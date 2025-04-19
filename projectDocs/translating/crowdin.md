@@ -1,45 +1,83 @@
-# Translating using Crowdin
+# Translating With Crowdin
 
-Crowdin is used to translate the main NVDA interface and user documentation.
+Crowdin is used to manage the translations of the main NVDA interface and user documentation.
 NVDA's Crowdin project: <https://crowdin.com/project/nvda>.
 
-This document covers setting up a Crowdin account, connecting it with PoEdit, and translating the main interface and user documentation using Crowdin and PoEdit.
+This document covers setting up a Crowdin account, and translating the main interface and user documentation using either the Crowdin web interface or Poedit / nvdaL10nUtil. 
 
-## Setup
-
-### Create Crowdin account
+## Creating a Crowdin account
 
 1. Create a [Crowdin account](https://accounts.crowdin.com/register?continue=%2Fproject%2Fnvda).
 1. Message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org> to request being added as a translator.
 Please include your Crowdin username and the languages you wish to translate.
 
-### Setup PoEdit
+## Translation workflows
+
+There are 2 common workflows for translating with Crowdin:
+
+1. Translating strings directly via Crowdin's web interface. Or
+1. Downloading a translation file from Crowdin, translating with Poedit, and uploading the file back to Crowdin.
+
+### Translating via Crowdin's web interface
+For instructions on how to translate strings using Crowdin's web interface, please read [Crowdin's documentation for translators](https://support.crowdin.com/for-translators/).
+
+Note: If you are a screen reader user, you may find Crowdin's web interface inefficient or impossible to use. Therefore you may choose to use the Poedit workflow instead. 
+
+#### Translation Reviews / Approvals
+Due to accessibility issues and to be able to support the alternative workflow using Poedit, the translation approvals feature has been disabled in the NVDA project on Crowdin.
+This means that all new strings are essentially auto approved.
+ However, to maintain quality control, only translators specifically added to the project can add or change strings.
+ 
+### Translating with Poedit
+Poedit is a desktop application which is commonly used to translate files. 
+It is fairly accessible and is used by many blind and vision impaired translators. 
+
+The workflow for translating with Poedit involves:
+1. Downloading the translation file using NVDA's l10n utility
+1. Opening the translation file in Poedit, translating one or more strings, and saving the file.
+1. Uploading the translation file back to Crowdin.
+
+Warning: Do not download / upload translation files via Crowdin's web interface, nor use Poedit's Crowdin cloud translation feature, as these methods have been found to corrupt xliff files.
+Please instead use NvDA's l10n utility for download and upload.
+NVDA's l10n utility will automatically use the appropriate Crowdin settings when downloading and uploading, and will detect and correct corruptions in xliff files. 
+
+#### Setting up PoEdit
 
 It is recommended that you use the latest version of PoEdit and NVDA for translating.
-Alternatively, you can use the [Crowdin web interface](https://support.crowdin.com/online-editor/) directly.
-As PoEdit only supports viewing approved strings, large translator teams need to co-ordinate submitting unapproved strings to prevent conflicts.
-Using Crowdin's interface avoids this problem.
 
 PoEdit's homepage is: <http://www.poedit.net/>
 
 1. Download the latest Windows PoEdit version at <https://poedit.net/download>
 1. Install it by following the on-screen instructions, the default options should be sufficient.
 
-### Translation reviews
-Due to accessibility issues, for now translation approvals have been disabled on Crowdin.
-Any translation uploaded to Crowdin is automatically available in the project.
-However, joining the project as a translator is by invitation only.
+As PoEdit only supports viewing approved strings, large translator teams need to co-ordinate submitting unapproved strings to prevent conflicts.
+Using Crowdin's interface avoids this problem.
 
-## Translation workflows
+#### Locating the NVDA l10n Utility
+The NVDA l10n utility is required for safely and efficiently downloading and uploading translation files from / to Crowdin when translating with Poedit.
+ 
+ This utility is included with all versions of NVDA from 2025.1beta1 onwards.
 
-There are 2 common workflows for translating with Crowdin:
+* For installed copies of NVDA, its path is: `c:\Program Files (x86)\nvda\l10nUtil.exe`
+* For portable copies, it can be found as `l10nUtil.exe` in the root directory of the portable copy.
+ 
+#### Downloading with NVDA's l10n Utility
+```
+l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
+```
+E.g.
+```
+l10nUtil.exe downloadTranslationFile fr nvda.po
+```
+The first time you will be asked for an authorization token.
+Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
+Ensure that it has at least the translations scope.
+Then paste this into the user prompt.
+This will be saved in ~/.nvda_crowdin for future use. 
 
-1. Translating strings directly via Crowdin's interface. Or
-1. Downloading from Crowdin, translating with Poedit and uploading again.
+#### Translating using PoEdit
 
-## Translating using PoEdit
-
-After opening a .po or .xliff file you will be placed on a list with all of the strings to translate.
+After opening a .po or .xliff file you have previously downloaded with NVDA's l10n utility, you will be placed on a list with all of the strings to translate.
 
 You can read the status bar to see how many strings have already been translated, the number of untranslated messages, and how many are fuzzy.
 A fuzzy string is a message which has been automatically translated, thus it may be wrong.
@@ -62,23 +100,8 @@ NVDA provides additional shortcuts for PoEdit which are described in [the User G
 If you are unsure of the meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
 
-## Translating NVDA's interface
-
-* Download the po file for your language from  Crowdin using NVA's l10nUtil.exe:
-```
-l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
-```
-E.g.
-```
-l10nUtil.exe downloadTranslationFile fr nvda.po
-```
-The first time you will be asked for an authorization token.
-Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
-Ensure that it has at least the translations scope.
-Then paste this into the user prompt.
-This will be saved in ~/.nvda_crowdin for future use.
-* Open the xliff file in Poedit, translate, and save the file.
-* Upload the translated file using l10nUtil
+#### Uploading with NvDA's l10n Utility
+After translating the file with Poedit, upload the file back to Crowdin.
 ```
 l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
 ```
@@ -87,7 +110,12 @@ E.g.
 l10nUtil.exe uploadTranslationFile fr nvda.po
 ```
 
-Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
+## Translating NVDA's interface
+* If translating via the Crowdin web interface, you can find these strings  in the `NVDA interface messages` file.
+* If translating via Poedit, you can download  it as `nvda.po` using NVDA's l10n utility E.g.
+```
+l10nUtil.exe downloadTranslationFile fr nvda.po
+```
 
 ### Messages with formatting strings
 
@@ -180,35 +208,10 @@ Documentation available for translation includes:
 * The NVDA user guide (userGuide.xliff)
 * The NVDA What's New document (changes.xliff)
 
-To translate any of these files:
-
-* Download the xliff file for your language from  Crowdin using NVA's l10nUtil.exe:
-```
-l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
-```
-E.g.
-```
-l10nUtil.exe downloadTranslationFile fr userGuide.xliff
-```
-The first time you will be asked for an authorization token.
-Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
-Ensure that it has at least the translations scope.
-Then paste this into the user prompt.
-This will be saved in ~/.nvda_crowdin for future use.
-* Make a copy of the downloaded file.
-* Open the xliff file in Poedit, translate, and save the file.
-* Upload the translated file using l10nUtil
-```
-l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>] [--old <oldLocalFilepath>]
-```
-E.g.
-```
-l10nUtil.exe uploadTranslationFile fr userGuide.xliff --old userGuide_backup.xliff
-```
-This will only upload added / changed translations since you downloaded the file.
-
-Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
-
+To translate any of these files either:
+* locate the file in the Crowdin web interface and translate directly, or
+* Download the file using NVDA's l10n utility, open the file in Poedit, translate and save, then upload the file with NVDA's l10n utility.
+ 
 ### Translating markdown
 
 The English NVDA user documentation is written in markdown syntax.
