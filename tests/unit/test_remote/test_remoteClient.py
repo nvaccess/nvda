@@ -120,8 +120,9 @@ class TestRemoteClient(unittest.TestCase):
 		# Without any transport (neither follower nor leader), pushClipboard should warn.
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
-		self.client.pushClipboard()
-		self.uiMessage.assert_called_with("Not connected.")
+		with self.assertRaises(RuntimeError) as cm:
+			self.client.pushClipboard()
+		self.assertEqual(str(cm.exception), "Not connected.")
 
 	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.

@@ -4892,7 +4892,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
-		_remoteClient._remoteClient.pushClipboard()
+		try:
+			_remoteClient._remoteClient.pushClipboard()
+		except RuntimeError as e:
+			log.error("Error pushing clipboard to remote machine", exc_info=True)
+			ui.message(str(e))
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
