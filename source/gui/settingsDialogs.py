@@ -1862,8 +1862,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self._appendSpeechModesList(settingsSizerHelper)
 
 	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
-			self.reportLanguageCheckbox.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
-			self.reportNotSupportedLanguageCombo.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
+		self.reportLanguageCheckbox.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
+		self.reportNotSupportedLanguageCombo.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
 
 	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._availableSymbolDictionaries = [
