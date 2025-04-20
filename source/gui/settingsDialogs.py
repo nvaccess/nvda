@@ -1689,6 +1689,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				label=autoLanguageSwitchingText,
 			),
 		)
+		self.autoLanguageSwitchingCheckbox.Bind(wx.EVT_CHECKBOX, self.onAutoLanguageSwitchingChange)
 		self.bindHelpEvent("SpeechSettingsLanguageSwitching", self.autoLanguageSwitchingCheckbox)
 		self.autoLanguageSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoLanguageSwitching"],
@@ -1717,6 +1718,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportLanguageCheckbox.SetValue(
 			config.conf["speech"]["reportLanguage"],
 		)
+		self.reportLanguageCheckbox.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
 
 		# Translators: This is a label for a combobox in the Voice settings panel to select reporting when the language of the text being read is not supported by the current synthesizer.
 		labelText = _("Report when switching to language is not s&upported by synthesizer")
@@ -1733,6 +1735,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportNotSupportedLanguageCombo.SetSelection(
 			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
 		)
+		self.reportNotSupportedLanguageCombo.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
 
 		# Translators: This is the label for a combobox in the
 		# voice settings panel (possible choices are none, some, most and all).
@@ -1857,6 +1860,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"],
 		)
 		self._appendSpeechModesList(settingsSizerHelper)
+
+	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
+			self.reportLanguageCheckbox.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
+			self.reportNotSupportedLanguageCombo.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
 
 	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._availableSymbolDictionaries = [
