@@ -279,7 +279,7 @@ environments = ["sys_platform == 'win32'"]
 package-dir = {"" = "source"}
 
 [tool.uv.sources]
-nvda-miscDeps = { workspace = true }
+nvda-misc-deps = { workspace = true }
 configobj = { git = "https://github.com/DiffSK/configobj", rev = "8be54629ee7c26acb5c865b74c76284e80f3aa31" }
 
 [tool.uv.workspace]
@@ -289,7 +289,7 @@ members = [
 
 [dependency-groups]
 dev = [
-	"nvda-miscDeps",
+	"nvda-misc-deps",
 	# NVDA's build system is SCons
 	"SCons==4.8.1",
 	# Packaging NVDA
