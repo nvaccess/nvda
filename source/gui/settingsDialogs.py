@@ -5458,7 +5458,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentNavigationPanel,
 		AddonStorePanel,
 	]
-	# if not globalVars.appArgs.secure:
+	
 	categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
