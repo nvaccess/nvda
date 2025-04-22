@@ -579,6 +579,7 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 						f"Renamed config['remote']['{sectionKey}']['{oldItemKey}'] to config['remote']['{sectionKey}']['{newItemKey}'].",
 					)
 
+
 def upgradeConfigFrom_17_to_18(profile: ConfigObj):
 	"""Convert report spelling errors configurations from boolean to integer values."""
 
@@ -596,4 +597,6 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj):
 	else:
 		newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
 		profile[section][key] = newValue
-		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name}).")
+		log.debug(
+			f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name})."
+		)
