@@ -32,7 +32,7 @@ if "%choice%"=="0" (
 	)
 ) else if "%choice%"=="2" (
 	echo Installing uv using the official script...
-	powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+	powershell -ExecutionPolicy ByPass -c "Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
 	goto :runUv
 ) else (
 	echo Invalid choice: "%choice%". Exiting.

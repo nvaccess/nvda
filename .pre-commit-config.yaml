@@ -129,7 +129,8 @@ repos:
   rev: 0.6.14
   hooks:
     - id: uv-lock
-      # Override python interpretter from .python-version as that is too strict for pre-commit.ci
+      name: Verify uv lock file
+      # Override python interpreter from .python-version as that is too strict for pre-commit.ci
       args: ["-p3.11"]
 
 - repo: local

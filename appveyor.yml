@@ -47,7 +47,7 @@ install:
     "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
- - ps: irm https://astral.sh/uv/install.ps1 | iex
+ - ps: Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
  - set Path=%userprofile%\.local\bin;%Path%
  - git submodule update --init
  - ps: |

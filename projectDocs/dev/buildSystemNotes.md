@@ -1,4 +1,5 @@
 # Build System Notes
+
 The NVDA build system uses [uv](https://docs.astral.sh/uv/) to manage a Python virtual environment.
 All Python dependencies are installed into this environment.
 
@@ -11,7 +12,7 @@ running NVDA or tests) see the main repository readme file.
 ## How the build system works
 
 Dependencies are managed in the `pyproject.toml` file.
-Ideally, version numbers for dependencies should be used to lock in a version.
+Version numbers for dependencies should be used to lock in a version.
 
 ### Entry points to the build system
 
@@ -24,13 +25,12 @@ These are the only files expected to be executed directly by a user/developer:
 - `runlicensecheck.bat`
 
 **Note:** The `runnvda.bat` script uses `uv run`, which executes `nvda.pyw` as a GUI application by default.
-this is the more common and expected way to run NVDA.
+This is the more common and expected way to run NVDA.
 You can override this behavior by passing `-s` as a parameter to `uv run`.
 To do this, modify the `runnvda.bat` file.
-This allows you to have standard output/error output to the console,
-which is particularly useful if there is an error in NVDA before logging is initialised.
+This allows you to have standard output/error output to the console, which is particularly useful if there is an error in NVDA before logging is initialised.
 
-**Note:** Executing `source/nvda.pyw` Outside uv will produce an error message
+**Note:** Executing `source/nvda.pyw` outside uv will produce an error message
 and early termination.
 
 ## Motivation for using uv

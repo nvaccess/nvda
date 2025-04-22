@@ -15,7 +15,7 @@ virtualEnv = os.getenv("VIRTUAL_ENV")
 uv = os.getenv("uv")
 if not virtualEnv or not uv or Path.cwd() not in Path(virtualEnv).resolve().parents:
 	print(
-		"Error: SCons was started  outside NVDA's build system Python virtual environment.\n"
+		"Error: SCons was started outside NVDA's build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
 	)
 	sys.exit(1)
