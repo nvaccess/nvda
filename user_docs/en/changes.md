@@ -598,6 +598,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 
 ### Bug Fixes
 
+* Fixed math attributes being read in Adobe Reader, this resulted in poor or wrong speech and braille. (#17980)
 * Windows 11 fixes:
   * NVDA will once again announce hardware keyboard input suggestions. (#16283, @josephsl)
   * In Version 24H2 (2024 Update and Windows Server 2025), mouse and touch interaction can be used in quick settings. (#16348, @josephsl)
