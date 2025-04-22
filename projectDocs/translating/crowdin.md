@@ -61,7 +61,7 @@ Using Crowdin's interface avoids this problem.
 
 The NVDA l10n utility is required for safely and efficiently downloading and uploading translation files from / to Crowdin when translating with Poedit.
 
- This utility is included with all versions of NVDA from 2025.1beta1 onwards.
+This utility is included with all versions of NVDA from 2025.1beta1 onwards.
 
 * For installed copies of NVDA, its path is: `c:\Program Files (x86)\nvda\l10nUtil.exe`
 * For portable copies, it can be found as `l10nUtil.exe` in the root directory of the portable copy.
