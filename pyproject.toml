@@ -160,11 +160,11 @@ exclude = [
 
 # Tell pyright where to load python code from
 extraPaths = [
-	"./source",                                                                                                     
-	# Used by system tests                                                                                         
-	"./tests/system/libraries",                                                                                     
-	# Used internally in NVDA                                                                                       
-	"./miscDeps/python",                                                                                            
+	"./source",
+	# Used by system tests
+	"./tests/system/libraries",
+	# Used internally in NVDA
+	"./miscDeps/python",
 ]
 # General config
 analyzeUnannotatedFunctions = true
