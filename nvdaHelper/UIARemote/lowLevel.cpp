@@ -9,6 +9,7 @@ For full terms and any additional permissions, see the NVDA license file: https:
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.ui.uiautomation.core.h>
+#include <atlcomcli.h>
 
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::UI::UIAutomation;
@@ -198,6 +199,35 @@ HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, V
 		}
 		return S_OK;
 	}
+	auto stringMap = result.try_as<winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>>();
+	if(stringMap) {
+		// Create a scripting.Dictionary object from Windows script host, populate it with the map, and return it.
+		// This is a bit of a hack, but it works.
+		CComPtr<IDispatch> dictionary;
+		CLSID clsid_scripting_dictionary{};
+		HRESULT hr = CLSIDFromProgID(L"Scripting.Dictionary", &clsid_scripting_dictionary);
+		if(FAILED(hr)) {
+			return hr;
+		}
+		hr = CoCreateInstance(clsid_scripting_dictionary, nullptr, CLSCTX_INPROC_SERVER, IID_IDispatch, reinterpret_cast<void**>(&dictionary));
+		if (FAILED(hr)) {
+			return hr;
+		}
+		CComDispatchDriver dictionaryDriver(dictionary.p);
+		for(auto it = stringMap.First(); it.HasCurrent(); it.MoveNext()) {
+			CComVariant args[2];
+			IInspectableToVariant(it.Current().Value(), &args[0]);
+			args[1] = static_cast<PCWSTR>(it.Current().Key().c_str());
+			hr = dictionaryDriver.InvokeN(L"Add", args, 2, nullptr);
+			if(FAILED(hr)) {
+				return hr;
+			}
+		}
+		arg_pVariant->vt = VT_DISPATCH;
+		arg_pVariant->pdispVal = dictionary.Detach();
+		return S_OK;
+	}
+
 	// Just treat it as an IUnknown.
 	arg_pVariant->vt = VT_UNKNOWN;
 	arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(result.as<winrt::Windows::Foundation::IUnknown>()));

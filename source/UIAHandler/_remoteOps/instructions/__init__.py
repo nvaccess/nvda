@@ -34,6 +34,15 @@ from .array import (
 	ArraySetAt,
 	ArraySize,
 )
+from .stringMap import (
+	NewStringMap,
+	IsStringmap,
+	StringMapInsert,
+	StringMapHasKey,
+	StringMapLookup,
+	StringMapRemove,
+	StringMapSize
+)
 from .bool import (
 	NewBool,
 	IsBool,

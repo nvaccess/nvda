@@ -26,6 +26,7 @@ from comtypes import (
 	IUnknown,
 	COMError,
 )
+import comtypes.client.lazybind
 import enum
 from UIAHandler import UIA
 from .. import lowLevel
@@ -615,31 +616,36 @@ class RemoteString(RemoteBaseObject[str]):
 		return copy
 
 
-class RemoteArray(RemoteBaseObject):
+class RemoteContainer(RemoteBaseObject):
 	_LOCAL_COM_INTERFACES = [
 		UIA.IUIAutomationElement,
 		UIA.IUIAutomationTextRange,
 	]
 
-	def _correctCOMPointers(self, *items: object) -> list:
-		correctedItems = []
-		for i, item in enumerate(items):
-			if isinstance(item, IUnknown):
-				for interface in self._LOCAL_COM_INTERFACES:
-					try:
-						item = item.QueryInterface(interface)
-						break
-					except COMError:
-						pass
-			elif isinstance(item, tuple):
-				item = self._correctCOMPointers(*item)
-			correctedItems.append(item)
-		return correctedItems
+	def _unpackVariant(self, item: object) -> object:
+		if isinstance(item, comtypes.client.lazybind.Dispatch):
+			# disp is a Scripting.Dictionary object
+			keys = item.keys()
+			values = [self._unpackVariant(value) for value in item.items()]
+			return {key: values[index] for index, key in enumerate(keys)}
+		if isinstance(item, IUnknown):
+			for interface in self._LOCAL_COM_INTERFACES:
+				try:
+					item = item.QueryInterface(interface)
+					break
+				except COMError:
+					pass
+		elif isinstance(item, tuple):
+			item = [self._unpackVariant(subItem) for subItem in item]
+		return item
+
+
+class RemoteArray(RemoteContainer):
 
 	@property
 	def localValue(self) -> list:
 		items = super().localValue
-		return self._correctCOMPointers(*items)
+		return [self._unpackVariant(item) for item in items]
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewArray(
@@ -698,6 +704,76 @@ class RemoteArray(RemoteBaseObject):
 			instructions.ArrayRemoveAt(
 				target=self,
 				index=RemoteIntBase.ensureRemote(self.rob, index),
+			),
+		)
+
+
+class RemoteStringMap(RemoteContainer):
+
+	@property
+	def localValue(self) -> dict[str, Any]:
+		return cast(dict[str, Any], self._unpackVariant(super().localValue))
+
+	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
+		yield instructions.NewStringMap(
+			result=self,
+		)
+
+	@remoteMethod
+	def hasKey(self, key: RemoteString | str) -> RemoteBool:
+		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.StringMapHasKey(
+				result=result,
+				target=self,
+				key=RemoteString.ensureRemote(self.rob, key),
+			),
+		)
+		return result
+
+	@remoteMethod
+	def __getitem__(self, key: RemoteString | str) -> RemoteVariant:
+		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.StringMapLookup(
+				result=result,
+				target=self,
+				key=RemoteString.ensureRemote(self.rob, key),
+			),
+		)
+		return result
+
+	@remoteMethod
+	def size(self) -> RemoteUint:
+		result = RemoteUint(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.StringMapSize(
+				result=result,
+				target=self,
+			),
+		)
+		return result
+
+	@remoteMethod_mutable
+	def __setitem__(
+		self,
+		key: RemoteString | str,
+		value: RemoteBaseObject | int | float | str,
+	) -> None:
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.StringMapInsert(
+				target=self,
+				key=RemoteString.ensureRemote(self.rob, key),
+				value=RemoteBaseObject.ensureRemote(self.rob, value),
+			),
+		)
+
+	@remoteMethod_mutable
+	def remove(self, key: RemoteString | str) -> None:
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.StringMapRemove(
+				target=self,
+				key=RemoteString.ensureRemote(self.rob, key),
 			),
 		)
 
