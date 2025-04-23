@@ -44,6 +44,7 @@ HTML_HEADERS = """
 <meta charset="utf-8">
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" href="favicon.ico"/>
 <link rel="stylesheet" href="styles.css">
 {extraStylesheet}
 </head>
