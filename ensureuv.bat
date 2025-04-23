@@ -24,8 +24,7 @@ if "%choice%"=="0" (
 ) else if "%choice%"=="1" (
 	if "%hasWinGet%"=="1" (
 		echo Installing uv using WinGet...
-		winget install --accept-source-agreements --disable-interactivity -e astral-sh.uv
-		goto :runUv
+		(winget install --accept-source-agreements --disable-interactivity -e astral-sh.uv && goto :runUv) || exit /B %ERRORLEVEL%
 	) else (
 		echo Invalid option: WinGet is not available.
 		goto :prompt
