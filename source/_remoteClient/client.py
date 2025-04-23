@@ -134,7 +134,7 @@ class RemoteClient:
 		"""
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
-			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
+			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
 			ui.message(pgettext("remote", "Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
@@ -147,7 +147,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(_("Unable to push clipboard"))
+			ui.message(_("Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.

@@ -37,10 +37,10 @@ class RemoteMenu(wx.Menu):
 		sysTrayIcon.Bind(wx.EVT_MENU, self.onMuteItem, self.muteItem)
 		self.pushClipboardItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
-			_("&Push clipboard"),
-			# Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
-			pgettext("remote", "Push the clipboard to the remote computer."),
+			# Translators: Menu item in NVDA Remote submenu to send clipboard content to the remote computer.
+			_("&Send clipboard"),
+			# Translators: Tooltip for the Send clipboard menu item in the NVDA Remote submenu.
+			pgettext("remote", "Send the text on the clipboard to the remote computer."),
 		)
 		self.pushClipboardItem.Enable(False)
 		sysTrayIcon.Bind(

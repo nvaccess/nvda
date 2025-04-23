@@ -40,8 +40,8 @@ CUES: Dict[str, Cue] = {
 	"clipboardPushed": {
 		"wave": "clipboardPush",
 		"beeps": [(500, 100), (600, 100)],
-		# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
-		"message": _("Clipboard pushed"),
+		# Translators: Message shown when the clipboard is successfully sent to the remote computer.
+		"message": _("Clipboard sent"),
 	},
 	"clipboardReceived": {
 		"wave": "clipboardReceive",
