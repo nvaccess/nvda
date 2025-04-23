@@ -581,12 +581,12 @@ class LeaderSession(RemoteSession):
 		if client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
 			del self.followers[client["id"]]
 			# If the last follower has disconnected, switch back to controlling the local computer.
-			if not self.followers:
-				# import late to avoid circular import
-				from . import _remoteClient
+			# if not self.followers:
+			# import late to avoid circular import
+			# from . import _remoteClient
 
-				if _remoteClient.sendingKeys:
-					_remoteClient._switchToLocalControl
+			# if _remoteClient.sendingKeys:
+			# _remoteClient._switchToLocalControl
 		elif client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
 			self.leaders.discard(client["id"])
 		if self.callbacksAdded and not self.followers:

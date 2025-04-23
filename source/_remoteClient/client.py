@@ -12,6 +12,8 @@ from config.configFlags import RemoteConnectionMode
 import core
 import gui
 import inputCore
+import queueHandler
+import speech
 import ui
 import wx
 from config import isInstalledCopy
@@ -443,6 +445,21 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
+		if self.connectedFollowersCount < 1:
+			if pressed:
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					speech.cancelSpeech,
+					_immediate=True,
+				)
+				# Translators: Presented when sending keys to a remote computer when there are no controllable computers in the channel.
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					ui.message,
+					pgettext("remote", "No controlled computers are connected"),
+					_immediate=True,
+				)
+			return False
 		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
@@ -606,6 +623,20 @@ class RemoteClient:
 			return self.leaderSession.connectedClientsCount
 		elif self.followerSession is not None:
 			return self.followerSession.connectedClientsCount
+		log.error(
+			"is connected returned true, but neither leaderSession or followerSession is not None.",
+			stack_info=True,
+		)
+		return 0
+
+	@property
+	def connectedFollowersCount(self) -> int:
+		if not self.isConnected():
+			return 0
+		elif self.leaderSession is not None:
+			return self.leaderSession.connectedFollowersCount
+		elif self.followerSession is not None:
+			return self.followerSession.connectedFollowersCount
 		log.error(
 			"is connected returned true, but neither leaderSession or followerSession is not None.",
 			stack_info=True,
