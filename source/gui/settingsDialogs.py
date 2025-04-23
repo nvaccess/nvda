@@ -3379,7 +3379,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in Remote Access settings,
-			# allowing users to choose whether they want to use an existing Remote relay server, or host their own.
+			# allowing users to choose whether they want to use an existing server, or host their own.
 			pgettext("remote", "&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
@@ -3389,7 +3389,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the host field in Remote Access settings.
-			# This is where users should enter the URL of the Remote server they want to use if they are not hosting their own.
+			# This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 			_("&Host:"),
 			wx.TextCtrl,
 		)
@@ -3419,7 +3419,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self.key = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in Remote Access settings,
-			# Where users set the key for their Remote connection.
+			# Where users set the key for their connection.
 			_("&Key:"),
 			wx.TextCtrl,
 		)

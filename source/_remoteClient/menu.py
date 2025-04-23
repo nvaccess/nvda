@@ -27,9 +27,9 @@ class RemoteMenu(wx.Menu):
 		self._switchToConnectItem()
 		self.muteItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
+			# Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 			_("Mute remote"),
-			# Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
+			# Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
 			pgettext("remote", "Mute speech and sounds from the remote computer."),
 			kind=wx.ITEM_CHECK,
 		)
@@ -37,9 +37,9 @@ class RemoteMenu(wx.Menu):
 		sysTrayIcon.Bind(wx.EVT_MENU, self.onMuteItem, self.muteItem)
 		self.pushClipboardItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to send clipboard content to the remote computer.
+			# Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 			_("&Send clipboard"),
-			# Translators: Tooltip for the Send clipboard menu item in the NVDA Remote submenu.
+			# Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 			pgettext("remote", "Send the text on the clipboard to the remote computer."),
 		)
 		self.pushClipboardItem.Enable(False)
@@ -50,9 +50,9 @@ class RemoteMenu(wx.Menu):
 		)
 		self.copyLinkItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
+			# Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 			_("Copy &link"),
-			# Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
+			# Translators: Tooltip for the Copy Link menu item in the Remote Access submenu.
 			pgettext("remote", "Copy a link to the current Remote Access session to the clipboard."),
 		)
 		self.copyLinkItem.Enable(False)
@@ -63,9 +63,9 @@ class RemoteMenu(wx.Menu):
 		)
 		self.sendCtrlAltDelItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
+			# Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 			pgettext("remote", "Send ctrl+alt+del"),
-			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
+			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the Remote Access submenu.
 			pgettext("remote", "Send control+alt+delete to the controlled computer."),
 		)
 		sysTrayIcon.Bind(
@@ -151,9 +151,9 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for creating a new Remote session.
 		"""
-		# Translators: Item in the Remote Access submenu to connect to a remote computer.
+		# Translators: Item in the Remote Access submenu to connect to another computer.
 		self.connectionItem.SetItemLabel(_("Connect..."))
-		# Translators: Tooltip for the Connect menu item in the NVDA Remote Access submenu.
+		# Translators: Tooltip for the Connect menu item in the Remote Access submenu.
 		self.connectionItem.SetHelp(pgettext("remote", "Remotely connect to another computer running NVDA."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
@@ -168,7 +168,7 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for disconnecting an existing Remote session.
 		"""
-		# Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA Remote Access.
+		# Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 		self.connectionItem.SetItemLabel(_("Disconnect"))
 		# Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
 		self.connectionItem.SetHelp(pgettext("remote", "Disconnect from the current Remote Access session."))
