@@ -119,16 +119,19 @@ class AcrobatNode(IAccessible):
 			return self.accID == other.accID
 		return super(AcrobatNode, self)._isEqual(other)
 
+	@staticmethod
+	def getMathMLAttributes(node, attrList: list) -> str:
+		"""Get the MathML attributes in 'attrList' for a 'node' (MathML element)."""
+		attrValues = ""
+		for attr in attrList:
+			# "NSO" comes from the PDF spec
+			val = node.GetAttribute(attr, "NSO")
+			if val:
+				attrValues += f' {attr}="{val}"'
+		return attrValues
+
 	def _getNodeMathMl(self, node) -> str:
 		"""Traverse the MathML tree and return an XML string representing the math"""
-
-		def getMathMLAttributes(element, attrList: list) -> str:
-			attrValues = ""
-			for attr in attrList:
-				val = element.GetAttribute(attr, "NSO")
-				if val:
-					attrValues += f' {attr}="{val}"'
-			return attrValues
 
 		tag = node.GetTagName()
 		answer = f"<{tag}"
@@ -136,18 +139,20 @@ class AcrobatNode(IAccessible):
 		id = node.GetID()
 		if id:
 			answer += f' id="{id}"'
-		answer += getMathMLAttributes(node, ["intent", "arg"])
+		# The PDF interface lacks a way to get all the attributes, so we have to get specific ones
+		# The attributes below affect accessibility
+		answer += AcrobatNode.getMathMLAttributes(node, ["intent", "arg"])
 		match tag:
 			case "mi" | "mn" | "mo" | "mtext":
-				answer += getMathMLAttributes(node, ["mathvariant"])
+				answer += AcrobatNode.getMathMLAttributes(node, ["mathvariant"])
 			case "mfenced":
-				answer += getMathMLAttributes(node, ["open", "close", "separators"])
+				answer += AcrobatNode.getMathMLAttributes(node, ["open", "close", "separators"])
 			case "menclose":
-				answer += getMathMLAttributes(node, ["notation", "notationtype"])
+				answer += AcrobatNode.getMathMLAttributes(node, ["notation", "notationtype"])
 			case "annotation-xml" | "annotation":
-				answer += getMathMLAttributes(node, ["encoding"])
+				answer += AcrobatNode.getMathMLAttributes(node, ["encoding"])
 			case "ms":
-				answer += getMathMLAttributes(node, ["open", "close"])
+				answer += AcrobatNode.getMathMLAttributes(node, ["open", "close"])
 			case _:
 				pass
 		answer += ">"
