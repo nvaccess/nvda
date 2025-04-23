@@ -598,5 +598,5 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj):
 		newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
 		profile[section][key] = newValue
 		log.debug(
-			f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name})."
+			f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name}).",
 		)
