@@ -72,6 +72,7 @@ from .element import (
 	IsElement,
 	ElementGetPropertyValue,
 	ElementNavigate,
+	ElementGetTextPattern,
 )
 from .extension import (
 	IsExtensionSupported,
@@ -124,4 +125,7 @@ from .textRange import (
 	TextRangeExpandToEnclosingUnit,
 	TextRangeMoveEndpointByRange,
 	TextRangeCompareEndpoints,
+)
+from .textPattern import (
+	TextPatternRangeFromChild,
 )

@@ -26,7 +26,6 @@ from . import (
 	RemoteIntEnum,
 	RemoteString,
 	RemoteExtensionTarget,
-	RemoteElement,
 )
 
 
@@ -291,3 +290,4 @@ class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
 		realCount = (count * -1) if self.isReversed else count
 		return self.textRange.move(unit, realCount)
 
+from .element import RemoteElement

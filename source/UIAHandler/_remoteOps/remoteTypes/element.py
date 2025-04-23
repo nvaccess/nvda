@@ -104,3 +104,16 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 	@remoteMethod
 	def getPreviousSiblingElement(self) -> RemoteElement:
 		return self._navigate(lowLevel.NavigationDirection.PreviousSibling)
+
+	@remoteMethod
+	def getTextPattern(self) -> RemoteTextPattern:
+		result = RemoteTextPattern(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.ElementGetTextPattern(
+				result=result,
+				target=self,
+			),
+		)
+		return result
+
+from .textPattern import RemoteTextPattern

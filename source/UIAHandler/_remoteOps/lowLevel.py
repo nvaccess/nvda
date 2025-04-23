@@ -4,6 +4,7 @@
 # Copyright (C) 2023-2025 NV Access Limited
 
 from __future__ import annotations
+import re
 from ctypes import (
 	oledll,
 	byref,
@@ -27,6 +28,17 @@ allowing for the execution of multiple UI Automation operations in a remote prov
 via one cross-process call.
 """
 
+
+_re_COMMethodVtableOffset = re.compile("^<COM method offset (\d+):")
+def _getCOMMethodVtableOffset(COMMethod):
+	m = _re_COMMethodVtableOffset.match(str(COMMethod))
+	if not m:
+		raise ValueError(f"Invalid COM method: {COMMethod}")
+	return int(m.group(1))
+
+def _makeUIAPatternInstructionId(patternId, COMMethod) -> int:
+	vtableOffset = _getCOMMethodVtableOffset(COMMethod)
+	return (patternId << 10) | vtableOffset
 
 class OperandId(c_ulong):
 	"""
@@ -324,6 +336,10 @@ class InstructionType(enum.IntEnum):
 	TextRangeScrollIntoView = 0x271E0113
 	TextRangeGetChildren = 0x271E0114
 	TextRangeShowContextMenu = 0x271E0115
+
+	# Text pattern
+	ElementGetTextPattern = UIA.UIA_TextPatternId
+	TextPatternRangeFromChild = _makeUIAPatternInstructionId(UIA.UIA_TextPatternId, UIA.IUIAutomationTextPattern.RangeFromChild)
 
 
 class ComparisonType(enum.IntEnum):

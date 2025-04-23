@@ -612,7 +612,19 @@ class RemoteString(RemoteBaseObject[str]):
 	@remoteMethod
 	def copy(self) -> Self:
 		copy = type(self)(self.rob, self.rob.requestNewOperandId())
-		copy += self
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.NewString(
+				result=copy,
+				length=c_ulong(1),
+				value=ctypes.create_unicode_buffer(""),
+			),
+		)
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.Set(
+				target=copy,
+				value=self,
+			),
+		)
 		return copy
 
 
@@ -819,4 +831,5 @@ from .intEnum import RemoteIntEnum
 from .extensionTarget import RemoteExtensionTarget
 from .cacheRequest import RemoteCacheRequest
 from .element import RemoteElement
+from .textPattern import RemoteTextPattern
 from .textRange import RemoteTextRange
