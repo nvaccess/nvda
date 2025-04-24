@@ -3794,8 +3794,8 @@ Alternatively, press "Generate key" to have NVDA generate a key for you.
 Once a Remote Access session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
 
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
-* Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Push Clipboard".
-* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute Remote".
+* Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
+* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
@@ -3808,7 +3808,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Copy link | None | Copies a link to the remote session to the clipboard. |
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
-| Push clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
