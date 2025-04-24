@@ -10,6 +10,7 @@ import wx
 if TYPE_CHECKING:
 	from .client import RemoteClient
 
+import globalVars
 import gui
 
 from .connectionInfo import ConnectionMode
@@ -158,6 +159,9 @@ class RemoteMenu(wx.Menu):
 			self.client.doConnect,
 			self.connectionItem,
 		)
+		# The option to start a new Remote Access session should be unavailable in secure mode.
+		if globalVars.appArgs.secure:
+			self.connectionItem.Enable(False)
 
 	def _switchToDisconnectItem(self):
 		"""Switch to showing the "Disconnect" item in the menu.
@@ -175,3 +179,5 @@ class RemoteMenu(wx.Menu):
 			self.doDisconnect,
 			self.connectionItem,
 		)
+		# The option to disconnect from a Remote Access session should always be available.
+		self.connectionItem.Enable()
