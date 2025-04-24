@@ -12,12 +12,104 @@ The NVDA Add-on Runtime (ART) moves NVDA add-ons from the core NVDA process to a
 
 ## 3. Architecture
 
-ART consists of two processes:
+### 3.1 Process Architecture
 
-1. NVDA Core Process: Main NVDA screen reader application
-2. Add-on Runtime Process: Hosts all add-ons in a single process
+ART consists of three primary processes:
 
-These processes communicate via Pyro4 RPC.
+1. NVDA Core Process: The main NVDA screen reader application
+   - Manages the lifecycle of add-on runtime processes
+   - Maintains communication channels with runtime processes
+   - Restarts runtime processes if they crash
+   - Provides core screen reader functionality
+   - Implements security validation for runtime communication
+
+2. Regular Add-on Runtime Process (ART): Hosts add-ons with standard permissions in normal desktop sessions
+   - Runs with limited but practical permissions
+   - Has network access allowed to support add-ons that require online functionality
+   - Has restricted file system access (limited to add-on's own directory)
+   - Operates within an app container for isolation from the main system
+   - Runs at low integrity level (IL_LOW)
+   - Communicates with NVDA Core via secure, validated RPC channels
+   - Cannot start new processes
+   - Provides a Python environment where add-ons execute
+
+3. Secure Desktop Add-on Runtime Process (SD-ART): Hosts add-ons with highly restricted permissions in secure desktop sessions
+   - Runs with minimal permissions (no network, no clipboard, strictly limited file system access)
+   - Operates within a more restrictive app container than the regular ART
+   - Also runs at low integrity level (IL_LOW)
+   - Cannot create UI outside of NVDA
+   - Cannot start new processes
+   - Optimized for security-critical environments
+
+### 3.2 Process Communication
+
+All inter-process communication occurs via Pyro4 RPC with the following security measures:
+
+- Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
+- Process Validation: The Windows Socket API is used to validate process identity
+- Serialization: JSON serialization is used instead of Pickle to prevent code execution exploits
+- Input Validation: All incoming data is validated using Pydantic before processing
+- Message Size Limits: Maximum message sizes are enforced to prevent denial of service attacks
+
+### 3.3 Data Flow Architecture
+
+1. Event Flow:
+   - System events originate in NVDA Core (via accessibility APIs)
+   - Events are filtered and forwarded to relevant add-on runtimes
+   - Add-ons process events and respond if necessary
+   - Responses are validated before being processed by NVDA Core
+
+2. Extension Point Flow:
+   - Extension points in NVDA Core trigger calls to registered add-ons
+   - NVDA Core tracks which add-ons have registered for which extension points
+   - Add-on responses are validated and integrated into NVDA behavior
+
+3. GUI Interaction Flow:
+   - Add-ons create GUI descriptions that are sent to NVDA Core
+   - NVDA Core renders and displays the GUI elements
+   - User interactions with GUI elements generate events sent back to add-ons
+   - Add-ons respond with updates that are applied to the GUI
+
+4. Audio Data Flow:
+   - Add-ons generate audio data (e.g., synthesized speech)
+   - PCM audio data is streamed to NVDA Core
+   - NVDA Core handles playback through the audio subsystem
+
+### 3.4 Process Lifecycle
+
+1. Startup Sequence:
+   - NVDA Core initializes
+   - NVDA Core launches the appropriate add-on runtime process (ART or SD-ART)
+   - Runtime process establishes a connection back to NVDA Core
+   - NVDA Core validates the connection
+   - NVDA Core loads add-ons into the runtime
+
+2. Normal Operation:
+   - Add-ons run within their respective runtime process
+   - Communication follows the data flow patterns described above
+   - NVDA monitors runtime health
+
+3. Error Handling:
+   - If an add-on crashes, the runtime process contains the crash
+   - If the runtime process crashes, NVDA Core detects this and restarts it
+   - During runtime restart, add-ons are reloaded
+
+4. Secure Desktop Transitions:
+   - When transitioning to a secure desktop for the first time, NVDA Core launches the SD-ART
+   - Add-ons and configuration (potentially only selected ones depending on future NVDA decisions) are copied to the secure desktop environment
+   - The SD-ART loads add-ons with more restrictive permissions
+
+### 3.5 Security Boundaries
+
+The architecture establishes multiple security boundaries:
+
+1. Process Boundary: Add-ons run in a separate process from NVDA Core
+2. Integrity Level Boundary: Add-on runtimes operate at a lower integrity level than NVDA Core
+3. App Container Boundary: Add-on runtimes run within app containers that restrict their capabilities
+4. File System Boundary: Add-ons can only access their own directories
+5. Network Boundary: SD-ART has no network access, ART has network access
+
+These boundaries work together to create a defense-in-depth approach to protecting NVDA Core from potentially malicious or unstable add-ons.
 
 ## 4. Components
 
@@ -97,7 +189,7 @@ These processes communicate via Pyro4 RPC.
 
 - Serializer: JSON (this was chosen to limit the possibility of Pickle security issues)
 - Timeout: 2 seconds (is this too conservative?)
-- **Binding:** The Pyro4 RPC communication channel MUST be configured to bind exclusively to the loopback interface (e.g., `127.0.0.1` for IPv4, `::1` for IPv6). Binding to any other network interface is prohibited.
+The Pyro4 RPC communication channel MUST be configured to bind exclusively to the loopback interface (e.g., `127.0.0.1`). Binding to any other network interface is prohibited.
 
 ### 6.2 Message Flow
 
@@ -313,7 +405,58 @@ def event_gainFocus(self, obj, nextHandler):
 4. NVDA Core loads configured add-ons through AddOnLifecycleService (part of `addonHandler.loadAddons`).
 5. System is ready for user interaction.
 
-## 14. Future Enhancements (Post-Version 1)
+## 14. Security Model
+
+### 14.1 Add-on Runtime Hosts
+
+ART implements two different security models for add-on runtimes:
+
+#### 14.1.1 Regular Add-on Runtime Host (ART)
+
+- Limited file system access (restricted to the add-on's own directory)
+- Network access allowed
+- No ability to start new processes
+- Running with low integrity level (IL_LOW, same as Internet downloaded files)
+- Implemented using app container technology for sandboxing
+
+#### 14.1.2 Secure Desktop Add-on Runtime Host (SD-ART)
+
+- More restrictive than regular ART
+- No network access whatsoever
+- File system access limited to only its own directory
+- No clipboard access
+- No ability to start new processes
+- No ability to create UI outside of NVDA
+- No desktop access (can't access the active desktop)
+- Also running with low integrity level and app container technology
+
+### 14.2 Process Security Validation
+
+To ensure that only legitimate ART processes can communicate with NVDA, and vice versa:
+
+- NVDA will track the Process ID (PID) of each ART process it launches
+- Connection validation will be implemented using the Windows Socket API to verify the source process
+- This approach is similar to the secure desktop process validation already implemented in NVDA Remote
+
+### 14.3 Communication Security
+
+- All Pyro4 RPC communication will be bound exclusively to loopback interfaces
+- Input validation will be implemented using Pydantic to define data models and enforce validation rules
+- Message size limits will be enforced to prevent DOS attacks
+
+### 14.4 Audio Handling
+
+- NVDA core will handle all audio processing
+- Add-ons will send PCM audio data streams to NVDA for playback
+- Audio generation capabilities remain in add-ons, but playback is controlled by NVDA
+
+### 14.5 Add-on Isolation
+
+- Version 1 does not implement isolation between add-ons within the same runtime
+- Add-ons running in the same runtime process can potentially interact with each other
+- Future versions may implement more granular isolation between add-ons
+
+## 15. Future Enhancements (Post-Version 1)
 
 - Permissions
 - multiprocess runtime
