@@ -370,6 +370,7 @@ class MainFrame(wx.Frame):
 	def onUwpOcrCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onRemoteAccessSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
 
