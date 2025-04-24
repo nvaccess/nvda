@@ -10,6 +10,7 @@ import api
 import braille
 from config.configFlags import RemoteConnectionMode
 import core
+import globalVars
 import gui
 import inputCore
 import ui
@@ -232,7 +233,7 @@ class RemoteClient:
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
-	def doConnect(self, evt=None):
+	def doConnect(self, evt: inputCore.InputGesture = None):
 		"""Show connection dialog and handle connection initiation.
 
 		:param evt: Optional wx event object
@@ -240,6 +241,12 @@ class RemoteClient:
 		"""
 		if evt is not None:
 			evt.Skip()
+		if globalVars.appArgs.secure:
+			log.error(
+				"Creating new Remote Access connections is not allowed in Secure Mode.",
+				stack_info=True,
+			)
+			return
 		previousConnections = configuration.getRemoteConfig()["connections"]["lastConnected"]
 		hostnames = list(reversed(previousConnections))
 		dlg = dialogs.DirectConnectDialog(
