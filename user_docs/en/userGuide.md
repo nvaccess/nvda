@@ -3711,6 +3711,7 @@ You’ll need to decide which computer will be controlled (the controlled comput
 If NVDA is running in [secure mode](#SecureMode), you cannot manually initiate a new Remote Access session.
 However, NVDA will still automatically start a new Remote Access session if configured to do so with the [Automatically connect after NVDA starts](#RemoteAutoconnect) setting.
 You can still manually disconnect in secure mode.
+
 #### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
 1. Open the NVDA menu and select Tools, then Remote, then Connect.
