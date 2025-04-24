@@ -611,17 +611,3 @@ class RemoteClient:
 			stack_info=True,
 		)
 		return 0
-
-	@property
-	def connectedFollowersCount(self) -> int:
-		if not self.isConnected():
-			return 0
-		elif self.leaderSession is not None:
-			return self.leaderSession.connectedFollowersCount
-		elif self.followerSession is not None:
-			return self.followerSession.connectedFollowersCount
-		log.error(
-			"is connected returned true, but neither leaderSession or followerSession is not None.",
-			stack_info=True,
-		)
-		return 0
