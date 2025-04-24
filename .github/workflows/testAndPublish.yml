@@ -162,9 +162,6 @@ jobs:
     - name: Prepare source code for launcher
       shell: cmd
       run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
-    - name: Export package list
-      shell: cmd
-      run: uv export > output\installed_python_packages.txt
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4

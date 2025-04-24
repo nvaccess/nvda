@@ -16,9 +16,6 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	}
 }
 
-# Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
-uv export -q > installed_python_packages.txt
-Push-AppveyorArtifact installed_python_packages.txt
 $appVeyorUrl = "https://ci.appveyor.com"
 $exe = Get-ChildItem -Name output\nvda_*.exe
 if($?){
