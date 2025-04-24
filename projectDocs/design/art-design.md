@@ -438,11 +438,32 @@ To ensure that only legitimate ART processes can communicate with NVDA, and vice
 - Connection validation will be implemented using the Windows Socket API to verify the source process
 - This approach is similar to the secure desktop process validation already implemented in NVDA Remote
 
+Based on the Pyro documentation provided, here's my suggested enhancement for the Communication Security section:
+
 ### 14.3 Communication Security
 
-- All Pyro4 RPC communication will be bound exclusively to loopback interfaces
+- All Pyro4 RPC communication will be bound exclusively to loopback interface (127.0.0.1)
 - Input validation will be implemented using Pydantic to define data models and enforce validation rules
 - Message size limits will be enforced to prevent DOS attacks
+- HMAC signature verification will be implemented to ensure only legitimate NVDA Core and ART processes can communicate with each other
+- The HMAC key will be generated during runtime initialization and securely shared between NVDA Core and ART processes
+- This prevents malicious processes from connecting to either NVDA Core or ART services
+
+#### 14.3.1 HMAC Key Exchange Process
+
+When NVDA Core launches an ART process, it will:
+
+1. Generate a cryptographically secure random key
+2. Pass this key to the child process via standard input (stdin) immediately after process creation
+3. The ART process will read this key from stdin during initialization
+4. Both NVDA Core and the ART process will set their respective Pyro daemons' `_pyroHmacKey` property to this key
+5. All subsequent RPC communications will include the HMAC signature for verification
+
+This approach eliminates the need to store the shared secret in any persistent storage or configuration files, which could pose security risks. Each ART process will have its own unique HMAC key, known only to NVDA Core and that specific ART process. If the ART process needs to be restarted, a new key will be generated.
+
+Since the key is passed via stdin, it never appears on the command line or in environment variables where it might be visible to other processes on the system. Both the Secure Desktop and Regular Add-on Runtime hosts will use this same mechanism for secure communication.
+
+This security measure, combined with process validation using the Windows Socket API, provides a robust defense against unauthorized connections and ensures that only legitimate NVDA Core and ART processes can communicate with each other.
 
 ### 14.4 Audio Handling
 
