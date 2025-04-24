@@ -3427,6 +3427,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to Remote Access settings command.
+		description=_("Shows the Remote Access settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for opening default dictionary dialog.
 		description=_("Shows the NVDA default dictionary dialog"),
 		category=SCRCAT_CONFIG,

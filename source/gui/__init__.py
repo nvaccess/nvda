@@ -59,6 +59,7 @@ from .settingsDialogs import (
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
 	ObjectPresentationPanel,
+	RemoteSettingsPanel,
 	SettingsDialog,
 	SpeechSettingsPanel,
 	SpeechSymbolsDialog,
@@ -368,6 +369,9 @@ class MainFrame(wx.Frame):
 
 	def onUwpOcrCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
+
+	def onRemoteAccessSettingsCommand(self, evt):
+		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
