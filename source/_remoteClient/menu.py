@@ -38,9 +38,9 @@ class RemoteMenu(wx.Menu):
 		self.pushClipboardItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
-			_("&Send clipboard"),
+			pgettext("remote", "&Send clipboard"),
 			# Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
-			pgettext("remote", "Send the text on the clipboard to the remote computer."),
+			pgettext("remote", "Send the clipboard text to the remote computer."),
 		)
 		self.pushClipboardItem.Enable(False)
 		sysTrayIcon.Bind(

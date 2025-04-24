@@ -42,7 +42,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			wx.ComboBox,
 		)
 		self.key = sizerHelper.addLabeledControl(
-			# Translators: Label of the edit field to enter key (password) to secure the remote Access connection.
+			# Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 			_("&Key:"),
 			wx.TextCtrl,
 		)
@@ -193,7 +193,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			max=65535,
 			initial=SERVER_PORT,
 		)
-		# Translators: Label of the edit field to enter key (password) to secure the remote Access connection.
+		# Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 		self.key = sizerHelper.addLabeledControl(pgettext("remote", "&Key"), wx.TextCtrl)
 		# Translators: The button used to generate a random key/password.
 		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))

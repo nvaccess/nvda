@@ -147,7 +147,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(_("Unable to send clipboard"))
+			ui.message(pgettext("remote", "Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.

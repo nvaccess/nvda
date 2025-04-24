@@ -4895,7 +4895,7 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.pushClipboard()
 
 	@script(
-		# Translators: Documentation string for the script that copies a link to the remote Access session to the clipboard.
+		# Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
 		description=pgettext("remote", "Copies a link to the current Remote Access session to the clipboard"),
 		category=SCRCAT_REMOTE,
 	)
@@ -4907,7 +4907,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that disconnects a remote Access session.
+		# Translators: Documentation string for the script that disconnects a Remote Access session.
 		description=pgettext("remote", "Disconnects from the current Remote Access session"),
 	)
 	@gui.blockAction.when(
@@ -4922,7 +4922,7 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.disconnect()
 
 	@script(
-		# Translators: Documentation string for the script that starts a new remote Access session.
+		# Translators: Documentation string for the script that starts a new Remote Access session.
 		description=pgettext("remote", "Connects to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
@@ -4939,7 +4939,7 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.doConnect()
 
 	@script(
-		# Translators: Describes the script that creates a new remote Access session, or disconnects it if one already exists.
+		# Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
 		description=pgettext("remote", "Toggles whether Remote Access is connected"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
