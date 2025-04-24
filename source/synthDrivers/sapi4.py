@@ -392,19 +392,6 @@ class SynthDriverAudio(COMObject):
 		)
 		self._setLevel(self._level)
 
-	def _calculateInitialFreeSpace(self) -> int:
-		wfx = self._waveFormat
-		size = wfx.nAvgBytesPerSec >> 3
-		if (wfx.nAvgBytesPerSec & 8) != 0:
-			size -= 1
-		size -= size % wfx.nBlockAlign
-		if size == 0:
-			size = wfx.nBlockAlign
-		size *= 16
-		if isDebugForSynthDriver():
-			log.debug(f"SAPI4: Initial buffer space is {size} bytes")
-		return size
-
 	@_logTrace(logAll=True)
 	def IAudio_Flush(self) -> None:
 		"""Clears the object's internal buffer and resets the audio device,
@@ -421,7 +408,7 @@ class SynthDriverAudio(COMObject):
 					self._queueNotification(self._notifySink.BookMark, bookmark.id, 1)
 			self._audioQueue.clear()
 			self._bookmarkQueue.clear()
-			self._freeBytes = self._calculateInitialFreeSpace()
+			self._freeBytes = self._waveFormat.nAvgBytesPerSec * BUFFER_LENGTH_S
 			# As byte positions can only increase,
 			# set _playedBytes to the current _writtenBytes
 			# to make sure that bookmarks that use byte positions still work.
@@ -605,7 +592,7 @@ class SynthDriverAudio(COMObject):
 		self._waveFormat = wfx
 		self._initPlayer()
 		self._deviceState = _AudioState.UNCLAIMED
-		self._freeBytes = self._calculateInitialFreeSpace()
+		self._freeBytes = wfx.nAvgBytesPerSec * BUFFER_LENGTH_S
 		self._audioThread.start()
 
 	@_logTrace(format="{result[0]} bytes free")
