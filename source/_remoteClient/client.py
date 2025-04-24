@@ -12,8 +12,6 @@ from config.configFlags import RemoteConnectionMode
 import core
 import gui
 import inputCore
-import queueHandler
-import speech
 import ui
 import wx
 from config import isInstalledCopy
@@ -445,21 +443,6 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
-		if self.connectedFollowersCount < 1:
-			if pressed:
-				queueHandler.queueFunction(
-					queueHandler.eventQueue,
-					speech.cancelSpeech,
-					_immediate=True,
-				)
-				# Translators: Presented when sending keys to a remote computer when there are no controllable computers in the channel.
-				queueHandler.queueFunction(
-					queueHandler.eventQueue,
-					ui.message,
-					pgettext("remote", "No controlled computers are connected"),
-					_immediate=True,
-				)
-			return False
 		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
