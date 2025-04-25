@@ -628,6 +628,25 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
 
+	@classmethod
+	def _addQuickNavHeading(
+		cls,
+		levelRange: range,
+	):
+		for i in levelRange:
+			cls.addQuickNav(
+				f"heading{i}",
+				key=f"{i}",
+				# Translators: Input help message for a Word quick navigation command in browse mode.
+				nextDoc=_("Moves to the next heading at level {i}").format(i=i),
+				# Translators: Message presented when the browse mode element is not found.
+				nextError=_("No next heading at level {i}").format(i=i),
+				# Translators: Input help message for a quick navigation command in browse mode.
+				prevDoc=_("Moves to the previous heading at level {i}").format(i=i),
+				# Translators: Message presented when the browse mode element is not found.
+				prevError=_("No previous heading at level {i}").format(i=i),
+			)
+
 	def script_elementsList(self, gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
@@ -788,6 +807,8 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous heading"),
 )
+BrowseModeTreeInterceptor._addQuickNavHeading(range(1, 7))
+"""
 qn(
 	"heading1",
 	key="1",
@@ -860,6 +881,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous heading at level 6"),
 )
+zzz"""
 qn(
 	"table",
 	key="t",

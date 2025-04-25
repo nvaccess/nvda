@@ -6,6 +6,8 @@
 
 ### New Features
 
+* In MS word's browse mode, it is now possible to use digit keys 7 to 9 to navigate  to the corresponding heading. (#18014, @CyrilleB79)
+
 ### Changes
 
 ### Bug Fixes
