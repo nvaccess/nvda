@@ -301,20 +301,16 @@ class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 		self.host = "localhost"
 		self.port = 8090
 
-	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocketOnion(self, mockSocket):
+	def test_createOutboundSocketOnion(self):
 		t = TCPTransport(self.serializer, (self.host + ".onion", self.port))
 		fakeSocket = DummyTCPSocket()
-		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host + ".onion", self.port, insecure=False)
 		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
 
-	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocketRegularInsecure(self, mockSocket):
+	def test_createOutboundSocketRegularInsecure(self):
 		t = TCPTransport(self.serializer, (self.host, self.port))
 		fakeSocket = DummyTCPSocket()
-		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host, self.port, insecure=True)
 		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
