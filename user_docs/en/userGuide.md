@@ -3702,11 +3702,15 @@ You can enable Remote Access [in Remote settings](#RemoteSettings).
 ### Getting Started {#RemoteAccessGettingStarted}
 
 Before you begin, ensure NVDA is installed and running on both computers.
-The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
+The remote access feature is available from the Tools menu in NVDA; there's no need for additional downloads or installations.
 
 ### Setting Up a Remote Session {#RemoteAccessSetup}
 
-You’ll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
+You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
+
+If NVDA is running in [secure mode](#SecureMode), you cannot manually initiate a new Remote Access session.
+However, NVDA will still automatically start a new Remote Access session if configured to do so with the [Automatically connect after NVDA starts](#RemoteAutoconnect) setting.
+You can still manually disconnect in secure mode.
 
 #### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
@@ -3801,9 +3805,9 @@ Once the session is active, you can switch between controlling the remote comput
 <!-- KC:beginInclude -->
 | Name |Key |Description|
 |---|---|---|
-| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnects from it. Otherwise, starts a new Remote session. |
+| Toggle Remote connection | `NVDA+alt+r` | Starts a new Remote Access session or, if a session is already in progress, disconnects from it. |
 | Toggle Control | `NVDA+alt+tab` | Switches between controlling the remote and local computer. |
-| Connect | None | Starts a new Remote Access session. |
+| Connect | None | Starts a new Remote Access session. Unavailable in [secure mode](#SecureMode). |
 | Copy link | None | Copies a link to the remote session to the clipboard. |
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
