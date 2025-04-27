@@ -374,6 +374,17 @@ class TextPatternRangeEndpoint(enum.IntEnum):
 	End = 1
 
 
+class AutomationIdentifierType(enum.IntEnum):
+	Property = 0
+	Pattern = 1
+	Event = 2
+	ControlType = 3
+	TextAttribute = 4
+	LandmarkType = 5
+	Annotation = 6
+	Changes = 7
+	Style = 8
+
 PropertyId = enum.IntEnum(
 	"PropertyId",
 	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")},

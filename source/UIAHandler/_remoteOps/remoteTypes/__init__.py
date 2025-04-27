@@ -804,6 +804,18 @@ class RemoteGuid(RemoteBaseObject[GUID]):
 			value=self.initialValue,
 		)
 
+	@remoteMethod
+	def lookupId(self, identifierType: lowLevel.AutomationIdentifierType) -> RemoteInt:
+		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.GuidLookupId(
+				result=result,
+				target=self,
+				identifierType=identifierType,
+			),
+		)
+		return result
+
 
 def getRemoteTypeForLocalType(LocalType: Type[object]) -> Type[RemoteBaseObject]:
 	if issubclass(LocalType, enum.IntEnum):

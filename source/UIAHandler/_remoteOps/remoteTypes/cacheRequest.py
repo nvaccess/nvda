@@ -8,6 +8,8 @@ from __future__ import annotations
 from typing import (
 	Iterable,
 )
+from comtypes import GUID
+from comInterfaces import UIAutomationClient as UIA
 from .. import lowLevel
 from .. import instructions
 from ..remoteFuncWrapper import (
@@ -15,6 +17,8 @@ from ..remoteFuncWrapper import (
 )
 from . import (
 	RemoteBaseObject,
+	RemoteInt,
+	RemoteGuid,
 	RemoteIntEnum,
 )
 
@@ -46,5 +50,15 @@ class RemoteCacheRequest(RemoteBaseObject):
 			instructions.CacheRequestAddPattern(
 				target=self,
 				patternId=RemoteIntEnum.ensureRemote(self.rob, patternId),
+				propertyId=RemoteIntEnum[lowLevel.PropertyId].ensureRemote(self.rob, propertyId)
+			),
+		)
+
+	@remoteMethod_mutable
+	def addCustomProperty(self, propertyId: RemoteGuid | GUID):
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.CacheRequestAddProperty(
+				target=self,
+				propertyId=RemoteGuid.ensureRemote(self.rob, propertyId).lookupId(lowLevel.AutomationIdentifierType.Property)
 			),
 		)

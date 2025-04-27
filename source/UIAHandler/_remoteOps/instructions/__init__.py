@@ -90,6 +90,7 @@ from .general import (
 from .guid import (
 	NewGuid,
 	IsGuid,
+	GuidLookupId,
 )
 from .int import (
 	NewInt,

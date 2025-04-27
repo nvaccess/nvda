@@ -11,6 +11,7 @@ Including to create new GUID values, and check if an object is a GUID.
 from __future__ import annotations
 from dataclasses import dataclass
 from comtypes import GUID
+from ctypes import windll
 from .. import lowLevel
 from .. import builder
 from ._base import _TypedInstruction
@@ -34,3 +35,17 @@ class IsGuid(_TypedInstruction):
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		registers[self.result.operandId] = isinstance(registers[self.target.operandId], GUID)
+
+@dataclass
+class GuidLookupId(_TypedInstruction):
+	opCode = lowLevel.InstructionType.LookupId
+	result: builder.Operand
+	target: builder.Operand
+	identifierType: lowLevel.AutomationIdentifierType
+
+	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
+		guid = registers[self.target.operandId]
+		if not isinstance(guid, GUID):
+			raise TypeError("Expected a GUID")
+		identifierType = self.registers[self.identifierType.operandId]
+		registers[self.result.operandId] = windll.UIAutomationCore.UiaLookupId(identifierType, guid)
