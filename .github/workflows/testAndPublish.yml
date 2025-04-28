@@ -46,7 +46,7 @@ jobs:
       with:
         submodules: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: Set version variables
@@ -76,7 +76,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: Check comments for translators
@@ -102,7 +102,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: License check
@@ -120,7 +120,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: Run unit tests
@@ -157,7 +157,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: Set version variables
@@ -212,7 +212,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         activate-environment: true
     - name: Get NVDA launcher
