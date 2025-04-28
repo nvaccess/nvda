@@ -47,6 +47,8 @@ jobs:
         submodules: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -75,6 +77,8 @@ jobs:
         fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
@@ -99,6 +103,8 @@ jobs:
         fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -115,6 +121,8 @@ jobs:
         fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
@@ -150,6 +158,8 @@ jobs:
         fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -203,6 +213,8 @@ jobs:
         fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
+      with:
+        activate-environment: true
     - name: Get NVDA launcher
       id: getLauncher
       uses: actions/download-artifact@v4
