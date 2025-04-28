@@ -618,12 +618,9 @@ class SynthDriverAudio(COMObject):
 		elif self._deviceState in (_AudioState.UNCLAIMED, _AudioState.UNCLAIMING):
 			log.debugWarning("Audio data written when device is not claimed")
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
-		elif self._freeBytes < dwSize:
-			raise ReturnHRESULT(AudioError.NOT_ENOUGH_DATA, None)
 		with self._audioCond:
 			self._audioQueue.append(string_at(pBuffer, dwSize))
 			self._writtenBytes += dwSize
-			self._freeBytes -= dwSize
 			self._audioCond.notify()
 
 	@_logTrace()
@@ -666,7 +663,6 @@ class SynthDriverAudio(COMObject):
 
 	def _onChunkFinished(self, size: int):
 		self._playedBytes += size
-		self._freeBytes += size
 		if self._notifySink:
 			self._queueNotification(self._notifySink.FreeSpace, self._freeBytes, 0)
 

@@ -120,9 +120,9 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 #: Script category for audio streaming commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_AUDIO = _("Audio")
-#: Script category for Remote commands.
+#: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_REMOTE = _("Remote")
+SCRCAT_REMOTE = pgettext("remote", "Remote Access")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -3427,6 +3427,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to Remote Access settings command.
+		description=pgettext("remote", "Shows the Remote Access settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for opening default dictionary dialog.
 		description=_("Shows the NVDA default dictionary dialog"),
 		category=SCRCAT_CONFIG,
@@ -4877,8 +4886,8 @@ class GlobalCommands(ScriptableObject):
 		audio._toggleSoundSplitState()
 
 	@script(
-		# Translators: Describes a command.
-		description=_("Mute or unmute the speech coming from the remote computer"),
+		# Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
+		description=pgettext("remote", "Mutes or unmutes the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
@@ -4887,16 +4896,16 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
-		description=_("Sends the contents of the clipboard to the remote machine"),
+		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
+		description=pgettext("remote", "Sends the contents of the clipboard to the remote computer"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.pushClipboard()
 
 	@script(
-		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
-		description=_("Copies a link to the remote session to the clipboard"),
+		# Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
+		description=pgettext("remote", "Copies a link to the current Remote Access session to the clipboard"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
@@ -4907,20 +4916,20 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that disconnects a remote session.
-		description=_("Disconnect a remote session"),
+		# Translators: Documentation string for the script that disconnects a Remote Access session.
+		description=pgettext("remote", "Disconnects from the current Remote Access session"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
 		if not _remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
-			ui.message(_("Not connected"))
+			ui.message(pgettext("remote", "Not connected"))
 			return
 		_remoteClient._remoteClient.disconnect()
 
 	@script(
-		# Translators: Documentation string for the script that invokes the remote session.
-		description=_("Connect to a remote computer"),
+		# Translators: Documentation string for the script that starts a new Remote Access session.
+		description=pgettext("remote", "Connects to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(
@@ -4936,8 +4945,8 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.doConnect()
 
 	@script(
-		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
-		description=pgettext("remote", "Toggle Remote connection"),
+		# Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
+		description=pgettext("remote", "Toggles whether Remote Access is connected"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
 	)
@@ -4949,8 +4958,11 @@ class GlobalCommands(ScriptableObject):
 			self.script_connectToRemote(gesture)
 
 	@script(
-		# Translators: Documentation string for the script that toggles the control between guest and host machine.
-		description=_("Toggles the control between guest and host machine"),
+		description=pgettext(
+			"remote",
+			# Translators: Documentation string for the script that toggles the control between guest and host computers.
+			"Switches whether the keyboard controls the local or remote computer",
+		),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+tab",
 	)

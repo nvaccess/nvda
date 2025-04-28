@@ -135,8 +135,8 @@ class RemoteClient:
 		"""
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
-			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
-			ui.message(_("Not connected."))
+			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
+			ui.message(pgettext("remote", "Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
 			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
@@ -148,7 +148,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(_("Unable to push clipboard"))
+			ui.message(pgettext("remote", "Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.
@@ -158,7 +158,7 @@ class RemoteClient:
 		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
-			ui.message(_("Not connected."))
+			ui.message(pgettext("remote", "Not connected"))
 			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
@@ -228,7 +228,7 @@ class RemoteClient:
 				parent=gui.mainFrame,
 				# Translators: Title of the connection error dialog.
 				caption=_("Error Connecting"),
-				# Translators: Message shown when cannot connect to the remote computer.
+				# Translators: Message shown when unable to connect to the remote computer.
 				message=_("Unable to connect to the remote computer"),
 				style=wx.OK | wx.ICON_WARNING,
 			)
@@ -529,10 +529,13 @@ class RemoteClient:
 		"""
 		if self.isConnected() or self.connecting:
 			gui.messageBox(
-				# Translators: Message shown when trying to connect while already connected.
-				_("NVDA Remote is already connected. Disconnect before opening a new connection."),
+				pgettext(
+					"remote",
+					# Translators: Message shown when trying to connect while already connected.
+					"A Remote Access session is already in progress. Disconnect before starting a new session.",
+				),
 				# Translators: Title of the connection error dialog.
-				_("NVDA Remote Already Connected"),
+				pgettext("remote", "Already Connected"),
 				wx.OK | wx.ICON_WARNING,
 			)
 			return
@@ -544,18 +547,22 @@ class RemoteClient:
 
 			# Prepare connection request message based on mode
 			if conInfo.mode == ConnectionMode.LEADER:
-				# Translators: Ask the user if they want to control the remote computer.
-				question = _("Do you wish to control the machine on server {server} with key {key}?")
+				question = pgettext(
+					"remote",
+					# Translators: Ask the user if they want to control the remote computer.
+					"Do you wish to control the computer on server {server} with key {key}?",
+				)
 			else:
-				question = _(
+				question = pgettext(
+					"remote",
 					# Translators: Ask the user if they want to allow the remote computer to control this computer.
-					"Do you wish to allow this machine to be controlled on server {server} with key {key}?",
+					"Do you wish to allow this computer to be controlled on server {server} with key {key}?",
 				)
 
 			question = question.format(server=serverAddr, key=key)
 
 			# Translators: Title of the connection request dialog.
-			dialogTitle = _("NVDA Remote Connection Request")
+			dialogTitle = pgettext("remote", "Remote Access Connection Request")
 
 			# Show confirmation dialog
 			if (

@@ -162,9 +162,11 @@ class RemoteSession:
 		"""
 		log.error("Protocol version mismatch detected with relay server")
 		ui.message(
-			# Translators: Message for version mismatch
-			_("""The version of the relay server which you have connected to is not compatible with this version of the Remote Client.
-Please use a different server."""),
+			pgettext(
+				"remote",
+				# Translators: Message presented when attempting to connect to an incompatible Remote Access server.
+				"The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server.",
+			),
 		)
 		self.transport.close()
 
@@ -182,8 +184,8 @@ Please use a different server."""),
 		if force_display or self.shouldDisplayMotd(motd):
 			gui.messageBox(
 				parent=gui.mainFrame,
-				# Translators: Caption for message of the day dialog
-				caption=_("Message of the Day"),
+				# Translators: Title of a dialog showing a message sent by a Remote Access server.
+				caption=pgettext("remote", "Message from Remote Access Server"),
 				message=motd,
 			)
 
@@ -548,7 +550,7 @@ class LeaderSession(RemoteSession):
 		speech.cancelSpeech()
 		ui.message(
 			# Translators: Message for when the remote NVDA is not connected
-			_("Remote NVDA not connected."),
+			pgettext("remote", "Remote NVDA not connected"),
 		)
 
 	def handleChannelJoined(

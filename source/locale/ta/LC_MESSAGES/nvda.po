@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:53+0000\n"
-"PO-Revision-Date: 2025-04-22 01:33\n"
+"POT-Creation-Date: 2025-04-22 23:28+0000\n"
+"PO-Revision-Date: 2025-04-28 00:57\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -18617,29 +18617,29 @@ msgstr "பிடிப்புப்பலகை நகர்த்தப்�
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:50
 msgid "Clipboard received"
-msgstr ""
+msgstr "பிடிப்புப்பலகை பெறப்பட்டது"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:199
 msgid "&Generate Key"
-msgstr ""
+msgstr "விசையை உருவாக்குக (&G)"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
 msgid "Host must be set."
-msgstr ""
+msgstr "கட்டுப்பாட்டுக் கணினி அமைக்கப்பட வேண்டும்."
 
 #. Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "விசை உருவாக்கப்படுகிறது"
 
 #. Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "விசை உருவாக்கப்படுகிறது..."
 
 #. Translators: Message shown to users when requesting that a Remote control server generate a key fails.
 #. {host} will be replaced with the address of the Remote control server.
@@ -18647,73 +18647,73 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "{host} உடன் இணைய இயலவில்லை. தங்களுக்கு இணைய அணுகல் இருக்கிறது என்பதையும், கட்டுப்பாட்டுக் கணினிக் களத்தில் எந்தத் தவறும் இல்லை என்பதையும் உறுதிசெய்துகொள்ளவும்."
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:111
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "கட்டுப்பாட்டுக் கணினி இணைப்பு தோல்வியடைந்தது"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:175
 msgid "&External IP:"
-msgstr ""
+msgstr "வெளிப்புற இணைய நெறிமுறை (&E):"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:180
 msgid "Get External &IP"
-msgstr ""
+msgstr "வெறிப்புற இணைய நெறிமுறையைப் பெறுக (&I)"
 
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: _remoteClient\dialogs.py:197
 msgid "&Key"
-msgstr ""
+msgstr "விசை (&K)"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:218
 msgctxt "remote"
 msgid "Getting external IP"
-msgstr ""
+msgstr "வெளிப்புற இணைய நெறிமுறைப் பெறப்படுகிறது"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:220
 msgctxt "remote"
 msgid "Getting external IP..."
-msgstr ""
+msgstr "வெளிப்புற இணைய நெறிமுறை பெறப்படுகிறது..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
 #: _remoteClient\dialogs.py:247
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr ""
+msgstr "இணைய நெறிமுறை முகவரி வெற்றிகரமாக மீட்கப்பட்டது. நுழைவாயில் {port} திறந்துள்ளது."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
 #: _remoteClient\dialogs.py:258
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
-msgstr ""
+msgstr "வெளிப்புற இணைய நெறிமுறை மீட்கப்பட்டது. ஆனால், நுழைவாயில் {port} தற்பொழுது பெரும்பாலும் முன்னனுப்பப்படவில்லை."
 
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:273
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr ""
+msgstr "நுழைவாயில் சரிபார்ப்பு சேவையகத்தை தொடர்புகொள்ள இயலவில்லை. தங்களின் இணைய நெறிமுறை முகவரியை கைமுறையில் மீட்கவும்"
 
 #. Translators: A message box displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:342
 msgid "Both host and key must be set."
-msgstr ""
+msgstr "கட்டுப்பாட்டுக் கணினி, விசை ஆகிய இரண்டும் அமைக்கப்பட வேண்டும்."
 
 #. Translators: A message box displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:348
 msgid "Both port and key must be set."
-msgstr ""
+msgstr "நுழைவாயில், விசை ஆகிய இரண்டும் அமைக்கப்பட வேண்டும்."
 
 #. Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 #: _remoteClient\dialogs.py:393
 msgid "NVDA Remote Connection Security Warning"
-msgstr ""
+msgstr "என்விடிஏ தொலைநிலை இணைப்பு பாதுகாப்பு எச்சரிக்கை"
 
 #. Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
 #: _remoteClient\dialogs.py:396
@@ -18722,32 +18722,35 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "இச்சேவையகத்தின் சான்றிதழை சரிபார்க்க இயலவில்லை. தவறான கைரேகையைப் பயன்படுத்துவது, மூன்றாம் தரப்பினரை தொலைநிலை அமர்வை அணுக அனுமதிக்கும்..\n\n"
+"தொடரும் முன், பின்வரும் சேவையக சான்றிதழ் கைரேகை சரியானதுதான் என்பதை உறுதிசெய்துகொள்ளவும்.\n"
+"சேவையகம் SHA256 கைரேகை: {fingerprint}\n\n"
+"எப்படியாகினும் இணைப்பைத் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:411
 msgid "Connect and do not ask again for this server"
-msgstr ""
+msgstr "இணைப்பதோடு, இச்சேவையகத்திற்கு மீண்டும் கேட்காமல் இருந்திடுக"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:413
 msgid "Connect"
-msgstr ""
+msgstr "இணைத்திடுக"
 
 #. Translators: Message displayed when a remote machine tries to send a SAS but UI Access is disabled.
 #: _remoteClient\localMachine.py:260
 msgid "Unable to trigger Alt Control Delete from remote"
-msgstr ""
+msgstr "தொலைநிலையிலிருந்து நிலைமாற்றி கட்டுப்பாடு அழி விசையை தூண்ட இயலவில்லை"
 
 #. Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:31
 msgid "Mute remote"
-msgstr ""
+msgstr "தொலைநிலை கணினியை அமைதியாக்கிடுக"
 
 #. Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:33
 msgid "Mute speech and sounds from the remote computer"
-msgstr ""
+msgstr "தொலைநிலை கணினியிலிருந்து பேச்சையும், ஒலிகளையும் அமைதியாக்கிடுக"
 
 #. Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 #: _remoteClient\menu.py:41
@@ -18762,62 +18765,63 @@ msgstr "மற்றொரு கணினிக்கு பிடிப்ப�
 #. Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
 #: _remoteClient\menu.py:54
 msgid "Copy &link"
-msgstr ""
+msgstr "தொடுப்பினைப் படியெடுத்திடுக (&L)"
 
 #. Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:56
 msgid "Copy a link to the remote session"
-msgstr ""
+msgstr "தொலைநிலை நிகழ்வுக்கு ஒரு தொடுப்பினைப் படியெடுத்திடுக"
 
 #. Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
 #. Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:67 _remoteClient\menu.py:69
 msgid "Send Ctrl+Alt+Del"
-msgstr ""
+msgstr "கட்டுப்பாடு+நிலைமாற்றி+அழி விசையை அனுப்பிடுக"
 
 #. Translators: Label of menu in NVDA tools menu.
 #: _remoteClient\menu.py:80
 msgid "R&emote"
-msgstr ""
+msgstr "தொலைநிலை (&E)"
 
 #. Translators: Tooltip for the Remote menu in the NVDA Tools menu.
 #: _remoteClient\menu.py:82
 msgid "NVDA Remote Access"
-msgstr ""
+msgstr "என்விடிஏ தொலைநிலை அணுகல்"
 
 #. Translators: Item in NVDA Remote submenu to connect to a remote computer.
 #: _remoteClient\menu.py:152
 msgid "Connect..."
-msgstr ""
+msgstr "இணைத்திடுக..."
 
 #. Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:154
 msgid "Remotely connect to another computer running NVDA Remote Access"
-msgstr ""
+msgstr "என்விடிஏ தொலைநிலை அணுகலை இயக்கிக்கொண்டிருக்கும் பிரிதொரு கணினியுடன் தொலைநிலையில் இணைத்திடுக"
 
 #. Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
 #: _remoteClient\menu.py:169
 msgid "Disconnect"
-msgstr ""
+msgstr "இணைப்பைத் துண்டித்திடுக"
 
 #. Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:171
 msgid "Disconnect from another computer running NVDA Remote Access"
-msgstr ""
+msgstr "என்விடிஏ தொலைநிலை அணுகலை இயக்கிக்கொண்டிருக்கும் பிரிதொரு கணினியிலிருந்து இணைப்பைத் துண்டித்திடுக"
 
 #. Translators: Message for version mismatch
 #: _remoteClient\session.py:166
 msgid "The version of the relay server which you have connected to is not compatible with this version of the Remote Client.\n"
 "Please use a different server."
-msgstr ""
+msgstr "தாங்கள் இணைத்திருக்கும் தொடர் சேவையகத்தின் பதிப்பு, நுகர்வியின் இப்பதிப்போடு பொருந்துவதில்லை.\n"
+"வேறொரு சேவையகத்தைப் பயன்படுத்தவும்."
 
 #. Translators: Caption for message of the day dialog
 #: _remoteClient\session.py:186
 msgid "Message of the Day"
-msgstr ""
+msgstr "இந்நாளைய செய்தி"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:551
 msgid "Remote NVDA not connected."
-msgstr ""
+msgstr "தொலைநிலை என்விடிஏ இணைக்கப்படவில்லை."
 
