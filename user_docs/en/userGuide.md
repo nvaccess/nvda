@@ -1012,7 +1012,7 @@ The following keys by themselves jump to the next available element, while addin
 * g: graphic
 * d: landmark
 * o: embedded object (audio and video player, application, dialog, etc.)
-* 1 to 6 (or 1 to 9 in MS Word): headings at levels 1 to 6 (or 1 to 9) respectively
+* 1 to 9: headings at levels 1 to 9 respectively
 * a: annotation (comment, editor revision, etc.)
 * `p`: text paragraph
 * w: spelling error

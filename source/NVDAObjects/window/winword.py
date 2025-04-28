@@ -1589,10 +1589,6 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	}
 
 
-# Add quick navigation scripts available in Word only
-WordDocumentTreeInterceptor._addQuickNavHeading(range(7, 10))
-
-
 class WordDocument(Window, EditableTextBase):
 	_supportsSentenceNavigation = True
 

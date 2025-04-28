@@ -807,7 +807,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous heading"),
 )
-BrowseModeTreeInterceptor._addQuickNavHeading(range(1, 7))
+BrowseModeTreeInterceptor._addQuickNavHeading(range(1, 10))
 qn(
 	"table",
 	key="t",

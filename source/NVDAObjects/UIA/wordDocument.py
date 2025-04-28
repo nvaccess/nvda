@@ -593,10 +593,6 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		)
 
 
-# Add quick navigation scripts available in Word only
-WordBrowseModeDocument._addQuickNavHeading(range(7, 10))
-
-
 class WordDocumentNode(UIA):
 	TextInfo = WordDocumentTextInfo
 
