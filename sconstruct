@@ -590,7 +590,9 @@ outputHeadingStylesFile = env.Command(
 	Copy("$TARGET", "$SOURCE"),
 )
 outputLogoFile = env.Command(
-	outputDir.File("favicon.ico"), userDocsDir.File("favicon.ico"), Copy("$TARGET", "$SOURCE")
+	outputDir.File("favicon.ico"),
+	userDocsDir.File("favicon.ico"),
+	Copy("$TARGET", "$SOURCE"),
 )
 changesFile = env.Command(
 	outputDir.File("%s_changes.html" % outFilePrefix),
