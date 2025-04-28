@@ -19,6 +19,9 @@
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
+  * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
+
 #### Deprecations
 
 ## 2025.1

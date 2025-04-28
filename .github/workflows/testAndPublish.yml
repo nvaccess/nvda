@@ -45,11 +45,13 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    - name: Install dependencies
+    - name: Install Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
         architecture: x86
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -76,6 +78,8 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
@@ -98,6 +102,8 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -112,6 +118,8 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
@@ -145,6 +153,8 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -152,9 +162,6 @@ jobs:
     - name: Prepare source code for launcher
       shell: cmd
       run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
-    - name: Export package list
-      shell: cmd
-      run: .\venvUtils\exportPackageList.bat output\installed_python_packages.txt
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
@@ -199,6 +206,8 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
     - name: Get NVDA launcher
       id: getLauncher
       uses: actions/download-artifact@v4
