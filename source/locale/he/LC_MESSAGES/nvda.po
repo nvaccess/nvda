@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:53+0000\n"
-"PO-Revision-Date: 2025-04-22 01:33\n"
+"POT-Creation-Date: 2025-04-22 23:28+0000\n"
+"PO-Revision-Date: 2025-04-28 00:56\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -5961,7 +5961,7 @@ msgstr "מיתוג בין מצבי פיצול הצליל"
 #. Translators: Describes a command.
 #: globalCommands.py:4881
 msgid "Mute or unmute the speech coming from the remote computer"
-msgstr "השתקה או ביטול השתקה של הדיבור המגיע מהמחשב המרוחק"
+msgstr "השתק או השמע קול ממחשב נשלט מרחוק"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 #: globalCommands.py:4891
@@ -5971,17 +5971,17 @@ msgstr "שולח את תוכן הלוח למחשב המרוחק"
 #. Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
 #: globalCommands.py:4899
 msgid "Copies a link to the remote session to the clipboard"
-msgstr "העתקת קישור להפעלה המרוחקת ללוח"
+msgstr "מעתיק קישור למחשב נשלט ללוח הגזירים"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: globalCommands.py:4906
 msgid "Copied link"
-msgstr "קישור שהועתק"
+msgstr "קישור הועתק"
 
 #. Translators: Documentation string for the script that disconnects a remote session.
 #: globalCommands.py:4911
 msgid "Disconnect a remote session"
-msgstr "ניתוק הפעלה מרחוק"
+msgstr "התנתק מהפעלה מרחוק"
 
 #. Translators: A message indicating that the remote client is not connected.
 #: globalCommands.py:4920
@@ -11552,7 +11552,7 @@ msgstr "כתובת ה-URL שהזנת לא נבדקה. האם אתה בטוח ש�
 #: gui\settingsDialogs.py:1036 gui\settingsDialogs.py:1927
 #: visionEnhancementProviders\screenCurtain.py:146 _remoteClient\dialogs.py:260
 msgid "Warning"
-msgstr "הזהרה"
+msgstr "אזהרה"
 
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
@@ -11572,7 +11572,7 @@ msgstr "החיבור לכתובת ה- URL הצליחה ."
 #: gui\_SetURLDialog.py:177 gui\installerGui.py:129 gui\installerGui.py:618
 #: gui\settingsDialogs.py:1080 _remoteClient\dialogs.py:249
 msgid "Success"
-msgstr "הצלחה"
+msgstr "הצליח"
 
 #. Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
 #: gui\_SetURLDialog.py:186
@@ -13811,7 +13811,7 @@ msgstr "שרת:"
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
 #: gui\settingsDialogs.py:3393 _remoteClient\dialogs.py:41
 msgid "&Host:"
-msgstr "מארח:"
+msgstr "%מארח"
 
 #. Translators: Label for the port field in NVDA's Remote settings.
 #. This is the port on which the local control server will be accessible,
@@ -13820,14 +13820,14 @@ msgstr "מארח:"
 #: gui\settingsDialogs.py:3402 gui\settingsDialogs.py:4451
 #: _remoteClient\dialogs.py:190
 msgid "&Port:"
-msgstr "&יציאה:"
+msgstr "&חיבור פורט"
 
 #. Translators: Label for a control in NVDA's Remote settings,
 #. Where users set the key for their Remote connection.
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: gui\settingsDialogs.py:3423 _remoteClient\dialogs.py:46
 msgid "&Key:"
-msgstr "מפתח:"
+msgstr "&סיסמא"
 
 #. Translators: A button in NVDA's Remote settings to delete all fingerprints of unauthorized certificates.
 #: gui\settingsDialogs.py:3430
@@ -18597,7 +18597,7 @@ msgstr "מחשב מרוחק לא מושתק"
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #: _remoteClient\client.py:138 _remoteClient\client.py:160
 msgid "Not connected."
-msgstr "לא מחובר."
+msgstr "לא מחובר"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
 #: _remoteClient\client.py:142
@@ -18613,12 +18613,12 @@ msgstr "לא ניתן לדחוף את לוח הגזירים"
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:229
 msgid "Error Connecting"
-msgstr "שגיאה בחיבור"
+msgstr "בעיית התחברות"
 
 #. Translators: Message shown when cannot connect to the remote computer.
 #: _remoteClient\client.py:231
 msgid "Unable to connect to the remote computer"
-msgstr "אין אפשרות להתחבר למחשב המרוחק"
+msgstr "נכשל בהתחברות למחשב מרחוק"
 
 #. Translators: Title of the Remote Access connection dialog.
 #: _remoteClient\client.py:249
@@ -18670,34 +18670,34 @@ msgstr "שליטה במחשב המקומי"
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:526
 msgid "NVDA Remote is already connected. Disconnect before opening a new connection."
-msgstr "שליטה באמצעות NVDA כבר מחובר, אנא התנתק לפני ביצוע התחברות חדשה."
+msgstr "הפעלת NVDA מרחוק כבר מופעלת, התנתק לפני פתיחת חיבור חדש. "
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:528
 msgid "NVDA Remote Already Connected"
-msgstr "שליטה באמצעות NVDA כבר מחובר"
+msgstr "NVDA גישה מרחוק כבר מחובר."
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:541
 #, python-brace-format
 msgid "Do you wish to control the machine on server {server} with key {key}?"
-msgstr "האם ברצונך לשלוט במחשב בשרת {server} באמצעות מפתח {key}?"
+msgstr "האם אתה מעוניין לשלוט במכשיר על שרת {server} עם סיסמא {key} ?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:545
 #, python-brace-format
 msgid "Do you wish to allow this machine to be controlled on server {server} with key {key}?"
-msgstr "האם ברצונך לאפשר שליטה במחשב זו בשרת {server} באמצעות {key} מפתח?"
+msgstr "האם אתה מעוניין להתיר למחשב זה גישה מרחוק על שרת {server} עם סיסמא {key} ?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:551
 msgid "NVDA Remote Connection Request"
-msgstr "בקשה לחיבור מרחוק של NVDA"
+msgstr "NVDA גישה מרחוק בקשה נשלחה"
 
 #. Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
 #: _remoteClient\cues.py:36
 msgid "Connected to control server"
-msgstr "מחובר לשרת שליטה"
+msgstr "מחובר לשרת"
 
 #. Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 #: _remoteClient\cues.py:44
@@ -18712,7 +18712,7 @@ msgstr "התקבל תוכן של לוח גזירים ממחשב אחר"
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:199
 msgid "&Generate Key"
-msgstr "&צור מפתח"
+msgstr "&צור סיסמא"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
@@ -18748,12 +18748,12 @@ msgstr "חיבור המחשב  המארח נכשל"
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:175
 msgid "&External IP:"
-msgstr "ו-IP חיצוני:"
+msgstr "&IP חיצוני"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:180
 msgid "Get External &IP"
-msgstr "קבל& IP חיצוני"
+msgstr "קבל IP חיצוני"
 
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: _remoteClient\dialogs.py:197
@@ -18776,7 +18776,7 @@ msgstr "מקבל IP חיצוני..."
 #: _remoteClient\dialogs.py:247
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr "כתובת IP התקבלה בהצלחה החיבור ב . {port} פתוח  ."
+msgstr "אחזרת כתובת IP בוצעה בהצלחה. החיבור-פורט {port} פתוח."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
@@ -18788,17 +18788,17 @@ msgstr "אוחזר IP חיצוני, אך סביר להניח שיציאה {port}
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:273
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr "לא ניתן ליצור קשר עם שרת portcheck, אנא אחזר את כתובת ה-IP שלך באופן ידני"
+msgstr "נכשל בהתחברות לשרת portcheck , אנא אחזר כתובת IP ידנית. "
 
 #. Translators: A message box displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:342
 msgid "Both host and key must be set."
-msgstr "יש להגדיר גם את המחשב  המארח וגם את המפתח."
+msgstr "קבע ערכים לאירוח וסיסמא "
 
 #. Translators: A message box displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:348
 msgid "Both port and key must be set."
-msgstr "יש להגדיר גם את היציאה וגם את המפתח."
+msgstr "קבע ערכים לחיבור-פורט וסיסמא"
 
 #. Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 #: _remoteClient\dialogs.py:393
@@ -18840,53 +18840,53 @@ msgstr "השתק מחשב מרוחק"
 #. Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:33
 msgid "Mute speech and sounds from the remote computer"
-msgstr "השתקת דיבור וצלילים מהמחשב המרוחק"
+msgstr "השתק דיבור וקול ממחשב מרוחק"
 
 #. Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 #: _remoteClient\menu.py:41
 msgid "&Push clipboard"
-msgstr "שלח את לוח הגזירים"
+msgstr "העבר לוח הגזירים"
 
 #. Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:43
 msgid "Push the clipboard to the other machine"
-msgstr "שלח את לוח הגזירים למחשב השני"
+msgstr "העבר לוח הגזירים למכשיר אחר"
 
 #. Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
 #: _remoteClient\menu.py:54
 msgid "Copy &link"
-msgstr "העתקת הקישור"
+msgstr "העתקת קישור"
 
 #. Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:56
 msgid "Copy a link to the remote session"
-msgstr "העתקת קישור להפעלה המרוחקת"
+msgstr "העתק קישור למחשב נשלט "
 
 #. Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
 #. Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:67 _remoteClient\menu.py:69
 msgid "Send Ctrl+Alt+Del"
-msgstr "שליחת Ctrl+Alt+Del"
+msgstr "שלח Ctrl+Alt+Del"
 
 #. Translators: Label of menu in NVDA tools menu.
 #: _remoteClient\menu.py:80
 msgid "R&emote"
-msgstr "&מרוחק"
+msgstr "&שליטה מרחוק"
 
 #. Translators: Tooltip for the Remote menu in the NVDA Tools menu.
 #: _remoteClient\menu.py:82
 msgid "NVDA Remote Access"
-msgstr "שליטה מרחוק של NVDA"
+msgstr "NVDA גישה מרחוק"
 
 #. Translators: Item in NVDA Remote submenu to connect to a remote computer.
 #: _remoteClient\menu.py:152
 msgid "Connect..."
-msgstr "התחבר..."
+msgstr "התחבר.."
 
 #. Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:154
 msgid "Remotely connect to another computer running NVDA Remote Access"
-msgstr "התחברות מרחוק למחשב אחר עם שליטה מרחוק של NVDA "
+msgstr "התחבר מרחוק למחשב אחר בהפעלת NVDA בשליטה מרחוק"
 
 #. Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
 #: _remoteClient\menu.py:169
@@ -18896,7 +18896,7 @@ msgstr "התנתק"
 #. Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:171
 msgid "Disconnect from another computer running NVDA Remote Access"
-msgstr "התנתק ממחשב אחר המריץ שליטה מרחוק של NVDA"
+msgstr "התנתק ממחשב אחר אשר מפעיל NVDA בשליטה מרחוק"
 
 #. Translators: Message for version mismatch
 #: _remoteClient\session.py:166
@@ -18908,10 +18908,10 @@ msgstr "גירסת שרת הממסר שאליו התחברת אינה תואמת
 #. Translators: Caption for message of the day dialog
 #: _remoteClient\session.py:186
 msgid "Message of the Day"
-msgstr "מסר היום"
+msgstr "הודעת היום "
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:551
 msgid "Remote NVDA not connected."
-msgstr "שליטה מרחוק של NVDA לא מחובר"
+msgstr "NVDA שליטה מרחוק לא מחובר"
 

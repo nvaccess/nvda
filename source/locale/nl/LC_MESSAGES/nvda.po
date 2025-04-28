@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:53+0000\n"
-"PO-Revision-Date: 2025-04-22 01:33\n"
+"POT-Creation-Date: 2025-04-22 23:28+0000\n"
+"PO-Revision-Date: 2025-04-28 00:56\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -5953,7 +5953,7 @@ msgstr "Schakelt tussen splits geluid-modi"
 #. Translators: Describes a command.
 #: globalCommands.py:4881
 msgid "Mute or unmute the speech coming from the remote computer"
-msgstr ""
+msgstr "Dempt de spraak die komt van de computer op afstand of heft het dempen op"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 #: globalCommands.py:4891
@@ -5963,17 +5963,17 @@ msgstr ""
 #. Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
 #: globalCommands.py:4899
 msgid "Copies a link to the remote session to the clipboard"
-msgstr ""
+msgstr "Kopieert een link naar de externe sessie naar het klembord"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: globalCommands.py:4906
 msgid "Copied link"
-msgstr ""
+msgstr "Link gekopiëerd"
 
 #. Translators: Documentation string for the script that disconnects a remote session.
 #: globalCommands.py:4911
 msgid "Disconnect a remote session"
-msgstr ""
+msgstr "Verbinding met externe sessie verbreken"
 
 #. Translators: A message indicating that the remote client is not connected.
 #: globalCommands.py:4920
@@ -11528,7 +11528,7 @@ msgstr ""
 #: gui\_SetURLDialog.py:177 gui\installerGui.py:129 gui\installerGui.py:618
 #: gui\settingsDialogs.py:1080 _remoteClient\dialogs.py:249
 msgid "Success"
-msgstr "Gelukt"
+msgstr "Succes"
 
 #. Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
 #: gui\_SetURLDialog.py:186
@@ -13754,7 +13754,7 @@ msgstr ""
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
 #: gui\settingsDialogs.py:3393 _remoteClient\dialogs.py:41
 msgid "&Host:"
-msgstr ""
+msgstr "&Adres:"
 
 #. Translators: Label for the port field in NVDA's Remote settings.
 #. This is the port on which the local control server will be accessible,
@@ -13770,7 +13770,7 @@ msgstr "&Poort:"
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: gui\settingsDialogs.py:3423 _remoteClient\dialogs.py:46
 msgid "&Key:"
-msgstr ""
+msgstr "&Sleutel:"
 
 #. Translators: A button in NVDA's Remote settings to delete all fingerprints of unauthorized certificates.
 #: gui\settingsDialogs.py:3430
@@ -18498,7 +18498,7 @@ msgstr ""
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #: _remoteClient\client.py:138 _remoteClient\client.py:160
 msgid "Not connected."
-msgstr ""
+msgstr "niet verbonden."
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
 #: _remoteClient\client.py:142
@@ -18514,12 +18514,12 @@ msgstr ""
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:229
 msgid "Error Connecting"
-msgstr ""
+msgstr "Fout bij verbinden"
 
 #. Translators: Message shown when cannot connect to the remote computer.
 #: _remoteClient\client.py:231
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Kan geen verbinding maken met externe computer"
 
 #. Translators: Title of the Remote Access connection dialog.
 #: _remoteClient\client.py:249
@@ -18571,34 +18571,34 @@ msgstr ""
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:526
 msgid "NVDA Remote is already connected. Disconnect before opening a new connection."
-msgstr ""
+msgstr "NVDA externe toegang is reeds verbonden. Verbreek de verbinding alvorens een nieuwe verbinding te openen."
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:528
 msgid "NVDA Remote Already Connected"
-msgstr ""
+msgstr "NVDA externe toegang reeds verbonden"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:541
 #, python-brace-format
 msgid "Do you wish to control the machine on server {server} with key {key}?"
-msgstr ""
+msgstr "Wilt u de machine op server {server} met sleutel {key} beheren?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:545
 #, python-brace-format
 msgid "Do you wish to allow this machine to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Wilt u het beheren van deze machine toestaan op server {server} met sleutel {key}?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:551
 msgid "NVDA Remote Connection Request"
-msgstr ""
+msgstr "NVDA externe toegang verbindingsverzoek"
 
 #. Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
 #: _remoteClient\cues.py:36
 msgid "Connected to control server"
-msgstr ""
+msgstr "Verbonden met beheerserver"
 
 #. Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 #: _remoteClient\cues.py:44
@@ -18613,7 +18613,7 @@ msgstr ""
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:199
 msgid "&Generate Key"
-msgstr ""
+msgstr "Sleutel &genereren"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
@@ -18649,12 +18649,12 @@ msgstr ""
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:175
 msgid "&External IP:"
-msgstr ""
+msgstr "&Extern IP:"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:180
 msgid "Get External &IP"
-msgstr ""
+msgstr "Extern &IP opvragen"
 
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: _remoteClient\dialogs.py:197
@@ -18677,7 +18677,7 @@ msgstr ""
 #: _remoteClient\dialogs.py:247
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr ""
+msgstr "IP-adres succesvol verkregen. Poort {port} is open."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
@@ -18689,17 +18689,17 @@ msgstr ""
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:273
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr ""
+msgstr "Kan geen verbinding maken met de portcheck server, vraag uw ip-adres handmatig op"
 
 #. Translators: A message box displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:342
 msgid "Both host and key must be set."
-msgstr ""
+msgstr "Zowel adres als sleutel moeten worden ingevoerd."
 
 #. Translators: A message box displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:348
 msgid "Both port and key must be set."
-msgstr ""
+msgstr "Zowel poort als sleutel moeten worden ingevoerd."
 
 #. Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 #: _remoteClient\dialogs.py:393
@@ -18723,7 +18723,7 @@ msgstr ""
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:413
 msgid "Connect"
-msgstr ""
+msgstr "Verbinden"
 
 #. Translators: Message displayed when a remote machine tries to send a SAS but UI Access is disabled.
 #: _remoteClient\localMachine.py:260
@@ -18733,68 +18733,68 @@ msgstr ""
 #. Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:31
 msgid "Mute remote"
-msgstr ""
+msgstr "Extern geluid &dempen"
 
 #. Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:33
 msgid "Mute speech and sounds from the remote computer"
-msgstr ""
+msgstr "Spraak en geluid van de externe computer dempen"
 
 #. Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 #: _remoteClient\menu.py:41
 msgid "&Push clipboard"
-msgstr ""
+msgstr "&Klembord doorsturen"
 
 #. Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:43
 msgid "Push the clipboard to the other machine"
-msgstr ""
+msgstr "Stuurt de inhoud van het klembord door naar de andere machine"
 
 #. Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
 #: _remoteClient\menu.py:54
 msgid "Copy &link"
-msgstr ""
+msgstr "&Link kopiëren"
 
 #. Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:56
 msgid "Copy a link to the remote session"
-msgstr ""
+msgstr "Kopieer een link naar de externe sessie"
 
 #. Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
 #. Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:67 _remoteClient\menu.py:69
 msgid "Send Ctrl+Alt+Del"
-msgstr ""
+msgstr "&Ctrl+Alt+Del sturen"
 
 #. Translators: Label of menu in NVDA tools menu.
 #: _remoteClient\menu.py:80
 msgid "R&emote"
-msgstr ""
+msgstr "&Externe toegang"
 
 #. Translators: Tooltip for the Remote menu in the NVDA Tools menu.
 #: _remoteClient\menu.py:82
 msgid "NVDA Remote Access"
-msgstr ""
+msgstr "NVDA Externe Toegang"
 
 #. Translators: Item in NVDA Remote submenu to connect to a remote computer.
 #: _remoteClient\menu.py:152
 msgid "Connect..."
-msgstr ""
+msgstr "Verbinden..."
 
 #. Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:154
 msgid "Remotely connect to another computer running NVDA Remote Access"
-msgstr ""
+msgstr "Verbinding maken met een andere computer op afstand waarop NVDA Externe Toegang gebruikt wordt"
 
 #. Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
 #: _remoteClient\menu.py:169
 msgid "Disconnect"
-msgstr ""
+msgstr "Verbinding ver&breken"
 
 #. Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:171
 msgid "Disconnect from another computer running NVDA Remote Access"
-msgstr ""
+msgstr "De verbinding verbreken met een andere computer op afstand waarop NVDA Externe Toegang gebruikt wordt"
 
 #. Translators: Message for version mismatch
 #: _remoteClient\session.py:166
@@ -18805,10 +18805,10 @@ msgstr ""
 #. Translators: Caption for message of the day dialog
 #: _remoteClient\session.py:186
 msgid "Message of the Day"
-msgstr ""
+msgstr "Bericht van de dag"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:551
 msgid "Remote NVDA not connected."
-msgstr ""
+msgstr "Externe NVDA niet verbonden."
 
