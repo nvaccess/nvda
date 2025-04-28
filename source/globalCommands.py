@@ -3428,7 +3428,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for go to Remote Access settings command.
-		description=_("Shows the Remote Access settings"),
+		description=pgettext("remote", "Shows the Remote Access settings"),
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
