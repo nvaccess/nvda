@@ -46,14 +46,15 @@ The NVDA source depends on several other packages to run correctly.
 
 The following dependencies need to be installed on your system:
 
-#### Python
-[Python](https://www.python.org/), version 3.11, 32 bit.
-
-To replicate the production build environment, use the 3.11.x minor version of Python that [AppVeyor uses for the Visual Studio 2022 environment](https://www.appveyor.com/docs/windows-images-software/#python).
-
 #### uv
 
 [uv](https://docs.astral.sh/uv/) is used as package and project manager.
+
+##### Python
+
+[Python](https://www.python.org/), version 3.11, 32 bit.
+
+The Python runtime is managed by uv, which uses the [python-build-standalone](https://github.com/astral-sh/python-build-standalone/) project internally.
 
 #### Microsoft Visual Studio
 
