@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:53+0000\n"
-"PO-Revision-Date: 2025-04-22 01:33\n"
+"POT-Creation-Date: 2025-04-22 23:28+0000\n"
+"PO-Revision-Date: 2025-04-28 00:56\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -3732,7 +3732,7 @@ msgstr "音訊"
 #. Translators: This is the label for the remote settings category in NVDA Settings screen.
 #: globalCommands.py:125 gui\settingsDialogs.py:3320
 msgid "Remote"
-msgstr "遠端"
+msgstr "遠端連線"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -5436,17 +5436,18 @@ msgstr "停用在文字中定位游標時讀出字元"
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
 #: globalCommands.py:3746
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
-msgstr "切換當使用點字以行或段落導覽時說話的開或關"
+msgstr "切換當使用點字逐行或段落導覽時說話的開或\n"
+"關"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3755
 msgid "Speak whenn navigating by line or paragraph with braille on"
-msgstr "使用點字以行或段落導覽時說話 開"
+msgstr "使用點字逐行或段落導覽時說話 開"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3757
 msgid "Speak when navigating by line or paragraph with braille off"
-msgstr "使用點字以行或段落導覽時說話 關"
+msgstr "使用點字逐行或段落導覽時說話 關"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3762
@@ -8123,7 +8124,7 @@ msgstr "複製"
 #. given language; or to set this to the empty string if that key combination is unavailable on some keyboard.
 #: ui.py:210
 msgid "control+shift+c"
-msgstr "Ctrl+Shift+C"
+msgstr "control+shift+c"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -10053,13 +10054,13 @@ msgstr "段落符號 (¶)"
 #: config\configFlags.py:322
 msgctxt "remote"
 msgid "Allow this machine to be controlled"
-msgstr "允許此電腦被控制"
+msgstr "允許此裝置被控制"
 
 #. Translators: Allow this computer to control the remote computer.
 #: config\configFlags.py:324
 msgctxt "remote"
 msgid "Control another machine"
-msgstr "控制另一台電腦"
+msgstr "控制另一台裝置"
 
 #. Translators: Use an existing Remote control server
 #: config\configFlags.py:352
@@ -11525,7 +11526,7 @@ msgstr "發生網路錯誤，請確認您已連接網際網路後再重試一次
 #. Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
 #: gui\_SetURLDialog.py:203
 msgid "The URL you have entered is not valid. Check that it is correct and try again."
-msgstr "您輸入的 URL 無效。請確認是否正確後再重試一次。"
+msgstr "您輸入的 URL 無效，請確認是否正確後再重試一次。"
 
 #. Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
 #: gui\_SetURLDialog.py:206
@@ -13776,19 +13777,19 @@ msgstr "刪除所有信任的憑證"
 #: gui\settingsDialogs.py:3513
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote section in order to automatically connect using an existing Remote Access server after NVDA starts."
-msgstr ""
+msgstr "若要在 NVDA 啟動後自動使用現有的遠端存取伺服器連線，必須在「遠端」區段中同時設定主機與金鑰。"
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3519
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote section in order to automatically connect using a locally hosted Remote Access server after NVDA starts."
-msgstr ""
+msgstr "若要在 NVDA 啟動後自動連線至本機架設的遠端存取伺服器，必須在「遠端」區段中同時設定連接埠與金鑰。"
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3525
 msgctxt "remote"
 msgid "Remote Access Error"
-msgstr ""
+msgstr "遠端存取錯誤"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:3558
@@ -14078,13 +14079,13 @@ msgstr "嘗試將已過期焦點事件的語音取消:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:3974
 msgid "Trim leading silence in speech audio"
-msgstr ""
+msgstr "去除語音音訊開頭的靜音"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:3982
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "使用 WASAPI 作為 SAPI 4 的音訊輸出:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14224,7 +14225,7 @@ msgstr "輸出轉譯表(&O):"
 #: gui\settingsDialogs.py:4602 gui\settingsDialogs.py:4629
 #, python-brace-format
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "自動 ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 #: gui\settingsDialogs.py:4621
@@ -14320,7 +14321,7 @@ msgstr "在文字中定位遊標時讀出字元(&K)"
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:4905
 msgid "Speak when navigating by &line or paragraph"
-msgstr "在逐行或段落導覽時說話"
+msgstr "在逐行或段落導覽時說話(&L)"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14723,7 +14724,7 @@ msgstr "更新選取的附加元件(&U)"
 #: gui\addonStoreGui\controls\actions.py:226
 msgctxt "addonStore"
 msgid "Re&try installing selected add-ons"
-msgstr "重試安裝選取的附加元件(&T)"
+msgstr "重新嘗試安裝選取的附加元件(&T)"
 
 #. Translators: Label for an action that cancel install of the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:233
@@ -17158,77 +17159,77 @@ msgstr "僅文字"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:118
 msgid "Double"
-msgstr "雙底線"
+msgstr "雙"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:120
 msgid "Dotted"
-msgstr "點狀底線"
+msgstr "點狀"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:122
 msgid "Thick"
-msgstr "粗底線"
+msgstr "粗"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:124
 msgid "Dash"
-msgstr "虛線底線"
+msgstr "虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:126
 msgid "Dot dash"
-msgstr "點虛線底線"
+msgstr "點虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:128
 msgid "Dot dot dash"
-msgstr "雙點虛線底線"
+msgstr "雙點虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:130
 msgid "Wave"
-msgstr "波浪底線"
+msgstr "波浪"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:132
 msgid "Dotted heavy"
-msgstr "粗點底線"
+msgstr "粗點"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:134
 msgid "Dashed heavy"
-msgstr "粗虛線底線"
+msgstr "粗虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:136
 msgid "Dot dash heavy"
-msgstr "粗點虛線底線"
+msgstr "粗點虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:138
 msgid "Dot dot dash heavy"
-msgstr "粗雙點虛線底線"
+msgstr "粗雙點虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:140
 msgid "Wave heavy"
-msgstr "粗波浪底線"
+msgstr "粗波浪"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:142
 msgid "Dashed long"
-msgstr "長虛線底線"
+msgstr "長虛線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:144
 msgid "Wave double"
-msgstr "雙波浪底線"
+msgstr "雙波浪"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:146
 msgid "Dashed long heavy"
-msgstr "粗長虛線底線"
+msgstr "粗長虛線"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:309
@@ -18463,128 +18464,128 @@ msgstr "沒有其他人連線"
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
 #: _remoteClient\client.py:150
 msgid "Unable to push clipboard"
-msgstr ""
+msgstr "無法推送剪貼簿"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:229
 msgid "Error Connecting"
-msgstr ""
+msgstr "連線錯誤"
 
 #. Translators: Message shown when cannot connect to the remote computer.
 #: _remoteClient\client.py:231
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "無法連線到遠端電腦"
 
 #. Translators: Title of the Remote Access connection dialog.
 #: _remoteClient\client.py:249
 msgctxt "remote"
 msgid "Connect to Another Computer"
-msgstr ""
+msgstr "連線到另一台電腦"
 
 #. Translators: Presented when connected to the remote computer.
 #: _remoteClient\client.py:292
 msgid "Connected"
-msgstr ""
+msgstr "已連線"
 
 #. Translators: Presented when connection to a remote computer was interupted.
 #. Translators: Message shown when the connection to the remote computer is lost.
 #: _remoteClient\client.py:310 _remoteClient\cues.py:30
 msgid "Disconnected"
-msgstr ""
+msgstr "已中斷連線"
 
 #. Translators: A message indicating that the remote client is not connected.
 #: _remoteClient\client.py:463
 msgctxt "remote"
 msgid "Not connected"
-msgstr ""
+msgstr "沒有連線"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
 #: _remoteClient\client.py:467
 msgctxt "remote"
 msgid "Not the controlling computer"
-msgstr ""
+msgstr "非控制端電腦"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 #: _remoteClient\client.py:471
 msgctxt "remote"
 msgid "No controlled computers are connected"
-msgstr ""
+msgstr "尚未連線任何被控制電腦"
 
 #. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 #: _remoteClient\client.py:479
 msgctxt "remote"
 msgid "Controlling remote computer"
-msgstr ""
+msgstr "控制遠端電腦"
 
 #. Translators: Presented when keyboard control is back to the controlling computer.
 #: _remoteClient\client.py:485
 msgctxt "remote"
 msgid "Controlling local computer"
-msgstr ""
+msgstr "控制本機電腦"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:526
 msgid "NVDA Remote is already connected. Disconnect before opening a new connection."
-msgstr ""
+msgstr "NVDA 遠端已連線，請先中斷目前的連線再開啟新連線。"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:528
 msgid "NVDA Remote Already Connected"
-msgstr ""
+msgstr "NVDA 遠端已連線"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:541
 #, python-brace-format
 msgid "Do you wish to control the machine on server {server} with key {key}?"
-msgstr ""
+msgstr "您是否要使用金鑰 {key} 控制伺服器 {server} 上的電腦?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:545
 #, python-brace-format
 msgid "Do you wish to allow this machine to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "您是否允許此電腦使用金鑰 {key} 在伺服器 {server} 上被遠端控制?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:551
 msgid "NVDA Remote Connection Request"
-msgstr ""
+msgstr "NVDA 遠端連線請求"
 
 #. Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
 #: _remoteClient\cues.py:36
 msgid "Connected to control server"
-msgstr ""
+msgstr "連線到控制伺服器"
 
 #. Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 #: _remoteClient\cues.py:44
 msgid "Clipboard pushed"
-msgstr ""
+msgstr "剪貼簿已推送"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:50
 msgid "Clipboard received"
-msgstr ""
+msgstr "剪貼簿已收到"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:199
 msgid "&Generate Key"
-msgstr ""
+msgstr "產生金鑰(&G)"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
 msgid "Host must be set."
-msgstr ""
+msgstr "必須設定主機。"
 
 #. Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "產生金鑰"
 
 #. Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "產生金鑰..."
 
 #. Translators: Message shown to users when requesting that a Remote control server generate a key fails.
 #. {host} will be replaced with the address of the Remote control server.
@@ -18592,73 +18593,73 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "無法連線至 {host}，請確認您已連接網際網路，並檢查主機欄位中是否有輸入錯誤。"
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:111
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "主機連線失敗"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:175
 msgid "&External IP:"
-msgstr ""
+msgstr "外部 IP(&E):"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:180
 msgid "Get External &IP"
-msgstr ""
+msgstr "取得外部 IP(&I)"
 
 #. Translators: Label of the edit field to enter key (password) to secure the remote connection.
 #: _remoteClient\dialogs.py:197
 msgid "&Key"
-msgstr ""
+msgstr "金鑰(&K)"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:218
 msgctxt "remote"
 msgid "Getting external IP"
-msgstr ""
+msgstr "取得外部 IP"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:220
 msgctxt "remote"
 msgid "Getting external IP..."
-msgstr ""
+msgstr "取得外部 IP..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
 #: _remoteClient\dialogs.py:247
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr ""
+msgstr "成功取得 IP 位址。連接埠 {port} 已開啟。"
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
 #: _remoteClient\dialogs.py:258
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
-msgstr ""
+msgstr "取得外部 IP，但連接埠 {port} 很可能尚未進行轉發。"
 
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:273
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr ""
+msgstr "無法聯繫埠檢查伺服器，請手動取得您的 IP 位址"
 
 #. Translators: A message box displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:342
 msgid "Both host and key must be set."
-msgstr ""
+msgstr "必須設定主機和金鑰。"
 
 #. Translators: A message box displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:348
 msgid "Both port and key must be set."
-msgstr ""
+msgstr "必須設定連接部和金鑰。"
 
 #. Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 #: _remoteClient\dialogs.py:393
 msgid "NVDA Remote Connection Security Warning"
-msgstr ""
+msgstr "NVDA 遠端連線安全性警告"
 
 #. Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
 #: _remoteClient\dialogs.py:396
@@ -18667,78 +18668,81 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "此伺服器的憑證無法驗證。若使用錯誤的憑證，可能導致第三方存取此遠端連線。\n\n"
+"繼續之前，請務必確認下列伺服器憑證指紋是否正確:\n"
+"伺服器 SHA256 憑證:{fingerprint}\n\n"
+"是否仍要繼續連線?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:411
 msgid "Connect and do not ask again for this server"
-msgstr ""
+msgstr "連線並且不再詢問此伺服器"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:413
 msgid "Connect"
-msgstr ""
+msgstr "連線"
 
 #. Translators: Message displayed when a remote machine tries to send a SAS but UI Access is disabled.
 #: _remoteClient\localMachine.py:260
 msgid "Unable to trigger Alt Control Delete from remote"
-msgstr ""
+msgstr "無法從遠端觸發 Ctrl+Alt+Del 指令"
 
 #. Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:31
 msgid "Mute remote"
-msgstr ""
+msgstr "遠端靜音"
 
 #. Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:33
 msgid "Mute speech and sounds from the remote computer"
-msgstr ""
+msgstr "將遠端電腦的語音和音效靜音"
 
 #. Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 #: _remoteClient\menu.py:41
 msgid "&Push clipboard"
-msgstr ""
+msgstr "推送剪貼簿(&P)"
 
 #. Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:43
 msgid "Push the clipboard to the other machine"
-msgstr ""
+msgstr "將剪貼䈬簿推送至另一台裝置"
 
 #. Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
 #: _remoteClient\menu.py:54
 msgid "Copy &link"
-msgstr ""
+msgstr "複製連結(&L)"
 
 #. Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:56
 msgid "Copy a link to the remote session"
-msgstr ""
+msgstr "複製遠端連線連結"
 
 #. Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
 #. Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:67 _remoteClient\menu.py:69
 msgid "Send Ctrl+Alt+Del"
-msgstr ""
+msgstr "傳送 Ctrl+Alt+Del"
 
 #. Translators: Label of menu in NVDA tools menu.
 #: _remoteClient\menu.py:80
 msgid "R&emote"
-msgstr ""
+msgstr "遠端連線(&E)"
 
 #. Translators: Tooltip for the Remote menu in the NVDA Tools menu.
 #: _remoteClient\menu.py:82
 msgid "NVDA Remote Access"
-msgstr ""
+msgstr "NVDA 遠端存取"
 
 #. Translators: Item in NVDA Remote submenu to connect to a remote computer.
 #: _remoteClient\menu.py:152
 msgid "Connect..."
-msgstr ""
+msgstr "連線..."
 
 #. Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:154
 msgid "Remotely connect to another computer running NVDA Remote Access"
-msgstr "遠端連線到另一台執行 NVDA Remote Access 的電腦"
+msgstr "遠端連線到另一台執行 NVDA 遠端存取的電腦"
 
 #. Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
 #: _remoteClient\menu.py:169
@@ -18748,7 +18752,7 @@ msgstr "中斷連線"
 #. Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:171
 msgid "Disconnect from another computer running NVDA Remote Access"
-msgstr "中斷連線另一台執行 NVDA Remote Access 的電腦"
+msgstr "中斷連線另一台執行 NVDA 遠端存取的電腦"
 
 #. Translators: Message for version mismatch
 #: _remoteClient\session.py:166

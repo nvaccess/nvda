@@ -32,16 +32,16 @@ CUES: Dict[str, Cue] = {
 	"controlServerConnected": {
 		"wave": "controlled",
 		"beeps": [(720, 100), (None, 50), (720, 100), (None, 50), (720, 100)],
-		# Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
-		"message": _("Connected to control server"),
+		# Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
+		"message": pgettext("remote", "Connected as controlled computer"),
 	},
 	"clientConnected": {"wave": "controlling", "beeps": [(1000, 300)]},
 	"clientDisconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
 	"clipboardPushed": {
 		"wave": "clipboardPush",
 		"beeps": [(500, 100), (600, 100)],
-		# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
-		"message": _("Clipboard pushed"),
+		# Translators: Message shown when the clipboard is successfully sent to the remote computer.
+		"message": pgettext("remote", "Clipboard sent"),
 	},
 	"clipboardReceived": {
 		"wave": "clipboardReceive",

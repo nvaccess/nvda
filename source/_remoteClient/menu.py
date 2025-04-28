@@ -28,20 +28,20 @@ class RemoteMenu(wx.Menu):
 		self._switchToConnectItem()
 		self.muteItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
+			# Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 			_("Mute remote"),
-			# Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
-			_("Mute speech and sounds from the remote computer"),
+			# Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
+			pgettext("remote", "Mute speech and sounds from the remote computer."),
 			kind=wx.ITEM_CHECK,
 		)
 		self.muteItem.Enable(False)
 		sysTrayIcon.Bind(wx.EVT_MENU, self.onMuteItem, self.muteItem)
 		self.pushClipboardItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
-			_("&Push clipboard"),
-			# Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
-			_("Push the clipboard to the other machine"),
+			# Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
+			pgettext("remote", "&Send clipboard"),
+			# Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
+			pgettext("remote", "Send the clipboard text to the remote computer."),
 		)
 		self.pushClipboardItem.Enable(False)
 		sysTrayIcon.Bind(
@@ -51,10 +51,10 @@ class RemoteMenu(wx.Menu):
 		)
 		self.copyLinkItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
+			# Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 			_("Copy &link"),
-			# Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
-			_("Copy a link to the remote session"),
+			# Translators: Tooltip for the Copy Link menu item in the Remote Access submenu.
+			pgettext("remote", "Copy a link to the current Remote Access session to the clipboard."),
 		)
 		self.copyLinkItem.Enable(False)
 		sysTrayIcon.Bind(
@@ -64,10 +64,10 @@ class RemoteMenu(wx.Menu):
 		)
 		self.sendCtrlAltDelItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
-			_("Send Ctrl+Alt+Del"),
-			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
-			_("Send Ctrl+Alt+Del"),
+			# Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
+			pgettext("remote", "Send ctrl+alt+del"),
+			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the Remote Access submenu.
+			pgettext("remote", "Send control+alt+delete to the controlled computer."),
 		)
 		sysTrayIcon.Bind(
 			wx.EVT_MENU,
@@ -77,10 +77,13 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem.Enable(False)
 		self.remoteItem = toolsMenu.AppendSubMenu(
 			self,
-			# Translators: Label of menu in NVDA tools menu.
-			_("R&emote"),
-			# Translators: Tooltip for the Remote menu in the NVDA Tools menu.
-			_("NVDA Remote Access"),
+			# Translators: Label of the Remote Access submenu in the NVDA tools menu.
+			pgettext("remote", "R&emote Access"),
+			pgettext(
+				"remote",
+				# Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
+				"Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one.",
+			),
 		)
 
 	def terminate(self) -> None:
@@ -149,10 +152,10 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for creating a new Remote session.
 		"""
-		# Translators: Item in NVDA Remote submenu to connect to a remote computer.
+		# Translators: Item in the Remote Access submenu to connect to another computer.
 		self.connectionItem.SetItemLabel(_("Connect..."))
-		# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
-		self.connectionItem.SetHelp(_("Remotely connect to another computer running NVDA Remote Access"))
+		# Translators: Tooltip for the Connect menu item in the Remote Access submenu.
+		self.connectionItem.SetHelp(pgettext("remote", "Remotely connect to another computer running NVDA."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,
@@ -169,10 +172,10 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for disconnecting an existing Remote session.
 		"""
-		# Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
+		# Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 		self.connectionItem.SetItemLabel(_("Disconnect"))
-		# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
-		self.connectionItem.SetHelp(_("Disconnect from another computer running NVDA Remote Access"))
+		# Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
+		self.connectionItem.SetHelp(pgettext("remote", "Disconnect from the current Remote Access session."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,

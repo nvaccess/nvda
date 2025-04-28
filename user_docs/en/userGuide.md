@@ -27,12 +27,12 @@ Major highlights include:
 * Reporting of textual formatting where available such as font name and size, style and spelling errors
 * Automatic announcement of text under the mouse and optional audible indication of the mouse position
 * Support for many refreshable braille displays, including the ability to detect many of them automatically as well as braille input on braille displays with a braille keyboard
-* Remote Access: Connect to and control another computer running NVDA for remote assistance or collaboration.
+* Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
 * Translated into 54 languages
 * Support for modern Windows Operating Systems including both 32 and 64 bit variants
-* Ability to run during Windows sign-in and [other secure screens](#SecureScreens).
+* Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 * Support for Windows Command Prompt and console applications
@@ -3103,7 +3103,7 @@ If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "
 
 If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
 
-#### Remote Settings {#RemoteSettings}
+#### Remote Access Settings {#RemoteSettings}
 
 This category allows you to configure the behaviour of [Remote Access](#RemoteAccess).
 
@@ -3119,9 +3119,9 @@ The following options are only available if Remote Access is enabled.
 
 ##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
 
-Use this option to select the type of audio cues played by Remote.
+Use this option to select the type of audio cues played by Remote Access.
 
-When checked, NVDA will produce natural-sounding audio cues for Remote events.
+When checked, NVDA will produce natural-sounding audio cues for Remote Access events.
 When unchecked, NVDA will beep for Remote events.
 
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
@@ -3175,7 +3175,7 @@ This option is only available when [Automatically connect after NVDA starts](#Re
 ##### Delete all trusted fingerprints {#RemoteDeleteFingerprints}
 
 This button allows you to forget the fingerprints of all previously trusted Remote Access servers.
-This means that you will again be asked whether to connect to all unauthorized Remote Access servers, even ones that you have previously connected to.
+This means that you will again be asked whether to connect to all unrecognised Remote Access servers, even ones that you have previously connected to.
 You will be asked to confirm before all trusted fingerprints are deleted.
 This action cannot be undone.
 
@@ -3697,14 +3697,14 @@ With NVDA's built-in remote access feature, you can control another computer run
 This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
 
 Remote access is disabled by default for your security.
-You can enable Remote Access [in Remote settings](#RemoteSettings).
+You can enable Remote Access [in Remote Access settings](#RemoteSettings).
 
 ### Getting Started {#RemoteAccessGettingStarted}
 
 Before you begin, ensure NVDA is installed and running on both computers.
 The remote access feature is available from the Tools menu in NVDA; there's no need for additional downloads or installations.
 
-### Setting Up a Remote Session {#RemoteAccessSetup}
+### Setting Up a Remote Access Session {#RemoteAccessSetup}
 
 You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
@@ -3714,33 +3714,34 @@ You can still manually disconnect in secure mode.
 
 #### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
-1. Open the NVDA menu and select Tools, then Remote, then Connect.
-1. Choose Allow this computer to be controlled.
+1. Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
+1. For Mode, choose "Allow this computer to be controlled".
 1. Enter the connection details provided by the person controlling your computer:
-   * Relay Server: If using a server, enter the hostname (e.g., `nvdaremote.com`).
+   * Existing Remote Access server: If using a server, enter the hostname (e.g., `nvdaremote.com`).
    * Direct Connection: If connecting directly, share your external IP address and port (default: 6837). Ensure your network is set up for direct connections.
-1. Press OK. Share the connection key with the other person.
+1. Press OK.
+Share the connection key with the other person.
 
 #### Steps for the Controlling Computer {#RemoteAccessSetupControlling}
 
-1. Open the NVDA menu and select Tools, then Remote, then Connect.
-1. Choose Control another computer.
+1. Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
+1. For Mode, choose "Control another computer".
 1. Enter the connection details and key provided by the controlled computer.
 1. Press OK to connect.
 
 Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
 
-### The Remote Connection Dialog {#RemoteAccessConnect}
+### The Remote Access Connection Dialog {#RemoteAccessConnect}
 
-The Remote connection dialog allows you to set up a Remote Access session.
-To get to the Remote Connection dialog, open the NVDA menu, and navigate to Tools, then Remote, then Connect....
+The Remote Access connection dialog allows you to connect to a new or existing session.
+To open the dialog, open the NVDA menu, and navigate to Tools, then "Remote Access", then "Connect...".
 
 The first control in this dialog is the Mode control.
 This allows you to select whether your computer will be controlled remotely, or be remotely controlling another.
 You cannot change the connection mode once a connection is established.
 Choose "Allow this computer to be controlled" if you are going to be getting technical assistance.
 
-Next is the Server control, which lets you choose the type of control server you would like to use.
+Next is the Server control, which lets you choose the type of Remote Access connection you would like to use.
 Most users should select to use an existing Relay server.
 
 You can choose between two connection types depending on your setup:
@@ -3794,11 +3795,11 @@ Alternatively, press "Generate key" to have NVDA generate a key for you.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
-Once the session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
+Once a Remote Access session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
 
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
-* Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then Remote, then Push Clipboard.
-* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then Remote, then Mute Remote.
+* Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
+* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
@@ -3811,10 +3812,8 @@ Once the session is active, you can switch between controlling the remote comput
 | Copy link | None | Copies a link to the remote session to the clipboard. |
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
-| Push clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
 <!-- KC:endInclude -->
-
-You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
 
 ## Add-ons and the Add-on Store {#AddonsManager}
 

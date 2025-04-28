@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:53+0000\n"
-"PO-Revision-Date: 2025-04-22 01:33\n"
+"POT-Creation-Date: 2025-04-22 23:28+0000\n"
+"PO-Revision-Date: 2025-04-28 00:56\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -3732,7 +3732,7 @@ msgstr "オーディオ"
 #. Translators: This is the label for the remote settings category in NVDA Settings screen.
 #: globalCommands.py:125 gui\settingsDialogs.py:3320
 msgid "Remote"
-msgstr "リモートワーク"
+msgstr "リモート"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -4798,12 +4798,12 @@ msgstr "レビューカーソルを現在のナビゲーターオブジェクト
 #. Translators: Input help mode message for move review cursor to start of selection command.
 #: globalCommands.py:2270
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
-msgstr "レビューカーソルを選択範囲の最初の文字に移動して読み上げます"
+msgstr "レビューカーソルを選択範囲の最初の文字に移動して読み上げ"
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
 #: globalCommands.py:2298
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
-msgstr "レビューカーソルを選択範囲の最後の文字に移動して読み上げます"
+msgstr "レビューカーソルを選択範囲の最後の文字に移動して読み上げ"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 #: globalCommands.py:2337
@@ -5436,7 +5436,7 @@ msgstr "テキストでのタッチカーソル操作で文字の読み上げな
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
 #: globalCommands.py:3746
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
-msgstr "点字で行や段落を移動するときの読み上げのオン/オフを切り替える"
+msgstr "点字で行や段落を移動するときの読み上げのオン/オフを切り替え"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3755
@@ -8165,7 +8165,7 @@ msgstr "更新を確認中"
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "インターネットに接続されていて、NVDAアップデートのミラーURLが有効であることを確認してください。\n"
+msgstr "インターネットに接続されていて、NVDA更新のミラーURLが有効であることを確認してください。\n"
 "ミラーURL: {url}"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -9642,12 +9642,12 @@ msgstr "見出しが選択されていません"
 #. Translators: a message when collapsing a heading in MS Word
 #: appModules\winword.py:133
 msgid "Collapsed"
-msgstr "折りたたむ"
+msgstr "折りたたみ"
 
 #. Translators: a message when expanding a heading in MS Word
 #: appModules\winword.py:136
 msgid "Expanded"
-msgstr "拡張"
+msgstr "展開"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:39
@@ -10055,19 +10055,19 @@ msgstr "段落記号 (⣏⣹)"
 #: config\configFlags.py:322
 msgctxt "remote"
 msgid "Allow this machine to be controlled"
-msgstr "このPCをコントロールできるようにする"
+msgstr "このPCが制御されることを許可する"
 
 #. Translators: Allow this computer to control the remote computer.
 #: config\configFlags.py:324
 msgctxt "remote"
 msgid "Control another machine"
-msgstr "別のPCをコントロールする"
+msgstr "別のPCを制御する"
 
 #. Translators: Use an existing Remote control server
 #: config\configFlags.py:352
 msgctxt "remote"
 msgid "Use existing"
-msgstr "既存のものを使う"
+msgstr "既存のサーバーを使用"
 
 #. Translators: Use NVDA as the Remote control server
 #: config\configFlags.py:354
@@ -12638,7 +12638,7 @@ msgstr "保存(&S)"
 #. Translators: An apply button on a message dialog.
 #: gui\message.py:338
 msgid "&Apply"
-msgstr "&適用"
+msgstr "適用(&A)"
 
 #. Translators: A help button on a message dialog.
 #: gui\message.py:342
@@ -12802,12 +12802,12 @@ msgstr "変更..."
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:990
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr "読み上げ中・点字表示中のディスプレイのオフを防止(&D)"
+msgstr "読み上げ中と点字表示中のディスプレイのオフを防止(&D)"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1004
 msgid "Set NVDA Update Mirror"
-msgstr "NVDAアップデートミラーの設定"
+msgstr "NVDA更新ミラーの設定"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -13532,7 +13532,7 @@ msgstr "要素"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2887
 msgid "Link type"
-msgstr "リンクの種類"
+msgstr "リンク先の種別"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13685,7 +13685,7 @@ msgstr "既定の更新チャンネル(&C)"
 #. Translators: Mute other apps checkbox in settings
 #: gui\settingsDialogs.py:3233
 msgid "Allow automatic updates to install incompatible add-ons"
-msgstr "自動アップデートで互換性のないアドオンのインストールを許可"
+msgstr "自動更新で互換性のないアドオンのインストールを許可"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
 #: gui\settingsDialogs.py:3239
@@ -14686,12 +14686,12 @@ msgstr "使用許諾契約"
 #. Translators: The label of a button in NVDA installation process to view the license agreement.
 #: gui\startupDialogs.py:225
 msgid "&View License"
-msgstr "ライセンスを読む(&V)"
+msgstr "使用許諾契約を読む(&V)"
 
 #. Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 #: gui\startupDialogs.py:230
 msgid "I have read and &agree to the license agreement"
-msgstr "ライセンス契約を読んで同意します(&A)"
+msgstr "使用許諾契約に同意します(&A)"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:276
@@ -17175,7 +17175,7 @@ msgstr "単語のみ"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:118
 msgid "Double"
-msgstr "ダブル（2重線）"
+msgstr "2重線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:120
@@ -17205,7 +17205,7 @@ msgstr "二点鎖点"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:130
 msgid "Wave"
-msgstr "波"
+msgstr "波線"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:132
@@ -17290,12 +17290,12 @@ msgstr "全幅"
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:325
 msgid "Katakana"
-msgstr "カタカナ　あいうえお順"
+msgstr "カタカナ"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:327
 msgid "Hiragana"
-msgstr "ひらがな　あいうえお順"
+msgstr "ひらがな"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:405
@@ -18475,7 +18475,7 @@ msgstr "接続されていません。"
 #: _remoteClient\client.py:142
 msgctxt "remote"
 msgid "No one else is connected"
-msgstr "誰も接続していません"
+msgstr "他に誰も接続していません"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
 #: _remoteClient\client.py:150
@@ -18507,13 +18507,13 @@ msgstr "接続済み"
 #. Translators: Message shown when the connection to the remote computer is lost.
 #: _remoteClient\client.py:310 _remoteClient\cues.py:30
 msgid "Disconnected"
-msgstr "ネットワーク接続なし"
+msgstr "切断されました"
 
 #. Translators: A message indicating that the remote client is not connected.
 #: _remoteClient\client.py:463
 msgctxt "remote"
 msgid "Not connected"
-msgstr "未接続"
+msgstr "接続されていません"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
 #: _remoteClient\client.py:467
@@ -18542,7 +18542,7 @@ msgstr "ローカルPCの制御"
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:526
 msgid "NVDA Remote is already connected. Disconnect before opening a new connection."
-msgstr "NVDA Remoteはすでに接続されています。新しい接続を開始する前に切断してください。"
+msgstr "NVDA リモートはすでに接続されています。新しい接続を開始する前に切断してください。"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:528
@@ -18569,7 +18569,7 @@ msgstr "NVDAリモート接続リクエスト"
 #. Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
 #: _remoteClient\cues.py:36
 msgid "Connected to control server"
-msgstr "制御サーバーに接続"
+msgstr "制御サーバーに接続しました"
 
 #. Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 #: _remoteClient\cues.py:44
@@ -18589,7 +18589,7 @@ msgstr "鍵を生成(&G)"
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
 msgid "Host must be set."
-msgstr "ホストを設定する必要があります。"
+msgstr "ホストを設定してください。"
 
 #. Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
 #: _remoteClient\dialogs.py:74
@@ -18609,7 +18609,7 @@ msgstr "鍵の生成..."
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr "{host} に接続できません。インターネットに接続できるか、ホストの値に間違いがないか確認してください。"
+msgstr "{host}に接続できません。インターネットに接続していること、およびホストに間違いがないことを確認してください"
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:111
@@ -18743,7 +18743,7 @@ msgstr "Ctrl+Alt+Del を送信"
 #. Translators: Label of menu in NVDA tools menu.
 #: _remoteClient\menu.py:80
 msgid "R&emote"
-msgstr "リモート(&R)"
+msgstr "リモート(&E)"
 
 #. Translators: Tooltip for the Remote menu in the NVDA Tools menu.
 #: _remoteClient\menu.py:82
@@ -18753,12 +18753,12 @@ msgstr "NVDAリモートアクセス"
 #. Translators: Item in NVDA Remote submenu to connect to a remote computer.
 #: _remoteClient\menu.py:152
 msgid "Connect..."
-msgstr "Bağlan..."
+msgstr "接続..."
 
 #. Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 #: _remoteClient\menu.py:154
 msgid "Remotely connect to another computer running NVDA Remote Access"
-msgstr "NVDA Uzaktan Erişim eklentisini çalıştıran bir bilgisayara uzaktan bağlanın"
+msgstr "NVDAリモートアクセスを実行している別のPCとの接続を解除します。"
 
 #. Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
 #: _remoteClient\menu.py:169
