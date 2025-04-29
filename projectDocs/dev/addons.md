@@ -21,6 +21,7 @@ This website is considered legacy software, using the NVDA Add-on Store instead 
 ### Communication channels
 
 #### NV Access
+
 * [GitHub discussions](https://github.com/nvaccess/nvda/discussions)
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 
