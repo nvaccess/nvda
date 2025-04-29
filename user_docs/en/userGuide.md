@@ -3114,6 +3114,8 @@ Use this checkbox to enable or disable NVDA's Remote Access feature.
 When this is unchecked, the Remote Access feature is entirely unavailable.
 
 Please note that in order to continue a Remote Access session on secure screens such as User Account Control prompts, you must enable this setting, save the changes, and then [copy your settings to NVDA's system configuration directory](#GeneralSettingsCopySettings).
+Remote Access will only continue sessions started by the installed copy of NVDA on secure desktops.
+This means that you cannot, for instance, start a Remote Access session with a portable copy of NVDA and have the session continue on secure screens.
 
 The following options are only available if Remote Access is enabled.
 
