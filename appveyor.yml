@@ -47,7 +47,8 @@ install:
     "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
- - py -m pip install --upgrade --no-warn-script-location pip
+ - ps: Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
+ - set Path=%userprofile%\.local\bin;%Path%
  - git submodule update --init
  - ps: |
     "INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
@@ -95,10 +96,6 @@ after_test:
 artifacts:
  - path: output\*
  - path: output\*\*
-
-# Legacy deployment over ssh
-deploy_script:
- - ps: appveyor\scripts\deployScript.ps1
 
 # Prepare environment with additional variables for webhook
 before_deploy:

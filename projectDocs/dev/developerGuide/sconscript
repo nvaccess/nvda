@@ -54,7 +54,6 @@ ignorePaths = [
 	"mathType.py",  # Fails when not installed
 	"oleTypes.py",  # Not our code
 	"setup.py",  # Py2exe
-	"sourceEnv.py",  # Only available when running from source
 ]
 
 sphinxAPIDocs = env.Command(

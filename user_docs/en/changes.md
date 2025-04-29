@@ -25,6 +25,9 @@
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
+  * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
+
 #### Deprecations
 
 ## 2025.1
@@ -111,6 +114,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * Added a general setting to prevent the display turning off during say all or reading with braille.
 This option is enabled by default, but may result in increased battery depletion. (#17649, @LeonarddeR)
+* NVDA is now translated into Bosnian. (#17953)
 
 ### Changes
 

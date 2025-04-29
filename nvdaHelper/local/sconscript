@@ -98,6 +98,7 @@ localLib = env.SharedLibrary(
 		"oleUtils.cpp",
 		"wasapi.cpp",
 		"screenCurtain.cpp",
+		"remoteAccess.cpp",
 	],
 	LIBS=[
 		"advapi32.lib",
@@ -110,6 +111,8 @@ localLib = env.SharedLibrary(
 		detoursLib,
 		"Gdi32",
 		"Gdiplus",
+		"Iphlpapi",
+		"Ws2_32",
 	],
 )
 

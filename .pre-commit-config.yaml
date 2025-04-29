@@ -13,6 +13,7 @@ ci:
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
+  submodules: true
 
 default_language_version:
   python: python3.11
@@ -52,14 +53,14 @@ repos:
     - id: debug-statements
     # Removes trailing whitespace.
     - id: trailing-whitespace
-      types_or: [python, c, c++, batch, markdown]
+      types_or: [python, c, c++, batch, markdown, toml, yaml]
     # Ensures all files end in 1 (and only 1) newline.
     - id: end-of-file-fixer
-      types_or: [python, c, c++, batch, markdown]
+      types_or: [python, c, c++, batch, markdown, toml, yaml]
     # Removes the UTF-8 BOM from files that have it.
     # See https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/codingStandards.md#encoding
     - id: fix-byte-order-marker
-      types_or: [python, c, c++, batch, markdown]
+      types_or: [python, c, c++, batch, markdown, toml, yaml]
     # Validates TOML files.
     - id: check-toml
     # Validates YAML files.
@@ -98,7 +99,7 @@ repos:
   - id: add-trailing-comma
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  # Matches Ruff version in requirements.
+  # Matches Ruff version in pyproject.
   rev: v0.8.1
   hooks:
     - id: ruff
@@ -120,9 +121,17 @@ repos:
   - id: pyright
     alias: pyrightCI
     name: Check types with pyright
-    # use nodejs version of pyright and install requirements.txt for CI
-    additional_dependencies: ["-rrequirements.txt", "pyright[nodejs]"]
+    # use nodejs version of pyright and install pyproject.toml for CI
+    additional_dependencies: [".", "pyright[nodejs]"]
     stages: [manual]  # Only run from CI manually
+
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.6.14
+  hooks:
+    - id: uv-lock
+      name: Verify uv lock file
+      # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
+      args: ["-p3.11"]
 
 - repo: local
   hooks:
@@ -147,7 +156,7 @@ repos:
       types_or: [python, c, c++, batch]
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
-      files: ^(requirements\.txt|runlicensecheck\.bat|pyproject\.toml)$
+      files: ^(runlicensecheck\.bat|pyproject\.toml)$
       entry: ./runlicensecheck.bat
       language: script
       pass_filenames: false
