@@ -473,23 +473,34 @@ class RemoteClient:
 			# Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		elif self.leaderSession.connectedFollowersCount < 1:
+		elif self.leaderSession.connectedFollowersCount < 1 and not self.sendingKeys:
 			# Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 			ui.message(pgettext("remote", "No controlled computers are connected"))
 			return
-		self.sendingKeys = not self.sendingKeys
-		log.info(f"Remote key control {'enabled' if self.sendingKeys else 'disabled'}")
-		self.setReceivingBraille(self.sendingKeys)
 		if self.sendingKeys:
-			self.hostPendingModifiers = gesture.modifiers
-			# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
-			ui.message(pgettext("remote", "Controlling remote computer"))
-			if self.localMachine.isMuted:
-				self.toggleMute()
+			self._switchToLocalControl()
 		else:
-			self.releaseKeys()
-			# Translators: Presented when keyboard control is back to the controlling computer.
-			ui.message(pgettext("remote", "Controlling local computer"))
+			self._switchToRemoteControl(gesture)
+
+	def _switchToLocalControl(self) -> None:
+		"""Switch to controlling the local computer."""
+		self.sendingKeys = False
+		log.info("Remote key control disabled")
+		self.setReceivingBraille(False)
+		self.releaseKeys()
+		# Translators: Presented when keyboard control is back to the controlling computer.
+		ui.message(pgettext("remote", "Controlling local computer"))
+
+	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
+		"""Switch to controlling the remote computer."""
+		self.sendingKeys = True
+		log.info("Remote key control enabled")
+		self.setReceivingBraille(self.sendingKeys)
+		self.hostPendingModifiers = gesture.modifiers
+		# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
+		ui.message(pgettext("remote", "Controlling remote computer"))
+		if self.localMachine.isMuted:
+			self.toggleMute()
 
 	def releaseKeys(self):
 		"""Release all pressed keys on the remote machine.
