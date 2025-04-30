@@ -11,7 +11,7 @@ Including to create new GUID values, and check if an object is a GUID.
 from __future__ import annotations
 from dataclasses import dataclass
 from comtypes import GUID
-from ctypes import windll
+from ctypes import windll, byref
 from .. import lowLevel
 from .. import builder
 from ._base import _TypedInstruction
@@ -47,8 +47,7 @@ class GuidLookupId(_TypedInstruction):
 		guid = registers[self.target.operandId]
 		if not isinstance(guid, GUID):
 			raise TypeError("Expected a GUID")
-		identifierType = self.registers[self.identifierType.operandId]
-		registers[self.result.operandId] = windll.UIAutomationCore.UiaLookupId(identifierType, guid)
+		registers[self.result.operandId] = windll.UIAutomationCore.UiaLookupId(self.identifierType, byref(guid))
 
 @dataclass
 class LookupGuid(_TypedInstruction):
