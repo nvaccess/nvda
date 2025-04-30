@@ -365,13 +365,17 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		):
 			# Translators: Message displayed when the host or key field is empty and the user tries to connect.
 			message = _("Both host and key must be set.")
-			focusTarget = self._selectedPanel.host
+			focusTarget = (
+				self._selectedPanel.host if not self._selectedPanel.host.Value else self._selectedPanel.key
+			)
 		elif self._selectedPanel is self._serverPanel and (
 			not self._selectedPanel.port.GetValue() or not self._selectedPanel.key.GetValue()
 		):
 			# Translators: Message displayed when the port or key field is empty and the user tries to connect.
 			message = _("Both port and key must be set.")
-			focusTarget = self._selectedPanel.port
+			focusTarget = (
+				self._selectedPanel.port if not self._selectedPanel.port.Value else self._selectedPanel.key
+			)
 		if message is not None:
 			gui.messageBox(
 				message,
