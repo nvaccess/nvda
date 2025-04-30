@@ -241,6 +241,19 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			req = request.urlopen("https://portcheck.nvdaremote.com/port/%s" % port)
 			data = req.read()
 			result = json.loads(data)
+
+			# Because we don't know when the containing dialog will next be focusable,
+			# and a window must be focusable in order for calling `SetFocus` to work,
+			# we need to focus the "Key" field when the containing dialog is next active,
+			# as this will happen when it is next focusable.
+			def setFocusOnNextActivate(evt: wx.ActivateEvent):
+				evt.Skip()
+				# Only move focus when this window next becomes the foreground window.
+				if evt.Active:
+					self._externalIPControl.SetFocus()
+					self.GetTopLevelParent().Unbind(wx.EVT_ACTIVATE, handler=setFocusOnNextActivate)
+
+			self.GetTopLevelParent().Bind(wx.EVT_ACTIVATE, setFocusOnNextActivate)
 			wx.CallAfter(self.onGetIPSucceeded, result)
 		except Exception as e:
 			wx.CallAfter(self.onGetIPFail, e)
