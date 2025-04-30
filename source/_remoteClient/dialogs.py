@@ -89,12 +89,24 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 
 	@alwaysCallAfter
 	def _handleKeyGenerated(self, key: str | None = None) -> None:
-		self._keyGenerationProgressDialog.done()
-		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
-		self.key.SetFocus()
 		self._keyConnector.close()
 		self._keyConnector = None
+
+		# Because we don't know when the containing dialog will next be focusable,
+		# and a window must be focusable in order for calling `SetFocus` to work,
+		# we need to focus the "Key" field when the containing dialog is next active,
+		# as this will happen when it is next focusable.
+		def setFocusOnNextActivate(evt: wx.ActivateEvent):
+			evt.Skip()
+			# Only move focus when this window next becomes the foreground window.
+			if evt.Active:
+				self.key.SetFocus()
+				self.GetTopLevelParent().Unbind(wx.EVT_ACTIVATE, handler=setFocusOnNextActivate)
+
+		self.GetTopLevelParent().Bind(wx.EVT_ACTIVATE, setFocusOnNextActivate)
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
 
 	@alwaysCallAfter
 	def _handleConnectionFailed(self) -> None:
