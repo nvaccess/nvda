@@ -20,15 +20,33 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::UI::UIAutomation;
 using namespace winrt::Windows::UI::UIAutomation::Core;
 
-inline py::object get_ctypes_POINTER_func() {
+inline py::module get_ctypes_module() {
 	static py::module ctypes = py::module::import("ctypes");
-	static py::object ctypes_POINTER   = ctypes.attr("POINTER");
+	return ctypes;
+}
+
+inline py::object get_ctypes_POINTER_func() {
+	static py::object ctypes_POINTER   = get_ctypes_module().attr("POINTER");
 	return ctypes_POINTER;
 }
 
-inline py::object get_comtypes_IUnknown_class() {
+inline py::object get_ctypes_addressof_func() {
+	static py::object ctypes_addressof   = get_ctypes_module().attr("addressof");
+	return ctypes_addressof;
+}
+
+inline py::object get_comtypes_module() {
 	static py::module comtypes = py::module::import("comtypes");
-	static py::object comtypes_IUnknown = comtypes.attr("IUnknown");
+	return comtypes;
+}
+
+inline py::object get_comtypes_GUID_class() {
+	static py::object comtypes_GUID = get_comtypes_module().attr("GUID");
+	return comtypes_GUID;
+}
+
+inline py::object get_comtypes_IUnknown_class() {
+	static py::object comtypes_IUnknown = get_comtypes_module().attr("IUnknown");
 	static py::object ptr = get_ctypes_POINTER_func()(comtypes_IUnknown);
 	return ptr;
 }
@@ -81,6 +99,14 @@ inline py::object IInspectableToPythonObject(IInspectable const& insp) {
 			return py::bool_(pv.GetBoolean());
 			case PropertyType::String:
 			return py::str(winrt::to_string(pv.GetString()));
+			case PropertyType::Guid: {
+				GUID guid = pv.GetGuid();
+				py::object guidObj = get_comtypes_GUID_class()();
+				std::uintptr_t addr = get_ctypes_addressof_func()(guidObj).cast<std::uintptr_t>();
+				GUID* pyGuidPtr = reinterpret_cast<GUID*>(addr);
+				*pyGuidPtr = guid;
+				return guidObj;
+			}
 			default:
 				throw py::value_error("Unsupported PropertyType");
 		}
