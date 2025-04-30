@@ -629,6 +629,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 
 class RemoteArray(RemoteBaseObject):
+	_IsTypeInstruction = instructions.IsArray
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewArray(
