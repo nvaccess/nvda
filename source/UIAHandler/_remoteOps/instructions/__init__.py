@@ -91,6 +91,7 @@ from .guid import (
 	NewGuid,
 	IsGuid,
 	GuidLookupId,
+	LookupGuid,
 )
 from .int import (
 	NewInt,

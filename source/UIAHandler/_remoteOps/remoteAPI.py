@@ -18,7 +18,7 @@ from comtypes import (
 	GUID,
 )
 from UIAHandler import UIA
-from .lowLevel import RelativeOffset
+from .lowLevel import RelativeOffset, AutomationIdentifierType
 from . import instructions
 from . import builder
 from .remoteFuncWrapper import (
@@ -385,3 +385,14 @@ class RemoteAPI(builder._RemoteBase):
 	def addCompiletimeComment(self, comment: str):
 		instructionList = self.rob.getDefaultInstructionList()
 		instructionList.addComment(comment)
+
+	def lookupGuidFromAutomationIdentifier(self, automationIdentifier: RemoteInt, identifierType: AutomationIdentifierType) -> RemoteGuid:
+		result = RemoteGuid(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.LookupGuid(
+				result=result,
+				target=RemoteInt.ensureRemote(self.rob, automationIdentifier),
+				identifierType=identifierType,
+			),
+		)
+		return result

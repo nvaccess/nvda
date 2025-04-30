@@ -49,3 +49,13 @@ class GuidLookupId(_TypedInstruction):
 			raise TypeError("Expected a GUID")
 		identifierType = self.registers[self.identifierType.operandId]
 		registers[self.result.operandId] = windll.UIAutomationCore.UiaLookupId(identifierType, guid)
+
+@dataclass
+class LookupGuid(_TypedInstruction):
+	opCode = lowLevel.InstructionType.LookupGuid
+	result: builder.Operand
+	target: builder.Operand
+	identifierType: lowLevel.AutomationIdentifierType
+
+	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
+		raise NotImplementedError("LookupGuid is not implemented locally")
