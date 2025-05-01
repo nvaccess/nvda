@@ -86,5 +86,5 @@ New gestures will be announced there, and localisations can be added to `gesture
 1. Await feedback from NV Access
     - NV Access will provide feedback if any further work is required.
     - You will receive a notification when your proposal is accepted - the request will be merged and closed.
-    - After merging, the changes will become available in [alpha builds](https://download.nvaccess.org/snapshots/alpha/) for testing.
+    - After merging, the changes will become available in [beta builds](https://download.nvaccess.org/snapshots/beta/) for testing.
     The changes will also be made available in the next [beta release](https://download.nvaccess.org/releases/beta/).
