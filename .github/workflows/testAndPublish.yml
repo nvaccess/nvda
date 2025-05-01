@@ -269,6 +269,9 @@ jobs:
       with:
         name: Symbols
         path: output/symbols.zip
+    - name: Install the latest version of uv
+      if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
+      uses: astral-sh/setup-uv@v5
     - name: Upload symbols to Mozilla
       if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
       continue-on-error: true
