@@ -245,27 +245,6 @@ jobs:
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
-  cleanupCache:
-    # Cache deletion on pull_request events cannot occur on PRs from forks
-    # as PRs from forks do not get write permissions from pull_request events.
-    # Alternatively, we can change the event trigger to pull_request_target,
-    # however that might introduce security risks as it grants fork PRs greater permissions.
-    # In these cases we can always let GitHub handle cache deletion:
-    # auto deletion after 7 days or limits are hit
-    name: Cleanup cache
-    permissions:
-      actions: write
-    needs: [checkPot, licenseCheck, unitTests, systemTests]
-    if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cleanup cache
-        shell: bash
-        run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-
   uploadSymbols:
     name: Upload symbols
     runs-on: ubuntu-latest
@@ -300,6 +279,27 @@ jobs:
         shell: bash
         run: |
           echo "Warning: Uploading symbols to Mozilla failed." >> $GITHUB_STEP_SUMMARY
+
+  cleanupCache:
+    # Cache deletion on pull_request events cannot occur on PRs from forks
+    # as PRs from forks do not get write permissions from pull_request events.
+    # Alternatively, we can change the event trigger to pull_request_target,
+    # however that might introduce security risks as it grants fork PRs greater permissions.
+    # In these cases we can always let GitHub handle cache deletion:
+    # auto deletion after 7 days or limits are hit
+    name: Cleanup cache
+    permissions:
+      actions: write
+    needs: [checkPot, licenseCheck, unitTests, systemTests, uploadSymbols]
+    if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup cache
+        shell: bash
+        run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
 
   release:
     name: Release NVDA
