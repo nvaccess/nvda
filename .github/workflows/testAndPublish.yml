@@ -33,7 +33,7 @@ env:
   # feature_buildSymbols: configured
   # feature_uploadSymbolsToMozilla: configured
   # feature_buildAppx: configured
-  # feature_crowdinSync: configured
+  feature_crowdinSync: configured
   # feature_signing: configured
 
 jobs:
@@ -141,6 +141,29 @@ jobs:
         detailed_summary: true
         annotate_only: true
         report_paths: testOutput/unit/unitTests.xml
+
+  crowdinUpload:
+    name: Upload translations to Crowdin
+    runs-on: windows-latest
+    needs: buildNVDA
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
+    steps:
+    - name: Skip if feature disabled
+      if: ${{ !env.feature_crowdinSync }}
+      run: exit 0
+    - name: Checkout cached build
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}
+        key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
+    - name: Upload translations to Crowdin
+      env:
+        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+      run: uv run --with requests --directory appveyor crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 
   createLauncher:
     name: Create launcher
@@ -255,7 +278,7 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
-    needs: [checkPot, licenseCheck, unitTests, systemTests]
+    needs: [checkPot, licenseCheck, unitTests, systemTests, crowdinUpload]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     steps:
