@@ -277,6 +277,8 @@ jobs:
       continue-on-error: true
       # TODO: this script should be moved to ci/scripts
       run: uv run --with requests --directory appveyor mozillaSyms.py
+      env:
+        mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_AUTH_TOKEN }}
     - name: Warn on failure
       if: ${{ failure() }}
       shell: bash
