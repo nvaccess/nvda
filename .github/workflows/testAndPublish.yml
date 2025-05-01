@@ -247,38 +247,38 @@ jobs:
 
   uploadSymbols:
     name: Upload symbols
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: buildNVDA
     steps:
-      - name: Cancel if feature disabled
-        if: ${{ !env.feature_buildSymbols }}
-        shell: bash
-        run: exit 0
-      - name: Checkout cached build
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ github.workspace }}
-          key: ${{ github.ref }}-${{ github.run_id }}
-          fail-on-cache-miss: true
-      - name: Create build symbols
-        env:
-          symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
-        run: ci/scripts/buildSymbolStore.ps1
-      - name: Upload symbols
-        uses: actions/upload-artifact@v4
-        with:
-          name: Symbols
-          path: output/symbols.zip
-      - name: Upload symbols to Mozilla
-        if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
-        continue-on-error: true
-        # TODO: this script should be moved to ci/scripts
-        run: uv run --with requests --directory appveyor mozillaSyms.py
-      - name: Warn on failure
-        if: ${{ failure() }}
-        shell: bash
-        run: |
-          echo "Warning: Uploading symbols to Mozilla failed." >> $GITHUB_STEP_SUMMARY
+    - name: Cancel if feature disabled
+      if: ${{ !env.feature_buildSymbols }}
+      shell: bash
+      run: exit 0
+    - name: Checkout cached build
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}
+        key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
+    - name: Create build symbols
+      env:
+        symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+      run: ci/scripts/buildSymbolStore.ps1
+    - name: Upload symbols
+      uses: actions/upload-artifact@v4
+      with:
+        name: Symbols
+        path: output/symbols.zip
+    - name: Upload symbols to Mozilla
+      if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
+      continue-on-error: true
+      # TODO: this script should be moved to ci/scripts
+      run: uv run --with requests --directory appveyor mozillaSyms.py
+    - name: Warn on failure
+      if: ${{ failure() }}
+      shell: bash
+      run: |
+        echo "Warning: Uploading symbols to Mozilla failed." >> $GITHUB_STEP_SUMMARY
 
   cleanupCache:
     # Cache deletion on pull_request events cannot occur on PRs from forks
