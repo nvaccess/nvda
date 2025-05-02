@@ -147,12 +147,13 @@ Discuss under "testing strategy" heading:
   highlight it under the "Known issues" heading
 
 ### Security precautions taken
+
 Windows allows NVDA to access secure information from a user's desktop while the lock screen is activated.
 When handling NVDAObjects, code should check if an object should be available while the lock screen is activated.
 This can be done checking `utils.security._isSecureObjectWhileLockScreenActivated`.
 If this function returns `True`, code should not process the NVDAObject any further, and return gracefully.
 It is important that information from the object does not reach the user.
 
-Any code which should not performed on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens), should check `globalVars.appArgs.secure` and return gracefully.
+Any code which should not be performed on [secure screens](https://download.nvaccess.org/documentation/userGuide.html#SecureScreens) should check `globalVars.appArgs.secure` and return gracefully.
 If this is a user initiated action `gui.blockAction` should be used to notify the user that the action cannot be performed.
 This can be done by decorating the function with `@blockAction.when(blockAction.Context.SECURE_MODE)`.

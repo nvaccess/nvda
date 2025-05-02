@@ -118,6 +118,10 @@ class RemoteClient:
 
 		:note: Updates menu item state and announces new mute status
 		"""
+		if not self.isConnected():
+			# Translators: Message shown when attempting to mute the remote computer when no session is connected.
+			ui.message(pgettext("remote", "Not connected"))
+			return
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
 		# Translators: Displayed when muting speech and sounds from the remote computer
