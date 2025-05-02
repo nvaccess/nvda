@@ -28,6 +28,7 @@ env:
   START_BUILD_NUMBER: 50000
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: NV Access
+  VSCMD_SKIP_SENDTELEMETRY: 1
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
@@ -78,7 +79,7 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
     - name: Save SCons MSVC Cache
-      if: ${{ steps.get-scons-msvc-cache.outputs.cache-hit != 'true'
+      if: ${{ steps.get-scons-msvc-cache.outputs.cache-hit != 'true'  }}
       uses: actions/cache/save@v4
       with:
         path: .scons_msvc_cache.json
