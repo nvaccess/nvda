@@ -28,6 +28,7 @@ env:
   START_BUILD_NUMBER: 50000
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: NV Access
+  SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
   feature_buildSymbols: configured
