@@ -183,7 +183,7 @@ class AcrobatNode(IAccessible):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
 			except COMError:
-				log.debugWarning(f"COMError trying to get childNum={childNum}")
+				log.debugWarning(f"COMError trying to get {childNum=}")
 				continue
 			if log.isEnabledFor(log.DEBUG):
 				log.debug(f"\t(PDF) get_mathMl: tag={child.GetTagName()}")
