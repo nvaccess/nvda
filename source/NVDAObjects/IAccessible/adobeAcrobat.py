@@ -120,7 +120,7 @@ class AcrobatNode(IAccessible):
 		return super(AcrobatNode, self)._isEqual(other)
 
 	@staticmethod
-	def getMathMLAttributes(node, attrList: list) -> str:
+	def getMathMLAttributes(node: IPDDomElement, attrList: list) -> str:
 		"""Get the MathML attributes in 'attrList' for a 'node' (MathML element)."""
 		attrValues = ""
 		for attr in attrList:
@@ -130,7 +130,7 @@ class AcrobatNode(IAccessible):
 				attrValues += f' {attr}="{val}"'
 		return attrValues
 
-	def _getNodeMathMl(self, node) -> str:
+	def _getNodeMathMl(self, node: IPDDomElement) -> str:
 		"""Traverse the MathML tree and return an XML string representing the math"""
 
 		tag = node.GetTagName()
