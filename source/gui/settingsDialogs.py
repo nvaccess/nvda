@@ -3348,6 +3348,15 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
 
+		self.confirmDisconnect = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
+				label=pgettext("remote", "Confirm when disconnecting as a follower"),
+			),
+		)
+		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnect)
+
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3469,6 +3478,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.playSounds.SetValue(self.config["ui"]["playSounds"])
+		self.confirmDisconnect.SetValue(self.config["ui"]["confirmDisconnect"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3533,6 +3543,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
+		self.config["ui"]["confirmDisconnect"] = self.confirmDisconnect.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
