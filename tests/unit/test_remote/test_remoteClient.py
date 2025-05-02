@@ -101,6 +101,7 @@ class TestRemoteClient(unittest.TestCase):
 	def tearDown(self):
 		self.client = None
 
+	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
 	def test_toggleMute(self):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
