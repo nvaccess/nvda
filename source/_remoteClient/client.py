@@ -201,18 +201,20 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 
-		if (
-			self.followerSession is not None
-			and configuration.getRemoteConfig()["ui"].get("confirmDisconnect", True)
+		if self.followerSession is not None and configuration.getRemoteConfig()["ui"].get(
+			"confirmDisconnect", True
 		):
-			if gui.messageBox(
-				parent=gui.mainFrame,
-				# Translators: Title of the confirmation dialog.
-				caption=_("Confirm Disconnection"),
-				# Translators: Message shown when disconnecting from the remote computer.
-				message=_("Are you sure you want to disconnect from the remote session?"),
-				style=wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_QUESTION
-			) != wx.YES:
+			if (
+				gui.messageBox(
+					parent=gui.mainFrame,
+					# Translators: Title of the confirmation dialog.
+					caption=_("Confirm Disconnection"),
+					# Translators: Message shown when disconnecting from the remote computer.
+					message=_("Are you sure you want to disconnect from the remote session?"),
+					style=wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_QUESTION,
+				)
+				!= wx.YES
+			):
 				return
 
 		log.info("Disconnecting from remote session")
