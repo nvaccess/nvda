@@ -57,6 +57,16 @@ jobs:
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
+    - name: set cache key for SCons MSVC Cache
+      shell: bash
+      run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
+    - id: get-scons-msvc-cache
+      name: Get SCons MSVC Cache
+      uses: actions/cache/restore@v4
+      with:
+        path: .scons_msvc_cache.json
+        key: ${{ env.SCONS_CACHE_KEY }}
+        fail-on-cache-miss: false
     - name: Prepare source code
       shell: cmd
       run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
@@ -67,6 +77,12 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+    - name: Save SCons MSVC Cache
+      if: ${{ steps.get-scons-msvc-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: .scons_msvc_cache.json
+        key: ${{ env.SCONS_CACHE_KEY }}
 
   checkPot:
     name: Check translator comments
