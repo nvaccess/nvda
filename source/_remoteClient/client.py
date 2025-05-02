@@ -202,7 +202,8 @@ class RemoteClient:
 			return
 
 		if self.followerSession is not None and configuration.getRemoteConfig()["ui"].get(
-			"confirmDisconnect", True
+			"confirmDisconnect",
+			True,
 		):
 			if (
 				gui.messageBox(
