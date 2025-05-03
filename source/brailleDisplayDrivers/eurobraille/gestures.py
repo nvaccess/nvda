@@ -122,27 +122,27 @@ GestureMapEntries = {
 		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace"),
 		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace"),
 		"braille_toggleShift": (
-			#"br(eurobraille):dot1+dot7+space",
-			#"br(eurobraille):dot4+dot7+space",
+			# "br(eurobraille):dot1+dot7+space",
+			# "br(eurobraille):dot4+dot7+space",
 			"br(eurobraille):l4",
-			"br(eurobraille):dot7+space"
+			"br(eurobraille):dot7+space",
 		),
-		#"kb:shift": ("br(eurobraille):dot7+space",),
+		# "kb:shift": ("br(eurobraille):dot7+space",),
 		"braille_toggleControl": (
-			#"br(eurobraille):dot1+dot7+dot8+space",
-			#"br(eurobraille):dot4+dot7+dot8+space",
+			# "br(eurobraille):dot1+dot7+dot8+space",
+			# "br(eurobraille):dot4+dot7+dot8+space",
 			"br(eurobraille):l5",
 			"br(eurobraille):dot7+dot8+space",
 		),
-		#"kb:control": ("br(eurobraille):dot7+dot8+space",),
+		# "kb:control": ("br(eurobraille):dot7+dot8+space",),
 		"braille_toggleAlt": (
-			#"br(eurobraille):dot1+dot8+space",
-			#"br(eurobraille):dot4+dot8+space",
+			# "br(eurobraille):dot1+dot8+space",
+			# "br(eurobraille):dot4+dot8+space",
 			"br(eurobraille):l6",
 			"br(eurobraille):dot8+space",
 		),
 		"kb:alt": (
-			#"br(eurobraille):dot8+space",
+			# "br(eurobraille):dot8+space",
 			"br(eurobraille):joystick1Down"
 		),
 		"braille_toggleNVDAKey": ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
@@ -159,7 +159,7 @@ GestureMapEntries = {
 		"braille_toggleWindows": (
 			"br(eurobraille):backspace+dot1+dot2+dot3+dot4",
 			"br(eurobraille):dot2+dot4+dot5+dot6+space",
-			"br(eurobraille):l2+l3"
+			"br(eurobraille):l2+l3",
 		),
 		"kb:control+shift+e": ("br(eurobraille):dot1+dot5+space",),
 	},
