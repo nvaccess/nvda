@@ -6483,7 +6483,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)</source>
-        <target>Kun "Standardinmukainen HID-pistenäyttö" on valittu pistenäyttöajuriksi ja pistenäyttöluettelo avataan, NVDA tunnistaa oikein HID-ajurin valituksi sen sijaan, että näyttäisi "ei valittua ajuria". (#17537, @LeonarddeR)</target>
+        <target>Kun "Standardinmukainen HID-pistenäyttö" on valittu pistenäyttöohjaimeksi ja pistenäyttöluettelo avataan, NVDA tunnistaa oikein HID-ohjaimen valituksi sen sijaan, että näyttäisi "ei valittua ohjainta". (#17537, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3008412e-f390-4f10-92d4-f797d021deb4">
@@ -6493,7 +6493,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors. (#17537, @LeonarddeR)</source>
-        <target>Humanware Brailliant -pistenäyttöajuri on nyt luotettavampi oikean yhteyspisteen valinnassa, mikä parantaa yhteyden vakautta ja vähentää virheitä. (#17537, @LeonarddeR)</target>
+        <target>Humanware Brailliant -pistenäyttöohjain on nyt luotettavampi oikean yhteyspisteen valinnassa, mikä parantaa yhteyden vakautta ja vähentää virheitä. (#17537, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="45d16bcf-9b36-46d8-b50d-817e000d2404">
@@ -8505,7 +8505,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)</source>
-        <target>Kaikkien rivien pistesoluja hyödynnetään käytettäessä monirivistä pistenäyttöä standardinmukaisen HID-pistenäyttöajurin kautta. (#16993, @alexmoon)</target>
+        <target>Kaikkien rivien pistesoluja hyödynnetään käytettäessä monirivistä pistenäyttöä standardinmukaisen HID-pistenäyttöohjaimen kautta. (#16993, @alexmoon)</target>
       </segment>
     </unit>
     <unit id="55923e00-e386-4eb8-8df7-ae3489cdf32d">
@@ -8565,7 +8565,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)</source>
-        <target>Seika Notetaker -ajuri tuottaa nyt asianmukaisesti pistesyötteen väli- ja askelpalautin-näppäimille sekä pisteet+väli/askelpalautin-komennoille. (#16642, @school510587)</target>
+        <target>Seika Notetakerin ohjain tuottaa nyt asianmukaisesti pistesyötteen väli- ja askelpalautin-näppäimille sekä pisteet+väli/askelpalautin-komennoille. (#16642, @school510587)</target>
       </segment>
     </unit>
     <unit id="ded99fa3-6ef3-425a-9d92-a84ec96585d7">
@@ -11354,7 +11354,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)</source>
-        <target>Moniriviset pistenäytöt eivät enää kaada BRLTTY-ajuria, ja niitä käsitellään yhtenä jatkuvana näyttönä. (#15386)</target>
+        <target>Moniriviset pistenäytöt eivät enää kaada BRLTTY-ohjainta, ja niitä käsitellään yhtenä jatkuvana näyttönä. (#15386)</target>
       </segment>
     </unit>
     <unit id="d64b3143-dee9-41c0-916c-0c096dca78fc">
@@ -11404,7 +11404,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)</source>
-        <target>Albatross-pistenäyttöajuri ei enää käsittele ESP32-mikro-ohjainta Albatross-näyttönä. (#15671)</target>
+        <target>Albatross-pistenäyttöohjain ei enää käsittele ESP32-mikro-ohjainta Albatross-näyttönä. (#15671)</target>
       </segment>
     </unit>
     <unit id="a8c2e7e5-12e6-4800-9459-5a64a8a9adf2">
@@ -11532,7 +11532,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)</source>
-        <target>SAPI4-syntetisaattoriajuri tukee nyt asianmukaisesti puhuttuun tekstiin sisällytettyjä äänenvoimakkuuden, nopeuden ja korkeuden muutoksia. (#15271, @LeonarddeR)</target>
+        <target>SAPI 4 -syntetisaattoriohjain tukee nyt asianmukaisesti puhuttuun tekstiin sisällytettyjä äänenvoimakkuuden, nopeuden ja korkeuden muutoksia. (#15271, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="b25d42c8-ead5-4892-98ab-442a78a13d27">
@@ -13345,7 +13345,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to opt-out unwanted drivers from automatic detection, to improve autodetection performance.</source>
-        <target>Pistenäyttöajureita on nyt mahdollista jättää pois automaattisesta tunnistuksesta, mikä parantaa sen suorituskykyä.</target>
+        <target>Pistenäyttöohjaimia on nyt mahdollista jättää pois automaattisesta tunnistuksesta, mikä parantaa sen suorituskykyä.</target>
       </segment>
     </unit>
     <unit id="c3b91e01-79cd-45fe-8490-a0e50b05a30f">
@@ -13540,7 +13540,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)</source>
-        <target>Pistenäyttöjen automaattista tunnistusta käytettäessä on nyt mahdollista jättää ajureita tunnistuksen ulkopuolelle Valitse pistenäyttö -valintaikkunasta. (#15196)</target>
+        <target>Pistenäyttöjen automaattista tunnistusta käytettäessä on nyt mahdollista jättää ohjaimia tunnistuksen ulkopuolelle Valitse pistenäyttö -valintaikkunasta. (#15196)</target>
       </segment>
     </unit>
     <unit id="0284c6ab-4cc7-4155-8d93-10ea47a61ca4">
@@ -13679,7 +13679,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)</source>
-        <target>BRLTTY-ajuri on käytettävissä vain, kun käynnissä on BRLTTY-kopio, jossa BrlAPI on käytössä. (#15335)</target>
+        <target>BRLTTY-ohjain on käytettävissä vain, kun käynnissä on BRLTTY-kopio, jossa BrlAPI on käytössä. (#15335)</target>
       </segment>
     </unit>
     <unit id="61f24a47-d38b-4106-8eed-67248307c662">
@@ -13698,7 +13698,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>  You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)</source>
-        <target>  Automaattinen tunnistus on nyt mahdollista poistaa käytöstä määrätyiltä pistenäyttöajureilta Valitse pistenäyttö -valintaikkunassa. (#15196)</target>
+        <target>  Automaattinen tunnistus on nyt mahdollista poistaa käytöstä määrätyiltä pistenäyttöohjaimilta Valitse pistenäyttö -valintaikkunassa. (#15196)</target>
       </segment>
     </unit>
     <unit id="32f42b03-92cd-4cff-a173-fbc8ccd36407">
@@ -14408,7 +14408,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Baum braille driver: added several braille chord gestures for performing common keyboard commands such as `windows+d` and `alt+tab`.</source>
-        <target>Lisätty Baum-pistenäyttöjen ajuriin useita moniosaisia näppäinkomentoja yleisten näppäinkomentojen, kuten `Win+D` ja `Alt+Sarkain`, suorittamista varten.</target>
+        <target>Lisätty Baum-pistenäyttöjen ohjaimeen useita moniosaisia näppäinkomentoja yleisten näppäinkomentojen, kuten `Win+D` ja `Alt+Sarkain`, suorittamista varten.</target>
       </segment>
     </unit>
     <unit id="bf583280-0928-4543-afd2-9e89b15c9c49">
@@ -14786,7 +14786,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.</source>
-        <target>Kun pistenäyttöä käytetään standardinmukaisella HID-ajurilla, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen.</target>
+        <target>Kun pistenäyttöä käytetään standardinmukaisella HID-ohjaimella, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen.</target>
       </segment>
     </unit>
     <unit id="2780ada1-9eaa-4df3-a9d2-03a703f290b1">
@@ -14924,7 +14924,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)</source>
-        <target>NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ajuriin useasti automaattisen tunnistuksen aikana, mistä on seurauksena puhtaampi loki ja pienempi muistin käyttö. (#14524)</target>
+        <target>NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ohjaimeen useasti automaattisen tunnistuksen aikana, minkä ansiosta loki on selkeämpi ja muistin käyttö vähenee. (#14524)</target>
       </segment>
     </unit>
     <unit id="f90686ed-a5ae-46a8-bebb-fe34649f8783">
@@ -20046,7 +20046,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>There are improvements to braille display drivers including Seika Notetaker, Papenmeier and HID Braille.</source>
-        <target>Parannuksia tehty pistenäyttöajureihin, Seika Notetaker, Papenmeier ja HID Braille mukaan lukien.</target>
+        <target>Tehty parannuksia pistenäyttöohjaimiin, Seika Notetaker, Papenmeier ja HID Braille mukaan lukien.</target>
       </segment>
     </unit>
     <unit id="78c3d54f-8f9a-4ddc-be14-98651e7e16a7">
@@ -20673,7 +20673,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)</source>
-        <target>Korjattu virhe, joka aiheutti NVDA:n kaatumisen Papenmeier-pistenäyttöajuria valittaessa. (#13348)</target>
+        <target>Korjattu virhe, joka aiheutti NVDA:n kaatumisen Papenmeier-pistenäyttöohjainta valittaessa. (#13348)</target>
       </segment>
     </unit>
     <unit id="b2db1d12-7638-4d05-9eec-e464432053ef">
@@ -21710,7 +21710,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The new HID Braille protocol is no longer preferred when another braille display driver can be used. (#13153)</source>
-        <target>Uutta HID Braille -protokollaa ei enää aseteta etusijalle, jos muutakin pistenäyttöajuria voidaan käyttää. (#13153)</target>
+        <target>Uutta HID Braille -protokollaa ei enää aseteta etusijalle, jos muutakin pistenäyttöohjainta voidaan käyttää. (#13153)</target>
       </segment>
     </unit>
     <unit id="11b48a69-52c6-4404-b936-6c7c60c17c6e">
@@ -21778,7 +21778,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This specification aims to standardise support for Braille Displays without needing individual drivers.</source>
-        <target>Sen tarkoituksena on standardoida pistenäyttöjen tuki, jossa ei tarvita valmistajakohtaisia ajureita.</target>
+        <target>Sen tarkoituksena on standardoida pistenäyttöjen tuki, jossa ei tarvita valmistajakohtaisia ohjaimia.</target>
       </segment>
     </unit>
     <unit id="60613682-f3b5-467a-9899-3405387bef00">
@@ -22776,7 +22776,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)</source>
-        <target>Handy Tech -pistenäyttöajurin uudelleenvalitseminen Valitse pistenäyttö -valintaikkunasta ei aiheuta enää virheitä. (#12618)</target>
+        <target>Handy Tech -pistenäyttöohjaimen uudelleenvalitseminen Valitse pistenäyttö -valintaikkunasta ei aiheuta enää virheitä. (#12618)</target>
       </segment>
     </unit>
     <unit id="1d24c5d4-c23e-4195-b7b4-ac88ea419847">
@@ -23491,7 +23491,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fix Seika Braille driver. (#10787)</source>
-        <target>Seika-pistenäyttöjen ajuri korjattu. (#10787)</target>
+        <target>Seika-pistenäyttöjen ohjain korjattu. (#10787)</target>
       </segment>
     </unit>
     <unit id="c64bd3c5-6c8a-4f76-b6e3-f4fd065c0c14">
@@ -28154,7 +28154,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)</source>
-        <target>Tuettujen pistenäyttöajureiden asetuksia on nyt mahdollista muuttaa NVDA:n asetusvalintaikkunan Pistekirjoitus-kategoriasta. (#7452)</target>
+        <target>Tuettujen pistenäyttöohjainten asetuksia on nyt mahdollista muuttaa NVDA:n asetusvalintaikkunan Pistekirjoitus-kategoriasta. (#7452)</target>
       </segment>
     </unit>
     <unit id="534798ae-4271-473d-bcab-27e75bdf2484">
@@ -28254,7 +28254,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)</source>
-        <target>Kun automaattisesti tunnistettu pistenäyttö kytketään bluetoothin kautta, NVDA jatkaa saman ajurin tukemien USB-näyttöjen etsimistä ja vaihtaa USB-yhteyteen, mikäli sellainen tulee saataville. (#8853)</target>
+        <target>Kun automaattisesti tunnistettu pistenäyttö kytketään bluetoothin kautta, NVDA jatkaa saman ohjaimen tukemien USB-näyttöjen etsimistä ja vaihtaa USB-yhteyteen, mikäli sellainen tulee saataville. (#8853)</target>
       </segment>
     </unit>
     <unit id="4ac545c3-833c-4309-bc26-848cf5066514">
@@ -28711,7 +28711,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Please note that starting from this release of NVDA, custom appModules, globalPlugins, braille display drivers and synth drivers will no longer be automatically loaded from your NVDA user configuration directory.</source>
-        <target>Huom: Tästä versiosta alkaen käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriajureita ei enää ladata automaattisesti NVDA:n asetushakemistosta.</target>
+        <target>Huom: Tästä versiosta alkaen käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriohjaimia ei enää ladata automaattisesti NVDA:n asetushakemistosta.</target>
       </segment>
     </unit>
     <unit id="601443e1-67c6-49b3-9675-7a460ea7a336">
@@ -28988,7 +28988,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)</source>
-        <target>NVDA ei enää lataa käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriajureita käyttäjän asetushakemistosta. Tällainen koodi tulee sen sijaan pakata lisäosaksi, jossa on oikeat versiotiedot, jotta varmistetaan, ettei yhteensopimatonta koodia suoriteta NVDA:n nykyisillä versioilla. (#9238)</target>
+        <target>NVDA ei enää lataa käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriohjaimia käyttäjän asetushakemistosta. Tällainen koodi tulee sen sijaan pakata lisäosaksi, jossa on oikeat versiotiedot, jotta varmistetaan, ettei yhteensopimatonta koodia suoriteta NVDA:n nykyisillä versioilla. (#9238)</target>
       </segment>
     </unit>
     <unit id="109f2442-6360-469f-85e3-7d4c33fd59eb">
@@ -30043,7 +30043,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)</source>
-        <target>Jos käyttäjä on sallinut käyttötilastojen lähettämisen, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)</target>
+        <target>Jos käyttäjä on sallinut käyttötilastojen lähettämisen, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ohjainten tulevaa kehitystä voidaan priorisoida paremmin. (#8217)</target>
       </segment>
     </unit>
     <unit id="5b455de4-6ec5-46a9-a78b-2fa004e09295">
@@ -31020,7 +31020,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This is a special release of NVDA which addresses   a bug in the Onecore Windows Speech synthesizer driver, which was causing it to speak with a higher pitch and speed in Windows 10 Redstone 4 (1803). (#8082)</source>
-        <target>Tämä on erikoisversio, joka ratkaisee Windowsin OneCore-syntetisaattoriajurissa olevan virheen,  jonka vuoksi NVDA puhui korkeammalla äänellä ja nopeammin Windows 10:n Redstone 4 (1803) -versiossa. (#8082)</target>
+        <target>Tämä on erikoisversio, joka ratkaisee Windowsin OneCore-syntetisaattoriohjaimessa olevan virheen,  jonka vuoksi NVDA puhui korkeammalla äänellä ja nopeammin Windows 10:n Redstone 4 (1803) -versiossa. (#8082)</target>
       </segment>
     </unit>
     <unit id="7a9ec98f-2f53-42ec-aca5-b6464b45e8e6">
@@ -31179,7 +31179,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459)</source>
-        <target>HIMS Braille Sense/Braille EDGE/Smart Beetle- ja Sync Braille -pistenäyttöjen ajurit on korvattu yhdellä ajurilla. Uusi ajuri otetaan automaattisesti käyttöön aiemman Sync Braille -ajurin käyttäjillä. (#7459)</target>
+        <target>HIMS Braille Sense-, Braille EDGE-, Smart Beetle- ja Sync Braille -pistenäyttöjen ohjaimet on korvattu yhdellä ohjaimella. Uusi ohjain otetaan automaattisesti käyttöön aiemman Sync Braille -ohjaimen käyttäjillä. (#7459)</target>
       </segment>
     </unit>
     <unit id="4e28e0d5-eae8-48f1-84f9-c74c04937878">
@@ -31837,7 +31837,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Braillino, Bookworm and Modular (with old firmware) braille displays from Handy Tech are no longer supported out of the box. Install the Handy Tech Universal Driver and NVDA add-on to use these displays. (#7590)</source>
-        <target>Handy Techin Braillino- ja Bookworm- sekä vanhalla laiteohjelmistolla varustettuja Modular-pistenäyttöjä ei enää tueta suoraan asennuksen jälkeen. Asenna Handy Techin yleisajuri ja NVDA:n lisäosa käyttääksesi niitä. (#7590)</target>
+        <target>Handy Techin Braillino- ja Bookworm- sekä vanhalla laiteohjelmistolla varustettuja Modular-pistenäyttöjä ei enää tueta suoraan asennuksen jälkeen. Asenna Handy Techin yleisohjain ja NVDA:n lisäosa käyttääksesi niitä. (#7590)</target>
       </segment>
     </unit>
     <unit id="2befaa94-0953-46e2-b29d-1702a90880dc">
@@ -34043,7 +34043,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6462)</source>
-        <target>Korjattu harvinainen ongelma, jossa sarjaporttien tutkiminen teki joissakin järjestelmissä pistenäyttöajureista käyttökelvottomia. (#6462)</target>
+        <target>Korjattu harvinainen ongelma, jossa sarjaporttien skannaus teki joissakin järjestelmissä pistenäyttöohjaimista käyttökelvottomia. (#6462)</target>
       </segment>
     </unit>
     <unit id="fb78fcee-a00a-4bc5-8e05-881f3d534f79">
@@ -34063,7 +34063,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to assign gestures to commands for the Handy Tech braille display driver in the NVDA Input Gestures dialog. (#6461)</source>
-        <target>Handy Tech -pistenäyttöjen ajurin komentoihin on nyt mahdollista määrittää eleitä Syöte-eleet-valintaikkunassa. (#6461)</target>
+        <target>Handy Tech -pistenäyttöjen ohjaimen komentoihin on nyt mahdollista määrittää eleitä Syöte-eleet-valintaikkunassa. (#6461)</target>
       </segment>
     </unit>
     <unit id="dd3c5528-9cc8-4871-8571-7b7983bd78d0">
@@ -34382,7 +34382,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6015)</source>
-        <target>Korjattu muutamissa järjestelmissä sarjaportteja etsittäessä ilmennyt harvinainen ongelma, joka teki joistakin pistenäyttöajureista käyttökelvottomia. (#6015)</target>
+        <target>Korjattu muutamissa järjestelmissä sarjaportteja etsittäessä ilmennyt harvinainen ongelma, joka teki joistakin pistenäyttöohjaimista käyttökelvottomia. (#6015)</target>
       </segment>
     </unit>
     <unit id="a7ee8556-6a11-4c88-af25-4e8d64a5c89e">
@@ -39574,7 +39574,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.</source>
-        <target>Korjattu ongelma, joka aiheutti sen, että joissakin järjestelmissä HumanWare Brailliant BI/B -sarjan pistenäytön ajuria ei näytetty Pistekirjoitusasetukset-valintaikkunassa, vaikka sellainen näyttö oli liitettynä USB:n kautta.</target>
+        <target>Korjattu ongelma, joka aiheutti sen, että joissakin järjestelmissä HumanWaren Brailliant BI- ja B-sarjan pistenäytön ohjainta ei näytetty Pistekirjoitusasetukset-valintaikkunassa, vaikka sellainen näyttö oli kytkettynä USB:n kautta.</target>
       </segment>
     </unit>
     <unit id="6f55465b-b9f2-4011-88eb-d195dc05eedd">
@@ -39594,7 +39594,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)</source>
-        <target>Korjattu ongelma, joka aiheutti joissakin tapauksissa Freedom Scientificin pistenäyttöajurin toimimattomuutta, kun portiksi oli määritetty USB. (#3509, #3662)</target>
+        <target>Korjattu ongelma, joka aiheutti joissakin tilanteissa Freedom Scientificin pistenäyttöohjaimen toimimattomuutta, kun portiksi oli määritetty USB. (#3509, #3662)</target>
       </segment>
     </unit>
     <unit id="4b71a80c-1e8e-4a83-8bdd-320a4a1af541">
@@ -40862,7 +40862,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The HumanWare Brailliant BI/B series braille display driver can now be selected when the display is connected via Bluetooth but has never been connected via USB.</source>
-        <target>HumanWare Brailliant BI/B -pistenäyttöajuri on nyt mahdollista valita, kun näyttö on liitetty tietokoneeseen bluetoothilla, mutta ei vielä kertaakaan USB:llä.</target>
+        <target>HumanWare Brailliant BI/B -pistenäyttöohjain on nyt mahdollista valita, kun näyttö on kytketty tietokoneeseen bluetoothilla, mutta ei vielä kertaakaan USB:llä.</target>
       </segment>
     </unit>
     <unit id="854d4ed7-f987-45d8-b2d2-94ac5ccf9886">
@@ -41022,7 +41022,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The eSpeak synthesizer driver now handles reading by character more appropriately (e.g. announcing a foreign letter's name or value rather than just its sound or generic name). (#3106)</source>
-        <target>eSpeak-syntetisaattoriajuri käsittelee nyt merkeittäin lukemista asianmukaisemmin (esim. lukee vierasperäisen kirjaimen nimen tai arvon sen äänen tai yleisnimen sijaan). (#3106)</target>
+        <target>eSpeak-syntetisaattoriohjain käsittelee nyt merkeittäin lukemista asianmukaisemmin (esim. lukee vierasperäisen kirjaimen nimen tai arvon sen äänen tai yleisnimen sijaan). (#3106)</target>
       </segment>
     </unit>
     <unit id="ec27fb96-e601-44dc-b342-f5639338e8d0">
@@ -41611,7 +41611,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated Handy Tech BrailleDriver COM-Server to 1.4.2.0.</source>
-        <target>Handy Techin pistenäyttöajurin COM-palvelin päivitetty versioksi 1.4.2.0.</target>
+        <target>Handy Techin pistenäyttöohjaimen COM-palvelin päivitetty versioksi 1.4.2.0.</target>
       </segment>
     </unit>
     <unit id="d4435516-6745-4ac5-9cf6-5d410076c80d">
@@ -42319,7 +42319,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Extending NVDA's functionality  has been made easier with the addition of an Add-ons Manager (found under Tools in the NVDA menu) allowing you to install and uninstall new NVDA add-on packages (.nvda-addon files) containing plugins and drivers. Note the Add-on manager does not show older custom plugins and drivers manually copied in to your configuration directory. (#213)</source>
-        <target>NVDA:n toiminnallisuuden laajentaminen on tehty helpommaksi lisäosien hallinnalla (löytyy NVDA-valikosta Työkalut-valikon alta), joka mahdollistaa liitännäisiä ja ajureita sisältävien lisäosapakettien (.nvda-addon-tiedostojen) asentamisen ja poistamisen. Huomaa, että manuaalisesti asetushakemistoon kopioidut vanhemmat liitännäiset ja ajurit eivät näy lisäosien hallinnassa. (#213)</target>
+        <target>NVDA:n toiminnallisuuden laajentaminen on tehty helpommaksi lisäosien hallinnalla (löytyy NVDA-valikosta Työkalut-valikon alta), joka mahdollistaa liitännäisiä ja ohjaimia sisältävien lisäosapakettien (.nvda-addon-tiedostojen) asentamisen ja poistamisen. Huomaa, että manuaalisesti asetushakemistoon kopioidut vanhemmat liitännäiset ja ohjaimet eivät näy lisäosien hallinnassa. (#213)</target>
       </segment>
     </unit>
     <unit id="0aa87e76-0df1-4933-b6df-d8874a1184ed">
@@ -45364,7 +45364,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Handy Tech braille displays can now be used without installing the Handy Tech universal driver. (#854)</source>
-        <target>Handy Tech -pistenäyttöjä on nyt mahdollista käyttää asentamatta yleisajuria. (#854)</target>
+        <target>Handy Tech -pistenäyttöjä on nyt mahdollista käyttää ilman yleisohjainta. (#854)</target>
       </segment>
     </unit>
     <unit id="7902bf9c-271c-4075-94b5-98c85418d889">
@@ -45794,7 +45794,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now switches to the appropriate braille display driver when you revert to saved configuration. (#1346)</source>
-        <target>NVDA vaihtaa nyt asianmukaiseen pistenäyttöajuriin tallennettuja asetuksia palautettaessa. (#1346)</target>
+        <target>NVDA vaihtaa nyt asianmukaiseen pistenäyttöohjaimeen tallennettuja asetuksia palautettaessa. (#1346)</target>
       </segment>
     </unit>
     <unit id="0fc606d9-2917-4557-8f58-01efe038bd20">
@@ -46363,7 +46363,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a driver for the MDV Lilli braille display. (#241)</source>
-        <target>Lisätty ajuri MDV Lilli -pistenäytölle. (#241)</target>
+        <target>Lisätty ohjain MDV Lilli -pistenäytölle. (#241)</target>
       </segment>
     </unit>
     <unit id="40cf94e4-0263-4388-8931-bf0e82cb2bbf">
@@ -46483,7 +46483,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.</source>
-        <target>NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Aiemmin etuliitteenä näytettiin käytettävän ajurin nimi, josta ei ole hyötyä normaalikäyttäjälle.</target>
+        <target>NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Aiemmin etuliitteenä näytettiin käytettävän ohjaimen nimi, josta ei ole hyötyä normaalikäyttäjälle.</target>
       </segment>
     </unit>
     <unit id="838e8d4c-0e46-4db5-accf-9fa050c52601">
@@ -47561,7 +47561,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a synthesizer driver for the Newfon synthesizer. Note that this requires a special version of Newfon. (#206)</source>
-        <target>Lisätty ajuri venäjänkieliselle Newfon-puhesyntetisaattorille. (Edellyttää Newfonin erikoisversiota). (#206)</target>
+        <target>Lisätty ohjain venäjänkieliselle Newfon-puhesyntetisaattorille. (Edellyttää Newfonin erikoisversiota). (#206)</target>
       </segment>
     </unit>
     <unit id="0192e245-46c3-4445-b9ff-a805e48f84d0">
@@ -47711,7 +47711,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a driver for the Optelec ALVA BC6 series braille displays.</source>
-        <target>Lisätty ajuri Optelec ALVA BC6 -sarjan pistenäytöille</target>
+        <target>Lisätty ohjain Optelec ALVA BC6 -sarjan pistenäytöille</target>
       </segment>
     </unit>
     <unit id="93665fe1-f4fe-41b1-a8cc-325b0f35f23d">
@@ -47771,7 +47771,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration  directory. (#337)</source>
-        <target>Mukautetut sovellusmoduulit sekä pistenäyttö- ja puhesyntetisaattoriajurit tallennetaan nyt käyttäjän asetushakemistoon. (#337)</target>
+        <target>Mukautetut sovellusmoduulit sekä pistenäyttö- ja puhesyntetisaattoriohjaimet tallennetaan nyt käyttäjän asetushakemistoon. (#337)</target>
       </segment>
     </unit>
     <unit id="d76773a7-7387-437d-9a98-177a60d8ec1a">
@@ -48421,7 +48421,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Rewritten SAPI4 synthesizer driver which replaces the sapi4serotek and sapi4activeVoice drivers and should fix the problems encountered with these drivers.</source>
-        <target>Uudelleenkirjoitettu SAPI 4 -puhesyntetisaattoriajuri, joka korvaa sapi4serotek- ja sapi4activeVoice-ajurit, sekä korjaa niiden kanssa ilmenneitä ongelmia.</target>
+        <target>Uudelleenkirjoitettu SAPI 4 -puhesyntetisaattoriohjain, joka korvaa sapi4serotek- ja sapi4activeVoice-ohjaimet, sekä korjaa niiden kanssa ilmenneitä ongelmia.</target>
       </segment>
     </unit>
     <unit id="32eb6c39-3d67-4c5d-a356-716965771b23">
@@ -48511,7 +48511,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improve performance of eSpeak with some Windows Vista audio drivers.</source>
-        <target>Paranneltu eSpeakin suorituskykyä joidenkin Windows Vistan ääniajureiden kanssa.</target>
+        <target>Paranneltu eSpeakin suorituskykyä joidenkin Windows Vistan ääniohjainten kanssa.</target>
       </segment>
     </unit>
     <unit id="7db0d0bf-1414-449a-9182-d2503471e5c1">
@@ -48771,7 +48771,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The eSpeak synthesizer driver no longer stops speaking completely after a single error.</source>
-        <target>eSpeak-puhesyntetisaattoriajuri ei enää lakkaa kokonaan puhumasta yksittäisen virheen jälkeen.</target>
+        <target>eSpeak-puhesyntetisaattoriohjain ei enää lakkaa kokonaan puhumasta yksittäisen virheen jälkeen.</target>
       </segment>
     </unit>
     <unit id="61dcd6c9-1000-44e9-99ef-9c6db3482fb8">
@@ -49331,7 +49331,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fix bug in the sapi4serotek driver where the pitch could get locked at a particular value, i.e. stays high after reading a capital letter. (#89)</source>
-        <target>Korjattu sapi4serotek-ajurin virhe, joka aiheutti sen, että äänenkorkeus saattoi lukittua johonkin tiettyyn arvoon, ts. jäi korkeaksi ison kirjaimen jälkeen. (#89)</target>
+        <target>Korjattu sapi4serotek-ohjaimen virhe, joka aiheutti sen, että äänenkorkeus saattoi lukittua johonkin tiettyyn arvoon, ts. jäi korkeaksi ison kirjaimen jälkeen. (#89)</target>
       </segment>
     </unit>
     <unit id="eaf3bb50-ab9a-4658-a17a-3d577c59118f">
@@ -50701,7 +50701,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added Sapi4 support to NVDA. Currently there are two sapi4 drivers, one based on code contributed by Serotek Corporation, and one using the ActiveVoice.ActiveVoice com Interface. Both these drivers have issues, see which one works best for you.</source>
-        <target>Lisätty SAPI4-tuki. Ajureita on kaksi, yksi Serotek Corporationin lahjoittamaan koodiin perustuva ja yksi ActiveVoice.ActiveVoice-COM-rajapintaa käyttävä ajuri. Molemmissa on ongelmia, joten kannattaa kokeilla, kumpi toimii kenelläkin parhaiten.</target>
+        <target>Lisätty SAPI 4 -tuki. Ohjaimia on kaksi, yksi Serotek Corporationin lahjoittamaan koodiin perustuva ja yksi ActiveVoice.ActiveVoice-COM-rajapintaa käyttävä. Molemmissa on ongelmia, joten kannattaa kokeilla, kumpi toimii parhaiten.</target>
       </segment>
     </unit>
     <unit id="5dcc9b4a-1a9e-47ef-a1dd-4ee252f98a4b">
@@ -50751,7 +50751,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a synth driver called Silence. This is a synth driver that does not speak anything, allowing NVDA to stay completely silent at all times. Eventually this could be used along with Braille support, when we have it.</source>
-        <target>Lisätty Ei puhetta -syntetisaattoriajuri. Tällä ajurilla NVDA:n saa pysymään koko ajan täysin hiljaa. Tätä voidaan käyttää yhdessä pistenäyttötuen kanssa, kunhan sellainen tulee.</target>
+        <target>Lisätty Ei puhetta -syntetisaattoriohjain. Tällä ohjaimella NVDA:n saa pysymään koko ajan täysin hiljaa. Tätä voidaan käyttää yhdessä pistenäyttötuen kanssa, kunhan sellainen tulee.</target>
       </segment>
     </unit>
     <unit id="bf806169-d95c-43c8-b262-c3a7bacb7618">
