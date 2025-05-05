@@ -360,7 +360,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		} else {
 			// Silence ends in this chunk. Skip the silence and continue.
 			data += silenceSize;
-			size -= silenceSize;
+			size -= (unsigned int)silenceSize;
 			remainingFrames = size / format.nBlockAlign;
 			isTrimmingLeadingSilence = false;  // Stop checking for silence
 
