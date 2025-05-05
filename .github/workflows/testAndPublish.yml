@@ -28,7 +28,9 @@ env:
   START_BUILD_NUMBER: 50000
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: NV Access
+  # Don't send telemetry to Microsoft when using MSVC tooling, avoiding an unnecessary PowerShell script invocation.
   VSCMD_SKIP_SENDTELEMETRY: 1
+  # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
@@ -61,10 +63,13 @@ jobs:
     - name: Set cache key for SCons MSVC Cache
       shell: bash
       run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
+    # On GithubActions, it can take more than two minutes for SCons to collect information about MSVC tooling, majorly impacting build performance.
+    # This information is static for the current GithubActions runner image.
+    # Therefore, cache this information with a key scoped to the current image version, ensuring that subsequent workflow runs will be much faster.
     - name: SCons MSVC Cache
       uses: actions/cache@v4
       with:
-        path: .scons_msvc_cache.json
+        path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
