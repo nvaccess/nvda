@@ -114,3 +114,17 @@ scons launcher version=test1
 ```
 
 For more see the [sconstruct file](../../sconstruct).
+
+## Creating experimental 64-bit builds
+
+To use NVDA's experimental 64-bit support, instruct UV to use the `.nvdaX64.env` environment variables.
+
+```ps
+$env:UV_ENV_FILE="<NVDAProjectDir>\.nvdaX64.env"
+```
+
+or
+
+```cmd
+set UV_ENV_FILE="<NVDAProjectDir>\.nvdaX64.env"
+```
