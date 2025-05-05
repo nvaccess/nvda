@@ -8,9 +8,11 @@
 from ctypes import POINTER, windll
 from ctypes.wintypes import BOOL, DWORD, HANDLE
 
+__all__ = ("OpenProcessToken",)
 
-_dll = windll.advapi32
-OpenProcessToken = _dll.OpenProcessToken
+
+dll = windll.advapi32
+OpenProcessToken = dll.OpenProcessToken
 """
 opens the access token associated with a process.
 .. seealso::

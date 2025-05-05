@@ -8,6 +8,16 @@
 from ctypes import WINFUNCTYPE, c_int, c_long, c_longlong, c_void_p, sizeof, windll
 from ctypes.wintypes import BOOL, DWORD, HHOOK, HINSTANCE, HWND, LPARAM, LPMSG, UINT, WPARAM
 
+__all__ = (
+	"LRESULT",
+	"CallNextHookEx",
+	"GetMessage",
+	"HOOKPROC",
+	"SetWindowsHookEx",
+	"DefWindowProc",
+)
+
+
 # LRESULT is defined as LONG_PTR (signed type)
 if sizeof(c_long) == sizeof(c_void_p):
 	LRESULT = c_long
@@ -17,9 +27,9 @@ else:
 	raise RuntimeError("Unsupported platform")
 
 
-_dll = windll.user32
+dll = windll.user32
 
-CallNextHookEx = _dll.CallNextHookEx
+CallNextHookEx = dll.CallNextHookEx
 """
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callnexthookex
@@ -32,7 +42,7 @@ CallNextHookEx.argtypes = (
 )
 CallNextHookEx.restype = LRESULT
 
-GetMessage = _dll.GetMessageW
+GetMessage = dll.GetMessageW
 """
 Retrieves a message from the calling thread's message queue, dispatching incoming sent messages until a posted message is available for retrieval.
 
@@ -49,7 +59,7 @@ GetMessage.restype = BOOL
 
 HOOKPROC = WINFUNCTYPE(LRESULT, c_int, WPARAM, LPARAM)  # noqa: F405
 
-SetWindowsHookEx = _dll.SetWindowsHookExW
+SetWindowsHookEx = dll.SetWindowsHookExW
 SetWindowsHookEx.argtypes = (
 	c_int,  # idHook
 	HOOKPROC,  # lpfn
@@ -58,7 +68,7 @@ SetWindowsHookEx.argtypes = (
 )
 SetWindowsHookEx.restype = HHOOK
 
-DefWindowProc = _dll.DefWindowProcW
+DefWindowProc = dll.DefWindowProcW
 """
 Calls the default window procedure to provide default processing for any window messages that an application does not process.
 

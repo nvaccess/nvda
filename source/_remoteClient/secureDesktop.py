@@ -219,7 +219,7 @@ class SecureDesktopHandler:
 
 			# Check that a socket is open on the right IP and port and with the same owning process image
 			processImageName = create_unicode_buffer(1024)
-			kernel32.getModuleFileName(0, processImageName, 1024)
+			kernel32.GetModuleFileName(0, processImageName, 1024)
 			if not localLib.localListeningSocketExists(port, processImageName):
 				raise RuntimeError("Matching socket not open.")
 

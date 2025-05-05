@@ -8,9 +8,15 @@
 from ctypes import c_wchar_p, windll
 from ctypes.wintypes import DWORD, HANDLE, HMODULE
 
-_dll = windll.kernel32
+__all__ = (
+	"GetModuleHandle",
+	"GetModuleFileName",
+)
 
-GetModuleHandle = _dll.GetModuleHandleW
+
+dll = windll.kernel32
+
+GetModuleHandle = dll.GetModuleHandleW
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
 
@@ -20,12 +26,12 @@ Retrieves a module handle for the specified module, which must have been loaded 
 GetModuleHandle.argtypes = (c_wchar_p,)
 GetModuleHandle.restype = HMODULE
 
-getModuleFileName = _dll.GetModuleFileNameW
+GetModuleFileName = dll.GetModuleFileNameW
 """
 Retrieves the fully qualified path for the file that contains the specified module, which must have been loaded by the current process.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulefilenamew
 """
-getModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
-getModuleFileName.restype = DWORD
+GetModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
+GetModuleFileName.restype = DWORD
