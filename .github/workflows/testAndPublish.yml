@@ -58,7 +58,7 @@ jobs:
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
-    - name: set cache key for SCons MSVC Cache
+    - name: Set cache key for SCons MSVC Cache
       shell: bash
       run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
     - name: SCons MSVC Cache
