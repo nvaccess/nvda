@@ -346,6 +346,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self.Fit()
 		self.CenterOnScreen()
 		self._connectionModeControl.SetFocus()
+		self.Bind(wx.EVT_SHOW, self._onShow)
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		"""Respond to changing between using a control server or hosting it locally"""
@@ -414,6 +415,12 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			port=port,
 			insecure=insecure,
 		)
+
+	def _onShow(self, evt: wx.ShowEvent):
+		"""Make sure this dialog is focused when opened."""
+		self.Raise()
+		self.SetFocus()
+		evt.Skip()
 
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
