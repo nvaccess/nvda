@@ -635,7 +635,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	):
 		for i in levelRange:
 			if not (0 < i < 10):
-				log.debug(f"Skipping adding quick navigation key for heading level {i}.")
+				log.error(f"Could not add quick navigation key for heading level {i}; only levels 1 to 9 supported.")
 				continue
 			cls.addQuickNav(
 				f"heading{i}",
