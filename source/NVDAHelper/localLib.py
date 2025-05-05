@@ -6,6 +6,7 @@
 
 import os
 from ctypes import (
+	c_ushort,
 	c_void_p,
 	c_size_t,
 	cdll,
@@ -613,6 +614,13 @@ wasPlay_startup = dll.wasPlay_startup
 wasPlay_startup.restype = HRESULT
 wasPlay_startup.argtypes = ()
 
+wasPlay_startTrimmingLeadingSilence = dll.wasPlay_startTrimmingLeadingSilence
+wasPlay_startTrimmingLeadingSilence.argtypes = (
+	HWasapiPlayer,  # player
+	c_bool,  # start
+)
+wasPlay_startTrimmingLeadingSilence.restype = None
+
 wasSilence_init = dll.wasSilence_init
 wasSilence_init.restype = HRESULT
 wasSilence_init.argtypes = (
@@ -662,3 +670,11 @@ calculateWordOffsets.argtypes = (
 	POINTER(c_int),  # startOffset
 	POINTER(c_int),  # endOffset
 )
+
+isScreenFullyBlack = dll.isScreenFullyBlack
+isScreenFullyBlack.argtypes = tuple()
+isScreenFullyBlack.restype = c_bool
+
+localListeningSocketExists = dll.localListeningSocketExists
+localListeningSocketExists.argtypes = (c_ushort, c_wchar_p)
+localListeningSocketExists.restype = c_bool
