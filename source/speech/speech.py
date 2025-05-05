@@ -1893,9 +1893,7 @@ def _getTextInfoSpeech_considerSpelling(
 	speechSequence: SpeechSequence,
 	language: str,
 ) -> Generator[SpeechSequence, None, None]:
-	# zzz Replacing if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
 	if onlyInitialFields or speechSequence:
-		# zzz replaced if onlyInitialFields or speechSequence:
 		yield speechSequence
 	if not onlyInitialFields:
 		spellingSequence = list(
