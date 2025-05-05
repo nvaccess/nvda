@@ -634,16 +634,23 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		levelRange: range,
 	):
 		for i in levelRange:
+			if not (0 < i < 10):
+				log.debug(f"Skipping adding quick navigation key for heading level {i}.")
+				continue
 			cls.addQuickNav(
 				f"heading{i}",
 				key=f"{i}",
-				# Translators: Input help message for a Word quick navigation command in browse mode.
+				# Translators: Input help message for a quick navigation command in browse mode.
+				# {i} will be replaced with the level number.
 				nextDoc=_("Moves to the next heading at level {i}").format(i=i),
 				# Translators: Message presented when the browse mode element is not found.
+				# {i} will be replaced with the level number.
 				nextError=_("No next heading at level {i}").format(i=i),
 				# Translators: Input help message for a quick navigation command in browse mode.
+				# {i} will be replaced with the level number.
 				prevDoc=_("Moves to the previous heading at level {i}").format(i=i),
 				# Translators: Message presented when the browse mode element is not found.
+				# {i} will be replaced with the level number.
 				prevError=_("No previous heading at level {i}").format(i=i),
 			)
 
