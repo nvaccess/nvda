@@ -788,7 +788,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report spelling errors command.
-		description=_("Cycles through the possible choices to report spelling errors"),
+		description=_("Cycles through options for how to report spelling errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture):

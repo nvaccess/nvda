@@ -2760,8 +2760,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			"DocumentFormattingSettingsSpellingErrors",
 			self.spellingErrorsCombo,
 		)
-		reportSpellingErrors = config.conf["documentFormatting"]["reportSpellingErrors"]
-		self.spellingErrorsCombo.SetSelection(reportSpellingErrors)
+		self.spellingErrorsCombo.SetSelection(config.conf["documentFormatting"]["reportSpellingErrors"])
 
 		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel

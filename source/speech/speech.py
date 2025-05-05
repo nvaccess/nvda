@@ -1493,7 +1493,7 @@ def speakTextInfo(
 def getTextInfoSpeech(  # noqa: C901
 	info: textInfos.TextInfo,
 	useCache: Union[bool, SpeakTextInfoState] = True,
-	formatConfig: Dict[str, bool | int] = None,
+	formatConfig: dict[str, bool | int] | None = None,
 	unit: Optional[str] = None,
 	reason: OutputReason = OutputReason.QUERY,
 	_prefixSpeechCommand: Optional[SpeechCommand] = None,
