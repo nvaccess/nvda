@@ -2609,7 +2609,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if [reporting of spelling errors](#DocumentFormattingSettingsSpellingErrors) is enabled in NVDA's Document Formatting Settings.
+This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -2951,7 +2951,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors [(Off, Speech, Sound)](#DocumentFormattingSettingsSpellingErrors)
+  * Spelling errors [(Off, Speech, Sound)](#reportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3000,7 +3000,7 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling errors reporting {#DocumentFormattingSettingsSpellingErrors}
+##### Spelling errors reporting {#reportSpellingErrors}
 
 This option allows you to configure how spelling errors are reported while reading text.
 The "Report spelling errors" combo box has three options.

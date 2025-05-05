@@ -2757,7 +2757,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			choices=[i.displayString for i in ReportSpellingErrors],
 		)
 		self.bindHelpEvent(
-			"DocumentFormattingSettingsSpellingErrors",
+			"reportSpellingErrors",
 			self.spellingErrorsCombo,
 		)
 		self.spellingErrorsCombo.SetSelection(config.conf["documentFormatting"]["reportSpellingErrors"])
