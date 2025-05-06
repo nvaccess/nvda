@@ -171,12 +171,18 @@ class AcrobatNode(IAccessible):
 
 	def _get_mathMl(self) -> str:
 		"""Return the MathML associated with a Formula tag"""
-		# There are two ways that MathML can be represented in a PDF:
+		# There are three ways that MathML can be represented in a PDF:
 		# 1. As a series of nested tags, each with a MathML element as the value.
 		# 2. As a Formula tag with MathML as the value (comes from MathML in an Associated File)
+		# 3. As a custom Microsoft Office attribute (MSFT_MathML) on the Formula tag.
 		if self.pdDomNode is None:
 			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
 			raise LookupError
+
+		# First, fetch and return the MSFT_MathML attribute if it exists.
+		math = self.pdDomNode.GetAttribute("MSFT_MathML", "MSFT_Office")
+		if math:
+			return math
 
 		# see if it is MathML tagging is used
 		for childNum in range(self.pdDomNode.GetChildCount()):
