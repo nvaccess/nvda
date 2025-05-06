@@ -1,4 +1,4 @@
-name: Rebuild English User Documentation for Translation 
+name: Rebuild English User Documentation for Translation
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
       run: |
         # for any English markdown files changed within the commits of this push,
         # update the corresponding xliff file (if one exists) to reflect the current markdown file,
-        # keeping existing translation IDs in tact. 
+        # keeping existing translation IDs in tact.
         $ErrorActionPreference = 'Stop'
         $changedFiles = git diff --name-only ${{github.event.before}}.. -- user_docs/en/*.md
         foreach ($file in $changedFiles) {
@@ -70,7 +70,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path ~/.ssh
           # Add github.com to the list of known hosts for ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          # set the private key of the Github deploy key as the ssh key 
+          # set the private key of the Github deploy key as the ssh key
           $privateKey = "${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY }}"
           $privateKey | Out-File -FilePath ~/.ssh/id_rsa -Encoding ascii
           # Tell git to use ssh for pushing

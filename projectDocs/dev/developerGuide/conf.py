@@ -8,13 +8,8 @@
 # -- Path setup --------------------------------------------------------------
 
 import os
-import sys
 
 _appDir = os.path.abspath(os.path.join("..", "..", "..", "source"))
-
-sys.path.insert(0, _appDir)
-import sourceEnv  # noqa: F401, E402
-
 
 # Apply several monkey patches to comtypes.
 # Add our `comInterfaces` to the `comtypes.gen` search path to replicate the behavior at runtime

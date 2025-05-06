@@ -11,20 +11,20 @@ Here is an overview of the most important support sources.
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
 * The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
-* [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
+* [NVDA development snapshots](https://download.nvaccess.org/snapshots/alpha/): Automatically generated builds of the project in its current state of development
 * [Translating NVDA](../translating/readme.md): Information about how to translate NVDA into another language
 
 ### Documentation
 
-* [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
-* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
-* [Key Commands](https://www.nvaccess.org/files/nvda/documentation/keyCommands.html)
-* [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
+* [NVDA User Guide](https://download.nvaccess.org/documentation/userGuide.html)
+* [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html)
+* [Key Commands](https://download.nvaccess.org/documentation/keyCommands.html)
+* [Changes in the latest release](https://download.nvaccess.org/documentation/changes.html)
 * [Release process](./releaseProcess.md)
 
 ### Add-ons
 
-* [The NVDA Add-on store](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
+* [The NVDA Add-on store](https://download.nvaccess.org/documentation/userGuide.html#AddonsManager)
 * [Community add-ons website](https://addons.nvda-project.org/).
 This website is considered legacy software, using the NVDA Add-on Store instead is encouraged.
 
