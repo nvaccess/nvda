@@ -94,7 +94,7 @@ NVDA will beep if you are on an untranslated or fuzzy message.
 If you are using a braille display you'll see a star sign in-front of the messages you have to translate.
 
 You may want to spell the original string to be aware of any punctuation mark, capital letters, etc.
-To copy the original string into the Translated text control ready for further translation, you can press `control+b`. 
+To copy the original string into the Translated text control ready for further translation, you can press `control+b`.
 You may then replace it with your translation as normal.
 
 Press `control+s` at any moment to save your work.
