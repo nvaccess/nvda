@@ -45,6 +45,7 @@ HTML_HEADERS = """
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css">
+<link rel="shortcut icon" href="nvda.ico">
 {extraStylesheet}
 </head>
 <body>

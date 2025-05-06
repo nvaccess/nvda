@@ -311,6 +311,7 @@ freeze(
 				"*.xliff",
 				"*/user_docs/styles.css",
 				"*/user_docs/numberedHeadings.css",
+				"*/source/images/nvda.ico",
 				"*/developerGuide.*",
 			),
 		)

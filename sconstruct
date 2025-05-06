@@ -331,6 +331,7 @@ for po in env.Glob(sourceDir.path + "/locale/*/lc_messages/*.po"):
 
 styles = os.path.join(userDocsDir.path, "styles.css")
 numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
+logo = os.path.join(sourceDir.path, "images", "nvda.ico")
 
 # Create Non-english md files in user_docs from localized xliff and English skel files
 for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
@@ -365,6 +366,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
 	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
+	installedLogo = env.Install(styleInstallPath, logo)
 	env.Depends(
 		htmlFile,
 		[
@@ -586,6 +588,11 @@ outputHeadingStylesFile = env.Command(
 	outputDir.File("numberedHeadings.css"),
 	userDocsDir.File("numberedHeadings.css"),
 	Copy("$TARGET", "$SOURCE"),
+)
+outputLogoFile = env.Command(
+	outputDir.File("nvda.ico"),
+	sourceDir.File("images/nvda.ico"),
+	Copy("$TARGET", "$SOURCE")
 )
 changesFile = env.Command(
 	outputDir.File("%s_changes.html" % outFilePrefix),
