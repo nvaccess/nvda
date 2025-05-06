@@ -54,9 +54,6 @@ PoEdit's homepage is: <http://www.poedit.net/>
 1. Download the latest Windows PoEdit version at <https://poedit.net/download>
 1. Install it by following the on-screen instructions, the default options should be sufficient.
 
-As PoEdit only supports viewing approved strings, large translator teams need to co-ordinate submitting unapproved strings to prevent conflicts.
-Using Crowdin's interface avoids this problem.
-
 #### Locating the NVDA l10n utility
 
 The NVDA l10n utility is required for safely and efficiently downloading and uploading translation files from / to Crowdin when translating with Poedit.
