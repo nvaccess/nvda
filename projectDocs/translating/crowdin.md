@@ -82,7 +82,7 @@ This will be saved in ~/.nvda_crowdin for future use.
 
 If your language team has more than one translator who may be downloading, translating and uploading at the same time, it is important that once you have downloaded the file, that you save a copy before you start translating with Poedit.
  This then allows you to provide l10nUtil with this original file when uploading, so that it can just upload only what has changed, which will avoid accidentally overriding another translator's work.
- 
+
 #### Translating po / xliff files using Poedit
 
 After opening a .po or .xliff file you have previously downloaded with NVDA's l10n utility, you will be placed on a list with all of the strings to translate.
