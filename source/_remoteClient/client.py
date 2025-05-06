@@ -20,6 +20,10 @@ from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
+from gui.message import MessageDialog
+from gui.message import DefaultButton
+from gui.message import ReturnCode
+from gui.message import DialogType
 import scriptHandler
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
@@ -201,21 +205,24 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 
-		if self.followerSession is not None and configuration.getRemoteConfig()["ui"].get(
-			"confirmDisconnect",
-			True,
+		if (
+			self.followerSession is not None
+			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
 		):
-			if (
-				gui.messageBox(
-					parent=gui.mainFrame,
-					# Translators: Title of the confirmation dialog.
-					caption=_("Confirm Disconnection"),
-					# Translators: Message shown when disconnecting from the remote computer.
-					message=_("Are you sure you want to disconnect from the remote session?"),
-					style=wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_QUESTION,
-				)
-				!= wx.YES
-			):
+			confirmation_buttons = (DefaultButton.YES, DefaultButton.NO.value._replace(defaultFocus=True))
+
+			dialog = MessageDialog(
+				parent=gui.mainFrame,
+				title=pgettext("remote", "Confirm Disconnection"),
+				message=pgettext(
+					"remote", "Are you sure you want to disconnect from the Remote Access session?"
+				),
+				dialogType=DialogType.WARNING,
+				buttons=confirmation_buttons,
+			)
+
+			if dialog.ShowModal() != ReturnCode.YES:
+				log.info("Remote disconnection cancelled by user.")
 				return
 
 		log.info("Disconnecting from remote session")

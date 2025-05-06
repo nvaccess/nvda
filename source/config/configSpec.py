@@ -362,7 +362,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		playSounds = boolean(default=True)
-		confirmDisconnect = boolean(default=True)
+		confirmDisconnectAsFollower = boolean(default=True)
 """
 
 #: The configuration specification
