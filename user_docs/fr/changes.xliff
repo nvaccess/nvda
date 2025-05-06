@@ -5624,9 +5624,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Automatic updates (#3208):</source>
-        <target>Mises à jour automatqiques (#3208):</target>
+        <target>Mises à jour automatiques (#3208):</target>
       </segment>
     </unit>
     <unit id="be447b8c-de47-440b-82be-128cedf70413">
@@ -43866,9 +43866,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4589</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.</source>
-        <target>SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.</target>
+        <target>Les objets SynthDriver doivent également fournir l'argument de langue aux objets VoiceInfo (ou remplacer l'attribut language pour récupérer la langue actuelle). Sinon, la langue de l'interface utilisateur de NVDA sera utilisée.</target>
       </segment>
     </unit>
     <unit id="3a956146-27c2-400a-acde-958200e8e777">
@@ -43876,7 +43876,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4591</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2011.2</source>
         <target>2011.2</target>
       </segment>
@@ -45005,9 +45005,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4713</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This allows for embedded indexes, parameter changes, etc.</source>
-        <target>This allows for embedded indexes, parameter changes, etc.</target>
+        <target>Cela permet d'intégrer des index, des changements de paramètres, etc.</target>
       </segment>
     </unit>
     <unit id="82379215-8ede-4bd2-951d-bf6ff49b59a0">
@@ -45015,9 +45015,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4714</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().</source>
-        <target>Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().</target>
+        <target>Les pilotes doivent implémenter SynthDriver.speak() au lieu de SynthDriver.speakText() et SynthDriver.speakCharacter().</target>
       </segment>
     </unit>
     <unit id="62c16213-2179-4b4c-a090-0d558e6cea42">
@@ -45025,9 +45025,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4715</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.</source>
-        <target>The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.</target>
+        <target>Les anciennes méthodes seront utilisées si SynthDriver.speak() n'est pas implémenté, mais elles sont obsolètes et seront supprimées dans une future version.</target>
       </segment>
     </unit>
     <unit id="e4f85c15-33ec-4235-908b-e516345aa460">
@@ -45055,9 +45055,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4718</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For message dialogs, use wx.CallAfter(gui.messageBox, ...).</source>
-        <target>For message dialogs, use wx.CallAfter(gui.messageBox, ...).</target>
+        <target>Pour les boîtes de dialogue de messages, utilisez wx.CallAfter(gui.messageBox, ...).</target>
       </segment>
     </unit>
     <unit id="9315f0b8-b152-4b2f-8196-1e1b4130c42d">
@@ -45065,9 +45065,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4719</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For all other dialogs, real wx dialogs should be used instead.</source>
-        <target>For all other dialogs, real wx dialogs should be used instead.</target>
+        <target>Pour toutes les autres boîtes de dialogue, de vraies boîtes de dialogue wx devraient être utilisées à la place.</target>
       </segment>
     </unit>
     <unit id="dfb07d2c-4add-4178-a6c5-3ad8a8a275bf">
@@ -45075,9 +45075,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4720</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.</source>
-        <target>A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.</target>
+        <target>Une nouvelle fonction gui.runScriptModalDialog() simplifie l'utilisation des boîtes de dialogue modales depuis des scripts.</target>
       </segment>
     </unit>
     <unit id="de1b0851-57fb-4800-a287-0c830aad9cf8">
@@ -45105,7 +45105,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4724</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2011.1.1</source>
         <target>2011.1.1</target>
       </segment>
@@ -45204,7 +45204,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4738</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2011.1</source>
         <target>2011.1</target>
       </segment>
@@ -45243,9 +45243,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4745</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Initially, this is supported in standard IAccessible2 editable text controls (such as in Mozilla applications), RichEdit controls (such as in Wordpad) and IBM Lotus Symphony text controls.</source>
-        <target>Initially, this is supported in standard IAccessible2 editable text controls (such as in Mozilla applications), RichEdit controls (such as in Wordpad) and IBM Lotus Symphony text controls.</target>
+        <target>Initialement, cela est pris en charge dans les contrôles de texte modifiables IAccessible2 standard (comme dans les applications Mozilla), les contrôles RichEdit (comme dans Wordpad) et les contrôles de texte IBM Lotus Symphony.</target>
       </segment>
     </unit>
     <unit id="2ac93c0f-97eb-4f7e-a9db-d7e6060053fb">
@@ -45903,9 +45903,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4817</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Each source of input subclasses the base InputGesture class.</source>
-        <target>Each source of input subclasses the base InputGesture class.</target>
+        <target>Chaque source d'entrée est une sous-classe de la classe de base InputGesture.</target>
       </segment>
     </unit>
     <unit id="56f59cd3-aa7a-4dfa-a7dd-e239e77075d1">
@@ -45913,9 +45913,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4818</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.</source>
-        <target>Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.</target>
+        <target>Les touches pressées sur le clavier du système sont englobées par la classe keyboardHandler.KeyboardInputGesture.</target>
       </segment>
     </unit>
     <unit id="6bf329c8-010a-4da2-8102-f6f0ad1d5335">
@@ -45923,9 +45923,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4819</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.</source>
-        <target>Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.</target>
+        <target>Les appuis sur les boutons, molettes et autres contrôles sur un afficheur braille sont englobés par des sous-classes de la classe braille.BrailleDisplayGesture. Ces sous-classes sont fournies par chaque pilote d'afficheur braille.</target>
       </segment>
     </unit>
     <unit id="603b0b7d-c0e0-4ad0-a5f1-861693522b75">
@@ -45963,9 +45963,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 4823</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.</source>
-        <target>KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.</target>
+        <target>Les KeyboardInputGestures peuvent être envoyés au système d'exploitation en utilisant la méthode send() du geste.</target>
       </segment>
     </unit>
     <unit id="60040e61-1b8a-4759-bdec-0acb847c01de">

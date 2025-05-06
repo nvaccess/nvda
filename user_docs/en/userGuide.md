@@ -3148,8 +3148,8 @@ This option is only available when [Automatically connect after NVDA starts](#Re
 
 |Option |Behaviour |
 |---|---|
-|Allow this machine to be controlled |Use this computer as the "controlling" computer. This allows you to execute commands on the remote computer. |
-|Control another machine |Use this computer as the "controlled" computer. This allows the operator of the "controlling" computer to use this computer as if they were sitting in front of it. |
+|Allow this computer to be controlled |Use this computer as the "controlled" computer. This allows the operator of the "controlling" computer to use this computer as if they were sitting in front of it. |
+|Control another computer |Use this computer as the "controlling" computer. This allows you to execute commands on the remote computer. |
 
 ##### Server {#RemoteAutoconnectServer}
 
