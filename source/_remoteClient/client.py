@@ -209,11 +209,16 @@ class RemoteClient:
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
 		):
-			confirmation_buttons = (DefaultButton.YES, DefaultButton.NO.value._replace(defaultFocus=True))
+			confirmation_buttons = (
+				DefaultButton.YES,
+				DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
+			)
 
 			dialog = MessageDialog(
 				parent=gui.mainFrame,
+				# Translators: Title of the Remote Access disconnection confirmation dialog.
 				title=pgettext("remote", "Confirm Disconnection"),
+				# Translators: Message shown when disconnecting from the remote computer.
 				message=pgettext(
 					"remote",
 					"Are you sure you want to disconnect from the Remote Access session?",
