@@ -209,27 +209,30 @@ class RemoteClient:
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
 		):
-			confirmation_buttons = (
-				DefaultButton.YES,
-				DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
-			)
+			if core._hasShutdownBeenTriggered:
+				log.info("NVDA is shutting down, skipping remote disconnect confirmation dialog.")
+			else:
+				confirmation_buttons = (
+					DefaultButton.YES,
+					DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
+				)
 
-			dialog = MessageDialog(
-				parent=gui.mainFrame,
-				# Translators: Title of the Remote Access disconnection confirmation dialog.
-				title=pgettext("remote", "Confirm Disconnection"),
-				# Translators: Message shown when disconnecting from the remote computer.
-				message=pgettext(
-					"remote",
-					"Are you sure you want to disconnect from the Remote Access session?",
-				),
-				dialogType=DialogType.WARNING,
-				buttons=confirmation_buttons,
-			)
+				dialog = MessageDialog(
+					parent=gui.mainFrame,
+					# Translators: Title of the Remote Access disconnection confirmation dialog.
+					title=pgettext("remote", "Confirm Disconnection"),
+					message=pgettext(
+						"remote",
+						# Translators: Message shown when disconnecting from the remote computer.
+						"Are you sure you want to disconnect from the Remote Access session?",
+					),
+					dialogType=DialogType.WARNING,
+					buttons=confirmation_buttons,
+				)
 
-			if dialog.ShowModal() != ReturnCode.YES:
-				log.info("Remote disconnection cancelled by user.")
-				return
+				if dialog.ShowModal() != ReturnCode.YES:
+					log.info("Remote disconnection cancelled by user.")
+					return
 
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
