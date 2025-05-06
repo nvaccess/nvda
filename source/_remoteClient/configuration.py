@@ -24,5 +24,13 @@ def writeConnectionToConfig(connectionInfo: ConnectionInfo):
 	lastConnections = conf["connections"]["lastConnected"]
 	address = connectionInfo.getAddress()
 	if address in lastConnections:
-		conf["connections"]["lastConnected"].remove(address)
-	conf["connections"]["lastConnected"].append(address)
+		if lastConnections.index(address) == len(lastConnections) - 1:
+			# This address is already the last connected address, so no action is needed.
+			return
+		# Remove the address from the list, so appending it won't result in a duplicate.
+		lastConnections.remove(address)
+	lastConnections.append(address)
+	# Configobj recognises items as changed based on calls to __setitem__,
+	# so will not know that the underlying list has been mutated.
+	# Set the list to itself to force configobj to realise the key is dirty.
+	conf["connections"]["lastConnected"] = lastConnections
