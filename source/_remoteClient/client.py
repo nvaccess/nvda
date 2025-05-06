@@ -215,7 +215,8 @@ class RemoteClient:
 				parent=gui.mainFrame,
 				title=pgettext("remote", "Confirm Disconnection"),
 				message=pgettext(
-					"remote", "Are you sure you want to disconnect from the Remote Access session?"
+					"remote",
+					"Are you sure you want to disconnect from the Remote Access session?",
 				),
 				dialogType=DialogType.WARNING,
 				buttons=confirmation_buttons,
