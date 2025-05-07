@@ -34,3 +34,7 @@ def writeConnectionToConfig(connectionInfo: ConnectionInfo):
 	# so will not know that the underlying list has been mutated.
 	# Set the list to itself to force configobj to realise the key is dirty.
 	conf["connections"]["lastConnected"] = lastConnections
+
+
+def _isDebugForRemoteClient() -> bool:
+	return config.conf["debugLog"]["remoteClient"]

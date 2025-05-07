@@ -4072,6 +4072,7 @@ class AdvancedPanelControls(
 			"annotations",
 			"events",
 			"garbageHandler",
+			"remoteClient",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
