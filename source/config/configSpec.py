@@ -318,6 +318,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	annotations = boolean(default=false)
 	events = boolean(default=false)
 	garbageHandler = boolean(default=false)
+	remoteClient = boolean(default=False)
 
 [uwpOcr]
 	language = string(default="")

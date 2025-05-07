@@ -42,7 +42,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			wx.ComboBox,
 		)
 		self.key = sizerHelper.addLabeledControl(
-			# Translators: Label of the edit field to enter key (password) to secure the remote connection.
+			# Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 			_("&Key:"),
 			wx.TextCtrl,
 		)
@@ -70,9 +70,9 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 	def _generateKeyCommand(self, insecure: bool = False) -> None:
 		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
 			self,
-			# Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
+			# Translators: Title of a dialog shown to users when asking a Remote Access server to generate a key
 			pgettext("remote", "Generating key"),
-			# Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
+			# Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 			pgettext("remote", "Generating key..."),
 		)
 		address = protocol.addressToHostPort(self.host.GetValue())
@@ -89,12 +89,24 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 
 	@alwaysCallAfter
 	def _handleKeyGenerated(self, key: str | None = None) -> None:
-		self._keyGenerationProgressDialog.done()
-		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
-		self.key.SetFocus()
 		self._keyConnector.close()
 		self._keyConnector = None
+
+		# Because we don't know when the containing dialog will next be focusable,
+		# and a window must be focusable in order for calling `SetFocus` to work,
+		# we need to focus the "Key" field when the containing dialog is next active,
+		# as this will happen when it is next focusable.
+		def setFocusOnNextActivate(evt: wx.ActivateEvent):
+			evt.Skip()
+			# Only move focus when this window next becomes the foreground window.
+			if evt.Active:
+				self.key.SetFocus()
+				self.GetTopLevelParent().Unbind(wx.EVT_ACTIVATE, handler=setFocusOnNextActivate)
+
+		self.GetTopLevelParent().Bind(wx.EVT_ACTIVATE, setFocusOnNextActivate)
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
 
 	@alwaysCallAfter
 	def _handleConnectionFailed(self) -> None:
@@ -103,8 +115,8 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		gui.messageBox(
 			pgettext(
 				"remote",
-				# Translators: Message shown to users when requesting that a Remote control server generate a key fails.
-				# {host} will be replaced with the address of the Remote control server.
+				# Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
+				# {host} will be replaced with the address of the Remote Access server.
 				"Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field.",
 			).format(host=self.host.GetValue()),
 			# Translators: Title of a dialog.
@@ -193,8 +205,8 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			max=65535,
 			initial=SERVER_PORT,
 		)
-		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
-		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
+		# Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
+		self.key = sizerHelper.addLabeledControl(pgettext("remote", "&Key"), wx.TextCtrl)
 		# Translators: The button used to generate a random key/password.
 		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
 		self._generateKeyButton.Bind(wx.EVT_BUTTON, self.onGenerateKey)
@@ -229,6 +241,19 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			req = request.urlopen("https://portcheck.nvdaremote.com/port/%s" % port)
 			data = req.read()
 			result = json.loads(data)
+
+			# Because we don't know when the containing dialog will next be focusable,
+			# and a window must be focusable in order for calling `SetFocus` to work,
+			# we need to focus the "Key" field when the containing dialog is next active,
+			# as this will happen when it is next focusable.
+			def setFocusOnNextActivate(evt: wx.ActivateEvent):
+				evt.Skip()
+				# Only move focus when this window next becomes the foreground window.
+				if evt.Active:
+					self._externalIPControl.SetFocus()
+					self.GetTopLevelParent().Unbind(wx.EVT_ACTIVATE, handler=setFocusOnNextActivate)
+
+			self.GetTopLevelParent().Bind(wx.EVT_ACTIVATE, setFocusOnNextActivate)
 			wx.CallAfter(self.onGetIPSucceeded, result)
 		except Exception as e:
 			wx.CallAfter(self.onGetIPFail, e)
@@ -321,6 +346,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self.Fit()
 		self.CenterOnScreen()
 		self._connectionModeControl.SetFocus()
+		self.Bind(wx.EVT_SHOW, self._onShow)
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		"""Respond to changing between using a control server or hosting it locally"""
@@ -338,15 +364,19 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		if self._selectedPanel is self._clientPanel and (
 			not self._selectedPanel.host.GetValue() or not self._selectedPanel.key.GetValue()
 		):
-			# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
+			# Translators: Message displayed when the host or key field is empty and the user tries to connect.
 			message = _("Both host and key must be set.")
-			focusTarget = self._selectedPanel.host
+			focusTarget = (
+				self._selectedPanel.host if not self._selectedPanel.host.Value else self._selectedPanel.key
+			)
 		elif self._selectedPanel is self._serverPanel and (
 			not self._selectedPanel.port.GetValue() or not self._selectedPanel.key.GetValue()
 		):
-			# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
+			# Translators: Message displayed when the port or key field is empty and the user tries to connect.
 			message = _("Both port and key must be set.")
-			focusTarget = self._selectedPanel.port
+			focusTarget = (
+				self._selectedPanel.port if not self._selectedPanel.port.Value else self._selectedPanel.key
+			)
 		if message is not None:
 			gui.messageBox(
 				message,
@@ -386,14 +416,22 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			insecure=insecure,
 		)
 
+	def _onShow(self, evt: wx.ShowEvent):
+		"""Make sure this dialog is focused when opened."""
+		self.Raise()
+		self.SetFocus()
+		evt.Skip()
+
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
 	def __init__(self, parent: wx.Window | None, fingerprint: str | None = None):
-		# Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
-		title = _("NVDA Remote Connection Security Warning")
-		message = _(
-			# Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
-			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the remote session..\n"
+		# Translators: Title of the dialog presented when attempting to connect to a server with an untrusted certificate.
+		title = pgettext("remote", "Security Warning")
+		message = pgettext(
+			"remote",
+			# Translators: Message presented when attempting to connect to a server with an untrusted certificate.
+			# {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
+			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n"
 			"\n"
 			"Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 			"Server SHA256 fingerprint: {fingerprint}\n"

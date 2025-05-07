@@ -101,6 +101,7 @@ class TestRemoteClient(unittest.TestCase):
 	def tearDown(self):
 		self.client = None
 
+	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
 	def test_toggleMute(self):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
@@ -121,7 +122,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
 		self.client.pushClipboard()
-		self.uiMessage.assert_called_with("Not connected.")
+		self.uiMessage.assert_called_with("Not connected")
 
 	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
@@ -143,7 +144,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerSession = None
 		self.uiMessage.reset_mock()
 		self.client.copyLink()
-		self.uiMessage.assert_called_with("Not connected.")
+		self.uiMessage.assert_called_with("Not connected")
 
 	def test_copyLinkWithSession(self):
 		# With a fake session, copyLink should call api.copyToClip with the proper URL.

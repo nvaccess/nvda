@@ -37,6 +37,7 @@ from _remoteClient.transport import (
 	Transport,
 	clearQueue,
 )
+import logHandler
 
 
 # ---------------------------------------------------------------------------
@@ -301,20 +302,16 @@ class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 		self.host = "localhost"
 		self.port = 8090
 
-	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocketOnion(self, mockSocket):
+	def test_createOutboundSocketOnion(self):
 		t = TCPTransport(self.serializer, (self.host + ".onion", self.port))
 		fakeSocket = DummyTCPSocket()
-		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host + ".onion", self.port, insecure=False)
 		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
 
-	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocketRegularInsecure(self, mockSocket):
+	def test_createOutboundSocketRegularInsecure(self):
 		t = TCPTransport(self.serializer, (self.host, self.port))
 		fakeSocket = DummyTCPSocket()
-		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host, self.port, insecure=True)
 		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
@@ -463,18 +460,18 @@ class TestParseErrorHandling(unittest.TestCase):
 		self.transport.inboundHandlers = {}
 
 	def test_parseNoType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			self.transport.parse(b"invalid message\n")
 			self.assertTrue(any("Received message without type" in log for log in cm.output))
 
 	def test_parseInvalidType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			message = self.serializer.serialize(type="NONEXISTENT", a=10)
 			self.transport.parse(message)
 			self.assertTrue(any("Received message with invalid type" in log for log in cm.output))
 
 	def test_parseUnhandledType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			message = self.serializer.serialize(type=RemoteMessageType.GENERATE_KEY, b=10)
 			self.transport.parse(message)
 			self.assertTrue(any("Received message with unhandled type" in log for log in cm.output))
