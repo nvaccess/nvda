@@ -465,10 +465,11 @@ def redirectStdout(logger):
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
 
 
+NVDA_LOGGER_NAME = "nvda"
 # Register our logging class as the class for all loggers.
 logging.setLoggerClass(Logger)
 #: The singleton logger instance.
-log: Logger = logging.getLogger("nvda")
+log: Logger = logging.getLogger(NVDA_LOGGER_NAME)
 #: The singleton log handler instance.
 logHandler: Optional[logging.Handler] = None
 
@@ -545,6 +546,16 @@ def _shouldDisableLogging() -> bool:
 	return globalVars.appArgs.secure or noLoggingRequested
 
 
+def filterExternalDependencyLogging(record: logging.LogRecord) -> bool:
+	import config
+
+	return (
+		record.name == NVDA_LOGGER_NAME
+		or record.levelno >= Logger.WARNING
+		or config.conf["debugLog"]["externalPythonDependencies"]
+	)
+
+
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -593,8 +604,7 @@ def initialize(shouldDoRemoteLogging=False):
 				logLevel = Logger.DEBUG
 			elif logLevel <= 0:
 				logLevel = Logger.INFO
-			log.setLevel(logLevel)
-			log.root.setLevel(max(logLevel, logging.WARN))
+			log.root.setLevel(logLevel)
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -602,6 +612,7 @@ def initialize(shouldDoRemoteLogging=False):
 			style="{",
 		)
 	logHandler.setFormatter(logFormatter)
+	logHandler.addFilter(filterExternalDependencyLogging)
 	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
@@ -636,5 +647,4 @@ def setLogLevelFromConfig():
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
-	log.setLevel(level)
-	log.root.setLevel(max(level, logging.WARN))
+	log.root.setLevel(level)
