@@ -24,7 +24,7 @@ def writeConnectionToConfig(connectionInfo: ConnectionInfo):
 	lastConnections = conf["connections"]["lastConnected"]
 	address = connectionInfo.getAddress()
 	if address in lastConnections:
-		if lastConnections.index(address) == len(lastConnections) - 1:
+		if lastConnections[-1] == address:
 			# This address is already the last connected address, so no action is needed.
 			return
 		# Remove the address from the list, so appending it won't result in a duplicate.
