@@ -37,6 +37,7 @@ from _remoteClient.transport import (
 	Transport,
 	clearQueue,
 )
+import logHandler
 
 
 # ---------------------------------------------------------------------------
@@ -459,18 +460,18 @@ class TestParseErrorHandling(unittest.TestCase):
 		self.transport.inboundHandlers = {}
 
 	def test_parseNoType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			self.transport.parse(b"invalid message\n")
 			self.assertTrue(any("Received message without type" in log for log in cm.output))
 
 	def test_parseInvalidType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			message = self.serializer.serialize(type="NONEXISTENT", a=10)
 			self.transport.parse(message)
 			self.assertTrue(any("Received message with invalid type" in log for log in cm.output))
 
 	def test_parseUnhandledType(self):
-		with self.assertLogs(level="WARN") as cm:
+		with self.assertLogs(logHandler.log, level="WARN") as cm:
 			message = self.serializer.serialize(type=RemoteMessageType.GENERATE_KEY, b=10)
 			self.transport.parse(message)
 			self.assertTrue(any("Received message with unhandled type" in log for log in cm.output))
