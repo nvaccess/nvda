@@ -14,7 +14,7 @@ The NVDA Add-on API includes all NVDA internals, except symbols that are prefixe
 
 The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
 Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
-Changes relevant to developers are also announced via the [NVDA changes file](https://www.nvaccess.org/files/nvda/documentation/changes.html).
+Changes relevant to developers are also announced via the [NVDA changes file](https://download.nvaccess.org/documentation/changes.html).
 Any changes to the API policy outlined in this section will be conveyed via these two channels.
 
 API breaking releases happen at most once per year, these are `.1` releases, e.g. `2022.1`.

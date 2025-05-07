@@ -564,7 +564,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	_terminate(globalPluginHandler)
 	# the brailleViewer should be destroyed safely before closing the window
 	brailleViewer.destroyBrailleViewer()
-	# Terminating remote causes it to clean up its menus, so do it here while they still exist
+	# Terminating remoteClient causes it to clean up its menus, so do it here while they still exist
 	_terminate(_remoteClient)
 
 
