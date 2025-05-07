@@ -549,8 +549,10 @@ def _shouldDisableLogging() -> bool:
 def filterExternalDependencyLogging(record: logging.LogRecord) -> bool:
 	import config
 
-	return record.name == NVDA_LOGGER_NAME or (
-		record.levelno >= Logger.WARNING or config.conf["debugLog"]["externalPythonDependencies"]
+	return (
+		record.name == NVDA_LOGGER_NAME
+		or record.levelno >= Logger.WARNING
+		or config.conf["debugLog"]["externalPythonDependencies"]
 	)
 
 
