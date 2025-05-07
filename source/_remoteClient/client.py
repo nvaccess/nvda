@@ -20,10 +20,7 @@ from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
-from gui.message import MessageDialog
-from gui.message import DefaultButton
-from gui.message import ReturnCode
-from gui.message import DialogType
+from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
