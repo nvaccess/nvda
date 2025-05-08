@@ -19,6 +19,7 @@ import re
 import typing
 import requests
 import wx
+import wx.adv
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -3330,6 +3331,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		sHelper.addItem(remoteControlsGroupHelper)
 
 		if globalVars.appArgs.secure:
+			self._insertReadOnlyNotice(sHelper)
 			remoteControlsGroupBox.Disable()
 
 		self.enableRemote = remoteControlsGroupHelper.addItem(
@@ -3441,6 +3443,18 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
+
+	def _insertReadOnlyNotice(self, sHelper):
+		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
+		banner.SetText(
+			# Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
+			pgettext("remote", "Read only"),
+			# Translators: Message presented to users when viewing Remote Access settings in secure mode.
+			pgettext("remote", "Remote Access settings are read only as NVDA is running in secure mode."),
+		)
+		normalBgColour = self.GetBackgroundColour()
+		banner.SetGradient(normalBgColour, normalBgColour)
+		sHelper.sizer.Insert(0, banner)
 
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
@@ -5463,8 +5477,6 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		AddonStorePanel,
 		RemoteSettingsPanel,
 	]
-	# if not globalVars.appArgs.secure:
-	# categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
