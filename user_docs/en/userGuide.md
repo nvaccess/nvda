@@ -3808,7 +3808,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
-* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
+* If connected as the controlling computer, mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
