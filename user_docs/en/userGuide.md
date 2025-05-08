@@ -3179,7 +3179,6 @@ This option is only available when [Automatically connect after NVDA starts](#Re
 This button allows you to forget the fingerprints of all previously trusted Remote Access servers.
 This means that you will again be asked whether to connect to all unrecognised Remote Access servers, even ones that you have previously connected to.
 You will be asked to confirm before all trusted fingerprints are deleted.
-This action cannot be undone.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
