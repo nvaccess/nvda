@@ -140,11 +140,11 @@ class RemoteClient:
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
 			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
-			ui.message(pgettext("remote", "No one else is connected"))
+			ui.delayedMessage(pgettext("remote", "No one else is connected"))
 			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
@@ -152,7 +152,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(pgettext("remote", "Unable to send clipboard"))
+			ui.delayedMessage(pgettext("remote", "Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.

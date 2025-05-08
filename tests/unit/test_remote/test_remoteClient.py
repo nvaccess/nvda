@@ -125,7 +125,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
 		self.client.pushClipboard()
-		self.uiMessage.assert_called_with("Not connected")
+		self.uiDelayedMessage.assert_called_with("Not connected")
 
 	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
