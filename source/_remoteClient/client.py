@@ -18,8 +18,9 @@ import wx
 from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
-from gui.guiHelper import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter, wxCallOnMain
 from utils.security import isRunningOnSecureDesktop
+from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
@@ -199,6 +200,36 @@ class RemoteClient:
 		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
+
+		if (
+			self.followerSession is not None
+			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
+		):
+			if core._hasShutdownBeenTriggered:
+				log.info("NVDA is shutting down, skipping remote disconnect confirmation dialog.")
+			else:
+				confirmation_buttons = (
+					DefaultButton.YES,
+					DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
+				)
+
+				dialog = MessageDialog(
+					parent=None,
+					# Translators: Title of the Remote Access disconnection confirmation dialog.
+					title=pgettext("remote", "Confirm Disconnection"),
+					message=pgettext(
+						"remote",
+						# Translators: Message shown when disconnecting from the remote computer.
+						"Are you sure you want to disconnect from the Remote Access session?",
+					),
+					dialogType=DialogType.WARNING,
+					buttons=confirmation_buttons,
+				)
+
+				if wxCallOnMain(dialog.ShowModal) != ReturnCode.YES:
+					log.info("Remote disconnection cancelled by user.")
+					return
+
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
 			self.localControlServer.close()
