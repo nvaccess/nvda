@@ -8,6 +8,7 @@ from unittest.mock import MagicMock, patch
 import _remoteClient.client as rcClient
 from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
 from _remoteClient.protocol import RemoteMessageType
+from gui.message import ReturnCode
 
 
 # Fake implementations for testing
@@ -208,7 +209,8 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.localControlServer = fakeControl
 		self.client.leaderSession = MagicMock()
 		self.client.followerSession = MagicMock()
-		self.client.disconnect()
+		with patch.object(rcClient.MessageDialog, "ShowModal", lambda *a, **k: ReturnCode.YES):
+			self.client.disconnect()
 		fakeControl.close.assert_called_once()
 
 

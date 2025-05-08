@@ -18,7 +18,7 @@ import wx
 from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
-from gui.guiHelper import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter, wxCallOnMain
 from utils.security import isRunningOnSecureDesktop
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
@@ -192,7 +192,6 @@ class RemoteClient:
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
 			self.connectAsFollower(connectionInfo)
 
-	@alwaysCallAfter
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
 
@@ -215,7 +214,7 @@ class RemoteClient:
 				)
 
 				dialog = MessageDialog(
-					parent=gui.mainFrame,
+					parent=None,
 					# Translators: Title of the Remote Access disconnection confirmation dialog.
 					title=pgettext("remote", "Confirm Disconnection"),
 					message=pgettext(
@@ -227,7 +226,7 @@ class RemoteClient:
 					buttons=confirmation_buttons,
 				)
 
-				if dialog.ShowModal() != ReturnCode.YES:
+				if wxCallOnMain(dialog.ShowModal) != ReturnCode.YES:
 					log.info("Remote disconnection cancelled by user.")
 					return
 
