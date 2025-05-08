@@ -162,10 +162,12 @@ class RemoteClient:
 		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
+		# Translators: A message indicating that a link has been copied to the clipboard.
+		ui.delayedMessage(_("Copied link"))
 
 	def sendSAS(self):
 		"""Send Secure Attention Sequence to remote computer.

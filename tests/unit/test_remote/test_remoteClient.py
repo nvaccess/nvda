@@ -147,7 +147,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerSession = None
 		self.uiMessage.reset_mock()
 		self.client.copyLink()
-		self.uiMessage.assert_called_with("Not connected")
+		self.uiDelayedMessage.assert_called_with("Not connected")
 
 	def test_copyLinkWithSession(self):
 		# With a fake session, copyLink should call api.copyToClip with the proper URL.
