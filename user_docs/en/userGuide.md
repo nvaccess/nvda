@@ -3128,7 +3128,7 @@ When unchecked, NVDA will beep for Remote events.
 
 ##### Confirm before disconnecting when controlled {#RemoteConfirmDisconnect}
 
-Use this option to require confirmation before disconnecting from a Remote Access session when connected as the controlled computer.
+This option controls whether confirmation is required before disconnecting from a Remote Access session when connected as the controlled computer.
 
 When checked, NVDA will ask for confirmation before disconnecting.
 When unchecked, NVDA will disconnect immediately without confirmation.
