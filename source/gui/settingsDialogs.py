@@ -3325,9 +3325,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
 		remoteControlsGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
-		remoteControlsGroupBox = remoteControlsGroupSizer.GetStaticBox()
+		remoteControlsGroupBox: wx.StaticBox = remoteControlsGroupSizer.GetStaticBox()
 		remoteControlsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteControlsGroupSizer)
 		sHelper.addItem(remoteControlsGroupHelper)
+
+		if globalVars.appArgs.secure:
+			remoteControlsGroupBox.Disable()
 
 		self.enableRemote = remoteControlsGroupHelper.addItem(
 			# Translators: Label of a checkbox in Remote Access settings
@@ -5458,9 +5461,10 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		AddonStorePanel,
+		RemoteSettingsPanel,
 	]
-	if not globalVars.appArgs.secure:
-		categoryClasses.append(RemoteSettingsPanel)
+	# if not globalVars.appArgs.secure:
+	# categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
