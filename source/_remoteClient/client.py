@@ -120,7 +120,7 @@ class RemoteClient:
 		"""
 		if not self.isConnected():
 			# Translators: Message shown when attempting to mute the remote computer when no session is connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
@@ -129,7 +129,7 @@ class RemoteClient:
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
-		ui.message(status)
+		ui.delayedMessage(status)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
