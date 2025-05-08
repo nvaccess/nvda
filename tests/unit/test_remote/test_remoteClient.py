@@ -106,7 +106,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client = None
 
 	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
-	def test_toggleMute(self):
+	def test_toggleMuteAsLeader(self):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
 		# Toggle mute: should mute the local machine.
@@ -120,6 +120,16 @@ class TestRemoteClient(unittest.TestCase):
 		self.assertFalse(self.client.localMachine.isMuted)
 		self.assertFalse(self.client.menu.muteItem.checked)
 		self.uiDelayedMessage.assert_called_once()
+
+	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
+	def test_toggleMuteAsFollower(self):
+		# Initially, local machine should not be muted.
+		self.assertFalse(self.client.localMachine.isMuted)
+		with patch.object(self.client, "leaderTransport", None):
+			# Toggle mute: should have no effect
+			self.client.toggleMute()
+			self.assertFalse(self.client.localMachine.isMuted)
+			self.assertFalse(self.client.menu.muteItem.checked)
 
 	def test_pushClipboardNoConnection(self):
 		# Without any transport (neither follower nor leader), pushClipboard should warn.
@@ -161,9 +171,9 @@ class TestRemoteClient(unittest.TestCase):
 	def test_sendSasNoLeaderTransport(self):
 		# Without a leaderTransport, sendSAS should log an error.
 		self.client.leaderTransport = None
-		with patch("_remoteClient.client.log.error") as mockLogError:
+		with patch("_remoteClient.client.log.debugWarning") as mockLogDebugWarning:
 			self.client.sendSAS()
-			mockLogError.assert_called_once_with("No leader transport to send SAS")
+			mockLogDebugWarning.assert_called_once_with("No leader transport to send SAS")
 
 	def test_sendSasWithLeaderTransport(self):
 		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.
