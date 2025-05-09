@@ -496,6 +496,13 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	@classmethod
 	def _generalizeModifiers(cls, modifiers: _ModifierT) -> _ModifierT:
+		"""Return the input set, with specific modifiers replaced with their general equivalents.
+
+		Replaces keys like leftAlt or rightCtrl with their generic alternatives (i.e. alt or ctrl).
+
+		:param modifiers: Set of (vkCode, extended) tuples.
+		:return: A copy of the input set with the specific modifiers replaced with their general equivalents.
+		"""
 		return set((cls.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)
 
 	def _get_bypassInputHelp(self):
