@@ -251,9 +251,21 @@ class LocalMachine:
 
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
-		if hasUiAccess():
+		if self._canSendSAS():
 			ctypes.windll.sas.SendSAS(0)
 		else:
 			# Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
 			ui.message(_("Unable to trigger Alt Control Delete from remote"))
+
+	@staticmethod
+	def _canSendSAS() -> bool:
+		"""Determine if we have sufficient permissions to send a secure attention sequence.
+
+		If we can't, a more specific reason is logged.
+
+		:return: True if simulating an SAS should succeed, false otherwise.
+		"""
+		if not hasUiAccess():
 			log.debug("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")
+			return False
+		return True
