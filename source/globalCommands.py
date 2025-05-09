@@ -2324,10 +2324,9 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if config.conf["speech"]["autoLanguageSwitching"]:
-			for field in info.getTextWithFields({}):
-				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-					curLanguage = field.field.get("language")
+		for field in info.getTextWithFields({}):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+				curLanguage = field.field.get("language")
 		if curLanguage is None:
 			curLanguage = speech.getCurrentLanguage()
 		return curLanguage
