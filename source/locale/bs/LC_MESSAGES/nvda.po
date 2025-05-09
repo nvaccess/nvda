@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-02 03:16+0000\n"
-"PO-Revision-Date: 2025-05-04 23:46\n"
+"PO-Revision-Date: 2025-05-09 23:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: Bosnian\n"
 "Language: bs_BA\n"
@@ -16,6 +16,7 @@ msgstr ""
 "X-Crowdin-Language: bs\n"
 "X-Crowdin-File: nvda.pot\n"
 "X-Crowdin-File-ID: 2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 #: NVDAHelper.py:486
@@ -3380,9 +3381,11 @@ msgstr[2] "Sljedeći dodaci se nisu mogli instalirati: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #: core.py:116
-msgid "Some operations on add-ons failed. See the log file for more details.\n"
+msgid ""
+"Some operations on add-ons failed. See the log file for more details.\n"
 "{}"
-msgstr "Neke operacije na dodacima nisu uspjele. Pogledajte datoteku zapisnika za više detalja.\n"
+msgstr ""
+"Neke operacije na dodacima nisu uspjele. Pogledajte datoteku zapisnika za više detalja.\n"
 "{}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
@@ -3443,9 +3446,11 @@ msgstr "Nepoznati parametri komandne linije"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 #: core.py:161
-msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
+msgid ""
+"Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "Vaša konfiguracijska datoteka sadrži greške. Konfiguracija je vraćena na fabričke postavke.\n"
+msgstr ""
+"Vaša konfiguracijska datoteka sadrži greške. Konfiguracija je vraćena na fabričke postavke.\n"
 "Više detalja o greškama možete pronaći u datoteci zapisnika."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
@@ -3454,9 +3459,11 @@ msgid "Configuration File Error"
 msgstr "Greška konfiguracijske datoteke"
 
 #: core.py:184
-msgid "Your gesture map file contains errors.\n"
+msgid ""
+"Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
-msgstr "Vaša datoteka komandi sadrži greške.\n"
+msgstr ""
+"Vaša datoteka komandi sadrži greške.\n"
 "Više detalja o greškama možete pronaći u datoteci zapisnika."
 
 #: core.py:187
@@ -4824,9 +4831,11 @@ msgstr "Nema zamjene za simbol"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 #: globalCommands.py:2358
-msgid "Character: {}\n"
+msgid ""
+"Character: {}\n"
 "Replacement: {}"
-msgstr "Znak: {}\n"
+msgstr ""
+"Znak: {}\n"
 "Zamjena: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
@@ -8195,9 +8204,11 @@ msgstr "Provjera ažuriranja"
 #: updateCheck.py:409
 #, python-brace-format
 msgctxt "updateCheck"
-msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
+msgid ""
+"Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "Uvjerite se da imate internetsku vezu i da je adresa za ažuriranje NVDA ispravna.\n"
+msgstr ""
+"Uvjerite se da imate internetsku vezu i da je adresa za ažuriranje NVDA ispravna.\n"
 "Adresa ažuriranja: {url}"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -8211,9 +8222,11 @@ msgstr "Provjerite internetsku vezu i pokušajte ponovo."
 #: updateCheck.py:422
 #, python-brace-format
 msgctxt "updateCheck"
-msgid "Error checking for update.\n"
+msgid ""
+"Error checking for update.\n"
 "{tip}"
-msgstr "Greška prilikom provjere ažuriranja.\n"
+msgstr ""
+"Greška prilikom provjere ažuriranja.\n"
 "{tip}"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
@@ -8318,12 +8331,14 @@ msgstr "Greška pri preuzimanju ažuriranja."
 
 #. Translators: The message requesting donations from users.
 #: updateCheck.py:935
-msgid "We need your help in order to continue to improve NVDA.\n"
+msgid ""
+"We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 "If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
 "All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
 "Thank you for your support."
-msgstr "Potrebna nam je vaša pomoć kako bismo nastavili poboljšavati NVDA čitač zaslona.\n"
+msgstr ""
+"Potrebna nam je vaša pomoć kako bismo nastavili poboljšavati NVDA čitač zaslona.\n"
 "Ovaj projekat se prvenstveno oslanja na donacije i nagrade. Donacijom pomažete u finansiranju stalnog razvoja.\n"
 "Ako svako ko preuzme program donira 10 dolara, moći ćemo pokriti sve tekuće troškove projekta.\n"
 "Sve donacije prima NV Access, neprofitna organizacija koja razvija NVDA.\n"
@@ -8369,22 +8384,28 @@ msgstr "Autorska prava (C) {years} NVDA suradnici"
 #. Translators: "About NVDA" dialog box message
 #: versionInfo.py:23
 #, python-brace-format
-msgid "{longName} ({name})\n"
+msgid ""
+"{longName} ({name})\n"
 "Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
-"{copyright}\n\n"
+"{copyright}\n"
+"\n"
 "{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n\n"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"\n"
 "{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
-msgstr "{longName} ({name})\n"
+msgstr ""
+"{longName} ({name})\n"
 "Verzija: {version} ({version_detailed})\n"
 "URL: {url}\n"
-"{copyright}\n\n"
+"{copyright}\n"
+"\n"
 "{name} je pokriven GNU Općom javnom licencom (verzija 2). Možete slobodno dijeliti ili mijenjati ovaj softver na bilo koji način pod uslovom da ga prati licenca i da sav izvorni kod učinite dostupnim svima koji to žele. Ovo se odnosi i na originalne i na izmijenjene kopije ovog softvera, kao i na svaki drugi softver baziran na ovom.\n"
 "Za više detalja, možete pogledati licencu u podizborniku \"Pomoć\".\n"
-"Također ju možete pogledati online na: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n\n"
+"Također ju možete pogledati online na: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"\n"
 "{name} je razvio NV Access, neprofitna organizacija posvećena pomaganju i promovisanju besplatnih rješenja otvorenog koda za slijepe i slabovidne osobe.\n"
 "Ako smatrate da je NVDA koristan i želite da se nastavi poboljšavati, razmislite o doniranju NV Accessu. To možete učiniti aktiviranjem opcije \"Doniraj\" u NVDA izborniku."
 
@@ -8392,9 +8413,11 @@ msgstr "{longName} ({name})\n"
 #. from windows explorer and NVDA is not running.
 #: nvda_slave.pyw:115
 #, python-brace-format
-msgid "Cannot install NVDA add-on from {path}.\n"
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
-msgstr "Nije moguće instalirati NVDA dodatak u {path}.\n"
+msgstr ""
+"Nije moguće instalirati NVDA dodatak u {path}.\n"
 "NVDA mora biti pokrenut kako biste mogli instalirati dodatke."
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
@@ -8408,9 +8431,11 @@ msgstr "Greška ažuriranja podataka dodatka"
 #: addonStore\dataManager.py:219
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
+msgid ""
+"Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "Uvjerite se da imate internetsku vezu i da je adresa za ažuriranje dodataka ispravna.\n"
+msgstr ""
+"Uvjerite se da imate internetsku vezu i da je adresa za ažuriranje dodataka ispravna.\n"
 "Adresa za ažuriranje: {url}"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -9722,7 +9747,7 @@ msgstr "Prošireno"
 #: audio\soundSplit.py:39
 msgctxt "SoundSplit"
 msgid "Sound split disabled"
-msgstr "Kodjela zvuka je isključena"
+msgstr "Podjela zvuka je isključena"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:43
@@ -11650,13 +11675,21 @@ msgstr "O NVDA"
 
 #. Translators: Explain the COM Registration Fixing tool to users before running
 #: gui\__init__.py:502
-msgid "Welcome to the COM Registration Fixing tool.\n\n"
-"Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
-"This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
+msgid ""
+"Welcome to the COM Registration Fixing tool.\n"
+"\n"
+"Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n"
+"\n"
+"This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n"
+"\n"
 "Press Continue to run the tool now."
-msgstr "Dobro došli u alat za popravljanje COM registracija.\n\n"
-"Instaliranje i deinstaliranje programa, kao i neke druge operacije, mogu oštetiti unose pristupačnosti u Windows registru. To može uzrokovati da nekada pristupačni elementi budu pogrešno predstavljeni i sada nepristupačni, uzrokujući da NVDA, umjesto onoga što se očekuje, izgovara i na brajevom zaslonu prikazuje \"nepoznato\" i \"okno\" u nekim aplikacijama i komponentama Windowsa.\n\n"
-"Ovaj alat pokušava popraviti takve uobičajene probleme. Imajte na umu da alat mora pristupiti registru sistema, što zahtijeva administratorska prava.\n\n"
+msgstr ""
+"Dobro došli u alat za popravljanje COM registracija.\n"
+"\n"
+"Instaliranje i deinstaliranje programa, kao i neke druge operacije, mogu oštetiti unose pristupačnosti u Windows registru. To može uzrokovati da nekada pristupačni elementi budu pogrešno predstavljeni i sada nepristupačni, uzrokujući da NVDA, umjesto onoga što se očekuje, izgovara i na brajevom zaslonu prikazuje \"nepoznato\" i \"okno\" u nekim aplikacijama i komponentama Windowsa.\n"
+"\n"
+"Ovaj alat pokušava popraviti takve uobičajene probleme. Imajte na umu da alat mora pristupiti registru sistema, što zahtijeva administratorska prava.\n"
+"\n"
 "Pritisnite \"Nastavi\" da biste pokrenuli alat."
 
 #. Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
@@ -11672,9 +11705,11 @@ msgstr "Pričekajte dok je pokušaj popravljanja sistemskih COM registracija u t
 #. Translators: message shown to the user on COM Registration Fix fail
 #: gui\__init__.py:569
 #, python-brace-format
-msgid "The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
+msgid ""
+"The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr "Popravljanje COM registracija nije uspjelo. Ova Windows greška mogla bi dati više informacija:\n"
+msgstr ""
+"Popravljanje COM registracija nije uspjelo. Ova Windows greška mogla bi dati više informacija:\n"
 "{error}"
 
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
@@ -11684,9 +11719,11 @@ msgstr "Popravljanje COM registracija nije uspjelo"
 
 #. Translators: Message shown when the COM Registration Fixing tool completes.
 #: gui\__init__.py:580
-msgid "The COM Registration Fixing Tool has completed successfully.\n"
+msgid ""
+"The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr "Popravljanje COM registracija je uspješno završeno.\n"
+msgstr ""
+"Popravljanje COM registracija je uspješno završeno.\n"
 "Toplo se preporučuje ponovno pokretanje računara kako bi izvršene promjene stupile na snagu."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
@@ -12259,9 +12296,11 @@ msgstr "Ovaj profil će se koristiti za:"
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
 #: gui\configProfiles.py:494
-msgid "This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
+msgid ""
+"This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
-msgstr "Ovaj okidač je već povezan s drugim profilom. Ako nastavite, bit će uklonjen s tog profila i povezan s ovim.\n"
+msgstr ""
+"Ovaj okidač je već povezan s drugim profilom. Ako nastavite, bit će uklonjen s tog profila i povezan s ovim.\n"
 "Jeste li sigurni da želite nastaviti?"
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
@@ -12278,9 +12317,11 @@ msgstr "Greška pri kreiranju profila - vjerovatno je sistem datoteka samo za č
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
 #: gui\configProfiles.py:556
-msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
+msgid ""
+"To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
-msgstr "Da biste uredili ovaj profil, morat ćete ga ručno aktivirati. Kada završite s uređivanjem, morat ćete ga ručno deaktivirati da nastavite s normalnim korištenjem.\n"
+msgstr ""
+"Da biste uredili ovaj profil, morat ćete ga ručno aktivirati. Kada završite s uređivanjem, morat ćete ga ručno deaktivirati da nastavite s normalnim korištenjem.\n"
 "Želite li ga sada ručno aktivirati?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -12405,10 +12446,14 @@ msgstr "Vrati na tvorničke vrijednosti"
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:789
-msgid "Are you sure you want to reset all gestures to their factory defaults?\n\n"
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
 "\t\t\tAll of your user defined gestures, whether previously set or defined during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
-msgstr "Jeste li sigurni da želite vratiti sve komande na fabričke vrijednosti?\n\n"
+msgstr ""
+"Jeste li sigurni da želite vratiti sve komande na fabričke vrijednosti?\n"
+"\n"
 "\t\t\tSve vaše komande , bilo da su prethodno podešene ili podešene tokom ove sesije, bit će izbrisane.\n"
 "\t\t\tOvo se ne može poništiti."
 
@@ -12728,10 +12773,14 @@ msgstr "Zadano ({})"
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:441
 #, python-brace-format
-msgid "{message}\n\n"
+msgid ""
+"{message}\n"
+"\n"
 "Category: \"{category}\"\n"
 "Option: \"{option}\""
-msgstr "{message}\n\n"
+msgstr ""
+"{message}\n"
+"\n"
 "Kategorija: \"{category}\"\n"
 "Opcija: \"{option}\""
 
@@ -13835,9 +13884,12 @@ msgstr "Izbriši sve pouzdane otiske prstiju"
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3491
 msgctxt "remote"
-msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
+msgid ""
+"This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n"
+"\n"
 "Are you sure you want to continue? This action cannot be undone."
-msgstr "Ovo će uzrokovati da NVDA zaboravi sve pouzdane servere udaljenog pristupa. Sljedeći put pri uspostavljanju veze s nekada pouzdanim, a sada nepoznatim serverom, bit ćete pitani želite li vjerovati njegovim certifikatima.\n"
+msgstr ""
+"Ovo će uzrokovati da NVDA zaboravi sve pouzdane servere udaljenog pristupa. Sljedeći put pri uspostavljanju veze s nekada pouzdanim, a sada nepoznatim serverom, bit ćete pitani želite li vjerovati njegovim certifikatima.\n"
 "Jeste li sigurni da želite nastaviti? Ova radnja se ne može poništiti."
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
@@ -14015,7 +14067,8 @@ msgstr "Zastarjela"
 #. Note the '\n' is used to split this long label approximately in half.
 #: gui\settingsDialogs.py:3790
 msgctxt "advanced.uiaWithChromium"
-msgid "Use UIA with Microsoft Edge and other \n"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr "Koristi UI Automatization sa Microsoft Edgeom i drugim pretraživačima baziranim na Chromiumu:"
 
@@ -14417,9 +14470,11 @@ msgstr "Nije moguće učitati {providerName} pružatelja poboljšanja vizuelnog 
 #. load multiple vision enhancement providers.
 #: gui\settingsDialogs.py:5038
 #, python-brace-format
-msgid "Could not load the following vision enhancement providers:\n"
+msgid ""
+"Could not load the following vision enhancement providers:\n"
 "{providerNames}"
-msgstr "Nije moguće učitati sljedeće pružatelje poboljšanja vizuelnog sadržaja:\n"
+msgstr ""
+"Nije moguće učitati sljedeće pružatelje poboljšanja vizuelnog sadržaja:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
@@ -14438,9 +14493,11 @@ msgstr "Nije moguće ispravno zatvoriti{providerName} pružatelj poboljšanja vi
 #. NVDA is unable to terminate multiple vision enhancement providers.
 #: gui\settingsDialogs.py:5069
 #, python-brace-format
-msgid "Could not gracefully terminate the following vision enhancement providers:\n"
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
-msgstr "Nije moguće ispravno zatvoriti sljedeće pružatelje poboljšanja vizuelnog sadržaja:\n"
+msgstr ""
+"Nije moguće ispravno zatvoriti sljedeće pružatelje poboljšanja vizuelnog sadržaja:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
@@ -14689,12 +14746,14 @@ msgstr "Privremeni rječnik"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 #: gui\startupDialogs.py:38
-msgid "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
 "By default, the Insert and numpad Insert keys may both be used as the NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr "Većina komandi za kontrolu NVDA čitača zaslona zahtijeva da držite NVDA tipku dok pritiskate druge tipke.\n"
+msgstr ""
+"Većina komandi za kontrolu NVDA čitača zaslona zahtijeva da držite NVDA tipku dok pritiskate druge tipke.\n"
 "Prema zadanim postavkama, tipka Insert i numpad Insert mogu se koristiti i kao NVDA tipka.\n"
 "Također, možete podesiti NVDA da koristi Caps Lock kao NVDA tipku.\n"
 "Pritisnite NVDA+N bilo kada da otvorite NVDA izbornik.\n"
@@ -14764,11 +14823,17 @@ msgstr "Prikupljanje podataka o upotrebi NVDA čitača zaslona"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 #: gui\startupDialogs.py:282
-msgid "In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n\n"
-"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please refer to the User Guide for a current list of all data collected.\n\n"
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please refer to the User Guide for a current list of all data collected.\n"
+"\n"
 "Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
-msgstr "Kako bi unaprijedio NVDA u budućnosti, NV Access želi prikupljati podatke o korištenju iz pokrenutih NVDA kopija.\n\n"
-"Podaci uključuju verziju operativnog sistema, NVDA verziju, jezik, zemlju porijekla, plus određena NVDA podešavanja kao što su trenutna sinteza, brajev zaslon i brajeva tabela. Sadržaj koji se izgovara ili sadržaj na brajevom zaslonu nikada neće biti poslani NV Accessu. Molimo vas da pogledate korisničko uputstvo za popis podataka koji se prikupljaju.\n\n"
+msgstr ""
+"Kako bi unaprijedio NVDA u budućnosti, NV Access želi prikupljati podatke o korištenju iz pokrenutih NVDA kopija.\n"
+"\n"
+"Podaci uključuju verziju operativnog sistema, NVDA verziju, jezik, zemlju porijekla, plus određena NVDA podešavanja kao što su trenutna sinteza, brajev zaslon i brajeva tabela. Sadržaj koji se izgovara ili sadržaj na brajevom zaslonu nikada neće biti poslani NV Accessu. Molimo vas da pogledate korisničko uputstvo za popis podataka koji se prikupljaju.\n"
+"\n"
 "Želite li dozvoliti NV Accessu da povremeno prikuplja ove podatke kako bi poboljšao NVDA?"
 
 #. Translators: Label for a submenu that allows the user to change the default update
@@ -15010,9 +15075,11 @@ msgstr "Zapamti ovaj odabir za sljedeće dodatke"
 #: gui\addonStoreGui\controls\messageDialogs.py:118
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Warning: add-on installation may result in downgrade: {name}. The installed add-on version cannot be compared with the add-on store version. Installed version: {oldVersion}. Available version: {version}.\n"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed add-on version cannot be compared with the add-on store version. Installed version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
-msgstr "Upozorenje: instaliranje dodatka može dovesti do vraćanja na stariju verziju: {name}.\n"
+msgstr ""
+"Upozorenje: instaliranje dodatka može dovesti do vraćanja na stariju verziju: {name}.\n"
 "Instalirana verzija dodatka ne može se porediti sa verzijom iz trgovine dodataka.\n"
 "Instalirana verzija: {oldVersion}. Dostupna verzija: {version}.\n"
 "Želite li ipak nastaviti s instaliranjem? "
@@ -15043,9 +15110,11 @@ msgstr "Uklanjanje dodatka"
 #: gui\addonStoreGui\controls\messageDialogs.py:174
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Upozorenje: dodatak je nekompatibilan: {name} {version}. Provjerite ima li ažurirane verzije ovog dodatka ako je moguće. Ovaj dodatak je posljednji put testiran sa NVDA {lastTestedNVDAVersion}. NVDA zahtijeva da se ovaj dodatak testira sa NVDA {nvdaVersion} ili novijom. Instaliranje bi moglo uzrokovati nestabilno ponašanje u NVDA.\n"
+msgstr ""
+"Upozorenje: dodatak je nekompatibilan: {name} {version}. Provjerite ima li ažurirane verzije ovog dodatka ako je moguće. Ovaj dodatak je posljednji put testiran sa NVDA {lastTestedNVDAVersion}. NVDA zahtijeva da se ovaj dodatak testira sa NVDA {nvdaVersion} ili novijom. Instaliranje bi moglo uzrokovati nestabilno ponašanje u NVDA.\n"
 "Želite li ipak nastaviti s instaliranjem? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -15053,9 +15122,11 @@ msgstr "Upozorenje: dodatak je nekompatibilan: {name} {version}. Provjerite ima 
 #: gui\addonStoreGui\controls\messageDialogs.py:207
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Upozorenje: dodatak je nekompatibilan: {name} {version}. Provjerite ima li ažurirane verzije ovog dodatka ako je moguće. Ovaj dodatak je posljednji put testiran sa NVDA {lastTestedNVDAVersion}. NVDA zahtijeva da se ovaj dodatak testira sa NVDA {nvdaVersion} ili novijom. Omogućavanje bi moglo uzrokovati nestabilno ponašanje u NVDA.\n"
+msgstr ""
+"Upozorenje: dodatak je nekompatibilan: {name} {version}. Provjerite ima li ažurirane verzije ovog dodatka ako je moguće. Ovaj dodatak je posljednji put testiran sa NVDA {lastTestedNVDAVersion}. NVDA zahtijeva da se ovaj dodatak testira sa NVDA {nvdaVersion} ili novijom. Omogućavanje bi moglo uzrokovati nestabilno ponašanje u NVDA.\n"
 "Želite li ipak nastaviti s omogućavanjem? "
 
 #. Translators: The title of a dialog presented when an error occurs.
@@ -15080,10 +15151,12 @@ msgstr "Greška pri instaliranju dodatka"
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui\addonStoreGui\controls\messageDialogs.py:263
 #, python-brace-format
-msgid "Are you sure you want to install this add-on?\n"
+msgid ""
+"Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
-msgstr "Jeste li sigurni da želite instalirati ovaj dodatak?\n"
+msgstr ""
+"Jeste li sigurni da želite instalirati ovaj dodatak?\n"
 "Instalirajte samo dodatke iz pouzdanih izvora.\n"
 "Dodatak: {summary} {version}"
 
@@ -15097,10 +15170,12 @@ msgstr "Instaliranje dodatka"
 #: gui\addonStoreGui\controls\messageDialogs.py:287
 #, python-brace-format
 msgctxt "addonStore"
-msgid "{summary} ({name})\n"
+msgid ""
+"{summary} ({name})\n"
 "Version: {version}\n"
 "Description: {description}\n"
-msgstr "{summary} ({name})\n"
+msgstr ""
+"{summary} ({name})\n"
 "Verzija: {version}\n"
 "Opis: {description}\n"
 
@@ -18490,9 +18565,12 @@ msgstr "Reproduciraj &zvuk prilikom prebacivanja zaslonske zavjese"
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
 #: visionEnhancementProviders\screenCurtain.py:131
-msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n"
+"\n"
 "Do you wish to continue?"
-msgstr "Omogućavanje zaslonske zavjese će učiniti zaslon vašeg računara potpuno crnim. Prije nego što nastavite, uvjerite se da ćete moći da koristite računar bez upotrebe zaslona.\n"
+msgstr ""
+"Omogućavanje zaslonske zavjese će učiniti zaslon vašeg računara potpuno crnim. Prije nego što nastavite, uvjerite se da ćete moći da koristite računar bez upotrebe zaslona.\n"
 "Želite li nastaviti?"
 
 #. Translators: option to enable screen curtain in the vision settings panel
@@ -18788,13 +18866,19 @@ msgstr "Sigurnosno upozorenje"
 #: _remoteClient\dialogs.py:427
 #, python-brace-format
 msgctxt "remote"
-msgid "The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n\n"
+msgid ""
+"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n"
+"\n"
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
-"Server SHA256 fingerprint: {fingerprint}\n\n"
+"Server SHA256 fingerprint: {fingerprint}\n"
+"\n"
 "Continue connecting anyway?"
-msgstr "Certifikat ovog servera ne može biti provjeren. Korištenje pogrešnog otiska prsta moglo bi trećim stranama omogućiti pristup sesiji udaljenog pristupa.\n\n"
+msgstr ""
+"Certifikat ovog servera ne može biti provjeren. Korištenje pogrešnog otiska prsta moglo bi trećim stranama omogućiti pristup sesiji udaljenog pristupa.\n"
+"\n"
 "Prije nego što nastavite, uvjerite se da je otisak prsta certifikata ovog servera ispravan.\n"
-"Server SHA256 otisak prsta: {fingerprint}\n\n"
+"Server SHA256 otisak prsta: {fingerprint}\n"
+"\n"
 "Želite li nastaviti s uspostavljanjem veze?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
@@ -18909,4 +18993,3 @@ msgstr "Poruka sa servera udaljenog pristupa"
 msgctxt "remote"
 msgid "Remote NVDA not connected"
 msgstr "Udaljeni računar s pokrenutim NVDA nije povezan"
-
