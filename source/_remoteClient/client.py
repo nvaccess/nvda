@@ -20,6 +20,7 @@ from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
+from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
@@ -120,7 +121,7 @@ class RemoteClient:
 		"""
 		if not self.isConnected():
 			# Translators: Message shown when attempting to mute the remote computer when no session is connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
@@ -129,7 +130,7 @@ class RemoteClient:
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
-		ui.message(status)
+		ui.delayedMessage(status)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -140,11 +141,11 @@ class RemoteClient:
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
 			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
-			ui.message(pgettext("remote", "No one else is connected"))
+			ui.delayedMessage(pgettext("remote", "No one else is connected"))
 			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
@@ -152,7 +153,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(pgettext("remote", "Unable to send clipboard"))
+			ui.delayedMessage(pgettext("remote", "Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.
@@ -162,10 +163,12 @@ class RemoteClient:
 		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
+		# Translators: A message indicating that a link has been copied to the clipboard.
+		ui.delayedMessage(_("Copied link"))
 
 	def sendSAS(self):
 		"""Send Secure Attention Sequence to remote computer.
@@ -191,6 +194,7 @@ class RemoteClient:
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
 			self.connectAsFollower(connectionInfo)
 
+	@alwaysCallAfter
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
 
@@ -199,6 +203,36 @@ class RemoteClient:
 		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
+
+		if (
+			self.followerSession is not None
+			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
+		):
+			if core._hasShutdownBeenTriggered:
+				log.info("NVDA is shutting down, skipping remote disconnect confirmation dialog.")
+			else:
+				confirmation_buttons = (
+					DefaultButton.YES,
+					DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
+				)
+
+				dialog = MessageDialog(
+					parent=None,
+					# Translators: Title of the Remote Access disconnection confirmation dialog.
+					title=pgettext("remote", "Confirm Disconnection"),
+					message=pgettext(
+						"remote",
+						# Translators: Message shown when disconnecting from the remote computer.
+						"Are you sure you want to disconnect from the Remote Access session?",
+					),
+					dialogType=DialogType.WARNING,
+					buttons=confirmation_buttons,
+				)
+
+				if dialog.ShowModal() != ReturnCode.YES:
+					log.info("Remote disconnection cancelled by user.")
+					return
+
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
 			self.localControlServer.close()
