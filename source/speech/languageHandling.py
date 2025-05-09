@@ -49,7 +49,9 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					== ReportNotSupportedLanguage.SPEECH.value
 				):
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
-					speechSequence.append(pgettext("languageNotSupported", "{lang} (not supported)").format(lang=langDesc))
+					speechSequence.append(
+						pgettext("languageNotSupported", "{lang} (not supported)").format(lang=langDesc)
+					)
 				elif (
 					config.conf["speech"]["reportNotSupportedLanguage"]
 					== ReportNotSupportedLanguage.BEEP.value
