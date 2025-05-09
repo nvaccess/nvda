@@ -15,6 +15,7 @@ from typing import (
 	List,
 	Optional,
 	Any,
+	TypeAlias,
 )
 
 import winVersion
@@ -45,6 +46,7 @@ _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
+_ModifierT: TypeAlias = tuple[int, bool]
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -486,13 +488,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Some numpad keys have the same vkCode regardless of numlock.
 			# For these keys, treat numlock as a modifier.
 			modifiers.add((winUser.VK_NUMLOCK, False))
-		self.generalizedModifiers = set(
-			(self.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers
-		)
+		self.generalizedModifiers = self._generalizeModifiers(modifiers)
 		self.vkCode = vkCode
 		self.scanCode = scanCode
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
+
+	@classmethod
+	def _generalizeModifiers(cls, modifiers: _ModifierT) -> _ModifierT:
+		return set((cls.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)
 
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
