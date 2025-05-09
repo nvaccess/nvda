@@ -19,7 +19,6 @@ muting and uses wxPython's CallAfter for thread synchronization.
 """
 
 import ctypes
-import logging
 import os
 from typing import Any, Dict, List, Optional
 
@@ -34,10 +33,9 @@ from speech.priorities import Spri
 from speech.types import SpeechSequence
 from systemUtils import hasUiAccess
 import ui
+from logHandler import log
 
 from . import cues, input
-
-logger = logging.getLogger("local_machine")
 
 
 def setSpeechCancelledToFalse() -> None:
@@ -258,4 +256,4 @@ class LocalMachine:
 		else:
 			# Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
 			ui.message(_("Unable to trigger Alt Control Delete from remote"))
-			logger.warning("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")
+			log.debug("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")

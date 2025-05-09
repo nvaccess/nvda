@@ -23,12 +23,11 @@ Supported Data Types
 import json
 from abc import ABCMeta, abstractmethod
 from enum import Enum
-from logging import getLogger
 from typing import Any, Dict, Optional, Type, TypeVar, Union
 
 import speech.commands
+from logHandler import log
 
-log = getLogger("serializer")
 
 T = TypeVar("T")
 JSONDict = Dict[str, Any]

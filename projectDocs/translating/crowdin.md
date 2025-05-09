@@ -57,7 +57,7 @@ You may then replace it with your translation as normal.
 Press `control+s` at any moment to save your work.
 Each time you press this key, PoEdit saves the po file, and if you check compile mo file checkbox in preferences, the .mo file will be re-generated.
 
-NVDA provides additional shortcuts for PoEdit which are described in [the User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#Poedit).
+NVDA provides additional shortcuts for PoEdit which are described in [the User Guide](https://download.nvaccess.org/documentation/userGuide.html#Poedit).
 
 If you are unsure of the meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
@@ -136,7 +136,7 @@ Example:
 In the [Crowdin web interface](https://support.crowdin.com/online-editor/), these can be set for each language using the "Form" section which replaces the standard translation edit box.
 
 In PoEdit, the standard translation edit box has tabs for each plural form.
-[Object navigation](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#ObjectNavigation) is required to move focus to each tab button for the plural form.
+[Object navigation](https://download.nvaccess.org/documentation/userGuide.html#ObjectNavigation) is required to move focus to each tab button for the plural form.
 You can do this by:
 
 - By moving to the previous focus object from the edit box, you can cycle through each plural form tab button by continuing to more backward.
