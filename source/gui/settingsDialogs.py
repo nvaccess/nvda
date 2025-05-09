@@ -1721,7 +1721,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportLanguageCheckbox.Enabled = self.autoLanguageSwitchingCheckbox.IsChecked()
 
 		# Translators: This is a label for a combobox in the Voice settings panel to select reporting when the language of the text being read is not supported by the current synthesizer.
-		labelText = pgettext("speech.reportLanguage", "Report when switching to language is not s&upported by synthesizer")
+		labelText = pgettext(
+			"speech.reportLanguage", "Report when switching to language is not s&upported by synthesizer"
+		)
 		self.reportNotSupportedLanguageCombo = settingsSizerHelper.addLabeledControl(
 			labelText,
 			wx.Choice,
