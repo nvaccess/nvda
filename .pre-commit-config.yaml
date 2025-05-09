@@ -100,7 +100,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.8.1
+  rev: v0.11.8
   hooks:
     - id: ruff
       name: lint with ruff
@@ -109,14 +109,14 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.394
+  rev: v1.1.400
   hooks:
   - id: pyright
     alias: pyrightLocal
     name: Check types with pyright
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.396
+  rev: v1.1.400
   hooks:
   - id: pyright
     alias: pyrightCI
@@ -126,7 +126,7 @@ repos:
     stages: [manual]  # Only run from CI manually
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.6.14
+  rev: 0.7.2
   hooks:
     - id: uv-lock
       name: Verify uv lock file

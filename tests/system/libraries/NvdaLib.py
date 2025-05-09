@@ -255,7 +255,7 @@ class NvdaLib:
 		def _makeKeywordCaller(lib, keyword):
 			def runKeyword(*args, **kwargs):
 				builtIn.log(
-					f"{keyword}" f"{f' {args}' if args else ''}" f"{f' {kwargs}' if kwargs else ''}",
+					f"{keyword}{f' {args}' if args else ''}{f' {kwargs}' if kwargs else ''}",
 				)
 				return lib.run_keyword(keyword, args, kwargs)
 
