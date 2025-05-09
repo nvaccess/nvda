@@ -121,7 +121,7 @@ class RemoteClient:
 		"""
 		if not self.isConnected():
 			# Translators: Message shown when attempting to mute the remote computer when no session is connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
@@ -130,7 +130,7 @@ class RemoteClient:
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
-		ui.message(status)
+		ui.delayedMessage(status)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -141,11 +141,11 @@ class RemoteClient:
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
 			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
-			ui.message(pgettext("remote", "No one else is connected"))
+			ui.delayedMessage(pgettext("remote", "No one else is connected"))
 			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
@@ -153,7 +153,7 @@ class RemoteClient:
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
-			ui.message(pgettext("remote", "Unable to send clipboard"))
+			ui.delayedMessage(pgettext("remote", "Unable to send clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.
@@ -163,10 +163,12 @@ class RemoteClient:
 		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
-			ui.message(pgettext("remote", "Not connected"))
+			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
+		# Translators: A message indicating that a link has been copied to the clipboard.
+		ui.delayedMessage(_("Copied link"))
 
 	def sendSAS(self):
 		"""Send Secure Attention Sequence to remote computer.
