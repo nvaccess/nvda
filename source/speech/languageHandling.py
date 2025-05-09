@@ -41,7 +41,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		filteredSpeechSequence.append(LangChangeCommand(None))
 		match curSynth.languageIsSupported(item.lang):
 			case True if config.conf["speech"]["reportLanguage"]:
-				# If `reportLanguage´is ``False``, we still change `speech._speechState.lastReportedLanguage` to report not supported language if it appears multiple times.
+				# If reportLanguage is False, we still change speech._speechState.lastReportedLanguage to report not supported language if it appears multiple times.
 				filteredSpeechSequence.append(langDesc)
 			case False:
 				if (
@@ -49,7 +49,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					== ReportNotSupportedLanguage.SPEECH.value
 				):
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
-					speechSequence.append(_("{lang} (not supported)").format(lang=langDesc))
+					speechSequence.append(pgettext("languageNotSupported", "{lang} (not supported)").format(lang=langDesc))
 				elif (
 					config.conf["speech"]["reportNotSupportedLanguage"]
 					== ReportNotSupportedLanguage.BEEP.value
@@ -57,7 +57,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					speechSequence.append(langDesc)
 					speechSequence.append(BeepCommand(500, 50))
 				elif config.conf["speech"]["reportLanguage"]:
-					# We need this to use the formatted string when appropriate, to avoid appending `(not supported)`.
+					# We need this to use the formatted string when appropriate, to avoid appending (not supported).
 					filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
 		filteredSpeechSequence.append(item)
