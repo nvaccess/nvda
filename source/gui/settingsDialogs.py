@@ -3331,7 +3331,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		sHelper.addItem(remoteControlsGroupHelper)
 
 		if globalVars.appArgs.secure:
-			self._insertReadOnlyNotice(sHelper)
+			self._insertReadOnlyNotice(sizer)
 			remoteControlsGroupBox.Disable()
 
 		self.enableRemote = remoteControlsGroupHelper.addItem(
@@ -3444,7 +3444,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self._setFromConfig()
 
-	def _insertReadOnlyNotice(self, sHelper):
+	def _insertReadOnlyNotice(self, sizer: wx.BoxSizer):
 		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
 		banner.SetText(
 			# Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
@@ -3454,7 +3454,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		normalBgColour = self.GetBackgroundColour()
 		banner.SetGradient(normalBgColour, normalBgColour)
-		sHelper.sizer.Insert(0, banner)
+		sizer.Insert(0, banner)
 
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
