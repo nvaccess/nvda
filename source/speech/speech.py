@@ -125,6 +125,7 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
+	# The language reported in the last speech sequence
 	lastReportedLanguage: str | None = None
 
 
