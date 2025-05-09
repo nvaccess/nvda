@@ -242,6 +242,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
+|Report language |Not assigned |Not assigned |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
 #### Toggle which information NVDA reads {#ToggleWhichInformationNVDAReads}
