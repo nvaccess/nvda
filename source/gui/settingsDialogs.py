@@ -1719,8 +1719,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 
 		labelText = pgettext(
-			# Translators: This is a label for a combobox in the Voice settings panel to select reporting when the language of the text being read is not supported by the current synthesizer.
 			"speech.reportLanguage",
+			# Translators: This is a label for a combobox in the Voice settings panel to select
+			# reporting when the language of the text being read is not supported by the current synthesizer.
 			"Report when switching to language is not s&upported by synthesizer",
 		)
 		self.reportNotSupportedLanguageCombo = settingsSizerHelper.addLabeledControl(
