@@ -564,7 +564,6 @@ class RemoteClient:
 			)
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
-			log.info(k)
 			self.leaderTransport.send(
 				RemoteMessageType.KEY,
 				vk_code=k[0],
