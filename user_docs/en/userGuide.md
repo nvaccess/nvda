@@ -3717,17 +3717,17 @@ You can still manually disconnect in secure mode.
 Remote access sessions are configured via the Remote Access connection dialog.
 Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
 Or from anywhere press `NVDA+alt+r`.
- 
+
 #### Mode Selection (Controlling or Controlled)
 You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
-the mode combo box allows you to choose whether this computer will be controlled (Another person will interact with your computer) or controlling (you will interact with someone else's computer). 
+the mode combo box allows you to choose whether this computer will be controlled (Another person will interact with your computer) or controlling (you will interact with someone else's computer).
 * If you require another person to help you with your computer, choose "Allow this computer to be controlled".
 * If you are going to help someone with their computer, choose "Control another computer".
 
 #### Connecting to an existing server (Host and Key Provided)
  In this case, the other person has either started the connection via a relay server, or is hosting the connection locally.
- 
+
 1. For Server, choose "Use existing".
 1. In the Host field, Enter the host address (and port if also given).
   * You may include the port to connect on by appending a colon (":") and the port number to the host address.
