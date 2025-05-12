@@ -16,14 +16,14 @@ These functions are supported in NVDA 2024.1 and newer. On older versions, they 
 
 ## Security practices
 
-Developers should be aware that NVDA runs on the lock screen and [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
+Developers should be aware that NVDA runs on the lock screen and [secure screens](https://download.nvaccess.org/documentation/userGuide.html#SecureScreens).
 Before providing information to the end user (e.g. via `nvdaController_speakText`), developers should check if Windows is locked or running on a secure screen to prevent secure data being leaked.
 
 ## How to get it?
 
 You can build locally or download pre-built, details:
 - **Built with the release:**
-  - Download the `*controllerClient.zip` from the releases folder: EG [Latest stable](https://www.nvaccess.org/files/nvda/releases/stable/)
+  - Download the `*controllerClient.zip` from the releases folder: e.g. [Latest stable](https://download.nvaccess.org/releases/stable/)
 - **Latest, in development version:**
   - The libraries are built by Appveyor (our CI).
   - Downloads are available from the artifacts tab.

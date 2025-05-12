@@ -58,25 +58,25 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		braille.handler.routeTo(3)  # Route to the fourth cell
 		self.assertLess(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, self.caret)
+		self.assertEqual(caret, self.caret)
 		expectedReview = self.caret.copy()
 		expectedReview.move(textInfos.UNIT_CHARACTER, 3)
-		self.assertEquals(expectedReview, api.getReviewPosition())
+		self.assertEqual(expectedReview, api.getReviewPosition())
 		braille.handler.routeTo(4)  # Route to the fifth cell
 		# Object still not activated as no second routing press on same cell.
 		self.assertLess(self.cm.lastActivateTime, curTime)
 		# The caret shouldn't have been moved either
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, self.caret)
+		self.assertEqual(caret, self.caret)
 		# move expected review from cell 4 to 5
 		expectedReview.move(textInfos.UNIT_CHARACTER, 1)
-		self.assertEquals(expectedReview, api.getReviewPosition())
+		self.assertEqual(expectedReview, api.getReviewPosition())
 		# Route a second time to activate the object under the cell
 		braille.handler.routeTo(4)
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		# While the object is now activated, caret should have been steady.
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, self.caret)
+		self.assertEqual(caret, self.caret)
 
 	def test_moveCaret_never_instantActivate(self):
 		"""Test that routing action on a cell will activate the current position
@@ -95,7 +95,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		# While the object is now activated, caret should have been steady.
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, self.caret)
+		self.assertEqual(caret, self.caret)
 
 	def test_moveCaret_always_moveReviewAndActivate(self):
 		"""Test that routing action on a cell will move the review cursor when routing changes the position,
@@ -111,21 +111,21 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		expectedReview = self.caret.copy()
 		expectedReview.move(textInfos.UNIT_CHARACTER, 3)
-		self.assertEquals(expectedReview, api.getReviewPosition())
-		self.assertEquals(caret, expectedReview)
+		self.assertEqual(expectedReview, api.getReviewPosition())
+		self.assertEqual(caret, expectedReview)
 		braille.handler.routeTo(4)  # Route to the fifth cell
 		# Object still not activated as no second routing press on same cell.
 		self.assertLess(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		# move expected review from cell 4 to 5
 		expectedReview.move(textInfos.UNIT_CHARACTER, 1)
-		self.assertEquals(expectedReview, api.getReviewPosition())
-		self.assertEquals(caret, expectedReview)
+		self.assertEqual(expectedReview, api.getReviewPosition())
+		self.assertEqual(caret, expectedReview)
 		# Route a second time to activate the object under the cell
 		braille.handler.routeTo(4)
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, expectedReview)
+		self.assertEqual(caret, expectedReview)
 
 	def test_moveCaret_always_instantActivate(self):
 		"""Test that routing action on a cell will activate the current position
@@ -146,7 +146,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		braille.handler.routeTo(3)
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
-		self.assertEquals(caret, review)
+		self.assertEqual(caret, review)
 
 
 class TestTextInfoRegionRouting(unittest.TestCase):

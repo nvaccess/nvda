@@ -19,6 +19,7 @@ import re
 import typing
 import requests
 import wx
+import wx.adv
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -3324,20 +3325,29 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
-		self.enableRemote = sHelper.addItem(
+		remoteControlsGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
+		remoteControlsGroupBox: wx.StaticBox = remoteControlsGroupSizer.GetStaticBox()
+		remoteControlsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteControlsGroupSizer)
+		sHelper.addItem(remoteControlsGroupHelper)
+
+		if globalVars.appArgs.secure:
+			self._insertReadOnlyNotice(sizer)
+			remoteControlsGroupBox.Disable()
+
+		self.enableRemote = remoteControlsGroupHelper.addItem(
 			# Translators: Label of a checkbox in Remote Access settings
-			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
+			wx.CheckBox(remoteControlsGroupBox, label=pgettext("remote", "Enable Remote Access")),
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
-			self,
+			remoteControlsGroupBox,
 		)
 		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
-		sHelper.addItem(remoteSettingsGroupHelper)
+		remoteControlsGroupHelper.addItem(remoteSettingsGroupHelper)
 
 		self.playSounds = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3347,6 +3357,15 @@ class RemoteSettingsPanel(SettingsPanel):
 			),
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
+
+		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
+				label=pgettext("remote", "Confirm before disconnecting when controlled"),
+			),
+		)
+		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3425,14 +3444,26 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
 
-		self.deleteFingerprints = sHelper.addItem(
+		self.deleteFingerprints = remoteControlsGroupHelper.addItem(
 			# Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-			wx.Button(self, label=_("Delete all trusted fingerprints")),
+			wx.Button(remoteControlsGroupBox, label=_("Delete all trusted fingerprints")),
 		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
+
+	def _insertReadOnlyNotice(self, sizer: wx.BoxSizer):
+		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
+		banner.SetText(
+			# Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
+			pgettext("remote", "Read only"),
+			# Translators: Message presented to users when viewing Remote Access settings in secure mode.
+			pgettext("remote", "Remote Access settings are read only as NVDA is running in secure mode."),
+		)
+		normalBgColour = self.GetBackgroundColour()
+		banner.SetGradient(normalBgColour, normalBgColour)
+		sizer.Insert(0, banner)
 
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
@@ -3469,6 +3500,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.playSounds.SetValue(self.config["ui"]["playSounds"])
+		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3533,6 +3565,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
+		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
@@ -4072,6 +4105,7 @@ class AdvancedPanelControls(
 			"annotations",
 			"events",
 			"garbageHandler",
+			"remoteClient",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5452,9 +5486,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		AddonStorePanel,
+		RemoteSettingsPanel,
 	]
-	if not globalVars.appArgs.secure:
-		categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
