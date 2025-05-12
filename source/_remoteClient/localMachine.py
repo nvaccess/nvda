@@ -297,7 +297,7 @@ class LocalMachine:
 		:return: True if simulating an SAS should succeed, false otherwise.
 		"""
 		if not hasUiAccess():
-			log.debug("Unable to simulte the SAS as NVDA does not have UI Access.")
+			log.debug("Unable to simulate the SAS as NVDA does not have UI Access.")
 			return False
 		# If we have UI Access, whether we can simulate the SAS depends on the Software SAS Generation group policy.
 		try:
