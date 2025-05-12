@@ -283,7 +283,7 @@ class LocalMachine:
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
 		if self._canSendSAS():
-			ctypes.windll.sas.SendSAS(0)
+			ctypes.windll.sas.SendSAS(not isRunningOnSecureDesktop())
 		else:
 			# Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
 			ui.message(_("Unable to trigger Alt Control Delete from remote"))
