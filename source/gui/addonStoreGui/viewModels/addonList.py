@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,7 +13,6 @@ from typing import (
 	List,
 	Optional,
 	TYPE_CHECKING,
-	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -22,6 +21,7 @@ from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
 	_AddonManifestModel,
+	_AddonModelT,
 )
 from addonStore.models.status import (
 	_installedAddonStatuses,
@@ -95,9 +95,6 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Date"),
 		50,
 	)
-
-
-_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 
 class AddonListItemVM(Generic[_AddonModelT]):
