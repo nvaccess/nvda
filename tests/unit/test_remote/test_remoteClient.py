@@ -110,16 +110,17 @@ class TestRemoteClient(unittest.TestCase):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
 		# Toggle mute: should mute the local machine.
-		self.client.toggleMute()
-		self.assertTrue(self.client.localMachine.isMuted)
-		self.assertTrue(self.client.menu.muteItem.checked)
-		self.uiDelayedMessage.assert_called_once()
-		# Now toggle again: should unmute.
-		self.uiDelayedMessage.reset_mock()
-		self.client.toggleMute()
-		self.assertFalse(self.client.localMachine.isMuted)
-		self.assertFalse(self.client.menu.muteItem.checked)
-		self.uiDelayedMessage.assert_called_once()
+		with patch.object(self.client, "leaderTransport", FakeTransport):
+			self.client.toggleMute()
+			self.assertTrue(self.client.localMachine.isMuted)
+			self.assertTrue(self.client.menu.muteItem.checked)
+			self.uiDelayedMessage.assert_called_once()
+			# Now toggle again: should unmute.
+			self.uiDelayedMessage.reset_mock()
+			self.client.toggleMute()
+			self.assertFalse(self.client.localMachine.isMuted)
+			self.assertFalse(self.client.menu.muteItem.checked)
+			self.uiDelayedMessage.assert_called_once()
 
 	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
 	def test_toggleMuteAsFollower(self):
