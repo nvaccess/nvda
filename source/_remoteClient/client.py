@@ -16,12 +16,13 @@ import inputCore
 import ui
 import wx
 from config import isInstalledCopy
-from keyboardHandler import KeyboardInputGesture
+from keyboardHandler import KeyboardInputGesture, canModifiersPerformAction
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
+import winUser
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -503,7 +504,7 @@ class RemoteClient:
 		:param gesture: The keyboard gesture that triggered this
 		:note: Also toggles braille input and mute state
 		"""
-		if not self.isConnected():
+		if not self.isConnected() and not self.sendingKeys:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(pgettext("remote", "Not connected"))
 			return
@@ -545,6 +546,25 @@ class RemoteClient:
 
 		:note: Sends key-up events for all held modifiers
 		"""
+		# Before releasing the keys, check if doing so will cause unintended consequences
+		if canModifiersPerformAction(KeyboardInputGesture._generalizeModifiers(self.keyModifiers)):
+			# Releasing these keys alone could cause an action, which is most likely not what the user wants.
+			# Send special reserved vkcode VK_NONE (0xff)
+			# to notify the remote computer's key state that something happened.
+			# This allows gestures which would cause an action if `NVDA` and the non-modifier key were removed
+			# to be used to toggle between controling the local and remote computers.
+			self.leaderTransport.send(
+				RemoteMessageType.KEY,
+				vk_code=winUser.VK_NONE,
+				extended=False,
+				pressed=True,
+			)
+			self.leaderTransport.send(
+				RemoteMessageType.KEY,
+				vk_code=winUser.VK_NONE,
+				extended=False,
+				pressed=False,
+			)
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
 			self.leaderTransport.send(

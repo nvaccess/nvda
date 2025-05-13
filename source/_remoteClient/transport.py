@@ -562,7 +562,7 @@ class TCPTransport(Transport):
 				log.debug(f"Enqueuing outbound message: {obj!r}")
 			self.queue.put(obj)
 		else:
-			log.error(f"Attempted to send message {type} while not connected")
+			log.debugWarning(f"Attempted to send message {type} while not connected")
 
 	def _disconnect(self) -> None:
 		"""Internal method to disconnect the transport.
