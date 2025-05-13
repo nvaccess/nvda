@@ -3522,7 +3522,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 				"This will cause NVDA to forget all previously trusted Remote Access servers. "
 				"When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
-				"Are you sure you want to continue? This action cannot be undone.",
+				"Are you sure you want to continue?",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 			pgettext("remote", "Delete All Trusted Fingerprints"),
