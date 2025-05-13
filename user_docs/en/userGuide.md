@@ -3741,8 +3741,8 @@ For example, `example.com:1234`.
 1. For host, provide the host name of a relay server, such as `nvdaremote.com`. You will need to provide this address to the other person.
   * You may include the port to connect on by appending a colon (":") and the port number to the host.
 For example, `example.com:1234`.
-1. For key:  come up with a long hard to guess key, or press the Generate Key button to have one automatically generated. You will need to provide this to the other person.
-  * Note that the key acts both as the identifier for the session and also the password. so it is very important it is hard to guess.
+1. For key:  come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated. You will need to provide this to the other person.
+  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
 1. Provide  the connection details (such as host and key) to the other person so they can connect.
 
@@ -3756,7 +3756,7 @@ If you do not wish to use a relay server or you are connecting over a local netw
   * By default, Remote Access uses port 6837.
   * If connecting over the internet, the  port may need to be forwarded. This documentation does not cover how to forward ports. You may need to contact your network administrator to do this.
 1. For key:  come up with a long hard to guess key, or press the Generate Key button to have one automatically generated. You will need to provide this to the other person.
-  * Note that the key acts both as the identifier for the session and also the password. so it is very important it is hard to guess.
+  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
 1. Provide  the connection details (such as host and key) to the other person so they can connect.
 
