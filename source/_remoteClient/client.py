@@ -504,7 +504,7 @@ class RemoteClient:
 		:param gesture: The keyboard gesture that triggered this
 		:note: Also toggles braille input and mute state
 		"""
-		if not self.isConnected():
+		if not self.isConnected() and not self.sendingKeys:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(pgettext("remote", "Not connected"))
 			return
