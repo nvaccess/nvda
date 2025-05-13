@@ -3706,7 +3706,7 @@ You can enable Remote Access [in Remote Access settings](#RemoteSettings).
 
 Before you begin, ensure NVDA is installed and running on both computers.
 Also ensure that the Enable Remote Access checkbox [in Remote Access settings](#RemoteSettings) is checked on both computers.
-The remote access feature will then  be available from the Tools menu in NVDA; there's no need for additional downloads or installations.
+The remote access feature will then be available from the Tools menu in NVDA; there's no need for additional downloads or installations.
 
 If NVDA is running in [secure mode](#SecureMode), you cannot manually initiate a new Remote Access session.
 However, NVDA will still automatically start a new Remote Access session if configured to do so with the [Automatically connect after NVDA starts](#RemoteAutoconnect) setting.
@@ -3735,7 +3735,7 @@ In this case, the other person has either started the connection via a relay ser
 1. In the Host field, Enter the host address (and port if also given).
   * You may include the port to connect on by appending a colon (":") and the port number to the host address.
 For example, `example.com:1234`.
-1. In the Key field, enter the  key provided.
+1. In the Key field, enter the key provided.
 Be careful to type the key exactly as given.
 1. Press OK.
 
@@ -3748,11 +3748,11 @@ If allowing another person to connect to you over the internet, the easiest opti
 You will need to provide this address to the other person.
   * You may include the port to connect on by appending a colon (":") and the port number to the host.
 For example, `example.com:1234`.
-1. For key:  come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated.
+1. For key: come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated.
 You will need to provide this to the other person.
   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
-1. Provide  the connection details (such as host and key) to the other person so they can connect.
+1. Provide the connection details (such as host and key) to the other person so they can connect.
 
 #### Using NVDA as the server {#RemoteAccessConnectSelfHosted}
 
@@ -3762,19 +3762,19 @@ If you do not wish to use a relay server or you are connecting over a local netw
 1. If connecting over the internet, you can press the "Get External IP" button to show your external IP (internet visible) address.
 You will need to provide this external IP to the other person.
 1. If connecting over a local network, you will need to provide the other person with your local IP.
-Locating this  is not covered in this documentation.
+Locating this is not covered in this documentation.
 1. For Port, enter the port you want to use for incoming Remote connections.
 The other person will also need this.
   * This should be a port that is not used by any other services.
   * By default, Remote Access uses port 6837.
-  * If connecting over the internet, the  port may need to be forwarded.
+  * If connecting over the internet, the port may need to be forwarded.
   This documentation does not cover how to forward ports.
   You may need to contact your network administrator to do this.
-1. For key:  come up with a long hard to guess key, or press the Generate Key button to have one automatically generated.
+1. For key: come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated.
 You will need to provide this to the other person.
   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
-1. Provide  the connection details (such as host and key) to the other person so they can connect.
+1. Provide the connection details (such as host and key) to the other person so they can connect.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
