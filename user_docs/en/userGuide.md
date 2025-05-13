@@ -3718,7 +3718,7 @@ Remote access sessions are configured via the Remote Access connection dialog.
 Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
 Or from anywhere press `NVDA+alt+r`.
 
-#### Mode Selection (Controlling or Controlled)
+#### Mode Selection (Controlling or Controlled) {#RemoteAccessMode}
 
 You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
@@ -3727,9 +3727,9 @@ the mode combo box allows you to choose whether this computer will be controlled
 * If you require another person to help you with your computer, choose "Allow this computer to be controlled".
 * If you are going to help someone with their computer, choose "Control another computer".
 
-#### Connecting to an existing server (Host and Key Provided)
+#### Connecting to an existing server (Host and Key Provided) {#RemoteAccessJoin}
 
- In this case, the other person has either started the connection via a relay server, or is hosting the connection locally.
+In this case, the other person has either started the connection via a relay server, or is hosting the connection locally.
 
 1. For Server, choose "Use existing".
 1. In the Host field, Enter the host address (and port if also given).
@@ -3739,7 +3739,7 @@ For example, `example.com:1234`.
 Be careful to type the key exactly as given.
 1. Press OK.
 
-#### Starting a Connection Via a Relay Server
+#### Starting a Connection Via a Relay Server {#RemoteAccessConnectRelay}
 
 If allowing another person to connect to you over the internet, the easiest option is to use a relay server. To do this:
 
@@ -3754,7 +3754,7 @@ You will need to provide this to the other person.
 1. Press OK.
 1. Provide  the connection details (such as host and key) to the other person so they can connect.
 
-#### Using NVDA as the server
+#### Using NVDA as the server {#RemoteAccessConnectSelfHosted}
 
 If you do not wish to use a relay server or you are connecting over a local network:
 
