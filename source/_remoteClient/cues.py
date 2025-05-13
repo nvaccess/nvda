@@ -65,7 +65,7 @@ def _playCue(cueName: str) -> None:
 
 	# Show message if specified
 	if message := CUES[cueName].get("message"):
-		ui.message(message)
+		ui.delayedMessage(message)
 
 
 def connected():

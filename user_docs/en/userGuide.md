@@ -3142,6 +3142,13 @@ Use this option to select the type of audio cues played by Remote Access.
 When checked, NVDA will produce natural-sounding audio cues for Remote Access events.
 When unchecked, NVDA will beep for Remote events.
 
+##### Confirm before disconnecting when controlled {#RemoteConfirmDisconnect}
+
+This option controls whether confirmation is required before disconnecting from a Remote Access session when connected as the controlled computer.
+
+When checked, NVDA will ask for confirmation before disconnecting.
+When unchecked, NVDA will disconnect immediately without confirmation.
+
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
 This option allows you to automatically establish a Remote Access session when NVDA starts.

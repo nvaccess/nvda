@@ -4944,8 +4944,6 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.copyLink()
-		# Translators: A message indicating that a link has been copied to the clipboard.
-		ui.message(_("Copied link"))
 
 	@script(
 		category=SCRCAT_REMOTE,

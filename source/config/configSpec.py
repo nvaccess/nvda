@@ -320,6 +320,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	events = boolean(default=false)
 	garbageHandler = boolean(default=false)
 	remoteClient = boolean(default=False)
+	externalPythonDependencies = boolean(default=False)
 
 [uwpOcr]
 	language = string(default="")
@@ -365,6 +366,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		playSounds = boolean(default=True)
+		confirmDisconnectAsFollower = boolean(default=True)
 """
 
 #: The configuration specification
