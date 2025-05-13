@@ -8,7 +8,7 @@
 
 ### Changes
 
-* In browse mode, it is now possible to use number keys 1 to 9, instead of 1 to 6 previously, to navigate  to the corresponding heading. (#18014, @CyrilleB79)
+* In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 
 ### Bug Fixes
 
