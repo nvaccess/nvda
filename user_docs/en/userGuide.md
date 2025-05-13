@@ -3719,43 +3719,59 @@ Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
 Or from anywhere press `NVDA+alt+r`.
 
 #### Mode Selection (Controlling or Controlled)
+
 You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
 the mode combo box allows you to choose whether this computer will be controlled (Another person will interact with your computer) or controlling (you will interact with someone else's computer).
+
 * If you require another person to help you with your computer, choose "Allow this computer to be controlled".
 * If you are going to help someone with their computer, choose "Control another computer".
 
 #### Connecting to an existing server (Host and Key Provided)
+
  In this case, the other person has either started the connection via a relay server, or is hosting the connection locally.
 
 1. For Server, choose "Use existing".
 1. In the Host field, Enter the host address (and port if also given).
   * You may include the port to connect on by appending a colon (":") and the port number to the host address.
 For example, `example.com:1234`.
-1. In the Key field, enter the  key provided. Be careful to type the key exactly as given.
+1. In the Key field, enter the  key provided.
+Be careful to type the key exactly as given.
 1. Press OK.
 
 #### Starting a Connection Via a Relay Server
-  If allowing another person to connect to you over the internet, the easiest option is to use a relay server. To do this:
+
+If allowing another person to connect to you over the internet, the easiest option is to use a relay server. To do this:
+
 1. For Server, choose "Use existing".
-1. For host, provide the host name of a relay server, such as `nvdaremote.com`. You will need to provide this address to the other person.
+1. For host, provide the host name of a relay server, such as `nvdaremote.com`.
+You will need to provide this address to the other person.
   * You may include the port to connect on by appending a colon (":") and the port number to the host.
 For example, `example.com:1234`.
-1. For key:  come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated. You will need to provide this to the other person.
+1. For key:  come up with a long, hard to guess key, or press the Generate Key button to have one automatically generated.
+You will need to provide this to the other person.
   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
 1. Provide  the connection details (such as host and key) to the other person so they can connect.
 
 #### Using NVDA as the server
+
 If you do not wish to use a relay server or you are connecting over a local network:
+
 1. For Server, choose "Host locally".
-1. If connecting over the internet, you can press the "Get External IP" button to show your external IP (internet visible) address. You will need to provide this external IP to the other person.
-1. If connecting over a local network, you will need to provide the other person with your local IP. Locating this  is not covered in this documentation.
-1. For Port, enter the port you want to use for incoming Remote connections. The other person will also need this.
+1. If connecting over the internet, you can press the "Get External IP" button to show your external IP (internet visible) address.
+You will need to provide this external IP to the other person.
+1. If connecting over a local network, you will need to provide the other person with your local IP.
+Locating this  is not covered in this documentation.
+1. For Port, enter the port you want to use for incoming Remote connections.
+The other person will also need this.
   * This should be a port that is not used by any other services.
   * By default, Remote Access uses port 6837.
-  * If connecting over the internet, the  port may need to be forwarded. This documentation does not cover how to forward ports. You may need to contact your network administrator to do this.
-1. For key:  come up with a long hard to guess key, or press the Generate Key button to have one automatically generated. You will need to provide this to the other person.
+  * If connecting over the internet, the  port may need to be forwarded.
+  This documentation does not cover how to forward ports.
+  You may need to contact your network administrator to do this.
+1. For key:  come up with a long hard to guess key, or press the Generate Key button to have one automatically generated.
+You will need to provide this to the other person.
   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 1. Press OK.
 1. Provide  the connection details (such as host and key) to the other person so they can connect.
