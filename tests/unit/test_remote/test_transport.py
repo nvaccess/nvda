@@ -151,11 +151,11 @@ class TestTransportSendAndQueue(unittest.TestCase):
 		self.assertEqual(result["type"], "TEST_TYPE")
 		self.assertEqual(result["key"], 123)
 
-	def test_sendWhenNotConnectedLogsError(self):
+	def test_sendWhenNotConnectedLogsWarning(self):
 		self.transport.connected = False
-		with mock.patch("_remoteClient.transport.log.error") as mockError:
+		with mock.patch("_remoteClient.transport.log.debugWarning") as mockWarning:
 			self.transport.send("TEST", a=1)
-		mockError.assert_called_once()
+		mockWarning.assert_called_once()
 
 
 # ---------------------------------------------------------------------------
