@@ -321,7 +321,11 @@ class LocalMachine:
 		except FileNotFoundError:
 			# The group policy is either disabled or not set,
 			# which means that ATs can only simulate the SAS on secure desktops.
-			return isRunningOnSecureDesktop()
+			if not isRunningOnSecureDesktop():
+				log.debug(
+					f"Unable to simulate the SAS as {SoftwareSASGeneration.DISPLAY_PATH} is not set and NVDA is not running on the secure desktop.",
+				)
+				return False
 		except OSError:
 			# Something went wrong trying to read the registry.
 			# Return False to avoid a false positive.
