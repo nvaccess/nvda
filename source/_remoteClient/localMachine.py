@@ -278,15 +278,15 @@ class LocalMachine:
 		api.copyToClip(text=text)
 
 	def sendSAS(self) -> None:
-		"""Simulate a secure attention sequence (e.g. CTRL+ALT+DEL).
+		"""Simulate a secure attention sequence (i.e. control+alt+delete).
 
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
 		if self._canSendSAS():
 			ctypes.windll.sas.SendSAS(not isRunningOnSecureDesktop())
 		else:
-			# Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
-			ui.message(pgettext("remote", "Unable to trigger ctrl+alt+delete"))
+			# Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
+			ui.message(pgettext("remote", "Unable to trigger control+alt+delete"))
 
 	@staticmethod
 	def _canSendSAS() -> bool:
