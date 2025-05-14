@@ -48,7 +48,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					config.conf["speech"]["reportNotSupportedLanguage"]
 					== ReportNotSupportedLanguage.SPEECH.value
 				):
-					speechSequence.append(
+					filteredSpeechSequence.append(
 						# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 						pgettext("languageNotSupported", "{lang} (not supported)").format(lang=langDesc),
 					)
@@ -56,8 +56,8 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					config.conf["speech"]["reportNotSupportedLanguage"]
 					== ReportNotSupportedLanguage.BEEP.value
 				):
-					speechSequence.append(langDesc)
-					speechSequence.append(BeepCommand(500, 50))
+					filteredSpeechSequence.append(langDesc)
+					filteredSpeechSequence.append(BeepCommand(500, 50))
 				elif config.conf["speech"]["reportLanguage"]:
 					# We need this to use the formatted string when appropriate, to avoid appending (not supported).
 					filteredSpeechSequence.append(langDesc)
