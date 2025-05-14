@@ -34,14 +34,63 @@ FACTOR_VALUES = {
 """Possible values for each of the factors in :class:`CanSendSASFactors`."""
 
 EXPECTED_SUCCESS_CASES = (
-	CanSendSASFactors(True, None, None, SoftwareSASGeneration.UIACCESS, winreg.REG_DWORD, False),
-	CanSendSASFactors(True, None, None, SoftwareSASGeneration.UIACCESS, winreg.REG_DWORD, True),
-	CanSendSASFactors(True, None, None, SoftwareSASGeneration.BOTH, winreg.REG_DWORD, False),
-	CanSendSASFactors(True, None, None, SoftwareSASGeneration.BOTH, winreg.REG_DWORD, True),
-	CanSendSASFactors(True, FileNotFoundError, None, None, None, True),
-	CanSendSASFactors(True, None, FileNotFoundError, None, None, True),
-	# This case shouldn't be able to happen IRL
-	CanSendSASFactors(True, FileNotFoundError, FileNotFoundError, None, None, True),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=None,
+		queryValueRaises=None,
+		valueData=SoftwareSASGeneration.UIACCESS,
+		valueType=winreg.REG_DWORD,
+		isRunningOnSecureDesktop=False,
+	),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=None,
+		queryValueRaises=None,
+		valueData=SoftwareSASGeneration.UIACCESS,
+		valueType=winreg.REG_DWORD,
+		isRunningOnSecureDesktop=True,
+	),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=None,
+		queryValueRaises=None,
+		valueData=SoftwareSASGeneration.BOTH,
+		valueType=winreg.REG_DWORD,
+		isRunningOnSecureDesktop=False,
+	),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=None,
+		queryValueRaises=None,
+		valueData=SoftwareSASGeneration.BOTH,
+		valueType=winreg.REG_DWORD,
+		isRunningOnSecureDesktop=True,
+	),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=FileNotFoundError,
+		queryValueRaises=None,
+		valueData=None,
+		valueType=None,
+		isRunningOnSecureDesktop=True,
+	),
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=None,
+		queryValueRaises=FileNotFoundError,
+		valueData=None,
+		valueType=None,
+		isRunningOnSecureDesktop=True,
+	),
+	# This case should not happen in practice
+	CanSendSASFactors(
+		hasUIAccess=True,
+		openKeyRaises=FileNotFoundError,
+		queryValueRaises=FileNotFoundError,
+		valueData=None,
+		valueType=None,
+		isRunningOnSecureDesktop=True,
+	),
 )
 """Combinations of external factors under which we expect to be able to call SendSAS."""
 
