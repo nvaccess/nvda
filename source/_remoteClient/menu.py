@@ -136,12 +136,12 @@ class RemoteMenu(wx.Menu):
 			self._switchToDisconnectItem()
 		else:
 			self._switchToConnectItem()
-		self.muteItem.Enable(connected)
+		self.muteItem.Enable(connected and mode is ConnectionMode.LEADER)
 		if not connected:
 			self.muteItem.Check(False)
 		self.pushClipboardItem.Enable(connected)
 		self.copyLinkItem.Enable(connected)
-		self.sendCtrlAltDelItem.Enable(connected)
+		self.sendCtrlAltDelItem.Enable(connected and mode is ConnectionMode.LEADER)
 
 	def handleConnecting(self, mode: ConnectionMode) -> None:
 		self._switchToDisconnectItem()
