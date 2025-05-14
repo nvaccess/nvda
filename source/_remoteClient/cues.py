@@ -12,12 +12,12 @@ import ui
 
 
 class Cue(TypedDict, total=False):
-	wave: Optional[str]
-	message: Optional[str]
+	wave: str | None
+	message: str | None
 
 
 # Declarative dictionary of all possible cues
-CUES: Dict[str, Cue] = {
+CUES: dict[str, Cue] = {
 	"connected": {
 		"wave": "connected",
 	},
