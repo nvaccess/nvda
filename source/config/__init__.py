@@ -36,7 +36,6 @@ import extensionPoints
 from . import profileUpgrader
 from . import aggregatedSection
 from .configSpec import confspec
-from .configFlags import OutputMode
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
@@ -1315,39 +1314,10 @@ class AggregatedSection:
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		"""Link deprecated config keys and values to their replacements.
 
-		Args:
-			key: The configuration key to link to its new or old counterpart.
-			val: The value associated with the configuration key.
-
-		postconditions:
-			- If self.path is "documentFormatting":
-				- If key is "reportFontAttributes":
-					- If val is True, "documentFormatting.fontAttributeReporting" is set to OutputMode.SPEECH_AND_BRAILLE, otherwise, it is set to OutputMode.OFF.
-				- If key is "fontAttributeReporting":
-					- if val is OutputMode.OFF, "documentFormatting.reportFontAttributes" is set to False, otherwise, it is set to True.
+		:arg key: The configuration key to link to its new or old counterpart.
+		:arg val: The value associated with the configuration key.
 		"""
 		match self.path:
-			case ("documentFormatting",):
-				match key:
-					case "fontAttributeReporting":
-						# Alias documentFormatting.fontAttributeReporting to documentFormatting.reportFontAttributes for backwards compatibility.
-						key = "reportFontAttributes"
-						val = bool(val)
-
-					case "reportFontAttributes":
-						# Alias documentFormatting.reportFontAttributes to documentFormatting.fontAttributeReporting for forwards compatibility.
-						log.warning(
-							"documentFormatting.reportFontAttributes is deprecated. Use documentFormatting.fontAttributeReporting instead.",
-							# Include stack info so testers can report warning to add-on author.
-							stack_info=True,
-						)
-						key = "fontAttributeReporting"
-						val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
-
-					case _:
-						# We don't care about other keys in this section.
-						return
-
 			case ("speech",):
 				match key:
 					case "symbolDictionaries":
