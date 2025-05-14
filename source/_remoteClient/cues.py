@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import os
-from typing import Dict, Optional, TypedDict
+from typing import TypedDict
 
 import globalVars
 import nvwave
