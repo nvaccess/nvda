@@ -219,7 +219,7 @@ def getDriversForConnectedUsbDevices(
 		)
 	)
 
-	fallbackDriversAndMatches: list[set[str, DeviceMatch]] = []
+	fallbackDriversAndMatches: list[tuple[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -228,7 +228,7 @@ def getDriversForConnectedUsbDevices(
 			for definition in usbDefinitions:
 				if definition.matches(match):
 					if definition.useAsFallback:
-						fallbackDriversAndMatches.append({driver, match})
+						fallbackDriversAndMatches.append((driver, match))
 					else:
 						yield (driver, match)
 
