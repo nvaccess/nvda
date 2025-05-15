@@ -123,7 +123,7 @@ class _UpdateChannelSubMenu(_ActionsContextMenuP[AddonUpdateChannelActionVM]):
 		selectedAddon = actionVM.actionTarget
 		actionVM.actionHandler(selectedAddon)
 		log.debug(
-			f"update check channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}"
+			f"update check channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}",
 		)
 
 	def _insertToContextMenu(self, action: AddonUpdateChannelActionVM, prevActionIndex: int):
