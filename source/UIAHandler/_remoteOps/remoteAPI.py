@@ -191,10 +191,11 @@ class RemoteAPI(builder._RemoteBase):
 			),
 		)
 
-	_scopeInstructionJustExited: instructions.InstructionBase | None = None
+	_lastChainedBlockTailInstruction: instructions.Instruction | None = None
 
 	@contextlib.contextmanager
 	def ifBlock(self, condition: RemoteBool, silent: bool = False):
+		self._lastChainedBlockTailInstruction = None
 		instructionList = self.rob.getDefaultInstructionList()
 		conditionInstruction = instructions.ForkIfFalse(
 			condition=condition,
@@ -206,33 +207,53 @@ class RemoteAPI(builder._RemoteBase):
 		yield
 		if not silent:
 			instructionList.addComment("End of if block body")
+		# add a final jump instruction to the previous if block to skip over a future possible else block.
+		jumpElseInstruction = instructions.JumpElse(RelativeOffset(1))  # offset updated by the else block
+		instructionList.addInstruction(jumpElseInstruction)
+		self._lastChainedBlockTailInstruction = jumpElseInstruction
 		nextInstructionIndex = instructionList.getInstructionCount()
 		conditionInstruction.branch = RelativeOffset(nextInstructionIndex - conditionInstructionIndex)
-		self._scopeInstructionJustExited = conditionInstruction
+
+	@contextlib.contextmanager
+	def elifBlock(self, condition: RemoteBool, silent: bool = False):
+		# Implemented with an else and an if block.
+		instructionList = self.rob.getDefaultInstructionList()
+		prevInstruction = self._lastChainedBlockTailInstruction
+		with self.elseBlock(silent=True):
+			with self.ifBlock(condition, silent=True):
+				instructionList.addComment("Elif block body")
+				yield
+				instructionList.addComment("End of elif block body")
+			# if block complete.
+			nextInstructionIndex = instructionList.getInstructionCount()
+			# Link the previous if/elif's jump instruction to this elif's jump else instruction
+			jumpElseInstruction = instructionList.getInstruction(nextInstructionIndex - 1)
+			assert isinstance(jumpElseInstruction, instructions.JumpElse)
+			jumpElseInstruction._prevJumpElse = prevInstruction
+		# else block completes here,
+		# Which will update all the previous jump else instructions to point to the end of this elif block
 
 	@contextlib.contextmanager
 	def elseBlock(self, silent: bool = False):
-		scopeInstructionJustExited = self._scopeInstructionJustExited
-		if not isinstance(scopeInstructionJustExited, instructions.ForkIfFalse):
-			raise RuntimeError("Else block not directly preceded by If block")
 		instructionList = self.rob.getDefaultInstructionList()
-		ifConditionInstruction = scopeInstructionJustExited
-		# add a final jump instruction to the previous if block to skip over the else block.
-		if not silent:
-			instructionList.addComment("Jump over else block")
-		jumpElseInstruction = instructions.Fork(RelativeOffset(1))  # offset updated after yield
-		jumpElseInstructionIndex = instructionList.addInstruction(jumpElseInstruction)
-		# increment the false offset of the previous if block to take the new jump instruction into account.
-		ifConditionInstruction.branch.value += 1
+		prevInstructionIndex = instructionList.getInstructionCount() - 1
+		# Ensure this else block is directly preceded by an if or elif block
+		prevInstruction = self._lastChainedBlockTailInstruction
+		if not isinstance(prevInstruction, instructions.JumpElse):
+			raise RuntimeError(f"Else block not directly preceded by If block. Expected JumpElse, got {prevInstruction.__class__.__name__}")
+		self._lastChainedBlockTailInstruction = None
 		if not silent:
 			instructionList.addComment("Else block body")
 		yield
 		if not silent:
 			instructionList.addComment("End of else block body")
-		# update the jump instruction to jump to the real end of the else block.
+		# update all the jump else instructions on the chain of if/elif blocks to jump to the end of this else block
 		nextInstructionIndex = instructionList.getInstructionCount()
-		jumpElseInstruction.jumpTo = RelativeOffset(nextInstructionIndex - jumpElseInstructionIndex)
-		self._scopeInstructionJustExited = None
+		numNewInstructions = nextInstructionIndex - (prevInstructionIndex + 1)
+		while prevInstruction:
+			instructionList.addComment(f"Incrementing previous jump else instruction by {numNewInstructions}")
+			prevInstruction.jumpTo.value += numNewInstructions
+			prevInstruction = prevInstruction._prevJumpElse
 
 	def continueLoop(self):
 		instructionList = self.rob.getDefaultInstructionList()
@@ -244,6 +265,7 @@ class RemoteAPI(builder._RemoteBase):
 
 	@contextlib.contextmanager
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool], silent: bool = False):
+		self._lastChainedBlockTailInstruction = None
 		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new loop block instruction to start the while loop
 		loopBlockInstruction = instructions.NewLoopBlock(
@@ -269,7 +291,6 @@ class RemoteAPI(builder._RemoteBase):
 		# update the loop break offset to jump to the end of the loop body
 		nextInstructionIndex = instructionList.getInstructionCount()
 		loopBlockInstruction.breakBranch = RelativeOffset(nextInstructionIndex - loopBlockInstructionIndex)
-		self._scopeInstructionJustExited = loopBlockInstruction
 
 	_range_intTypeVar = TypeVar("_range_intTypeVar", bound=RemoteIntBase)
 
@@ -303,6 +324,7 @@ class RemoteAPI(builder._RemoteBase):
 
 	@contextlib.contextmanager
 	def tryBlock(self, silent: bool = False):
+		self._lastChainedBlockTailInstruction = None
 		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new try block instruction to start the try block
 		tryBlockInstruction = instructions.NewTryBlock(
@@ -316,27 +338,24 @@ class RemoteAPI(builder._RemoteBase):
 		if not silent:
 			instructionList.addComment("End of try block body")
 		instructionList.addInstruction(instructions.EndTryBlock())
-		# update the try block catch offset to jump to the end of the try block body
+		jumpCatchInstruction = instructions.JumpCatch(
+			jumpTo=RelativeOffset(1),  # offset updated by the future catch block
+		)
+		instructionList.addInstruction(jumpCatchInstruction)
+		self._lastChainedBlockTailInstruction = jumpCatchInstruction
+		# update the try block catch offset to jump to the end of the try block
 		nextInstructionIndex = instructionList.getInstructionCount()
 		tryBlockInstruction.catchBranch = RelativeOffset(nextInstructionIndex - tryBlockInstructionIndex)
-		self._scopeInstructionJustExited = tryBlockInstruction
 
 	@contextlib.contextmanager
 	def catchBlock(self, silent: bool = False):
-		scopeInstructionJustExited = self._scopeInstructionJustExited
-		if not isinstance(scopeInstructionJustExited, instructions.NewTryBlock):
-			raise RuntimeError("Catch block not directly preceded by Try block")
 		instructionList = self.rob.getDefaultInstructionList()
-		tryBlockInstruction = scopeInstructionJustExited
-		# add a final jump instruction to the previous try block to skip over the catch block.
-		if not silent:
-			instructionList.addComment("Jump over catch block")
-		jumpCatchInstruction = instructions.Fork(
-			jumpTo=RelativeOffset(1),  # offset updated after yield
-		)
-		jumpCatchInstructionIndex = instructionList.addInstruction(jumpCatchInstruction)
-		# increment the catch offset of the previous try block to take the new jump instruction into account.
-		tryBlockInstruction.catchBranch.value += 1
+		prevInstructionIndex = instructionList.getInstructionCount() - 1
+		# Ensure this catch block is directly preceded by a try block
+		prevInstruction = self._lastChainedBlockTailInstruction
+		if not isinstance(prevInstruction, instructions.JumpCatch):
+			raise RuntimeError("Catch block not directly preceded by Try block")
+		self._lastChainedBlockTailInstruction = None
 		# fetch the error status that caused the catch
 		status = self.getOperationStatus()
 		# reset the error status to 0
@@ -349,8 +368,7 @@ class RemoteAPI(builder._RemoteBase):
 			instructionList.addComment("End of catch block body")
 		# update the jump instruction to jump to the real end of the catch block.
 		nextInstructionIndex = instructionList.getInstructionCount()
-		jumpCatchInstruction.jumpTo = RelativeOffset(nextInstructionIndex - jumpCatchInstructionIndex)
-		self._scopeInstructionJustExited = None
+		prevInstruction.jumpTo = RelativeOffset(nextInstructionIndex - prevInstructionIndex)
 
 	def halt(self):
 		instructionList = self.rob.getDefaultInstructionList()

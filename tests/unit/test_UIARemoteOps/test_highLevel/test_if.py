@@ -97,3 +97,98 @@ class Test_if(TestCase):
 
 		with self.assertRaises(operation.NoReturnException):
 			op.execute()
+
+	def test_bad_if_while_else(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition = ra.newBool(True)
+			with ra.ifBlock(condition):
+				ra.Return(1)
+			with ra.whileBlock(lambda: condition):
+				with self.assertRaises(RuntimeError):
+					# This should raise an error because we are inside a while block and not straight after an if block.
+					with ra.elseBlock():
+						pass
+
+		op.execute()
+
+	def test_elif(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition1 = ra.newBool(False)
+			condition2 = ra.newBool(True)
+			was_in_if = ra.newBool(False)
+			was_in_elif = ra.newBool(False)
+			was_in_else = ra.newBool(False)
+			with ra.ifBlock(condition1):
+				was_in_if.set(True)
+			with ra.elifBlock(condition2):
+				was_in_elif.set(True)
+			with ra.elseBlock():
+				was_in_else.set(True)
+			ra.Return(was_in_if, was_in_elif, was_in_else)
+
+		was_in_if, was_in_elif, was_in_else = op.execute()
+		self.assertFalse(was_in_if)
+		self.assertTrue(was_in_elif)
+		self.assertFalse(was_in_else)
+
+	def test_elif_no_if(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			with self.assertRaises(RuntimeError):
+				with ra.elifBlock(True):
+					pass
+			ra.Return(1)
+
+		op.execute()
+
+	def test_elif_if_is_true(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition1 = ra.newBool(True)
+			condition2 = ra.newBool(True)
+			was_in_if = ra.newBool(False)
+			was_in_elif = ra.newBool(False)
+			was_in_else = ra.newBool(False)
+			with ra.ifBlock(condition1):
+				was_in_if.set(True)
+			with ra.elifBlock(condition2):
+				was_in_elif.set(True)
+			with ra.elseBlock():
+				was_in_else.set(True)
+			ra.Return(was_in_if, was_in_elif, was_in_else)
+
+		was_in_if, was_in_elif, was_in_else = op.execute()
+		self.assertTrue(was_in_if)
+		self.assertFalse(was_in_elif)
+		self.assertFalse(was_in_else)
+
+	def test_elif_calculated_condition(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			a = ra.newInt(5)
+			was_in_if = ra.newBool(False)
+			was_in_elif = ra.newBool(False)
+			was_in_else = ra.newBool(False)
+			with ra.ifBlock(a == 4):
+				was_in_if.set(True)
+			with ra.elifBlock(a == 5):
+				was_in_elif.set(True)
+			with ra.elseBlock():
+				was_in_else.set(True)
+			ra.Return(was_in_if, was_in_elif, was_in_else)
+		was_in_if, was_in_elif, was_in_else = op.execute()
+		self.assertFalse(was_in_if)
+		self.assertTrue(was_in_elif)
+		self.assertFalse(was_in_else)

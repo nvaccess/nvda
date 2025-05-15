@@ -15,4 +15,4 @@ __all__ = ["_TypedInstruction"]
 class _TypedInstruction(InstructionBase):
 	@property
 	def params(self) -> dict[str, object]:
-		return vars(self)
+		return {k: v for k, v in vars(self).items() if not k.startswith("_")}
