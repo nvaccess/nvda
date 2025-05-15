@@ -2873,7 +2873,8 @@ This option allows you to specify whether browse mode should place clickable con
 Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
 When screen layout is enabled, page elements will stay as they are visually shown.
 For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
-If it is disabled, then page elements will be placed on their own lines.
+If it is disabled, interactive elements, such as links and buttons, will be placed on their own lines.
+Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
