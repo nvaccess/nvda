@@ -365,7 +365,7 @@ The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
-To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+To learn more about and configure this behaviour, refer to ["Add-ons update"](#AddonsUpdateMode).
 
 ### Community {#Community}
 
@@ -3042,7 +3042,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 
 This category allows you to adjust the behaviour of the Add-on Store.
 
-##### Automatic updates {#AutomaticAddonUpdates}
+##### Add-ons update {#AddonsUpdateMode}
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
@@ -3063,12 +3063,12 @@ You will be prompted to restart NVDA when the updates are finished.
 |Update Automatically |Automatically update add-ons in the background |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Default Update Channel {#DefaultAddonUpdateChannel}
+##### Default Update Check Channel {#DefaultAddonUpdateChannel}
 
-When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, by default, add-ons only update to the same [channel](#AddonStoreFilterChannel).
+When [Add-ons update](#AddonsUpdateMode) is enabled ("Notify" or "Update Automatically"),, by default, add-ons only check for update to the same [channel](#AddonStoreFilterChannel).
 For example, an installed beta version will only update to a newer beta version.
-This option sets the default update channel for all add-ons.
-You can also change the update channel for a [specific add-on individually from the Add-on Store](#AddonStoreUpdateChannel).
+This option sets the default update check channel for all add-ons.
+You can also change the update check channel for a [specific add-on individually from the Add-on Store](#AddonStoreUpdateChannel).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3078,20 +3078,20 @@ You can also change the update channel for a [specific add-on individually from 
 | Option | Behaviour |
 |---|---|
 | Same | Add-ons will remain on their channel |
-| Any | Add-ons will automatically update to the latest version, regardless of channel |
-| Do not update | Add-ons will not automatically update by default, you must enable them individually |
-| Stable | Add-ons will automatically update to stable versions |
-| Beta or dev | Add-ons will automatically update to beta or dev versions |
-| Beta | Add-ons will automatically update to beta versions |
-| Dev | Add-ons will automatically update to dev versions |
+| Any | Add-ons will check for update to the latest version, regardless of channel |
+| Do not update | Add-ons will not check for update by default, you must enable them individually |
+| Stable | Add-ons will check for update to stable versions |
+| Beta or dev | Add-ons will check for update to beta or dev versions |
+| Beta | Add-ons will check for update to beta versions |
+| Dev | Add-ons will check for update to dev versions |
 
-##### Allow automatic updates to install incompatible add-ons {#AllowIncompatibleAddonUpdates}
+##### Allow incompatible add-ons when checking for updates {#AllowIncompatibleAddonUpdates}
 
-This setting enables automatic updates to add-ons that may not be fully compatible with the current version of NVDA.
-By default, this is disabled, meaning automatic updates will only upgrade to add-on versions marked as compatible with the current version of NVDA.
-Automatic updates will still update an incompatible add-on version to a compatible version when it is released.
-Enabling this may be useful for switching over to using add-on breaking releases (the first release of the year).
-This is particularly useful for alpha and beta testers, who are testing compatibility of add-ons during the early stages of an add-on breaking release.
+When NVDA checks for add-on updates, this setting allows to accept updates to add-ons that may not be fully compatible with the current version of NVDA.
+By default, this is disabled, meaning add-ons update will only check for add-on versions marked as compatible with the current version of NVDA.
+Add-on updates check will still allow to update an incompatible add-on version to a compatible version when it is released.
+Enabling this may be useful for switching over to using add-on API breaking releases (the first release of the year).
+This is particularly useful for alpha and beta testers, who are testing compatibility of add-ons during the early stages of an add-on API breaking release.
 
 ##### Mirror server {#AddonStoreMetadataMirror}
 
@@ -3915,7 +3915,7 @@ When an add-on is being installed from an external source, NVDA will ask you to 
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
-To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+To learn more about and configure this behaviour, refer to ["Add-ons update"](#AddonsUpdateMode).
 
 #### Removing Add-ons {#AddonStoreRemoving}
 
@@ -3945,22 +3945,22 @@ This links to a GitHub Discussion webpage, where you will be able to read and wr
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
-#### Changing the automatic update channel {#AddonStoreUpdateChannel}
+#### Changing the update check channel {#AddonStoreUpdateChannel}
 
-You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
-When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
+You can manage the update check channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
+When [Add-ons update](#AddonsUpdateMode) is enabled ("Notify" or "Update Automatically"), add-ons will check for update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
 From an add-on's actions menu, using the submenu "Update channel", you can modify the channels an add-on will automatically update to.
 
 | Option | Behaviour |
 |---|---|
-| Default | Add-on will follow the [default update channel](#DefaultAddonUpdateChannel) |
+| Default | Add-on will follow the [default update check channel](#DefaultAddonUpdateChannel) |
 | Same | Add-on will remain on the same channel |
-| Any | Add-on will automatically update to the latest version, regardless of channel |
-| Do not update | Add-on will not automatically update |
-| Stable | Add-on will automatically update to stable versions |
-| Beta or dev | Add-on will automatically update to beta or dev versions |
-| Beta | Add-on will automatically update to beta versions |
-| Dev | Add-on will automatically update to dev versions |
+| Any | Add-on will check for update to the latest version, regardless of channel |
+| Do not update | Add-on will not check for update |
+| Stable | Add-on will check for update to stable versions |
+| Beta or dev | Add-on will check for update to beta or dev versions |
+| Beta | Add-on will check for update to beta versions |
+| Dev | Add-on will check for update to dev versions |
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 

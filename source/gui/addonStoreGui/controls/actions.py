@@ -122,7 +122,9 @@ class _UpdateChannelSubMenu(_ActionsContextMenuP[AddonUpdateChannelActionVM]):
 	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonUpdateChannelActionVM):
 		selectedAddon = actionVM.actionTarget
 		actionVM.actionHandler(selectedAddon)
-		log.debug(f"update channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}")
+		log.debug(
+			f"update check channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}"
+		)
 
 	def _insertToContextMenu(self, action: AddonUpdateChannelActionVM, prevActionIndex: int):
 		self._actionMenuItemMap[action] = self._contextMenu.InsertRadioItem(
@@ -166,9 +168,9 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 			_updateChannelSubMenu = _UpdateChannelSubMenu(self._storeVM)
 			self._contextMenu.AppendSubMenu(
 				_updateChannelSubMenu._contextMenu,
-				# Translators: Label for a submenu that allows the user to change the default update
+				# Translators: Label for a submenu that allows the user to change the default update check
 				# channel of the selected add-on
-				_("Upd&ate channel"),
+				_("Upd&ate check channel"),
 			)
 
 

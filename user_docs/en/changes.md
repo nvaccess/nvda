@@ -8,7 +8,7 @@ There are many improvements to speech, particularly responsiveness with SAPI 4, 
 Rate boost and automatic language switching is now supported in SAPI 5.
 SAPI 4 voices now support audio ducking, leading silence trimming, and keeping the audio device awake.
 
-The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
+The Add-on Store's update system has been improved, allowing you to select channels for update checks, and run automatic updates in the background.
 
 It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.
 
@@ -40,12 +40,12 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Add-on Store:
   * Automatic updates (#3208):
-    * Automatic update channels for add-ons can now be modified.
-      * Automatic update channels can be selected for installed add-ons via an "Update channel" submenu.
-      * The default automatic update channel can be set from the Add-on Store panel in NVDA's settings.
+    * Update check channels for add-ons can now be modified.
+      * Update check channels can be selected for installed add-ons via an "Update channel" submenu.
+      * The default update check channel can be set from the Add-on Store panel in NVDA's settings.
     * Automatic updates can now happen in the background.
-      * This can be enabled in the Add-on Store panel in NVDA's settings by changing "Automatic updates" to "Update Automatically".
-    * Automatic updates can now update incompatible add-ons to another, newer, incompatible version.
+      * This can be enabled in the Add-on Store panel in NVDA's settings by changing "Addons update" to "Update Automatically".
+    * Update check can now update incompatible add-ons to another, newer, incompatible version.
       * This can be enabled in the Add-on Store panel in NVDA's settings.
   * Added an action to cancel the install of add-ons. (#15578, @hwf1324)
   * Added an action to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)

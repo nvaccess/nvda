@@ -238,7 +238,7 @@ class ReportCellBorders(DisplayStringIntEnum):
 		}
 
 
-class AddonsAutomaticUpdate(DisplayStringStrEnum):
+class AddonsUpdateMode(DisplayStringStrEnum):
 	NOTIFY = "notify"
 	UPDATE = "update"
 	DISABLED = "disabled"
@@ -246,12 +246,12 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: This is a label for the automatic update behaviour for add-ons.
+			# Translators: This is a label for the add-on update behaviour for add-ons.
 			# It will notify the user when updates are available.
 			self.NOTIFY: _("Notify"),
-			# Translators: This is a label for the automatic update behaviour for add-ons.
+			# Translators: This is a label for the add-on update behaviour for add-ons.
 			self.UPDATE: _("Update Automatically"),
-			# Translators: This is a label for the automatic update behaviour for add-ons.
+			# Translators: This is a label for the add-on update behaviour for add-ons.
 			self.DISABLED: _("Disabled"),
 		}
 
