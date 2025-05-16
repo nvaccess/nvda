@@ -10,7 +10,7 @@ SAPI 4 voices now support audio ducking, leading silence trimming, and keeping t
 
 The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
 
-It's now easier to manually refresh an OCR recognition result and toggle automatic refresh, with new commands.
+New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.
 
 Native selection is now available in Chrome and Edge.
 
