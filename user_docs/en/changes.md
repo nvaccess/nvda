@@ -10,7 +10,7 @@ SAPI 4 voices now support audio ducking, leading silence trimming, and keeping t
 
 The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
 
-It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.
+New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.
 
 Native selection is now available in Chrome and Edge.
 
@@ -168,7 +168,6 @@ This option is enabled by default, but may result in increased battery depletion
 * In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)
 * When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)
 * The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)
-* Closing the COM registration fixing tool while on its intro screen with alt+f4 now correctly cancels the tool rather than letting it try to run. (#18090)
 
 ### Changes for Developers
 
@@ -249,13 +248,13 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * The following symbols have been removed from `nvwave`: `getOutputDeviceNames`, `outputDeviceIDToName`, `outputDeviceNameToID`.
   Use `utils.mmdevice.getOutputDevices` instead.
   * `nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.
+  Additionally, the method signature of its `__init__` has changed as follows:
+    * The `outputDevice` parameter should now only be passed string arguments.
+    * The deprecated `closeWhenIdle` and `buffered` parameters have been removed.
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
   * The `WASAPI` key has been removed from the `audio` section of the config spec.
-  * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
   * The configuration key `config.conf["speech"]["outputDevice"]` has been removed.
     It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)
-  * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
-  * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
