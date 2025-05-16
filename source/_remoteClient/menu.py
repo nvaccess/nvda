@@ -65,8 +65,8 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
-			pgettext("remote", "Send ctrl+alt+del"),
-			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the Remote Access submenu.
+			pgettext("remote", "S&end control+alt+delete"),
+			# Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 			pgettext("remote", "Send control+alt+delete to the controlled computer."),
 		)
 		sysTrayIcon.Bind(
