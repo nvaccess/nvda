@@ -3349,15 +3349,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
 		remoteControlsGroupHelper.addItem(remoteSettingsGroupHelper)
 
-		self.playSounds = remoteSettingsGroupHelper.addItem(
-			wx.CheckBox(
-				self.remoteSettingsGroupBox,
-				# Translators: A checkbox in Remote Access settings to set whether sounds play instead of beeps.
-				label=pgettext("remote", "&Play sounds instead of beeps"),
-			),
-		)
-		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
-
 		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3499,7 +3490,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.playSounds.SetValue(self.config["ui"]["playSounds"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
 		self._setControls()
 
@@ -3564,7 +3554,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		enabled = self.enableRemote.GetValue()
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
-		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
