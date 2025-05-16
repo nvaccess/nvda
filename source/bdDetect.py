@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2013-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2013-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Christian Comaschi
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
