@@ -21,7 +21,7 @@ from addonStore.models.addon import (
 from addonStore.dataManager import addonDataManager
 from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
 import config
-from config.configFlags import AddonsAutomaticUpdate
+from config.configFlags import AddonsUpdateMode
 import gui
 from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
@@ -578,9 +578,9 @@ class UpdatableAddonsDialog(
 	@classmethod
 	def _checkForUpdatableAddons(cls):
 		if not NVDAState.shouldWriteToDisk() or (
-			AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"]
+			AddonsUpdateMode.DISABLED == config.conf["addonStore"]["automaticUpdates"]
 		):
-			log.debug("automatic add-on updates are disabled")
+			log.debug("add-on updates are disabled")
 			return
 		log.debug("checking for updatable add-ons")
 
@@ -595,7 +595,7 @@ class UpdatableAddonsDialog(
 		log.debug("updatable add-ons found")
 
 		match config.conf["addonStore"]["automaticUpdates"]:
-			case AddonsAutomaticUpdate.NOTIFY:
+			case AddonsUpdateMode.NOTIFY:
 
 				def delayCreateDialog():
 					winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
@@ -603,7 +603,7 @@ class UpdatableAddonsDialog(
 
 				wx.CallAfter(delayCreateDialog)
 
-			case AddonsAutomaticUpdate.UPDATE:
+			case AddonsUpdateMode.UPDATE:
 				threading.Thread(
 					name="AutomaticAddonUpdate",
 					target=_updateAddons,
@@ -612,7 +612,7 @@ class UpdatableAddonsDialog(
 				).start()
 
 			case _:
-				raise NotImplementedError("Unknown automatic update setting")
+				raise NotImplementedError("Unknown add-ons update setting")
 
 
 @_countAsMessageBox()
