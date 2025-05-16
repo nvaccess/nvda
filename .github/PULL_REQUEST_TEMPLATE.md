@@ -8,6 +8,7 @@ See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 -->
 
 ### Link to issue number:
+<!-- Use Closes/Fixes/Resolves #xxx to link this PR to the issue it is responding to. -->
 
 ### Summary of the issue:
 
