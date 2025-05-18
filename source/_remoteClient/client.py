@@ -183,10 +183,10 @@ class RemoteClient:
 		if self.leaderTransport is None:
 			log.debugWarning("No leader transport to send SAS")
 			if not self.isConnected():
-				# Translators: Message shown when attempting to send ctrl+alt+del when no session is connected.
+				# Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 				ui.message(pgettext("remote", "Not connected"))
 			else:
-				# Translators: Presented when attempting to send ctrl+alt+del when connected as the controlled computer.
+				# Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
 				ui.message(pgettext("remote", "Not the controlling computer"))
 			return
 		self.leaderTransport.send(RemoteMessageType.SEND_SAS)

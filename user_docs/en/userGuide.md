@@ -3120,13 +3120,6 @@ This means that you cannot, for instance, start a Remote Access session with a p
 
 The following options are only available if Remote Access is enabled.
 
-##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
-
-Use this option to select the type of audio cues played by Remote Access.
-
-When checked, NVDA will produce natural-sounding audio cues for Remote Access events.
-When unchecked, NVDA will beep for Remote events.
-
 ##### Confirm before disconnecting when controlled {#RemoteConfirmDisconnect}
 
 This option controls whether confirmation is required before disconnecting from a Remote Access session when connected as the controlled computer.
@@ -3791,6 +3784,9 @@ Once a Remote Access session is active, you can switch between controlling the r
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
 * If connected as the controlling computer, mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
+* If connected as the controlling computer, send `control+alt+delete` to the controlled computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send control+alt+delete".
+  In order for this to work, the controlled computer must be running an installed copy of NVDA.
+  Additionally, depending on the settings of the controlled computer, this function may not always work.
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
