@@ -3444,7 +3444,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		self._setFromConfig()
 
 		if globalVars.appArgs.secure:
-			self._insertReadOnlyNotice(sizer)
 			self._disableDescendants(sizer, enabledInSecureMode)
 
 	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
@@ -3453,18 +3452,6 @@ class RemoteSettingsPanel(SettingsPanel):
 				window.Disable()
 			elif (subsizer := child.GetSizer()) is not None:
 				self._disableDescendants(subsizer, excluded)
-
-	def _insertReadOnlyNotice(self, sizer: wx.BoxSizer):
-		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
-		banner.SetText(
-			# Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
-			pgettext("remote", "Read only"),
-			# Translators: Message presented to users when viewing Remote Access settings in secure mode.
-			pgettext("remote", "Remote Access settings are read only as NVDA is running in secure mode."),
-		)
-		normalBgColour = self.GetBackgroundColour()
-		banner.SetGradient(normalBgColour, normalBgColour)
-		sizer.Insert(0, banner)
 
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
