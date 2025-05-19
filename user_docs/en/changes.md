@@ -11,8 +11,11 @@
     * Report the language of the text being read.
     * Report if the language of the text being read is not supported.
   * A new unassigned command has been added to report the language of the text at the caret position.
+* In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
 
 ### Changes
+
+* In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 
 ### Bug Fixes
 
@@ -41,7 +44,7 @@ SAPI 4 voices now support audio ducking, leading silence trimming, and keeping t
 
 The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
 
-It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.
+New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.
 
 Native selection is now available in Chrome and Edge.
 
@@ -164,6 +167,7 @@ This option is enabled by default, but may result in increased battery depletion
   * When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)
   * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors. (#17537, @LeonarddeR)
   * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
+  * Fixed an issue where some USB braille displays were not properly detected by NVDA. (#18114, @christiancomaschi)
 * Microsoft Office:
   * The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)
   * In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
@@ -279,13 +283,13 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * The following symbols have been removed from `nvwave`: `getOutputDeviceNames`, `outputDeviceIDToName`, `outputDeviceNameToID`.
   Use `utils.mmdevice.getOutputDevices` instead.
   * `nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.
+  Additionally, the method signature of its `__init__` has changed as follows:
+    * The `outputDevice` parameter should now only be passed string arguments.
+    * The deprecated `closeWhenIdle` and `buffered` parameters have been removed.
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
   * The `WASAPI` key has been removed from the `audio` section of the config spec.
-  * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
   * The configuration key `config.conf["speech"]["outputDevice"]` has been removed.
     It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)
-  * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
-  * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
@@ -313,6 +317,8 @@ Instead, a `callback` property has been added, which returns a function that per
   * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
 * The `winUser.paint` has been renamed from `painStruct` to `paintStruct`, fixing a bug where passing in a `PAINTSTRUCT` would raise an exception. (#17744)
 * `documentationUtils.getDocFilePath` and `installer.getDocFilePath` no longer look for `.txt` files in locale documentation folders. (#17911, @CyrilleB79)
+* `config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use `config.conf["documentFormatting"]["fontAttributeReporting"]` instead. (#18066)
+* `config.conf["speech"]["includeCLDR"]` has been removed, check/modify whether `config.conf["speech"]["symbolDictionaries"]` contains `"cldr"` instead. (#18066)
 
 #### Deprecations
 

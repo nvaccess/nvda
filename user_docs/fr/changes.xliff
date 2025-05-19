@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/8efed37b1ef0ca81dca9886bed4d94863ce5c5cd/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/73afac7ccc6befe1702c3d131b0b9e61ba196e39/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -14,7 +14,7 @@ $(ID:698c241c-1ade-46a5-bb6b-ee23f6e49e04)
 
 $(ID:1b210c3b-0fbe-42c5-b1fb-a2b63456f3b9)
 
-$(ID:5d8815bb-0213-4c6b-a487-ff8a868da89b)
+$(ID:17977634-b3c7-4ff8-baa0-7b6c304f2e10)
 
 $(ID:20963f36-9dbc-442d-94cc-1034306850a5)
 
@@ -252,13 +252,13 @@ $(ID:7d996341-4b3b-4866-8dbc-d25db96c8ea5)
   * $(ID:577f916f-e5ff-4f67-bf13-1037f6c060c2)
 $(ID:39543c90-9b62-4b2b-9cd5-9d2147534302)
   * $(ID:662ad44f-58f9-4174-947f-bd3bfc29e426)
+$(ID:d6569b4b-453e-4611-8ff0-03207d5f5419)
+    * $(ID:8ddc3742-3862-46c8-ab55-edceda0c301f)
+    * $(ID:52f69654-6bf0-4424-8854-6d692a3906cb)
   * $(ID:b7ec61e8-747a-4f68-b201-96c0a4c30770)
   * $(ID:47799452-2417-46fc-90e0-5607790777ea)
-  * $(ID:d33c0dae-24f1-4657-92fd-5edcf0319190)
   * $(ID:084a8e31-cab7-4df0-acdd-3ff8a39a8222)
 $(ID:8490fab4-0b9d-4216-b6d8-b267def08f96)
-  * $(ID:b569e7d4-0eb4-485f-93e0-d69356a9a939)
-  * $(ID:71b599e4-724e-4b6a-90e1-3f7f39b7c60d)
 * $(ID:14f25227-0c94-49fc-9975-82ba830e61f9)
 * $(ID:93869b50-ae5b-4e7e-8c6f-c9aa18b631a5)
 * $(ID:a7ae2825-da24-40b3-9bbc-5fc0ee33bdf4)
@@ -5452,13 +5452,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Le système de mise à jour automatique de l'Addon Store a été amélioré, vous permettant de sélectionner les canaux pour les mises à jour automatiques et d'exécuter celles-ci en arrière-plan.</target>
       </segment>
     </unit>
-    <unit id="5d8815bb-0213-4c6b-a487-ff8a868da89b">
+    <unit id="17977634-b3c7-4ff8-baa0-7b6c304f2e10">
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
-      <segment state="translated">
-        <source>It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.</source>
-        <target>Il est désormais plus facile de rafraîchir manuellement l'OCR et de basculer le rafraîchissement automatique grâce à de nouvelles commandes.</target>
+      <segment state="final">
+        <source>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</source>
+        <target>De nouvelles commandes ont été ajoutées pour actualiser manuellement un résultat de Reconnaissance Optique de Caractères et pour activer ou désactiver l'actualisation périodique des résultats de reconnaissance.</target>
       </segment>
     </unit>
     <unit id="20963f36-9dbc-442d-94cc-1034306850a5">
@@ -5776,9 +5776,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome, Edge and other applications based on Chromium 134 or newer. (#17838)</source>
-        <target>Le mode de sélection native de NVDA en mode navigation (`NVDA+shift+f10`) est désormais pris en charge dans Google Chrome, Edge et d'autres applications basées sur Chromium 134 ou plus récent. (#17838)</target>
+        <target>Le mode de sélection native de NVDA en mode navigation (`NVDA+maj+f10`) est désormais pris en charge dans Google Chrome, Edge et d'autres applications basées sur Chromium 134 ou plus récent. (#17838)</target>
       </segment>
     </unit>
     <unit id="7552ea32-24b9-4dcd-b150-1e8716c4526a">
@@ -5826,9 +5826,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 63</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)</source>
-        <target>Dans Word, la mise à jour de la sélection est maintenant annoncée lorsque vous utilisez les commandes de Word pour étendre ou réduire la sélection (`f8` ou `Maj+f8`). (#3293, @CyrilleB79)</target>
+        <target>Dans Word, la mise à jour de la sélection est maintenant annoncée lorsque vous utilisez les commandes de Word pour étendre ou réduire la sélection (`f8` ou `maj+f8`). (#3293, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="3e3c1bbf-28dd-40e1-baf0-0ac2d8c6da56">
@@ -5846,9 +5846,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>In Word with UIA, when using the native extended table navigation commands (`alt+home`, `alt+end`, `alt+pageUp`, and `alt+pageDown`), the caret movement will now be reported. (#17867, @CyrilleB79)</source>
-        <target>Dans Word avec UIA, lorsque vous utilisez les commandes natives de navigation étendue dans les tableaux (`alt+`Début, `alt+Fin`, `alt+pagePréc`, et `alt+pageSuiv`), le mouvement du curseur sera désormais annoncé. (#17867, @CyrilleB79)</target>
+        <target>Dans Word avec UIA, lorsque vous utilisez les commandes natives de navigation étendue dans les tableaux (`alt+début`, `alt+fin`, `alt+pagePréc`, et `alt+pageSuiv`), le mouvement du curseur sera désormais annoncé. (#17867, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="a0015a1c-ba2d-4f95-9932-d29d555967f2">
@@ -5868,7 +5868,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The result of more shortcuts is now reported in Word and Outlook:</source>
-        <target>Le résultat de l'ajout de nouveaux raccourcis est maintenant visible dans Word et Outlook :</target>
+        <target>Le résultat de davantage de raccourcis est maintenant annoncé dans Word et Outlook :</target>
       </segment>
     </unit>
     <unit id="0f695aed-520e-46fb-b2c3-4e176c5856c1">
@@ -5878,7 +5878,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>font formatting shortcuts (#10271, @CyrilleB79)</source>
-        <target>des raccourcis de mise en forme de police (#10271, @CyrilleB79)</target>
+        <target>raccourcis de mise en forme de police (#10271, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="d81b0182-87a0-42ee-ba06-21cdd2a21486">
@@ -5928,7 +5928,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When toggling double underline in Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)</source>
-        <target>When toggling double underline in Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)</target>
+        <target>Lorsque vous activez ou désactivez le double soulignement dans Writer à l'aide du raccourci clavier correspondant, NVDA annonce le nouvel état ("soulignage double activé" / "soulignage double désactivé"). (#6915, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="dc5b6bdb-7018-42cc-b255-8780a6b8de22">
@@ -5948,7 +5948,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>OCR:</source>
-        <target>OCR:</target>
+        <target>Reconnaissance Optique de Caractères :</target>
       </segment>
     </unit>
     <unit id="04990fc0-b683-48d3-8d8d-c606a0edff9c">
@@ -5968,7 +5968,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added an unassigned gesture to toggle periodically refreshing the Windows OCR result. (#16897)</source>
-        <target>Ajout d'un geste de commandes non assigné pour basculer l'actualisation périodique du résultat de l'OCR Windows. (#16897)</target>
+        <target>Ajout d'un geste de commandes non assigné pour activer ou désactiver l'actualisation périodique du résultat de la Reconnaissance Optique de Caractères de Windows. (#16897)</target>
       </segment>
     </unit>
     <unit id="cb090932-3eea-4e80-a8e1-d978eaba98ce">
@@ -5978,7 +5978,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Remote access functionality, based on the NVDA Remote add-on, has been integrated into NVDA. (#4390, @ctoth, @tspivey, @daiverd, NVDA Remote Contributors and funders)</source>
-        <target>Les fonctionnalités d'accès à distance, basées sur l'extension NVDA Remote, ont été intégrées à NVDA. (#4390, @ctoth, @tspivey, @daiverd, contributeurs et financeurs de NVDA Remote)</target>
+        <target>La fonctionnalité d'accès à distance, basée sur l'extension NVDA Remote, a été intégrée à NVDA. (#4390, @ctoth, @tspivey, @daiverd, contributeurs et financeurs de NVDA Remote)</target>
       </segment>
     </unit>
     <unit id="a47c7ded-2c61-4f51-ae37-23ef498bdcc9">
@@ -6137,7 +6137,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated CLDR to version 46.0. (#17484, @OzancanKaratas)</source>
-        <target>Mise à jour de CLDR vers la version 46.0. (#17484, @OzcanKaratas)</target>
+        <target>Mise à jour de CLDR vers la version 46.0. (#17484, @OzancanKaratas)</target>
       </segment>
     </unit>
     <unit id="9d41c784-2eaf-4966-9fbc-f42f51606d91">
@@ -6157,7 +6157,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA interface changes:</source>
-        <target>Modifications de l'interface NVDA:</target>
+        <target>Modifications de l'interface de NVDA :</target>
       </segment>
     </unit>
     <unit id="1b3da822-fecb-4fcc-a6e0-3bc9835044d2">
@@ -6167,7 +6167,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The NVDA installer no longer plays a sound when launched. (#14068)</source>
-        <target>L'installateur NVDA ne joue plus de son au lancement. (#14068)</target>
+        <target>L'installateur de NVDA ne joue plus de son au lancement. (#14068)</target>
       </segment>
     </unit>
     <unit id="5ad9fa28-2b9e-41e3-8442-1f0a67ebb0ee">
@@ -6177,7 +6177,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)</source>
-        <target>Les boîtes de dialogue de l'annonce de la destination d'un lien, Informations sur le formatage des caractères et Lire la sélection incluent maintenant des boutons "Fermer" et "Copier" pour plus de commodité. (#17018, @XLTechie)</target>
+        <target>Les boîtes de dialogue d'annonce de la destination d'un lien, d'informations sur la mise en forme des caractères et de lecture de la sélection incluent maintenant des boutons "Fermer" et "Copier" pour plus de commodité. (#17018, @XLTechie)</target>
       </segment>
     </unit>
     <unit id="fa7acb79-4053-4977-95ba-445e5b387810">
@@ -6535,7 +6535,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)</source>
-        <target>La commande Annonçant l'URL de destination d'un lien fonctionne maintenant comme prévu lors de l'utilisation du modèle d'objet ancien dans Word, Outlook, Excel et PowerPoint. (#17292, #17362, #17435, @CyrilleB79)</target>
+        <target>La commande d'Annonce de l'URL de destination d'un lien fonctionne maintenant comme prévu lors de l'utilisation du modèle d'objet hérité dans Word, Outlook, Excel et PowerPoint. (#17292, #17362, #17435, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="51a15094-f57b-43cb-8df2-c01d8e94f3a9">
@@ -6853,7 +6853,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)</source>
-        <target>Lorsque des liens d'ancrage pointent vers le même objet que celui où est placé le curseur virtuel, NVDA n'échoue plus à défilement vers la destination du lien. (#17669, @nvdaes)</target>
+        <target>Lorsque des liens d'ancrage pointent vers le même objet que celui où est placé le curseur virtuel, NVDA n'échoue plus à faire défiler vers la destination du lien. (#17669, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="897ce6c2-4516-45a8-91c2-04956630bd5d">
@@ -6892,7 +6892,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Note: this is an Add-on API compatibility breaking release.</source>
-        <target>Remarque: cette version annule la compatibilité API des extensions.</target>
+        <target>Remarque : il s'agit d'une version de rupture de compatibilité de l'API des extensions.</target>
       </segment>
     </unit>
     <unit id="55c7a660-8585-40ee-bc0f-024c52edd75f">
@@ -7140,8 +7140,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>`BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object</source>
-        <target>L'objet `BrowseModeTreeInterceptor` possède une nouvelle méthode `getLinkTypeInDocument` qui accepte une URL pour vérifier le type de lien de l'objet
-</target>
+        <target>L'objet `BrowseModeTreeInterceptor` possède une nouvelle méthode `getLinkTypeInDocument` qui accepte une URL pour vérifier le type de lien de l'objet</target>
       </segment>
     </unit>
     <unit id="c2b534ac-3a55-4b29-94f9-ad5b6f027ec2">
@@ -7400,7 +7399,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>API Breaking Changes</source>
-        <target>Ruptures de compatibilité d'API</target>
+        <target>Changements avec rupture de l'API</target>
       </segment>
     </unit>
     <unit id="17b39575-e78b-4865-8234-6987a3dee769">
@@ -7418,7 +7417,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Please open a GitHub issue if your add-on has an issue with updating to the new API.</source>
-        <target>Veuillez ouvrir une issue GitHub si votre extension rencontre un problème lors de la mise à jour vers la nouvelle API.</target>
+        <target>Veuillez ouvrir un ticket GitHub si votre extension rencontre un problème lors de la mise à jour vers la nouvelle API.</target>
       </segment>
     </unit>
     <unit id="57b9cb67-824f-41b7-8adc-e513b5f10e5c">
@@ -7598,9 +7597,38 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`nvwave.WasapiWavePlayer` a été renommé en `WavePlayer`.</target>
       </segment>
     </unit>
-    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+    <unit id="d6569b4b-453e-4611-8ff0-03207d5f5419">
       <notes>
         <note appliesTo="source">line: 252</note>
+      </notes>
+      <segment state="final">
+        <source>  Additionally, the method signature of its `__init__` has changed as follows:</source>
+        <target>  De plus, la signature de sa méthode `__init__` a changé comme suit :</target>
+      </segment>
+    </unit>
+    <unit id="8ddc3742-3862-46c8-ab55-edceda0c301f">
+      <notes>
+        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="final">
+        <source>The `outputDevice` parameter should now only be passed string arguments.</source>
+        <target>Le paramètre `outputDevice` ne reçoit désormais que des arguments de type string.</target>
+      </segment>
+    </unit>
+    <unit id="52f69654-6bf0-4424-8854-6d692a3906cb">
+      <notes>
+        <note appliesTo="source">line: 254</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="final">
+        <source>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</source>
+        <target>Les paramètres obsolètes `closeWhenIdle` and `buffered` ont été supprimés.</target>
+      </segment>
+    </unit>
+    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+      <notes>
+        <note appliesTo="source">line: 255</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -7610,7 +7638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="47799452-2417-46fc-90e0-5607790777ea">
       <notes>
-        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">line: 256</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -7618,19 +7646,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>La clé `WASAPI` a été supprimée de la section `audio` de la spécification de configuration.</target>
       </segment>
     </unit>
-    <unit id="d33c0dae-24f1-4657-92fd-5edcf0319190">
-      <notes>
-        <note appliesTo="source">line: 254</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="final">
-        <source>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</source>
-        <target>La sortie de `nvwave.outputDeviceNameToID` et l'entrée de `nvwave.outputDeviceIDToName` sont maintenant des identifiants de chaîne.</target>
-      </segment>
-    </unit>
     <unit id="084a8e31-cab7-4df0-acdd-3ff8a39a8222">
       <notes>
-        <note appliesTo="source">line: 255</note>
+        <note appliesTo="source">line: 257</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -7640,31 +7658,11 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8490fab4-0b9d-4216-b6d8-b267def08f96">
       <notes>
-        <note appliesTo="source">line: 256</note>
+        <note appliesTo="source">line: 258</note>
       </notes>
       <segment state="final">
         <source>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</source>
         <target>    Elle a été remplacée par `config.conf["audio"]["outputDevice"]`, qui stocke un ID de périphérique de point de terminaison audio Windows core. (#17547)</target>
-      </segment>
-    </unit>
-    <unit id="b569e7d4-0eb4-485f-93e0-d69356a9a939">
-      <notes>
-        <note appliesTo="source">line: 257</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="final">
-        <source>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</source>
-        <target>Le paramètre `outputDevice` de `WasapiWavePlayer.__init__` ne doit maintenant recevoir que des arguments de type chaîne.</target>
-      </segment>
-    </unit>
-    <unit id="71b599e4-724e-4b6a-90e1-3f7f39b7c60d">
-      <notes>
-        <note appliesTo="source">line: 258</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="final">
-        <source>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</source>
-        <target>Les paramètres dépréciés `closeWhenIdle` et `buffered` de `WasapiWavePlayer.__init__` ont été supprimés.</target>
       </segment>
     </unit>
     <unit id="14f25227-0c94-49fc-9975-82ba830e61f9">
@@ -10743,7 +10741,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons</source>
-        <target>L'Add-on Store prend désormais en charge les actions groupées (par exemple, l'installation, l'activation d'extensions) en sélectionnant plusieurs extensions.</target>
+        <target>L'Add-on Store prend désormais en charge les actions groupées (par exemple, l'installation, l'activation d'extensions) en sélectionnant plusieurs extensions</target>
       </segment>
     </unit>
     <unit id="7f61598a-1b1e-4e79-ae9b-9faa11815599">
@@ -13503,7 +13501,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>  Incompatible versions of these add-ons will be disabled when updating NVDA:</source>
-        <target>  Les versions incompatibles de ces extensions seront désactivées lors de la mise à jour de NVDA.</target>
+        <target>  Les versions incompatibles de ces extensions seront désactivées lors de la mise à jour de NVDA :</target>
       </segment>
     </unit>
     <unit id="b6790c85-2fdd-4fb9-8cef-8c137f3607f0">
@@ -19212,7 +19210,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Using the NVDA Windows Store version.</source>
-        <target>Lors de l'utilisation de la version Windows Store</target>
+        <target>Lors de l'utilisation de la version Windows Store.</target>
       </segment>
     </unit>
     <unit id="12689559-8b81-4d85-8529-e4415ecb5920">
@@ -19510,7 +19508,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Windows 11, it is again possible to navigate and interact with user interface elements,</source>
-        <target>Sous Windows 11, il est à nouveau possible de naviguer et d'interagir avec certains éléments de l'interface utilisateur</target>
+        <target>Sous Windows 11, il est à nouveau possible de naviguer et d'interagir avec certains éléments de l'interface utilisateur,</target>
       </segment>
     </unit>
     <unit id="469436c6-2562-40a5-acf0-704da31a3f00">
@@ -20336,7 +20334,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added new braille table: Japanese (Kantenji) literary braille.</source>
-        <target>Ajout de nouvelles tables Braille : Japonais (Kantenji) braille littéraire</target>
+        <target>Ajout de nouvelles tables Braille : Japonais (Kantenji) braille littéraire.</target>
       </segment>
     </unit>
     <unit id="a34f93ea-e830-4a5d-8266-decc7d07540c">
@@ -20346,7 +20344,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added new German 6 dot computer braille table.</source>
-        <target>Ajout de la nouvelle table Braille Allemand Braille informatique 6 points</target>
+        <target>Ajout de la nouvelle table Braille Allemand Braille informatique 6 points.</target>
       </segment>
     </unit>
     <unit id="291e013d-8d91-41b3-9796-01c6f1036b2d">
@@ -23824,7 +23822,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>For example: `controlTypes.IsCurrent.YES.displayString`.</source>
-        <target>Par exemple `controlTypes.IsCurrent.YES.displayString`</target>
+        <target>Par exemple `controlTypes.IsCurrent.YES.displayString`.</target>
       </segment>
     </unit>
     <unit id="6775707c-02f8-4428-b9e2-59c8c2cbc7d0">
@@ -24568,7 +24566,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to version 3.16.1:</source>
-        <target>Mise à jour du transcripteur Braille Liblouis à la version 3.16.1.</target>
+        <target>Mise à jour du transcripteur Braille Liblouis à la version 3.16.1 :</target>
       </segment>
     </unit>
     <unit id="3634fa33-e26e-45af-92ad-623eb0e440cf">
@@ -29569,7 +29567,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated eSpeak-NG to commit 919f3240cbb.</source>
-        <target>Mise à jour de eSpeak-NG à la révision 919f3240cbb</target>
+        <target>Mise à jour de eSpeak-NG à la révision 919f3240cbb.</target>
       </segment>
     </unit>
     <unit id="7dfca3d7-fe7f-4560-8261-f7643224f2b4">

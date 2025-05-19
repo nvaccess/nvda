@@ -276,7 +276,7 @@ The full list of Single Letter Navigation keys is in the [Browse Mode](#BrowseMo
 | Command |Keystroke |Description|
 |---|---|---|
 |Heading |`h` |Move to the next heading|
-|Heading level 1, 2, or 3 |`1`, `2`, `3` |Move to the next heading at the specified level|
+|Heading level 1, 2, etc. |`1`, `2`, etc. |Move to the next heading at the specified level|
 |Form field |`f` |Move to the next form field (edit box, button, etc)|
 |Link |`k` |Move to the next link|
 |Landmark |`d` |Move to the next landmark|
@@ -1013,7 +1013,7 @@ The following keys by themselves jump to the next available element, while addin
 * g: graphic
 * d: landmark
 * o: embedded object (audio and video player, application, dialog, etc.)
-* 1 to 6: headings at levels 1 to 6 respectively
+* 1 to 9: headings at levels 1 to 9 respectively
 * a: annotation (comment, editor revision, etc.)
 * `p`: text paragraph
 * w: spelling error
@@ -2889,7 +2889,8 @@ This option allows you to specify whether browse mode should place clickable con
 Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
 When screen layout is enabled, page elements will stay as they are visually shown.
 For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
-If it is disabled, then page elements will be placed on their own lines.
+If it is disabled, interactive elements, such as links and buttons, will be placed on their own lines.
+Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
@@ -3135,13 +3136,6 @@ This means that you cannot, for instance, start a Remote Access session with a p
 
 The following options are only available if Remote Access is enabled.
 
-##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
-
-Use this option to select the type of audio cues played by Remote Access.
-
-When checked, NVDA will produce natural-sounding audio cues for Remote Access events.
-When unchecked, NVDA will beep for Remote events.
-
 ##### Confirm before disconnecting when controlled {#RemoteConfirmDisconnect}
 
 This option controls whether confirmation is required before disconnecting from a Remote Access session when connected as the controlled computer.
@@ -3155,6 +3149,8 @@ This option allows you to automatically establish a Remote Access session when N
 This could be useful, for example, to control your home computer when away from home.
 
 Use caution when enabling this option, as it may increase the risk of unauthorized access to your computer.
+
+For further details on the following options, please refer to the [Setting Up a Remote Access Session section](#RemoteAccessSetup)
 
 ##### Mode {#RemoteAutoconnectMode}
 
@@ -3202,7 +3198,6 @@ This option is only available when [Automatically connect after NVDA starts](#Re
 This button allows you to forget the fingerprints of all previously trusted Remote Access servers.
 This means that you will again be asked whether to connect to all unrecognised Remote Access servers, even ones that you have previously connected to.
 You will be asked to confirm before all trusted fingerprints are deleted.
-This action cannot be undone.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
@@ -3727,96 +3722,76 @@ You can enable Remote Access [in Remote Access settings](#RemoteSettings).
 ### Getting Started {#RemoteAccessGettingStarted}
 
 Before you begin, ensure NVDA is installed and running on both computers.
-The remote access feature is available from the Tools menu in NVDA; there's no need for additional downloads or installations.
-
-### Setting Up a Remote Access Session {#RemoteAccessSetup}
-
-You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
+Also ensure that the Enable Remote Access checkbox [in Remote Access settings](#RemoteSettings) is checked on both computers.
+The remote access feature will then be available from the Tools menu in NVDA; there's no need for additional downloads or installations.
 
 If NVDA is running in [secure mode](#SecureMode), you cannot manually initiate a new Remote Access session.
 However, NVDA will still automatically start a new Remote Access session if configured to do so with the [Automatically connect after NVDA starts](#RemoteAutoconnect) setting.
 You can still manually disconnect in secure mode.
 
-#### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
+### Setting Up a Remote Access Session {#RemoteAccessSetup}
 
-1. Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
-1. For Mode, choose "Allow this computer to be controlled".
-1. Enter the connection details provided by the person controlling your computer:
-   * Existing Remote Access server: If using a server, enter the hostname (e.g., `nvdaremote.com`).
-   * Direct Connection: If connecting directly, share your external IP address and port (default: 6837). Ensure your network is set up for direct connections.
-1. Press OK.
-Share the connection key with the other person.
+Remote access sessions are configured via the Remote Access connection dialog.
+Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
+Or from anywhere press `NVDA+alt+r`.
 
-#### Steps for the Controlling Computer {#RemoteAccessSetupControlling}
+#### Mode Selection (Controlling or Controlled) {#RemoteAccessMode}
 
-1. Open the NVDA menu and select Tools, then "Remote Access", then "Connect...".
-1. For Mode, choose "Control another computer".
-1. Enter the connection details and key provided by the controlled computer.
-1. Press OK to connect.
+You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
-Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
+the mode combo box allows you to choose whether this computer will be controlled (Another person will interact with your computer) or controlling (you will interact with someone else's computer).
 
-### The Remote Access Connection Dialog {#RemoteAccessConnect}
+* If you require another person to help you with your computer, choose "Allow this computer to be controlled".
+* If you are going to help someone with their computer, choose "Control another computer".
 
-The Remote Access connection dialog allows you to connect to a new or existing session.
-To open the dialog, open the NVDA menu, and navigate to Tools, then "Remote Access", then "Connect...".
+#### Connecting to an existing server (Host and Key Provided) {#RemoteAccessJoin}
 
-The first control in this dialog is the Mode control.
-This allows you to select whether your computer will be controlled remotely, or be remotely controlling another.
-You cannot change the connection mode once a connection is established.
-Choose "Allow this computer to be controlled" if you are going to be getting technical assistance.
+In this case, the other person has either started the connection via a relay server, or is hosting the connection locally.
 
-Next is the Server control, which lets you choose the type of Remote Access connection you would like to use.
-Most users should select to use an existing Relay server.
-
-You can choose between two connection types depending on your setup:
-
-* Use existing (basic): Uses a public or private server to mediate the connection.
-  Only the server hostname (URL) and key are needed.
-* Host locally (advanced): Connect directly by running the server inside NVDA.
-  Requires network setup, such as port forwarding.
-
-The next few options configure the network connection, and differ depending on the connection type you have chosen.
-
-#### Existing server options {#RemoteAccessConnectExisting}
-
-These options are shown when the server type is set to "Use existing".
-
-The host field is where you should enter the URL of the Remote Access server you will use to mediate the connection.
-
-Optionally, you may include the port to connect on by appending a colon (":") and the port number to the host.
+1. For Server, choose "Use existing".
+1. In the Host field, Enter the host address (and port if also given).
+  * You may include the port to connect on by appending a colon (":") and the port number to the host address.
 For example, `example.com:1234`.
-If no port is provided, Remote Access will use port 6837.
+1. In the Key field, enter the key provided.
+Be careful to type the key exactly as given.
+1. Press OK.
 
-The key field is where you should enter the key for the remote session you are creating or connecting to.
-The key identifies and controls access to a remote session.
+#### Starting a Connection Via a Relay Server {#RemoteAccessConnectRelay}
 
-If you are creating a Remote Access session, choose a key that is unique and not easily guessable.
-Alternatively, press "Generate key" to have the Remote Access server generate a key for you.
+If allowing another person to connect to you over the internet, the easiest option is to use a relay server. To do this:
 
-If you are joining an existing session, enter the key exactly as provided.
-Pay careful attention to capitalisation, spaces and punctuation.
+1. For Server, choose "Use existing".
+1. For host, provide the host name of a relay server, such as `nvdaremote.com`.
+You will need to provide this address to the other person.
+  * You may include the port to connect on by appending a colon (":") and the port number to the host.
+For example, `example.com:1234`.
+1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
+You will need to provide this to the other person.
+  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+1. Press OK.
+1. Provide the connection details (such as host and key) to the other person so they can connect.
 
-#### Local server options {#RemoteAccessConnectLocal}
+#### Using NVDA as the server {#RemoteAccessConnectSelfHosted}
 
-These options are shown when the Server is set to "Host locally".
+If you do not wish to use a relay server or you are connecting over a local network:
 
-Warning: locally hosting the control server in NVDA is an advanced option, and may require network setup that is out of scope for this manual.
-
-The External IP field shows your currently detected external IP address.
-This field is initially blank.
-To detect your external IP address, press "Get external IP".
-This will also check whether the selected port is open.
-Note that this test may not be 100% accurate.
-
-The port field is where you should enter the port you want to use for Remote connections.
-This should be a port that is not used by any other services.
-The port should also be open, and forwarded.
-By default, Remote Access uses port 6837.
-
-The key field is where you should enter the key for this Remote session.
-This is essentially the password for this session.
-Alternatively, press "Generate key" to have NVDA generate a key for you.
+1. For Server, choose "Host locally".
+1. If connecting over the internet, you can press the "Get External IP" button to show your external IP (internet visible) address.
+You will need to provide this external IP to the other person.
+1. If connecting over a local network, you will need to provide the other person with your local IP.
+Locating this is not covered in this documentation.
+1. For Port, enter the port you want to use for incoming Remote connections.
+The other person will also need this.
+  * This should be a port that is not used by any other services.
+  * By default, Remote Access uses port 6837.
+  * If connecting over the internet, the port may need to be forwarded.
+  This documentation does not cover how to forward ports.
+  You may need to contact your network administrator to do this.
+1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
+You will need to provide this to the other person.
+  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+1. Press OK.
+1. Provide the connection details (such as host and key) to the other person so they can connect.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
@@ -3824,7 +3799,10 @@ Once a Remote Access session is active, you can switch between controlling the r
 
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
-* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
+* If connected as the controlling computer, mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
+* If connected as the controlling computer, send `control+alt+delete` to the controlled computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send control+alt+delete".
+  In order for this to work, the controlled computer must be running an installed copy of NVDA.
+  Additionally, depending on the settings of the controlled computer, this function may not always work.
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 

@@ -4671,14 +4671,15 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 	)
 	def script_toggleReportCLDR(self, gesture):
-		if config.conf["speech"]["includeCLDR"]:
+		dictionaries: list[str] = config.conf["speech"]["symbolDictionaries"]
+		if "cldr" in dictionaries:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters off")
-			config.conf["speech"]["includeCLDR"] = False
+			dictionaries.remove("cldr")
 		else:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters on")
-			config.conf["speech"]["includeCLDR"] = True
+			dictionaries.append("cldr")
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 

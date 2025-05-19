@@ -3386,15 +3386,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
 		remoteControlsGroupHelper.addItem(remoteSettingsGroupHelper)
 
-		self.playSounds = remoteSettingsGroupHelper.addItem(
-			wx.CheckBox(
-				self.remoteSettingsGroupBox,
-				# Translators: A checkbox in Remote Access settings to set whether sounds play instead of beeps.
-				label=pgettext("remote", "&Play sounds instead of beeps"),
-			),
-		)
-		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
-
 		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3536,7 +3527,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.playSounds.SetValue(self.config["ui"]["playSounds"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
 		self._setControls()
 
@@ -3559,7 +3549,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 				"This will cause NVDA to forget all previously trusted Remote Access servers. "
 				"When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
-				"Are you sure you want to continue? This action cannot be undone.",
+				"Are you sure you want to continue?",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 			pgettext("remote", "Delete All Trusted Fingerprints"),
@@ -3601,7 +3591,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		enabled = self.enableRemote.GetValue()
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
-		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()

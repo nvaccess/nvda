@@ -124,6 +124,10 @@ class RemoteClient:
 			# Translators: Message shown when attempting to mute the remote computer when no session is connected.
 			ui.delayedMessage(pgettext("remote", "Not connected"))
 			return
+		elif self.leaderTransport is None:
+			# Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
+			ui.message(pgettext("remote", "Not the controlling computer"))
+			return
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
 		# Translators: Displayed when muting speech and sounds from the remote computer
@@ -177,7 +181,13 @@ class RemoteClient:
 		:note: Requires an active leader transport connection
 		"""
 		if self.leaderTransport is None:
-			log.error("No leader transport to send SAS")
+			log.debugWarning("No leader transport to send SAS")
+			if not self.isConnected():
+				# Translators: Message shown when attempting to send control+alt+delete when no session is connected.
+				ui.message(pgettext("remote", "Not connected"))
+			else:
+				# Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
+				ui.message(pgettext("remote", "Not the controlling computer"))
 			return
 		self.leaderTransport.send(RemoteMessageType.SEND_SAS)
 
