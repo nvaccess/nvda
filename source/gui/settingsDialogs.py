@@ -3442,6 +3442,13 @@ class RemoteSettingsPanel(SettingsPanel):
 			self._disableDescendants(sizer, enabledInSecureMode)
 
 	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
+		"""Disable all but the specified discendant windows of this sizer.
+
+		Disables all child windows, and recursively calls itself for all child sizers.
+
+		:param sizer: Root sizer whose descendents should be disabled.
+		:param excluded: Container of windows that should remain enabled.
+		"""
 		for child in sizer.GetChildren():
 			if (window := child.GetWindow()) is not None and window not in excluded:
 				window.Disable()
