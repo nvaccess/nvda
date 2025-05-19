@@ -283,7 +283,8 @@ Instead, a `callback` property has been added, which returns a function that per
   * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
 * The `winUser.paint` has been renamed from `painStruct` to `paintStruct`, fixing a bug where passing in a `PAINTSTRUCT` would raise an exception. (#17744)
 * `documentationUtils.getDocFilePath` and `installer.getDocFilePath` no longer look for `.txt` files in locale documentation folders. (#17911, @CyrilleB79)
-* `config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use`config.conf["documentFormatting"]["fontAttributeReporting"]` instead.
+* `config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use`config.conf["documentFormatting"]["fontAttributeReporting"]` instead. (#18066)
+* `config.conf["speech"]["includeCLDR"]` has been removed, check/modify whether `config.conf["speech"]["symbolDictionaries"]` contains `"cldr"` instead. (#18066)
 
 #### Deprecations
 
