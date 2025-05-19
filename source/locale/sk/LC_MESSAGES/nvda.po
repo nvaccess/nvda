@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 07:11+0000\n"
-"PO-Revision-Date: 2025-05-11 23:19\n"
+"POT-Creation-Date: 2025-05-16 07:34+0000\n"
+"PO-Revision-Date: 2025-05-19 00:08\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -820,7 +820,7 @@ msgstr "zal"
 #: braille.py:1219
 msgctxt "paragraphMarker"
 msgid "¶"
-msgstr ""
+msgstr "⠨⠜"
 
 #. Translators: Label for a setting in braille settings dialog.
 #: braille.py:3614
@@ -1025,7 +1025,7 @@ msgstr "Klynové písmo (transliterácia) plnopis"
 #. braille settings dialog.
 #: brailleTables.py:268
 msgid "Cuneiform (transliterated, compact diacritics) grade 1"
-msgstr ""
+msgstr "Klinové písmo (transliterácia, kompaktná diakritika) plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3424,8 +3424,8 @@ msgstr "Nebolo možné dokončiť všetky operácie s doplnkami. Podrobnosti sú
 #: gui\configProfiles.py:539 gui\inputGestures.py:808 gui\inputGestures.py:822
 #: gui\installerGui.py:112 gui\installerGui.py:520 gui\installerGui.py:535
 #: gui\installerGui.py:607 gui\logViewer.py:112 gui\logViewer.py:143
-#: gui\message.py:161 gui\settingsDialogs.py:1075 gui\settingsDialogs.py:5431
-#: gui\settingsDialogs.py:5788 gui\startupDialogs.py:128
+#: gui\message.py:161 gui\settingsDialogs.py:1075 gui\settingsDialogs.py:5420
+#: gui\settingsDialogs.py:5777 gui\startupDialogs.py:128
 #: _remoteClient\dialogs.py:62 _remoteClient\dialogs.py:300
 #: _remoteClient\dialogs.py:384
 msgid "Error"
@@ -3668,7 +3668,7 @@ msgstr "Myš"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:89 config\configFlags.py:277 gui\settingsDialogs.py:1184
-#: gui\settingsDialogs.py:3972
+#: gui\settingsDialogs.py:3961
 msgid "Speech"
 msgstr "Reč"
 
@@ -3687,14 +3687,14 @@ msgstr "Konfiguračné profily"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:98 config\configFlags.py:279 gui\settingsDialogs.py:3878
-#: gui\settingsDialogs.py:4386
+#: globalCommands.py:98 config\configFlags.py:279 gui\settingsDialogs.py:3867
+#: gui\settingsDialogs.py:4375
 msgid "Braille"
 msgstr "braillovo písmo"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:101 gui\settingsDialogs.py:5199
+#: globalCommands.py:101 gui\settingsDialogs.py:5188
 msgid "Vision"
 msgstr "Zrak"
 
@@ -5729,7 +5729,7 @@ msgstr "Odkaz nemá určený zdroj"
 #. Translators: A destination for braille output.
 #: globalCommands.py:4325 brailleDisplayDrivers\dotPad\driver.py:257
 msgid "Graphic"
-msgstr ""
+msgstr "Grafická vrstva"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -5992,10 +5992,11 @@ msgstr "Odpojí od servera pre vzdialený prístup"
 #. Translators: Message shown when attempting to mute the remote computer when no session is connected.
 #. Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
+#. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
-#: globalCommands.py:4924 _remoteClient\client.py:124
-#: _remoteClient\client.py:144 _remoteClient\client.py:166
-#: _remoteClient\client.py:508
+#: globalCommands.py:4924 _remoteClient\client.py:125
+#: _remoteClient\client.py:149 _remoteClient\client.py:171
+#: _remoteClient\client.py:187 _remoteClient\client.py:519
 msgctxt "remote"
 msgid "Not connected"
 msgstr "Nepripojené"
@@ -6497,25 +6498,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:460
+#: keyboardHandler.py:462
 msgid "desktop"
 msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:462
+#: keyboardHandler.py:464
 msgid "laptop"
 msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:550
+#: keyboardHandler.py:561
 #, python-format
 msgid "unknown %s"
 msgstr "Neznámy kláves %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:620 synthSettingsRing.py:117 controlTypes\state.py:201
+#: keyboardHandler.py:631 synthSettingsRing.py:117 controlTypes\state.py:201
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "zapnuté"
@@ -6524,7 +6525,7 @@ msgstr "zapnuté"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:620 synthSettingsRing.py:117 controlTypes\state.py:227
+#: keyboardHandler.py:631 synthSettingsRing.py:117 controlTypes\state.py:227
 #: gui\settingsDialogs.py:2370 gui\speechDict.py:198
 msgid "off"
 msgstr "vypnuté"
@@ -6532,13 +6533,13 @@ msgstr "vypnuté"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:739
+#: keyboardHandler.py:750
 #, python-format
 msgid "%s keyboard"
 msgstr "rozloženie %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:744
+#: keyboardHandler.py:755
 msgid "keyboard, all layouts"
 msgstr "Všetky rozloženia"
 
@@ -11499,7 +11500,7 @@ msgstr "Otvorí stromové zobrazenie"
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:212
 msgid "same page"
-msgstr ""
+msgstr "aktuálna stránka"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:218
@@ -12404,7 +12405,7 @@ msgstr "Filt&er:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:5676 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:5665 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Pridať"
 
@@ -12971,7 +12972,7 @@ msgstr "Hlasový výstup"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1212 gui\settingsDialogs.py:4407
+#: gui\settingsDialogs.py:1212 gui\settingsDialogs.py:4396
 msgid "C&hange..."
 msgstr "&Zmeniť..."
 
@@ -13018,7 +13019,7 @@ msgstr "pri spracovaní textu sa riadiť jazykom hlasového výstupu"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1739 gui\settingsDialogs.py:4960
+#: gui\settingsDialogs.py:1739 gui\settingsDialogs.py:4949
 msgid "Unicode normali&zation"
 msgstr "Normali&zovať znaky unicode"
 
@@ -13434,7 +13435,7 @@ msgstr "&Ignorovať skratky mimo rýchlej navigácie"
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:2645 gui\settingsDialogs.py:4065
+#: gui\settingsDialogs.py:2645 gui\settingsDialogs.py:4054
 msgid "Document Formatting"
 msgstr "Čítanie Textu"
 
@@ -13786,26 +13787,20 @@ msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "Povoliť vzdialený prístup"
 
-#. Translators: A checkbox in Remote Access settings to set whether sounds play instead of beeps.
-#: gui\settingsDialogs.py:3356
-msgctxt "remote"
-msgid "&Play sounds instead of beeps"
-msgstr "Namiesto pípania používať &zvuky"
-
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3365
+#: gui\settingsDialogs.py:3356
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "Potvrdiť odpojenie ak je tento počítač ovládaný na diaľku"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3374
+#: gui\settingsDialogs.py:3365
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "Automaticky &pripojiť po spustení NVDA"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3384
+#: gui\settingsDialogs.py:3375
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "Automatické pripojenie"
@@ -13813,7 +13808,7 @@ msgstr "Automatické pripojenie"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3393 _remoteClient\dialogs.py:318
+#: gui\settingsDialogs.py:3384 _remoteClient\dialogs.py:318
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "&Režim:"
@@ -13821,7 +13816,7 @@ msgstr "&Režim:"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3402 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3393 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Server:"
 msgstr "&Server:"
@@ -13829,7 +13824,7 @@ msgstr "&Server:"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3412 _remoteClient\dialogs.py:41
+#: gui\settingsDialogs.py:3403 _remoteClient\dialogs.py:41
 msgid "&Host:"
 msgstr "&Hostiteľ:"
 
@@ -13837,7 +13832,7 @@ msgstr "&Hostiteľ:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3421 gui\settingsDialogs.py:4485
+#: gui\settingsDialogs.py:3412 gui\settingsDialogs.py:4474
 #: _remoteClient\dialogs.py:202
 msgid "&Port:"
 msgstr "&Port:"
@@ -13845,208 +13840,208 @@ msgstr "&Port:"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3442 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3433 _remoteClient\dialogs.py:46
 msgid "&Key:"
 msgstr "&Kľúč:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3449
+#: gui\settingsDialogs.py:3440
 msgid "Delete all trusted fingerprints"
 msgstr "Vymazať všetky dôverované odtlačky"
 
 #. Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
-#: gui\settingsDialogs.py:3460
+#: gui\settingsDialogs.py:3451
 msgctxt "remote"
 msgid "Read only"
 msgstr "Iba na čítanie"
 
 #. Translators: Message presented to users when viewing Remote Access settings in secure mode.
-#: gui\settingsDialogs.py:3462
+#: gui\settingsDialogs.py:3453
 msgctxt "remote"
 msgid "Remote Access settings are read only as NVDA is running in secure mode."
 msgstr "Nastavenia vzdialeného pripojenia sú zobrazené v režime iba na čítanie, pretože je zapnutý bezpečný režim."
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3523
+#: gui\settingsDialogs.py:3513
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
-"Are you sure you want to continue? This action cannot be undone."
-msgstr "Toto spôsobí odstránenie certifikátov serverov, ku ktorým ste sa v minulosti pripojili. Pri ďalšom pripojení k serveru budete vyzvaní na overenie jeho certifikátu. Odstránené certifikáty nie je možné obnoviť. Želáte si pokračovať?"
+"Are you sure you want to continue?"
+msgstr "Toto spôsobí odstránenie certifikátov serverov, ku ktorým ste sa v minulosti pripojili. Pri ďalšom pripojení k serveru budete vyzvaní na overenie jeho certifikátu. Želáte si pokračovať?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3528
+#: gui\settingsDialogs.py:3518
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "Odstrániť uložené certifikáty"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:3545
+#: gui\settingsDialogs.py:3535
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "Aby bolo možné pripojiť sa k vzdialenému ovládaniu po štarte NVDA, musíte vyplniť hostiteľa aj kľúč v časti vzdialené ovládanie."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:3551
+#: gui\settingsDialogs.py:3541
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "Aby bolo možné pripojiť sa k vzdialenému ovládaniu po štarte NVDA, musíte vyplniť port vášho servera aj kľúč v časti vzdialené ovládanie."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:3557
+#: gui\settingsDialogs.py:3547
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "Chyba vzdialeného ovládania"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:3591
+#: gui\settingsDialogs.py:3580
 msgid "Touch Interaction"
 msgstr "Dotyková obrazovka"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:3598
+#: gui\settingsDialogs.py:3587
 msgid "Enable touch interaction support"
 msgstr "Povoliť dotykové gestá"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:3604
+#: gui\settingsDialogs.py:3593
 msgid "&Touch typing mode"
 msgstr "Písať okamžite po do&tyku"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:3616
+#: gui\settingsDialogs.py:3605
 msgid "Windows OCR"
 msgstr "Rozpoznávanie textu Windows"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:3635
+#: gui\settingsDialogs.py:3624
 msgid "Recognition &language:"
 msgstr "&jazyk rozpoznávania:"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:3645
+#: gui\settingsDialogs.py:3634
 msgid "Periodically &refresh recognized content"
 msgstr "Pravidelne &obnovovať rozpoznaný text"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3676
+#: gui\settingsDialogs.py:3665
 msgid "NVDA Development"
 msgstr "Vývoj NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3684
+#: gui\settingsDialogs.py:3673
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "Načítať vlastné moduly z priečinka Scratchpad"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:3697
+#: gui\settingsDialogs.py:3686
 msgid "Open developer scratchpad directory"
 msgstr "Otvoriť priečinok scratchpad"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3707
+#: gui\settingsDialogs.py:3696
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:3717
+#: gui\settingsDialogs.py:3706
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "&Sledovanie zmien a udalostí UI Automation"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:3723
+#: gui\settingsDialogs.py:3712
 msgid "Automatic (prefer selective)"
 msgstr "Automaticky (preferuje vybrané)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:3727
+#: gui\settingsDialogs.py:3716
 msgid "Selective"
 msgstr "Vybrané"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:3731
+#: gui\settingsDialogs.py:3720
 msgid "Global"
 msgstr "Globálne"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3760
+#: gui\settingsDialogs.py:3749
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "Na sprístupnenie prvkov v dokumentoch Microsoft &Word preferovať UI Automation"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3765
+#: gui\settingsDialogs.py:3754
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Predvolené (ak to má zmysel)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3767
+#: gui\settingsDialogs.py:3756
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Len keď je to nevyhnutné"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3769
+#: gui\settingsDialogs.py:3758
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Ak to má zmysel"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3771
+#: gui\settingsDialogs.py:3760
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "Vždy"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3780
+#: gui\settingsDialogs.py:3769
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "Na sprístupnenie prvkov v zošitoch Microsoft &Excel používať UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:3788
+#: gui\settingsDialogs.py:3777
 msgid "Windows C&onsole support:"
 msgstr "Podpora pre Windows K&onzolu:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:3793
+#: gui\settingsDialogs.py:3782
 msgid "Automatic (prefer UIA)"
 msgstr "Automaticky (preferuje UIA)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:3796
+#: gui\settingsDialogs.py:3785
 msgid "UIA when available"
 msgstr "UIA Ak je dostupné"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:3800
+#: gui\settingsDialogs.py:3789
 msgid "Legacy"
 msgstr "Staršie"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:3823
+#: gui\settingsDialogs.py:3812
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14055,72 +14050,72 @@ msgstr "Použiť UI Automation v Microsoft Edge a ostatných\n"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3828
+#: gui\settingsDialogs.py:3817
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Predvolené (len keď je to nevyhnutné)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3830
+#: gui\settingsDialogs.py:3819
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "len keď je to nevyhnutné"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3832
+#: gui\settingsDialogs.py:3821
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Áno"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3834
+#: gui\settingsDialogs.py:3823
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Nie"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:3842
+#: gui\settingsDialogs.py:3831
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "Použiť pokročilé spracovanie &udalostí (vyžaduje reštart)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3853
+#: gui\settingsDialogs.py:3842
 msgid "Annotations"
 msgstr "revízie"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3862
+#: gui\settingsDialogs.py:3851
 msgid "Report 'has details' for structured annotations"
 msgstr "Oznamovať detaily pre štruktúrované poznámky a komentáre"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3869
+#: gui\settingsDialogs.py:3858
 msgid "Report aria-description always"
 msgstr "Vždy oznamovať prítomnosť &aria-description"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:3885
+#: gui\settingsDialogs.py:3874
 msgid "Report live regions:"
 msgstr "oznamovať dynamicky menený obsah označený pomocou live region:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3894
+#: gui\settingsDialogs.py:3883
 msgid "Terminal programs"
 msgstr "Terminály a príkazové riadky"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3901
+#: gui\settingsDialogs.py:3890
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "Hovoriť heslá v rozšírených &termináloch (môže zrýchliť odozvu)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3910
+#: gui\settingsDialogs.py:3899
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Použiť rozšírenú podporu oznamovania napísaných znakov v starších &Windows konzolách, ak je dostupná"
 
@@ -14128,328 +14123,328 @@ msgstr "Použiť rozšírenú podporu oznamovania napísaných znakov v starší
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:3923
+#: gui\settingsDialogs.py:3912
 msgid "&Diff algorithm:"
 msgstr "Algoritmus počítania roz&dielov"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:3928
+#: gui\settingsDialogs.py:3917
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automaticky (preferuje Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:3932
+#: gui\settingsDialogs.py:3921
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:3936
+#: gui\settingsDialogs.py:3925
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:3962
+#: gui\settingsDialogs.py:3951
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Oznamovať nový text vo Windows termináloch cez:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3981
+#: gui\settingsDialogs.py:3970
 msgid "Default (Yes)"
 msgstr "Predvolené (Áno)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3984
+#: gui\settingsDialogs.py:3973
 msgid "Yes"
 msgstr "Áno"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3987
+#: gui\settingsDialogs.py:3976
 msgid "No"
 msgstr "Nie"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:3991
+#: gui\settingsDialogs.py:3980
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Prerušiť reč po vypršaní zameranej udalosti:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4007
+#: gui\settingsDialogs.py:3996
 msgid "Trim leading silence in speech audio"
 msgstr "Odstrániť nadbytočné počiatočné medzery v reči"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4015
+#: gui\settingsDialogs.py:4004
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "Na výstup pre reč cez Sapi 4 používať rozhranie WASAPI:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4026
+#: gui\settingsDialogs.py:4015
 msgid "Virtual Buffers"
 msgstr "Virtuálny buffer"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4034
+#: gui\settingsDialogs.py:4023
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Načítať virtuálny chromium buffer, ak je prehliadač zaneprázdnený"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4043
+#: gui\settingsDialogs.py:4032
 msgid "Editable Text"
 msgstr "Editovateľný text"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4050
+#: gui\settingsDialogs.py:4039
 msgid "Caret movement timeout (in ms)"
 msgstr "Počkať pred pohybom systémového kurzora (v milisekundách)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4073
+#: gui\settingsDialogs.py:4062
 msgid "Report transparent color values"
 msgstr "Oznamovať hodnoty priehľadných farieb"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4087
+#: gui\settingsDialogs.py:4076
 msgid "Debug logging"
 msgstr "Úroveň záznamu"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4112
+#: gui\settingsDialogs.py:4101
 msgid "Enabled logging categories"
 msgstr "Povolené úrovne záznamu"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4132
+#: gui\settingsDialogs.py:4121
 msgid "Play a sound for logged e&rrors:"
 msgstr "&Zaznamenané chyby signalizovať zvukom:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4135
+#: gui\settingsDialogs.py:4124
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Len v testovacích verziách NVDA"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4137
+#: gui\settingsDialogs.py:4126
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "Áno"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4150
+#: gui\settingsDialogs.py:4139
 msgid "Regular expression for text paragraph navigation"
 msgstr "Regulárny výraz pre navigáciu po textových odsekoch"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4172
+#: gui\settingsDialogs.py:4161
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Nepodarilo sa spracovať regulárny výraz pre navigáciu po textových odsekoch: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4302
+#: gui\settingsDialogs.py:4291
 msgid "Advanced"
 msgstr "Pokročilé"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4307
+#: gui\settingsDialogs.py:4296
 msgid "Warning!"
 msgstr "Upozornenie!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4311
+#: gui\settingsDialogs.py:4300
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Tieto nastavenia sú určené pre pokročilých používateľov. Ich nesprávna konfigurácia môže spôsobiť nestabilné správanie NVDA. Upravujte prosím tieto nastavenia len v prípade, že viete, čo máte robiť, alebo ste dostali inštrukcie od vývojárov."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4338
+#: gui\settingsDialogs.py:4327
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Rozumiem, že zmena týchto nastavení môže spôsobiť nesprávne fungovanie NVDA."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4349
+#: gui\settingsDialogs.py:4338
 msgid "Restore defaults"
 msgstr "Obnoviť pôvodné nastavenia"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4392
+#: gui\settingsDialogs.py:4381
 msgid "Braille display"
 msgstr "Brailový riadok"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:4461
+#: gui\settingsDialogs.py:4450
 msgid "Select Braille Display"
 msgstr "Nastavenia brailového riadka"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:4470
+#: gui\settingsDialogs.py:4459
 msgid "Braille &display:"
 msgstr "Brailový ria&dok:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:4476
+#: gui\settingsDialogs.py:4465
 msgid "&Displays to detect automatically:"
 msgstr "Brailové &riadky na automatickú detekciu:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:4592
+#: gui\settingsDialogs.py:4581
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Nie je možné načítať zobrazovač {display}."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:4595
+#: gui\settingsDialogs.py:4584
 msgid "Braille Display Error"
 msgstr "Chyba brailového riadku"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:4628
+#: gui\settingsDialogs.py:4617
 msgid "&Output table:"
 msgstr "Výstupná prekladová &tabuľka:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:4636 gui\settingsDialogs.py:4663
+#: gui\settingsDialogs.py:4625 gui\settingsDialogs.py:4652
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automatická ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:4655
+#: gui\settingsDialogs.py:4644
 msgid "&Input table:"
 msgstr "&vstupná prekladová tabuľka:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:4681
+#: gui\settingsDialogs.py:4670
 msgid "Braille mode:"
 msgstr "Režim brailu:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:4696
+#: gui\settingsDialogs.py:4685
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:4704
+#: gui\settingsDialogs.py:4693
 msgid "&Show cursor"
 msgstr "Zobraziť &kurzor"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:4713
+#: gui\settingsDialogs.py:4702
 msgid "Blink cursor"
 msgstr "Blikajúci kurzor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:4724
+#: gui\settingsDialogs.py:4713
 msgid "Cursor blink rate (ms)"
 msgstr "Rýchlosť &blikania kurzora (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:4746
+#: gui\settingsDialogs.py:4735
 msgid "Cursor shape for &focus:"
 msgstr "Tv&ar kurzora fokusu:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:4762
+#: gui\settingsDialogs.py:4751
 msgid "Cursor shape for &review:"
 msgstr "Tva&r prezeracieho kurzora:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:4784
+#: gui\settingsDialogs.py:4773
 msgid "Show messages"
 msgstr "Zobrazovať správy"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:4806
+#: gui\settingsDialogs.py:4795
 msgid "Message &timeout (sec)"
 msgstr "Zobrazovať &správy (sek)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:4825
+#: gui\settingsDialogs.py:4814
 msgid "Tether B&raille:"
 msgstr "Brailový kurzor zviaza&ný:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4849
+#: gui\settingsDialogs.py:4838
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Privolávacie tlačidlá posúvajú prezerací aj systémový kur&zor"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:4865
+#: gui\settingsDialogs.py:4854
 msgid "Read by &paragraph"
 msgstr "Čítať po odsekoch"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:4874
+#: gui\settingsDialogs.py:4863
 msgid "Paragraph start marker:"
 msgstr "Značka začiatku odseku:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:4889
+#: gui\settingsDialogs.py:4878
 msgid "Focus context presentation:"
 msgstr "Prezentácia kontextu:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4910
+#: gui\settingsDialogs.py:4899
 msgid "Show se&lection"
 msgstr "Ukázať v&ýber"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4922
+#: gui\settingsDialogs.py:4911
 msgid "Formatting &display"
 msgstr "Zobrazovanie formátovania"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:4931
+#: gui\settingsDialogs.py:4920
 msgid "Spea&k character when routing cursor in text"
 msgstr "Vyslovovať zna&ky pri posúvaní kurzora privolávacími tlačidlami"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:4939
+#: gui\settingsDialogs.py:4928
 msgid "Speak when navigating by &line or paragraph"
 msgstr "Hovoriť pri &pohybe po riadkoch a odsekoch"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:4952
+#: gui\settingsDialogs.py:4941
 msgid "Avoid splitting &words when possible"
 msgstr "Zabrániť deleniu sl&ov, keď je to možné"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4971
+#: gui\settingsDialogs.py:4960
 msgid "I&nterrupt speech while scrolling"
 msgstr "&Prerušiť reč počas posúvania"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5065
+#: gui\settingsDialogs.py:5054
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Nie je možné načítať vizuálne rozšírenie {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5072
+#: gui\settingsDialogs.py:5061
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14457,20 +14452,20 @@ msgstr "Nepodarilo sa načítať nasledujúce vizuálne rozšírenia:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5078 gui\settingsDialogs.py:5108
+#: gui\settingsDialogs.py:5067 gui\settingsDialogs.py:5097
 msgid "Vision Enhancement Provider Error"
 msgstr "Chyba vizuálneho rozšírenia"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5095
+#: gui\settingsDialogs.py:5084
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nepodarilo sa korektne ukončiť vizuálne rozšírenie {providerName}"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5103
+#: gui\settingsDialogs.py:5092
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14478,119 +14473,119 @@ msgstr "Nepodarilo sa korektne ukončiť nasledujúce vizuálne rozšírenia:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5203
+#: gui\settingsDialogs.py:5192
 msgid "Configure visual aids."
 msgstr "Nastavenia zobrazenia."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5375
+#: gui\settingsDialogs.py:5364
 msgid "Enable"
 msgstr "Povolené"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5382
+#: gui\settingsDialogs.py:5371
 #: visionEnhancementProviders\NVDAHighlighter.py:307
 #: visionEnhancementProviders\screenCurtain.py:245
 msgid "Options:"
 msgstr "Možnosti:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:5428
+#: gui\settingsDialogs.py:5417
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Nepodarilo sa zobraziť ovládacie prvky vizuálneho rozšírenia, preto nebude aktivované."
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:5473
+#: gui\settingsDialogs.py:5462
 msgid "NVDA Settings"
 msgstr "Nastavenia"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:5516
+#: gui\settingsDialogs.py:5505
 msgid "normal configuration"
 msgstr "Základný profil"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:5551
+#: gui\settingsDialogs.py:5540
 msgid "Add Symbol"
 msgstr "pridať symbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:5556
+#: gui\settingsDialogs.py:5545
 msgid "&Symbol:"
 msgstr "&Symbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:5586
+#: gui\settingsDialogs.py:5575
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Výslovnosť symbolov (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:5600
+#: gui\settingsDialogs.py:5589
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "Filt&er:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:5609
+#: gui\settingsDialogs.py:5598
 msgid "&Symbols"
 msgstr "&Symboly"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:5619
+#: gui\settingsDialogs.py:5608
 msgid "Symbol"
 msgstr "Symbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:5621 gui\speechDict.py:191
+#: gui\settingsDialogs.py:5610 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Nahradiť s"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:5623
+#: gui\settingsDialogs.py:5612
 msgid "Level"
 msgstr "Úroveň"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:5626
+#: gui\settingsDialogs.py:5615
 msgid "Preserve"
 msgstr "Uprednostniť"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:5630
+#: gui\settingsDialogs.py:5619
 msgid "Change selected symbol"
 msgstr "Zmeniť symbol"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:5648 gui\speechDict.py:55
+#: gui\settingsDialogs.py:5637 gui\speechDict.py:55
 msgid "&Replacement"
 msgstr "&Nahradiť s"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:5657
+#: gui\settingsDialogs.py:5646
 msgid "&Level"
 msgstr "Ú&roveň"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:5664
+#: gui\settingsDialogs.py:5653
 msgid "&Send actual symbol to synthesizer"
 msgstr "Ponechať pôvodný symbol na spracovanie &hlasovému výstupu"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:5679
+#: gui\settingsDialogs.py:5668
 msgid "Re&move"
 msgstr "&Odstrániť"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:5786
+#: gui\settingsDialogs.py:5775
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symbol \"%s\" už existuje."
@@ -15742,9 +15737,9 @@ msgstr "aktivovať"
 #: NVDAObjects\UIA\__init__.py:2710
 msgid "{} suggestion"
 msgid_plural "{} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{} návrh"
+msgstr[1] "{} návrhy"
+msgstr[2] "{} návrhov"
 msgstr[3] "{} návrhov"
 
 #. Translators: the description of a script
@@ -17288,132 +17283,132 @@ msgstr "{desc} {position}"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:116
 msgid "Words only"
-msgstr ""
+msgstr "Iba slová"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:118
 msgid "Double"
-msgstr ""
+msgstr "Dvojité"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:120
 msgid "Dotted"
-msgstr ""
+msgstr "Bodkované"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:122
 msgid "Thick"
-msgstr ""
+msgstr "Hrubé"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:124
 msgid "Dash"
-msgstr ""
+msgstr "Čiarkované"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:126
 msgid "Dot dash"
-msgstr ""
+msgstr "Bodko-čiarkované"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:128
 msgid "Dot dot dash"
-msgstr ""
+msgstr "Bodko-bodko-čiarkované"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:130
 msgid "Wave"
-msgstr ""
+msgstr "Vlnovka"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:132
 msgid "Dotted heavy"
-msgstr ""
+msgstr "Bodkované hrubé"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:134
 msgid "Dashed heavy"
-msgstr ""
+msgstr "Čiarkované hrubé"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:136
 msgid "Dot dash heavy"
-msgstr ""
+msgstr "Bodko-čiarkované hrubé"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:138
 msgid "Dot dot dash heavy"
-msgstr ""
+msgstr "Bodko-bodko-čiarkované hrubé"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:140
 msgid "Wave heavy"
-msgstr ""
+msgstr "Vlnovka hrubá"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:142
 msgid "Dashed long"
-msgstr ""
+msgstr "Dlhé čiarky"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:144
 msgid "Wave double"
-msgstr ""
+msgstr "Dvojitá vlnovka"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:146
 msgid "Dashed long heavy"
-msgstr ""
+msgstr "Hrubé dlhé čiarky"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:309
 msgid "No case"
-msgstr ""
+msgstr "Normálne písmo"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:311
 msgid "Lowercase"
-msgstr ""
+msgstr "Malé písmená"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:313
 msgid "Uppercase"
-msgstr ""
+msgstr "Všetky písmená veľké"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:315
 msgid "Each word capitalized"
-msgstr ""
+msgstr "Slová začínať veľkým písmenom"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:317
 msgid "Sentence case"
-msgstr ""
+msgstr "Veľké na začiatkoch viet"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:319
 msgid "Mixed case"
-msgstr ""
+msgstr "Malé a veľké písmená"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:321
 msgid "Half width"
-msgstr ""
+msgstr "Polovičná šírka"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:323
 msgid "Full width"
-msgstr ""
+msgstr "Plná šírka"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:325
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:327
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:405
@@ -17632,22 +17627,22 @@ msgstr "Predvolená farba"
 #: NVDAObjects\window\winword.py:1738
 #, python-brace-format
 msgid "Underline {style}on"
-msgstr ""
+msgstr "Podčiarknutie {style} aktívne"
 
 #. Translators: a message when toggling formatting to 'all capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1764
 msgid "All caps on"
-msgstr ""
+msgstr "Veľké písmená aktívne"
 
 #. Translators: a message when toggling formatting to 'small capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1767
 msgid "Small caps on"
-msgstr ""
+msgstr "Malé písmená aktívne"
 
 #. Translators: a message when toggling formatting to 'No capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1770
 msgid "Caps off"
-msgstr ""
+msgstr "Bez veľkých písmen"
 
 #. Translators: a an alignment in Microsoft Word
 #: NVDAObjects\window\winword.py:1813
@@ -18615,144 +18610,147 @@ msgstr "{hourText} a {minuteText} zostáva"
 msgid "Secure Desktop"
 msgstr "Zabezpečená pracovná plocha"
 
+#. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
+#. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
+#. Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
+#: _remoteClient\client.py:129 _remoteClient\client.py:190
+#: _remoteClient\client.py:523
+msgctxt "remote"
+msgid "Not the controlling computer"
+msgstr "Neovládate iný počítač"
+
 #. Translators: Displayed when muting speech and sounds from the remote computer
-#: _remoteClient\client.py:129
+#: _remoteClient\client.py:134
 msgid "Muted remote"
 msgstr "Vzdialená reč stlmená"
 
 #. Translators: Displayed when unmuting speech and sounds from the remote computer
-#: _remoteClient\client.py:131
+#: _remoteClient\client.py:136
 msgid "Unmuted remote"
 msgstr "Vzdialená reč obnovená"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
-#: _remoteClient\client.py:148
+#: _remoteClient\client.py:153
 msgctxt "remote"
 msgid "No one else is connected"
 msgstr "Nik nie je pripojený"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
-#: _remoteClient\client.py:156
+#: _remoteClient\client.py:161
 msgctxt "remote"
 msgid "Unable to send clipboard"
 msgstr "Nepodarilo sa odoslať obsah schránky"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
-#: _remoteClient\client.py:171
+#: _remoteClient\client.py:176
 msgid "Copied link"
 msgstr "Odkaz skopírovaný do schránky"
 
 #. Translators: Title of the Remote Access disconnection confirmation dialog.
-#: _remoteClient\client.py:222
+#: _remoteClient\client.py:233
 msgctxt "remote"
 msgid "Confirm Disconnection"
 msgstr "Ukončenie spojenia"
 
 #. Translators: Message shown when disconnecting from the remote computer.
-#: _remoteClient\client.py:226
+#: _remoteClient\client.py:237
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
 msgstr "Naozaj chcete ukončiť spojenie?"
 
 #. Translators: Title of the connection error dialog.
-#: _remoteClient\client.py:268
+#: _remoteClient\client.py:279
 msgid "Error Connecting"
 msgstr "Chyba pri pripájaní"
 
 #. Translators: Message shown when unable to connect to the remote computer.
-#: _remoteClient\client.py:270
+#: _remoteClient\client.py:281
 msgid "Unable to connect to the remote computer"
 msgstr "Nie je možné pripojiť sa ku vzdialenému počítaču"
 
 #. Translators: Title of the Remote Access connection dialog.
-#: _remoteClient\client.py:294
+#: _remoteClient\client.py:305
 msgctxt "remote"
 msgid "Connect to Another Computer"
 msgstr "Pripojenie k vzdialenému počítaču"
 
 #. Translators: Presented when connected to the remote computer.
-#: _remoteClient\client.py:337
+#: _remoteClient\client.py:348
 msgid "Connected"
 msgstr "Pripojené"
 
 #. Translators: Presented when connection to a remote computer was interupted.
 #. Translators: Message shown when the connection to the remote computer is lost.
-#: _remoteClient\client.py:355 _remoteClient\cues.py:30
+#: _remoteClient\client.py:366 _remoteClient\cues.py:27
 msgid "Disconnected"
 msgstr "Odpojené"
 
-#. Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
-#: _remoteClient\client.py:512
-msgctxt "remote"
-msgid "Not the controlling computer"
-msgstr ""
-
 #. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
-#: _remoteClient\client.py:516
+#: _remoteClient\client.py:527
 msgctxt "remote"
 msgid "No controlled computers are connected"
-msgstr ""
+msgstr "Nie sú pripojené žiadne počítače"
 
 #. Translators: Presented when keyboard control is back to the controlling computer.
-#: _remoteClient\client.py:530
+#: _remoteClient\client.py:541
 msgctxt "remote"
 msgid "Controlling local computer"
-msgstr ""
+msgstr "Lokálny počítač"
 
 #. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
-#: _remoteClient\client.py:539
+#: _remoteClient\client.py:550
 msgctxt "remote"
 msgid "Controlling remote computer"
-msgstr ""
+msgstr "Vzdialený počítač"
 
 #. Translators: Message shown when trying to connect while already connected.
-#: _remoteClient\client.py:584
+#: _remoteClient\client.py:614
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr ""
+msgstr "Už ste pripojení k vzdialenému ovládaniu. Ukončíte aktívne pripojenie a vytvorte nové."
 
 #. Translators: Title of the connection error dialog.
-#: _remoteClient\client.py:587
+#: _remoteClient\client.py:617
 msgctxt "remote"
 msgid "Already Connected"
-msgstr ""
+msgstr "Už pripojené"
 
 #. Translators: Ask the user if they want to control the remote computer.
-#: _remoteClient\client.py:602
+#: _remoteClient\client.py:632
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
-msgstr ""
+msgstr "Želáte si ovládať počítač s kľúčom {key} na serveri {server}?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
-#: _remoteClient\client.py:608
+#: _remoteClient\client.py:638
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Želáte si povoliť ovládanie tohto počítača s kľúčom {key} na serveri {server}?"
 
 #. Translators: Title of the connection request dialog.
-#: _remoteClient\client.py:614
+#: _remoteClient\client.py:644
 msgctxt "remote"
 msgid "Remote Access Connection Request"
-msgstr ""
+msgstr "Žiadosť o vzdialené ovládanie"
 
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
-#: _remoteClient\cues.py:36
+#: _remoteClient\cues.py:32
 msgctxt "remote"
 msgid "Connected as controlled computer"
-msgstr ""
+msgstr "Povolené ovládanie tohto počítača"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
-#: _remoteClient\cues.py:44
+#: _remoteClient\cues.py:43
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr ""
+msgstr "Schránka odoslaná"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
-#: _remoteClient\cues.py:50
+#: _remoteClient\cues.py:48
 msgid "Clipboard received"
-msgstr ""
+msgstr "Schránka prijatá"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:211
@@ -18768,13 +18766,13 @@ msgstr "Pole Hostiteľ nesmie ostať prázdne."
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "Generujem kľúč"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "Generujem kľúč..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
@@ -18782,13 +18780,13 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "Nepodarilo sa pripojiť k {host}. Skontrolujte dostupnosť internetového pripojenia a správnosť adresy hostiteľa."
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:123
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "Pripojenie k hostiteľovi zlyhalo"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:187
@@ -18861,7 +18859,11 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "Nepodarilo sa overiť certifikát tohto servera. Použitím nesprávneho odtlačku certifikátu môže dôjsť k zneužitiu \n"
+"údajov.\n"
+"pred pokračovaním sa uistite, že nasledujúci odtlačok certifikátu je správny.\n"
+"Odtlačok Servera SHA256: {fingerprint}\n\n"
+"Želáte si pokračovať?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:449
@@ -18873,10 +18875,11 @@ msgstr "Pripojiť a viac sa na tento server nepýtať"
 msgid "Connect"
 msgstr "Pripojiť"
 
-#. Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
-#: _remoteClient\localMachine.py:258
-msgid "Unable to trigger Alt Control Delete from remote"
-msgstr ""
+#. Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
+#: _remoteClient\localMachine.py:289
+msgctxt "remote"
+msgid "Unable to trigger control+alt+delete"
+msgstr "Nepodarilo sa odoslať príkaz ctrl+alt+delete"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
@@ -18887,19 +18890,19 @@ msgstr "Stlmiť reč na vzdialenom počítači"
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr ""
+msgstr "Stĺmi hlas a zvuky zo vzdialeného počítača."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr ""
+msgstr "&Odoslať schránku"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr ""
+msgstr "Odošle obsah schránky do vzdialeného počítača."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
@@ -18910,31 +18913,31 @@ msgstr "S&kopírovať odkaz"
 #: _remoteClient\menu.py:57
 msgctxt "remote"
 msgid "Copy a link to the current Remote Access session to the clipboard."
-msgstr ""
+msgstr "Skopíruje informácie o vzdialenom pripojení do schránky."
 
 #. Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 #: _remoteClient\menu.py:68
 msgctxt "remote"
-msgid "Send ctrl+alt+del"
-msgstr ""
+msgid "S&end control+alt+delete"
+msgstr "Odoslať &Príkaz ctrl+alt+delete"
 
-#. Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the Remote Access submenu.
+#. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
 msgctxt "remote"
 msgid "Send control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Odošle príkaz Ctrl+Alt+Delete do vzdialeného počítača."
 
 #. Translators: Label of the Remote Access submenu in the NVDA tools menu.
 #: _remoteClient\menu.py:81
 msgctxt "remote"
 msgid "R&emote Access"
-msgstr ""
+msgstr "&Vzdialené ovládanie"
 
 #. Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 #: _remoteClient\menu.py:85
 msgctxt "remote"
 msgid "Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one."
-msgstr ""
+msgstr "Umožňuje ovládať tento počítač na diaľku alebo ovládať na diaľku iný počítač."
 
 #. Translators: Item in the Remote Access submenu to connect to another computer.
 #: _remoteClient\menu.py:156
@@ -18945,7 +18948,7 @@ msgstr "Pripojiť..."
 #: _remoteClient\menu.py:158
 msgctxt "remote"
 msgid "Remotely connect to another computer running NVDA."
-msgstr ""
+msgstr "Umožní pripojiť sa ku vzdialenému počítaču so spusteným NVDA."
 
 #. Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 #: _remoteClient\menu.py:176
@@ -18956,23 +18959,23 @@ msgstr "Odpojiť"
 #: _remoteClient\menu.py:178
 msgctxt "remote"
 msgid "Disconnect from the current Remote Access session."
-msgstr ""
+msgstr "Odpojí od servera pre vzdialený prístup."
 
 #. Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr ""
+msgstr "Zvolený Server nie je kompatibilný s touto verziou NVDA. Použite prosím iný server."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
 msgctxt "remote"
 msgid "Message from Remote Access Server"
-msgstr ""
+msgstr "Správa zo servera na vzdialené ovládanie"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr ""
+msgstr "Vzdialený počítač nie je pripojený"
 
