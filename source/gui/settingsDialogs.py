@@ -9,6 +9,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Container
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -3322,6 +3323,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
+		enabledInSecureMode: set[wx.Window] = set()
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -3329,10 +3331,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteControlsGroupBox: wx.StaticBox = remoteControlsGroupSizer.GetStaticBox()
 		remoteControlsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteControlsGroupSizer)
 		sHelper.addItem(remoteControlsGroupHelper)
-
-		if globalVars.appArgs.secure:
-			self._insertReadOnlyNotice(sizer)
-			remoteControlsGroupBox.Disable()
 
 		self.enableRemote = remoteControlsGroupHelper.addItem(
 			# Translators: Label of a checkbox in Remote Access settings
@@ -3357,6 +3355,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			),
 		)
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
+		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3443,6 +3442,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
+
+		if globalVars.appArgs.secure:
+			self._insertReadOnlyNotice(sizer)
+			self._disableDescendants(sizer, enabledInSecureMode)
+
+	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
+		for child in sizer.GetChildren():
+			if (window := child.GetWindow()) is not None and window not in excluded:
+				window.Disable()
+			elif (subsizer := child.GetSizer()) is not None:
+				self._disableDescendants(subsizer, excluded)
 
 	def _insertReadOnlyNotice(self, sizer: wx.BoxSizer):
 		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
