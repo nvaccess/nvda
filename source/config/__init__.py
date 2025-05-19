@@ -48,7 +48,6 @@ from typing import (
 	Set,
 	Tuple,
 )
-from addonAPIVersion import BACK_COMPAT_TO
 import NVDAState
 from NVDAState import WritePaths
 
@@ -1305,45 +1304,37 @@ class AggregatedSection:
 		self.manager._markWriteProfileDirty()
 		self._cache[key] = val
 
-		# Alias ["documentFormatting"]["reportFontAttributes"] and ["speech"]["includeCLDR"]
-		# for backwards compatibility.
-		# TODO: Comment out in 2025.1.
-		if BACK_COMPAT_TO < (2025, 1, 0) and NVDAState._allowDeprecatedAPI():
-			self._linkDeprecatedValues(key, val)
+		# Alias old config items to their new counterparts for backwards compatibility.
+		# Uncomment when there are new links that need to be made.
+		# if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
+		# self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		"""Link deprecated config keys and values to their replacements.
 
 		:arg key: The configuration key to link to its new or old counterpart.
 		:arg val: The value associated with the configuration key.
+
+		Example of how to link values:
+
+		>>> match self.path:
+		>>> 	...
+		>>> 	case ("path", "segments"):
+		>>> 		...
+		>>> 		match key:
+		>>> 			case "newKey":
+		>>> 				# Do something to alias the new path/key to the old path/key for backwards compatibility.
+		>>> 			case "oldKey":
+		>>> 				# Do something to alias the old path/key to the new path/key for forwards compatibility.
+		>>> 			case _:
+		>>> 				# We don't care about other keys in this section.
+		>>> 				return
+		>>> 	case _:
+		>>> 		# We don't care about other sections.
+		>>> 		return
+		>>> ...
 		"""
 		match self.path:
-			case ("speech",):
-				match key:
-					case "symbolDictionaries":
-						# Alias speech.symbolDictionaries to speech.includeCLDR for backwards compatibility.
-						key = "includeCLDR"
-						val = "cldr" in val
-
-					case "includeCLDR":
-						# Alias speech.includeCLDR to speech.symbolDictionaries for forwards compatibility.
-						log.warning(
-							"speech.includeCLDR is deprecated. Use speech.symbolDictionaries instead.",
-							# Include stack info so testers can report warning to add-on author.
-							stack_info=True,
-						)
-						key = "symbolDictionaries"
-						curVal = self.get(key, []).copy()
-						if val and "cldr" not in curVal:
-							curVal.append("cldr")
-						elif not val and "cldr" in curVal:
-							curVal.remove("cldr")
-						val = curVal
-
-					case _:
-						# We don't care about other keys in this section.
-						return
-
 			case _:
 				# We don't care about other sections.
 				return
