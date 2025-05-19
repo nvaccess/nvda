@@ -38,8 +38,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trustVoiceLanguage = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
-	# Deprecated in 2025.1
-	includeCLDR = boolean(default=True)
 	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	autoLanguageSwitching = boolean(default=true)
