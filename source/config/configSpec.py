@@ -363,7 +363,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[trustedCertificates]]
 		__many__ = string(default="")
 	[[ui]]
-		playSounds = boolean(default=True)
 		confirmDisconnectAsFollower = boolean(default=True)
 """
 

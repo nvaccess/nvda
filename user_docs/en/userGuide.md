@@ -2873,7 +2873,8 @@ This option allows you to specify whether browse mode should place clickable con
 Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
 When screen layout is enabled, page elements will stay as they are visually shown.
 For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
-If it is disabled, then page elements will be placed on their own lines.
+If it is disabled, interactive elements, such as links and buttons, will be placed on their own lines.
+Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
@@ -3118,13 +3119,6 @@ Remote Access will only continue sessions started by the installed copy of NVDA 
 This means that you cannot, for instance, start a Remote Access session with a portable copy of NVDA and have the session continue on secure screens.
 
 The following options are only available if Remote Access is enabled.
-
-##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
-
-Use this option to select the type of audio cues played by Remote Access.
-
-When checked, NVDA will produce natural-sounding audio cues for Remote Access events.
-When unchecked, NVDA will beep for Remote events.
 
 ##### Confirm before disconnecting when controlled {#RemoteConfirmDisconnect}
 
@@ -3790,6 +3784,9 @@ Once a Remote Access session is active, you can switch between controlling the r
 * Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Send text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send clipboard".
 * If connected as the controlling computer, mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".
+* If connected as the controlling computer, send `control+alt+delete` to the controlled computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send control+alt+delete".
+  In order for this to work, the controlled computer must be running an installed copy of NVDA.
+  Additionally, depending on the settings of the controlled computer, this function may not always work.
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
