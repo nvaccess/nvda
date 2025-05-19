@@ -3327,25 +3327,20 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
-		remoteControlsGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
-		remoteControlsGroupBox: wx.StaticBox = remoteControlsGroupSizer.GetStaticBox()
-		remoteControlsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteControlsGroupSizer)
-		sHelper.addItem(remoteControlsGroupHelper)
-
-		self.enableRemote = remoteControlsGroupHelper.addItem(
+		self.enableRemote = sHelper.addItem(
 			# Translators: Label of a checkbox in Remote Access settings
-			wx.CheckBox(remoteControlsGroupBox, label=pgettext("remote", "Enable Remote Access")),
+			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
-			remoteControlsGroupBox,
+			self,
 		)
 		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
-		remoteControlsGroupHelper.addItem(remoteSettingsGroupHelper)
+		sHelper.addItem(remoteSettingsGroupHelper)
 
 		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3434,9 +3429,9 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
 
-		self.deleteFingerprints = remoteControlsGroupHelper.addItem(
+		self.deleteFingerprints = sHelper.addItem(
 			# Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-			wx.Button(remoteControlsGroupBox, label=_("Delete all trusted fingerprints")),
+			wx.Button(self, label=_("Delete all trusted fingerprints")),
 		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
