@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="zh-CN">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/8efed37b1ef0ca81dca9886bed4d94863ce5c5cd/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/73afac7ccc6befe1702c3d131b0b9e61ba196e39/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -14,7 +14,7 @@ $(ID:698c241c-1ade-46a5-bb6b-ee23f6e49e04)
 
 $(ID:1b210c3b-0fbe-42c5-b1fb-a2b63456f3b9)
 
-$(ID:5d8815bb-0213-4c6b-a487-ff8a868da89b)
+$(ID:17977634-b3c7-4ff8-baa0-7b6c304f2e10)
 
 $(ID:20963f36-9dbc-442d-94cc-1034306850a5)
 
@@ -252,13 +252,13 @@ $(ID:7d996341-4b3b-4866-8dbc-d25db96c8ea5)
   * $(ID:577f916f-e5ff-4f67-bf13-1037f6c060c2)
 $(ID:39543c90-9b62-4b2b-9cd5-9d2147534302)
   * $(ID:662ad44f-58f9-4174-947f-bd3bfc29e426)
+$(ID:d6569b4b-453e-4611-8ff0-03207d5f5419)
+    * $(ID:8ddc3742-3862-46c8-ab55-edceda0c301f)
+    * $(ID:52f69654-6bf0-4424-8854-6d692a3906cb)
   * $(ID:b7ec61e8-747a-4f68-b201-96c0a4c30770)
   * $(ID:47799452-2417-46fc-90e0-5607790777ea)
-  * $(ID:d33c0dae-24f1-4657-92fd-5edcf0319190)
   * $(ID:084a8e31-cab7-4df0-acdd-3ff8a39a8222)
 $(ID:8490fab4-0b9d-4216-b6d8-b267def08f96)
-  * $(ID:b569e7d4-0eb4-485f-93e0-d69356a9a939)
-  * $(ID:71b599e4-724e-4b6a-90e1-3f7f39b7c60d)
 * $(ID:14f25227-0c94-49fc-9975-82ba830e61f9)
 * $(ID:93869b50-ae5b-4e7e-8c6f-c9aa18b631a5)
 * $(ID:a7ae2825-da24-40b3-9bbc-5fc0ee33bdf4)
@@ -5431,7 +5431,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Rate boost and automatic language switching is now supported in SAPI 5.</source>
-        <target>SAPI 5 现在支持语速加倍和自动语言切换。</target>
+        <target>SAPI 5 语音现支持语速加倍和自动语言切换。</target>
       </segment>
     </unit>
     <unit id="698c241c-1ade-46a5-bb6b-ee23f6e49e04">
@@ -5452,13 +5452,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>插件商店的自动更新系统已改进，允许您选择自动更新通道并在后台运行自动更新。</target>
       </segment>
     </unit>
-    <unit id="5d8815bb-0213-4c6b-a487-ff8a868da89b">
+    <unit id="17977634-b3c7-4ff8-baa0-7b6c304f2e10">
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
-      <segment state="final">
-        <source>It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.</source>
-        <target>现在通过新命令可以更轻松地手动刷新 OCR 识别结果、切换自动刷新的开关。</target>
+      <segment state="initial">
+        <source>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</source>
+        <target>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</target>
       </segment>
     </unit>
     <unit id="20963f36-9dbc-442d-94cc-1034306850a5">
@@ -5467,7 +5467,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Native selection is now available in Chrome and Edge.</source>
-        <target>Chrome 和 Edge 浏览器现在支持应用原生选择。</target>
+        <target>Chrome 和 Edge 浏览器现已支持应用原生选择。</target>
       </segment>
     </unit>
     <unit id="99440f4e-200e-44ea-90df-e0128897806a">
@@ -5485,7 +5485,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Default input and output braille tables can now be determined based on the NVDA language.</source>
-        <target>现在可以根据 NVDA 语言确定默认的输入和输出盲文表。</target>
+        <target>可根据 NVDA 语言确定默认的输入和输出盲文表。</target>
       </segment>
     </unit>
     <unit id="7a853ee1-c275-407d-a752-94fec651658d">
@@ -5638,7 +5638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic update channels for add-ons can now be modified.</source>
-        <target>现在可以修改插件的自动更新通道。</target>
+        <target>可修改插件的自动更新通道。</target>
       </segment>
     </unit>
     <unit id="a04d32da-24e4-4265-a07f-1f57144ee623">
@@ -5668,7 +5668,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic updates can now happen in the background.</source>
-        <target>自动更新现在可以在后台进行。</target>
+        <target>可在后台进行自动更新。</target>
       </segment>
     </unit>
     <unit id="b0f894fa-4772-4228-9e14-eaaff098f885">
@@ -5688,7 +5688,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic updates can now update incompatible add-ons to another, newer, incompatible version.</source>
-        <target>现在可以自动将不兼容的插件更新到另一个较新的不兼容版本。</target>
+        <target>可自动将不兼容的插件更新到另一个较新的不兼容版本。</target>
       </segment>
     </unit>
     <unit id="3310be30-53b9-4e8a-903e-f0adbf4501b2">
@@ -5728,7 +5728,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The add-ons lists can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)</source>
-        <target>插件列表现在可按列排序（包括发布日期），支持升序和降序排列。 (#15277, #16681, @nvdaes)</target>
+        <target>插件列表可按列排序（包括发布日期），支持升序和降序排列。 (#15277, #16681, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="e71872e9-8dfd-42fd-8343-3b4f8b52098a">
@@ -5748,7 +5748,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)</source>
-        <target>现在使用 Microsoft Speech API version 5（SAPI 5）和 Microsoft Speech Platform 语音时支持自动语言切换。 (#17146, @gexgd0419)</target>
+        <target>使用 Microsoft Speech API version 5（SAPI 5）和 Microsoft Speech Platform 语音时支持自动语言切换。 (#17146, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="99dd16d5-bef7-4b0e-8ddc-c10c92e8601e">
@@ -5758,7 +5758,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Rate boost is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices, which supports up to 6X speed. (#17606, @gexgd0419)</source>
-        <target>现在使用 Microsoft Speech API version 5（SAPI 5）和 Microsoft Speech Platform 语音时支持语速加倍，最高可达 6 倍速。 (#17606, @gexgd0419)</target>
+        <target>使用 Microsoft Speech API version 5（SAPI 5）和 Microsoft Speech Platform 语音时支持语速加倍，最高可达 6 倍速。 (#17606, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="2ddce60b-18aa-4115-93a9-048285f66aa4">
@@ -5778,7 +5778,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome, Edge and other applications based on Chromium 134 or newer. (#17838)</source>
-        <target>现在 Google Chrome、Edge 和其他基于 Chromium 134 及更高版本的 应用程序支持 NVDA 浏览模式的应用原生选择（`NVDA+shift+f10`）。 (#17838)</target>
+        <target>Google Chrome、Edge 和其他基于 Chromium 134 及更高版本的 应用程序已支持 NVDA 浏览模式的应用原生选择（`NVDA+shift+f10`）。 (#17838)</target>
       </segment>
     </unit>
     <unit id="7552ea32-24b9-4dcd-b150-1e8716c4526a">
@@ -5788,7 +5788,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)</source>
-        <target>在 Mozilla Firefox 中，访问包含文本片段的网址时，NVDA 将读出高亮显示的文本。 (#16910, @jcsteh)</target>
+        <target>在 Mozilla Firefox 中，访问包含文本片段的网址时，将读出高亮显示的文本。 (#16910, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="69b8d2bd-3b81-44c9-aa9d-55894b033b00">
@@ -5798,7 +5798,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)</source>
-        <target>NVDA 现在可以读出链接目标是否指向当前页面。 (#141, @LeonarddeR, @nvdaes)</target>
+        <target>现可读出链接目标是否指向当前页面。 (#141, @LeonarddeR, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="78aedac5-a92a-4630-84a1-92e7c237fd91">
@@ -5818,7 +5818,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When editing in PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)</source>
-        <target>在 PowerPoint 文本框中编辑时，现在可以使用`alt+上光标`/`alt+下光标`逐句移动。 (#17015, @LeonarddeR)</target>
+        <target>在 PowerPoint 文本框中编辑时，可以使用`alt+上光标`/`alt+下光标`逐句移动。 (#17015, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="ceef0fe5-5dbb-4469-965e-41b41569ffd9">
@@ -5828,7 +5828,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)</source>
-        <target>在 Word 中使用扩展或缩小选区命令（`f8` 或 `shift+f8`）时，现在会读出选区更新。 (#3293, @CyrilleB79)</target>
+        <target>在 Word 中使用扩展或缩小选区命令（`f8` 或 `shift+f8`）时，会读出选区更新。 (#3293, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="3e3c1bbf-28dd-40e1-baf0-0ac2d8c6da56">
@@ -5838,7 +5838,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)</source>
-        <target>在 Word 16.0.18226 及更高版本或使用 Word 对象模型时，NVDA 将通过语音和盲文提示标题是否折叠。 (#17499)</target>
+        <target>在 Word 16.0.18226 及更高版本或使用 Word 对象模型时，会通过语音和盲文提示标题是否折叠。 (#17499)</target>
       </segment>
     </unit>
     <unit id="3c55d45c-f6bd-4106-85b4-019f0af2800b">
@@ -5848,7 +5848,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Word with UIA, when using the native extended table navigation commands (`alt+home`, `alt+end`, `alt+pageUp`, and `alt+pageDown`), the caret movement will now be reported. (#17867, @CyrilleB79)</source>
-        <target>在使用 UIA 的 Word 中，使用原生扩展表格导航命令（`alt+home`、`alt+end`、`alt+pageUp`、`alt+pageDown`）时，现在会读出输入焦点移动。 (#17867, @CyrilleB79)</target>
+        <target>在使用 UIA 的 Word 中，使用原生扩展表格导航命令（`alt+home`、`alt+end`、`alt+pageUp`、`alt+pageDown`）时，会读出输入焦点移动。 (#17867, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="a0015a1c-ba2d-4f95-9932-d29d555967f2">
@@ -5858,7 +5858,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)</source>
-        <target>在 Word 中使用“读出焦点”命令时，如果文档布局信息可用且启用了读出对象描述，将会读出文档布局。 (#15088, @nvdaes)</target>
+        <target>在 Word 中使用“读出焦点”命令时，如果文档布局信息可用且启用了读出对象描述，会读出文档布局。 (#15088, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="e9a4a07d-5a69-4caf-a524-06340cf10b91">
@@ -5868,7 +5868,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The result of more shortcuts is now reported in Word and Outlook:</source>
-        <target>现在 Word 和 Outlook 中会读出更多快捷键的操作结果：</target>
+        <target>在 Word 和 Outlook 中会读出更多快捷键的操作结果：</target>
       </segment>
     </unit>
     <unit id="0f695aed-520e-46fb-b2c3-4e176c5856c1">
@@ -5908,7 +5908,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When increasing or decreasing the font size in Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)</source>
-        <target>在 Writer 中使用键盘快捷键增大/减小字号时，NVDA 会读出新字号。 (#6915, @michaelweghorn)</target>
+        <target>在 Writer 中使用键盘快捷键增大/减小字号时，会读出新字号。 (#6915, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="83c1615b-35e9-40c6-b216-d54bc22fd949">
@@ -5918,7 +5918,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)</source>
-        <target>在 Writer 25.2 或更高版本中使用对应快捷键应用“正文文本”或标题段落样式时，NVDA 会读出新段落样式。 (#6915, @michaelweghorn)</target>
+        <target>在 Writer 25.2 或更高版本中使用对应快捷键应用“正文文本”或标题段落样式时，会读出新段落样式。 (#6915, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="7cbb5953-77f5-4680-b330-a60e56ab4c07">
@@ -5928,7 +5928,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When toggling double underline in Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)</source>
-        <target>在 Writer 中使用快捷键切换双下划线时，NVDA 会读出新状态（“双下划线开启”/“双下划线关闭”）。 (#6915, @michaelweghorn)</target>
+        <target>在 Writer 中使用快捷键切换双下划线时，会读出新状态（“双下划线开启”/“双下划线关闭”）。 (#6915, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="dc5b6bdb-7018-42cc-b255-8780a6b8de22">
@@ -5938,7 +5938,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now report the first line indent in LibreOffice 25.8 and later. (#13052, @michaelweghorn)</source>
-        <target>NVDA 现可在 LibreOffice 25.8 或更高版本中读出首行缩进。(#13052, @michaelweghorn)</target>
+        <target>可在 LibreOffice 25.8 或更高版本中读出首行缩进。(#13052, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="690052fe-8205-403e-a397-afe9f637136d">
@@ -5988,7 +5988,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, @christopherpross)</source>
-        <target>现可为 NVDA 更新和插件商店指定镜像网址。 (#14974, #17151, #17310, @christopherpross)</target>
+        <target>可为 NVDA 更新和插件商店指定镜像网址。 (#14974, #17151, #17310, @christopherpross)</target>
       </segment>
     </unit>
     <unit id="a287ff34-3461-43a3-81a8-617c4d9a614c">
@@ -6028,7 +6028,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)</source>
-        <target>现在可以配置 NVDA 在使用盲文导航键导航时读出当前行或段落。 (#17053, @nvdaes)</target>
+        <target>可配置 NVDA 在使用盲文导航键导航时读出当前行或段落。 (#17053, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="84ea75e9-a300-44de-a77e-047fc1efc8ae">
@@ -6085,9 +6085,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 89</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In Adobe Acrobat, NVDA can now read and interact with math equations in PDF documents generated by recent versions of Microsoft Word. (#18056)</source>
-        <target>In Adobe Acrobat, NVDA can now read and interact with math equations in PDF documents generated by recent versions of Microsoft Word. (#18056)</target>
+        <target>在 Adobe Acrobat 中，可读出由新版 Microsoft Word 生成的 PDF 文档中的数学方程并与之交互。 (#18056)</target>
       </segment>
     </unit>
     <unit id="af228e16-4abd-40f9-acca-f2307083e051">
@@ -6187,7 +6187,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)</source>
-        <target>退出对话框现在允许您同时禁用插件并启用调试日志记录来重启 NVDA。 (#11538, @CyrilleB79)</target>
+        <target>退出对话框现允许您同时禁用插件并启用调试日志记录来重启 NVDA。 (#11538, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="7839f993-b9c1-412c-8762-7714e10a0fca">
@@ -6515,7 +6515,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)</source>
-        <target>禁用插件运行时，开发者实验目录中的自定义盲文表现会被正确忽略。 (#17565, @LeonarddeR)</target>
+        <target>禁用插件运行时，开发者实验目录中的自定义盲文表会被正确忽略。 (#17565, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="366e7f76-c067-4311-a3b2-6abc79869852">
@@ -6535,7 +6535,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)</source>
-        <target>在 Word、Outlook、Excel、PowerPoint 使用旧版对象模型时，读出链接网址命令现可正常生效。 (#17292, #17362, #17435, @CyrilleB79)</target>
+        <target>在 Word、Outlook、Excel、PowerPoint 使用旧版对象模型时，读出链接网址命令可正常生效。 (#17292, #17362, #17435, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="51a15094-f57b-43cb-8df2-c01d8e94f3a9">
@@ -6545,7 +6545,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)</source>
-        <target>Excel 中的元素列表对话框（`NVDA+f7`）现可在非英文系统中正常列出批注和公式。 (#11366, @CyrilleB79)</target>
+        <target>Excel 中的元素列表对话框（`NVDA+f7`）可在非英文系统中正常列出批注和公式。 (#11366, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="33dfb2c2-0b62-49b8-abf2-26861fbc0020">
@@ -6585,7 +6585,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer starts say all when starting a slide show and the browse mode setting "Automatic Say All on page load" is disabled. (#17488, @LeonarddeR)</source>
-        <target>禁用“页面加载完成后朗读所有内容”选项后，启动幻灯片放映时 NVDA 不再自动开始全文朗读。 (#17488, @LeonarddeR)</target>
+        <target>禁用“页面加载完成后朗读所有内容”选项后，启动幻灯片放映时不再自动开始全文朗读。 (#17488, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="a560a9c9-0e34-4632-9c63-3226aefe9592">
@@ -6694,7 +6694,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Certain section elements are now correctly recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)</source>
-        <target>Visual Studio Code 中的部分区域现能被正确识别为可编辑控件。 (#17573, @Cary-rowen)</target>
+        <target>Visual Studio Code 中的部分区域能被正确识别为可编辑控件。 (#17573, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="d3d716d5-967e-4d21-9def-0aebbe12c4d6">
@@ -6773,7 +6773,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)</source>
-        <target>组合字符现能正确读出。 (#17295, @LeonarddeR)</target>
+        <target>组合字符（如é）现能正确读出。 (#17295, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="0f36ac88-bcb5-4559-9448-33a8e9342f24">
@@ -6793,7 +6793,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)</source>
-        <target>COM 注册修复工具现不会在失败时误报成功。 (#12355, @XLTechie)</target>
+        <target>COM 注册修复工具不会在失败时误报成功。 (#12355, @XLTechie)</target>
       </segment>
     </unit>
     <unit id="b1f8e653-4c2d-4e56-a882-7a4074e0fd9f">
@@ -6803,7 +6803,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)</source>
-        <target>当存在项目时关闭窗口，NVDA 将不再读出 Windows 11 剪贴板历史条目。 (#17308, @josephsl)</target>
+        <target>当存在项目时关闭窗口，将不再读出 Windows 11 剪贴板历史条目。 (#17308, @josephsl)</target>
       </segment>
     </unit>
     <unit id="ef453176-3122-41c8-8fcb-6d4086323641">
@@ -6813,7 +6813,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)</source>
-        <target>在浏览模式消息窗口打开时重新加载插件，NVDA 不再无法读出后续的焦点移动。 (#17323, @CyrilleB79)</target>
+        <target>在浏览模式消息窗口打开时重新加载插件，不再无法读出后续的焦点移动。 (#17323, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="9b6f55a2-fd8d-4330-885b-86ca19a9121c">
@@ -7597,9 +7597,38 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.</target>
       </segment>
     </unit>
-    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+    <unit id="d6569b4b-453e-4611-8ff0-03207d5f5419">
       <notes>
         <note appliesTo="source">line: 252</note>
+      </notes>
+      <segment state="initial">
+        <source>  Additionally, the method signature of its `__init__` has changed as follows:</source>
+        <target>  Additionally, the method signature of its `__init__` has changed as follows:</target>
+      </segment>
+    </unit>
+    <unit id="8ddc3742-3862-46c8-ab55-edceda0c301f">
+      <notes>
+        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The `outputDevice` parameter should now only be passed string arguments.</source>
+        <target>The `outputDevice` parameter should now only be passed string arguments.</target>
+      </segment>
+    </unit>
+    <unit id="52f69654-6bf0-4424-8854-6d692a3906cb">
+      <notes>
+        <note appliesTo="source">line: 254</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</source>
+        <target>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</target>
+      </segment>
+    </unit>
+    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+      <notes>
+        <note appliesTo="source">line: 255</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7609,7 +7638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="47799452-2417-46fc-90e0-5607790777ea">
       <notes>
-        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">line: 256</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7617,19 +7646,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>The `WASAPI` key has been removed from the `audio` section of the config spec.</target>
       </segment>
     </unit>
-    <unit id="d33c0dae-24f1-4657-92fd-5edcf0319190">
-      <notes>
-        <note appliesTo="source">line: 254</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</source>
-        <target>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</target>
-      </segment>
-    </unit>
     <unit id="084a8e31-cab7-4df0-acdd-3ff8a39a8222">
       <notes>
-        <note appliesTo="source">line: 255</note>
+        <note appliesTo="source">line: 257</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7639,31 +7658,11 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8490fab4-0b9d-4216-b6d8-b267def08f96">
       <notes>
-        <note appliesTo="source">line: 256</note>
+        <note appliesTo="source">line: 258</note>
       </notes>
       <segment state="initial">
         <source>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</source>
         <target>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</target>
-      </segment>
-    </unit>
-    <unit id="b569e7d4-0eb4-485f-93e0-d69356a9a939">
-      <notes>
-        <note appliesTo="source">line: 257</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</source>
-        <target>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</target>
-      </segment>
-    </unit>
-    <unit id="71b599e4-724e-4b6a-90e1-3f7f39b7c60d">
-      <notes>
-        <note appliesTo="source">line: 258</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</source>
-        <target>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</target>
       </segment>
     </unit>
     <unit id="14f25227-0c94-49fc-9975-82ba830e61f9">
