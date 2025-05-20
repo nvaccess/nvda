@@ -8,7 +8,7 @@ There are many improvements to speech, particularly responsiveness with SAPI 4, 
 Rate boost and automatic language switching is now supported in SAPI 5.
 SAPI 4 voices now support audio ducking, leading silence trimming, and keeping the audio device awake.
 
-The Add-on Store's update system has been improved, allowing you to select channels for update checks, and run automatic updates in the background.
+The Add-on Store's update system has been improved, allowing you to select channels for update and run automatic updates in the background.
 
 It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.
 
