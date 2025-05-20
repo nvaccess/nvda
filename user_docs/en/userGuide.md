@@ -3087,9 +3087,9 @@ You can also change the update check channel for a [specific add-on individually
 
 ##### Allow incompatible add-ons when checking for updates {#AllowIncompatibleAddonUpdates}
 
-When NVDA checks for add-on updates, this setting allows to accept updates to add-ons that may not be fully compatible with the current version of NVDA.
+-This setting allows NVDA to update add-ons to versions that may not be fully compatible with the current version of NVDA when checking for add-on updates.
 By default, this is disabled, meaning add-ons update will only check for add-on versions marked as compatible with the current version of NVDA.
-Add-on updates check will still allow to update an incompatible add-on version to a compatible version when it is released.
+Add-on update checks will still include updates from incompatible add-on versions to compatible versions when they are released.
 Enabling this may be useful for switching over to using add-on API breaking releases (the first release of the year).
 This is particularly useful for alpha and beta testers, who are testing compatibility of add-ons during the early stages of an add-on API breaking release.
 

@@ -3205,7 +3205,7 @@ class AddonStorePanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the add-ons update combo box in the Add-on Store Settings dialog.
-		addonsUpdateLabelText = _("Add-ons &update:")
+		addonsUpdateLabelText = _("Add-on &update check:")
 		self.addonsUpdateComboBox = sHelper.addLabeledControl(
 			addonsUpdateLabelText,
 			wx.Choice,
