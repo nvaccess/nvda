@@ -212,7 +212,8 @@ class AcrobatNode(IAccessible):
 			return mathMl.replace('xmlns:mml="http://www.w3.org/1998/Math/MathML"', "")
 
 		# not MathML -- fall back to return the contents, which is hopefully alt text, inside an <mtext>
-		answer = f"<math><mtext>{mathMl.replace('<', '&lt;').replace('&', '&amp;')}</mtext></math>"
+		# note: we need to convert '<' and '%' to entity names; order of replacement is important
+		answer = f"<math><mtext>{mathMl.replace('&', '&amp;').replace('<', '&lt;')}</mtext></math>"
 		log.debug(f"_get_mathMl: didn't find MathML -- returning value as mtext: {answer}")
 		return answer
 
