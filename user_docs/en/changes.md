@@ -18,6 +18,7 @@
 * Fixed some rare cases where NVDA playing sounds could result in unexpected errors. (#17918, @LeonarddeR)
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table end markers when the cursor is in a table cell. (#15828, @LeonarddeR)
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
+* NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 
 ### Changes for Developers
 
