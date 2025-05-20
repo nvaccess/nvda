@@ -32,7 +32,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
-	AddonsUpdateMode,
+	AddonUpdateCheck,
 	NVDAKey,
 	RemoteConnectionMode,
 	RemoteServerType,
@@ -3204,16 +3204,16 @@ class AddonStorePanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is a label for the add-ons update combo box in the Add-on Store Settings dialog.
-		addonsUpdateLabelText = _("Add-on &update check:")
-		self.addonsUpdateComboBox = sHelper.addLabeledControl(
-			addonsUpdateLabelText,
+		# Translators: This is a label for the add-on update check combo box in the Add-on Store Settings dialog.
+		addonUpdateCheckLabelText = _("Add-on &update check:")
+		self.addonUpdateCheckComboBox = sHelper.addLabeledControl(
+			addonUpdateCheckLabelText,
 			wx.Choice,
-			choices=[mode.displayString for mode in AddonsUpdateMode],
+			choices=[mode.displayString for mode in AddonUpdateCheck],
 		)
-		self.bindHelpEvent("AddonsUpdateMode", self.addonsUpdateComboBox)
-		index = [x.value for x in AddonsUpdateMode].index(config.conf["addonStore"]["automaticUpdates"])
-		self.addonsUpdateComboBox.SetSelection(index)
+		self.bindHelpEvent("AddonUpdateCheck", self.addonUpdateCheckComboBox)
+		index = [x.value for x in AddonUpdateCheck].index(config.conf["addonStore"]["automaticUpdates"])
+		self.addonUpdateCheckComboBox.SetSelection(index)
 
 		self.defaultUpdateCheckChannelComboBox = sHelper.addLabeledControl(
 			# Translators: This is the label for the default update check channel combo box in the Add-on Store Settings dialog.
@@ -3230,9 +3230,9 @@ class AddonStorePanel(SettingsPanel):
 		self.defaultUpdateCheckChannelComboBox.SetSelection(index)
 
 		self.allowIncompatibleUpdates = sHelper.addItem(
-			# Translators: This is the label for the "Allow incompatible add-ons when checking for updates" checkbox
+			# Translators: This is the label for the "Allow updates to add-ons marked as incompatible" checkbox
 			# in the Add-on Store Settings dialog.
-			wx.CheckBox(self, label=_("Allow incompatible add-ons when checking for updates")),
+			wx.CheckBox(self, label=_("Allow updates to add-ons marked as incompatible")),
 		)
 		self.bindHelpEvent("AllowIncompatibleAddonUpdates", self.allowIncompatibleUpdates)
 		self.allowIncompatibleUpdates.SetValue(config.conf["addonStore"]["allowIncompatibleUpdates"])
@@ -3311,8 +3311,8 @@ class AddonStorePanel(SettingsPanel):
 		super().onPanelActivated()
 
 	def onSave(self):
-		index = self.addonsUpdateComboBox.GetSelection()
-		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsUpdateMode][index]
+		index = self.addonUpdateCheckComboBox.GetSelection()
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonUpdateCheck][index]
 		config.conf["addonStore"]["allowIncompatibleUpdates"] = self.allowIncompatibleUpdates.IsChecked()
 		config.conf["addonStore"]["defaultUpdateChannel"] = (
 			self.defaultUpdateCheckChannelComboBox.GetSelection()

@@ -1,3 +1,4 @@
+ons upd
 # NVDA NVDA_VERSION User Guide
 
 [TOC]
@@ -365,7 +366,7 @@ The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
-To learn more about and configure this behaviour, refer to ["Add-ons update"](#AddonsUpdateMode).
+To learn more about and configure this behaviour, refer to ["Add-on update check"](#AddonUpdateCheck).
 
 ### Community {#Community}
 
@@ -3042,7 +3043,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 
 This category allows you to adjust the behaviour of the Add-on Store.
 
-##### Add-ons update {#AddonsUpdateMode}
+##### Add-on update check {#AddonUpdateCheck}
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
@@ -3065,7 +3066,7 @@ You will be prompted to restart NVDA when the updates are finished.
 
 ##### Default Update Check Channel {#DefaultAddonUpdateChannel}
 
-When [Add-ons update](#AddonsUpdateMode) is enabled ("Notify" or "Update Automatically"),, by default, add-ons only check for update to the same [channel](#AddonStoreFilterChannel).
+When [Add-on update check](#AddonUpdateCheck) is enabled ("Notify" or "Update Automatically"),, by default, add-ons only check for update to the same [channel](#AddonStoreFilterChannel).
 For example, an installed beta version will only update to a newer beta version.
 This option sets the default update check channel for all add-ons.
 You can also change the update check channel for a [specific add-on individually from the Add-on Store](#AddonStoreUpdateChannel).
@@ -3915,7 +3916,7 @@ When an add-on is being installed from an external source, NVDA will ask you to 
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
-To learn more about and configure this behaviour, refer to ["Add-ons update"](#AddonsUpdateMode).
+To learn more about and configure this behaviour, refer to ["Add-on update check"](#AddonUpdateCheck).
 
 #### Removing Add-ons {#AddonStoreRemoving}
 
@@ -3948,7 +3949,7 @@ Instead, the purpose of this feature is to share feedback to help users decide i
 #### Changing the update check channel {#AddonStoreUpdateChannel}
 
 You can manage the update check channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
-When [Add-ons update](#AddonsUpdateMode) is enabled ("Notify" or "Update Automatically"), add-ons will check for update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
+When [Add-on update check](#AddonUpdateCheck) is enabled ("Notify" or "Update Automatically"), add-ons will check for update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
 From an add-on's actions menu, using the submenu "Update channel", you can modify the channels an add-on will automatically update to.
 
 | Option | Behaviour |
