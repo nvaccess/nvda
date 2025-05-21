@@ -238,7 +238,7 @@ class RemoteClient:
 					return
 		self.disconnect()
 
-	def disconnect(self):
+	def disconnect(self, *, _silent: bool = False):
 		"""Close all active connections and clean up resources.
 
 		:note: Closes local control server and both leader/follower sessions if active
@@ -254,7 +254,8 @@ class RemoteClient:
 			self.disconnectAsLeader()
 		if self.followerSession is not None:
 			self.disconnectAsFollower()
-		cues.disconnected()
+		if not _silent:
+			cues.disconnected()
 
 	def disconnectAsLeader(self):
 		"""Close leader session and clean up related resources."""
@@ -407,7 +408,7 @@ class RemoteClient:
 		log.warning(f"Certificate validation failed for {transport.address}")
 		self.lastFailAddress = transport.address
 		self.lastFailKey = transport.channel
-		self.disconnect()
+		self.disconnect(_silent=True)
 		try:
 			certHash = transport.lastFailFingerprint
 
