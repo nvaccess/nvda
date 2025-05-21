@@ -4927,7 +4927,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(pgettext("remote", "Not connected"))
 			return
-		_remoteClient._remoteClient.disconnect()
+		_remoteClient._remoteClient.doDisconnect()
 
 	@script(
 		# Translators: Documentation string for the script that starts a new Remote Access session.
