@@ -142,7 +142,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		5. Close the key connector and reset it.
 		6. Generate a new key from the server.
 		"""
-		self._keyGenerationProgressDialog.Done()
+		self._keyGenerationProgressDialog.done()
 		self._keyGenerationProgressDialog = None
 		try:
 			certHash = self._keyConnector.lastFailFingerprint
