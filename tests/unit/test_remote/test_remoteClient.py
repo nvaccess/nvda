@@ -218,7 +218,7 @@ class TestRemoteClient(unittest.TestCase):
 		with patch("_remoteClient.client.log.debug") as mockLogDebug:
 			# `disconnect` is decorated with `alwaysCallAfter`, which causes it to be executed on the GUI thread.
 			# Unwrap it since we want it to run on this thread.
-			rcClient.RemoteClient.disconnect.__wrapped__(self.client)
+			self.client.disconnect()
 			mockLogDebug.assert_called()
 		# Test disconnect with an active localControlServer.
 		fakeControl = MagicMock()
@@ -226,9 +226,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.leaderSession = MagicMock()
 		self.client.followerSession = MagicMock()
 		with patch.object(rcClient.MessageDialog, "ShowModal", lambda *a, **k: ReturnCode.YES):
-			# `disconnect` is decorated with `alwaysCallAfter`, which causes it to be executed on the GUI thread.
-			# Unwrap it since we want it to run on this thread.
-			rcClient.RemoteClient.disconnect.__wrapped__(self.client)
+			self.client.disconnect()
 		fakeControl.close.assert_called_once()
 
 
