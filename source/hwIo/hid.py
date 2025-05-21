@@ -119,6 +119,35 @@ class HidOutputReport(HidReport):
 		)
 
 
+class HidFeatureReport(HidReport):
+	_reportType = hidpi.HIDP_REPORT_TYPE.FEATURE
+
+	def __init__(self, device, reportID=0):
+		self._reportSize = device.caps.FeatureReportByteLength
+		self._reportBuf = ctypes.c_buffer(self._reportSize)
+		self._reportBuf[0] = reportID
+		super().__init__(device)
+
+	@property
+	def data(self):
+		return self._reportBuf.raw
+
+	def setUsageValueArray(self, usagePage, linkCollection, usage, data):
+		dataBuf = ctypes.c_buffer(data)
+		check_HidP_status(
+			hidDll.HidP_SetUsageValueArray,
+			self._reportType,
+			hidpi.USAGE(usagePage),
+			ctypes.c_ushort(linkCollection),
+			hidpi.USAGE(usage),
+			dataBuf,
+			len(dataBuf),
+			self._dev._pd,
+			self._reportBuf,
+			self._reportSize,
+		)
+
+
 class Hid(IoBase):
 	"""Raw I/O for HID devices."""
 
