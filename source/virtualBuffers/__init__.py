@@ -907,7 +907,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
 		except:  # noqa: E722
 			log.debugWarning(
-				"getIdentifierFromNVDAObject failed. " "Object probably died while walking ancestors.",
+				"getIdentifierFromNVDAObject failed. Object probably died while walking ancestors.",
 				exc_info=True,
 			)
 			return None

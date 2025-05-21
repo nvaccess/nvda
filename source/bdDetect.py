@@ -737,7 +737,7 @@ class DriverRegistrar:
 		"""
 		if not isinstance(id, str) or not USB_ID_REGEX.match(id):
 			raise ValueError(
-				f"Invalid ID provided for driver {self._driver!r}, type {type!r}: " f"{id!r}",
+				f"Invalid ID provided for driver {self._driver!r}, type {type!r}: {id!r}",
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]
@@ -771,8 +771,7 @@ class DriverRegistrar:
 		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 		if malformedIds:
 			raise ValueError(
-				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
-				f"{', '.join(malformedIds)}",
+				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: {', '.join(malformedIds)}",
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]

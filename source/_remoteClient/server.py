@@ -194,7 +194,7 @@ class RemoteCertificateManager:
 		config["trustedCertificates"]["localhost"] = fingerprint
 		config["trustedCertificates"]["127.0.0.1"] = fingerprint
 
-		log.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
+		log.info(f"Generated new self-signed certificate for NVDA Remote. Fingerprint: {fingerprint}")
 
 	def getCurrentFingerprint(self) -> str | None:
 		"""Get the fingerprint of the current certificate."""
@@ -461,7 +461,7 @@ class Client:
 			return
 		self.connectionType = obj.get("connection_type")
 		self.authenticated = True
-		log.info(f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})")
+		log.info(f"Client {self.id} authenticated successfully (connection type: {self.connectionType})")
 		clients = []
 		clientIds = []
 		for client in list(self.server.clients.values()):
