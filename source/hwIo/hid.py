@@ -280,6 +280,24 @@ class Hid(IoBase):
 		self._outputValueCaps = valueCapsList
 		return self._outputValueCaps
 
+	@property
+	def featureValueCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
+		if hasattr(self, "_featureValueCaps"):
+			return self._featureValueCaps
+		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberFeatureValueCaps)()
+		numValueCaps = ctypes.c_long(self.caps.NumberFeatureValueCaps)
+		if numValueCaps.value == 0:
+			return valueCapsList
+		check_HidP_status(
+			hidDll.HidP_GetValueCaps,
+			hidpi.HIDP_REPORT_TYPE.FEATURE,
+			ctypes.byref(valueCapsList),
+			ctypes.byref(numValueCaps),
+			self._pd,
+		)
+		self._featureValueCaps = valueCapsList
+		return self._featureValueCaps
+
 	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
 		"""For HID devices, the buffer to be written must match the
 		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
