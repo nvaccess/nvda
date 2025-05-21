@@ -206,15 +206,8 @@ class RemoteClient:
 			self.connectAsFollower(connectionInfo)
 
 	@alwaysCallAfter
-	def disconnect(self):
-		"""Close all active connections and clean up resources.
-
-		:note: Closes local control server and both leader/follower sessions if active
-		"""
-		if self.leaderSession is None and self.followerSession is None:
-			log.debug("Disconnect called but no active sessions")
-			return
-
+	def doDisconnect(self) -> None:
+		"""Seek confirmation from the user before disconnecting."""
 		if (
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
@@ -243,7 +236,16 @@ class RemoteClient:
 				if dialog.ShowModal() != ReturnCode.YES:
 					log.info("Remote disconnection cancelled by user.")
 					return
+		self.disconnect()
 
+	def disconnect(self, *, _silent: bool = False):
+		"""Close all active connections and clean up resources.
+
+		:note: Closes local control server and both leader/follower sessions if active
+		"""
+		if self.leaderSession is None and self.followerSession is None:
+			log.debug("Disconnect called but no active sessions")
+			return
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
 			self.localControlServer.close()
@@ -252,7 +254,8 @@ class RemoteClient:
 			self.disconnectAsLeader()
 		if self.followerSession is not None:
 			self.disconnectAsFollower()
-		cues.disconnected()
+		if not _silent:
+			cues.disconnected()
 
 	def disconnectAsLeader(self):
 		"""Close leader session and clean up related resources."""
@@ -405,7 +408,7 @@ class RemoteClient:
 		log.warning(f"Certificate validation failed for {transport.address}")
 		self.lastFailAddress = transport.address
 		self.lastFailKey = transport.channel
-		self.disconnect()
+		self.disconnect(_silent=True)
 		try:
 			certHash = transport.lastFailFingerprint
 
