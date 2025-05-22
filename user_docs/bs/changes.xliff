@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="bs">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/8efed37b1ef0ca81dca9886bed4d94863ce5c5cd/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/73afac7ccc6befe1702c3d131b0b9e61ba196e39/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -14,7 +14,7 @@ $(ID:698c241c-1ade-46a5-bb6b-ee23f6e49e04)
 
 $(ID:1b210c3b-0fbe-42c5-b1fb-a2b63456f3b9)
 
-$(ID:5d8815bb-0213-4c6b-a487-ff8a868da89b)
+$(ID:17977634-b3c7-4ff8-baa0-7b6c304f2e10)
 
 $(ID:20963f36-9dbc-442d-94cc-1034306850a5)
 
@@ -252,13 +252,13 @@ $(ID:7d996341-4b3b-4866-8dbc-d25db96c8ea5)
   * $(ID:577f916f-e5ff-4f67-bf13-1037f6c060c2)
 $(ID:39543c90-9b62-4b2b-9cd5-9d2147534302)
   * $(ID:662ad44f-58f9-4174-947f-bd3bfc29e426)
+$(ID:d6569b4b-453e-4611-8ff0-03207d5f5419)
+    * $(ID:8ddc3742-3862-46c8-ab55-edceda0c301f)
+    * $(ID:52f69654-6bf0-4424-8854-6d692a3906cb)
   * $(ID:b7ec61e8-747a-4f68-b201-96c0a4c30770)
   * $(ID:47799452-2417-46fc-90e0-5607790777ea)
-  * $(ID:d33c0dae-24f1-4657-92fd-5edcf0319190)
   * $(ID:084a8e31-cab7-4df0-acdd-3ff8a39a8222)
 $(ID:8490fab4-0b9d-4216-b6d8-b267def08f96)
-  * $(ID:b569e7d4-0eb4-485f-93e0-d69356a9a939)
-  * $(ID:71b599e4-724e-4b6a-90e1-3f7f39b7c60d)
 * $(ID:14f25227-0c94-49fc-9975-82ba830e61f9)
 * $(ID:93869b50-ae5b-4e7e-8c6f-c9aa18b631a5)
 * $(ID:a7ae2825-da24-40b3-9bbc-5fc0ee33bdf4)
@@ -5452,13 +5452,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Sistem ažuriranja trgovine dodataka je poboljšan, pa vam sada omogućuje odabir kanala za automatsko ažuriranje i pokretanje ažuriranja u pozadini.</target>
       </segment>
     </unit>
-    <unit id="5d8815bb-0213-4c6b-a487-ff8a868da89b">
+    <unit id="17977634-b3c7-4ff8-baa0-7b6c304f2e10">
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
-      <segment state="final">
-        <source>It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.</source>
-        <target>Sada je lakše ručno osvježiti rezultat OCR prepoznavanja, a moguće je uključiti i automatsko osvježavanje, sa novim prečicama.</target>
+      <segment state="initial">
+        <source>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</source>
+        <target>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</target>
       </segment>
     </unit>
     <unit id="20963f36-9dbc-442d-94cc-1034306850a5">
@@ -5608,7 +5608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New Features</source>
-        <target>Nove značajke</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="19e3afb5-78fd-454b-a4ca-6fbb663f92c4">
@@ -6672,9 +6672,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 152</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)</source>
-        <target>NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)</target>
+        <target>NVDA se više neće rušiti prilikom odabira cijelog teksta u nekim datotekama koda u programima Android Studio ili IntelliJ Idea. (#17418, @thgcode)</target>
       </segment>
     </unit>
     <unit id="eb17f3bc-c113-4386-8cf2-317b51284e9f">
@@ -6692,9 +6692,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 154</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Certain section elements are now correctly recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)</source>
-        <target>Certain section elements are now correctly recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)</target>
+        <target>Određeni elementi odjeljaka sada su ispravno prepoznati kao uredive kontrole u programu Visual Studio Code. (#17573, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="d3d716d5-967e-4d21-9def-0aebbe12c4d6">
@@ -6702,18 +6702,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 155</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.</source>
-        <target>In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.</target>
+        <target>U Notepad i drugim UIA dokumentima, kao i Notepad++ dokumentima na Windowsu 11, ako je posljednji red prazan, komanda za pomjeranje na sljedeći red će pomjeriti kursor na posljednji red.</target>
       </segment>
     </unit>
     <unit id="549554ad-d4f3-4135-a0b2-427b8822b192">
       <notes>
         <note appliesTo="source">line: 156</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, #17430, @nvdaes)</source>
-        <target>  In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, #17430, @nvdaes)</target>
+        <target>  U bilo kojem dokumentu, ako je kursor na posljednjem redu, bit će pomjeren na kraj prilikom korištenja ove komande. (#17251, #17430, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="21d58f6d-40d8-40b6-8384-4acb0f33e4b7">
@@ -6731,9 +6731,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 158</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Braille is no longer dysfunctional when activating "say all" with an associated configuration profile. (#17163, @LeonarddeR)</source>
-        <target>Braille is no longer dysfunctional when activating "say all" with an associated configuration profile. (#17163, @LeonarddeR)</target>
+        <target>Brajica više nije nefunkcionalna prilikom korištenja funkcije "Pročitaj sve" u kombinaciji sa dodijeljenim konfiguracijskim profilom. (#17163, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="206b4558-a280-4327-96fe-3d0ccce52470">
@@ -6741,9 +6741,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 159</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)</source>
-        <target>Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)</target>
+        <target>Ispravljen je problem kada su određene postavke bile spremane isključivo u profil aktivne konfiguracije, iako je vrijednost te postavke jednaka onoj iz standardne konfiguracije. (#17157, @leonarddeR)</target>
       </segment>
     </unit>
     <unit id="78681f8b-9948-4996-ac58-b50c72263be9">
@@ -6751,9 +6751,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 160</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When spelling, unicode normalization now works more appropriately:</source>
-        <target>When spelling, unicode normalization now works more appropriately:</target>
+        <target>Prilikom izgovaranja slovo po slovo, Unicode normalizacija sada radi ispravnije:</target>
       </segment>
     </unit>
     <unit id="abbcdfb0-e0c8-4565-bbb7-38679c5a640a">
@@ -6761,9 +6761,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 161</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)</source>
-        <target>After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)</target>
+        <target>Nakon prijavljivanja normalizovanog znaka, NVDA više neće neispravno prijavljivati sljedeće znakove kao normalizovane. (#17286, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="f8929018-afd9-4cfe-a3f4-aba2a441a8f8">
@@ -6771,9 +6771,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 162</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)</source>
-        <target>Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)</target>
+        <target>Složeni znakovi (kao što su é) sada se ispravno prijavljuju.</target>
       </segment>
     </unit>
     <unit id="0f36ac88-bcb5-4559-9448-33a8e9342f24">
@@ -6801,9 +6801,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 165</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)</source>
-        <target>NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)</target>
+        <target>NVDA više neće najavljivati historiju Windows 11 međuspremnika prilikom zatvaranja prozora. (#17308, @josephsl)</target>
       </segment>
     </unit>
     <unit id="ef453176-3122-41c8-8fcb-6d4086323641">
@@ -6811,9 +6811,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 166</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)</source>
-        <target>If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)</target>
+        <target>Ako su dodaci ponovno učitani dok je otvorena neka poruka u načinu pregleda, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="9b6f55a2-fd8d-4330-885b-86ca19a9121c">
@@ -6821,9 +6821,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 167</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)</source>
-        <target>When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)</target>
+        <target>Prilikom korištenja aplikacija kao što su Skype, Discord, Signal i Povezivanje s telefonom, NVDA govor i zvukovi se više ne smanjuju. (#17349, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="6e37f292-b621-4a33-a0e3-5ec8cabd8933">
@@ -6831,9 +6831,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 168</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)</source>
-        <target>Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)</target>
+        <target>NVDA Python konzola se sada uspješno otvara čak i ako dođe do greške tokom dohvaćanja snapshot varijabli. (#17391, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="0d955676-53ce-4caf-831f-379ed9a196ef">
@@ -6841,9 +6841,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 169</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)</source>
-        <target>In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)</target>
+        <target>U web preglednicima se sada pouzdano prijavljuju promjene odabira teksta unutar polja za uređivanje. (#17501, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="685f34bb-4a6a-4ec4-9341-673da9b930ed">
@@ -6851,9 +6851,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 170</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)</source>
-        <target>When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)</target>
+        <target>Kada poveznice vode do istog objekta na kom se virtuelni kursor već nalazi, NVDA će se ispravno pomjeriti na odredište poveznice. (#17669, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="897ce6c2-4516-45a8-91c2-04956630bd5d">
@@ -6861,9 +6861,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 171</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)</source>
-        <target>The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)</target>
+        <target>Ikonica NVDA Highlighter prozora više ne ostaje "zaglavljena" u traci zadataka nakon ponovnog pokretanja Explorera. (#17696, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="70c8f98f-d5b5-4ec6-8e26-7de32f2da4e7">
@@ -7597,9 +7597,38 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.</target>
       </segment>
     </unit>
-    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+    <unit id="d6569b4b-453e-4611-8ff0-03207d5f5419">
       <notes>
         <note appliesTo="source">line: 252</note>
+      </notes>
+      <segment state="initial">
+        <source>  Additionally, the method signature of its `__init__` has changed as follows:</source>
+        <target>  Additionally, the method signature of its `__init__` has changed as follows:</target>
+      </segment>
+    </unit>
+    <unit id="8ddc3742-3862-46c8-ab55-edceda0c301f">
+      <notes>
+        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The `outputDevice` parameter should now only be passed string arguments.</source>
+        <target>The `outputDevice` parameter should now only be passed string arguments.</target>
+      </segment>
+    </unit>
+    <unit id="52f69654-6bf0-4424-8854-6d692a3906cb">
+      <notes>
+        <note appliesTo="source">line: 254</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</source>
+        <target>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</target>
+      </segment>
+    </unit>
+    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+      <notes>
+        <note appliesTo="source">line: 255</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7609,7 +7638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="47799452-2417-46fc-90e0-5607790777ea">
       <notes>
-        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">line: 256</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7617,19 +7646,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>The `WASAPI` key has been removed from the `audio` section of the config spec.</target>
       </segment>
     </unit>
-    <unit id="d33c0dae-24f1-4657-92fd-5edcf0319190">
-      <notes>
-        <note appliesTo="source">line: 254</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</source>
-        <target>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</target>
-      </segment>
-    </unit>
     <unit id="084a8e31-cab7-4df0-acdd-3ff8a39a8222">
       <notes>
-        <note appliesTo="source">line: 255</note>
+        <note appliesTo="source">line: 257</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7639,31 +7658,11 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8490fab4-0b9d-4216-b6d8-b267def08f96">
       <notes>
-        <note appliesTo="source">line: 256</note>
+        <note appliesTo="source">line: 258</note>
       </notes>
       <segment state="initial">
         <source>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</source>
         <target>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</target>
-      </segment>
-    </unit>
-    <unit id="b569e7d4-0eb4-485f-93e0-d69356a9a939">
-      <notes>
-        <note appliesTo="source">line: 257</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</source>
-        <target>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</target>
-      </segment>
-    </unit>
-    <unit id="71b599e4-724e-4b6a-90e1-3f7f39b7c60d">
-      <notes>
-        <note appliesTo="source">line: 258</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</source>
-        <target>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</target>
       </segment>
     </unit>
     <unit id="14f25227-0c94-49fc-9975-82ba830e61f9">
@@ -8257,9 +8256,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 341</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>New Features</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="46536a6e-bc60-4327-b0ef-8c55569125ab">
@@ -9062,9 +9061,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 445</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>New Features</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="7f6ead02-e340-48ce-ae01-b8bbc7b8c809">
@@ -9848,9 +9847,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 533</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>There is a new feature called sound split.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Tu je nova funkcija pod nazivom podjela zvuka.</target>
       </segment>
     </unit>
     <unit id="591043ed-1370-49e5-86ce-7af10402db19">
@@ -10843,9 +10842,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 658</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>New Features</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="6e3f25a2-2fb9-4fad-b758-97380a14f517">
@@ -10853,9 +10852,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 660</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Add-on Store:</source>
-        <target>&lt;target/&gt;</target>
+        <target>Trgovina dodataka:</target>
       </segment>
     </unit>
     <unit id="9bd159db-ac1d-4299-b373-475bd81ddfcc">
@@ -13393,9 +13392,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 954</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>New Features</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="83590f94-77a3-4a3e-94db-96e1527c8da0">
@@ -14238,9 +14237,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1057</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>New Features</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nove funkcije</target>
       </segment>
     </unit>
     <unit id="41091bf4-9f57-4bfd-9f4f-38f9f1e516c8">
@@ -14248,9 +14247,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1059</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Add-on Store has been added to NVDA. (#13985)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Dodana je trgovina dodataka. (#13985)</target>
       </segment>
     </unit>
     <unit id="5e8b25ea-0449-4cc7-a351-a9b9ca2ccbb5">
@@ -14258,9 +14257,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1060</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Browse, search, install and update community add-ons.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Pregledajte, pretražujte, instalirajte i ažurirajte dodatke zajednice.</target>
       </segment>
     </unit>
     <unit id="514436f2-cb1a-49f7-bb5f-9dbf48ab4953">
@@ -14288,9 +14287,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1063</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>For more information please read the updated user guide.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Za više informacija pročitajte ažurirani korisnički priručnik.</target>
       </segment>
     </unit>
     <unit id="a930a2f2-5fb3-4d9e-b6d1-5618a7deec12">

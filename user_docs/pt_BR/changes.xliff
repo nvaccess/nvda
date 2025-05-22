@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="pt-BR">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/8efed37b1ef0ca81dca9886bed4d94863ce5c5cd/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/73afac7ccc6befe1702c3d131b0b9e61ba196e39/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -14,7 +14,7 @@ $(ID:698c241c-1ade-46a5-bb6b-ee23f6e49e04)
 
 $(ID:1b210c3b-0fbe-42c5-b1fb-a2b63456f3b9)
 
-$(ID:5d8815bb-0213-4c6b-a487-ff8a868da89b)
+$(ID:17977634-b3c7-4ff8-baa0-7b6c304f2e10)
 
 $(ID:20963f36-9dbc-442d-94cc-1034306850a5)
 
@@ -252,13 +252,13 @@ $(ID:7d996341-4b3b-4866-8dbc-d25db96c8ea5)
   * $(ID:577f916f-e5ff-4f67-bf13-1037f6c060c2)
 $(ID:39543c90-9b62-4b2b-9cd5-9d2147534302)
   * $(ID:662ad44f-58f9-4174-947f-bd3bfc29e426)
+$(ID:d6569b4b-453e-4611-8ff0-03207d5f5419)
+    * $(ID:8ddc3742-3862-46c8-ab55-edceda0c301f)
+    * $(ID:52f69654-6bf0-4424-8854-6d692a3906cb)
   * $(ID:b7ec61e8-747a-4f68-b201-96c0a4c30770)
   * $(ID:47799452-2417-46fc-90e0-5607790777ea)
-  * $(ID:d33c0dae-24f1-4657-92fd-5edcf0319190)
   * $(ID:084a8e31-cab7-4df0-acdd-3ff8a39a8222)
 $(ID:8490fab4-0b9d-4216-b6d8-b267def08f96)
-  * $(ID:b569e7d4-0eb4-485f-93e0-d69356a9a939)
-  * $(ID:71b599e4-724e-4b6a-90e1-3f7f39b7c60d)
 * $(ID:14f25227-0c94-49fc-9975-82ba830e61f9)
 * $(ID:93869b50-ae5b-4e7e-8c6f-c9aa18b631a5)
 * $(ID:a7ae2825-da24-40b3-9bbc-5fc0ee33bdf4)
@@ -5452,13 +5452,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.</target>
       </segment>
     </unit>
-    <unit id="5d8815bb-0213-4c6b-a487-ff8a868da89b">
+    <unit id="17977634-b3c7-4ff8-baa0-7b6c304f2e10">
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
       <segment state="initial">
-        <source>It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.</source>
-        <target>It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.</target>
+        <source>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</source>
+        <target>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</target>
       </segment>
     </unit>
     <unit id="20963f36-9dbc-442d-94cc-1034306850a5">
@@ -7597,9 +7597,38 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.</target>
       </segment>
     </unit>
-    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+    <unit id="d6569b4b-453e-4611-8ff0-03207d5f5419">
       <notes>
         <note appliesTo="source">line: 252</note>
+      </notes>
+      <segment state="initial">
+        <source>  Additionally, the method signature of its `__init__` has changed as follows:</source>
+        <target>  Additionally, the method signature of its `__init__` has changed as follows:</target>
+      </segment>
+    </unit>
+    <unit id="8ddc3742-3862-46c8-ab55-edceda0c301f">
+      <notes>
+        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The `outputDevice` parameter should now only be passed string arguments.</source>
+        <target>The `outputDevice` parameter should now only be passed string arguments.</target>
+      </segment>
+    </unit>
+    <unit id="52f69654-6bf0-4424-8854-6d692a3906cb">
+      <notes>
+        <note appliesTo="source">line: 254</note>
+        <note appliesTo="source">prefix:     * </note>
+      </notes>
+      <segment state="initial">
+        <source>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</source>
+        <target>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</target>
+      </segment>
+    </unit>
+    <unit id="b7ec61e8-747a-4f68-b201-96c0a4c30770">
+      <notes>
+        <note appliesTo="source">line: 255</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7609,7 +7638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="47799452-2417-46fc-90e0-5607790777ea">
       <notes>
-        <note appliesTo="source">line: 253</note>
+        <note appliesTo="source">line: 256</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7617,19 +7646,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>The `WASAPI` key has been removed from the `audio` section of the config spec.</target>
       </segment>
     </unit>
-    <unit id="d33c0dae-24f1-4657-92fd-5edcf0319190">
-      <notes>
-        <note appliesTo="source">line: 254</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</source>
-        <target>The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.</target>
-      </segment>
-    </unit>
     <unit id="084a8e31-cab7-4df0-acdd-3ff8a39a8222">
       <notes>
-        <note appliesTo="source">line: 255</note>
+        <note appliesTo="source">line: 257</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="initial">
@@ -7639,31 +7658,11 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8490fab4-0b9d-4216-b6d8-b267def08f96">
       <notes>
-        <note appliesTo="source">line: 256</note>
+        <note appliesTo="source">line: 258</note>
       </notes>
       <segment state="initial">
         <source>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</source>
         <target>    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)</target>
-      </segment>
-    </unit>
-    <unit id="b569e7d4-0eb4-485f-93e0-d69356a9a939">
-      <notes>
-        <note appliesTo="source">line: 257</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</source>
-        <target>The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.</target>
-      </segment>
-    </unit>
-    <unit id="71b599e4-724e-4b6a-90e1-3f7f39b7c60d">
-      <notes>
-        <note appliesTo="source">line: 258</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
-        <source>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</source>
-        <target>The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.</target>
       </segment>
     </unit>
     <unit id="14f25227-0c94-49fc-9975-82ba830e61f9">

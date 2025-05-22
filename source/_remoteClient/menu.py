@@ -113,7 +113,7 @@ class RemoteMenu(wx.Menu):
 
 	def doDisconnect(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
-		self.client.disconnect()
+		self.client.doDisconnect()
 
 	def onMuteItem(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
