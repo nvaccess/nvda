@@ -9,6 +9,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Container
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -3359,32 +3360,24 @@ class RemoteSettingsPanel(SettingsPanel):
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
+		enabledInSecureMode: set[wx.Window] = set()
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
-		remoteControlsGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
-		remoteControlsGroupBox: wx.StaticBox = remoteControlsGroupSizer.GetStaticBox()
-		remoteControlsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteControlsGroupSizer)
-		sHelper.addItem(remoteControlsGroupHelper)
-
-		if globalVars.appArgs.secure:
-			self._insertReadOnlyNotice(sizer)
-			remoteControlsGroupBox.Disable()
-
-		self.enableRemote = remoteControlsGroupHelper.addItem(
+		self.enableRemote = sHelper.addItem(
 			# Translators: Label of a checkbox in Remote Access settings
-			wx.CheckBox(remoteControlsGroupBox, label=pgettext("remote", "Enable Remote Access")),
+			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
-			remoteControlsGroupBox,
+			self,
 		)
 		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
-		remoteControlsGroupHelper.addItem(remoteSettingsGroupHelper)
+		sHelper.addItem(remoteSettingsGroupHelper)
 
 		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3394,6 +3387,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			),
 		)
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
+		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3472,26 +3466,31 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
 
-		self.deleteFingerprints = remoteControlsGroupHelper.addItem(
+		self.deleteFingerprints = sHelper.addItem(
 			# Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-			wx.Button(remoteControlsGroupBox, label=_("Delete all trusted fingerprints")),
+			wx.Button(self, label=_("Delete all trusted fingerprints")),
 		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
 
-	def _insertReadOnlyNotice(self, sizer: wx.BoxSizer):
-		banner = wx.adv.BannerWindow(self, dir=wx.TOP)
-		banner.SetText(
-			# Translators: Title of a message presented to users when viewing Remote Access settings in secure mode.
-			pgettext("remote", "Read only"),
-			# Translators: Message presented to users when viewing Remote Access settings in secure mode.
-			pgettext("remote", "Remote Access settings are read only as NVDA is running in secure mode."),
-		)
-		normalBgColour = self.GetBackgroundColour()
-		banner.SetGradient(normalBgColour, normalBgColour)
-		sizer.Insert(0, banner)
+		if globalVars.appArgs.secure:
+			self._disableDescendants(sizer, enabledInSecureMode)
+
+	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
+		"""Disable all but the specified discendant windows of this sizer.
+
+		Disables all child windows, and recursively calls itself for all child sizers.
+
+		:param sizer: Root sizer whose descendents should be disabled.
+		:param excluded: Container of windows that should remain enabled.
+		"""
+		for child in sizer.GetChildren():
+			if (window := child.GetWindow()) is not None and window not in excluded:
+				window.Disable()
+			elif (subsizer := child.GetSizer()) is not None:
+				self._disableDescendants(subsizer, excluded)
 
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
@@ -5512,9 +5511,12 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		AddonStorePanel,
 		RemoteSettingsPanel,
 	]
+	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
+	# add-on update related controls.
+	if not globalVars.appArgs.secure:
+		categoryClasses.append(AddonStorePanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
