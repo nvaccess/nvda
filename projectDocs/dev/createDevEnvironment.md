@@ -95,7 +95,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
-* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
+* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
