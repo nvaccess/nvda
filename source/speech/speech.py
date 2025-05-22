@@ -1118,7 +1118,9 @@ def speak(  # noqa: C901
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
-	shouldReportLanguage = config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"]
+	shouldReportLanguage = (
+		config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"]
+	)
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
