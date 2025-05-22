@@ -9,7 +9,7 @@ import api
 import controlTypes
 import eventHandler
 import winUser
-import html  # for escape
+import html
 from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
 from NVDAObjects.behaviors import EditableText
