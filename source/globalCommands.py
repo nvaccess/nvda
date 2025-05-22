@@ -3761,7 +3761,7 @@ class GlobalCommands(ScriptableObject):
 			configSection="braille",
 			configKey="speakOnNavigatingByUnit",
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			enabledMsg=_("Speak when navigating by line or paragraph with braille on"),
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
 		)
