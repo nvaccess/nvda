@@ -1118,11 +1118,14 @@ def speak(  # noqa: C901
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
+	shouldReportLanguage = config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"]
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
+			if shouldReportLanguage:
+				speechSequence.append(LangChangeCommand(item.lang, onlyCache=True))
 			if not autoLanguageSwitching:
 				continue
 			curLanguage = item.lang
@@ -1158,8 +1161,11 @@ def speak(  # noqa: C901
 		item = speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode = item.state
-		if autoLanguageSwitching and isinstance(item, LangChangeCommand):
-			curLanguage = item.lang
+		if isinstance(item, LangChangeCommand):
+			if item.onlyCache:
+				continue
+			if autoLanguageSwitching:
+				curLanguage = item.lang
 		if isinstance(item, SuppressUnicodeNormalizationCommand):
 			unicodeNormalization = initialUnicodeNormalization and not item.state
 		if isinstance(item, str):
