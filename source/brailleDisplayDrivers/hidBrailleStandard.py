@@ -69,6 +69,11 @@ class BraillePageUsageID(enum.IntEnum):
 	BRAILLE_ROCKER_DOWN = 0x21D
 	BRAILLE_ROCKER_PRESS = 0x21E
 
+SCREEN_READER_IDENTIFIER = bytes([
+	0xb0, 0x46, 0x9e, 0x01, 0xe6, 0x59, 0x4b, 0x2a,
+	0xa0, 0xc0, 0x91, 0x5a, 0x9d, 0x04, 0x8f, 0x3f
+])
+
 
 @dataclass
 class ButtonCapsInfo:
@@ -130,6 +135,16 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 						port=port,
 					),
 				)
+				screenReaderIdentifier = self._findScreenReaderIdentifierValueCaps()
+				if screenReaderIdentifier:
+					report = hwIo.hid.HidFeatureReport(self._dev, screenReaderIdentifier.ReportID)
+					report.setUsageValueArray(
+						HID_USAGE_PAGE_BRAILLE,
+						0,
+						BraillePageUsageID.SCREEN_READER_IDENTIFIER,
+						SCREEN_READER_IDENTIFIER
+					)
+					self._dev.setFeature(report.data)
 				break
 			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
@@ -161,6 +176,15 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
 				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
 				and valueCaps.u1.NotRange.Usage == BraillePageUsageID.NUMBER_OF_BRAILLE_CELLS
+				and valueCaps.ReportCount > 0
+			):
+				return valueCaps
+		return None
+
+	def _findScreenReaderIdentifierValueCaps(self) -> hidpi.HIDP_VALUE_CAPS | None:
+		for valueCaps in self._dev.featureValueCaps:
+			if (
+				valueCaps.u1.NotRange.Usage == BraillePageUsageID.SCREEN_READER_IDENTIFIER
 				and valueCaps.ReportCount > 0
 			):
 				return valueCaps
