@@ -1676,10 +1676,10 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
-	if autoLanguageSwitching:
-		language = newFormatField.get("language")
-		speechSequence.append(LangChangeCommand(language))
-		lastLanguage = language
+	langCommandOnlyCache = not autoLanguageSwitching
+	language = newFormatField.get("language")
+	speechSequence.append(LangChangeCommand(language, langCommandOnlyCache))
+	lastLanguage = language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
 	if len(textWithFields) > 0:
@@ -1807,8 +1807,8 @@ def getTextInfoSpeech(  # noqa: C901
 					relativeSpeechSequence.extend(fieldSequence)
 				if command.command == "controlStart" and command.field.get("role") == controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
-				if autoLanguageSwitching and newLanguage != lastLanguage:
-					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
+				if newLanguage != lastLanguage:
+					relativeSpeechSequence.append(LangChangeCommand(newLanguage, langCommandOnlyCache))
 					lastLanguage = newLanguage
 	if (
 		reportIndentation
