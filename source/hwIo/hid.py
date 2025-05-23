@@ -119,6 +119,35 @@ class HidOutputReport(HidReport):
 		)
 
 
+class HidFeatureReport(HidReport):
+	_reportType = hidpi.HIDP_REPORT_TYPE.FEATURE
+
+	def __init__(self, device, reportID=0):
+		self._reportSize = device.caps.FeatureReportByteLength
+		self._reportBuf = ctypes.c_buffer(self._reportSize)
+		self._reportBuf[0] = reportID
+		super().__init__(device)
+
+	@property
+	def data(self):
+		return self._reportBuf.raw
+
+	def setUsageValueArray(self, usagePage, linkCollection, usage, data):
+		dataBuf = ctypes.c_buffer(data)
+		check_HidP_status(
+			hidDll.HidP_SetUsageValueArray,
+			self._reportType,
+			hidpi.USAGE(usagePage),
+			ctypes.c_ushort(linkCollection),
+			hidpi.USAGE(usage),
+			dataBuf,
+			len(dataBuf),
+			self._dev._pd,
+			self._reportBuf,
+			self._reportSize,
+		)
+
+
 class Hid(IoBase):
 	"""Raw I/O for HID devices."""
 
@@ -250,6 +279,24 @@ class Hid(IoBase):
 		)
 		self._outputValueCaps = valueCapsList
 		return self._outputValueCaps
+
+	@property
+	def featureValueCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
+		if hasattr(self, "_featureValueCaps"):
+			return self._featureValueCaps
+		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberFeatureValueCaps)()
+		numValueCaps = ctypes.c_long(self.caps.NumberFeatureValueCaps)
+		if numValueCaps.value == 0:
+			return valueCapsList
+		check_HidP_status(
+			hidDll.HidP_GetValueCaps,
+			hidpi.HIDP_REPORT_TYPE.FEATURE,
+			ctypes.byref(valueCapsList),
+			ctypes.byref(numValueCaps),
+			self._pd,
+		)
+		self._featureValueCaps = valueCapsList
+		return self._featureValueCaps
 
 	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
 		"""For HID devices, the buffer to be written must match the
