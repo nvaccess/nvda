@@ -10,8 +10,13 @@
 
 ### Changes
 
+<<<<<<< HEAD
+* Component updates:
+  * Updated SCons to 4.9.1. (#18069)
+=======
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 
+>>>>>>> remotes/origin/master
 ### Bug Fixes
 
 * In WinUI 3 apps including Microsoft Copilot and parts of Windows 11 File Explorer, NVDA will no longer fail to announce controls when using mouse and touch interaction. (#17407, #17771, @josephsl)
