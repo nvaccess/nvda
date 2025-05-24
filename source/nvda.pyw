@@ -36,11 +36,10 @@ _log.addHandler(logging.NullHandler(level=logging.INFO))
 
 if NVDAState.isRunningAsSource():
 	# We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	appDir = os.path.normpath(os.path.dirname(__file__))
-	# Ensure we are inside the Python virtual environment, and that it is started with uv
+	appDir = os.path.abspath(os.path.dirname(__file__))
+	# Ensure we are inside the Python virtual environment
 	virtualEnv = os.getenv("VIRTUAL_ENV")
-	uv = os.getenv("uv")
-	if not virtualEnv or not uv or Path(appDir).parent.resolve() not in Path(virtualEnv).resolve().parents:
+	if not virtualEnv or Path(appDir).parent != Path(virtualEnv).parent:
 		ctypes.windll.user32.MessageBoxW(
 			0,
 			"NVDA cannot  detect the Python virtual environment. "
@@ -52,9 +51,8 @@ if NVDAState.isRunningAsSource():
 else:
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	appDir = sys.prefix
+	appDir = os.path.abspath(sys.prefix)
 
-appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
