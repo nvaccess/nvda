@@ -1130,7 +1130,9 @@ def speak(  # noqa: C901
 				speechSequence.append(item)
 			curLanguage = item.lang
 			if not curLanguage or (
-				autoLanguageSwitching and not autoDialectSwitching and curLanguage.split("_")[0] == defaultLanguageRoot
+				autoLanguageSwitching
+				and not autoDialectSwitching
+				and curLanguage.split("_")[0] == defaultLanguageRoot
 			):
 				curLanguage = defaultLanguage
 		elif isinstance(item, SuppressUnicodeNormalizationCommand):
