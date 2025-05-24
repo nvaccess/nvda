@@ -28,6 +28,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 	for index, item in enumerate(speechSequence):
 		if (
 			not isinstance(item, LangChangeCommand)
+			or not item.onlyCache
 			or item.isDefault
 			or index == len(speechSequence) - 1
 			or item.lang == speech._speechState.lastReportedLanguage
@@ -62,5 +63,4 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					# We need this to use the formatted string when appropriate, to avoid appending (not supported).
 					filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
-		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence

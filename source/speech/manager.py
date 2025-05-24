@@ -14,6 +14,7 @@ from .commands import (
 	EndUtteranceCommand,
 	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
+	LangChangeCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
@@ -365,6 +366,8 @@ class SpeechManager(object):
 				continue
 			if isinstance(command, EndUtteranceCommand):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
+				continue
+			if isinstance(command, LangChangeCommand) and command.onlyCache:
 				continue
 			if isinstance(command, SynthParamCommand):
 				paramTracker.update(command)
