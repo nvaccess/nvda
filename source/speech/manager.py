@@ -367,9 +367,9 @@ class SpeechManager(object):
 			if isinstance(command, EndUtteranceCommand):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
-			if isinstance(command, LangChangeCommand) and command.onlyCache:
-				continue
 			if isinstance(command, SynthParamCommand):
+				if isinstance(command, LangChangeCommand) and command.onlyCache:
+					continue
 				paramTracker.update(command)
 			if isinstance(command, SuppressUnicodeNormalizationCommand):
 				continue  # Not handled by speech manager

@@ -2,7 +2,7 @@
 # Copyright (C) 2025 NV Access Limited, Noelia Ruiz Martínez
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-
+from logHandler import log
 import languageHandler
 import synthDriverHandler
 import config
@@ -28,9 +28,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 	for index, item in enumerate(speechSequence):
 		if (
 			not isinstance(item, LangChangeCommand)
-			or not item.onlyCache
 			or item.isDefault
-			or index == len(speechSequence) - 1
 			or item.lang == speech._speechState.lastReportedLanguage
 		):
 			filteredSpeechSequence.append(item)
@@ -40,6 +38,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			langDesc = item.lang
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
+		log.info(f"descri: {langDesc}")
 		match curSynth.languageIsSupported(item.lang):
 			case True if config.conf["speech"]["reportLanguage"]:
 				# If reportLanguage is False, we still change speech._speechState.lastReportedLanguage to report not supported language if it appears multiple times.
@@ -63,4 +62,5 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 					# We need this to use the formatted string when appropriate, to avoid appending (not supported).
 					filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
+		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
