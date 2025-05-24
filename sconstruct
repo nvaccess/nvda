@@ -13,7 +13,7 @@ from pathlib import Path
 # Ensure we are inside the Python virtual environment, and that it is started with uv
 virtualEnv = os.getenv("VIRTUAL_ENV")
 uv = os.getenv("uv")
-if not virtualEnv or not uv or Path.cwd() not in Path(virtualEnv).resolve().parents:
+if not virtualEnv or not uv or Path.cwd() != Path(virtualEnv).parent:
 	print(
 		"Error: SCons was started outside NVDA's build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
