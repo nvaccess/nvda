@@ -6,6 +6,11 @@
 
 ### New Features
 
+* NVDA can report the language of the text being read. (#17664, @nvdaes):
+  * When language switching is enabled, new options are available to:
+    * Report the language of the text being read.
+    * Report if the language of the text being read is not supported.
+  * A new unassigned command has been added to report the language of the text at the caret position.
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
 
 ### Changes

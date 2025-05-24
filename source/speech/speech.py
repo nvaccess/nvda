@@ -125,6 +125,8 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
+	# The language reported in the last speech sequence
+	lastReportedLanguage: str | None = None
 
 
 def getState():
@@ -1116,16 +1118,21 @@ def speak(  # noqa: C901
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
+	shouldReportLanguage = (
+		config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"]
+	)
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
-			if not autoLanguageSwitching:
-				continue
+			if item.onlyCache:
+				speechSequence.append(item)
 			curLanguage = item.lang
 			if not curLanguage or (
-				not autoDialectSwitching and curLanguage.split("_")[0] == defaultLanguageRoot
+				autoLanguageSwitching
+				and not autoDialectSwitching
+				and curLanguage.split("_")[0] == defaultLanguageRoot
 			):
 				curLanguage = defaultLanguage
 		elif isinstance(item, SuppressUnicodeNormalizationCommand):
@@ -1668,10 +1675,10 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
-	if autoLanguageSwitching:
-		language = newFormatField.get("language")
-		speechSequence.append(LangChangeCommand(language))
-		lastLanguage = language
+	langCommandOnlyCache = not autoLanguageSwitching
+	language = newFormatField.get("language")
+	speechSequence.append(LangChangeCommand(language, langCommandOnlyCache))
+	lastLanguage = language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
 	if len(textWithFields) > 0:
@@ -1799,8 +1806,8 @@ def getTextInfoSpeech(  # noqa: C901
 					relativeSpeechSequence.extend(fieldSequence)
 				if command.command == "controlStart" and command.field.get("role") == controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
-				if autoLanguageSwitching and newLanguage != lastLanguage:
-					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
+				if newLanguage != lastLanguage:
+					relativeSpeechSequence.append(LangChangeCommand(newLanguage, langCommandOnlyCache))
 					lastLanguage = newLanguage
 	if (
 		reportIndentation
