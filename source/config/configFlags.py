@@ -310,7 +310,7 @@ class ReportNotSupportedLanguage(DisplayStringStrEnum):
 	def _displayStringLabels(self) -> dict["ReportNotSupportedLanguage", str]:
 		return {
 			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
-			self.SPEECH: pgettext("languageNotSupported", "Speech (default)"),
+			self.SPEECH: pgettext("languageNotSupported", "Speech"),
 			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 			self.BEEP: pgettext("languageNotSupported", "Beep"),
 			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
