@@ -1126,12 +1126,15 @@ def speak(  # noqa: C901
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
+			if not autoLanguageSwitching and not shouldReportLanguage:
+				continue
 			if item.onlyCache:
+				# Not autoLanguageSwitching.
 				speechSequence.append(item)
+				continue
 			curLanguage = item.lang
 			if not curLanguage or (
-				autoLanguageSwitching
-				and not autoDialectSwitching
+				not autoDialectSwitching
 				and curLanguage.split("_")[0] == defaultLanguageRoot
 			):
 				curLanguage = defaultLanguage
@@ -1141,7 +1144,7 @@ def speak(  # noqa: C901
 		elif isinstance(item, str):
 			if not item:
 				continue
-			if autoLanguageSwitching and curLanguage != prevLanguage:
+			if curLanguage != prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage = curLanguage
 			speechSequence.append(item)
@@ -1163,7 +1166,7 @@ def speak(  # noqa: C901
 		item = speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode = item.state
-		if autoLanguageSwitching and isinstance(item, LangChangeCommand):
+		if isinstance(item, LangChangeCommand) and not item.onlyCache:
 			curLanguage = item.lang
 		if isinstance(item, SuppressUnicodeNormalizationCommand):
 			unicodeNormalization = initialUnicodeNormalization and not item.state

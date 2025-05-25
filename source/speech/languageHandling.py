@@ -30,6 +30,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			not isinstance(item, LangChangeCommand)
 			or item.isDefault
 			or item.lang == speech._speechState.lastReportedLanguage
+			or index == len(speechSequence) -1
 		):
 			filteredSpeechSequence.append(item)
 			continue
@@ -38,7 +39,6 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			langDesc = item.lang
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
-		log.info(f"descri: {langDesc}")
 		match curSynth.languageIsSupported(item.lang):
 			case True if config.conf["speech"]["reportLanguage"]:
 				# If reportLanguage is False, we still change speech._speechState.lastReportedLanguage to report not supported language if it appears multiple times.
