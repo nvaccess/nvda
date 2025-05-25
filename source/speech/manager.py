@@ -369,6 +369,7 @@ class SpeechManager(object):
 				continue
 			if isinstance(command, SynthParamCommand):
 				if isinstance(command, LangChangeCommand) and command.onlyCache:
+					# Language change shouldn't be passed to synthesizer.
 					continue
 				paramTracker.update(command)
 			if isinstance(command, SuppressUnicodeNormalizationCommand):

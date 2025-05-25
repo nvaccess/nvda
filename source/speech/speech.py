@@ -1141,6 +1141,7 @@ def speak(  # noqa: C901
 			if not item:
 				continue
 			if curLanguage != prevLanguage:
+				# If autoLanguageSwitching is True, onlyCache will prevent LangChangeCommand to be processed by synthesizers.
 				onlyCache = not autoLanguageSwitching
 				speechSequence.append(LangChangeCommand(curLanguage, onlyCache))
 				prevLanguage = curLanguage
@@ -1675,6 +1676,8 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
+	# If not autoLanguageSwitching, LangChangeCommand is added to speechSequence to track language changes,
+	# but onlyCache parameter is used to prevent changes to be processed by synthesizers.
 	langCommandOnlyCache = not autoLanguageSwitching
 	language = newFormatField.get("language")
 	speechSequence.append(LangChangeCommand(language, langCommandOnlyCache))
