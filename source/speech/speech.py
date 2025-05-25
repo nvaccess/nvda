@@ -67,6 +67,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	ReportNotSupportedLanguage,
 	OutputMode,
 	TypingEcho,
 )
@@ -1119,7 +1120,7 @@ def speak(  # noqa: C901
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
 	shouldReportLanguage = (
-		config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"]
+		config.conf["speech"]["reportLanguage"] or config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
 	)
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
