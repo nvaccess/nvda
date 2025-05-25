@@ -2,7 +2,6 @@
 # Copyright (C) 2025 NV Access Limited, Noelia Ruiz Martínez
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-from logHandler import log
 import languageHandler
 import synthDriverHandler
 import config
@@ -30,7 +29,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			not isinstance(item, LangChangeCommand)
 			or item.isDefault
 			or item.lang == speech._speechState.lastReportedLanguage
-			or index == len(speechSequence) -1
+			or index == len(speechSequence) - 1
 		):
 			filteredSpeechSequence.append(item)
 			continue
