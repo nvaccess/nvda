@@ -2,6 +2,7 @@
 # Copyright (C) 2025 NV Access Limited, Noelia Ruiz Martínez
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import languageHandler
 import synthDriverHandler
 import config
@@ -36,7 +37,6 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		langDesc = languageHandler.getLanguageDescription(item.lang)
 		if langDesc is None:
 			langDesc = item.lang
-			log.info({langDesc})
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
 		match curSynth.languageIsSupported(item.lang):
