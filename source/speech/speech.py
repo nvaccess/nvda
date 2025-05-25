@@ -1134,8 +1134,7 @@ def speak(  # noqa: C901
 				continue
 			curLanguage = item.lang
 			if not curLanguage or (
-				not autoDialectSwitching
-				and curLanguage.split("_")[0] == defaultLanguageRoot
+				not autoDialectSwitching and curLanguage.split("_")[0] == defaultLanguageRoot
 			):
 				curLanguage = defaultLanguage
 		elif isinstance(item, SuppressUnicodeNormalizationCommand):
