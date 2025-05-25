@@ -1128,10 +1128,6 @@ def speak(  # noqa: C901
 		if isinstance(item, LangChangeCommand):
 			if not autoLanguageSwitching and not shouldReportLanguage:
 				continue
-			if item.onlyCache:
-				# Not autoLanguageSwitching.
-				speechSequence.append(item)
-				continue
 			curLanguage = item.lang
 			if not curLanguage or (
 				not autoDialectSwitching
@@ -1145,7 +1141,8 @@ def speak(  # noqa: C901
 			if not item:
 				continue
 			if curLanguage != prevLanguage:
-				speechSequence.append(LangChangeCommand(curLanguage))
+				onlyCache = not autoLanguageSwitching
+				speechSequence.append(LangChangeCommand(curLanguage, onlyCache))
 				prevLanguage = curLanguage
 			speechSequence.append(item)
 		else:
@@ -1795,11 +1792,10 @@ def getTextInfoSpeech(  # noqa: C901
 				)
 				if fieldSequence:
 					inTextChunk = False
-				if autoLanguageSwitching:
-					newLanguage = command.field.get("language")
-					if lastLanguage != newLanguage:
-						# The language has changed, so this starts a new text chunk.
-						inTextChunk = False
+				newLanguage = command.field.get("language")
+				if lastLanguage != newLanguage:
+					# The language has changed, so this starts a new text chunk.
+					inTextChunk = False
 			if not inTextChunk:
 				if fieldSequence:
 					if autoLanguageSwitching and lastLanguage is not None:

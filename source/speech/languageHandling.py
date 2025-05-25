@@ -37,6 +37,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		langDesc = languageHandler.getLanguageDescription(item.lang)
 		if langDesc is None:
 			langDesc = item.lang
+			log.info({langDesc})
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
 		match curSynth.languageIsSupported(item.lang):
