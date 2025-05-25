@@ -65,7 +65,7 @@ class WelcomeDialog(
 		optionsLabel = _("Options")
 		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
 		optionsBox = optionsSizer.GetStaticBox()
-		optionsBox.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.BOLD, faceName="Atkinson Hyperlegible"))
+		optionsBox.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.NORMAL, faceName="Atkinson Hyperlegible"))
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
