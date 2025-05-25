@@ -58,12 +58,14 @@ class WelcomeDialog(
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
+		welcomeTextDetail.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.NORMAL, faceName="Atkinson Hyperlegible"))
 		mainSizer.Add(welcomeTextDetail, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 
 		# Translators: The label for a group box containing the NVDA welcome dialog options.
 		optionsLabel = _("Options")
 		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
 		optionsBox = optionsSizer.GetStaticBox()
+		optionsBox.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.BOLD, faceName="Atkinson Hyperlegible"))
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
