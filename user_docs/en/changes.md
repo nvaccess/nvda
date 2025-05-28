@@ -19,7 +19,7 @@
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table end markers when the cursor is in a table cell. (#15828, @LeonarddeR)
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
-* NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#?, @LeonarddeR)
+* NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -28,7 +28,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
   * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
 * Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)
-* Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#?, @LeonarddeR)
+* Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 
 #### Deprecations
 
