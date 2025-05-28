@@ -1,8 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2025 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio,
+# Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio,
-# Leonard de Ruijter
+
+"""App module for Microsoft Visual Studio and Microsoft SQL Server Management Studio."""
 
 import os.path
 import objbase
