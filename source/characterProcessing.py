@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2024 NV Access Limited, World Light Information Limited,
+# Copyright (C) 2010-2025 NV Access Limited, World Light Information Limited,
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -865,10 +865,7 @@ With listAvailableSymbolDictionaryDefinitions, there is a public interface to re
 
 def listAvailableSymbolDictionaryDefinitions() -> list[SymbolDictionaryDefinition]:
 	"""Get available symbol dictionary definitions as initialized in core or in add-ons."""
-	return sorted(
-		_symbolDictionaryDefinitions,
-		key=lambda dct: (dct.source != _SymbolDefinitionSource.BUILTIN, strxfrm(dct.displayName or dct.name)),
-	)
+	return list(_symbolDictionaryDefinitions)
 
 
 def _addSymbolDefinitions():
