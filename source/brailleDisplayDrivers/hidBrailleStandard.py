@@ -88,7 +88,7 @@ SCREEN_READER_IDENTIFIER = bytes(
 		0x04,
 		0x8F,
 		0x3F,
-	]
+	],
 )
 
 
