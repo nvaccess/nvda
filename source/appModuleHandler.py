@@ -489,10 +489,10 @@ class AppModule(baseObject.ScriptableObject):
 
 		self._inprocRegistrationHandle = None
 
-	def _getExecutableFileInfo(self):
-		# Used for obtaining file name and version for the executable.
-		# This is needed in case immersive app package returns an error,
-		# dealing with a native app, or a converted desktop app.
+	processExecutablePath: str
+	"""The path to the executable of the current process."""
+
+	def _get_processExecutablePath(self) -> str:
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
@@ -503,8 +503,13 @@ class AppModule(baseObject.ScriptableObject):
 			ctypes.byref(length),
 		):
 			raise ctypes.WinError()
-		fileName = exeFileName.value
-		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
+		return exeFileName.value
+
+	def _getExecutableFileInfo(self):
+		# Used for obtaining file name and version for the executable.
+		# This is needed in case immersive app package returns an error,
+		# dealing with a native app, or a converted desktop app.
+		fileinfo = getFileVersionInfo(self.processExecutablePath, "ProductName", "ProductVersion")
 		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
 
 	def _getImmersivePackageInfo(self):

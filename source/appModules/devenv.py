@@ -4,12 +4,14 @@
 # Copyright (C) 2010-2022 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio,
 # Leonard de Ruijter
 
+import os.path
 import objbase
 import comtypes
 from locationHelper import RectLTWH
 from logHandler import log
 import textInfos.offsets
 
+from fileUtils import getFileVersionInfo
 from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window import Window
 from comtypes.automation import IDispatch
@@ -40,7 +42,13 @@ class AppModule(appModuleHandler.AppModule):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self._DTECache = {}
-		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
+		slnDllPath = os.path.join(os.path.dirname(self.processExecutablePath), "vssln.dll")
+		if self.appName.lower() == "ssms" and os.path.exists(slnDllPath):
+			fileinfo = getFileVersionInfo(slnDllPath, "ProductVersion")
+			productVersion = fileinfo["ProductVersion"]
+		else:
+			productVersion = self.productVersion
+		vsMajor, vsMinor, rest = productVersion.split(".", 2)
 		self.vsMajor, self.vsMinor = int(vsMajor), int(vsMinor)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
