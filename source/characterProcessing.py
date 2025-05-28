@@ -8,7 +8,6 @@ import dataclasses
 from enum import IntEnum, StrEnum
 from functools import cached_property
 import glob
-from locale import strxfrm
 import os
 import codecs
 import collections
