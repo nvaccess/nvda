@@ -69,10 +69,27 @@ class BraillePageUsageID(enum.IntEnum):
 	BRAILLE_ROCKER_DOWN = 0x21D
 	BRAILLE_ROCKER_PRESS = 0x21E
 
-SCREEN_READER_IDENTIFIER = bytes([
-	0xb0, 0x46, 0x9e, 0x01, 0xe6, 0x59, 0x4b, 0x2a,
-	0xa0, 0xc0, 0x91, 0x5a, 0x9d, 0x04, 0x8f, 0x3f
-])
+
+SCREEN_READER_IDENTIFIER = bytes(
+	[
+		0xB0,
+		0x46,
+		0x9E,
+		0x01,
+		0xE6,
+		0x59,
+		0x4B,
+		0x2A,
+		0xA0,
+		0xC0,
+		0x91,
+		0x5A,
+		0x9D,
+		0x04,
+		0x8F,
+		0x3F,
+	]
+)
 
 
 @dataclass
@@ -142,7 +159,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 						HID_USAGE_PAGE_BRAILLE,
 						0,
 						BraillePageUsageID.SCREEN_READER_IDENTIFIER,
-						SCREEN_READER_IDENTIFIER
+						SCREEN_READER_IDENTIFIER,
 					)
 					self._dev.setFeature(report.data)
 				break
