@@ -43,7 +43,7 @@ Major highlights include:
 #### Minimum System Requirements {#MinimumSystemRequirements}
 
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
-  * both AMD64 and ARM64 variants of Windows are supported.
+  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
   * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 500 MB of storage space.
@@ -51,7 +51,7 @@ Major highlights include:
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
-  * both AMD64 and ARM64 variants of Windows are supported.
+  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
