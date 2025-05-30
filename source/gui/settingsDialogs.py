@@ -45,6 +45,7 @@ from config.configFlags import (
 	ReportCellBorders,
 	OutputMode,
 	TypingEcho,
+	ReportNotSupportedLanguage,
 )
 import languageHandler
 import speech
@@ -1706,6 +1707,38 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoDialectSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoDialectSwitching"],
 		)
+		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language switched to will be reported.
+		reportLanguageText = pgettext("speech.reportLanguage", "Report lan&guage changes")
+		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(
+				self,
+				label=reportLanguageText,
+			),
+		)
+		self.bindHelpEvent("ReportLanguage", self.reportLanguageCheckbox)
+		self.reportLanguageCheckbox.SetValue(
+			config.conf["speech"]["reportLanguage"],
+		)
+
+		labelText = pgettext(
+			"speech.reportLanguage",
+			# Translators: This is a label for a combobox in the Voice settings panel to select
+			# reporting when the language of the text being read is not supported by the current synthesizer.
+			"Report when switching to language is not s&upported by synthesizer",
+		)
+		self.reportNotSupportedLanguageCombo = settingsSizerHelper.addLabeledControl(
+			labelText,
+			wx.Choice,
+			choices=[option.displayString for option in ReportNotSupportedLanguage],
+		)
+		self.bindHelpEvent(
+			"ReportIfLanguageIsNotSupportedBySynthesizer",
+			self.reportNotSupportedLanguageCombo,
+		)
+		reportNotSupportedLanguage = config.conf["speech"]["reportNotSupportedLanguage"]
+		self.reportNotSupportedLanguageCombo.SetSelection(
+			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
+		)
 
 		# Translators: This is the label for a combobox in the
 		# voice settings panel (possible choices are none, some, most and all).
@@ -1879,6 +1912,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["reportLanguage"] = self.reportLanguageCheckbox.IsChecked()
+		config.conf["speech"]["reportNotSupportedLanguage"] = [
+			option.value for option in ReportNotSupportedLanguage
+		][self.reportNotSupportedLanguageCombo.GetSelection()]
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		].value

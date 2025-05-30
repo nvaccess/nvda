@@ -67,6 +67,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	ReportNotSupportedLanguage,
 	OutputMode,
 	TypingEcho,
 )
@@ -125,6 +126,8 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
+	# The language reported in the last speech sequence
+	lastReportedLanguage: str | None = None
 
 
 def getState():
@@ -1116,12 +1119,16 @@ def speak(  # noqa: C901
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
+	shouldReportLanguage = (
+		config.conf["speech"]["reportLanguage"]
+		or config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
+	)
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
-			if not autoLanguageSwitching:
+			if not autoLanguageSwitching and not shouldReportLanguage:
 				continue
 			curLanguage = item.lang
 			if not curLanguage or (
@@ -1134,8 +1141,10 @@ def speak(  # noqa: C901
 		elif isinstance(item, str):
 			if not item:
 				continue
-			if autoLanguageSwitching and curLanguage != prevLanguage:
-				speechSequence.append(LangChangeCommand(curLanguage))
+			if curLanguage != prevLanguage:
+				# If autoLanguageSwitching is True, onlyCache will prevent LangChangeCommand to be processed by synthesizers.
+				onlyCache = not autoLanguageSwitching
+				speechSequence.append(LangChangeCommand(curLanguage, onlyCache))
 				prevLanguage = curLanguage
 			speechSequence.append(item)
 		else:
@@ -1156,7 +1165,7 @@ def speak(  # noqa: C901
 		item = speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode = item.state
-		if autoLanguageSwitching and isinstance(item, LangChangeCommand):
+		if isinstance(item, LangChangeCommand) and not item.onlyCache:
 			curLanguage = item.lang
 		if isinstance(item, SuppressUnicodeNormalizationCommand):
 			unicodeNormalization = initialUnicodeNormalization and not item.state
@@ -1668,10 +1677,12 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
-	if autoLanguageSwitching:
-		language = newFormatField.get("language")
-		speechSequence.append(LangChangeCommand(language))
-		lastLanguage = language
+	# If not autoLanguageSwitching, LangChangeCommand is added to speechSequence to track language changes,
+	# but onlyCache parameter is used to prevent changes to be processed by synthesizers.
+	langCommandOnlyCache = not autoLanguageSwitching
+	language = newFormatField.get("language")
+	speechSequence.append(LangChangeCommand(language, langCommandOnlyCache))
+	lastLanguage = language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
 	if len(textWithFields) > 0:
@@ -1785,11 +1796,10 @@ def getTextInfoSpeech(  # noqa: C901
 				)
 				if fieldSequence:
 					inTextChunk = False
-				if autoLanguageSwitching:
-					newLanguage = command.field.get("language")
-					if lastLanguage != newLanguage:
-						# The language has changed, so this starts a new text chunk.
-						inTextChunk = False
+				newLanguage = command.field.get("language")
+				if lastLanguage != newLanguage:
+					# The language has changed, so this starts a new text chunk.
+					inTextChunk = False
 			if not inTextChunk:
 				if fieldSequence:
 					if autoLanguageSwitching and lastLanguage is not None:
@@ -1799,8 +1809,8 @@ def getTextInfoSpeech(  # noqa: C901
 					relativeSpeechSequence.extend(fieldSequence)
 				if command.command == "controlStart" and command.field.get("role") == controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
-				if autoLanguageSwitching and newLanguage != lastLanguage:
-					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
+				if newLanguage != lastLanguage:
+					relativeSpeechSequence.append(LangChangeCommand(newLanguage, langCommandOnlyCache))
 					lastLanguage = newLanguage
 	if (
 		reportIndentation
