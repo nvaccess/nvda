@@ -679,7 +679,7 @@ class UIATextInfo(textInfos.TextInfo):
 			furtherUIAFormatUnits = self.UIAFormatUnits if UIAFormatUnits is None else []
 		if debug:
 			log.debug(
-				f"Walking by unit {unit}, " f"with further units of: {furtherUIAFormatUnits}",
+				f"Walking by unit {unit}, with further units of: {furtherUIAFormatUnits}",
 			)
 		rangeIter = iterUIARangeByUnit(textRange, unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
@@ -934,7 +934,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if lastChildEndDelta > 0:
 					if debug:
 						log.debug(
-							"textRange ended part way through the child. " "Crop end of childRange to fit",
+							"textRange ended part way through the child. Crop end of childRange to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_End,
@@ -961,8 +961,7 @@ class UIATextInfo(textInfos.TextInfo):
 				elif childStartDelta < 0:
 					if debug:
 						log.debug(
-							"textRange started part way through child. "
-							"Cropping Start of child range to fit",
+							"textRange started part way through child. Cropping Start of child range to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_Start,

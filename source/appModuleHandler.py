@@ -859,7 +859,7 @@ def getWmiProcessInfo(processId):
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
 		results = wmi.ExecQuery(
-			"select * from Win32_Process " "where ProcessId = %d" % processId,
+			"select * from Win32_Process where ProcessId = %d" % processId,
 		)
 		for result in results:
 			return result
