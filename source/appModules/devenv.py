@@ -46,6 +46,8 @@ class AppModule(appModuleHandler.AppModule):
 		self._DTECache = {}
 		slnDllPath = os.path.join(os.path.dirname(self.processExecutablePath), "vssln.dll")
 		if self.appName.lower() == "ssms" and os.path.exists(slnDllPath):
+			# Use the underlying Visual Studio version number,
+			# Not the SQL Server Management Studio version number.
 			fileinfo = getFileVersionInfo(slnDllPath, "ProductVersion")
 			productVersion = fileinfo["ProductVersion"]
 		else:
