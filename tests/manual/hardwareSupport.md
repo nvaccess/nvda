@@ -15,6 +15,7 @@ NVDA is currently migrating to only 64bit hardware support, and currently recomm
 
 1. Run the NVDA installer on the target hardware.
 2. Verify successful installation and basic functionality.
+Test using Edge, Notepad and the NVDA GUI.
 
 ## Hardware to consider
 
