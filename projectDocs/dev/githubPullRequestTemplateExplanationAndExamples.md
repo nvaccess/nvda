@@ -11,7 +11,7 @@ To automatically generate a title, set the title to `@coderabbitai title`.
 
 ## The template
 
-At the start of the template, there is an HTML comment block (starting with `<!--`), which points to this wiki page.
+At the start of the template, there is an HTML comment block (starting with `<!--`), which points to this page.
 It can be left in place and will not appear once the issue is saved.
 However, you may delete it (i.e. all text up to and including `-->`) if you like.
 
@@ -24,7 +24,7 @@ If in doubt, please create one.
 
 Note that Github [allows you to automatically close issues using keywords](https://help.github.com/en/articles/closing-issues-using-keywords).
 For example, when writing `closes #7777` or `fixes #4242` in the body of the description, the mentioned issue will automatically be closed when the pull request is merged into the master branch.
-If your pull request is filed against another branch, such as beta, the particular issue will have to be closed manually after merging the pull request.
+If your pull request is merged into another branch, such as beta, the particular issue will be closed automatically after merging the pull request into master from beta.
 
 ### Summary of the issue:
 
@@ -64,7 +64,7 @@ More broadly, try to answer the following questions:
 Please use this section as an opportunity to try to convince us (and yourself) that your proposed change should be merged.
 
 Often in face to face development it's useful to demonstrate a change, quite often bugs are noticed at this point when the new person asks for some variation in testing approach.
-Since we unlikely to be able to demonstrate a feature in an interactive way, an easy-to-follow list of steps for a "demo" allows others to check for themselves without having to work out all the details.
+Since we are unlikely to be able to demonstrate a feature in an interactive way, an easy-to-follow list of steps for a "demo" allows others to check for themselves without having to work out all the details.
 It also serves as a starting point for members of the community who are testing the changes that go into NVDA.
 
 Example:
@@ -102,7 +102,7 @@ Not all items will be applicable for all situations, in this case checking the i
 If the reviewer reaches the same conclusion as the author, no further work is necessary.
 
 Most items in the checklist have a section in the PR template where you can add your thoughts.
-Doing so may preempt questions from the reviewer ensuring you are on the same page and speeding up the review process.
+Doing so may pre-empt questions from the reviewer ensuring you are on the same page and speed up the review process.
 
 ### Testing:
 
@@ -110,10 +110,10 @@ Discuss under "testing strategy" heading:
 
 - Unit tests
   - Describe the coverage of automated unit tests?
-  - Is the changed covered already, or can it be covered by automated unit tests?
+  - Is the changed code covered already, or can it be covered by automated unit tests?
 - System tests
   - Describe the coverage of automated system tests?
-  - Is the changed covered already, or can it be covered by automated system tests?
+  - Is the changed code covered already, or can it be covered by automated system tests?
 - Manual tests
   - Have you followed any relevant test plans in [the manual test documentation](../../tests/manual/README.md)?
   - How did you manually test the change?
