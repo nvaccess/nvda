@@ -4,4 +4,4 @@ set here=%hereOrig%
 if #%hereOrig:~-1%# == #\# set here=%hereOrig:~0,-1%
 set sourceDirPath=%here%\source
 
-call uv run --gui-script --directory "%sourceDirPath%" nvda.pyw %*
+start uvw run --gui-script --directory "%sourceDirPath%" nvda.pyw %*

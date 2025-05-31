@@ -126,7 +126,7 @@ repos:
     stages: [manual]  # Only run from CI manually
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.6.14
+  rev: 0.7.9
   hooks:
     - id: uv-lock
       name: Verify uv lock file
