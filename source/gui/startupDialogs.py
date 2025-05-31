@@ -48,24 +48,25 @@ class WelcomeDialog(
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		WelcomeDialog._instances.add(self)
+		fontFaceName = config.conf["general"]["font"]
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 		# This is in larger, bold lettering
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.BOLD, faceName="Atkinson Hyperlegible"))
+		welcomeTextHeader.SetFont(wx.Font(wx.FontInfo(18).Bold().FaceName(fontFaceName))) 
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
-		welcomeTextDetail.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.NORMAL, faceName="Atkinson Hyperlegible"))
+		welcomeTextDetail.SetFont(wx.Font(wx.FontInfo(10).FaceName(fontFaceName)))
 		mainSizer.Add(welcomeTextDetail, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 
 		# Translators: The label for a group box containing the NVDA welcome dialog options.
 		optionsLabel = _("Options")
 		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
 		optionsBox = optionsSizer.GetStaticBox()
-		optionsBox.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.NORMAL, wx.NORMAL, faceName="Atkinson Hyperlegible"))
+		optionsBox.SetFont(wx.Font(wx.FontInfo(10).FaceName(fontFaceName)))
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
