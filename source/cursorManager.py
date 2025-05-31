@@ -42,6 +42,8 @@ class FindDialog(
 
 	helpId = "SearchingForText"
 
+	shouldSuspendConfigProfileTriggers = True
+
 	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
