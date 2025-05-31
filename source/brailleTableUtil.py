@@ -1,0 +1,296 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025-2026 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+"""Utility for working with liblouis braille table metadata.
+
+``brailleTables/tables.json`` records which liblouis tables NVDA exposes
+and where NVDA's table metadata diverges from liblouis metadata.
+A table is exposed when its file name is a key in the document.
+Its entry contains the diverging metadata:
+
+* ``displayName``: the name shown in the braille settings dialog, when it differs from
+  or is absent in the liblouis ``display-name`` metadata.
+* ``contracted``: whether the table is contracted, when NVDA disagrees with the liblouis
+  ``contraction`` metadata.
+* ``input`` / ``output``: whether the table is suitable for braille input or output.
+  Liblouis has no equivalent metadata; both default to true.
+* ``inputForLangs`` / ``outputForLangs``: the languages for which the table is the
+  default input or output table.
+
+Table file names are matched against liblouis metadata case insensitively.
+This tool is not distributed in binary copies of NVDA; run it from source.
+Run it with ``--help`` for a description of the available commands.
+"""
+
+import argparse
+import ast
+import json
+import os
+
+import globalVars
+import languageHandler
+
+DEFAULT_OVERRIDES_FILE = os.path.join(
+	os.path.dirname(os.path.abspath(__file__)),
+	"brailleTables",
+	"tables.json",
+)
+
+
+def _writeToJson(data: dict, outputFile: str) -> None:
+	with open(outputFile, "w", encoding="utf-8", newline="\n") as f:
+		json.dump(data, f, indent="\t", ensure_ascii=False)
+		f.write("\n")
+
+
+def _readFromJson(inputFile: str) -> dict:
+	with open(inputFile, "r", encoding="utf-8") as f:
+		return json.load(f)
+
+
+def _langsByTable(tableForLangs: dict[str, str]) -> dict[str, list[str]]:
+	langsByTable: dict[str, list[str]] = {}
+	for lang, tableFileName in tableForLangs.items():
+		langsByTable.setdefault(tableFileName, []).append(lang)
+	return langsByTable
+
+
+def readRegistry() -> dict[str, dict]:
+	import brailleTables
+
+	inputTableForLangs = _langsByTable(brailleTables._inputTableForLangs)
+	outputTableForLangs = _langsByTable(brailleTables._outputTableForLangs)
+	registry: dict[str, dict] = {}
+	for fileName, table in brailleTables._tables.items():
+		entry: dict = {"displayName": table.displayName}
+		if table.contracted:
+			entry["contracted"] = True
+		if not table.output:
+			entry["output"] = False
+		if not table.input:
+			entry["input"] = False
+		if langs := inputTableForLangs.get(fileName):
+			entry["inputForLangs"] = sorted(langs)
+		if langs := outputTableForLangs.get(fileName):
+			entry["outputForLangs"] = sorted(langs)
+		registry[fileName] = entry
+	return registry
+
+
+_LEGACY_TABLE_FILE_EXTENSION = ".tbl"
+_TABLE_FILE_EXTENSIONS = (".ctb", ".utb", _LEGACY_TABLE_FILE_EXTENSION)
+
+
+def readLiblouisMetadata() -> dict[str, dict]:
+	with os.add_dll_directory(globalVars.appDir):
+		import louis
+
+	tablesDir = os.path.join(globalVars.appDir, "louis", "tables")
+	metadata: dict[str, dict] = {}
+	for fileName in sorted(os.listdir(tablesDir)):
+		if not fileName.endswith(_TABLE_FILE_EXTENSIONS):
+			continue
+		path = os.path.join(tablesDir, fileName)
+		entry: dict = {}
+		if displayName := louis.getTableInfo(path, "display-name"):
+			entry["displayName"] = displayName
+		if louis.getTableInfo(path, "contraction") in ("partial", "full"):
+			entry["contracted"] = True
+		metadata[fileName] = entry
+	return metadata
+
+
+def _casefoldKeys(mapping: dict[str, dict]) -> dict[str, dict]:
+	return {key.casefold(): value for key, value in mapping.items()}
+
+
+def diffTables(overrides: dict[str, dict], louisMetadata: dict[str, dict]) -> dict:
+	metadataByName = _casefoldKeys(louisMetadata)
+	overriddenNames = {fileName.casefold() for fileName in overrides}
+	unpinCandidates: dict[str, list[str]] = {}
+	for fileName in sorted(overrides):
+		override = overrides[fileName]
+		metadata = metadataByName.get(fileName.casefold())
+		if metadata is None:
+			continue
+		candidates = [
+			key
+			for key in ("displayName", "contracted")
+			if key in override and override[key] == metadata.get(key, False if key == "contracted" else None)
+		]
+		if candidates:
+			unpinCandidates[fileName] = candidates
+	return {
+		"notOptedIn": sorted(
+			fileName
+			for fileName in louisMetadata
+			if fileName.casefold() not in overriddenNames
+			and not fileName.endswith(_LEGACY_TABLE_FILE_EXTENSION)
+		),
+		"missingUpstream": sorted(
+			fileName for fileName in overrides if fileName.casefold() not in metadataByName
+		),
+		"unpinCandidates": unpinCandidates,
+	}
+
+
+_TABLES_MODULE_HEADER = """\
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2026 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+# This file is generated by brailleTableUtil. Do not edit it manually.
+
+from . import addTable
+
+"""
+
+_TRANSLATORS_COMMENT_LINES = (
+	"# Translators: The name of a braille table displayed in the",
+	"# braille settings dialog.",
+)
+
+_TRANSLATION_FUNCTION = "_"
+
+
+def _renderLangs(langs: list[str]) -> str:
+	return "{" + ", ".join(json.dumps(lang) for lang in sorted(langs)) + "}"
+
+
+def computeOverrides(registry: dict[str, dict], louisMetadata: dict[str, dict]) -> dict[str, dict]:
+	metadataByName = _casefoldKeys(louisMetadata)
+	overrides: dict[str, dict] = {}
+	for fileName in sorted(registry):
+		entry: dict = {}
+		table = registry[fileName]
+		metadata = metadataByName.get(fileName.casefold(), {})
+		if table["displayName"] != metadata.get("displayName"):
+			entry["displayName"] = table["displayName"]
+		if (contracted := table.get("contracted", False)) != metadata.get("contracted", False):
+			entry["contracted"] = contracted
+		if not table.get("output", True):
+			entry["output"] = False
+		if not table.get("input", True):
+			entry["input"] = False
+		if langs := table.get("inputForLangs"):
+			entry["inputForLangs"] = sorted(langs)
+		if langs := table.get("outputForLangs"):
+			entry["outputForLangs"] = sorted(langs)
+		overrides[fileName] = entry
+	return overrides
+
+
+def generateTablesSource(overrides: dict[str, dict], louisMetadata: dict[str, dict]) -> str:
+	metadataByName = _casefoldKeys(louisMetadata)
+	chunks = [_TABLES_MODULE_HEADER]
+	for fileName in sorted(overrides):
+		override = overrides[fileName]
+		metadata = metadataByName.get(fileName.casefold(), {})
+		displayName = override.get("displayName", metadata.get("displayName"))
+		if not displayName:
+			raise ValueError(f"No display name for table {fileName}")
+		lines = [
+			"addTable(",
+			f"\t{json.dumps(fileName)},",
+		]
+		lines.extend(f"\t{comment}" for comment in _TRANSLATORS_COMMENT_LINES)
+		lines.append(f"\t{_TRANSLATION_FUNCTION}({json.dumps(displayName)}),")
+		if override.get("contracted", metadata.get("contracted", False)):
+			lines.append("\tcontracted=True,")
+		if not override.get("output", True):
+			lines.append("\toutput=False,")
+		if not override.get("input", True):
+			lines.append("\tinput=False,")
+		if langs := override.get("inputForLangs"):
+			lines.append(f"\tinputForLangs={_renderLangs(langs)},")
+		if langs := override.get("outputForLangs"):
+			lines.append(f"\toutputForLangs={_renderLangs(langs)},")
+		lines.append(")")
+		chunks.append("\n".join(lines) + "\n")
+	source = "".join(chunks)
+	ast.parse(source)
+	return source
+
+
+def main():
+	globalVars.appDir = os.path.dirname(os.path.abspath(__file__))
+	languageHandler.setLanguage("en")
+	parser = argparse.ArgumentParser(
+		description="Work with liblouis braille table metadata and NVDA's braille tables registry.",
+	)
+	commands = parser.add_subparsers(title="commands", dest="command", required=True)
+	command_builtIn = commands.add_parser(
+		"builtIn",
+		help="Generate a JSON document from the current list of built-in tables.",
+	)
+	command_builtIn.add_argument(
+		"outputFile",
+		help="The path to the JSON file to output",
+	)
+	command_liblouis = commands.add_parser(
+		"liblouis",
+		help="Generate a JSON document from liblouis metadata.",
+	)
+	command_liblouis.add_argument(
+		"outputFile",
+		help="The path to the JSON file to output",
+	)
+	command_bootstrapOverrides = commands.add_parser(
+		"bootstrapOverrides",
+		help="Generate the overrides file from the current list of built-in tables and liblouis metadata.",
+	)
+	command_bootstrapOverrides.add_argument(
+		"outputFile",
+		help="The path to the JSON file to output",
+	)
+	command_generate = commands.add_parser(
+		"generate",
+		help="Generate the tables module from the overrides file and liblouis metadata.",
+	)
+	command_generate.add_argument(
+		"outputFile",
+		help="The path to the Python module to output",
+	)
+	command_generate.add_argument(
+		"--overrides",
+		default=DEFAULT_OVERRIDES_FILE,
+		help="The path to the overrides file (default: %(default)s)",
+	)
+	command_diff = commands.add_parser(
+		"diff",
+		help="Report differences between the overrides file and liblouis metadata as JSON: "
+		"liblouis tables not exposed by NVDA (notOptedIn), "
+		"exposed tables without a liblouis table file (missingUpstream), "
+		"and recorded divergences that match liblouis metadata again (unpinCandidates). "
+		"Tables with the legacy .tbl extension are excluded from notOptedIn.",
+	)
+	command_diff.add_argument(
+		"--overrides",
+		default=DEFAULT_OVERRIDES_FILE,
+		help="The path to the overrides file (default: %(default)s)",
+	)
+
+	args = parser.parse_args()
+	match args.command:
+		case "builtIn":
+			_writeToJson(readRegistry(), args.outputFile)
+		case "liblouis":
+			_writeToJson(readLiblouisMetadata(), args.outputFile)
+		case "bootstrapOverrides":
+			_writeToJson(computeOverrides(readRegistry(), readLiblouisMetadata()), args.outputFile)
+		case "generate":
+			source = generateTablesSource(_readFromJson(args.overrides), readLiblouisMetadata())
+			with open(args.outputFile, "w", encoding="utf-8", newline="\n") as f:
+				f.write(source)
+		case "diff":
+			diff = diffTables(_readFromJson(args.overrides), readLiblouisMetadata())
+			print(json.dumps(diff, indent="\t", ensure_ascii=False))
+		case _:
+			raise ValueError(f"Unknown command {args.command}")
+
+
+if __name__ == "__main__":
+	main()

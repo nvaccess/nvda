@@ -144,6 +144,7 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Added the `brailleTableUtil` script for working with liblouis braille table metadata, available when running NVDA from source. (#11298, @LeonarddeR)
 
 #### Deprecations
 
