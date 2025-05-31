@@ -1004,8 +1004,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=fontChoices,
 		)
-		self.defaultFont = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
-		index = [x for x in self.systemFonts].index(self.defaultFont)
+		if config.conf["general"]["font"] == "":
+			config.conf["general"]["font"] = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		self.currentFont = config.conf["general"]["font"]
+		index = [x for x in self.systemFonts].index(self.currentFont)
 		self.fontList.SetSelection(index)
 
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
@@ -1131,7 +1133,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 		config.conf["general"]["preventDisplayTurningOff"] = self.preventDisplayTurningOffCheckBox.IsChecked()
-		newFont = [x[0] for x in self.systemFonts][self.fontList.GetSelection()]
+		newFont = [x for x in self.systemFonts][self.fontList.GetSelection()]
 		config.conf["general"]["font"] = newFont
 
 	def onPanelActivated(self):
