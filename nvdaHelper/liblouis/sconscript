@@ -60,7 +60,7 @@ if len(clangDirs) == 0:
 		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
 	)
 env["CC"] = "clang-cl"
-env["M4"] = str(env.File("#miscdeps/tools/m4.exe"))
+env["M4"] = f'"{env.File("#miscdeps/tools/m4.exe")}"'
 # Liblouis disables GNU extensions for m4
 env.Append(M4FLAGS="-G")
 # Don't analyze the code as not our project

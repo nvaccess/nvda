@@ -9,6 +9,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Container
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -19,6 +20,7 @@ import re
 import typing
 import requests
 import wx
+import wx.adv
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -3321,6 +3323,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
+		enabledInSecureMode: set[wx.Window] = set()
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -3339,14 +3342,15 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
 		sHelper.addItem(remoteSettingsGroupHelper)
 
-		self.playSounds = remoteSettingsGroupHelper.addItem(
+		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
-				# Translators: A checkbox in Remote Access settings to set whether sounds play instead of beeps.
-				label=pgettext("remote", "&Play sounds instead of beeps"),
+				# Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
+				label=pgettext("remote", "Confirm before disconnecting when controlled"),
 			),
 		)
-		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
+		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
+		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3434,6 +3438,23 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self._setFromConfig()
 
+		if globalVars.appArgs.secure:
+			self._disableDescendants(sizer, enabledInSecureMode)
+
+	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
+		"""Disable all but the specified discendant windows of this sizer.
+
+		Disables all child windows, and recursively calls itself for all child sizers.
+
+		:param sizer: Root sizer whose descendents should be disabled.
+		:param excluded: Container of windows that should remain enabled.
+		"""
+		for child in sizer.GetChildren():
+			if (window := child.GetWindow()) is not None and window not in excluded:
+				window.Disable()
+			elif (subsizer := child.GetSizer()) is not None:
+				self._disableDescendants(subsizer, excluded)
+
 	def _setControls(self) -> None:
 		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
 
@@ -3468,7 +3489,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.playSounds.SetValue(self.config["ui"]["playSounds"])
+		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3490,7 +3511,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 				"This will cause NVDA to forget all previously trusted Remote Access servers. "
 				"When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
-				"Are you sure you want to continue? This action cannot be undone.",
+				"Are you sure you want to continue?",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 			pgettext("remote", "Delete All Trusted Fingerprints"),
@@ -3532,7 +3553,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		enabled = self.enableRemote.GetValue()
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
-		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
+		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
@@ -4072,6 +4093,8 @@ class AdvancedPanelControls(
 			"annotations",
 			"events",
 			"garbageHandler",
+			"remoteClient",
+			"externalPythonDependencies",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5451,10 +5474,12 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		AddonStorePanel,
+		RemoteSettingsPanel,
 	]
+	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
+	# add-on update related controls.
 	if not globalVars.appArgs.secure:
-		categoryClasses.append(RemoteSettingsPanel)
+		categoryClasses.append(AddonStorePanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():

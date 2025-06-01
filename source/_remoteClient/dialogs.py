@@ -25,7 +25,7 @@ from .protocol import SERVER_PORT, RemoteMessageType
 
 
 class ClientPanel(ContextHelpMixin, wx.Panel):
-	helpId = "RemoteAccessConnectExisting"
+	helpId = "RemoteAccessJoin"
 	host: wx.ComboBox
 	key: wx.TextCtrl
 	_generateKeyButton: wx.Button
@@ -142,7 +142,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		5. Close the key connector and reset it.
 		6. Generate a new key from the server.
 		"""
-		self._keyGenerationProgressDialog.Done()
+		self._keyGenerationProgressDialog.done()
 		self._keyGenerationProgressDialog = None
 		try:
 			certHash = self._keyConnector.lastFailFingerprint
@@ -170,7 +170,7 @@ class PortCheckResponse(TypedDict):
 
 
 class ServerPanel(ContextHelpMixin, wx.Panel):
-	helpId = "RemoteAccessConnectLocal"
+	helpId = "RemoteAccessConnectSelfHosted"
 	_getIPButton: wx.Button
 	_externalIPControl: wx.TextCtrl
 	port: wx.TextCtrl
@@ -306,7 +306,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 
 
 class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
-	helpId = "RemoteAccessConnect"
+	helpId = "RemoteAccessSetup"
 	_selectedPanel: ClientPanel | ServerPanel
 
 	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: list[str] | None = None):

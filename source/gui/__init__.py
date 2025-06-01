@@ -532,7 +532,7 @@ class MainFrame(wx.Frame):
 			helpId="RunCOMRegistrationFixingTool",
 		)
 		response: int = introDialog.ShowModal()
-		if response == wx.CANCEL:
+		if response != wx.OK:
 			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
 			return
 		progressDialog = IndeterminateProgressDialog(

@@ -3761,7 +3761,7 @@ class GlobalCommands(ScriptableObject):
 			configSection="braille",
 			configKey="speakOnNavigatingByUnit",
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			enabledMsg=_("Speak when navigating by line or paragraph with braille on"),
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
 		)
@@ -4671,14 +4671,18 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 	)
 	def script_toggleReportCLDR(self, gesture):
-		if config.conf["speech"]["includeCLDR"]:
+		# We need to save a copy of the symbolDictionaries list
+		# so we can set it back afterwards so configobj knows it's changed.
+		dictionaries: list[str] = config.conf["speech"]["symbolDictionaries"].copy()
+		if "cldr" in dictionaries:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters off")
-			config.conf["speech"]["includeCLDR"] = False
+			dictionaries.remove("cldr")
 		else:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters on")
-			config.conf["speech"]["includeCLDR"] = True
+			dictionaries.append("cldr")
+		config.conf["speech"]["symbolDictionaries"] = dictionaries
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 
@@ -4911,8 +4915,6 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.copyLink()
-		# Translators: A message indicating that a link has been copied to the clipboard.
-		ui.message(_("Copied link"))
 
 	@script(
 		category=SCRCAT_REMOTE,
@@ -4925,7 +4927,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(pgettext("remote", "Not connected"))
 			return
-		_remoteClient._remoteClient.disconnect()
+		_remoteClient._remoteClient.doDisconnect()
 
 	@script(
 		# Translators: Documentation string for the script that starts a new Remote Access session.
