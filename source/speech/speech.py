@@ -1119,16 +1119,12 @@ def speak(  # noqa: C901
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
 	defaultLanguageRoot = defaultLanguage.split("_")[0]
-	shouldReportLanguage = (
-		config.conf["speech"]["reportLanguage"]
-		or config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
-	)
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
-			if not autoLanguageSwitching and not shouldReportLanguage:
+			if not item.shouldGetLanguageForTextInfo():
 				continue
 			curLanguage = item.lang
 			if not curLanguage or (
@@ -1142,9 +1138,7 @@ def speak(  # noqa: C901
 			if not item:
 				continue
 			if curLanguage != prevLanguage:
-				# If autoLanguageSwitching is True, onlyCache will prevent LangChangeCommand to be processed by synthesizers.
-				onlyCache = not autoLanguageSwitching
-				speechSequence.append(LangChangeCommand(curLanguage, onlyCache))
+				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage = curLanguage
 			speechSequence.append(item)
 		else:
@@ -1165,7 +1159,7 @@ def speak(  # noqa: C901
 		item = speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode = item.state
-		if isinstance(item, LangChangeCommand) and not item.onlyCache:
+		if isinstance(item, LangChangeCommand):
 			curLanguage = item.lang
 		if isinstance(item, SuppressUnicodeNormalizationCommand):
 			unicodeNormalization = initialUnicodeNormalization and not item.state
@@ -1677,11 +1671,8 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
-	# If not autoLanguageSwitching, LangChangeCommand is added to speechSequence to track language changes,
-	# but onlyCache parameter is used to prevent changes to be processed by synthesizers.
-	langCommandOnlyCache = not autoLanguageSwitching
 	language = newFormatField.get("language")
-	speechSequence.append(LangChangeCommand(language, langCommandOnlyCache))
+	speechSequence.append(LangChangeCommand(language))
 	lastLanguage = language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
@@ -1810,7 +1801,7 @@ def getTextInfoSpeech(  # noqa: C901
 				if command.command == "controlStart" and command.field.get("role") == controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
 				if newLanguage != lastLanguage:
-					relativeSpeechSequence.append(LangChangeCommand(newLanguage, langCommandOnlyCache))
+					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage = newLanguage
 	if (
 		reportIndentation

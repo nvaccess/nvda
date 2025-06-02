@@ -368,7 +368,7 @@ class SpeechManager(object):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
 			if isinstance(command, SynthParamCommand):
-				if isinstance(command, LangChangeCommand) and command.onlyCache:
+				if isinstance(command, LangChangeCommand) and not command.shouldSwitchVoice():
 					# Language change shouldn't be passed to synthesizer.
 					continue
 				paramTracker.update(command)
