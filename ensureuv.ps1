@@ -9,7 +9,7 @@ Set-StrictMode -Version Latest
 [Version]$UvVersion = '0.7.9'
 
 function Invoke-Uv {
-	& uv $UvArgs
+	& uv @UvArgs
 	exit $LASTEXITCODE
 }
 
@@ -52,7 +52,7 @@ function Install-Uv {
 				try {
 					if ($IsUpdate) {
 						Write-Host 'Updating uv using WinGet...'
-						& winget update $($WinGetArgs)
+						& winget update @WinGetArgs
 					}
 					else {
 						Write-Host 'Installing uv using WinGet...'
@@ -71,7 +71,7 @@ function Install-Uv {
 				try {
 					Write-Host 'Installing uv using the official script...'
 					Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
-					$env:PATH = "$env:USERPROFILE\.local\bin;$env:PATH"
+					$env:PATH = "$(Join-Path $env:USERPROFILE '.local bin');$env:PATH"
 					return
 				}
 				catch {
