@@ -3,24 +3,17 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from os import (
-	PathLike,
-)
-from typing import (
-	TYPE_CHECKING,
-	cast,
-	Optional,
-)
+from os import PathLike
+from typing import TYPE_CHECKING, Optional, cast
 
 import systemUtils
+from addonHandler import AddonBundle
 from logHandler import log
 
-from .dataManager import (
-	addonDataManager,
-)
+from .dataManager import addonDataManager
 
 if TYPE_CHECKING:
-	from addonHandler import AddonBundle, Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
@@ -29,7 +22,7 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 	@return: the addonBundle, if valid
 	@raise DisplayableError if the addon bundle is invalid / incompatible.
 	"""
-	from addonHandler import AddonBundle, AddonError
+	from addonHandler import AddonError
 	from gui.message import DisplayableError
 
 	try:
@@ -82,7 +75,10 @@ def installAddon(addonPath: PathLike) -> None:
 	bundle = _getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
-	addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+	addonObj = systemUtils.ExecAndPump[addonHandler.addon.Addon](
+		addonHandler.installAddonBundle,
+		bundle,
+	).funcRes
 	if bundle._installExceptions:
 		log.error(f"Error(s) installing addon bundle from {addonPath}")
 		for e in bundle._installExceptions:
