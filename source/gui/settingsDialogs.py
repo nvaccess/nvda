@@ -1291,6 +1291,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	synthNames: List[str] = []
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer dialog.
@@ -4469,6 +4470,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	possiblePorts = []
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
