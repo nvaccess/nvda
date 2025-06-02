@@ -802,6 +802,7 @@ class GeneralSettingsPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
@@ -1205,6 +1206,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	helpId = "SpeechSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("Synthesizer")
@@ -1696,6 +1698,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			return self.helpId
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		# Construct synthesizer settings
 		self.updateDriverSettings()
 
@@ -1984,6 +1987,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 	helpId = "KeyboardSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a combobox in the
 		# keyboard settings panel.
@@ -2156,6 +2160,7 @@ class MouseSettingsPanel(SettingsPanel):
 	helpId = "MouseSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for a checkbox in the
@@ -2243,6 +2248,7 @@ class ReviewCursorPanel(SettingsPanel):
 	helpId = "ReviewCursorSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
 		self.followFocusCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
@@ -2281,6 +2287,7 @@ class InputCompositionPanel(SettingsPanel):
 	helpId = "InputCompositionSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		self.autoReportAllCandidatesCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
@@ -2403,6 +2410,7 @@ class ObjectPresentationPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		self.windowText = sHelper.addItem(
@@ -2530,6 +2538,7 @@ class BrowseModePanel(SettingsPanel):
 	helpId = "BrowseModeSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
@@ -2669,6 +2678,7 @@ class DocumentFormattingPanel(SettingsPanel):
 	panelDescription = _("The following options control the types of document formatting reported by NVDA.")
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
@@ -3031,6 +3041,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
@@ -3064,6 +3075,7 @@ class AudioPanel(SettingsPanel):
 	helpId = "AudioSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
@@ -3223,6 +3235,7 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 		automaticUpdatesLabelText = _("Automatic &updates:")
@@ -3342,6 +3355,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -3580,6 +3594,7 @@ class TouchInteractionPanel(SettingsPanel):
 	helpId = "TouchInteraction"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
@@ -3605,6 +3620,7 @@ class UwpOcrPanel(SettingsPanel):
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Lazily import this.
 		from contentRecog import uwpOcr
@@ -4307,6 +4323,7 @@ class AdvancedPanel(SettingsPanel):
 		"""
 		:type settingsSizer: wx.BoxSizer
 		"""
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		warningSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
 		warningGroup = guiHelper.BoxSizerHelper(self, sizer=warningSizer)
@@ -4374,6 +4391,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	helpId = "BrailleSettings"
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille display")
@@ -4603,6 +4621,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		return self.driver
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		shouldDebugGui = gui._isDebug()
 		startTime = 0 if not shouldDebugGui else time.time()
 		# Construct braille display specific settings
@@ -5215,6 +5234,7 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		self.providerPanelInstances = []
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -5337,6 +5357,7 @@ class VisionProviderSubPanel_Settings(
 
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		self.updateDriverSettings()
 
 
@@ -5361,6 +5382,7 @@ class VisionProviderSubPanel_Wrapper(
 			# Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 			label=_("Enable"),
 		)
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		settingsSizer.Add(self._checkBox)
 		self.bindHelpEvent("VisionSettings", self._checkBox)
 		self._optionsSizer = wx.BoxSizer(orient=wx.VERTICAL)
