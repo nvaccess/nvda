@@ -1,8 +1,7 @@
-﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2024 NVDA Contributors
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2025 NVDA Contributors
 # This file is covered by the GNU General Public License.
-# Edited by NVDA-Taiwan Volunteers Team on 2024/09/25
-# 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
+# Edited by NVDA-Taiwan Volunteers Team on 2025/05/28
 
 complexSymbols:
 # identifier	regexp
@@ -365,7 +364,7 @@ _	半形底線	most
 ⌘	Mac Command 鍵	none
 ⌥	mac Option 鍵	none
 
-# 中文標點
+# 中文標點與全形符號
 　	全形空格	all
 ，	逗號	all	always
 、	頓號	all	always
@@ -528,37 +527,7 @@ _	半形底線	most
 Ｙ	Y	none
 Ｚ	Z	none
 
-# 不成字部首
-丨	滾	none
-丶	主	none
-乚	乙	none
-亻	人	none
-冂	扃	none
-冖	密	none
-冫	冰	none
-凵	砍	none
-刂	刀	none
-卩	節	none
-宀	棉	none
-尢	汪	none
-忄	心	none
-扌	手	none
-氵	水	none
-犭	犬	none
-攴	撲	none
-攵	撲	none
-爿	牆	none
-辶	輟	none
-歺	傣	none
-疒	床	none
-罒	往	none
-糹	密	none
-虍	呼	none
-辵	輟	none
-镸	常	none
-黽	敏	none
-
-# 點字符號 (Add 64braille symbols) 
+# 點字符號
 ⠀	點字空格
 ⠁	點字第一點
 ⠂	點字第二點
@@ -816,21 +785,19 @@ _	半形底線	most
 ⣾	點字二三四五六七八點
 ⣿	點字一二三四五六七八點
 
-# 以下為「中日韓統一表意文字」
-敻	詗	none
-㚬	軍	none
-䧟	陷	none
-𪹚	棒	none
-
-# 化學用字
-# 有些罕用字需安裝支援的字型才能正常顯示。
-㖕	辛	none
-㖠	奈	none
-㗁	咢	none
-䏲	悌	none
-䓝	孟	none
-䓬	卓	none
-䥑	麥	none
+# 以下區段為「中日韓統一表意文字 (0x4e00~0x9fff)」
+丨	滾	none
+丶	主	none
+乚	乙	none
+亪	噎	none
+亻	人	none
+冂	扃	none
+冖	密	none
+冫	冰	none
+凪	指	none
+凵	砍	none
+刂	刀	none
+卩	節	none
 吖	鴉	none
 呔	太	none
 呠	本	none
@@ -845,10 +812,37 @@ _	半形底線	most
 嘌	飄	none
 噻	賽	none
 垻	貝	none
+塩	顏	none
+売	邁	none
+宀	棉	none
+尢	汪	none
+岃	某	none
+忄	心	none
+扌	手	none
+攴	撲	none
+攵	撲	none
+敻	詗	none
+柡	永	none
+栃	立	none
+歚	善	none
+歺	傣	none
 氬	亞	none
 氰	青	none
+氵	水	none
+渋	澀	none
+濏	瑟	none
+爿	牆	none
+犭	犬	none
 甾	玆	none
+疒	床	none
+癪	積	none
 砈	厄	none
+粀	丈	none
+粁	千	none
+粌	銀	none
+糹	密	none
+繍	秀	none
+罒	往	none
 肟	污	none
 胂	申	none
 胜	生	none
@@ -863,8 +857,12 @@ _	半形底線	most
 苨	尼	none
 茋	底	none
 茬	在	none
+菐	僕	none
 萉	肥	none
 薁	奧	none
+虍	呼	none
+辵	輟	none
+辶	輟	none
 釙	破	none
 鈀	巴	none
 鈇	夫	none
@@ -881,21 +879,263 @@ _	半形底線	most
 錪	典	none
 鍗	帝	none
 鎝	塔	none
+镸	常	none
+閪	某	none
+餎	忇	none
+饂	餛	none
+饹	了	none
+黽	敏	none
+龵	手	none
+鿏	邁	none
+鿔	哥	none
 鿫	澳	none
 鿬	田	none
+鿭	你	none
+
+# 以下區段為「中日韓統一表意文字擴充 A (0x3400~0x4dbf)」
+㐁	瑱	none
+㐮	襄	none
+㐱	軫	none
+㑁	捉	none
+㑳	宙	none
+㓾	旗	none
+㔂	林	none
+㔾	節	none
+㕚	沼	none
+㕡	貨	none
+㕸	立	none
+㖅	續	none
+㖕	辛	none
+㖠	奈	none
+㖸	絕	none
+㗁	咢	none
+㗎	架	none
+㗘	博	none
+㗱	集	none
+㘔	腮	none
+㘚	喊	none
+㘛	龕	none
+㘝	逆	none
+㘭	凹	none
+㘿	涅	none
+㚇	宗	none
+㚬	軍	none
+㛄	依	none
+㛢	秀	none
+㜮	濫	none
+㜷	彌	none
+㝗	郎	none
+㝩	康	none
+㠣	立	none
+㢟	梴	none
+㤉	訝	none
+㤕	觸	none
+㤘	皺	none
+㥮	炒	none
+㧁	覷	none
+㧌	帽	none
+㧎	牙	none
+㧐	聳	none
+㧒	玉	none
+㧟	蒯	none
+㧡	位	none
+㧣	豬	none
+㧬	拱	none
+㧻	濁	none
+㧾	忽	none
+㨂	董	none
+㨑	宗	none
+㨗	捷	none
+㨨	抽	none
+㨪	晃	none
+㨻	殘	none
+㩆	促	none
+㩒	勤	none
+㩳	聳	none
+㫃	眼	none
+㬎	顯	none
+㬹	爭	none
+㮝	河	none
+㰵	族	none
+㴘	冒	none
+㴙	眨	none
+㶈	螢	none
+㷍	倫	none
+㷫	廎	none
+㷮	遭	none
+㸆	靠	none
+㸐	然	none
+㸰	陀	none
+㹴	庚	none
+㼈	羅	none
+㼓	連	none
+㽎	談	none
+㾀	竊	none
+㾊	刺	none
+㿸	蠻	none
+䀐	山	none
+䀘	西	none
+䀯	甫	none
+䀴	影	none
+䀹	睫	none
+䁖	瞜	none
+䁯	西	none
+䃗	撥	none
+䃮	妲	none
+䆀	每	none
+䇶	握	none
+䉂	蕾	none
+䌈	踏	none
+䍃	由	none
+䏝	專	none
+䏟	必	none
+䏲	悌	none
+䐶	潛	none
+䓝	孟	none
+䓣	啢	none
+䓬	卓	none
+䕒	嘉	none
+䖙	梯	none
+䖳	榨	none
+䖵	坤	none
+䗁	七	none
+䗆	管	none
+䗐	施	none
+䘆	遣	none
+䘥	頰	none
+䘼	宛	none
+䞚	旗	none
+䟓	丁	none
+䟘	沆	none
+䟩	卻	none
+䠡	茶	none
+䡵	歲	none
+䢍	放	none
+䢢	賶	none
+䥑	麥	none
+䥕	鐅	none
+䥽	坡	none
+䦃	捉	none
+䧟	陷	none
+䪞	雜	none
+䫌	痞	none
+䭲	以	none
+䮄	懸	none
+䯋	博	none
+䰾	巴	none
+䱛	或	none
+䲁	位	none
+䲅	規	none
+䲘	管	none
+䴉	懸	none
+
+# 以下區段為「中日韓統一表意文字擴充 B (0x20000~0x2a6df)」
+𠁽	丸	none
+𠂆	億	none
+𠂤	堆	none
+𠎷	薩	none
+𠖄	同	none
+𠗻	懸	none
+𠜱	批	none
+𠞩	誜	none
+𠞭	漏	none
+𠠃	千	none
+𠠝	歷	none
+𠢕	豪	none
+𠫓	圖	none
+𠬛	末	none
+𠬝	福	none
+𠬪	飆	none
 𠮻	久	none
 𠮿	山	none
+𠯗	匝	none
 𠯤	井	none
+𠰂	完	none
 𠰌	末	none
 𠰐	剖	none
 𠰢	半	none
+𠲿	朔	none
+𠳐	邦	none
 𠳭	克	none
 𠷬	練	none
+𡈼	挺	none
+𡑍	牢	none
+𡟚	盈	none
+𡩋	寧	none
+𡳞	吝	none
+𢎙	嫌	none
+𢡄	慘	none
+𢫦	拍	none
+𢯾	冒	none
+𢱤	聳	none
+𢲴	慰	none
+𢲸	鹵	none
+𢳂	瞥	none
+𢳆	傲	none
+𢶀	拽	none
+𢼌	報	none
+𣁳	握	none
+𣏕	癈	none
+𣏟	派	none
+𣦻	殘	none
+𣦼	纏	none
+𣮈	屈	none
+𤊶	辣	none
+𤌍	胡	none
+𤐰	貨	none
+𤔔	亂	none
+𤘅	牙	none
+𤞚	消	none
+𤣩	玉	none
+𤧟	亭	none
+𤰇	備	none
+𤰈	備	none
+𤴔	書	none
+𤸁	惠	none
+𤸱	愾	none
+𤺅	墜	none
+𥁕	溫	none
+𥉌	褡	none
+𥌚	樹	none
+𥍉	設	none
+𥕢	舀	none
+𥗽	恰	none
+𥫗	竹	none
+𥯟	派	none
+𥯥	撤	none
+𥳐	遣	none
+𥻗	茶	none
+𦈢	鴀	none
+𦉎	荽	none
+𦊓	領	none
+𦐇	踏	none
+𦘒	聶	none
+𦣞	宜	none
+𦥑	局	none
 𦭌	卡	none
 𦭽	伊	none
 𦯉	伯	none
+𦰡	納	none
 𦸽	黑	none
 𦺻	傘	none
+𧃽	應	none
+𧉟	胎	none
+𧊅	拐	none
+𧌄	惡	none
+𧨾	ㄕㄢˊ	none
+𧩣	腦	none
+𧮙	昨	none
+𧶠	玉	none
+𧷏	玉	none
+𧻓	蹦	none
+𧻴	埌	none
+𧾷	族	none
+𧿳	福	none
+𨂿	ㄨㄞˇ	none
+𨅔	殘	none
+𨋢	立	none
+𨑨	志	none
+𨒇	甲	none
 𨠴	西	none
 𨥙	井	none
 𨦡	羊	none
@@ -903,12 +1143,50 @@ _	半形底線	most
 𨨏	波	none
 𨭆	黑	none
 𨭎	喜	none
+𨳊	鳩	none
+𨸏	阜	none
+𩑾	低	none
+𩓩	兜	none
+𩜰	屁	none
+𩱧	庚	none
+𩵱	午	none
+𩷍	役	none
+𩻸	帶	none
+𩼧	邊	none
+𪁎	消	none
+𪐞	杜	none
+𪖐	藥	none
+𪘒	韓	none
+
+# 以下區段為「中日韓統一表意文字擴充 C (0x2a700~0x2b73f)」
 𪡓	昆	none
+𪹚	棒	none
+𫒖	西	none
+𫓧	伕	none
+
+# 以下區段為「中日韓統一表意文字擴充 D (0x2b740~0x2b81f)」
+𫟷	立	none
+𫟼	鐽	none
+
+# 以下區段為「中日韓統一表意文字擴充 E (0x2b820~0x2ceaf)」
 𫩒	巾	none
+𬉼	偶	none
 𬜢	久	none
 𬜴	快	none
+𬬭	侖	none
+𬬻	盧	none
+𬭊	杜	none
+𬭛	撥	none
+𬭳	璽	none
+𬭶	潶	none
+
+# 以下區段為「中日韓統一表意文字擴充 F (0x2ceb0~0x2ebef)」
 𭈻	星	none
 𮠺	帝	none
+
+# 以下區段為「中日韓統一表意文字擴充 G (0x30000~0x3134f)」
+
+# 以下區段為「中日韓統一表意文字擴充 H (0x31350~0x323af)」
 𱽕	叨	none
 𱽖	申	none
 𱽥	米	none
@@ -919,7 +1197,9 @@ _	半形底線	most
 𲆱	朋	none
 𲆳	品	none
 
-# 以下為「中日韓相容表意文字」，每個字的外觀與該字的詞解字相同，或近似，但內碼不同。
+# 以下區段為「中日韓統一表意文字擴充 I (0x2ebf0~0x2ee5f)」
+
+# 以下區段為「中日韓相容表意文字 (0xf900~0xfaff)」
 豈	豈	none
 更	更	none
 車	車	none
@@ -1274,7 +1554,11 @@ _	半形底線	most
 恵	恵	none
 舘	舘	none
 
-# 康熙部首
+# 以下區段為「中日韓相容表意文字補充 (0x2f800~0x2fa1f)」
+𥄳	踏	none
+者	者	none
+
+# 以下區段為「康熙部首 (0x2f00~0x2fdf)」
 ⼀	一	none
 ⼁	丨	none
 ⼂	丶	none
@@ -1489,4 +1773,5 @@ _	半形底線	most
 ⿓	龍	none
 ⿔	龜	none
 ⿕	龠	none
+
 # End of file
