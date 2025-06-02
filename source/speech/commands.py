@@ -180,17 +180,15 @@ class CharacterModeCommand(SynthParamCommand):
 class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
-	def __init__(self, lang: str | None, onlyCache: bool = False):
+	def __init__(self, lang: Optional[str]):
 		"""
-		:param lang: The language to switch to: If None then the NVDA locale will be used.
-		:param onlyCache: True if the command shouldn't be passed to the synthesizer, False otherwise.
+		@param lang: the language to switch to: If None then the NVDA locale will be used.
 		"""
 		self.lang = lang
-		self.onlyCache = onlyCache
 		self.isDefault = not lang
 
 	def __repr__(self):
-		return f"LangChangeCommand (language: {self.lang}, onlyCache: {self.onlyCache})"
+		return "LangChangeCommand (%r)" % self.lang
 
 	def __eq__(self, __o: object) -> bool:
 		if __o is self:
@@ -198,7 +196,7 @@ class LangChangeCommand(SynthParamCommand):
 			# Check performed first for performance reasons.
 			return True
 		if isinstance(__o, LangChangeCommand):
-			return self.lang == __o.lang and self.onlyCache == __o.onlyCache
+			return self.lang == __o.lang
 		return super().__eq__(__o)
 
 
