@@ -5,8 +5,15 @@
 
 """Functions exported by advapi32.dll, and supporting data structurs and enumerations."""
 
-from ctypes import POINTER, windll
-from ctypes.wintypes import BOOL, DWORD, HANDLE
+from ctypes import (
+	POINTER,
+	windll,
+)
+from ctypes.wintypes import (
+	BOOL,
+	DWORD,
+	HANDLE,
+)
 
 __all__ = ("OpenProcessToken",)
 

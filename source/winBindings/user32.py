@@ -5,8 +5,26 @@
 
 """Functions exported by user32.dll, and supporting data structures and enumerations."""
 
-from ctypes import WINFUNCTYPE, c_int, c_long, c_longlong, c_void_p, sizeof, windll
-from ctypes.wintypes import BOOL, DWORD, HHOOK, HINSTANCE, HWND, LPARAM, LPMSG, UINT, WPARAM
+from ctypes import (
+	WINFUNCTYPE,
+	c_int,
+	c_long,
+	c_longlong,
+	c_void_p,
+	sizeof,
+	windll,
+)
+from ctypes.wintypes import (
+	BOOL,
+	DWORD,
+	HHOOK,
+	HINSTANCE,
+	HWND,
+	LPARAM,
+	LPMSG,
+	UINT,
+	WPARAM,
+)
 
 __all__ = (
 	"LRESULT",

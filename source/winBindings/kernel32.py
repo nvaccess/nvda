@@ -5,8 +5,15 @@
 
 """Functions exported by kernel32.dll, and supporting data structures and enumerations."""
 
-from ctypes import c_wchar_p, windll
-from ctypes.wintypes import DWORD, HANDLE, HMODULE
+from ctypes import (
+	c_wchar_p,
+	windll,
+)
+from ctypes.wintypes import (
+	DWORD,
+	HANDLE,
+	HMODULE,
+)
 
 __all__ = (
 	"GetModuleHandle",
