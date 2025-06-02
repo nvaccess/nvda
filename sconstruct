@@ -7,6 +7,7 @@
 
 import multiprocessing
 import os
+import platform
 import sys
 from pathlib import Path
 
@@ -251,7 +252,10 @@ env32["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 env64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 envArm64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 
-env = env64
+if platform.architecture()[0].startswith("64"):
+	env = env64
+else:
+	env = env32
 
 projectRCSubstDict = {
 	"%version_year%": env["version_year"],
