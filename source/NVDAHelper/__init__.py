@@ -34,13 +34,14 @@ versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
 versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
 
 import NVDAState
+
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
 	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, buildVersion.version)
 	versionedLibARM64Path = os.path.join(versionedLibARM64Path, buildVersion.version)
 
-match(sysconfig.get_platform()):
+match sysconfig.get_platform():
 	case "win-amd64":
 		coreArchLibPath = versionedLibAMD64Path
 	case "win-arm64":
@@ -880,6 +881,7 @@ def terminate():
 	generateBeep = None
 	VBuf_getTextInRange = None
 	localLib.nvdaHelperLocal_terminate()
+
 
 LOCAL_WIN10_DLL_PATH = os.path.join(coreArchLibPath, "nvdaHelperLocalWin10.dll")
 

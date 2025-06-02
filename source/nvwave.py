@@ -13,17 +13,12 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	Structure,
 	c_uint,
 	byref,
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
 	string_at,
-)
-from ctypes.wintypes import (
-	WORD,
-	DWORD,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG

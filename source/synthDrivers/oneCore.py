@@ -521,7 +521,7 @@ class OneCoreSynthDriver(SynthDriver):
 		Checks that the given voice actually exists and is valid.
 		It checks the Registry, and also ensures that its data files actually exist on this machine.
 		@param ID: the ID of the requested voice.
-		
+
 		@returns: True if the voice is valid, False otherwise.
 
 		OneCore keeps specific registry caches of OneCore for AT applications.
