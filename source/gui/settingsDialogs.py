@@ -5561,6 +5561,7 @@ class AddSymbolDialog(
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
 		super().__init__(parent, title=_("Add Symbol"))
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -5602,6 +5603,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		)
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		self.filteredSymbols = self.symbols = [
 			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
 		]
