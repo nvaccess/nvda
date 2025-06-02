@@ -117,14 +117,17 @@ For more see the [sconstruct file](../../sconstruct).
 
 ## Creating experimental 64-bit builds
 
-To use NVDA's experimental 64-bit support, instruct UV to use the `.nvdaX64.env` environment variables.
+To use NVDA's experimental 64-bit support, instruct UV to use a 64-bit version of python.
 
 ```ps
-$env:UV_ENV_FILE="<NVDAProjectDir>\.nvdaX64.env"
+$env:UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
 ```
 
 or
 
 ```cmd
-set UV_ENV_FILE="<NVDAProjectDir>\.nvdaX64.env"
+set UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
 ```
+
+* This will apply to all projects managed by UV.
+* This will not persist across terminal sessions.
