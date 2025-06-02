@@ -1252,6 +1252,8 @@ class ElementsListDialog(
 
 	lastSelectedElementType = 0
 
+	shouldSuspendConfigProfileTriggers = True
+
 	def __init__(self, document):
 		super().__init__(
 			parent=gui.mainFrame,

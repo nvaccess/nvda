@@ -16,6 +16,7 @@
 ### Changes
 
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
+* When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 
 ### Bug Fixes
 
@@ -24,6 +25,7 @@
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table end markers when the cursor is in a table cell. (#15828, @LeonarddeR)
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
+* NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -36,6 +38,9 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.
   * A `languageHandling` module has been added to report the language within speech sequences.
   * `LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text been read, and switch synthesizer voice.
+* The `brailleTables` module is now a package.
+The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
+* Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 
 #### Deprecations
 
