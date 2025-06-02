@@ -53,14 +53,14 @@ repos:
     - id: debug-statements
     # Removes trailing whitespace.
     - id: trailing-whitespace
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Ensures all files end in 1 (and only 1) newline.
     - id: end-of-file-fixer
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Removes the UTF-8 BOM from files that have it.
     # See https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/codingStandards.md#encoding
     - id: fix-byte-order-marker
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Validates TOML files.
     - id: check-toml
     # Validates YAML files.
