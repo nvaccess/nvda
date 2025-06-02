@@ -6,7 +6,7 @@
 
 ### New Features
 
-* NVDA can report the language of the text being read. (#17664, @nvdaes):
+* NVDA can now report the language of the text being read. (#17664, @nvdaes):
   * New options are available to:
     * Report the language of the text being read.
     * Report if the language of the text being read is not supported.

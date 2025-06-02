@@ -1708,7 +1708,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["autoDialectSwitching"],
 		)
 		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language switched to will be reported.
-		reportLanguageText = pgettext("speech.reportLanguage", "Report lan&guage changes")
+		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes")
 		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(
 				self,
@@ -1721,7 +1721,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 
 		labelText = pgettext(
-			"speech.reportLanguage",
+			"reportLanguage",
 			# Translators: This is a label for a combobox in the Voice settings panel to select
 			# reporting when the language of the text being read is not supported by the current synthesizer.
 			"Report when switching to language is not s&upported by synthesizer",
