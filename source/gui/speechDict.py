@@ -19,6 +19,7 @@ import speechDictHandler
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
 
+import config
 
 class DictionaryEntryDialog(
 	gui.contextHelp.ContextHelpMixin,
@@ -43,6 +44,7 @@ class DictionaryEntryDialog(
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
 		super(DictionaryEntryDialog, self).__init__(parent, title=title)
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -173,6 +175,7 @@ class DictionaryDialog(
 		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 		entriesLabelText = _("&Dictionary entries")
