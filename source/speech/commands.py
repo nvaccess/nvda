@@ -14,6 +14,7 @@ from typing import (
 )
 
 import config
+from config.configFlags import ReportNotSupportedLanguage
 from synthDriverHandler import getSynth
 
 __all__ = [
@@ -198,7 +199,7 @@ class LangChangeCommand(SynthParamCommand):
 		return (
 			config.conf["speech"][""]["autoLanguageSwitching"]
 			or config.conf["speech"][""]["reportLanguage"]
-			or config.conf["speech"][""]["reportNotSupportedLanguage"]
+			or config.conf["speech"][""]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
 		)
 
 	def __repr__(self):
