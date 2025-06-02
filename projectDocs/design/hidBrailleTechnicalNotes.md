@@ -144,9 +144,10 @@ This structure should also be saved off as it is later needed when writing brail
 when the `LinkCollection` member last differed from the previous structure).
 In other words, the index within its collection.
 this is needed in some implementations to work out which routing key a value represents, as the Usage ID for the value will be just ROUTING_KEY and the collection will be one of the ROUTER_SET_* collection Usage IDs.
-* A HID Braille device may optionally define the screen reader identifier usage in its feature report, allowing the screen reader to identify itself when the connection is established. This enables the Braille device to adapt its behavior to the specific screen reader. If this usage is present, NVDA will identify itself through it using the following UUID:
-	0xb0, 0x46, 0x9e, 0x01, 0xe6, 0x59, 0x4b, 0x2a,
-	0xa0, 0xc0, 0x91, 0x5a, 0x9d, 0x04, 0x8f, 0x3f
+* A HID braille device may optionally define the screen reader identifier usage in its feature report, allowing the screen reader to identify itself when the connection is established.
+This enables the braille device to adapt its behavior to the specific screen reader.
+If this usage is present, NVDA will identify itself through it using the following UUID:
+  * `0xb0, 0x46, 0x9e, 0x01, 0xe6, 0x59, 0x4b, 0x2a, 0xa0, 0xc0, 0x91, 0x5a, 0x9d, 0x04, 0x8f, 0x3f`
 
 #### Writing cells to the device
 * Create a HID output report (block of memory), setting the report ID (first byte) to the value of the ReportID member of the Braille cell `HIDP_VALUE_CAPS` structure found at construction time.
