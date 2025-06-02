@@ -67,7 +67,6 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
-	ReportNotSupportedLanguage,
 	OutputMode,
 	TypingEcho,
 )
@@ -1114,7 +1113,6 @@ def speak(  # noqa: C901
 	_speechState.beenCanceled = False
 	# Filter out redundant LangChangeCommand objects
 	# And also fill in default values
-	autoLanguageSwitching = config.conf["speech"]["autoLanguageSwitching"]
 	autoDialectSwitching = config.conf["speech"]["autoDialectSwitching"]
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
