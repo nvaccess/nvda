@@ -556,6 +556,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText = _("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
+		categoriesLabel.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 
 		# since the categories list and the container both expand in height, the y
 		# portion is essentially a "min" height.
@@ -576,6 +577,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			size=catListDim,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_NO_HEADER,
 		)
+		self.catListCtrl.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
 		# This list consists of only one column.
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0, categoriesLabelText)
