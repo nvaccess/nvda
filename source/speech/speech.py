@@ -1122,7 +1122,7 @@ def speak(  # noqa: C901
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
-			if not item.shouldMakeLangChangeCommand():
+			if not LangChangeCommand.shouldMakeLangChangeCommand():
 				continue
 			curLanguage = item.lang
 			if not curLanguage or (
@@ -1135,7 +1135,7 @@ def speak(  # noqa: C901
 		elif isinstance(item, str):
 			if not item:
 				continue
-			if curLanguage != prevLanguage:
+			if LangChangeCommand.shouldMakeLangChangeCommand() and curLanguage != prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage = curLanguage
 			speechSequence.append(item)
@@ -1157,7 +1157,7 @@ def speak(  # noqa: C901
 		item = speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode = item.state
-		if isinstance(item, LangChangeCommand):
+		if LangChangeCommand.shouldMakeLangChangeCommand() and isinstance(item, LangChangeCommand):
 			curLanguage = item.lang
 		if isinstance(item, SuppressUnicodeNormalizationCommand):
 			unicodeNormalization = initialUnicodeNormalization and not item.state
@@ -1668,9 +1668,10 @@ def getTextInfoSpeech(  # noqa: C901
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
 	language = None
-	language = newFormatField.get("language")
-	speechSequence.append(LangChangeCommand(language))
-	lastLanguage = language
+	if LangChangeCommand.shouldMakeLangChangeCommand():
+		language = newFormatField.get("language")
+		speechSequence.append(LangChangeCommand(language))
+		lastLanguage = language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
 	if len(textWithFields) > 0:
@@ -1784,10 +1785,11 @@ def getTextInfoSpeech(  # noqa: C901
 				)
 				if fieldSequence:
 					inTextChunk = False
-				newLanguage = command.field.get("language")
-				if lastLanguage != newLanguage:
-					# The language has changed, so this starts a new text chunk.
-					inTextChunk = False
+				if LangChangeCommand.shouldMakeLangChangeCommand():
+					newLanguage = command.field.get("language")
+					if lastLanguage != newLanguage:
+						# The language has changed, so this starts a new text chunk.
+						inTextChunk = False
 			if not inTextChunk:
 				if fieldSequence:
 					if LangChangeCommand.shouldMakeLangChangeCommand() and lastLanguage is not None:
@@ -1797,7 +1799,7 @@ def getTextInfoSpeech(  # noqa: C901
 					relativeSpeechSequence.extend(fieldSequence)
 				if command.command == "controlStart" and command.field.get("role") == controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
-				if newLanguage != lastLanguage:
+				if LangChangeCommand.shouldMakeLangChangeCommand() and newLanguage != lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage = newLanguage
 	if (
