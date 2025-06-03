@@ -31,6 +31,7 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
+	commands,
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
@@ -2324,7 +2325,7 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if shouldGetCurrentLanguageForTextInfo():
+		if commands.LangChangeCommand.shouldMakeLangChangeCommand():
 			for field in info.getTextWithFields({}):
 				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 					curLanguage = field.field.get("language")

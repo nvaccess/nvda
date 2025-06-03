@@ -1739,6 +1739,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportNotSupportedLanguageCombo.SetSelection(
 			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
 		)
+		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
 
 		# Translators: This is the label for a combobox in the
 		# voice settings panel (possible choices are none, some, most and all).

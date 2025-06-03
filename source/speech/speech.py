@@ -310,7 +310,7 @@ def spellTextInfo(
 	priority: Optional[Spri] = None,
 ) -> None:
 	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
-	if not config.conf["speech"]["autoLanguageSwitching"]:
+	if not LangChangeCommand.shouldMakeLangChangeCommand():
 		speakSpelling(info.text, useCharacterDescriptions=useCharacterDescriptions)
 		return
 	curLanguage = None
@@ -499,7 +499,7 @@ def _getSpellingSpeechWithoutCharMode(
 						characterProcessing.processSpeechSymbol(locale, normChar) for normChar in normalized
 					)
 					itemIsNormalized = True
-		if config.conf["speech"]["autoLanguageSwitching"]:
+		if LangChangeCommand.shouldMakeLangChangeCommand():
 			yield LangChangeCommand(locale)
 		yield from _getSpellingCharAddCapNotification(
 			speakCharAs,
@@ -1122,7 +1122,7 @@ def speak(  # noqa: C901
 	speechSequence = []
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
-			if not item.shouldGetLanguageForTextInfo():
+			if not item.shouldMakeLangChangeCommand():
 				continue
 			curLanguage = item.lang
 			if not curLanguage or (
@@ -1505,7 +1505,6 @@ def getTextInfoSpeech(  # noqa: C901
 		speakTextInfoState = SpeakTextInfoState(info.obj)
 	else:
 		speakTextInfoState = None
-	autoLanguageSwitching = config.conf["speech"]["autoLanguageSwitching"]
 	extraDetail = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig = config.conf["documentFormatting"]
@@ -1791,7 +1790,7 @@ def getTextInfoSpeech(  # noqa: C901
 					inTextChunk = False
 			if not inTextChunk:
 				if fieldSequence:
-					if autoLanguageSwitching and lastLanguage is not None:
+					if LangChangeCommand.shouldMakeLangChangeCommand() and lastLanguage is not None:
 						# Fields must be spoken in the default language.
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage = None
@@ -1813,7 +1812,7 @@ def getTextInfoSpeech(  # noqa: C901
 		and allIndentation != speakTextInfoState.indentationCache
 	):
 		indentationSpeech = getIndentationSpeech(allIndentation, formatConfig)
-		if autoLanguageSwitching and speechSequence[-1].lang is not None:
+		if LangChangeCommand.shouldMakeLangChangeCommand() and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
 			# but the initial format field specified a different language.
 			# Insert the indentation before the LangChangeCommand.
@@ -1835,7 +1834,7 @@ def getTextInfoSpeech(  # noqa: C901
 		shouldConsiderTextInfoBlank = False
 
 	# Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
-	if autoLanguageSwitching and lastLanguage is not None:
+	if LangChangeCommand.shouldMakeLangChangeCommand() and lastLanguage is not None:
 		speechSequence.append(
 			LangChangeCommand(None),
 		)
