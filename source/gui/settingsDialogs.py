@@ -1695,6 +1695,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoLanguageSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoLanguageSwitching"],
 		)
+		self.autoLanguageSwitchingCheckbox.Bind(wx.EVT_CHECKBOX, self.onAutoLanguageSwitchingChange)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, different voices for dialects will be used to
@@ -1907,6 +1908,16 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.delayedCharacterDescriptionsCheckBox.SetValue(
 			config.conf["speech"]["delayedCharacterDescriptions"],
 		)
+
+	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
+		"""Take action when the autoLanguageSwitching checkbox is pressed."""
+		if not self.autoLanguageSwitchingCheckbox.IsChecked():
+			# Synthesizer won't support switching to languages, so don't report if a language is not supported.
+			reportNotSupportedLanguage = ReportNotSupportedLanguage.OFF
+			self.reportNotSupportedLanguageCombo.SetSelection(
+				[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
+			)
+		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
