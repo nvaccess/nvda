@@ -130,8 +130,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		return response.content
@@ -146,8 +145,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		cacheHash = response.json()
