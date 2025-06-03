@@ -194,12 +194,11 @@ class LangChangeCommand(SynthParamCommand):
 		return config.conf["speech"]["autoLanguageSwitching"]
 
 	@staticmethod
-	def shouldGetLanguageForTextInfo() -> bool:
+	def shouldMakeLangChangeCommand() -> bool:
 		"""Determines if NVDA should get the language of the text been read."""
 		return (
 			config.conf["speech"]["autoLanguageSwitching"]
 			or config.conf["speech"]["reportLanguage"]
-			or config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
 		)
 
 	def __repr__(self):

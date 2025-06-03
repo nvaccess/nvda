@@ -2324,9 +2324,10 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		for field in info.getTextWithFields({}):
-			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				curLanguage = field.field.get("language")
+		if shouldGetCurrentLanguageForTextInfo():
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get("language")
 		if curLanguage is None:
 			curLanguage = speech.getCurrentLanguage()
 		return curLanguage
@@ -4911,7 +4912,9 @@ class GlobalCommands(ScriptableObject):
 			message = languageDescription
 		else:
 			# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-			message = _("{languageDescription} (not supported)").format(
+			message = pgettext(
+				"reportLanguage",
+				"{languageDescription} (not supported)").format(
 				languageDescription=languageDescription,
 			)
 		repeats = scriptHandler.getLastScriptRepeatCount()
@@ -4919,7 +4922,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(message)
 		elif repeats == 1:
 			# Translators: title for report caret language dialog.
-			title = _("Language at caret position")
+			title = pgettext("reportLanguage", "Language at caret position")
 			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
 
 	@script(

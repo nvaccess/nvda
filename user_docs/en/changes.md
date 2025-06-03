@@ -44,7 +44,7 @@ The several built-in table definitions are moved to the `__tables` module in tha
 
 #### Deprecations
 
-## 2025.1xxx
+## 2025.1
 
 This release introduces NVDA Remote Access, allowing you to control a remote computer running NVDA from another device running NVDA.
 
