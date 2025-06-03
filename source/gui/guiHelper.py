@@ -374,9 +374,9 @@ class BoxSizerHelper:
 		@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is
 			normally not necessary.
 		"""
-		assert (
-			not self.dialogDismissButtonsAdded
-		), "Buttons to dismiss the dialog already added, they should be the last item added."
+		assert not self.dialogDismissButtonsAdded, (
+			"Buttons to dismiss the dialog already added, they should be the last item added."
+		)
 
 		toAdd = item
 		shouldAddSpacer = self.hasFirstItemBeenAdded

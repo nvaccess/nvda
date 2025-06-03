@@ -125,7 +125,7 @@ def __getattr__(attrName: str) -> Any:
 		return SettingsPanel
 	if attrName == "ExecAndPump" and NVDAState._allowDeprecatedAPI():
 		log.warning(
-			"Importing ExecAndPump from here is deprecated. " "Import ExecAndPump from systemUtils instead. ",
+			"Importing ExecAndPump from here is deprecated. Import ExecAndPump from systemUtils instead. ",
 			# Include stack info so testers can report warning to add-on author.
 			stack_info=True,
 		)

@@ -28,6 +28,10 @@
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Component updates:
+  * Updated Ruff to 0.11.12. (#17671)
+  * Updated pre-commit to 4.2.0. (#17671)
+  * Updated pyright to 1.1.401. (#17671)
 * NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
   * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
 * Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)
