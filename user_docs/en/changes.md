@@ -285,6 +285,7 @@ Instead, a `callback` property has been added, which returns a function that per
 * `documentationUtils.getDocFilePath` and `installer.getDocFilePath` no longer look for `.txt` files in locale documentation folders. (#17911, @CyrilleB79)
 * `config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use `config.conf["documentFormatting"]["fontAttributeReporting"]` instead. (#18066)
 * `config.conf["speech"]["includeCLDR"]` has been removed, check/modify whether `config.conf["speech"]["symbolDictionaries"]` contains `"cldr"` instead. (#18066)
+* `characterProcessing.listAvailableSymbolDictionaryDefinitions` do not sort the list of symbol dictionaries anymore to keep the order in which the dictionaries have been added in the list. (#18178, @CyrilleB79)
 
 #### Deprecations
 
