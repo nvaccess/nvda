@@ -296,7 +296,10 @@ class Operation:
 			logOutput = self._remoteLog.localValue
 			if logOutput:
 				log.info(
-					f"Remote log for execution {self._executionCount}\n--- Begin ---\n{logOutput}--- end ---",
+					f"Remote log for execution {self._executionCount}\n"
+					"--- Begin ---\n"
+					f"{logOutput}"
+					"--- end ---",  # fmt: skip
 				)
 
 	def _dumpCompiletimeLog(self):

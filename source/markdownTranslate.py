@@ -281,7 +281,11 @@ def generateXliff(
 				if suffix:
 					outputFile.write(f'<note appliesTo="source">suffix: {xmlEscape(suffix)}</note>\n')
 				outputFile.write(
-					f"</notes>\n<segment>\n<source>{xmlEscape(source)}</source>\n</segment>\n</unit>\n",
+					"</notes>\n"
+					f"<segment>\n"
+					f"<source>{xmlEscape(source)}</source>\n"
+					"</segment>\n"
+					"</unit>\n",  # fmt: skip
 				)
 			else:
 				if mdLine != skelLine:
