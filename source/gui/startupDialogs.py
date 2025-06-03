@@ -54,7 +54,7 @@ class WelcomeDialog(
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 		# This is in larger, bold lettering
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(wx.FontInfo(18).Bold().FaceName(fontFaceName))) 
+		welcomeTextHeader.SetFont(wx.Font(wx.FontInfo(18).Bold().FaceName(fontFaceName)))
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
