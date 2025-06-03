@@ -31,8 +31,8 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
-	commands,
 )
+from speech.commands import LangChangeCommand
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -2325,7 +2325,7 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if commands.LangChangeCommand.shouldMakeLangChangeCommand():
+		if LangChangeCommand.shouldMakeLangChangeCommand():
 			for field in info.getTextWithFields({}):
 				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 					curLanguage = field.field.get("language")
@@ -4910,9 +4910,9 @@ class GlobalCommands(ScriptableObject):
 		if curSynth.languageIsSupported(curLanguage):
 			message = languageDescription
 		else:
-			# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 			message = pgettext(
 				"reportLanguage",
+				# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 				"{languageDescription} (not supported)",
 			).format(
 				languageDescription=languageDescription,
