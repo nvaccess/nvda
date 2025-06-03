@@ -32,7 +32,7 @@ def __getattr__(attrName: str) -> Any:
 	if NVDAState._allowDeprecatedAPI():
 		if attrName == "isObjectAboveLockScreen":
 			log.warning(
-				"isObjectAboveLockScreen(obj) is deprecated. " "Instead use obj.isBelowLockScreen. ",
+				"isObjectAboveLockScreen(obj) is deprecated. Instead use obj.isBelowLockScreen. ",
 			)
 			return _isObjectAboveLockScreen
 		if attrName == "postSessionLockStateChanged":
@@ -181,7 +181,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
-		"This function is deprecated. " "Instead use obj.isBelowLockScreen. ",
+		"This function is deprecated. Instead use obj.isBelowLockScreen. ",
 	)
 	return not obj.isBelowLockScreen
 
