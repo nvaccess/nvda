@@ -1120,9 +1120,6 @@ class ExcelWorksheet(ExcelBase):
 	)
 	def script_changeActiveCell(self, gesture: inputCore.InputGesture) -> None:
 		isChartActive = True if self.excelWindowObject.ActiveChart else False
-		import ui
-
-		ui.message(f"{isChartActive}")
 		if isChartActive:
 			objGetter = self._getSelection
 		else:
