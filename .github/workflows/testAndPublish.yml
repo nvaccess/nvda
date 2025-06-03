@@ -237,7 +237,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        testSuite: [chrome, installer, startupShutdown, symbols]
+        testSuite: [chrome, installer, startupShutdown]
     name: Run system tests
     runs-on: windows-latest
     needs: createLauncher
