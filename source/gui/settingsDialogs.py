@@ -33,7 +33,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
-	AddonsAutomaticUpdate,
+	AddonUpdateCheck,
 	NVDAKey,
 	RemoteConnectionMode,
 	RemoteServerType,
@@ -3205,34 +3205,35 @@ class AddonStorePanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-		automaticUpdatesLabelText = _("Automatic &updates:")
-		self.automaticUpdatesComboBox = sHelper.addLabeledControl(
-			automaticUpdatesLabelText,
+		# Translators: This is a label for the add-on update check combo box in the Add-on Store Settings dialog.
+		addonUpdateCheckLabelText = _("Add-on &update check:")
+		self.addonUpdateCheckComboBox = sHelper.addLabeledControl(
+			addonUpdateCheckLabelText,
 			wx.Choice,
-			choices=[mode.displayString for mode in AddonsAutomaticUpdate],
+			choices=[mode.displayString for mode in AddonUpdateCheck],
 		)
-		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
-		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
-		self.automaticUpdatesComboBox.SetSelection(index)
+		self.bindHelpEvent("AddonUpdateCheck", self.addonUpdateCheckComboBox)
+		index = [x.value for x in AddonUpdateCheck].index(config.conf["addonStore"]["automaticUpdates"])
+		self.addonUpdateCheckComboBox.SetSelection(index)
 
-		self.defaultUpdateChannelComboBox = sHelper.addLabeledControl(
-			# Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-			_("Default update &channel:"),
+		self.defaultUpdateCheckChannelComboBox = sHelper.addLabeledControl(
+			# Translators: This is the label for the default update check channel combo box in the Add-on Store Settings dialog.
+			_("Default update check &channel:"),
 			wx.Choice,
-			# The default update channel for a specific add-on (UpdateChannel.DEFAULT) refers to this channel,
+			# The default update check channel for a specific add-on (UpdateChannel.DEFAULT) refers to this channel,
 			# so it should be skipped.
 			choices=[
 				channel.displayString for channel in UpdateChannel if channel is not UpdateChannel.DEFAULT
 			],
 		)
-		self.bindHelpEvent("DefaultAddonUpdateChannel", self.defaultUpdateChannelComboBox)
+		self.bindHelpEvent("DefaultAddonUpdateChannel", self.defaultUpdateCheckChannelComboBox)
 		index = config.conf["addonStore"]["defaultUpdateChannel"]
-		self.defaultUpdateChannelComboBox.SetSelection(index)
+		self.defaultUpdateCheckChannelComboBox.SetSelection(index)
 
 		self.allowIncompatibleUpdates = sHelper.addItem(
-			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Allow automatic updates to install incompatible add-ons")),
+			# Translators: This is the label for the "Allow updates to add-ons marked as incompatible" checkbox
+			# in the Add-on Store Settings dialog.
+			wx.CheckBox(self, label=_("Allow updates to add-ons marked as incompatible")),
 		)
 		self.bindHelpEvent("AllowIncompatibleAddonUpdates", self.allowIncompatibleUpdates)
 		self.allowIncompatibleUpdates.SetValue(config.conf["addonStore"]["allowIncompatibleUpdates"])
@@ -3311,10 +3312,12 @@ class AddonStorePanel(SettingsPanel):
 		super().onPanelActivated()
 
 	def onSave(self):
-		index = self.automaticUpdatesComboBox.GetSelection()
-		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+		index = self.addonUpdateCheckComboBox.GetSelection()
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonUpdateCheck][index]
 		config.conf["addonStore"]["allowIncompatibleUpdates"] = self.allowIncompatibleUpdates.IsChecked()
-		config.conf["addonStore"]["defaultUpdateChannel"] = self.defaultUpdateChannelComboBox.GetSelection()
+		config.conf["addonStore"]["defaultUpdateChannel"] = (
+			self.defaultUpdateCheckChannelComboBox.GetSelection()
+		)
 
 
 class RemoteSettingsPanel(SettingsPanel):
