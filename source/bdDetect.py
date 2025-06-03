@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2013-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2013-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Christian Comaschi
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
@@ -219,7 +219,7 @@ def getDriversForConnectedUsbDevices(
 		)
 	)
 
-	fallbackDriversAndMatches: list[set[str, DeviceMatch]] = []
+	fallbackDriversAndMatches: list[tuple[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -228,7 +228,7 @@ def getDriversForConnectedUsbDevices(
 			for definition in usbDefinitions:
 				if definition.matches(match):
 					if definition.useAsFallback:
-						fallbackDriversAndMatches.append({driver, match})
+						fallbackDriversAndMatches.append((driver, match))
 					else:
 						yield (driver, match)
 
@@ -737,7 +737,7 @@ class DriverRegistrar:
 		"""
 		if not isinstance(id, str) or not USB_ID_REGEX.match(id):
 			raise ValueError(
-				f"Invalid ID provided for driver {self._driver!r}, type {type!r}: " f"{id!r}",
+				f"Invalid ID provided for driver {self._driver!r}, type {type!r}: {id!r}",
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]
@@ -771,8 +771,7 @@ class DriverRegistrar:
 		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 		if malformedIds:
 			raise ValueError(
-				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
-				f"{', '.join(malformedIds)}",
+				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: {', '.join(malformedIds)}",
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]

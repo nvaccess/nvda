@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -489,10 +489,10 @@ class AppModule(baseObject.ScriptableObject):
 
 		self._inprocRegistrationHandle = None
 
-	def _getExecutableFileInfo(self):
-		# Used for obtaining file name and version for the executable.
-		# This is needed in case immersive app package returns an error,
-		# dealing with a native app, or a converted desktop app.
+	processExecutablePath: str
+	"""The path to the executable of the current process."""
+
+	def _get_processExecutablePath(self) -> str:
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
@@ -503,8 +503,13 @@ class AppModule(baseObject.ScriptableObject):
 			ctypes.byref(length),
 		):
 			raise ctypes.WinError()
-		fileName = exeFileName.value
-		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
+		return exeFileName.value
+
+	def _getExecutableFileInfo(self):
+		# Used for obtaining file name and version for the executable.
+		# This is needed in case immersive app package returns an error,
+		# dealing with a native app, or a converted desktop app.
+		fileinfo = getFileVersionInfo(self.processExecutablePath, "ProductName", "ProductVersion")
 		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
 
 	def _getImmersivePackageInfo(self):
@@ -859,7 +864,7 @@ def getWmiProcessInfo(processId):
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
 		results = wmi.ExecQuery(
-			"select * from Win32_Process " "where ProcessId = %d" % processId,
+			"select * from Win32_Process where ProcessId = %d" % processId,
 		)
 		for result in results:
 			return result

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2024 NV Access Limited, Łukasz Golonka, Joseph Lee
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2009-2025 NV Access Limited, Łukasz Golonka, Joseph Lee, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 
 EXECUTABLE_NAMES_TO_APP_MODS: dict[str, str] = {
@@ -43,6 +43,8 @@ EXECUTABLE_NAMES_TO_APP_MODS: dict[str, str] = {
 	# Spring Tool Suite is based on Eclipse and should use its appModule.
 	"springtoolsuite4": "eclipse",
 	"sts": "eclipse",
+	# Microsoft SQL Server Management Studio is based on Visual Studio
+	"ssms": "devenv",
 	# Various versions of Teamtalk.
 	"teamtalk3": "teamtalk4classic",
 	# App module for Windows 10/11 Modern Keyboard aka new touch keyboard panel

@@ -628,6 +628,34 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
 
+	@classmethod
+	def _addQuickNavHeading(
+		cls,
+		levelRange: range,
+	):
+		for i in levelRange:
+			if not (0 < i < 10):
+				log.error(
+					f"Could not add quick navigation key for heading level {i}; only levels 1 to 9 supported.",
+				)
+				continue
+			cls.addQuickNav(
+				f"heading{i}",
+				key=f"{i}",
+				# Translators: Input help message for a quick navigation command in browse mode.
+				# {i} will be replaced with the level number.
+				nextDoc=_("Moves to the next heading at level {i}").format(i=i),
+				# Translators: Message presented when the browse mode element is not found.
+				# {i} will be replaced with the level number.
+				nextError=_("No next heading at level {i}").format(i=i),
+				# Translators: Input help message for a quick navigation command in browse mode.
+				# {i} will be replaced with the level number.
+				prevDoc=_("Moves to the previous heading at level {i}").format(i=i),
+				# Translators: Message presented when the browse mode element is not found.
+				# {i} will be replaced with the level number.
+				prevError=_("No previous heading at level {i}").format(i=i),
+			)
+
 	def script_elementsList(self, gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
@@ -788,78 +816,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous heading"),
 )
-qn(
-	"heading1",
-	key="1",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 1"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 1"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 1"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 1"),
-)
-qn(
-	"heading2",
-	key="2",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 2"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 2"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 2"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 2"),
-)
-qn(
-	"heading3",
-	key="3",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 3"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 3"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 3"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 3"),
-)
-qn(
-	"heading4",
-	key="4",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 4"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 4"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 4"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 4"),
-)
-qn(
-	"heading5",
-	key="5",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 5"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 5"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 5"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 5"),
-)
-qn(
-	"heading6",
-	key="6",
-	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 6"),
-	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 6"),
-	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 6"),
-	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 6"),
-)
+BrowseModeTreeInterceptor._addQuickNavHeading(range(1, 10))
 qn(
 	"table",
 	key="t",
@@ -1294,6 +1251,8 @@ class ElementsListDialog(
 	Element = collections.namedtuple("Element", ("item", "parent"))
 
 	lastSelectedElementType = 0
+
+	shouldSuspendConfigProfileTriggers = True
 
 	def __init__(self, document):
 		super().__init__(

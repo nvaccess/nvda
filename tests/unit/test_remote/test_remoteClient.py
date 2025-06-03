@@ -8,6 +8,7 @@ from unittest.mock import MagicMock, patch
 import _remoteClient.client as rcClient
 from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
 from _remoteClient.protocol import RemoteMessageType
+from gui.message import ReturnCode
 
 
 # Fake implementations for testing
@@ -88,6 +89,9 @@ class TestRemoteClient(unittest.TestCase):
 		patcher = patch("_remoteClient.client.ui.message")
 		self.addCleanup(patcher.stop)
 		self.uiMessage = patcher.start()
+		delayedMessagePatcher = patch("_remoteClient.client.ui.delayedMessage")
+		self.addCleanup(delayedMessagePatcher.stop)
+		self.uiDelayedMessage = delayedMessagePatcher.start()
 		# Patch the API module to use our fake API.
 		patcherAPI = patch("_remoteClient.client.api", new=FakeAPI)
 		self.addCleanup(patcherAPI.stop)
@@ -102,27 +106,38 @@ class TestRemoteClient(unittest.TestCase):
 		self.client = None
 
 	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
-	def test_toggleMute(self):
+	def test_toggleMuteAsLeader(self):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
 		# Toggle mute: should mute the local machine.
-		self.client.toggleMute()
-		self.assertTrue(self.client.localMachine.isMuted)
-		self.assertTrue(self.client.menu.muteItem.checked)
-		self.uiMessage.assert_called_once()
-		# Now toggle again: should unmute.
-		self.uiMessage.reset_mock()
-		self.client.toggleMute()
+		with patch.object(self.client, "leaderTransport", FakeTransport):
+			self.client.toggleMute()
+			self.assertTrue(self.client.localMachine.isMuted)
+			self.assertTrue(self.client.menu.muteItem.checked)
+			self.uiDelayedMessage.assert_called_once()
+			# Now toggle again: should unmute.
+			self.uiDelayedMessage.reset_mock()
+			self.client.toggleMute()
+			self.assertFalse(self.client.localMachine.isMuted)
+			self.assertFalse(self.client.menu.muteItem.checked)
+			self.uiDelayedMessage.assert_called_once()
+
+	@patch.object(rcClient.RemoteClient, "isConnected", lambda self: True)
+	def test_toggleMuteAsFollower(self):
+		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
-		self.assertFalse(self.client.menu.muteItem.checked)
-		self.uiMessage.assert_called_once()
+		with patch.object(self.client, "leaderTransport", None):
+			# Toggle mute: should have no effect
+			self.client.toggleMute()
+			self.assertFalse(self.client.localMachine.isMuted)
+			self.assertFalse(self.client.menu.muteItem.checked)
 
 	def test_pushClipboardNoConnection(self):
 		# Without any transport (neither follower nor leader), pushClipboard should warn.
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
 		self.client.pushClipboard()
-		self.uiMessage.assert_called_with("Not connected")
+		self.uiDelayedMessage.assert_called_with("Not connected")
 
 	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
@@ -144,7 +159,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerSession = None
 		self.uiMessage.reset_mock()
 		self.client.copyLink()
-		self.uiMessage.assert_called_with("Not connected")
+		self.uiDelayedMessage.assert_called_with("Not connected")
 
 	def test_copyLinkWithSession(self):
 		# With a fake session, copyLink should call api.copyToClip with the proper URL.
@@ -157,9 +172,9 @@ class TestRemoteClient(unittest.TestCase):
 	def test_sendSasNoLeaderTransport(self):
 		# Without a leaderTransport, sendSAS should log an error.
 		self.client.leaderTransport = None
-		with patch("_remoteClient.client.log.error") as mockLogError:
+		with patch("_remoteClient.client.log.debugWarning") as mockLogDebugWarning:
 			self.client.sendSAS()
-			mockLogError.assert_called_once_with("No leader transport to send SAS")
+			mockLogDebugWarning.assert_called_once_with("No leader transport to send SAS")
 
 	def test_sendSasWithLeaderTransport(self):
 		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.
@@ -201,6 +216,8 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.leaderSession = None
 		self.client.followerSession = None
 		with patch("_remoteClient.client.log.debug") as mockLogDebug:
+			# `disconnect` is decorated with `alwaysCallAfter`, which causes it to be executed on the GUI thread.
+			# Unwrap it since we want it to run on this thread.
 			self.client.disconnect()
 			mockLogDebug.assert_called()
 		# Test disconnect with an active localControlServer.
@@ -208,7 +225,8 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.localControlServer = fakeControl
 		self.client.leaderSession = MagicMock()
 		self.client.followerSession = MagicMock()
-		self.client.disconnect()
+		with patch.object(rcClient.MessageDialog, "ShowModal", lambda *a, **k: ReturnCode.YES):
+			self.client.disconnect()
 		fakeControl.close.assert_called_once()
 
 

@@ -1675,7 +1675,9 @@ def getTextInfoSpeech(  # noqa: C901
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	firstText = ""
 	if len(textWithFields) > 0:
-		firstText = textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]
+		firstField = textWithFields[0]
+		if isinstance(firstField, str):
+			firstText = firstField.strip() if not firstField.isspace() else firstField
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and (len(firstText) == 1 or len(unicodeNormalize(firstText)) == 1)

@@ -1063,8 +1063,6 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_16_to_17(unittest.TestCase):
 		nvdaremote.com:6837=7B502C3A1F48C8609AE212CDFB639DEE39673F5E
 	[[trusted_certs]]
 		sketchyServer.example.com:6837 = 64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C
-	[[ui]]
-		play_sounds = False
 """
 		expectedV16Config = {
 			"remote": {
@@ -1084,9 +1082,6 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_16_to_17(unittest.TestCase):
 				},
 				"trustedCertificates": {
 					"sketchyServer.example.com:6837": "64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C",
-				},
-				"ui": {
-					"playSounds": "False",
 				},
 			},
 		}
