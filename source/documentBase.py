@@ -559,7 +559,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 
 	script_speakRow.__doc__ = _(
 		# Translators: the description for the speak row command
-		"Reads the current row horizontally from left to right " "without moving the system caret.",
+		"Reads the current row horizontally from left to right without moving the system caret.",
 	)
 	script_speakRow.speakOnDemand = True
 
@@ -568,7 +568,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 
 	script_speakColumn.__doc__ = _(
 		# Translators: the description for the speak column command
-		"Reads the current column vertically from top to bottom " "without moving the system caret.",
+		"Reads the current column vertically from top to bottom without moving the system caret.",
 	)
 	script_speakColumn.speakOnDemand = True
 
