@@ -4907,13 +4907,10 @@ class GlobalCommands(ScriptableObject):
 		languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
 			languageDescription = curLanguage
-		if config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value:
-			message = languageDescription
-		else:
+		message = languageDescription
+		if config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value:
 			curSynth = synthDriverHandler.getSynth()
-			if curSynth.languageIsSupported(curLanguage):
-				message = languageDescription
-			else:
+			if not curSynth.languageIsSupported(curLanguage):
 				message = pgettext(
 					"reportLanguage",
 					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
