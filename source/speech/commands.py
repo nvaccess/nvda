@@ -14,7 +14,6 @@ from typing import (
 )
 
 import config
-from config.configFlags import ReportNotSupportedLanguage
 from synthDriverHandler import getSynth
 
 __all__ = [
@@ -196,10 +195,7 @@ class LangChangeCommand(SynthParamCommand):
 	@staticmethod
 	def shouldMakeLangChangeCommand() -> bool:
 		"""Determines if NVDA should get the language of the text been read."""
-		return (
-			config.conf["speech"]["autoLanguageSwitching"]
-			or config.conf["speech"]["reportLanguage"]
-		)
+		return config.conf["speech"]["autoLanguageSwitching"] or config.conf["speech"]["reportLanguage"]
 
 	def __repr__(self):
 		return "LangChangeCommand (%r)" % self.lang

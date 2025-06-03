@@ -4914,7 +4914,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 			message = pgettext(
 				"reportLanguage",
-				"{languageDescription} (not supported)").format(
+				"{languageDescription} (not supported)",
+			).format(
 				languageDescription=languageDescription,
 			)
 		repeats = scriptHandler.getLastScriptRepeatCount()
