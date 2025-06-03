@@ -46,6 +46,7 @@ from config.configFlags import (
 	BrailleMode,
 	OutputMode,
 	TypingEcho,
+	ReportNotSupportedLanguage,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -4906,17 +4907,20 @@ class GlobalCommands(ScriptableObject):
 		languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
 			languageDescription = curLanguage
-		curSynth = synthDriverHandler.getSynth()
-		if curSynth.languageIsSupported(curLanguage):
+		if config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value:
 			message = languageDescription
 		else:
-			message = pgettext(
-				"reportLanguage",
-				# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-				"{languageDescription} (not supported)",
-			).format(
-				languageDescription=languageDescription,
-			)
+			curSynth = synthDriverHandler.getSynth()
+			if curSynth.languageIsSupported(curLanguage):
+				message = languageDescription
+			else:
+				message = pgettext(
+					"reportLanguage",
+					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+					"{languageDescription} (not supported)",
+				).format(
+					languageDescription=languageDescription,
+				)
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(message)
