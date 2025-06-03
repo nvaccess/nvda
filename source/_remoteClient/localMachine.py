@@ -19,8 +19,10 @@ muting and uses wxPython's CallAfter for thread synchronization.
 """
 
 import ctypes
+from enum import IntEnum, nonmember
 import os
 from typing import Any, Dict, List, Optional
+import winreg
 
 import api
 import braille
@@ -34,8 +36,37 @@ from speech.types import SpeechSequence
 from systemUtils import hasUiAccess
 import ui
 from logHandler import log
+from utils.security import isRunningOnSecureDesktop
 
 from . import cues, input
+
+
+class SoftwareSASGeneration(IntEnum):
+	"""
+	Possible values for the Windows Components | Windows Logon Options | Disable or enable software Secure Attention Sequence group policy.
+
+	Values extracted from WinLogon.admx.
+	<https://www.microsoft.com/en-us/download/details.aspx?id=106254>
+	"""
+
+	NONE = 0
+	"""User mode software cannot simulate the SAS."""
+
+	SYSTEM = 1
+	"""Services can simulate the SAS."""
+
+	UIACCESS = 2
+	"""Ease of Access applications can simulate the SAS"""
+
+	BOTH = 3
+	"""both services and Ease of Access applications can simulate the SAS."""
+
+	KEY: int = nonmember(winreg.HKEY_LOCAL_MACHINE)
+	SUBKEY: str = nonmember(r"Software\Microsoft\Windows\CurrentVersion\Policies\System")
+	VALUE_NAME: str = nonmember("SoftwareSASGeneration")
+	DISPLAY_PATH: str = nonmember(
+		r"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System!SoftwareSASGeneration",
+	)
 
 
 def setSpeechCancelledToFalse() -> None:
@@ -247,13 +278,59 @@ class LocalMachine:
 		api.copyToClip(text=text)
 
 	def sendSAS(self) -> None:
-		"""Simulate a secure attention sequence (e.g. CTRL+ALT+DEL).
+		"""Simulate a secure attention sequence (i.e. control+alt+delete).
 
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
-		if hasUiAccess():
-			ctypes.windll.sas.SendSAS(0)
+		if self._canSendSAS():
+			ctypes.windll.sas.SendSAS(not isRunningOnSecureDesktop())
 		else:
-			# Translators: Message displayed when a remote computer tries to send ctrl+alt+del but UI Access is disabled.
-			ui.message(_("Unable to trigger Alt Control Delete from remote"))
-			log.debug("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")
+			# Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
+			ui.message(pgettext("remote", "Unable to trigger control+alt+delete"))
+
+	@staticmethod
+	def _canSendSAS() -> bool:
+		"""Determine if we have sufficient permissions to send a secure attention sequence.
+
+		If we can't, a more specific reason is logged.
+
+		:return: True if simulating an SAS should succeed, false otherwise.
+		"""
+		if not hasUiAccess():
+			log.debug("Unable to simulate the SAS as NVDA does not have UI Access.")
+			return False
+		# If we have UI Access, whether we can simulate the SAS depends on the Software SAS Generation group policy.
+		try:
+			with winreg.OpenKeyEx(SoftwareSASGeneration.KEY, SoftwareSASGeneration.SUBKEY) as regkey:
+				valueData, valueType = winreg.QueryValueEx(regkey, SoftwareSASGeneration.VALUE_NAME)
+				if valueType != winreg.REG_DWORD:
+					# SoftwareSASGeneration should be a REG_DWORD, but it isn't.
+					# Return False to avoid a false positive.
+					log.debug(
+						f"{SoftwareSASGeneration.DISPLAY_PATH} is not a REG_DWORD. Got {valueType=}, {valueData=}",
+					)
+					return False
+				if valueData not in (SoftwareSASGeneration.UIACCESS, SoftwareSASGeneration.BOTH):
+					# UIAccess means ease of access applications can simulate the SAS,
+					# and both means services and ease of access applications can simulate the SAS.
+					# Since it's neither of these values, we can't simulate an SAS.
+					log.debug(
+						f"The setting of {SoftwareSASGeneration.DISPLAY_PATH} does not allow NVDA to simulate the SAS. Got {valueData=}",
+					)
+					return False
+		except FileNotFoundError:
+			# The group policy is either disabled or not set,
+			# which means that ATs can only simulate the SAS on secure desktops.
+			if not isRunningOnSecureDesktop():
+				log.debug(
+					f"Unable to simulate the SAS as {SoftwareSASGeneration.DISPLAY_PATH} is not set and NVDA is not running on the secure desktop.",
+				)
+				return False
+		except OSError:
+			# Something went wrong trying to read the registry.
+			# Return False to avoid a false positive.
+			log.error(f"Error reading {SoftwareSASGeneration.DISPLAY_PATH}.", exc_info=True)
+			return False
+		# None of the known impediments to simulating the SAS seem to hold,
+		# so it should be safe to do so.
+		return True

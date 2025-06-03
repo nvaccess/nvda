@@ -554,7 +554,6 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 	RENAMED_ITEMS: dict[str, dict[str, str]] = {
 		"connections": {"last_connected": "lastConnected"},
 		"controlServer": {"connection_type": "connectionMode", "self_hosted": "selfHosted"},
-		"ui": {"play_sounds": "playSounds"},
 	}
 	if "remote" not in profile:
 		log.debug("No remote section in config, no action taken.")
