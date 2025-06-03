@@ -143,7 +143,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				)
 				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
-					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
+					comportNumber = f"{int(re.match('.*?([0-9]+)$', port).group(1)):02d}"
 					identifier = f"NVDA/{comportNumber}".encode()
 					log.debug(f"sending {identifier} to eurobraille display")
 					self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, identifier)

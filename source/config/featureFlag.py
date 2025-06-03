@@ -172,8 +172,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 	if not isinstance(optionsEnumVal, str):
 		raise VdtParamError(
 			name_or_msg=(
-				f"Param '{optionsEnumKey}' should have a string value"
-				f" but got {type(optionsEnumVal)}. {usage}"
+				f"Param '{optionsEnumKey}' should have a string value but got {type(optionsEnumVal)}. {usage}"
 			),
 			value=specString,
 		)
@@ -215,7 +214,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 		)
 	if len(kwargs) != 2:
 		raise VdtParamError(
-			name_or_msg=("Unexpected number of params." f" Got {kwargs}. {usage}"),
+			name_or_msg=(f"Unexpected number of params. Got {kwargs}. {usage}"),
 			value=specString,
 		)
 	# ensure there is the expected default

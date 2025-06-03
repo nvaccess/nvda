@@ -187,8 +187,7 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 		return False
 	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
 		log.error(
-			"Unable to determine lock state via Session Query."
-			f" Lock state value: {sessionQueryLockState!r}",
+			f"Unable to determine lock state via Session Query. Lock state value: {sessionQueryLockState!r}",
 		)
 		return False
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK

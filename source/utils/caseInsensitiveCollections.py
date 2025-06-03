@@ -12,7 +12,7 @@ class CaseInsensitiveSet(set):
 	def __init__(self, *args: Iterable[str]):
 		if len(args) > 1:
 			raise TypeError(
-				f"{type(self).__name__} expected at most 1 argument, " f"got {len(args)}",
+				f"{type(self).__name__} expected at most 1 argument, got {len(args)}",
 			)
 		values = args[0] if args else ()
 		for v in values:
