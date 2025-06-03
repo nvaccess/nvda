@@ -386,7 +386,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				ti = self._getEmbedding(obj)
 				if not ti:
 					log.debugWarning(
-						"_getEmbedding returned None while getting initial fields. " "Object probably dead.",
+						"_getEmbedding returned None while getting initial fields. Object probably dead.",
 					)
 					return []
 				obj = ti.obj
@@ -420,7 +420,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			ti = self._getEmbedding(obj)
 			if not ti:
 				log.debugWarning(
-					"_getEmbedding returned None while ascending to get more text. " "Object probably dead.",
+					"_getEmbedding returned None while ascending to get more text. Object probably dead.",
 				)
 				return []
 			obj = ti.obj

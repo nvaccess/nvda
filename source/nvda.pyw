@@ -14,6 +14,7 @@ import logging
 import sys
 import os
 
+from pathlib import Path
 from typing import Any
 
 import globalVars
@@ -21,8 +22,9 @@ from argsParsing import getParser
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
-import NVDAState
 
+import NVDAState
+import winUser
 
 monkeyPatches.applyMonkeyPatches()
 
@@ -32,29 +34,25 @@ monkeyPatches.applyMonkeyPatches()
 _log = logging.Logger(name="preStartup", level=logging.INFO)
 _log.addHandler(logging.NullHandler(level=logging.INFO))
 
-customVenvDetected = False
 if NVDAState.isRunningAsSource():
-	# Ensure we are inside the NVDA build system's Python virtual environment.
-	nvdaVenv = os.getenv("NVDA_VENV")
+	# We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
+	appDir = os.path.abspath(os.path.dirname(__file__))
+	# Ensure we are inside the Python virtual environment
 	virtualEnv = os.getenv("VIRTUAL_ENV")
-	if not virtualEnv or not os.path.isdir(virtualEnv):
+	if not virtualEnv or Path(appDir).parent != Path(virtualEnv).parent:
 		ctypes.windll.user32.MessageBoxW(
 			0,
 			"NVDA cannot  detect the Python virtual environment. "
 			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
 			"Error",
-			0,
+			winUser.MB_ICONERROR,
 		)
 		sys.exit(1)
-	customVenvDetected = nvdaVenv != virtualEnv
-	# We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	appDir = os.path.normpath(os.path.dirname(__file__))
 else:
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	appDir = sys.prefix
+	appDir = os.path.abspath(sys.prefix)
 
-appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
@@ -63,7 +61,6 @@ globalVars.appPid = os.getpid()
 import config  # noqa: E402
 import logHandler  # noqa: E402
 from logHandler import log  # noqa: E402
-import winUser  # noqa: E402
 import winKernel  # noqa: E402
 
 # Find out if NVDA is running as a Windows Store application
@@ -293,8 +290,6 @@ import buildVersion  # noqa: E402
 
 log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")
-if customVenvDetected:
-	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 

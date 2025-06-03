@@ -69,6 +69,19 @@ class WinwordWordDocument(WordDocument):
 		except AttributeError:
 			return super()._get_description()
 
+	@script(gestures=["kb:control+alt+o", "kb:control+alt+p"])
+	def script_changeViewType(self, gesture: "inputCore.InputGesture") -> None:
+		if not self.WinwordWindowObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordWindowObject.view.Type,
+		)
+		ui.message(ViewType(val).displayString)
+
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
 		if not self.WinwordDocumentObject:
@@ -88,7 +101,14 @@ class WinwordWordDocument(WordDocument):
 			ui.message(_("Change tracking off"))
 
 	@script(
-		gestures=["kb:alt+shift+-", "kb:alt+shift+=", "kb:alt+shift+numpadPlus", "kb:alt+shift+numpadMinus"],
+		gestures=[
+			"kb:alt+shift+-",
+			"kb:alt+shift+=",
+			"kb:alt+shift+numpadPlus",
+			"kb:alt+shift+numpadMinus",
+			"kb:numLock+shift+alt+numpadPlus",
+			"kb:numLock+shift+alt+numpadMinus",
+		],
 	)
 	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture") -> None:
 		if not self.WinwordSelectionObject:

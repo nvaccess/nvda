@@ -29,10 +29,17 @@ import speech
 import braille
 from config.configFlags import TetherTo
 import globalVars
-from typing import Optional
+from typing import Final, Optional
 from collections.abc import Callable
 
 from utils.security import isRunningOnSecureDesktop
+import core
+
+
+_DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
+"""Duration in milliseconds for which to delay speaking and brailling a message, so that any UI changes don't interrupt it.
+1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
+"""
 
 
 # From urlmon.h
@@ -241,6 +248,33 @@ def message(
 	"""
 	speech.speakMessage(text, priority=speechPriority)
 	braille.handler.message(brailleText if brailleText is not None else text)
+
+
+def delayedMessage(
+	text: str,
+	speechPriority: speech.Spri | None = speech.Spri.NOW,
+	brailleText: str | None = None,
+) -> None:
+	"""Present a message to the user, delayed by a short amount so it isn't interrupted by UI changes.
+
+	In most cases, :func:`ui.message` should be preferred.
+	However, in cases where a message is presented at the same time as a UI change
+	(for instance as confirmation that the action performed by an item in the NVDA menu has been performed),
+	this function may be needed so that the message is not immediately interrupted by the UI changing.
+
+	The message will be presented in both speech and braille.
+
+	:param text: The text of the message.
+	:param speechPriority: The speech priority, defaults to SpeechPriority.NOW.
+	:param brailleText: If specified, present this alternative text on the braille display., defaults to None
+	"""
+	core.callLater(
+		_DELAY_BEFORE_MESSAGE_MS,
+		message,
+		text=text,
+		speechPriority=speechPriority,
+		brailleText=brailleText,
+	)
 
 
 def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):

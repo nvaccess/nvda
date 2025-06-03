@@ -167,11 +167,12 @@ def checkPot(fileName):
 				else:
 					continue
 				print(
-					"{error}\n" "Source lines: {lines}\n" "Message: {message}\n".format(
+					"{error}\nSource lines: {lines}\nMessage: {message}\n".format(
 						error=error,
 						lines=" ".join(sourceLines),
 						message=message,
 					),
+					file=sys.stderr,
 				)
 				continue
 	removedTranslatableMessages = EXPECTED_MESSAGES_WITHOUT_COMMENTS - foundMessagesWithOutComments
@@ -179,11 +180,13 @@ def checkPot(fileName):
 		print(
 			"The following messages are no longer present in the source code "
 			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:",
+			file=sys.stderr,
 		)
-		print("\n".join(removedTranslatableMessages))
+		print("\n".join(removedTranslatableMessages), file=sys.stderr)
 	print(
 		f"{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors, "
 		f"{len(removedTranslatableMessages)} messages marked as expected errors not present in the source code",
+		file=sys.stderr,
 	)
 	return errors + unexpectedSuccesses + len(removedTranslatableMessages)
 

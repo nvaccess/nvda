@@ -190,6 +190,13 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 				)
 		return cell
 
+	def _inTable(self, info: textInfos.TextInfo) -> bool:
+		try:
+			self._getTableCellCoords(info)
+			return True
+		except LookupError:
+			return False
+
 	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
 		"""
 		Fetches information about the deepest table dimension.
@@ -552,7 +559,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 
 	script_speakRow.__doc__ = _(
 		# Translators: the description for the speak row command
-		"Reads the current row horizontally from left to right " "without moving the system caret.",
+		"Reads the current row horizontally from left to right without moving the system caret.",
 	)
 	script_speakRow.speakOnDemand = True
 
@@ -561,7 +568,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 
 	script_speakColumn.__doc__ = _(
 		# Translators: the description for the speak column command
-		"Reads the current column vertically from top to bottom " "without moving the system caret.",
+		"Reads the current column vertically from top to bottom without moving the system caret.",
 	)
 	script_speakColumn.speakOnDemand = True
 

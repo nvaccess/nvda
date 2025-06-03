@@ -1916,8 +1916,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		description=_(
 			# Translators: the description for a script for Excel
-			"Reports the note on the current cell. "
-			"If pressed twice, presents the information in browse mode",
+			"Reports the note on the current cell. If pressed twice, presents the information in browse mode",
 		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,

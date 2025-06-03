@@ -111,9 +111,8 @@ def _ensureDucked():
 		_duckingRefCount += 1
 		if _isDebug():
 			log.debug("Increased ref count, _duckingRefCount=%d" % _duckingRefCount)
-		if _audioDuckingMode != AudioDuckingMode.NONE:
-			_setDuckingState(True)
 		if _duckingRefCount == 1 and _audioDuckingMode != AudioDuckingMode.NONE:
+			_setDuckingState(True)
 			delta = 0
 		else:
 			delta = time.time() - _lastDuckedTime

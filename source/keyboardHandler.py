@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -15,6 +15,7 @@ from typing import (
 	List,
 	Optional,
 	Any,
+	TypeAlias,
 )
 
 import winVersion
@@ -45,6 +46,7 @@ _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
+_ModifierT: TypeAlias = tuple[int, bool]
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -486,13 +488,22 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Some numpad keys have the same vkCode regardless of numlock.
 			# For these keys, treat numlock as a modifier.
 			modifiers.add((winUser.VK_NUMLOCK, False))
-		self.generalizedModifiers = set(
-			(self.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers
-		)
+		self.generalizedModifiers = self._generalizeModifiers(modifiers)
 		self.vkCode = vkCode
 		self.scanCode = scanCode
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
+
+	@classmethod
+	def _generalizeModifiers(cls, modifiers: _ModifierT) -> _ModifierT:
+		"""Return the input set, with specific modifiers replaced with their general equivalents.
+
+		Replaces keys like leftAlt or rightCtrl with their generic alternatives (i.e. alt or ctrl).
+
+		:param modifiers: Set of (vkCode, extended) tuples.
+		:return: A copy of the input set with the specific modifiers replaced with their general equivalents.
+		"""
+		return set((cls.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)
 
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
@@ -654,6 +665,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					# Already down.
 					continue
 				vk = winUser.VK_LWIN
+			elif vk == winUser.VK_NUMLOCK:
+				# Numlock is considered a modifier by NVDA but never by the OS.
+				continue
 			elif winUser.getKeyState(vk) & 32768:
 				# Already down.
 				continue

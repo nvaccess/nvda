@@ -6,7 +6,8 @@ There are several tasks to be done, and this document hopes to give you an overv
 
 ## Translation Mailing List
 
-Translators should subscribe to the [NVDA translations mailing list](https://groups.io/g/nvda-translations) hosted at Groups.IO.
+To monitor changes to symbols and character description files, translators should subscribe to the read-only [NVDA localisation mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n/about).
+Translators should subscribe to the [NVDA translations mailing list](https://groups.io/g/nvda-translations) for general conversations regarding translations.
 
 It is an English low traffic list devoted to the discussion of translation.
 Important messages that relate to translators will also be sent here, e.g. before official NVDA releases, to remind translators to make sure their localization is up to date.
@@ -29,8 +30,8 @@ Start by subscribing to the translation list above so that you can get help and 
 
 The current process for translation is split between multiple processes:
 
-- Crowdin for the NVDA interface and user documentation
-- Github for Character Descriptions, Symbols and Gestures.
+- [Crowdin](./crowdin.md) for the NVDA interface and user documentation
+- [Github](./github.md) for Character Descriptions, Symbols and Gestures.
 
 Read [Files to be Localized](#files-to-be-localized) to learn the translation for process for these.
 
@@ -45,13 +46,10 @@ If your language is no longer maintained, you can request to be the new maintain
 
 ## Files to be Localized
 
-These files are listed in order of importance.
-Note that linked guides may be out of date, as the translation system is undergoing the process of migration.
-
 - nvda.po: NVDA's interface messages, see [Translating using Crowdin](./crowdin.md) for more information.
-- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#characterDescriptions) for more info.
-- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#symbolPronunciation) for more information.
-- gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures) for more information.
+- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://download.nvaccess.org/documentation/developerGuide.html#characterDescriptions) for more info.
+- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://download.nvaccess.org/documentation/developerGuide.html#symbolPronunciation) for more information.
+- gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://download.nvaccess.org/documentation/developerGuide.html#TranslatingGestures) for more information.
 - userGuide.md: the User Guide, see [Translating using Crowdin](./crowdin.md) for more information.
 - changes.md (optional): a list of changes between releases, see [Translating using Crowdin](./crowdin.md) for more information.
-- Add-ons (optional): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
+- Add-ons (optional, out of date): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.

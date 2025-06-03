@@ -2,13 +2,14 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
-#  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
+# Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Container
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -19,6 +20,7 @@ import re
 import typing
 import requests
 import wx
+import wx.adv
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -33,6 +35,8 @@ import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
 	NVDAKey,
+	RemoteConnectionMode,
+	RemoteServerType,
 	ShowMessages,
 	TetherTo,
 	ParagraphStartMarker,
@@ -49,7 +53,6 @@ import gui
 import gui.contextHelp
 import globalVars
 from logHandler import log
-from remoteClient import configuration
 import audio
 import audioDucking
 import queueHandler
@@ -142,7 +145,7 @@ class SettingsDialog(
 		if log.isEnabledFor(log.DEBUG):
 			instancesState = dict(SettingsDialog._instances)
 			log.debug(
-				"Creating new settings dialog (multiInstanceAllowed:{}). " "State of _instances {!r}".format(
+				"Creating new settings dialog (multiInstanceAllowed:{}). State of _instances {!r}".format(
 					multiInstanceAllowed,
 					instancesState,
 				),
@@ -218,7 +221,7 @@ class SettingsDialog(
 			buttonFlag |= button
 		if hasApplyButton:
 			log.debugWarning(
-				"The hasApplyButton parameter is deprecated. " "Use buttons instead. ",
+				"The hasApplyButton parameter is deprecated. Use buttons instead. ",
 			)
 			buttonFlag |= wx.APPLY
 		self.hasApply = hasApplyButton or wx.APPLY in buttons
@@ -437,7 +440,7 @@ class SettingsPanel(
 		gui.messageBox(
 			message=_(
 				# Translators: Content of the message displayed when a validation error occurs in the settings dialog
-				"{message}\n" "\n" 'Category: "{category}"\n' 'Option: "{option}"',
+				'{message}\n\nCategory: "{category}"\nOption: "{option}"',
 			).format(
 				message=message,
 				category=category,
@@ -3106,46 +3109,6 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		label = _(
-			# Translators: This is a label for the
-			# "allow NVDA to control the volume of other applications"
-			# combo box in settings.
-			"&Allow NVDA to control the volume of other applications:",
-		)
-		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf,
-		)
-		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
-		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
-
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100,
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		if 0 <= volume <= 100:
-			self.appSoundVolSlider.SetValue(volume)
-		else:
-			log.error("Invalid volume level: {}", volume)
-			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
-			self.appSoundVolSlider.SetValue(defaultVolume)
-
-		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
-			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Mute other apps")),
-		)
-		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
-		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
-
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3205,15 +3168,6 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
-		self.appVolAdjusterCombo.saveCurrentValueToConf()
-		audio.appsVolume._updateAppsVolumeImpl(
-			volume=self.appSoundVolSlider.GetValue() / 100.0,
-			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
-		)
-
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -3228,10 +3182,6 @@ class AudioPanel(SettingsPanel):
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
 		self.soundVolSlider.Enable(not self.soundVolFollowCheckBox.IsChecked())
-
-		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
-		self.muteOtherAppsCheckBox.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
@@ -3368,155 +3318,260 @@ class AddonStorePanel(SettingsPanel):
 
 
 class RemoteSettingsPanel(SettingsPanel):
-	# Translators: This is the label for the remote settings category in NVDA Settings screen.
-	title = _("Remote")
-	autoconnect: wx.CheckBox
-	clientOrServer: wx.RadioBox
-	connectionType: wx.RadioBox
-	host: wx.TextCtrl
-	port: wx.SpinCtrl
-	key: wx.TextCtrl
-	playSounds: wx.CheckBox
-	deleteFingerprints: wx.Button
+	# Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
+	title = pgettext("remote", "Remote Access")
+	helpId = "RemoteSettings"
 
-	def makeSettings(self, sizer):
-		self.config = configuration.getRemoteConfig()
-		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
-		self.autoconnect = wx.CheckBox(
-			parent=self,
-			id=wx.ID_ANY,
-			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
-			label=_("Automatically connect to control server on startup"),
+	def makeSettings(self, sizer: wx.BoxSizer):
+		enabledInSecureMode: set[wx.Window] = set()
+		self.config = config.conf["remote"]
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+
+		self.enableRemote = sHelper.addItem(
+			# Translators: Label of a checkbox in Remote Access settings
+			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
 		)
-		self.autoconnect.Bind(wx.EVT_CHECKBOX, self.onAutoconnect)
-		sHelper.addItem(self.autoconnect)
-		self.clientOrServer = wx.RadioBox(
+		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
+		self.bindHelpEvent("RemoteEnable", self.enableRemote)
+
+		remoteSettingsGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
 			self,
-			wx.ID_ANY,
-			choices=(
-				# Translators: Use a remote control server
-				_("Use Remote Control Server"),
-				# Translators: Host a control server
-				_("Host Control Server"),
-			),
-			style=wx.RA_VERTICAL,
 		)
-		self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
-		self.clientOrServer.SetSelection(0)
-		self.clientOrServer.Enable(False)
-		sHelper.addItem(self.clientOrServer)
-		choices = [
-			# Translators: Radio button to allow this machine to be controlled
-			_("Allow this machine to be controlled"),
-			# Translators: Radio button to allow this machine to control another machine
-			_("Control another machine"),
-		]
-		self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
-		self.connectionType.SetSelection(0)
-		self.connectionType.Enable(False)
-		sHelper.addItem(self.connectionType)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
-		self.host = wx.TextCtrl(self, wx.ID_ANY)
-		self.host.Enable(False)
-		sHelper.addItem(self.host)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
-		self.port = wx.SpinCtrl(self, wx.ID_ANY, min=1, max=65535)
-		self.port.Enable(False)
-		sHelper.addItem(self.port)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		self.key.Enable(False)
-		sHelper.addItem(self.key)
-		# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
-		self.playSounds = wx.CheckBox(self, wx.ID_ANY, label=_("Play sounds instead of beeps"))
-		sHelper.addItem(self.playSounds)
-		# Translators: A button in Remote settings to delete all fingerprints of unauthorized certificates.
-		self.deleteFingerprints = wx.Button(self, wx.ID_ANY, label=_("Delete all trusted fingerprints"))
+		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
+		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
+		sHelper.addItem(remoteSettingsGroupHelper)
+
+		self.confirmDisconnectAsFollower = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
+				label=pgettext("remote", "Confirm before disconnecting when controlled"),
+			),
+		)
+		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
+		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
+
+		self.autoconnect = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
+				label=pgettext("remote", "Automatically &connect after NVDA starts"),
+			),
+		)
+		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
+		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
+
+		self.autoConnectGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self.remoteSettingsGroupBox,
+			# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
+			label=pgettext("remote", "Automatic connection"),
+		)
+		self.autoConnectionGroupBox: wx.StaticBox = self.autoConnectGroupSizer.GetStaticBox()
+		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=self.autoConnectGroupSizer)
+		remoteSettingsGroupHelper.addItem(autoConnectionGroupHelper)
+
+		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in Remote Access settings,
+			# allowing the user to select whether their computer is controlling or controlled.
+			pgettext("remote", "&Mode:"),
+			wx.Choice,
+			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
+		)
+		self.bindHelpEvent("RemoteAutoconnectMode", self.connectionMode)
+
+		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in Remote Access settings,
+			# allowing users to choose whether they want to use an existing server, or host their own.
+			pgettext("remote", "&Server:"),
+			wx.Choice,
+			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
+		)
+		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		self.bindHelpEvent("RemoteAutoconnectServer", self.clientOrServer)
+
+		self.host = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for the host field in Remote Access settings.
+			# This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
+			_("&Host:"),
+			wx.TextCtrl,
+		)
+		self.bindHelpEvent("RemoteAutoconnectHost", self.host)
+
+		self.port = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for the port field in Remote Access settings.
+			# This is the port on which the local control server will be accessible,
+			# if the user has chosen to host their own.
+			_("&Port:"),
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=1,
+			max=65535,
+		)
+		self.bindHelpEvent("RemoteAutoconnectPort", self.port)
+		# Since only host or port will ever be shown at once,
+		# there is no need for a vertical spacer between them.
+		# There's no way to override the insertion of such space,
+		# so remove it manually.
+		# BoxSizerHelper.addItem inserts a spacer, then the item,
+		# So the space should be the second-last child of the sizer.
+		# In some cases, BoxSizerHelper.addItem won't insert a spacer.
+		# While it should here, check that the penultimate child is a spacer,
+		# just to be sure.
+		if (item := self.autoConnectGroupSizer.GetChildren()[-2]).IsSpacer():
+			item.AssignSpacer(0, 0)
+
+		self.key = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in Remote Access settings,
+			# Where users set the key for their connection.
+			_("&Key:"),
+			wx.TextCtrl,
+		)
+		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
+
+		self.deleteFingerprints = sHelper.addItem(
+			# Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
+			wx.Button(self, label=_("Delete all trusted fingerprints")),
+		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
-		sHelper.addItem(self.deleteFingerprints)
-		self.setFromConfig()
+		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
-	def onAutoconnect(self, evt: wx.CommandEvent) -> None:
-		self.setControls()
+		self._setFromConfig()
 
-	def setControls(self) -> None:
-		state = bool(self.autoconnect.GetValue())
-		self.clientOrServer.Enable(state)
-		self.connectionType.Enable(state)
-		self.key.Enable(state)
-		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and state)
-		self.port.Enable(bool(self.clientOrServer.GetSelection()) and state)
+		if globalVars.appArgs.secure:
+			self._disableDescendants(sizer, enabledInSecureMode)
 
-	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
-		evt.Skip()
-		self.setControls()
+	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
+		"""Disable all but the specified discendant windows of this sizer.
 
-	def setFromConfig(self) -> None:
-		controlServer = self.config["controlserver"]
-		selfHosted = controlServer["self_hosted"]
-		connectionType = controlServer["connection_type"]
+		Disables all child windows, and recursively calls itself for all child sizers.
+
+		:param sizer: Root sizer whose descendents should be disabled.
+		:param excluded: Container of windows that should remain enabled.
+		"""
+		for child in sizer.GetChildren():
+			if (window := child.GetWindow()) is not None and window not in excluded:
+				window.Disable()
+			elif (subsizer := child.GetSizer()) is not None:
+				self._disableDescendants(subsizer, excluded)
+
+	def _setControls(self) -> None:
+		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
+
+		Does not set the value of controls, just which ones are enabled.
+		"""
+		self.remoteSettingsGroupBox.Enable(self.enableRemote.GetValue())
+		autoConnect = bool(self.autoconnect.GetValue())
+		self.autoConnectionGroupBox.Enable(autoConnect)
+		self.autoConnectGroupSizer.Show(
+			self.port.GetContainingSizer(),
+			bool(self.clientOrServer.GetSelection()),
+			True,
+		)
+		self.autoConnectGroupSizer.Show(
+			self.host.GetContainingSizer(),
+			not bool(self.clientOrServer.GetSelection()),
+			True,
+		)
+		self.autoConnectGroupSizer.Layout()
+		self.deleteFingerprints.Enable(len(self.config["trustedCertificates"]) > 0)
+
+	def _setFromConfig(self) -> None:
+		"""Ensure the state of the GUI matches that of the saved configuration.
+
+		Also ensures the state of the GUI is internally consistent.
+		"""
+		self.enableRemote.SetValue(self.config["enabled"])
+		controlServer = self.config["controlServer"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
-		self.clientOrServer.SetSelection(int(selfHosted))
-		self.connectionType.SetSelection(connectionType)
+		self.clientOrServer.SetSelection(int(controlServer["selfHosted"]))
+		self.connectionMode.SetSelection(controlServer["connectionMode"])
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.setControls()
-		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
+		self._setControls()
+
+	def _onEnableRemote(self, evt: wx.CommandEvent):
+		self._setControls()
+
+	def _onAutoconnect(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the auto-connection checkbox being checked or unchecked."""
+		self._setControls()
+
+	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the selected value of the client/server choice control changing."""
+		self._setControls()
 
 	def onDeleteFingerprints(self, evt: wx.CommandEvent) -> None:
-		if (
-			gui.messageBox(
-				_(
-					# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-					"When connecting to an unauthorized server, you will again be prompted to accepts its certificate.",
-				),
-				# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-				_("Are you sure you want to delete all stored trusted fingerprints?"),
-				wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
-			)
-			== wx.YES
-		):
-			self.config["trusted_certs"].clear()
+		"""Respond to presses of the delete trusted fingerprints button."""
+		deleteFingerprints = gui.messageBox(
+			pgettext(
+				"remote",
+				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
+				"This will cause NVDA to forget all previously trusted Remote Access servers. "
+				"When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
+				"Are you sure you want to continue?",
+			),
+			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
+			pgettext("remote", "Delete All Trusted Fingerprints"),
+			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+		)
+		if deleteFingerprints == wx.YES:
+			self.config["trustedCertificates"].clear()
+			self._setControls()
 		evt.Skip()
 
 	def isValid(self) -> bool:
-		if self.autoconnect.GetValue():
+		message: str | None = None
+		if self.enableRemote.GetValue() and self.autoconnect.GetValue():
 			if not self.clientOrServer.GetSelection() and (
 				not self.host.GetValue() or not self.key.GetValue()
 			):
-				gui.messageBox(
+				message = pgettext(
+					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-					_("Both host and key must be set in the Remote section."),
-					# Translators: This is the title of the dialog presented when the user tries to save the settings with the host or key field empty.
-					_("Remote Error"),
-					wx.OK | wx.ICON_ERROR,
+					"Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts.",
 				)
-				return False
 			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
-				gui.messageBox(
+				message = pgettext(
+					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					_("Both port and key must be set in the Remote section."),
-					# Translators: This is the title of the dialog presented when the user tries to save the settings with the port or key field empty.
-					_("Remote Error"),
+					"Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts.",
+				)
+			if message is not None:
+				gui.messageBox(
+					message,
+					# Translators: Title of a dialog.
+					pgettext("remote", "Remote Access Error"),
 					wx.OK | wx.ICON_ERROR,
 				)
 				return False
 		return True
 
 	def onSave(self):
-		cs = self.config["controlserver"]
-		cs["autoconnect"] = self.autoconnect.GetValue()
-		selfHosted = bool(self.clientOrServer.GetSelection())
-		connectionType = self.connectionType.GetSelection()
-		cs["self_hosted"] = selfHosted
-		cs["connection_type"] = connectionType
+		enabled = self.enableRemote.GetValue()
+		oldEnabled = self.config["enabled"]
+		self.config["enabled"] = enabled
+		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
+		controlServer = self.config["controlServer"]
+		selfHosted = self.clientOrServer.GetSelection()
+		controlServer["autoconnect"] = self.autoconnect.GetValue()
+		controlServer["selfHosted"] = bool(selfHosted)
+		controlServer["connectionMode"] = self.connectionMode.GetSelection()
 		if not selfHosted:
-			cs["host"] = self.host.GetValue()
+			controlServer["host"] = self.host.GetValue()
 		else:
-			cs["port"] = int(self.port.GetValue())
-		cs["key"] = self.key.GetValue()
-		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+			controlServer["port"] = int(self.port.GetValue())
+		controlServer["key"] = self.key.GetValue()
+
+		if enabled != oldEnabled:
+			import _remoteClient
+
+			if enabled and not _remoteClient.remoteRunning():
+				_remoteClient.initialize()
+			elif not enabled and _remoteClient.remoteRunning():
+				_remoteClient.terminate()
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -4038,6 +4093,8 @@ class AdvancedPanelControls(
 			"annotations",
 			"events",
 			"garbageHandler",
+			"remoteClient",
+			"externalPythonDependencies",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5032,7 +5089,7 @@ def showTerminationErrorForProviders(
 		message = _(
 			# Translators: This message is presented when
 			# NVDA is unable to terminate multiple vision enhancement providers.
-			"Could not gracefully terminate the following vision enhancement providers:\n" "{providerNames}",
+			"Could not gracefully terminate the following vision enhancement providers:\n{providerNames}",
 		).format(providerNames=providerNames)
 	gui.messageBox(
 		message,
@@ -5417,10 +5474,12 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		AddonStorePanel,
+		RemoteSettingsPanel,
 	]
+	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
+	# add-on update related controls.
 	if not globalVars.appArgs.secure:
-		categoryClasses.append(RemoteSettingsPanel)
+		categoryClasses.append(AddonStorePanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
@@ -5443,6 +5502,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			not NvdaSettingsDialogActiveConfigProfile
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
+			or isinstance(self.currentCategory, RemoteSettingsPanel)
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")

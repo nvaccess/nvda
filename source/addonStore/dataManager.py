@@ -113,7 +113,8 @@ class _DataManager:
 		self._initialiseAvailableAddonsThread.start()
 
 	def terminate(self):
-		self.storeSettings.save()
+		if NVDAState.shouldWriteToDisk():
+			self.storeSettings.save()
 		if self._initialiseAvailableAddonsThread.is_alive():
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
@@ -129,8 +130,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		return response.content
@@ -145,8 +145,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		cacheHash = response.json()

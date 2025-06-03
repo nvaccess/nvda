@@ -69,9 +69,8 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
-from audio import appsVolume
 from utils.displayString import DisplayStringEnum
-import remoteClient
+import _remoteClient
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -121,9 +120,9 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 #: Script category for audio streaming commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_AUDIO = _("Audio")
-#: Script category for Remote commands.
+#: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_REMOTE = _("Remote")
+SCRCAT_REMOTE = pgettext("remote", "Remote Access")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -2780,7 +2779,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			if _isDebugLogCatEnabled:
 				log.debug(
-					"No prior target summary reported:" f" lastReported: {self._annotationNav.lastReported}",
+					f"No prior target summary reported: lastReported: {self._annotationNav.lastReported}",
 				)
 			if self._annotationNav.lastReported and _isDebugLogCatEnabled:
 				log.debug(
@@ -3428,6 +3427,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to Remote Access settings command.
+		description=pgettext("remote", "Shows the Remote Access settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for opening default dictionary dialog.
 		description=_("Shows the NVDA default dictionary dialog"),
 		category=SCRCAT_CONFIG,
@@ -3753,7 +3761,7 @@ class GlobalCommands(ScriptableObject):
 			configSection="braille",
 			configKey="speakOnNavigatingByUnit",
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			enabledMsg=_("Speak when navigating by line or paragraph with braille on"),
 			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
 		)
@@ -4189,8 +4197,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the control and shift keys to emulate a "
-			"keyboard shortcut with braille input",
+			"Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4201,7 +4208,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the alt and shift keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4224,7 +4231,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the NVDA and shift keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4235,7 +4242,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the control and alt keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4473,8 +4480,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a touchscreen gesture.
-			"Reports the new object or content under your finger "
-			"if different to where your finger was last",
+			"Reports the new object or content under your finger if different to where your finger was last",
 		),
 		category=SCRCAT_TOUCH,
 		gesture="ts:hover",
@@ -4663,14 +4669,18 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 	)
 	def script_toggleReportCLDR(self, gesture):
-		if config.conf["speech"]["includeCLDR"]:
+		# We need to save a copy of the symbolDictionaries list
+		# so we can set it back afterwards so configobj knows it's changed.
+		dictionaries: list[str] = config.conf["speech"]["symbolDictionaries"].copy()
+		if "cldr" in dictionaries:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters off")
-			config.conf["speech"]["includeCLDR"] = False
+			dictionaries.remove("cldr")
 		else:
 			# Translators: presented when the report CLDR is toggled.
 			state = _("report CLDR characters on")
-			config.conf["speech"]["includeCLDR"] = True
+			dictionaries.append("cldr")
+		config.conf["speech"]["symbolDictionaries"] = dictionaries
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 
@@ -4878,109 +4888,87 @@ class GlobalCommands(ScriptableObject):
 		audio._toggleSoundSplitState()
 
 	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Increases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Decreases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(-5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Toggles application volume control on and off",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeState()
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Mutes or unmutes other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeMute()
-
-	@script(
-		# Translators: Describes a command.
-		description=_("""Mute or unmute the speech coming from the remote computer"""),
+		# Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
+		description=pgettext("remote", "Mutes or unmutes the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleMute()
+		_remoteClient._remoteClient.toggleMute()
 
 	@script(
-		gesture="kb:control+shift+NVDA+c",
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
-		description=_("Sends the contents of the clipboard to the remote machine"),
+		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
+		description=pgettext("remote", "Sends the contents of the clipboard to the remote computer"),
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.pushClipboard()
+		_remoteClient._remoteClient.pushClipboard()
 
 	@script(
-		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
-		description=_("""Copies a link to the remote session to the clipboard"""),
+		# Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
+		description=pgettext("remote", "Copies a link to the current Remote Access session to the clipboard"),
 		category=SCRCAT_REMOTE,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.copyLink()
-		# Translators: A message indicating that a link has been copied to the clipboard.
-		ui.message(_("Copied link"))
+		_remoteClient._remoteClient.copyLink()
 
 	@script(
-		gesture="kb:alt+NVDA+pageDown",
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that disconnects a remote session.
-		description=_("Disconnect a remote session"),
+		# Translators: Documentation string for the script that disconnects a Remote Access session.
+		description=pgettext("remote", "Disconnects from the current Remote Access session"),
 	)
-	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
-		if not remoteClient._remoteClient.isConnected:
+		if not _remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
-			ui.message(_("Not connected"))
+			ui.message(pgettext("remote", "Not connected"))
 			return
-		remoteClient._remoteClient.disconnect()
+		_remoteClient._remoteClient.doDisconnect()
 
 	@script(
-		gesture="kb:alt+NVDA+pageUp",
-		# Translators: Documentation string for the script that invokes the remote session.
-		description=_("""Connect to a remote computer"""),
+		# Translators: Documentation string for the script that starts a new Remote Access session.
+		description=pgettext("remote", "Connects to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
-	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	@gui.blockAction.when(
+		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
+		gui.blockAction.Context.SECURE_MODE,
+		gui.blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
-		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
+		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.connecting:
 			# Translators: A message indicating that the remote client is already connected.
 			ui.message(_("Already connected"))
 			return
-		remoteClient._remoteClient.doConnect()
+		_remoteClient._remoteClient.doConnect()
 
 	@script(
-		# Translators: Documentation string for the script that toggles the control between guest and host machine.
-		description=_("Toggles the control between guest and host machine"),
+		# Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
+		description=pgettext("remote", "Toggles whether Remote Access is connected"),
 		category=SCRCAT_REMOTE,
-		gesture="kb:NVDA+f11",
+		gesture="kb:NVDA+alt+r",
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
+	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
+		if _remoteClient._remoteClient.isConnected():
+			self.script_disconnectFromRemote(gesture)
+		else:
+			self.script_connectToRemote(gesture)
+
+	@script(
+		description=pgettext(
+			"remote",
+			# Translators: Documentation string for the script that toggles the control between guest and host computers.
+			"Switches whether the keyboard controls the local or remote computer",
+		),
+		category=SCRCAT_REMOTE,
+		gesture="kb:NVDA+alt+tab",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
+		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.
