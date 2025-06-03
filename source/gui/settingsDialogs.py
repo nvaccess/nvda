@@ -1911,12 +1911,15 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
 		"""Take action when the autoLanguageSwitching checkbox is pressed."""
-		if not self.autoLanguageSwitchingCheckbox.IsChecked():
-			# Synthesizer won't support switching to languages, so don't report if a language is not supported.
+		if self.autoLanguageSwitchingCheckbox.IsChecked():
+			# Set the default option for report not supported language.
+			reportNotSupportedLanguage = ReportNotSupportedLanguage.SPEECH
+		else:
+			# Synthesizer won't support switching to languages, so set the option to off.
 			reportNotSupportedLanguage = ReportNotSupportedLanguage.OFF
-			self.reportNotSupportedLanguageCombo.SetSelection(
-				[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
-			)
+		self.reportNotSupportedLanguageCombo.SetSelection(
+			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
+		)
 		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
 
 	def onSave(self):
