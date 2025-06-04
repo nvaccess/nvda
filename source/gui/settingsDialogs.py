@@ -322,12 +322,7 @@ class SettingsDialog(
 		Sub-classes may extend or override this method.
 		This base method should be called to run the postInit method.
 		"""
-		# Ensure that after applying, focus stays on the Apply button
-		self.setPostInitFocus = lambda: self.FindWindowById(wx.ID_APPLY).SetFocus()
-		# Show a floating message notifying user the settings are applied
-		tip = wx.TipWindow(self, "Settings successfully applied.")
-    	# Auto-close the tooltip after 3 seconds
-		wx.CallLater(3000, tip.Close)
+		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
