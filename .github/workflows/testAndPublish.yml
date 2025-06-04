@@ -266,7 +266,7 @@ jobs:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
         INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: "System tests results (${{ matrix.testSuite }})"
@@ -276,7 +276,7 @@ jobs:
           !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
         check_name: "System tests (${{ matrix.testSuite }})"
         detailed_summary: true
