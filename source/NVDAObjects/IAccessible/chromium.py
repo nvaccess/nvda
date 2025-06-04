@@ -15,7 +15,7 @@ from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
-from . import IAccessible, Groupbox
+from . import Groupbox
 
 
 if typing.TYPE_CHECKING:
