@@ -78,6 +78,6 @@ class AppModule(appModuleHandler.AppModule):
 		return statusBar
 
 	def event_NVDAObject_init(self, obj: NVDAObject):
-		# #18208: argh, "go to line" edit field is classified as a dialog.
+		# #18208: "go to line" edit field is classified as a dialog.
 		if isinstance(obj, UIA) and obj.UIAAutomationId == "LineNumberBox":
 			obj.role = controlTypes.Role.EDITABLETEXT
