@@ -55,6 +55,10 @@ from utils.displayString import DisplayStringIntEnum
 import NVDAState
 from globalCommands import SCRCAT_SYSTEMCARET
 from ._msOffice import MsoHyperlink
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from ._msOfficeChart import OfficeChart
 
 excel2010VersionMajor = 14
 
@@ -1186,7 +1190,7 @@ class ExcelWorksheet(ExcelBase):
 	def changeSelectionOrActiveCell(
 		self,
 		gesture: inputCore.InputGesture,
-		objGetter: Callable[[], ExcelCell | ExcelSelection | _msOfficeChart.OfficeChart],
+		objGetter: Callable[[], ExcelCell | ExcelSelection | OfficeChart],
 	):
 		oldSelection = objGetter()
 		gesture.send()
