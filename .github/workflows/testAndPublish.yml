@@ -234,6 +234,10 @@ jobs:
         echo "    * Packaging metadata (library modules, installed python packages)" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
+    strategy:
+      fail-fast: false
+      matrix:
+        testSuite: [chrome, installer, startupShutdown]
     name: Run system tests
     runs-on: windows-latest
     needs: createLauncher
@@ -256,29 +260,25 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
-    - name: Upload install log
-      if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Install log
-        path: |
-          testOutput/install
-          !testOutput/install/nvda_install_temp.log
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+        INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: System tests results
-        path: testOutput/system
+        name: "System tests results (${{ matrix.testSuite }})"
+        path: |
+          testOutput/system
+          testOutput/install
+          !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
-        check_name: System tests
+        check_name: "System tests (${{ matrix.testSuite }})"
         detailed_summary: true
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
