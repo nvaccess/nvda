@@ -88,6 +88,7 @@ import winVersion
 import weakref
 import time
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import ui
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
