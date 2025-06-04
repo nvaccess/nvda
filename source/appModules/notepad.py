@@ -76,3 +76,8 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError
 		statusBar = UIA(UIAElement=element).parent
 		return statusBar
+
+	def event_NVDAObject_init(self, obj: NVDAObject):
+		# #18208: argh, "go to line" edit field is classified as a dialog.
+		if isinstance(obj, UIA) and obj.UIAAutomationId == "LineNumberBox":
+			obj.role = controlTypes.Role.EDITABLETEXT
