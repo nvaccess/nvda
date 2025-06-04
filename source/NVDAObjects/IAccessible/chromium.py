@@ -15,6 +15,8 @@ from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
+from . import IAccessible, Groupbox
+
 
 if typing.TYPE_CHECKING:
 	# F401 imported but unused, actually used as a string within type annotation (to avoid having to import
@@ -197,6 +199,17 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(PresentationalList)
 	elif obj.role == controlTypes.Role.GROUPING and obj.IA2Attributes.get("tag", "").casefold() == "figure":
 		clsList.append(Figure)
+	# Prevent NVDA from treating <header> or <footer> as "grouping" unless they're landmarks
+	elif (
+		obj.role == controlTypes.Role.GROUPING
+		and obj.IA2Attributes.get("tag", "").casefold() in ("header", "footer")
+		and "container-tag" not in obj.IA2Attributes
+	):
+		try:
+			clsList.remove(Groupbox)
+		except ValueError:
+			pass
+
 	ia2Web.findExtraOverlayClasses(
 		obj,
 		clsList,

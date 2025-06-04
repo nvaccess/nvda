@@ -322,7 +322,6 @@ class SettingsDialog(
 		Sub-classes may extend or override this method.
 		This base method should be called to run the postInit method.
 		"""
-		self.postInit()
 		# Ensure that after applying, focus stays on the Apply button
 		self.setPostInitFocus = lambda: self.FindWindowById(wx.ID_APPLY).SetFocus()
 		# Show a floating message notifying user the settings are applied
