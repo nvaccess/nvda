@@ -88,6 +88,7 @@ import winVersion
 import weakref
 import time
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import ui
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -322,7 +323,11 @@ class SettingsDialog(
 		Sub-classes may extend or override this method.
 		This base method should be called to run the postInit method.
 		"""
+		# Ensure that after applying, focus stays on the Apply button
+		self.setPostInitFocus = lambda: self.FindWindowById(wx.ID_APPLY).SetFocus()
 		self.postInit()
+		# Translators: confirmation message for when settings are applied
+		core.callLater(500, ui.message, _("Settings successfully applied."))
 		self.SetReturnCode(wx.ID_APPLY)
 
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
