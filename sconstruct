@@ -419,6 +419,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	if certFile or apiSigningToken:
 		executablesToSign = (
+			"nvda_art.exe", 
 			"nvda_noUIAccess.exe",
 			"nvda_uiAccess.exe",
 			"nvda_slave.exe",
