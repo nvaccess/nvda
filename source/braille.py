@@ -1922,6 +1922,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				try:
 					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
 					if lastSpaceIndex < end:
+						# The next braille window doesn't start with space.
 						end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
 					pass  # No space on line
