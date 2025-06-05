@@ -1920,7 +1920,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				clippedEnd = True
 			elif doWordWrap:
 				try:
-					end = rindex(self.brailleCells, 0, start, end) + 1
+					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
+					if lastSpaceIndex < end:
+						end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
 					pass  # No space on line
 			self._windowRowBufferOffsets.append((start, end))
