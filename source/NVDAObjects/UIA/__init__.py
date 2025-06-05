@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Copyright (C) 2009-2025 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
 # Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
@@ -2441,14 +2441,19 @@ class UIA(Window):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		if displayString:
+			speechPriority = None
 			if notificationProcessing in (
 				UIAHandler.NotificationProcessing_ImportantMostRecent,
 				UIAHandler.NotificationProcessing_MostRecent,
 			):
 				# These notifications superseed earlier notifications.
 				# Note that no distinction is made between important and non-important.
-				speech.cancelSpeech()
-			ui.message(displayString)
+				# #17986: speak notification message as soon as possible while say all is in progress.
+				if speech.sayAll.SayAllHandler.isRunning():
+					speechPriority = speech.priorities.Spri.NOW
+				else:
+					speech.cancelSpeech()
+			ui.message(displayString, speechPriority=speechPriority)
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.
