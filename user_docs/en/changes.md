@@ -23,6 +23,7 @@
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 * NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 
 ### Changes for Developers
 
