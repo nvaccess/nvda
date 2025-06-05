@@ -876,7 +876,7 @@ class Excel7Window(ExcelBase):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def _get_focusRedirect(self):
-		selection = self._getSelection()
+		selection = self._getActiveCell()
 		dropdown = self._getDropdown(selection=selection)
 		if dropdown:
 			return dropdown
