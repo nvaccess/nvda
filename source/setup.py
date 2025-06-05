@@ -145,20 +145,6 @@ _py2ExeWindows = [
 			"company_name": publisher,
 		},
 	},
-	{
-		"script": "nvda_art.pyw",
-		"dest_base": "nvda_art",
-		"icon_resources": [(1, "images/nvda.ico")],
-		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
-		"version_info": {
-			"version": formatBuildVersionString(),
-			"description": "NVDA Add-on Runtime",
-			"product_name": name,
-			"product_version": version,
-			"copyright": NVDAcopyright,
-			"company_name": publisher,
-		},
-	},
 ]
 if _partialArgs.uiAccess:
 	_py2ExeWindows.insert(
@@ -315,4 +301,59 @@ freeze(
 			),
 		)
 	),
+)
+
+# Build nvda_art as a separate executable
+freeze(
+	version_info={
+		"version": formatBuildVersionString(),
+		"description": "NVDA Add-on Runtime",
+		"product_name": "NVDA ART",
+		"product_version": version,
+		"copyright": NVDAcopyright,
+		"company_name": publisher,
+	},
+	windows=[
+		{
+			"script": "nvda_art.pyw",
+			"dest_base": "nvda_art",
+			"icon_resources": [(1, "images/nvda.ico")],
+			"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
+			"version_info": {
+				"version": formatBuildVersionString(),
+				"description": "NVDA Add-on Runtime",
+				"product_name": "NVDA ART",
+				"product_version": version,
+				"copyright": NVDAcopyright,
+				"company_name": publisher,
+			},
+		},
+	],
+	options={
+		"verbose": 2,
+		"optimize": 1,
+		"bundle_files": 3,
+		"dist_dir": "../dist",
+		"excludes": [
+			"tkinter",
+			"netbios",
+			"win32wnet",
+			"winxptheme",
+			"numpy",
+			"multiprocessing",
+			"concurrent.futures.process",
+			"tomli",
+		],
+		"packages": [
+			"html.parser",
+		],
+		"includes": [
+			"bisect",
+		],
+	},
+	data_files=[
+		(".", ["builtin.dic"]),
+		("images", glob("images/*.ico")),
+		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
+	],
 )
