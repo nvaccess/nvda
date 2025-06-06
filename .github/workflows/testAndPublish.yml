@@ -202,9 +202,9 @@ jobs:
     - name: Create launcher
       shell: cmd
       run: |
-        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
-        PowerShell -Command "Install-PSResource -Name SignPath -TrustRepository"
         PowerShell -Command "Set-ExecutionPolicy Bypass"
+        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+        PowerShell -Command "Install-Module -Name SignPath -Force"
         scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Upload launcher
       id: uploadLauncher
