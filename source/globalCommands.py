@@ -32,6 +32,7 @@ from speech import (
 	sayAll,
 	shortcutKeys,
 )
+from speech.commands import LangChangeCommand
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -45,6 +46,7 @@ from config.configFlags import (
 	BrailleMode,
 	OutputMode,
 	TypingEcho,
+	ReportNotSupportedLanguage,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -69,6 +71,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
 
@@ -2323,7 +2326,7 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if config.conf["speech"]["autoLanguageSwitching"]:
+		if LangChangeCommand.shouldMakeLangChangeCommand():
 			for field in info.getTextWithFields({}):
 				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 					curLanguage = field.field.get("language")
@@ -4886,6 +4889,42 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=pgettext(
+			"reportLanguage",
+			# Translators: Input help mode message for report language for caret command.
+			"Reports the language for the text under the caret, and if the language is not supported by the current synthesizer. "
+			"If pressed twice, presents the information in browse mode",
+		),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
+	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
+		info = self._getTIAtCaret()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if languageDescription is None:
+			languageDescription = curLanguage
+		message = languageDescription
+		if config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value:
+			curSynth = synthDriverHandler.getSynth()
+			if not curSynth.languageIsSupported(curLanguage):
+				message = pgettext(
+					"reportLanguage",
+					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+					"{languageDescription} (not supported)",
+				).format(
+					languageDescription=languageDescription,
+				)
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(message)
+		elif repeats == 1:
+			# Translators: title for report caret language dialog.
+			title = pgettext("reportLanguage", "Language at caret position")
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
 
 	@script(
 		# Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.

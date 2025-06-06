@@ -14,6 +14,7 @@ from .commands import (
 	EndUtteranceCommand,
 	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
+	LangChangeCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
@@ -366,6 +367,9 @@ class SpeechManager(object):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
 			if isinstance(command, SynthParamCommand):
+				if isinstance(command, LangChangeCommand) and not command.shouldSwitchVoice():
+					# Language change shouldn't be passed to synthesizer.
+					continue
 				paramTracker.update(command)
 			if isinstance(command, SuppressUnicodeNormalizationCommand):
 				continue  # Not handled by speech manager
