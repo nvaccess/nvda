@@ -12,6 +12,7 @@
 
 * Component updates:
   * Updated NSIS to 3.11 (#18027, @dpy013)
+  * Updated SCons to 4.9.1. (#18069, @dpy013)
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 * When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 
