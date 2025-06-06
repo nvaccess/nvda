@@ -284,7 +284,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 	def _getTextRange(self, start, end):
 		if start == end:
 			return ""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle, start, end, False) or ""
+		return NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle, start, end, False) or ""
 
 	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
 		"""Gets the placeholder attribute to be used.
@@ -336,7 +336,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 		return command
 
 	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
-		text = NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle, start, end, True)
+		text = NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle, start, end, True)
 		if not text:
 			return [""]
 		commandList = XMLFormatting.XMLTextParser().parse(text)
@@ -570,7 +570,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle = NVDAHelper.localLib.VBuf_createBuffer(
+			self.VBufHandle = NVDAHelper.localLib.VBufRemote_bufferHandle_t()
+			self.VBufHandle.value = NVDAHelper.localLib.VBuf_createBuffer(
 				self.rootNVDAObject.appModule.helperLocalBindingHandle,
 				self.rootDocHandle,
 				self.rootID,
@@ -631,7 +632,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			try:
 				watchdog.cancellableExecute(
 					NVDAHelper.localLib.VBuf_destroyBuffer,
-					ctypes.byref(ctypes.c_int(self.VBufHandle)),
+					ctypes.byref(self.VBufHandle),
 				)
 			except WindowsError:
 				pass

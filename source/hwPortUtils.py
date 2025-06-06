@@ -20,10 +20,10 @@ from winAPI.constants import SystemErrorCodes
 from winKernel import SYSTEMTIME
 
 
-def ValidHandle(value):
-	if value == 0:
+def validHandle_errcheck(res, func, args):
+	if res == 0:
 		raise ctypes.WinError()
-	return value
+	return res
 
 
 HDEVINFO = ctypes.c_void_p
@@ -81,7 +81,8 @@ SetupDiDestroyDeviceInfoList.restype = BOOL
 
 SetupDiGetClassDevs = ctypes.windll.setupapi.SetupDiGetClassDevsW
 SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), ctypes.c_wchar_p, HWND, DWORD)
-SetupDiGetClassDevs.restype = ValidHandle  # HDEVINFO
+SetupDiGetClassDevs.restype = HDEVINFO
+SetupDiGetClassDevs.errcheck = validHandle_errcheck  # HDEVINFO
 
 SetupDiGetDeviceProperty = ctypes.windll.setupapi.SetupDiGetDevicePropertyW
 SetupDiGetDeviceProperty.argtypes = (

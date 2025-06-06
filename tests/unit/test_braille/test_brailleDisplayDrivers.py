@@ -5,6 +5,7 @@
 
 """Unit tests for braille display drivers."""
 
+import sysconfig
 from typing import Set
 from brailleDisplayDrivers import seikantk
 import unittest
@@ -179,6 +180,7 @@ class TestGestureMap(unittest.TestCase):
 					self.assertRegexpMatches(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 
+@unittest.skipUnless(sysconfig.get_platform() == "win32", "BRLTTY is only supported on 32-bit Windows")
 class TestBRLTTY(unittest.TestCase):
 	"""Tests the integrity of the bundled brlapi module."""
 

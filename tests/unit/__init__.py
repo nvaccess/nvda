@@ -134,7 +134,7 @@ import ctypes  # noqa: E402
 import NVDAHelper  # noqa: E402
 
 NVDAHelper.localLib = ctypes.cdll.LoadLibrary(
-	os.path.join(NVDAHelper.versionedLibPath, "nvdaHelperLocal.dll"),
+	os.path.join(NVDAHelper.coreArchLibPath, "nvdaHelperLocal.dll"),
 )
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole  # noqa: E402, F401
