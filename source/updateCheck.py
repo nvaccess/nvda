@@ -413,7 +413,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			tip = pgettext(
 				"updateCheck",
 				# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
-				"Make sure you are connected to the internet and try again.",
+				"Unable to establish a connection to the NV Access server.",
 			)
 		message = pgettext(
 			"updateCheck",
