@@ -19,6 +19,8 @@ import speechDictHandler
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
 
+import config
+
 
 class DictionaryEntryDialog(
 	gui.contextHelp.ContextHelpMixin,
@@ -43,6 +45,7 @@ class DictionaryEntryDialog(
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
 		super(DictionaryEntryDialog, self).__init__(parent, title=title)
+		self.SetFont(self.GetFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -144,6 +147,17 @@ class DictionaryEntryDialog(
 	def setType(self, type):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
+
 
 class DictionaryDialog(
 	SettingsDialog,
@@ -173,6 +187,7 @@ class DictionaryDialog(
 		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
+		self.SetFont(self.GetFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 		entriesLabelText = _("&Dictionary entries")

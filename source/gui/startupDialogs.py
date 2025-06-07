@@ -48,12 +48,14 @@ class WelcomeDialog(
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		WelcomeDialog._instances.add(self)
+		self.SetFont(self.GetFontFromConfig())
+		fontFaceName = self.GetFont().GetFaceName()
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 		# This is in larger, bold lettering
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
+		welcomeTextHeader.SetFont(wx.Font(wx.FontInfo(18).Bold().FaceName(fontFaceName)))
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -161,6 +163,17 @@ class WelcomeDialog(
 				instance.EndModal(wx.ID_CLOSE_ALL)
 			else:
 				cls._instances.remove(instance)
+
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
 
 
 class LauncherDialog(

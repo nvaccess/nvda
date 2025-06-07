@@ -77,6 +77,7 @@ class ExitDialog(wx.Dialog):
 		ExitDialog._instance = weakref.ref(self)
 		# Translators: The title of the dialog to exit NVDA
 		super().__init__(parent, title=_("Exit NVDA"))
+		self.SetFont(self.GetFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		warningMessages = []
@@ -184,3 +185,14 @@ class ExitDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
