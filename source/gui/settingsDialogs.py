@@ -17,7 +17,6 @@ import os
 from enum import IntEnum
 from locale import strxfrm
 import re
-from tkinter import font
 import typing
 import requests
 import wx
@@ -1010,7 +1009,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=fontChoices,
 		)
-		try :
+		try:
 			fontFaceName = config.conf["general"]["font"]
 		except KeyError:
 			# If the font is not set, use the default system font.
