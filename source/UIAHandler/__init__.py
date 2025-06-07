@@ -1064,13 +1064,13 @@ class UIAHandler(COMObject):
 					if _isDebug():
 						log.debugWarning(
 							"HandleNotificationEvent: processing element without native window handle "
-							f"at request of appModule {appMod.appName}"
+							f"at request of appModule {appMod.appName} "
 							f"using foreground window handle with handle value {window}",
 						)
 				else:
 					if _isDebug():
 						log.debugWarning(
-							"HandleNotificationEvent: native window handle not found: ",
+							"HandleNotificationEvent: native window handle not found",
 						)
 					return
 		import NVDAObjects.UIA
