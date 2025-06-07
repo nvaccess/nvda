@@ -48,7 +48,7 @@ class WelcomeDialog(
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		WelcomeDialog._instances.add(self)
-		try :
+		try:
 			fontFaceName = config.conf["general"]["font"]
 		except KeyError:
 			# If the font is not set, use the default system font.
