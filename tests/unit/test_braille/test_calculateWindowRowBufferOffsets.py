@@ -10,6 +10,7 @@ import unittest
 import braille
 import config
 
+
 def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
 	"""Used to build a braille handler with particular dimensions."""
 	return braille.DisplayDimensions(
@@ -57,9 +58,9 @@ class TestCalculate(unittest.TestCase):
 	def test_wordWrapFirstRowWithSpace(self):
 		"""Check that the first row will be truncated if it contains a space, only if word wrap is True."""
 		config.conf["braille"]["wordWrap"] = True
-		cells = [1] * (braille.handler.displayDimensions.numCols -5)
+		cells = [1] * (braille.handler.displayDimensions.numCols - 5)
 		cells.append(0)
-		cells.extend([1] * (braille.handler.displayDimensions.numCols +4))
+		cells.extend([1] * (braille.handler.displayDimensions.numCols + 4))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		expectedOffsets = [(0, 16), (16, 36)]
@@ -74,7 +75,7 @@ class TestCalculate(unittest.TestCase):
 		config.conf["braille"]["wordWrap"] = True
 		cells = [1] * braille.handler.displayDimensions.numCols
 		cells.append(0)
-		cells.extend([1] * (braille.handler.displayDimensions.numCols -1))
+		cells.extend([1] * (braille.handler.displayDimensions.numCols - 1))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		expectedOffsets = [(0, 20), (20, 40)]
