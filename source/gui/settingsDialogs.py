@@ -5291,8 +5291,8 @@ class VisionSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=fontChoices,
 		)
-		self.currentFont = self.GetFont()
-		index = [x for x in self.systemFonts].index(self.currentFont)
+		self.currentFont = self.GetFontFromConfig()
+		index = [x for x in self.systemFonts].index(self.currentFont.GetFaceName())
 		self.fontList.SetSelection(index)
 
 	def safeInitProviders(
