@@ -253,13 +253,13 @@ addTable("grc-international-en-composed.utb", _("Greek international braille (si
 addTable("grc-international-es.utb", _("Spanish for Greek text"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hbo.utb", _("Hebrew (Biblical) IHBC"))
+addTable("hbo.utb", _("Hebrew (Biblical) IHBC"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hbo-cantillated.utb", _("Hebrew (Biblical) full cantillation"))
+addTable("hbo-cantillated.utb", _("Hebrew (Biblical) full cantillation"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hbo-slim.utb", _("Hebrew (Biblical) Slim"))
+addTable("hbo-slim.utb", _("Hebrew (Biblical) Slim"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he-IL.utb", _("Israeli grade 1"))
