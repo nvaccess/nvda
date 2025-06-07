@@ -73,7 +73,7 @@ class ReadThread(Thread):
 					self._event.wait(KC_INTERVAL)
 					continue
 				log.debug(
-					f"Port {self._dev.name} present, calling {self._readFunction.__name__} " "to open it",
+					f"Port {self._dev.name} present, calling {self._readFunction.__name__} to open it",
 				)
 				self._readFunction()
 				if not self._dev.is_open:

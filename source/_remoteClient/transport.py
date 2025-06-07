@@ -33,7 +33,7 @@ import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from logging import getLogger
+from logHandler import log
 from queue import Queue
 from typing import Any, Literal, Optional, Self
 
@@ -44,8 +44,6 @@ from . import configuration
 from .connectionInfo import ConnectionInfo
 from .protocol import PROTOCOL_VERSION, RemoteMessageType, hostPortToAddress
 from .serializer import Serializer
-
-log = getLogger("transport")
 
 
 @dataclass
@@ -514,6 +512,8 @@ class TCPTransport(Transport):
 		:note: Handlers execute asynchronously on wx main thread
 		"""
 		obj = self.serializer.deserialize(line)
+		if configuration._isDebugForRemoteClient():
+			log.debug(f"Received message: {obj!r}")
 		if "type" not in obj:
 			log.warn(f"Received message without type: {obj!r}")
 			return
@@ -538,6 +538,8 @@ class TCPTransport(Transport):
 		"""
 		while True:
 			item = self.queue.get()
+			if configuration._isDebugForRemoteClient():
+				log.debug(f"Sending outbound message: {item!r}")
 			if item is None:
 				return
 			try:
@@ -556,9 +558,11 @@ class TCPTransport(Transport):
 		"""
 		if self.connected:
 			obj = self.serializer.serialize(type=type, **kwargs)
+			if configuration._isDebugForRemoteClient():
+				log.debug(f"Enqueuing outbound message: {obj!r}")
 			self.queue.put(obj)
 		else:
-			log.error(f"Attempted to send message {type} while not connected")
+			log.debugWarning(f"Attempted to send message {type} while not connected")
 
 	def _disconnect(self) -> None:
 		"""Internal method to disconnect the transport.

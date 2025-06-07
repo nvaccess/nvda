@@ -148,7 +148,7 @@ class NotepadLib:
 		except OSError as e:
 			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
 		raise AssertionError(
-			"Unable to focus Notepad.\n" f"{windowInformation}",
+			f"Unable to focus Notepad.\n{windowInformation}",
 		)
 
 	def canNotepadTitleBeReported(self, notepadTitleSpeechPattern: re.Pattern) -> bool:

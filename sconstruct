@@ -13,7 +13,7 @@ from pathlib import Path
 # Ensure we are inside the Python virtual environment, and that it is started with uv
 virtualEnv = os.getenv("VIRTUAL_ENV")
 uv = os.getenv("uv")
-if not virtualEnv or not uv or Path.cwd() not in Path(virtualEnv).resolve().parents:
+if not virtualEnv or not uv or Path.cwd() != Path(virtualEnv).parent:
 	print(
 		"Error: SCons was started outside NVDA's build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
@@ -291,6 +291,12 @@ for po in env.Glob(sourceDir.path + "/locale/*/lc_messages/*.po"):
 
 styles = os.path.join(userDocsDir.path, "styles.css")
 numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
+logo = os.path.join(sourceDir.path, "images", "nvda.ico")
+favicon = env.Command(
+	outputDir.File("favicon.ico"),
+	logo,
+	Copy("$TARGET", "$SOURCE"),
+)
 
 # Create Non-english md files in user_docs from localized xliff and English skel files
 for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
@@ -301,7 +307,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	env.Command(
 		mdFile,
 		xliffFile,
-		[f'@{sys.executable} source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+		[f'@"{sys.executable}" source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
@@ -320,11 +326,12 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.Command(
 		target=mdFile.abspath.replace(".md", ".html"),
 		source=mdFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
 	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
 	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
+	installedLogo = env.Install(styleInstallPath, favicon)
 	env.Depends(
 		htmlFile,
 		[
@@ -332,6 +339,8 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 			installedStyle,
 			numberedHeadingsStyle,
 			installedHeadingsStyle,
+			favicon,
+			installedLogo
 		],
 	)
 	env.Depends(htmlFile, mdFile)
@@ -342,7 +351,7 @@ for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.
 	keyCommandsHtmlFile = env.Command(
 		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
 		source=userGuideFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
 	)
 	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 
@@ -546,6 +555,11 @@ outputHeadingStylesFile = env.Command(
 	outputDir.File("numberedHeadings.css"),
 	userDocsDir.File("numberedHeadings.css"),
 	Copy("$TARGET", "$SOURCE"),
+)
+outputLogoFile = env.Command(
+	outputDir.File("favicon.ico"),
+	logo,
+	Copy("$TARGET", "$SOURCE")
 )
 changesFile = env.Command(
 	outputDir.File("%s_changes.html" % outFilePrefix),

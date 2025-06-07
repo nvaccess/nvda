@@ -125,7 +125,7 @@ def __getattr__(attrName: str) -> Any:
 		return SettingsPanel
 	if attrName == "ExecAndPump" and NVDAState._allowDeprecatedAPI():
 		log.warning(
-			"Importing ExecAndPump from here is deprecated. " "Import ExecAndPump from systemUtils instead. ",
+			"Importing ExecAndPump from here is deprecated. Import ExecAndPump from systemUtils instead. ",
 			# Include stack info so testers can report warning to add-on author.
 			stack_info=True,
 		)
@@ -532,7 +532,7 @@ class MainFrame(wx.Frame):
 			helpId="RunCOMRegistrationFixingTool",
 		)
 		response: int = introDialog.ShowModal()
-		if response == wx.CANCEL:
+		if response != wx.OK:
 			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
 			return
 		progressDialog = IndeterminateProgressDialog(
