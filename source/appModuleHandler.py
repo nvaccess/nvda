@@ -768,10 +768,10 @@ class AppModule(baseObject.ScriptableObject):
 	def shouldProcessUIANotificationEventNoWindowHandle(
 		self,
 		sender,
-		NotificationKind: int | None=None,
-		NotificationProcessing: int | None=None,
-		displayString: str="",
-		activityId: str=""
+		NotificationKind: int | None = None,
+		NotificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
 	) -> bool:
 		"""
 		Determines whether NVDA should process a UIA notification event

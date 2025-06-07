@@ -1057,7 +1057,7 @@ class UIAHandler(COMObject):
 					NotificationKind=NotificationKind,
 					NotificationProcessing=NotificationProcessing,
 					displayString=displayString,
-					activityId=activityId
+					activityId=activityId,
 				):
 					# Take foreground window handle as a substitute.
 					window = api.getForegroundObject().windowHandle
@@ -1065,12 +1065,12 @@ class UIAHandler(COMObject):
 						log.debugWarning(
 							"HandleNotificationEvent: processing element without native window handle "
 							f"at request of appModule {appMod.appName}"
-							f"using foreground window handle with handle value {window}"
+							f"using foreground window handle with handle value {window}",
 						)
 				else:
 					if _isDebug():
 						log.debugWarning(
-							"HandleNotificationEvent: native window handle not found: "
+							"HandleNotificationEvent: native window handle not found: ",
 						)
 					return
 		import NVDAObjects.UIA

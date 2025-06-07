@@ -565,8 +565,8 @@ class AppModule(appModuleHandler.AppModule):
 	def shouldProcessUIANotificationEventNoWindowHandle(
 		self,
 		sender,
-		activityId: str="",
-		**kwargs
+		activityId: str = "",
+		**kwargs,
 	) -> bool:
 		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
 			return True
@@ -578,7 +578,7 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler: Callable[[], None],
 		displayString: str | None = None,
 		activityId: str | None = None,
-		**kwargs
+		**kwargs,
 	) -> None:
 		# #17841: announce window states across apps (Windows 11 24H2 and later).
 		# These messages come from a File Explorer (shell) element and there is no native window handle.
