@@ -10,7 +10,6 @@ import braille
 
 
 class TestCalculate(unittest.TestCase):
-
 	def setUp(self):
 		self.handler = braille.handler
 
