@@ -1021,12 +1021,12 @@ class UIAHandler(COMObject):
 
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
 		self,
-		sender,
-		NotificationKind,
-		NotificationProcessing,
-		displayString,
-		activityId,
-	):
+		sender: UIA.IUIAutomationElement,
+		NotificationKind: int,
+		NotificationProcessing: int,
+		displayString: str,
+		activityId: str,
+	) -> None:
 		if _isDebug():
 			log.debug(
 				"handleNotificationEvent called "
@@ -1041,6 +1041,35 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
+		# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
+		# #18175: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
+		# should be announced from everywhere (applicable on Windows 11 24H2 and later).
+		# Therefore, ask app modules if notifications from these elements should be processed.
+		if not (window := self.getNearestWindowHandle(sender)):
+			try:
+				processId = sender.CachedProcessID
+			except COMError:
+				pass
+			else:
+				appMod = appModuleHandler.getAppModuleFromProcessID(processId)
+				if appMod.shouldProcessUIANotificationEventNoWindowHandle(
+					sender,
+					NotificationKind=NotificationKind,
+					NotificationProcessing=NotificationProcessing,
+					displayString=displayString,
+					activityId=activityId
+				):
+					if _isDebug():
+						log.debugWarning(
+							"HandleNotificationEvent: processing element without native window handle "
+							f"at request of appModule {appMod.appName}"
+						)
+				else:
+					if _isDebug():
+						log.debugWarning(
+							"HandleNotificationEvent: native window handle not found: "
+						)
+					return
 		import NVDAObjects.UIA
 
 		try:
