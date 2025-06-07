@@ -26,6 +26,7 @@ from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, Edit
 import config
+import ui
 from winAPI.types import HWNDValT
 
 
@@ -559,4 +560,29 @@ class AppModule(appModuleHandler.AppModule):
 					positionInfo=obj.positionInfo,
 				),
 			)
+		nextHandler()
+
+	def shouldProcessUIANotificationEventNoWindowHandle(
+		self,
+		sender,
+		activityId: str="",
+		**kwargs
+	) -> bool:
+		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
+			return True
+		return False
+
+	def event_UIA_notification(
+		self,
+		obj: NVDAObject,
+		nextHandler: Callable[[], None],
+		displayString: str | None = None,
+		activityId: str | None = None,
+		**kwargs
+	) -> None:
+		# #17841: announce window states across apps (Windows 11 24H2 and later).
+		# These messages come from a File Explorer (shell) element and there is no native window handle.
+		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
+			ui.message(displayString)
+			return
 		nextHandler()
