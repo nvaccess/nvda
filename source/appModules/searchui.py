@@ -28,23 +28,26 @@ class StartMenuSearchField(SearchField):
 		return super().description
 
 
-class StartChromiumObj(UIA):
-	def _get_shouldAllowUIAFocusEvent(self):
+class StartChromiumObj(IAccessible):
+	def _get_shouldAllowIAccessibleFocusEvent(self):
 		if self.role == controlTypes.Role.DOCUMENT:
 			# #17951: Sometimes, the results Chromium document fires a focus event and
 			# reports as focused, even though the search box still has focus. We can
 			# tell whether it is *really* focused by checking whether its
 			# Windows.UI.Core.CoreComponentInputSource ancestor has focus.
 			try:
-				return self.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.hasFocus
+				return self.parent.parent.parent.hasFocus
 			except AttributeError:
 				log.debugWarning("Couldn't find CoreInput ancestor of Chromium doc")
-		return super().shouldAllowUIAFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
-	def _get_treeInterceptorClass(self):
-		# #17951: Don't allow browse mode because setting focus with UIA hangs, which
-		# will be triggered by browse mode in various cases.
-		raise NotImplementedError
+	def isDescendantOf(self, obj):
+		# #17951: We use IA2 for the Chromium document. However, this method will be
+		# called with the UIA object being controlled by the search box to check
+		# whether it is a suggestion.
+		return (
+			isinstance(obj, UIA) and obj.UIAElement.CurrentClassName == "WebView2Standalone.Controls.WebView2"
+		)
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -69,6 +72,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ContentGenericClient)
 			except ValueError:
 				pass
+			if obj.windowClassName.startswith("Chrome_"):
+				clsList.insert(0, StartChromiumObj)
 		elif isinstance(obj, UIA):
 			if obj.UIAAutomationId == "SearchTextBox":
 				clsList.insert(0, StartMenuSearchField)
@@ -80,18 +85,13 @@ class AppModule(appModuleHandler.AppModule):
 				or isinstance(obj.parent.parent, SuggestionListItem)
 			):
 				clsList.insert(0, SuggestionListItem)
-			elif obj.windowClassName.startswith("Chrome_"):
-				clsList.insert(0, StartChromiumObj)
 
-	def isGoodUIAWindow(self, hwnd):
-		# #17951: We need to use UIA for the Chromium document in the Start menu for
-		# several reasons:
-		# 1. If we use IA2, suggestions won't be considered descendants of the (UIA)
-		# container controlled by the search box, which means they won't be reported.
-		# 2. IA2 vbufs require in-process injection. We only inject when a process
-		# gets a foreground or focus event. Because Chromium is in a separate process
-		# from the rest of the UI, it doesn't get a foreground event and only gets a
-		# focus event once focus moves inside the document, which is too late.
-		# 3. If NVDA is run without the uiAccess privilege (e.g. a portable copy), it
-		# can't inject into this process at all.
-		return winUser.getClassName(hwnd).startswith("Chrome_")
+	def isBadUIAWindow(self, hwnd):
+		# #17951: Never use UIA for the Chromium document in the Start menu because
+		# SetFocus freezes. Without this explicit code, NVDA will try to use UIA:
+		# 1. If we haven't injected yet. This can happen before focus is fired
+		# within the Chromium document. Since it is in a different process, it
+		# doesn't fire foreground and focus events as soon as the Start Menu opens.
+		# 2. If we can't inject at all, which happens if we don't have the uiAccess
+		# privilege.
+		return winUser.getClassName(hwnd) == "Chrome_RenderWidgetHostHWND"
