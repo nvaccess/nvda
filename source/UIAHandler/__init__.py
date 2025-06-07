@@ -1042,7 +1042,7 @@ class UIAHandler(COMObject):
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
-		# #18175: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
+		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
 		# should be announced from everywhere (applicable on Windows 11 24H2 and later).
 		# Therefore, ask app modules if notifications from these elements should be processed.
 		if not (window := self.getNearestWindowHandle(sender)):
