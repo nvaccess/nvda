@@ -7,6 +7,7 @@
 ### New Features
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* In Windows 11 2024 Update and Server 2025 and later, NVDA will announce foreground window states such as restore, maximize, and snap when changing window position by pressing Windows+arrow keys. (#17841, #18175, @josephsl)
 
 ### Changes
 
