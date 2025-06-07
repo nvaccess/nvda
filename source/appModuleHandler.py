@@ -765,6 +765,26 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return True
 
+	def shouldProcessUIANotificationEventNoWindowHandle(
+		self,
+		sender,
+		NotificationKind: int | None=None,
+		NotificationProcessing: int | None=None,
+		displayString: str="",
+		activityId: str=""
+	) -> bool:
+		"""
+		Determines whether NVDA should process a UIA notification event
+		for an element without native window handle.
+		Sometimes notification events can be fired on a UIAElement that has no windowHandle
+		and does not connect through parents back to the desktop.
+		Returning False will cause the event to be dropped completely.
+		Returning True means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+		"""
+		return False
+
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
