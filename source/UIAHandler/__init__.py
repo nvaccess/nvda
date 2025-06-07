@@ -1059,10 +1059,13 @@ class UIAHandler(COMObject):
 					displayString=displayString,
 					activityId=activityId
 				):
+					# Take foreground window handle as a substitute.
+					window = api.getForegroundObject().windowHandle
 					if _isDebug():
 						log.debugWarning(
 							"HandleNotificationEvent: processing element without native window handle "
 							f"at request of appModule {appMod.appName}"
+							f"using foreground window handle with handle value {window}"
 						)
 				else:
 					if _isDebug():
@@ -1073,7 +1076,7 @@ class UIAHandler(COMObject):
 		import NVDAObjects.UIA
 
 		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender, windowHandle=window)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
@@ -1085,8 +1088,7 @@ class UIAHandler(COMObject):
 				)
 			return
 		if not obj:
-			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
-			# There is nothing we can do with these.
+			# Sometimes UIA object can be None despite setting window handle to something else.
 			if _isDebug():
 				log.debug(
 					"HandleNotificationEvent: Ignoring because no object: "
