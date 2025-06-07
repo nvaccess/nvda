@@ -4,6 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from tkinter import font
 from typing import Set
 import weakref
 import wx
@@ -48,11 +49,8 @@ class WelcomeDialog(
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		WelcomeDialog._instances.add(self)
-		try:
-			fontFaceName = config.conf["general"]["font"]
-		except KeyError:
-			# If the font is not set, use the default system font.
-			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		self.SetFont(self.GetFontFromConfig())
+		fontFaceName = self.GetFont().GetFaceName()
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
@@ -63,14 +61,12 @@ class WelcomeDialog(
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
-		welcomeTextDetail.SetFont(wx.Font(wx.FontInfo(10).FaceName(fontFaceName)))
 		mainSizer.Add(welcomeTextDetail, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 
 		# Translators: The label for a group box containing the NVDA welcome dialog options.
 		optionsLabel = _("Options")
 		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
 		optionsBox = optionsSizer.GetStaticBox()
-		optionsBox.SetFont(wx.Font(wx.FontInfo(10).FaceName(fontFaceName)))
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -168,6 +164,17 @@ class WelcomeDialog(
 				instance.EndModal(wx.ID_CLOSE_ALL)
 			else:
 				cls._instances.remove(instance)
+
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
 
 
 class LauncherDialog(

@@ -67,7 +67,7 @@ class _SetURLDialog(SettingsDialog):
 		super().__init__(parent, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer: wx.Sizer):
-		self.SetFont(wx.Font(wx.FontInfo(10).FaceName(config.conf["general"]["font"])))
+		self.SetFont(self.GetFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self._urlControl = urlControl = settingsSizerHelper.addLabeledControl(
 			# Translators: The label of a text box asking the user for a URL.
