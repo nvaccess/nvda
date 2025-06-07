@@ -19,7 +19,6 @@ def _getDisplayDimensions(dimensions: "DisplayDimensions") -> "DisplayDimensions
 
 
 class TestCalculate(unittest.TestCase):
-
 	def setUp(self):
 		braille.filter_displayDimensions.register(_getDisplayDimensions)
 
