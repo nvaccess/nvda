@@ -518,7 +518,7 @@ requires-dist = [
     { name = "schedule", specifier = "==1.2.2" },
     { name = "typing-extensions", specifier = "==4.12.2" },
     { name = "url-normalize", specifier = "==1.4.3" },
-    { name = "wxpython", specifier = "==4.2.2" },
+    { name = "wxpython", specifier = "==4.2.3" },
 ]
 
 [package.metadata.requires-dev]
@@ -1136,14 +1136,13 @@ wheels = [
 
 [[package]]
 name = "wxpython"
-version = "4.2.2"
+version = "4.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy", marker = "sys_platform == 'win32'" },
-    { name = "six", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/f5/8c272764770f47fd419cc2eff4c4fa1c0681c71bcc2f3158b3a83d1339ff/wxPython-4.2.2.tar.gz", hash = "sha256:5dbcb0650f67fdc2c5965795a255ffaa3d7b09fb149aa8da2d0d9aa44e38e2ba", size = 57358880, upload-time = "2024-09-12T02:44:55.263Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/d9/4451392d3d6ba45aa23aa77a6f1a9970b43351b956bf61e10fd513a1dc38/wxPython-4.2.3.tar.gz", hash = "sha256:20d6e0c927e27ced85643719bd63e9f7fd501df6e9a8aab1489b039897fd7c01", size = 58861286, upload-time = "2025-04-10T02:49:43.557Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2d/49/ff72728cc7964b01982b6f6677e21f517beb4cc3424a350b651f55ad1ec7/wxPython-4.2.2-cp311-cp311-win32.whl", hash = "sha256:f63863d52272f8c841b22e7128a339b6d93f3e4d8307d98ea346fa1ec6fbc13b", size = 14366610, upload-time = "2024-09-12T02:44:14.302Z" },
-    { url = "https://files.pythonhosted.org/packages/0c/97/d829af5e0ea3472b1988dfd3e286c269c8207841b31bb73feb01494676a6/wxPython-4.2.2-cp311-cp311-win_amd64.whl", hash = "sha256:008c55c60abb3dd66229e1849f10f6a7d5b9af9cc62de40fb9dec144686b5c4d", size = 16408142, upload-time = "2024-09-12T02:44:16.835Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/28/18fc80c1ae7bdbbb2c03f6bc995b328b3518e5b3cd69a01fa5354b9acfa4/wxpython-4.2.3-cp311-cp311-win32.whl", hash = "sha256:4e5028d7092701ab20b3bef4547d6a7d528d82f12192d72595eeb98b2ebe6364", size = 14496540, upload-time = "2025-04-10T02:48:57.311Z" },
+    { url = "https://files.pythonhosted.org/packages/da/8a/beb38cf4c74a6d8587372aef86c00dde6fec2c8d88292b8e36389aa9dc73/wxpython-4.2.3-cp311-cp311-win_amd64.whl", hash = "sha256:9040fe6ae7e0fd1b33c7020c392a08f94d205614a24e23b9c7a3a74a9836140d", size = 16562662, upload-time = "2025-04-10T02:48:59.804Z" },
 ]
