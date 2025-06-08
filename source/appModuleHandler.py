@@ -775,15 +775,17 @@ class AppModule(baseObject.ScriptableObject):
 	) -> bool:
 		"""
 		Determines whether NVDA should process a UIA notification event
-		for an element without native window handle.
-		Sometimes notification events can be fired on a UIAElement that has no windowHandle
-		and does not connect through parents back to the desktop.
+		By default, events from elements with window handle value set
+		and traversable back to the desktop will be accepted.
 		Returning False will cause the event to be dropped completely.
 		Returning True means that the event will be processed, but it might still
 		be rejected later; e.g. because it isn't native UIA, because
 		shouldAcceptEvent returns False, etc.
 		"""
-		return False
+		import UIAHandler
+
+		# By default, see if UIA tree can be traversed to arrive at the desktop element.
+		return bool(UIAHandler.handler.getNearestWindowHandle(sender))
 
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
