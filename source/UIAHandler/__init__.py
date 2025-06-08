@@ -1044,35 +1044,34 @@ class UIAHandler(COMObject):
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
 		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
 		# should be announced from everywhere (applicable on Windows 11 24H2 and later).
-		# Therefore, ask app modules if notifications from these elements should be processed.
+		# Therefore, ask app modules if notifications (including from these elements) should be processed.
+		try:
+			processId = sender.CachedProcessID
+		except COMError:
+			pass
+		else:
+			appMod = appModuleHandler.getAppModuleFromProcessID(processId)
+			if not appMod.shouldProcessUIANotificationEvent(
+				sender,
+				NotificationKind=NotificationKind,
+				NotificationProcessing=NotificationProcessing,
+				displayString=displayString,
+				activityId=activityId,
+			):
+				if _isDebug():
+					log.debugWarning(
+						"HandleNotificationEvent: dropping notification event "
+						f"at request of appModule {appMod.appName}",
+					)
+				return
+		# Take foreground window handle as a substitute if window handle is not set.
 		if not (window := self.getNearestWindowHandle(sender)):
-			try:
-				processId = sender.CachedProcessID
-			except COMError:
-				pass
-			else:
-				appMod = appModuleHandler.getAppModuleFromProcessID(processId)
-				if appMod.shouldProcessUIANotificationEventNoWindowHandle(
-					sender,
-					NotificationKind=NotificationKind,
-					NotificationProcessing=NotificationProcessing,
-					displayString=displayString,
-					activityId=activityId,
-				):
-					# Take foreground window handle as a substitute.
-					window = api.getForegroundObject().windowHandle
-					if _isDebug():
-						log.debugWarning(
-							"HandleNotificationEvent: processing element without native window handle "
-							f"at request of appModule {appMod.appName} "
-							f"using foreground window handle with handle value {window}",
-						)
-				else:
-					if _isDebug():
-						log.debugWarning(
-							"HandleNotificationEvent: native window handle not found",
-						)
-					return
+			window = api.getForegroundObject().windowHandle
+			if _isDebug():
+				log.debugWarning(
+					"HandleNotificationEvent: native window handle not found, "
+					f"using foreground window handle {window}",
+				)
 		import NVDAObjects.UIA
 
 		try:

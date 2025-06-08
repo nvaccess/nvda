@@ -562,7 +562,7 @@ class AppModule(appModuleHandler.AppModule):
 			)
 		nextHandler()
 
-	def shouldProcessUIANotificationEventNoWindowHandle(
+	def shouldProcessUIANotificationEvent(
 		self,
 		sender,
 		activityId: str = "",

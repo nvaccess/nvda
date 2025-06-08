@@ -765,7 +765,7 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return True
 
-	def shouldProcessUIANotificationEventNoWindowHandle(
+	def shouldProcessUIANotificationEvent(
 		self,
 		sender,
 		NotificationKind: int | None = None,
