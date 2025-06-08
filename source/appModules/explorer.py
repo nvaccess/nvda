@@ -570,7 +570,7 @@ class AppModule(appModuleHandler.AppModule):
 	) -> bool:
 		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
 			return True
-		return False
+		return super().shouldProcessUIANotificationEvent(sender, **kwargs)
 
 	def event_UIA_notification(
 		self,
