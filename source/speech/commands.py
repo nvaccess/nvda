@@ -204,6 +204,7 @@ class LangChangeCommand(SynthParamCommand):
 			config.conf["speech"]["autoLanguageSwitching"]
 			and config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
 		)
+
 	def __repr__(self):
 		return "LangChangeCommand (%r)" % self.lang
 

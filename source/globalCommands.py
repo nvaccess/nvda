@@ -46,7 +46,6 @@ from config.configFlags import (
 	BrailleMode,
 	OutputMode,
 	TypingEcho,
-	ReportNotSupportedLanguage,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
