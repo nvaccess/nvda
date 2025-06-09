@@ -174,6 +174,9 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 			self._storyLength = textInfo.charCount
 		return self._storyLength
 
+	def _getStoryText(self) -> str:
+		return self._getTextRange(0, self._getStoryLength())
+
 	def _getTextRange(self, start: int, end: int) -> str:
 		# Java needs end of range as last character, not one past the last character
 		text = self.obj.jabContext.getAccessibleTextRange(start, end - 1)
@@ -194,7 +197,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return (start, end)
 
 	def _getParagraphOffsets(self, offset: int) -> tuple[int, int]:
-		return self._getLineOffsets(offset)
+		return super()._getLineOffsets(offset)
 
 	def _getFormatFieldAndOffsets(self, offset: int, formatConfig, calculateOffsets=True):
 		attribs: JABHandler.AccessibleTextAttributesInfo

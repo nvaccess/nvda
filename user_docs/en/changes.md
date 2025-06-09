@@ -23,6 +23,7 @@
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 * NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 
 ### Changes for Developers
 
