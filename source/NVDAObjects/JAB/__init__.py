@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2025 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner, hwf1324
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import ctypes
 import re
 from typing import (
-	Dict,
 	Any,
 )
 import eventHandler
@@ -22,7 +21,7 @@ import textInfos.offsets
 from logHandler import log
 from locationHelper import RectLTWH
 
-JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
+JABRolesToNVDARoles: dict[str, controlTypes.Role] = {
 	"alert": controlTypes.Role.DIALOG,
 	"column header": controlTypes.Role.TABLECOLUMNHEADER,
 	"canvas": controlTypes.Role.CANVAS,
@@ -127,6 +126,10 @@ def _processHtml(text: str) -> str:
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	# Provides IntelliSense and type hints for IDE.
+	obj: "JAB"
+
 	def _getOffsetFromPoint(self, x: int, y: int) -> int:
 		info = self.obj.jabContext.getAccessibleTextInfo(x, y)
 		offset = max(min(info.indexAtPoint, info.charCount - 1), 0)
