@@ -4894,7 +4894,7 @@ class GlobalCommands(ScriptableObject):
 		description=pgettext(
 			"reportLanguage",
 			# Translators: Input help mode message for report language for caret command.
-			"Reports the language for the text under the caret, and if the language is not supported by the current synthesizer. "
+			"Reports the language for the text under the caret. "
 			"If pressed twice, presents the information in browse mode",
 		),
 		category=SCRCAT_SYSTEMCARET,
@@ -4908,7 +4908,7 @@ class GlobalCommands(ScriptableObject):
 		if languageDescription is None:
 			languageDescription = curLanguage
 		message = languageDescription
-		if config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value:
+		if LangChangeCommand.shouldReportNotSupported():
 			curSynth = synthDriverHandler.getSynth()
 			if not curSynth.languageIsSupported(curLanguage):
 				message = pgettext(
