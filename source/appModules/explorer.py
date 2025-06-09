@@ -565,20 +565,29 @@ class AppModule(appModuleHandler.AppModule):
 	def shouldProcessUIANotificationEvent(
 		self,
 		sender,
+		NotificationKind: int | None = None,
+		NotificationProcessing: int | None = None,
+		displayString: str = "",
 		activityId: str = "",
-		**kwargs,
 	) -> bool:
 		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
 			return True
-		return super().shouldProcessUIANotificationEvent(sender, **kwargs)
+		return super().shouldProcessUIANotificationEvent(
+			sender,
+			NotificationKind=NotificationKind,
+			NotificationProcessing=NotificationProcessing,
+			displayString=displayString
+			activityId=activityId,
+		)
 
 	def event_UIA_notification(
 		self,
 		obj: NVDAObject,
 		nextHandler: Callable[[], None],
-		displayString: str | None = None,
-		activityId: str | None = None,
-		**kwargs,
+		NotificationKind: int | None = None,
+		NotificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
 	) -> None:
 		# #17841: announce window states across apps (Windows 11 24H2 and later).
 		# These messages come from a File Explorer (shell) element and there is no native window handle.
