@@ -2426,10 +2426,10 @@ class UIA(Window):
 
 	def event_UIA_notification(
 		self,
-		notificationKind: Optional[int] = None,
-		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-		displayString: Optional[str] = None,
-		activityId: Optional[str] = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: str | None = None,
+		activityId: str | None = None,
 	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
