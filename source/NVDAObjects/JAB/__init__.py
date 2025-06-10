@@ -126,7 +126,6 @@ def _processHtml(text: str) -> str:
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
-	# Provides IntelliSense and type hints for IDE.
 	obj: "JAB"
 
 	def _getOffsetFromPoint(self, x: int, y: int) -> int:
