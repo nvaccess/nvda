@@ -184,7 +184,8 @@ class AppModule(appModuleHandler.AppModule):
 					ImeCandidateItem,  # IME candidate items
 					NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
 				),
-			) or api.getFocusObject().appModule == self
+			)
+			or api.getFocusObject().appModule == self
 		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
