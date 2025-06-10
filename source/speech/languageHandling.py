@@ -18,7 +18,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 	:param speechSequence: The original speech sequence.
 	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
 	"""
-	if not LangChangeCommand.shouldMakeLangChangeCommand():
+	if not shouldMakeLangChangeCommand():
 		return speechSequence
 	curSynth = synthDriverHandler.getSynth()
 	filteredSpeechSequence = list()
@@ -61,3 +61,18 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		speech._speechState.lastReportedLanguage = item.lang
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
+
+def shouldSwitchVoice() -> bool:
+	"""Determines if the current synthesizer should switch to the voice corresponding to the language of the text been read."""
+	return config.conf["speech"]["autoLanguageSwitching"]
+
+def shouldMakeLangChangeCommand() -> bool:
+	"""Determines if NVDA should get the language of the text been read."""
+	return config.conf["speech"]["autoLanguageSwitching"] or config.conf["speech"]["reportLanguage"]
+
+def shouldReportNotSupported() -> bool:
+	"""Determines if NVDA should report if the language is not supported by the synthesizer."""
+	return (
+		config.conf["speech"]["autoLanguageSwitching"]
+		and config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
+	)

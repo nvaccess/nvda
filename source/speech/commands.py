@@ -187,24 +187,6 @@ class LangChangeCommand(SynthParamCommand):
 		self.lang = lang
 		self.isDefault = not lang
 
-	@staticmethod
-	def shouldSwitchVoice() -> bool:
-		"""Determines if the current synthesizer should switch to the voice corresponding to the language of the text been read."""
-		return config.conf["speech"]["autoLanguageSwitching"]
-
-	@staticmethod
-	def shouldMakeLangChangeCommand() -> bool:
-		"""Determines if NVDA should get the language of the text been read."""
-		return config.conf["speech"]["autoLanguageSwitching"] or config.conf["speech"]["reportLanguage"]
-
-	@staticmethod
-	def shouldReportNotSupported() -> bool:
-		"""Determines if NVDA should report if the language is not supported by the synthesizer."""
-		return (
-			config.conf["speech"]["autoLanguageSwitching"]
-			and config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
-		)
-
 	def __repr__(self):
 		return "LangChangeCommand (%r)" % self.lang
 
