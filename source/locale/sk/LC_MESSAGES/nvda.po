@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-22 03:03+0000\n"
-"PO-Revision-Date: 2025-05-25 23:05\n"
+"POT-Creation-Date: 2025-06-05 06:26+0000\n"
+"PO-Revision-Date: 2025-06-10 00:38\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -5968,7 +5968,7 @@ msgstr "Prepína medzi dostupnými režimami oddelenia zvukov od hlasového výs
 #: globalCommands.py:4894
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
-msgstr "Stĺmi alebo obnoví reč zo vzdialeného počítača"
+msgstr "Stlmí alebo obnoví reč vzdialeného počítača"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
 #: globalCommands.py:4904
@@ -5980,7 +5980,7 @@ msgstr "Odošle obsach schránky do vzdialeného počítača"
 #: globalCommands.py:4912
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
-msgstr "Skopíruje do schránky informácie o vzdielanom pripojení"
+msgstr "Skopíruje do schránky informácie o vzdialenom pripojení"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
 #: globalCommands.py:4922
@@ -8213,7 +8213,8 @@ msgstr "Skontrolujte dostupnosť internetového pripojenia a skúste to znovu."
 msgctxt "updateCheck"
 msgid "Error checking for update.\n"
 "{tip}"
-msgstr "Pri kontrole aktualizácií nastala chyba. {tip}"
+msgstr "Pri kontrole aktualizácií nastala chyba.\n"
+"{tip}"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to apply an NVDA update.
@@ -9937,7 +9938,7 @@ msgstr "DotPad brailový a grafický zobrazovač"
 #. Translators: Label for a setting that allows the user to choose the destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:102
 msgid "Braille destination"
-msgstr "Zdroj brailového výstupu"
+msgstr "Cieľ brailového výstupu"
 
 #. Translators: A destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:251
@@ -11578,7 +11579,7 @@ msgstr "Upozornenie"
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
 msgid "Validating URL..."
-msgstr "Overujem URL adresu..."
+msgstr "Overovanie adresy URL..."
 
 #. Translators: Message shown to users when testing a given URL has succeeded.
 #: gui\_SetURLDialog.py:175
@@ -11691,7 +11692,8 @@ msgstr "Opravný nástroj zapisuje zmeny, prosím čakajte..."
 #, python-brace-format
 msgid "The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr "Nepodarilo sa uložiť zmeny z dôvodu nasledujúcej chyby: {error}"
+msgstr "Nepodarilo sa uložiť zmeny z dôvodu nasledujúcej chyby:\n"
+"{error}"
 
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
 #: gui\__init__.py:573
@@ -12941,7 +12943,7 @@ msgstr "Nedostatočné oprávnenia"
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1133 gui\settingsDialogs.py:3305
 msgid "No mirror"
-msgstr "Žiadny zdroj"
+msgstr "Žiadny alternatívny zdroj"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 #: gui\settingsDialogs.py:1152
@@ -15388,7 +15390,7 @@ msgstr "Autor"
 #: gui\addonStoreGui\viewModels\addonList.py:95
 msgctxt "addonStore"
 msgid "Date"
-msgstr "Dátumu"
+msgstr "Dátum"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -18754,13 +18756,13 @@ msgstr "Pole Hostiteľ nesmie ostať prázdne."
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr "Generujem kľúč"
+msgstr "Generovanie kľúča"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr "Generujem kľúč..."
+msgstr "Generovanie kľúča..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
@@ -18847,8 +18849,7 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr "Nepodarilo sa overiť certifikát tohto servera. Použitím nesprávneho odtlačku certifikátu môže dôjsť k zneužitiu \n"
-"údajov.\n"
+msgstr "Nepodarilo sa overiť certifikát tohto servera. Použitím nesprávneho odtlačku certifikátu môže dôjsť k zneužitiu údajov.\n\n"
 "pred pokračovaním sa uistite, že nasledujúci odtlačok certifikátu je správny.\n"
 "Odtlačok Servera SHA256: {fingerprint}\n\n"
 "Želáte si pokračovať?"
@@ -18872,13 +18873,13 @@ msgstr "Nepodarilo sa odoslať príkaz ctrl+alt+delete"
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
 msgid "Mute remote"
-msgstr "Stlmiť reč na vzdialenom počítači"
+msgstr "Stlmiť reč vzdialeného počítača"
 
 #. Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr "Stĺmi hlas a zvuky zo vzdialeného počítača."
+msgstr "Stlmí reč a zvuky zo vzdialeného počítača."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42

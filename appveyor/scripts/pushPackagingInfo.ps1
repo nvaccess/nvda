@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop";
 if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
-	# Not a pr build 
+	# Not a pr build
 	if ($env:APPVEYOR_REPO_BRANCH -eq "beta" -and $env:feature_crowdinSync) {
 		# Upload files to Crowdin for translation
 		uv run --with requests --directory appveyor crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
