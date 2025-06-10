@@ -173,13 +173,18 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Logic for the following items is handled by overlay classes
+		# #18236: for others, event_selection method from base NVDA object will be invoked,
+		# and on Windows 11, this causes speech repetitions because emoji panel takes system focus
+		# if the event handler is allowed to run through its course.
 		# Therefore pass these events straight on.
-		if isinstance(
-			obj,
-			(
-				ImeCandidateItem,  # IME candidate items
-				NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
-			),
+		if (
+			isinstance(
+				obj,
+				(
+					ImeCandidateItem,  # IME candidate items
+					NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
+				),
+			) or api.getFocusObject().appModule == self
 		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
