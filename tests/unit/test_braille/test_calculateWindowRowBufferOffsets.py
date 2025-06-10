@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022-2025 NV Access Limited, Noelia Ruiz Martínez
 
-"""Unit tests for the _calculate function in the braille module."""
+"""Unit tests for the _calculateWindowRowBufferOffsets function in the braille module."""
 
 import unittest
 
@@ -71,7 +71,7 @@ class TestCalculate(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_wordWrapSecondRowStartsWithSpace(self):
-		"""Check that the first row won't be truncated if the next wrow starts with a space, even if word wrap is True."""
+		"""Check that the first row won't be truncated if the next row starts with a space, even if word wrap is True."""
 		config.conf["braille"]["wordWrap"] = True
 		cells = [1] * braille.handler.displayDimensions.numCols
 		cells.append(0)
