@@ -12,6 +12,10 @@
 
 * Component updates:
   * Updated NSIS to 3.11 (#18027, @dpy013)
+  * Updated LibLouis Braille translator to [3.34.0](https://github.com/liblouis/liblouis/releases/tag/v3.34.0). (#18227, @LeonarddeR, @codeofdusk)
+    * Added new tables for Biblical Hebrew as well as for Russian 6 dot computer braille and Thai Grade 2.
+    * Substantial updates to Lithuanian braille tables.
+    * Small improvements to Hungarian, Dutch, Norwegian and Turkish tables.
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 * When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 
