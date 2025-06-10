@@ -62,13 +62,16 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
 
+
 def shouldSwitchVoice() -> bool:
 	"""Determines if the current synthesizer should switch to the voice corresponding to the language of the text been read."""
 	return config.conf["speech"]["autoLanguageSwitching"]
 
+
 def shouldMakeLangChangeCommand() -> bool:
 	"""Determines if NVDA should get the language of the text been read."""
 	return config.conf["speech"]["autoLanguageSwitching"] or config.conf["speech"]["reportLanguage"]
+
 
 def shouldReportNotSupported() -> bool:
 	"""Determines if NVDA should report if the language is not supported by the synthesizer."""
