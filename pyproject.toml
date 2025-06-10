@@ -283,6 +283,7 @@ reportUnknownMemberType = false  # 20000+ errors
 default-groups = "all"
 python-preference = "only-system"
 environments = ["sys_platform == 'win32'"]
+required-version = ">=0.7.9"
 
 [tool.setuptools]
 package-dir = {"" = "source"}
