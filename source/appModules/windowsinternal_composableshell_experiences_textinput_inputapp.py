@@ -171,7 +171,7 @@ class AppModule(appModuleHandler.AppModule):
 	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
 	disableBrowseModeByDefault: bool = True
 
-	def event_UIA_elementSelected(self, obj, nextHandler):
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
 		# Logic for the following items is handled by overlay classes
 		# #18236: for others, event_selection method from base NVDA object will be invoked,
 		# and on Windows 11, this causes speech repetitions because emoji panel takes system focus
