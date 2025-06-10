@@ -26,6 +26,10 @@
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 * NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
+* In the Start Menu in Windows 11 24H2: (#17951, @jcsteh)
+  * NVDA no longer sometimes incorrectly switches to browse mode soon after entering the Start Menu.
+  * NVDA no longer sometimes freezes when navigating in browse mode.
+  * Search suggestions are now reported reliably.
 
 ### Changes for Developers
 
