@@ -11,7 +11,6 @@
 ### Changes
 
 * Component updates:
-  * Updated NSIS to 3.11 (#18027, @dpy013)
   * Updated LibLouis Braille translator to [3.34.0](https://github.com/liblouis/liblouis/releases/tag/v3.34.0). (#18227, @LeonarddeR, @codeofdusk)
     * Added new tables for Biblical Hebrew as well as for Russian 6 dot computer braille and Thai Grade 2.
     * Substantial updates to Lithuanian braille tables.
@@ -33,6 +32,8 @@
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Component updates:
+  * Updated SCons to 4.9.1. (#18069, @dpy013)
+  * Updated NSIS to 3.11 (#18027, @dpy013)
   * Updated Ruff to 0.11.12. (#17671)
   * Updated pre-commit to 4.2.0. (#17671)
   * Updated pyright to 1.1.401. (#17671)
