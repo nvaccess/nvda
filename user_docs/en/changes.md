@@ -30,6 +30,7 @@
   * NVDA no longer sometimes incorrectly switches to browse mode soon after entering the Start Menu.
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
+* In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 
 ### Changes for Developers
 
