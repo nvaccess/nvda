@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2024 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2025 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -171,15 +171,21 @@ class AppModule(appModuleHandler.AppModule):
 	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
 	disableBrowseModeByDefault: bool = True
 
-	def event_UIA_elementSelected(self, obj, nextHandler):
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
 		# Logic for the following items is handled by overlay classes
+		# #18236: for others, event_selection method from base NVDA object will be invoked,
+		# and on Windows 11, this causes speech repetitions because emoji panel takes system focus
+		# if the event handler is allowed to run through its course.
 		# Therefore pass these events straight on.
-		if isinstance(
-			obj,
-			(
-				ImeCandidateItem,  # IME candidate items
-				NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
-			),
+		if (
+			isinstance(
+				obj,
+				(
+					ImeCandidateItem,  # IME candidate items
+					NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
+				),
+			)
+			or api.getFocusObject().appModule == self
 		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
