@@ -1931,7 +1931,7 @@ This option is disabled by default.
 
 ##### Report if language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
 
-This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer.
+This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer. If Automatic Language switching is disabled, this option won't take effect, and the combo box will be disabled.
 
 | . {.hideHeaderRow} |.|
 |---|---|
