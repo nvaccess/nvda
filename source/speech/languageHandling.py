@@ -55,7 +55,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 				):
 					filteredSpeechSequence.append(langDesc)
 					filteredSpeechSequence.append(BeepCommand(500, 50))
-			case False if (not shouldReportNotSupported() and config.conf["speech"]["reportLanguage"]):
+			case False if not shouldReportNotSupported() and config.conf["speech"]["reportLanguage"]:
 				# We need this to use the formatted string when appropriate, to avoid appending (not supported).
 				filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
