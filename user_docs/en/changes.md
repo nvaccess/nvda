@@ -26,6 +26,7 @@
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 * NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
+* In Windows 11 Notepad, NVDA will announce values typed into the "Line number" field of the "Go to line" dialog when "speak typed characters" is set to "only in edit controls". (#18208, @josephsl)
 * In the Start Menu in Windows 11 24H2: (#17951, @jcsteh)
   * NVDA no longer sometimes incorrectly switches to browse mode soon after entering the Start Menu.
   * NVDA no longer sometimes freezes when navigating in browse mode.

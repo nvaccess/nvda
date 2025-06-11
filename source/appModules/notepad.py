@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Joseph Lee
+# Copyright (C) 2022-2025 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -76,3 +76,8 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError
 		statusBar = UIA(UIAElement=element).parent
 		return statusBar
+
+	def event_NVDAObject_init(self, obj: NVDAObject):
+		# #18208: "go to line" edit field is classified as a dialog.
+		if isinstance(obj, UIA) and obj.UIAAutomationId == "LineNumberBox":
+			obj.role = controlTypes.Role.EDITABLETEXT
