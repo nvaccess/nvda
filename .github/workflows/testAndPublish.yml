@@ -392,13 +392,9 @@ jobs:
       shell: bash
       id: deployRelease
       run: |
-        export NVDA_EXE=$(ls output/nvda*.exe | head -n 1)
-        export NVDA_HASH=$(sha1sum "$NVDA_EXE" | cut -d ' ' -f 1)
-        echo SHA256=$(sha256sum "$NVDA_EXE" | cut -d ' ' -f 1)  >> $GITHUB_OUTPUT
-
-        sudo apt-get install jq
-        # Copy the entire environment to the payload, filtering out only NVDA related variables.
-        export payload=$(jq -c -n 'env | to_entries | map(select(.key | startswith("NVDA"))) | from_entries')
+        export NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        export NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+        echo SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)  >> $GITHUB_OUTPUT
 
         gh api \
           --method POST \
@@ -406,19 +402,18 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/deployments \
           -f "task=release" \
+          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
           -f "ref=${{ github.ref_name }}" \
           -F "auto_merge=false" \
           -f "environment=production" \
-          -f "payload=$payload" \
           -f "required_contexts[]" \
-          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
-      env:
-        GH_TOKEN: ${{ github.token }}
-        NVDA_API_VERSION: ${{ needs.buildNVDA.outputs.APIversion }}
-        NVDA_API_COMPAT_TO: ${{ needs.buildNVDA.outputs.APIbackCompat }}
-        NVDA_VERSION: ${{ needs.buildNVDA.outputs.version }}
-        NVDA_VERSION_TYPE: ${{ needs.buildNVDA.outputs.versionType }}
-        NVDA_DOWNLOAD_URL: ${{ needs.createLauncher.outputs.launcherUrl }}
+          -f "payload[NVDA_EXE_NAME]=$NVDA_EXE_NAME" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
