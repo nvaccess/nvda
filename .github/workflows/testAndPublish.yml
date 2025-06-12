@@ -357,19 +357,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
 
-  deployAlpha:
-    name: Deploy NVDA alpha
+  deploySnapshot:
+    name: Deploy NVDA snapshot
     permissions:
       contents: write
       deployments: write
     runs-on: ubuntu-latest
     needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-')}}
     concurrency:
-      group: alpha
+      group: snapshot
       cancel-in-progress: true
     environment:
-      name: alpha
+      name: snapshot
     steps:
     - name: Get NVDA launcher
       uses: actions/download-artifact@v4
@@ -394,7 +394,7 @@ jobs:
           -f "description=Release of $NVDA_EXE_NAME" \
           -f "ref=${{ github.ref_name }}" \
           -F "auto_merge=true" \
-          -f "environment=alpha" \
+          -f "environment=snapshot" \
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
           -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
