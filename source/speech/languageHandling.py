@@ -37,10 +37,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
 		if shouldReportNotSupported() and not curSynth.languageIsSupported(item.lang):
-			if (
-				config.conf["speech"]["reportNotSupportedLanguage"]
-				== ReportNotSupportedLanguage.SPEECH.value
-			):
+			if config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.SPEECH.value:
 				filteredSpeechSequence.append(
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 					pgettext("languageNotSupported", "{lang} (not supported)").format(lang=langDesc),
@@ -49,7 +46,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 				filteredSpeechSequence.append(langDesc)
 				filteredSpeechSequence.append(BeepCommand(500, 50))
 		elif config.conf["speech"]["reportLanguage"]:
-				filteredSpeechSequence.append(langDesc)
+			filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
