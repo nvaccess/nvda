@@ -390,9 +390,11 @@ jobs:
         echo VT_URL=$vtUrl >> $GITHUB_OUTPUT
     - name: Deploy release
       shell: bash
+      id: deployRelease
       run: |
         export NVDA_EXE=$(ls output/nvda*.exe | head -n 1)
         export NVDA_HASH=$(sha1sum "$NVDA_EXE" | cut -d ' ' -f 1)
+        echo SHA256=$(sha256sum "$NVDA_EXE" | cut -d ' ' -f 1)  >> $GITHUB_OUTPUT
 
         sudo apt-get install jq
         # Copy the entire environment to the payload, filtering out only NVDA related variables.
@@ -428,6 +430,7 @@ jobs:
         body: |
           * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
           * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+          * SHA256 sum: `${{ steps.deployRelease.outputs.SHA256 }}`
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
@@ -440,3 +443,4 @@ jobs:
         body: |
           * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
           * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+          * SHA256 sum: `${{ steps.deployRelease.outputs.SHA256 }}`
