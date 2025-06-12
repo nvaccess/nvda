@@ -239,9 +239,10 @@ jobs:
       id: addJobSummary
       shell: bash
       run: |
-        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
         SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
         echo SHA256=$SHA256 >> $GITHUB_OUTPUT
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * SHA256 of launcher exe file: \`$SHA256\`" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
@@ -399,8 +400,8 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        export NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
-        export NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
 
         gh api \
           --method POST \
@@ -413,7 +414,6 @@ jobs:
           -F "auto_merge=false" \
           -f "environment=production" \
           -f "required_contexts[]" \
-          -f "payload[NVDA_EXE_NAME]=$NVDA_EXE_NAME" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
           -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
