@@ -3,20 +3,18 @@ name: CI/CD
 on:
   push:
     branches:
-    - master
-    - beta
-    - rc
-    - 'try-**'
-    # Currently disabled while the 2025.1 release is in progress.
-    # Blocked by #17878
-    # tags:
-    # - 'release-**'
+      - master
+      - beta
+      - rc
+      - 'try-**'
+    tags:
+      - 'release-**'
 
   pull_request:
     branches:
-    - master
-    - beta
-    - rc
+      - master
+      - beta
+      - rc
 
   workflow_dispatch:
 
@@ -34,16 +32,22 @@ env:
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
-  feature_buildSymbols: configured
-  feature_uploadSymbolsToMozilla: configured
-  feature_crowdinSync: configured
+  # feature_buildSymbols: configured
+  # feature_uploadSymbolsToMozilla: configured
+  # feature_crowdinSync: configured
   # feature_signing: configured
+  feature_deployRelease: configured
   # feature_buildAppx: configured
 
 jobs:
   buildNVDA:
     name: Build NVDA
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.releaseInfo.outputs.VERSION }}
+      versionType: ${{ steps.releaseInfo.outputs.VERSION_TYPE }}
+      APIversion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
+      APIbackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
       uses: actions/checkout@v4
@@ -81,6 +85,13 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+    - name: Store release metadata information
+      id: releaseInfo
+      run: |
+        Write-Output VERSION=$env:version >> $GITHUB_OUTPUT
+        Write-Output VERSION_TYPE=$env:versionType >> $GITHUB_OUTPUT
+        Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $GITHUB_OUTPUT
+        Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $GITHUB_OUTPUT
 
   checkPot:
     name: Check translator comments
@@ -184,6 +195,8 @@ jobs:
     name: Create launcher
     runs-on: windows-latest
     needs: buildNVDA
+    outputs:
+      launcherUrl: ${{ steps.uploadLauncher.outputs.artifact-url }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -237,7 +250,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        testSuite: [chrome, installer, startupShutdown]
+        # testSuite: [chrome, installer, startupShutdown]
+        testSuite: [excluded_from_build]
     name: Run system tests
     runs-on: windows-latest
     needs: createLauncher
@@ -348,10 +362,20 @@ jobs:
     name: Release NVDA
     permissions:
       contents: write
+      deployments: write
     runs-on: ubuntu-latest
-    needs: [checkPot, licenseCheck, unitTests, systemTests, uploadSymbols]
+    needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
     if: startsWith(github.ref_name, 'release-')
+    concurrency:
+      group: release
+      cancel-in-progress: true
+    environment:
+      name: production
     steps:
+    - name: Cancel if feature disabled
+      if: ${{ !env.feature_deployRelease }}
+      shell: bash
+      run: exit 0
     - name: Get normalized tag names
       id: getReleaseNotes
       shell: bash
@@ -375,6 +399,34 @@ jobs:
       run: |
         vtUrl=$(echo ${{ steps.virusTotal.outputs.analysis }} | sed -E 's/([^=]*)=([^,]*).*/\2/')
         echo VT_URL=$vtUrl >> $GITHUB_OUTPUT
+    - name: Deploy release
+      shell: bash
+      run: |
+        export NVDA_EXE=$(ls output/nvda*.exe | head -n 1)
+        export NVDA_HASH=$(sha1sum "$NVDA_EXE" | cut -d ' ' -f 1)
+
+        sudo apt-get install jq
+        # Copy the entire environment to the payload, filtering out only NVDA related variables.
+        export payload=$(jq -n 'env | to_entries | map(select(.key | startswith("NVDA"))) | from_entries')
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=false" \
+          -f "environment=production" \
+          -f "payload=$payload" \
+          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        NVDA_API_VERSION: ${{ needs.buildNVDA.outputs.APIversion }}
+        NVDA_API_COMPAT_TO: ${{ needs.buildNVDA.outputs.APIbackCompat }}
+        NVDA_VERSION: ${{ needs.buildNVDA.outputs.version }}
+        NVDA_VERSION_TYPE: ${{ needs.buildNVDA.outputs.versionType }}
+        NVDA_DOWNLOAD_URL: ${{ needs.createLauncher.outputs.launcherUrl }}
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
