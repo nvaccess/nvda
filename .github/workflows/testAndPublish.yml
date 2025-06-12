@@ -32,11 +32,9 @@ env:
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
-  # feature_buildSymbols: configured
   # feature_uploadSymbolsToMozilla: configured
   # feature_crowdinSync: configured
   # feature_signing: configured
-  feature_deployRelease: configured
   # feature_buildAppx: configured
 
 jobs:
@@ -174,10 +172,8 @@ jobs:
     needs: buildNVDA
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
     steps:
-    - name: Skip if feature disabled
-      if: ${{ !env.feature_crowdinSync }}
-      run: exit 0
     - name: Checkout cached build
+      if: ${{ env.feature_crowdinSync }}
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}
@@ -186,6 +182,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
+      if: ${{ env.feature_crowdinSync }}
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
@@ -302,10 +299,6 @@ jobs:
     runs-on: windows-latest
     needs: buildNVDA
     steps:
-    - name: Cancel if feature disabled
-      if: ${{ !env.feature_buildSymbols }}
-      shell: bash
-      run: exit 0
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
@@ -372,10 +365,6 @@ jobs:
     environment:
       name: production
     steps:
-    - name: Cancel if feature disabled
-      if: ${{ !env.feature_deployRelease }}
-      shell: bash
-      run: exit 0
     - name: Get normalized tag names
       id: getReleaseNotes
       shell: bash
@@ -419,7 +408,7 @@ jobs:
           -F "auto_merge=false" \
           -f "environment=production" \
           -f "payload=$payload" \
-          -F "required_contexts=[]" \
+          -f "required_contexts[]" \
           -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
       env:
         GH_TOKEN: ${{ github.token }}
