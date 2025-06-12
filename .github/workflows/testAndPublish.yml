@@ -419,6 +419,7 @@ jobs:
           -F "auto_merge=false" \
           -f "environment=production" \
           -f "payload=$payload" \
+          -F "required_contexts=[]" \
           -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
       env:
         GH_TOKEN: ${{ github.token }}
