@@ -86,10 +86,10 @@ jobs:
     - name: Store release metadata information
       id: releaseInfo
       run: |
-        Write-Output VERSION=$env:version >> $GITHUB_OUTPUT
-        Write-Output VERSION_TYPE=$env:versionType >> $GITHUB_OUTPUT
-        Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $GITHUB_OUTPUT
-        Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $GITHUB_OUTPUT
+        Write-Output VERSION=$env:version >> $env:GITHUB_OUTPUT
+        Write-Output VERSION_TYPE=$env:versionType >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $env:GITHUB_OUTPUT
 
   checkPot:
     name: Check translator comments
@@ -237,7 +237,7 @@ jobs:
     - name: Add job summary
       shell: bash
       run: |
-        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) (${{ steps.uploadLauncher.outputs.artifact-digest }})" >> $GITHUB_STEP_SUMMARY
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) >> $GITHUB_STEP_SUMMARY
         echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
