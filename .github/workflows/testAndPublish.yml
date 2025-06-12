@@ -409,7 +409,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/deployments \
           -f "task=release" \
-          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}"
+          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
           -f "ref=${{ github.ref_name }}" \
           -F "auto_merge=false" \
           -f "environment=production" \
