@@ -194,6 +194,7 @@ jobs:
     needs: buildNVDA
     outputs:
       launcherUrl: ${{ steps.uploadLauncher.outputs.artifact-url }}
+      launcherSha256: ${{ steps.addJobSummary.outputs.SHA256 }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -235,9 +236,13 @@ jobs:
           output/library_modules.txt
           output/installed_python_packages.txt
     - name: Add job summary
+      id: addJobSummary
       shell: bash
       run: |
         echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+        echo SHA256=$SHA256 >> $GITHUB_OUTPUT
+        echo "    * SHA256 of launcher exe file: \`$SHA256\`" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
@@ -391,10 +396,11 @@ jobs:
     - name: Deploy release
       shell: bash
       id: deployRelease
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         export NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
         export NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
-        echo SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)  >> $GITHUB_OUTPUT
 
         gh api \
           --method POST \
@@ -425,7 +431,7 @@ jobs:
         body: |
           * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
           * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
-          * SHA256 sum: `${{ steps.deployRelease.outputs.SHA256 }}`
+          * SHA256 sum: `${{ needs.createLauncher.outputs.launcherSha256 }}`
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
@@ -438,4 +444,4 @@ jobs:
         body: |
           * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
           * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
-          * SHA256 sum: `${{ steps.deployRelease.outputs.SHA256 }}`
+          * SHA256 sum: `${{ needs.createLauncher.outputs.launcherSha256 }}`
