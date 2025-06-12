@@ -391,7 +391,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/deployments \
           -f "task=release" \
-          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          -f "description=Release of $NVDA_EXE_NAME" \
           -f "ref=${{ github.ref_name }}" \
           -F "auto_merge=true" \
           -f "environment=alpha" \
@@ -455,7 +455,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/deployments \
           -f "task=release" \
-          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          -f "description=Release of $NVDA_EXE_NAME" \
           -f "ref=${{ github.ref_name }}" \
           -F "auto_merge=false" \
           -f "environment=production" \
@@ -466,28 +466,28 @@ jobs:
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
           -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
           -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+    - name: Create release notes
+      id: createReleaseNotes
+      shell: bash
+      run: |
+        echo "* Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)." >> /tmp/releaseNotes.md
+        echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
+        echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: true
-        make_latest: false
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
-          * SHA256 sum: `${{ needs.createLauncher.outputs.launcherSha256 }}`
+      shell: bash
+      run: |
+        gh release create  \
+          --prerelease \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: false
-        make_latest: true
-        discussion_category_name: Releases
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
-          * SHA256 sum: `${{ needs.createLauncher.outputs.launcherSha256 }}`
+      shell: bash
+      run: |
+        gh release create  \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag \
+          --discussion-category Releases
