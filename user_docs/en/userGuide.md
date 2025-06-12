@@ -1929,9 +1929,10 @@ This checkbox allows you to toggle whether NVDA should report the detected langu
 The language configured to be used by default won't be reported.
 This option is disabled by default.
 
-##### Report if language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
+##### Report when switching to language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
 
-This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer. If Automatic Language switching is disabled, this option won't take effect, and the combo box will be disabled.
+This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer.
+If [Automatic Language switching](#SpeechSettingsLanguageSwitching) is disabled, this option won't take effect, and the combo box will be readonly.
 
 | . {.hideHeaderRow} |.|
 |---|---|
