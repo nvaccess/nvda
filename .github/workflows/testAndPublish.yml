@@ -476,6 +476,8 @@ jobs:
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         gh release create  \
           --prerelease \
@@ -485,6 +487,8 @@ jobs:
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         gh release create  \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
