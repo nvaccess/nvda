@@ -357,6 +357,52 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
 
+  deployAlpha:
+    name: Deploy NVDA alpha
+    permissions:
+      contents: write
+      deployments: write
+    runs-on: ubuntu-latest
+    needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    concurrency:
+      group: alpha
+      cancel-in-progress: true
+    environment:
+      name: alpha
+    steps:
+    - name: Get NVDA launcher
+      uses: actions/download-artifact@v4
+      with:
+        name: NVDA launcher
+        path: output
+    - name: Deploy snapshot
+      shell: bash
+      id: deploySnapshot
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "description=Release of ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=true" \
+          -f "environment=alpha" \
+          -f "required_contexts[]" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+
   release:
     name: Release NVDA
     permissions:
