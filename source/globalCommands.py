@@ -31,6 +31,7 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
+	languageHandling,
 )
 from speech.commands import LangChangeCommand
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -4907,7 +4908,7 @@ class GlobalCommands(ScriptableObject):
 		if languageDescription is None:
 			languageDescription = curLanguage
 		message = languageDescription
-		if LangChangeCommand.shouldReportNotSupported():
+		if languageHandling.shouldReportNotSupported():
 			curSynth = synthDriverHandler.getSynth()
 			if not curSynth.languageIsSupported(curLanguage):
 				message = pgettext(
