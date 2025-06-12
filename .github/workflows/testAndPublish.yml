@@ -408,6 +408,7 @@ jobs:
     permissions:
       contents: write
       deployments: write
+      discussions: write
     runs-on: ubuntu-latest
     needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
     if: startsWith(github.ref_name, 'release-')
