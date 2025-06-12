@@ -398,7 +398,7 @@ jobs:
 
         sudo apt-get install jq
         # Copy the entire environment to the payload, filtering out only NVDA related variables.
-        export payload=$(jq -n 'env | to_entries | map(select(.key | startswith("NVDA"))) | from_entries')
+        export payload=$(jq -c -n 'env | to_entries | map(select(.key | startswith("NVDA"))) | from_entries')
 
         gh api \
           --method POST \
