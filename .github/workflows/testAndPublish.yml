@@ -237,7 +237,7 @@ jobs:
     - name: Add job summary
       shell: bash
       run: |
-        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) >> $GITHUB_STEP_SUMMARY
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
