@@ -215,24 +215,19 @@ jobs:
       id: uploadLauncher
       uses: actions/upload-artifact@v4
       with:
-        name: NVDA launcher
-        path: output/nvda*.exe
+        name: NVDA launcher and controller client
+        path: |
+          output/nvda*.exe
+          output/nvda*controllerClient.zip
     - name: Upload documentation artifacts
       uses: actions/upload-artifact@v4
-      id: uploadDocsArtifacts
+      id: uploadBuildArtifacts
       with:
-        name: Documentation files
+        name: Documentation files and packaging metadata
         path: |
           output/devDocs
           output/*.html
           output/*.css
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      id: uploadBuildArtifacts
-      with:
-        name: Controller client and packaging metadata
-        path: |
-          output/nvda*controllerClient.zip
           output/library_modules.txt
           output/installed_python_packages.txt
     - name: Add job summary
@@ -244,10 +239,9 @@ jobs:
         echo SHA256=$SHA256 >> $GITHUB_OUTPUT
         echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * SHA256 of launcher exe file: \`$SHA256\`" >> $GITHUB_STEP_SUMMARY
-        echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
-        echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
-        echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
-        echo "    * Packaging metadata (library modules, installed python packages)" >> $GITHUB_STEP_SUMMARY
+        echo "* [Download the documentation and other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        echo "    * User guide, change log, developer guide" >> $GITHUB_STEP_SUMMARY
+        echo "    * Packaging metadata: library modules, installed python packages" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
     strategy:
@@ -304,6 +298,8 @@ jobs:
     name: Upload symbols
     runs-on: windows-latest
     needs: buildNVDA
+    outputs:
+      symbolsUrl: ${{ steps.uploadArtifact.outputs.artifact-url }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -315,7 +311,8 @@ jobs:
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
       run: ci/scripts/buildSymbolStore.ps1
-    - name: Upload symbols
+    - name: Upload symbols artifact
+      id: uploadArtifact
       uses: actions/upload-artifact@v4
       with:
         name: Symbols
@@ -395,6 +392,7 @@ jobs:
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
           -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[SYMBOLS_DOWNLOAD_URL]=${{ needs.uploadSymbols.outputs.symbolsUrl }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
           -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
