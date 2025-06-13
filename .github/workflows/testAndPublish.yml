@@ -98,7 +98,7 @@ jobs:
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: makePot results
@@ -138,19 +138,19 @@ jobs:
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       # Junit reports fail on these
       shell: bash
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: Unit tests results
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
         check_name: Unit tests
         detailed_summary: true
