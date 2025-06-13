@@ -197,7 +197,7 @@ if apiSigningToken:
 		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
-				ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				ps_cmd = rf"PowerShell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
