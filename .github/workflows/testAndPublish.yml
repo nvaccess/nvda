@@ -3,20 +3,18 @@ name: CI/CD
 on:
   push:
     branches:
-    - master
-    - beta
-    - rc
-    - 'try-**'
-    # Currently disabled while the 2025.1 release is in progress.
-    # Blocked by #17878
-    # tags:
-    # - 'release-**'
+      - master
+      - beta
+      - rc
+      - 'try-**'
+    tags:
+      - 'release-**'
 
   pull_request:
     branches:
-    - master
-    - beta
-    - rc
+      - master
+      - beta
+      - rc
 
   workflow_dispatch:
 
@@ -44,6 +42,11 @@ jobs:
   buildNVDA:
     name: Build NVDA
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.releaseInfo.outputs.VERSION }}
+      versionType: ${{ steps.releaseInfo.outputs.VERSION_TYPE }}
+      APIversion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
+      APIbackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
       uses: actions/checkout@v4
@@ -81,6 +84,13 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+    - name: Store release metadata information
+      id: releaseInfo
+      run: |
+        Write-Output VERSION=$env:version >> $env:GITHUB_OUTPUT
+        Write-Output VERSION_TYPE=$env:versionType >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $env:GITHUB_OUTPUT
 
   checkPot:
     name: Check translator comments
@@ -184,6 +194,9 @@ jobs:
     name: Create launcher
     runs-on: windows-latest
     needs: buildNVDA
+    outputs:
+      launcherUrl: ${{ steps.uploadLauncher.outputs.artifact-url }}
+      launcherSha256: ${{ steps.addJobSummary.outputs.SHA256 }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -225,9 +238,14 @@ jobs:
           output/library_modules.txt
           output/installed_python_packages.txt
     - name: Add job summary
+      id: addJobSummary
       shell: bash
       run: |
-        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) (${{ steps.uploadLauncher.outputs.artifact-digest }})" >> $GITHUB_STEP_SUMMARY
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+        echo SHA256=$SHA256 >> $GITHUB_OUTPUT
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        echo "    * SHA256 of launcher exe file: \`$SHA256\`" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
         echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
@@ -237,6 +255,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown]
     name: Run system tests
     runs-on: windows-latest
@@ -316,7 +335,7 @@ jobs:
       # TODO: this script should be moved to ci/scripts
       run: uv run --with requests --directory appveyor mozillaSyms.py
       env:
-        mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_AUTH_TOKEN }}
+        mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_TOKEN }}
     - name: Warn on failure
       if: ${{ failure() }}
       shell: bash
@@ -344,13 +363,66 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
 
+  deploySnapshot:
+    name: Deploy NVDA snapshot
+    permissions:
+      contents: write
+      deployments: write
+    runs-on: ubuntu-latest
+    needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
+    if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-')}}
+    concurrency:
+      group: snapshot
+      cancel-in-progress: true
+    environment:
+      name: snapshot
+    steps:
+    - name: Get NVDA launcher
+      uses: actions/download-artifact@v4
+      with:
+        name: NVDA launcher
+        path: output
+    - name: Deploy snapshot
+      shell: bash
+      id: deploySnapshot
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "description=Release of $NVDA_EXE_NAME" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=true" \
+          -f "environment=snapshot" \
+          -f "required_contexts[]" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+
   release:
     name: Release NVDA
     permissions:
       contents: write
+      deployments: write
+      discussions: write
     runs-on: ubuntu-latest
-    needs: [checkPot, licenseCheck, unitTests, systemTests, uploadSymbols]
+    needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, uploadSymbols]
     if: startsWith(github.ref_name, 'release-')
+    concurrency:
+      group: release
+      cancel-in-progress: true
+    environment:
+      name: production
     steps:
     - name: Get normalized tag names
       id: getReleaseNotes
@@ -375,26 +447,60 @@ jobs:
       run: |
         vtUrl=$(echo ${{ steps.virusTotal.outputs.analysis }} | sed -E 's/([^=]*)=([^,]*).*/\2/')
         echo VT_URL=$vtUrl >> $GITHUB_OUTPUT
+    - name: Deploy release
+      shell: bash
+      id: deployRelease
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "description=Release of $NVDA_EXE_NAME" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=false" \
+          -f "environment=production" \
+          -f "required_contexts[]" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+    - name: Create release notes
+      id: createReleaseNotes
+      shell: bash
+      run: |
+        echo "* Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)." >> /tmp/releaseNotes.md
+        echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
+        echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: true
-        make_latest: false
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create ${{github.ref_name }} \
+          --repo ${{ github.repository }} \
+          --prerelease \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: false
-        make_latest: true
-        discussion_category_name: Releases
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create ${{github.ref_name }} \
+          --repo ${{ github.repository }} \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag \
+          --discussion-category Releases
