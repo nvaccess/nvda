@@ -13,16 +13,12 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	Structure,
 	c_uint,
 	byref,
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
-)
-from ctypes.wintypes import (
-	WORD,
-	DWORD,
+	string_at,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
@@ -60,17 +56,7 @@ Handlers are called with the same arguments as L{playWaveFile} as keyword argume
 """
 
 
-class WAVEFORMATEX(Structure):
-	_fields_ = [
-		("wFormatTag", WORD),
-		("nChannels", WORD),
-		("nSamplesPerSec", DWORD),
-		("nAvgBytesPerSec", DWORD),
-		("nBlockAlign", WORD),
-		("wBitsPerSample", WORD),
-		("cbSize", WORD),
-	]
-
+from NVDAHelper.localLib import WAVEFORMATEX
 
 WAVE_FORMAT_PCM = 1
 
@@ -333,6 +319,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 		# turn off trimming temporarily.
 		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
+		if not isinstance(data, bytes):
+			data = string_at(data, size)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,
