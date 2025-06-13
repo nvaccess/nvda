@@ -45,31 +45,52 @@ PowerShell scripts continue on non-terminating errors unless the file is prefixe
 
 The repository hosting GitHub Actions must be configured correctly for different parts of the build process.
 
+### Publisher name
+
+Our releases are packaged with a publisher name.
+To customise this, set:
+
+* `PUBLISHER_NAME` as a variable.
+It currently defaults to the repostiory owner (e.g. `nvaccess`).
+
+### Build number offset
+
+To offset from our previous build system, we start the sequential build count at a higher number than 0.
+This means our first build will be numbered something like 100,001 not 1.
+
+To offset build numbers, set;
+
+* `BUILD_NUMBER_OFFSET` as a variable.
+It currently defaults to 0.
+
 ### Crowdin
 
 NVDA translations are synced with Crowdin on the beta branch.
 
-The repository requires:
+To enable, set:
 
-* `CROWDIN_PROJECT_ID` as a GitHub Actions variable.
-* `CROWDIN_AUTH_TOKEN` as a GitHub Actions secret.
-
-This can be disabled by commenting out `feature_crowdinSync`.
+* `CROWDIN_PROJECT_ID` as a variable.
+* `CROWDIN_AUTH_TOKEN` as a secret.
 
 ### Code signing
 
 NV Access signs snapshot/tagged builds with SignPath.
-The repository requires `API_SIGNING_TOKEN`as a GitHub Actions secret.
 
-This can be disabled by commenting out `feature_signing`.
+To enable, set:
+
+* `API_SIGNING_TOKEN` as a secret with your SignPath token.
+* `feature_signing` as a variable with any non-empty string.
 
 ### Uploading symbols
 
 NVDA uploads its build symbols to Mozilla to help them with debugging on snapshot/tagged builds.
-The repository requires `MOZILLA_SYMS_TOKEN`as a GitHub Actions secret.
-Generating this requires direct co-ordination with Mozilla.
 
-This can be disabled by commenting out `feature_uploadSymbolsToMozilla`.
+To enable, set:
+
+* `MOZILLA_SYMS_TOKEN` as a secret.
+* `feature_uploadSymbolsToMozilla` as a variable with any non-empty string.
+
+Generating this requires direct co-ordination with Mozilla.
 
 ### GitHub Environments
 
@@ -83,13 +104,15 @@ Used for tagged releases of NVDA.
 It's recommended to enable deployment protection rules so that a human can confirm the deployment of a built tagged release staged for deployment.
 This is so any desired testing can get manually confirmed, and communications for the release can be prepared.
 
-Config:
+Configuration:
 
 * Name: `production`
 * Enable required reviewers: this ensures a human must confirm deployment of a staged release
 * Under "Deployment branches and tags", create a tag rule: `release-*`
 
 #### snapshot
+
+Configuration:
 
 * Name: `snapshot`
 * Do not enable required reviewers: this is not needed for snapshots.
@@ -111,7 +134,7 @@ Ensure a secret is set and SSL is enabled.
 
 NV Access scans tagged builds with VirusTotal.
 
-The repository requires `VT_API_KEY`as a GitHub Actions secret.
+Set `VT_API_KEY` as a secret to perform tagged builds.
 
 ### GitHub Discussions category
 
