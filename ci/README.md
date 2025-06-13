@@ -105,6 +105,8 @@ Create a GitHub webhook to subscribe to snapshot/tagged builds of NVDA, and use 
 
 Under events, only subscribe to the Deployments event.
 
+Ensure a secret is set and SSL is enabled.
+
 ### VirusTotal scanning
 
 NV Access scans tagged builds with VirusTotal.
