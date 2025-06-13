@@ -4,75 +4,65 @@
 # See the file COPYING for more details.
 # NLS eReader Zoomax driver for NVDA.
 
-import time
+import bdDetect
 import braille
-import inputCore
-from logHandler import log
 import brailleInput
 import hwIo
-import bdDetect
+import inputCore
 import serial
+import time
+from dataclasses import dataclass
+from enum import Enum
+from logHandler import log
+from typing import Optional, Tuple, Dict
 
 TIMEOUT_SEC = 0.2
 BAUD_RATE = 19200
 CONNECT_RETRIES = 5
 TIMEOUT_BETWEEN_RETRIES_SEC = 2
 
-ESCAPE = b"\x1b"
+COMMUNICATION_ESCAPE_BYTE   = b"\x1b"
 
-LOC_DISPLAY_DATA = b"\x01"
-LOC_REQUEST_INFO = b"\x02"
-LOC_REQUEST_VERSION = b"\x05"
-LOC_REPEAT_ALL = b"\x08"
-LOC_PROTOCOL_ONOFF = b"\x15"
-LOC_ROUTING_KEYS = b"\x22"
-LOC_DISPLAY_KEYS = b"\x24"
-LOC_ROUTING_KEY = b"\x27"
-LOC_BRAILLE_KEYS = b"\x33"
-LOC_JOYSTICK_KEYS = b"\x34"
-LOC_DEVICE_ID = b"\x84"
-LOC_SERIAL_NUMBER = b"\x8a"
+class DeviceCommand(bytes, Enum):
+    DISPLAY_DATA = b"\x01"
+    REQUEST_INFO = b"\x02"
+    REQUEST_VERSION = b"\x05"
+    REPEAT_ALL = b"\x08"
+    PROTOCOL_ONOFF = b"\x15"
+    ROUTING_KEYS = b"\x22"
+    DISPLAY_KEYS = b"\x24"
+    BRAILLE_KEYS = b"\x33"
+    JOYSTICK_KEYS = b"\x34"
+    DEVICE_ID = b"\x84"
+    SERIAL_NUMBER = b"\x8a"
 
-LOC_RSP_LENGTHS = {
-	LOC_DISPLAY_DATA: 1,
-	LOC_DISPLAY_KEYS: 1,
-	LOC_ROUTING_KEY: 1,
-	LOC_BRAILLE_KEYS: 2,
-	LOC_JOYSTICK_KEYS: 1,
-	LOC_DEVICE_ID: 16,
-	LOC_SERIAL_NUMBER: 8,
+@dataclass(frozen=True)
+class DeviceResponseInfo:
+    length: int
+    keys: Optional[Tuple[str, ...]] = None
+
+COMMAND_RESPONSE_INFO: Dict[DeviceCommand, DeviceResponseInfo] = {
+    DeviceCommand.DISPLAY_DATA: DeviceResponseInfo(1),
+	DeviceCommand.DISPLAY_KEYS: DeviceResponseInfo(
+		1, ("d1", "d2", "d3", "d4", "d5", "d6")
+	),
+	DeviceCommand.BRAILLE_KEYS: DeviceResponseInfo(
+        2, (
+            "bl", "br", "bs", None, "s1", "s2", "s3", "s4",  # byte 1
+            "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8",  # byte 2
+        ),
+    ),
+    DeviceCommand.JOYSTICK_KEYS: DeviceResponseInfo(
+        1, ("up", "left", "down", "right", "select")
+    ),
+	DeviceCommand.ROUTING_KEYS: DeviceResponseInfo(5),
+	DeviceCommand.DEVICE_ID: DeviceResponseInfo(16),
+    DeviceCommand.SERIAL_NUMBER: DeviceResponseInfo(8),
 }
-
-KEY_NAMES = {
-	LOC_ROUTING_KEYS: None,
-	LOC_ROUTING_KEY: None,
-	LOC_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
-	LOC_BRAILLE_KEYS: (
-		"bl",
-		"br",
-		"bs",
-		None,
-		"s1",
-		"s2",
-		"s3",
-		"s4",  # byte 1
-		"b1",
-		"b2",
-		"b3",
-		"b4",
-		"b5",
-		"b6",
-		"b7",
-		"b8",  # byte 2
-	),  
-	LOC_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
-}
-
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
-	# Translators: Names of braille displays.
 	description = _("NLS eReader Zoomax")
 	isThreadSafe = True
 	supportsAutomaticDetection = True
@@ -82,7 +72,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		driverRegistrar.addUsbDevices(
 			bdDetect.DeviceType.SERIAL,
 			{
-				"VID_1A86&PID_7523",  # CH340
+				"VID_1A86&PID_7523",  # CH340 USB to serial chip
 			},
 		)
 
@@ -92,7 +82,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	def _connect(self, port):
+	def _connect(self, port: str) -> None:
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			try:
 				self._dev = hwIo.Serial(
@@ -112,31 +102,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._dev.close()
 				continue
 
-			self._sendRequest(LOC_PROTOCOL_ONOFF, False)
-			self._sendRequest(LOC_PROTOCOL_ONOFF, True)
-			self._sendRequest(LOC_PROTOCOL_ONOFF, True)
-			self._sendRequest(LOC_REPEAT_ALL)
+			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF.value, False)
+			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF.value, True)
+			self._sendRequest(DeviceCommand.REPEAT_ALL.value)
 
-			for i in range(5):
+			for i in range(CONNECT_RETRIES):
 				self._dev.waitForRead(TIMEOUT_SEC)
 				if self.numCells:
 					break
 
 			if self.numCells:
-				log.info(
-					"Device connected via {type} ({port})".format(
-						type=portType,
-						port=port,
-					),
-				)
+				log.info(f"Device connected via {portType} ({port})",)
 				return True
 			log.info("Device arrival timeout")
 			self._dev.close()
 		return False
 
 	def __init__(self, port="auto"):
-		log.info("nlseReaderZoomax Init")
-		super(BrailleDisplayDriver, self).__init__()
+		log.info("Initializing nlseReaderZoomax driver")
+		super().__init__()
 		self.numCells = 0
 		self._deviceID: str | None = None
 		self._dev = None
@@ -152,19 +136,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
-			try:
-				self._sendRequest(LOC_PROTOCOL_ONOFF, False)
-			except EnvironmentError:
-				pass
+			super().terminate()
+			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF, False)
+		except EnvironmentError:
+			pass
 		finally:
 			self._dev.close()
 
 	def _sendRequest(self, command: bytes, arg: bytes | bool | int = b""):
-		"""
-		:type command: bytes
-		:type arg: bytes | bool | int
-		"""
 		typeErrorString = "Expected param '{}' to be of type '{}', got '{}'"
 		if not isinstance(arg, bytes):
 			if isinstance(arg, bool):
@@ -179,11 +158,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		# doubling the escape characters in the data (arg) part
 		# as requried by the device communication protocol
-		arg = arg.replace(ESCAPE, ESCAPE * 2)
+		arg = arg.replace(COMMUNICATION_ESCAPE_BYTE, COMMUNICATION_ESCAPE_BYTE * 2)
 
 		data = b"".join(
 			[
-				ESCAPE,
+				COMMUNICATION_ESCAPE_BYTE,
 				command,
 				arg,
 			],
@@ -191,28 +170,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._dev.write(data)
 
 	def _onReceive(self, data: bytes):
-		if data != ESCAPE:
+		if data != COMMUNICATION_ESCAPE_BYTE:
 			log.debugWarning(f"Ignoring byte before escape: {data!r}")
 			return
 		# data only contained the escape. Read the rest from the device.
 		stream = self._dev
 		command = stream.read(1)
-		length = LOC_RSP_LENGTHS.get(command, 0)
-		if command == LOC_ROUTING_KEYS:
-			length = 10 if self.numCells > 40 else 5
+		length = COMMAND_RESPONSE_INFO.get(command, DeviceResponseInfo(0)).length
 		arg = stream.read(length)
 		self._handleResponse(command, arg)
 
 	def _handleResponse(self, command: bytes, arg: bytes):
-		if command == LOC_DISPLAY_DATA:
+		if command == DeviceCommand.DISPLAY_DATA:
 			self.numCells = ord(arg)
-		elif command == LOC_DEVICE_ID:
+		elif command == DeviceCommand.DEVICE_ID:
 			# Short ids can be padded with either nulls or spaces.
 			arg = arg.rstrip(b"\0 ")
 			# Assumption: all device IDs can be decoded with latin-1.
 			# If not, we wish to know about it, allow decode to raise.
 			self._deviceID = arg.decode("latin-1", errors="strict")
-		elif command in KEY_NAMES:
+		elif command in COMMAND_RESPONSE_INFO:
 			arg = int.from_bytes(reversed(arg))
 			if arg < self._keysDown.get(command, 0):
 				# Release.
@@ -236,12 +213,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# #3541: Remove this group so it doesn't count as a group with keys down.
 				del self._keysDown[command]
 		else:
-			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
+			log.debugWarning(f"Unknown command {command!r}, arg {arg!r}")
 
 	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		arg = bytes(cells)
-		self._sendRequest(LOC_DISPLAY_DATA, arg)
+		self._sendRequest(DeviceCommand.DISPLAY_DATA, arg)
 
 	gestureMap = inputCore.GlobalGestureMap(
 		{
@@ -272,24 +249,22 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			assert self.model.isalnum()
 		self.keysDown = dict(keysDown)
 
+		SYSTEM_KEYS_MASK = 0xF8
+		SPACEBAR_KEYS_MASK = 0x07
+
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
-			if group == LOC_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xF8:
-				# This is braille input.
-				# 0xF8 covers command keys. The space bars are covered by 0x7.
+			if group == DeviceCommand.BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & SYSTEM_KEYS_MASK:
 				self.dots = groupKeysDown >> 8
-				self.space = groupKeysDown & 0x7
-			if group == LOC_ROUTING_KEYS:
+				self.space = groupKeysDown & SPACEBAR_KEYS_MASK
+			if group == DeviceCommand.ROUTING_KEYS:
 				for index in range(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index
 						names.append("routing")
 						break
-			elif group == LOC_ROUTING_KEY:
-				self.routingIndex = groupKeysDown - 1
-				names.append("routing")
 			else:
-				for index, name in enumerate(KEY_NAMES[group]):
+				for index, name in enumerate(COMMAND_RESPONSE_INFO.get(group).keys):
 					if groupKeysDown & (1 << index):
 						names.append(name)
 
