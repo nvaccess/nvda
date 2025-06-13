@@ -34,7 +34,8 @@ env:
   # They are checked for existence of content, not specific value.
   feature_uploadSymbolsToMozilla: configured
   feature_crowdinSync: configured
-  # feature_signing: configured
+  feature_signing: configured
+  # AppX (Windows Store) packaging is currently not being maintained or supported.
   # feature_buildAppx: configured
 
 jobs:
@@ -208,9 +209,15 @@ jobs:
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
-    - name: Prepare source code for launcher
+      env:
+        apiSigningToken: ${{ (github.event_name == 'push' && env.feature_signing) && secrets.API_SIGNING_TOKEN || '' }}
+    - name: Create launcher
       shell: cmd
-      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
+      run: |
+        PowerShell -Command "Set-ExecutionPolicy Bypass"
+        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+        PowerShell -Command "Install-Module -Name SignPath -Force"
+        scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
