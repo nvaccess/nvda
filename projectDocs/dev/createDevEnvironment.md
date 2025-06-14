@@ -104,7 +104,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 The following build time dependencies are included in the miscDeps git submodule:
 
-* xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
+* xgettext and msgfmt from [GNU gettext](https://github.com/mlocati/gettext-iconv-windows/tags)
 
 #### VS Code
 

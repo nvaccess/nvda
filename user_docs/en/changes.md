@@ -18,6 +18,7 @@
     * Small improvements to Hungarian, Dutch, Norwegian and Turkish tables.
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 * When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
+* In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)
 
 ### Bug Fixes
 
@@ -27,10 +28,12 @@
 * In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 * NVDA no longer fails to read check list items in Microsoft Loop when viewed in Google Chrome / Microsoft Edge. (#18130)
 * NVDA now respects its line number reporting setting in Microsoft SQL Server Management Studio 21. (#18176, @LeonarddeR)
+* In Windows 11 Notepad, NVDA will announce values typed into the "Line number" field of the "Go to line" dialog when "speak typed characters" is set to "only in edit controls". (#18208, @josephsl)
 * In the Start Menu in Windows 11 24H2: (#17951, @jcsteh)
   * NVDA no longer sometimes incorrectly switches to browse mode soon after entering the Start Menu.
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
+* In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 
 ### Changes for Developers
 
