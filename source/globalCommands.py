@@ -4904,13 +4904,14 @@ class GlobalCommands(ScriptableObject):
 		info = self._getTIAtCaret()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
-		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		langToReport = languageHandling.getLangToReport(curLanguage)
+		languageDescription = languageHandler.getLanguageDescription(langToReport)
 		if languageDescription is None:
-			languageDescription = curLanguage
+			languageDescription = langToReport
 		message = languageDescription
 		if languageHandling.shouldReportNotSupported():
 			curSynth = synthDriverHandler.getSynth()
-			if not curSynth.languageIsSupported(curLanguage):
+			if not curSynth.languageIsSupported(langToReport):
 				message = pgettext(
 					"reportLanguage",
 					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
