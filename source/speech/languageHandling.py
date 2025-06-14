@@ -72,6 +72,7 @@ def shouldReportNotSupported() -> bool:
 
 def getLangToReport(lang: str) -> str:
 	"""Gets the language to report by NVDA, according to speech settings.
+
 	:param lang: A language code corresponding to the text been read.
 	:return: A language code corresponding to the language to be reported.
 	"""
