@@ -26,20 +26,17 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		if (
 			not isinstance(item, LangChangeCommand)
 			or item.isDefault
-			or item.lang == speech._speechState.lastReportedLanguage
+			or getLangToReport(item.lang) == speech._speechState.lastReportedLanguage
 			or index == len(speechSequence) - 1
 		):
 			filteredSpeechSequence.append(item)
 			continue
-		langToReport = item.lang
-		if config.conf["speech"]["autoDialectSwitching"]:
-			langToReport = item.lang.split("_")[0]
-		langDesc = languageHandler.getLanguageDescription(langToReport)
+		langDesc = languageHandler.getLanguageDescription(getLangToReport(item.lang))
 		if langDesc is None:
-			langDesc = langToReport
+			langDesc = getLangToReport(item.lang)
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
-		if shouldReportNotSupported() and not curSynth.languageIsSupported(langToReport):
+		if shouldReportNotSupported() and not curSynth.languageIsSupported(getLangToReport(item.lang)):
 			if config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.SPEECH.value:
 				filteredSpeechSequence.append(
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
@@ -50,7 +47,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 				filteredSpeechSequence.append(BeepCommand(500, 50))
 		elif config.conf["speech"]["reportLanguage"]:
 			filteredSpeechSequence.append(langDesc)
-		speech._speechState.lastReportedLanguage = item.lang
+		speech._speechState.lastReportedLanguage = getLangToReport(item.lang)
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
 
@@ -71,3 +68,13 @@ def shouldReportNotSupported() -> bool:
 		config.conf["speech"]["autoLanguageSwitching"]
 		and config.conf["speech"]["reportNotSupportedLanguage"] != ReportNotSupportedLanguage.OFF.value
 	)
+
+
+def getLangToReport(lang: str) -> str:
+	"""Gets the language to report by NVDA, according to speech settings.
+	:param lang: A language code corresponding to the text been read.
+	:return: A language code corresponding to the language to be reported.
+	"""
+	if config.conf["speech"]["autoLanguageSwitching"] and config.conf["speech"]["autoDialectSwitching"]:
+		return lang.split("_")[0]
+	return lang
