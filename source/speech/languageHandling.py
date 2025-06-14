@@ -31,12 +31,15 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		):
 			filteredSpeechSequence.append(item)
 			continue
-		langDesc = languageHandler.getLanguageDescription(item.lang)
+		langToReport = item.lang
+		if config.conf["speech"]["autoDialectSwitching"]:
+			langToReport = item.lang.split("_")[0]
+		langDesc = languageHandler.getLanguageDescription(langToReport)
 		if langDesc is None:
-			langDesc = item.lang
+			langDesc = langToReport
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
-		if shouldReportNotSupported() and not curSynth.languageIsSupported(item.lang):
+		if shouldReportNotSupported() and not curSynth.languageIsSupported(langToReport):
 			if config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.SPEECH.value:
 				filteredSpeechSequence.append(
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
