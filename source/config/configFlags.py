@@ -301,6 +301,23 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 		}
 
 
+class ReportNotSupportedLanguage(DisplayStringStrEnum):
+	SPEECH = "speech"
+	BEEP = "beep"
+	OFF = "off"
+
+	@property
+	def _displayStringLabels(self) -> dict["ReportNotSupportedLanguage", str]:
+		return {
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.SPEECH: pgettext("reportLanguage", "Speech"),
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.BEEP: pgettext("reportLanguage", "Beep"),
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.OFF: pgettext("reportLanguage", "Off"),
+		}
+
+
 @verify(CONTINUOUS)
 class RemoteConnectionMode(DisplayStringIntEnum):
 	"""Enumeration containing the possible remote connection modes (roles for connected clients).
