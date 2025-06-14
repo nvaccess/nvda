@@ -75,6 +75,6 @@ def getLangToReport(lang: str) -> str:
 	:param lang: A language code corresponding to the text been read.
 	:return: A language code corresponding to the language to be reported.
 	"""
-	if config.conf["speech"]["autoLanguageSwitching"] and config.conf["speech"]["autoDialectSwitching"]:
+	if config.conf["speech"]["autoLanguageSwitching"] and not config.conf["speech"]["autoDialectSwitching"]:
 		return lang.split("_")[0]
 	return lang
