@@ -33,7 +33,6 @@ from speech import (
 	shortcutKeys,
 	languageHandling,
 )
-from speech.commands import LangChangeCommand
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -2326,7 +2325,7 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if LangChangeCommand.shouldMakeLangChangeCommand():
+		if languageHandling.shouldMakeLangChangeCommand():
 			for field in info.getTextWithFields({}):
 				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 					curLanguage = field.field.get("language")
