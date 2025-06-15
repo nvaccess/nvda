@@ -2893,7 +2893,7 @@ def test_reportLanguageDisabled():
 				"Cyrille",
 				"created this",
 				"test:",
-				"let's mention",
+				"Let's mention",
 				"Noelia",
 				"and",
 				"Leonem",
