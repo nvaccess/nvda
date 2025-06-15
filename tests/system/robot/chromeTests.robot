@@ -172,3 +172,6 @@ aria-errormessage
 Report language disabled
 	[Documentation]	Read a sentence with different languages without reporting none of them.
 	test_reportLanguageDisabled
+Report language enabled
+	[Documentation]	Read a sentence with different languages reporting them.
+	test_reportLanguageEnabled

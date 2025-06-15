@@ -2901,3 +2901,38 @@ def test_reportLanguageDisabled():
 			),
 		),
 	)
+
+
+def test_reportLanguageEnabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, False),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"fr",
+				"Cyrille",
+				"en",
+				"created this",
+				"unknown",
+				"test:",
+				"en",
+				"Let's mention",
+				"es",
+				"Noelia",
+				"en"
+				"and",
+				"la",
+				"Leonem",
+				"en",
+				"in the same sentence.",
+			),
+		),
+	)
