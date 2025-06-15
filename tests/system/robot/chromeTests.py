@@ -2927,8 +2927,7 @@ def test_reportLanguageEnabled():
 				"Let's mention",
 				"es",
 				"Noelia",
-				"en"
-				"and",
+				"enand",
 				"la",
 				"Leonem",
 				"en",
