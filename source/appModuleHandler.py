@@ -775,13 +775,19 @@ class AppModule(baseObject.ScriptableObject):
 		activityId: str = "",
 	) -> bool:
 		"""
-		Determines whether NVDA should process a UIA notification event
+		Determines whether NVDA should process a UIA notification event.
 		By default, events from elements with window handle value set
 		and traversable back to the desktop will be accepted.
 		Returning False will cause the event to be dropped completely.
 		Returning True means that the event will be processed, but it might still
 		be rejected later; e.g. because it isn't native UIA, because
 		shouldAcceptEvent returns False, etc.
+		:param sender: UIA element raising the notification event.
+		param NotificationKind: notification kind such as activity completion.
+		param NotificationProcessing: how NVDA should process notifications such as canceling speech.
+		param displayString: notification content/text.
+		activityId: notification description.
+		@return: should NVDA components including ap modules and NVDA objects process notification events.
 		"""
 		import UIAHandler
 
