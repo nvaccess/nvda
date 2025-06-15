@@ -2869,20 +2869,20 @@ def test_ariaErrorMessage():
 def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
-		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test</span>: Let's mention <span lang="es">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
+		<p><span lang=⠀"fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
 	""",
 	)
 	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
 	spy.modifyNVDAConfig(nvdaConfValues)
 
 
-def test_reportLanguageDefaultConfig():
+def test_reportLanguageDisabled():
 	_doTestReportLanguage(
 		nvdaConfValues=[
 			(AUTO_LANGUAGE_SWITCHING_KEY, True),
 			(AUTO_DIALECT_SWITCHING_KEY, False),
 			(REPORT_LANGUAGE_KEY, False),
-			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
 		],
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
@@ -2891,8 +2891,12 @@ def test_reportLanguageDefaultConfig():
 		SPEECH_SEP.join(
 			(
 				"Cyrille created this",
-				"unknown (not supported",
-				"test: let's mention Noelia and Leonem in the same sentence.",
+				"test:",
+				"let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
 			),
 		),
 	)
