@@ -2890,7 +2890,8 @@ def test_reportLanguageDisabled():
 		actualSpeech,
 		SPEECH_SEP.join(
 			(
-				"Cyrille created this",
+				"Cyrille",
+				"created this",
 				"test:",
 				"let's mention",
 				"Noelia",
