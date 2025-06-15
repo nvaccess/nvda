@@ -576,7 +576,7 @@ class AppModule(appModuleHandler.AppModule):
 			sender,
 			NotificationKind=NotificationKind,
 			NotificationProcessing=NotificationProcessing,
-			displayString=displayString
+			displayString=displayString,
 			activityId=activityId,
 		)
 
