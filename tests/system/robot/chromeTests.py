@@ -2878,7 +2878,7 @@ def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 
 def test_reportLanguageDefaultConfig():
 	_doTestReportLanguage(
-		confValues=[
+		nvdaConfValues=[
 			(AUTO_LANGUAGE_SWITCHING_KEY, True),
 			(AUTO_DIALECT_SWITCHING_KEY, False),
 			(REPORT_LANGUAGE_KEY, False),
