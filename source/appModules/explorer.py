@@ -28,6 +28,7 @@ from NVDAObjects.window.edit import RichEdit50, Edit
 import config
 import ui
 from winAPI.types import HWNDValT
+from comInterfaces import UIAutomationClient
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -564,7 +565,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def shouldProcessUIANotificationEvent(
 		self,
-		sender,
+		sender: UIAutomationClient.IUIAutomationElement,
 		NotificationKind: int | None = None,
 		NotificationProcessing: int | None = None,
 		displayString: str = "",

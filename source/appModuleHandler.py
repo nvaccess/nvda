@@ -44,6 +44,7 @@ import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
 from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
+from comInterfaces import UIAutomationClient as UIA
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -767,7 +768,7 @@ class AppModule(baseObject.ScriptableObject):
 
 	def shouldProcessUIANotificationEvent(
 		self,
-		sender,
+		sender: UIA.IUIAutomationElement,
 		NotificationKind: int | None = None,
 		NotificationProcessing: int | None = None,
 		displayString: str = "",
