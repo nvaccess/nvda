@@ -65,10 +65,10 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
-AUTO_LANGUAGE_SWITCHING_KEY = ["speech"]["autoLanguageSwitching"]
-AUTO_DIALECT_SWITCHING_KEY = ["speech"]["autoDialectSwitching"]
-REPORT_LANGUAGE_KEY = ["speech"]["reportLanguage"]
-REPORT_NOT_SUPPORTED_LANGUAGE_KEY = ["speech"]["reportNotSupportedLanguage"]
+AUTO_LANGUAGE_SWITCHING_KEY = ["speech", "autoLanguageSwitching"]
+AUTO_DIALECT_SWITCHING_KEY = ["speech", "autoDialectSwitching"]
+REPORT_LANGUAGE_KEY = ["speech", "reportLanguage"]
+REPORT_NOT_SUPPORTED_LANGUAGE_KEY = ["speech", "reportNotSupportedLanguage"]
 READ_DETAILS_GESTURE = "NVDA+d"
 
 
