@@ -14,6 +14,7 @@ from .commands import (
 	EndUtteranceCommand,
 	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
+	LangChangeCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
@@ -21,6 +22,7 @@ from .commands import (
 )
 from .extensions import pre_speechQueued
 from .priorities import Spri, SPEECH_PRIORITIES
+from .languageHandling import shouldSwitchVoice
 from logHandler import log
 from synthDriverHandler import getSynth, pre_synthSpeak
 from typing import (
@@ -366,6 +368,9 @@ class SpeechManager(object):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
 			if isinstance(command, SynthParamCommand):
+				if isinstance(command, LangChangeCommand) and not shouldSwitchVoice():
+					# Language change shouldn't be passed to synthesizer.
+					continue
 				paramTracker.update(command)
 			if isinstance(command, SuppressUnicodeNormalizationCommand):
 				continue  # Not handled by speech manager

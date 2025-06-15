@@ -320,6 +320,21 @@ class SynthDriver(driverHandler.Driver):
 		"""
 		pass
 
+	def languageIsSupported(self, lang: str | None) -> bool:
+		"""Determines if the specified language is supported.
+		:param lang: A language code or None.
+		:return: ``True`` if the language is supported, ``False`` otherwise.
+		"""
+		if lang is None:
+			return True
+		for availableLang in self.availableLanguages:
+			if (
+				lang == languageHandler.normalizeLanguage(availableLang)
+				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
+			):
+				return True
+		return False
+
 	def initSettings(self):
 		firstLoad = not config.conf[self._configSection].isSet(self.name)
 		if firstLoad:

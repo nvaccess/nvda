@@ -169,3 +169,9 @@ styleNav
 aria-errormessage
 	[Documentation]	Test that aria-errormessage is reported correctly in focus and browse mode
 	test_ariaErrorMessage
+Report language disabled
+	[Documentation]	Read a sentence with different languages without reporting none of them.
+	test_reportLanguageDisabled
+Report language enabled
+	[Documentation]	Read a sentence with different languages reporting them.
+	test_reportLanguageEnabled
