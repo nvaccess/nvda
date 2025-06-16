@@ -2870,7 +2870,7 @@ def test_ariaErrorMessage():
 def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
-		<p><span lang=⠀"fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
+		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
 	""",
 	)
 	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
