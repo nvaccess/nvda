@@ -8,11 +8,10 @@ from enum import IntEnum
 from functools import wraps
 import locale
 from collections import OrderedDict, deque
-import queue
 import threading
 import time
 import winreg
-from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
+from comtypes import CoCreateInstance, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
 	addressof,
 	byref,
@@ -28,8 +27,9 @@ from ctypes import (
 	sizeof,
 	windll,
 )
-from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
+from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, WORD
 from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
+from core import callLater
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -50,7 +50,6 @@ from ._sapi4 import (
 	IAudioDest,
 	IAudioDestNotifySink,
 	IAudioMultiMediaDevice,
-	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
 	ITTSEnumW,
@@ -184,117 +183,6 @@ class _AudioState(IntEnum):
 	RECLAIMING = 5  # will change to STARTED after audio completes
 
 
-class _ComThreadTask:
-	def __init__(self, func: Callable, *args, **kwargs):
-		self.func = func
-		self.args = args
-		self.kwargs = kwargs
-		self.completed = threading.Event()
-		self.result = None
-		self.exception = None
-
-
-class _ComThread(threading.Thread):
-	"""Thread dedicated to run all SAPI 4 COM-related code."""
-
-	def __init__(self):
-		super().__init__(name="Sapi4ComThread")
-		self._tasks: queue.SimpleQueue[_ComThreadTask] = queue.SimpleQueue()
-		self._ready = threading.Event()
-		self.start()  # Start the thread immediately
-		self._ready.wait()  # Wait for message queue to be created
-
-	def run(self):
-		msg = MSG()
-		# Force the message queue to be created first
-		PM_NOREMOVE = 0
-		windll.user32.PeekMessageW(byref(msg), None, 0, 0, PM_NOREMOVE)
-		CoInitialize()
-		self._ready.set()
-		# Run a message loop, as it's required by SAPI 4.
-		# When queueing a new task, post a message to this thread to wake it up.
-		# When done, post WM_QUIT to this thread.
-		while windll.user32.GetMessageW(byref(msg), None, 0, 0):
-			windll.user32.TranslateMessage(byref(msg))
-			windll.user32.DispatchMessageW(byref(msg))
-			# Process queued tasks outside window procedures
-			# to avoid COM error RPC_E_CANTCALLOUT_INEXTERNALCALL
-			# (-2147418107, 0x80010005).
-			try:
-				while True:
-					task = self._tasks.get_nowait()
-					try:
-						task.result = task.func(*task.args, **task.kwargs)
-					except BaseException as e:
-						task.exception = e
-					finally:
-						completed = task.completed
-						del task
-						completed.set()
-			except queue.Empty:
-				pass
-
-	def stop(self):
-		WM_QUIT = 18
-		windll.user32.PostThreadMessageW(self.native_id, WM_QUIT, 0, 0)
-		self.join()
-
-	def submit(self, func: Callable, *args, **kwargs) -> _ComThreadTask:
-		"""Queue a function to be executed on this thread."""
-		if not self.is_alive():
-			raise RuntimeError("Thread has been stopped")
-		task = _ComThreadTask(func, *args, **kwargs)
-		self._tasks.put(task)
-		# post a message to wake up the thread
-		windll.user32.PostThreadMessageW(self.native_id, 0, 0, 0)
-		return task
-
-	def invoke(self, func: Callable, *args, **kwargs):
-		"""Invoke a function on this thread synchronously, and return its result."""
-		if threading.current_thread() is self:
-			# Call directly
-			return func(*args, **kwargs)
-		task = self.submit(func, *args, **kwargs)
-		task.completed.wait()
-		if task.exception is not None:
-			try:
-				raise task.exception
-			finally:
-				del task
-		return task.result
-
-
-class _ComProxy:
-	"""Proxy for SAPI 4 COM object pointers that invokes all COM methods on the specified `_ComThread`.
-	All SAPI 4 COM objects should be wrapped by _ComProxy and run on the same _ComThread."""
-
-	def __init__(self, obj, thread: _ComThread):
-		"""Constructor.
-
-		:param obj: The COM object pointer to wrap.
-		:param thread: The COM thread to run all its COM method calls on. The object should be created on the same thread."""
-		self._obj = obj
-		self._thread = thread
-
-	def __getattr__(self, name: str):
-		attr = getattr(self._obj, name)
-		if not callable(attr):
-			return attr
-
-		@wraps(attr)
-		def _wrapper(*args, **kwargs):
-			return self._thread.invoke(attr, *args, **kwargs)
-
-		return _wrapper
-
-	def __del__(self):
-		# Release the object on the ComThread as well.
-		def _deleter():
-			self._obj = None
-
-		self._thread.invoke(_deleter)
-
-
 BUFFER_LENGTH_S = 2
 """Length of SynthDriverAudio's internal buffer, in seconds.
 SAPI4 requires the buffer to be at least 2 seconds."""
@@ -324,7 +212,7 @@ class SynthDriverAudio(COMObject):
 
 	_com_interfaces_ = [IAudio, IAudioDest]
 
-	def __init__(self, comThread: _ComThread):
+	def __init__(self):
 		"""Constructor.
 
 		:param comThread: The COM thread that `IAudioDestNotifySink` methods will be called on."""
@@ -345,7 +233,6 @@ class SynthDriverAudio(COMObject):
 		self._audioStopped = False
 		self._audioThread = threading.Thread(target=self._audioThreadFunc, name="Sapi4AudioThread")
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
-		self._comThread = comThread
 
 	def _final_release_(self):
 		"""This will be called automatically when this COM object is being destroyed."""
@@ -371,7 +258,7 @@ class SynthDriverAudio(COMObject):
 			except COMError:
 				pass  # Ignore returned HRESULT errors
 
-		self._comThread.submit(_notify, *args, **kwargs)
+		callLater(0, _notify, *args, **kwargs)
 
 	def _setLevel(self, level: int) -> None:
 		self._level = level
@@ -874,7 +761,6 @@ class SynthDriver(SynthDriver):
 		return enginesList
 
 	def __init__(self):
-		self._comThread = _ComThread()
 		self._finalIndex: Optional[int] = None
 		self._ttsCentral = None
 		self._sinkRegKey = DWORD()
@@ -887,10 +773,7 @@ class SynthDriver(SynthDriver):
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
-		# Create COM objects on the dedicated COM thread,
-		# and wrap them with _ComProxy so that method calls will happen on the same thread.
-		self._ttsEngines = self._comThread.invoke(CoCreateInstance, CLSID_TTSEnumerator, ITTSEnumW)
-		self._ttsEngines = _ComProxy(self._ttsEngines, self._comThread)
+		self._ttsEngines = CoCreateInstance(CLSID_TTSEnumerator, ITTSEnumW)
 		self._enginesList = self._fetchEnginesList()
 		if len(self._enginesList) == 0:
 			raise RuntimeError("No Sapi4 engines available")
@@ -907,7 +790,6 @@ class SynthDriver(SynthDriver):
 		self._ttsAttrs = None
 		self._ttsCentral = None
 		self._ttsEngines = None
-		self._comThread.stop()
 
 	def speak(self, speechSequence: SpeechSequence):
 		textList = []
@@ -1045,14 +927,12 @@ class SynthDriver(SynthDriver):
 			self._ttsAttrs = None
 			self._ttsCentral = None
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
-			ttsAudio = self._comThread.invoke(SynthDriverAudio, self._comThread)
+			ttsAudio = SynthDriverAudio()
 		else:
-			ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
+			ttsAudio = SynthDriverMMAudio()
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), ttsAudio)
-		self._ttsCentral = _ComProxy(self._ttsCentral, self._comThread)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
-		self._ttsAttrs = _ComProxy(self._ttsCentral.QueryInterface(ITTSAttributes), self._comThread)
 		# Find out rate limits
 		hasRate = bool(mode.dwFeatures & TTSFEATURE_SPEED)
 		if hasRate:
