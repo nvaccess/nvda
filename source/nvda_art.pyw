@@ -46,8 +46,8 @@ class ExtensionPointHandlerService:
 	@property
 	def extensionPointService(self):
 		"""Get the extension point service from runtime."""
-		if self._runtime and hasattr(self._runtime, 'services'):
-			return self._runtime.services.get('extension_points')
+		if self._runtime and hasattr(self._runtime, "services"):
+			return self._runtime.services.get("extension_points")
 		return None
 
 	def registerHandler(self, extPointName: str, handlerFunc: Callable, epType: str) -> str:
@@ -187,12 +187,13 @@ class ARTRuntime:
 
 		# Import and add synth service
 		from art.runtime.services.synth import SynthService
+
 		service_definitions.append(("synth", SynthService(), "nvda.art.synth"))
 
 		# Register all services
 		for service_name, service_instance, pyro_name in service_definitions:
 			# Set runtime reference for services that need it
-			if hasattr(service_instance, '_runtime'):
+			if hasattr(service_instance, "_runtime"):
 				service_instance._runtime = self
 			self._register_service(service_name, service_instance, pyro_name)
 
@@ -266,14 +267,15 @@ artRuntime: ARTRuntime
 def handleStartupError(error: Exception, addon_name: str = "unknown") -> None:
 	"""Common error handling for startup failures."""
 	error_msg = f"ERROR: Startup failed: {error}"
-	
+
 	if logger:
 		logger.exception("Startup failed")
 	else:
 		print(error_msg, file=sys.stderr)
 		import traceback
+
 		traceback.print_exc()
-	
+
 	# If we're in handshake mode (stdin available), send error response
 	if not sys.stdin.isatty():
 		try:
@@ -281,7 +283,7 @@ def handleStartupError(error: Exception, addon_name: str = "unknown") -> None:
 				"status": "error",
 				"error": str(error),
 				"details": f"Exception during ART startup: {type(error).__name__}",
-				"addon_name": addon_name
+				"addon_name": addon_name,
 			}
 			error_json = json.dumps(error_response) + "\n"
 			sys.stdout.write(error_json)
@@ -341,7 +343,7 @@ def performHandshake() -> Optional[Dict[str, str]]:
 		config = startup_data.get("config", {})
 		if config.get("debug", False):
 			os.environ["NVDA_ART_DEBUG"] = "1"
-		
+
 		if config_path := config.get("configPath"):
 			os.environ["NVDA_ART_CONFIG_PATH"] = config_path
 
@@ -355,13 +357,9 @@ def performHandshake() -> Optional[Dict[str, str]]:
 
 		# Start services
 		service_uris = startWithAddonSpec(addon_spec)
-		
+
 		# Send success response
-		response_data = {
-			"status": "ready", 
-			"addon_name": addon_spec["name"], 
-			"art_services": service_uris
-		}
+		response_data = {"status": "ready", "addon_name": addon_spec["name"], "art_services": service_uris}
 		response_json = json.dumps(response_data) + "\n"
 		sys.stdout.write(response_json)
 		sys.stdout.flush()
@@ -369,14 +367,17 @@ def performHandshake() -> Optional[Dict[str, str]]:
 		return service_uris
 
 	except Exception as e:
-		handleStartupError(e, startup_data.get("addon", {}).get("name", "unknown") if 'startup_data' in locals() else "unknown")
+		handleStartupError(
+			e,
+			startup_data.get("addon", {}).get("name", "unknown") if "startup_data" in locals() else "unknown",
+		)
 		return None
 
 
 def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	"""Common startup logic for both CLI and handshake."""
 	global logger
-	
+
 	# Set addon name in environment for components that need it
 	os.environ["NVDA_ART_ADDON_NAME"] = addon_spec["name"]
 
@@ -407,34 +408,45 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	# Import and set up proxy modules in sys.modules so addons can import them directly
 	try:
 		# Import all proxy modules
-		from runtime.proxies import (
-			ui, config, logHandler, globalVars, addonHandler,
-			languageHandler, nvwave, extensionPoints, appModules,
-			brailleDisplayDrivers, globalPlugins, synthDrivers,
-			visionEnhancementProviders, synthDriverHandler, speech
+		from art.runtime.proxies import (
+			ui,
+			config,
+			logHandler,
+			globalVars,
+			addonHandler,
+			languageHandler,
+			nvwave,
+			extensionPoints,
+			appModules,
+			brailleDisplayDrivers,
+			globalPlugins,
+			synthDrivers,
+			visionEnhancementProviders,
+			synthDriverHandler,
+			speech,
 		)
 
 		# Define module mappings with any special submodules
 		PROXY_MODULE_REGISTRY = {
 			# Main modules
-			'ui': ui,
-			'config': config,
-			'logHandler': logHandler,
-			'globalVars': globalVars,
-			'addonHandler': addonHandler,
-			'languageHandler': languageHandler,
-			'nvwave': nvwave,
-			'extensionPoints': extensionPoints,
-			'appModules': appModules,
-			'brailleDisplayDrivers': brailleDisplayDrivers,
-			'globalPlugins': globalPlugins,
-			'synthDrivers': synthDrivers,
-			'visionEnhancementProviders': visionEnhancementProviders,
-			'synthDriverHandler': synthDriverHandler,
-			'speech': speech,
+			"ui": ui,
+			"config": config,
+			"logHandler": logHandler,
+			"globalVars": globalVars,
+			"addonHandler": addonHandler,
+			"languageHandler": languageHandler,
+			"nvwave": nvwave,
+			"extensionPoints": extensionPoints,
+			"appModules": appModules,
+			"brailleDisplayDrivers": brailleDisplayDrivers,
+			"globalPlugins": globalPlugins,
+			"synthDrivers": synthDrivers,
+			"visionEnhancementProviders": visionEnhancementProviders,
+			"synthDriverHandler": synthDriverHandler,
+			"speech": speech,
 			# Submodules
-			'speech.commands': speech.commands,
-			'speech.types': speech.types,
+			"speech.commands": speech.commands,
+			"speech.types": speech.types,
 		}
 
 		# Register all modules in sys.modules
