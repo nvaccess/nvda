@@ -54,6 +54,8 @@ The several built-in table definitions are moved to the `__tables` module in tha
 
 #### Deprecations
 
+* `NVDAHelper.versionedLibPath` is deprecated. Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
+
 ## 2025.1.1
 
 This is a patch release to fix a bug.
