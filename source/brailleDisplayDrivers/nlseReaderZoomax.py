@@ -21,44 +21,65 @@ BAUD_RATE = 19200
 CONNECT_RETRIES = 5
 TIMEOUT_BETWEEN_RETRIES_SEC = 2
 
-COMMUNICATION_ESCAPE_BYTE   = b"\x1b"
+COMMUNICATION_ESCAPE_BYTE = b"\x1b"
+
 
 class DeviceCommand(bytes, Enum):
-    DISPLAY_DATA = b"\x01"
-    REQUEST_INFO = b"\x02"
-    REQUEST_VERSION = b"\x05"
-    REPEAT_ALL = b"\x08"
-    PROTOCOL_ONOFF = b"\x15"
-    ROUTING_KEYS = b"\x22"
-    DISPLAY_KEYS = b"\x24"
-    BRAILLE_KEYS = b"\x33"
-    JOYSTICK_KEYS = b"\x34"
-    DEVICE_ID = b"\x84"
-    SERIAL_NUMBER = b"\x8a"
+	DISPLAY_DATA = b"\x01"
+	REQUEST_INFO = b"\x02"
+	REQUEST_VERSION = b"\x05"
+	REPEAT_ALL = b"\x08"
+	PROTOCOL_ONOFF = b"\x15"
+	ROUTING_KEYS = b"\x22"
+	DISPLAY_KEYS = b"\x24"
+	BRAILLE_KEYS = b"\x33"
+	JOYSTICK_KEYS = b"\x34"
+	DEVICE_ID = b"\x84"
+	SERIAL_NUMBER = b"\x8a"
+
 
 @dataclass(frozen=True)
 class DeviceResponseInfo:
-    length: int
-    keys: Optional[Tuple[str, ...]] = None
+	length: int
+	keys: Optional[Tuple[str, ...]] = None
+
 
 COMMAND_RESPONSE_INFO: Dict[DeviceCommand, DeviceResponseInfo] = {
-    DeviceCommand.DISPLAY_DATA: DeviceResponseInfo(1),
+	DeviceCommand.DISPLAY_DATA: DeviceResponseInfo(1),
 	DeviceCommand.DISPLAY_KEYS: DeviceResponseInfo(
-		1, ("d1", "d2", "d3", "d4", "d5", "d6")
+		1,
+		("d1", "d2", "d3", "d4", "d5", "d6"),
 	),
 	DeviceCommand.BRAILLE_KEYS: DeviceResponseInfo(
-        2, (
-            "bl", "br", "bs", None, "s1", "s2", "s3", "s4",  # byte 1
-            "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8",  # byte 2
-        ),
-    ),
-    DeviceCommand.JOYSTICK_KEYS: DeviceResponseInfo(
-        1, ("up", "left", "down", "right", "select")
-    ),
+		2,
+		(
+			"bl",
+			"br",
+			"bs",
+			None,
+			"s1",
+			"s2",
+			"s3",
+			"s4",  # byte 1
+			"b1",
+			"b2",
+			"b3",
+			"b4",
+			"b5",
+			"b6",
+			"b7",
+			"b8",  # byte 2
+		),
+	),
+	DeviceCommand.JOYSTICK_KEYS: DeviceResponseInfo(
+		1,
+		("up", "left", "down", "right", "select"),
+	),
 	DeviceCommand.ROUTING_KEYS: DeviceResponseInfo(5),
 	DeviceCommand.DEVICE_ID: DeviceResponseInfo(16),
-    DeviceCommand.SERIAL_NUMBER: DeviceResponseInfo(8),
+	DeviceCommand.SERIAL_NUMBER: DeviceResponseInfo(8),
 }
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
@@ -112,7 +133,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					break
 
 			if self.numCells:
-				log.info(f"Device connected via {portType} ({port})",)
+				log.info(f"Device connected via {portType} ({port})")
 				return True
 			log.info("Device arrival timeout")
 			self._dev.close()
@@ -254,7 +275,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
-			if group == DeviceCommand.BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & SYSTEM_KEYS_MASK:
+			if (
+				group == DeviceCommand.BRAILLE_KEYS
+				and len(keysDown) == 1
+				and not groupKeysDown & SYSTEM_KEYS_MASK
+			):
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & SPACEBAR_KEYS_MASK
 			if group == DeviceCommand.ROUTING_KEYS:
