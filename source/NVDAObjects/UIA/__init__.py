@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Copyright (C) 2009-2025 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
 # Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
@@ -679,7 +679,7 @@ class UIATextInfo(textInfos.TextInfo):
 			furtherUIAFormatUnits = self.UIAFormatUnits if UIAFormatUnits is None else []
 		if debug:
 			log.debug(
-				f"Walking by unit {unit}, " f"with further units of: {furtherUIAFormatUnits}",
+				f"Walking by unit {unit}, with further units of: {furtherUIAFormatUnits}",
 			)
 		rangeIter = iterUIARangeByUnit(textRange, unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
@@ -934,7 +934,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if lastChildEndDelta > 0:
 					if debug:
 						log.debug(
-							"textRange ended part way through the child. " "Crop end of childRange to fit",
+							"textRange ended part way through the child. Crop end of childRange to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_End,
@@ -961,8 +961,7 @@ class UIATextInfo(textInfos.TextInfo):
 				elif childStartDelta < 0:
 					if debug:
 						log.debug(
-							"textRange started part way through child. "
-							"Cropping Start of child range to fit",
+							"textRange started part way through child. Cropping Start of child range to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_Start,
@@ -2427,10 +2426,10 @@ class UIA(Window):
 
 	def event_UIA_notification(
 		self,
-		notificationKind: Optional[int] = None,
-		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-		displayString: Optional[str] = None,
-		activityId: Optional[str] = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: str | None = None,
+		activityId: str | None = None,
 	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
@@ -2442,14 +2441,19 @@ class UIA(Window):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		if displayString:
+			speechPriority = None
 			if notificationProcessing in (
 				UIAHandler.NotificationProcessing_ImportantMostRecent,
 				UIAHandler.NotificationProcessing_MostRecent,
 			):
 				# These notifications superseed earlier notifications.
 				# Note that no distinction is made between important and non-important.
-				speech.cancelSpeech()
-			ui.message(displayString)
+				# #17986: speak notification message as soon as possible while say all is in progress.
+				if speech.sayAll.SayAllHandler.isRunning():
+					speechPriority = speech.priorities.Spri.NOW
+				else:
+					speech.cancelSpeech()
+			ui.message(displayString, speechPriority=speechPriority)
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.

@@ -283,6 +283,7 @@ reportUnknownMemberType = false  # 20000+ errors
 default-groups = "all"
 python-preference = "only-system"
 environments = ["sys_platform == 'win32'"]
+required-version = ">=0.7.9"
 
 [tool.setuptools]
 package-dir = {"" = "source"}
@@ -300,15 +301,15 @@ members = [
 dev = [
 	"nvda-misc-deps",
 	# NVDA's build system is SCons
-	"SCons==4.8.1",
+	"SCons==4.9.1",
 	# Packaging NVDA
 	"py2exe==0.13.0.2",
 	"setuptools~=72.0",
 ]
 lint = [
-	"ruff==0.8.1",
-	"pre-commit==4.0.1",
-	"pyright==1.1.396",
+	"ruff==0.11.12",
+	"pre-commit==4.2.0",
+	"pyright==1.1.401",
 ]
 license-check = [
 	"licensecheck==2024.3",

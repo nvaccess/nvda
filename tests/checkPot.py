@@ -167,7 +167,7 @@ def checkPot(fileName):
 				else:
 					continue
 				print(
-					"{error}\n" "Source lines: {lines}\n" "Message: {message}\n".format(
+					"{error}\nSource lines: {lines}\nMessage: {message}\n".format(
 						error=error,
 						lines=" ".join(sourceLines),
 						message=message,

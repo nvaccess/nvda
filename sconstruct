@@ -326,7 +326,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	env.Command(
 		mdFile,
 		xliffFile,
-		[f'@{sys.executable} source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+		[f'@"{sys.executable}" source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
@@ -345,7 +345,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.Command(
 		target=mdFile.abspath.replace(".md", ".html"),
 		source=mdFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
 	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
@@ -370,7 +370,7 @@ for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.
 	keyCommandsHtmlFile = env.Command(
 		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
 		source=userGuideFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
 	)
 	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 

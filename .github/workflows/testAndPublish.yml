@@ -55,7 +55,7 @@ jobs:
         python-version: '3.11'
         architecture: x86
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -94,11 +94,11 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: makePot results
@@ -118,7 +118,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -134,23 +134,23 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       # Junit reports fail on these
       shell: bash
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: Unit tests results
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
         check_name: Unit tests
         detailed_summary: true
@@ -173,7 +173,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
@@ -192,7 +192,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -234,6 +234,10 @@ jobs:
         echo "    * Packaging metadata (library modules, installed python packages)" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
+    strategy:
+      fail-fast: false
+      matrix:
+        testSuite: [chrome, installer, startupShutdown]
     name: Run system tests
     runs-on: windows-latest
     needs: createLauncher
@@ -245,7 +249,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Get NVDA launcher
       id: getLauncher
       uses: actions/download-artifact@v4
@@ -256,29 +260,25 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
-    - name: Upload install log
-      if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Install log
-        path: |
-          testOutput/install
-          !testOutput/install/nvda_install_temp.log
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+        INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: System tests results
-        path: testOutput/system
+        name: "System tests results (${{ matrix.testSuite }})"
+        path: |
+          testOutput/system
+          testOutput/install
+          !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
-        check_name: System tests
+        check_name: "System tests (${{ matrix.testSuite }})"
         detailed_summary: true
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
@@ -309,7 +309,7 @@ jobs:
         path: output/symbols.zip
     - name: Install the latest version of uv
       if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Upload symbols to Mozilla
       if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
       continue-on-error: true

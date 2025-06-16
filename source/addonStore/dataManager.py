@@ -130,8 +130,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		return response.content
@@ -146,8 +145,7 @@ class _DataManager:
 			return None
 		if response.status_code != requests.codes.OK:
 			log.error(
-				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}",
+				f"Unable to get data from API ({url}), response ({response.status_code}): {response.content}",
 			)
 			return None
 		cacheHash = response.json()
@@ -221,8 +219,8 @@ class _DataManager:
 	)
 	_updateFailureDefaultSuggestion = pgettext(
 		"addonStore",
-		# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
-		"Make sure you are connected to the internet and try again.",
+		# Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
+		"Unable to establish a connection to the Add-on Store server.",
 	)
 
 	def getLatestCompatibleAddons(

@@ -145,7 +145,7 @@ class SettingsDialog(
 		if log.isEnabledFor(log.DEBUG):
 			instancesState = dict(SettingsDialog._instances)
 			log.debug(
-				"Creating new settings dialog (multiInstanceAllowed:{}). " "State of _instances {!r}".format(
+				"Creating new settings dialog (multiInstanceAllowed:{}). State of _instances {!r}".format(
 					multiInstanceAllowed,
 					instancesState,
 				),
@@ -221,7 +221,7 @@ class SettingsDialog(
 			buttonFlag |= button
 		if hasApplyButton:
 			log.debugWarning(
-				"The hasApplyButton parameter is deprecated. " "Use buttons instead. ",
+				"The hasApplyButton parameter is deprecated. Use buttons instead. ",
 			)
 			buttonFlag |= wx.APPLY
 		self.hasApply = hasApplyButton or wx.APPLY in buttons
@@ -440,7 +440,7 @@ class SettingsPanel(
 		gui.messageBox(
 			message=_(
 				# Translators: Content of the message displayed when a validation error occurs in the settings dialog
-				"{message}\n" "\n" 'Category: "{category}"\n' 'Option: "{option}"',
+				'{message}\n\nCategory: "{category}"\nOption: "{option}"',
 			).format(
 				message=message,
 				category=category,
@@ -5089,7 +5089,7 @@ def showTerminationErrorForProviders(
 		message = _(
 			# Translators: This message is presented when
 			# NVDA is unable to terminate multiple vision enhancement providers.
-			"Could not gracefully terminate the following vision enhancement providers:\n" "{providerNames}",
+			"Could not gracefully terminate the following vision enhancement providers:\n{providerNames}",
 		).format(providerNames=providerNames)
 	gui.messageBox(
 		message,

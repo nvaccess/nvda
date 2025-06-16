@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-22 03:03+0000\n"
-"PO-Revision-Date: 2025-05-25 23:05\n"
+"POT-Creation-Date: 2025-06-05 06:26+0000\n"
+"PO-Revision-Date: 2025-06-10 00:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -11631,7 +11631,7 @@ msgstr "COM 註冊修復工具執行失敗"
 #: gui\__init__.py:580
 msgid "The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr "COM 註冊修復工具已成功完成。\n"
+msgstr "COM 註冊修復工具已順利完成。\n"
 "強烈建議您現在重新啟動電腦以確認變更完全生效。"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
@@ -12404,12 +12404,12 @@ msgstr "NVDA 安裝失敗，請檢查事件記錄檢視器以得到更多資訊�
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui\installerGui.py:119
 msgid "Successfully installed NVDA. "
-msgstr "已成功安裝 NVDA。 "
+msgstr "已順利安裝 NVDA。 "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 #: gui\installerGui.py:122
 msgid "Successfully updated your installation of NVDA. "
-msgstr "已成功更新您所安裝的 NVDA。 "
+msgstr "已順利更新您所安裝的 NVDA。 "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -12596,7 +12596,8 @@ msgstr "無法建立可攜式版: {error}."
 #: gui\installerGui.py:616
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
-msgstr "已成功在 {dir} 建立 NVDA 可攜式版"
+msgstr "已順利在以下路徑建立 NVDA 可攜式版:\n"
+"{dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 #: gui\logViewer.py:29
@@ -13717,7 +13718,7 @@ msgstr "啟用遠端存取"
 #: gui\settingsDialogs.py:3349
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr "被控端電腦中斷連線前進行確認"
+msgstr "被控端電腦中斷連線前需要確認"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3359
@@ -18552,7 +18553,7 @@ msgstr "控制遠端電腦"
 #: _remoteClient\client.py:617
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr "遠端連線已在進行中。請先中斷連線後再開始新的連線。"
+msgstr "遠端連線已在進行中。請先中斷連線後再發起新的連線。"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:620

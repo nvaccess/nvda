@@ -3,4 +3,4 @@ rem Executes SScons within the NVDA build system's Python virtual environment.
 set hereOrig=%~dp0
 set here=%hereOrig%
 if #%hereOrig:~-1%# == #\# set here=%hereOrig:~0,-1%
-call "%here%\ensureuv.bat" run --directory "%here%" SCons %*
+powershell -ExecutionPolicy Bypass -NoProfile -File "%here%\ensureuv.ps1" run --directory "%here%" SCons %*

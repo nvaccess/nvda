@@ -26,7 +26,7 @@ You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit
 
 - You can filter files with `--files` and `--all-files`
 - You can also compare two revisions:
-`pre-commit run --from-ref origin/master --to-ref HEAD`
+`uv run pre-commit run --from-ref origin/master --to-ref HEAD`
 
 ### Translatable string checks
 

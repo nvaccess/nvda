@@ -33,6 +33,9 @@ The tests we perform are:
 * license checks
 * unit tests
 * system tests
+  * each test suite (i.e. .robot file) must be manually included by:
+    * adding a tag to `Force Tags` in the suite
+    * adding the tag to `systemTests.strategy.matrix.testSuite` in the [CI script](../.github/workflows/testAndPublish.yml)
 
 ## Artifacts
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-22 03:03+0000\n"
-"PO-Revision-Date: 2025-05-25 23:05\n"
+"POT-Creation-Date: 2025-06-05 06:26+0000\n"
+"PO-Revision-Date: 2025-06-10 00:37\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -560,7 +560,7 @@ msgstr "frml"
 #. Translators: Displayed in braille when a link destination points to the same page
 #: braille.py:281
 msgid "smp"
-msgstr ""
+msgstr "zpgn"
 
 #. Translators: Displayed in braille when an object is not selected.
 #: braille.py:285
@@ -3629,12 +3629,12 @@ msgstr "Schakelt in bladermodus het uitspreken van opmaaktabellen in en uit"
 #. Translators: Message reported upon action (e.g. context sensitive help, open documentation from NVDA menu)
 #: documentationUtils.py:63
 msgid "No documentation found."
-msgstr ""
+msgstr "Geen documentatie gevonden."
 
 #. Translators: The title of the dialog to show the NVDA License.
 #: documentationUtils.py:98
 msgid "NVDA License"
-msgstr ""
+msgstr "NVDA Licensie"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:77
@@ -3736,7 +3736,7 @@ msgstr "Audio"
 #: globalCommands.py:125 gui\settingsDialogs.py:3322
 msgctxt "remote"
 msgid "Remote Access"
-msgstr ""
+msgstr "Externe toegang"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -3763,7 +3763,7 @@ msgstr "Schakelt de invoerhulp in en uit. Wanneer de hulp ingeschakeld is, zal e
 #: globalCommands.py:220
 #, python-brace-format
 msgid "input help on. Press {gestureKeys} again to turn it off."
-msgstr ""
+msgstr "invoerhulp aan. Druk opnieuw op {gestureKeys} om het uit te schakelen."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:224
@@ -3902,31 +3902,31 @@ msgstr "Gaat naar de vorige instelling van de synthesizer instellingen"
 #. Translators: Input help mode message for cycling the reporting of typed characters.
 #: globalCommands.py:569
 msgid "Cycles through options for when to speak typed characters."
-msgstr ""
+msgstr "Schakelt  door de opties voor wanneer getypte tekens moeten worden uitgesproken."
 
 #. Translators: Reported when the user cycles through speak typed characters modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
 #: globalCommands.py:580
 #, python-brace-format
 msgid "Speak typed characters {mode}"
-msgstr ""
+msgstr "Getypte tekens uitspreken {mode}"
 
 #. Translators: Input help mode message for cycling the reporting of typed words.
 #: globalCommands.py:585
 msgid "Cycles through options for when to speak typed words."
-msgstr ""
+msgstr "Schakelt  door de opties voor wanneer getypte woorden moeten worden uitgesproken."
 
 #. Translators: Reported when the user cycles through speak typed words modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
 #: globalCommands.py:596
 #, python-brace-format
 msgid "Speak typed words {mode}"
-msgstr ""
+msgstr "Getypte woorden uitspreken {mode}"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 #: globalCommands.py:601
 msgid "Toggles on and off the speaking of command keys"
-msgstr ""
+msgstr "Schakelt het uitspreken van commandotoetsen in en uit"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:608
@@ -4276,23 +4276,23 @@ msgstr "links melden aan"
 #. Translators: Input help mode message for toggle report link type command.
 #: globalCommands.py:979
 msgid "Toggles on and off the reporting of link type"
-msgstr ""
+msgstr "Schakelt het melden van het linktype in en uit"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
 #: globalCommands.py:988
 msgid "Report link type on"
-msgstr ""
+msgstr "Link type melden aan"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
 #: globalCommands.py:990
 msgid "Report link type off"
-msgstr ""
+msgstr "Link type melden uit"
 
 #. Translators: The message announced when reporting links is disabled,
 #. and the user tries to toggle the report link type document formatting setting.
 #: globalCommands.py:995
 msgid "The report links setting must be enabled to toggle report link type"
-msgstr ""
+msgstr "De instelling links melden moet ingeschakeld zijn om linktype melden in of uit te schakelen"
 
 #. Translators: Input help mode message for toggle report graphics command.
 #: globalCommands.py:999
@@ -4802,12 +4802,12 @@ msgstr "Verplaatst de leescursor naar het laatste karakter van de huidige regel 
 #. Translators: Input help mode message for move review cursor to start of selection command.
 #: globalCommands.py:2270
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
-msgstr ""
+msgstr "Verplaatst de leescursor naar het eerste teken van de selectie en spreekt het uit"
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
 #: globalCommands.py:2298
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
-msgstr ""
+msgstr "Verplaatst de leescursor naar het laatste teken van de selectie en spreekt het uit"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 #: globalCommands.py:2337
@@ -5257,7 +5257,7 @@ msgstr "Toont de documentopmaak instellingen van NVDA"
 #: globalCommands.py:3431
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
-msgstr ""
+msgstr "Geeft de instellingen voor externe toegang weer"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3440
@@ -5446,17 +5446,17 @@ msgstr "Spreek teken uit bij het verplaatsen van de cursor in tekst uitgeschakel
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
 #: globalCommands.py:3755
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
-msgstr ""
+msgstr "Schakelt de spraakfunctie in en uit bij het navigeren per regel of alinea met braille"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3764
 msgid "Speak whenn navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "Spreek tijdens het navigeren per regel of alinea met braille aan"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3766
 msgid "Speak when navigating by line or paragraph with braille off"
-msgstr ""
+msgstr "Spreek tijdens het navigeren per regel of alinea met braille uit"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3771
@@ -5722,7 +5722,7 @@ msgstr "Link heeft geen duidelijke bestemming"
 #. Translators: A destination for braille output.
 #: globalCommands.py:4325 brailleDisplayDrivers\dotPad\driver.py:257
 msgid "Graphic"
-msgstr ""
+msgstr "Afbeelding"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -5734,7 +5734,7 @@ msgstr "Bestemming van: {name}"
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4340
 msgid "Unable to get the destination of this link."
-msgstr ""
+msgstr "De bestemming van deze link kan niet worden vastgesteld."
 
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4343
@@ -5861,17 +5861,17 @@ msgstr "Schakel tussen de beschikbare talen voor Windows OCR"
 #. Translators: Describes a command.
 #: globalCommands.py:4647
 msgid "Toggle periodical refresh of a Windows OCR result"
-msgstr ""
+msgstr "Periodieke vernieuwing van een Windows OCR-resultaat in-/uitschakelen"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
 #: globalCommands.py:4658
 msgid "Automatic refresh enabled"
-msgstr ""
+msgstr "Automatisch vernieuwen ingeschakeld"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
 #: globalCommands.py:4660
 msgid "Automatic refresh disabled"
-msgstr ""
+msgstr "Automatisch vernieuwen uitgeschakeld"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 #: globalCommands.py:4670
@@ -5961,25 +5961,25 @@ msgstr "Schakelt tussen splits geluid-modi"
 #: globalCommands.py:4894
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
-msgstr ""
+msgstr "Dempt de spraak die van de externe computer komt of heft dempen op"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
 #: globalCommands.py:4904
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
-msgstr ""
+msgstr "Stuurt de inhoud van het klembord naar de externe computer"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
 #: globalCommands.py:4912
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
-msgstr ""
+msgstr "Kopieert een koppeling naar de huidige Externe Toegang-sessie naar het klembord"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
 #: globalCommands.py:4922
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
-msgstr ""
+msgstr "Verbreekt de verbinding met de huidige Externe Toegang-sessie"
 
 #. Translators: A message indicating that the remote client is not connected.
 #. Translators: Message shown when attempting to mute the remote computer when no session is connected.
@@ -5992,30 +5992,30 @@ msgstr ""
 #: _remoteClient\client.py:187 _remoteClient\client.py:522
 msgctxt "remote"
 msgid "Not connected"
-msgstr ""
+msgstr "Niet verbonden"
 
 #. Translators: Documentation string for the script that starts a new Remote Access session.
 #: globalCommands.py:4934
 msgctxt "remote"
 msgid "Connects to a remote computer"
-msgstr ""
+msgstr "Verbindt met een externe computer"
 
 #. Translators: A message indicating that the remote client is already connected.
 #: globalCommands.py:4945
 msgid "Already connected"
-msgstr ""
+msgstr "Al verbonden"
 
 #. Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
 #: globalCommands.py:4951
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
-msgstr ""
+msgstr "Schakelt in of uit of externe toegang is verbonden"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
 #: globalCommands.py:4966
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
-msgstr ""
+msgstr "Schakelt tussen het bedienen van de lokale of externe computer met het toetsenbord"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -8100,7 +8100,7 @@ msgstr "Functie niet beschikbaar."
 #. because of a component failure.
 #: ui.py:115
 msgid "An error has caused this feature to be unavailable at this time. Restarting NVDA or Windows may solve this problem."
-msgstr ""
+msgstr "Door een fout is deze functie momenteel niet beschikbaar. Het opnieuw opstarten van NVDA of Windows kan dit probleem mogelijk verhelpen."
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. because of a component failure. This prompt includes the title
@@ -8110,7 +8110,7 @@ msgstr ""
 #: ui.py:125
 #, python-brace-format
 msgid "An error has caused this feature ({title}) to be unavailable at this time. Restarting NVDA or Windows may solve this problem."
-msgstr ""
+msgstr "Door een fout is deze functie ({title}) momenteel niet beschikbaar. Dit probleem kan mogelijk worden opgelost door NVDA of Windows opnieuw op te starten."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 #: ui.py:193
@@ -8120,23 +8120,23 @@ msgstr "NVDA Bericht"
 #. Translators: A notice to the user that a copy operation succeeded.
 #: ui.py:204
 msgid "Text copied."
-msgstr ""
+msgstr "Tekst gekopieerd."
 
 #. Translators: A notice to the user that a copy operation failed.
 #: ui.py:206
 msgid "Couldn't copy to clipboard."
-msgstr ""
+msgstr "Kon niet naar klembord kopiëren."
 
 #. Translators: The text of a button which closes the window.
 #. Translators: A close button on a message dialog.
 #: ui.py:209 gui\message.py:340
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #. Translators: The label of a button to copy the text of the window to the clipboard.
 #: ui.py:212
 msgid "Copy"
-msgstr ""
+msgstr "Kopiëren"
 
 #. Translators: A portion of an accessibility label for the "Copy" button,
 #. describing the key to press to activate the button. Currently, this key may only be Ctrl+Shift+C.
@@ -8144,7 +8144,7 @@ msgstr ""
 #. given language; or to set this to the empty string if that key combination is unavailable on some keyboard.
 #: ui.py:217
 msgid "control+shift+c"
-msgstr ""
+msgstr "control+shift+c"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -8187,13 +8187,14 @@ msgstr "Bezig met het controleren op update"
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr ""
+msgstr "Zorg ervoor dat je verbinding hebt met internet en dat de NVDA-update mirror-URL geldig is.\n"
+"Mirror-URL: {url}"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet and try again."
-msgstr ""
+msgstr "Zorg ervoor dat je verbonden bent met internet en probeer het opnieuw."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -8202,7 +8203,8 @@ msgstr ""
 msgctxt "updateCheck"
 msgid "Error checking for update.\n"
 "{tip}"
-msgstr ""
+msgstr "Fout bij het controleren op updates.\n"
+"{tip}"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to apply an NVDA update.
@@ -8398,13 +8400,14 @@ msgstr "Fout bij bijwerken van add-ongegevens"
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr ""
+msgstr "Zorg ervoor dat je verbinding hebt met internet en dat de mirror-URL van de Add-on Store geldig is.\n"
+"Mirror-URL: {url}"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
 #: addonStore\dataManager.py:225
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet and try again."
-msgstr ""
+msgstr "Zorg ervoor dat u verbonden bent met internet en probeer het opnieuw."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:258
@@ -8505,45 +8508,45 @@ msgstr "Extern"
 #: addonStore\models\channel.py:96
 #, python-brace-format
 msgid "Default ({defaultChannel})"
-msgstr ""
+msgstr "Standaard ({defaultChannel})"
 
 #. Translators: Update channel for an addon.
 #. Same means an add-on only updates to a newer version in the same channel.
 #. e.g. an installed beta version only updates to beta versions.
 #: addonStore\models\channel.py:107
 msgid "Same"
-msgstr ""
+msgstr "Zelfde"
 
 #. Translators: Update channel for an addon.
 #. Any means an add-on updates to the latest version regardless of the channel.
 #: addonStore\models\channel.py:110
 msgid "Any"
-msgstr ""
+msgstr "Alle"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:112
 msgid "Do not update"
-msgstr ""
+msgstr "Niet updaten"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:114
 msgid "Stable"
-msgstr ""
+msgstr "Stabiel"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:116
 msgid "Beta or dev"
-msgstr ""
+msgstr "Beta of dev"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:118
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:120
 msgid "Dev"
-msgstr ""
+msgstr "Dev"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -9639,7 +9642,7 @@ msgstr "Geen emoji"
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:43
 msgid "DRAFT"
-msgstr ""
+msgstr "Concept"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:45
@@ -9654,12 +9657,12 @@ msgstr ""
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:49
 msgid "Web layout"
-msgstr ""
+msgstr "Web layout"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:51
 msgid "Read mode"
-msgstr ""
+msgstr "Leesmodus"
 
 #. Translators: a message when toggling change tracking in Microsoft word
 #: appModules\winword.py:85
@@ -9674,17 +9677,17 @@ msgstr "Wijzigingen bijhouden uit"
 #. Translators: a message when collapsing or expanding headings in MS Word
 #: appModules\winword.py:125
 msgid "No heading selected"
-msgstr ""
+msgstr "Geen kop geselecteerd"
 
 #. Translators: a message when collapsing a heading in MS Word
 #: appModules\winword.py:133
 msgid "Collapsed"
-msgstr ""
+msgstr "Samengevouwen"
 
 #. Translators: a message when expanding a heading in MS Word
 #: appModules\winword.py:136
 msgid "Expanded"
-msgstr ""
+msgstr "Uitgevouwen"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:39
@@ -9883,17 +9886,17 @@ msgstr "Om een Albatross met NVDA te gebruiken, wijzig je het aantal statuscelle
 #. Translators: Description of the DotPad Braille / Tactile Graphic display.
 #: brailleDisplayDrivers\dotPad\driver.py:81
 msgid "DotPad Braille / Tactile Graphic display"
-msgstr ""
+msgstr "DotPad Braille / Tactile Graphic leesregel"
 
 #. Translators: Label for a setting that allows the user to choose the destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:102
 msgid "Braille destination"
-msgstr ""
+msgstr "Braillebestemming"
 
 #. Translators: A destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:251
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -9939,7 +9942,7 @@ msgstr "Uit"
 #. Translators: One of the choices for typing echo in keyboard settings
 #: config\configFlags.py:71
 msgid "Only in edit controls"
-msgstr ""
+msgstr "Alleen in bewerkingsvelden"
 
 #. Translators: One of the choices for typing echo in keyboard settings
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
@@ -10061,7 +10064,7 @@ msgstr "Melden"
 #. Translators: This is a label for the automatic update behaviour for add-ons.
 #: config\configFlags.py:253
 msgid "Update Automatically"
-msgstr ""
+msgstr "Automatisch updaten"
 
 #. Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 #: config\configFlags.py:281
@@ -10092,25 +10095,25 @@ msgstr "Pilcrow (¶)"
 #: config\configFlags.py:322
 msgctxt "remote"
 msgid "Allow this computer to be controlled"
-msgstr ""
+msgstr "Laat deze computer beheren"
 
 #. Translators: Option that allows this computer to control the remote computer.
 #: config\configFlags.py:324
 msgctxt "remote"
 msgid "Control another computer"
-msgstr ""
+msgstr "Een andere computer beheren"
 
 #. Translators: Use an existing Remote control server
 #: config\configFlags.py:352
 msgctxt "remote"
 msgid "Use existing"
-msgstr ""
+msgstr "Gebruik bestaande"
 
 #. Translators: Use NVDA as the Remote control server
 #: config\configFlags.py:354
 msgctxt "remote"
 msgid "Host locally"
-msgstr ""
+msgstr "Host lokaal"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:53
@@ -10185,18 +10188,18 @@ msgstr "Herkenning mislukt"
 #. Translators: Describes a command.
 #: contentRecog\recogUi.py:171
 msgid "Refresh the recognition result"
-msgstr ""
+msgstr "Vernieuw het herkenningsresultaat"
 
 #. Translators: Reported when a manual update of a content recognition result (e.g. OCR result) is
 #. requested, but the content is already updated automatically.
 #: contentRecog\recogUi.py:178
 msgid "The result of content recognition is already automatically updated"
-msgstr ""
+msgstr "Het resultaat van de inhoudsherkenning wordt al automatisch bijgewerkt"
 
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
 #: contentRecog\recogUi.py:192
 msgid "Refresh of recognition result failed"
-msgstr ""
+msgstr "Vernieuwing van herkenningsresultaat mislukt"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
@@ -11451,7 +11454,7 @@ msgstr "opent boom"
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:212
 msgid "same page"
-msgstr ""
+msgstr "zelfde pagina"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:218
@@ -11497,22 +11500,22 @@ msgstr "Geen vorige alinea"
 #. The purpose of this text box will be explained elsewhere in the user interface.
 #: gui\_SetURLDialog.py:74
 msgid "&URL:"
-msgstr ""
+msgstr "&URL:"
 
 #. Translators: A button in a dialog which allows the user to test a URL that they have entered.
 #: gui\_SetURLDialog.py:82
 msgid "&Test..."
-msgstr ""
+msgstr "&Test..."
 
 #. Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
 #: gui\_SetURLDialog.py:105
 msgid "The URL you have entered failed the connection test. Are you sure you want to save it anyway?"
-msgstr ""
+msgstr "De ingevoerde URL is niet geslaagd voor de verbindingstest. Weet u zeker dat u deze toch wilt opslaan?"
 
 #. Translators: Message shown to users when saving an untested URL to NVDA's settings.
 #: gui\_SetURLDialog.py:110
 msgid "The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?"
-msgstr ""
+msgstr "De ingevoerde URL is niet getest. Weet u zeker dat u deze wilt opslaan zonder eerst verbinding te maken?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -11529,12 +11532,12 @@ msgstr "Waarschuwing"
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
 msgid "Validating URL..."
-msgstr ""
+msgstr "URL valideren..."
 
 #. Translators: Message shown to users when testing a given URL has succeeded.
 #: gui\_SetURLDialog.py:175
 msgid "Successfully connected to the given URL."
-msgstr ""
+msgstr "Succesvol verbonden met de opgegeven URL."
 
 #. Translators: The title of a dialog presented when a test succeeds
 #. Translators: The title of a dialog presented to indicate a successful operation.
@@ -11549,34 +11552,34 @@ msgstr "Succes"
 #. Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
 #: gui\_SetURLDialog.py:186
 msgid "The response from the server was not recognised. Check the URL is correct before trying again."
-msgstr ""
+msgstr "Het antwoord van de server is niet herkend. Controleer of de URL correct is voordat u het opnieuw probeert."
 
 #. Translators: Tip shown to users when testing a given URL has failed because the server returned an error.
 #: gui\_SetURLDialog.py:190
 msgid "The server returned an error. Check that the URL is correct before trying again."
-msgstr ""
+msgstr "De server heeft een fout geretourneerd. Controleer of de URL correct is voordat u het opnieuw probeert."
 
 #. Translators: Tip shown to users when testing a given URL has failed because of a network error.
 #: gui\_SetURLDialog.py:193
 msgid "There was a network error. Check that you are connected to the internet and try again."
-msgstr ""
+msgstr "Er is een netwerkfout opgetreden. Controleer of je verbinding hebt met internet en probeer het opnieuw."
 
 #. Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
 #: gui\_SetURLDialog.py:203
 msgid "The URL you have entered is not valid. Check that it is correct and try again."
-msgstr ""
+msgstr "De ingevoerde URL is ongeldig. Controleer of deze correct is en probeer het opnieuw."
 
 #. Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
 #: gui\_SetURLDialog.py:206
 msgid "Make sure you are connected to the internet and the URL is correct."
-msgstr ""
+msgstr "Controleer of u verbinding heeft met internet en of de URL correct is."
 
 #. Translators: Message shown to users when testing a given URL has failed.
 #. {tip} will be replaced with a tip on how to resolve the issue.
 #: gui\_SetURLDialog.py:209
 #, python-brace-format
 msgid "The URL you have entered failed the connection test. {tip}"
-msgstr ""
+msgstr "De door u ingevoerde URL heeft de verbindingstest niet doorstaan. {tip}"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 #: gui\__init__.py:208
@@ -11603,7 +11606,7 @@ msgstr "De configuratie kon niet opgeslagen worden - waarschijnlijk een alleen-l
 #. Translators: Message shown when current configuration cannot be saved, for an unknown reason.
 #: gui\__init__.py:241
 msgid "Could not save configuration; see the log for more details."
-msgstr ""
+msgstr "De configuratie kon niet worden opgeslagen. Zie het logboek voor meer informatie."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog.
 #. Example: when trying to open touch interaction settings on an unsupported system.
@@ -11622,35 +11625,39 @@ msgid "Welcome to the COM Registration Fixing tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
 "Press Continue to run the tool now."
-msgstr ""
+msgstr "Welkom bij de COM-registratiehersteltool.\n\n"
+"Het installeren en verwijderen van programma's, evenals andere gebeurtenissen, kan toegankelijkheidsvermeldingen in het Windows-register beschadigen. Dit kan ertoe leiden dat eerder toegankelijke elementen onjuist worden weergegeven, of dat \"onbekend\" of \"venster\" in sommige toepassingen of Windows-componenten wordt uitgesproken of in braille wordt weergegeven, in plaats van de verwachte inhoud.\n\n"
+"Deze tool probeert dergelijke veelvoorkomende problemen op te lossen. Let op: de tool moet toegang hebben tot het systeemregister, waarvoor beheerdersrechten vereist zijn.\n\n"
+"Klik op Doorgaan om de tool nu uit te voeren."
 
 #. Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 #: gui\__init__.py:527
 msgid "Fix COM Registrations"
-msgstr ""
+msgstr "COM-registraties herstellen"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 #: gui\__init__.py:542
 msgid "Please wait while NVDA attempts to fix your system's COM registrations..."
-msgstr ""
+msgstr "Een ogenblik geduld terwijl NVDA probeert de COM-registraties van uw systeem te herstellen..."
 
 #. Translators: message shown to the user on COM Registration Fix fail
 #: gui\__init__.py:569
 #, python-brace-format
 msgid "The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr ""
+msgstr "De COM-registratiehersteltool is niet succesvol gebleken. Deze Windows-fout kan mogelijk meer informatie bieden.\n"
+"{error}"
 
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
 #: gui\__init__.py:573
 msgid "COM Registration Fixing Tool Failed"
-msgstr ""
+msgstr "COM-registratiehersteltool mislukt"
 
 #. Translators: Message shown when the COM Registration Fixing tool completes.
 #: gui\__init__.py:580
 msgid "The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr ""
+msgstr "Het is sterk aan te raden uw computer nu opnieuw op te starten om ervoor te zorgen dat de wijzigingen volledig van kracht worden."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:607
@@ -12043,7 +12050,7 @@ msgstr "Actie niet beschikbaar terwijl de braille-modus is ingesteld op spraakui
 #: gui\blockAction.py:87
 msgctxt "remote"
 msgid "Action unavailable when Remote Access is disabled"
-msgstr ""
+msgstr "Actie niet beschikbaar wanneer externe toegang is uitgeschakeld"
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -12269,7 +12276,7 @@ msgstr "Herstart"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:49
 msgid "Restart with add-ons disabled and debug logging enabled"
-msgstr ""
+msgstr "Opnieuw opstarten met uitgeschakelde add-ons en ingeschakelde debug-logging"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:53
@@ -12662,22 +12669,22 @@ msgstr "Annuleren"
 #. Translators: A save button on a message dialog.
 #: gui\message.py:336
 msgid "&Save"
-msgstr ""
+msgstr "&Opslaan"
 
 #. Translators: An apply button on a message dialog.
 #: gui\message.py:338
 msgid "&Apply"
-msgstr ""
+msgstr "&Toepassen"
 
 #. Translators: A help button on a message dialog.
 #: gui\message.py:342
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #. Translators: A don't save button on a message dialog.
 #: gui\message.py:364
 msgid "Do&n't save"
-msgstr ""
+msgstr "Nie&t opslaan"
 
 #. Translators: Label for the default option for some feature-flag combo boxes
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
@@ -12818,7 +12825,7 @@ msgstr "Sta NV Access toe om NVDA-gebruiksstatistieken te verzamelen"
 #. Translators: The label for the update mirror on the General Settings panel.
 #: gui\settingsDialogs.py:958
 msgid "Update mirror"
-msgstr ""
+msgstr "Update mirror"
 
 #. Translators: This is the label for the button used to change the NVDA update mirror URL,
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
@@ -12826,17 +12833,17 @@ msgstr ""
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
 #: gui\settingsDialogs.py:976 gui\settingsDialogs.py:3259
 msgid "Change..."
-msgstr ""
+msgstr "Wijzigen..."
 
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:992
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr ""
+msgstr "Voorkom dat de &leesregel uitgaat tijdens alles lezen of braillelezen"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1006
 msgid "Set NVDA Update Mirror"
-msgstr ""
+msgstr "NVDA-updatemirror instellen"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -12886,7 +12893,7 @@ msgstr "Onvoldoende rechten"
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1133 gui\settingsDialogs.py:3305
 msgid "No mirror"
-msgstr ""
+msgstr "Geen mirror"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 #: gui\settingsDialogs.py:1152
@@ -13050,12 +13057,12 @@ msgstr "&Selecteer NVDA-toetsen"
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2001
 msgid "Speak typed &characters:"
-msgstr ""
+msgstr "Getypte &tekens uitspreken:"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2012
 msgid "Speak typed &words:"
-msgstr ""
+msgstr "Getypte &woorden uitspreken:"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -13561,7 +13568,7 @@ msgstr "Elementen"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2889
 msgid "Link type"
-msgstr ""
+msgstr "Link type"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13704,51 +13711,51 @@ msgstr "Add-on Store"
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3209
 msgid "Automatic &updates:"
-msgstr ""
+msgstr "Automatische &updates:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3221
 msgid "Default update &channel:"
-msgstr ""
+msgstr "Standaard update &kanaal:"
 
 #. Translators: Mute other apps checkbox in settings
 #: gui\settingsDialogs.py:3235
 msgid "Allow automatic updates to install incompatible add-ons"
-msgstr ""
+msgstr "Automatische updates toestaan ​​om incompatibele add-ons te installeren"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
 #: gui\settingsDialogs.py:3241
 msgid "Mirror server"
-msgstr ""
+msgstr "Mirror server"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
 #: gui\settingsDialogs.py:3278
 msgid "Set Add-on Store Mirror Server"
-msgstr ""
+msgstr "Add-on Store Mirror Server instellen"
 
 #. Translators: Label of a checkbox in Remote Access settings
 #: gui\settingsDialogs.py:3332
 msgctxt "remote"
 msgid "Enable Remote Access"
-msgstr ""
+msgstr "Externe toegang inschakelen"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
 #: gui\settingsDialogs.py:3349
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr ""
+msgstr "Bevestig voor het verbreken van de verbinding wanneer je computer wordt beheerd"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3359
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
-msgstr ""
+msgstr "Automatisch &verbinden nadat NVDA is gestart"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
 #: gui\settingsDialogs.py:3369
 msgctxt "remote"
 msgid "Automatic connection"
-msgstr ""
+msgstr "Automatische verbinding"
 
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
@@ -13756,7 +13763,7 @@ msgstr ""
 #: gui\settingsDialogs.py:3378 _remoteClient\dialogs.py:318
 msgctxt "remote"
 msgid "&Mode:"
-msgstr ""
+msgstr "&Modus:"
 
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
@@ -13764,7 +13771,7 @@ msgstr ""
 #: gui\settingsDialogs.py:3387 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Server:"
-msgstr ""
+msgstr "&Server:"
 
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
@@ -13792,38 +13799,39 @@ msgstr "&Sleutel:"
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
 #: gui\settingsDialogs.py:3434
 msgid "Delete all trusted fingerprints"
-msgstr ""
+msgstr "Verwijder alle vertrouwde vingerafdrukken"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3512
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Hierdoor vergeet NVDA alle eerder vertrouwde servers voor externe toegang. Wanneer u verbinding maakt met een eerder vertrouwde, niet-herkende server, wordt u opnieuw gevraagd of u het certificaat wilt vertrouwen.\n\n"
+"Weet u zeker dat u wilt doorgaan?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3517
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
-msgstr ""
+msgstr "Verwijder alle vertrouwde vingerafdrukken"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
 #: gui\settingsDialogs.py:3534
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr ""
+msgstr "Zowel de host als de sleutel moeten worden ingesteld in het gedeelte Externe toegang om automatisch verbinding te maken via een bestaande server nadat NVDA is gestart."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3540
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr ""
+msgstr "Zowel de poort als de sleutel moeten worden ingesteld in de categorie Externe toegang om automatisch verbinding te maken via een lokaal gehoste server nadat NVDA is gestart."
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3546
 msgctxt "remote"
 msgid "Remote Access Error"
-msgstr ""
+msgstr "Externe toegang-fout"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:3579
@@ -14113,13 +14121,13 @@ msgstr "Probeer spraak te annuleren voor verlopen focuswijzigingen:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:3995
 msgid "Trim leading silence in speech audio"
-msgstr ""
+msgstr "Verwijder de eerste stilte in spraakaudio"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4003
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Gebruik WASAPI voor SAPI 4-audio-uitvoer:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14259,7 +14267,7 @@ msgstr "&Uitvoertabel:"
 #: gui\settingsDialogs.py:4624 gui\settingsDialogs.py:4651
 #, python-brace-format
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Automatisch ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 #: gui\settingsDialogs.py:4643
@@ -14355,7 +14363,7 @@ msgstr "Spreek &teken uit wanneer de cursor in tekst wordt verplaatst"
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:4927
 msgid "Speak when navigating by &line or paragraph"
-msgstr ""
+msgstr "Spreken bij het navigeren per &regel of alinea"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14712,12 +14720,12 @@ msgstr "Licentieovereenkomst"
 #. Translators: The label of a button in NVDA installation process to view the license agreement.
 #: gui\startupDialogs.py:225
 msgid "&View License"
-msgstr ""
+msgstr "&Bekijk licentie"
 
 #. Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 #: gui\startupDialogs.py:230
 msgid "I have read and &agree to the license agreement"
-msgstr ""
+msgstr "Ik heb de licentieovereenkomst gelezen en ga ermee &akkoord"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:276
@@ -14737,7 +14745,7 @@ msgstr "Om NVDA in de toekomst te kunnen verbeteren, wenst NV Access gebruikssta
 #. channel of the selected add-on
 #: gui\addonStoreGui\controls\actions.py:171
 msgid "Upd&ate channel"
-msgstr ""
+msgstr "Upd&atekanaal"
 
 #. Translators: a message displayed when activating the context menu on multiple selected add-ons,
 #. but no actions are available for the add-ons.
@@ -14762,13 +14770,13 @@ msgstr "&Update geselecteerde add-ons"
 #: gui\addonStoreGui\controls\actions.py:226
 msgctxt "addonStore"
 msgid "Re&try installing selected add-ons"
-msgstr ""
+msgstr "Pro&beer de geselecteerde add-ons opnieuw te installeren"
 
 #. Translators: Label for an action that cancel install of the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:233
 msgctxt "addonStore"
 msgid "Ca&ncel install of selected add-ons"
-msgstr ""
+msgstr "Installatie van geselecteerde add-ons a&nnuleren"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -14932,13 +14940,13 @@ msgstr "Link voor beoordelingen:"
 #: gui\addonStoreGui\controls\details.py:351
 msgctxt "addonStore"
 msgid "Install date:"
-msgstr ""
+msgstr "Installatiedatum:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:358
 msgctxt "addonStore"
 msgid "Publication date:"
-msgstr ""
+msgstr "Publicatiedatum:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15235,7 +15243,7 @@ msgstr[1] "Add-ons {} worden geïnstalleerd, een ogenblik geduld."
 #: gui\addonStoreGui\controls\messageDialogs.py:646
 msgctxt "addonStore"
 msgid "Add-ons updated, restart NVDA to activate changes"
-msgstr ""
+msgstr "Add-ons bijgewerkt, start NVDA opnieuw op om de wijzigingen te activeren"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:40
@@ -15259,7 +15267,7 @@ msgstr "Opmerking: NVDA is gestart met uitgeschakelde add-ons"
 #: gui\addonStoreGui\controls\storeDialog.py:156
 msgctxt "addonStore"
 msgid "Sort by colu&mn:"
-msgstr ""
+msgstr "Sorteren op kolo&m:"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:165
@@ -15329,7 +15337,7 @@ msgstr "Auteur"
 #: gui\addonStoreGui\viewModels\addonList.py:95
 msgctxt "addonStore"
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -15337,7 +15345,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
-msgstr ""
+msgstr "{column} (oplopend)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
@@ -15345,7 +15353,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
-msgstr ""
+msgstr "{column} (aflopend)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:117
@@ -15375,7 +15383,7 @@ msgstr "&Update (incompatibiliteit negeren)"
 #: gui\addonStoreGui\viewModels\store.py:145
 msgctxt "addonStore"
 msgid "Re&try install"
-msgstr ""
+msgstr "Op&nieuw installeren"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -15388,7 +15396,7 @@ msgstr "Ver&vangen"
 #: gui\addonStoreGui\viewModels\store.py:160
 msgctxt "addonStore"
 msgid "Ca&ncel install"
-msgstr ""
+msgstr "I&nstallatie annuleren"
 
 #. Translators: Label for an action that disables the selected addon
 #: gui\addonStoreGui\viewModels\store.py:167
@@ -17202,12 +17210,12 @@ msgstr "{desc} {position}"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:116
 msgid "Words only"
-msgstr ""
+msgstr "Alleen woorden"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:118
 msgid "Double"
-msgstr ""
+msgstr "Dubbel"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:120
@@ -17217,7 +17225,7 @@ msgstr ""
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:122
 msgid "Thick"
-msgstr ""
+msgstr "Dik"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:124
@@ -17287,17 +17295,17 @@ msgstr ""
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:311
 msgid "Lowercase"
-msgstr ""
+msgstr "Kleine letters"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:313
 msgid "Uppercase"
-msgstr ""
+msgstr "Hoofdletters"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:315
 msgid "Each word capitalized"
-msgstr ""
+msgstr "Elk woord met een hoofdletter"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:317
@@ -17312,12 +17320,12 @@ msgstr ""
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:321
 msgid "Half width"
-msgstr ""
+msgstr "Halve breedte"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:323
 msgid "Full width"
-msgstr ""
+msgstr "Volledige breedte"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:325
@@ -18342,7 +18350,7 @@ msgstr "{D} dagen {H}:{M}:{S}"
 #. Translators: Value to show when choosing to use the default audio output device.
 #: utils\mmdevice.py:44
 msgid "Default output device"
-msgstr ""
+msgstr "Standaard uitvoerapparaat"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -18508,29 +18516,29 @@ msgstr "Beveiligd Bureaublad"
 #: _remoteClient\client.py:526
 msgctxt "remote"
 msgid "Not the controlling computer"
-msgstr ""
+msgstr "Niet de beherende computer"
 
 #. Translators: Displayed when muting speech and sounds from the remote computer
 #: _remoteClient\client.py:134
 msgid "Muted remote"
-msgstr ""
+msgstr "Externe computer gedemd"
 
 #. Translators: Displayed when unmuting speech and sounds from the remote computer
 #: _remoteClient\client.py:136
 msgid "Unmuted remote"
-msgstr ""
+msgstr "Externe computer niet meer gedemd"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
 #: _remoteClient\client.py:153
 msgctxt "remote"
 msgid "No one else is connected"
-msgstr ""
+msgstr "Er is niemand anders verbonden"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
 #: _remoteClient\client.py:161
 msgctxt "remote"
 msgid "Unable to send clipboard"
-msgstr ""
+msgstr "Niet in staat klembord te versturen"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: _remoteClient\client.py:176
@@ -18541,13 +18549,13 @@ msgstr "Link gekopiëerd"
 #: _remoteClient\client.py:226
 msgctxt "remote"
 msgid "Confirm Disconnection"
-msgstr ""
+msgstr "Verbreken van verbinding bevestigen"
 
 #. Translators: Message shown when disconnecting from the remote computer.
 #: _remoteClient\client.py:230
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
-msgstr ""
+msgstr "Weet u zeker dat u de verbinding met de Externe toegang-sessie wilt verbreken?"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:282
@@ -18563,85 +18571,85 @@ msgstr "Kan geen verbinding maken met externe computer"
 #: _remoteClient\client.py:308
 msgctxt "remote"
 msgid "Connect to Another Computer"
-msgstr ""
+msgstr "Verbinding maken met een andere computer"
 
 #. Translators: Presented when connected to the remote computer.
 #: _remoteClient\client.py:351
 msgid "Connected"
-msgstr ""
+msgstr "Verbonden"
 
 #. Translators: Presented when connection to a remote computer was interupted.
 #. Translators: Message shown when the connection to the remote computer is lost.
 #: _remoteClient\client.py:369 _remoteClient\cues.py:27
 msgid "Disconnected"
-msgstr ""
+msgstr "Verbinding verbroken"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 #: _remoteClient\client.py:530
 msgctxt "remote"
 msgid "No controlled computers are connected"
-msgstr ""
+msgstr "Geen beheerde computers verbonden"
 
 #. Translators: Presented when keyboard control is back to the controlling computer.
 #: _remoteClient\client.py:544
 msgctxt "remote"
 msgid "Controlling local computer"
-msgstr ""
+msgstr "Lokale computer beheren"
 
 #. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 #: _remoteClient\client.py:553
 msgctxt "remote"
 msgid "Controlling remote computer"
-msgstr ""
+msgstr "Externe computer beheren"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:617
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr ""
+msgstr "Er is al een sessie voor externe toegang actief. Verbreek de verbinding voordat u een nieuwe sessie start."
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:620
 msgctxt "remote"
 msgid "Already Connected"
-msgstr ""
+msgstr "Al verbonden"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:635
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
-msgstr ""
+msgstr "Wilt u de computer op server {server} beheren met de sleutel {key}?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:641
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Wilt u dat deze computer via server {server} met sleutel {key} beheerd kan worden?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:647
 msgctxt "remote"
 msgid "Remote Access Connection Request"
-msgstr ""
+msgstr "Verzoek om externe toegang"
 
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
 #: _remoteClient\cues.py:32
 msgctxt "remote"
 msgid "Connected as controlled computer"
-msgstr ""
+msgstr "Verbonden als beheerde computer"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
 #: _remoteClient\cues.py:43
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr ""
+msgstr "Klembord verzonden"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:48
 msgid "Clipboard received"
-msgstr ""
+msgstr "Klembord ontvangen"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:211
@@ -18651,19 +18659,19 @@ msgstr "Sleutel &genereren"
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
 msgid "Host must be set."
-msgstr ""
+msgstr "Host moet worden ingesteld."
 
 #. Translators: Title of a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "Sleutel genereren"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "Sleutel genereren..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
@@ -18671,13 +18679,13 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "Kan geen verbinding maken met {host}. Controleer of u internettoegang hebt en of het hostveld geen fouten bevat."
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:123
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "Verbinding met host mislukt"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:187
@@ -18693,19 +18701,19 @@ msgstr "Extern &IP opvragen"
 #: _remoteClient\dialogs.py:209
 msgctxt "remote"
 msgid "&Key"
-msgstr ""
+msgstr "&Sleutel"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:230
 msgctxt "remote"
 msgid "Getting external IP"
-msgstr ""
+msgstr "Extern IP-adres verkrijgen"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:232
 msgctxt "remote"
 msgid "Getting external IP..."
-msgstr ""
+msgstr "Externe IP ophalen..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
 #: _remoteClient\dialogs.py:272
@@ -18718,7 +18726,7 @@ msgstr "IP-adres succesvol verkregen. Poort {port} is open."
 #: _remoteClient\dialogs.py:283
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
-msgstr ""
+msgstr "Extern IP-adres opgehaald, maar poort {port} is waarschijnlijk momenteel niet doorgestuurd."
 
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:298
@@ -18739,7 +18747,7 @@ msgstr "Zowel poort als sleutel moeten worden ingevoerd."
 #: _remoteClient\dialogs.py:429
 msgctxt "remote"
 msgid "Security Warning"
-msgstr ""
+msgstr "Beveiligingswaarschuwing"
 
 #. Translators: Message presented when attempting to connect to a server with an untrusted certificate.
 #. {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
@@ -18750,12 +18758,15 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "Het certificaat van deze server kon niet worden geverifieerd. Door een onjuiste vingerafdruk te gebruiken, kan een derde partij toegang krijgen tot de sessie voor externe toegang.\n\n"
+"Controleer voordat u verdergaat of de volgende vingerafdruk van het servercertificaat correct is.\n"
+"Server SHA256-vingerafdruk: {fingerprint}\n\n"
+"Toch doorgaan met verbinden?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:449
 msgid "Connect and do not ask again for this server"
-msgstr ""
+msgstr "Maak verbinding en vraag niet meer voor deze server"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:451
@@ -18766,7 +18777,7 @@ msgstr "Verbinden"
 #: _remoteClient\localMachine.py:289
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr ""
+msgstr "Control+alt+delete kan niet worden geactiveerd"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
@@ -18777,19 +18788,19 @@ msgstr "Extern geluid &dempen"
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr ""
+msgstr "Demp spraak en geluiden van de externe computer."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr ""
+msgstr "&Klembord verzenden"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr ""
+msgstr "Stuur de klembordtekst naar de externe computer."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
@@ -18800,31 +18811,31 @@ msgstr "&Link kopiëren"
 #: _remoteClient\menu.py:57
 msgctxt "remote"
 msgid "Copy a link to the current Remote Access session to the clipboard."
-msgstr ""
+msgstr "Kopieer een koppeling naar de huidige Externe Toegang-sessie naar het klembord."
 
 #. Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 #: _remoteClient\menu.py:68
 msgctxt "remote"
 msgid "S&end control+alt+delete"
-msgstr ""
+msgstr "St&uur control+alt+delete"
 
 #. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
 msgctxt "remote"
 msgid "Send control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Stuur control+alt+delete naar de beheerde computer."
 
 #. Translators: Label of the Remote Access submenu in the NVDA tools menu.
 #: _remoteClient\menu.py:81
 msgctxt "remote"
 msgid "R&emote Access"
-msgstr ""
+msgstr "E&xterne Toegang"
 
 #. Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 #: _remoteClient\menu.py:85
 msgctxt "remote"
 msgid "Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one."
-msgstr ""
+msgstr "Geef iemand de mogelijkheid om deze computer vanaf een andere locatie te bedienen, of bedien een andere computer waarop NVDA draait met deze computer."
 
 #. Translators: Item in the Remote Access submenu to connect to another computer.
 #: _remoteClient\menu.py:156
@@ -18835,7 +18846,7 @@ msgstr "Verbinden..."
 #: _remoteClient\menu.py:158
 msgctxt "remote"
 msgid "Remotely connect to another computer running NVDA."
-msgstr ""
+msgstr "Maak op afstand verbinding met een andere computer waarop NVDA draait."
 
 #. Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 #: _remoteClient\menu.py:176
@@ -18846,23 +18857,23 @@ msgstr "Verbinding ver&breken"
 #: _remoteClient\menu.py:178
 msgctxt "remote"
 msgid "Disconnect from the current Remote Access session."
-msgstr ""
+msgstr "Verbreek de verbinding met de huidige Externe toegang-sessie."
 
 #. Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr ""
+msgstr "De Externe Toegang-server waarmee u verbinding hebt gemaakt, is niet compatibel met deze versie van NVDA. Gebruik een andere server."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
 msgctxt "remote"
 msgid "Message from Remote Access Server"
-msgstr ""
+msgstr "Bericht van Externe Toegang-server"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr ""
+msgstr "Externe NVDA niet verbonden"
 

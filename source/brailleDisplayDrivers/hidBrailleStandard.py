@@ -78,6 +78,7 @@ class ButtonCapsInfo:
 
 class HidBrailleDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
+	_numberOfCellsValueCaps: hidpi.HIDP_VALUE_CAPS | None = None
 	name = "hidBrailleStandard"
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
@@ -190,6 +191,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 						buttonCaps,
 						relativeIndexInCollection=relativeIndexInCollection,
 					)
+					relativeIndexInCollection += 1
 			else:
 				nr = buttonCaps.u1.NotRange
 				index = nr.DataIndex
@@ -348,8 +350,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				isBrailleInput = False
 				self.dots = 0
 				self.space = False
-			if usagePage == HID_USAGE_PAGE_BRAILLE and usageID == BraillePageUsageID.ROUTER_KEY:
+			if usagePage == HID_USAGE_PAGE_BRAILLE and linkUsageID == BraillePageUsageID.ROUTER_SET_1:
+				# We must assume that any input in the router set is a routing key,
+				# Because some devices expose the routing keys as 1-bit values
+				# which Windows then combines into a usage range.
 				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
+				usageID = BraillePageUsageID.ROUTER_KEY
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
 			name = self._usageIDToGestureName(usagePage, usageID)

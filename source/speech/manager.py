@@ -276,8 +276,7 @@ class SpeechManager(object):
 		log._speechManagerDebug("Out Seq: %r", outSeq)  # expensive string to build - defer
 		queue = self._priQueues.get(priority)
 		log._speechManagerDebug(
-			f"Current priority: {priority},"
-			f" queLen: {0 if queue is None else len(queue.pendingSequences)}",
+			f"Current priority: {priority}, queLen: {0 if queue is None else len(queue.pendingSequences)}",
 		)
 		if not queue:
 			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
@@ -613,7 +612,7 @@ class SpeechManager(object):
 			if isinstance(lastCommand, IndexCommand):
 				if self._isIndexAAfterIndexB(index, lastCommand.index):
 					log.debugWarning(
-						f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled",
+						f"Reached speech index {index:d}, but index {lastCommand.index:d} never handled",
 					)
 				elif index == lastCommand.index:
 					endOfUtterance = isinstance(

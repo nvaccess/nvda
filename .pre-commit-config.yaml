@@ -53,14 +53,14 @@ repos:
     - id: debug-statements
     # Removes trailing whitespace.
     - id: trailing-whitespace
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Ensures all files end in 1 (and only 1) newline.
     - id: end-of-file-fixer
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Removes the UTF-8 BOM from files that have it.
     # See https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/codingStandards.md#encoding
     - id: fix-byte-order-marker
-      types_or: [python, c, c++, batch, markdown, toml, yaml]
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
     # Validates TOML files.
     - id: check-toml
     # Validates YAML files.
@@ -91,7 +91,7 @@ repos:
         )
 
 - repo: https://github.com/asottile/add-trailing-comma
-  rev: v3.1.0
+  rev: v3.2.0
   hooks:
   # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
   # if a trailing comma is added.
@@ -100,7 +100,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.8.1
+  rev: v0.11.12
   hooks:
     - id: ruff
       name: lint with ruff
@@ -109,14 +109,14 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.394
+  rev: v1.1.401
   hooks:
   - id: pyright
     alias: pyrightLocal
     name: Check types with pyright
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.396
+  rev: v1.1.401
   hooks:
   - id: pyright
     alias: pyrightCI
@@ -126,7 +126,7 @@ repos:
     stages: [manual]  # Only run from CI manually
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.6.14
+  rev: 0.7.9
   hooks:
     - id: uv-lock
       name: Verify uv lock file
