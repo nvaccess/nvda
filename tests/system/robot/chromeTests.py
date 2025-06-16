@@ -2885,7 +2885,7 @@ def _getLangDisplayName(lang) -> str | None:
 	"""
 
 	language = Locale.parse(lang)
-	return language.get_display_name('en')
+	return language.get_display_name("en")
 
 
 def test_reportLanguageDisabled():
