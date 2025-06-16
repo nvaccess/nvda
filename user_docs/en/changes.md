@@ -38,6 +38,7 @@
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
+* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
 ### Changes for Developers
 
@@ -61,6 +62,14 @@ The several built-in table definitions are moved to the `__tables` module in tha
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 
 #### Deprecations
+
+## 2025.1.1
+
+This is a patch release to fix a bug.
+
+### Bug fixes
+
+* Fixed bug where the Add-on Store would not open when using the Korean language for the NVDA interface. (#18250)
 
 ## 2025.1
 
