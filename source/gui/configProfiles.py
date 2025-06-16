@@ -34,6 +34,7 @@ class ProfilesDialog(
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super().__init__(parent, title=_("Configuration Profiles"))
+		self.SetFont(self.GetFontFromConfig())
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -337,6 +338,17 @@ class ProfilesDialog(
 				parent=parentWindow,
 			)
 
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
+
 
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
@@ -356,6 +368,7 @@ class TriggersDialog(
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
 		super().__init__(parent, title=_("Profile Triggers"))
+		self.SetFont(self.GetFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -438,6 +451,17 @@ class TriggersDialog(
 		self.Parent.Enable()
 		self.Destroy()
 
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
+
 
 class NewProfileDialog(
 	gui.contextHelp.ContextHelpMixin,
@@ -448,6 +472,7 @@ class NewProfileDialog(
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
 		super().__init__(parent, title=_("New Profile"))
+		self.SetFont(self.GetFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -603,6 +628,17 @@ class NewProfileDialog(
 			self.profileName.Value = name
 			self.profileName.SelectAll()
 		self.autoProfileName = name
+
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
 
 
 class RenameProfileDialog(
