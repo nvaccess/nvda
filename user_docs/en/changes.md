@@ -7,6 +7,7 @@
 ### New Features
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* While reading text, spelling errors can now be reported with a sound. (#4233, @jcsteh, @CyrilleB79)
 
 ### Changes
 
