@@ -41,6 +41,14 @@ class ExtensionPointHandlerService:
 	def __init__(self):
 		self._handlers: Dict[str, List[Tuple[str, Callable]]] = {}
 		self.logger = logging.getLogger("ART.ExtensionPointHandlerService")
+		self._runtime = None  # Will be set when registered
+
+	@property
+	def extensionPointService(self):
+		"""Get the extension point service from runtime."""
+		if self._runtime and hasattr(self._runtime, 'services'):
+			return self._runtime.services.get('extension_points')
+		return None
 
 	def registerHandler(self, extPointName: str, handlerFunc: Callable, epType: str) -> str:
 		"""Register a handler function for an extension point."""
@@ -53,9 +61,8 @@ class ExtensionPointHandlerService:
 
 		self._handlers[extPointName].append((handlerID, handlerFunc))
 
-		extService = artRuntime.extensionPointService
-		if extService:
-			extService.registerHandler(addonId, extPointName, handlerID, epType)
+		if self.extensionPointService:
+			self.extensionPointService.registerHandler(addonId, extPointName, handlerID, epType)
 
 		self.logger.info(f"Registered handler {handlerID} for {extPointName}")
 		return handlerID
@@ -148,13 +155,18 @@ class ARTRuntime:
 		addon_name = addon_spec["name"] if addon_spec else "unknown"
 		self.logger = logging.getLogger(f"ART.ARTRuntime.{addon_name}")
 		self.daemon: Optional[Pyro5.api.Daemon] = None
-		self.addonService: Optional[AddOnLifecycleService] = None
-		self.extensionPointService: Optional[ExtensionPointService] = None
-		self.handlerService: Optional[ExtensionPointHandlerService] = None
-		self.synthService = None  # Will be initialized in start()
+		self.services: Dict[str, Any] = {}  # Store all services
+		self.service_uris: Dict[str, str] = {}  # Store all URIs
 		self.executor: Optional[concurrent.futures.ThreadPoolExecutor] = None
 		self.daemonFuture: Optional[concurrent.futures.Future] = None
 		self._shutdownEvent = threading.Event()
+
+	def _register_service(self, service_name: str, service_instance: Any, pyro_name: str) -> None:
+		"""Register a service with Pyro and store its URI."""
+		uri = self.daemon.register(service_instance, pyro_name)
+		self.services[service_name] = service_instance
+		self.service_uris[service_name] = str(uri)
+		self.logger.info(f"{service_name} registered at: {uri}")
 
 	def start(self) -> Dict[str, str]:
 		"""Start the ART runtime services."""
@@ -164,44 +176,38 @@ class ARTRuntime:
 		Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024
 
 		self.daemon = Pyro5.api.Daemon(host="127.0.0.1", port=0)
-
 		self.logger.info(f"Pyro5 daemon created at: {self.daemon.locationStr}")
 
-		# Create services with addon spec
-		self.addonService = AddOnLifecycleService(self.addon_spec)
-		self.extensionPointService = ExtensionPointService()
-		self.handlerService = ExtensionPointHandlerService()
-		
-		# Import and create synth service
+		# Define services to register
+		service_definitions = [
+			("addon_lifecycle", AddOnLifecycleService(self.addon_spec), "nvda.art.addon_lifecycle"),
+			("extension_points", ExtensionPointService(), "nvda.art.extension_points"),
+			("handlers", ExtensionPointHandlerService(), "nvda.art.handlers"),
+		]
+
+		# Import and add synth service
 		from art.runtime.services.synth import SynthService
-		self.synthService = SynthService()
+		service_definitions.append(("synth", SynthService(), "nvda.art.synth"))
 
-		addon_uri = self.daemon.register(self.addonService, "nvda.art.addon_lifecycle")
-		ext_uri = self.daemon.register(self.extensionPointService, "nvda.art.extension_points")
-		handler_uri = self.daemon.register(self.handlerService, "nvda.art.handlers")
-		synth_uri = self.daemon.register(self.synthService, "nvda.art.synth")
-
-		self.logger.info(f"AddOnLifecycleService registered at: {addon_uri}")
-		self.logger.info(f"ExtensionPointService registered at: {ext_uri}")
-		self.logger.info(f"ExtensionPointHandlerService registered at: {handler_uri}")
-		self.logger.info(f"SynthService registered at: {synth_uri}")
+		# Register all services
+		for service_name, service_instance, pyro_name in service_definitions:
+			# Set runtime reference for services that need it
+			if hasattr(service_instance, '_runtime'):
+				service_instance._runtime = self
+			self._register_service(service_name, service_instance, pyro_name)
 
 		self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="ARTDaemon")
 		self.daemonFuture = self.executor.submit(self._daemonLoop)
 		self.logger.info("ART runtime started successfully")
 
 		# Load the addon now that services are ready
-		if self.addon_spec and self.addonService:
-			if not self.addonService.loadAddonIfNeeded():
+		addon_service = self.services.get("addon_lifecycle")
+		if self.addon_spec and addon_service:
+			if not addon_service.loadAddonIfNeeded():
 				self.logger.error("Failed to load addon after services were ready")
 				# Continue anyway - services are still available
 
-		return {
-			"addon_lifecycle": str(addon_uri),
-			"extension_points": str(ext_uri),
-			"handlers": str(handler_uri),
-			"synth": str(synth_uri),
-		}
+		return self.service_uris
 
 	def _daemonLoop(self):
 		"""Run the Pyro5 daemon request loop."""
@@ -284,6 +290,13 @@ def handleStartupError(error: Exception, addon_name: str = "unknown") -> None:
 			print("ERROR: Failed to send error response", file=sys.stderr)
 
 
+def _set_core_service_uris(core_services: Dict[str, str]) -> None:
+	"""Set environment variables for core service URIs."""
+	for service_name, uri in core_services.items():
+		env_var = f"NVDA_ART_{service_name.upper()}_SERVICE_URI"
+		os.environ[env_var] = uri
+
+
 def performCLIStartup() -> Optional[Dict[str, str]]:
 	"""Handle CLI startup - parse args and start with addon spec."""
 	try:
@@ -333,9 +346,7 @@ def performHandshake() -> Optional[Dict[str, str]]:
 			os.environ["NVDA_ART_CONFIG_PATH"] = config_path
 
 		# Set core service URIs
-		for service_name, uri in startup_data.get("core_services", {}).items():
-			env_var = f"NVDA_ART_{service_name.upper()}_SERVICE_URI"
-			os.environ[env_var] = uri
+		_set_core_service_uris(startup_data.get("core_services", {}))
 
 		# Get addon spec
 		addon_spec = startup_data.get("addon")
