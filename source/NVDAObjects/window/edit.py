@@ -13,7 +13,6 @@ import comtypes.client
 import ctypes
 from comtypes import COMError
 import colors
-import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -832,24 +831,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		).text
 		if label and not label.isspace():
 			return label
-		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
-		try:
-			dataObj = o.QueryInterface(oleTypes.IDataObject)
-		except comtypes.COMError:
-			dataObj = None
-		if dataObj:
-			text = comtypes.BSTR()
-			NVDAHelper.localLib.getOleClipboardText(dataObj, ctypes.byref(text))
-			label = text.value
-		if label:
-			return label
-		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
-		try:
-			oleObj = o.QueryInterface(oleTypes.IOleObject)
-			label = oleObj.GetUserType(1)
-		except comtypes.COMError:
-			pass
-		return label
 
 	def _getTextAtRange(self, rangeObj):
 		embedRangeObj = None
