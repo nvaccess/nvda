@@ -1,19 +1,23 @@
+import argparse
 import concurrent.futures
-import importlib.util
+import json
+import logging
+import os
 import sys
 import threading
 from enum import Enum
-from logging import INFO, basicConfig, getLogger
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import Pyro5.api
 import wx
 
-# NVDA ART (Add-On Runtime) main module
+# Import ART logging configuration
+from art.runtime.services.addons import AddOnLifecycleService
+
 __version__ = "0.1.0"
-logger = getLogger(__name__)
-basicConfig(level=INFO)
+# Logger will be configured after we know the addon name
+logger = None
 
 global wxApp
 global mainWindow
@@ -31,82 +35,17 @@ class ExtensionPointType(Enum):
 
 
 @Pyro5.api.expose
-class AddOnLifecycleService:
-	"""Service for managing add-on lifecycle in the ART process."""
-
-	def __init__(self):
-		self.loadedAddons: Dict[str, object] = {}
-		logger.info("AddOnLifecycleService initialized")
-
-	def loadAddon(self, addonPath: str) -> bool:
-		"""Load an add-on from the given path.
-		@param addonPath: Path to the add-on directory
-		@return: True if successful, False otherwise
-		"""
-		addonPathObj = Path(addonPath)
-		if not addonPathObj.exists():
-			logger.error(f"Add-on path does not exist: {addonPathObj}")
-			return False
-
-		# Look for __init__.py in the add-on directory
-		initFile = addonPathObj / "__init__.py"
-		if not initFile.exists():
-			logger.error(f"Add-on __init__.py not found: {initFile}")
-			return False
-
-		# Generate a module name based on the add-on directory name
-		addonId = addonPathObj.name
-		moduleName = f"addon_{addonId}"
-
-		# Load the module
-		spec = importlib.util.spec_from_file_location(moduleName, initFile)
-		if spec is None or spec.loader is None:
-			logger.error(f"Could not create module spec for {initFile}")
-			return False
-
-		module = importlib.util.module_from_spec(spec)
-
-		# Add the add-on directory to sys.path temporarily
-		addonDirStr = str(addonPathObj)
-		if addonDirStr not in sys.path:
-			sys.path.insert(0, addonDirStr)
-
-		try:
-			spec.loader.exec_module(module)
-			logger.info(f"Successfully loaded add-on module: {addonId}")
-
-			# Store the loaded module
-			self.loadedAddons[addonId] = module
-
-			logger.info(f"Add-on {addonId} loaded successfully")
-			return True
-
-		except Exception:
-			logger.exception(f"Error executing add-on module {addonId}")
-			return False
-		finally:
-			# Remove from sys.path
-			if addonDirStr in sys.path:
-				sys.path.remove(addonDirStr)
-
-	def getLoadedAddons(self) -> List[str]:
-		"""Get a list of currently loaded add-on IDs.
-		@return: List of add-on IDs that are currently loaded
-		"""
-		return list(self.loadedAddons.keys())
-
-
-@Pyro5.api.expose
 class ExtensionPointHandlerService:
 	"""Service for executing extension point handlers in ART."""
 
 	def __init__(self):
 		self._handlers: Dict[str, List[Tuple[str, Callable]]] = {}
-		self._currentAddon: Optional[str] = None
+		self.logger = logging.getLogger("ART.ExtensionPointHandlerService")
 
 	def registerHandler(self, extPointName: str, handlerFunc: Callable, epType: str) -> str:
 		"""Register a handler function for an extension point."""
-		addonId = self._currentAddon or "unknown"
+		# Get addon name from runtime
+		addonId = artRuntime.addon_spec["name"] if artRuntime and artRuntime.addon_spec else "unknown"
 		handlerID = f"{addonId}_{id(handlerFunc)}"
 
 		if extPointName not in self._handlers:
@@ -114,31 +53,29 @@ class ExtensionPointHandlerService:
 
 		self._handlers[extPointName].append((handlerID, handlerFunc))
 
-		# Also register with tracking service
 		extService = artRuntime.extensionPointService
 		if extService:
 			extService.registerHandler(addonId, extPointName, handlerID, epType)
 
-		logger.info(f"Registered handler {handlerID} for {extPointName}")
+		self.logger.info(f"Registered handler {handlerID} for {extPointName}")
 		return handlerID
 
-	def executeHandlers(self, extPointName: str, epType: str, *args, **kwargs) -> Any:
+	def executeHandlers(self, extPointName: str, epType: str, *args: Any, **kwargs: Any) -> Any:
 		"""Execute all handlers for an extension point."""
 		if extPointName not in self._handlers:
-			return self._getDefaultResult(epType, **args)
+			return self._getDefaultResult(epType, *args)
 
 		results = []
 		for handlerId, handlerFunc in self._handlers[extPointName]:
 			try:
-				# TODO: Use callWithSupportedKwargs when available
 				result = handlerFunc(*args, **kwargs)
 				results.append(result)
 			except Exception:
-				logger.exception(f"Error in handler {handlerId}")
+				self.logger.exception(f"Error in handler {handlerId}")
 
 		return self._combineResults(epType, results)
 
-	def _getDefaultResult(self, epType: str, *args) -> Any:
+	def _getDefaultResult(self, epType: str, *args: Any) -> Any:
 		"""Get default result for extension point type."""
 		if epType == "action":
 			return None
@@ -159,10 +96,8 @@ class ExtensionPointHandlerService:
 		elif epType == "decider":
 			return all(results) if results else True
 		elif epType == "accumulating_decider":
-			# Return True if any handler returned False
 			return not any(not r for r in results)
 		elif epType == "filter":
-			# Chain filters together
 			if not results:
 				return None
 			value = results[0]
@@ -171,7 +106,6 @@ class ExtensionPointHandlerService:
 					value = result
 			return value
 		elif epType == "chain":
-			# Flatten all results
 			flattened = []
 			for result in results:
 				if isinstance(result, list):
@@ -179,7 +113,6 @@ class ExtensionPointHandlerService:
 				else:
 					flattened.append(result)
 			return flattened
-		# Default case for unknown types
 		return results
 
 
@@ -210,61 +143,82 @@ class ExtensionPointService:
 class ARTRuntime:
 	"""Main runtime manager for the ART process."""
 
-	def __init__(self):
+	def __init__(self, addon_spec=None):
+		self.addon_spec = addon_spec
+		addon_name = addon_spec["name"] if addon_spec else "unknown"
+		self.logger = logging.getLogger(f"ART.ARTRuntime.{addon_name}")
 		self.daemon: Optional[Pyro5.api.Daemon] = None
 		self.addonService: Optional[AddOnLifecycleService] = None
 		self.extensionPointService: Optional[ExtensionPointService] = None
 		self.handlerService: Optional[ExtensionPointHandlerService] = None
+		self.synthService = None  # Will be initialized in start()
 		self.executor: Optional[concurrent.futures.ThreadPoolExecutor] = None
 		self.daemonFuture: Optional[concurrent.futures.Future] = None
 		self._shutdownEvent = threading.Event()
 
-	def start(self):
+	def start(self) -> Dict[str, str]:
 		"""Start the ART runtime services."""
-		# Configure Pyro5 settings based on design document
 		Pyro5.config.SERIALIZER = "json"
-		Pyro5.config.COMMTIMEOUT = 2.0  # 2 seconds timeout
-		Pyro5.config.HOST = "127.0.0.1"  # Default host for daemons
-		Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024  # 1MB limit
+		Pyro5.config.COMMTIMEOUT = 2.0
+		Pyro5.config.HOST = "127.0.0.1"
+		Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024
 
-		# Create Pyro5 daemon bound to localhost only
 		self.daemon = Pyro5.api.Daemon(host="127.0.0.1", port=0)
-		logger.info(f"Pyro5 daemon created at: {self.daemon.locationStr}")
 
-		# Create and register the add-on lifecycle service
-		self.addonService = AddOnLifecycleService()
-		uri = self.daemon.register(self.addonService, "nvda.art.addon_lifecycle")
-		logger.info(f"AddOnLifecycleService registered at: {uri}")
+		self.logger.info(f"Pyro5 daemon created at: {self.daemon.locationStr}")
 
-		# Create and register the extension point service
+		# Create services with addon spec
+		self.addonService = AddOnLifecycleService(self.addon_spec)
 		self.extensionPointService = ExtensionPointService()
-		extUri = self.daemon.register(self.extensionPointService, "nvda.art.extension_points")
-		logger.info(f"ExtensionPointService registered at: {extUri}")
-
-		# Create and register the handler service
 		self.handlerService = ExtensionPointHandlerService()
-		handlerUri = self.daemon.register(self.handlerService, "nvda.art.handlers")
-		logger.info(f"ExtensionPointHandlerService registered at: {handlerUri}")
+		
+		# Import and create synth service
+		from art.runtime.services.synth import SynthService
+		self.synthService = SynthService()
 
-		# Print the URIs so NVDA Core can discover them
-		print(f"ART_SERVICE_URI:{uri}", flush=True)
-		print(f"ART_EXT_SERVICE_URI:{extUri}", flush=True)
-		print(f"ART_HANDLER_SERVICE_URI:{handlerUri}", flush=True)
+		addon_uri = self.daemon.register(self.addonService, "nvda.art.addon_lifecycle")
+		ext_uri = self.daemon.register(self.extensionPointService, "nvda.art.extension_points")
+		handler_uri = self.daemon.register(self.handlerService, "nvda.art.handlers")
+		synth_uri = self.daemon.register(self.synthService, "nvda.art.synth")
 
-		# Start the daemon using ThreadPoolExecutor
+		self.logger.info(f"AddOnLifecycleService registered at: {addon_uri}")
+		self.logger.info(f"ExtensionPointService registered at: {ext_uri}")
+		self.logger.info(f"ExtensionPointHandlerService registered at: {handler_uri}")
+		self.logger.info(f"SynthService registered at: {synth_uri}")
+
 		self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="ARTDaemon")
 		self.daemonFuture = self.executor.submit(self._daemonLoop)
-		logger.info("ART runtime started successfully")
+		self.logger.info("ART runtime started successfully")
+
+		# Load the addon now that services are ready
+		if self.addon_spec and self.addonService:
+			if not self.addonService.loadAddonIfNeeded():
+				self.logger.error("Failed to load addon after services were ready")
+				# Continue anyway - services are still available
+
+		return {
+			"addon_lifecycle": str(addon_uri),
+			"extension_points": str(ext_uri),
+			"handlers": str(handler_uri),
+			"synth": str(synth_uri),
+		}
 
 	def _daemonLoop(self):
 		"""Run the Pyro5 daemon request loop."""
-		logger.info("Starting Pyro5 daemon request loop")
-		self.daemon.requestLoop(lambda: not self._shutdownEvent.is_set())
-		logger.info("Pyro5 daemon request loop finished")
+		self.logger.info("Starting Pyro5 daemon request loop")
+		self.logger.debug(f"Daemon location: {self.daemon.locationStr}")
+
+		try:
+			self.daemon.requestLoop(lambda: not self._shutdownEvent.is_set())
+		except Exception:
+			self.logger.exception("Exception in daemon request loop")
+			raise
+		finally:
+			self.logger.info("Pyro5 daemon request loop finished")
 
 	def shutdown(self):
 		"""Shutdown the ART runtime."""
-		logger.info("Shutting down ART runtime")
+		self.logger.info("Shutting down ART runtime")
 		self._shutdownEvent.set()
 
 		if self.daemon:
@@ -272,19 +226,18 @@ class ARTRuntime:
 
 		if self.daemonFuture:
 			try:
-				# Wait for daemon to shutdown gracefully
 				self.daemonFuture.result(timeout=5.0)
 			except concurrent.futures.TimeoutError:
-				logger.warning("Daemon did not shutdown within timeout")
+				self.logger.warning("Daemon did not shutdown within timeout")
 			except Exception as e:
-				logger.warning(f"Exception during daemon shutdown: {e}")
+				self.logger.warning(f"Exception during daemon shutdown: {e}")
 
 		if self.executor:
-			self.executor.shutdown(wait=True, timeout=5.0)
+			self.executor.shutdown(wait=True)
 
 
 class MainWindow(wx.Frame):
-	"""Main window for the NVDA ART application. Only for receiving events, no UI."""
+	"""Main window for the NVDA ART application."""
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -292,7 +245,8 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 
 	def onClose(self, event):
-		logger.info("Closing NVDA ART main window.")
+		if logger:
+			logger.info("Closing NVDA ART main window.")
 		if artRuntime:
 			artRuntime.shutdown()
 		self.Destroy()
@@ -303,22 +257,213 @@ mainWindow: MainWindow
 artRuntime: ARTRuntime
 
 
+def performCLIStartup() -> Optional[Dict[str, str]]:
+	"""Handle CLI startup - same as handshake but from args."""
+	try:
+		parser = argparse.ArgumentParser()
+		parser.add_argument("--addon-path", required=True)
+		parser.add_argument("--addon-name")
+		args = parser.parse_args()
+
+		addon_path = Path(args.addon_path).resolve()
+		addon_name = args.addon_name or addon_path.name
+
+		addon_spec = {
+			"name": addon_name,
+			"path": str(addon_path),
+			"manifest": {},  # Don't care about manifest details for now
+		}
+
+		return startWithAddonSpec(addon_spec)
+
+	except Exception as e:
+		if logger:
+			logger.exception("CLI startup failed")
+		else:
+			print(f"ERROR: CLI startup failed: {e}", file=sys.stderr)
+			import traceback
+
+			traceback.print_exc()
+		return None
+
+
+def performHandshake() -> Optional[Dict[str, str]]:
+	"""Perform JSON handshake with NVDA Core."""
+	try:
+		startup_line = sys.stdin.readline().strip()
+		if not startup_line:
+			# Can't log yet, just print to stderr
+			print("ERROR: No startup data received from NVDA Core", file=sys.stderr)
+			return None
+
+		startup_data = json.loads(startup_line)
+
+		# Extract config from startup data
+		config = startup_data.get("config", {})
+		debug_mode = config.get("debug", False)
+		os.environ["NVDA_ART_DEBUG"] = "1" if debug_mode else "0"
+
+		# Set config path if provided (for portable copies)
+		config_path = config.get("configPath")
+		if config_path:
+			os.environ["NVDA_ART_CONFIG_PATH"] = config_path
+
+		for service_name, uri in startup_data.get("core_services", {}).items():
+			env_var = f"NVDA_ART_{service_name.upper()}_SERVICE_URI"
+			os.environ[env_var] = uri
+			logger.debug(f"Set {env_var} = {uri}")
+
+		# Get addon spec (NVDA Core can pass this the same way)
+		addon_spec = startup_data.get("addon")
+		if not addon_spec:
+			raise ValueError("No addon specified")
+
+		service_uris = startWithAddonSpec(addon_spec)
+
+		# Send response
+		response_data = {"status": "ready", "addon_name": addon_spec["name"], "art_services": service_uris}
+
+		response_json = json.dumps(response_data) + "\n"
+		sys.stdout.write(response_json)
+		sys.stdout.flush()
+
+		# Note: logger is configured in startWithAddonSpec
+		return service_uris
+
+	except Exception as e:
+		print(f"ERROR: Handshake failed: {e}", file=sys.stderr)
+
+		try:
+			error_response = {
+				"status": "error",
+				"error": str(e),
+				"details": f"Exception during ART startup: {type(e).__name__}",
+			}
+			error_json = json.dumps(error_response) + "\n"
+			sys.stdout.write(error_json)
+			sys.stdout.flush()
+		except Exception:
+			print("ERROR: Failed to send error response", file=sys.stderr)
+
+		return None
+
+
+def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
+	"""Common startup logic for both CLI and handshake."""
+	global logger
+	
+	# Set addon name in environment for components that need it
+	os.environ["NVDA_ART_ADDON_NAME"] = addon_spec["name"]
+
+	# Configure logging for this ART instance - send to stdout
+	debug_mode = os.environ.get("NVDA_ART_DEBUG", "").lower() in ("1", "true", "yes")
+
+	# Set up stdout logging instead of using art.runtime.logging
+	log_level = logging.DEBUG if debug_mode else logging.INFO
+	logging.basicConfig(
+		level=log_level,
+		format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+		stream=sys.stdout,
+		force=True,  # Override any existing configuration
+	)
+
+	logger = logging.getLogger(f"ART.{addon_spec['name']}")
+
+	# Log startup information
+	logger.info(f"Starting ART for addon: {addon_spec['name']}")
+	logger.info(f"Addon path: {addon_spec.get('path', 'Unknown')}")
+	logger.debug(f"Full addon spec: {addon_spec}")
+
+	# Set up proxies - add the art directory so we can import art.runtime.proxies
+	art_path = Path(__file__).parent / "art"
+	sys.path.insert(0, str(art_path))
+	logger.debug(f"Added art to path: {art_path}")
+
+	# Import and set up proxy modules in sys.modules so addons can import them directly
+	try:
+		# Import all proxy modules
+		from runtime.proxies import (
+			ui, config, logHandler, globalVars, addonHandler,
+			languageHandler, nvwave, extensionPoints, appModules,
+			brailleDisplayDrivers, globalPlugins, synthDrivers,
+			visionEnhancementProviders, synthDriverHandler, speech
+		)
+
+		# Define module mappings with any special submodules
+		PROXY_MODULE_REGISTRY = {
+			# Main modules
+			'ui': ui,
+			'config': config,
+			'logHandler': logHandler,
+			'globalVars': globalVars,
+			'addonHandler': addonHandler,
+			'languageHandler': languageHandler,
+			'nvwave': nvwave,
+			'extensionPoints': extensionPoints,
+			'appModules': appModules,
+			'brailleDisplayDrivers': brailleDisplayDrivers,
+			'globalPlugins': globalPlugins,
+			'synthDrivers': synthDrivers,
+			'visionEnhancementProviders': visionEnhancementProviders,
+			'synthDriverHandler': synthDriverHandler,
+			'speech': speech,
+			# Submodules
+			'speech.commands': speech.commands,
+			'speech.types': speech.types,
+		}
+
+		# Register all modules in sys.modules
+		for module_name, module_obj in PROXY_MODULE_REGISTRY.items():
+			sys.modules[module_name] = module_obj
+			logger.debug(f"Registered proxy module: {module_name}")
+
+		# Initialize addonHandler proxy with addon info
+		addonHandler.initialize(addon_spec)
+		logger.info(f"Initialized addonHandler proxy for addon: {addon_spec['name']}")
+	except Exception:
+		logger.exception("Failed to set up proxy modules")
+
+	# Configure Pyro
+	Pyro5.config.SERIALIZER = "json"
+	Pyro5.config.COMMTIMEOUT = 2.0
+	Pyro5.config.HOST = "127.0.0.1"
+
+	global artRuntime
+	artRuntime = ARTRuntime(addon_spec)  # Pass addon spec to runtime
+	return artRuntime.start()
+
+
 def main():
 	"""Initialize the NVDA ART Runtime."""
-	global wxApp, mainWindow, artRuntime
+	global wxApp, mainWindow
 
+	# Check if we have CLI args
+	if len(sys.argv) > 1:
+		service_uris = performCLIStartup()
+	else:
+		service_uris = performHandshake()
+
+	if not service_uris:
+		if logger:
+			logger.error("Startup failed, exiting")
+		else:
+			print("ERROR: Startup failed, exiting", file=sys.stderr)
+		sys.exit(1)
+
+	# Same wx setup for both modes
 	wxApp = wx.App(False, useBestVisual=False)
 	wxApp.SetAppName("NVDA ART")
 	wxApp.SetVendorName("NV Access")
 
 	mainWindow = MainWindow(None, title="NVDA ART")
-	mainWindow.Hide()
+	if len(sys.argv) > 1:  # CLI mode
+		mainWindow.Show()
+	else:  # Handshake mode (run by NVDA Core)
+		mainWindow.Hide()
 
-	# Initialize and start the ART runtime
-	artRuntime = ARTRuntime()
-	artRuntime.start()
-	logger.info(f"Starting NVDA ART version {__version__}")
-	# Start the wxPython event loop
+	if logger:
+		logger.info(f"Starting NVDA ART version {__version__}")
+
 	try:
 		wxApp.MainLoop()
 	finally:

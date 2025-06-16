@@ -14,16 +14,17 @@ The NVDA Add-on Runtime (ART) moves NVDA add-ons from the core NVDA process to a
 
 ### 3.1 Process Architecture
 
-ART consists of three primary processes:
+ART uses a one-addon-per-process model where each enabled addon runs in its own isolated ART process:
 
 1. NVDA Core Process: The main NVDA screen reader application
-   - Manages the lifecycle of add-on runtime processes
-   - Maintains communication channels with runtime processes
-   - Restarts runtime processes if they crash
+   - Manages the lifecycle of multiple add-on runtime processes (one per addon)
+   - Maintains communication channels with each runtime process
+   - Restarts individual runtime processes if they crash
    - Provides core screen reader functionality
    - Implements security validation for runtime communication
 
-2. Regular Add-on Runtime Process (ART): Hosts add-ons with standard permissions in normal desktop sessions
+2. Regular Add-on Runtime Process (ART): Each addon gets its own ART process
+   - Hosts exactly one addon with standard permissions in normal desktop sessions
    - Runs with limited but practical permissions
    - Has network access allowed to support add-ons that require online functionality
    - Has restricted file system access (limited to add-on's own directory)
@@ -31,9 +32,10 @@ ART consists of three primary processes:
    - Runs at low integrity level (IL_LOW)
    - Communicates with NVDA Core via secure, validated RPC channels
    - Cannot start new processes
-   - Provides a Python environment where add-ons execute
+   - Provides a Python environment where the single addon executes
 
-3. Secure Desktop Add-on Runtime Process (SD-ART): Hosts add-ons with highly restricted permissions in secure desktop sessions
+3. Secure Desktop Add-on Runtime Process (SD-ART): Each addon gets its own SD-ART process in secure desktop
+   - Hosts exactly one addon with highly restricted permissions in secure desktop sessions
    - Runs with minimal permissions (no network, no clipboard, strictly limited file system access)
    - Operates within a more restrictive app container than the regular ART
    - Also runs at low integrity level (IL_LOW)
@@ -64,13 +66,7 @@ All inter-process communication occurs via Pyro4 RPC with the following security
    - NVDA Core tracks which add-ons have registered for which extension points
    - Add-on responses are validated and integrated into NVDA behavior
 
-3. GUI Interaction Flow:
-   - Add-ons create GUI descriptions that are sent to NVDA Core
-   - NVDA Core renders and displays the GUI elements
-   - User interactions with GUI elements generate events sent back to add-ons
-   - Add-ons respond with updates that are applied to the GUI
-
-4. Audio Data Flow:
+3. Audio Data Flow:
    - Add-ons generate audio data (e.g., synthesized speech)
    - PCM audio data is streamed to NVDA Core
    - NVDA Core handles playback through the audio subsystem
@@ -79,25 +75,27 @@ All inter-process communication occurs via Pyro4 RPC with the following security
 
 1. Startup Sequence:
    - NVDA Core initializes
-   - NVDA Core launches the appropriate add-on runtime process (ART or SD-ART)
-   - Runtime process establishes a connection back to NVDA Core
-   - NVDA Core validates the connection
-   - NVDA Core loads add-ons into the runtime
+   - NVDA Core discovers enabled addons
+   - For each enabled addon, NVDA Core launches a separate ART process (or SD-ART in secure desktop)
+   - Each runtime process establishes a connection back to NVDA Core
+   - NVDA Core validates each connection
+   - Each ART process loads its assigned addon
 
 2. Normal Operation:
-   - Add-ons run within their respective runtime process
+   - Each addon runs in its own isolated runtime process
    - Communication follows the data flow patterns described above
-   - NVDA monitors runtime health
+   - NVDA monitors each runtime process health independently
 
 3. Error Handling:
-   - If an add-on crashes, the runtime process contains the crash
-   - If the runtime process crashes, NVDA Core detects this and restarts it
-   - During runtime restart, add-ons are reloaded
+   - If an addon crashes, only its runtime process is affected
+   - If a runtime process crashes, NVDA Core detects this and can restart just that process
+   - Other addons continue running unaffected
+   - During runtime restart, only the crashed addon is reloaded
 
 4. Secure Desktop Transitions:
-   - When transitioning to a secure desktop for the first time, NVDA Core launches the SD-ART
-   - Add-ons and configuration (potentially only selected ones depending on future NVDA decisions) are copied to the secure desktop environment
-   - The SD-ART loads add-ons with more restrictive permissions
+   - When transitioning to a secure desktop, NVDA Core launches SD-ART processes for each addon
+   - Each addon gets its own SD-ART process with more restrictive permissions
+   - Addons are isolated from each other even in secure desktop
 
 ### 3.5 Security Boundaries
 
@@ -113,39 +111,88 @@ These boundaries work together to create a defense-in-depth approach to protecti
 
 ## 4. Components
 
-### 4.1 NVDA Core Components
+### 4.1 Package Structure
 
-#### 4.1.1 ART Manager
+```
+source/art/
+├── __init__.py
+├── manager.py                    # ARTManager - handles startup/shutdown/monitoring
+├── core/                         # Services that run in NVDA Core process
+│   ├── __init__.py
+│   └── services/
+│       ├── __init__.py
+│       ├── config.py             # ConfigService - exposes config.conf
+│       ├── speech.py             # SpeechService - handles synth registration
+│       ├── logging.py            # LoggingService - receives log messages
+│       ├── events.py             # EventService - sends events to ART
+│       └── navigation.py         # NavigationService - api.getFocusObject
+└── runtime/                      # Code that runs in ART process
+    ├── __init__.py
+    ├── services/
+    │   ├── __init__.py
+    │   ├── addons.py             # AddOnLifecycleService
+    │   ├── handlers.py           # ExtensionPointHandlerService
+    │   └── extensionPoints.py    # ExtensionPointService
+    └── proxies/                  # NVDA module proxies for add-ons
+        ├── __init__.py
+        ├── config.py             # Proxy for config module
+        ├── speech.py             # Proxy for speech module
+        ├── synthDriverHandler.py # Proxy for synthDriverHandler
+        ├── globalVars.py         # Proxy for globalVars
+        ├── logHandler.py         # Proxy for logHandler
+        └── api.py                # Proxy for api module
+```
+
+### 4.2 NVDA Core Components
+
+#### 4.2.1 ART Manager (`art.manager`)
 
 - Starts and monitors the ART process
-- Maintains communication with the ART process
+- Registers `art.core.services.*` with Pyro daemon
+- Passes service URIs to ART process
 - Starts/restarts the ART process if it crashes
 
-#### 4.1.2 Service Proxies
+#### 4.2.2 Core Services (`art.core.services.*`)
 
-- Extension Point Service Proxy
-- Event Service Proxy
+Services that run in NVDA Core and are exposed to ART via RPC:
 
-### 4.2 Add-on Runtime Components
+- **ConfigService**: Exposes `config.conf` read/write access
+- **SpeechService**: Handles synthesizer registration and audio streaming
+- **LoggingService**: Receives log messages from ART
+- **EventService**: Forwards NVDA events to ART
+- **NavigationService**: Provides `api.getFocusObject`, `api.getNavigatorObject`
 
-#### 4.2.1 Runtime Manager
+### 4.3 Add-on Runtime Components
 
-- Initializes the ART process
-- Sets up Pyro4 server
-- Loads add-ons
-- Shuts down gracefully
+#### 4.3.1 Runtime Services (`art.runtime.services.*`)
 
-#### 4.2.2 Add-on Host
+Services that run in the ART process:
 
-- Loads add-on modules
-- Manages add-on lifecycle (init, terminate)
-- Routes events to add-ons
+- **AddOnLifecycleService**: Loads and manages add-ons
+- **ExtensionPointHandlerService**: Executes extension point handlers
+- **ExtensionPointService**: Tracks extension point registrations
 
-#### 4.2.3 Service Implementations
+#### 4.3.2 NVDA Module Proxies (`art.runtime.proxies.*`)
 
-- Add-on Lifecycle Service
-- Extension Point Service
-- Event Handler Service
+Proxy modules that make NVDA APIs available to add-ons:
+
+- Added to Python path so `import config` finds `art.runtime.proxies.config`
+- Each proxy forwards calls to appropriate `art.core.services.*` via RPC
+- Maintains API compatibility with existing NVDA modules
+
+#### 4.3.3 Import Redirection
+
+```python
+# In ART process startup
+import sys
+from pathlib import Path
+
+# Add proxies to Python path
+proxies_path = Path(__file__).parent / "art" / "runtime" / "proxies"
+sys.path.insert(0, str(proxies_path))
+
+# Now add-ons automatically get proxies when they import NVDA modules
+```
 
 ## 5. Services (Version 1 Minimum Set)
 
@@ -170,9 +217,9 @@ These boundaries work together to create a defense-in-depth approach to protecti
 
 #### 5.2.1 AddOnLifecycleService
 
-- `loadAddon(addonPath)`: Loads an add-on
-- `unloadAddon(addonId)`: Unloads an add-on
-- `getLoadedAddons()`: Lists loaded add-ons
+- `loadAddon(addonPath)`: Loads the single addon assigned to this ART process
+- `getLoadedAddon()`: Returns info about the loaded addon
+- `getAddonInfo()`: Gets information about the loaded addon
 
 #### 5.2.2 EventHandlerService
 
@@ -193,10 +240,21 @@ The Pyro4 RPC communication channel MUST be configured to bind exclusively to th
 
 ### 6.2 Message Flow
 
+```
+Add-on (ART process)
+    ↓ import config
+art.runtime.proxies.config 
+    ↓ RPC call
+art.core.services.config (NVDA Core)
+    ↓ direct access  
+config.conf
+```
+
 - Method calls are serialized and sent via RPC
 - Objects are serialized when possible
 - Events flow from NVDA to add-ons via the EventHandlerService
 - Extension point calls flow from NVDA to add-ons via the ExtensionPointService
+- NVDA module access flows through proxy modules to core services
 
 ### 6.3 RPC Input Validation
 
@@ -206,83 +264,25 @@ All data received via RPC at service endpoints (both in NVDA Core receiving call
 
 ### 7.1 Overview
 
-Add-ons need to create GUI elements in the NVDA process. Instead of attempting to serialize wxPython objects, ART uses a description-based approach where add-ons define the structure and NVDA renders it.
+ART has its own copy of wxPython, so add-ons can create GUI elements directly without serialization. Add-ons running in ART can use wx normally to create dialogs, message boxes, and other UI elements.
 
-### 7.2 GUI Description Format
+### 7.2 GUI Creation
 
-Add-ons create a JSON description of the intended GUI that mirrors guiHelper operations:
+Add-ons can use wx directly:
 
-```json
-{
-  "dialog": {
-    "id": "addonSettingsDialog_123",
-    "title": "My Add-on Settings",
-    "mainSizer": {
-      "orientation": "VERTICAL"
-    },
-    "items": [
-      {
-        "type": "labeledControl",
-        "label": "Setting:",
-        "control": {
-          "type": "TextCtrl",
-          "id": "settingValue",
-          "initialValue": "default"
-        }
-      },
-      {
-        "type": "checkBox",
-        "id": "enableFeature",
-        "label": "Enable Feature",
-        "initialValue": false
-      },
-      {
-        "type": "dialogDismissButtons",
-        "standardButtons": ["OK", "Cancel"]
-      }
-    ]
-  }
-}
+```python
+# In add-on code running in ART
+import wx
+
+def showSettingsDialog(parent):
+    dialog = wx.Dialog(parent, title="My Add-on Settings")
+    # ... create controls normally
+    dialog.ShowModal()
 ```
 
-### 7.3 GUI Creation Process
+### 7.3 Integration with NVDA
 
-1. Add-on creates a JSON description of the dialog
-2. Add-on calls GUIService.createDialog() with the description
-3. NVDA creates the dialog using `gui` helpers (e.g., similar logic to `gui.message.MessageDialog`)
-4. NVDA shows the dialog to the user
-
-### 7.4 Event Handling
-
-1. User interacts with dialog (clicks button, changes value)
-2. NVDA captures the event and widget ID
-3. NVDA gathers current state of all controls in the dialog
-4. NVDA sends an event message to the add-on with:
-   - Dialog ID
-   - Widget ID that triggered the event
-   - Event type
-   - Current state of all controls
-5. Add-on processes the event and responds if needed
-
-### 7.5 GUI Updates
-
-Add-ons can send update messages to modify the GUI:
-
-```json
-{
-  "dialogId": "addonSettingsDialog_123",
-  "updates": [
-    { "widgetId": "enableFeature", "property": "enabled", "value": false }
-  ]
-}
-```
-
-### 7.6 GUI Service Methods
-
-- `createDialog(description)`: Creates and shows a dialog
-- `updateDialog(dialogId, updates)`: Updates dialog elements
-- `closeDialog(dialogId)`: Closes a dialog
-- `getDialogState(dialogId)`: Gets current state of all controls
+Since ART runs in a separate process, GUI elements created by add-ons will appear as separate windows from NVDA's main interface. This is acceptable for add-on settings dialogs and similar functionality.
 
 ## 8. Extension Point System
 
@@ -354,42 +354,54 @@ def event_gainFocus(self, obj, nextHandler):
 ## 10. Add-on Loading Process
 
 1. NVDA Core discovers installed add-ons (using `addonHandler`).
-2. NVDA Core calls AddOnLifecycleService.loadAddon() for each add-on.
-3. Add-on Runtime imports the add-on module.
-4. Add-on initializes (calling its `init` method) and registers event handlers/extension points (via proxied `register` calls).
-5. Add-on Runtime returns success/failure to NVDA Core.
+2. For each enabled addon, NVDA Core spawns a separate ART process with addon info.
+3. Each ART process loads its assigned addon via AddOnLifecycleService.
+4. Add-on initializes and registers event handlers/extension points (via proxied `register` calls).
+5. Add-on Runtime signals ready status to NVDA Core.
 
 ## 11. Implementation Plan
 
-### 11.1 Phase 1: Basic Framework
+### 11.1 Phase 1: Core Infrastructure
 
-1. Implement ART Manager in NVDA Core
-2. Implement Runtime Manager in ART process
-3. Set up Pyro4 communication
-4. Implement basic process monitoring and restart
+1. Reorganize existing code into `art.core` and `art.runtime` packages
+2. Move services from `nvda_art.pyw` to `art.runtime.services`
+3. Fix service discovery mechanism in ARTManager
+4. Implement basic proxy modules in `art.runtime.proxies`
 
-### 11.2 Phase 2: Extension Points
+### 11.2 Phase 2: Essential Services
 
-1. Implement ExtensionPointService
-2. Implement extension point registration and invocation
+1. Implement `art.core.services.config` - ConfigService
+2. Implement `art.core.services.logging` - LoggingService  
+3. Implement `art.runtime.proxies.config` - config module proxy
+4. Implement `art.runtime.proxies.logHandler` - logHandler module proxy
+5. Test basic add-on loading with logging
 
-### 11.3 Phase 3: Event System
+### 11.3 Phase 3: Speech System
+
+1. Implement `art.core.services.speech` - SpeechService
+2. Implement `art.runtime.proxies.synthDriverHandler` - synthDriverHandler proxy
+3. Implement `art.runtime.proxies.speech` - speech module proxy
+4. Test synthesizer registration and basic speech
+
+### 11.4 Phase 4: Vocalizer Integration
+
+1. Implement remaining proxies (`globalVars`, `addonHandler`, etc.)
+2. Add native DLL loading support
+3. Implement file system access controls
+4. Test full vocalizer add-on loading
+
+### 11.5 Phase 5: Event System & Extension Points
 
 1. Implement EventHandlerService
 2. Implement event forwarding from NVDA to add-ons
+3. Complete extension point system
+4. Test with complex add-on interactions
 
-### 11.4 Phase 4: GUI System
+### 11.6 Phase 6: Polish & Optimization
 
-1. Implement GUI description format
-2. Implement GUI service for dialog creation
-3. Implement event feedback system
-
-### 11.5 Phase 5: Testing
-
-1. Test with simple add-ons
-2. Verify extension point operation
-3. Test GUI interaction
-4. Address compatibility issues
+1. Performance optimization for RPC calls
+2. Enhanced error handling and recovery
+3. Additional proxy modules as needed
 
 ## 12. Error Handling
 
@@ -400,10 +412,15 @@ def event_gainFocus(self, obj, nextHandler):
 ## 13. Startup Sequence
 
 1. NVDA Core initializes (see `core.main`).
-2. NVDA Core starts ART process.
-3. ART process initializes and connects back to NVDA Core.
-4. NVDA Core loads configured add-ons through AddOnLifecycleService (part of `addonHandler.loadAddons`).
-5. System is ready for user interaction.
+2. ARTManager creates and registers `art.core.services.*` with Pyro daemon.
+3. For each enabled addon:
+   - ARTManager starts a new ART process, passing addon info and service URIs
+   - ART process connects to provided service URIs
+   - ART process adds `art.runtime.proxies` to Python path for import redirection
+   - ART process initializes `art.runtime.services.*` with addon context
+   - ART process loads its assigned addon through AddOnLifecycleService
+   - Addon imports NVDA modules, automatically getting proxies that communicate with NVDA Core
+4. System is ready for user interaction with all addons running in isolation.
 
 ## 14. Security Model
 
