@@ -54,6 +54,14 @@ The several built-in table definitions are moved to the `__tables` module in tha
 
 #### Deprecations
 
+## 2025.1.1
+
+This is a patch release to fix a bug.
+
+### Bug fixes
+
+* Fixed bug where the Add-on Store would not open when using the Korean language for the NVDA interface. (#18250)
+
 ## 2025.1
 
 This release introduces NVDA Remote Access, allowing you to control a remote computer running NVDA from another device running NVDA.
