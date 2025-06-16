@@ -6,9 +6,10 @@
 
 from ctypes.wintypes import HANDLE, HKEY, HMODULE
 import sysconfig
-from typing import Optional
+from typing import Any, Optional
 import typing
 import os
+import warnings
 import winreg
 import msvcrt
 
@@ -34,7 +35,7 @@ from ctypes import (
 import buildVersion
 import globalVars
 
-versionedLibPath = os.path.join(globalVars.appDir, "lib", "x86")
+versionedLibX86Path = os.path.join(globalVars.appDir, "lib", "x86")
 versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
 versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
 
@@ -42,7 +43,7 @@ import NVDAState  # noqa: E402
 
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
-	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
+	versionedLibX86Path = os.path.join(versionedLibX86Path, buildVersion.version)
 	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, buildVersion.version)
 	versionedLibARM64Path = os.path.join(versionedLibARM64Path, buildVersion.version)
 
@@ -52,9 +53,21 @@ match sysconfig.get_platform():
 	case "win-arm64":
 		coreArchLibPath = versionedLibARM64Path
 	case "win32":
-		coreArchLibPath = versionedLibPath
+		coreArchLibPath = versionedLibX86Path
 	case _:
 		raise RuntimeError("Unsupported platform")
+
+
+def __getattr__(name: str) -> Any:
+	if NVDAState._allowDeprecatedAPI():
+		if name == "versionedLibPath":
+			warnings.warn(
+				"NVDAHelper.versionedLibPath is deprecated. Use NVDAHelper.versionedLibX86Path instead.",
+				DeprecationWarning,
+			)
+			return versionedLibX86Path
+	raise AttributeError(f"Module {__name__!r} has no attribute {name!r}")
+
 
 from . import localLib  # noqa: E402
 import winVersion  # noqa: E402
