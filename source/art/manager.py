@@ -73,6 +73,7 @@ class ARTAddonProcess:
 			return True
 		except Exception:
 			log.exception(f"Failed to start ART process for addon {self.addon_name}")
+			self.subprocessManager.terminate()
 			return False
 
 	def _startProcessWithHandshake(self):
@@ -82,73 +83,29 @@ class ARTAddonProcess:
 		if not self.subprocessManager.subprocess:
 			raise RuntimeError(f"Failed to start ART subprocess for {self.addon_name}")
 
-		try:
-			startup_data = {
-				"addon": self.addon_spec,
-				"core_services": self.core_service_uris,
-				"config": {
-					"debug": getattr(__import__("globalVars").appArgs, "debugLogging", False),
-					"secure": getattr(__import__("globalVars").appArgs, "secure", False),
-					"configPath": str(getattr(__import__("globalVars").appArgs, "configPath", "")) or "",
-				},
-			}
+		# Send startup data
+		startup_data = {
+			"addon": self.addon_spec,
+			"core_services": self.core_service_uris,
+			"config": {
+				"debug": getattr(__import__("globalVars").appArgs, "debugLogging", False),
+			},
+		}
 
-			# Log that we're starting this addon's ART process
-			log.info(f"Starting ART process for addon: {self.addon_name}")
-			log.debug(f"ART debug mode: {startup_data['config']['debug']}")
+		startup_json = json.dumps(startup_data) + "\n"
+		self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
+		self.subprocessManager.subprocess.stdin.flush()
 
-			startup_json = json.dumps(startup_data) + "\n"
-			self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
-			self.subprocessManager.subprocess.stdin.flush()
-			log.debug(f"Sent startup data to ART process for {self.addon_name}")
+		# Read response
+		response_line = self.subprocessManager.subprocess.stdout.readline().decode("utf-8")
+		response_data = json.loads(response_line.strip())
 
-			response_line = self._readLineWithTimeout(self.subprocessManager.subprocess.stdout, timeout=10.0)
-
-			if not response_line:
-				raise RuntimeError(f"Timeout waiting for ART process response for {self.addon_name}")
-
-			response_data = json.loads(response_line.strip())
-			log.debug(f"Received response from ART for {self.addon_name}: {response_data}")
-
-			if response_data.get("status") == "ready":
-				self._connectToARTServices(response_data.get("art_services", {}))
-				log.info(f"ART process started successfully for {self.addon_name}")
-			else:
-				error_msg = response_data.get("error", "Unknown error")
-				details = response_data.get("details", "")
-				raise RuntimeError(f"ART startup failed for {self.addon_name}: {error_msg}. {details}")
-
-		except Exception as e:
-			log.exception(f"Failed to start ART process for {self.addon_name}")
-			self.subprocessManager.terminate()
-			raise
-
-	def _readLineWithTimeout(self, stream, timeout: float) -> Optional[str]:
-		"""Read a line from stream with timeout."""
-		import select
-		import sys
-
-		if sys.platform == "win32":
-			result = [None]
-
-			def read_line():
-				try:
-					result[0] = stream.readline().decode("utf-8")
-				except Exception as e:
-					log.exception(f"Error reading from ART process for {self.addon_name}")
-					result[0] = None
-
-			thread = threading.Thread(target=read_line)
-			thread.daemon = True
-			thread.start()
-			thread.join(timeout)
-
-			return result[0]
+		if response_data.get("status") == "ready":
+			self._connectToARTServices(response_data.get("art_services", {}))
+			log.info(f"ART process started successfully for {self.addon_name}")
 		else:
-			ready, _, _ = select.select([stream], [], [], timeout)
-			if ready:
-				return stream.readline().decode("utf-8")
-			return None
+			raise RuntimeError(f"ART startup failed for {self.addon_name}")
+
 
 	def _connectToARTServices(self, service_uris: Dict[str, str]):
 		"""Connect to ART services using provided URIs."""
