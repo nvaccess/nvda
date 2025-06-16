@@ -7,6 +7,7 @@
 
 import typing
 import os
+from babel import Locale
 from robot.libraries.BuiltIn import BuiltIn
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -2874,6 +2875,17 @@ def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	)
 	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
 	spy.modifyNVDAConfig(nvdaConfValues)
+
+
+def _getLangDisplayName(lang) -> str | None:
+	"""Gets the display name for a given language.
+
+	:lang: A language code.
+	:Return: The display name for the provided language.
+	"""
+
+	language = Locale.parse(lang)
+	return language.get_display_name('en')
 
 
 def test_reportLanguageDisabled():
