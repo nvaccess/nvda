@@ -257,16 +257,48 @@ mainWindow: MainWindow
 artRuntime: ARTRuntime
 
 
+def handleStartupError(error: Exception, addon_name: str = "unknown") -> None:
+	"""Common error handling for startup failures."""
+	error_msg = f"ERROR: Startup failed: {error}"
+	
+	if logger:
+		logger.exception("Startup failed")
+	else:
+		print(error_msg, file=sys.stderr)
+		import traceback
+		traceback.print_exc()
+	
+	# If we're in handshake mode (stdin available), send error response
+	if not sys.stdin.isatty():
+		try:
+			error_response = {
+				"status": "error",
+				"error": str(error),
+				"details": f"Exception during ART startup: {type(error).__name__}",
+				"addon_name": addon_name
+			}
+			error_json = json.dumps(error_response) + "\n"
+			sys.stdout.write(error_json)
+			sys.stdout.flush()
+		except Exception:
+			print("ERROR: Failed to send error response", file=sys.stderr)
+
+
 def performCLIStartup() -> Optional[Dict[str, str]]:
-	"""Handle CLI startup - same as handshake but from args."""
+	"""Handle CLI startup - parse args and start with addon spec."""
 	try:
 		parser = argparse.ArgumentParser()
 		parser.add_argument("--addon-path", required=True)
 		parser.add_argument("--addon-name")
+		parser.add_argument("--debug", action="store_true")
 		args = parser.parse_args()
 
 		addon_path = Path(args.addon_path).resolve()
 		addon_name = args.addon_name or addon_path.name
+
+		# Set debug mode if specified
+		if args.debug:
+			os.environ["NVDA_ART_DEBUG"] = "1"
 
 		addon_spec = {
 			"name": addon_name,
@@ -277,13 +309,7 @@ def performCLIStartup() -> Optional[Dict[str, str]]:
 		return startWithAddonSpec(addon_spec)
 
 	except Exception as e:
-		if logger:
-			logger.exception("CLI startup failed")
-		else:
-			print(f"ERROR: CLI startup failed: {e}", file=sys.stderr)
-			import traceback
-
-			traceback.print_exc()
+		handleStartupError(e)
 		return None
 
 
@@ -298,53 +324,41 @@ def performHandshake() -> Optional[Dict[str, str]]:
 
 		startup_data = json.loads(startup_line)
 
-		# Extract config from startup data
+		# Extract and apply configuration
 		config = startup_data.get("config", {})
-		debug_mode = config.get("debug", False)
-		os.environ["NVDA_ART_DEBUG"] = "1" if debug_mode else "0"
-
-		# Set config path if provided (for portable copies)
-		config_path = config.get("configPath")
-		if config_path:
+		if config.get("debug", False):
+			os.environ["NVDA_ART_DEBUG"] = "1"
+		
+		if config_path := config.get("configPath"):
 			os.environ["NVDA_ART_CONFIG_PATH"] = config_path
 
+		# Set core service URIs
 		for service_name, uri in startup_data.get("core_services", {}).items():
 			env_var = f"NVDA_ART_{service_name.upper()}_SERVICE_URI"
 			os.environ[env_var] = uri
-			logger.debug(f"Set {env_var} = {uri}")
 
-		# Get addon spec (NVDA Core can pass this the same way)
+		# Get addon spec
 		addon_spec = startup_data.get("addon")
 		if not addon_spec:
 			raise ValueError("No addon specified")
 
+		# Start services
 		service_uris = startWithAddonSpec(addon_spec)
-
-		# Send response
-		response_data = {"status": "ready", "addon_name": addon_spec["name"], "art_services": service_uris}
-
+		
+		# Send success response
+		response_data = {
+			"status": "ready", 
+			"addon_name": addon_spec["name"], 
+			"art_services": service_uris
+		}
 		response_json = json.dumps(response_data) + "\n"
 		sys.stdout.write(response_json)
 		sys.stdout.flush()
 
-		# Note: logger is configured in startWithAddonSpec
 		return service_uris
 
 	except Exception as e:
-		print(f"ERROR: Handshake failed: {e}", file=sys.stderr)
-
-		try:
-			error_response = {
-				"status": "error",
-				"error": str(e),
-				"details": f"Exception during ART startup: {type(e).__name__}",
-			}
-			error_json = json.dumps(error_response) + "\n"
-			sys.stdout.write(error_json)
-			sys.stdout.flush()
-		except Exception:
-			print("ERROR: Failed to send error response", file=sys.stderr)
-
+		handleStartupError(e, startup_data.get("addon", {}).get("name", "unknown") if 'startup_data' in locals() else "unknown")
 		return None
 
 
@@ -437,28 +451,23 @@ def main():
 	"""Initialize the NVDA ART Runtime."""
 	global wxApp, mainWindow
 
-	# Check if we have CLI args
-	if len(sys.argv) > 1:
-		service_uris = performCLIStartup()
-	else:
-		service_uris = performHandshake()
+	# Determine startup mode and get service URIs
+	is_cli_mode = len(sys.argv) > 1
+	service_uris = performCLIStartup() if is_cli_mode else performHandshake()
 
 	if not service_uris:
-		if logger:
-			logger.error("Startup failed, exiting")
-		else:
-			print("ERROR: Startup failed, exiting", file=sys.stderr)
 		sys.exit(1)
 
-	# Same wx setup for both modes
+	# Initialize wx application
 	wxApp = wx.App(False, useBestVisual=False)
 	wxApp.SetAppName("NVDA ART")
 	wxApp.SetVendorName("NV Access")
 
+	# Create main window (visible only in CLI mode)
 	mainWindow = MainWindow(None, title="NVDA ART")
-	if len(sys.argv) > 1:  # CLI mode
+	if is_cli_mode:
 		mainWindow.Show()
-	else:  # Handshake mode (run by NVDA Core)
+	else:
 		mainWindow.Hide()
 
 	if logger:
