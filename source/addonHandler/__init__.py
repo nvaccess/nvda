@@ -315,6 +315,50 @@ def initialize():
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
+	
+	# Start ART processes for enabled addons if ART is available
+	_startARTProcessesForAddons()
+
+
+def _startARTProcessesForAddons():
+	"""Start ART processes for all enabled addons."""
+	try:
+		from art.manager import getARTManager
+		artManager = getARTManager()
+		if not artManager:
+			log.debug("ART manager not available, addons will run in main process")
+			return
+			
+		for addon in getAvailableAddons():
+			if addon.isDisabled or addon.isBlocked or addon.isPendingInstall:
+				continue
+				
+			# Convert manifest to a simple dict for serialization
+			manifest_dict = {
+				"name": addon.manifest.get("name"),
+				"version": addon.manifest.get("version"),
+				"author": addon.manifest.get("author"),
+				"description": addon.manifest.get("description"),
+				"summary": addon.manifest.get("summary"),
+				"url": addon.manifest.get("url"),
+				"docFileName": addon.manifest.get("docFileName"),
+				"minimumNVDAVersion": addon.manifest.get("minimumNVDAVersion", (0, 0, 0)),
+				"lastTestedNVDAVersion": addon.manifest.get("lastTestedNVDAVersion", (0, 0, 0)),
+			}
+			
+			addon_spec = {
+				"name": addon.name,
+				"path": addon.path,
+				"manifest": manifest_dict
+			}
+			
+			if not artManager.startAddonProcess(addon_spec):
+				log.error(f"Failed to start ART process for addon {addon.name}")
+				
+	except ImportError:
+		log.debug("ART not available, addons will run in main process")
+	except Exception:
+		log.exception("Error starting ART processes for addons")
 
 
 def terminate():
