@@ -447,7 +447,7 @@ displayModel_getWindowTextInRect = CFUNCTYPE(
 )(
 	("displayModel_getWindowTextInRect", dll),
 	(
-		(1,),  # [in]: bindingHandle
+		(1,),  # [in] bindingHandle
 		(1,),  # [in] windowHandle
 		(1,),  # [in] includeDescendantWindows
 		(1,),  # [in] left

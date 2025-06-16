@@ -820,7 +820,7 @@ def initialize() -> None:
 		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
 	]:
 		try:
-			_setDllFuncPointer(localLib.dll, "_%s" % name, func)
+			_setDllFuncPointer(localLib.dll, f"_{name}", func)
 		except AttributeError as e:
 			log.error(
 				"nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"
