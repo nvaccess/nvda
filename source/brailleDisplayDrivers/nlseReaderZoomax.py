@@ -63,6 +63,7 @@ COMMAND_RESPONSE_INFO: Dict[DeviceCommand, DeviceResponseInfo] = {
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
+	# Translators: Names of braille displays.
 	description = _("NLS eReader Zoomax")
 	isThreadSafe = True
 	supportsAutomaticDetection = True
