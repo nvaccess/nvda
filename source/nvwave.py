@@ -37,6 +37,7 @@ import globalVars
 from speech import SpeechSequence
 from speech.commands import BreakCommand
 from synthDriverHandler import pre_synthSpeak
+from NVDAHelper.localLib import WAVEFORMATEX
 
 
 __all__ = (
@@ -55,8 +56,6 @@ Also, registrars should be able to suppress playing sounds if desired.
 Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
 """
 
-
-from NVDAHelper.localLib import WAVEFORMATEX
 
 WAVE_FORMAT_PCM = 1
 

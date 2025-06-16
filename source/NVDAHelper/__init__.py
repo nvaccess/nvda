@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from ctypes.wintypes import HANDLE, HKEY, HMODULE
 import sysconfig
 from typing import Optional
 import typing
@@ -11,20 +12,24 @@ import os
 import winreg
 import msvcrt
 
-from ctypes import *  # noqa: F403
 from ctypes import (
+	CDLL,
+	POINTER,
 	WINFUNCTYPE,
+	WinError,
+	byref,
 	c_bool,
 	c_int,
 	c_long,
 	c_ulong,
+	c_void_p,
 	c_wchar_p,
 	c_wchar,
+	cast,
 	create_unicode_buffer,
 	windll,
+	wstring_at,
 )
-from ctypes.wintypes import *  # noqa: F403
-from comtypes import BSTR
 
 import buildVersion
 import globalVars
@@ -33,7 +38,7 @@ versionedLibPath = os.path.join(globalVars.appDir, "lib", "x86")
 versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
 versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
 
-import NVDAState
+import NVDAState  # noqa: E402
 
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
@@ -51,17 +56,17 @@ match sysconfig.get_platform():
 	case _:
 		raise RuntimeError("Unsupported platform")
 
-from . import localLib
-import winVersion
-import winKernel
-import config
-import winUser
-import eventHandler
-import queueHandler
-import api
-from logHandler import log
-from utils.security import isLockScreenModeActive
-from winAPI.constants import SystemErrorCodes
+from . import localLib  # noqa: E402
+import winVersion  # noqa: E402
+import winKernel  # noqa: E402
+import config  # noqa: E402
+import winUser  # noqa: E402
+import eventHandler  # noqa: E402
+import queueHandler  # noqa: E402
+import api  # noqa: E402
+from logHandler import log  # noqa: E402
+from utils.security import isLockScreenModeActive  # noqa: E402
+from winAPI.constants import SystemErrorCodes  # noqa: E402
 
 if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
@@ -902,6 +907,6 @@ def bstrReturn(address):
 	# Just access the string ourselves.
 	# This will terminate at a null character, even though BSTR allows nulls.
 	# We're only using this for normal, null-terminated strings anyway.
-	val = wstring_at(address)  # noqa: F405
+	val = wstring_at(address)
 	windll.oleaut32.SysFreeString(address)
 	return val
