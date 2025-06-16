@@ -34,7 +34,6 @@
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 * It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
-
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
