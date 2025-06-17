@@ -7,6 +7,7 @@
 
 import typing
 import os
+from babel import Locale
 from robot.libraries.BuiltIn import BuiltIn
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -65,6 +66,10 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
+AUTO_LANGUAGE_SWITCHING_KEY = ["speech", "autoLanguageSwitching"]
+AUTO_DIALECT_SWITCHING_KEY = ["speech", "autoDialectSwitching"]
+REPORT_LANGUAGE_KEY = ["speech", "reportLanguage"]
+REPORT_NOT_SUPPORTED_LANGUAGE_KEY = ["speech", "reportNotSupportedLanguage"]
 READ_DETAILS_GESTURE = "NVDA+d"
 
 
@@ -2859,4 +2864,87 @@ def test_ariaErrorMessage():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4")),
+	)
+
+
+def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
+	_chrome.prepareChrome(
+		"""
+		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
+	""",
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
+
+def _getLangDisplayName(lang) -> str | None:
+	"""Gets the display name for a given language.
+
+	:lang: A language code.
+	:Return: The display name for the provided language.
+	"""
+
+	language = Locale.parse(lang)
+	return language.get_display_name("en_US")
+
+
+def test_reportLanguageDisabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, False),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"Cyrille",
+				"created this",
+				"test:",
+				"Let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportLanguageEnabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, False),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				_getLangDisplayName("fr"),
+				"Cyrille",
+				_getLangDisplayName("en"),
+				"created this",
+				"unknown",
+				"test:",
+				_getLangDisplayName("en"),
+				"Let's mention",
+				_getLangDisplayName("es"),
+				"Noelia",
+				_getLangDisplayName("en"),
+				"and",
+				_getLangDisplayName("la"),
+				"Leonem",
+				_getLangDisplayName("en"),
+				"in the same sentence.",
+			),
+		),
 	)

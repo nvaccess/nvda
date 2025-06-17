@@ -186,9 +186,9 @@ Export("outFilePrefix")
 outputDir = Dir(env["outputDir"])
 Export("outputDir")
 
-assert not (
-	apiSigningToken and certFile
-), "Cannot specify signing with both API token (cloud) and local certificate"
+assert not (apiSigningToken and certFile), (
+	"Cannot specify signing with both API token (cloud) and local certificate"
+)
 if apiSigningToken:
 	# Code signing with SignPath HSM
 	def signExecApi(target, source, env):
@@ -334,14 +334,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	installedLogo = env.Install(styleInstallPath, favicon)
 	env.Depends(
 		htmlFile,
-		[
-			styles,
-			installedStyle,
-			numberedHeadingsStyle,
-			installedHeadingsStyle,
-			favicon,
-			installedLogo
-		],
+		[styles, installedStyle, numberedHeadingsStyle, installedHeadingsStyle, favicon, installedLogo],
 	)
 	env.Depends(htmlFile, mdFile)
 
@@ -556,11 +549,7 @@ outputHeadingStylesFile = env.Command(
 	userDocsDir.File("numberedHeadings.css"),
 	Copy("$TARGET", "$SOURCE"),
 )
-outputLogoFile = env.Command(
-	outputDir.File("favicon.ico"),
-	logo,
-	Copy("$TARGET", "$SOURCE")
-)
+outputLogoFile = env.Command(outputDir.File("favicon.ico"), logo, Copy("$TARGET", "$SOURCE"))
 changesFile = env.Command(
 	outputDir.File("%s_changes.html" % outFilePrefix),
 	userDocsDir.File("en/changes.html"),
