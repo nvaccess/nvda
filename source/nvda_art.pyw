@@ -57,7 +57,7 @@ class ExtensionPointHandlerService:
 			return self._runtime.services.get("extension_points")
 		return None
 
-	def registerHandler(self, extPointName: str, handlerFunc: Callable, epType: str) -> str:
+	def registerHandler(self, extPointName: str, handlerFunc: Callable, epType: ExtensionPointType) -> str:
 		"""Register a handler function for an extension point."""
 		# Get addon name from runtime
 		addonId = artRuntime.addon_spec["name"] if artRuntime and artRuntime.addon_spec else "unknown"
@@ -74,7 +74,7 @@ class ExtensionPointHandlerService:
 		self.logger.info(f"Registered handler {handlerID} for {extPointName}")
 		return handlerID
 
-	def executeHandlers(self, extPointName: str, epType: str, *args: Any, **kwargs: Any) -> Any:
+	def executeHandlers(self, extPointName: str, epType: ExtensionPointType, *args: Any, **kwargs: Any) -> Any:
 		"""Execute all handlers for an extension point."""
 		if extPointName not in self._handlers:
 			return self._getDefaultResult(epType, *args)
@@ -89,45 +89,49 @@ class ExtensionPointHandlerService:
 
 		return self._combineResults(epType, results)
 
-	def _getDefaultResult(self, epType: str, *args: Any) -> Any:
+	def _getDefaultResult(self, epType: ExtensionPointType, *args: Any) -> Any:
 		"""Get default result for extension point type."""
-		if epType == "action":
-			return None
-		elif epType == "decider":
-			return True
-		elif epType == "accumulating_decider":
-			return True
-		elif epType == "filter":
-			return args[0] if args else None
-		elif epType == "chain":
-			return []
-		return None
-
-	def _combineResults(self, epType: str, results: List[Any]) -> Any:
-		"""Combine results based on extension point type."""
-		if epType == "action":
-			return None
-		elif epType == "decider":
-			return all(results) if results else True
-		elif epType == "accumulating_decider":
-			return not any(not r for r in results)
-		elif epType == "filter":
-			if not results:
+		match epType:
+			case ExtensionPointType.ACTION:
 				return None
-			value = results[0]
-			for result in results[1:]:
-				if result is not None:
-					value = result
-			return value
-		elif epType == "chain":
-			flattened = []
-			for result in results:
-				if isinstance(result, list):
-					flattened.extend(result)
-				else:
-					flattened.append(result)
-			return flattened
-		return results
+			case ExtensionPointType.DECIDER:
+				return True
+			case ExtensionPointType.ACCUMULATING_DECIDER:
+				return True
+			case ExtensionPointType.FILTER:
+				return args[0] if args else None
+			case ExtensionPointType.CHAIN:
+				return []
+			case _:
+				return None
+
+	def _combineResults(self, epType: ExtensionPointType, results: List[Any]) -> Any:
+		"""Combine results based on extension point type."""
+		match epType:
+			case ExtensionPointType.ACTION:
+				return None
+			case ExtensionPointType.DECIDER:
+				return all(results) if results else True
+			case ExtensionPointType.ACCUMULATING_DECIDER:
+				return not any(not r for r in results)
+			case ExtensionPointType.FILTER:
+				if not results:
+					return None
+				value = results[0]
+				for result in results[1:]:
+					if result is not None:
+						value = result
+				return value
+			case ExtensionPointType.CHAIN:
+				flattened = []
+				for result in results:
+					if isinstance(result, list):
+						flattened.extend(result)
+					else:
+						flattened.append(result)
+				return flattened
+			case _:
+				return results
 
 
 @Pyro5.api.expose
@@ -135,11 +139,7 @@ class ExtensionPointService:
 	def __init__(self):
 		self._addonHandlers: Dict[str, set] = {}
 
-	def registerHandler(self, addonID: str, extPointName: str, handlerId: str, extPointType: str) -> bool:
-		try:
-			ExtensionPointType(extPointType)  # Validate the type
-		except ValueError:
-			return False
+	def registerHandler(self, addonID: str, extPointName: str, handlerId: str, extPointType: ExtensionPointType) -> bool:
 
 		if addonID not in self._addonHandlers:
 			self._addonHandlers[addonID] = set()
