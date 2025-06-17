@@ -14,7 +14,6 @@ import time
 from dataclasses import dataclass
 from enum import Enum
 from logHandler import log
-from typing import Optional, Tuple, Dict
 
 TIMEOUT_SEC = 0.2
 BAUD_RATE = 19200
