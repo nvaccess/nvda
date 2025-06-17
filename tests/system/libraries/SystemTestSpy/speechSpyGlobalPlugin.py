@@ -591,7 +591,9 @@ def _crashNVDA(param: Optional[int] = None):
 
 def _getLanguageDescription(lang) -> str | None:
 	import languageHandler
+
 	return languageHandler.getLanguageDescription(lang)
+
 
 GlobalPlugin = SystemTestSpyServer
 GlobalPlugin.__gestures = {}
