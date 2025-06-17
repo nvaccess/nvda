@@ -462,6 +462,7 @@ dependencies = [
     { name = "mdx-truly-sane-lists", marker = "sys_platform == 'win32'" },
     { name = "nh3", marker = "sys_platform == 'win32'" },
     { name = "pycaw", marker = "sys_platform == 'win32'" },
+    { name = "pyro5", marker = "sys_platform == 'win32'" },
     { name = "pyserial", marker = "sys_platform == 'win32'" },
     { name = "requests", marker = "sys_platform == 'win32'" },
     { name = "schedule", marker = "sys_platform == 'win32'" },
@@ -513,6 +514,7 @@ requires-dist = [
     { name = "mdx-truly-sane-lists", specifier = "==1.3" },
     { name = "nh3", specifier = "==0.2.19" },
     { name = "pycaw", specifier = "==20240210" },
+    { name = "pyro5", specifier = ">=5.15" },
     { name = "pyserial", specifier = "==3.5" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "schedule", specifier = "==1.2.2" },
@@ -738,6 +740,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pyro5"
+version = "5.15"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "serpent", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/46/53/d0fb4625ecf2fdbe83211a4b7e384b8deec95989330451b53b25ddc6f79a/Pyro5-5.15.tar.gz", hash = "sha256:82c3dfc9860b49f897b28ff24fe6716c841672c600af8fe40d0e3a7fac9a3f5e", size = 447559, upload-time = "2023-10-18T20:42:58.476Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/85/32/1c7e488f82c59189e917bfedb926b1c2b87104c8d31c8323a5aa5e1fc603/Pyro5-5.15-py3-none-any.whl", hash = "sha256:4d85428ed75985e63f159d2486ad5680743ea76f766340fd30b65dd20f83d471", size = 79110, upload-time = "2023-10-18T20:42:56.119Z" },
+]
+
+[[package]]
 name = "pyscreeze"
 version = "1.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -888,6 +902,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/c8/c1/30176c76c1ef723fab62e5cdb15d3c972427a146cb6f868748613d7b25af/scons-4.9.1.tar.gz", hash = "sha256:bacac880ba2e86d6a156c116e2f8f2bfa82b257046f3ac2666c85c53c615c338", size = 3252106, upload-time = "2025-03-27T20:42:19.765Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/45/92/50b739021983b131dcacd57aa8b04d31c5acc2e7e0eb4ed4a362f438c6b7/scons-4.9.1-py3-none-any.whl", hash = "sha256:d2db1a22eb6039e97cbbb0106f18f435af033d0aad190299c9688378e2810a5e", size = 4131331, upload-time = "2025-03-27T20:42:16.665Z" },
+]
+
+[[package]]
+name = "serpent"
+version = "1.41"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/b4/6dee78c531270d98b4166971c0d8b1432af05e10f887d52dbf536aaa23e3/serpent-1.41.tar.gz", hash = "sha256:0407035fe3c6644387d48cff1467d5aa9feff814d07372b78677ed0ee3ed7095", size = 88927, upload-time = "2022-06-26T13:53:42.834Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ad/86/e029bd8a451f145e28530128239be057ca6e701aac46ad0d0000f852d551/serpent-1.41-py3-none-any.whl", hash = "sha256:5fd776b3420441985bc10679564c2c9b4a19f77bea59f018e473441d98ae5dd7", size = 9573, upload-time = "2022-06-26T13:53:39.139Z" },
 ]
 
 [[package]]
