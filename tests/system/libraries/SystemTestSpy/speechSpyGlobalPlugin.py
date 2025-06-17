@@ -172,6 +172,11 @@ class NVDASpyLib:
 			)
 		self.fakeTranslations.translationResults[invariantString] = replacementString
 
+	def getLanguageDescription(self, lang):
+		import languageHandler
+		langDesc = languageHandler.getLanguageDescription(lang)
+		return langDesc
+
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
 
@@ -587,15 +592,6 @@ def _crashNVDA(param: Optional[int] = None):
 	# This may be caught by a "postmortem debugger", which would prevent the application from exiting.
 	# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/enabling-postmortem-debugging
 	ctypes.windll.Kernel32.DebugBreak()
-
-
-def _getLanguageDescription(lang) -> str | None:
-	"""Uses the `languageHandler.getLanguageDescription` function for testing.
-	:param lang: Language code.
-	"""
-	import languageHandler
-
-	return languageHandler.getLanguageDescription(lang)
 
 
 GlobalPlugin = SystemTestSpyServer

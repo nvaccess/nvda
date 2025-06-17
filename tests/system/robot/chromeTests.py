@@ -24,7 +24,7 @@ _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 if typing.TYPE_CHECKING:
-	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib, _getLanguageDescription
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 
 #: Double space is used to separate semantics in speech output this typically
@@ -2912,26 +2912,27 @@ def test_reportLanguageEnabled():
 			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
 		],
 	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join(
 			(
-				_getLanguageDescription("fr"),
+				spy.getLanguageDescription("fr"),
 				"Cyrille",
-				_getLanguageDescription("en"),
+				spy.getLanguageDescription("en"),
 				"created this",
 				"unknown",
 				"test:",
-				_getLanguageDescription("en"),
+				spy.getLanguageDescription("en"),
 				"Let's mention",
-				_getLanguageDescription("es_ES"),
+				spy.getLanguageDescription("es_ES"),
 				"Noelia",
-				_getLanguageDescription("en"),
+				spy.getLanguageDescription("en"),
 				"and",
-				_getLanguageDescription("la"),
+				spy.getLanguageDescription("la"),
 				"Leonem",
-				_getLanguageDescription("en"),
+				spy.getLanguageDescription("en"),
 				"in the same sentence.",
 			),
 		),
