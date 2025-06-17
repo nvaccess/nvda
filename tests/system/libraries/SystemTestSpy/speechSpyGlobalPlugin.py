@@ -174,6 +174,7 @@ class NVDASpyLib:
 
 	def getLanguageDescription(self, lang):
 		import languageHandler
+
 		langDesc = languageHandler.getLanguageDescription(lang)
 		return langDesc
 
