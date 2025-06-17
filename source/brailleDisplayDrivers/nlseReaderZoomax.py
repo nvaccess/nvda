@@ -41,10 +41,10 @@ class DeviceCommand(bytes, Enum):
 @dataclass(frozen=True)
 class DeviceResponseInfo:
 	length: int
-	keys: Optional[Tuple[str, ...]] = None
+	keys: tuple[str, ...] | None = None
 
 
-COMMAND_RESPONSE_INFO: Dict[DeviceCommand, DeviceResponseInfo] = {
+COMMAND_RESPONSE_INFO: dict[DeviceCommand, DeviceResponseInfo] = {
 	DeviceCommand.DISPLAY_DATA: DeviceResponseInfo(1),
 	DeviceCommand.DISPLAY_KEYS: DeviceResponseInfo(
 		1,
@@ -100,10 +100,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("NLS eReader Z"))
 
-	@classmethod
-	def getManualPorts(cls):
-		return braille.getSerialPorts()
-
 	def _connect(self, port: str) -> bool:
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			try:
@@ -153,7 +149,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				time.sleep(TIMEOUT_BETWEEN_RETRIES_SEC)
 
-		self._keysDown = {}
+		self._keysDown: dict[bytes, bytes] = {}
 		self._ignoreKeyReleases = False
 
 	def terminate(self):
@@ -263,13 +259,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model, keysDown):
+	def __init__(self, model: str, keysDown: dict[bytes, bytes]):
 		super().__init__()
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")
 			assert self.model.isalnum()
-		self.keysDown = dict(keysDown)
+		self.keysDown = keysDown
 
 		SYSTEM_KEYS_MASK = 0xF8
 		SPACEBAR_KEYS_MASK = 0x07
