@@ -3,9 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
-
-import Pyro5.api
+from typing import TYPE_CHECKING, Any, List
 
 from logHandler import log
 
@@ -15,45 +13,34 @@ if TYPE_CHECKING:
 
 class ExtensionPointProxy:
 	"""Proxy for invoking extension point handlers in ART."""
-	
+
 	def __init__(self, artManager: "ARTManager") -> None:
 		self.artManager = artManager
-		
-	def invokeHandlers(
-		self, 
-		extPointName: str, 
-		epType: str, 
-		*args: Any, 
-		**kwargs: Any
-	) -> Any:
+
+	def invokeHandlers(self, extPointName: str, epType: str, *args: Any, **kwargs: Any) -> Any:
 		"""Invoke extension point handlers in all ART processes."""
 		results = []
 		default_result = self._getDefaultResult(epType, *args)
-		
+
 		# Invoke handlers in all addon processes
 		for addon_name, process in self.artManager.addonProcesses.items():
 			handlerService = process.getService("handlers")
 			if not handlerService:
 				log.debug(f"No ART handler service available for addon {addon_name}")
 				continue
-				
+
 			try:
-				result = handlerService.executeHandlers(
-					extPointName, 
-					epType, 
-					*args, 
-					**kwargs
-				)
+				result = handlerService.executeHandlers(extPointName, epType, *args, **kwargs)
 				results.append(result)
 			except Exception:
 				log.exception(f"Error invoking ART handlers for {extPointName} in addon {addon_name}")
-				
+
 		# Combine results based on extension point type
 		if not results:
 			return default_result
-			
+
 		return self._combineResults(epType, results, default_result)
-			
+
 	def _getDefaultResult(self, epType: str, *args: Any) -> Any:
 		"""Get default result for extension point type."""
 		if epType == "action":
@@ -65,7 +52,7 @@ class ExtensionPointProxy:
 		elif epType == "chain":
 			return []
 		return None
-		
+
 	def _combineResults(self, epType: str, results: List[Any], default: Any) -> Any:
 		"""Combine results from multiple addon processes based on extension point type."""
 		if epType == "action":

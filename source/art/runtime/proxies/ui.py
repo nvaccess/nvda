@@ -6,6 +6,7 @@
 """UI module proxy for add-ons running in ART."""
 
 from typing import Optional
+
 from .base import ServiceProxyMixin
 
 
@@ -20,9 +21,9 @@ def message(
 	brailleText: Optional[str] = None,
 ) -> None:
 	"""Present a message to the user via speech and/or braille.
-	
+
 	This is the most commonly used UI function in add-ons.
-	
+
 	@param text: The text to speak and display in braille.
 	@param speechPriority: The speech priority (0-2). None uses default.
 	@param brailleText: Alternative text for braille. If None, uses text.
@@ -42,7 +43,7 @@ def browseableMessage(
 	closeButton: bool = False,
 ) -> None:
 	"""Present a message to the user in a browseable window.
-	
+
 	@param message: The message text or HTML content.
 	@param title: The window title. If None, uses default.
 	@param isHtml: Whether the message is HTML content.
@@ -59,7 +60,7 @@ def browseableMessage(
 
 def reviewMessage(text: str, speechPriority: Optional[int] = None) -> None:
 	"""Present a message in review mode.
-	
+
 	@param text: The text to present.
 	@param speechPriority: The speech priority.
 	"""
@@ -70,8 +71,6 @@ def reviewMessage(text: str, speechPriority: Optional[int] = None) -> None:
 	)
 
 
-# Re-export common items that add-ons might use
-from .nvwave import isInError
 
 # For compatibility with code that might import these
-__all__ = ["message", "browseableMessage", "reviewMessage", "isInError"]
+__all__ = ["message", "browseableMessage", "reviewMessage"]

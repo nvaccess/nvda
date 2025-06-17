@@ -9,8 +9,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-# Configure Pyro5 before any imports
-import Pyro5.config
+import Pyro5
+
 Pyro5.config.SERIALIZER = "json"
 Pyro5.config.COMMTIMEOUT = 2.0
 Pyro5.config.HOST = "127.0.0.1"
@@ -74,7 +74,9 @@ class ExtensionPointHandlerService:
 		self.logger.info(f"Registered handler {handlerID} for {extPointName}")
 		return handlerID
 
-	def executeHandlers(self, extPointName: str, epType: ExtensionPointType, *args: Any, **kwargs: Any) -> Any:
+	def executeHandlers(
+		self, extPointName: str, epType: ExtensionPointType, *args: Any, **kwargs: Any
+	) -> Any:
 		"""Execute all handlers for an extension point."""
 		if extPointName not in self._handlers:
 			return self._getDefaultResult(epType, *args)
@@ -139,8 +141,9 @@ class ExtensionPointService:
 	def __init__(self):
 		self._addonHandlers: Dict[str, set] = {}
 
-	def registerHandler(self, addonID: str, extPointName: str, handlerId: str, extPointType: ExtensionPointType) -> bool:
-
+	def registerHandler(
+		self, addonID: str, extPointName: str, handlerId: str, extPointType: ExtensionPointType
+	) -> bool:
 		if addonID not in self._addonHandlers:
 			self._addonHandlers[addonID] = set()
 		self._addonHandlers[addonID].add(f"{extPointName}:{handlerId}")
@@ -303,12 +306,12 @@ def _set_core_service_uris(core_services: Dict[str, str]) -> None:
 
 def getStartupInfo() -> Tuple[Optional[dict], bool]:
 	"""Get addon spec and mode from either CLI args or stdin handshake.
-	
+
 	Returns:
 		(addon_spec, is_cli_mode) or (None, is_cli_mode) on error
 	"""
 	is_cli_mode = len(sys.argv) > 1
-	
+
 	if is_cli_mode:
 		# CLI mode - parse arguments
 		try:
@@ -330,9 +333,9 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 				"path": str(addon_path),
 				"manifest": {},  # Don't care about manifest details for now
 			}
-			
+
 			return addon_spec, is_cli_mode
-			
+
 		except Exception as e:
 			handleStartupError(e)
 			return None, is_cli_mode
@@ -362,11 +365,15 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 			addon_spec = startup_data.get("addon")
 			if not addon_spec:
 				raise ValueError("No addon specified")
-				
+
 			return addon_spec, is_cli_mode
 
 		except Exception as e:
-			addon_name = startup_data.get("addon", {}).get("name", "unknown") if "startup_data" in locals() else "unknown"
+			addon_name = (
+				startup_data.get("addon", {}).get("name", "unknown")
+				if "startup_data" in locals()
+				else "unknown"
+			)
 			handleStartupError(e, addon_name)
 			return None, is_cli_mode
 
@@ -376,16 +383,20 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 	try:
 		# Start services
 		service_uris = startWithAddonSpec(addon_spec)
-		
+
 		# Send handshake response if not in CLI mode
 		if not is_cli_mode:
-			response_data = {"status": "ready", "addon_name": addon_spec["name"], "art_services": service_uris}
+			response_data = {
+				"status": "ready",
+				"addon_name": addon_spec["name"],
+				"art_services": service_uris,
+			}
 			response_json = json.dumps(response_data) + "\n"
 			sys.stdout.write(response_json)
 			sys.stdout.flush()
-			
+
 		return service_uris
-		
+
 	except Exception as e:
 		handleStartupError(e, addon_spec.get("name", "unknown"))
 		return None
@@ -426,21 +437,21 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	try:
 		# Import all proxy modules
 		from art.runtime.proxies import (
-			ui,
-			config,
-			logHandler,
-			globalVars,
 			addonHandler,
-			languageHandler,
-			nvwave,
-			extensionPoints,
 			appModules,
 			brailleDisplayDrivers,
+			config,
+			extensionPoints,
 			globalPlugins,
-			synthDrivers,
-			visionEnhancementProviders,
-			synthDriverHandler,
+			globalVars,
+			languageHandler,
+			logHandler,
+			nvwave,
 			speech,
+			synthDriverHandler,
+			synthDrivers,
+			ui,
+			visionEnhancementProviders,
 		)
 
 		# Define module mappings with any special submodules
@@ -490,7 +501,7 @@ def main():
 	addon_spec, is_cli_mode = getStartupInfo()
 	if not addon_spec:
 		sys.exit(1)
-		
+
 	# Perform startup
 	service_uris = performStartup(addon_spec, is_cli_mode)
 	if not service_uris:
