@@ -590,6 +590,9 @@ def _crashNVDA(param: Optional[int] = None):
 
 
 def _getLanguageDescription(lang) -> str | None:
+	"""Uses the `languageHandler.getLanguageDescription` function for testing.
+	:param lang: Language code.
+	"""
 	import languageHandler
 	return languageHandler.getLanguageDescription(lang)
 
