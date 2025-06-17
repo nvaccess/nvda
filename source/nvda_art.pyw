@@ -9,6 +9,13 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
+# Configure Pyro5 before any imports
+import Pyro5.config
+Pyro5.config.SERIALIZER = "json"
+Pyro5.config.COMMTIMEOUT = 2.0
+Pyro5.config.HOST = "127.0.0.1"
+Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024
+
 import Pyro5.api
 import wx
 
@@ -170,11 +177,6 @@ class ARTRuntime:
 
 	def start(self) -> Dict[str, str]:
 		"""Start the ART runtime services."""
-		Pyro5.config.SERIALIZER = "json"
-		Pyro5.config.COMMTIMEOUT = 2.0
-		Pyro5.config.HOST = "127.0.0.1"
-		Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024
-
 		self.daemon = Pyro5.api.Daemon(host="127.0.0.1", port=0)
 		self.logger.info(f"Pyro5 daemon created at: {self.daemon.locationStr}")
 
@@ -474,11 +476,6 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 		logger.info(f"Initialized addonHandler proxy for addon: {addon_spec['name']}")
 	except Exception:
 		logger.exception("Failed to set up proxy modules")
-
-	# Configure Pyro
-	Pyro5.config.SERIALIZER = "json"
-	Pyro5.config.COMMTIMEOUT = 2.0
-	Pyro5.config.HOST = "127.0.0.1"
 
 	global artRuntime
 	artRuntime = ARTRuntime(addon_spec)  # Pass addon spec to runtime
