@@ -589,5 +589,9 @@ def _crashNVDA(param: Optional[int] = None):
 	ctypes.windll.Kernel32.DebugBreak()
 
 
+def _getLanguageDescription(lang) -> str | None:
+	import languageHandler
+	return languageHandler.getLanguageDescription(lang)
+
 GlobalPlugin = SystemTestSpyServer
 GlobalPlugin.__gestures = {}

@@ -7,7 +7,6 @@
 
 import typing
 import os
-from babel import Locale
 from robot.libraries.BuiltIn import BuiltIn
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -25,7 +24,7 @@ _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 if typing.TYPE_CHECKING:
-	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib, _getLanguageDescription
 
 
 #: Double space is used to separate semantics in speech output this typically
@@ -2877,17 +2876,6 @@ def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	spy.modifyNVDAConfig(nvdaConfValues)
 
 
-def _getLangDisplayName(lang) -> str | None:
-	"""Gets the display name for a given language.
-
-	:lang: A language code.
-	:Return: The display name for the provided language.
-	"""
-
-	language = Locale.parse(lang)
-	return language.get_display_name("en_US")
-
-
 def test_reportLanguageDisabled():
 	_doTestReportLanguage(
 		nvdaConfValues=[
@@ -2929,21 +2917,21 @@ def test_reportLanguageEnabled():
 		actualSpeech,
 		SPEECH_SEP.join(
 			(
-				_getLangDisplayName("fr"),
+				_getLanguageDescription("fr"),
 				"Cyrille",
-				_getLangDisplayName("en"),
+				_getLanguageDescription("en"),
 				"created this",
 				"unknown",
 				"test:",
-				_getLangDisplayName("en"),
+				_getLanguageDescription("en"),
 				"Let's mention",
-				_getLangDisplayName("es_ES"),
+				_getLanguageDescription("es_ES"),
 				"Noelia",
-				_getLangDisplayName("en"),
+				_getLanguageDescription("en"),
 				"and",
-				_getLangDisplayName("la"),
+				_getLanguageDescription("la"),
 				"Leonem",
-				_getLangDisplayName("en"),
+				_getLanguageDescription("en"),
 				"in the same sentence.",
 			),
 		),
