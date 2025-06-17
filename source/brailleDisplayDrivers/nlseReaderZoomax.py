@@ -104,7 +104,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	def _connect(self, port: str) -> None:
+	def _connect(self, port: str) -> bool:
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			try:
 				self._dev = hwIo.Serial(
