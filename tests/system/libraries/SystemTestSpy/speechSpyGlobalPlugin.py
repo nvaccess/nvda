@@ -594,7 +594,9 @@ def _getLanguageDescription(lang) -> str | None:
 	:param lang: Language code.
 	"""
 	import languageHandler
+
 	return languageHandler.getLanguageDescription(lang)
+
 
 GlobalPlugin = SystemTestSpyServer
 GlobalPlugin.__gestures = {}
