@@ -50,6 +50,7 @@ from ._sapi4 import (
 	IAudioDest,
 	IAudioDestNotifySink,
 	IAudioMultiMediaDevice,
+	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
 	ITTSEnumW,
@@ -933,6 +934,7 @@ class SynthDriver(SynthDriver):
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
+		self._ttsAttrs = self._ttsCentral.QueryInterface(ITTSAttributes)
 		# Find out rate limits
 		hasRate = bool(mode.dwFeatures & TTSFEATURE_SPEED)
 		if hasRate:
