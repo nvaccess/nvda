@@ -106,7 +106,6 @@ class ARTAddonProcess:
 		else:
 			raise RuntimeError(f"ART startup failed for {self.addon_name}")
 
-
 	def _connectToARTServices(self, service_uris: Dict[str, str]):
 		"""Connect to ART services using provided URIs."""
 		for service_name, uri in service_uris.items():
