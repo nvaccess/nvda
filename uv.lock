@@ -490,7 +490,6 @@ lint = [
     { name = "ruff", marker = "sys_platform == 'win32'" },
 ]
 system-tests = [
-    { name = "babel", marker = "sys_platform == 'win32'" },
     { name = "robotframework", marker = "sys_platform == 'win32'" },
     { name = "robotframework-screencaplibrary", marker = "sys_platform == 'win32'" },
     { name = "robotremoteserver", marker = "sys_platform == 'win32'" },
@@ -540,7 +539,6 @@ lint = [
     { name = "ruff", specifier = "==0.11.12" },
 ]
 system-tests = [
-    { name = "babel", specifier = "==2.17.0" },
     { name = "robotframework", specifier = "==7.1.1" },
     { name = "robotframework-screencaplibrary", specifier = "==1.6.0" },
     { name = "robotremoteserver", specifier = "==1.1.1" },
