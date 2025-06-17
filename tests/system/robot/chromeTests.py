@@ -2937,7 +2937,7 @@ def test_reportLanguageEnabled():
 				"test:",
 				_getLangDisplayName("en"),
 				"Let's mention",
-				_getLangDisplayName("es"),
+				_getLangDisplayName("es-ES"),
 				"Noelia",
 				_getLangDisplayName("en"),
 				"and",
