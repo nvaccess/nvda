@@ -2984,27 +2984,19 @@ def test_reportNotSupportedLanguageWithoutOtherLanguages():
 			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
 		],
 	)
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join(
 			(
-				spy.getLanguageDescription("fr"),
 				"Cyrille",
-				spy.getLanguageDescription("en"),
 				"created this",
 				"unknown (not supported)",
 				"test:",
-				spy.getLanguageDescription("en"),
 				"Let's mention",
-				spy.getLanguageDescription("es"),
 				"Noelia",
-				spy.getLanguageDescription("en"),
 				"and",
-				spy.getLanguageDescription("la"),
 				"Leonem",
-				spy.getLanguageDescription("en"),
 				"in the same sentence.",
 			),
 		),
