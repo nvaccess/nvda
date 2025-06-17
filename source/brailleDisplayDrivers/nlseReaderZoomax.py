@@ -264,7 +264,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")
