@@ -3,11 +3,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Utilities to check a gettext po file for errors.
-"""
+"""Utilities to check a gettext po file for errors."""
 
 import codecs
-import platform
 import re
 import subprocess
 import sys
@@ -47,7 +45,7 @@ class PoChecker:
 		self.errorCount: int = 0
 		"""Number of errors found."""
 
-	def _addToString(self, line: list[str], startingCommand: str | None = None) ->  None:
+	def _addToString(self, line: list[str], startingCommand: str | None = None) -> None:
 		"""Helper function to add a line to the current string.
 		:param line: The line to add.
 		:param startingCommand: The command that started this string, if any.
@@ -55,7 +53,7 @@ class PoChecker:
 		"""
 		if startingCommand:
 			# Strip the command and the quotes.
-			self._string = line[len(startingCommand) + 2:-1]
+			self._string = line[len(startingCommand) + 2 : -1]
 		else:
 			# Strip the quotes.
 			self._string += line[1:-1]
@@ -88,14 +86,15 @@ class PoChecker:
 			f"{msgType} starting on line {self._messageLineNum}\n"
 			f'Original: "{self._msgid}"\n'
 			f'Translated: "{self._msgstr[-1]}"\n'
-			f"{'Error' if isError else 'Warning'}: {alert}"
+			f"{'Error' if isError else 'Warning'}: {alert}",
 		)
 
 	def _checkSyntax(self) -> None:
 		"""Check the syntax of the po file using msgfmt.
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
-		p = subprocess.Popen((MSGFMT, "-o", "-", self._poPath),
+		p = subprocess.Popen(
+			(MSGFMT, "-o", "-", self._poPath),
 			stdout=open("NUL:" if sys.platform == "win32" else "/dev/null", "w"),
 			stderr=subprocess.PIPE,
 			errors="UTF-8",
@@ -137,11 +136,11 @@ class PoChecker:
 			elif line.startswith(self.MSGID_PLURAL):
 				self._msgid = self._finishString()
 				command = self.MSGID_PLURAL
-				start = command				
+				start = command
 			elif line.startswith(self.MSGSTR):
 				self._handleMsgStrReaching(lastCommand=command)
 				command = self.MSGSTR
-				start = line[:line.find(' ')]
+				start = line[: line.find(" ")]
 			elif line.startswith('"'):
 				# Continuing a string.
 				start = None
@@ -169,12 +168,12 @@ class PoChecker:
 			self._msgstr[-1] = self._finishString()
 			self._checkMessage()
 		else:
-			raise RuntimeError(f'Unexpected command before line {self._messageLineNum}: {lastCommand}')
-	
+			raise RuntimeError(f"Unexpected command before line {self._messageLineNum}: {lastCommand}")
+
 		# For first msgstr create the msgstr list
 		if lastCommand != self.MSGSTR:
 			self._msgstr = []
-	
+
 		# Initiate the string for the current msgstr
 		self._msgstr.append("")
 
@@ -213,7 +212,9 @@ class PoChecker:
 			formats.add(m.group(0))
 		return unnamedPercent, namedPercent, formats
 
-	def _formatInterpolations(self, unnamedPercent: list[str], namedPercent: set[str], formats: set[str]) -> str:
+	def _formatInterpolations(
+		self, unnamedPercent: list[str], namedPercent: set[str], formats: set[str]
+	) -> str:
 		"""Format the interpolations for display in an error message.
 		:param unnamedPercent: The unnamed percent interpolations.
 		:param namedPercent: The named percent interpolations.
@@ -264,7 +265,7 @@ class PoChecker:
 				f"{', '.join(alerts)}\n"
 				f"Expected: {self._formatInterpolations(idUnnamedPercent, idNamedPercent, idFormats)}\n"
 				f"Got: {self._formatInterpolations(strUnnamedPercent, strNamedPercent, strFormats)}",
-				isError=error
+				isError=error,
 			)
 
 	def getReport(self) -> str | None:
