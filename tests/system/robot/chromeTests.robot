@@ -175,3 +175,6 @@ Report language disabled
 Report language enabled
 	[Documentation]	Read a sentence with different languages reporting them.
 	test_reportLanguageEnabled
+Report language without dialects
+	[Documentation]	Read a sentence with different languages without reporting dialects.
+	test_reportLanguageWithoutDialects
