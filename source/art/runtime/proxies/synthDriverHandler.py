@@ -5,23 +5,26 @@
 
 """SynthDriverHandler module proxy for add-ons running in ART."""
 
-from typing import Optional, List, Dict, Any
+from typing import Any, Dict, List, Optional
+
 from .base import ServiceProxyMixin
 
 # Re-export base classes from synthDrivers
 from .synthDrivers import SynthDriver, VoiceInfo
+
 
 # ------------------------------------------------------------------
 # Extension-point notification proxies
 # ------------------------------------------------------------------
 class _SynthNotification(ServiceProxyMixin):
 	"""Proxy object mimicking NVDA's synthIndexReached / synthDoneSpeaking.
-	
+
 	It exposes a .notify(**kwargs) method so existing synthesizers can call
 	`synthIndexReached.notify(synth=self, index=idx)` or
 	`synthDoneSpeaking.notify(synth=self)`.
 	The call is forwarded to Core's SpeechService via RPC.
 	"""
+
 	_service_env_var = "NVDA_ART_SPEECH_SERVICE_URI"
 
 	def __init__(self, _kind: str):
@@ -44,19 +47,20 @@ class _SynthNotification(ServiceProxyMixin):
 
 # Constants that synths import
 synthIndexReached = _SynthNotification("index")
-synthDoneSpeaking  = _SynthNotification("done")
+synthDoneSpeaking = _SynthNotification("done")
 
 
 class _SynthDriverHandlerProxy(ServiceProxyMixin):
 	"""Internal proxy class for synthDriverHandler service."""
+
 	_service_env_var = "NVDA_ART_SPEECH_SERVICE_URI"
 
 
 def getSynth() -> Optional[SynthDriver]:
 	"""Get the current synthesizer.
-	
+
 	In ART, this returns None as synths don't have access to other synths.
-	
+
 	@return: None (synths in ART are isolated)
 	"""
 	return None
@@ -64,7 +68,7 @@ def getSynth() -> Optional[SynthDriver]:
 
 def getSynthList() -> List[tuple]:
 	"""Get list of available synthesizers.
-	
+
 	@return: Empty list (not available in ART)
 	"""
 	return []
@@ -72,7 +76,7 @@ def getSynthList() -> List[tuple]:
 
 def setSynth(name: str) -> bool:
 	"""Set the current synthesizer.
-	
+
 	@param name: Name of the synthesizer to set
 	@return: False (not available in ART)
 	"""
@@ -80,5 +84,12 @@ def setSynth(name: str) -> bool:
 
 
 # Re-export for compatibility
-__all__ = ["SynthDriver", "VoiceInfo", "getSynth", "getSynthList", "setSynth", 
-           "synthIndexReached", "synthDoneSpeaking"]
+__all__ = [
+	"SynthDriver",
+	"VoiceInfo",
+	"getSynth",
+	"getSynthList",
+	"setSynth",
+	"synthIndexReached",
+	"synthDoneSpeaking",
+]

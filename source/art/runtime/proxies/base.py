@@ -7,24 +7,25 @@
 
 import os
 from typing import Optional
+
 import Pyro5.api
 
 
 class ServiceProxyMixin:
 	"""Mixin for accessing service proxies."""
-	
+
 	_service_cache = {}
 	_service_env_var = None
 	_service_timeout = 2.0
-	
+
 	@classmethod
 	def _get_service(cls) -> Optional[Pyro5.api.Proxy]:
 		"""Get or create the service proxy."""
 		if cls._service_env_var is None:
 			raise NotImplementedError("_service_env_var must be set")
-			
+
 		service_name = cls._service_env_var
-		
+
 		if service_name not in cls._service_cache:
 			uri = os.environ.get(service_name)
 			if uri:
@@ -33,9 +34,9 @@ class ServiceProxyMixin:
 				cls._service_cache[service_name] = proxy
 			else:
 				cls._service_cache[service_name] = None
-				
+
 		return cls._service_cache[service_name]
-	
+
 	@classmethod
 	def _call_service(cls, method: str, *args, **kwargs):
 		"""Call a service method, returning None on failure."""
