@@ -4484,7 +4484,7 @@ The following extra devices are also supported (and do not require any special d
 * APH Mantis Q40
 * APH Chameleon 20
 * Humanware BrailleOne
-* NLS eReader Humanware
+* NLS eReader HumanWare
 
 Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
