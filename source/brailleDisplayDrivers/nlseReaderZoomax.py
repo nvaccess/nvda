@@ -140,7 +140,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 		return False
 
-	def __init__(self, port="auto"):
+	def __init__(self, port: str = "auto"):
 		log.info("Initializing nlseReaderZoomax driver")
 		super().__init__()
 		self.numCells = 0
