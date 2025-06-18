@@ -501,7 +501,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			try:
 				officeVersion = tuple(int(x) for x in self.obj.appModule.productVersion.split(".")[:3])
 			except Exception:
-				log.debugWarning("Unable to parse Office version", exc_info=True)
+				log.error("Unable to parse Office version", exc_info=True)
 				officeVersion = (0, 0, 0)
 			if officeVersion >= (16, 0, 18226):
 				expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
