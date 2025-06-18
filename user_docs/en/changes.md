@@ -6,7 +6,7 @@ This is a patch release to fix a bug.
 
 ### Bug fixes
 
-* Certain Microsoft Word versions before version 16.0.18226   will no longer crash on opening. (#18280)
+* Certain Microsoft Word versions before version 16.0.18226 will no longer crash on opening. (#18280)
 
 ## 2025.1.1
 
