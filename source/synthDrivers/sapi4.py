@@ -930,7 +930,8 @@ class SynthDriver(SynthDriver):
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
 			ttsAudio = SynthDriverAudio()
 		else:
-			ttsAudio = SynthDriverMMAudio()
+			ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
+			ttsAudio.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
