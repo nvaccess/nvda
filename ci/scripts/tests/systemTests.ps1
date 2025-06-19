@@ -29,7 +29,7 @@ $tagsForTest = "installer NVDA"  # include the tests tagged with installer, or N
 if ($env:INCLUDE_SYSTEM_TEST_TAGS) {
 	if ($env:INCLUDE_SYSTEM_TEST_TAGS -eq $SKIP_SYS_TESTS) {
 		# Indicate the tests were skipped, and exit early.
-		"Skipped: System tests." >> $env:GITHUB_STEP_SUMMARY
+		Write-Output "Skipped: System tests." >> $env:GITHUB_STEP_SUMMARY
 		return
 	}
 	$tagsForTest = $env:INCLUDE_SYSTEM_TEST_TAGS
