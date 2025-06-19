@@ -172,6 +172,12 @@ class NVDASpyLib:
 			)
 		self.fakeTranslations.translationResults[invariantString] = replacementString
 
+	def getLanguageDescription(self, lang):
+		import languageHandler
+
+		langDesc = languageHandler.getLanguageDescription(lang)
+		return langDesc
+
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
 

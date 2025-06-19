@@ -180,9 +180,9 @@ class CharacterModeCommand(SynthParamCommand):
 class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
-	def __init__(self, lang: Optional[str]):
+	def __init__(self, lang: str | None):
 		"""
-		@param lang: the language to switch to: If None then the NVDA locale will be used.
+		:param lang: The language to switch to: If None then the NVDA locale will be used.
 		"""
 		self.lang = lang
 		self.isDefault = not lang
