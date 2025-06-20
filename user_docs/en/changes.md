@@ -5,6 +5,7 @@
 ### New Features
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
 ### Changes
 
@@ -31,7 +32,6 @@
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
-* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
 ### Changes for Developers
 
