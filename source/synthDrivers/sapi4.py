@@ -40,12 +40,15 @@ from synthDriverHandler import (
 )
 from logHandler import log
 from ._sapi4 import (
+	AUDATTR_TIMERMS,
 	MMSYSERR_NOERROR,
+	WAVE_MAPPER,
 	AudioError,
 	SDATA,
 	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
 	DriverMessage,
+	IAttributesW,
 	IAudio,
 	IAudioDest,
 	IAudioDestNotifySink,
@@ -322,7 +325,7 @@ class SynthDriverAudio(COMObject):
 	  `Stop` and `UnClaim` will not clear the buffer, but `Flush` will.
 	"""
 
-	_com_interfaces_ = [IAudio, IAudioDest]
+	_com_interfaces_ = [IAudio, IAudioDest, IAudioMultiMediaDevice, IAttributesW]
 
 	def __init__(self, comThread: _ComThread):
 		"""Constructor.
@@ -346,6 +349,7 @@ class SynthDriverAudio(COMObject):
 		self._audioThread = threading.Thread(target=self._audioThreadFunc, name="Sapi4AudioThread")
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._comThread = comThread
+		self._timer_ms = 33
 
 	def _final_release_(self):
 		"""This will be called automatically when this COM object is being destroyed."""
@@ -637,6 +641,24 @@ class SynthDriverAudio(COMObject):
 			self._bookmarkQueue.append(_Bookmark(self._writtenBytes, dwMarkID))
 			self._audioCond.notify()
 
+	def IAudioMultiMediaDevice_DeviceNumGet(self) -> int:
+		return WAVE_MAPPER
+
+	def IAudioMultiMediaDevice_DeviceNumSet(self, dwDeviceID: int) -> None:
+		pass  # ignore
+
+	def IAttributesW_DWORDGet(self, dwAttrib: int) -> int:
+		if dwAttrib == AUDATTR_TIMERMS:
+			return self._timer_ms
+		else:
+			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
+
+	def IAttributesW_DWORDSet(self, dwAttrib: int, dwValue: int) -> None:
+		if dwAttrib == AUDATTR_TIMERMS:
+			self._timer_ms = dwValue
+		else:
+			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
+
 	def _audioThreadFunc(self):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
 		while not self._audioStopped:
@@ -713,7 +735,7 @@ class SynthDriverMMAudio(COMObject):
 	which can log the interactions between MMAudioDest and the TTS engine.
 	"""
 
-	_com_interfaces_ = [IAudio, IAudioDest]
+	_com_interfaces_ = [IAudio, IAudioDest, IAudioMultiMediaDevice, IAttributesW]
 
 	def __init__(self):
 		if isDebugForSynthDriver():
@@ -722,6 +744,7 @@ class SynthDriverMMAudio(COMObject):
 		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		self.audio = self.mmdev.QueryInterface(IAudio)
 		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
+		self.attrs = self.mmdev.QueryInterface(IAttributesW)
 
 	def terminate(self):
 		pass  # do nothing
@@ -789,6 +812,22 @@ class SynthDriverMMAudio(COMObject):
 	@_logTrace()
 	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
 		self.audiodest.BookMark(dwMarkID)
+
+	@_logTrace()
+	def IAudioMultiMediaDevice_DeviceNumGet(self) -> int:
+		return self.mmdev.DeviceNumGet()
+
+	@_logTrace()
+	def IAudioMultiMediaDevice_DeviceNumSet(self, dwDeviceID: int) -> None:
+		self.mmdev.DeviceNumSet(dwDeviceID)
+
+	@_logTrace(format="attribute {args[1]} = {result[0]}")
+	def IAttributesW_DWORDGet(self, dwAttrib: int) -> int:
+		return self.attrs.DWORDGet(dwAttrib)
+
+	@_logTrace(format="attribute {args[1]} = {args[2]}")
+	def IAttributesW_DWORDSet(self, dwAttrib: int, dwValue: int) -> None:
+		self.attrs.DWORDSet(dwAttrib, dwValue)
 
 
 class SynthDriverSink(COMObject):
