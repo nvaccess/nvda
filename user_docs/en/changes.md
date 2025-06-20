@@ -2,8 +2,6 @@
 
 ## 2025.2
 
-### Important notes
-
 ### New Features
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
@@ -51,8 +49,6 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
-
-#### Deprecations
 
 ## 2025.1.2
 
