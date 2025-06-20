@@ -24,3 +24,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
 | @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |
 | @jcsteh | <jamie@nvaccess.org> | Mozilla Firefox |
+| @alex19EP | <email@alex19ep.me> | eSpeak |
