@@ -43,6 +43,10 @@ TTSFEATURE_SPEED = 4
 TTSFEATURE_PITCH = 8
 TTSFEATURE_FIXEDAUDIO = 1024
 
+WAVE_MAPPER = -1
+
+AUDATTR_TIMERMS = 0x6003  # MMAudioDest: milliseconds between timer ticks, when send out buffers, etc.
+
 
 class AudioError(IntEnum):
 	"""SAPI4 audio related error codes."""
@@ -189,9 +193,9 @@ class IAudioMultiMediaDevice(IUnknown):
 
 
 IAudioMultiMediaDevice._methods_ = [
-	STDMETHOD(HRESULT, "CustomMessage", [c_uint, SDATA]),
-	STDMETHOD(HRESULT, "DeviceNumGet", [POINTER(DWORD)]),
-	STDMETHOD(HRESULT, "DeviceNumSet", [DWORD]),
+	COMMETHOD([], HRESULT, "CustomMessage", (["in"], c_uint, "uMsg"), (["in"], SDATA, "dData")),
+	COMMETHOD([], HRESULT, "DeviceNumGet", (["out"], POINTER(DWORD), "pdwDeviceID")),
+	COMMETHOD([], HRESULT, "DeviceNumSet", (["in"], DWORD, "dwDeviceID")),
 ]
 
 
@@ -311,6 +315,49 @@ IAudioDestNotifySink._methods_ = [
 	STDMETHOD(HRESULT, "BookMark", [DWORD, BOOL]),
 ]
 
+
+class IAttributesW(IUnknown):
+	_iid_ = GUID("{1D59DED1-E367-11d1-BED7-006008317CE8}")
+
+
+IAttributesW._methods_ = [
+	COMMETHOD([], HRESULT, "DWORDGet", (["in"], DWORD, "dwAttrib"), (["out"], POINTER(DWORD), "pdwValue")),
+	COMMETHOD([], HRESULT, "DWORDSet", (["in"], DWORD, "dwAttrib"), (["in"], DWORD, "dwValue")),
+	COMMETHOD(
+		[],
+		HRESULT,
+		"StringGet",
+		(["in"], DWORD, "dwAttrib"),
+		(["in"], c_void_p, "psz"),
+		(["in"], DWORD, "dwSize"),
+		(["out"], POINTER(DWORD), "pdwNeeded"),
+	),
+	COMMETHOD(
+		[],
+		HRESULT,
+		"StringSet",
+		(["in"], DWORD, "dwAttrib"),
+		(["in"], c_wchar_p, "psz"),
+	),
+	COMMETHOD(
+		[],
+		HRESULT,
+		"MemoryGet",
+		(["in"], DWORD, "dwAttrib"),
+		(["out"], POINTER(c_void_p), "ppMem"),
+		(["out"], POINTER(DWORD), "pdwSize"),
+	),
+	COMMETHOD(
+		[],
+		HRESULT,
+		"MemorySet",
+		(["in"], DWORD, "dwAttrib"),
+		(["in"], c_void_p, "pMem"),
+		(["in"], DWORD, "dwSize"),
+	),
+]
+
+IAttributes = IAttributesW
 
 CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
