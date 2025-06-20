@@ -2,11 +2,26 @@
 
 ## 2025.2
 
-### Important notes
+This release includes improvements in Windows 11, browse mode, and Microsoft Word.
+
+In browse mode, quick navigation keys for headings 7 through 9 have been added.
+The Elements List and Find dialogs no longer cause application profiles to be deactivated.
+In Microsoft Edge, notifications like "loading complete" no longer stop say all.
+
+In Microsoft Word,   when using the shortcuts to switch to page view  or outline view, the new view is now reported.
+When UIA is enabled, redundant table end markers are no longer brailled when the cursor is in a table cell.
+
+On Windows 11, NVDA will no longer announce emoji panel items twice while browsing them.
+Performance and reliability in the Start Menu on Windows 11 24H2 has  been improved.
+
+LibLouis has been updated, adding new Biblical Hebrew, Russian 6 dot computer braille and Thai Grade 2 braille tables.
+
+There have also been a number of other fixes and improvements, including to mouse and touch interaction,  Windows 11 Notepad, and HumanWare Monarch support.
 
 ### New Features
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
 ### Changes
 
@@ -16,7 +31,7 @@
     * Substantial updates to Lithuanian braille tables.
     * Small improvements to Hungarian, Dutch, Norwegian and Turkish tables.
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
-* When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
+* When the Elements List or Find dialog is opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 * In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)
 
 ### Bug Fixes
@@ -33,7 +48,6 @@
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
-* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 
 ### Changes for Developers
 
@@ -45,14 +59,12 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Updated Ruff to 0.11.12. (#17671)
   * Updated pre-commit to 4.2.0. (#17671)
   * Updated pyright to 1.1.401. (#17671)
-* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
+* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, @LeonarddeR)
   * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
 * Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
-
-#### Deprecations
 
 ## 2025.1.2
 
