@@ -197,6 +197,10 @@ class SapiSink(COMObject):
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		if not synth.isSpeaking:  # already stopped (cancelled)
+			synth._streamBookmarks.clear()
+			synthDoneSpeaking.notify(synth=synth)
+			return
 		# Flush the stream and get the remaining data.
 		synth.sonicStream.flush()
 		audioData = synth.sonicStream.readShort()
