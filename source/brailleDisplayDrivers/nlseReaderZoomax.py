@@ -115,8 +115,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
-				if self._dev:
-					self._dev.close()
 				continue
 
 			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF.value, False)
