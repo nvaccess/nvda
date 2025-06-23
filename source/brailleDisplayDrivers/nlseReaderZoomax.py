@@ -172,7 +172,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise TypeError(typeErrorString.format("command", "bytes", type(command).__name__))
 
 		# doubling the escape characters in the data (arg) part
-		# as requried by the device communication protocol
+		# as required by the device communication protocol
 		arg = arg.replace(COMMUNICATION_ESCAPE_BYTE, COMMUNICATION_ESCAPE_BYTE * 2)
 
 		data = b"".join(
