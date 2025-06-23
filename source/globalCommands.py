@@ -3454,6 +3454,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onAddonStoreSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to Windows OCR settings command.
+		description=_("Shows NVDA's Windows OCR settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateWindowsOCRSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onUwpOcrCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to Advanced settings command.
 		description=_("Shows NVDA's Advanced settings"),
 		category=SCRCAT_CONFIG,
