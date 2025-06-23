@@ -38,7 +38,7 @@ def getObjectPosition(obj):
 				pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 			except (NotImplementedError, RuntimeError):
 				log.debugWarning(
-					"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+					f"{obj.TextInfo} does not support POSITION_FIRST, falling back to NVDAObjectTextInfo",
 				)
 				# First position not supported either, return first position from a generic NVDAObjectTextInfo
 				isNavigable = False
