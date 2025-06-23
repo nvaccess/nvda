@@ -1,6 +1,6 @@
 !include "fileFunc.nsh"
 !include "LogicLib.nsh"
-!include "mui2.nsh"
+!include "MUI2.nsh"
 
 !define launcher_appExe "nvdaLauncher.exe"
 !define MUI_ICON ..\source\images\nvda.ico
