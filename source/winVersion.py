@@ -83,6 +83,7 @@ class WinVersion(object):
 		major: int = 0,
 		minor: int = 0,
 		build: int = 0,
+		revision: int = 0,
 		releaseName: str | None = None,
 		servicePack: str = "",
 		productType: str = "",
@@ -91,6 +92,7 @@ class WinVersion(object):
 		self.major = major
 		self.minor = minor
 		self.build = build
+		self.revision= revision
 		if releaseName:
 			self.releaseName = releaseName
 		else:
@@ -126,7 +128,7 @@ class WinVersion(object):
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
-		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
+		winVersionText.append(f"({self.major}.{self.minor}.{self.build}.{self.revision})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
