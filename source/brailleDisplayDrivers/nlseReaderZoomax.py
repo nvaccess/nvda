@@ -22,6 +22,7 @@ TIMEOUT_BETWEEN_RETRIES_SEC = 2
 
 COMMUNICATION_ESCAPE_BYTE = b"\x1b"
 """ """
+""" """
 
 
 class DeviceCommand(bytes, Enum):
