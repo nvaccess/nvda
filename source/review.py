@@ -5,6 +5,7 @@
 
 from typing import (
 	Optional,
+	Tuple,
 	Union,
 )
 
@@ -20,13 +21,11 @@ import textInfos
 import config
 
 
-def getObjectPosition(obj):
+def getObjectPosition(obj: NVDAObject) -> Optional[Tuple[textInfos.TextInfo, ScriptableObject]]:
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object.
 	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
 	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
-	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	isNavigable: bool = obj._hasNavigableText
 	if isNavigable:
