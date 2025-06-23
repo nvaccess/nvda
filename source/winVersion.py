@@ -188,10 +188,17 @@ def getWinVer():
 			releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
 	except RuntimeError:
 		releaseName = None
+	# #18266: ask Windows Registry for update build revision (UBR).
+	# UBR is updated whenever cumulative updates are applied.
+	with winreg.OpenKey(
+		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+	) as currentVersion:
+		buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
+		revision=buildRevision,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
