@@ -48,6 +48,7 @@ from .nvdaControls import _ContinueCancelDialog
 from .exit import ExitDialog
 from .settingsDialogs import (
 	AudioPanel,
+	VisionSettingsPanel,
 	BrailleDisplaySelectionDialog,
 	BrailleSettingsPanel,
 	BrowseModePanel,
@@ -343,6 +344,11 @@ class MainFrame(wx.Frame):
 	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
+	def onVisionSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, VisionSettingsPanel)
+	
+		
+	
 	def onKeyboardSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
