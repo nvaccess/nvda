@@ -18,11 +18,11 @@ from logHandler import log
 TIMEOUT_SEC = 0.2
 BAUD_RATE = 19200
 CONNECT_RETRIES = 5
-TIMEOUT_BETWEEN_RETRIES_SEC = 2
 
 COMMUNICATION_ESCAPE_BYTE = b"\x1b"
-""" """
-""" """
+""" The device communication protocol is escape ASCII character based.
+So each command starts with the escape character.
+When part of the command payload, the escape character is duplicated. """
 
 
 class DeviceCommand(bytes, Enum):
@@ -115,7 +115,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					onReceive=self._onReceive,
 				)
 			except EnvironmentError:
-				log.debugWarning("", exc_info=True)
+				log.debugWarning("Port not yet available.", exc_info=True)
 				continue
 
 			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF.value, False)
@@ -138,14 +138,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.info("Initializing nlseReaderZoomax driver")
 		super().__init__()
 		self.numCells = 0
-		self._deviceID: str | None = None
 		self._dev = None
 
-		for i in range(CONNECT_RETRIES):
-			if self._connect(port):
-				break
-			else:
-				time.sleep(TIMEOUT_BETWEEN_RETRIES_SEC)
+		if not self._connect(port):
+			raise RuntimeError("Could not connect to device")
 
 		self._keysDown: dict[bytes, bytes] = {}
 		self._ignoreKeyReleases = False
@@ -199,12 +195,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _handleResponse(self, command: bytes, arg: bytes):
 		if command == DeviceCommand.DISPLAY_DATA:
 			self.numCells = ord(arg)
-		elif command == DeviceCommand.DEVICE_ID:
-			# Short ids can be padded with either nulls or spaces.
-			arg = arg.rstrip(b"\0 ")
-			# Assumption: all device IDs can be decoded with latin-1.
-			# If not, we wish to know about it, allow decode to raise.
-			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in COMMAND_RESPONSE_INFO:
 			arg = int.from_bytes(reversed(arg))
 			if arg < self._keysDown.get(command, 0):
@@ -212,7 +202,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if not self._ignoreKeyReleases:
 					# The first key released executes the key combination.
 					try:
-						inputCore.manager.executeGesture(InputGesture(self._deviceID, self._keysDown))
+						inputCore.manager.executeGesture(InputGesture(self._keysDown))
 					except inputCore.NoInputGestureAction:
 						pass
 					# Any further releases are just the rest of the keys in the combination being released,
@@ -257,12 +247,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model: str, keysDown: dict[bytes, bytes]):
+	def __init__(self, keysDown: dict[bytes, bytes]):
 		super().__init__()
-		# Model identifiers should not contain spaces.
-		if model:
-			self.model = model.replace(" ", "")
-			assert self.model.isalnum()
 		self.keysDown = keysDown
 
 		SYSTEM_KEYS_MASK = 0xF8
