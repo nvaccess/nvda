@@ -525,7 +525,7 @@ requires-dist = [
 dev = [
     { name = "nvda-misc-deps", editable = "miscDeps" },
     { name = "py2exe", specifier = "==0.13.0.2" },
-    { name = "scons", specifier = "==4.8.1" },
+    { name = "scons", specifier = "==4.9.1" },
     { name = "setuptools", specifier = "~=72.0" },
 ]
 dev-docs = [
@@ -883,11 +883,11 @@ wheels = [
 
 [[package]]
 name = "scons"
-version = "4.8.1"
+version = "4.9.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b9/76/a2c1293642f9a448f2d012cabf525be69ca5abf4af289bc0935ac1554ee8/scons-4.8.1.tar.gz", hash = "sha256:5b641357904d2f56f7bfdbb37e165ab996b6143c948b9df0efc7305f54949daa", size = 3244174, upload-time = "2024-09-04T01:07:24.321Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c8/c1/30176c76c1ef723fab62e5cdb15d3c972427a146cb6f868748613d7b25af/scons-4.9.1.tar.gz", hash = "sha256:bacac880ba2e86d6a156c116e2f8f2bfa82b257046f3ac2666c85c53c615c338", size = 3252106, upload-time = "2025-03-27T20:42:19.765Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/a7/823091100c88d7d992c8c608d82a88ed59e227d13f8ccb33ea7a96d43d51/SCons-4.8.1-py3-none-any.whl", hash = "sha256:a4c3b434330e2d7d975002fd6783284ba348bf394db94c8f83fdc5bf69cdb8d7", size = 4123564, upload-time = "2024-09-04T01:07:20.877Z" },
+    { url = "https://files.pythonhosted.org/packages/45/92/50b739021983b131dcacd57aa8b04d31c5acc2e7e0eb4ed4a362f438c6b7/scons-4.9.1-py3-none-any.whl", hash = "sha256:d2db1a22eb6039e97cbbb0106f18f435af033d0aad190299c9688378e2810a5e", size = 4131331, upload-time = "2025-03-27T20:42:16.665Z" },
 ]
 
 [[package]]
@@ -1091,13 +1091,13 @@ wheels = [
 
 [[package]]
 name = "uv"
-version = "0.6.14"
+version = "0.7.9"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e5/eb/07bc000a3c05372448b63c45da98630c532ec4e059d848488c3e774d017a/uv-0.6.14.tar.gz", hash = "sha256:a117466f307d164a74444949cc94ec4328ec880fb489cbaa7df324dab14c5c98", size = 3134567, upload-time = "2025-04-09T21:57:01.113Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/7c/8621d5928111f985196dc75c50a64147b3bad39f36164686f24d45581367/uv-0.7.9.tar.gz", hash = "sha256:baac54e49f3b0d05ee83f534fdcb27b91d2923c585bf349a1532ca25d62c216f", size = 3272882, upload-time = "2025-05-30T19:54:33.003Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d8/fe/087d5193603e16bc5f67556d94cf8fa8634785c5863cccdec825f14e9a4c/uv-0.6.14-py3-none-win32.whl", hash = "sha256:7cdf3c8d927b07d4eaffc44809eb57523d449705f10dabbdd6f34f7bdfc7d5fe", size = 16131231, upload-time = "2025-04-09T21:56:52.117Z" },
-    { url = "https://files.pythonhosted.org/packages/40/17/33c5c1503c35c874932d4a21ec10a55051e3695dba12b7de700bcfad0cca/uv-0.6.14-py3-none-win_amd64.whl", hash = "sha256:012f46bef6909209c4a6749e4019eb755ba762d37d7ceaaf76da9cb4b7f771e9", size = 17628508, upload-time = "2025-04-09T21:56:55.444Z" },
-    { url = "https://files.pythonhosted.org/packages/77/09/163062d439ddc0d89e527ae0e631abf1f7781b183442d8823c48af368f5d/uv-0.6.14-py3-none-win_arm64.whl", hash = "sha256:7465081b4d0b213d0055ccb48de7fe546b5cf0853c6d3601115760760634f6d8", size = 16387232, upload-time = "2025-04-09T21:56:58.872Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/2e/e35b2c5669533075987e1d74da45af891890ae5faee031f90997ed81cada/uv-0.7.9-py3-none-win32.whl", hash = "sha256:298e9b3c65742edcb3097c2cf3f62ec847df174a7c62c85fe139dddaa1b9ab65", size = 17121149, upload-time = "2025-05-30T19:54:23.608Z" },
+    { url = "https://files.pythonhosted.org/packages/33/8e/d10425711156d0d5d9a28299950acb3ab4a3987b3150a3c871ac95ce2fdd/uv-0.7.9-py3-none-win_amd64.whl", hash = "sha256:82d76ea988ff1347158c6de46a571b1db7d344219e452bd7b3339c21ec37cfd8", size = 18622895, upload-time = "2025-05-30T19:54:27.427Z" },
+    { url = "https://files.pythonhosted.org/packages/72/77/cac29a8fb608b5613b7a0863ec6bd7c2517f3a80b94c419e9d890c12257e/uv-0.7.9-py3-none-win_arm64.whl", hash = "sha256:4d419bcc3138fd787ce77305f1a09e2a984766e0804c6e5a2b54adfa55d2439a", size = 17316542, upload-time = "2025-05-30T19:54:30.697Z" },
 ]
 
 [[package]]

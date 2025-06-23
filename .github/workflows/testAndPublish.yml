@@ -55,7 +55,7 @@ jobs:
         python-version: '3.11'
         architecture: x86
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -94,11 +94,11 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: makePot results
@@ -118,7 +118,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -134,23 +134,23 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       # Junit reports fail on these
       shell: bash
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: Unit tests results
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ success() || failure() }}
+      if: ${{ failure() }}
       with:
         check_name: Unit tests
         detailed_summary: true
@@ -173,7 +173,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
@@ -192,7 +192,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -249,7 +249,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Get NVDA launcher
       id: getLauncher
       uses: actions/download-artifact@v4
@@ -309,7 +309,7 @@ jobs:
         path: output/symbols.zip
     - name: Install the latest version of uv
       if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
     - name: Upload symbols to Mozilla
       if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
       continue-on-error: true

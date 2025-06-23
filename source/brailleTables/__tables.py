@@ -253,7 +253,13 @@ addTable("grc-international-en-composed.utb", _("Greek international braille (si
 addTable("grc-international-es.utb", _("Spanish for Greek text"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hbo.utb", _("Hebrew (Biblical) grade 1"))
+addTable("hbo.utb", _("Hebrew (Biblical) IHBC"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("hbo-cantillated.utb", _("Hebrew (Biblical) full cantillation"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("hbo-slim.utb", _("Hebrew (Biblical) Slim"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he-IL.utb", _("Israeli grade 1"))
@@ -352,7 +358,7 @@ addTable("lo-g1.utb", _("Lao Grade 1"))
 addTable("lg-ug-g1.utb", _("Luganda literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("lt.ctb", _("Lithuanian 8 dot"))
+addTable("lt-8dot.utb", _("Lithuanian 8 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("lt-6dot.utb", _("Lithuanian 6 dot"), inputForLangs={"lt"}, outputForLangs={"lt"})
@@ -453,7 +459,10 @@ addTable("ro-g0.utb", _("Romanian 6 dot"), inputForLangs={"ro"}, outputForLangs=
 addTable("ro.ctb", _("Romanian"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru.ctb", _("Russian computer braille"))
+addTable("ru-comp6.utb", _("Russian 6 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ru-comp8.utb", _("Russian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ru-litbrl.ctb", _("Russian literary braille"), inputForLangs={"ru"}, outputForLangs={"ru"})
@@ -547,6 +556,9 @@ addTable("th-g0.utb", _("Thai grade 0"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("th-g1.utb", _("Thai grade 1"), input=False, contracted=True, outputForLangs={"th"})
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("th-g2.ctb", _("Thai grade 2"), input=False, contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tr.ctb", _("Turkish grade 1"), inputForLangs={"tr"}, outputForLangs={"tr"})

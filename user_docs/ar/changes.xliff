@@ -5459,9 +5459,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</source>
-        <target>New commands have been added to manually refresh an OCR result, and to toggle periodically refreshing OCR results.</target>
+        <target>أُضيفت أوامر جديدة لتحديث نتيجة التعرُّف على المحتوى (OCR) يدويا، وللتبديل بين تفعيل وتعطيل التحديث التلقائي باستمرار لنتيجة التعرف على المحتوى.</target>
       </segment>
     </unit>
     <unit id="20963f36-9dbc-442d-94cc-1034306850a5">
@@ -5861,8 +5861,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)</source>
-        <target>في Word، عند تنفيذ أمر "قراءة الكائن المحدد (حيثُ مؤشّر النظام)" سيُعلَن عن تخطيط العرض المختار حاليا، إن كانت هذه المعلومة متوفرةً وكان أمر الإعلان عن وصف الكائن مفعَّلاً. 
-#15088, @nvdaes)</target>
+        <target>في Word، عند تنفيذ أمر "قراءة الكائن المحدد (حيثُ مؤشّر النظام)" سيُعلَن عن تخطيط العرض المختار حاليا، إن كانت هذه المعلومة متوفرةً وكان أمر الإعلان عن وصف الكائن مفعَّلاً. (#15088, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="e9a4a07d-5a69-4caf-a524-06340cf10b91">
@@ -6527,9 +6526,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 137</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed an issue where some USB braille displays were not properly detected by NVDA. (#18114, @christiancomaschi)</source>
-        <target>Fixed an issue where some USB braille displays were not properly detected by NVDA. (#18114, @christiancomaschi)</target>
+        <target>إصلاح مشكلة عدم اكتشاف NVDA لبعض شاشات برايل عند وصلها عبر USB. (#18114, @christiancomaschi)</target>
       </segment>
     </unit>
     <unit id="366e7f76-c067-4311-a3b2-6abc79869852">
@@ -7615,7 +7614,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 253</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Additionally, the method signature of its `__init__` has changed as follows:</source>
         <target>  Additionally, the method signature of its `__init__` has changed as follows:</target>
       </segment>
@@ -7625,7 +7624,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 254</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `outputDevice` parameter should now only be passed string arguments.</source>
         <target>The `outputDevice` parameter should now only be passed string arguments.</target>
       </segment>
@@ -7635,7 +7634,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 255</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</source>
         <target>The deprecated `closeWhenIdle` and `buffered` parameters have been removed.</target>
       </segment>
@@ -7949,7 +7948,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 287</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use `config.conf["documentFormatting"]["fontAttributeReporting"]` instead. (#18066)</source>
         <target>`config.conf["documentFormatting"]["reportFontAttributes"]` has been removed, use `config.conf["documentFormatting"]["fontAttributeReporting"]` instead. (#18066)</target>
       </segment>
@@ -7959,7 +7958,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 288</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`config.conf["speech"]["includeCLDR"]` has been removed, check/modify whether `config.conf["speech"]["symbolDictionaries"]` contains `"cldr"` instead. (#18066)</source>
         <target>`config.conf["speech"]["includeCLDR"]` has been removed, check/modify whether `config.conf["speech"]["symbolDictionaries"]` contains `"cldr"` instead. (#18066)</target>
       </segment>
