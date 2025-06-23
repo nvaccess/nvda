@@ -225,7 +225,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._keysDown[command] = arg
 			elif command in self._keysDown:
 				# All keys in this group have been released.
-				# #3541: Remove this group so it doesn't count as a group with keys down.
+				# Remove this group so it doesn't count as a group with keys down.
 				del self._keysDown[command]
 		else:
 			log.debugWarning(f"Unknown command {command!r}, arg {arg!r}")
