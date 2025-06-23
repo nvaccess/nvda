@@ -348,9 +348,7 @@ class MainFrame(wx.Frame):
 
 	def onVisionSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, VisionSettingsPanel)
-	
-		
-	
+
 	def onKeyboardSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
