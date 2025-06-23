@@ -92,7 +92,7 @@ class WinVersion(object):
 		self.major = major
 		self.minor = minor
 		self.build = build
-		self.revision= revision
+		self.revision = revision
 		if releaseName:
 			self.releaseName = releaseName
 		else:
@@ -191,7 +191,8 @@ def getWinVer():
 	# #18266: ask Windows Registry for update build revision (UBR).
 	# UBR is updated whenever cumulative updates are applied.
 	with winreg.OpenKey(
-		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+		winreg.HKEY_LOCAL_MACHINE,
+		r"Software\Microsoft\Windows NT\CurrentVersion",
 	) as currentVersion:
 		buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
 	return WinVersion(
