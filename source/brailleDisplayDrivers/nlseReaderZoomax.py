@@ -114,7 +114,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					onReceive=self._onReceive,
 				)
 			except EnvironmentError:
-				log.info("Port not yet available.")
 				log.debugWarning("", exc_info=True)
 				if self._dev:
 					self._dev.close()
