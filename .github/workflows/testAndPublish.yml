@@ -170,6 +170,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
+      if: ${{ env.feature_crowdinSync }}
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
       if: ${{ env.feature_crowdinSync }}
