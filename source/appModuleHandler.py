@@ -783,7 +783,7 @@ class AppModule(baseObject.ScriptableObject):
 		Returning ``True`` means that the event will be processed, but it might still
 		be rejected later; e.g. because it isn't native UIA, because
 		shouldAcceptEvent returns False, etc.
-		
+
 		:param sender: UIA element raising the notification event.
 		:param NotificationKind: notification kind such as activity completion.
 		:param NotificationProcessing: how NVDA should process notifications such as canceling speech.
