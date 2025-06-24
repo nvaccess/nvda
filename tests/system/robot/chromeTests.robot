@@ -181,3 +181,6 @@ Report language without dialects
 Report not supported language without other languages
 	[Documentation]	Read a sentence with different languages without reporting supported ones.
 	test_reportNotSupportedLanguageWithoutOtherLanguages
+Report not supported language and other languages
+	[Documentation]	Read a sentence with different languages reporting them, included the not supported language.
+	test_reportNotSupportedLanguageAndOtherLanguages

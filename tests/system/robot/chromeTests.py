@@ -3001,3 +3001,40 @@ def test_reportNotSupportedLanguageWithoutOtherLanguages():
 			),
 		),
 	)
+
+
+def test_reportNotSupportedLanguageAndOtherLanguages():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+		],
+	)
+
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown (not supported)",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
+	)
