@@ -1,6 +1,7 @@
 !include "MUI2.nsh"
 
 !define appName "NVDA"
+!define MUI_UNICON ..\source\images\nvda.ico
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${appName}"
