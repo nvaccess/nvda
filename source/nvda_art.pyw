@@ -591,6 +591,11 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 
 	global artRuntime
 	artRuntime = ARTRuntime(addon_spec)  # Pass addon spec to runtime
+	
+	# Register the runtime instance with art.runtime for clean API access
+	import art.runtime
+	art.runtime.setRuntime(artRuntime)
+	
 	return artRuntime.start()
 
 
