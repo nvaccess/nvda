@@ -259,15 +259,22 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentLine(self, gesture):
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
+		isNavigable: bool = False
 		if (
 			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
 			and not treeInterceptor.passThrough
 		):
 			obj = treeInterceptor
-		try:
-			info = obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			isNavigable = True
+		else:
+			isNavigable = obj._hasNavigableText
+		if isNavigable:
+			try:
+				info = obj.makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
+				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+		else:
+			info = NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:
@@ -3359,6 +3366,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onAudioSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to vision settings command.
+		description=_("Shows NVDA's vision settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateVisionSettingsDialog(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onVisionSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to keyboard settings command.
 		description=_("Shows NVDA's keyboard settings"),
 		category=SCRCAT_CONFIG,
@@ -3434,6 +3450,33 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Add-on Store settings command.
+		description=_("Shows NVDA's Add-on Store settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAddonStoreSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onAddonStoreSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Windows OCR settings command.
+		description=_("Shows NVDA's Windows OCR settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateWindowsOCRSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onUwpOcrCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Advanced settings command.
+		description=_("Shows NVDA's Advanced settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAdvancedSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onAdvancedSettingsCommand, None)
 
 	@script(
 		# Translators: Input help mode message for opening default dictionary dialog.

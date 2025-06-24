@@ -8,6 +8,7 @@
 
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
 * In Windows 11 2024 Update and Server 2025 and later, NVDA will announce foreground window states such as restore, maximize, and snap when changing window position by pressing `windows+arrow` keys. (#17841, #18175, @josephsl)
+* Unassigned commands have been added to open the NVDA settings dialog in the following categories: Vision, Windows OCR, Add-on Store and Advanced. (#18313, @CyrilleB79)
 
 ### Changes
 
@@ -34,6 +35,9 @@
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
+* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
+* In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
+* It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
 
 ### Changes for Developers
 
@@ -51,8 +55,25 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
+* NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
 
 #### Deprecations
+
+## 2025.1.2
+
+This is a patch release to fix a bug.
+
+### Bug fixes
+
+* Certain Microsoft Word versions before version 16.0.18226 will no longer crash on opening. (#18280)
+
+## 2025.1.1
+
+This is a patch release to fix a bug.
+
+### Bug fixes
+
+* Fixed bug where the Add-on Store would not open when using the Korean language for the NVDA interface. (#18250)
 
 ## 2025.1
 
