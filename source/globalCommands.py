@@ -31,6 +31,7 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
+	languageHandling,
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
@@ -69,6 +70,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
 
@@ -259,15 +261,22 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentLine(self, gesture):
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
+		isNavigable: bool = False
 		if (
 			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
 			and not treeInterceptor.passThrough
 		):
 			obj = treeInterceptor
-		try:
-			info = obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			isNavigable = True
+		else:
+			isNavigable = obj._hasNavigableText
+		if isNavigable:
+			try:
+				info = obj.makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
+				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+		else:
+			info = NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:
@@ -2323,7 +2332,7 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if config.conf["speech"]["autoLanguageSwitching"]:
+		if languageHandling.shouldMakeLangChangeCommand():
 			for field in info.getTextWithFields({}):
 				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 					curLanguage = field.field.get("language")
@@ -3359,6 +3368,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onAudioSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to vision settings command.
+		description=_("Shows NVDA's vision settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateVisionSettingsDialog(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onVisionSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to keyboard settings command.
 		description=_("Shows NVDA's keyboard settings"),
 		category=SCRCAT_CONFIG,
@@ -3434,6 +3452,33 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Add-on Store settings command.
+		description=_("Shows NVDA's Add-on Store settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAddonStoreSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onAddonStoreSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Windows OCR settings command.
+		description=_("Shows NVDA's Windows OCR settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateWindowsOCRSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onUwpOcrCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Advanced settings command.
+		description=_("Shows NVDA's Advanced settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAdvancedSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onAdvancedSettingsCommand, None)
 
 	@script(
 		# Translators: Input help mode message for opening default dictionary dialog.
@@ -4886,6 +4931,43 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=pgettext(
+			"reportLanguage",
+			# Translators: Input help mode message for report language for caret command.
+			"Reports the language for the text under the caret. "
+			"If pressed twice, presents the information in browse mode",
+		),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
+	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
+		info = self._getTIAtCaret()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		langToReport = languageHandling.getLangToReport(curLanguage)
+		languageDescription = languageHandler.getLanguageDescription(langToReport)
+		if languageDescription is None:
+			languageDescription = langToReport
+		message = languageDescription
+		if languageHandling.shouldReportNotSupported():
+			curSynth = synthDriverHandler.getSynth()
+			if not curSynth.languageIsSupported(langToReport):
+				message = pgettext(
+					"reportLanguage",
+					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+					"{languageDescription} (not supported)",
+				).format(
+					languageDescription=languageDescription,
+				)
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(message)
+		elif repeats == 1:
+			# Translators: title for report caret language dialog.
+			title = pgettext("reportLanguage", "Language at caret position")
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
 
 	@script(
 		# Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
