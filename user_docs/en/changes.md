@@ -14,9 +14,11 @@ When UIA is enabled, redundant table end markers are no longer brailled when the
 On Windows 11, NVDA will no longer announce emoji panel items twice while browsing them.
 Performance and reliability in the Start Menu on Windows 11 24H2 has been improved.
 
+Options have been added to report the language of the text being read, and report when the text language is not supported by the current synthesizer.
+
 LibLouis has been updated, adding new Biblical Hebrew, Russian 6 dot computer braille and Thai Grade 2 braille tables.
 
-There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, and HumanWare Monarch support.
+There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, Google Chrome, and HumanWare Monarch support.
 
 ### New Features
 
