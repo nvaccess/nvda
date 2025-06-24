@@ -4,10 +4,12 @@
 # See the file COPYING for more details.
 
 import json
+import queue
 import subprocess
+import sys
 import threading
 from pathlib import Path
-from typing import TYPE_CHECKING, Dict, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 import Pyro5.api
 from logHandler import log
@@ -23,6 +25,36 @@ from .core.services.ui import UIService
 
 if TYPE_CHECKING:
 	from .services.extensionPoints import ExtensionPointProxy
+
+
+def _readLineWithTimeout(pipe, timeout_seconds: float) -> Optional[str]:
+	"""
+	Reads a single line from a pipe with a timeout.
+	Returns the line as string, or None if timeout or EOF is reached.
+	Cross-platform solution that works on Windows.
+	"""
+	q: queue.Queue[Optional[bytes]] = queue.Queue()
+
+	def readerThread(pipe, q):
+		try:
+			line = pipe.readline()
+			q.put(line)
+		except Exception:
+			q.put(None)
+
+	thread = threading.Thread(target=readerThread, args=(pipe, q), name="ARTHandshakeReader")
+	thread.daemon = True
+	thread.start()
+
+	try:
+		result = q.get(timeout=timeout_seconds)
+		if result:
+			return result.decode("utf-8")
+		return None
+	except queue.Empty:
+		# Timeout occurred
+		return None
+
 
 # Global ART manager instance
 _artManager: Optional["ARTManager"] = None
@@ -41,10 +73,9 @@ def setARTManager(manager: Optional["ARTManager"]) -> None:
 
 ART_CONFIG = ProcessConfig(
 	name="NVDA ART",
-	sourceScriptPath=Path("nvda_art.pyw"),
-	builtExeName="nvda_art.pyw",
+	sourceScriptPath=Path("../source/nvda_art.pyw"),
+	builtExeName="nvda_art.exe",
 	popenFlags={
-		"creationflags": subprocess.CREATE_NO_WINDOW,
 		"bufsize": 0,
 		"stdin": subprocess.PIPE,
 		"stdout": subprocess.PIPE,
@@ -78,10 +109,15 @@ class ARTAddonProcess:
 
 	def _startProcessWithHandshake(self):
 		"""Start ART process and perform JSON handshake."""
+		log.debug(f"Starting ART subprocess for {self.addon_name}")
 		self.subprocessManager.ensureProcessRunning()
 
 		if not self.subprocessManager.subprocess:
 			raise RuntimeError(f"Failed to start ART subprocess for {self.addon_name}")
+
+		# Log subprocess details
+		log.info(f"ART subprocess started for {self.addon_name}: PID={self.subprocessManager.subprocess.pid}")
+		log.debug(f"ART subprocess command line: {self.subprocessManager.subprocess.args}")
 
 		# Send startup data
 		startup_data = {
@@ -93,12 +129,35 @@ class ARTAddonProcess:
 		}
 
 		startup_json = json.dumps(startup_data) + "\n"
+		log.debug(f"Sending ART handshake data to {self.addon_name}: {startup_json.strip()}")
 		self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
 		self.subprocessManager.subprocess.stdin.flush()
 
-		# Read response
-		response_line = self.subprocessManager.subprocess.stdout.readline().decode("utf-8")
-		response_data = json.loads(response_line.strip())
+		# Read response with timeout to prevent indefinite hang
+		log.debug(f"Waiting for handshake response from {self.addon_name} (10s timeout)")
+		response_line = _readLineWithTimeout(self.subprocessManager.subprocess.stdout, 10.0)
+
+		if response_line is None:
+			# Timeout or EOF occurred - process failed or hung
+			# Check if process is still running
+			poll_result = self.subprocessManager.subprocess.poll()
+			if poll_result is not None:
+				log.error(f"ART process {self.addon_name} exited with code {poll_result} before handshake")
+			else:
+				log.error(
+					f"ART process handshake timed out for {self.addon_name}. Process still running but not responding."
+				)
+			self.subprocessManager.terminate()
+			raise RuntimeError(f"ART handshake timeout for {self.addon_name}")
+
+		log.debug(f"Received ART handshake response from {self.addon_name}: {response_line.strip()}")
+
+		try:
+			response_data = json.loads(response_line.strip())
+		except json.JSONDecodeError as e:
+			log.error(f"Failed to decode ART handshake response from {self.addon_name}: {response_line!r}")
+			self.subprocessManager.terminate()
+			raise RuntimeError(f"Invalid ART handshake response: {e}")
 
 		if response_data.get("status") == "ready":
 			self._connectToARTServices(response_data.get("art_services", {}))
@@ -150,6 +209,7 @@ class ARTManager:
 		self.uiService = None  # Will be initialized in _registerCoreServices
 		self.speechService: Optional[SpeechService] = None
 		self._shutdownEvent = threading.Event()
+		self._coreServiceURIs: Dict[str, str] = {}
 
 	def start(self):
 		"""Start the ART manager and register core services."""
@@ -179,7 +239,16 @@ class ARTManager:
 		nvwave_uri = self.coreDaemon.register(self.nvwaveService, "nvda.core.nvwave")
 		language_uri = self.coreDaemon.register(self.languageHandlerService, "nvda.core.language")
 		ui_uri = self.coreDaemon.register(self.uiService, "nvda.core.ui")
-		speech_uri = self.coreDaemon.register(self.speechService, "nvda.core.speech")  # Add this line
+		speech_uri = self.coreDaemon.register(self.speechService, "nvda.core.speech")
+
+		# Store URIs for later retrieval
+		self._coreServiceURIs["config"] = str(config_uri)
+		self._coreServiceURIs["logging"] = str(logging_uri)
+		self._coreServiceURIs["globalvars"] = str(globalvars_uri)
+		self._coreServiceURIs["nvwave"] = str(nvwave_uri)
+		self._coreServiceURIs["language"] = str(language_uri)
+		self._coreServiceURIs["ui"] = str(ui_uri)
+		self._coreServiceURIs["speech"] = str(speech_uri)
 
 		log.info(f"ConfigService registered at: {config_uri}")
 		log.info(f"LoggingService registered at: {logging_uri}")
@@ -201,13 +270,7 @@ class ARTManager:
 
 	def _getCoreServiceURIs(self) -> Dict[str, str]:
 		"""Get URIs for all registered core services."""
-		uris = {}
-		for obj_id, (obj, _) in self.coreDaemon.objectsById.items():
-			if obj_id.startswith("nvda.core."):
-				service_name = obj_id.split(".", 2)[2]
-				uri = f"PYRO:{obj_id}@{self.coreDaemon.locationStr.split('@')[1]}"
-				uris[service_name] = uri
-		return uris
+		return self._coreServiceURIs.copy()
 
 	def startAddonProcess(self, addon_spec: dict) -> bool:
 		"""Start an ART process for a specific addon."""
@@ -267,3 +330,49 @@ class ARTManager:
 		"""Check if an addon's ART process is running."""
 		process = self.addonProcesses.get(addon_name)
 		return process is not None and process.subprocessManager.isRunning()
+
+	def getAvailableSynthList(self) -> List[Tuple[str, str]]:
+		"""Get list of available ART synthesizers.
+
+		@return: List of (name, description) tuples for ART synths
+		"""
+		log.debug("ARTManager.getAvailableSynthList() called")
+		synth_list = []
+
+		# Scan sys.modules for ART-generated synthesizer proxy modules
+		log.debug(f"Scanning {len(sys.modules)} modules for ART synth proxies")
+		art_proxy_modules = []
+		for module_name, module in sys.modules.copy().items():
+			if module_name.startswith("synthDrivers.") and hasattr(module, "SynthDriver"):
+				synth_name = module_name.split(".", 1)[1]  # Remove "synthDrivers." prefix
+				synth_class = module.SynthDriver
+				log.debug(f"Found synthDrivers module: {module_name}, class: {synth_class}")
+
+				# Check if this is an ART proxy synthesizer
+				if hasattr(synth_class, "_artAddonName") and hasattr(synth_class, "_artSynthName"):
+					art_proxy_modules.append(module_name)
+					log.debug(f"Found ART proxy synth: {synth_name} from addon {synth_class._artAddonName}")
+					
+					# Verify the addon is still running
+					addon_running = self.isAddonRunning(synth_class._artAddonName)
+					log.debug(f"Addon {synth_class._artAddonName} running: {addon_running}")
+					if addon_running:
+						try:
+							# Use the class check() method to verify availability
+							check_result = synth_class.check()
+							log.debug(f"Synth {synth_name} check() result: {check_result}")
+							if check_result:
+								description = getattr(synth_class, "description", synth_name)
+								synth_list.append((synth_name, description))
+								log.debug(f"Added {synth_name} to available synth list")
+							else:
+								log.debug(f"ART synth {synth_name} failed check(), excluding from list")
+						except Exception:
+							# If check() fails, skip this synth
+							log.debug(f"ART synth {synth_name} failed check() with exception, excluding from list", exc_info=True)
+					else:
+						log.debug(f"ART synth {synth_name} excluded - addon not running")
+
+		log.debug(f"Found {len(art_proxy_modules)} ART proxy modules: {art_proxy_modules}")
+		log.debug(f"Returning {len(synth_list)} available ART synths: {synth_list}")
+		return synth_list

@@ -718,6 +718,15 @@ def main():
 
 	log.debug("initializing nvwave")
 	nvwave.initialize()
+	# Initialize ART Manager (Add-on Runtime)
+	try:
+		from art.manager import ARTManager
+		log.debug("Initializing ART Manager")
+		artManager = ARTManager()
+		artManager.start()
+		log.info("ART Manager initialized")
+	except Exception:
+		log.error("Failed to initialize ART Manager", exc_info=True)
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
@@ -1089,6 +1098,15 @@ def main():
 	_terminate(characterProcessing)
 	_terminate(bdDetect)
 	_terminate(hwIo)
+	# Terminate ART Manager before addon handler
+	try:
+		from art.manager import getARTManager
+		artManager = getARTManager()
+		if artManager:
+			log.debug("Terminating ART Manager")
+			artManager.stop()
+	except Exception:
+		log.error("Error terminating ART Manager", exc_info=True)
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
