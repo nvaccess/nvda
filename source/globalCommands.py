@@ -3364,7 +3364,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateVisionSettingsDialog(self, gesture):
+	def script_activateVisionSettingsDialog(self, gesture: "inputCore.InputGesture"):
 		wx.CallAfter(gui.mainFrame.onVisionSettingsCommand, None)
 
 	@script(

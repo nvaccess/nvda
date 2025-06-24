@@ -374,7 +374,7 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
-	def onAddonStoreSettingsCommand(self, evt):
+	def onAddonStoreSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AddonStorePanel)
 
 	def onUwpOcrCommand(self, evt):
@@ -385,7 +385,7 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
-	def onAdvancedSettingsCommand(self, evt):
+	def onAdvancedSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AdvancedPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
