@@ -575,8 +575,8 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return super().shouldProcessUIANotificationEvent(
 			sender,
-			notificationKind=NotificationKind,
-			notificationProcessing=NotificationProcessing,
+			notificationKind=notificationKind,
+			notificationProcessing=notificationProcessing,
 			displayString=displayString,
 			activityId=activityId,
 		)
