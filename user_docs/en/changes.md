@@ -12,6 +12,7 @@
     * Report if the language of the text being read is not supported.
   * A new unassigned command has been added to report the language of the text at the caret position.
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* Unassigned commands have been added to open the NVDA settings dialog in the following categories: Vision, Windows OCR, Add-on Store and Advanced. (#18313, @CyrilleB79)
 
 ### Changes
 
@@ -39,6 +40,8 @@
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 * It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
+* In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
+* It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
 
 ### Changes for Developers
 
@@ -60,8 +63,17 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
+* NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
 
 #### Deprecations
+
+## 2025.1.2
+
+This is a patch release to fix a bug.
+
+### Bug fixes
+
+* Certain Microsoft Word versions before version 16.0.18226 will no longer crash on opening. (#18280)
 
 ## 2025.1.1
 
