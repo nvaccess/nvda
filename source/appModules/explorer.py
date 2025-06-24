@@ -585,8 +585,8 @@ class AppModule(appModuleHandler.AppModule):
 		self,
 		obj: NVDAObject,
 		nextHandler: Callable[[], None],
-		NotificationKind: int | None = None,
-		NotificationProcessing: int | None = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
 		displayString: str = "",
 		activityId: str = "",
 	) -> None:
