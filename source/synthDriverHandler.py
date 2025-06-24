@@ -7,6 +7,7 @@
 from collections import OrderedDict
 import pkgutil
 import importlib
+import sys
 from typing import (
 	TYPE_CHECKING,
 )
@@ -444,7 +445,38 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 
+def _isARTSynth(name: str) -> bool:
+	"""Check if a synthesizer is managed by ART and has a proxy available.
+
+	@param name: The synthesizer name to check
+	@return: True if this is an ART synthesizer with available proxy
+	"""
+	module_name = f"synthDrivers.{name}"
+	if module_name in sys.modules:
+		module = sys.modules[module_name]
+		if hasattr(module, "SynthDriver"):
+			synth_class = module.SynthDriver
+			# Check if this is an ART proxy (has ART-specific attributes)
+			return hasattr(synth_class, "_artAddonName") and hasattr(synth_class, "_artSynthName")
+	return False
+
+
 def _getSynthDriver(name: str) -> type[SynthDriver]:
+	"""Get a synthesizer driver class by name.
+
+	Handles both regular synthesizers and ART synthesizers with proxy classes.
+
+	@param name: The synthesizer name
+	@return: The synthesizer driver class
+	"""
+	# Check if this is an ART synthesizer with existing proxy
+	if _isARTSynth(name):
+		log.debug(f"Loading ART synthesizer proxy for {name}")
+		module = sys.modules[f"synthDrivers.{name}"]
+		return module.SynthDriver
+
+	# Regular synthesizer - use normal import
+	log.debug(f"Loading regular synthesizer {name}")
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
@@ -472,7 +504,7 @@ def getSynthList() -> list[tuple[str, str]]:
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
 		except:  # noqa: E722 # Legacy bare except
 			log.error("", exc_info=True)
-	
+
 	# Add ART synthesizers to the list
 	try:
 		from art.manager import getARTManager
@@ -482,7 +514,7 @@ def getSynthList() -> list[tuple[str, str]]:
 			existingNames = {name for name, desc in synthList}
 			if lastSynth:
 				existingNames.add(lastSynth[0])
-			
+
 			artSynthList = artManager.getAvailableSynthList()
 			for name, description in artSynthList:
 				if name not in existingNames:
@@ -491,10 +523,10 @@ def getSynthList() -> list[tuple[str, str]]:
 					log.debugWarning(f"ART synth '{name}' conflicts with existing synth, skipping")
 	except Exception:
 		log.debugWarning("Failed to query ART synthesizers", exc_info=True)
-	
+
 	# Sort the list to include any added ART synths and maintain order
 	synthList.sort(key=lambda s: strxfrm(s[1]))
-	
+
 	if lastSynth:
 		synthList.append(lastSynth)
 	return synthList

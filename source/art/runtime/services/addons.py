@@ -7,6 +7,7 @@
 import importlib
 from importlib.machinery import SourceFileLoader
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import List
@@ -138,6 +139,21 @@ class AddOnLifecycleService:
 								self.logger.info(f"Found SynthDriver class in {module_name}")
 								synth_class = getattr(module, 'SynthDriver')
 								self.logger.debug(f"SynthDriver class: {synth_class}")
+								
+								# Instantiate the synthesizer to trigger registration (like NVDA does)
+								self.logger.debug(f"Instantiating SynthDriver from {module_name}")
+								self.logger.debug(f"SynthDriver class type: {type(synth_class)}")
+								self.logger.debug(f"SynthDriver class MRO: {synth_class.__mro__}")
+								self.logger.debug(f"SynthDriver class bases: {synth_class.__bases__}")
+								self.logger.debug(f"SynthDriver class module: {synth_class.__module__}")
+								try:
+									synth_instance = synth_class()
+									self.logger.info(f"Successfully instantiated SynthDriver: {module_name}")
+									
+									# Register the synthesizer with NVDA Core to generate proxy
+									self._registerSynthWithCore(synth_instance, module_name)
+								except Exception:
+									self.logger.exception(f"Failed to instantiate SynthDriver: {module_name}")
 							else:
 								self.logger.warning(f"No SynthDriver class found in {module_name}")
 					
@@ -152,6 +168,107 @@ class AddOnLifecycleService:
 						
 				except Exception:
 					self.logger.exception(f"Failed to load {plugin_dir_name} module: {module_name}")
+
+	def _registerSynthWithCore(self, synth_instance, module_name):
+		"""Register a synthesizer instance with NVDA Core to generate proxy."""
+		try:
+			self.logger.info(f"Registering synthesizer {module_name} with NVDA Core")
+			
+			# Get speech service URI from environment
+			speech_uri = os.environ.get("NVDA_ART_SPEECH_SERVICE_URI")
+			if not speech_uri:
+				self.logger.error("No NVDA_ART_SPEECH_SERVICE_URI found in environment")
+				return False
+			
+			# Connect to NVDA Core's speech service
+			import Pyro5.api
+			speech_service = Pyro5.api.Proxy(speech_uri)
+			speech_service._pyroTimeout = 5.0
+			
+			# Get addon name from environment
+			addon_name = os.environ.get("NVDA_ART_ADDON_NAME", self.addon_name or "unknown")
+			
+			# Extract metadata from synthesizer instance
+			synth_name = getattr(synth_instance, 'name', module_name)
+			synth_description = getattr(synth_instance, 'description', f"{module_name} Synthesizer")
+			
+			# Get supported commands and notifications
+			supported_commands = []
+			if hasattr(synth_instance, 'supportedCommands'):
+				supported_commands = [cmd.__name__ for cmd in synth_instance.supportedCommands]
+			
+			supported_notifications = []
+			if hasattr(synth_instance, 'supportedNotifications'):
+				supported_notifications = list(synth_instance.supportedNotifications)
+			
+			# Get supported settings metadata
+			settings_metadata = {}
+			synth_class = synth_instance.__class__
+			if hasattr(synth_class, 'getSupportedSettingsMetadata'):
+				try:
+					settings_metadata = synth_class.getSupportedSettingsMetadata()
+					self.logger.debug(f"Got settings metadata for {synth_name}: {settings_metadata}")
+				except Exception:
+					self.logger.exception(f"Failed to get settings metadata for {synth_name}")
+			else:
+				# Provide default settings for regular NVDA synthesizers
+				settings_metadata = {
+					"supportedSettings": [
+						{
+							"name": "rate",
+							"type": "NumericDriverSetting",
+							"params": {
+								"displayNameWithAccelerator": "&Rate",
+								"minVal": 0,
+								"maxVal": 100,
+								"defaultVal": 50
+							}
+						},
+						{
+							"name": "pitch",
+							"type": "NumericDriverSetting", 
+							"params": {
+								"displayNameWithAccelerator": "&Pitch",
+								"minVal": 0,
+								"maxVal": 100,
+								"defaultVal": 50
+							}
+						},
+						{
+							"name": "volume",
+							"type": "NumericDriverSetting",
+							"params": {
+								"displayNameWithAccelerator": "&Volume",
+								"minVal": 0,
+								"maxVal": 100,
+								"defaultVal": 100
+							}
+						}
+					]
+				}
+				self.logger.debug(f"Using default settings metadata for {synth_name}")
+			
+			# Register with NVDA Core
+			self.logger.debug(f"Calling registerSynthDriver for {synth_name}")
+			result = speech_service.registerSynthDriver(
+				name=synth_name,
+				description=synth_description,
+				addon_name=addon_name,
+				supportedCommands=supported_commands,
+				supportedNotifications=supported_notifications,
+				supportedSettings=settings_metadata
+			)
+			
+			if result:
+				self.logger.info(f"Successfully registered {synth_name} with NVDA Core")
+				return True
+			else:
+				self.logger.error(f"Failed to register {synth_name} - registerSynthDriver returned False")
+				return False
+				
+		except Exception:
+			self.logger.exception(f"Error registering synthesizer {module_name} with NVDA Core")
+			return False
 
 	def getLoadedAddons(self) -> List[str]:
 		return [self.loadedAddon["name"]] if self.loadedAddon else []

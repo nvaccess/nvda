@@ -7,7 +7,7 @@
 
 import queue
 import threading
-from typing import Dict, List
+from typing import Dict, List, Any
 
 import nvwave
 import Pyro5.api
@@ -35,6 +35,7 @@ class SpeechService(BaseService):
 		addon_name: str,
 		supportedCommands: List[str],
 		supportedNotifications: List[str],
+		supportedSettings: Dict[str, Any] = None,
 	) -> bool:
 		"""Register a synthesizer driver from ART.
 
@@ -43,6 +44,7 @@ class SpeechService(BaseService):
 		@param addon_name: The addon that provides this synth
 		@param supportedCommands: List of supported command class names
 		@param supportedNotifications: List of supported notifications
+		@param supportedSettings: Settings metadata for proxy generation
 		@return: True if registration successful
 		"""
 		log.debug(f"SpeechService.registerSynthDriver called: name={name}, addon={addon_name}")
@@ -52,6 +54,7 @@ class SpeechService(BaseService):
 				"addon_name": addon_name,
 				"supportedCommands": supportedCommands,
 				"supportedNotifications": supportedNotifications,
+				"supportedSettings": supportedSettings or {},
 				"isActive": False,
 			}
 
@@ -67,7 +70,9 @@ class SpeechService(BaseService):
 			log.debug(f"Generating proxy for {name}")
 			from art.synthProxyGenerator import ARTSynthProxyGenerator
 
-			proxy_class = ARTSynthProxyGenerator.generateProxy(addon_name, name, description)
+			proxy_class = ARTSynthProxyGenerator.generateProxy(
+				addon_name, name, description, supportedSettings or {}
+			)
 			log.debug(f"Generated proxy class: {proxy_class}")
 
 			# Note: synthDriverHandler.getSynthList() now dynamically queries ART for available synths
