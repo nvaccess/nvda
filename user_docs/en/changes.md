@@ -13,6 +13,7 @@ When UIA is enabled, redundant table end markers are no longer brailled when the
 
 On Windows 11, NVDA will no longer announce emoji panel items twice while browsing them.
 Performance and reliability in the Start Menu on Windows 11 24H2 has been improved.
+On Windows 11 24H2 and newer, window state will be announced when resizing windows with `Windows+arrow` keys.
 
 Options have been added to report the language of the text being read, and report when the text language is not supported by the current synthesizer.
 
