@@ -59,7 +59,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Several additions to report the language of the text being read. (#17685, @nvdaes)
   * The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.
   * A `languageHandling` module has been added to report the language within speech sequences.
-  * `LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text been read, and switch synthesizer voice.
+  * `LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text being read, and switch synthesizer voice.
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
