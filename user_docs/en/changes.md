@@ -56,7 +56,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
   * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
 * Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)
-* Several additions to report the language of the text been read. (#17685, @nvdaes)
+* Several additions to report the language of the text being read. (#17685, @nvdaes)
   * The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.
   * A `languageHandling` module has been added to report the language within speech sequences.
   * `LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text been read, and switch synthesizer voice.
