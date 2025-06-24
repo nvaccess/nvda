@@ -35,10 +35,10 @@ class ARTProxySynthDriver(SynthDriver):
 	# Note: supportedSettings is now dynamically generated for each proxy class
 	# by ARTSynthProxyGenerator based on metadata from the ART synthesizer
 	
-	# Default values for synth properties
-	DEFAULT_RATE = 50
-	DEFAULT_PITCH = 50
-	DEFAULT_VOLUME = 100
+	# Fallback values if synthesizer provides no defaults (should rarely be used)
+	FALLBACK_RATE = 50
+	FALLBACK_PITCH = 50
+	FALLBACK_VOLUME = 100
 
 	def __init__(self):
 		self._artManager = None
@@ -46,13 +46,8 @@ class ARTProxySynthDriver(SynthDriver):
 		self._speechService = None
 		self._connected = False
 		
-		# Cache for synth properties
-		self._property_cache = {
-			'rate': self.DEFAULT_RATE,
-			'pitch': self.DEFAULT_PITCH,
-			'volume': self.DEFAULT_VOLUME,
-			'voice': 'testvoice'  # Default to known valid voice
-		}
+		# Cache for synth properties - will be populated from synthesizer
+		self._property_cache = {}
 		
 		# Properties that need to be sent on next connection
 		self._pending_property_updates = {}
@@ -78,6 +73,10 @@ class ARTProxySynthDriver(SynthDriver):
 		self._speechService = self._artManager.speechService
 		
 		self._connected = True
+		
+		# Initialize property cache with actual values from synthesizer
+		self._initializePropertyCache()
+		
 		log.info(f"Connected to ART synthesizer: {self.name}")
 	
 	@classmethod
@@ -95,7 +94,13 @@ class ARTProxySynthDriver(SynthDriver):
 	def speak(self, speechSequence: SpeechSequence):
 		"""Serialize and forward speech to ART."""
 		if not self._connected:
+			log.warning(f"Cannot speak - ART synth {self.name} is disconnected")
 			return
+		
+		# Send any pending property updates first
+		if self._pending_property_updates:
+			log.debug(f"Sending {len(self._pending_property_updates)} pending updates before speech")
+			self._sendPendingUpdates()
 			
 		# Serialize the speech sequence
 		serialized = self._serializeSpeechSequence(speechSequence)
@@ -121,37 +126,87 @@ class ARTProxySynthDriver(SynthDriver):
 			except Exception:
 				log.exception(f"Error pausing ART synth {self.name}")
 	
+	def _initializePropertyCache(self):
+		"""Initialize property cache with actual values from the synthesizer."""
+		if not self._connected:
+			return
+		
+		try:
+			# Get property defaults from synthesizer
+			defaults = self._synthService.getPropertyDefaults()
+			self._property_cache.update(defaults)
+			log.debug(f"Initialized property cache: {self._property_cache}")
+			
+			# Get current actual values to override defaults if different
+			current_voice = self._synthService.getCurrentVoice()
+			if current_voice:
+				self._property_cache['voice'] = current_voice
+			
+			current_rate = self._synthService.getCurrentRate()
+			self._property_cache['rate'] = current_rate
+			
+			current_pitch = self._synthService.getCurrentPitch()
+			self._property_cache['pitch'] = current_pitch
+			
+			current_volume = self._synthService.getCurrentVolume()
+			self._property_cache['volume'] = current_volume
+			
+			log.debug(f"Updated property cache with current values: {self._property_cache}")
+		except Exception:
+			log.exception(f"Error initializing property cache for {self.name}")
+			# Set minimal fallback cache
+			self._property_cache = {
+				'rate': self.FALLBACK_RATE,
+				'pitch': self.FALLBACK_PITCH,
+				'volume': self.FALLBACK_VOLUME,
+				'voice': ''
+			}
+	
 	def _get_voice(self) -> str:
 		"""Get current voice from ART."""
 		if not self._connected:
-			# Return cached voice (always fallback to testvoice)
-			return self._property_cache.get('voice', 'testvoice')
+			# Return cached voice or empty string if no cache
+			return self._property_cache.get('voice', '')
 		
 		try:
-			# Get current voice settings from ART
-			voices = self._synthService.getAvailableVoices()
-			if voices:
-				# Return first voice ID if available
-				voice_id = voices[0]['id']
-				self._property_cache['voice'] = voice_id
-				return voice_id
+			# Get actual current voice from synthesizer
+			current_voice = self._synthService.getCurrentVoice()
+			if current_voice:
+				self._property_cache['voice'] = current_voice
+				return current_voice
 		except Exception:
-			log.exception(f"Error getting voice from ART synth {self.name}")
+			log.exception(f"Error getting current voice from ART synth {self.name}")
 			self._connected = False
 		
-		# Always return a valid voice ID, never empty string
-		return self._property_cache.get('voice', 'testvoice')
+		# Return cached voice or empty string (no hardcoded fallbacks)
+		return self._property_cache.get('voice', '')
 	
 	def _set_voice(self, value: str):
 		"""Set voice in ART."""
-		# Always update cache first
+		if not value:
+			log.warning(f"Attempted to set empty voice on {self.name}")
+			return
+		
+		# Validate voice ID first if connected
+		if self._connected:
+			try:
+				if not self._synthService.isValidVoice(value):
+					log.warning(f"Invalid voice ID '{value}' for {self.name}")
+					return
+			except Exception:
+				log.exception(f"Error validating voice {value} for {self.name}")
+				return
+		
+		# Update cache
 		self._property_cache['voice'] = value
 		
+		# Set in synthesizer if connected
 		if self._connected:
 			try:
 				self._synthService.setVoice(value)
+				log.debug(f"Set voice to '{value}' on {self.name}")
 			except Exception:
-				log.exception(f"Error setting voice in ART synth {self.name}")
+				log.exception(f"Error setting voice '{value}' in ART synth {self.name}")
 	
 	def _getAvailableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		"""Get available voices from ART."""
@@ -160,21 +215,39 @@ class ARTProxySynthDriver(SynthDriver):
 			
 		try:
 			voiceData = self._synthService.getAvailableVoices()
+			if not voiceData:
+				log.warning(f"No voices returned from ART synth {self.name}")
+				return OrderedDict()
+			
 			voices = OrderedDict()
 			for vData in voiceData:
-				voices[vData['id']] = VoiceInfo(
-					vData['id'],
-					vData['displayName'],
-					vData.get('language')
-				)
+				if not isinstance(vData, dict):
+					log.warning(f"Invalid voice data format: {vData}")
+					continue
+				
+				voice_id = vData.get('id')
+				if not voice_id:
+					log.warning(f"Voice data missing ID: {vData}")
+					continue
+				
+				display_name = vData.get('displayName', voice_id)
+				language = vData.get('language')
+				
+				voices[voice_id] = VoiceInfo(voice_id, display_name, language)
+			
+			log.debug(f"Retrieved {len(voices)} voices from {self.name}")
 			return voices
+		except Pyro5.errors.CommunicationError:
+			log.warning(f"Communication error getting voices from {self.name}")
+			self._connected = False
+			return OrderedDict()
 		except Exception:
 			log.exception(f"Error getting voices from ART synth {self.name}")
 			return OrderedDict()
 	
 	def _get_rate(self) -> int:
 		"""Get current rate from ART."""
-		return self._get_synth_property('rate', self.DEFAULT_RATE)
+		return self._get_synth_property('rate', self.FALLBACK_RATE)
 
 	def _set_rate(self, value: int):
 		"""Set rate in ART."""
@@ -182,7 +255,7 @@ class ARTProxySynthDriver(SynthDriver):
 
 	def _get_pitch(self) -> int:
 		"""Get current pitch from ART."""
-		return self._get_synth_property('pitch', self.DEFAULT_PITCH)
+		return self._get_synth_property('pitch', self.FALLBACK_PITCH)
 
 	def _set_pitch(self, value: int):
 		"""Set pitch in ART."""
@@ -190,7 +263,7 @@ class ARTProxySynthDriver(SynthDriver):
 
 	def _get_volume(self) -> int:
 		"""Get current volume from ART."""
-		return self._get_synth_property('volume', self.DEFAULT_VOLUME)
+		return self._get_synth_property('volume', self.FALLBACK_VOLUME)
 
 	def _set_volume(self, value: int):
 		"""Set volume in ART."""
@@ -198,23 +271,33 @@ class ARTProxySynthDriver(SynthDriver):
 	
 	def _get_synth_property(self, prop_name: str, default_value: Any) -> Any:
 		"""Generic getter for synth properties with caching."""
+		# If not connected, use cached value or fallback
 		if not self._connected:
+			cached_value = self._property_cache.get(prop_name)
+			if cached_value is not None:
+				return cached_value
 			return default_value
 		
 		try:
-			# Try to get from service
-			method_name = f'get{prop_name.capitalize()}'
+			# Try to get current value from service
+			method_name = f'getCurrent{prop_name.capitalize()}'
 			if hasattr(self._synthService, method_name):
 				value = getattr(self._synthService, method_name)()
 				self._property_cache[prop_name] = value
 				return value
+			else:
+				log.warning(f"Method {method_name} not available on ART synth service")
 		except Pyro5.errors.CommunicationError:
 			log.debugWarning(f"Communication error getting {prop_name}, using cached value")
+			self._connected = False  # Mark as disconnected for retry
 		except Exception:
 			log.exception(f"Error getting {prop_name} from ART synth {self.name}")
 		
-		# Fall back to cached value
-		return self._property_cache.get(prop_name, default_value)
+		# Fall back to cached value or default
+		cached_value = self._property_cache.get(prop_name)
+		if cached_value is not None:
+			return cached_value
+		return default_value
 
 	def _set_synth_property(self, prop_name: str, value: Any, method_name: str) -> None:
 		"""Generic setter for synth properties with caching."""

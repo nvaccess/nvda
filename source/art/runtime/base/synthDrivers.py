@@ -58,6 +58,11 @@ class SynthDriver(ABC):
 		self._speechService = None
 		self._synthService = None
 		
+		# Initialize voice tracking
+		self._currentVoice: Optional[str] = None
+		self._defaultVoice: Optional[str] = None
+		self._voicesInitialized = False
+		
 		# Register this synth instance with the ART synth service
 		self._registerWithARTService()
 		
@@ -67,6 +72,9 @@ class SynthDriver(ABC):
 		# 2. Make it selectable in NVDA's synth selection dialog
 		# 3. Route speech to this synth when selected
 		self._registerWithCore()
+		
+		# Initialize voice state after registration
+		self._initializeVoiceState()
 		
 		self.logger.info(f"Synthesizer driver {self.name} initialized in ART")
 
@@ -210,24 +218,95 @@ class SynthDriver(ABC):
 		"""
 		pass
 	
+	def _initializeVoiceState(self):
+		"""Initialize voice state with proper defaults."""
+		try:
+			if self._voicesInitialized:
+				return
+			
+			# Get available voices to determine defaults
+			available = self._getAvailableVoices()
+			if not available:
+				self.logger.warning("No voices available during initialization")
+				self._voicesInitialized = True
+				return
+			
+			# Set default voice (first available if no override)
+			if not self._defaultVoice:
+				self._defaultVoice = next(iter(available.keys()))
+				self.logger.debug(f"Set default voice to first available: {self._defaultVoice}")
+			
+			# Set current voice to default if not already set
+			if not self._currentVoice:
+				self._currentVoice = self._defaultVoice
+				self.logger.debug(f"Set current voice to default: {self._currentVoice}")
+			
+			self._voicesInitialized = True
+			
+		except Exception:
+			self.logger.exception("Error initializing voice state")
+			self._voicesInitialized = True
+	
 	def _get_voice(self) -> str:
 		"""Get the current voice ID.
 		
-		This method must be implemented by subclasses.
+		Base implementation tracks current voice in _currentVoice.
+		Subclasses can override for custom voice tracking.
 		
 		@return: The ID of the current voice.
 		"""
-		raise NotImplementedError
+		if not self._voicesInitialized:
+			self._initializeVoiceState()
+		
+		if self._currentVoice:
+			return self._currentVoice
+		
+		# Fallback: try to get first available voice
+		try:
+			available = self._getAvailableVoices()
+			if available:
+				first_voice = next(iter(available.keys()))
+				self._currentVoice = first_voice
+				return first_voice
+		except Exception:
+			self.logger.exception("Error getting fallback voice")
+		
+		return ""
 	
 	def _set_voice(self, value: str):
 		"""Set the current voice.
 		
 		@param value: The ID of the voice to set.
 		
-		The default implementation does nothing.
-		Subclasses should override this to change voices.
+		Base implementation updates _currentVoice if valid.
+		Subclasses should override for actual voice switching.
 		"""
-		pass
+		# Validate voice ID
+		try:
+			available = self.availableVoices
+			if value not in available:
+				self.logger.warning(f"Attempted to set invalid voice: {value}")
+				return
+		except Exception:
+			self.logger.exception(f"Error validating voice {value}")
+			return
+		
+		# Update current voice
+		old_voice = self._currentVoice
+		self._currentVoice = value
+		self.logger.debug(f"Voice changed: {old_voice} -> {value}")
+	
+	def getDefaultVoice(self) -> str:
+		"""Get this synthesizer's preferred default voice.
+		
+		Can be overridden by subclasses to provide synth-specific defaults.
+		
+		@return: Default voice ID.
+		"""
+		if not self._voicesInitialized:
+			self._initializeVoiceState()
+		
+		return self._defaultVoice or ""
 	
 	voice = property(_get_voice, _set_voice)
 	"""Voice property for getting and setting the current voice.
@@ -437,11 +516,18 @@ class SynthDriver(ABC):
 		self.logger = logging.getLogger(f"ART.SynthDriver.{self.name}")
 		self._speechService = None
 		self._synthService = None
+		
+		# Initialize voice tracking
+		self._currentVoice: Optional[str] = None
+		self._defaultVoice: Optional[str] = None
+		self._voicesInitialized = False
 
 		# Perform normal registrations
 		try:
 			self._registerWithARTService()
 			self._registerWithCore()
+			# Initialize voice state after registration
+			self._initializeVoiceState()
 			self.logger.info(
 				f"Synthesizer driver {self.name} initialized in ART (fallback)"
 			)
