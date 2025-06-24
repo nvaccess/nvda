@@ -417,7 +417,7 @@ def initialize():
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
-	
+
 	# Start ART processes for enabled addons if ART is available
 	_startARTProcessesForAddons()
 
@@ -430,11 +430,15 @@ def _startARTProcessesForAddons():
 		if not artManager:
 			log.debug("ART manager not available, addons will run in main process")
 			return
-			
+
 		for addon in getAvailableAddons():
 			if addon.isDisabled or addon.isBlocked or addon.isPendingInstall:
 				continue
-				
+
+			# Only start ART process for external addons
+			if addon.manifest.get("runtime") != "external":
+				continue
+
 			# Convert manifest to a simple dict for serialization
 			manifest_dict = {
 				"name": addon.manifest.get("name"),
@@ -447,16 +451,16 @@ def _startARTProcessesForAddons():
 				"minimumNVDAVersion": addon.manifest.get("minimumNVDAVersion", (0, 0, 0)),
 				"lastTestedNVDAVersion": addon.manifest.get("lastTestedNVDAVersion", (0, 0, 0)),
 			}
-			
+
 			addon_spec = {
 				"name": addon.name,
 				"path": addon.path,
 				"manifest": manifest_dict
 			}
-			
+
 			if not artManager.startAddonProcess(addon_spec):
 				log.error(f"Failed to start ART process for addon {addon.name}")
-				
+
 	except ImportError:
 		log.debug("ART not available, addons will run in main process")
 	except Exception:
@@ -774,6 +778,16 @@ class Addon(AddonBase):
 		# By returning here the addon does not "run"/ become active / registered.
 		if self.isDisabled or self.isBlocked or self.isPendingInstall or self.name in _failedPendingRemovals:
 			return
+
+		# Check if addon should run externally via ART
+		if self.manifest.get("runtime") == "external":
+			from art.manager import getARTManager
+			artManager = getARTManager()
+			if artManager:
+				log.debug(f"Skipping {self.name} package path - will run in ART")
+				return
+			else:
+				log.warning(f"ART not available for external addon {self.name}, loading internally")
 
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
@@ -1206,6 +1220,9 @@ docFileName = string(default=None)
 	[[__many__]]
 		displayName = string()
 		mandatory = boolean(default=false)
+
+# Runtime mode: "internal" (default) or "external" (runs in ART)
+runtime = string(default="internal")
 
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0

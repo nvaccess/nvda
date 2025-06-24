@@ -114,12 +114,15 @@ class AddOnLifecycleService:
 				self.logger.debug(f"Loading {plugin_dir_name} module: {module_name}")
 				
 				try:
+					self.logger.info(f"=== Attempting to import {plugin_dir_name} module: {module_name} ===")
 					try:
 						if module_name.isidentifier():
+							self.logger.debug(f"Using importlib.import_module for {full_module_name}")
 							module = importlib.import_module(full_module_name)
 						else:
 							sanitised = "".join(ch if ch.isalnum() or ch == "_" else "_" for ch in module_name)
 							sanitised_full = f"{plugin_dir_name}.{sanitised}"
+							self.logger.debug(f"Using SourceFileLoader for {sanitised_full}")
 							loader = SourceFileLoader(sanitised_full, str(py_file))
 							module = importlib.util.module_from_spec(importlib.machinery.ModuleSpec(sanitised_full, loader))
 							loader.exec_module(module)
@@ -128,6 +131,15 @@ class AddOnLifecycleService:
 						
 						if plugin_dir_name == "synthDrivers":
 							sys.modules[f"synthDrivers.{module_name}"] = module
+							self.logger.info(f"Successfully imported synthDriver module: {module_name}")
+							
+							# Check if module has SynthDriver class
+							if hasattr(module, 'SynthDriver'):
+								self.logger.info(f"Found SynthDriver class in {module_name}")
+								synth_class = getattr(module, 'SynthDriver')
+								self.logger.debug(f"SynthDriver class: {synth_class}")
+							else:
+								self.logger.warning(f"No SynthDriver class found in {module_name}")
 					
 					except Exception:
 						self.logger.exception(f"Error importing {plugin_dir_name} module: {module_name}")
@@ -145,6 +157,8 @@ class AddOnLifecycleService:
 		return [self.loadedAddon["name"]] if self.loadedAddon else []
 	
 	def loadAddonIfNeeded(self) -> bool:
+		self.logger.info(f"=== loadAddonIfNeeded() called for addon: {self.addon_name} ===")
+		
 		if self.loadedAddon:
 			self.logger.debug(f"Add-on {self.addon_name} already loaded")
 			return True
@@ -152,6 +166,15 @@ class AddOnLifecycleService:
 		if not self.addon_path:
 			self.logger.error("No addon path specified")
 			return False
-			
-		self.logger.debug(f"Loading addon {self.addon_name} now that services are ready")
-		return self.loadAddon(self.addon_path)
+		
+		self.logger.info(f"About to load addon {self.addon_name} from path: {self.addon_path}")
+		try:
+			result = self.loadAddon(self.addon_path)
+			if result:
+				self.logger.info(f"Successfully loaded addon {self.addon_name}")
+			else:
+				self.logger.error(f"Failed to load addon {self.addon_name}")
+			return result
+		except Exception:
+			self.logger.exception(f"Exception while loading addon {self.addon_name}")
+			return False

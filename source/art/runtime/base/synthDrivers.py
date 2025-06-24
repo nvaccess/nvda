@@ -92,25 +92,30 @@ class SynthDriver(ABC):
 	
 	def _registerWithCore(self):
 		"""Register this synth driver with NVDA Core."""
+		self.logger.debug(f"Attempting to register {self.name} with NVDA Core")
 		try:
 			# Get the speech service URI from environment
 			speech_uri = os.environ.get("NVDA_ART_SPEECH_SERVICE_URI")
+			self.logger.debug(f"Speech service URI from environment: {speech_uri}")
 			if not speech_uri:
 				self.logger.error("No NVDA_ART_SPEECH_SERVICE_URI found")
 				return
 			
 			# Connect to NVDA Core's speech service
+			self.logger.debug(f"Connecting to speech service at {speech_uri}")
 			self._speechService = Pyro5.api.Proxy(speech_uri)
 			self._speechService._pyroTimeout = 2.0
 			
 			# Get addon name from environment
 			addon_name = os.environ.get("NVDA_ART_ADDON_NAME", "unknown")
+			self.logger.debug(f"Addon name from environment: {addon_name}")
 			
 			# Register this synth
 			# TODO: In NVDA Core, SpeechService.registerSynthDriver will need to:
 			# 1. Store this synth's info in a registry
 			# 2. Make it available to synthDriverHandler.getSynthList()
 			# 3. Create a proxy synth driver when this synth is selected
+			self.logger.debug(f"Calling registerSynthDriver for {self.name}")
 			result = self._speechService.registerSynthDriver(
 				name=self.name,
 				description=self.description,
@@ -118,11 +123,12 @@ class SynthDriver(ABC):
 				supportedCommands=[cmd.__name__ for cmd in self.supportedCommands],
 				supportedNotifications=list(self.supportedNotifications)
 			)
+			self.logger.debug(f"registerSynthDriver returned: {result}")
 			
 			if result:
-				self.logger.info(f"Registered {self.name} with NVDA Core")
+				self.logger.info(f"Successfully registered {self.name} with NVDA Core")
 			else:
-				self.logger.error(f"Failed to register {self.name} with NVDA Core")
+				self.logger.error(f"Failed to register {self.name} with NVDA Core - registerSynthDriver returned False")
 				
 		except Exception:
 			self.logger.exception("Error registering with NVDA Core")

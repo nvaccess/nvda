@@ -201,9 +201,9 @@ class Filter(
 	'This is a message which has been filtered'
 	"""
 
-	def __init__(self) -> None:
+	def __init__(self, **kwargs) -> None:
 		_ExtensionPointBase.__init__(self)
-		HandlerRegistrar.__init__(self)
+		HandlerRegistrar.__init__(self, **kwargs)
 
 	def apply(self, value: FilterValueT, **kwargs: Any) -> FilterValueT:
 		"""Pass a value to be filtered through all registered handlers.

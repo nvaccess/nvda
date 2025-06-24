@@ -45,6 +45,7 @@ class SpeechService(BaseService):
 		@param supportedNotifications: List of supported notifications
 		@return: True if registration successful
 		"""
+		log.debug(f"SpeechService.registerSynthDriver called: name={name}, addon={addon_name}")
 		try:
 			self._registeredSynths[name] = {
 				"description": description,
@@ -63,12 +64,15 @@ class SpeechService(BaseService):
 			log.debug(f"Supported notifications: {supportedNotifications}")
 
 			# Generate a proxy synthesizer in Core
+			log.debug(f"Generating proxy for {name}")
 			from art.synthProxyGenerator import ARTSynthProxyGenerator
 
 			proxy_class = ARTSynthProxyGenerator.generateProxy(addon_name, name, description)
+			log.debug(f"Generated proxy class: {proxy_class}")
 
-			# TODO: Notify synthDriverHandler about the new synth dynamically
+			# Note: synthDriverHandler.getSynthList() now dynamically queries ART for available synths
 
+			log.debug(f"Registration completed successfully for {name}")
 			return True
 		except Exception:
 			self._log_error("registerSynthDriver", name)

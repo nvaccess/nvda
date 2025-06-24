@@ -40,14 +40,23 @@ class SubprocessManager:
 
 	def ensureProcessRunning(self):
 		"""Ensures process is running, starts if needed. Thread-safe."""
+		log.debug(f"Acquiring lock to ensure {self._config.name} process is running")
 		with self._lock:
-			if not self.isRunning():
+			log.debug(f"Lock acquired for {self._config.name}, checking if running")
+			if not self._isRunningUnsafe():
+				log.debug(f"Process {self._config.name} not running, starting")
 				self._startProcess()
+			else:
+				log.debug(f"Process {self._config.name} already running")
+
+	def _isRunningUnsafe(self) -> bool:
+		"""Check if process is running. NOT thread-safe - assumes lock is held."""
+		return self.subprocess is not None and self.subprocess.poll() is None
 
 	def isRunning(self) -> bool:
 		"""Check if process is running. Thread-safe."""
 		with self._lock:
-			return self.subprocess is not None and self.subprocess.poll() is None
+			return self._isRunningUnsafe()
 
 	def _startProcess(self):
 		"""Internal method to start process using config."""
@@ -55,8 +64,13 @@ class SubprocessManager:
 			command = self._config.getSourceCommand()
 		else:
 			command = self._config.getBuiltCommand()
-
-		self.subprocess = subprocess.Popen(command, **self._config.popenFlags)
+		log.debug(f"Starting {self._config.name} process with command: {command}")
+		try:
+			self.subprocess = subprocess.Popen(command, **self._config.popenFlags)
+			log.info(f"Successfully started {self._config.name} process with PID: {self.subprocess.pid}")
+		except Exception:
+			log.exception(f"Failed to start {self._config.name} process")
+			raise
 
 	def terminate(self):
 		"""Gracefully terminate process. Thread-safe."""
