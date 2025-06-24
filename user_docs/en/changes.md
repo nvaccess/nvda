@@ -12,6 +12,7 @@
     * Report if the language of the text being read is not supported.
   * A new unassigned command has been added to report the language of the text at the caret position.
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* In Windows 11 2024 Update and Server 2025 and later, NVDA will announce foreground window states such as restore, maximize, and snap when changing window position by pressing `windows+arrow` keys. (#17841, #18175, @josephsl)
 * Unassigned commands have been added to open the NVDA settings dialog in the following categories: Vision, Windows OCR, Add-on Store and Advanced. (#18313, @CyrilleB79)
 
 ### Changes
