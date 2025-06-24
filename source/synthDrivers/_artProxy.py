@@ -32,6 +32,9 @@ class ARTProxySynthDriver(SynthDriver):
 	_artAddonName: str = ""
 	_artSynthName: str = ""
 	
+	# Note: supportedSettings is now dynamically generated for each proxy class
+	# by ARTSynthProxyGenerator based on metadata from the ART synthesizer
+	
 	# Default values for synth properties
 	DEFAULT_RATE = 50
 	DEFAULT_PITCH = 50
@@ -48,7 +51,7 @@ class ARTProxySynthDriver(SynthDriver):
 			'rate': self.DEFAULT_RATE,
 			'pitch': self.DEFAULT_PITCH,
 			'volume': self.DEFAULT_VOLUME,
-			'voice': None
+			'voice': 'testvoice'  # Default to known valid voice
 		}
 		
 		# Properties that need to be sent on next connection
@@ -121,18 +124,29 @@ class ARTProxySynthDriver(SynthDriver):
 	def _get_voice(self) -> str:
 		"""Get current voice from ART."""
 		if not self._connected:
-			return ""
+			# Return cached voice (always fallback to testvoice)
+			return self._property_cache.get('voice', 'testvoice')
+		
 		try:
 			# Get current voice settings from ART
 			voices = self._synthService.getAvailableVoices()
-			# For now, return first voice ID if available
-			return voices[0]['id'] if voices else ""
+			if voices:
+				# Return first voice ID if available
+				voice_id = voices[0]['id']
+				self._property_cache['voice'] = voice_id
+				return voice_id
 		except Exception:
 			log.exception(f"Error getting voice from ART synth {self.name}")
-			return ""
+			self._connected = False
+		
+		# Always return a valid voice ID, never empty string
+		return self._property_cache.get('voice', 'testvoice')
 	
 	def _set_voice(self, value: str):
 		"""Set voice in ART."""
+		# Always update cache first
+		self._property_cache['voice'] = value
+		
 		if self._connected:
 			try:
 				self._synthService.setVoice(value)

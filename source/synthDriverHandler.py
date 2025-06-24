@@ -6,6 +6,7 @@
 
 import pkgutil
 import importlib
+import sys
 from typing import (
 	List,
 	Optional,
@@ -435,7 +436,38 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 
+def _isARTSynth(name: str) -> bool:
+	"""Check if a synthesizer is managed by ART and has a proxy available.
+	
+	@param name: The synthesizer name to check
+	@return: True if this is an ART synthesizer with available proxy
+	"""
+	module_name = f"synthDrivers.{name}"
+	if module_name in sys.modules:
+		module = sys.modules[module_name]
+		if hasattr(module, "SynthDriver"):
+			synth_class = module.SynthDriver
+			# Check if this is an ART proxy (has ART-specific attributes)
+			return hasattr(synth_class, "_artAddonName") and hasattr(synth_class, "_artSynthName")
+	return False
+
+
 def _getSynthDriver(name) -> SynthDriver:
+	"""Get a synthesizer driver class by name.
+	
+	Handles both regular synthesizers and ART synthesizers with proxy classes.
+	
+	@param name: The synthesizer name
+	@return: The synthesizer driver class
+	"""
+	# Check if this is an ART synthesizer with existing proxy
+	if _isARTSynth(name):
+		log.debug(f"Loading ART synthesizer proxy for {name}")
+		module = sys.modules[f"synthDrivers.{name}"]
+		return module.SynthDriver
+	
+	# Regular synthesizer - use normal import
+	log.debug(f"Loading regular synthesizer {name}")
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
