@@ -91,13 +91,21 @@ class SynthDriver(ABC):
 	def _registerWithARTService(self):
 		"""Register this synth instance with the ART synth service."""
 		try:
-			# Get the synth service from the ART runtime
-			import nvda_art
-			if hasattr(nvda_art, 'artRuntime') and nvda_art.artRuntime:
-				self._synthService = nvda_art.artRuntime.synthService
-				if self._synthService:
-					self._synthService.setSynthInstance(self)
-					self.logger.debug("Registered with ART synth service")
+			self.logger.debug("Attempting to register with ART synth service")
+			
+			# Get the synth service from the ART runtime using clean API
+			import art.runtime
+			runtime = art.runtime.getRuntime()
+			self.logger.debug(f"Got runtime: {runtime}")
+			
+			self._synthService = runtime.services.get('synth')
+			self.logger.debug(f"Got synthService: {self._synthService}")
+			
+			if self._synthService:
+				self._synthService.setSynthInstance(self)
+				self.logger.debug("Successfully registered with ART synth service")
+			else:
+				self.logger.warning("ART synthService not found in services")
 		except Exception:
 			self.logger.exception("Failed to register with ART synth service")
 	
