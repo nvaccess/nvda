@@ -451,7 +451,29 @@ def getSynthList() -> List[Tuple[str, str]]:
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
 		except:  # noqa: E722 # Legacy bare except
 			log.error("", exc_info=True)
+	
+	# Add ART synthesizers to the list
+	try:
+		from art.manager import getARTManager
+		artManager = getARTManager()
+		if artManager:
+			# Get ART synths and avoid duplicates
+			existingNames = {name for name, desc in synthList}
+			if lastSynth:
+				existingNames.add(lastSynth[0])
+			
+			artSynthList = artManager.getAvailableSynthList()
+			for name, description in artSynthList:
+				if name not in existingNames:
+					synthList.append((name, description))
+				else:
+					log.debugWarning(f"ART synth '{name}' conflicts with existing synth, skipping")
+	except Exception:
+		log.debugWarning("Failed to query ART synthesizers", exc_info=True)
+	
+	# Sort the list to include any added ART synths and maintain order
 	synthList.sort(key=lambda s: strxfrm(s[1]))
+	
 	if lastSynth:
 		synthList.append(lastSynth)
 	return synthList
