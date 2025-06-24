@@ -25,7 +25,18 @@ class SynthDriver(ABC):
 	"""Base class for synthesizer drivers running in ART.
 	
 	This mirrors the NVDA SynthDriver API but runs in the ART process.
-	Subclasses must implement the abstract methods and can override others as needed.
+	
+	Required implementations for subclasses:
+	- check(): Class method to verify synth availability
+	- speak(): Process speech sequences
+	- _get_voice(): Return current voice ID
+	- _getAvailableVoices(): Return available voices
+	
+	Optional implementations:
+	- _set_voice(): Change voice (defaults to no-op if not overridden)
+	- cancel(), pause(), terminate(): Speech control methods
+	
+	The voice property is provided by this base class and uses _get_voice() and _set_voice().
 	"""
 	
 	#: The name of the synth; must be the original module file name.
@@ -191,9 +202,10 @@ class SynthDriver(ABC):
 		"""
 		pass
 	
-	@abstractmethod
 	def _get_voice(self) -> str:
 		"""Get the current voice ID.
+		
+		This method must be implemented by subclasses.
 		
 		@return: The ID of the current voice.
 		"""
@@ -210,6 +222,14 @@ class SynthDriver(ABC):
 		pass
 	
 	voice = property(_get_voice, _set_voice)
+	"""Voice property for getting and setting the current voice.
+	
+	This property is implemented using _get_voice() and _set_voice() methods.
+	Subclasses must implement _get_voice() to return the current voice ID.
+	Subclasses may implement _set_voice() to support changing voices.
+	Accessing this property on a driver that hasn't implemented _get_voice() 
+	will raise NotImplementedError.
+	"""
 	
 	@abstractmethod
 	def _getAvailableVoices(self) -> OrderedDict[str, VoiceInfo]:
