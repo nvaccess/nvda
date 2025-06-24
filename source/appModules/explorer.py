@@ -566,8 +566,8 @@ class AppModule(appModuleHandler.AppModule):
 	def shouldProcessUIANotificationEvent(
 		self,
 		sender: UIAutomationClient.IUIAutomationElement,
-		NotificationKind: int | None = None,
-		NotificationProcessing: int | None = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
 		displayString: str = "",
 		activityId: str = "",
 	) -> bool:
@@ -575,8 +575,8 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return super().shouldProcessUIANotificationEvent(
 			sender,
-			NotificationKind=NotificationKind,
-			NotificationProcessing=NotificationProcessing,
+			notificationKind=NotificationKind,
+			notificationProcessing=NotificationProcessing,
 			displayString=displayString,
 			activityId=activityId,
 		)

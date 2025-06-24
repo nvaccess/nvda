@@ -1054,8 +1054,8 @@ class UIAHandler(COMObject):
 			appMod = appModuleHandler.getAppModuleFromProcessID(processId)
 			if not appMod.shouldProcessUIANotificationEvent(
 				sender,
-				NotificationKind=NotificationKind,
-				NotificationProcessing=NotificationProcessing,
+				notificationKind=NotificationKind,
+				notificationProcessing=NotificationProcessing,
 				displayString=displayString,
 				activityId=activityId,
 			):

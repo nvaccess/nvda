@@ -769,8 +769,8 @@ class AppModule(baseObject.ScriptableObject):
 	def shouldProcessUIANotificationEvent(
 		self,
 		sender: UIA.IUIAutomationElement,
-		NotificationKind: int | None = None,
-		NotificationProcessing: int | None = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
 		displayString: str = "",
 		activityId: str = "",
 	) -> bool:
@@ -785,8 +785,8 @@ class AppModule(baseObject.ScriptableObject):
 		shouldAcceptEvent returns False, etc.
 
 		:param sender: UIA element raising the notification event.
-		:param NotificationKind: notification kind such as activity completion.
-		:param NotificationProcessing: how NVDA should process notifications such as canceling speech.
+		:param notificationKind: notification kind such as activity completion.
+		:param notificationProcessing: how NVDA should process notifications such as canceling speech.
 		:param displayString: notification content/text.
 		:param activityId: notification description.
 		:return: Whether NVDA components including ap modules and NVDA objects should process notification events.
