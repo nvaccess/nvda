@@ -172,7 +172,7 @@ class NVDASpyLib:
 			)
 		self.fakeTranslations.translationResults[invariantString] = replacementString
 
-	def getLanguageDescription(self, lang):
+	def getLanguageDescription(self, lang: str) -> str:
 		import languageHandler
 
 		langDesc = languageHandler.getLanguageDescription(lang)
