@@ -110,6 +110,14 @@ class SynthDriver(ABC):
 			addon_name = os.environ.get("NVDA_ART_ADDON_NAME", "unknown")
 			self.logger.debug(f"Addon name from environment: {addon_name}")
 			
+			# Get settings metadata for the proxy
+			try:
+				settings_metadata = self.__class__.getSupportedSettingsMetadata()
+				self.logger.debug(f"Settings metadata for {self.name}: {settings_metadata}")
+			except Exception:
+				self.logger.exception(f"Failed to get settings metadata for {self.name}")
+				settings_metadata = {}
+			
 			# Register this synth
 			# TODO: In NVDA Core, SpeechService.registerSynthDriver will need to:
 			# 1. Store this synth's info in a registry
@@ -121,7 +129,8 @@ class SynthDriver(ABC):
 				description=self.description,
 				addon_name=addon_name,
 				supportedCommands=[cmd.__name__ for cmd in self.supportedCommands],
-				supportedNotifications=list(self.supportedNotifications)
+				supportedNotifications=list(self.supportedNotifications),
+				supportedSettings=settings_metadata
 			)
 			self.logger.debug(f"registerSynthDriver returned: {result}")
 			
@@ -209,6 +218,61 @@ class SynthDriver(ABC):
 		@return: An OrderedDict of VoiceInfo instances keyed by voice ID.
 		"""
 		raise NotImplementedError
+	
+	@classmethod
+	def getSupportedSettingsMetadata(cls) -> Dict[str, Any]:
+		"""Get metadata describing the settings supported by this synth driver.
+		
+		This method is called by ARTSynthProxyGenerator before the synth is instantiated
+		to create the proxy class with the correct supportedSettings attribute.
+		
+		@return: Dictionary containing settings metadata in the format:
+			{
+				"supportedSettings": [
+					{
+						"name": "rate",
+						"type": "NumericDriverSetting", 
+						"params": {"displayNameWithAccelerator": "&Rate", "minVal": 0, "maxVal": 100, "defaultVal": 50}
+					},
+					...
+				]
+			}
+		"""
+		# Default implementation provides basic settings that most synths support
+		return {
+			"supportedSettings": [
+				{
+					"name": "rate",
+					"type": "NumericDriverSetting",
+					"params": {
+						"displayNameWithAccelerator": "&Rate",
+						"minVal": 0,
+						"maxVal": 100, 
+						"defaultVal": 50
+					}
+				},
+				{
+					"name": "pitch", 
+					"type": "NumericDriverSetting",
+					"params": {
+						"displayNameWithAccelerator": "&Pitch",
+						"minVal": 0,
+						"maxVal": 100,
+						"defaultVal": 50
+					}
+				},
+				{
+					"name": "volume",
+					"type": "NumericDriverSetting", 
+					"params": {
+						"displayNameWithAccelerator": "&Volume",
+						"minVal": 0,
+						"maxVal": 100,
+						"defaultVal": 100
+					}
+				}
+			]
+		}
 	
 	def _get_availableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		"""Property getter for available voices with caching."""
