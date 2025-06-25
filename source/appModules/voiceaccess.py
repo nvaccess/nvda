@@ -46,4 +46,5 @@ class AppModule(appModuleHandler.AppModule):
 	):
 		# #16862: report Voice access messages such as microphone toggle from everywhere.
 		# #17384: this also allows dictated text to be announced.
-		ui.message(displayString)
+		if displayString is not None:
+			ui.message(displayString)
