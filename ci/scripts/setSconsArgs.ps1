@@ -11,7 +11,7 @@ if ($env:versionType) {
 	$sconsArgs += " updateVersionType=$env:versionType"
 }
 $sconsArgs += " publisher=`"$env:scons_publisher`""
-if ($env:GITHUB_EVENT_NAME -eq "push" -and $env:feature_signing -and $env:apiSigningToken) {
+if ($env:GITHUB_EVENT_NAME -eq "push" -and $env:apiSigningToken) {
 	# Note must be a single line variable
 	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
