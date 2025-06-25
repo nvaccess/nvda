@@ -7,7 +7,10 @@
 Voice Access allows users to dictate text and perform voice commands, replacing Windows Speech Recognition.
 This app module cannot be used in portable version of NVDA."""
 
+from typing import Callable
 import appModuleHandler
+import ui
+from NVDAObjects import NVDAObject
 import UIAHandler
 
 
@@ -23,3 +26,16 @@ class AppModule(appModuleHandler.AppModule):
 		# #16862: Voice Access notification elements do not have native window handle.
 		# Say "yes" so notifications from these elements, including text dictation, can be announced.
 		return True
+
+	def event_UIA_notification(
+		self,
+		obj: NVDAObject,
+		nextHandler: Callable[[], None],
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str | None = None,
+		activityId: str | None = None,
+	):
+		# #16862: report Voice access messages such as microphone toggle from everywhere.
+		# #17384: this also allows dictated text to be announced.
+		ui.message(displayString)
