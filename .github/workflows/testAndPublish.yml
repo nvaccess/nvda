@@ -25,19 +25,13 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  START_BUILD_NUMBER: 50000
+  START_BUILD_NUMBER: ${{ vars.BUILD_NUMBER_OFFSET || 0 }}
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
-  scons_publisher: NV Access
+  scons_publisher: ${{ vars.PUBLISHER_NAME || github.repository_owner }}
   # Don't send telemetry to Microsoft when using MSVC tooling, avoiding an unnecessary PowerShell script invocation.
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
-  # Comment out any of the feature_* variables to disable the respective build feature.
-  # They are checked for existence of content, not specific value.
-  feature_uploadSymbolsToMozilla: configured
-  feature_crowdinSync: configured
-  feature_signing: configured
-  # feature_buildAppx: configured
 
 jobs:
   buildNVDA:
@@ -163,17 +157,17 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
     steps:
     - name: Checkout cached build
-      if: ${{ env.feature_crowdinSync }}
+      if: ${{ vars.CROWDIN_PROJECT_ID }}
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      if: ${{ env.feature_crowdinSync }}
+      if: ${{ vars.CROWDIN_PROJECT_ID }}
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
-      if: ${{ env.feature_crowdinSync }}
+      if: ${{ vars.CROWDIN_PROJECT_ID }}
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
@@ -197,7 +191,7 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
       env:
-        apiSigningToken: ${{ (github.event_name == 'push' && env.feature_signing) && secrets.API_SIGNING_TOKEN || '' }}
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN }}
     - name: Create launcher
       shell: cmd
       run: |
@@ -309,15 +303,15 @@ jobs:
         name: Symbols
         path: output/symbols.zip
     - name: Install the latest version of uv
-      if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
+      if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
       uses: astral-sh/setup-uv@v6
     - name: Upload symbols to Mozilla
-      if: ${{ github.event_name == 'push' && env.feature_uploadSymbolsToMozilla }}
+      if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
       continue-on-error: true
       # TODO: this script should be moved to ci/scripts
       run: uv run --with requests --directory appveyor mozillaSyms.py
       env:
-        mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_AUTH_TOKEN }}
+        mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_TOKEN }}
     - name: Warn on failure
       if: ${{ failure() }}
       shell: bash
