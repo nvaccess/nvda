@@ -519,6 +519,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def collapseAndMaybeMoveToNextParagraph(self, end: bool = False):
+		return self.collapse(end)
+
 	@abstractmethod
 	def copy(self):
 		"""duplicates this text info object so that changes can be made to either one with out afecting the other"""
