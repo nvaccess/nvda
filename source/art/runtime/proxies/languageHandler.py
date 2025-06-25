@@ -82,5 +82,16 @@ def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	return _LanguageHandlerProxy._call_service("windowsLCIDToLocaleName", lcid)
 
 
+def stripLocaleFromLangCode(langWithOptionalLocale: str) -> str:
+	"""Get the lang code eg "en" for "en-au" or "chr" for "chr-US-Qaaa-x-west".
+	
+	@param langWithOptionalLocale: may already be language only, or include locale specifier
+	(e.g. "en" or "en-au").
+	@return: The language only part, before the first dash.
+	"""
+	result = _LanguageHandlerProxy._call_service("stripLocaleFromLangCode", langWithOptionalLocale)
+	return result if result is not None else ""
+
+
 # Constants that add-ons might use
 LCID_NONE = 0
