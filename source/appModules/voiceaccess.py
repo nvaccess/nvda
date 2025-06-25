@@ -5,7 +5,7 @@
 
 """App module for Windows 11 Voice Access (Version 22H2 and later).
 Voice Access allows users to dictate text and perform voice commands, replacing Windows Speech Recognition.
-This app module cannot be used in portable version of NVDA."""
+"""
 
 from typing import Callable
 import appModuleHandler
