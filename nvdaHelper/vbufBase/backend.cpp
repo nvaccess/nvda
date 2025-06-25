@@ -211,11 +211,13 @@ void VBufBackend_t::update() {
 		workingInvalidSubtreesList.clear();
 		this->lock.acquire();
 		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
+		int oldSel = this->selectionStart;
 		if(!this->replaceSubtrees(replacementSubtreeMap)) {
 			LOG_DEBUGWARNING(L"Error replacing one or more subtrees");
 		}
 		this->lock.release();
-		nvdaControllerInternal_vbufChangeNotify(this->rootDocHandle,this->rootID);
+		nvdaControllerInternal_vbufChangeNotify(this->rootDocHandle, this->rootID,
+			this->selectionStart != oldSel);
 	} else {
 		LOG_DEBUG(L"Initial render");
 		this->lock.acquire();

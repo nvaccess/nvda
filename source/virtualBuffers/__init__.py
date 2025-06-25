@@ -868,20 +868,23 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod
-	def changeNotify(cls, rootDocHandle, rootID):
+	def changeNotify(cls, rootDocHandle: int, rootID: int, selectionChanged: bool):
 		try:
 			queueHandler.queueFunction(
 				queueHandler.eventQueue,
 				cls.rootIdentifiers[rootDocHandle, rootID]._handleUpdate,
+				selectionChanged,
 			)
 		except KeyError:
 			pass
 
-	def _handleUpdate(self):
+	def _handleUpdate(self, selectionChanged: bool):
 		"""Handle an update to this buffer."""
 		if not self.VBufHandle:
 			# #4859: The buffer was unloaded after this method was queued.
 			return
+		if selectionChanged:
+			review.handleCaretMove(self.makeTextInfo(textInfos.POSITION_CARET))
 		braille.handler.handleUpdate(self)
 
 	def getControlFieldForNVDAObject(self, obj):

@@ -60,9 +60,9 @@ error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const 
 	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);
-error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID) {
-	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID);
+error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int, const unsigned char);
+error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID, const unsigned char selectionChanged) {
+	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID,selectionChanged);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_installAddonPackageFromPath)(const wchar_t *);

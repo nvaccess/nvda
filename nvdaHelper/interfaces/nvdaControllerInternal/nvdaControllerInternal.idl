@@ -78,7 +78,7 @@ interface NvdaControllerInternal {
 /**
  * Notifies NVDA that a virtual buffer has changed.
  */
-	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
+	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID, [in] const boolean selectionChanged);
 
 /**
 * Requests for installation of the add-on package from specified path.
