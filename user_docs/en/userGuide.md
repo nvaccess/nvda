@@ -477,6 +477,7 @@ Portable and temporary copies of NVDA have the following restrictions:
 * The inability to automatically start during and/or after log-on.
 * The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended). Examples include:
   * Command Prompt and PowerShell running in admin mode
+  * Task Manager
   * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 * The inability to support input from a touchscreen.
