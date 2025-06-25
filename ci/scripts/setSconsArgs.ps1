@@ -13,7 +13,6 @@ if ($env:versionType) {
 }
 $sconsArgs += " publisher=`"$env:scons_publisher`""
 if ($env:GITHUB_EVENT_NAME -eq "push" -and $env:apiSigningToken) {
-	# Note must be a single line variable
 	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
 $sconsArgs += " version_build=$([int]$env:GITHUB_RUN_NUMBER + [int]$env:START_BUILD_NUMBER)"

@@ -47,6 +47,8 @@ from .nvdaControls import _ContinueCancelDialog
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
 from .settingsDialogs import (
+	AddonStorePanel,
+	AdvancedPanel,
 	AudioPanel,
 	BrailleDisplaySelectionDialog,
 	BrailleSettingsPanel,
@@ -60,13 +62,14 @@ from .settingsDialogs import (
 	NVDASettingsDialog,
 	ObjectPresentationPanel,
 	RemoteSettingsPanel,
+	ReviewCursorPanel,
 	SettingsDialog,
 	SpeechSettingsPanel,
 	SpeechSymbolsDialog,
 	SynthesizerSelectionDialog,
 	TouchInteractionPanel,
-	ReviewCursorPanel,
 	UwpOcrPanel,
+	VisionSettingsPanel,
 )
 from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
@@ -343,6 +346,9 @@ class MainFrame(wx.Frame):
 	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
+	def onVisionSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, VisionSettingsPanel)
+
 	def onKeyboardSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
@@ -367,12 +373,20 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onAddonStoreSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, AddonStorePanel)
+
 	def onUwpOcrCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onRemoteAccessSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onAdvancedSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, AdvancedPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
