@@ -10,11 +10,19 @@ This app module cannot be used in portable version of NVDA."""
 from typing import Callable
 import appModuleHandler
 import ui
+import winUser
 from NVDAObjects import NVDAObject
+from winAPI.types import HWNDValT
 import UIAHandler
 
 
 class AppModule(appModuleHandler.AppModule):
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
+		# Allow proper mouse and touch interaction from main Voice access interface.
+		if winUser.getClassName(hwnd) == "Voice access":
+			return True
+		return False
+
 	def shouldProcessUIANotificationEvent(
 		self,
 		sender: UIAHandler.UIA.IUIAutomationElement,
