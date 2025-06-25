@@ -51,7 +51,7 @@ Our releases are packaged with a publisher name.
 To customise this, set:
 
 * `PUBLISHER_NAME` as a variable.
-It currently defaults to the repostiory owner (e.g. `nvaccess`).
+It currently defaults to the repository owner (e.g. `nvaccess`).
 
 ### Build number offset
 
