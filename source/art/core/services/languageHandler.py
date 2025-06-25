@@ -78,3 +78,12 @@ class LanguageHandlerService(BaseService):
 		except Exception:
 			self._log_error("windowsLCIDToLocaleName", str(lcid))
 			return ""
+
+	def stripLocaleFromLangCode(self, langWithOptionalLocale: str) -> str:
+		"""Get the lang code eg "en" for "en-au"."""
+		try:
+			stripped = languageHandler.stripLocaleFromLangCode(langWithOptionalLocale)
+			return stripped if stripped else ""
+		except Exception:
+			self._log_error("stripLocaleFromLangCode", langWithOptionalLocale)
+			return ""
