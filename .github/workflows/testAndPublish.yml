@@ -374,7 +374,10 @@ jobs:
       deployments: write
     runs-on: ubuntu-latest
     needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
-    if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-')}}
+    if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
+    concurrency:
+      group: snapshot
+      cancel-in-progress: true
     environment:
       name: snapshot
     steps:
@@ -419,7 +422,6 @@ jobs:
       discussions: write
     runs-on: ubuntu-latest
     needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
-    needs: [checkPot, licenseCheck, unitTests, systemTests, createSymbols]
     if: startsWith(github.ref_name, 'release-')
     concurrency:
       group: release
