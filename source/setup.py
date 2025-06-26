@@ -282,6 +282,7 @@ freeze(
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ["message.html"]),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
+		("mathcatAssets", glob("../include/nvda-mathcat/assets/**/*")),
 	]
 	+ (
 		getLocaleDataFiles()
