@@ -20,7 +20,8 @@ import subprocess
 RAW_GITHUB_REPO_URL = "https://raw.githubusercontent.com/nvaccess/nvda"
 re_kcTitle = re.compile(r"^(<!--\s+KC:title:\s*)(.+?)(\s*-->)$")
 re_kcSettingsSection = re.compile(r"^(<!--\s+KC:settingsSection:\s*)(.+?)(\s*-->)$")
-re_comment = re.compile(r"^<!--.*?-->$", flags=re.DOTALL)
+# Comments that span a single line in their entirety
+re_comment = re.compile(r"^<!--.+-->$")
 re_heading = re.compile(r"^(#+\s+)(.+?)((?:\s+\{#.+\})?)$")
 re_bullet = re.compile(r"^(\s*\*\s+)(.+)$")
 re_number = re.compile(r"^(\s*[0-9]+\.\s+)(.+)$")
