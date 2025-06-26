@@ -89,7 +89,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Static type analysis
-      run: ci/scripts/tests/licenseCheck.ps1
+      run: ci/scripts/tests/typeCheck.ps1
 
   checkPot:
     name: Check translator comments
