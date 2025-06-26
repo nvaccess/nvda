@@ -520,7 +520,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def collapseAndMaybeMoveToNextParagraph(self, end: bool = False):
-		return self.collapse(end)
+		self.collapse(end)
 
 	@abstractmethod
 	def copy(self):
