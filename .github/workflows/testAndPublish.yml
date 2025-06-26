@@ -155,8 +155,6 @@ jobs:
     runs-on: windows-latest
     needs: [buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
-    needs: [buildNVDA, checkPot]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
