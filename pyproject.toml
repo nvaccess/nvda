@@ -292,10 +292,12 @@ package-dir = {"" = "source"}
 [tool.uv.sources]
 nvda-misc-deps = { workspace = true }
 configobj = { git = "https://github.com/DiffSK/configobj", rev = "8be54629ee7c26acb5c865b74c76284e80f3aa31" }
+nvda-mathcat = { path = "include/nvda-mathcat" }
 
 [tool.uv.workspace]
 members = [
     "miscDeps",
+	"include/nvda-mathcat",
 ]
 
 [dependency-groups]
@@ -306,6 +308,7 @@ dev = [
 	# Packaging NVDA
 	"py2exe==0.13.0.2",
 	"setuptools~=72.0",
+	"nvda-mathcat" = { path = "include/nvda-mathcat" },
 ]
 lint = [
 	"ruff==0.11.12",
