@@ -16,7 +16,7 @@ Performance and reliability in the Start Menu on Windows 11 24H2 has been improv
 On Windows 11 24H2 and newer, window state will be announced when resizing windows with `Windows+arrow` keys.
 Support has also been added for Windows 11 Voice Access.
 
-Options have been added to report the language of the text being read, and report when the text language is not supported by the current synthesizer.
+Options have been added to report the language of the text being read, and report when the language is not supported by the current synthesizer.
 
 Support for the NLS eReader Zoomax braille display has been added.
 Support for cursor routing with the point and click action on the Humanware Monarch has been added.
