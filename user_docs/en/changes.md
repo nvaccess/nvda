@@ -32,6 +32,8 @@ There have also been a number of other fixes and improvements, including to mous
 * It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
 * In Windows 11 2024 Update and Server 2025 and later, NVDA will announce foreground window states such as restore, maximize, and snap when changing window position by pressing `windows+arrow` keys. (#17841, #18175, @josephsl)
 * Unassigned commands have been added to open the NVDA settings dialog in the following categories: Vision, Windows OCR, Add-on Store and Advanced. (#18313, @CyrilleB79)
+* Introduced support for Windows 11 Voice Access, including reporting dictated text and microphone status from everywhere (requires NVDA to be installed). (#16862, #17384, @josephsl)
+* Support for the NLS eReader Zoomax braille display has been added. (#15863, @florin-trutiu)
 
 ### Changes
 
@@ -40,6 +42,8 @@ There have also been a number of other fixes and improvements, including to mous
     * Added new tables for Biblical Hebrew as well as for Russian 6 dot computer braille and Thai Grade 2.
     * Substantial updates to Lithuanian braille tables.
     * Small improvements to Hungarian, Dutch, Norwegian and Turkish tables.
+  * Updated eSpeak NG to [commit `e93d3a9`](https://github.com/espeak-ng/espeak-ng/commit/e93d3a97ee9237f7e170cc8870f44c14de9032a9). (#17896)
+    * Added new languages Aromanian, Crimean Tatar, Mongolian, and Pashto.
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 * When the Elements List or Find dialog is opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 * In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)

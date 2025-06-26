@@ -16,7 +16,7 @@ branches:
 environment:
  PY_PYTHON: 3.11-32
  apiSigningToken:
-  secure: 8ARK3NZNRlz8VrhTbpTLP5GMnwbqlUN0DK4SYL4FUYSAAEgXUSB+MBcHHLa6JL9E
+  secure: kfXhUTs1gmcOo0yFDwqNySP3NuLkNcB3m0qeSg+YPPS4gPyLOU9GyvBLnMuDnHe6
  secure_ssh_pass:
   secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
@@ -34,7 +34,7 @@ environment:
  feature_buildSymbols: configured
  feature_uploadSymbolsToMozilla: configured
  #feature_buildAppx: configured
- feature_crowdinSync: configured
+ #feature_crowdinSync: configured
  feature_signing: configured
 
 # scripts that are called at very beginning, before repo cloning
