@@ -97,7 +97,7 @@ jobs:
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
-      if: ${{ failure() }}
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: makePot results
@@ -159,7 +159,7 @@ jobs:
   crowdinUpload:
     name: Upload translations to Crowdin
     runs-on: windows-latest
-    needs: buildNVDA
+    needs: [buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
     steps:
     - name: Checkout cached build
@@ -169,6 +169,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Get makePot results
+      uses: actions/download-artifact@v4
+      with:
+        name: makePot results
+        path: output
     - name: Install the latest version of uv
       if: ${{ env.feature_crowdinSync }}
       uses: astral-sh/setup-uv@v6
