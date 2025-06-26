@@ -188,7 +188,7 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
       env:
-        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN }}
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
     - name: Create launcher
       shell: cmd
       run: |
