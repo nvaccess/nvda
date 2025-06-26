@@ -519,7 +519,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def collapseAndMaybeMoveToNextParagraph(self, end: bool = False):
+	def _collapseAndMaybeMoveToNextParagraph(self, end: bool = False) -> None:
 		self.collapse(end)
 
 	@abstractmethod
