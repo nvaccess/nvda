@@ -33,7 +33,7 @@ Some of these steps run concurrently.
   * On tagged/snapshot builds, upload symbols to Mozilla
   * On beta branch builds, upload translation to Crowdin.
   * On snapshot builds, deploy to the server.
-  * On release builds, publish the release in GitHub and deploy to the server.
+  * On release builds, publish the release on GitHub and deploy to the server.
 * Clean up build cache.
 
 ### Build behaviours
