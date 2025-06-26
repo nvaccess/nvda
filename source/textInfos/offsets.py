@@ -664,7 +664,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		count = 0
 		lowLimit = 0
 		highLimit = self._getStoryLength()
-		if self.allowMoveToOffsetPastEnd and unit == textInfos.UNIT_CHARACTER:
+		if self.allowMoveToOffsetPastEnd:
 			# #2096: There is often an uncounted character at the end of the text
 			# where the caret is placed to append text.
 			highLimit += 1
