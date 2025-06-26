@@ -19,22 +19,22 @@ These are signed and deployed to the NV Access server.
 The build process is non-linear.
 Some of these steps run concurrently.
 
-1. Prepare source code and cache:
-    1. Checkout NVDA repository with submodules.
-    1. Install dependencies (or use cache).
-    1. Set version and scons variables.
-    1. Build NVDA source.
-1. Build and test:
-    1. Run static tests
-    1. Build launcher
-    1. Install NVDA
-    1. Run systems tests
-1. Deploy (not fully active currently):
-    1. On tagged/snapshot builds, upload symbols to Mozilla
-    1. On beta branch builds, upload translation to Crowdin.
-    1. On snapshot builds, deploy to the server.
-    1. On release builds, publish the release in GitHub and deploy to the server.
-1. Clean up build cache.
+* Prepare source code and cache:
+  * Checkout NVDA repository with submodules.
+  * Install dependencies (or use cache).
+  * Set version and scons variables.
+  * Build NVDA source.
+* Build and test:
+  * Run static tests
+  * Build launcher
+  * Install NVDA
+  * Run systems tests
+* Deploy (not fully active currently):
+  * On tagged/snapshot builds, upload symbols to Mozilla
+  * On beta branch builds, upload translation to Crowdin.
+  * On snapshot builds, deploy to the server.
+  * On release builds, publish the release in GitHub and deploy to the server.
+* Clean up build cache.
 
 ### Build behaviours
 
@@ -56,7 +56,7 @@ It currently defaults to the repository owner (e.g. `nvaccess`).
 ### Build number offset
 
 To offset from our previous build system, we start the sequential build count at a higher number than 0.
-This means our first build will be numbered something like 100,001 not 1.
+This means our first build will be numbered something like 100,001 not *
 
 To offset build numbers, set;
 
@@ -133,7 +133,9 @@ Ensure a secret is set and SSL is enabled.
 
 NV Access scans tagged builds with VirusTotal.
 
-Set `VT_API_KEY` as a secret to perform tagged builds.
+To ensure this step of tagged builds succeed, set:
+
+* `VT_API_KEY` as a secret.
 
 ### GitHub Discussions category
 

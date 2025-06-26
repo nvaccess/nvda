@@ -154,20 +154,17 @@ jobs:
     name: Upload translations to Crowdin
     runs-on: windows-latest
     needs: buildNVDA
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
     steps:
     - name: Checkout cached build
-      if: ${{ vars.CROWDIN_PROJECT_ID }}
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Install the latest version of uv
-      if: ${{ vars.CROWDIN_PROJECT_ID }}
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
-      if: ${{ vars.CROWDIN_PROJECT_ID }}
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
@@ -282,8 +279,8 @@ jobs:
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
-  uploadSymbols:
-    name: Upload symbols
+  createSymbols:
+    name: Create symbols
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -302,11 +299,21 @@ jobs:
       with:
         name: Symbols
         path: output/symbols.zip
+
+  uploadSymbols:
+    name: Upload symbols
+    runs-on: windows-latest
+    needs: createSymbols
+    if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
+    steps:
     - name: Install the latest version of uv
-      if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
       uses: astral-sh/setup-uv@v6
+    - name: Get symbols
+      uses: actions/download-artifact@v4
+      with:
+        name: Symbols
+        path: output/symbols.zip
     - name: Upload symbols to Mozilla
-      if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
       continue-on-error: true
       # TODO: this script should be moved to ci/scripts
       run: uv run --with requests --directory appveyor mozillaSyms.py
@@ -328,7 +335,7 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
-    needs: [checkPot, licenseCheck, unitTests, systemTests, crowdinUpload, uploadSymbols]
+    needs: [checkPot, licenseCheck, unitTests, systemTests, crowdinUpload, createSymbols]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     steps:
@@ -344,7 +351,7 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    needs: [checkPot, licenseCheck, unitTests, systemTests, uploadSymbols]
+    needs: [checkPot, licenseCheck, unitTests, systemTests, createSymbols]
     if: startsWith(github.ref_name, 'release-')
     steps:
     - name: Get normalized tag names
