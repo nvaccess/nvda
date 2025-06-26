@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -44,6 +44,7 @@ import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
 from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
+from comInterfaces import UIAutomationClient as UIA
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -489,10 +490,10 @@ class AppModule(baseObject.ScriptableObject):
 
 		self._inprocRegistrationHandle = None
 
-	def _getExecutableFileInfo(self):
-		# Used for obtaining file name and version for the executable.
-		# This is needed in case immersive app package returns an error,
-		# dealing with a native app, or a converted desktop app.
+	processExecutablePath: str
+	"""The path to the executable of the current process."""
+
+	def _get_processExecutablePath(self) -> str:
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
@@ -503,8 +504,13 @@ class AppModule(baseObject.ScriptableObject):
 			ctypes.byref(length),
 		):
 			raise ctypes.WinError()
-		fileName = exeFileName.value
-		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
+		return exeFileName.value
+
+	def _getExecutableFileInfo(self):
+		# Used for obtaining file name and version for the executable.
+		# This is needed in case immersive app package returns an error,
+		# dealing with a native app, or a converted desktop app.
+		fileinfo = getFileVersionInfo(self.processExecutablePath, "ProductName", "ProductVersion")
 		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
 
 	def _getImmersivePackageInfo(self):
@@ -760,6 +766,36 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return True
 
+	def shouldProcessUIANotificationEvent(
+		self,
+		sender: UIA.IUIAutomationElement,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
+	) -> bool:
+		"""
+		Determines whether NVDA should process a UIA notification event.
+
+		By default, events from elements with window handle value set
+		and traversable back to the desktop will be accepted.
+		Returning ``False`` will cause the event to be dropped completely.
+		Returning ``True`` means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+
+		:param sender: UIA element raising the notification event.
+		:param notificationKind: notification kind such as activity completion.
+		:param notificationProcessing: how NVDA should process notifications such as canceling speech.
+		:param displayString: notification content/text.
+		:param activityId: notification description.
+		:return: Whether NVDA components including ap modules and NVDA objects should process notification events.
+		"""
+		import UIAHandler
+
+		# By default, see if UIA tree can be traversed to arrive at the desktop element.
+		return bool(UIAHandler.handler.getNearestWindowHandle(sender))
+
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
@@ -859,7 +895,7 @@ def getWmiProcessInfo(processId):
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
 		results = wmi.ExecQuery(
-			"select * from Win32_Process " "where ProcessId = %d" % processId,
+			"select * from Win32_Process where ProcessId = %d" % processId,
 		)
 		for result in results:
 			return result

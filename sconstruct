@@ -7,56 +7,19 @@
 
 import multiprocessing
 import os
-import platform
 import sys
+from pathlib import Path
 
-
-# Ensure we are inside the Python virtual environment.
-nvdaVenv = os.getenv("NVDA_VENV")
+# Ensure we are inside the Python virtual environment, and that it is started with uv
 virtualEnv = os.getenv("VIRTUAL_ENV")
-if not virtualEnv or not os.path.isdir(virtualEnv):
+uv = os.getenv("uv")
+if not virtualEnv or not uv or Path.cwd() != Path(virtualEnv).parent:
 	print(
-		"Error: SCons cannot detect the NVDA build system Python virtual environment.\n"
+		"Error: SCons was started outside NVDA's build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
 	)
 	sys.exit(1)
-if nvdaVenv != virtualEnv:
-	print("Warning: SCons launched within a custom Python virtual environment.")
 
-# Variables for storing required version of Python, and the version which is used to run this script.
-requiredPythonMajor = "3"
-requiredPythonMinor = "11"
-requiredPythonArchitecture = "32bit"
-installedPythonMajor = str(sys.version_info.major)
-installedPythonMinor = str(sys.version_info.minor)
-installedPythonArchitecture = platform.architecture()[0]
-# Ensure that we are running with required version of Python, otherwise inform the user and exit.
-if (
-	installedPythonArchitecture != requiredPythonArchitecture
-	or installedPythonMajor != requiredPythonMajor
-	or installedPythonMinor != requiredPythonMinor
-):
-	unsupportedPythonMsg = (
-		"This script is started with Python %s.%s %s, however to build NVDA you have to use Python %s.%s %s.\n"
-		"Please install the needed version of Python and launch SCons again, or if you have multiple "
-		"versions of Python installed start this script with required version explicitly."
-	)
-	raise RuntimeError(
-		unsupportedPythonMsg
-		% (
-			installedPythonMajor,
-			installedPythonMinor,
-			installedPythonArchitecture,
-			requiredPythonMajor,
-			requiredPythonMinor,
-			requiredPythonArchitecture,
-		)
-	)
-sourceEnvPath = os.path.abspath(os.path.join(Dir(".").srcnode().path, "source"))
-sys.path.append(sourceEnvPath)
-import sourceEnv  # noqa: E402
-
-sys.path.remove(sourceEnvPath)
 import time  # noqa: E402
 import importlib.util  # noqa: E402
 import winreg  # noqa: E402
@@ -192,9 +155,6 @@ if len(unknown) > 0:
 	print("Unknown commandline variables: %s" % unknown)
 	Exit(1)
 
-# Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
-env["ENV"]["PYTHONPATH"] = ";".join(sourceEnv.PYTHON_DIRS)
-
 env["copyright"] = versionInfo.copyright
 env["version_year"] = versionInfo.version_year
 env["version_major"] = versionInfo.version_major
@@ -237,7 +197,7 @@ if apiSigningToken:
 		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
-				ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				ps_cmd = rf"PowerShell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
@@ -347,7 +307,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	env.Command(
 		mdFile,
 		xliffFile,
-		[f'@{sys.executable} source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+		[f'@"{sys.executable}" source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
@@ -366,7 +326,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.Command(
 		target=mdFile.abspath.replace(".md", ".html"),
 		source=mdFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
 	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
@@ -391,7 +351,7 @@ for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.
 	keyCommandsHtmlFile = env.Command(
 		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
 		source=userGuideFileSub,
-		action=[f'@{sys.executable} source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
+		action=[f'@"{sys.executable}" source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
 	)
 	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 

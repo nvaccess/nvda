@@ -177,7 +177,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise RuntimeError("No MINI-SEIKA display found, no response")
 		else:
 			log.info(
-				f"Seika notetaker," f" Cells {self.numCells}" f" Buttons {self.numBtns}",
+				f"Seika notetaker, Cells {self.numCells} Buttons {self.numBtns}",
 			)
 
 	def _getDeviceInfo(self, dev: hwIo.IoBase) -> bool:

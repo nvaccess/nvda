@@ -73,7 +73,7 @@ def logBadSequenceTypes(sequence: SpeechIterable, raiseExceptionOnError=False) -
 	# Check the type of the container
 	if not isinstance(sequence, Sequence):
 		log.error(
-			f"Unexpected Sequence Type: {type(sequence)!r} supplied," f" a {SpeechSequence!r} is required.",
+			f"Unexpected Sequence Type: {type(sequence)!r} supplied, a {SpeechSequence!r} is required.",
 			stack_info=True,
 		)
 		if raiseExceptionOnError:

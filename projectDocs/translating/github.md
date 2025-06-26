@@ -6,9 +6,9 @@ This guide provides technical steps on how to translate symbols and character de
 
 For detailed information on the format of these files, please refer to the following sections in the developer guide:
 
-- `characterDescriptions.dic`: [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#characterDescriptions)
-- `symbols.dic`: [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#symbolPronunciation)
-- `gestures.ini`: [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures)
+- `characterDescriptions.dic`: [Translating Character Descriptions](https://download.nvaccess.org/documentation/developerGuide.html#characterDescriptions)
+- `symbols.dic`: [Translating Symbols](https://download.nvaccess.org/documentation/developerGuide.html#symbolPronunciation)
+- `gestures.ini`: [Translating Gestures](https://download.nvaccess.org/documentation/developerGuide.html#TranslatingGestures)
 
 To keep these files up to date, translators must be concious of changes in NVDA.
 For changes to `symbols.dic` and `characterDescriptions.dic`, please subscribe to the read-only [NVDA localisation mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n).
@@ -86,5 +86,5 @@ New gestures will be announced there, and localisations can be added to `gesture
 1. Await feedback from NV Access
     - NV Access will provide feedback if any further work is required.
     - You will receive a notification when your proposal is accepted - the request will be merged and closed.
-    - After merging, the changes will become available in [alpha builds](https://www.nvaccess.org/files/nvda/snapshots/) for testing.
-    The changes will also be made available in the next beta release.
+    - After merging, the changes will become available in [beta builds](https://download.nvaccess.org/snapshots/beta/) for testing.
+    The changes will also be made available in the next [beta release](https://download.nvaccess.org/releases/beta/).

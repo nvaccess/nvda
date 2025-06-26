@@ -122,9 +122,11 @@ def playWaveFile(
 
 	def play():
 		global fileWavePlayer
+		# #17918: Create a function local copy of the player to avoid cases where it becomes None during playback.
+		p = fileWavePlayer
 		try:
-			fileWavePlayer.feed(f.readframes(f.getnframes()))
-			fileWavePlayer.idle()
+			p.feed(f.readframes(f.getnframes()))
+			p.idle()
 		except Exception:
 			log.exception("Error playing wave file")
 		# #11169: Files might not be played that often. Leaving the device open

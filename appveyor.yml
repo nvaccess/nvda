@@ -28,12 +28,13 @@ environment:
  crowdinAuthToken:
   secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
  scons_publisher: NV Access
+ SCONS_CACHE_MSVC_CONFIG: "true"
  # Comment out any of the feature_* variables to disable the respective build feature.
  # They are checked for existence of content, not specific value.
  feature_buildSymbols: configured
  feature_uploadSymbolsToMozilla: configured
  #feature_buildAppx: configured
- feature_crowdinSync: configured
+ #feature_crowdinSync: configured
  feature_signing: configured
 
 # scripts that are called at very beginning, before repo cloning
@@ -47,7 +48,8 @@ install:
     "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
- - py -m pip install --upgrade --no-warn-script-location pip
+ - ps: Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
+ - set Path=%userprofile%\.local\bin;%Path%
  - git submodule update --init
  - ps: |
     "INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append

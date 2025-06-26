@@ -201,11 +201,8 @@ Summarising this information and opening a new issue filling out the issue templ
 
 NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`.
 
-### Missing attachments
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not.
-All of these Trac attachments are accessible on the [NV Access website](https://www.nvaccess.org/files/nvdaTracAttachments/), you can search for issue numbers in the folder, or append the GitHub issue number to the URL.
-As an example, for issue [#2396](https://github.com/nvaccess/nvda/issues/2396), get the attachments from <https://www.nvaccess.org/files/nvdaTracAttachments/2396>.
-If you come across one of these missing attachments, please upload if you think they're relevant to GitHub. Note you'll need to pay attention to GitHub's attachment naming restrictions, if it fails try zipping it.
+These attachments have been lost.
 
 ## NV Access staff-created tickets
 

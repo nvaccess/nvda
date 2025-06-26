@@ -24,7 +24,7 @@ mdFileSub = env.Substfile(
 htmlFile = env.Command(
 	target=mdFile.abspath.replace(".md", ".html"),
 	source=mdFileSub,
-	action=[f'@{sys.executable} source/md2html.py -t developerGuide "$SOURCE" "$TARGET"'],
+	action=[f'@"{sys.executable}" source/md2html.py -t developerGuide "$SOURCE" "$TARGET"'],
 )
 devGuide = env.Command(
 	target=devDocsOutputDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
@@ -54,7 +54,6 @@ ignorePaths = [
 	"mathType.py",  # Fails when not installed
 	"oleTypes.py",  # Not our code
 	"setup.py",  # Py2exe
-	"sourceEnv.py",  # Only available when running from source
 ]
 
 sphinxAPIDocs = env.Command(

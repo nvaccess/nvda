@@ -14,6 +14,7 @@ from .commands import (
 	EndUtteranceCommand,
 	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
+	LangChangeCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
@@ -21,6 +22,7 @@ from .commands import (
 )
 from .extensions import pre_speechQueued
 from .priorities import Spri, SPEECH_PRIORITIES
+from .languageHandling import shouldSwitchVoice
 from logHandler import log
 from synthDriverHandler import getSynth, pre_synthSpeak
 from typing import (
@@ -276,8 +278,7 @@ class SpeechManager(object):
 		log._speechManagerDebug("Out Seq: %r", outSeq)  # expensive string to build - defer
 		queue = self._priQueues.get(priority)
 		log._speechManagerDebug(
-			f"Current priority: {priority},"
-			f" queLen: {0 if queue is None else len(queue.pendingSequences)}",
+			f"Current priority: {priority}, queLen: {0 if queue is None else len(queue.pendingSequences)}",
 		)
 		if not queue:
 			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
@@ -367,6 +368,9 @@ class SpeechManager(object):
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
 			if isinstance(command, SynthParamCommand):
+				if isinstance(command, LangChangeCommand) and not shouldSwitchVoice():
+					# Language change shouldn't be passed to synthesizer.
+					continue
 				paramTracker.update(command)
 			if isinstance(command, SuppressUnicodeNormalizationCommand):
 				continue  # Not handled by speech manager
@@ -613,7 +617,7 @@ class SpeechManager(object):
 			if isinstance(lastCommand, IndexCommand):
 				if self._isIndexAAfterIndexB(index, lastCommand.index):
 					log.debugWarning(
-						f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled",
+						f"Reached speech index {index:d}, but index {lastCommand.index:d} never handled",
 					)
 				elif index == lastCommand.index:
 					endOfUtterance = isinstance(

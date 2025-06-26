@@ -47,10 +47,13 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 #### Python
-
 [Python](https://www.python.org/), version 3.11, 32 bit.
 
 To replicate the production build environment, use the 3.11.x minor version of Python that [AppVeyor uses for the Visual Studio 2022 environment](https://www.appveyor.com/docs/windows-images-software/#python).
+
+#### uv
+
+[uv](https://docs.astral.sh/uv/) is used as package and project manager.
 
 #### Microsoft Visual Studio
 
@@ -81,10 +84,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52.0
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `e93d3a97ee9237f7e170cc8870f44c14de9032a9`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.33.0
+* [liblouis](http://www.liblouis.io/), version 3.34.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 46.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -92,7 +95,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
-* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
+* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
@@ -101,7 +104,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 The following build time dependencies are included in the miscDeps git submodule:
 
-* xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
+* xgettext and msgfmt from [GNU gettext](https://github.com/mlocati/gettext-iconv-windows/tags)
 
 #### VS Code
 
@@ -121,7 +124,7 @@ The following build time dependencies are included in the miscDeps git submodule
 ### Python dependencies
 
 NVDA and its build system also depend on an extensive list of Python packages.
-They are all listed with their specific versions in the `requirements.txt` file in the root of this repository.
+They are all listed with their specific versions in the `pyproject.toml` file in the root of this repository.
 However, the build system takes care of fetching these itself when needed.
 These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
 

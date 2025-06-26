@@ -43,7 +43,7 @@ Major highlights include:
 #### Minimum System Requirements {#MinimumSystemRequirements}
 
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
-  * both AMD64 and ARM64 variants of Windows are supported.
+  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
   * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 500 MB of storage space.
@@ -51,7 +51,7 @@ Major highlights include:
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
-  * both AMD64 and ARM64 variants of Windows are supported.
+  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
@@ -242,6 +242,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
+|Report language |Not assigned |Not assigned |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
 #### Toggle which information NVDA reads {#ToggleWhichInformationNVDAReads}
@@ -275,7 +276,7 @@ The full list of Single Letter Navigation keys is in the [Browse Mode](#BrowseMo
 | Command |Keystroke |Description|
 |---|---|---|
 |Heading |`h` |Move to the next heading|
-|Heading level 1, 2, or 3 |`1`, `2`, `3` |Move to the next heading at the specified level|
+|Heading level 1, 2, etc. |`1`, `2`, etc. |Move to the next heading at the specified level|
 |Form field |`f` |Move to the next form field (edit box, button, etc)|
 |Link |`k` |Move to the next link|
 |Landmark |`d` |Move to the next landmark|
@@ -474,7 +475,10 @@ This includes disabling usage of the [Add-on Store](#AddonsManager).
 Portable and temporary copies of NVDA have the following restrictions:
 
 * The inability to automatically start during and/or after log-on.
-* The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
+* The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended). Examples include:
+  * Command Prompt and PowerShell running in admin mode
+  * Task Manager
+  * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 * The inability to support input from a touchscreen.
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
@@ -1012,7 +1016,7 @@ The following keys by themselves jump to the next available element, while addin
 * g: graphic
 * d: landmark
 * o: embedded object (audio and video player, application, dialog, etc.)
-* 1 to 6: headings at levels 1 to 6 respectively
+* 1 to 9: headings at levels 1 to 9 respectively
 * a: annotation (comment, editor revision, etc.)
 * `p`: text paragraph
 * w: spelling error
@@ -1131,7 +1135,13 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it (Mozilla Firefox, and any browser based on Chromium 134 or newer) which causes the document's native selection to follow NVDA's Browse Mode selection.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it.
+Native Selection causes the document's native selection to follow NVDA's Browse Mode selection, which enables details such as formatting, links, and tables to be copied.
+Currently, Native Selection Mode is supported in:
+
+* Mozilla Firefox
+* Mozilla Thunderbird
+* Chrome, Edge, and any browser based on Chromium 134 or newer
 
 <!-- KC:beginInclude -->
 
@@ -1921,6 +1931,22 @@ This option is enabled by default.
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
+
+##### Report language changes {#ReportLanguage}
+
+This checkbox allows you to toggle whether NVDA should report the detected language of the text being read, when the language changes from the default language.
+The language configured to be used by default won't be reported.
+This option is disabled by default.
+
+##### Report when switching to language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
+
+This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer.
+If [Automatic Language switching](#SpeechSettingsLanguageSwitching) is disabled, this option won't take effect, and the combo box will be readonly.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Speech, Beep, Off|
+|Default |Speech|
 
 <!-- KC:setting -->
 
@@ -2873,7 +2899,8 @@ This option allows you to specify whether browse mode should place clickable con
 Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
 When screen layout is enabled, page elements will stay as they are visually shown.
 For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
-If it is disabled, then page elements will be placed on their own lines.
+If it is disabled, interactive elements, such as links and buttons, will be placed on their own lines.
+Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
@@ -4042,7 +4069,7 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 ### Python Console {#PythonConsole}
 
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
+For more information, please see the [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html).
 
 ### Add-on Store {#AddonStoreMenuItem}
 
@@ -4170,6 +4197,7 @@ The following displays support this automatic detection functionality.
 * Nattiq nBraille displays
 * Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
 * Tivomatic Caiku Albatross 46/80 displays
+* NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
@@ -4482,8 +4510,7 @@ The following extra devices are also supported (and do not require any special d
 * APH Mantis Q40
 * APH Chameleon 20
 * Humanware BrailleOne
-* NLS eReader
-  * Note that the Zoomax is currently not supported without external drivers
+* NLS eReader HumanWare
 
 Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5343,6 +5370,34 @@ Please see the display's documentation for descriptions of where these keys can 
 |`Windows+e` key (this computer) |`attribute2`|
 |`Windows+b` key (focus system tray) |`attribute3`|
 |`Windows+i` key (Windows settings) |`attribute4`|
+
+<!-- KC:endInclude -->
+
+### NLS eReader Zoomax {#Zoomax}
+
+The NLS eReader Zoomax device supports USB or bluetooth connections.
+The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.
+For computers where the Internet connection is disabled or not available, you can manually [download and install the USB to serial CH340 chip driver](https://www.wch-ic.com/downloads/CH341SER_EXE.html) to support this display over USB.
+
+By default, NVDA can automatically detect and connect to this display via USB or bluetooth.
+However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back |`d2`|
+|Scroll braille display forward |`d5`|
+|Move braille display to previous line |`d1`|
+|Move braille display to next line |`d3`|
+|Route to braille cell |`routing`|
+|Up arrow key |`up`|
+|Down arrow key |`down`|
+|Left arrow key |`left`|
+|Right arrow key |`right`|
+|Enter key |`select`|
 
 <!-- KC:endInclude -->
 

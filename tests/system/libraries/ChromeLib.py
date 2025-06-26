@@ -229,15 +229,12 @@ class ChromeLib:
 		@param testCase - The HTML sample to test.
 		@param _alwaysDoToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
-		testCase = (
-			testCase
-			+ (
-				"\n<!-- "  # new line, start a HTML comment
-				"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
-				" this test case string: \n"
-				f"{ _datetime.datetime.now().isoformat()} "
-				f" -->"  # end HTML comment
-			)
+		testCase = testCase + (
+			"\n<!-- "  # new line, start a HTML comment
+			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
+			" this test case string: \n"
+			f"{_datetime.datetime.now().isoformat()} "
+			f" -->"  # end HTML comment
 		)
 		spy = _NvdaLib.getSpyLib()
 		_chromeLib: "ChromeLib" = _getLib("ChromeLib")  # using the lib gives automatic 'keyword' logging.
@@ -267,7 +264,7 @@ class ChromeLib:
 
 		if not self._waitForStartMarker():
 			builtIn.fail(
-				"Unable to locate 'before sample' marker." " See NVDA log for full speech.",
+				"Unable to locate 'before sample' marker. See NVDA log for full speech.",
 			)
 		# Move to the loading status line, and wait for it to become complete
 		# the page has fully loaded.

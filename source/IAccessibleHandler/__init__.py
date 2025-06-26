@@ -692,7 +692,7 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
-			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, " f"force {force}",
+			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, force {force}",
 		)
 	windowClassName = winUser.getClassName(window)
 	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.

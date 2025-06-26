@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Copyright (C) 2009-2025 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
 # Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
@@ -679,7 +679,7 @@ class UIATextInfo(textInfos.TextInfo):
 			furtherUIAFormatUnits = self.UIAFormatUnits if UIAFormatUnits is None else []
 		if debug:
 			log.debug(
-				f"Walking by unit {unit}, " f"with further units of: {furtherUIAFormatUnits}",
+				f"Walking by unit {unit}, with further units of: {furtherUIAFormatUnits}",
 			)
 		rangeIter = iterUIARangeByUnit(textRange, unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
@@ -729,15 +729,15 @@ class UIATextInfo(textInfos.TextInfo):
 	) -> Generator[textInfos.TextInfo.TextOrFieldsT, None, None]:
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
-		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
-		@param textRange: the UI Automation text range whos content should be fetched.
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+		:param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
+		:param textRange: the UI Automation text range whos content should be fetched.
+		:param formatConfig: the types of formatting requested.
+		:type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
-		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
-		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
+		:param includeRoot: If true, then a control start and end will be yielded for the root element.
+		:param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
+		:param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
+		:param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
 			or is clipped at the start or end.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
@@ -777,7 +777,7 @@ class UIATextInfo(textInfos.TextInfo):
 					break
 				else:
 					if debug:
-						log.debug("parentElement: %s" % parentElement.currentLocalizedControlType)
+						log.debug(f"parentElement: {parentElement.currentLocalizedControlType!r}")
 					try:
 						parentRange = self.obj.UIATextPattern.rangeFromChild(parentElement)
 					except COMError:
@@ -786,22 +786,26 @@ class UIATextInfo(textInfos.TextInfo):
 						if debug:
 							log.debug("parentRange is NULL. Breaking")
 						break
-					clippedStart = (
-						textRange.CompareEndpoints(
-							UIAHandler.TextPatternRangeEndpoint_Start,
-							parentRange,
-							UIAHandler.TextPatternRangeEndpoint_Start,
-						)
-						> 0
+					startCmp = textRange.CompareEndpoints(
+						UIAHandler.TextPatternRangeEndpoint_Start,
+						parentRange,
+						UIAHandler.TextPatternRangeEndpoint_Start,
 					)
-					clippedEnd = (
-						textRange.CompareEndpoints(
-							UIAHandler.TextPatternRangeEndpoint_End,
-							parentRange,
-							UIAHandler.TextPatternRangeEndpoint_End,
-						)
-						< 0
+					endCmp = textRange.CompareEndpoints(
+						UIAHandler.TextPatternRangeEndpoint_End,
+						parentRange,
+						UIAHandler.TextPatternRangeEndpoint_End,
 					)
+					clippedStart = startCmp > 0
+					if endCmp == startCmp and endCmp > 0:
+						if debug:
+							log.debug(
+								f"The end of the inner range is greater than the end of the outer range ({endCmp}). "
+								"This is likely a bug in the UIA implementation. Assuming clippedEnd=True",
+							)
+						clippedEnd = True
+					else:
+						clippedEnd = endCmp < 0
 					parentElements.append((parentElement, (clippedStart, clippedEnd)))
 				parentElement = UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(
 					parentElement,
@@ -930,7 +934,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if lastChildEndDelta > 0:
 					if debug:
 						log.debug(
-							"textRange ended part way through the child. " "Crop end of childRange to fit",
+							"textRange ended part way through the child. Crop end of childRange to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_End,
@@ -957,8 +961,7 @@ class UIATextInfo(textInfos.TextInfo):
 				elif childStartDelta < 0:
 					if debug:
 						log.debug(
-							"textRange started part way through child. "
-							"Cropping Start of child range to fit",
+							"textRange started part way through child. Cropping Start of child range to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_Start,
@@ -2423,10 +2426,10 @@ class UIA(Window):
 
 	def event_UIA_notification(
 		self,
-		notificationKind: Optional[int] = None,
-		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-		displayString: Optional[str] = None,
-		activityId: Optional[str] = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: str | None = None,
+		activityId: str | None = None,
 	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
@@ -2438,14 +2441,19 @@ class UIA(Window):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		if displayString:
+			speechPriority = None
 			if notificationProcessing in (
 				UIAHandler.NotificationProcessing_ImportantMostRecent,
 				UIAHandler.NotificationProcessing_MostRecent,
 			):
 				# These notifications superseed earlier notifications.
 				# Note that no distinction is made between important and non-important.
-				speech.cancelSpeech()
-			ui.message(displayString)
+				# #17986: speak notification message as soon as possible while say all is in progress.
+				if speech.sayAll.SayAllHandler.isRunning():
+					speechPriority = speech.priorities.Spri.NOW
+				else:
+					speech.cancelSpeech()
+			ui.message(displayString, speechPriority=speechPriority)
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.

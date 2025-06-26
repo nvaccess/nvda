@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
@@ -24,6 +24,12 @@ from logHandler import log
 from typing import Optional, Type
 import nvwave
 import globalVars
+import NVDAHelper
+
+
+isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
+isScreenFullyBlack.argtypes = ()
+isScreenFullyBlack.restype = BOOL
 
 
 class MAGCOLOREFFECT(Structure):
@@ -339,6 +345,8 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		try:
 			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 			Magnification.MagShowSystemCursor(False)
+			if not isScreenFullyBlack():
+				raise RuntimeError("Screen is not black.")
 		except Exception as e:
 			Magnification.MagUninitialize()
 			raise e

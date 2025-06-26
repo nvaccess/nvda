@@ -45,6 +45,7 @@ from config.configFlags import (
 	ReportCellBorders,
 	OutputMode,
 	TypingEcho,
+	ReportNotSupportedLanguage,
 )
 import languageHandler
 import speech
@@ -145,7 +146,7 @@ class SettingsDialog(
 		if log.isEnabledFor(log.DEBUG):
 			instancesState = dict(SettingsDialog._instances)
 			log.debug(
-				"Creating new settings dialog (multiInstanceAllowed:{}). " "State of _instances {!r}".format(
+				"Creating new settings dialog (multiInstanceAllowed:{}). State of _instances {!r}".format(
 					multiInstanceAllowed,
 					instancesState,
 				),
@@ -221,7 +222,7 @@ class SettingsDialog(
 			buttonFlag |= button
 		if hasApplyButton:
 			log.debugWarning(
-				"The hasApplyButton parameter is deprecated. " "Use buttons instead. ",
+				"The hasApplyButton parameter is deprecated. Use buttons instead. ",
 			)
 			buttonFlag |= wx.APPLY
 		self.hasApply = hasApplyButton or wx.APPLY in buttons
@@ -440,7 +441,7 @@ class SettingsPanel(
 		gui.messageBox(
 			message=_(
 				# Translators: Content of the message displayed when a validation error occurs in the settings dialog
-				"{message}\n" "\n" 'Category: "{category}"\n' 'Option: "{option}"',
+				'{message}\n\nCategory: "{category}"\nOption: "{option}"',
 			).format(
 				message=message,
 				category=category,
@@ -1694,6 +1695,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoLanguageSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoLanguageSwitching"],
 		)
+		self.autoLanguageSwitchingCheckbox.Bind(wx.EVT_CHECKBOX, self.onAutoLanguageSwitchingChange)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, different voices for dialects will be used to
@@ -1706,6 +1708,39 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoDialectSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoDialectSwitching"],
 		)
+		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
+		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes")
+		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(
+				self,
+				label=reportLanguageText,
+			),
+		)
+		self.bindHelpEvent("ReportLanguage", self.reportLanguageCheckbox)
+		self.reportLanguageCheckbox.SetValue(
+			config.conf["speech"]["reportLanguage"],
+		)
+
+		labelText = pgettext(
+			"reportLanguage",
+			# Translators: This is a label for a combobox in the Voice settings panel to select
+			# reporting when the language of the text being read is not supported by the current synthesizer.
+			"Report when switching to language is not s&upported by synthesizer",
+		)
+		self.reportNotSupportedLanguageCombo = settingsSizerHelper.addLabeledControl(
+			labelText,
+			wx.Choice,
+			choices=[option.displayString for option in ReportNotSupportedLanguage],
+		)
+		self.bindHelpEvent(
+			"ReportIfLanguageIsNotSupportedBySynthesizer",
+			self.reportNotSupportedLanguageCombo,
+		)
+		reportNotSupportedLanguage = config.conf["speech"]["reportNotSupportedLanguage"]
+		self.reportNotSupportedLanguageCombo.SetSelection(
+			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
+		)
+		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
 
 		# Translators: This is the label for a combobox in the
 		# voice settings panel (possible choices are none, some, most and all).
@@ -1874,11 +1909,19 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["delayedCharacterDescriptions"],
 		)
 
+	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
+		"""Take action when the autoLanguageSwitching checkbox is pressed."""
+		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
+
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
 
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["reportLanguage"] = self.reportLanguageCheckbox.IsChecked()
+		config.conf["speech"]["reportNotSupportedLanguage"] = [
+			option.value for option in ReportNotSupportedLanguage
+		][self.reportNotSupportedLanguageCombo.GetSelection()]
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		].value
@@ -4094,6 +4137,7 @@ class AdvancedPanelControls(
 			"events",
 			"garbageHandler",
 			"remoteClient",
+			"externalPythonDependencies",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5088,7 +5132,7 @@ def showTerminationErrorForProviders(
 		message = _(
 			# Translators: This message is presented when
 			# NVDA is unable to terminate multiple vision enhancement providers.
-			"Could not gracefully terminate the following vision enhancement providers:\n" "{providerNames}",
+			"Could not gracefully terminate the following vision enhancement providers:\n{providerNames}",
 		).format(providerNames=providerNames)
 	gui.messageBox(
 		message,
