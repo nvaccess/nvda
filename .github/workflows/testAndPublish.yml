@@ -173,7 +173,7 @@ jobs:
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-      run: uv run --with requests --directory appveyor crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+      run: uv run --with requests --directory ${{ github.workspace }} appveyor\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 
   createLauncher:
     name: Create launcher
@@ -321,7 +321,7 @@ jobs:
     - name: Upload symbols to Mozilla
       continue-on-error: true
       # TODO: this script should be moved to ci/scripts
-      run: uv run --with requests --directory appveyor mozillaSyms.py
+      run: uv run --with requests --directory ${{ github.workspace }} appveyor\mozillaSyms.py
       env:
         mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_TOKEN }}
     - name: Warn on failure
