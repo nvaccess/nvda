@@ -112,7 +112,13 @@ class SynthService:
 			return False
 
 		try:
+			# Cancel speech in the synthesizer
 			self._synthInstance.cancel()
+			
+			# Also clear any audio queues to stop queued audio from playing
+			if hasattr(self._synthInstance, '_clearAudioQueues'):
+				self._synthInstance._clearAudioQueues()
+			
 			return True
 		except Exception:
 			self.logger.exception("Error in cancel")
