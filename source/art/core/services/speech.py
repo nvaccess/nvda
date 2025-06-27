@@ -150,7 +150,7 @@ class SpeechService(BaseService):
 	def receiveAudioData(
 		self,
 		synthName: str,
-		audioData: bytes,
+		audioData: str,
 		sampleRate: int = 22050,
 		channels: int = 1,
 		bitsPerSample: int = 16,
@@ -159,14 +159,22 @@ class SpeechService(BaseService):
 		"""Receive PCM audio data from ART synth.
 
 		@param synthName: The synthesizer sending audio
-		@param audioData: Raw PCM audio data
+		@param audioData: Base64-encoded PCM audio data (encoded for JSON transport)
 		@param sampleRate: Sample rate in Hz
 		@param channels: Number of channels (1=mono, 2=stereo)
 		@param bitsPerSample: Bits per sample (usually 16)
 		@param isLastChunk: Whether this is the last chunk of audio
 		@return: True if audio was queued successfully
 		"""
-		log.info(f"SpeechService.receiveAudioData: {len(audioData)} bytes from {synthName}, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit, lastChunk={isLastChunk}")
+		try:
+			# Decode base64 audio data back to bytes
+			import base64
+			decoded_audio = base64.b64decode(audioData.encode('ascii'))
+			log.info(f"SpeechService.receiveAudioData: {len(decoded_audio)} bytes from {synthName}, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit, lastChunk={isLastChunk}")
+		except Exception as e:
+			log.error(f"Failed to decode base64 audio data from {synthName}: {e}")
+			return False
+		
 		try:
 			if synthName not in self._registeredSynths:
 				log.warning(f"Received audio from unregistered synth: {synthName}")
@@ -177,8 +185,8 @@ class SpeechService(BaseService):
 				log.info(f"Creating new audio player for {synthName}")
 				self._createAudioPlayer(synthName, sampleRate, channels, bitsPerSample)
 
-			# Queue the audio data
-			self._audioQueues[synthName].put((audioData, isLastChunk))
+			# Queue the decoded audio data
+			self._audioQueues[synthName].put((decoded_audio, isLastChunk))
 			log.debug(f"Queued audio data, queue size: {self._audioQueues[synthName].qsize()}")
 
 			# Start playback thread if not running
@@ -186,11 +194,11 @@ class SpeechService(BaseService):
 				log.info(f"Starting playback thread for {synthName}")
 				self._startPlaybackThread(synthName)
 
-			log.debug(f"Queued {len(audioData)} bytes of audio from {synthName}")
+			log.debug(f"Queued {len(decoded_audio)} bytes of audio from {synthName}")
 			return True
 
 		except Exception:
-			self._log_error("receiveAudioData", f"{synthName}, {len(audioData)} bytes")
+			self._log_error("receiveAudioData", f"{synthName}, audio data")
 			return False
 
 	def _createAudioPlayer(self, synthName: str, sampleRate: int, channels: int, bitsPerSample: int):
@@ -199,14 +207,13 @@ class SpeechService(BaseService):
 			# Get output device from config
 			import config
 
-			outputDevice = config.conf["speech"]["outputDevice"]
+			outputDevice = config.conf["audio"]["outputDevice"]
 
 			player = nvwave.WavePlayer(
 				channels=channels,
 				samplesPerSec=sampleRate,
 				bitsPerSample=bitsPerSample,
 				outputDevice=outputDevice,
-				buffered=True,
 			)
 			self._audioPlayers[synthName] = player
 			log.debug(
