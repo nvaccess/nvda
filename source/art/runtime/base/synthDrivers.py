@@ -813,11 +813,20 @@ class SynthDriver(ABC):
 		TODO: In NVDA Core, the SpeechService will need to forward this
 		to the synthIndexReached extension point.
 		"""
+		import time
 		if self._speechService:
 			try:
+				start_time = time.time()
+				self.logger.debug(f"Notifying index reached: {index}")
 				self._speechService.notifyIndexReached(self.name, index)
+				rpc_time = time.time() - start_time
+				if rpc_time > 0.1:
+					self.logger.warning(f"SLOW: Index notification RPC took {rpc_time:.3f}s - possible hang!")
+				else:
+					self.logger.debug(f"Index {index} notification completed in {rpc_time:.3f}s")
 			except Exception:
-				self.logger.exception(f"Error notifying index {index}")
+				rpc_time = time.time() - start_time
+				self.logger.exception(f"Error notifying index {index} after {rpc_time:.3f}s")
 	
 	def _notifySpeechDone(self):
 		"""Notify NVDA Core that speech has finished.
@@ -825,11 +834,20 @@ class SynthDriver(ABC):
 		TODO: In NVDA Core, the SpeechService will need to forward this
 		to the synthDoneSpeaking extension point.
 		"""
+		import time
 		if self._speechService:
 			try:
+				start_time = time.time()
+				self.logger.debug("Notifying speech done")
 				self._speechService.notifySpeechDone(self.name)
+				rpc_time = time.time() - start_time
+				if rpc_time > 0.1:
+					self.logger.warning(f"SLOW: Speech done notification RPC took {rpc_time:.3f}s - possible hang!")
+				else:
+					self.logger.debug(f"Speech done notification completed in {rpc_time:.3f}s")
 			except Exception:
-				self.logger.exception("Error notifying speech done")
+				rpc_time = time.time() - start_time
+				self.logger.exception(f"Error notifying speech done after {rpc_time:.3f}s")
 	
 	def _sendAudioData(self, data: bytes, sampleRate: int = 22050, channels: int = 1, bitsPerSample: int = 16):
 		"""Send PCM audio data to NVDA Core for playback.
@@ -842,12 +860,18 @@ class SynthDriver(ABC):
 		@param channels: Number of channels (default 1 for mono).
 		@param bitsPerSample: Bits per sample (default 16).
 		"""
+		import time
+		start_time = time.time()
 		self.logger.info(f"_sendAudioData called with {len(data)} bytes, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit")
 		if self._speechService:
 			try:
 				# Handle Pyro5 thread ownership issue - claim ownership for this thread
 				try:
+					ownership_start = time.time()
 					self._speechService._pyroClaimOwnership()
+					ownership_time = time.time() - ownership_start
+					if ownership_time > 0.1:
+						self.logger.warning(f"SLOW: Pyro ownership claim took {ownership_time:.3f}s")
 				except Exception as e:
 					self.logger.debug(f"Could not claim proxy ownership (may already be owned): {e}")
 				
@@ -861,7 +885,11 @@ class SynthDriver(ABC):
 					chunk = data[i:i + MAX_CHUNK_SIZE]
 					# Encode bytes as base64 string for JSON serialization
 					encoded_chunk = base64.b64encode(chunk).decode('ascii')
-					self.logger.debug(f"Sending audio chunk {i//MAX_CHUNK_SIZE + 1} of {(len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE}")
+					chunk_num = i//MAX_CHUNK_SIZE + 1
+					total_chunks = (len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE
+					self.logger.debug(f"Sending audio chunk {chunk_num} of {total_chunks}")
+					
+					chunk_start = time.time()
 					self._speechService.receiveAudioData(
 						synthName=self.name,
 						audioData=encoded_chunk,
@@ -870,9 +898,19 @@ class SynthDriver(ABC):
 						bitsPerSample=bitsPerSample,
 						isLastChunk=False  # Never mark audio chunks as last - speech completion is handled separately
 					)
-				self.logger.info(f"Successfully sent {len(data)} bytes of audio data")
+					chunk_time = time.time() - chunk_start
+					if chunk_time > 0.5:
+						self.logger.warning(f"SLOW: Audio chunk {chunk_num} RPC took {chunk_time:.3f}s - possible hang!")
+					elif chunk_time > 0.1:
+						self.logger.debug(f"Audio chunk {chunk_num} RPC took {chunk_time:.3f}s")
+				
+				total_time = time.time() - start_time
+				self.logger.info(f"Successfully sent {len(data)} bytes of audio data in {total_time:.3f}s")
+				if total_time > 1.0:
+					self.logger.warning(f"SLOW: Total _sendAudioData took {total_time:.3f}s - this could cause issues!")
 			except Exception:
-				self.logger.exception("Error sending audio data")
+				total_time = time.time() - start_time
+				self.logger.exception(f"Error sending audio data after {total_time:.3f}s")
 		else:
 			self.logger.error("No speech service available for audio data!")
 
