@@ -1670,7 +1670,16 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		return self.driver
 
 	def _getSettingControlHelpId(self, controlId):
-		standardSettings = ["voice", "variant", "rate", "rateBoost", "pitch", "inflection", "volume", "useWasapi"]
+		standardSettings = [
+			"voice",
+			"variant",
+			"rate",
+			"rateBoost",
+			"pitch",
+			"inflection",
+			"volume",
+			"useWasapi",
+		]
 		if controlId in standardSettings:
 			capitalizedId = controlId[0].upper() + controlId[1:]
 			return f"{self.helpId}{capitalizedId}"
