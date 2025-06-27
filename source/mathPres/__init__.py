@@ -82,11 +82,10 @@ def registerProvider(
 def initialize() -> None:
 	# Register builtin providers if a plugin hasn't registered others.
 	if not speechProvider or not brailleProvider or not interactionProvider:
-		print('importing mathcat')
 		from .MathCAT import MathCAT
 
 		try:
-			provider = MathCAT()
+			provider = MathCAT.MathCAT()
 		except:  # noqa: E722
 			log.warning("MathCAT not available.")
 		else:
