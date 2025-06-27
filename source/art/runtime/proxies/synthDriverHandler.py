@@ -27,8 +27,10 @@ class _SynthNotification(ServiceProxyMixin):
 
 	_service_env_var = "NVDA_ART_SPEECH_SERVICE_URI"
 
-	def __init__(self, _kind: str):
+	def __init__(self, name: str, _kind: str):
+		# name is the string identifier (e.g., "synthIndexReached")
 		# _kind is either "index" or "done"
+		self.name = name
 		self._kind = _kind
 
 	def notify(self, *, synth, index: int | None = None, **_ignored):
@@ -46,8 +48,8 @@ class _SynthNotification(ServiceProxyMixin):
 
 
 # Constants that synths import
-synthIndexReached = _SynthNotification("index")
-synthDoneSpeaking = _SynthNotification("done")
+synthIndexReached = _SynthNotification("synthIndexReached", "index")
+synthDoneSpeaking = _SynthNotification("synthDoneSpeaking", "done")
 
 
 class _SynthDriverHandlerProxy(ServiceProxyMixin):

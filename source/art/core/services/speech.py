@@ -166,6 +166,7 @@ class SpeechService(BaseService):
 		@param isLastChunk: Whether this is the last chunk of audio
 		@return: True if audio was queued successfully
 		"""
+		log.info(f"SpeechService.receiveAudioData: {len(audioData)} bytes from {synthName}, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit, lastChunk={isLastChunk}")
 		try:
 			if synthName not in self._registeredSynths:
 				log.warning(f"Received audio from unregistered synth: {synthName}")
@@ -173,13 +174,16 @@ class SpeechService(BaseService):
 
 			# Ensure we have a player for this synth with correct format
 			if synthName not in self._audioPlayers:
+				log.info(f"Creating new audio player for {synthName}")
 				self._createAudioPlayer(synthName, sampleRate, channels, bitsPerSample)
 
 			# Queue the audio data
 			self._audioQueues[synthName].put((audioData, isLastChunk))
+			log.debug(f"Queued audio data, queue size: {self._audioQueues[synthName].qsize()}")
 
 			# Start playback thread if not running
 			if synthName not in self._playbackThreads or not self._playbackThreads[synthName].is_alive():
+				log.info(f"Starting playback thread for {synthName}")
 				self._startPlaybackThread(synthName)
 
 			log.debug(f"Queued {len(audioData)} bytes of audio from {synthName}")

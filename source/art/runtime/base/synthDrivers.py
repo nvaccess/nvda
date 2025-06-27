@@ -12,6 +12,132 @@ import Pyro5.api
 import logging
 
 
+# ------------------------------------------------------------------
+# ART Driver Setting Proxy Classes
+# ------------------------------------------------------------------
+
+class _ARTDriverSetting:
+	"""Base proxy class for driver settings in ART.
+	
+	This mimics the API of autoSettingsUtils.DriverSetting to maintain
+	compatibility with existing synth driver code.
+	"""
+	
+	def __init__(
+		self,
+		id: str,
+		displayNameWithAccelerator: str,
+		availableInSettingsRing: bool = False,
+		defaultVal: Any = None,
+		displayName: Optional[str] = None,
+		useConfig: bool = True,
+	):
+		self.id = id
+		self.displayNameWithAccelerator = displayNameWithAccelerator
+		if not displayName:
+			# Strip accelerator from displayNameWithAccelerator
+			displayName = displayNameWithAccelerator.replace("&", "")
+		self.displayName = displayName
+		self.availableInSettingsRing = availableInSettingsRing
+		self.defaultVal = defaultVal
+		self.useConfig = useConfig
+	
+	def _get_metadata(self):
+		"""Generate serializable metadata for RPC."""
+		return {
+			"type": "DriverSetting",
+			"name": self.id,
+			"displayNameWithAccelerator": self.displayNameWithAccelerator,
+			"displayName": self.displayName,
+			"availableInSettingsRing": self.availableInSettingsRing,
+			"defaultVal": self.defaultVal,
+			"useConfig": self.useConfig,
+		}
+
+
+class _ARTNumericDriverSetting(_ARTDriverSetting):
+	"""Proxy for NumericDriverSetting in ART."""
+	
+	def __init__(
+		self,
+		id: str,
+		displayNameWithAccelerator: str,
+		availableInSettingsRing: bool = False,
+		defaultVal: int = 50,
+		minVal: int = 0,
+		maxVal: int = 100,
+		minStep: int = 1,
+		normalStep: int = 5,
+		largeStep: int = 10,
+		displayName: Optional[str] = None,
+		useConfig: bool = True,
+	):
+		super().__init__(
+			id,
+			displayNameWithAccelerator,
+			availableInSettingsRing=availableInSettingsRing,
+			defaultVal=defaultVal,
+			displayName=displayName,
+			useConfig=useConfig,
+		)
+		self.minVal = minVal
+		self.maxVal = max(maxVal, self.defaultVal)
+		self.minStep = minStep
+		self.normalStep = max(normalStep, minStep)
+		self.largeStep = max(largeStep, self.normalStep)
+	
+	def _get_metadata(self):
+		"""Generate serializable metadata for RPC."""
+		return {
+			"type": "NumericDriverSetting",
+			"name": self.id,
+			"displayNameWithAccelerator": self.displayNameWithAccelerator,
+			"displayName": self.displayName,
+			"availableInSettingsRing": self.availableInSettingsRing,
+			"defaultVal": self.defaultVal,
+			"minVal": self.minVal,
+			"maxVal": self.maxVal,
+			"minStep": self.minStep,
+			"normalStep": self.normalStep,
+			"largeStep": self.largeStep,
+			"useConfig": self.useConfig,
+		}
+
+
+class _ARTBooleanDriverSetting(_ARTDriverSetting):
+	"""Proxy for BooleanDriverSetting in ART."""
+	
+	def __init__(
+		self,
+		id: str,
+		displayNameWithAccelerator: str,
+		availableInSettingsRing: bool = False,
+		displayName: Optional[str] = None,
+		defaultVal: bool = False,
+		useConfig: bool = True,
+	):
+		super().__init__(
+			id,
+			displayNameWithAccelerator,
+			availableInSettingsRing=availableInSettingsRing,
+			defaultVal=defaultVal,
+			displayName=displayName,
+			useConfig=useConfig,
+		)
+	
+	def _get_metadata(self):
+		"""Generate serializable metadata for RPC."""
+		return {
+			"type": "BooleanDriverSetting",
+			"name": self.id,
+			"displayNameWithAccelerator": self.displayNameWithAccelerator,
+			"displayName": self.displayName,
+			"availableInSettingsRing": self.availableInSettingsRing,
+			"defaultVal": self.defaultVal,
+			"useConfig": self.useConfig,
+		}
+
+
 class VoiceInfo:
 	"""Information about a synthesizer voice."""
 	
@@ -96,6 +222,85 @@ class SynthDriver(ABC):
 
 		cls.__init__ = wrapped_init
 	
+	# ------------------------------------------------------------------
+	# Factory methods for creating driver settings (compatibility with NVDA)
+	# ------------------------------------------------------------------
+	
+	@classmethod
+	def VoiceSetting(cls):
+		"""Factory function for creating voice setting."""
+		return _ARTDriverSetting(
+			"voice",
+			"&Voice",
+			availableInSettingsRing=True,
+			displayName="Voice",
+		)
+	
+	@classmethod
+	def VariantSetting(cls):
+		"""Factory function for creating variant setting."""
+		return _ARTDriverSetting(
+			"variant", 
+			"V&ariant",
+			availableInSettingsRing=True,
+			displayName="Variant",
+		)
+	
+	@classmethod
+	def RateSetting(cls, minStep: int = 1):
+		"""Factory function for creating rate setting."""
+		return _ARTNumericDriverSetting(
+			"rate",
+			"&Rate",
+			availableInSettingsRing=True,
+			displayName="Rate",
+			minStep=minStep,
+		)
+	
+	@classmethod
+	def RateBoostSetting(cls):
+		"""Factory function for creating rate boost setting."""
+		return _ARTBooleanDriverSetting(
+			"rateBoost",
+			"Rate boos&t",
+			availableInSettingsRing=True,
+			displayName="Rate boost",
+		)
+	
+	@classmethod
+	def VolumeSetting(cls, minStep: int = 1):
+		"""Factory function for creating volume setting."""
+		return _ARTNumericDriverSetting(
+			"volume",
+			"V&olume",
+			availableInSettingsRing=True,
+			displayName="Volume",
+			minStep=minStep,
+			normalStep=5,
+		)
+	
+	@classmethod
+	def PitchSetting(cls, minStep: int = 1):
+		"""Factory function for creating pitch setting."""
+		return _ARTNumericDriverSetting(
+			"pitch",
+			"&Pitch",
+			availableInSettingsRing=True,
+			displayName="Pitch",
+			minStep=minStep,
+		)
+	
+	@classmethod
+	def InflectionSetting(cls, minStep: int = 1):
+		"""Factory function for creating inflection setting."""
+		return _ARTNumericDriverSetting(
+			"inflection",
+			"&Inflection",
+			availableInSettingsRing=True,
+			displayName="Inflection",
+			minStep=minStep,
+		)
+	
 	def _registerWithARTService(self):
 		"""Register this synth instance with the ART synth service."""
 		try:
@@ -156,7 +361,7 @@ class SynthDriver(ABC):
 				description=self.description,
 				addon_name=addon_name,
 				supportedCommands=[cmd.__name__ for cmd in self.supportedCommands],
-				supportedNotifications=list(self.supportedNotifications),
+				supportedNotifications=[notification.name for notification in self.supportedNotifications],
 				supportedSettings=settings_metadata
 			)
 			self.logger.debug(f"registerSynthDriver returned: {result}")
@@ -345,41 +550,69 @@ class SynthDriver(ABC):
 				]
 			}
 		"""
-		# Default implementation provides basic settings that most synths support
-		return {
-			"supportedSettings": [
+		settings_metadata = []
+		
+		# Check if the class has supportedSettings defined
+		if hasattr(cls, 'supportedSettings') and cls.supportedSettings:
+			# Extract metadata from the setting proxy objects
+			for setting in cls.supportedSettings:
+				if hasattr(setting, '_get_metadata'):
+					settings_metadata.append(setting._get_metadata())
+				else:
+					# Fallback for any settings that don't have _get_metadata
+					settings_metadata.append({
+						"type": "DriverSetting",
+						"name": getattr(setting, 'id', 'unknown'),
+						"displayNameWithAccelerator": getattr(setting, 'displayNameWithAccelerator', 'Unknown'),
+					})
+		else:
+			# Default implementation provides basic settings that most synths support
+			settings_metadata = [
 				{
+					"type": "NumericDriverSetting",
 					"name": "rate",
-					"type": "NumericDriverSetting",
-					"params": {
-						"displayNameWithAccelerator": "&Rate",
-						"minVal": 0,
-						"maxVal": 100, 
-						"defaultVal": 50
-					}
+					"displayNameWithAccelerator": "&Rate",
+					"displayName": "Rate",
+					"availableInSettingsRing": True,
+					"defaultVal": 50,
+					"minVal": 0,
+					"maxVal": 100,
+					"minStep": 1,
+					"normalStep": 5,
+					"largeStep": 10,
+					"useConfig": True,
 				},
 				{
-					"name": "pitch", 
 					"type": "NumericDriverSetting",
-					"params": {
-						"displayNameWithAccelerator": "&Pitch",
-						"minVal": 0,
-						"maxVal": 100,
-						"defaultVal": 50
-					}
+					"name": "pitch",
+					"displayNameWithAccelerator": "&Pitch",
+					"displayName": "Pitch",
+					"availableInSettingsRing": True,
+					"defaultVal": 50,
+					"minVal": 0,
+					"maxVal": 100,
+					"minStep": 1,
+					"normalStep": 5,
+					"largeStep": 10,
+					"useConfig": True,
 				},
 				{
+					"type": "NumericDriverSetting",
 					"name": "volume",
-					"type": "NumericDriverSetting", 
-					"params": {
-						"displayNameWithAccelerator": "&Volume",
-						"minVal": 0,
-						"maxVal": 100,
-						"defaultVal": 100
-					}
+					"displayNameWithAccelerator": "&Volume",
+					"displayName": "Volume",
+					"availableInSettingsRing": True,
+					"defaultVal": 100,
+					"minVal": 0,
+					"maxVal": 100,
+					"minStep": 1,
+					"normalStep": 5,
+					"largeStep": 10,
+					"useConfig": True,
 				}
 			]
-		}
+		
+		return {"supportedSettings": settings_metadata}
 	
 	def _get_availableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		"""Property getter for available voices with caching."""
@@ -388,6 +621,41 @@ class SynthDriver(ABC):
 		return self._availableVoices
 	
 	availableVoices = property(_get_availableVoices)
+	
+	def _get_language(self) -> Optional[str]:
+		"""Get the current voice's language.
+		
+		@return: The language code of the current voice, or None if no voice is set.
+		"""
+		try:
+			current_voice = self.voice
+			if current_voice and current_voice in self.availableVoices:
+				return self.availableVoices[current_voice].language
+		except Exception:
+			self.logger.exception("Error getting current language")
+		return None
+	
+	def _set_language(self, language: Optional[str]):
+		"""Set the current language by finding a voice that supports it.
+		
+		@param language: The language code to set.
+		"""
+		raise NotImplementedError
+	
+	language = property(_get_language, _set_language)
+	
+	def _get_availableLanguages(self) -> Set[Optional[str]]:
+		"""Get all available languages from the available voices.
+		
+		@return: A set of language codes available in the voices.
+		"""
+		try:
+			return {self.availableVoices[v].language for v in self.availableVoices}
+		except Exception:
+			self.logger.exception("Error getting available languages")
+			return set()
+	
+	availableLanguages = property(_get_availableLanguages)
 	
 	def _get_rate(self) -> int:
 		"""Get the current speech rate (0-100).
@@ -443,6 +711,81 @@ class SynthDriver(ABC):
 	
 	volume = property(_get_volume, _set_volume)
 	
+	def _get_variant(self) -> str:
+		"""Get the current variant.
+		
+		Subclasses should override this if they support variants.
+		"""
+		raise NotImplementedError
+	
+	def _set_variant(self, value: str):
+		"""Set the current variant.
+		
+		The default implementation does nothing.
+		Subclasses should override this if they support variants.
+		"""
+		pass
+	
+	variant = property(_get_variant, _set_variant)
+	
+	def _getAvailableVariants(self) -> OrderedDict[str, VoiceInfo]:
+		"""Get available variants for the current voice.
+		
+		The default implementation returns an empty OrderedDict.
+		Subclasses should override this if they support variants.
+		
+		@return: An OrderedDict of VoiceInfo instances keyed by variant ID.
+		"""
+		return OrderedDict()
+	
+	def _get_availableVariants(self) -> OrderedDict[str, VoiceInfo]:
+		"""Property getter for available variants with caching."""
+		if not hasattr(self, "_availableVariants"):
+			self._availableVariants = self._getAvailableVariants()
+		return self._availableVariants
+	
+	availableVariants = property(_get_availableVariants)
+	
+	def _get_inflection(self) -> int:
+		"""Get the current inflection (0-100).
+		
+		The default implementation returns 0.
+		Subclasses should override this if they support inflection.
+		"""
+		return 0
+	
+	def _set_inflection(self, value: int):
+		"""Set the inflection (0-100).
+		
+		The default implementation does nothing.
+		Subclasses should override this if they support inflection.
+		"""
+		pass
+	
+	inflection = property(_get_inflection, _set_inflection)
+	
+	def _paramToPercent(self, val: int, minVal: int = 0, maxVal: int = 100) -> int:
+		"""Convert a parameter value to a percentage.
+		
+		@param val: The parameter value to convert.
+		@param minVal: The minimum possible value.
+		@param maxVal: The maximum possible value.
+		@return: The percentage (0-100).
+		"""
+		if maxVal == minVal:
+			return 50  # Avoid division by zero
+		return int(round((val - minVal) * 100 / (maxVal - minVal)))
+
+	def _percentToParam(self, percent: int, minVal: int = 0, maxVal: int = 100) -> int:
+		"""Convert a percentage to a parameter value.
+		
+		@param percent: The percentage (0-100).
+		@param minVal: The minimum possible value.
+		@param maxVal: The maximum possible value.
+		@return: The parameter value.
+		"""
+		return int(round(minVal + (percent * (maxVal - minVal) / 100)))
+	
 	def terminate(self):
 		"""Terminate the synthesizer.
 		
@@ -488,6 +831,7 @@ class SynthDriver(ABC):
 		@param channels: Number of channels (default 1 for mono).
 		@param bitsPerSample: Bits per sample (default 16).
 		"""
+		self.logger.info(f"_sendAudioData called with {len(data)} bytes, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit")
 		if self._speechService:
 			try:
 				# For large audio data, we might need to chunk it
@@ -495,6 +839,7 @@ class SynthDriver(ABC):
 				
 				for i in range(0, len(data), MAX_CHUNK_SIZE):
 					chunk = data[i:i + MAX_CHUNK_SIZE]
+					self.logger.debug(f"Sending audio chunk {i//MAX_CHUNK_SIZE + 1} of {(len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE}")
 					self._speechService.receiveAudioData(
 						synthName=self.name,
 						audioData=chunk,
@@ -503,8 +848,11 @@ class SynthDriver(ABC):
 						bitsPerSample=bitsPerSample,
 						isLastChunk=(i + MAX_CHUNK_SIZE >= len(data))
 					)
+				self.logger.info(f"Successfully sent {len(data)} bytes of audio data")
 			except Exception:
 				self.logger.exception("Error sending audio data")
+		else:
+			self.logger.error("No speech service available for audio data!")
 
 	# ------------------------------------------------------------------
 	# Fallback logic when subclass skips super().__init__()
