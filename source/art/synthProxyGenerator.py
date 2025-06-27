@@ -13,14 +13,15 @@ from synthDrivers._artProxy import ARTProxySynthDriver
 
 # Import setting classes for the security allowlist
 try:
-	from autoSettingsUtils.driverSetting import NumericDriverSetting, BooleanDriverSetting
+	from autoSettingsUtils.driverSetting import DriverSetting, NumericDriverSetting, BooleanDriverSetting
 except ImportError:
 	# Fallback if module structure is different
 	log.warning("Could not import from autoSettingsUtils.driverSetting, trying synthDriverHandler")
 	try:
-		from synthDriverHandler import NumericDriverSetting, BooleanDriverSetting
+		from synthDriverHandler import DriverSetting, NumericDriverSetting, BooleanDriverSetting
 	except ImportError:
 		log.error("Could not import DriverSetting classes - dynamic settings will not work")
+		DriverSetting = None
 		NumericDriverSetting = None
 		BooleanDriverSetting = None
 
@@ -32,6 +33,7 @@ class ARTSynthProxyGenerator:
 	
 	# Security allowlist for Phase 1 - only allow known, safe setting types
 	_ALLOWED_SETTING_TYPES = {
+		"DriverSetting": DriverSetting,
 		"NumericDriverSetting": NumericDriverSetting,
 		"BooleanDriverSetting": BooleanDriverSetting,
 		# Phase 2 will add "DynamicVoiceSetting" here
@@ -70,9 +72,15 @@ class ARTSynthProxyGenerator:
 				continue
 			
 			try:
-				# Instantiate the setting using the provided parameters
-				# The setting_name becomes an implicit parameter along with the others
-				setting_instance = setting_class(setting_name, **setting_params)
+				# Extract required positional arguments based on setting type
+				if setting_type_name in ["DriverSetting", "NumericDriverSetting", "BooleanDriverSetting"]:
+					# These require displayNameWithAccelerator as second positional argument
+					displayNameWithAccelerator = setting_params.pop('displayNameWithAccelerator', setting_name)
+					setting_instance = setting_class(setting_name, displayNameWithAccelerator, **setting_params)
+				else:
+					# For other setting types, use original approach
+					setting_instance = setting_class(setting_name, **setting_params)
+				
 				settings_objects.append(setting_instance)
 				log.debug(f"Created setting instance: {setting_name} ({setting_type_name})")
 			except Exception as e:

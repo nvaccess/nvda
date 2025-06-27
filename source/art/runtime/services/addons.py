@@ -48,12 +48,18 @@ class AddOnLifecycleService:
 				"path": str(addonPathObj)
 			}
 			
-			self.logger.debug(f"Add-on loaded successfully: {self.addon_name}")
+			self.logger.info(f"Add-on loaded successfully: {self.addon_name}")
 			return True
 			
 		except Exception:
-			self.logger.exception(f"Error loading add-on from {addonPath}")
+			self.logger.exception(f"Failed to load add-on from {addonPath}")
 			return False
+		finally:
+			# Clean up sys.path to prevent pollution from failed loads
+			try:
+				sys.path.remove(str(addonPathObj))
+			except ValueError:
+				pass  # Already removed
 
 	def _setupPackagePaths(self, addon_path):
 		"""Set up package paths for addon plugin directories, matching main NVDA behavior."""
@@ -157,17 +163,18 @@ class AddOnLifecycleService:
 							else:
 								self.logger.warning(f"No SynthDriver class found in {module_name}")
 					
-					except Exception:
-						self.logger.exception(f"Error importing {plugin_dir_name} module: {module_name}")
-						continue
+					except (ImportError, SyntaxError, AttributeError) as e:
+						self.logger.exception(f"Failed to import {plugin_dir_name}.{module_name}: {e}")
+						raise  # Propagate error to abort addon loading
 					
 					if plugin_dir_name == "globalPlugins" and hasattr(module, expected_class):
 						plugin_class = getattr(module, expected_class)
 						self.logger.debug(f"Instantiating {expected_class} from {module_name}")
 						plugin_instance = plugin_class()
 						
-				except Exception:
-					self.logger.exception(f"Failed to load {plugin_dir_name} module: {module_name}")
+				except Exception as e:
+					self.logger.exception(f"Failed to load {plugin_dir_name}.{module_name}: {e}")
+					raise  # Propagate error to abort addon loading
 
 	def _registerSynthWithCore(self, synth_instance, module_name):
 		"""Register a synthesizer instance with NVDA Core to generate proxy."""
@@ -199,7 +206,7 @@ class AddOnLifecycleService:
 			
 			supported_notifications = []
 			if hasattr(synth_instance, 'supportedNotifications'):
-				supported_notifications = list(synth_instance.supportedNotifications)
+				supported_notifications = [notification.name for notification in synth_instance.supportedNotifications]
 			
 			# Get supported settings metadata
 			settings_metadata = {}
