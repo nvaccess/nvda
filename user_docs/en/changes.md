@@ -8,6 +8,8 @@
 
 ### Changes
 
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+
 ### Bug Fixes
 
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
