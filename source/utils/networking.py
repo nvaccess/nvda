@@ -42,8 +42,7 @@ class _CERT_CHAIN_PARA(ctypes.Structure):
 
 
 def _updateWindowsRootCertificates(url: str) -> None:
-	"""Updates the Windows root certificates by fetching the latest certificate from the server.
-	"""
+	"""Updates the Windows root certificates by fetching the latest certificate from the server."""
 	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
 	with requests.get(
@@ -84,12 +83,12 @@ def _updateWindowsRootCertificates(url: str) -> None:
 
 def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None) -> requests.Response:
 	"""Fetches the content of a URL and updates the Windows root certificates.
-	
+
 	:param url: The URL to fetch.
 	:param certFetchUrl: An optional URL to use for fetching the certificate if the original URL fails due to a certificate error.
 	:return: The content of the URL.
 	"""
-	
+
 	try:
 		log.debug(f"Fetching data from: {url}")
 		result = requests.get(url, timeout=_FETCH_TIMEOUT_S)

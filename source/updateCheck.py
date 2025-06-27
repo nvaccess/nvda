@@ -80,6 +80,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		from utils.networking import _CERT_USAGE_MATCH as CERT_USAGE_MATCH
+
 		return CERT_USAGE_MATCH
 	if attrName == "CERT_CHAIN_PARA" and NVDAState._allowDeprecatedAPI():
 		log.warning(
@@ -87,6 +88,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		from utils.networking import _CERT_CHAIN_PARA as CERT_CHAIN_PARA
+
 		return CERT_CHAIN_PARA
 	if attrName == "UPDATE_FETCH_TIMEOUT_S" and NVDAState._allowDeprecatedAPI():
 		log.warning(
@@ -94,6 +96,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		from utils.networking import _FETCH_TIMEOUT_S as UPDATE_FETCH_TIMEOUT_S
+
 		return UPDATE_FETCH_TIMEOUT_S
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
