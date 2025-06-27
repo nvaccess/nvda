@@ -157,12 +157,22 @@ class WavePlayer:
 		This runs in a separate thread to avoid blocking the eSpeak callback.
 		"""
 		import logging
+		import time
 		logger = logging.getLogger("ART.WavePlayer.Worker")
 		logger.debug("Audio worker thread started")
+		
+		last_heartbeat = time.time()
+		heartbeat_interval = 5.0  # Log heartbeat every 5 seconds
 		
 		try:
 			while not self._closed:
 				try:
+					# Periodic heartbeat to detect if worker thread is alive
+					now = time.time()
+					if now - last_heartbeat >= heartbeat_interval:
+						logger.debug(f"Worker thread heartbeat - alive and processing (queue size: {self._audioQueue.qsize()})")
+						last_heartbeat = now
+					
 					# Get audio data from queue with timeout
 					byte_data = self._audioQueue.get(timeout=0.1)
 					
