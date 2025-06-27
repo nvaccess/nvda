@@ -65,6 +65,10 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
+AUTO_LANGUAGE_SWITCHING_KEY = ["speech", "autoLanguageSwitching"]
+AUTO_DIALECT_SWITCHING_KEY = ["speech", "autoDialectSwitching"]
+REPORT_LANGUAGE_KEY = ["speech", "reportLanguage"]
+REPORT_NOT_SUPPORTED_LANGUAGE_KEY = ["speech", "reportNotSupportedLanguage"]
 READ_DETAILS_GESTURE = "NVDA+d"
 
 
@@ -2859,4 +2863,178 @@ def test_ariaErrorMessage():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4")),
+	)
+
+
+def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
+	_chrome.prepareChrome(
+		"""
+		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
+	""",
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
+
+def test_reportLanguageDisabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, False),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"Cyrille",
+				"created this",
+				"test:",
+				"Let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportLanguageEnabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, False),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es_ES"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportLanguageWithoutDialects():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportNotSupportedLanguageWithoutOtherLanguages():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, False),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"Cyrille",
+				"created this",
+				"unknown (not supported)",
+				"test:",
+				"Let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportNotSupportedLanguageAndOtherLanguages():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+		],
+	)
+
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown (not supported)",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
 	)

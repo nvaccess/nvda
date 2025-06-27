@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-22 03:03+0000\n"
-"PO-Revision-Date: 2025-05-25 23:05\n"
+"POT-Creation-Date: 2025-06-05 06:26+0000\n"
+"PO-Revision-Date: 2025-06-09 23:12\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -6021,7 +6021,7 @@ msgstr "Bascule entre le contrôle de l’ordinateur local ou distant"
 #. due to profile activation being suspended.
 #: globalCommands.py:5008
 msgid "Can't change the active profile while an NVDA dialog is open"
-msgstr "Impossible de changer le profil de configuration actif quand un dialogue de NVDA est ouvert"
+msgstr "Impossible de changer de profil de configuration actif quand un dialogue de NVDA est ouvert"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
@@ -10095,7 +10095,7 @@ msgstr "Pied-de-mouche (¶)"
 #: config\configFlags.py:322
 msgctxt "remote"
 msgid "Allow this computer to be controlled"
-msgstr "Autoriser cet ordinateur à être contrôlé"
+msgstr "Autoriser le contrôle de cet ordinateur"
 
 #. Translators: Option that allows this computer to control the remote computer.
 #: config\configFlags.py:324
@@ -11895,7 +11895,7 @@ msgstr "Veuillez patienter"
 #. as addons have been added, enabled/disabled or removed.
 #: gui\addonGui.py:31
 msgid "Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "Des changements ont été apportés aux extensions. Vous devez redémarrer NVDA pour que ces changements prennent effet. Voulez-vous redémarrer maintenant ?"
+msgstr "Des modifications ont été apportées aux extensions. Vous devez redémarrer NVDA pour que ces modifications prennent effet. Voulez-vous redémarrer maintenant ?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 #: gui\addonGui.py:36
@@ -12886,7 +12886,7 @@ msgstr "Paramètres utilisateur de NVDA copiés avec succès"
 
 #: gui\settingsDialogs.py:1108
 msgid "This change requires administrator privileges."
-msgstr "Ce changement requiert des privilèges administrateur."
+msgstr "Cette modification requiert des privilèges administrateur."
 
 #: gui\settingsDialogs.py:1109
 msgid "Insufficient Privileges"
@@ -12928,7 +12928,7 @@ msgstr "Synthétiseur"
 #. it appears in the context of a braille display group on the braille settings panel.
 #: gui\settingsDialogs.py:1213 gui\settingsDialogs.py:4395
 msgid "C&hange..."
-msgstr "&Changer..."
+msgstr "Modifie&r"
 
 #. Translators: This is the label for the synthesizer selection dialog
 #: gui\settingsDialogs.py:1268
@@ -14215,7 +14215,7 @@ msgstr "Avertissement !"
 #. Translators: This is a label appearing on the Advanced settings panel.
 #: gui\settingsDialogs.py:4299
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
-msgstr "Les réglages suivants s'adressent aux utilisateurs avancés. Les modifier peut provoquer un fonctionnement incorrect de NVDA. Veuillez ne les changer que si vous savez ce que vous faites ou si les développeurs de NVDA vous l'ont spécifiquement demandé."
+msgstr "Les réglages suivants s'adressent aux utilisateurs avancés. Les modifier peut provoquer un fonctionnement incorrect de NVDA. Veuillez ne les modifier que si vous savez ce que vous faites ou si les développeurs de NVDA vous l'ont spécifiquement demandé."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
 #: gui\settingsDialogs.py:4326
@@ -14365,7 +14365,7 @@ msgstr "Annoncer le caractère lors du routa&ge du curseur dans le texte"
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:4927
 msgid "Speak when navigating by &line or paragraph"
-msgstr "Retour vocal lors de la navigation par &ligne ou par paragraphe"
+msgstr "Retour vocal lors de la navigation par ligne ou par &paragraphe"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14502,7 +14502,7 @@ msgstr "Préserver"
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 #: gui\settingsDialogs.py:5621
 msgid "Change selected symbol"
-msgstr "Changer le symbole sélectionné"
+msgstr "Modifier le symbole sélectionné"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
@@ -15861,7 +15861,7 @@ msgstr "suppression : {text}"
 #: NVDAObjects\UIA\wordDocument.py:99
 #, python-brace-format
 msgid "track change: {text}"
-msgstr "suivi du changement : {text}"
+msgstr "suivi de modification : {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:151
@@ -18628,7 +18628,7 @@ msgstr "Souhaitez-vous contrôler l’ordinateur sur le serveur {server} avec la
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr "Souhaitez-vous autoriser cet ordinateur à être contrôlé sur le serveur {server} avec la clé {key}?"
+msgstr "Souhaitez-vous autoriser le contrôle de cet ordinateur sur le serveur {server} avec la clé {key}?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:647
@@ -18656,7 +18656,7 @@ msgstr "Presse-papiers reçu"
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:211
 msgid "&Generate Key"
-msgstr "&Générer la clé"
+msgstr "&Générer une clé"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
@@ -18697,7 +18697,7 @@ msgstr "&IP Publique :"
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:192
 msgid "Get External &IP"
-msgstr "&Obtenir l'adresse IP publique"
+msgstr "&Obtenir l'adresse IP externe"
 
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 #: _remoteClient\dialogs.py:209
