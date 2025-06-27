@@ -49,11 +49,22 @@ class SynthService:
 
 			# Deserialize speech commands
 			deserialized = self._deserializeSpeechSequence(speechSequence)
+			
+			# Wrap the critical call that might crash ESPeak addon
+			self.logger.debug(f"About to call synthInstance.speak() on {self._synthInstance}")
 			self._synthInstance.speak(deserialized)
+			self.logger.debug(f"synthInstance.speak() completed successfully")
 			return True
 
-		except Exception:
-			self.logger.exception("Error in speak")
+		except Exception as e:
+			self.logger.exception(f"CRITICAL: Error in speak() - this might cause ART process termination: {e}")
+			# Try to log additional context that might help debugging
+			try:
+				self.logger.error(f"SynthInstance type: {type(self._synthInstance)}")
+				self.logger.error(f"SynthInstance attributes: {dir(self._synthInstance)}")
+				self.logger.error(f"Deserialized sequence length: {len(deserialized) if 'deserialized' in locals() else 'unknown'}")
+			except:
+				pass
 			return False
 
 	def _deserializeSpeechSequence(self, serialized: List[Dict[str, Any]]) -> List[Any]:

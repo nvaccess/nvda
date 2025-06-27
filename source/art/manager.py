@@ -170,7 +170,8 @@ class ARTAddonProcess:
 		for service_name, uri in service_uris.items():
 			try:
 				proxy = Pyro5.api.Proxy(uri)
-				proxy._pyroTimeout = 2.0
+				proxy._pyroTimeout = 10.0  # Increase timeout to match ART config
+				proxy._pyroMaxRetries = 3  # Allow retries on temporary failures
 				self.artServices[service_name] = proxy
 				log.info(f"Connected to ART service for {self.addon_name}: {service_name}")
 			except Exception:
