@@ -403,6 +403,17 @@ class SynthDriver(ABC):
 		- VolumeCommand
 		- PhonemeCommand
 		"""
+		# Log the speech sequence being processed
+		self.logger.info(f"speak() called with {len(speechSequence)} items:")
+		for i, item in enumerate(speechSequence):
+			item_type = type(item).__name__ if hasattr(type(item), '__name__') else str(type(item))
+			if isinstance(item, str):
+				# Truncate long strings for logging
+				item_preview = item[:50] + "..." if len(item) > 50 else item
+				self.logger.info(f"  [{i}] {item_type}: '{item_preview}'")
+			else:
+				self.logger.info(f"  [{i}] {item_type}: {item}")
+		
 		raise NotImplementedError
 	
 	def cancel(self):
@@ -834,19 +845,30 @@ class SynthDriver(ABC):
 		self.logger.info(f"_sendAudioData called with {len(data)} bytes, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit")
 		if self._speechService:
 			try:
+				# Handle Pyro5 thread ownership issue - claim ownership for this thread
+				try:
+					self._speechService._pyroClaimOwnership()
+				except Exception as e:
+					self.logger.debug(f"Could not claim proxy ownership (may already be owned): {e}")
+				
 				# For large audio data, we might need to chunk it
 				MAX_CHUNK_SIZE = 64 * 1024  # 64KB chunks
 				
+				# Import base64 for encoding bytes data
+				import base64
+				
 				for i in range(0, len(data), MAX_CHUNK_SIZE):
 					chunk = data[i:i + MAX_CHUNK_SIZE]
+					# Encode bytes as base64 string for JSON serialization
+					encoded_chunk = base64.b64encode(chunk).decode('ascii')
 					self.logger.debug(f"Sending audio chunk {i//MAX_CHUNK_SIZE + 1} of {(len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE}")
 					self._speechService.receiveAudioData(
 						synthName=self.name,
-						audioData=chunk,
+						audioData=encoded_chunk,
 						sampleRate=sampleRate,
 						channels=channels,
 						bitsPerSample=bitsPerSample,
-						isLastChunk=(i + MAX_CHUNK_SIZE >= len(data))
+						isLastChunk=False  # Never mark audio chunks as last - speech completion is handled separately
 					)
 				self.logger.info(f"Successfully sent {len(data)} bytes of audio data")
 			except Exception:
