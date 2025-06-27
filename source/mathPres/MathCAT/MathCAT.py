@@ -22,7 +22,7 @@ import addonHandler
 import winKernel
 import gui
 
-from . import libmathcat_py as libmathcat
+import libmathcat_py as libmathcat
 from typing import Type
 from collections.abc import Generator, Callable
 from keyboardHandler import KeyboardInputGesture  # navigation key strokes
