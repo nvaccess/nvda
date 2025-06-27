@@ -182,12 +182,17 @@ class WavePlayer:
 					# Send audio data (this is now safe to block)
 					if hasattr(self._synthInstance, '_sendAudioData'):
 						logger.debug(f"Sending {len(byte_data)} bytes to synthInstance")
-						self._synthInstance._sendAudioData(
-							byte_data,
-							self.samplesPerSec,
-							self.channels,
-							self.bitsPerSample
-						)
+						try:
+							self._synthInstance._sendAudioData(
+								byte_data,
+								self.samplesPerSec,
+								self.channels,
+								self.bitsPerSample
+							)
+						except Exception as audio_error:
+							logger.exception(f"CRITICAL: _sendAudioData failed - this might terminate ART process: {audio_error}")
+							# Don't re-raise - let the worker continue
+							continue
 					else:
 						logger.error(f"synthInstance has no _sendAudioData method")
 					
@@ -195,8 +200,19 @@ class WavePlayer:
 					# Timeout - check if we should continue
 					continue
 				except Exception as e:
-					logger.exception(f"Error processing audio data: {e}")
+					logger.exception(f"CRITICAL: Unexpected error in audio worker - this might terminate ART process: {e}")
 					# Continue processing despite errors
+		except Exception as fatal_error:
+			logger.exception(f"FATAL: Audio worker thread crashed - ART process will likely terminate: {fatal_error}")
+			# Try to force-flush the log before we die
+			try:
+				for handler in logger.handlers:
+					handler.flush()
+				for handler in logging.getLogger().handlers:
+					handler.flush()
+			except:
+				pass
+			raise  # Re-raise to potentially trigger faulthandler
 		finally:
 			logger.debug("Audio worker thread ending")
 	

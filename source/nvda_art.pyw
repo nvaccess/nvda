@@ -39,37 +39,7 @@ class StreamToLogger(object):
 	def flush(self):
 		self.handler.stream.flush()
 
-# Set up crash logging - try multiple approaches
-try:
-	# First try direct file approach
-	crash_file_handle = open(crash_log_file, 'w', buffering=1)  # Line buffered
-	faulthandler.enable(file=crash_file_handle, all_threads=True)
-	print(f"ART Crash Log: {crash_log_file}", file=sys.stderr)
-	
-	# Also register signal handlers for common crash signals
-	import signal
-	faulthandler.register(signal.SIGTERM, file=crash_file_handle, all_threads=True)
-	if hasattr(signal, 'SIGBREAK'):  # Windows
-		faulthandler.register(signal.SIGBREAK, file=crash_file_handle, all_threads=True)
-	
-	# Set up exit handler to dump traceback on exit
-	import atexit
-	def dump_on_exit():
-		try:
-			crash_file_handle.write(f"\n=== ART PROCESS EXITING at {datetime.datetime.now()} ===\n")
-			crash_file_handle.flush()
-			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
-			crash_file_handle.flush()
-		except:
-			pass
-	atexit.register(dump_on_exit)
-	
-except Exception as e:
-	print(f"Failed to set up crash logging: {e}", file=sys.stderr)
-	# Fallback to stderr
-	faulthandler.enable(all_threads=True)
-
-# Set up file-based logging IMMEDIATELY for ART process visibility
+# Set up file-based logging FIRST so we can use it for crash logging
 log_file = os.path.join(
 	tempfile.gettempdir(),
 	f"nvda_art_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
@@ -90,6 +60,90 @@ logging.basicConfig(
 
 # Create ART logger
 art_logger = logging.getLogger("ART.Main")
+
+# Set up crash logging - try multiple approaches
+try:
+	# First try direct file approach
+	crash_file_handle = open(crash_log_file, 'w', buffering=1)  # Line buffered
+	faulthandler.enable(file=crash_file_handle, all_threads=True)
+	art_logger.info(f"ART Crash Log: {crash_log_file}")
+	
+	# Also register signal handlers for common crash signals
+	import signal
+	faulthandler.register(signal.SIGTERM, file=crash_file_handle, all_threads=True)
+	if hasattr(signal, 'SIGBREAK'):  # Windows
+		faulthandler.register(signal.SIGBREAK, file=crash_file_handle, all_threads=True)
+	
+	# Set up exit handler to dump traceback on exit
+	import atexit
+	def dump_on_exit():
+		try:
+			crash_file_handle.write(f"\n=== ART PROCESS EXITING at {datetime.datetime.now()} ===\n")
+			crash_file_handle.flush()
+			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
+			crash_file_handle.flush()
+			art_logger.info("ART process exiting - dumped traceback to crash log")
+		except Exception as exit_error:
+			art_logger.error(f"Failed to dump exit traceback: {exit_error}")
+	atexit.register(dump_on_exit)
+	
+	# Set up global exception handler to catch unhandled exceptions
+	def handle_exception(exc_type, exc_value, exc_traceback):
+		if issubclass(exc_type, KeyboardInterrupt):
+			sys.__excepthook__(exc_type, exc_value, exc_traceback)
+			return
+		
+		try:
+			art_logger.critical(f"UNHANDLED EXCEPTION: {exc_type.__name__}: {exc_value}")
+			crash_file_handle.write(f"\n=== UNHANDLED EXCEPTION at {datetime.datetime.now()} ===\n")
+			crash_file_handle.write(f"Exception: {exc_type.__name__}: {exc_value}\n")
+			import traceback
+			traceback.print_exception(exc_type, exc_value, exc_traceback, file=crash_file_handle)
+			crash_file_handle.write(f"\n=== FULL TRACEBACK DUMP ===\n")
+			crash_file_handle.flush()
+			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
+			crash_file_handle.flush()
+			art_logger.critical("Unhandled exception dumped to crash log - ART process will terminate")
+		except Exception as log_error:
+			art_logger.error(f"Failed to log unhandled exception: {log_error}")
+		
+		# Call the original exception handler
+		sys.__excepthook__(exc_type, exc_value, exc_traceback)
+	
+	sys.excepthook = handle_exception
+	
+	# Set up thread exception handler for Python 3.8+
+	def handle_thread_exception(args):
+		try:
+			art_logger.critical(f"UNHANDLED THREAD EXCEPTION: {args.exc_type.__name__}: {args.exc_value}")
+			art_logger.critical(f"Thread: {args.thread.name} (daemon: {args.thread.daemon})")
+			crash_file_handle.write(f"\n=== UNHANDLED THREAD EXCEPTION at {datetime.datetime.now()} ===\n")
+			crash_file_handle.write(f"Thread: {args.thread.name} (daemon: {args.thread.daemon})\n")
+			crash_file_handle.write(f"Exception: {args.exc_type.__name__}: {args.exc_value}\n")
+			import traceback
+			traceback.print_exception(args.exc_type, args.exc_value, args.exc_traceback, file=crash_file_handle)
+			crash_file_handle.write(f"\n=== FULL TRACEBACK DUMP ===\n")
+			crash_file_handle.flush()
+			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
+			crash_file_handle.flush()
+			art_logger.critical("Thread exception dumped to crash log - ART process may become unstable")
+		except Exception as log_error:
+			art_logger.error(f"Failed to log thread exception: {log_error}")
+	
+	# Only available in Python 3.8+
+	if hasattr(threading, 'excepthook'):
+		threading.excepthook = handle_thread_exception
+		art_logger.info("Thread exception handler initialized")
+	else:
+		art_logger.warning("threading.excepthook not available - thread crashes may go undetected")
+	
+	art_logger.info("Crash logging and exception handlers initialized")
+	
+except Exception as e:
+	art_logger.error(f"Failed to set up crash logging: {e}")
+	# Fallback to stderr
+	faulthandler.enable(all_threads=True)
+
 
 # Keep original streams for JSON handshake
 original_stdout = sys.stdout
@@ -115,9 +169,11 @@ for key, value in os.environ.items():
 		art_logger.info(f"  {key} = {value}")
 
 Pyro5.config.SERIALIZER = "json"
-Pyro5.config.COMMTIMEOUT = 2.0
+Pyro5.config.COMMTIMEOUT = 10.0  # Increase timeout for speech operations
 Pyro5.config.HOST = "127.0.0.1"
-Pyro5.config.MAX_MESSAGE_SIZE = 1024 * 1024
+Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
+Pyro5.config.THREADPOOL_SIZE = 16  # More threads to handle concurrent requests
+Pyro5.config.SERVERTYPE = "thread"  # Use thread server type (not threadpool)
 
 __version__ = "0.1.0"
 # Logger will be configured after we know the addon name
