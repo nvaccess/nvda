@@ -646,12 +646,23 @@ def nvdaControllerInternal_typedCharacterNotify(ch):
 	return 0
 
 
-@WINFUNCTYPE(c_long, c_int, c_int)
-def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
+@WINFUNCTYPE(c_long, c_int, c_int, c_bool)
+def _nvdaControllerInternal_vbufChangeNotify(rootDocHandle: int, rootID: int, selectionChanged: bool) -> int:
 	import virtualBuffers
 
-	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID)
+	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID, selectionChanged)
 	return 0
+
+
+def nvdaControllerInternal_vbufChangeNotify(
+	rootDocHandle: int,
+	rootID: int,
+	selectionChanged: bool = False,
+) -> int:
+	"""API compatibility wrapper. This is necessary because default argument values
+	are discarded for ctypes callbacks.
+	"""
+	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID, selectionChanged)
 
 
 @WINFUNCTYPE(c_long, c_wchar_p)
@@ -794,7 +805,7 @@ def initialize() -> None:
 			"nvdaControllerInternal_inputConversionModeUpdate",
 			nvdaControllerInternal_inputConversionModeUpdate,
 		),
-		("nvdaControllerInternal_vbufChangeNotify", nvdaControllerInternal_vbufChangeNotify),
+		("nvdaControllerInternal_vbufChangeNotify", _nvdaControllerInternal_vbufChangeNotify),
 		(
 			"nvdaControllerInternal_installAddonPackageFromPath",
 			nvdaControllerInternal_installAddonPackageFromPath,
