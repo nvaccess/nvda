@@ -18,7 +18,6 @@ import config  # look up caps setting
 import ui  # copy message
 import winUser  # clipboard manipulation
 import gettext
-import addonHandler
 import winKernel
 import gui
 
@@ -59,8 +58,6 @@ from api import getClipData
 from synthDrivers import _espeak
 
 _ = gettext.gettext
-
-addonHandler.initTranslation()
 
 RE_MATHML_SPEECH: re.Pattern = re.compile(
 	# Break.
@@ -293,7 +290,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def getScript(
 		self,
 		gesture: KeyboardInputGesture,
-	) -> Callable[KeyboardInputGesture, None] | None:
+	) -> Callable[[KeyboardInputGesture], None] | None:
 		"""
 		Returns the script function bound to the given gesture.
 
