@@ -550,7 +550,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		synth: SynthDriver = getSynth()
 		synthConfig = config.conf["speech"][synth.name]
 		if synth.name == "espeak":
-			_synthesizerRate: int = synthConfig["rate"]
+			_synthesizerRate = synthConfig["rate"]
 			# log.info(f'_synthesizer_rate={_synthesizer_rate}, get_rate()={getSynth()._get_rate()}')
 			getSynth()._set_rate(_synthesizerRate)
 		# log.info(f'..............get_rate()={getSynth()._get_rate()}, name={synth.name}')
