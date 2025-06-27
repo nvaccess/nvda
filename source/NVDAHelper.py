@@ -654,7 +654,9 @@ def _nvdaControllerInternal_vbufChangeNotify(rootDocHandle: int, rootID: int, se
 	return 0
 
 
-def nvdaControllerInternal_vbufChangeNotify(rootDocHandle: int, rootID: int, selectionChanged: bool = False) -> int:
+def nvdaControllerInternal_vbufChangeNotify(
+	rootDocHandle: int, rootID: int, selectionChanged: bool = False
+) -> int:
 	"""API compatibility wrapper. This is necessary because default argument values
 	are discarded for ctypes callbacks.
 	"""
