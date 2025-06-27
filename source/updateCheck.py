@@ -81,7 +81,7 @@ def __getattr__(attrName: str) -> Any:
 		)
 		from utils.networking import _CERT_USAGE_MATCH as CERT_USAGE_MATCH
 		return CERT_USAGE_MATCH
-	if attrName == "_CERT_CHAIN_PARA" and NVDAState._allowDeprecatedAPI():
+	if attrName == "CERT_CHAIN_PARA" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"CERT_CHAIN_PARA is deprecated and will be removed in a future version of NVDA. ",
 			stack_info=True,

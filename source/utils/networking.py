@@ -105,7 +105,6 @@ def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves.
 			_updateWindowsRootCertificates(certFetchUrl or url)
-			# Retry the url
 			log.debug(f"Retrying fetching data from: {url}")
 			result = requests.get(url, timeout=_FETCH_TIMEOUT_S)
 		else:
