@@ -125,6 +125,11 @@ repos:
 
 - repo: local
   hooks:
+    - id: checkPo
+      name: Check po files
+      entry: python ci/scripts/poChecker.py
+      language: python
+      types: [pofile]
     - id: scons-source
       name: build c/c++ files
       entry: cmd.exe /c "scons source --all-cores"
