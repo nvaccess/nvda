@@ -75,6 +75,22 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
 
+  typeCheck:
+    name: Check types with Pyright
+    runs-on: windows-latest
+    needs: buildNVDA
+    steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}
+        key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v6
+    - name: Static type analysis
+      run: ci/scripts/tests/typeCheck.ps1
+
   checkPot:
     name: Check translator comments
     runs-on: windows-latest
