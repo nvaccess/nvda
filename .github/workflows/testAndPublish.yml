@@ -311,13 +311,19 @@ jobs:
     needs: createSymbols
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}
+        key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get symbols
       uses: actions/download-artifact@v4
       with:
         name: Symbols
-        path: output/symbols.zip
+        path: output
     - name: Upload symbols to Mozilla
       continue-on-error: true
       # TODO: this script should be moved to ci/scripts
