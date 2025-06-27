@@ -81,6 +81,16 @@ def _updateWindowsRootCertificates(url: str) -> None:
 	crypt.CertFreeCertificateContext(certCont)
 
 
+def _is_cert_verification_error(exception: requests.exceptions.SSLError) -> bool:
+	return (
+		exception.__context__
+		and exception.__context__.__cause__
+		and exception.__context__.__cause__.__context__
+		and isinstance(exception.__context__.__cause__.__context__, ssl.SSLCertVerificationError)
+		and exception.__context__.__cause__.__context__.reason == "CERTIFICATE_VERIFY_FAILED"
+	)
+
+
 def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None) -> requests.Response:
 	"""Fetches the content of a URL and updates the Windows root certificates.
 
@@ -94,13 +104,7 @@ def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None
 		result = requests.get(url, timeout=_FETCH_TIMEOUT_S)
 		log.debug(f"Got response with status code: {result.status_code}")
 	except requests.exceptions.SSLError as e:
-		if (
-			e.__context__
-			and e.__context__.__cause__
-			and e.__context__.__cause__.__context__
-			and isinstance(e.__context__.__cause__.__context__, ssl.SSLCertVerificationError)
-			and e.__context__.__cause__.__context__.reason == "CERTIFICATE_VERIFY_FAILED"
-		):
+		if _is_cert_verification_error(e):
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves.
 			_updateWindowsRootCertificates(certFetchUrl or url)
