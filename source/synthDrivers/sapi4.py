@@ -79,6 +79,7 @@ from speech.commands import (
 	BreakCommand,
 	PitchCommand,
 	RateCommand,
+	SynthCommand,
 	VolumeCommand,
 	BaseProsodyCommand,
 )
@@ -842,7 +843,7 @@ class SynthDriver(SynthDriver):
 	name = "sapi4"
 	description = "Microsoft Speech API version 4"
 	supportedSettings = [SynthDriver.VoiceSetting()]
-	supportedCommands = {
+	supportedCommands: set[type[SynthCommand]] = {
 		IndexCommand,
 		CharacterModeCommand,
 		BreakCommand,
