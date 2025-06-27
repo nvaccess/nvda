@@ -266,10 +266,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	if result.status_code != 200:
 		raise RuntimeError(f"Checking for update failed with HTTP status code {result.status_code}.")
 
-	if result.content is not None:
-		data = result.content.decode("utf-8")  # Ensure the response is decoded correctly
-	else:
-		data = ""
+	data = result.content.decode("utf-8")  # Ensure the response is decoded correctly
 	# if data is empty, we return None, because the server returns an empty response if there is no update.
 	if not data:
 		return None
