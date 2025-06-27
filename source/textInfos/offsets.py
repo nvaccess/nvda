@@ -648,7 +648,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	allowMoveToOffsetPastEnd = True  #: move with unit_character can move 1 past story length to allow braille routing to end insertion point. (#2096)
+	allowMoveToOffsetPastEnd = True  #: we can move 1 past story length to allow braille routing to end insertion point. (#2096)
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
