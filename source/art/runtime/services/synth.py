@@ -107,21 +107,19 @@ class SynthService:
 
 		@return: True if cancel was successful.
 		"""
+		self.logger.info(f"SynthService.cancel() called")
+		
 		if not self._synthInstance:
 			self.logger.warning("No synth instance to cancel")
 			return False
 
 		try:
-			# Cancel speech in the synthesizer
+			self.logger.debug(f"About to call _synthInstance.cancel() on {self._synthInstance}")
 			self._synthInstance.cancel()
-			
-			# Also clear any audio queues to stop queued audio from playing
-			if hasattr(self._synthInstance, '_clearAudioQueues'):
-				self._synthInstance._clearAudioQueues()
-			
+			self.logger.debug(f"_synthInstance.cancel() completed successfully")
 			return True
-		except Exception:
-			self.logger.exception("Error in cancel")
+		except Exception as e:
+			self.logger.exception(f"CRITICAL: Error in cancel() - this might cause ART process termination: {e}")
 			return False
 
 	def pause(self, switch: bool) -> bool:
@@ -325,12 +323,13 @@ class SynthService:
 			return ""
 		
 		try:
+			self.logger.debug(f"About to call _get_voice() on synthInstance: {self._synthInstance}")
 			# Use the _get_voice method to get actual current voice
 			current_voice = self._synthInstance._get_voice()
 			self.logger.debug(f"Current voice: {current_voice}")
 			return current_voice
-		except Exception:
-			self.logger.exception("Error getting current voice")
+		except Exception as e:
+			self.logger.exception(f"CRITICAL: Error getting current voice from synthInstance - this might cause connection loss: {e}")
 			return ""
 	
 	def getDefaultVoice(self) -> str:

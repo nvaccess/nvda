@@ -119,14 +119,21 @@ class ARTProxySynthDriver(SynthDriver):
 
 	def cancel(self):
 		"""Cancel speech in ART."""
-		if self._connected:
-			try:
-				self._synthService.cancel()
-			except Pyro5.errors.CommunicationError:
-				log.debugWarning(f"ART synth {self.name} disconnected during cancel - normal during shutdown")
-				self._connected = False
-			except Exception:
-				log.exception(f"Error cancelling ART synth {self.name}")
+		log.info(f"ARTProxySynthDriver.cancel() called for {self.name}")
+		
+		if not self._connected:
+			log.warning(f"Cannot cancel - ART synth {self.name} is disconnected")
+			return
+		
+		try:
+			log.debug(f"About to call _synthService.cancel() for {self.name}")
+			self._synthService.cancel()
+			log.debug(f"_synthService.cancel() completed successfully for {self.name}")
+		except Pyro5.errors.CommunicationError as e:
+			log.error(f"CRITICAL: ART synth {self.name} disconnected during cancel - this is the connection loss! Error: {e}")
+			self._connected = False
+		except Exception as e:
+			log.exception(f"CRITICAL: Error cancelling ART synth {self.name} - this might cause disconnection: {e}")
 
 	def pause(self, switch: bool):
 		"""Pause/resume speech in ART."""
