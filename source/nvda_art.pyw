@@ -20,42 +20,41 @@ from art.runtime.services.addons import AddOnLifecycleService
 
 # Set up crash log file for faulthandler
 crash_log_file = os.path.join(
-	tempfile.gettempdir(),
-	f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
+	tempfile.gettempdir(), f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
 )
+
 
 class StreamToLogger(object):
 	"""Fake file-like stream object that redirects writes to a logger instance."""
+
 	def __init__(self, handler):
 		self.handler = handler
-	
+
 	def fileno(self):
 		return self.handler.stream.fileno()
-	
+
 	def write(self, data):
 		self.handler.stream.write(data)
 		self.handler.stream.flush()
-	
+
 	def flush(self):
 		self.handler.stream.flush()
 
+
 # Set up file-based logging FIRST so we can use it for crash logging
 log_file = os.path.join(
-	tempfile.gettempdir(),
-	f"nvda_art_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
+	tempfile.gettempdir(), f"nvda_art_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
 )
 
 # Create rotating file handler
-handler = logging.handlers.RotatingFileHandler(
-	log_file, maxBytes=2_000_000, backupCount=3, encoding="utf-8"
-)
+handler = logging.handlers.RotatingFileHandler(log_file, maxBytes=2_000_000, backupCount=3, encoding="utf-8")
 
 # Configure file logging
 logging.basicConfig(
 	handlers=[handler],
 	level=logging.DEBUG,
 	format="%(asctime)s | %(levelname)-8s | pid=%(process)d | %(name)s | %(message)s",
-	force=True
+	force=True,
 )
 
 # Create ART logger
@@ -64,18 +63,20 @@ art_logger = logging.getLogger("ART.Main")
 # Set up crash logging - try multiple approaches
 try:
 	# First try direct file approach
-	crash_file_handle = open(crash_log_file, 'w', buffering=1)  # Line buffered
+	crash_file_handle = open(crash_log_file, "w", buffering=1)  # Line buffered
 	faulthandler.enable(file=crash_file_handle, all_threads=True)
 	art_logger.info(f"ART Crash Log: {crash_log_file}")
-	
+
 	# Also register signal handlers for common crash signals
 	import signal
+
 	faulthandler.register(signal.SIGTERM, file=crash_file_handle, all_threads=True)
-	if hasattr(signal, 'SIGBREAK'):  # Windows
+	if hasattr(signal, "SIGBREAK"):  # Windows
 		faulthandler.register(signal.SIGBREAK, file=crash_file_handle, all_threads=True)
-	
+
 	# Set up exit handler to dump traceback on exit
 	import atexit
+
 	def dump_on_exit():
 		try:
 			crash_file_handle.write(f"\n=== ART PROCESS EXITING at {datetime.datetime.now()} ===\n")
@@ -85,33 +86,35 @@ try:
 			art_logger.info("ART process exiting - dumped traceback to crash log")
 		except Exception as exit_error:
 			art_logger.error(f"Failed to dump exit traceback: {exit_error}")
+
 	atexit.register(dump_on_exit)
-	
+
 	# Set up global exception handler to catch unhandled exceptions
 	def handle_exception(exc_type, exc_value, exc_traceback):
 		if issubclass(exc_type, KeyboardInterrupt):
 			sys.__excepthook__(exc_type, exc_value, exc_traceback)
 			return
-		
+
 		try:
 			art_logger.critical(f"UNHANDLED EXCEPTION: {exc_type.__name__}: {exc_value}")
 			crash_file_handle.write(f"\n=== UNHANDLED EXCEPTION at {datetime.datetime.now()} ===\n")
 			crash_file_handle.write(f"Exception: {exc_type.__name__}: {exc_value}\n")
 			import traceback
+
 			traceback.print_exception(exc_type, exc_value, exc_traceback, file=crash_file_handle)
-			crash_file_handle.write(f"\n=== FULL TRACEBACK DUMP ===\n")
+			crash_file_handle.write("\n=== FULL TRACEBACK DUMP ===\n")
 			crash_file_handle.flush()
 			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
 			crash_file_handle.flush()
 			art_logger.critical("Unhandled exception dumped to crash log - ART process will terminate")
 		except Exception as log_error:
 			art_logger.error(f"Failed to log unhandled exception: {log_error}")
-		
+
 		# Call the original exception handler
 		sys.__excepthook__(exc_type, exc_value, exc_traceback)
-	
+
 	sys.excepthook = handle_exception
-	
+
 	# Set up thread exception handler for Python 3.8+
 	def handle_thread_exception(args):
 		try:
@@ -121,24 +124,27 @@ try:
 			crash_file_handle.write(f"Thread: {args.thread.name} (daemon: {args.thread.daemon})\n")
 			crash_file_handle.write(f"Exception: {args.exc_type.__name__}: {args.exc_value}\n")
 			import traceback
-			traceback.print_exception(args.exc_type, args.exc_value, args.exc_traceback, file=crash_file_handle)
-			crash_file_handle.write(f"\n=== FULL TRACEBACK DUMP ===\n")
+
+			traceback.print_exception(
+				args.exc_type, args.exc_value, args.exc_traceback, file=crash_file_handle
+			)
+			crash_file_handle.write("\n=== FULL TRACEBACK DUMP ===\n")
 			crash_file_handle.flush()
 			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
 			crash_file_handle.flush()
 			art_logger.critical("Thread exception dumped to crash log - ART process may become unstable")
 		except Exception as log_error:
 			art_logger.error(f"Failed to log thread exception: {log_error}")
-	
+
 	# Only available in Python 3.8+
-	if hasattr(threading, 'excepthook'):
+	if hasattr(threading, "excepthook"):
 		threading.excepthook = handle_thread_exception
 		art_logger.info("Thread exception handler initialized")
 	else:
 		art_logger.warning("threading.excepthook not available - thread crashes may go undetected")
-	
+
 	art_logger.info("Crash logging and exception handlers initialized")
-	
+
 except Exception as e:
 	art_logger.error(f"Failed to set up crash logging: {e}")
 	# Fallback to stderr
@@ -165,13 +171,13 @@ print(f"ART Debug Log: {log_file}", file=original_stderr)
 # Log environment variables related to ART
 art_logger.info("ART Environment variables:")
 for key, value in os.environ.items():
-	if 'NVDA' in key or 'ART' in key:
+	if "NVDA" in key or "ART" in key:
 		art_logger.info(f"  {key} = {value}")
 
 Pyro5.config.SERIALIZER = "json"
-Pyro5.config.COMMTIMEOUT = 10.0  # Increase timeout for speech operations
+Pyro5.config.COMMTIMEOUT = 0.0
 Pyro5.config.HOST = "127.0.0.1"
-Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
+#Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
 Pyro5.config.THREADPOOL_SIZE = 16  # More threads to handle concurrent requests
 Pyro5.config.SERVERTYPE = "thread"  # Use thread server type (not threadpool)
 
@@ -391,13 +397,18 @@ class ARTRuntime:
 			ready_event.set()
 
 			# Start the request loop (this blocks until shutdown)
-			self.logger.info("About to enter daemon.requestLoop() - this is where ART might terminate unexpectedly")
+			self.logger.info(
+				"About to enter daemon.requestLoop() - this is where ART might terminate unexpectedly"
+			)
 			self.daemon.requestLoop(lambda: not self._shutdownEvent.is_set())
 			self.logger.info("daemon.requestLoop() exited normally")
 		except Exception as e:
-			self.logger.exception(f"CRITICAL: Exception in daemon request loop - this will terminate ART: {e}")
+			self.logger.exception(
+				f"CRITICAL: Exception in daemon request loop - this will terminate ART: {e}"
+			)
 			# Try to log some extra info before we die
 			import traceback
+
 			self.logger.error(f"Full traceback: {''.join(traceback.format_tb(e.__traceback__))}")
 			raise
 		finally:
@@ -521,10 +532,12 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 		try:
 			art_logger.info("=== HANDSHAKE MODE: Starting stdin processing ===")
 			art_logger.debug("About to read startup line from stdin")
-			
+
 			startup_line = sys.stdin.readline().strip()
-			art_logger.debug(f"Raw startup line received (length={len(startup_line)}): {startup_line[:200]}...")
-			
+			art_logger.debug(
+				f"Raw startup line received (length={len(startup_line)}): {startup_line[:200]}..."
+			)
+
 			if not startup_line:
 				art_logger.error("No startup data received from NVDA Core")
 				print("ERROR: No startup data received from NVDA Core", file=sys.stderr)
@@ -532,13 +545,15 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 
 			art_logger.debug("About to parse JSON from startup line")
 			startup_data = json.loads(startup_line)
-			art_logger.info(f"Successfully parsed startup data: addon={startup_data.get('addon', {}).get('name', 'unknown')}")
+			art_logger.info(
+				f"Successfully parsed startup data: addon={startup_data.get('addon', {}).get('name', 'unknown')}"
+			)
 			art_logger.debug(f"Full startup data keys: {list(startup_data.keys())}")
 
 			# Extract and apply configuration
 			config = startup_data.get("config", {})
 			art_logger.debug(f"Config section: {config}")
-			
+
 			if config.get("debug", False):
 				art_logger.debug("Setting NVDA_ART_DEBUG=1 from config")
 				os.environ["NVDA_ART_DEBUG"] = "1"
@@ -558,8 +573,10 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 			if not addon_spec:
 				art_logger.error("No addon specification found in startup data")
 				raise ValueError("No addon specified")
-				
-			art_logger.info(f"Successfully processed handshake for addon: {addon_spec.get('name', 'unknown')}")
+
+			art_logger.info(
+				f"Successfully processed handshake for addon: {addon_spec.get('name', 'unknown')}"
+			)
 			art_logger.debug(f"Addon spec keys: {list(addon_spec.keys())}")
 
 			return addon_spec, is_cli_mode
@@ -584,8 +601,10 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, str]]:
 	"""Perform startup with the given addon spec."""
 	try:
-		art_logger.info(f"=== PERFORMING STARTUP: mode={'CLI' if is_cli_mode else 'HANDSHAKE'}, addon={addon_spec.get('name', 'unknown')} ===")
-		
+		art_logger.info(
+			f"=== PERFORMING STARTUP: mode={'CLI' if is_cli_mode else 'HANDSHAKE'}, addon={addon_spec.get('name', 'unknown')} ==="
+		)
+
 		# Start services
 		art_logger.debug("About to call startWithAddonSpec()")
 		service_uris = startWithAddonSpec(addon_spec)
@@ -600,8 +619,10 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 				"art_services": service_uris,
 			}
 			response_json = json.dumps(response_data) + "\n"
-			art_logger.debug(f"Handshake response prepared (length={len(response_json)}): {response_json[:200]}...")
-			
+			art_logger.debug(
+				f"Handshake response prepared (length={len(response_json)}): {response_json[:200]}..."
+			)
+
 			art_logger.debug("Writing handshake response to stdout")
 			sys.stdout.write(response_json)
 			art_logger.debug("Flushing stdout")
@@ -699,7 +720,7 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 		# Initialize addonHandler proxy with addon info
 		addonHandler.initialize(addon_spec)
 		logger.info(f"Initialized addonHandler proxy for addon: {addon_spec['name']}")
-		
+
 		# Set up global translation functions for compatibility
 		# This ensures pgettext and other functions are available globally
 		addon = addonHandler.getCodeAddon()
@@ -712,11 +733,12 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 
 	global artRuntime
 	artRuntime = ARTRuntime(addon_spec)  # Pass addon spec to runtime
-	
+
 	# Register the runtime instance with art.runtime for clean API access
 	import art.runtime
+
 	art.runtime.setRuntime(artRuntime)
-	
+
 	return artRuntime.start()
 
 
@@ -724,14 +746,16 @@ def main():
 	"""Initialize the NVDA ART Runtime."""
 	global wxApp, mainWindow
 
-	art_logger.info(f"=== ART MAIN STARTING ===")
+	art_logger.info("=== ART MAIN STARTING ===")
 	art_logger.debug(f"Command line args: {sys.argv}")
-	
+
 	# Get startup info
 	art_logger.debug("About to call getStartupInfo()")
 	addon_spec, is_cli_mode = getStartupInfo()
-	art_logger.info(f"getStartupInfo() returned: is_cli_mode={is_cli_mode}, addon_spec={'present' if addon_spec else 'None'}")
-	
+	art_logger.info(
+		f"getStartupInfo() returned: is_cli_mode={is_cli_mode}, addon_spec={'present' if addon_spec else 'None'}"
+	)
+
 	if not addon_spec:
 		art_logger.error("No addon spec received, exiting")
 		sys.exit(1)
@@ -739,9 +763,9 @@ def main():
 	# Log environment variables that differ between modes
 	art_logger.debug("=== ENVIRONMENT VARIABLES ===")
 	for key, value in os.environ.items():
-		if 'NVDA' in key or 'ART' in key:
+		if "NVDA" in key or "ART" in key:
 			art_logger.debug(f"  {key} = {value}")
-	
+
 	# Log final addon spec for comparison
 	art_logger.debug(f"Final addon_spec: {addon_spec}")
 

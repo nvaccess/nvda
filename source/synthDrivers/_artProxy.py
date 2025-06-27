@@ -121,10 +121,19 @@ class ARTProxySynthDriver(SynthDriver):
 		"""Cancel speech in ART."""
 		log.info(f"ARTProxySynthDriver.cancel() called for {self.name}")
 		
+		# First, immediately cancel speech playback in core
+		if self._speechService:
+			try:
+				log.debug(f"Calling Speech Service cancelSpeech for {self._artSynthName}")
+				self._speechService.cancelSpeech(self._artSynthName)
+			except Exception as e:
+				log.exception(f"Error calling Speech Service cancelSpeech: {e}")
+		
 		if not self._connected:
 			log.warning(f"Cannot cancel - ART synth {self.name} is disconnected")
 			return
 		
+		# Then cancel the synthesizer in ART
 		try:
 			log.debug(f"About to call _synthService.cancel() for {self.name}")
 			self._synthService.cancel()
