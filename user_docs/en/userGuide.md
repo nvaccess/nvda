@@ -3303,7 +3303,7 @@ This setting contains the following values:
 
 * Default (where suitable)
 * Only where necessary: where the Microsoft Word object model is not available at all
-* Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+* Where suitable: Microsoft Word version 16.0.15000 or higher on Windows 11, or where the Microsoft Word object model is unavailable
 * Always: where ever UI automation is available in Microsoft word (no matter how complete).
 
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
