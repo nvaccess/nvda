@@ -525,8 +525,16 @@ class MathCAT(mathPres.MathPresentationProvider):
 
 		try:
 			# IMPORTANT -- SetRulesDir must be the first call to libmathcat besides GetVersion()
-			rulesDir: str = path.join(path.dirname(path.abspath(__file__)), "..", "..", "..", "include",
-				"nvda-mathcat", "assets", "Rules")
+			rulesDir: str = path.join(
+				path.dirname(path.abspath(__file__)),
+				"..",
+				"..",
+				"..",
+				"include",
+				"nvda-mathcat",
+				"assets",
+				"Rules",
+			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
 			libmathcat.SetRulesDir(rulesDir)
 			libmathcat.SetPreference("TTS", "SSML")
