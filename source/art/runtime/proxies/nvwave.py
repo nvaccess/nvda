@@ -6,6 +6,8 @@
 """NVWave module proxy for add-ons running in ART."""
 
 import ctypes
+import queue
+import threading
 from typing import Optional
 from .base import ServiceProxyMixin
 
@@ -53,6 +55,9 @@ class WavePlayer:
 	
 	This allows synthesizers that create WavePlayer instances to work unchanged in ART.
 	Audio is routed through the synthesizer's existing audio infrastructure.
+	
+	IMPORTANT: Uses a worker thread to avoid blocking the eSpeak native callback,
+	preventing race conditions and segmentation faults.
 	"""
 	
 	def __init__(self, channels=1, samplesPerSec=22050, 
@@ -70,9 +75,22 @@ class WavePlayer:
 		# We'll find it lazily in feed().
 		self._synthInstance = None
 		self._synthInstanceChecked = False
+		
+		# Create queue and worker thread to avoid blocking eSpeak callbacks
+		self._audioQueue = queue.Queue()
+		self._workerThread = threading.Thread(
+			target=self._audioWorker, 
+			name=f"WavePlayer-{id(self)}",
+			daemon=True
+		)
+		self._workerThread.start()
 	
 	def feed(self, data, size=None):
 		"""Queue audio data for playback.
+		
+		IMPORTANT: This method is called from eSpeak's native callback thread.
+		To prevent race conditions and segfaults, we immediately copy the audio 
+		data and queue it for processing by a worker thread.
 		
 		@param data: Audio data (bytes or ctypes pointer)
 		@param size: Size in bytes if data is a ctypes pointer
@@ -84,92 +102,51 @@ class WavePlayer:
 			logger.debug("feed() called on closed WavePlayer")
 			return
 		
-		# Log detailed info about the audio data we're receiving
-		actual_size = size if size is not None else (len(data) if hasattr(data, '__len__') else 'unknown')
-		logger.info(f"feed() called with data type: {type(data)}, size param: {size}, actual_size: {actual_size}")
-		
-		# If it's a ctypes pointer, log some details about the raw data
-		if hasattr(data, 'contents'):
-			logger.info(f"ctypes pointer detected - contents type: {type(data.contents) if hasattr(data, 'contents') else 'N/A'}")
-		
-		if not self._synthInstance and not self._synthInstanceChecked:
-			# Try to find the synthInstance - it should be available now
-			try:
-				import art.runtime
-				logger.debug("Looking for synthInstance via art.runtime.getRuntime()...")
-				
-				artRuntime = art.runtime.getRuntime()
-				logger.debug(f"Found artRuntime: {artRuntime}")
-				
-				synthService = artRuntime.services.get("synth")
-				if synthService:
-					logger.debug(f"Found synthService: {synthService}")
-					if hasattr(synthService, '_synthInstance'):
-						self._synthInstance = synthService._synthInstance
-						if self._synthInstance:
-							logger.info(f"Successfully found synthInstance: {self._synthInstance}")
-						else:
-							logger.warning("synthService._synthInstance is None")
-					else:
-						logger.error("synthService has no _synthInstance attribute")
-				else:
-					logger.error("artRuntime has no synthService")
-			except Exception as e:
-				logger.exception(f"Error finding synthInstance: {e}")
-			
-			self._synthInstanceChecked = True
-			
-		if not self._synthInstance:
-			logger.error(f"feed() called but no synthInstance - discarding {size if size else 'unknown'} bytes of audio")
-			return
-			
 		try:
-			# Convert ctypes pointer to bytes if needed
-			if isinstance(data, ctypes.POINTER(ctypes.c_int16)):
+			# CRITICAL: Immediately convert ctypes pointer to bytes to avoid race condition
+			# The eSpeak library expects this callback to return quickly
+			if hasattr(data, 'value') and size is not None:
+				# Handle ctypes.c_void_p and similar pointer types
+				byte_data = ctypes.string_at(data, size)
+				logger.debug(f"Converted ctypes pointer to {len(byte_data)} bytes")
+			elif isinstance(data, ctypes.POINTER(ctypes.c_int16)):
+				# Handle POINTER(c_int16) specifically
 				if size is None:
 					raise ValueError("size must be specified for ctypes pointer")
 				byte_data = ctypes.string_at(data, size)
-				logger.info(f"Converted ctypes pointer to {len(byte_data)} bytes")
-				
-				# Log first few bytes as hex and as 16-bit samples
-				if len(byte_data) >= 4:
-					hex_bytes = ' '.join(f'{b:02x}' for b in byte_data[:8])
-					logger.info(f"First 8 bytes as hex: {hex_bytes}")
-					
-					# Convert to 16-bit samples
-					import struct
-					num_samples = len(byte_data) // 2
-					if num_samples > 0:
-						samples = struct.unpack(f'<{num_samples}h', byte_data[:num_samples*2])
-						logger.info(f"As 16-bit samples: {samples}")
-						logger.info(f"Sample range: min={min(samples)}, max={max(samples)}")
+				logger.debug(f"Converted ctypes POINTER(c_int16) to {len(byte_data)} bytes")
 			else:
 				byte_data = bytes(data)
-				logger.info(f"Got {len(byte_data)} bytes of audio data directly")
-				
-				# Log the raw bytes too
-				if len(byte_data) >= 4:
-					hex_bytes = ' '.join(f'{b:02x}' for b in byte_data[:8])
-					logger.info(f"First 8 bytes as hex: {hex_bytes}")
+				logger.debug(f"Got {len(byte_data)} bytes of audio data directly")
 			
-			# Route through the synth's audio infrastructure
-			if hasattr(self._synthInstance, '_sendAudioData'):
-				logger.debug(f"Calling _sendAudioData with {len(byte_data)} bytes")
-				self._synthInstance._sendAudioData(
-					byte_data,
-					self.samplesPerSec,
-					self.channels,
-					self.bitsPerSample
-				)
-			else:
-				logger.error(f"synthInstance {self._synthInstance} has no _sendAudioData method!")
+			# Queue the audio data for processing by worker thread
+			# This ensures the eSpeak callback returns immediately
+			if not self._closed:
+				self._audioQueue.put(byte_data)
+				logger.debug(f"Queued {len(byte_data)} bytes for worker thread")
+			
 		except Exception as e:
 			logger.exception(f"Error in feed(): {e}")
 	
 	def stop(self):
 		"""Stop playback immediately."""
-		# Audio stopping is handled by the speech service
-		pass
+		import logging
+		logger = logging.getLogger("ART.WavePlayer")
+		
+		try:
+			# Clear the audio queue to stop queued audio from playing
+			queue_size = self._audioQueue.qsize()
+			if queue_size > 0:
+				logger.debug(f"Clearing {queue_size} items from audio queue")
+				# Clear the queue by getting all items
+				while not self._audioQueue.empty():
+					try:
+						self._audioQueue.get_nowait()
+					except:
+						break
+				logger.debug("Audio queue cleared")
+		except Exception as e:
+			logger.exception(f"Error clearing audio queue: {e}")
 	
 	def pause(self, switch):
 		"""Pause or resume playback.
@@ -189,9 +166,104 @@ class WavePlayer:
 		# Synchronization is handled by the speech service
 		pass
 	
+	def _audioWorker(self):
+		"""Worker thread that processes audio data from the queue.
+		
+		This runs in a separate thread to avoid blocking the eSpeak callback.
+		"""
+		import logging
+		logger = logging.getLogger("ART.WavePlayer.Worker")
+		logger.debug("Audio worker thread started")
+		
+		try:
+			while not self._closed:
+				try:
+					# Get audio data from queue with timeout
+					byte_data = self._audioQueue.get(timeout=0.1)
+					
+					# Check for shutdown sentinel
+					if byte_data is None:
+						logger.debug("Received shutdown sentinel")
+						break
+					
+					# Find synth instance if needed
+					if not self._synthInstance and not self._synthInstanceChecked:
+						self._findSynthInstance(logger)
+					
+					if not self._synthInstance:
+						logger.error(f"No synthInstance - discarding {len(byte_data)} bytes")
+						continue
+					
+					# Send audio data (this is now safe to block)
+					if hasattr(self._synthInstance, '_sendAudioData'):
+						logger.debug(f"Sending {len(byte_data)} bytes to synthInstance")
+						self._synthInstance._sendAudioData(
+							byte_data,
+							self.samplesPerSec,
+							self.channels,
+							self.bitsPerSample
+						)
+					else:
+						logger.error(f"synthInstance has no _sendAudioData method")
+					
+				except queue.Empty:
+					# Timeout - check if we should continue
+					continue
+				except Exception as e:
+					logger.exception(f"Error processing audio data: {e}")
+					# Continue processing despite errors
+		finally:
+			logger.debug("Audio worker thread ending")
+	
+	def _findSynthInstance(self, logger):
+		"""Find the synth instance (moved to separate method for worker thread)."""
+		try:
+			import art.runtime
+			logger.debug("Looking for synthInstance via art.runtime.getRuntime()...")
+			
+			artRuntime = art.runtime.getRuntime()
+			logger.debug(f"Found artRuntime: {artRuntime}")
+			
+			synthService = artRuntime.services.get("synth")
+			if synthService:
+				logger.debug(f"Found synthService: {synthService}")
+				if hasattr(synthService, '_synthInstance'):
+					self._synthInstance = synthService._synthInstance
+					if self._synthInstance:
+						logger.info(f"Successfully found synthInstance: {self._synthInstance}")
+						# Register this WavePlayer with the synthesizer for queue management
+						if hasattr(self._synthInstance, '_registerWavePlayer'):
+							self._synthInstance._registerWavePlayer(self)
+							logger.debug("Registered WavePlayer with synthesizer")
+					else:
+						logger.warning("synthService._synthInstance is None")
+				else:
+					logger.error("synthService has no _synthInstance attribute")
+			else:
+				logger.error("artRuntime has no synthService")
+		except Exception as e:
+			logger.exception(f"Error finding synthInstance: {e}")
+		
+		self._synthInstanceChecked = True
+	
 	def close(self):
 		"""Close the player and release resources."""
 		self._closed = True
+		
+		# Unregister from synthesizer
+		if self._synthInstance and hasattr(self._synthInstance, '_unregisterWavePlayer'):
+			self._synthInstance._unregisterWavePlayer(self)
+		
+		# Signal worker thread to stop
+		try:
+			self._audioQueue.put(None)  # Shutdown sentinel
+		except:
+			pass  # Queue might be full or closed
+		
+		# Wait for worker thread to finish
+		if self._workerThread.is_alive():
+			self._workerThread.join(timeout=1.0)
+		
 		self._synthInstance = None
 
 
