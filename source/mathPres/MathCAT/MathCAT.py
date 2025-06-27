@@ -48,7 +48,7 @@ from speech.commands import (
 	CharacterModeCommand,
 	PhonemeCommand,
 	IndexCommand,
-	ProsodyCommand,
+	BaseProsodyCommand,
 	SpeechCommand,
 	SynthCommand,
 )
@@ -79,7 +79,7 @@ RE_MATHML_SPEECH: re.Pattern = re.compile(
 	r"|(?P<content>[^<]+)",
 )
 
-PROSODY_COMMANDS: dict[str, ProsodyCommand] = {
+PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
 	"pitch": PitchCommand,
 	"volume": VolumeCommand,
 	"rate": RateCommand,
@@ -169,7 +169,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(language))
 
-	resetProsody: list[Type["ProsodyCommand"]] = []
+	resetProsody: list[Type["BaseProsodyCommand"]] = []
 	# log.info(f"\ntext: {text}")
 	for m in RE_MATHML_SPEECH.finditer(text):
 		if m.lastgroup == "break":
@@ -188,13 +188,13 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 				out.append(PitchCommand(multiplier=int(m.group(m.lastgroup))))
 				resetProsody.append(PitchCommand)
 		elif m.lastgroup in PROSODY_COMMANDS:
-			command: Type["ProsodyCommand"] = PROSODY_COMMANDS[m.lastgroup]
+			command: Type["BaseProsodyCommand"] = PROSODY_COMMANDS[m.lastgroup]
 			if command in supportedCommands:
 				out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
 				resetProsody.append(command)
 		elif m.lastgroup == "prosodyReset":
 			# for command in resetProsody:    # only supported commands were added, so no need to check
-			command: Type["ProsodyCommand"] = resetProsody.pop()
+			command: Type["BaseProsodyCommand"] = resetProsody.pop()
 			out.append(command(multiplier=1))
 		elif m.lastgroup == "phonemeText":
 			if usePhoneme:
