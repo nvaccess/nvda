@@ -868,7 +868,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod
-	def changeNotify(cls, rootDocHandle: int, rootID: int, selectionChanged: bool):
+	def changeNotify(cls, rootDocHandle: int, rootID: int, selectionChanged: bool = False):
 		try:
 			queueHandler.queueFunction(
 				queueHandler.eventQueue,
