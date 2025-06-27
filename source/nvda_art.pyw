@@ -628,6 +628,12 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 			art_logger.debug("Flushing stdout")
 			sys.stdout.flush()
 			art_logger.info("Handshake response sent successfully")
+			
+			# Redirect stdout/stderr to prevent pipe buffer deadlock
+			art_logger.debug("Redirecting stdout/stderr to prevent pipe buffer deadlock")
+			import os
+			sys.stdout = open(os.devnull, 'w')
+			sys.stderr = open(os.devnull, 'w')
 
 		return service_uris
 
