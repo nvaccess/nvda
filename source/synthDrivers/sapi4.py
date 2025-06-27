@@ -841,7 +841,7 @@ class SynthDriverSink(COMObject):
 class SynthDriver(SynthDriver):
 	name = "sapi4"
 	description = "Microsoft Speech API version 4"
-	supportedSettings = [SynthDriver.VoiceSetting()]
+	supportedSettings = [SynthDriver.VoiceSetting(), SynthDriver.UseWasapiSetting()]
 	supportedCommands = {
 		IndexCommand,
 		CharacterModeCommand,
@@ -898,6 +898,7 @@ class SynthDriver(SynthDriver):
 		self._pitchDelta = 0
 		self._volume = 100
 		self._paused = False
+		self._useWasapi = True
 		self.voice = str(self._enginesList[0].gModeID)
 
 	def terminate(self):
@@ -1044,7 +1045,7 @@ class SynthDriver(SynthDriver):
 			# before the next _ttsCentral is created.
 			self._ttsAttrs = None
 			self._ttsCentral = None
-		if config.conf["speech"]["useWASAPIForSAPI4"]:
+		if self.useWasapi:
 			ttsAudio = self._comThread.invoke(SynthDriverAudio, self._comThread)
 		else:
 			ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
@@ -1188,6 +1189,15 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+	def _get_useWasapi(self) -> bool:
+		return self._useWasapi
+
+	def _set_useWasapi(self, value: bool):
+		if value == self._useWasapi:
+			return
+		self._useWasapi = value
+		self.voice = self.voice  # reload the current voice
 
 
 def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:

@@ -221,6 +221,17 @@ class SynthDriver(driverHandler.Driver):
 			displayName=pgettext("synth setting", "Inflection"),
 		)
 
+	@classmethod
+	def UseWasapiSetting(cls):
+		"""Factory function for creating 'Use WASAPI' setting."""
+		return BooleanDriverSetting(
+			"useWasapi",
+			# Translators: Label for a setting in voice settings dialog.
+			_("Use modern audio output system (WASAPI)"),
+			availableInSettingsRing=False,
+			defaultVal=True,
+		)
+
 	@abstractmethod
 	def speak(self, speechSequence):
 		"""
