@@ -1021,12 +1021,12 @@ class UIAHandler(COMObject):
 
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
 		self,
-		sender,
-		NotificationKind,
-		NotificationProcessing,
-		displayString,
-		activityId,
-	):
+		sender: UIA.IUIAutomationElement,
+		NotificationKind: int,
+		NotificationProcessing: int,
+		displayString: str,
+		activityId: str,
+	) -> None:
 		if _isDebug():
 			log.debug(
 				"handleNotificationEvent called "
@@ -1041,10 +1041,42 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
+		# Sometimes notification events can be fired on a UIAElement that has no windowHandle
+		# and does not connect through parents back to the desktop.
+		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
+		# should be announced from everywhere (applicable on Windows 11 24H2 and later).
+		# Therefore, ask app modules if notifications (including from these elements) should be processed.
+		try:
+			processId = sender.CachedProcessID
+		except COMError:
+			pass
+		else:
+			appMod = appModuleHandler.getAppModuleFromProcessID(processId)
+			if not appMod.shouldProcessUIANotificationEvent(
+				sender,
+				notificationKind=NotificationKind,
+				notificationProcessing=NotificationProcessing,
+				displayString=displayString,
+				activityId=activityId,
+			):
+				if _isDebug():
+					log.debugWarning(
+						"HandleNotificationEvent: dropping notification event "
+						f"at request of appModule {appMod.appName}",
+					)
+				return
+		# Take desktop window handle as a substitute if window handle is not set.
+		if not (window := self.getNearestWindowHandle(sender)):
+			window = api.getDesktopObject().windowHandle
+			if _isDebug():
+				log.debugWarning(
+					"HandleNotificationEvent: native window handle not found, "
+					f"using desktop window handle {window}",
+				)
 		import NVDAObjects.UIA
 
 		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender, windowHandle=window)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
@@ -1056,8 +1088,7 @@ class UIAHandler(COMObject):
 				)
 			return
 		if not obj:
-			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
-			# There is nothing we can do with these.
+			# Sometimes UIA object can be None despite setting window handle to something else.
 			if _isDebug():
 				log.debug(
 					"HandleNotificationEvent: Ignoring because no object: "

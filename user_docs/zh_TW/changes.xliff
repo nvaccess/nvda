@@ -10470,9 +10470,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 606</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed math attributes being read in Adobe Reader, this resulted in poor or wrong speech and braille. (#17980)</source>
-        <target>Fixed math attributes being read in Adobe Reader, this resulted in poor or wrong speech and braille. (#17980)</target>
+        <target>修正了 Adobe Reader 中數學屬性被讀出的問題，此問題曾導致語音和點字輸出效果不佳或錯誤。(#17980)</target>
       </segment>
     </unit>
     <unit id="9256c01c-6cae-4f8c-b79f-a847b001ae15">
@@ -11535,9 +11535,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 733</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when `control+y`, `control+z` or `alt+backspace` is pressed. (#15547)</source>
-        <target>In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when `control+y`, `control+z` or `alt+backspace` is pressed. (#15547)</target>
+        <target>修正了在停用 UIA 的 Excel 中，當按下 `control+y`、`control+z` 或 `alt+backspace` 時，未朗讀操作結果且點字顯示未同時更新的錯誤。(#15547)</target>
       </segment>
     </unit>
     <unit id="794d5ee2-0075-4b31-a18d-e496e9289313">
@@ -11545,9 +11545,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 734</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Word with UIA disabled braille is updated when `control+v`, `control+x`, `control+y`, `control+z`, `alt+backspace`, `backspace` or `control+backspace` is pressed.</source>
-        <target>In Word with UIA disabled braille is updated when `control+v`, `control+x`, `control+y`, `control+z`, `alt+backspace`, `backspace` or `control+backspace` is pressed.</target>
+        <target>修正了在停用 UIA 的 Word 中，當按下 `control+v`、`control+x`、`control+y`、`control+z`、`alt+backspace`、亦或按住 `backspace`、`control+backspace` 時，點字未更新的錯誤。</target>
       </segment>
     </unit>
     <unit id="ace6add4-6c75-4001-8093-6f1e72e3dbb7">
@@ -11564,9 +11564,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 736</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation `alt+home`, `alt+end`, `alt+pageUp` and `alt+pageDown`. (#15805, @CyrilleB79)</source>
-        <target>In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation `alt+home`, `alt+end`, `alt+pageUp` and `alt+pageDown`. (#15805, @CyrilleB79)</target>
+        <target>修正了在 Word 中，使用原生 Word 表格導航快速鍵 `alt+home`、`alt+end`、`alt+pageUp`、`alt+pageDown` 時，不讀儲存格座標的錯誤。(#15805, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="d9ea5982-57ab-449d-a91a-c51ddf73517e">
@@ -11574,9 +11574,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 737</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)</source>
-        <target>Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)</target>
+        <target>物件快速鍵的朗讀有所改善。(#10807, #15816, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="2977ff0a-d280-4127-ad13-a7addcf07f94">
@@ -11584,9 +11584,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 738</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)</source>
-        <target>The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)</target>
+        <target>SAPI4 合成器現在可以正確支援嵌入在語音中的音量、速度和音調變化。(#15271, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="b25d42c8-ead5-4892-98ab-442a78a13d27">
@@ -11594,9 +11594,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 739</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)</source>
-        <target>Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)</target>
+        <target>使用 Java Access Bridge 的應用程式中現在可以正確朗讀多行狀態。(#14609)</target>
       </segment>
     </unit>
     <unit id="e865481a-e13a-4e64-9cbc-62537e6f4ca9">
@@ -11604,9 +11604,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 740</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)</source>
-        <target>NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)</target>
+        <target>NVDA 可以朗讀更多 Windows 10 和 11 對話框內容。(#15729, @josephsl)</target>
       </segment>
     </unit>
     <unit id="77c6e314-85a6-429a-aa74-d98d7006940b">
@@ -11614,9 +11614,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 741</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)</source>
-        <target>NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)</target>
+        <target>修正了使用 UIA 時，NVDA 無法讀取 Microsoft Edge 新載入的頁面的錯誤。(#15736)</target>
       </segment>
     </unit>
     <unit id="b3efdd6f-50d6-4836-8c5c-3b458ffe66bf">
@@ -11624,9 +11624,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 742</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)</source>
-        <target>When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)</target>
+        <target>使用「讀出全部」或拼讀文字的指令時，句間或字間的停頓時間不再隨著時間逐漸縮短。(#15739, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="5fd6bae2-ef35-4cdc-beba-a5989473db4c">
@@ -11634,9 +11634,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 743</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)</source>
-        <target>NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)</target>
+        <target>修正了 NVDA 在朗讀大量文字時，偶爾凍結的錯誤。(#15752, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="93f6968e-ab5c-494d-a653-57605b23fbf4">
@@ -11644,9 +11644,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 744</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)</source>
-        <target>When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)</target>
+        <target>修正了使用 UIA 存取 Microsoft Edge 時，NVDA 在流覽模式下無法啟動個別控制項的錯誤。(#14612)</target>
       </segment>
     </unit>
     <unit id="41917e95-72e5-490b-ae89-7dde716be546">
@@ -11654,9 +11654,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 745</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)</source>
-        <target>NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)</target>
+        <target>修正了組態設定檔被破壞時，NVDA 無法啟動的錯誤，在這種情況下，會和以前一樣將配置還原為預設值。(#15690, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="3658f392-1308-4570-b34e-5e7e48a6eaa7">
@@ -11664,9 +11664,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 746</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed support for System List view (`SysListView32`) controls in Windows Forms applications. (#15283, @LeonarddeR)</source>
-        <target>Fixed support for System List view (`SysListView32`) controls in Windows Forms applications. (#15283, @LeonarddeR)</target>
+        <target>修正了對 Windows Forms 應用程式中系統清單檢視（`SysListView32`）控制項的支援。(#15283, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="33374d53-01d7-481e-9398-d03edddd4d34">
@@ -11674,9 +11674,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 747</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)</source>
-        <target>It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)</target>
+        <target>修正了 NVDA 的 Python 主控台歷史記錄在個別情況下會被覆蓋的錯誤。(#15792, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="5874a0c0-0568-4f21-a2b8-e32f70bd7898">
@@ -11684,9 +11684,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 748</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)</source>
-        <target>NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)</target>
+        <target>當收到大量 UIA 事件(例如，大量文字被列印到終端或在 WhatsApp Messenger 中收聽語音訊息時)，NVDA 可以保持回應狀態。(#14888, #15169)</target>
       </segment>
     </unit>
     <unit id="26ff5b49-79f9-4d5f-af16-1e0d4c3eb347">
@@ -11694,9 +11694,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 749</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.</source>
-        <target>This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.</target>
+        <target>這一新行為可以透過 NVDA “進階”設定中的設定來停用。</target>
       </segment>
     </unit>
     <unit id="024aad3f-281b-493e-b6e6-be28e1f4b191">
@@ -11704,9 +11704,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 750</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)</source>
-        <target>NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)</target>
+        <target>修正了 NVDA 無法取得在 Windows Defender 應用程式防護(WDAG)中執行的應用程式焦點的錯誤。(#15164)</target>
       </segment>
     </unit>
     <unit id="a51012cd-c507-41bc-abdc-c5e375918230">
@@ -11714,9 +11714,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 751</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)</source>
-        <target>The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)</target>
+        <target>當滑鼠在語音檢視器中移動時，語音檢視器中的文字不再更新。(#15952, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="e4b62f35-41f7-4e5a-8342-6a30d6874657">
@@ -11724,9 +11724,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 752</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will again switch back to browse mode when closing combo boxes with `escape` or `alt+upArrow` in Firefox or Chrome. (#15653)</source>
-        <target>NVDA will again switch back to browse mode when closing combo boxes with `escape` or `alt+upArrow` in Firefox or Chrome. (#15653)</target>
+        <target>修正了在 Firefox 或 Chrome 中使用 `escape` 或 `alt+upArrow` 關閉下拉式方塊後，NVDA 未切換回流覽模式的錯誤。(#15653)</target>
       </segment>
     </unit>
     <unit id="770aee4d-2cc1-4a26-b79a-29d4af2e72b8">
@@ -11734,9 +11734,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 753</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)</source>
-        <target>Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)</target>
+        <target>修正了在 iTunes 中按上下鍵選擇下拉式方塊中的選項時會被切換回流覽模式的錯誤。(#15653)</target>
       </segment>
     </unit>
     <unit id="c2aec552-ee81-466c-ad0f-92f4f1de676a">
@@ -11744,18 +11744,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 755</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>開發者需要了解的變化</target>
       </segment>
     </unit>
     <unit id="5cb728bb-ef91-4d48-9189-cd2b044bc2f1">
       <notes>
         <note appliesTo="source">line: 757</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</target>
+        <target>請參閱 [開發者指南](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) 以了解 NVDA 的 API 廢除與移除過程。</target>
       </segment>
     </unit>
     <unit id="1bef4f4b-44a4-45ee-b6d5-d7b0dab50244">
@@ -11763,18 +11763,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 759</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Note: this is an Add-on API compatibility breaking release.</source>
-        <target>Note: this is an Add-on API compatibility breaking release.</target>
+        <target>請注意：此版本與先前的附加元件 API 不相容。</target>
       </segment>
     </unit>
     <unit id="c1035a54-a91d-4c19-8e51-2934f4e9b132">
       <notes>
         <note appliesTo="source">line: 760</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Add-ons will need to be re-tested and have their manifest updated.</source>
-        <target>Add-ons will need to be re-tested and have their manifest updated.</target>
+        <target>附加元件需要重新測試，並更新其資訊清單。</target>
       </segment>
     </unit>
     <unit id="823a701d-e467-4d43-bb3b-8869d9374b02">
@@ -11782,18 +11782,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 761</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Building NVDA now requires Visual Studio 2022.</source>
-        <target>Building NVDA now requires Visual Studio 2022.</target>
+        <target>構建 NVDA 現在需要 Visual Studio 2022。</target>
       </segment>
     </unit>
     <unit id="f026f5ef-9b48-4891-bd96-b454763823ed">
       <notes>
         <note appliesTo="source">line: 762</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please refer to the [NVDA docs](https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md) for the specific list of Visual Studio components. (#14313)</source>
-        <target>Please refer to the [NVDA docs](https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md) for the specific list of Visual Studio components. (#14313)</target>
+        <target>關於 Visual Studio 元件的具體清單，請參閱 [NVDA 文件](https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md)</target>
       </segment>
     </unit>
     <unit id="b8ecbf5b-dd8b-4ce9-a177-2c13507dfb6f">
