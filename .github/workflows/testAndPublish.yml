@@ -26,7 +26,7 @@ concurrency:
 
 env:
   START_BUILD_NUMBER: ${{ vars.BUILD_NUMBER_OFFSET || 0 }}
-  pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || '' }}
+  pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: ${{ vars.PUBLISHER_NAME || github.repository_owner }}
   # Don't send telemetry to Microsoft when using MSVC tooling, avoiding an unnecessary PowerShell script invocation.
   VSCMD_SKIP_SENDTELEMETRY: 1
