@@ -198,6 +198,117 @@ class SynthService:
 			self.logger.exception(f"Error setting voice to {voiceId}")
 			return False
 
+	def setProperty(self, prop_name: str, value) -> bool:
+		"""Generic property setter for any synthesizer property.
+		
+		@param prop_name: The property name (e.g., 'inflection', 'variant')
+		@param value: The value to set
+		@return: True if successful
+		"""
+		if not self._synthInstance:
+			self.logger.warning(f"No synth instance available for setting {prop_name}")
+			return False
+		
+		try:
+			if hasattr(self._synthInstance, prop_name):
+				setattr(self._synthInstance, prop_name, value)
+				self.logger.debug(f"Set {prop_name} to {value}")
+				return True
+			else:
+				self.logger.debug(f"Property {prop_name} not supported by synthesizer")
+				return False
+		except Exception:
+			self.logger.exception(f"Error setting {prop_name} to {value}")
+			return False
+
+	def getProperty(self, prop_name: str, default_value=None):
+		"""Generic property getter for any synthesizer property.
+		
+		@param prop_name: The property name (e.g., 'inflection', 'variant')
+		@param default_value: Default value if property doesn't exist
+		@return: The property value or default
+		"""
+		if not self._synthInstance:
+			self.logger.warning(f"No synth instance available for getting {prop_name}")
+			return default_value
+		
+		try:
+			# Try direct property access first
+			if hasattr(self._synthInstance, prop_name):
+				return getattr(self._synthInstance, prop_name)
+			
+			# Try getter method
+			getter_name = f'_get_{prop_name}'
+			if hasattr(self._synthInstance, getter_name):
+				return getattr(self._synthInstance, getter_name)()
+			
+			self.logger.debug(f"Property {prop_name} not found on synthesizer")
+			return default_value
+		except Exception:
+			self.logger.exception(f"Error getting {prop_name}")
+			return default_value
+
+	def __getattr__(self, name: str):
+		"""Dynamic method handler for synthesizer properties.
+		
+		Automatically handles methods like:
+		- set{PropertyName}(value) -> synth.property = value
+		- getCurrent{PropertyName}() -> synth.property
+		
+		This allows the service to support any property the synthesizer implements
+		without having to manually add every possible method.
+		"""
+		if name.startswith('set') and len(name) > 3:
+			# Handle set{PropertyName}(value)
+			prop_name = name[3:].lower()  # setInflection -> inflection
+			
+			def setter(value):
+				if not self._synthInstance:
+					self.logger.warning(f"No synth instance available for {name}")
+					return False
+				
+				try:
+					# Check if the synthesizer has this property
+					if hasattr(self._synthInstance, prop_name):
+						setattr(self._synthInstance, prop_name, value)
+						self.logger.debug(f"Set {prop_name} to {value}")
+						return True
+					else:
+						self.logger.debug(f"Property {prop_name} not supported by synthesizer")
+						raise NotImplementedError(f"Property {prop_name} not supported")
+				except Exception:
+					self.logger.exception(f"Error setting {prop_name} to {value}")
+					return False
+			
+			return setter
+			
+		elif name.startswith('getCurrent') and len(name) > 10:
+			# Handle getCurrent{PropertyName}()
+			prop_name = name[10:].lower()  # getCurrentInflection -> inflection
+			
+			def getter():
+				if not self._synthInstance:
+					self.logger.warning(f"No synth instance available for {name}")
+					return None
+				
+				try:
+					# Check if the synthesizer has this property
+					if hasattr(self._synthInstance, prop_name):
+						value = getattr(self._synthInstance, prop_name)
+						self.logger.debug(f"Got {prop_name}: {value}")
+						return value
+					else:
+						self.logger.debug(f"Property {prop_name} not supported by synthesizer")
+						raise NotImplementedError(f"Property {prop_name} not supported")
+				except Exception:
+					self.logger.exception(f"Error getting {prop_name}")
+					return None
+			
+			return getter
+		
+		# If we don't handle this method, raise AttributeError
+		raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
+
 	def getCurrentVoice(self) -> str:
 		"""Get the current voice ID from the synthesizer.
 		

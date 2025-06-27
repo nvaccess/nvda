@@ -157,6 +157,11 @@ def initTranslation() -> None:
 		setattr(module, "npgettext", translations.npgettext)
 	finally:
 		del callerFrame
+	
+	# Also install translation functions globally for compatibility
+	# with code that expects them in builtins (like core NVDA modules)
+	from . import languageHandler
+	languageHandler.setGlobalTranslation(translations)
 
 
 # Constants from addonHandler

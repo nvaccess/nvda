@@ -95,3 +95,24 @@ def stripLocaleFromLangCode(langWithOptionalLocale: str) -> str:
 
 # Constants that add-ons might use
 LCID_NONE = 0
+
+
+def setGlobalTranslation(translations) -> None:
+	"""Install translation functions globally.
+	
+	This function installs the gettext translation functions into the builtins
+	namespace, making them available globally throughout the process.
+	This matches the behavior of NVDA core's languageHandler.setLanguage().
+	
+	@param translations: A gettext translation object with gettext, ngettext, 
+		pgettext, and npgettext methods
+	"""
+	import builtins
+	
+	# Install translation functions into builtins
+	# This matches what trans.install(names=["pgettext", "npgettext", "ngettext"]) does
+	builtins._ = translations.gettext
+	builtins.gettext = translations.gettext
+	builtins.ngettext = translations.ngettext
+	builtins.pgettext = translations.pgettext
+	builtins.npgettext = translations.npgettext

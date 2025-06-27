@@ -586,6 +586,14 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 		# Initialize addonHandler proxy with addon info
 		addonHandler.initialize(addon_spec)
 		logger.info(f"Initialized addonHandler proxy for addon: {addon_spec['name']}")
+		
+		# Set up global translation functions for compatibility
+		# This ensures pgettext and other functions are available globally
+		addon = addonHandler.getCodeAddon()
+		if addon:
+			translations = addon.getTranslationsInstance()
+			languageHandler.setGlobalTranslation(translations)
+			logger.info("Set up global translation functions")
 	except Exception:
 		logger.exception("Failed to set up proxy modules")
 
