@@ -1,6 +1,7 @@
 import argparse
 import concurrent.futures
 import datetime
+import faulthandler
 import json
 import logging
 import logging.handlers
@@ -16,6 +17,57 @@ import Pyro5
 import Pyro5.api
 import wx
 from art.runtime.services.addons import AddOnLifecycleService
+
+# Set up crash log file for faulthandler
+crash_log_file = os.path.join(
+	tempfile.gettempdir(),
+	f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
+)
+
+class StreamToLogger(object):
+	"""Fake file-like stream object that redirects writes to a logger instance."""
+	def __init__(self, handler):
+		self.handler = handler
+	
+	def fileno(self):
+		return self.handler.stream.fileno()
+	
+	def write(self, data):
+		self.handler.stream.write(data)
+		self.handler.stream.flush()
+	
+	def flush(self):
+		self.handler.stream.flush()
+
+# Set up crash logging - try multiple approaches
+try:
+	# First try direct file approach
+	crash_file_handle = open(crash_log_file, 'w', buffering=1)  # Line buffered
+	faulthandler.enable(file=crash_file_handle, all_threads=True)
+	print(f"ART Crash Log: {crash_log_file}", file=sys.stderr)
+	
+	# Also register signal handlers for common crash signals
+	import signal
+	faulthandler.register(signal.SIGTERM, file=crash_file_handle, all_threads=True)
+	if hasattr(signal, 'SIGBREAK'):  # Windows
+		faulthandler.register(signal.SIGBREAK, file=crash_file_handle, all_threads=True)
+	
+	# Set up exit handler to dump traceback on exit
+	import atexit
+	def dump_on_exit():
+		try:
+			crash_file_handle.write(f"\n=== ART PROCESS EXITING at {datetime.datetime.now()} ===\n")
+			crash_file_handle.flush()
+			faulthandler.dump_traceback(file=crash_file_handle, all_threads=True)
+			crash_file_handle.flush()
+		except:
+			pass
+	atexit.register(dump_on_exit)
+	
+except Exception as e:
+	print(f"Failed to set up crash logging: {e}", file=sys.stderr)
+	# Fallback to stderr
+	faulthandler.enable(all_threads=True)
 
 # Set up file-based logging IMMEDIATELY for ART process visibility
 log_file = os.path.join(
@@ -283,9 +335,14 @@ class ARTRuntime:
 			ready_event.set()
 
 			# Start the request loop (this blocks until shutdown)
+			self.logger.info("About to enter daemon.requestLoop() - this is where ART might terminate unexpectedly")
 			self.daemon.requestLoop(lambda: not self._shutdownEvent.is_set())
-		except Exception:
-			self.logger.exception("Exception in daemon request loop")
+			self.logger.info("daemon.requestLoop() exited normally")
+		except Exception as e:
+			self.logger.exception(f"CRITICAL: Exception in daemon request loop - this will terminate ART: {e}")
+			# Try to log some extra info before we die
+			import traceback
+			self.logger.error(f"Full traceback: {''.join(traceback.format_tb(e.__traceback__))}")
 			raise
 		finally:
 			self.logger.info("Pyro5 daemon request loop finished")

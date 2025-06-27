@@ -189,9 +189,6 @@ class SynthDriver(ABC):
 		self._defaultVoice: Optional[str] = None
 		self._voicesInitialized = False
 		
-		# Track WavePlayer instances for audio queue clearing
-		self._wavePlayerInstances = []
-		
 		# Register this synth instance with the ART synth service
 		self._registerWithARTService()
 		
@@ -426,48 +423,6 @@ class SynthDriver(ABC):
 		Subclasses should override this to stop speech.
 		"""
 		pass
-	
-	def _clearAudioQueues(self):
-		"""Clear audio queues in all registered WavePlayer instances.
-		
-		This method is called by the SynthService when speech is cancelled
-		to ensure that queued audio doesn't continue playing.
-		"""
-		try:
-			cleared_count = 0
-			for wavePlayer in self._wavePlayerInstances[:]:  # Copy list to avoid modification during iteration
-				try:
-					if hasattr(wavePlayer, 'stop'):
-						wavePlayer.stop()
-						cleared_count += 1
-				except Exception:
-					self.logger.exception("Error clearing audio queue for WavePlayer")
-			
-			if cleared_count > 0:
-				self.logger.debug(f"Cleared audio queues for {cleared_count} WavePlayer instances")
-		except Exception:
-			self.logger.exception("Error in _clearAudioQueues")
-	
-	def _registerWavePlayer(self, wavePlayer):
-		"""Register a WavePlayer instance for audio queue management.
-		
-		@param wavePlayer: The WavePlayer instance to register.
-		"""
-		if wavePlayer not in self._wavePlayerInstances:
-			self._wavePlayerInstances.append(wavePlayer)
-			self.logger.debug(f"Registered WavePlayer instance: {wavePlayer}")
-	
-	def _unregisterWavePlayer(self, wavePlayer):
-		"""Unregister a WavePlayer instance.
-		
-		@param wavePlayer: The WavePlayer instance to unregister.
-		"""
-		try:
-			self._wavePlayerInstances.remove(wavePlayer)
-			self.logger.debug(f"Unregistered WavePlayer instance: {wavePlayer}")
-		except ValueError:
-			# WavePlayer wasn't in the list
-			pass
 	
 	def pause(self, switch: bool):
 		"""Pause or resume speech output.
@@ -936,9 +891,6 @@ class SynthDriver(ABC):
 		self._currentVoice: Optional[str] = None
 		self._defaultVoice: Optional[str] = None
 		self._voicesInitialized = False
-		
-		# Track WavePlayer instances for audio queue clearing
-		self._wavePlayerInstances = []
 
 		# Perform normal registrations
 		try:
