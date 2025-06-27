@@ -130,23 +130,8 @@ class WavePlayer:
 	
 	def stop(self):
 		"""Stop playback immediately."""
-		import logging
-		logger = logging.getLogger("ART.WavePlayer")
-		
-		try:
-			# Clear the audio queue to stop queued audio from playing
-			queue_size = self._audioQueue.qsize()
-			if queue_size > 0:
-				logger.debug(f"Clearing {queue_size} items from audio queue")
-				# Clear the queue by getting all items
-				while not self._audioQueue.empty():
-					try:
-						self._audioQueue.get_nowait()
-					except:
-						break
-				logger.debug("Audio queue cleared")
-		except Exception as e:
-			logger.exception(f"Error clearing audio queue: {e}")
+		# Audio stopping is handled by the speech service
+		pass
 	
 	def pause(self, switch):
 		"""Pause or resume playback.
@@ -231,10 +216,6 @@ class WavePlayer:
 					self._synthInstance = synthService._synthInstance
 					if self._synthInstance:
 						logger.info(f"Successfully found synthInstance: {self._synthInstance}")
-						# Register this WavePlayer with the synthesizer for queue management
-						if hasattr(self._synthInstance, '_registerWavePlayer'):
-							self._synthInstance._registerWavePlayer(self)
-							logger.debug("Registered WavePlayer with synthesizer")
 					else:
 						logger.warning("synthService._synthInstance is None")
 				else:
@@ -249,10 +230,6 @@ class WavePlayer:
 	def close(self):
 		"""Close the player and release resources."""
 		self._closed = True
-		
-		# Unregister from synthesizer
-		if self._synthInstance and hasattr(self._synthInstance, '_unregisterWavePlayer'):
-			self._synthInstance._unregisterWavePlayer(self)
 		
 		# Signal worker thread to stop
 		try:
