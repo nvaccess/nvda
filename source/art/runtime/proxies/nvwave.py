@@ -69,6 +69,9 @@ class WavePlayer:
 		self.buffered = buffered
 		self._closed = False
 		
+		# Each thread needs its own RPC proxy due to Pyro5 ownership restrictions
+		self._thread_proxies = {}
+		
 		# Find the synth instance to route audio through
 		# NOTE: We don't try to find it immediately because the synthesizer
 		# might not have called setSynthInstance() yet during initialization.
@@ -142,9 +145,46 @@ class WavePlayer:
 		pass
 	
 	def idle(self):
-		"""Wait for playback to complete."""
-		# Synchronization is handled by the speech service
-		pass
+		"""Wait for playback to complete via RPC proxy to NVDA Core."""
+		import logging
+		logger = logging.getLogger("ART.WavePlayer")
+		
+		# Find synth instance if needed
+		if not self._synthInstance and not self._synthInstanceChecked:
+			self._findSynthInstance(logger)
+		
+		if not self._synthInstance:
+			logger.warning("No synthInstance available for idle() - cannot wait for audio completion")
+			return
+			
+		if not hasattr(self._synthInstance, '_speechService'):
+			logger.warning("SynthInstance has no _speechService - cannot wait for audio completion")
+			return
+			
+		logger.debug(f"Attempting to wait for audio completion for {self._synthInstance.name}")
+		
+		try:
+			# Get thread-specific proxy for RPC calls
+			speech_service = self._getThreadSpeechProxy(logger)
+			if not speech_service:
+				logger.warning("Could not get thread-specific speech service proxy")
+				return
+				
+			logger.debug(f"Calling waitForAudioCompletion via thread-specific RPC proxy for {self._synthInstance.name}")
+			# Call the RPC method with timeout to wait for real audio completion
+			success = speech_service.waitForAudioCompletion(
+				self._synthInstance.name, 
+				timeout=5.0
+			)
+			if success:
+				logger.debug("Audio completion confirmed by NVDA Core")
+			else:
+				logger.debug("Audio completion returned False (no player or timeout)")
+				
+		except Exception as e:
+			# Log warning but don't crash - preserve speech flow
+			logger.warning(f"Audio completion wait failed: {e}")
+			# Continue execution - better to have slight audio cutoff than broken speech
 	
 	def sync(self):
 		"""Synchronize - ensure all queued audio has been sent."""
@@ -189,18 +229,21 @@ class WavePlayer:
 						logger.error(f"No synthInstance - discarding {len(byte_data)} bytes")
 						continue
 					
-					# Send audio data (this is now safe to block)
+					# Send audio data using thread-specific sendAudioData method
 					if hasattr(self._synthInstance, '_sendAudioData'):
-						logger.debug(f"Sending {len(byte_data)} bytes to synthInstance")
+						logger.debug(f"Sending {len(byte_data)} bytes via thread-specific method")
+						
 						try:
-							self._synthInstance._sendAudioData(
+							# Call thread-specific version that creates its own proxy
+							self._sendAudioDataThreadSafe(
 								byte_data,
 								self.samplesPerSec,
 								self.channels,
-								self.bitsPerSample
+								self.bitsPerSample,
+								logger
 							)
 						except Exception as audio_error:
-							logger.exception(f"CRITICAL: _sendAudioData failed - this might terminate ART process: {audio_error}")
+							logger.exception(f"CRITICAL: _sendAudioDataThreadSafe failed - this might terminate ART process: {audio_error}")
 							# Don't re-raise - let the worker continue
 							continue
 					else:
@@ -253,6 +296,81 @@ class WavePlayer:
 		
 		self._synthInstanceChecked = True
 	
+	def _getThreadSpeechProxy(self, logger):
+		"""Get a thread-specific speech service proxy.
+		
+		Pyro5 proxies can only be used by the thread that created them.
+		This method creates a separate proxy for each thread that needs RPC access.
+		"""
+		import threading
+		import os
+		import Pyro5.api
+		
+		thread_id = threading.get_ident()
+		
+		# Return existing proxy for this thread if available
+		if thread_id in self._thread_proxies:
+			return self._thread_proxies[thread_id]
+		
+		try:
+			# Create new proxy for this thread
+			speech_uri = os.environ.get("NVDA_ART_SPEECH_SERVICE_URI")
+			if not speech_uri:
+				logger.error("No NVDA_ART_SPEECH_SERVICE_URI found in environment")
+				return None
+			
+			logger.debug(f"Creating thread-specific speech proxy for thread {thread_id}")
+			speech_proxy = Pyro5.api.Proxy(speech_uri)
+			speech_proxy._pyroTimeout = 2.0
+			
+			# Cache proxy for this thread
+			self._thread_proxies[thread_id] = speech_proxy
+			logger.debug(f"Created and cached speech proxy for thread {thread_id}")
+			
+			return speech_proxy
+			
+		except Exception as e:
+			logger.exception(f"Failed to create thread-specific speech proxy: {e}")
+			return None
+	
+	def _sendAudioDataThreadSafe(self, data, sampleRate, channels, bitsPerSample, logger):
+		"""Send audio data using thread-specific RPC proxy.
+		
+		This creates a separate proxy for each thread to avoid Pyro5 ownership conflicts.
+		"""
+		try:
+			# Get thread-specific proxy
+			speech_service = self._getThreadSpeechProxy(logger)
+			if not speech_service:
+				logger.error("No thread-specific speech service available for audio data!")
+				return
+			
+			# Send audio via thread-specific proxy (same logic as _sendAudioData but with our proxy)
+			MAX_CHUNK_SIZE = 64 * 1024  # 64KB chunks
+			import base64
+			
+			for i in range(0, len(data), MAX_CHUNK_SIZE):
+				chunk = data[i:i + MAX_CHUNK_SIZE]
+				encoded_chunk = base64.b64encode(chunk).decode('ascii')
+				chunk_num = i//MAX_CHUNK_SIZE + 1
+				total_chunks = (len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE
+				logger.debug(f"Sending audio chunk {chunk_num} of {total_chunks} via thread proxy")
+				
+				speech_service.receiveAudioData(
+					synthName=self._synthInstance.name,
+					audioData=encoded_chunk,
+					sampleRate=sampleRate,
+					channels=channels,
+					bitsPerSample=bitsPerSample,
+					isLastChunk=False
+				)
+				
+			logger.debug(f"Successfully sent {len(data)} bytes via thread-specific proxy")
+			
+		except Exception as e:
+			logger.exception(f"Error sending audio data via thread-specific proxy: {e}")
+			raise
+	
 	def close(self):
 		"""Close the player and release resources."""
 		self._closed = True
@@ -267,6 +385,8 @@ class WavePlayer:
 		if self._workerThread.is_alive():
 			self._workerThread.join(timeout=1.0)
 		
+		# Clean up thread-specific proxies
+		self._thread_proxies.clear()
 		self._synthInstance = None
 
 
