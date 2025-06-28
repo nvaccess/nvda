@@ -865,15 +865,6 @@ class SynthDriver(ABC):
 		self.logger.info(f"_sendAudioData called with {len(data)} bytes, {sampleRate}Hz, {channels}ch, {bitsPerSample}bit")
 		if self._speechService:
 			try:
-				# Handle Pyro5 thread ownership issue - claim ownership for this thread
-				try:
-					ownership_start = time.time()
-					self._speechService._pyroClaimOwnership()
-					ownership_time = time.time() - ownership_start
-					if ownership_time > 0.1:
-						self.logger.warning(f"SLOW: Pyro ownership claim took {ownership_time:.3f}s")
-				except Exception as e:
-					self.logger.debug(f"Could not claim proxy ownership (may already be owned): {e}")
 				
 				# For large audio data, we might need to chunk it
 				MAX_CHUNK_SIZE = 64 * 1024  # 64KB chunks
