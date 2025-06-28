@@ -648,9 +648,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	allowMoveToOffsetPastEnd = (
-		True  #: we can move 1 past story length to allow braille routing to end insertion point. (#2096)
-	)
+	allowMoveToOffsetPastEnd = True
+	"""
+	We can move 1 past story length to allow braille routing to end insertion point. (#2096)
+	Furthermore, review cursor is able to reach the last, empty line in some controls, like Scintilla. (#18348)
+	"""
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
