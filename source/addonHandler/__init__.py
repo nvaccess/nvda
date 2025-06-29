@@ -315,8 +315,6 @@ def initialize():
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
-	
-	# Start ART processes for enabled addons if ART is available
 	_startARTProcessesForAddons()
 
 
