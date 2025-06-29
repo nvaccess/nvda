@@ -50,6 +50,8 @@ class ServiceProxyMixin:
 		if service:
 			try:
 				return getattr(service, method)(*args, **kwargs)
-			except Exception:
-				pass
+			except Exception as e:
+				from logHandler import log
+				log.exception(f"Service call failed: {cls._service_env_var}.{method}")
+				return None
 		return None

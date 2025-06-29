@@ -17,11 +17,6 @@ import logging
 # ------------------------------------------------------------------
 
 class _ARTDriverSetting:
-	"""Base proxy class for driver settings in ART.
-	
-	This mimics the API of autoSettingsUtils.DriverSetting to maintain
-	compatibility with existing synth driver code.
-	"""
 	
 	def __init__(
 		self,
@@ -56,7 +51,6 @@ class _ARTDriverSetting:
 
 
 class _ARTNumericDriverSetting(_ARTDriverSetting):
-	"""Proxy for NumericDriverSetting in ART."""
 	
 	def __init__(
 		self,

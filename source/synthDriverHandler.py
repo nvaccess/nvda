@@ -445,12 +445,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 
-def _isARTSynth(name: str) -> bool:
-	"""Check if a synthesizer is managed by ART and has a proxy available.
-
-	@param name: The synthesizer name to check
-	@return: True if this is an ART synthesizer with available proxy
-	"""
+def isARTSynth(name: str) -> bool:
 	module_name = f"synthDrivers.{name}"
 	if module_name in sys.modules:
 		module = sys.modules[module_name]
@@ -470,7 +465,7 @@ def _getSynthDriver(name: str) -> type[SynthDriver]:
 	@return: The synthesizer driver class
 	"""
 	# Check if this is an ART synthesizer with existing proxy
-	if _isARTSynth(name):
+	if isARTSynth(name):
 		log.debug(f"Loading ART synthesizer proxy for {name}")
 		module = sys.modules[f"synthDrivers.{name}"]
 		return module.SynthDriver
