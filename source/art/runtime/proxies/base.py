@@ -6,6 +6,7 @@
 """Base classes for runtime proxies."""
 
 import os
+import threading
 from typing import Optional
 
 import Pyro5.api
@@ -14,7 +15,7 @@ import Pyro5.api
 class ServiceProxyMixin:
 	"""Mixin for accessing service proxies."""
 
-	_service_cache = {}
+	_thread_local = threading.local()
 	_service_env_var = None
 	_service_timeout = 2.0
 
@@ -24,18 +25,23 @@ class ServiceProxyMixin:
 		if cls._service_env_var is None:
 			raise NotImplementedError("_service_env_var must be set")
 
+		# Get thread-local cache
+		if not hasattr(cls._thread_local, 'service_cache'):
+			cls._thread_local.service_cache = {}
+		service_cache = cls._thread_local.service_cache
+
 		service_name = cls._service_env_var
 
-		if service_name not in cls._service_cache:
+		if service_name not in service_cache:
 			uri = os.environ.get(service_name)
 			if uri:
 				proxy = Pyro5.api.Proxy(uri)
 				proxy._pyroTimeout = cls._service_timeout
-				cls._service_cache[service_name] = proxy
+				service_cache[service_name] = proxy
 			else:
-				cls._service_cache[service_name] = None
+				service_cache[service_name] = None
 
-		return cls._service_cache[service_name]
+		return service_cache[service_name]
 
 	@classmethod
 	def _call_service(cls, method: str, *args, **kwargs):
