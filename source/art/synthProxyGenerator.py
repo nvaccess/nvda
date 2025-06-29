@@ -55,7 +55,10 @@ class ARTSynthProxyGenerator:
 		for setting_spec in settings_metadata["supportedSettings"]:
 			setting_type_name = setting_spec.get("type")
 			setting_name = setting_spec.get("name")
-			setting_params = setting_spec.get("params", {})
+			setting_params = {
+				k: v for k, v in setting_spec.items()
+				if k not in ("type", "name")
+			}
 			
 			if not setting_type_name or not setting_name:
 				log.warning(f"Invalid setting spec - missing type or name: {setting_spec}")

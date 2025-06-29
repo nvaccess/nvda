@@ -364,8 +364,14 @@ class ARTProxySynthDriver(SynthDriver):
 		# Fall back to empty OrderedDict
 		return OrderedDict()
 
+	def _get_availableVariants(self):
+		"""Cached property getter for available variants, matching NVDA core pattern."""
+		if not hasattr(self, "_availableVariants"):
+			self._availableVariants = self._getAvailableVariants()
+		return self._availableVariants
+
 	def _get_synth_property(self, propName: str, defaultValue: Any) -> Any:
-		"""Generic getter for synth properties with caching."""
+		"""Generic getter for synth properties - always gets fresh value from ART when connected."""
 		# If not connected, use cached value or fallback
 		if not self._connected:
 			cachedValue = self._property_cache.get(propName)
@@ -374,8 +380,10 @@ class ARTProxySynthDriver(SynthDriver):
 			return defaultValue
 
 		try:
-			# Use the generic getProperty method instead of specific methods
+			# Always get the actual current value from ART to avoid stale cache issues
 			value = self._synthService.getProperty(propName, defaultValue)
+			log.debug(f"ARTProxySynthDriver: Got {propName} = {value} from ART")
+			# Update cache with the fresh value
 			self._property_cache[propName] = value
 			return value
 		except Pyro5.errors.CommunicationError:
@@ -400,7 +408,9 @@ class ARTProxySynthDriver(SynthDriver):
 
 		try:
 			# Use the generic setProperty method instead of specific methods
-			self._synthService.setProperty(propName, value)
+			log.debug(f"ARTProxySynthDriver: About to set {propName} to {value} via setProperty")
+			result = self._synthService.setProperty(propName, value)
+			log.debug(f"ARTProxySynthDriver: setProperty returned {result} for {propName}={value}")
 		except Pyro5.errors.CommunicationError:
 			log.warning(f"Failed to set {propName} in ART synth {self.name} - will retry on next speech")
 			# Mark for retry
