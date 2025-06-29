@@ -225,9 +225,15 @@ class SynthService:
 			return False
 		
 		try:
+			# Check if the synthesizer has this property
 			if hasattr(self._synthInstance, prop_name):
+				# Use setattr to trigger the property setter (which calls _set_pitch, etc.)
 				setattr(self._synthInstance, prop_name, value)
-				self.logger.debug(f"Set {prop_name} to {value}")
+				self.logger.debug(f"Set {prop_name} to {value} on synthesizer")
+				
+				# Verify the property was actually set by reading it back
+				actual_value = getattr(self._synthInstance, prop_name)
+				self.logger.debug(f"Verified {prop_name} is now {actual_value}")
 				return True
 			else:
 				self.logger.debug(f"Property {prop_name} not supported by synthesizer")
