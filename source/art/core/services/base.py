@@ -15,7 +15,6 @@ class BaseService:
 
 	def __init__(self, service_name: str):
 		self.service_name = service_name
-		log.info(f"{service_name} initialized")
 
 	def _log_error(self, operation: str, details: str = ""):
 		"""Log an error with consistent formatting."""
