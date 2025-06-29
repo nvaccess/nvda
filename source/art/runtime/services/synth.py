@@ -225,16 +225,21 @@ class SynthService:
 			return False
 		
 		try:
-			# Check if the synthesizer has this property
-			if hasattr(self._synthInstance, prop_name):
-				# Use setattr to trigger the property setter (which calls _set_pitch, etc.)
-				setattr(self._synthInstance, prop_name, value)
-				self.logger.debug(f"Set {prop_name} to {value} on synthesizer")
-				
-				# Verify the property was actually set by reading it back
-				actual_value = getattr(self._synthInstance, prop_name)
-				self.logger.debug(f"Verified {prop_name} is now {actual_value}")
+			# Try direct setter method first (bypasses property mechanism issues)
+			setter_method = getattr(self._synthInstance, f'_set_{prop_name}', None)
+			if setter_method and callable(setter_method):
+				self.logger.debug(f"Calling {prop_name} setter directly: _set_{prop_name}({value})")
+				setter_method(value)
+				self.logger.debug(f"Direct setter call completed for {prop_name}")
 				return True
+			
+			# Fallback to property mechanism if no direct setter
+			elif hasattr(self._synthInstance, prop_name):
+				self.logger.debug(f"No setter method _set_{prop_name}, using setattr fallback")
+				setattr(self._synthInstance, prop_name, value)
+				self.logger.debug(f"Set {prop_name} to {value} via setattr")
+				return True
+			
 			else:
 				self.logger.debug(f"Property {prop_name} not supported by synthesizer")
 				return False
@@ -254,17 +259,22 @@ class SynthService:
 			return default_value
 		
 		try:
-			# Try direct property access first
-			if hasattr(self._synthInstance, prop_name):
-				return getattr(self._synthInstance, prop_name)
+			# Try direct getter method first (bypasses property mechanism issues)
+			getter_method = getattr(self._synthInstance, f'_get_{prop_name}', None)
+			if getter_method and callable(getter_method):
+				value = getter_method()
+				self.logger.debug(f"Got {prop_name} = {value} via direct getter _get_{prop_name}()")
+				return value
 			
-			# Try getter method
-			getter_name = f'_get_{prop_name}'
-			if hasattr(self._synthInstance, getter_name):
-				return getattr(self._synthInstance, getter_name)()
+			# Fallback to property mechanism if no direct getter
+			elif hasattr(self._synthInstance, prop_name):
+				value = getattr(self._synthInstance, prop_name)
+				self.logger.debug(f"Got {prop_name} = {value} via getattr fallback")
+				return value
 			
-			self.logger.debug(f"Property {prop_name} not found on synthesizer")
-			return default_value
+			else:
+				self.logger.debug(f"Property {prop_name} not found on synthesizer")
+				return default_value
 		except Exception:
 			self.logger.exception(f"Error getting {prop_name}")
 			return default_value
