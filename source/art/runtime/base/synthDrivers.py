@@ -553,9 +553,17 @@ class SynthDriver(ABC):
 			{
 				"supportedSettings": [
 					{
+						"type": "NumericDriverSetting",
 						"name": "rate",
-						"type": "NumericDriverSetting", 
-						"params": {"displayNameWithAccelerator": "&Rate", "minVal": 0, "maxVal": 100, "defaultVal": 50}
+						"displayNameWithAccelerator": "&Rate",
+						"availableInSettingsRing": True,
+						"defaultVal": 50,
+						"minVal": 0,
+						"maxVal": 100,
+						"minStep": 1,
+						"normalStep": 5,
+						"largeStep": 10,
+						"useConfig": True
 					},
 					...
 				]
