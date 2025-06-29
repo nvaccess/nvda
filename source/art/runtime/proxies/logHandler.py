@@ -5,11 +5,15 @@
 
 """LogHandler module proxy for add-ons running in ART."""
 
+import logging
 import traceback
 from .base import ServiceProxyMixin
 
 
 _addonName = ""
+
+# Create local logger for ART proxy
+_localLogger = logging.getLogger("art.logHandler")
 
 
 def setAddonName(name: str):
@@ -38,14 +42,17 @@ class LogProxy(ServiceProxyMixin):
 
 	def debug(self, message: str):
 		"""Log a debug message."""
+		_localLogger.debug(f"[{_addonName}] {message}")
 		self._call_service("logMessage", self.DEBUG, str(message), _addonName)
 
 	def info(self, message: str):
 		"""Log an info message."""
+		_localLogger.info(f"[{_addonName}] {message}")
 		self._call_service("logMessage", self.INFO, str(message), _addonName)
 
 	def warning(self, message: str):
 		"""Log a warning message."""
+		_localLogger.warning(f"[{_addonName}] {message}")
 		self._call_service("logMessage", self.WARNING, str(message), _addonName)
 
 	def warn(self, message: str):
@@ -58,10 +65,12 @@ class LogProxy(ServiceProxyMixin):
 			# Include traceback in message
 			tb = traceback.format_exc()
 			message = f"{message}\n{tb}"
+		_localLogger.error(f"[{_addonName}] {message}")
 		self._call_service("logMessage", self.ERROR, str(message), _addonName)
 
 	def critical(self, message: str):
 		"""Log a critical message."""
+		_localLogger.critical(f"[{_addonName}] {message}")
 		self._call_service("logMessage", self.CRITICAL, str(message), _addonName)
 
 	def exception(self, message: str = "", exc_info=True):
@@ -74,6 +83,7 @@ class LogProxy(ServiceProxyMixin):
 		else:
 			tb = ""
 
+		_localLogger.exception(f"[{_addonName}] {message}", exc_info=exc_info)
 		self._call_service("logException", str(message), tb, _addonName)
 
 	def debugWarning(self, message: str, exc_info=False):
@@ -82,10 +92,12 @@ class LogProxy(ServiceProxyMixin):
 			# Include traceback in message
 			tb = traceback.format_exc()
 			message = f"{message}\n{tb}"
+		_localLogger.warning(f"[{_addonName}] DEBUG: {message}")
 		self._call_service("logDebugWarning", str(message), _addonName)
 
 	def io(self, message: str):
 		"""Log an IO message (NVDA custom level)."""
+		_localLogger.debug(f"[{_addonName}] IO: {message}")
 		self._call_service("logIO", str(message), _addonName)
 
 
