@@ -155,6 +155,7 @@ class SpeechService(BaseService):
 		channels: int = 1,
 		bitsPerSample: int = 16,
 		isLastChunk: bool = False,
+		callback_id=None,
 	) -> bool:
 		"""Receive PCM audio data from ART synth.
 
@@ -164,6 +165,7 @@ class SpeechService(BaseService):
 		@param channels: Number of channels (1=mono, 2=stereo)
 		@param bitsPerSample: Bits per sample (usually 16)
 		@param isLastChunk: Whether this is the last chunk of audio
+		@param callback_id: Optional callback ID for onDone notification
 		@return: True if audio was queued successfully
 		"""
 		try:
@@ -185,9 +187,9 @@ class SpeechService(BaseService):
 				log.info(f"Creating new audio player for {synthName}")
 				self._createAudioPlayer(synthName, sampleRate, channels, bitsPerSample)
 
-			# Queue the decoded audio data
-			self._audioQueues[synthName].put((decoded_audio, isLastChunk))
-			log.debug(f"Queued audio data, queue size: {self._audioQueues[synthName].qsize()}")
+			# Queue the decoded audio data with callback information
+			self._audioQueues[synthName].put((decoded_audio, isLastChunk, callback_id))
+			log.debug(f"Queued audio data with callback_id {callback_id}, queue size: {self._audioQueues[synthName].qsize()}")
 
 			# Start playback thread if not running
 			if synthName not in self._playbackThreads or not self._playbackThreads[synthName].is_alive():
@@ -241,11 +243,23 @@ class SpeechService(BaseService):
 		try:
 			while not stopEvent.is_set():
 				try:
-					# Get audio data with timeout
-					audioData, isLastChunk = audioQueue.get(timeout=0.1)
+					# Get audio data with timeout - handle both old and new queue formats
+					queue_item = audioQueue.get(timeout=0.1)
+					
+					if len(queue_item) == 3:
+						# New format: (audioData, isLastChunk, callback_id)
+						audioData, isLastChunk, callback_id = queue_item
+					else:
+						# Old format: (audioData, isLastChunk)
+						audioData, isLastChunk = queue_item
+						callback_id = None
 
-					# Feed to player
-					player.feed(audioData)
+					# TODO: Implement callback via existing synth service proxy
+					# For now, just feed without callback to restore functionality
+					onDone_callback = None
+
+					# Feed to player with optional callback
+					player.feed(audioData, onDone=onDone_callback)
 
 					# If this was the last chunk, wait for playback to complete
 					if isLastChunk:
