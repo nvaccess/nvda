@@ -206,8 +206,9 @@ class SapiSink(COMObject):
 			synth.player.idle()
 		# trigger all untriggered bookmarks
 		if streamNum in synth._streamBookmarks:
-			for bookmark in synth._streamBookmarks[streamNum]:
-				synthIndexReached.notify(synth=synth, index=bookmark)
+			if synth.isSpeaking:
+				for bookmark in synth._streamBookmarks[streamNum]:
+					synthIndexReached.notify(synth=synth, index=bookmark)
 			del synth._streamBookmarks[streamNum]
 		synth.isSpeaking = False
 		synthDoneSpeaking.notify(synth=synth)
