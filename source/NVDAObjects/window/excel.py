@@ -7,11 +7,7 @@
 import abc
 import ctypes
 import enum
-from typing import (
-	Any,
-	Dict,
-	Optional,
-)
+from typing import Any
 
 from comtypes import COMError, BSTR
 import comtypes.automation
@@ -1406,7 +1402,7 @@ class NvCellState(enum.IntEnum):
 	UNLOCKED = (1 << 10,)
 
 
-_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+_nvCellStatesToStates: dict[NvCellState, controlTypes.State] = {
 	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
 	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
 	NvCellState.LINKED: controlTypes.State.LINKED,
@@ -1555,10 +1551,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 
 class ExcelCell(ExcelBase):
-	excelCellInfo: Optional[EXCEL_CELLINFO]
+	excelCellInfo: EXCEL_CELLINFO | None
 	"""Type info for auto property: _get_excelCellInfo"""
 
-	def _get_excelCellInfo(self) -> Optional[EXCEL_CELLINFO]:
+	def _get_excelCellInfo(self) -> EXCEL_CELLINFO | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci = EXCEL_CELLINFO()
