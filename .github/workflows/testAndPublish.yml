@@ -218,7 +218,7 @@ jobs:
       id: uploadLauncher
       uses: actions/upload-artifact@v4
       with:
-        name: NVDA launcher and controller client
+        name: NVDA launcher
         path: |
           output/nvda*.exe
           output/nvda*controllerClient.zip
