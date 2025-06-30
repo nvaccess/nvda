@@ -360,7 +360,7 @@ class SynthDriverAudio(COMObject):
 		with self._audioCond:
 			self._audioStopped = True
 			self._audioCond.notify()
-		if self._audioThread is not threading.current_thread():
+		if self._audioThread is not threading.current_thread() and self._audioThread.is_alive():
 			self._audioThread.join()
 		self._notifySink = None
 		self._allowDelete = True
