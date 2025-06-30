@@ -10,6 +10,7 @@ When working on this file, consider moving to winAPI.
 """
 
 import ctypes
+import ctypes.wintypes
 import weakref
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
@@ -17,6 +18,8 @@ from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from typing import Optional
+from winBindings import user32
+
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 
@@ -281,11 +284,11 @@ class CustomWindow(AutoPropertyObject):
 			inst = CustomWindow._hwndsToInstances[hwnd]
 		except KeyError:
 			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
-			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+			return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 		try:
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
 			if res is not None:
 				return res
 		except:  # noqa: E722
 			log.exception("Error in wndProc")
-		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
