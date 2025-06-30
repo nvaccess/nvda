@@ -9,7 +9,8 @@ ci:
   # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
   # Can't run licenseCheck as it relies on telemetry,
   # which CI blocks.
-  skip: [scons-source, checkPot, unitTest, licenseCheck, pyrightLocal]
+  # Pyright does not seem to work in pre-commit CI
+  skip: [scons-source, checkPot, unitTest, licenseCheck, pyright]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
@@ -112,18 +113,7 @@ repos:
   rev: v1.1.401
   hooks:
   - id: pyright
-    alias: pyrightLocal
     name: Check types with pyright
-
-- repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.401
-  hooks:
-  - id: pyright
-    alias: pyrightCI
-    name: Check types with pyright
-    # use nodejs version of pyright and install pyproject.toml for CI
-    additional_dependencies: [".", "pyright[nodejs]"]
-    stages: [manual]  # Only run from CI manually
 
 - repo: https://github.com/astral-sh/uv-pre-commit
   rev: 0.7.9

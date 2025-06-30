@@ -496,15 +496,23 @@ class WordDocumentTextInfo(UIATextInfo):
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field["text-column-number"] = textColumnNumber
-			expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
-				docElement,
-				textRange,
-				UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
-			)
-			if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
-				formatField.field["collapsed"] = True
-			elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
-				formatField.field["collapsed"] = False
+			# #18279: It is only safe to fetch the expand/collapse state in MS Word 16.0.18226 or later,
+			# as earlier versions that support Custom attribute Values but not this particular argument will crash.
+			try:
+				officeVersion = tuple(int(x) for x in self.obj.appModule.productVersion.split(".")[:3])
+			except Exception:
+				log.error("Unable to parse Office version", exc_info=True)
+				officeVersion = (0, 0, 0)
+			if officeVersion >= (16, 0, 18226):
+				expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
+					docElement,
+					textRange,
+					UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
+				)
+				if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
+					formatField.field["collapsed"] = True
+				elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
+					formatField.field["collapsed"] = False
 		return formatField
 
 	def _getIndentValueDisplayString(self, val: float) -> str:
