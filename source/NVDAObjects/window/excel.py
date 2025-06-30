@@ -8,6 +8,7 @@ import abc
 import ctypes
 import enum
 from typing import Any
+import warnings
 
 from comtypes import COMError, BSTR
 import comtypes.automation
@@ -128,14 +129,22 @@ def __getattr__(attrName: str) -> Any:
 			1: "default",
 		},
 	}
-	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
-		replacementSymbol = _deprecatedConstantsMap[attrName]
-		log.warning(
-			f"Importing {attrName} from here is deprecated. "
-			f"Import XlVAlign or XlHAlign enumerations instead.",
-			stack_info=True,
-		)
-		return replacementSymbol
+	if NVDAState._allowDeprecatedAPI():
+		if attrName in _deprecatedConstantsMap:
+			replacementSymbol = _deprecatedConstantsMap[attrName]
+			log.warning(
+				f"Importing {attrName} from here is deprecated. "
+				f"Import XlVAlign or XlHAlign enumerations instead.",
+				stack_info=True,
+			)
+			return replacementSymbol
+		elif attrName == "ExcelCellInfo":
+			warnings.warn(
+				"NVDAObjects.window.excel.ExcelCellInfo is deprecated. Use NVDAHelper.localLib.EXCEL_CELLINFO instead.",
+				DeprecationWarning,
+				stacklevel=2,
+			)
+			return EXCEL_CELLINFO
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 

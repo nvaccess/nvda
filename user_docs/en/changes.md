@@ -22,6 +22,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `NVDAHelper.generateBeep` is deprecated. Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
 * `NVDAHelper.VBuf_getTextInRange` is deprecated. Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
 * `NVDAHelper.onSsmlMarkReached` is deprecated. Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
+* `NVDAObjects.window.excel.ExcelCellInfo` is deprecated. Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
 
 ## 2025.2
 
