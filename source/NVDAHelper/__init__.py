@@ -74,6 +74,9 @@ def __getattr__(name: str) -> Any:
 			case "generateBeep":
 				warnDeprecatedWithReplacement("generateBeep", "NVDAHelper.localLib.generateBeep")
 				return localLib.generateBeep
+			case "VBuf_getTextInRange":
+				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.VBuf_getTextInRange")
+				return localLib.VBuf_getTextInRange
 			case _:
 				pass
 	raise AttributeError(f"Module {__name__!r} has no attribute {name!r}")
@@ -104,7 +107,6 @@ _remoteLib = None
 _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
 _remoteLoaderARM64: "Optional[_RemoteLoader]" = None
 onSsmlMarkReached = None
-VBuf_getTextInRange = None
 lastLanguageID = None
 lastLayoutString = None
 
@@ -807,7 +809,7 @@ class _RemoteLoader:
 
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global onSsmlMarkReached, VBuf_getTextInRange
+	global onSsmlMarkReached
 	global lastLanguageID, lastLayoutString
 	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID = winUser.LOWORD(hkl)
@@ -892,7 +894,6 @@ def initialize() -> None:
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global VBuf_getTextInRange
 	if not config.isAppX:
 		if not _remoteLib.uninstallIA2Support():
 			log.debugWarning("Error uninstalling IA2 support")
@@ -905,7 +906,6 @@ def terminate():
 		if _remoteLoaderARM64:
 			_remoteLoaderARM64.terminate()
 			_remoteLoaderARM64 = None
-	VBuf_getTextInRange = None
 	localLib.nvdaHelperLocal_terminate()
 
 
