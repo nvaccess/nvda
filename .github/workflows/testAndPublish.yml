@@ -38,8 +38,8 @@ jobs:
     outputs:
       version: ${{ steps.releaseInfo.outputs.VERSION }}
       versionType: ${{ steps.releaseInfo.outputs.VERSION_TYPE }}
-      APIversion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
-      APIbackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
+      APIVersion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
+      APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
       uses: actions/checkout@v4
@@ -411,8 +411,8 @@ jobs:
           -f "payload[SYMBOLS_DOWNLOAD_URL]=${{ needs.createSymbols.outputs.symbolsUrl }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
-          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
-          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIBackCompat }}"
 
   release:
     name: Release NVDA
@@ -476,8 +476,8 @@ jobs:
           -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
-          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIversion }}" \
-          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIbackCompat }}"
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIBackCompat }}"
     - name: Create release notes
       id: createReleaseNotes
       shell: bash
