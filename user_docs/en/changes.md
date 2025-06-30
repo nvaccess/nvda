@@ -55,6 +55,7 @@ The several built-in table definitions are moved to the `__tables` module in tha
 #### Deprecations
 
 * `NVDAHelper.versionedLibPath` is deprecated. Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.generateBeep` is deprecated. Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
 
 ## 2025.1.1
 
