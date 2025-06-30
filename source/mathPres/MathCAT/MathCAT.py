@@ -528,11 +528,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			rulesDir: str = path.join(
 				path.dirname(path.abspath(__file__)),
 				"..",
-				"..",
-				"..",
-				"include",
-				"nvda-mathcat",
-				"assets",
+				"mathcatAssets",
 				"Rules",
 			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
