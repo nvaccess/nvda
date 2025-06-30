@@ -18,6 +18,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### Deprecations
 
+* `NVDAHelper.versionedLibPath` is deprecated. Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.generateBeep` is deprecated. Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
+* `NVDAHelper.VBuf_getTextInRange` is deprecated. Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
+* `NVDAHelper.onSsmlMarkReached` is deprecated. Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
+
 ## 2025.2
 
 This release includes improvements in Windows 11, browse mode, and Microsoft Word.
@@ -117,11 +122,6 @@ This is a patch release to fix a bug.
 ### Bug fixes
 
 * Certain Microsoft Word versions before version 16.0.18226 will no longer crash on opening. (#18280)
-
-* `NVDAHelper.versionedLibPath` is deprecated. Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
-* `NVDAHelper.generateBeep` is deprecated. Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
-* `NVDAHelper.VBuf_getTextInRange` is deprecated. Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
-* `NVDAHelper.onSsmlMarkReached` is deprecated. Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 
 ## 2025.1.1
 
