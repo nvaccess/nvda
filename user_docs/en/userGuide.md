@@ -1921,6 +1921,24 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
+
+This option enables audio output via the Windows Audio Session API (WASAPI).
+This may improve the responsiveness of some voices.
+However, some voices might not work with the current WASAPI implementation.
+If you find that the voice you are using stops working, you may disable this option.
+
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+
+* For Microsoft Speech API version 4 voices:
+  * Audio ducking
+  * Leading silence trimming
+  * Keep audio device awake
+* For Microsoft Speech API version 5 voices:
+  * Rate boost
+  * Leading silence trimming
+  * Keep audio device awake
+
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
@@ -3446,18 +3464,6 @@ This functionality is enabled by default as of NVDA 2021.1.
 When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
-
-##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
-
-This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
-This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
-However, some SAPI 4 voices might not work with the current WASAPI implementation.
-If you find that the SAPI 4 voice you are using stops working, you may disable this option.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
