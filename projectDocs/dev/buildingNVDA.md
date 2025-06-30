@@ -131,3 +131,5 @@ set UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
 
 * This will apply to all projects managed by UV.
 * This will not persist across terminal sessions.
+
+If you're using Visual Studio Code as your IDE, our [workspace configuration](https://github.com/nvaccess/vscode-nvda/) includes [terminal profiles](https://code.visualstudio.com/docs/terminal/profiles) to set these environment variables for you in PowerShell or Command Prompt.
