@@ -201,7 +201,7 @@ class SapiSink(COMObject):
 		synth.sonicStream.flush()
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
-		if len(synth._streamBookmarks) == 1:
+		if len(synth._streamBookmarks) <= 1:
 			# This is the last closing stream. Safe to call idle().
 			synth.player.idle()
 		# trigger all untriggered bookmarks
