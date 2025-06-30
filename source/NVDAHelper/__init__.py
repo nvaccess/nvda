@@ -77,6 +77,9 @@ def __getattr__(name: str) -> Any:
 			case "VBuf_getTextInRange":
 				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.VBuf_getTextInRange")
 				return localLib.VBuf_getTextInRange
+			case "onSsmlMarkReached":
+				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.nvdaController_onSsmlMarkReached")
+				return localLib.nvdaController_onSsmlMarkReached
 			case _:
 				pass
 	raise AttributeError(f"Module {__name__!r} has no attribute {name!r}")
@@ -106,7 +109,6 @@ windll.kernel32.LoadLibraryExW.restype = HMODULE
 _remoteLib = None
 _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
 _remoteLoaderARM64: "Optional[_RemoteLoader]" = None
-onSsmlMarkReached = None
 lastLanguageID = None
 lastLayoutString = None
 
@@ -206,7 +208,7 @@ def nvdaController_speakSsml(  # noqa: C901
 					case False:
 						return SystemErrorCodes.CANCELLED
 					case str() as name:
-						onSsmlMarkReached(name)
+						localLib.nvdaController_onSsmlMarkReached(name)
 					case _ as unknown:
 						log.error(f"Unknown item in SSML mark queue: {unknown}")
 		finally:
@@ -809,7 +811,6 @@ class _RemoteLoader:
 
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global onSsmlMarkReached
 	global lastLanguageID, lastLayoutString
 	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID = winUser.LOWORD(hkl)
