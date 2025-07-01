@@ -89,6 +89,7 @@ There have also been a number of other fixes and improvements, including to mous
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 * In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
 * It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
+* In browse mode in web browsers, if scrolling causes content to be removed earlier in the document, the review cursor correctly follows the caret if configured to do so. (#17379, @jcsteh)
 
 ### Changes for Developers
 
