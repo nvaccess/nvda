@@ -528,6 +528,8 @@ class MathCAT(mathPres.MathPresentationProvider):
 			rulesDir: str = path.join(
 				path.dirname(path.abspath(__file__)),
 				"..",
+				"..",
+				"..",
 				"mathcatAssets",
 				"Rules",
 			)
