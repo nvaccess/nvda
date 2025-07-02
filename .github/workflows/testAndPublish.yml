@@ -219,6 +219,8 @@ jobs:
         scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Validate launcher
       run: ci/scripts/validateLauncher.ps1
+      env:
+        expectSigned: ${{ !!(github.event_name == 'push' && secrets.API_SIGNING_TOKEN) }}
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4

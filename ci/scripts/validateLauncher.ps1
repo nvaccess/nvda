@@ -1,6 +1,6 @@
 echo "Validating launcher."
 $launcherName="output\nvda*.exe"
-echo "launcherName=$launcherName"
+echo "launcherName=$launcherName; expectSigned=$env:expectSigned"
 echo "Checking existance"
 if (-not (Test-Path -Path $launcherName -PathType Leaf)) {
 	echo "File doesn't exist."
@@ -8,7 +8,7 @@ if (-not (Test-Path -Path $launcherName -PathType Leaf)) {
 	exit 1
 }
 echo "File exists."
-if ($env:apiSigningToken) {
+if ($env:expectSigned) {
 	echo "Checking signature"
 	$authenticodeSignature = Get-AuthenticodeSignature -FilePath $launcherName
 	if (($authenticodeSignature).Status -ne 'Valid') {
