@@ -3,7 +3,7 @@
 import math
 import wx
 from . import MathCATgui
-from . import yaml
+import yaml
 import os
 import glob
 import webbrowser
