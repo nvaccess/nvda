@@ -113,6 +113,10 @@ The several built-in table definitions are moved to the `__tables` module in tha
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 * NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
 
+#### Deprecations
+
+* The following symbols in `updateCheck` are deprecated for removal without replacement: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`, `UPDATE_FETCH_TIMEOUT_S`. (#18354)
+
 ## 2025.1.2
 
 This is a patch release to fix a bug.
