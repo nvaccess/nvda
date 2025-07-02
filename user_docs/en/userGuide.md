@@ -1282,6 +1282,7 @@ In order to fit as much information as possible on a braille display, the follow
 |lnk |link|
 |vlnk |visited link|
 |lst |list|
+|mslst |multiselect list|
 |mnu |menu|
 |mnubar |menu bar|
 |mnubtn |menu button|
@@ -1327,6 +1328,7 @@ The following state indicators are also defined:
 |invalid |displayed when an invalid entry has been made|
 |ldesc |displayed when an object (usually a graphic) has a long description|
 |mln |displayed when an edit field allows typing multiple lines of text such as comment fields on websites|
+|msel |displayed when an object allows selecting multiple itemss|
 |req |displayed when a required form field is encountered|
 |ro |displayed when an object (e.g. an editable text field) is read-only|
 |sel |displayed when an object is selected|
@@ -2814,6 +2816,11 @@ This option lets you choose whether you wish to have an object's position (e.g. 
 If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwise unavailable for a particular control.
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
+
+##### Report when lists support multiple selection {#ReportMultiSelect}
+
+When this option is enabled, NVDA will report when a list box supports selecting multiple items.
+As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.
 
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
 

@@ -2434,6 +2434,12 @@ class List(IAccessible):
 	def _get_role(self):
 		return controlTypes.Role.LIST
 
+	def _get_states(self):
+		states = super().states
+		if self.windowStyle & winUser.LBS_EXTENDEDSEL:
+			states.add(controlTypes.State.MULTISELECTABLE)
+		return states
+
 
 class SysLinkClient(IAccessible):
 	def reportFocus(self):
