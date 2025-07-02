@@ -2,10 +2,8 @@ import wx
 
 # import wx.xrc
 import gettext
-import addonHandler
 
 _ = gettext.gettext
-addonHandler.initTranslation()
 
 ###########################################################################
 # Class MathCATPreferencesDialog

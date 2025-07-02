@@ -8,14 +8,12 @@ import os
 import glob
 import webbrowser
 import gettext
-import addonHandler
 from logHandler import log  # logging
 from collections.abc import Callable
 from .MathCAT import convertSSMLTextForNVDA
 from speech import speak
 from zipfile import ZipFile
 
-addonHandler.initTranslation()
 _ = gettext.gettext
 
 # two constants to scale "PauseFactor"
