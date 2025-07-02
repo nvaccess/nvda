@@ -98,7 +98,6 @@ def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None
 	:param certFetchUrl: An optional URL to use for fetching the certificate if the original URL fails due to a certificate error.
 	:return: The content of the URL.
 	"""
-
 	try:
 		log.debug(f"Fetching data from: {url}")
 		result = requests.get(url, timeout=_FETCH_TIMEOUT_S)
