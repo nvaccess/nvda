@@ -280,7 +280,7 @@ class AddonFileDownloader:
 					_updateWindowsRootCertificates(addonData.URL)
 					return self._download(listItem, ignore=True)
 				else:
-					return None   # The download was cancelled
+					return None  # The download was cancelled
 			else:
 				log.debugWarning(f"Unable to download addon file: {e}")
 				raise DisplayableError(
