@@ -13,7 +13,7 @@
 ### Bug Fixes
 
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
-
+* Fixed NLS eReader Zoomax driver does not work with all units (#18406, @florin-trutiu)
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
