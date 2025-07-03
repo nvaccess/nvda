@@ -1740,7 +1740,14 @@ class UIA(Window):
 	_cache_TextInfo = False
 
 	def _get_TextInfo(self):
-		if self.UIATextPattern:
+		if self.UIATextPattern and (
+			(
+				self.role
+				in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.TERMINAL, controlTypes.Role.DOCUMENT)
+			)
+			or controlTypes.State.EDITABLE in self.states
+			or self.UIATextPattern.SupportedTextSelection != UIAHandler.UIA.SupportedTextSelection_None
+		):
 			return self._TextInfo
 		textInfo = super(UIA, self).TextInfo
 		if (
