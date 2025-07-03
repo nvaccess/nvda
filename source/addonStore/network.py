@@ -267,6 +267,8 @@ class AddonFileDownloader:
 					messageBox(
 						message=pgettext(
 							"addonStore",
+							# Translators: A message to the user if an add-on download fails.
+							# url is replaced with the base URL of the add-on download e.g. (github.com).
 							"The website where you are downloading the add-on from has a certificate that is not trusted. "
 							"Do you want to trust the root certificate for {url}? "
 							"This will allow you to download add-ons from this website in the future. "
