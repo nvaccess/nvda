@@ -279,6 +279,18 @@ class AddonFileDownloader:
 				):
 					_updateWindowsRootCertificates(addonData.URL)
 					return self._download(listItem, ignore=True)
+				else:
+					return None   # The download was cancelled
+			else:
+				log.debugWarning(f"Unable to download addon file: {e}")
+				raise DisplayableError(
+					pgettext(
+						"addonStore",
+						# Translators: A message to the user if an add-on download fails
+						"Unable to download add-on: {name}",
+					).format(name=addonData.displayName),
+					_addonDownloadFailureMessageTitle,
+				)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to download addon file: {e}")
 			raise DisplayableError(
