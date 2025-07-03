@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +18,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
+from urllib.parse import urlparse
 
 import requests
 
@@ -28,6 +29,7 @@ import NVDAState
 from NVDAState import WritePaths
 import threading
 from utils.security import sha256_checksum
+from utils.networking import _is_cert_verification_error, _updateWindowsRootCertificates
 from config import conf
 
 from .models.addon import (
@@ -236,8 +238,8 @@ class AddonFileDownloader:
 							return False  # The download was cancelled
 		return True
 
-	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> Optional[os.PathLike]:
-		from gui.message import DisplayableError
+	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> os.PathLike | None:
+		from gui.message import DisplayableError, messageBox
 
 		# Translators: A title for a dialog notifying a user of an add-on download failure.
 		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
@@ -257,6 +259,22 @@ class AddonFileDownloader:
 		try:
 			if not self._downloadAddonToPath(listItem, inProgressFilePath):
 				return None  # The download was cancelled
+		except requests.exceptions.SSLError as e:
+			if _is_cert_verification_error(e):
+				import wx
+				if messageBox(
+					message=pgettext(
+						"addonStore",
+						"The website where you are downloading the add-on from has a certificate that is not trusted. "
+						"Do you want to trust the root certificate for {url}? "
+						"This will allow you to download add-ons from this website in the future. "
+						"Only do this if you trust the website. ",
+					).format(url=urlparse(addonData.URL).netloc),
+					caption=_addonDownloadFailureMessageTitle,
+					style=wx.OK | wx.CANCEL | wx.CENTRE | wx.ICON_WARNING,
+				) == wx.OK:
+					_updateWindowsRootCertificates(addonData.URL)
+					return self._download(listItem, ignore=True)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to download addon file: {e}")
 			raise DisplayableError(
