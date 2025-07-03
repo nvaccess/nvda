@@ -262,17 +262,21 @@ class AddonFileDownloader:
 		except requests.exceptions.SSLError as e:
 			if _is_cert_verification_error(e):
 				import wx
-				if messageBox(
-					message=pgettext(
-						"addonStore",
-						"The website where you are downloading the add-on from has a certificate that is not trusted. "
-						"Do you want to trust the root certificate for {url}? "
-						"This will allow you to download add-ons from this website in the future. "
-						"Only do this if you trust the website. ",
-					).format(url=urlparse(addonData.URL).netloc),
-					caption=_addonDownloadFailureMessageTitle,
-					style=wx.OK | wx.CANCEL | wx.CENTRE | wx.ICON_WARNING,
-				) == wx.OK:
+
+				if (
+					messageBox(
+						message=pgettext(
+							"addonStore",
+							"The website where you are downloading the add-on from has a certificate that is not trusted. "
+							"Do you want to trust the root certificate for {url}? "
+							"This will allow you to download add-ons from this website in the future. "
+							"Only do this if you trust the website. ",
+						).format(url=urlparse(addonData.URL).netloc),
+						caption=_addonDownloadFailureMessageTitle,
+						style=wx.OK | wx.CANCEL | wx.CENTRE | wx.ICON_WARNING,
+					)
+					== wx.OK
+				):
 					_updateWindowsRootCertificates(addonData.URL)
 					return self._download(listItem, ignore=True)
 		except requests.exceptions.RequestException as e:
