@@ -32,6 +32,8 @@ import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
 
+import pip_system_certs.wrapt_requests
+
 if TYPE_CHECKING:
 	import wx
 
@@ -694,6 +696,9 @@ def main():
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
+
+	# Use Windows root certificates for requests rather than certifi.
+	pip_system_certs.wrapt_requests.inject_truststore()
 	# Initialize the config path (make sure it exists)
 	config.initConfigPath()
 	log.info(f"Config dir: {WritePaths.configDir}")
