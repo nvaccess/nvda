@@ -3,17 +3,20 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import struct
-from abc import abstractmethod
-from difflib import ndiff
-from pathlib import Path
-from typing import List
-
 import config
+import globalVars
+import os
+import struct
+import subprocess
+import sys
+from abc import abstractmethod
 from baseObject import AutoPropertyObject
+from difflib import ndiff
 from logHandler import log
-from processManager import ProcessConfig, SubprocessManager
-from textInfos import UNIT_LINE, TextInfo
+from textInfos import TextInfo, UNIT_LINE
+from threading import Lock
+from typing import List
+import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -26,34 +29,60 @@ class DiffAlgo(AutoPropertyObject):
 		raise NotImplementedError
 
 
-DMP_CONFIG = ProcessConfig(
-	name="dmp", sourceScriptPath=Path("nvdaDmp/nvdaDmp.pyw"), builtExeName="nvdaDmp.pyw"
-)
-
-
 class DiffMatchPatch(DiffAlgo):
 	"""A character-based diffing approach, using the Google Diff Match Patch
 	library in a proxy process (to work around a licence conflict).
 	"""
 
-	def __init__(self):
-		super().__init__()
-		self._process = SubprocessManager(DMP_CONFIG)
+	#: A subprocess.Popen object for the nvda_dmp process.
+	_proc = None
+	#: A lock to control access to the nvda_dmp process.
+	#: Control access to avoid synchronization problems if multiple threads
+	#: attempt to use nvda_dmp at the same time.
+	_lock = Lock()
+
+	def _initialize(self):
+		"""Start the nvda_dmp process if it is not already running.
+		@note: This should be run from within the context of an acquired lock."""
+		if not DiffMatchPatch._proc:
+			log.debug("Starting diff-match-patch proxy")
+			if NVDAState.isRunningAsSource():
+				dmp_path = (
+					sys.executable,
+					os.path.join(
+						globalVars.appDir,
+						"..",
+						"include",
+						"nvda_dmp",
+						"nvda_dmp.py",
+					),
+				)
+			else:
+				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
+			DiffMatchPatch._proc = subprocess.Popen(
+				dmp_path,
+				creationflags=subprocess.CREATE_NO_WINDOW,
+				bufsize=0,
+				stdin=subprocess.PIPE,
+				stdout=subprocess.PIPE,
+			)
 
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
-	def _readData(self, size: int) -> bytes:
+	@classmethod
+	def _readData(cls, size: int) -> bytes:
 		"""Reads from stdout, raises exception on EOF."""
-		self._process.ensureProcessRunning()
 		buffer = b""
 		while (remainingLength := size - len(buffer)) > 0:
-			chunk = self._process.subprocess.stdout.read(remainingLength)
+			chunk = cls._proc.stdout.read(remainingLength)
 			if chunk:
 				buffer += chunk
 				continue
-			if not self._process.isRunning():
-				raise RuntimeError("Diff-match-patch proxy process died!")
+			return_code = cls._proc.poll()
+			if return_code is None:
+				continue
+			raise RuntimeError(f"Diff-match-patch proxy process died! Return code {return_code}")
 		return buffer
 
 	def diff(self, newText: str, oldText: str) -> List[str]:
@@ -62,26 +91,45 @@ class DiffMatchPatch(DiffAlgo):
 				# Return an empty list here to avoid exiting
 				# nvda_dmp uses two zero-length texts as a sentinal value
 				return []
-			self._process.ensureProcessRunning()
-			oldEncodedText = oldText.encode()
-			newEncodedText = newText.encode()
-			# Sizes are packed as 32-bit ints in native byte order.
-			# Since nvda and nvda_dmp are running on the same Python
-			# platform/version, this is okay.
-			packedTextLength = struct.pack("=II", len(oldEncodedText), len(newEncodedText))
-			self._process.subprocess.stdin.write(packedTextLength)
-			self._process.subprocess.stdin.write(oldEncodedText)
-			self._process.subprocess.stdin.write(newEncodedText)
-			self._process.subprocess.stdin.flush()
-			DIFF_LENGTH_BUFFER_SIZE = 4
-			diffLengthBuffer = self._readData(DIFF_LENGTH_BUFFER_SIZE)
-			(diff_length,) = struct.unpack("=I", diffLengthBuffer)
-			diffBuffer = self._readData(diff_length)
-			return [line for line in diffBuffer.decode("utf-8").splitlines() if line and not line.isspace()]
+			with DiffMatchPatch._lock:
+				self._initialize()
+				oldEncodedText = oldText.encode()
+				newEncodedText = newText.encode()
+				# Sizes are packed as 32-bit ints in native byte order.
+				# Since nvda and nvda_dmp are running on the same Python
+				# platform/version, this is okay.
+				packedTextLength = struct.pack("=II", len(oldEncodedText), len(newEncodedText))
+				DiffMatchPatch._proc.stdin.write(packedTextLength)
+				DiffMatchPatch._proc.stdin.write(oldEncodedText)
+				DiffMatchPatch._proc.stdin.write(newEncodedText)
+				DiffMatchPatch._proc.stdin.flush()
+				DIFF_LENGTH_BUFFER_SIZE = 4
+				diffLengthBuffer = DiffMatchPatch._readData(DIFF_LENGTH_BUFFER_SIZE)
+				(diff_length,) = struct.unpack("=I", diffLengthBuffer)
+				diffBuffer = DiffMatchPatch._readData(diff_length)
+				return [
+					line for line in diffBuffer.decode("utf-8").splitlines() if line and not line.isspace()
+				]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
-			self._process.terminate()
+			self._terminate()
 			return Difflib().diff(newText, oldText)
+
+	def _terminate(self):
+		with DiffMatchPatch._lock:
+			if DiffMatchPatch._proc:
+				log.debug("Terminating diff-match-patch proxy")
+				# nvda_dmp exits when it receives two zero-length texts.
+				returnCode = DiffMatchPatch._proc.poll()
+				if returnCode is None:
+					try:
+						DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+						DiffMatchPatch._proc.wait(timeout=5)
+					except Exception:
+						log.exception("Exception during DMP termination")
+				else:
+					log.debug(f"Diff-match-patch proxy already terminated, return code is {returnCode}")
+				DiffMatchPatch._proc = None
 
 
 class Difflib(DiffAlgo):
