@@ -1438,8 +1438,11 @@ class UIA(Window):
 
 			sysListView32.findExtraOverlayClasses(self, clsList)
 
-		# Add editableText support if UIA supports a text pattern
-		if self.TextInfo == UIATextInfo:
+		# Add editableText support if UIA supports a text pattern and the control either has navigable text or supports selection.
+		if self.TextInfo == UIATextInfo and (
+			self._hasNavigableText
+			or self.UIATextPattern.SupportedTextSelection != UIAHandler.UIA.SupportedTextSelection_None
+		):
 			if self.UIAFrameworkId == "XAML":
 				# This UIA element is being exposed by the XAML framework.
 				clsList.append(XamlEditableText)
@@ -1740,14 +1743,7 @@ class UIA(Window):
 	_cache_TextInfo = False
 
 	def _get_TextInfo(self):
-		if self.UIATextPattern and (
-			(
-				self.role
-				in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.TERMINAL, controlTypes.Role.DOCUMENT)
-			)
-			or controlTypes.State.EDITABLE in self.states
-			or self.UIATextPattern.SupportedTextSelection != UIAHandler.UIA.SupportedTextSelection_None
-		):
+		if self.UIATextPattern:
 			return self._TextInfo
 		textInfo = super(UIA, self).TextInfo
 		if (
