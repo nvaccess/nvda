@@ -278,7 +278,7 @@ class AddonFileDownloader:
 					== wx.OK
 				):
 					_updateWindowsRootCertificates(addonData.URL)
-					return self._download(listItem, ignore=True)
+					return self._download(listItem)
 				else:
 					return None  # The download was cancelled
 			else:
