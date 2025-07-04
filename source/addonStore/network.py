@@ -251,7 +251,9 @@ class AddonFileDownloader:
 	_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
 
 	def _handleCertVerificationError(
-		self, exception: requests.exceptions.SSLError, listItem: "AddonListItemVM[_AddonStoreModel]"
+		self,
+		exception: requests.exceptions.SSLError,
+		listItem: "AddonListItemVM[_AddonStoreModel]",
 	) -> os.PathLike | None:
 		import wx
 		from gui.message import messageBox, DisplayableError
