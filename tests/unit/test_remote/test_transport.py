@@ -308,6 +308,9 @@ class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 		self.host = "localhost"
 		self.port = 8090
 
+	def tearDown(self):
+		self.patcher_truststore.stop()
+
 	def test_createOutboundSocketOnion(self):
 		t = TCPTransport(self.serializer, (self.host + ".onion", self.port))
 		fakeSocket = DummyTCPSocket()
