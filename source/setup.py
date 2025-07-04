@@ -286,6 +286,10 @@ freeze(
 	+ (
 		getLocaleDataFiles()
 		+ getRecursiveDataFiles(
+			"mathcatAssets",
+			"../include/nvda-mathcat/assets",
+		)
+		+ getRecursiveDataFiles(
 			"synthDrivers",
 			"synthDrivers",
 			excludes=tuple(f"*{ext}" for ext in importlib.machinery.all_suffixes())
