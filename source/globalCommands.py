@@ -2332,10 +2332,9 @@ class GlobalCommands(ScriptableObject):
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
-		if languageHandling.shouldMakeLangChangeCommand():
-			for field in info.getTextWithFields({}):
-				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-					curLanguage = field.field.get("language")
+		for field in info.getTextWithFields({}):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+				curLanguage = field.field.get("language")
 		if curLanguage is None:
 			curLanguage = speech.getCurrentLanguage()
 		return curLanguage
@@ -4946,21 +4945,19 @@ class GlobalCommands(ScriptableObject):
 		info = self._getTIAtCaret()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
-		langToReport = languageHandling.getLangToReport(curLanguage)
-		languageDescription = languageHandler.getLanguageDescription(langToReport)
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
-			languageDescription = langToReport
+			languageDescription = curLanguage
 		message = languageDescription
-		if languageHandling.shouldReportNotSupported():
-			curSynth = synthDriverHandler.getSynth()
-			if not curSynth.languageIsSupported(langToReport):
-				message = pgettext(
-					"reportLanguage",
-					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-					"{languageDescription} (not supported)",
-				).format(
-					languageDescription=languageDescription,
-				)
+		curSynth = synthDriverHandler.getSynth()
+		if not curSynth.languageIsSupported(curLanguage):
+			message = pgettext(
+				"reportLanguage",
+				# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+				"{languageDescription} (not supported)",
+			).format(
+				languageDescription=languageDescription,
+			)
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(message)
