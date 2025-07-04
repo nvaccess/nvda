@@ -300,7 +300,8 @@ class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 	def setUp(self):
 		# Prevent pip_system_certs from replacing certifi with system certificates for testing.
 		self.patcher_truststore = mock.patch(
-			"pip._vendor.truststore._api._verify_peercerts", lambda *a, **kw: None
+			"pip._vendor.truststore._api._verify_peercerts",
+			lambda *a, **kw: None,
 		)
 		self.patcher_truststore.start()
 		self.serializer = FakeSerializer()
