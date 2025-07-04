@@ -251,6 +251,7 @@ class SynthDriver(SynthDriver):
 
 	COM_CLASS = "SAPI.SPVoice"
 	CUSTOMSTREAM_COM_CLASS = "SAPI.SpCustomStream"
+	MMAUDIOOUT_COM_CLASS = "SAPI.SpMMAudioOut"
 
 	name = "sapi5"
 	description = "Microsoft Speech API version 5"
@@ -377,7 +378,8 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
 
-		self.tts.AudioOutput = self.tts.AudioOutput  # Reset the audio and its format parameters
+		# Reset the audio and its format parameters
+		self.tts.AudioOutputStream = comtypes.client.CreateObject(self.MMAUDIOOUT_COM_CLASS)
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
 		# Force the wave format to be 16-bit integer (which Sonic uses internally).
