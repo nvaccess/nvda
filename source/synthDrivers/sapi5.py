@@ -279,7 +279,9 @@ class SynthDriver(SynthDriver):
 		self._initTts(_defaultVoiceToken)
 		# key = stream num, value = deque of bookmarks
 		self._streamBookmarks: dict[int, deque[int]] = dict()  # bookmarks in currently speaking streams
-		self._streamBookmarksNew: deque[deque[int]] = deque()  # bookmarks for streams that haven't been started
+		self._streamBookmarksNew: deque[deque[int]] = (
+			deque()
+		)  # bookmarks for streams that haven't been started
 
 	def terminate(self):
 		self.tts = None
