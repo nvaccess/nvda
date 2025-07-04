@@ -26,6 +26,7 @@ When part of the command payload, the escape character is duplicated. """
 PROTOCOL_NVDA = b"\x03"
 """There is a command, 0x15, for setting a device protocol type, the parameter value 0x03 is specifying that the screen reader is NVDA."""
 
+
 class DeviceCommand(bytes, Enum):
 	DISPLAY_DATA = b"\x01"
 	REQUEST_INFO = b"\x02"
