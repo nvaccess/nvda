@@ -7,11 +7,8 @@
 import abc
 import ctypes
 import enum
-from typing import (
-	Any,
-	Dict,
-	Optional,
-)
+from typing import Any
+import warnings
 
 from comtypes import COMError, BSTR
 import comtypes.automation
@@ -43,6 +40,7 @@ import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
 from controlTypes import TextPosition, TextAlign, VerticalTextAlign
+from NVDAHelper.localLib import EXCEL_CELLINFO
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -131,14 +129,22 @@ def __getattr__(attrName: str) -> Any:
 			1: "default",
 		},
 	}
-	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
-		replacementSymbol = _deprecatedConstantsMap[attrName]
-		log.warning(
-			f"Importing {attrName} from here is deprecated. "
-			f"Import XlVAlign or XlHAlign enumerations instead.",
-			stack_info=True,
-		)
-		return replacementSymbol
+	if NVDAState._allowDeprecatedAPI():
+		if attrName in _deprecatedConstantsMap:
+			replacementSymbol = _deprecatedConstantsMap[attrName]
+			log.warning(
+				f"Importing {attrName} from here is deprecated. "
+				f"Import XlVAlign or XlHAlign enumerations instead.",
+				stack_info=True,
+			)
+			return replacementSymbol
+		elif attrName == "ExcelCellInfo":
+			warnings.warn(
+				"NVDAObjects.window.excel.ExcelCellInfo is deprecated. Use NVDAHelper.localLib.EXCEL_CELLINFO instead.",
+				DeprecationWarning,
+				stacklevel=2,
+			)
+			return EXCEL_CELLINFO
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -1405,7 +1411,7 @@ class NvCellState(enum.IntEnum):
 	UNLOCKED = (1 << 10,)
 
 
-_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+_nvCellStatesToStates: dict[NvCellState, controlTypes.State] = {
 	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
 	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
 	NvCellState.LINKED: controlTypes.State.LINKED,
@@ -1417,23 +1423,6 @@ _nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
 	NvCellState.OVERFLOWING: controlTypes.State.OVERFLOWING,
 	NvCellState.UNLOCKED: controlTypes.State.UNLOCKED,
 }
-
-
-class ExcelCellInfo(ctypes.Structure):
-	_fields_ = [
-		("text", comtypes.BSTR),
-		("address", comtypes.BSTR),
-		("inputTitle", comtypes.BSTR),
-		("inputMessage", comtypes.BSTR),
-		("nvCellStates", ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
-		("rowNumber", ctypes.c_long),
-		("rowSpan", ctypes.c_long),
-		("columnNumber", ctypes.c_long),
-		("columnSpan", ctypes.c_long),
-		("outlineLevel", ctypes.c_long),
-		("comments", comtypes.BSTR),
-		("formula", comtypes.BSTR),
-	]
 
 
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
@@ -1534,7 +1523,7 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 		if not collectionObject:
 			return
 		count = collectionObject.count
-		cellInfos = (ExcelCellInfo * count)()
+		cellInfos = (EXCEL_CELLINFO * count)()
 		numCellsFetched = ctypes.c_long()
 		address = collectionObject.address(True, True, xlA1, True)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
@@ -1571,13 +1560,13 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 
 class ExcelCell(ExcelBase):
-	excelCellInfo: Optional[ExcelCellInfo]
+	excelCellInfo: EXCEL_CELLINFO | None
 	"""Type info for auto property: _get_excelCellInfo"""
 
-	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
+	def _get_excelCellInfo(self) -> EXCEL_CELLINFO | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
-		ci = ExcelCellInfo()
+		ci = EXCEL_CELLINFO()
 		numCellsFetched = ctypes.c_long()
 		address = self.excelCellObject.address(True, True, xlA1, True)
 		res = NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
