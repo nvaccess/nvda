@@ -201,7 +201,11 @@ class SapiSink(COMObject):
 		synth.player.feed(audioData, len(audioData) * 2)
 		if len(synth._streamBookmarks) == 1:
 			# This is the last closing stream. Safe to call idle().
-			synth.player.idle()
+			synth._isSyncing = True
+			try:
+				synth.player.idle()
+			finally:
+				synth._isSyncing = False
 		# trigger all untriggered bookmarks
 		if streamNum in synth._streamBookmarks:
 			if synth.isSpeaking:
@@ -270,6 +274,7 @@ class SynthDriver(SynthDriver):
 		self._volume = 100
 		self.player = None
 		self.isSpeaking = False
+		self._isSyncing = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 		# key = stream num, value = deque of bookmarks
@@ -551,6 +556,9 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
+		if self._isSyncing:
+			log.debug("Stopping WavePlayer to prevent deadlock")
+			self.player.stop()
 		# Add the bookmark list before speaking to avoid race conditions.
 		# Although the actual assigned stream number is unknown until Speak() returns,
 		# and we cannot ensure that Speak() can return before StartStream arrives,
