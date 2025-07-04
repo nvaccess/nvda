@@ -31,7 +31,7 @@ class DeviceCommand(bytes, Enum):
 	REQUEST_INFO = b"\x02"
 	REQUEST_VERSION = b"\x05"
 	REPEAT_ALL = b"\x08"
-	PROTOCOL_TYPE = b"\x15"
+	PROTOCOL_ONOFF = b"\x15"
 	ROUTING_KEYS = b"\x22"
 	DISPLAY_KEYS = b"\x24"
 	BRAILLE_KEYS = b"\x33"
@@ -119,7 +119,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debugWarning("Port not yet available.", exc_info=True)
 				continue
 
-			self._sendRequest(DeviceCommand.PROTOCOL_TYPE.value, PROTOCOL_NVDA)
+			self._sendRequest(DeviceCommand.PROTOCOL_ONOFF.value, PROTOCOL_NVDA)
 			self._sendRequest(DeviceCommand.REPEAT_ALL.value)
 
 			for i in range(CONNECT_RETRIES):
