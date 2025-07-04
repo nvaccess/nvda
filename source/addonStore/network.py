@@ -7,6 +7,7 @@ from concurrent.futures import (
 	Future,
 	ThreadPoolExecutor,
 )
+import hashlib
 import os
 import pathlib
 import shutil
@@ -29,7 +30,11 @@ import NVDAState
 from NVDAState import WritePaths
 import threading
 from utils.security import sha256_checksum
-from utils.networking import _is_cert_verification_error, _updateWindowsRootCertificates
+from utils.networking import (
+	_getCertificate,
+	_is_cert_verification_error,
+	_updateWindowsRootCertificates,
+)
 from config import conf
 
 from .models.addon import (
@@ -218,7 +223,11 @@ class AddonFileDownloader:
 		# Some add-ons are quite large, so we need to allow for a long download time.
 		# 1GB at 0.5 MB/s takes 4.5hr to download.
 		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
-		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
+		with requests.get(
+			addonData.model.URL,
+			stream=True,
+			timeout=MAX_ADDON_DOWNLOAD_TIME,
+		) as r:
 			with open(downloadFilePath, "wb") as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide
@@ -238,11 +247,57 @@ class AddonFileDownloader:
 							return False  # The download was cancelled
 		return True
 
-	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> os.PathLike | None:
-		from gui.message import DisplayableError, messageBox
+	# Translators: A title for a dialog notifying a user of an add-on download failure.
+	_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
 
-		# Translators: A title for a dialog notifying a user of an add-on download failure.
-		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
+	def _handleCertVerificationError(
+		self, exception: requests.exceptions.SSLError, listItem: "AddonListItemVM[_AddonStoreModel]"
+	) -> os.PathLike | None:
+		import wx
+		from gui.message import messageBox, DisplayableError
+
+		if _is_cert_verification_error(exception):
+			import wx
+
+			# Get certificate thumbprint
+			cert = _getCertificate(listItem.model.URL)
+			certFingerprint = hashlib.sha256(cert).hexdigest()
+
+			if (
+				messageBox(
+					message=pgettext(
+						"addonStore",
+						# Translators: A message to the user if an add-on download fails.
+						# url is replaced with the base URL of the add-on download e.g. (github.com).
+						# fingerprint is replaced with the SHA256 fingerprint of the certificate.
+						"The website where you are downloading the add-on from has a certificate that is not trusted. "
+						"Do you want to trust the root certificate for {url}? "
+						"This will allow you to download add-ons from this website in the future. "
+						"Only do this if you trust the website. "
+						"The certificate's SHA256 fingerprint is: {fingerprint}. ",
+					).format(url=urlparse(listItem.model.URL).netloc, fingerprint=certFingerprint),
+					caption=self._addonDownloadFailureMessageTitle,
+					style=wx.OK | wx.CANCEL | wx.CENTRE | wx.ICON_WARNING,
+				)
+				== wx.OK
+			):
+				_updateWindowsRootCertificates(cert)
+				return self._download(listItem)
+			else:
+				return None  # The download was cancelled
+		else:
+			log.debugWarning(f"Unable to download addon file: {exception}")
+			raise DisplayableError(
+				pgettext(
+					"addonStore",
+					# Translators: A message to the user if an add-on download fails
+					"Unable to download add-on: {name}",
+				).format(name=listItem.model.displayName),
+				self._addonDownloadFailureMessageTitle,
+			)
+
+	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> os.PathLike | None:
+		from gui.message import DisplayableError
 
 		addonData = listItem.model
 		log.debug(f"starting download: {addonData.addonId}")
@@ -260,39 +315,7 @@ class AddonFileDownloader:
 			if not self._downloadAddonToPath(listItem, inProgressFilePath):
 				return None  # The download was cancelled
 		except requests.exceptions.SSLError as e:
-			if _is_cert_verification_error(e):
-				import wx
-
-				if (
-					messageBox(
-						message=pgettext(
-							"addonStore",
-							# Translators: A message to the user if an add-on download fails.
-							# url is replaced with the base URL of the add-on download e.g. (github.com).
-							"The website where you are downloading the add-on from has a certificate that is not trusted. "
-							"Do you want to trust the root certificate for {url}? "
-							"This will allow you to download add-ons from this website in the future. "
-							"Only do this if you trust the website. ",
-						).format(url=urlparse(addonData.URL).netloc),
-						caption=_addonDownloadFailureMessageTitle,
-						style=wx.OK | wx.CANCEL | wx.CENTRE | wx.ICON_WARNING,
-					)
-					== wx.OK
-				):
-					_updateWindowsRootCertificates(addonData.URL)
-					return self._download(listItem)
-				else:
-					return None  # The download was cancelled
-			else:
-				log.debugWarning(f"Unable to download addon file: {e}")
-				raise DisplayableError(
-					pgettext(
-						"addonStore",
-						# Translators: A message to the user if an add-on download fails
-						"Unable to download add-on: {name}",
-					).format(name=addonData.displayName),
-					_addonDownloadFailureMessageTitle,
-				)
+			return self._handleCertVerificationError(e, listItem)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to download addon file: {e}")
 			raise DisplayableError(
@@ -301,7 +324,7 @@ class AddonFileDownloader:
 					# Translators: A message to the user if an add-on download fails
 					"Unable to download add-on: {name}",
 				).format(name=addonData.displayName),
-				_addonDownloadFailureMessageTitle,
+				self._addonDownloadFailureMessageTitle,
 			)
 		except OSError as e:
 			log.debugWarning(f"Unable to save addon file ({inProgressFilePath}): {e}")
@@ -311,7 +334,7 @@ class AddonFileDownloader:
 					# Translators: A message to the user if an add-on download fails
 					"Unable to save add-on as a file: {name}",
 				).format(name=addonData.displayName),
-				_addonDownloadFailureMessageTitle,
+				self._addonDownloadFailureMessageTitle,
 			)
 		if not self._checkChecksum(inProgressFilePath, addonData):
 			with self.DOWNLOAD_LOCK:
@@ -323,7 +346,7 @@ class AddonFileDownloader:
 					# Translators: A message to the user if an add-on download is not safe
 					"Add-on download not safe: checksum failed for {name}",
 				).format(name=addonData.displayName),
-				_addonDownloadFailureMessageTitle,
+				self._addonDownloadFailureMessageTitle,
 			)
 		log.debug(f"Download complete: {inProgressFilePath}")
 		with self.DOWNLOAD_LOCK:
