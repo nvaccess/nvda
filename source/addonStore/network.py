@@ -259,9 +259,6 @@ class AddonFileDownloader:
 		from gui.message import messageBox, DisplayableError
 
 		if _is_cert_verification_error(exception):
-			import wx
-
-			# Get certificate thumbprint
 			cert = _getCertificate(listItem.model.URL)
 			certFingerprint = hashlib.sha256(cert).hexdigest()
 

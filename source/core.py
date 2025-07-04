@@ -674,6 +674,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
+
+	# Use Windows root certificates for requests rather than certifi.
+	pip_system_certs.wrapt_requests.inject_truststore()
+
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
 		from winAPI.dpiAwareness import setDPIAwareness
@@ -697,8 +701,6 @@ def main():
 			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
 
-	# Use Windows root certificates for requests rather than certifi.
-	pip_system_certs.wrapt_requests.inject_truststore()
 	# Initialize the config path (make sure it exists)
 	config.initConfigPath()
 	log.info(f"Config dir: {WritePaths.configDir}")
