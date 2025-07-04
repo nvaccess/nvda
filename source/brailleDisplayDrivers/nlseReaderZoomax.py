@@ -23,12 +23,15 @@ COMMUNICATION_ESCAPE_BYTE = b"\x1b"
 So each command starts with the escape character.
 When part of the command payload, the escape character is duplicated. """
 
+PROTOCOL_NVDA = b"\x03"
+"""There is a command, 0x15, for setting a device protocol type, the parameter value 0x03 is specifying that the screen reader is NVDA."""
 
 class DeviceCommand(bytes, Enum):
 	DISPLAY_DATA = b"\x01"
 	REQUEST_INFO = b"\x02"
 	REQUEST_VERSION = b"\x05"
 	REPEAT_ALL = b"\x08"
+	PROTOCOL_TYPE = b"\x15"
 	ROUTING_KEYS = b"\x22"
 	DISPLAY_KEYS = b"\x24"
 	BRAILLE_KEYS = b"\x33"
@@ -116,6 +119,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debugWarning("Port not yet available.", exc_info=True)
 				continue
 
+			self._sendRequest(DeviceCommand.PROTOCOL_TYPE.value, PROTOCOL_NVDA)
 			self._sendRequest(DeviceCommand.REPEAT_ALL.value)
 
 			for i in range(CONNECT_RETRIES):
