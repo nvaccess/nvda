@@ -328,7 +328,7 @@ freeze(
 		"copyright": NVDAcopyright,
 		"company_name": publisher,
 	},
-	windows=[
+	console=[
 		{
 			"script": "nvda_art.pyw",
 			"dest_base": "nvda_art",
