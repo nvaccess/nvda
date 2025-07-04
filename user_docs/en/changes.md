@@ -1,5 +1,25 @@
 # What's New in NVDA
 
+## 2025.3
+
+### Important notes
+
+### New Features
+
+### Changes
+
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+
+### Bug Fixes
+
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
 ## 2025.2
 
 This release includes improvements in Windows 11, browse mode, and Microsoft Word.
