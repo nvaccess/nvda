@@ -182,9 +182,7 @@ class SapiSink(COMObject):
 	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
 		# The stream has been started. Move the bookmark list to _streamBookmarks.
-		if streamNum in synth._streamBookmarksNew:
-			synth._streamBookmarks[streamNum] = synth._streamBookmarksNew[streamNum]
-			del synth._streamBookmarksNew[streamNum]
+		synth._streamBookmarks[streamNum] = synth._streamBookmarksNew.popleft()
 		synth.isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
@@ -201,7 +199,7 @@ class SapiSink(COMObject):
 		synth.sonicStream.flush()
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
-		if len(synth._streamBookmarks) <= 1:
+		if len(synth._streamBookmarks) == 1:
 			# This is the last closing stream. Safe to call idle().
 			synth.player.idle()
 		# trigger all untriggered bookmarks
@@ -275,8 +273,8 @@ class SynthDriver(SynthDriver):
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 		# key = stream num, value = deque of bookmarks
-		self._streamBookmarks = dict()  # bookmarks in currently speaking streams
-		self._streamBookmarksNew = dict()  # bookmarks for streams that haven't been started
+		self._streamBookmarks: dict[int, deque[int]] = dict()  # bookmarks in currently speaking streams
+		self._streamBookmarksNew: deque[deque[int]] = deque()  # bookmarks for streams that haven't been started
 
 	def terminate(self):
 		self.tts = None
@@ -450,7 +448,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self, speechSequence):
 		textList = []
-		bookmarks = deque()
+		bookmarks: deque[int] = deque()
 
 		# NVDA SpeechCommands are linear, but XML is hierarchical.
 		# Therefore, we track values for non-empty tags.
@@ -553,10 +551,17 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		streamNum = self.tts.Speak(text, flags)
-		# When Speak returns, the previous stream may not have been ended.
-		# So the bookmark list is stored in another dict until this stream starts.
-		self._streamBookmarksNew[streamNum] = bookmarks
+		# Add the bookmark list before speaking to avoid race conditions.
+		# Although the actual assigned stream number is unknown until Speak() returns,
+		# and we cannot ensure that Speak() can return before StartStream arrives,
+		# we can assume that the StartStream events will arrive in the same order
+		# as our Speak() calls, so we can put the bookmark list in a queue.
+		self._streamBookmarksNew.append(bookmarks)
+		try:
+			self.tts.Speak(text, flags)
+		except:
+			self._streamBookmarksNew.pop()
+			raise
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
