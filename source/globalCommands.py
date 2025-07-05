@@ -31,7 +31,6 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
-	languageHandling,
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
