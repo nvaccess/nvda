@@ -1932,7 +1932,7 @@ This checkbox allows you to toggle whether or not dialect changes should be made
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
 
-##### Report language changes {#ReportLanguage}
+##### Report language changes while reading {#ReportLanguage}
 
 This checkbox allows you to toggle whether NVDA should report the detected language of the text being read, when the language changes from the default language.
 The language configured to be used by default won't be reported.
