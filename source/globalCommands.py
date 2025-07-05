@@ -4943,6 +4943,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
 		info = self._getTIAtCaret()
+		if info is None:
+			log.debugWarning("No caret")
+			return
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
 		languageDescription = languageHandler.getLanguageDescription(curLanguage)
