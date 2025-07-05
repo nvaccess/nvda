@@ -180,6 +180,8 @@ def waitForFreezeRecovery(waitedSince: float):
 	# This event will be reset by alive().
 	windll.kernel32.SetEvent(_cancelCallEvent)
 
+	frozenWarningCount = 0
+
 	# Some calls have to be killed individually.
 	while not _isAlive():
 		curTime = _timer()
@@ -190,6 +192,10 @@ def waitForFreezeRecovery(waitedSince: float):
 			log.error(f"Core frozen in stack! ({curTime - waitedSince} seconds)")
 			stacks = logHandler.getFormattedStacksForAllThreads()
 			log.info(f"Listing stacks for Python threads:\n{stacks}")
+			frozenWarningCount += 1
+			if frozenWarningCount >= 2:
+				# Create a crash dump and exit.
+				_crashHandler(None)
 		_recoverAttempt()
 		time.sleep(RECOVER_ATTEMPT_INTERVAL)
 
