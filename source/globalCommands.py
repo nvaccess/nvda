@@ -2349,6 +2349,8 @@ class GlobalCommands(ScriptableObject):
 		info = api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
 		text = info.text
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		if expandedSymbol == text:
