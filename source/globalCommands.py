@@ -2335,7 +2335,8 @@ class GlobalCommands(ScriptableObject):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 				curLanguage = field.field.get("language")
 		if curLanguage is None:
-			curLanguage = speech.getCurrentLanguage()
+			# Translators: Reported when the language of the text at caret is not defined.
+			_("Not defined")
 		return curLanguage
 
 	@script(
