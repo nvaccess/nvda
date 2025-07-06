@@ -9,6 +9,7 @@ import glob
 import webbrowser
 import gettext
 from logHandler import log  # logging
+from languageHandler import getLanguageDescription
 from collections.abc import Callable
 from .MathCAT import convertSSMLTextForNVDA
 from speech import speak
@@ -220,20 +221,20 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 			# codes https://en.wikipedia.org/wiki/ISO_3166-2
 			# check if there are language variants in the language folder
 			if subDir != "SharedRules":
-				languagesDict: dict[str, str] = UserInterface.languagesDict()
+				languagesSet: set[str] = UserInterface.languagesSet()
 				# add to the listbox the text for this language variant together with the code
 				regionalCode: str = language + "-" + subDir.upper()
-				if languagesDict.get(regionalCode, "missing") != "missing":
-					self._choiceLanguage.Append(f"{languagesDict[regionalCode]} ({language}-{subDir})")
-				elif languagesDict.get(language, "missing") != "missing":
-					self._choiceLanguage.Append(f"{languagesDict[language]} ({regionalCode})")
+				if regionalCode in languagesSet:
+					self._choiceLanguage.Append(f"{getLanguageDescription(regionalCode)} ({language}-{subDir})")
+				elif language in languagesSet:
+					self._choiceLanguage.Append(f"{getLanguageDescription(language)} ({regionalCode})")
 				else:
 					self._choiceLanguage.Append(f"{language} ({regionalCode})")
 				return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 			return []
 
 		# initialise the language list
-		languagesDict: dict[str, str] = UserInterface.languagesDict()
+		languagesSet: set[str] = UserInterface.languagesSet()
 		# clear the language names in the dialog
 		self._choiceLanguage.Clear()
 		# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
@@ -249,8 +250,8 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 				# only add this language if there is a xxx_Rules.yaml file
 				if len(self.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 					# add to the listbox the text for this language together with the code
-					if languagesDict.get(language, "missing") != "missing":
-						self._choiceLanguage.Append(languagesDict[language] + " (" + language + ")")
+					if language in languagesSet:
+						self._choiceLanguage.Append(getLanguageDescription(language) + " (" + language + ")")
 					else:
 						self._choiceLanguage.Append(language + " (" + language + ")")
 
