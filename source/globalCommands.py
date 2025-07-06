@@ -2334,9 +2334,6 @@ class GlobalCommands(ScriptableObject):
 		for field in info.getTextWithFields({}):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 				curLanguage = field.field.get("language")
-		if curLanguage is None:
-			# Translators: Reported when the language of the text at caret is not defined.
-			_("Not defined")
 		return curLanguage
 
 	@script(
@@ -4948,7 +4945,11 @@ class GlobalCommands(ScriptableObject):
 			return
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
-		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if curLanguage is None:
+			# Translators: Reported when the language of the text at caret is not defined.
+			languageDescription = _("Not defined")
+		else:
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
 			languageDescription = curLanguage
 		message = languageDescription
