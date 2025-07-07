@@ -1989,17 +1989,17 @@ class IAccessible(Window):
 		return super().controllerFor
 
 	#: Type definition for auto prop '_get_flowsTo'
-	flowsTo: typing.Optional["IAccessible"]
+	flowsTo: "IAccessible | None"
 
-	def _get_flowsTo(self) -> typing.Optional["IAccessible"]:
+	def _get_flowsTo(self) -> "IAccessible | None":
 		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
 		return super().flowsTo
 
 	#: Type definition for auto prop '_get_flowsFrom'
-	flowsFrom: typing.Optional["IAccessible"]
+	flowsFrom: "IAccessible | None"
 
-	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
+	def _get_flowsFrom(self) -> "IAccessible | None":
 		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
 		return super().flowsFrom
