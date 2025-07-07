@@ -500,8 +500,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		#: The gestures mapped by the user.
 		#: @type: L{GlobalGestureMap}
 		self.userGestureMap = GlobalGestureMap()
+		self.defaultGestureMap = GlobalGestureMap()
+		"""English fallback gestures"""
 		self.loadLocaleGestureMap()
 		self.loadUserGestureMap()
+		self.loadDefaultGestureMap()
 		self._lastInputTime = None
 
 	def executeGesture(self, gesture):
@@ -686,6 +689,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		except IOError:
 			log.debugWarning("No user gesture map")
 
+	def loadDefaultGestureMap(self):
+		self.defaultGestureMap.clear()
+		self.defaultGestureMap.load(os.path.join(globalVars.appDir, "locale", "en", "gestures.ini"))
+
 	def loadLocaleGestureMap(self):
 		self.localeGestureMap.clear()
 		lang = languageHandler.getLanguage()
@@ -738,6 +745,7 @@ class _AllGestureMappingsRetriever(object):
 
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
+		self.addGlobalMap(manager.defaultGestureMap)
 		import braille
 
 		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
