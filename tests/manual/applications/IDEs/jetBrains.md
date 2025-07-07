@@ -6,19 +6,6 @@ To ensure NVDA functions correctly with JetBrains IDEs (IntelliJ IDEA, Android S
 This plan focuses on basic navigation, project operations, editor accessibility, and common IDE features.
 JetBrains IDEs are based on the IntelliJ Platform, which is written in Java and smoke testing can reveal issues with the framework and Java applications more broadly.
 
-## Notes
-
-* Ensure all test results are documented, including screenshots or logs for failures.
-* Use the latest stable version of the JetBrains IDE (recommended).
-* Test with NVDA default settings unless otherwise specified.
-* This plan covers generic features common across all JetBrains IDEs.
-
-## Test Environment Requirements
-
-* Windows 10/11 (64-bit recommended)
-* Latest NVDA release
-* JetBrains IDE (latest stable)
-
 ## Areas Covered
 
 * Application launch and window navigation
