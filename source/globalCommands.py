@@ -4949,7 +4949,7 @@ class GlobalCommands(ScriptableObject):
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
 		if curLanguage is None:
 			# Translators: Reported when the language of the text at caret is not defined.
-			languageDescription = _("Not defined")
+			languageDescription = pgettext("reportLanguage", "Unknown language")
 		else:
 			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
