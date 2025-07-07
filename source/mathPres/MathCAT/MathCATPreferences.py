@@ -294,7 +294,7 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 				"zh-HANT",
 				"zh-TW",
 				"zu",
-			]
+			],
 		)
 		return languages
 
@@ -357,7 +357,7 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 				regionalCode: str = language + "-" + subDir.upper()
 				if regionalCode in languagesSet:
 					self._choiceLanguage.Append(
-						f"{getLanguageDescription(regionalCode)} ({language}-{subDir})"
+						f"{getLanguageDescription(regionalCode)} ({language}-{subDir})",
 					)
 				elif language in languagesSet:
 					self._choiceLanguage.Append(f"{getLanguageDescription(language)} ({regionalCode})")
