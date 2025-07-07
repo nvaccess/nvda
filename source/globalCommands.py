@@ -2329,7 +2329,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 
-	def _getCurrentLanguageForTextInfo(self, info):
+	def _getCurrentLanguageForTextInfo(self, info: textInfos.TextInfo):
 		curLanguage = None
 		for field in info.getTextWithFields({}):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
