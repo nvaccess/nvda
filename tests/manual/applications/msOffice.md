@@ -1,4 +1,4 @@
-# NVDA MS Office Smoke Testing Plan
+# MS Office Smoke Testing Plan
 
 ## Objective
 

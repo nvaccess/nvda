@@ -1,4 +1,4 @@
-# NVDA LibreOffice Smoke Testing Plan
+# LibreOffice Smoke Testing Plan
 
 ## Objective
 

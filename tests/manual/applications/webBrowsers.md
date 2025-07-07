@@ -1,4 +1,4 @@
-# NVDA Web Browser Smoke Testing Plan
+# Web Browser Smoke Testing Plan
 
 ## Objective
 
