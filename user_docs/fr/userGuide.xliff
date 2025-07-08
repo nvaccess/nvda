@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
-  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/071247b03b9cbd266e2dc137ffb95a75507f93ef/user_docs/en/userGuide.md">
+  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a48750d1b13c053845a35864c177caf8457da440/user_docs/en/userGuide.md">
     <skeleton>
 # $(ID:f5169acb-2803-46c6-8e4c-7c1aaf973723)
 
@@ -375,9 +375,9 @@ $(ID:b5be3f6b-f11b-43bd-9ea0-dd1e1cfa99d0)
 ### $(ID:84e4a805-e080-490b-b241-73afbffd0046) {#Community}
 
 $(ID:10acceab-2d34-4444-9bc5-5ce455798b4f)
-$(ID:494ab762-5a17-42d1-bb8b-446326255f74)
-$(ID:e91aa707-228a-4e7f-9a49-d2ed408bfeb8)
+$(ID:14e7bcd9-2165-49ae-8810-4b6c6852a56e)
 $(ID:46936321-9783-4806-9518-1464a2679946)
+$(ID:841cc920-d20f-4324-b54a-911546c71e4b)
 
 $(ID:02bcb343-6948-4d57-b460-babaadd25165)
 $(ID:4e0eada1-6951-487d-9d54-13660eea0c6b)
@@ -1936,7 +1936,7 @@ $(ID:3e76b5ec-6ec3-4e86-a2c9-c50fe5feee5b)
 $(ID:d628b3e4-e181-4d8b-ac05-382be5f76f9b)
 $(ID:4b0e1070-81d0-46cc-982e-0fb4e012ddd6)
 
-##### $(ID:b479c52f-f4bd-4e08-a05b-42855de7c3c1) {#ReportLanguage}
+##### $(ID:2e579547-98dd-45a1-8bdb-c7ecd207d8ec) {#ReportLanguage}
 
 $(ID:27a2be3f-0cd8-4720-80b5-045fdd800a6a)
 $(ID:c9eef931-329a-425d-b683-747d7c5aaa43)
@@ -7321,7 +7321,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report language |Not assigned |Not assigned |Reports text language. Pressing twice shows the information in a window</source>
-        <target>Langue du rapport |Non attribué |Non attribué |Indique la langue du texte du rapport. Appuyer deux fois affiche les informations dans une fenêtre</target>
+        <target>Annoncer la langue |Non attribué |Non attribué |Annonce la langue du texte. Un double appui affiche les informations dans une fenêtre</target>
       </segment>
     </unit>
     <unit id="85eb7fc3-aea0-4669-b0a9-ecb073bebfc7">
@@ -8318,31 +8318,31 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <target>NVDA a une communauté d'utilisateurs dynamique.</target>
       </segment>
     </unit>
-    <unit id="494ab762-5a17-42d1-bb8b-446326255f74">
+    <unit id="14e7bcd9-2165-49ae-8810-4b6c6852a56e">
       <notes>
         <note appliesTo="source">line: 375</note>
       </notes>
       <segment state="final">
-        <source>There is a main [English language email list](https://nvda.groups.io/g/nvda) and a page full of [local language groups](https://github.com/nvaccess/nvda/wiki/Connect).</source>
-        <target>Il existe une [liste de diffusion principale en anglais](https://nvda.groups.io/g/nvda) et une page complète de [groupes de langues locales](https://github.com/nvaccess/nvda-community/wiki/Connect) .</target>
-      </segment>
-    </unit>
-    <unit id="e91aa707-228a-4e7f-9a49-d2ed408bfeb8">
-      <notes>
-        <note appliesTo="source">line: 376</note>
-      </notes>
-      <segment state="final">
-        <source>NV Access, makers of NVDA, are active on [Twitter](https://twitter.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).</source>
-        <target>NV Access, développeur de NVDA, est actif sur Twitter [Twitter](https://twitter.com/nvaccess) et [Facebook](https://www.facebook.com/NVAccess).</target>
+        <source>NV Access, makers of NVDA, are active on [Mastodon](https://fosstodon.org/@NVAccess), [Twitter/X](https://x.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).</source>
+        <target>NV Access, développeur de NVDA, est actif sur [Mastodon](https://fosstodon.org/@NVAccess), [Twitter/X](https://x.com/nvaccess) et [Facebook](https://www.facebook.com/NVAccess).</target>
       </segment>
     </unit>
     <unit id="46936321-9783-4806-9518-1464a2679946">
       <notes>
-        <note appliesTo="source">line: 377</note>
+        <note appliesTo="source">line: 376</note>
       </notes>
       <segment state="final">
         <source>NV Access also have a regular [In-Process blog](https://www.nvaccess.org/category/in-process/).</source>
         <target>NV Access a également un [blog In-Process](https://www.nvaccess.org/category/in-process/) régulier.</target>
+      </segment>
+    </unit>
+    <unit id="841cc920-d20f-4324-b54a-911546c71e4b">
+      <notes>
+        <note appliesTo="source">line: 377</note>
+      </notes>
+      <segment state="final">
+        <source>There is a main [NV Access owned email list](https://groups.google.com/a/nvaccess.org/g/nvda-users) and a page full of [other community groups](https://github.com/nvaccess/nvda/wiki/Connect).</source>
+        <target>Ile existe une [liste de diffusion principale gérée par NV Access](https://groups.google.com/a/nvaccess.org/g/nvda-users) ainsi qu’une page référençant [d’autres groupes communautaire](https://github.com/nvaccess/nvda/wiki/Connect).</target>
       </segment>
     </unit>
     <unit id="02bcb343-6948-4d57-b460-babaadd25165">
@@ -18405,15 +18405,15 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <target>Par défaut, cette option est désactivée.</target>
       </segment>
     </unit>
-    <unit id="b479c52f-f4bd-4e08-a05b-42855de7c3c1">
+    <unit id="2e579547-98dd-45a1-8bdb-c7ecd207d8ec">
       <notes>
         <note appliesTo="source">line: 1936</note>
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#ReportLanguage}</note>
       </notes>
       <segment state="final">
-        <source>Report language changes</source>
-        <target>Annoncer les changements de langue</target>
+        <source>Report language changes while reading</source>
+        <target>Annoncer les changements de langue pendant la lecture</target>
       </segment>
     </unit>
     <unit id="27a2be3f-0cd8-4720-80b5-045fdd800a6a">
@@ -22541,7 +22541,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For the example command, a too short timeout will cause two presses to report the current character twice, rather than the phonetic description.</source>
-        <target>Pour la commande citée en example, avec un délai d'expiration trop court, deux appuis annonceront deux fois le caractère courant, au lieu de la description phonétique.</target>
+        <target>Pour la commande citée en exemple, avec un délai d'expiration trop court, deux appuis annonceront deux fois le caractère courant, au lieu de la description phonétique.</target>
       </segment>
     </unit>
     <unit id="5bf160f9-c7da-4306-9e90-69897a450636">
@@ -25786,7 +25786,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If the server uses a port other than 6837, include it after a colon (eg. `example.com:1234`).</source>
-        <target>Si le serveur utilise un port autre que 6837, ajoutez-le après deux points (par exemple, "example.com:1234").</target>
+        <target>Si le serveur utilise un port autre que 6837, ajoutez-le après deux points (par exemple, "exemple.com:1234").</target>
       </segment>
     </unit>
     <unit id="1c48db19-a2bd-4c29-810c-6a7b38a6269a">
@@ -29381,7 +29381,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, `example.com:1234`.</source>
-        <target>Par exemple, `example.com:1234`.</target>
+        <target>Par exemple, `exemple.com:1234`.</target>
       </segment>
     </unit>
     <unit id="c0c4cd99-9bc9-46e6-8fb9-1b39fcfc2acc">
@@ -29478,7 +29478,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, `example.com:1234`.</source>
-        <target>Par exemple, `example.com:1234`.</target>
+        <target>Par exemple, `exemple.com:1234`.</target>
       </segment>
     </unit>
     <unit id="dada18fb-997b-4047-9346-4f9d438e04a6">
@@ -32301,7 +32301,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4201</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NLS eReader Zoomax</source>
         <target>NLS eReader Zoomax</target>
       </segment>
@@ -34723,7 +34723,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4514</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NLS eReader HumanWare</source>
         <target>NLS eReader HumanWare</target>
       </segment>
@@ -41759,7 +41759,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#Zoomax}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NLS eReader Zoomax</source>
         <target>NLS eReader Zoomax</target>
       </segment>
@@ -41768,63 +41768,63 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 5379</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The NLS eReader Zoomax device supports USB or bluetooth connections.</source>
-        <target>The NLS eReader Zoomax device supports USB or bluetooth connections.</target>
+        <target>L'afficheur NLS eReader Zoomax prend en charge les connexions USB ou Bluetooth.</target>
       </segment>
     </unit>
     <unit id="149e40fa-2125-40f4-a9a9-8e76179f0598">
       <notes>
         <note appliesTo="source">line: 5380</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.</source>
-        <target>The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.</target>
+        <target>Les systèmes d’exploitation Windows 10 et Windows 11 détecteront et installeront automatiquement les pilotes nécessaires pour cet afficheur.</target>
       </segment>
     </unit>
     <unit id="0481c658-1b1c-4e60-9721-af42e0f1f597">
       <notes>
         <note appliesTo="source">line: 5381</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For computers where the Internet connection is disabled or not available, you can manually [download and install the USB to serial CH340 chip driver](https://www.wch-ic.com/downloads/CH341SER_EXE.html) to support this display over USB.</source>
-        <target>For computers where the Internet connection is disabled or not available, you can manually [download and install the USB to serial CH340 chip driver](https://www.wch-ic.com/downloads/CH341SER_EXE.html) to support this display over USB.</target>
+        <target>Pour les ordinateurs où la connexion Internet est désactivée ou indisponible, vous pouvez [télécharger et installer manuellement le pilote du circuit USB-série CH340](https://www.wch-ic.com/downloads/CH341SER_EXE.html) afin de prendre en charge cet afficheur via USB.</target>
       </segment>
     </unit>
     <unit id="bc966963-e8fc-4429-96ce-251f7107a6b7">
       <notes>
         <note appliesTo="source">line: 5383</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, NVDA can automatically detect and connect to this display via USB or bluetooth.</source>
-        <target>By default, NVDA can automatically detect and connect to this display via USB or bluetooth.</target>
+        <target>Par défaut, NVDA peut détecter et se connecter automatiquement à cet afficheur via USB ou Bluetooth.</target>
       </segment>
     </unit>
     <unit id="37efd470-b802-47e5-8407-48b1b9c16986">
       <notes>
         <note appliesTo="source">line: 5384</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.</source>
-        <target>However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.</target>
+        <target>Cependant, lors de la configuration de l’afficheur, vous pouvez aussi sélectionner explicitement les ports « USB » ou « Bluetooth » pour limiter le type de connexion à utiliser.</target>
       </segment>
     </unit>
     <unit id="a92f7c03-f970-4e78-8d54-d496a53350ee">
       <notes>
         <note appliesTo="source">line: 5386</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Following are the key assignments for this display with NVDA.</source>
-        <target>Following are the key assignments for this display with NVDA.</target>
+        <target>Voici les affectations des touches pour cet afficheur avec NVDA.</target>
       </segment>
     </unit>
     <unit id="8d84a6a4-39bd-40c6-af9c-2752e882621b">
       <notes>
         <note appliesTo="source">line: 5387</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please see the display's documentation for descriptions of where these keys can be found.</source>
-        <target>Please see the display's documentation for descriptions of where these keys can be found.</target>
+        <target>Veuillez consulter la documentation de l’afficheur pour la description de l’emplacement de ces touches.</target>
       </segment>
     </unit>
     <unit id="0ca991c7-b577-4517-bdb8-e1865eb16a80">
@@ -41833,9 +41833,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Name |Key</source>
-        <target> Name |Key</target>
+        <target> Nom |Touche</target>
       </segment>
     </unit>
     <unit id="c9ed18c2-bc9f-45c4-812b-9408950d7bff">
@@ -41844,9 +41844,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Scroll braille display back |`d2`</source>
-        <target>Scroll braille display back |`d2`</target>
+        <target>Défilement arrière affichage braille |`d2`</target>
       </segment>
     </unit>
     <unit id="1a1cef41-9b64-4a30-a3db-8cd16126dc99">
@@ -41855,9 +41855,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Scroll braille display forward |`d5`</source>
-        <target>Scroll braille display forward |`d5`</target>
+        <target>Défilement avant affichage braille |`d5`</target>
       </segment>
     </unit>
     <unit id="06bb61d7-1e00-40d3-81a1-fe0f65005a7d">
@@ -41866,9 +41866,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Move braille display to previous line |`d1`</source>
-        <target>Move braille display to previous line |`d1`</target>
+        <target>Amener l'affichage sur la ligne précédente |`d1`</target>
       </segment>
     </unit>
     <unit id="5023c8c7-c42f-4588-88d5-9f08423ffff4">
@@ -41877,9 +41877,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Move braille display to next line |`d3`</source>
-        <target>Move braille display to next line |`d3`</target>
+        <target>Amener l'affichage sur la ligne suivante |`d3`</target>
       </segment>
     </unit>
     <unit id="fe23dbff-7013-4baf-8595-ff0b9bb476fe">
@@ -41888,9 +41888,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Route to braille cell |`routing`</target>
+        <target>Aller à la cellule braille |`routage`</target>
       </segment>
     </unit>
     <unit id="e5443642-4760-484a-8f91-c0e8e58faeff">
@@ -41899,9 +41899,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Up arrow key |`up`</source>
-        <target>Up arrow key |`up`</target>
+        <target>Touche flèche haut |`haut`</target>
       </segment>
     </unit>
     <unit id="3ceee24f-58c0-4881-a882-81ce94799011">
@@ -41910,9 +41910,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Down arrow key |`down`</source>
-        <target>Down arrow key |`down`</target>
+        <target>Touche flèche bas |`bas`</target>
       </segment>
     </unit>
     <unit id="c43f022c-e767-4b08-b2d0-6b18b444a23c">
@@ -41921,9 +41921,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Left arrow key |`left`</source>
-        <target>Left arrow key |`left`</target>
+        <target>Touche flèche gauche |`gauche`</target>
       </segment>
     </unit>
     <unit id="325a81bd-8eae-4a45-ba28-ca678091808c">
@@ -41932,9 +41932,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Right arrow key |`right`</source>
-        <target>Right arrow key |`right`</target>
+        <target>Touche flèche droite |`droite`</target>
       </segment>
     </unit>
     <unit id="664032be-3ad6-4690-b32f-ceea143aec4f">
@@ -41943,9 +41943,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Enter key |`select`</source>
-        <target>Enter key |`select`</target>
+        <target>Touche entrée |`select`</target>
       </segment>
     </unit>
     <unit id="0475738b-d227-4c2f-bc1e-1c3cdcc9bb2a">
