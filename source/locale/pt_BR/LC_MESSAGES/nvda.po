@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-27 05:50+0000\n"
-"PO-Revision-Date: 2025-06-29 23:55\n"
+"POT-Creation-Date: 2025-07-07 04:27+0000\n"
+"PO-Revision-Date: 2025-07-07 23:53\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1714,7 +1714,7 @@ msgstr "Filtr&ar por:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1313 globalCommands.py:1731
+#: browseMode.py:1313 globalCommands.py:1730
 msgid "Activate"
 msgstr "Ativar"
 
@@ -1751,8 +1751,8 @@ msgstr "Move para o início do elemento pai, por exemplo uma lista ou tabela"
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2276 globalCommands.py:1881 globalCommands.py:1959
-#: globalCommands.py:2079 appModules\nvda.py:146
+#: browseMode.py:2276 globalCommands.py:1880 globalCommands.py:1958
+#: globalCommands.py:2078 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Fundo"
 
@@ -2161,8 +2161,8 @@ msgstr "Algumas operações em complementos falharam. Consulte o arquivo de log 
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:430 updateCheck.py:743
-#: updateCheck.py:913 gui\__init__.py:238 gui\__init__.py:246
+#: core.py:119 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
+#: updateCheck.py:928 gui\__init__.py:238 gui\__init__.py:246
 #: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
 #: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:217
 #: gui\configProfiles.py:270 gui\configProfiles.py:282
@@ -2271,7 +2271,7 @@ msgstr "procura a ocorrência anterior da cadeia textual digitada anteriormente,
 #. Translators: The message reported when there is no selection
 #. Translators: When trying to read the documentation but there is no selected autocompletion item in
 #. Eclipse
-#: cursorManager.py:541 globalCommands.py:133 globalCommands.py:401
+#: cursorManager.py:541 globalCommands.py:132 globalCommands.py:400
 #: appModules\eclipse.py:69
 msgid "No selection"
 msgstr "Sem seleção"
@@ -2389,23 +2389,23 @@ msgid "NVDA License"
 msgstr "Licença do NVDA"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:79
+#: globalCommands.py:78
 msgid "Text review"
 msgstr "Exploração de texto"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:82
+#: globalCommands.py:81
 msgid "Object navigation"
 msgstr "Navegação por objetos"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:85
+#: globalCommands.py:84
 msgid "System caret"
 msgstr "Cursor do sistema"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
-#: globalCommands.py:88 gui\settingsDialogs.py:2179
+#: globalCommands.py:87 gui\settingsDialogs.py:2179
 msgid "Mouse"
 msgstr "Mouse"
 
@@ -2414,18 +2414,18 @@ msgstr "Mouse"
 #. Translators: This is the label for the speech panel
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: globalCommands.py:91 config\configFlags.py:277 gui\settingsDialogs.py:1186
+#: globalCommands.py:90 config\configFlags.py:277 gui\settingsDialogs.py:1186
 #: gui\settingsDialogs.py:4003
 msgid "Speech"
 msgstr "Fala"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:94
+#: globalCommands.py:93
 msgid "Configuration"
 msgstr "Configuração"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:97
+#: globalCommands.py:96
 msgid "Configuration profiles"
 msgstr "Perfis de configurações"
 
@@ -2434,166 +2434,166 @@ msgstr "Perfis de configurações"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:100 config\configFlags.py:279 gui\settingsDialogs.py:3909
+#: globalCommands.py:99 config\configFlags.py:279 gui\settingsDialogs.py:3909
 #: gui\settingsDialogs.py:4418
 msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:103 gui\settingsDialogs.py:5231
+#: globalCommands.py:102 gui\settingsDialogs.py:5231
 msgid "Vision"
 msgstr "Visão"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:106
+#: globalCommands.py:105
 msgctxt "script category"
 msgid "Tools"
 msgstr "Ferramentas"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
-#: globalCommands.py:109 touchHandler.py:204
+#: globalCommands.py:108 touchHandler.py:204
 msgid "Touch screen"
 msgstr "Tela tátil"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:112
+#: globalCommands.py:111
 msgid "System focus"
 msgstr "Foco do sistema"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:115
+#: globalCommands.py:114
 msgid "System status"
 msgstr "Status do sistema"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:118
+#: globalCommands.py:117
 msgid "Input"
 msgstr "Entrada"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:121
+#: globalCommands.py:120
 msgid "Document formatting"
 msgstr "Formatação de documentos"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:124 gui\settingsDialogs.py:3087
+#: globalCommands.py:123 gui\settingsDialogs.py:3087
 msgid "Audio"
 msgstr "Áudio"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:127 gui\settingsDialogs.py:3365
+#: globalCommands.py:126 gui\settingsDialogs.py:3365
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Acesso remoto"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
-#: globalCommands.py:131
+#: globalCommands.py:130
 msgid "No settings"
 msgstr "Sem configurações"
 
 #. Translators: Describes the Cycle audio ducking mode command.
-#: globalCommands.py:190
+#: globalCommands.py:189
 msgid "Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
 msgstr "Alterna entre os modos de áudio prioritário que determinam quando o NVDA diminui o volume de outros sons"
 
 #. Translators: a message when audio ducking is not supported on this machine
-#: globalCommands.py:198
+#: globalCommands.py:197
 msgid "Audio ducking not supported"
 msgstr "Prioridade de áudio não suportada"
 
 #. Translators: Input help mode message for toggle input help command.
-#: globalCommands.py:211
+#: globalCommands.py:210
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
 msgstr "Liga ou desliga a ajuda de entrada; quando ligada, cada entrada como por exemplo pressionar uma tecla do teclado falará o script associado àquela entrada se houver algum."
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:222
+#: globalCommands.py:221
 #, python-brace-format
 msgid "input help on. Press {gestureKeys} again to turn it off."
 msgstr "ajuda de entrada ligada. Pressione {gestureKeys} novamente para desligar."
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:226
+#: globalCommands.py:225
 msgid "input help off"
 msgstr "ajuda de entrada desligada"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-#: globalCommands.py:232
+#: globalCommands.py:231
 msgid "Toggles sleep mode on and off for the active application."
 msgstr "Liga e desliga o modo dormir para o aplicativo ativo."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
-#: globalCommands.py:242
+#: globalCommands.py:241
 msgid "Sleep mode off"
 msgstr "Modo dormir desligado"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
-#: globalCommands.py:248
+#: globalCommands.py:247
 msgid "Sleep mode on"
 msgstr "Modo dormir ligado"
 
 #. Translators: Input help mode message for report current line command.
-#: globalCommands.py:253
+#: globalCommands.py:252
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."
 msgstr "Anuncia a linha sob o cursor do aplicativo. Se pressionada duas vezes, soletra a linha atual. Pressionar três vezes soletrará a linha usando descrições de caracteres."
 
 #. Translators: Input help mode message for left mouse click command.
-#: globalCommands.py:289
+#: globalCommands.py:288
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão esquerdo do mouse na posição atual"
 
 #. Translators: Reported when left mouse button is clicked.
-#: globalCommands.py:295
+#: globalCommands.py:294
 msgid "Left click"
 msgstr "Clique esquerdo"
 
 #. Translators: Input help mode message for right mouse click command.
-#: globalCommands.py:301
+#: globalCommands.py:300
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão direito do mouse na posição atual"
 
 #. Translators: Reported when right mouse button is clicked.
-#: globalCommands.py:307
+#: globalCommands.py:306
 msgid "Right click"
 msgstr "Clique direito"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
-#: globalCommands.py:313
+#: globalCommands.py:312
 msgid "Locks or unlocks the left mouse button"
 msgstr "Pressiona ou solta o botão esquerdo do mouse"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
-#: globalCommands.py:325
+#: globalCommands.py:324
 msgid "Locks or unlocks the right mouse button"
 msgstr "Pressiona ou solta o botão direito do mouse"
 
 #. Translators: Input help mode message for scroll up at the mouse position command.
-#: globalCommands.py:338
+#: globalCommands.py:337
 msgid "Scroll up at the mouse position"
 msgstr "Rola para cima na posição do mouse"
 
 #. Translators: Input help mode message for scroll down at the mouse position command.
-#: globalCommands.py:348
+#: globalCommands.py:347
 msgid "Scroll down at the mouse position"
 msgstr "Rola para baixo na posição do mouse"
 
 #. Translators: Input help mode message for scroll left at the mouse position command.
-#: globalCommands.py:358
+#: globalCommands.py:357
 msgid "Scroll left at the mouse position"
 msgstr "Rola para a esquerda na posição do mouse"
 
 #. Translators: Input help mode message for scroll right at the mouse position command.
-#: globalCommands.py:368
+#: globalCommands.py:367
 msgid "Scroll right at the mouse position"
 msgstr "Rola para a direita na posição do mouse"
 
 #. Translators: Input help mode message for report current selection command.
-#: globalCommands.py:378
+#: globalCommands.py:377
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
 msgstr "Anuncia a seleção atual em controles de edição e documentos. Pressionada duas vezes, soletra a informação. Pressionada três vezes, soletra usando descrições de caracteres. Pressionada quatro vezes, mostra numa mensagem navegável. "
 
@@ -2601,1333 +2601,1333 @@ msgstr "Anuncia a seleção atual em controles de edição e documentos. Pressio
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
 #. For example 'hello world selected'
-#: globalCommands.py:405 speech\speech.py:1228
+#: globalCommands.py:404 speech\speech.py:1228
 #, python-format
 msgid "%s selected"
 msgstr "%s selecionado"
 
 #. Translators: Input help mode message for report date and time command.
-#: globalCommands.py:440
+#: globalCommands.py:439
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "Pressionada uma vez, anuncia a hora atual. Se pressionada duas vezes, anuncia a data atual"
 
 #. Translators: Input help mode message for set the first value in the synth ring setting.
-#: globalCommands.py:468
+#: globalCommands.py:467
 msgid "Set the first value of the current setting in the synth settings ring"
 msgstr "Define o primeiro valor da opção atual do anel de configuração de sintetizador"
 
 #. Translators: Input help mode message for set the last value in the synth ring settings.
-#: globalCommands.py:481
+#: globalCommands.py:480
 msgid "Set the last value of the current setting in the synth settings ring"
 msgstr "Define o último valor da opção atual do anel de configuração de sintetizador"
 
 #. Translators: Input help mode message for increase synth setting value command.
-#: globalCommands.py:494
+#: globalCommands.py:493
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Aumenta a configuração atualmente ativa no anel de configurações de voz"
 
 #. Translators: Input help mode message for increasing synth setting value command in larger steps.
-#: globalCommands.py:508
+#: globalCommands.py:507
 msgid "Increases the currently active setting in the synth settings ring in a larger step"
 msgstr "Aumenta a opção atualmente ativa no anel de configuração de sintetizador por um intervalo maior"
 
 #. Translators: Input help mode message for decrease synth setting value command.
-#: globalCommands.py:522
+#: globalCommands.py:521
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "Diminui a configuração atualmente ativa no anel de configurações de voz"
 
 #. Translators: Input help mode message for decreasing synth setting value command in larger steps.
-#: globalCommands.py:536
+#: globalCommands.py:535
 msgid "Decreases the currently active setting in the synth settings ring in a larger step"
 msgstr "Diminui a opção atualmente ativa no anel de configuração de sintetizador por um intervalo maior"
 
 #. Translators: Input help mode message for next synth setting command.
-#: globalCommands.py:550
+#: globalCommands.py:549
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "Vai à próxima configuração disponível no anel de configurações de voz"
 
 #. Translators: Input help mode message for previous synth setting command.
-#: globalCommands.py:564
+#: globalCommands.py:563
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Volta à configuração anterior disponível no anel de configurações de voz"
 
 #. Translators: Input help mode message for cycling the reporting of typed characters.
-#: globalCommands.py:578
+#: globalCommands.py:577
 msgid "Cycles through options for when to speak typed characters."
 msgstr "Circula pelas opções de quando falar caracteres digitados."
 
 #. Translators: Reported when the user cycles through speak typed characters modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-#: globalCommands.py:589
+#: globalCommands.py:588
 #, python-brace-format
 msgid "Speak typed characters {mode}"
 msgstr "{mode}, falar caracteres digitados"
 
 #. Translators: Input help mode message for cycling the reporting of typed words.
-#: globalCommands.py:594
+#: globalCommands.py:593
 msgid "Cycles through options for when to speak typed words."
 msgstr "Circula pelas opções de quando falar palavras digitadas."
 
 #. Translators: Reported when the user cycles through speak typed words modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-#: globalCommands.py:605
+#: globalCommands.py:604
 #, python-brace-format
 msgid "Speak typed words {mode}"
 msgstr "{mode}, falar palavras digitadas"
 
 #. Translators: Input help mode message for toggle speak command keys command.
-#: globalCommands.py:610
+#: globalCommands.py:609
 msgid "Toggles on and off the speaking of command keys"
 msgstr "Liga e desliga falar comandos digitados"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:617
+#: globalCommands.py:616
 msgid "speak command keys off"
 msgstr "não falar teclas de comando"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:621
+#: globalCommands.py:620
 msgid "speak command keys on"
 msgstr "falar teclas de comando"
 
 #. Translators: Input help mode message for toggle report font name command.
-#: globalCommands.py:627
+#: globalCommands.py:626
 msgid "Toggles on and off the reporting of font changes"
 msgstr "Liga e desliga o anúncio de mudanças de fonte"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#: globalCommands.py:633
+#: globalCommands.py:632
 msgid "report font name off"
 msgstr "desligado anunciar nome da fonte"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#: globalCommands.py:637
+#: globalCommands.py:636
 msgid "report font name on"
 msgstr "ligado anunciar nome da fonte"
 
 #. Translators: Input help mode message for toggle report font size command.
-#: globalCommands.py:643
+#: globalCommands.py:642
 msgid "Toggles on and off the reporting of font size changes"
 msgstr "Liga e desliga anunciar mudanças de tamanho da fonte"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#: globalCommands.py:649
+#: globalCommands.py:648
 msgid "report font size off"
 msgstr "desligado anunciar tamanho da fonte"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#: globalCommands.py:653
+#: globalCommands.py:652
 msgid "report font size on"
 msgstr "ligado anunciar tamanho da fonte"
 
 #. Translators: Input help mode message for toggle report font attributes command.
-#: globalCommands.py:660
+#: globalCommands.py:659
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
 msgstr "Circula o anúncio de atributos da fonte entre fala, braille, fala e braille, e desligado."
 
 #. Translators: A state in which font attributes are not reported.
-#: globalCommands.py:670
+#: globalCommands.py:669
 msgid "Do not report font attributes"
 msgstr "Não anunciar atributos da fonte"
 
 #. Translators: A state in which font attributes are only spoken.
-#: globalCommands.py:673
+#: globalCommands.py:672
 msgid "Speak font attributes"
 msgstr "Falar atributos da fonte"
 
 #. Translators: A state in which font attributes are only brailled.
-#: globalCommands.py:676
+#: globalCommands.py:675
 msgid "Braille font attributes"
 msgstr "Mostrar em braille atributos da fonte"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
-#: globalCommands.py:679
+#: globalCommands.py:678
 msgid "Speak and braille font attributes"
 msgstr "Falar e mostrar em braille atributos da fonte"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
-#: globalCommands.py:685
+#: globalCommands.py:684
 msgid "Toggles on and off the reporting of superscripts and subscripts"
 msgstr "Liga e desliga o anúncio de sobrescritos e subscritos"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#: globalCommands.py:694
+#: globalCommands.py:693
 msgid "report superscripts and subscripts on"
 msgstr "ligado o anúncio de sobrescritos e subscritos"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#: globalCommands.py:698
+#: globalCommands.py:697
 msgid "report superscripts and subscripts off"
 msgstr "desligado o anúncio de sobrescritos e subscritos"
 
 #. Translators: Input help mode message for toggle report revisions command.
-#: globalCommands.py:703
+#: globalCommands.py:702
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Liga e desliga o anúncio de revisões"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#: globalCommands.py:709
+#: globalCommands.py:708
 msgid "report revisions off"
 msgstr "desligado o anúncio de revisões"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#: globalCommands.py:713
+#: globalCommands.py:712
 msgid "report revisions on"
 msgstr "ligado o anúncio de revisões"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#: globalCommands.py:719
+#: globalCommands.py:718
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Liga e desliga o anúncio de ênfase"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#: globalCommands.py:725
+#: globalCommands.py:724
 msgid "report emphasis off"
 msgstr "desligado o anúncio de ênfase"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#: globalCommands.py:729
+#: globalCommands.py:728
 msgid "report emphasis on"
 msgstr "ligado o anúncio de ênfase"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#: globalCommands.py:735
+#: globalCommands.py:734
 msgid "Toggles on and off the reporting of highlighted text"
 msgstr "Liga e desliga o anúncio de texto destacado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#: globalCommands.py:743
+#: globalCommands.py:742
 msgid "report highlighted on"
 msgstr "ligado o anúncio de destacado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#: globalCommands.py:746
+#: globalCommands.py:745
 msgid "report highlighted off"
 msgstr "desligado o anúncio de destacado"
 
 #. Translators: Input help mode message for toggle report colors command.
-#: globalCommands.py:751
+#: globalCommands.py:750
 msgid "Toggles on and off the reporting of colors"
 msgstr "Liga e desliga o anúncio de cores"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#: globalCommands.py:757
+#: globalCommands.py:756
 msgid "report colors off"
 msgstr "desligado o anúncio de cores"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#: globalCommands.py:761
+#: globalCommands.py:760
 msgid "report colors on"
 msgstr "ligado o anúncio de cores"
 
 #. Translators: Input help mode message for toggle report alignment command.
-#: globalCommands.py:767
+#: globalCommands.py:766
 msgid "Toggles on and off the reporting of text alignment"
 msgstr "Liga e desliga o anúncio de alinhamento de texto"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#: globalCommands.py:773
+#: globalCommands.py:772
 msgid "report alignment off"
 msgstr "desligado o anúncio de alinhamento"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#: globalCommands.py:777
+#: globalCommands.py:776
 msgid "report alignment on"
 msgstr "ligado o anúncio de alinhamento"
 
 #. Translators: Input help mode message for toggle report style command.
-#: globalCommands.py:783
+#: globalCommands.py:782
 msgid "Toggles on and off the reporting of style changes"
 msgstr "Liga e desliga o anúncio de mudanças de estilo"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#: globalCommands.py:789
+#: globalCommands.py:788
 msgid "report style off"
 msgstr "desligado o anúncio de estilo"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#: globalCommands.py:793
+#: globalCommands.py:792
 msgid "report style on"
 msgstr "ligado o anúncio de estilo"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
-#: globalCommands.py:799
+#: globalCommands.py:798
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Liga e desliga o anúncio de erros ortográficos"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
-#: globalCommands.py:805
+#: globalCommands.py:804
 msgid "report spelling errors off"
 msgstr "desligado o anúncio de erros ortográficos"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
-#: globalCommands.py:809
+#: globalCommands.py:808
 msgid "report spelling errors on"
 msgstr "ligado o anúncio de erros ortográficos"
 
 #. Translators: Input help mode message for toggle report pages command.
-#: globalCommands.py:815
+#: globalCommands.py:814
 msgid "Toggles on and off the reporting of pages"
 msgstr "Liga e desliga o anúncio de páginas"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#: globalCommands.py:821
+#: globalCommands.py:820
 msgid "report pages off"
 msgstr "desligado o anúncio de páginas"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#: globalCommands.py:825
+#: globalCommands.py:824
 msgid "report pages on"
 msgstr "ligado o anúncio de páginas"
 
 #. Translators: Input help mode message for toggle report line numbers command.
-#: globalCommands.py:831
+#: globalCommands.py:830
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Liga e desliga o anúncio de números das linhas"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#: globalCommands.py:837
+#: globalCommands.py:836
 msgid "report line numbers off"
 msgstr "desligado anunciar os números das linhas"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#: globalCommands.py:841
+#: globalCommands.py:840
 msgid "report line numbers on"
 msgstr "ligado anunciar os números das linhas"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-#: globalCommands.py:847
+#: globalCommands.py:846
 msgid "Cycles through line indentation settings"
 msgstr "Alterna entre as configurações de recuo de linha"
 
 #. Translators: A message reported when cycling through line indentation settings.
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
-#: globalCommands.py:859
+#: globalCommands.py:858
 #, python-brace-format
 msgid "Report line indentation {mode}"
 msgstr "{mode}: anúncio de recuo de linha"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
-#: globalCommands.py:863
+#: globalCommands.py:862
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
 msgstr "Liga e desliga o ignorar linhas em branco ao anunciar recuo de linhas"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#: globalCommands.py:872
+#: globalCommands.py:871
 msgid "Ignore blank lines for line indentation reporting off"
 msgstr "Desligado ignorar linhas em branco ao anunciar recuo de linhas"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#: globalCommands.py:876
+#: globalCommands.py:875
 msgid "Ignore blank lines for line indentation reporting on"
 msgstr "Ligado ignorar linhas em branco ao anunciar recuo de linhas"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
-#: globalCommands.py:880
+#: globalCommands.py:879
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "Liga e desliga o anúncio de recuo de parágrafo"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#: globalCommands.py:886
+#: globalCommands.py:885
 msgid "report paragraph indentation off"
 msgstr "desligado anunciar recuo de parágrafo"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#: globalCommands.py:890
+#: globalCommands.py:889
 msgid "report paragraph indentation on"
 msgstr "ligado anunciar recuo de parágrafo"
 
 #. Translators: Input help mode message for toggle report line spacing command.
-#: globalCommands.py:896
+#: globalCommands.py:895
 msgid "Toggles on and off the reporting of line spacing"
 msgstr "Liga e desliga o anúncio de espaçamento de linhas"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#: globalCommands.py:902
+#: globalCommands.py:901
 msgid "report line spacing off"
 msgstr "desligado anunciar espaçamento de linhas"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#: globalCommands.py:906
+#: globalCommands.py:905
 msgid "report line spacing on"
 msgstr "ligado anunciar espaçamento de linhas"
 
 #. Translators: Input help mode message for toggle report tables command.
-#: globalCommands.py:912
+#: globalCommands.py:911
 msgid "Toggles on and off the reporting of tables"
 msgstr "Liga e desliga o anúncio de tabelas"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#: globalCommands.py:918
+#: globalCommands.py:917
 msgid "report tables off"
 msgstr "desligado o anúncio de tabelas"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#: globalCommands.py:922
+#: globalCommands.py:921
 msgid "report tables on"
 msgstr "ligado o anúncio de tabelas"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-#: globalCommands.py:928
+#: globalCommands.py:927
 msgid "Cycle through the possible modes to report table row and column headers"
 msgstr "Troca entre os possíveis modos de anunciar cabeçalhos de linhas e colunas em tabelas"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
-#: globalCommands.py:938
+#: globalCommands.py:937
 #, python-brace-format
 msgid "Report table headers {mode}"
 msgstr "{mode} é anunciar cabeçalhos em tabelas"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
-#: globalCommands.py:942
+#: globalCommands.py:941
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr "Liga e desliga o anúncio de coordenadas de células em tabelas"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#: globalCommands.py:948
+#: globalCommands.py:947
 msgid "report table cell coordinates off"
 msgstr "desligado anunciar coordenadas de células em tabelas"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#: globalCommands.py:952
+#: globalCommands.py:951
 msgid "report table cell coordinates on"
 msgstr "ligado anunciar coordenadas de células em tabelas"
 
 #. Translators: Input help mode message for toggle report cell borders command.
-#: globalCommands.py:958
+#: globalCommands.py:957
 msgid "Cycles through the cell border reporting settings"
 msgstr "Alterna entre as configurações de anúncio de bordas de células"
 
 #. Translators: Reported when the user cycles through report cell border modes.
 #. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
-#: globalCommands.py:968
+#: globalCommands.py:967
 #, python-brace-format
 msgid "Report cell borders {mode}"
 msgstr "{mode}: anúncio das bordas de células"
 
 #. Translators: Input help mode message for toggle report links command.
-#: globalCommands.py:972
+#: globalCommands.py:971
 msgid "Toggles on and off the reporting of links"
 msgstr "Liga e desliga o anúncio de links"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#: globalCommands.py:978
+#: globalCommands.py:977
 msgid "report links off"
 msgstr "desligado o anúncio de links"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#: globalCommands.py:982
+#: globalCommands.py:981
 msgid "report links on"
 msgstr "ligado o anúncio de links"
 
 #. Translators: Input help mode message for toggle report link type command.
-#: globalCommands.py:988
+#: globalCommands.py:987
 msgid "Toggles on and off the reporting of link type"
 msgstr "Liga e desliga o anúncio do tipo de link"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
-#: globalCommands.py:997
+#: globalCommands.py:996
 msgid "Report link type on"
 msgstr "Ligado o anúncio do tipo de link"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
-#: globalCommands.py:999
+#: globalCommands.py:998
 msgid "Report link type off"
 msgstr "Desligado o anúncio do tipo de link"
 
 #. Translators: The message announced when reporting links is disabled,
 #. and the user tries to toggle the report link type document formatting setting.
-#: globalCommands.py:1004
+#: globalCommands.py:1003
 msgid "The report links setting must be enabled to toggle report link type"
 msgstr "A opção de anunciar links tem que estar habilitada para alternar o anúncio do tipo de link"
 
 #. Translators: Input help mode message for toggle report graphics command.
-#: globalCommands.py:1008
+#: globalCommands.py:1007
 msgid "Toggles on and off the reporting of graphics"
 msgstr "Liga e desliga o anúncio de gráficos"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
-#: globalCommands.py:1014
+#: globalCommands.py:1013
 msgid "report graphics off"
 msgstr "desligado o anúncio de gráficos"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
-#: globalCommands.py:1018
+#: globalCommands.py:1017
 msgid "report graphics on"
 msgstr "ligado o anúncio de gráficos"
 
 #. Translators: Input help mode message for toggle report comments command.
-#: globalCommands.py:1024
+#: globalCommands.py:1023
 msgid "Toggles on and off the reporting of comments"
 msgstr "Liga e desliga o anúncio de comentários"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#: globalCommands.py:1030
+#: globalCommands.py:1029
 msgid "report comments off"
 msgstr "desligado o anúncio de comentários"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#: globalCommands.py:1034
+#: globalCommands.py:1033
 msgid "report comments on"
 msgstr "ligado o anúncio de comentários"
 
 #. Translators: Input help mode message for toggle report lists command.
-#: globalCommands.py:1040
+#: globalCommands.py:1039
 msgid "Toggles on and off the reporting of lists"
 msgstr "Liga e desliga o anúncio de listas"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#: globalCommands.py:1046
+#: globalCommands.py:1045
 msgid "report lists off"
 msgstr "desligado o anúncio de listas"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#: globalCommands.py:1050
+#: globalCommands.py:1049
 msgid "report lists on"
 msgstr "ligado o anúncio de listas"
 
 #. Translators: Input help mode message for toggle report headings command.
-#: globalCommands.py:1056
+#: globalCommands.py:1055
 msgid "Toggles on and off the reporting of headings"
 msgstr "Liga e desliga o anúncio de títulos"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#: globalCommands.py:1062
+#: globalCommands.py:1061
 msgid "report headings off"
 msgstr "desligado o anúncio de títulos"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#: globalCommands.py:1066
+#: globalCommands.py:1065
 msgid "report headings on"
 msgstr "ligado o anúncio de títulos"
 
 #. Translators: Input help mode message for toggle report groupings command.
-#: globalCommands.py:1072
+#: globalCommands.py:1071
 msgid "Toggles on and off the reporting of groupings"
 msgstr "Liga e desliga o anúncio de agrupamentos"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1078
+#: globalCommands.py:1077
 msgid "report groupings off"
 msgstr "desligado o anúncio de agrupamentos"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1082
+#: globalCommands.py:1081
 msgid "report groupings on"
 msgstr "ligado o anúncio de agrupamentos"
 
 #. Translators: Input help mode message for toggle report block quotes command.
-#: globalCommands.py:1088
+#: globalCommands.py:1087
 msgid "Toggles on and off the reporting of block quotes"
 msgstr "Liga e desliga o anúncio de blocos de citação"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1094
+#: globalCommands.py:1093
 msgid "report block quotes off"
 msgstr "desligado anunciar blocos de citação"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1098
+#: globalCommands.py:1097
 msgid "report block quotes on"
 msgstr "ligado anunciar blocos de citação"
 
 #. Translators: Input help mode message for toggle report landmarks command.
-#: globalCommands.py:1104
+#: globalCommands.py:1103
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Liga e desliga o anúncio de marcos"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#: globalCommands.py:1110
+#: globalCommands.py:1109
 msgid "report landmarks and regions off"
 msgstr "desligado o anúncio de marcos e regiões"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#: globalCommands.py:1114
+#: globalCommands.py:1113
 msgid "report landmarks and regions on"
 msgstr "ligado o anúncio de marcos e regiões"
 
 #. Translators: Input help mode message for toggle report articles command.
-#: globalCommands.py:1120
+#: globalCommands.py:1119
 msgid "Toggles on and off the reporting of articles"
 msgstr "Liga e desliga o anúncio de artigos"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#: globalCommands.py:1126
+#: globalCommands.py:1125
 msgid "report articles off"
 msgstr "desligado o anúncio de artigos"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#: globalCommands.py:1130
+#: globalCommands.py:1129
 msgid "report articles on"
 msgstr "ligado o anúncio de artigos"
 
 #. Translators: Input help mode message for toggle report frames command.
-#: globalCommands.py:1136
+#: globalCommands.py:1135
 msgid "Toggles on and off the reporting of frames"
 msgstr "Liga e desliga o anúncio de frames"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#: globalCommands.py:1142
+#: globalCommands.py:1141
 msgid "report frames off"
 msgstr "desligado o anúncio de frames"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#: globalCommands.py:1146
+#: globalCommands.py:1145
 msgid "report frames on"
 msgstr "ligado o anúncio de frames"
 
 #. Translators: Input help mode message for toggle report if clickable command.
-#: globalCommands.py:1152
+#: globalCommands.py:1151
 msgid "Toggles on and off reporting if clickable"
 msgstr "Liga e desliga anunciar quando clicável"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#: globalCommands.py:1158
+#: globalCommands.py:1157
 msgid "report if clickable off"
 msgstr "desligado anunciar quando clicável"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#: globalCommands.py:1162
+#: globalCommands.py:1161
 msgid "report if clickable on"
 msgstr "ligado anunciar quando clicável"
 
 #. Translators: Input help mode message for toggle report figures and captions command.
-#: globalCommands.py:1168
+#: globalCommands.py:1167
 msgid "Toggles on and off the reporting of figures and captions"
 msgstr "Liga e desliga o anúncio de figuras e legendas"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
-#: globalCommands.py:1175
+#: globalCommands.py:1174
 msgid "report figures and captions off"
 msgstr "desligado o anúncio de figuras e legendas"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
-#: globalCommands.py:1180
+#: globalCommands.py:1179
 msgid "report figures and captions on"
 msgstr "ligado o anúncio de figuras e legendas"
 
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
-#: globalCommands.py:1187
+#: globalCommands.py:1186
 msgid "Cycles through the possible choices for automatic language switching: off, language only and language and dialect."
 msgstr "Alterna entre as escolhas possíveis para mudança automática de idioma: desligada, somente idioma e idioma e dialeto."
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1196
+#: globalCommands.py:1195
 msgid "Automatic language switching off"
 msgstr "Desligada alternância automática de idioma"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1201
+#: globalCommands.py:1200
 msgid "Automatic language and dialect switching on"
 msgstr "Ligada alternância automática de idioma e dialeto"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1205
+#: globalCommands.py:1204
 msgid "Automatic language switching on"
 msgstr "Ligada alternância automática de idioma"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
-#: globalCommands.py:1212
+#: globalCommands.py:1211
 msgid "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "Circula entre os graus de pontuação que determinam quais símbolos são falados"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#: globalCommands.py:1228
+#: globalCommands.py:1227
 #, python-format
 msgid "Symbol level %s"
 msgstr "Grau de símbolos %s"
 
 #. Translators: Input help mode message for toggle delayed character description command.
-#: globalCommands.py:1232
+#: globalCommands.py:1231
 msgid "Toggles on and off delayed descriptions for characters on cursor movement"
 msgstr "Liga e desliga descrições de caracteres com atraso ao movimentar cursor"
 
 #. Translators: The message announced when toggling the delayed character description setting.
-#: globalCommands.py:1240
+#: globalCommands.py:1239
 msgid "delayed character descriptions on"
 msgstr "ligado descrições de caracteres com atraso"
 
 #. Translators: The message announced when toggling the delayed character description setting.
-#: globalCommands.py:1243
+#: globalCommands.py:1242
 msgid "delayed character descriptions off"
 msgstr "desligado descrições de caracteres com atraso"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
-#: globalCommands.py:1248
+#: globalCommands.py:1247
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Move o ponteiro do mouse para o atual objeto de navegação"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:1282
+#: globalCommands.py:1281
 msgid "Object has no location"
 msgstr "Objeto não possui local"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
-#: globalCommands.py:1294
+#: globalCommands.py:1293
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "Coloca como objeto de navegação aquele atualmente sob o ponteiro do mouse e o fala"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-#: globalCommands.py:1301
+#: globalCommands.py:1300
 msgid "Move navigator object to mouse"
 msgstr "Mover objeto de navegação para mouse"
 
 #. Translators: Script help message for next review mode command.
-#: globalCommands.py:1316
+#: globalCommands.py:1315
 msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
 msgstr "Alterna para o próximo modo de exploração (que pode ser do objeto, do documento ou da tela) e posiciona a exploração onde está o objeto de navegação"
 
 #. Translators: reported when there are no other available review modes for this object
-#: globalCommands.py:1332
+#: globalCommands.py:1331
 msgid "No next review mode"
 msgstr "Sem modo de exploração seguinte"
 
 #. Translators: Script help message for previous review mode command.
-#: globalCommands.py:1337
+#: globalCommands.py:1336
 msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
 msgstr "Alterna para o modo de exploração anterior (que pode ser do objeto, do documento ou da tela) e posiciona a exploração onde está o objeto de navegação"
 
 #. Translators: reported when there are no other available review modes for this object
-#: globalCommands.py:1353
+#: globalCommands.py:1352
 msgid "No previous review mode"
 msgstr "Sem modo de exploração anterior"
 
 #. Translators: Input help mode message for toggle simple review mode command.
-#: globalCommands.py:1357
+#: globalCommands.py:1356
 msgid "Toggles simple review mode on and off"
 msgstr "Liga e desliga o modo simples de exploração"
 
 #. Translators: The message announced when toggling simple review mode.
-#: globalCommands.py:1363
+#: globalCommands.py:1362
 msgid "Simple review mode off"
 msgstr "Desligado modo simples de exploração"
 
 #. Translators: The message announced when toggling simple review mode.
-#: globalCommands.py:1367
+#: globalCommands.py:1366
 msgid "Simple review mode on"
 msgstr "Ligado modo simples de exploração"
 
 #. Translators: Input help mode message for report current navigator object command.
-#: globalCommands.py:1374
+#: globalCommands.py:1373
 msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
 msgstr "Anuncia o objeto de navegação atual; pressionar duas vezes soletra a informação e três vezes copia nome e valor do objeto para a área de transferência"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:1387 globalCommands.py:1610 globalCommands.py:1641
-#: globalCommands.py:1670 globalCommands.py:1700
+#: globalCommands.py:1386 globalCommands.py:1609 globalCommands.py:1640
+#: globalCommands.py:1669 globalCommands.py:1699
 msgid "No navigator object"
 msgstr "Sem objeto de navegação"
 
 #. Translators: message when there is no location information
-#: globalCommands.py:1439
+#: globalCommands.py:1438
 msgid "No location information"
 msgstr "Sem informações de local"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. review cursor, falling back to the location of navigator object if needed.
-#: globalCommands.py:1445
+#: globalCommands.py:1444
 msgid "Reports information about the location of the text at the review cursor, or location of the navigator object if there is no text under review cursor."
 msgstr "Anuncia informações sobre o local do texto sob o cursor de exploração, ou local do objeto de navegação se não houver texto sob o cursor de exploração."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
-#: globalCommands.py:1457
+#: globalCommands.py:1456
 msgid "Reports information about the location of the current navigator object."
 msgstr "Anuncia informações sobre o local do objeto de navegação atual."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
-#: globalCommands.py:1469
+#: globalCommands.py:1468
 msgid "Reports information about the location of the text at the caret, or location of the currently focused object if there is no caret."
 msgstr "Anuncia informações sobre o local do texto sob o cursor do sistema, ou local do objeto atualmente com foco se não houver cursor do sistema."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
-#: globalCommands.py:1484
+#: globalCommands.py:1483
 msgid "Reports information about the location of the currently focused object."
 msgstr "Anuncia informações sobre o local do objeto atualmente com foco."
 
 #. Translators: Description for report review cursor location command.
-#: globalCommands.py:1495
+#: globalCommands.py:1494
 msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
 msgstr "Anuncia informações sobre o local do texto ou objeto sob o cursor de exploração. Ao pressionar duas vezes pode-se obter mais detalhes."
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
-#: globalCommands.py:1513
+#: globalCommands.py:1512
 msgid "Reports information about the location of the text or object at the position of system caret. Pressing twice may provide further detail."
 msgstr "Anuncia informações sobre o local do texto ou objeto na posição do cursor do sistema. Ao pressionar duas vezes pode-se obter mais detalhes."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
-#: globalCommands.py:1529
+#: globalCommands.py:1528
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
 msgstr "Coloca como objeto de navegação aquele atualmente com foco e, se possível, coloca o cursor de exploração na posição do cursor dentro desse objeto."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-#: globalCommands.py:1549
+#: globalCommands.py:1548
 msgid "Move to focus"
 msgstr "Mover para o foco"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-#: globalCommands.py:1555
+#: globalCommands.py:1554
 msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
 msgstr "Pressionada uma vez, coloca o foco do teclado no objeto de navegação; pressionada duas vezes, coloca o cursor do sistema na posição do cursor de exploração"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-#: globalCommands.py:1567 globalCommands.py:2827
+#: globalCommands.py:1566 globalCommands.py:2825
 msgid "No focus"
 msgstr "Sem foco"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-#: globalCommands.py:1571
+#: globalCommands.py:1570
 msgid "Move focus"
 msgstr "Mover foco"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 #. Translators: Reported when there is no caret.
-#: globalCommands.py:1593 globalCommands.py:2629
+#: globalCommands.py:1592 globalCommands.py:2627
 msgid "No caret"
 msgstr "Sem cursor"
 
 #. Translators: Input help mode message for move to parent object command.
-#: globalCommands.py:1601
+#: globalCommands.py:1600
 msgid "Moves the navigator object to the object containing it"
 msgstr "Coloca como objeto de navegação o pai do atual"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-#: globalCommands.py:1617
+#: globalCommands.py:1616
 msgid "No containing object"
 msgstr "Sem objeto pai"
 
 #. Translators: Input help mode message for move to next object command.
-#: globalCommands.py:1632
+#: globalCommands.py:1631
 msgid "Moves the navigator object to the next object"
 msgstr "Coloca como objeto de navegação o próximo"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
-#: globalCommands.py:1647 globalCommands.py:4428
+#: globalCommands.py:1646 globalCommands.py:4426
 msgid "No next"
 msgstr "Último"
 
 #. Translators: Input help mode message for move to previous object command.
-#: globalCommands.py:1662
+#: globalCommands.py:1661
 msgid "Moves the navigator object to the previous object"
 msgstr "Coloca como objeto de navegação o anterior"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
-#: globalCommands.py:1676 globalCommands.py:4462
+#: globalCommands.py:1675 globalCommands.py:4460
 msgid "No previous"
 msgstr "Primeiro"
 
 #. Translators: Input help mode message for move to first child object command.
-#: globalCommands.py:1691
+#: globalCommands.py:1690
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Coloca como objeto de navegação o primeiro filho do atual"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
-#: globalCommands.py:1707
+#: globalCommands.py:1706
 msgid "No objects inside"
 msgstr "Sem objetos filhos"
 
 #. Translators: Input help mode message for activate current object command.
-#: globalCommands.py:1723
+#: globalCommands.py:1722
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "Executa a ação padrão do objeto atual de navegação Por (exemplo: pressiona se for um botão)."
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
-#: globalCommands.py:1770
+#: globalCommands.py:1769
 msgid "No action"
 msgstr "Sem ação"
 
 #. Translators: Input help mode message for move review cursor to top line command.
-#: globalCommands.py:1775
+#: globalCommands.py:1774
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a primeira linha do objeto atual de navegação e a lê"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
-#: globalCommands.py:1800
+#: globalCommands.py:1799
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a linha anterior do objeto atual de navegação e a lê"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
 #. output pane while there is no previous result.
-#: globalCommands.py:1813 globalCommands.py:1919 globalCommands.py:2011
+#: globalCommands.py:1812 globalCommands.py:1918 globalCommands.py:2010
 #: appModules\nvda.py:137
 msgid "Top"
 msgstr "Tôpo"
 
 #. Translators: Input help mode message for read current line under review cursor command.
-#: globalCommands.py:1834
+#: globalCommands.py:1833
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
 msgstr "Anuncia a linha do objeto de navegação onde se encontra o cursor de exploração; se pressionada duas vezes, soletra a linha; pressionada três vezes soletra a linha usando descrições de caracteres."
 
 #. Translators: Input help mode message for move review cursor to next line command.
-#: globalCommands.py:1862
+#: globalCommands.py:1861
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a próxima linha do objeto atual de navegação e a lê"
 
 #. Translators: Input help mode message for move review cursor to previous page command.
-#: globalCommands.py:1901
+#: globalCommands.py:1900
 msgid "Moves the review cursor to the previous page of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a página anterior do objeto atual de navegação e fala a mesma"
 
 #. Translators: a message reported when movement by page is unsupported
-#: globalCommands.py:1915 globalCommands.py:1951
+#: globalCommands.py:1914 globalCommands.py:1950
 msgid "Movement by page not supported"
 msgstr "Não suportado movimento por página"
 
 #. Translators: Input help mode message for move review cursor to next page command.
-#: globalCommands.py:1935
+#: globalCommands.py:1934
 msgid "Moves the review cursor to the next page of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a próxima página do objeto atual de navegação e fala a mesma"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
-#: globalCommands.py:1974
+#: globalCommands.py:1973
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a última linha do objeto atual de navegação e a anuncia"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
-#: globalCommands.py:1999
+#: globalCommands.py:1998
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a palavra anterior do objeto atual de navegação e a lê"
 
 #. Translators: Input help mode message for report current word under review cursor command.
-#: globalCommands.py:2032
+#: globalCommands.py:2031
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
 msgstr "Fala a palavra do objeto de navegação atual onde se encontra o cursor de exploração. Ao pressionar duas vezes, soletra a palavra. Ao pressionar três vezes, soletra usando descrições de caracteres"
 
 #. Translators: Input help mode message for move review cursor to next word command.
-#: globalCommands.py:2061
+#: globalCommands.py:2060
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para a próxima palavra do objeto atual de navegação e a lê"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
-#: globalCommands.py:2099
+#: globalCommands.py:2098
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para o primeiro caractere da linha onde este está situado dentro do objeto atual de navegação e o anuncia"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
-#: globalCommands.py:2128
+#: globalCommands.py:2127
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para o caractere anterior do objeto atual de navegação e o lê"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-#: globalCommands.py:2142
+#: globalCommands.py:2141
 msgid "Left"
 msgstr "Esquerda"
 
 #. Translators: Input help mode message for report current character under review cursor command.
-#: globalCommands.py:2165
+#: globalCommands.py:2164
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 msgstr "Anuncia o caractere do objeto de navegação atual onde se encontra o cursor de exploração. Ao pressionar duas vezes, dá uma descrição ou um exemplo do caractere. Ao pressionar três vezes, anuncia o valor numérico decimal e hexadecimal do caractere"
 
 #. Translators: Input help mode message for move review cursor to next character command.
-#: globalCommands.py:2213
+#: globalCommands.py:2212
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para o próximo caractere do objeto atual de navegação e o lê"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-#: globalCommands.py:2227
+#: globalCommands.py:2226
 msgid "Right"
 msgstr "Direita"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
-#: globalCommands.py:2250
+#: globalCommands.py:2249
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Move o cursor de exploração para o último caractere da linha onde este está situado dentro do objeto atual de navegação e o anuncia"
 
 #. Translators: Input help mode message for move review cursor to start of selection command.
-#: globalCommands.py:2279
+#: globalCommands.py:2278
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
 msgstr "Moves o cursor de exploração para o primeiro caractere da seleção e o fala"
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
-#: globalCommands.py:2307
+#: globalCommands.py:2306
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
 msgstr "Moves o cursor de exploração para o último caractere da seleção e o fala"
 
 #. Translators: Input help mode message for Review Current Symbol command.
-#: globalCommands.py:2346
+#: globalCommands.py:2342
 msgid "Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"
 msgstr "Anuncia o símbolo no qual o cursor de exploração está posicionado. Pressionado duas vezes, mostra o símbolo e o texto usado para falá-lo no modo de navegação"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
-#: globalCommands.py:2360
+#: globalCommands.py:2358
 msgid "No symbol replacement"
 msgstr "Nenhum símbolo substituto"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
-#: globalCommands.py:2367
+#: globalCommands.py:2365
 msgid "Character: {}\n"
 "Replacement: {}"
 msgstr "Caractere: {}\n"
 "Substituto: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
-#: globalCommands.py:2370
+#: globalCommands.py:2368
 msgid "Expanded symbol ({})"
 msgstr "Símbolo expandido ({})"
 
 #. Translators: Input help mode message for cycle speech mode command.
-#: globalCommands.py:2376
+#: globalCommands.py:2374
 msgid "Cycles between speech modes."
 msgstr "Alterna entre modos de fala."
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
-#: globalCommands.py:2399
+#: globalCommands.py:2397
 #, python-brace-format
 msgid "Speech mode {mode}"
 msgstr "{mode}, modo de fala"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-#: globalCommands.py:2406
+#: globalCommands.py:2404
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
 msgstr "Moves o foco para fora do objeto embutido atual e deixa dentro do documento que o contém"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#: globalCommands.py:2431 NVDAObjects\window\_msOfficeChart.py:634
+#: globalCommands.py:2429 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "Alterna entre o modo de navegação e o modo de foco. No modo de foco as teclas vão direto para o aplicativo, o que lhe possibilita interagir com o controle diretamente. No modo de navegação você pode percorrer o documento usando setas, teclas rápidas de navegação, etc."
 
 #. Translators: Input help mode message for quit NVDA command.
-#: globalCommands.py:2481
+#: globalCommands.py:2479
 msgid "Quits NVDA!"
 msgstr "Sai do NVDA!"
 
 #. Translators: Input help mode message for restart NVDA command.
-#: globalCommands.py:2489
+#: globalCommands.py:2487
 msgid "Restarts NVDA!"
 msgstr "Reinicia o NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
-#: globalCommands.py:2496
+#: globalCommands.py:2494
 msgid "Shows the NVDA menu"
 msgstr "Exibe o menu do NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#: globalCommands.py:2506
+#: globalCommands.py:2504
 msgid "Reads from the review cursor up to the end of the current text, moving the review cursor as it goes"
 msgstr "Lê a partir do cursor de exploração até o fim do texto atual, movendo o cursor de exploração conforme a leitura"
 
 #. Translators: Input help mode message for say all with system caret command.
-#: globalCommands.py:2520
+#: globalCommands.py:2518
 msgid "Reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "Lê a partir do cursor do sistema até o fim do texto, movendo o cursor de modo que ele acompanhe a leitura"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
-#: globalCommands.py:2581 globalCommands.py:2592 globalCommands.py:4115
+#: globalCommands.py:2579 globalCommands.py:2590 globalCommands.py:4113
 msgid "No formatting information"
 msgstr "Sem informações de formatação"
 
 #. Translators: title for formatting information dialog.
-#: globalCommands.py:2601
+#: globalCommands.py:2599
 msgid "Formatting"
 msgstr "Formatação"
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2633
+#: globalCommands.py:2631
 msgid "Reports formatting info for the current review cursor position."
 msgstr "Anuncia informações de formatação na posição atual do cursor de exploração."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
-#: globalCommands.py:2642
+#: globalCommands.py:2640
 msgid "Presents, in browse mode, formatting info for the current review cursor position."
 msgstr "Apresenta, em modo de navegação, informações de formatação na posição atual do cursor de exploração."
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2651
+#: globalCommands.py:2649
 msgid "Reports formatting info for the current review cursor position. If pressed twice, presents the information in browse mode"
 msgstr "Anuncia informações de formatação na posição atual do cursor de exploração. Se pressionada duas vezes, apresenta a informação em modo de navegação"
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2667
+#: globalCommands.py:2665
 msgid "Reports formatting info for the text under the caret."
 msgstr "Anuncia informações de formatação do texto sob o cursor."
 
 #. Translators: Input help mode message for show formatting at caret position command.
-#: globalCommands.py:2676
+#: globalCommands.py:2674
 msgid "Presents, in browse mode, formatting info for the text under the caret."
 msgstr "Apresenta, em modo de navegação, informações de formatação do texto sob o cursor."
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2685
+#: globalCommands.py:2683
 msgid "Reports formatting info for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Anuncia informações de formatação do texto sob o cursor. Se pressionada duas vezes, apresenta a informação em modo de navegação"
 
 #. Translators: the description for the reportDetailsSummary script.
-#: globalCommands.py:2751
+#: globalCommands.py:2749
 msgid "Report summary of any annotation details at the system caret."
 msgstr "Anunciar um resumo de quaisquer detalhes da anotação sob o cursor do sistema."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
-#: globalCommands.py:2769
+#: globalCommands.py:2767
 msgid "No additional details"
 msgstr "Sem mais detalhes"
 
 #. Translators: Input help mode message for report current focus command.
-#: globalCommands.py:2813
+#: globalCommands.py:2811
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
 msgstr "Anuncia o objeto com foco. Se pressionada duas vezes, soletra a informação. Pressionada três vezes soletra usando descrições de caracteres."
 
 #. Translators: Reported when there is no status line for the current program or window.
-#: globalCommands.py:2889
+#: globalCommands.py:2887
 msgid "No status line found"
 msgstr "Linha de status não achada"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
-#: globalCommands.py:2898
+#: globalCommands.py:2896
 msgid "Reads the current application status bar."
 msgstr "Lê a barra de status do aplicativo atual."
 
 #. Translators: Reported when status line exist, but is empty.
-#: globalCommands.py:2909 globalCommands.py:2927 globalCommands.py:2961
+#: globalCommands.py:2907 globalCommands.py:2925 globalCommands.py:2959
 msgid "no status bar information"
 msgstr "sem informações na barra de status"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
-#: globalCommands.py:2916
+#: globalCommands.py:2914
 msgid "Spells the current application status bar."
 msgstr "Soletra a barra de status do aplicativo atual."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
-#: globalCommands.py:2934
+#: globalCommands.py:2932
 msgid "Copies content of the status bar  of current application to the clipboard."
 msgstr "Copia o conteúdo da barra de status do aplicativo atual para a área de transferência."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
-#: globalCommands.py:2944
+#: globalCommands.py:2942
 msgid "Unable to copy status bar content to clipboard"
 msgstr "Impossível copiar o conteúdo da barra de status para a área de transferência"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
-#: globalCommands.py:2951
+#: globalCommands.py:2949
 msgid "Reads the current application status bar and moves navigator object into it."
 msgstr "Lê a barra de status do aplicativo atual e move o objeto de navegação para ela."
 
 #. Translators: Input help mode message for report status line text command.
-#: globalCommands.py:2968
+#: globalCommands.py:2966
 msgid "Reads the current application status bar. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
 msgstr "Lê a barra de status do aplicativo atual. Se pressionada duas vezes, soletra a informação. Se pressionada três vezes, copia a barra de status para a área de transferência"
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
-#: globalCommands.py:2992
+#: globalCommands.py:2990
 msgid "Reports the shortcut key of the currently focused object"
 msgstr "Anuncia a tecla de atalho do objeto atualmente focado"
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
-#: globalCommands.py:3007
+#: globalCommands.py:3005
 msgid "No shortcut key"
 msgstr "Sem tecla de atalho"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
-#: globalCommands.py:3011
+#: globalCommands.py:3009
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna o anúncio de informações conforme o mouse é movido"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3018
+#: globalCommands.py:3016
 msgid "Mouse tracking off"
 msgstr "Desligado rastreamento do mouse"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3022
+#: globalCommands.py:3020
 msgid "Mouse tracking on"
 msgstr "Ligado rastreamento do mouse"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
-#: globalCommands.py:3028
+#: globalCommands.py:3026
 msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr "Alterna como uma grande quantidade de texto é falada quando o mouse se move"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
-#: globalCommands.py:3045
+#: globalCommands.py:3043
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "Resolução de unidade de texto do mouse %s"
 
 #. Translators: Input help mode message for report title bar command.
-#: globalCommands.py:3050
+#: globalCommands.py:3048
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
 msgstr "Anuncia o título do aplicativo atual ou janela em primeiro plano. Se pressionada duas vezes, soletra o título. Se pressionada três vezes, copia-o para a área de transferência"
 
 #. Translators: Reported when there is no title text for current program or window.
-#: globalCommands.py:3071
+#: globalCommands.py:3069
 msgid "No title"
 msgstr "Sem título"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#: globalCommands.py:3082
+#: globalCommands.py:3080
 msgid "Reads all controls in the active window"
 msgstr "Lê todos os controles da janela atual"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
-#: globalCommands.py:3104
+#: globalCommands.py:3102
 msgid "Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
 msgstr "Abre a ferramenta de inspeção da GUI do WX. Usada para obter mais informações sobre o estado dos componentes da GUI."
 
 #. Translators: Input help mode message for developer info for current navigator object command,
 #. used by developers to examine technical info on navigator object.
 #. This command also serves as a shortcut to open NVDA log viewer.
-#: globalCommands.py:3119
+#: globalCommands.py:3117
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Registra informações úteis para desenvolvedores sobre o objeto de navegação atual e ativa o visualizador de log para que as mesmas possam ser examinadas."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
-#: globalCommands.py:3140
+#: globalCommands.py:3138
 msgid "Mark the current end of the log as the start of the fragment to be copied to clipboard by pressing again."
 msgstr "Marca o fim atual do log como início do gragmento a ser copiado para área de transferência ao pressionar de novo."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
-#: globalCommands.py:3152
+#: globalCommands.py:3150
 msgid "Log fragment start position marked, press again to copy to clipboard"
 msgstr "Marcada posição de início do fragmento de log; pressione novamente para copiar para área de transferência"
 
 #. Translators: Message when failed to mark the start of a
 #. fragment of the log file for later copy to clipboard
-#: globalCommands.py:3156
+#: globalCommands.py:3154
 msgid "Unable to mark log position"
 msgstr "Não é possível marcar posição de log"
 
 #. Translators: Message when attempting to copy an empty fragment of the log file
-#: globalCommands.py:3161
+#: globalCommands.py:3159
 msgid "No new log entry to copy"
 msgstr "Nenhuma entrada nova de log a copiar"
 
 #. Translators: Message when a fragment of the log file has been
 #. copied to clipboard
-#: globalCommands.py:3166
+#: globalCommands.py:3164
 msgid "Log fragment copied to clipboard"
 msgstr "Fragmento do log  copiado para área de transferência"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
 #. Translators: Presented when unable to copy to the clipboard because of an error
 #. or the clipboard content did not match what was just copied.
-#: globalCommands.py:3169 ui.py:299
+#: globalCommands.py:3167 ui.py:299
 msgid "Unable to copy"
 msgstr "Não consegui copiar"
 
 #. Translators: Input help mode message for Open user configuration directory command.
-#: globalCommands.py:3173
+#: globalCommands.py:3171
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Abre o diretório de configurações do NVDA para o usuário atual."
 
 #. Translators: Input help mode message for toggle progress bar output command.
-#: globalCommands.py:3183
+#: globalCommands.py:3181
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Alterna entre bipes, fala, bipes e fala, e desativado, para o anúncio das atualizações em barras de progresso"
 
 #. Translators: A mode where no progress bar updates are given.
-#: globalCommands.py:3193
+#: globalCommands.py:3191
 msgid "No progress bar updates"
 msgstr "Sem atualizações de barras de progresso"
 
 #. Translators: A mode where progress bar updates will be spoken.
-#: globalCommands.py:3197
+#: globalCommands.py:3195
 msgid "Speak progress bar updates"
 msgstr "Falar em atualizações de barras de progresso"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-#: globalCommands.py:3201
+#: globalCommands.py:3199
 msgid "Beep for progress bar updates"
 msgstr "Bipar em atualizações de barras de progresso"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-#: globalCommands.py:3205
+#: globalCommands.py:3203
 msgid "Beep and speak progress bar updates"
 msgstr "Bipar e falar em atualizações de barras de progresso"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
-#: globalCommands.py:3211
+#: globalCommands.py:3209
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Liga e desliga leitura de atualizações em conteúdo dinâmico, como por exemplo novos textos em janelas de console DOS"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3220
+#: globalCommands.py:3218
 msgid "report dynamic content changes off"
 msgstr "não anunciar atualizações em conteúdos dinâmicos"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3224
+#: globalCommands.py:3222
 msgid "report dynamic content changes on"
 msgstr "anunciar atualizações em conteúdos dinâmicos"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
-#: globalCommands.py:3230
+#: globalCommands.py:3228
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Liga e desliga o movimento do cursor de exploração conforme se move o cursor do sistema."
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3237
+#: globalCommands.py:3235
 msgid "caret moves review cursor off"
 msgstr "cursor do sistema não move o cursor de exploração"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3241
+#: globalCommands.py:3239
 msgid "caret moves review cursor on"
 msgstr "cursor do sistema move o cursor de exploração"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
-#: globalCommands.py:3247
+#: globalCommands.py:3245
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3254
+#: globalCommands.py:3252
 msgid "focus moves navigator object off"
 msgstr "foco não move o objeto de navegação"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3258
+#: globalCommands.py:3256
 msgid "focus moves navigator object on"
 msgstr "foco move o objeto de navegação"
 
 #. Translators: Input help mode message for report battery status command.
-#: globalCommands.py:3265
+#: globalCommands.py:3263
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "Anuncia a carga da bateria e o tempo restante caso o cabo de força não esteja plugado"
 
 #. Translators: Input help mode message for pass next key through command.
-#: globalCommands.py:3276
+#: globalCommands.py:3274
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "A próxima tecla pressionada não será processada pelo NVDA; será enviada diretamente ao Windows."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-#: globalCommands.py:3285
+#: globalCommands.py:3283
 msgid "Pass next key through"
 msgstr "Passar a próxima tecla"
 
 #. Translators: Input help mode message for report current program name and app module name command.
-#: globalCommands.py:3290
+#: globalCommands.py:3288
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Fala o nome do executável do aplicativo atualmente executando, bem como o nome do módulo de aplicativo atualmente carregado"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
-#: globalCommands.py:3303
+#: globalCommands.py:3301
 #, python-format
 msgid " %s module is loaded. "
 msgstr " módulo %s carregado. "
@@ -3935,381 +3935,381 @@ msgstr " módulo %s carregado. "
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
-#: globalCommands.py:3308
+#: globalCommands.py:3306
 #, python-format
 msgid " %s is currently running."
 msgstr " %s atualmente executando."
 
 #. Translators: Input help mode message for go to general settings command.
-#: globalCommands.py:3313
+#: globalCommands.py:3311
 msgid "Shows NVDA's general settings"
 msgstr "Exibe as configurações gerais do NVDA"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#: globalCommands.py:3323
+#: globalCommands.py:3321
 msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "Exibe o diálogo para seleção de sintetizador do NVDA"
 
 #. Translators: Input help mode message for go to speech settings command.
-#: globalCommands.py:3333
+#: globalCommands.py:3331
 msgid "Shows NVDA's speech settings"
 msgstr "Exibe as configurações de fala do NVDA"
 
 #. Translators: Input help mode message for go to select braille display command.
-#: globalCommands.py:3343
+#: globalCommands.py:3341
 msgid "Shows the NVDA braille display selection dialog"
 msgstr "Exibe o diálogo para seleção de linha braille do NVDA"
 
 #. Translators: Input help mode message for go to braille settings command.
-#: globalCommands.py:3353
+#: globalCommands.py:3351
 msgid "Shows NVDA's braille settings"
 msgstr "Exibe as configurações de braille do NVDA"
 
 #. Translators: Input help mode message for go to audio settings command.
-#: globalCommands.py:3362
+#: globalCommands.py:3360
 msgid "Shows NVDA's audio settings"
 msgstr "Mostra as configurações de áudio do NVDA"
 
 #. Translators: Input help mode message for go to vision settings command.
-#: globalCommands.py:3372
+#: globalCommands.py:3370
 msgid "Shows NVDA's vision settings"
 msgstr ""
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#: globalCommands.py:3381
+#: globalCommands.py:3379
 msgid "Shows NVDA's keyboard settings"
 msgstr "Exibe as configurações de teclado do NVDA"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#: globalCommands.py:3391
+#: globalCommands.py:3389
 msgid "Shows NVDA's mouse settings"
 msgstr "Exibe as configurações de mouse do NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#: globalCommands.py:3401
+#: globalCommands.py:3399
 msgid "Shows NVDA's review cursor settings"
 msgstr "Exibe as configurações do cursor de exploração do NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#: globalCommands.py:3410
+#: globalCommands.py:3408
 msgid "Shows NVDA's input composition settings"
 msgstr "Exibe as configurações de entrada para composição do NVDA"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#: globalCommands.py:3419
+#: globalCommands.py:3417
 msgid "Shows NVDA's object presentation settings"
 msgstr "Exibe as configurações para apresentação de objetos no NVDA"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#: globalCommands.py:3429
+#: globalCommands.py:3427
 msgid "Shows NVDA's browse mode settings"
 msgstr "Exibe as configurações do modo de navegação do NVDA"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#: globalCommands.py:3439
+#: globalCommands.py:3437
 msgid "Shows NVDA's document formatting settings"
 msgstr "Exibe as configurações para formatação de documentos no NVDA"
 
 #. Translators: Input help mode message for go to Remote Access settings command.
-#: globalCommands.py:3449
+#: globalCommands.py:3447
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
 msgstr "Mostra as configurações do Acesso Remoto"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
-#: globalCommands.py:3458
+#: globalCommands.py:3456
 msgid "Shows NVDA's Add-on Store settings"
 msgstr ""
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
-#: globalCommands.py:3467
+#: globalCommands.py:3465
 msgid "Shows NVDA's Windows OCR settings"
 msgstr ""
 
 #. Translators: Input help mode message for go to Advanced settings command.
-#: globalCommands.py:3476
+#: globalCommands.py:3474
 msgid "Shows NVDA's Advanced settings"
 msgstr ""
 
 #. Translators: Input help mode message for opening default dictionary dialog.
-#: globalCommands.py:3485
+#: globalCommands.py:3483
 msgid "Shows the NVDA default dictionary dialog"
 msgstr "Exibe o diálogo do dicionário padrão do NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
-#: globalCommands.py:3494
+#: globalCommands.py:3492
 msgid "Shows the NVDA voice-specific dictionary dialog"
 msgstr "Exibe o diálogo do dicionário específico da voz do NVDA"
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#: globalCommands.py:3503
+#: globalCommands.py:3501
 msgid "Shows the NVDA temporary dictionary dialog"
 msgstr "Exibe o diálogo do dicionário temporário do NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#: globalCommands.py:3512
+#: globalCommands.py:3510
 msgid "Shows the NVDA symbol pronunciation dialog"
 msgstr "Exibe o diálogo de pronúncia de símbolos do NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#: globalCommands.py:3521
+#: globalCommands.py:3519
 msgid "Shows the NVDA input gestures dialog"
 msgstr "Exibe o diálogo de gestos de entrada do NVDA"
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#: globalCommands.py:3530
+#: globalCommands.py:3528
 msgid "Reports the name of the current NVDA configuration profile"
 msgstr "Anuncia o nome do perfil de configuração atual do NVDA"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
-#: globalCommands.py:3540
+#: globalCommands.py:3538
 msgid "normal configuration profile active"
 msgstr "normal, perfil de configuração ativo"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#: globalCommands.py:3544
+#: globalCommands.py:3542
 #, python-brace-format
 msgid "{profileName} configuration profile active"
 msgstr "{profileName}, perfil de configuração ativo"
 
 #. Translators: Input help mode message for save current configuration command.
-#: globalCommands.py:3551
+#: globalCommands.py:3549
 msgid "Saves the current NVDA configuration"
 msgstr "Salva a configuração atual do NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-#: globalCommands.py:3561
+#: globalCommands.py:3559
 msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory defaults."
 msgstr "Ao pressionar uma vez, reverte a configuração atual para o último estado salvo. Ao pressionar três vezes, restaura ao original de fábrica."
 
 #. Translators: Input help mode message for activate python console command.
-#: globalCommands.py:3576
+#: globalCommands.py:3574
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
 
 #. Translators: Input help mode message to activate Add-on Store command.
-#: globalCommands.py:3596
+#: globalCommands.py:3594
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr "Ativa a Loja de Complementos para navegar e gerir pacotes de complementos do NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
-#: globalCommands.py:3605
+#: globalCommands.py:3603
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
 msgstr "Alterna o visualizador de fala do NVDA, uma janela flutuante que possibilita ver todo o texto que o NVDA está falando no momento"
 
 #. Translators: The message announced when disabling speech viewer.
-#: globalCommands.py:3614
+#: globalCommands.py:3612
 msgid "speech viewer disabled"
 msgstr "desabilitado visualizador de fala"
 
 #. Translators: The message announced when enabling speech viewer.
-#: globalCommands.py:3619
+#: globalCommands.py:3617
 msgid "speech viewer enabled"
 msgstr "habilitado visualizador de fala"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
-#: globalCommands.py:3627
+#: globalCommands.py:3625
 msgid "Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, and the text equivalent for each braille character"
 msgstr "Alterna o visualizador de braille do NVDA, uma janela flutuante que possibilita ver a saída braille e o equivalente em texto para cada caractere braille"
 
 #. Translators: The message announced when disabling braille viewer.
-#: globalCommands.py:3638
+#: globalCommands.py:3636
 msgid "Braille viewer disabled"
 msgstr "Desabilitado visualizador de braille"
 
 #. Translators: The message announced when enabling Braille viewer.
-#: globalCommands.py:3643
+#: globalCommands.py:3641
 msgid "Braille viewer enabled"
 msgstr "Habilitado visualizador de braille"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
-#: globalCommands.py:3651
+#: globalCommands.py:3649
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Alterna vinculação do braille entre a posição de foco e a de exploração"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
-#: globalCommands.py:3671
+#: globalCommands.py:3669
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Braille vinculado %s"
 
 #. Translators: Input help mode message for toggle braille mode command
-#: globalCommands.py:3675
+#: globalCommands.py:3673
 msgid "Toggles braille mode"
 msgstr "Liga o modo braille"
 
 #. Translators: The message reported when switching braille modes
-#: globalCommands.py:3690
+#: globalCommands.py:3688
 #, python-brace-format
 msgid "Braille mode {brailleMode}"
 msgstr "{brailleMode} modo Braille"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#: globalCommands.py:3701
+#: globalCommands.py:3699
 msgid "Cycle through the braille move system caret when routing review cursor states"
 msgstr "Percorrer os estados de mover cursor do sistema ao sincronizar cursor de exploração"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#: globalCommands.py:3711
+#: globalCommands.py:3709
 msgid "Action unavailable. Braille is tethered to focus"
 msgstr "Ação indisponível; braille está vinculado ao foco"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
-#: globalCommands.py:3727
+#: globalCommands.py:3725
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
 msgstr "Braille move o cursor do sistema ao sincronizar cursor de exploração, padrão (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
-#: globalCommands.py:3735
+#: globalCommands.py:3733
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
 msgstr "Braille move o cursor do sistema ao sincronizar cursor de exploração %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
-#: globalCommands.py:3743
+#: globalCommands.py:3741
 msgid "Toggle the way context information is presented in braille"
 msgstr "Alterna o modo como informações de contexto são apresentadas em braille"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
-#: globalCommands.py:3761
+#: globalCommands.py:3759
 #, python-format
 msgid "Braille focus context presentation: %s"
 msgstr "Apresentação do contexto do foco braille: %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
-#: globalCommands.py:3765
+#: globalCommands.py:3763
 msgid "Toggle the braille cursor on and off"
 msgstr "Liga e desliga o cursor braille"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3772
+#: globalCommands.py:3770
 msgid "Braille cursor off"
 msgstr "Desligado cursor braille"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3776
+#: globalCommands.py:3774
 msgid "Braille cursor on"
 msgstr "Ligado cursor braille"
 
 #. Translators: Input help mode message for speak on routing command.
-#: globalCommands.py:3784
+#: globalCommands.py:3782
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
 msgstr "Alterna falar o caractere sob o cursor ao rotear o cursor em textos"
 
 #. Translators: The message announced when toggling on speaking character when routing.
-#: globalCommands.py:3792
+#: globalCommands.py:3790
 msgid "Enabled speak character when routing cursor in text"
 msgstr "Habilitado falar caractere sob o cursor ao rotear o cursor em textos"
 
 #. Translators: The message announced when toggling off speaking character when routing.
-#: globalCommands.py:3795
+#: globalCommands.py:3793
 msgid "Disabled speak character when routing cursor in text"
 msgstr "Desabilitado falar caractere sob o cursor ao rotear o cursor em textos"
 
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
-#: globalCommands.py:3800
+#: globalCommands.py:3798
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
 msgstr "Liga e desliga a fala ao navegar por linha ou parágrafo em braille"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3809
+#: globalCommands.py:3807
 msgid "Speak when navigating by line or paragraph with braille on"
 msgstr ""
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3811
+#: globalCommands.py:3809
 msgid "Speak when navigating by line or paragraph with braille off"
 msgstr "Desligado falar ao navegar por linha ou parágrafo em braille"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
-#: globalCommands.py:3816
+#: globalCommands.py:3814
 msgid "Cycle through the braille cursor shapes"
 msgstr "Percorre os formatos do cursor braille"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
-#: globalCommands.py:3823
+#: globalCommands.py:3821
 msgid "Braille cursor is turned off"
 msgstr "O cursor braille está desligado"
 
 #. Translators: Reports which braille cursor shape is activated.
-#: globalCommands.py:3839
+#: globalCommands.py:3837
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Cursor braille %s"
 
 #. Translators: Input help mode message for cycle through braille show messages command.
-#: globalCommands.py:3843
+#: globalCommands.py:3841
 msgid "Cycle through the braille show messages modes"
 msgstr "Percorre os modos de mostrar mensagens em braille"
 
 #. Translators: Reports which show braille message mode is used
 #. (disabled, timeout or indefinitely).
-#: globalCommands.py:3856
+#: globalCommands.py:3854
 #, python-format
 msgid "Braille show messages %s"
 msgstr "%s mostrar mensagens em braille"
 
 #. Translators: Input help mode message for cycle through braille show selection command.
-#: globalCommands.py:3861
+#: globalCommands.py:3859
 msgid "Cycle through the braille show selection states"
 msgstr "Percorre os estados de mostrar seleção em braille"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
-#: globalCommands.py:3878
+#: globalCommands.py:3876
 #, python-format
 msgid "Braille show selection default (%s)"
 msgstr "Mostrar seleção em braille padrão (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
-#: globalCommands.py:3882
+#: globalCommands.py:3880
 #, python-format
 msgid "Braille show selection %s"
 msgstr "%s mostrar seleção em Braille"
 
 #. Translators: Input help mode message for Braille Unicode normalization command.
-#: globalCommands.py:3889
+#: globalCommands.py:3887
 msgid "Cycle through the braille Unicode normalization states"
 msgstr "Circula pelos estados de normalização Unicode de braille"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:3904
+#: globalCommands.py:3902
 #, python-brace-format
 msgid "Braille Unicode normalization default ({default})"
 msgstr "({default}), padrão de normalização Unicode de braille"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:3910
+#: globalCommands.py:3908
 #, python-brace-format
 msgid "Braille Unicode normalization {state}"
 msgstr "{state}, normalização Unicode de braille"
 
 #. Translators: Input help mode message for report clipboard text command.
-#: globalCommands.py:3918
+#: globalCommands.py:3916
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
 msgstr "Anuncia o texto na área de transferência do Windows. Pressionada duas vezes, soletra a informação. Pressionada três vezes, soletra usando descrições de caracteres."
 
 #. Translators: Presented when there is no text on the clipboard.
-#: globalCommands.py:3933
+#: globalCommands.py:3931
 msgid "There is no text on the clipboard"
 msgstr "Não há texto na área de transferência"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this
 #. message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large amount of text. It is 2300 characters long.
-#: globalCommands.py:3948
+#: globalCommands.py:3946
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
@@ -4318,456 +4318,462 @@ msgstr[1] "A área de transferência contém uma grande quantidade de texto. O t
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
-#: globalCommands.py:3959
+#: globalCommands.py:3957
 msgid "Marks the current position of the review cursor as the start of text to be selected or copied"
 msgstr "Marca a posição atual do cursor de exploração como o início do texto a ser selecionado ou copiado"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
-#: globalCommands.py:3972
+#: globalCommands.py:3970
 msgid "Start marked"
 msgstr "Início marcado"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
-#: globalCommands.py:3978
+#: globalCommands.py:3976
 msgid "Move the review cursor to the position marked as the start of text to be selected or copied"
 msgstr "Move o cursor de exploração para a posição marcada como o início do texto a ser selecionado ou copiado"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
-#: globalCommands.py:3987 globalCommands.py:4020
+#: globalCommands.py:3985 globalCommands.py:4018
 msgid "No start marker set"
 msgstr "Sem marca de início"
 
 #. Translators: Input help mode message for the select then copy command.
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-#: globalCommands.py:4010
+#: globalCommands.py:4008
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
 msgstr "Se pressionado uma vez, o texto a partir do marcador inicial anteriormente definido até e incluindo a posição atual do cursor de exploração é selecionado. Se pressionado duas vezes, o texto é copiado para a área de transferência"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
-#: globalCommands.py:4028
+#: globalCommands.py:4026
 msgid "Press twice to copy or reset the start marker"
 msgstr "Pressione duas vezes para copiar ou redefina o marcador inicial"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
-#: globalCommands.py:4047
+#: globalCommands.py:4045
 msgid "No text to copy"
 msgstr "Sem texto a copiar"
 
 #. Translators: Presented when unable to select the marked text.
-#: globalCommands.py:4069
+#: globalCommands.py:4067
 msgid "Can't select text, press twice to copy"
 msgstr "Não é possível selecionar o texto; pressione duas vezes para copiar"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4082
+#: globalCommands.py:4080
 msgid "Scrolls the braille display back"
 msgstr "Rola a linha braille para trás"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4091
+#: globalCommands.py:4089
 msgid "Scrolls the braille display forward"
 msgstr "Rola a linha braille para frente"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4100
+#: globalCommands.py:4098
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Move o cursor para o objeto sob esta cela braille ou ativa o mesmo"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#: globalCommands.py:4108
+#: globalCommands.py:4106
 msgid "Reports formatting info for the text under this braille cell"
 msgstr "Anuncia informações de formatação do texto sob esta cela braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4121
+#: globalCommands.py:4119
 msgid "Moves the braille display to the previous line"
 msgstr "Move a linha braille para a linha anterior"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4130
+#: globalCommands.py:4128
 msgid "Moves the braille display to the next line"
 msgstr "Move a linha braille para a próxima linha"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4139
+#: globalCommands.py:4137
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Pontos braille de entradas via teclado braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4148
+#: globalCommands.py:4146
 msgid "Moves the braille display to the current focus"
 msgstr "Move a linha braille para o foco atual"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4170
+#: globalCommands.py:4168
 msgid "Erases the last entered braille cell or character"
 msgstr "Apaga a última cela ou caractere braille inserido"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4179
+#: globalCommands.py:4177
 msgid "Translates any braille input and presses the enter key"
 msgstr "Transcreve qualquer entrada braille e pressiona a tecla enter"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4188
+#: globalCommands.py:4186
 msgid "Translates any braille input"
 msgstr "Transcreve qualquer entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4197
+#: globalCommands.py:4195
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente a tecla shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4206
+#: globalCommands.py:4204
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente a tecla control para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4215
+#: globalCommands.py:4213
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente a tecla alt para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4225
+#: globalCommands.py:4223
 msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente a tecla windows esquerda para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4235
+#: globalCommands.py:4233
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente a tecla NVDA para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4245
+#: globalCommands.py:4243
 msgid "Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas control e shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4256
+#: globalCommands.py:4254
 msgid "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas alt e shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4267
+#: globalCommands.py:4265
 msgid "Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas windows esquerda e shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4279
+#: globalCommands.py:4277
 msgid "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas NVDA e shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4290
+#: globalCommands.py:4288
 msgid "Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas control e alt para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4301
+#: globalCommands.py:4299
 msgid "Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Alterna virtualmente as teclas control, alt e shift para emular uma tecla de atalho com entrada braille"
 
 #. Translators: Input help mode message for reload plugins command.
-#: globalCommands.py:4313
+#: globalCommands.py:4311
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Recarrega módulos de aplicativo e plug-ins globais sem reiniciar o NVDA; pode ser útil a desenvolvedores"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-#: globalCommands.py:4325
+#: globalCommands.py:4323
 msgid "Plugins reloaded"
 msgstr "Plug-ins recarregados"
 
 #. Translators: input help mode message for Report destination URL of a link command
-#: globalCommands.py:4330
+#: globalCommands.py:4328
 msgid "Report the destination URL of the link at the position of caret or focus. If pressed twice, shows the URL in a window for easier review."
 msgstr "Anuncia o endereço de destino do link na posição do cursor ou do foco. Se pressionada duas vezes, mostra o endereço numa janela para uma revisão mais fácil."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4360
+#: globalCommands.py:4358
 msgid "Link has no apparent destination"
 msgstr "Link parece não possuir destino"
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
-#: globalCommands.py:4369 brailleDisplayDrivers\dotPad\driver.py:257
+#: globalCommands.py:4367 brailleDisplayDrivers\dotPad\driver.py:257
 msgid "Graphic"
 msgstr "Gráfico"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
-#: globalCommands.py:4374
+#: globalCommands.py:4372
 #, python-brace-format
 msgid "Destination of: {name}"
 msgstr "Destino de: {name}"
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4384
+#: globalCommands.py:4382
 msgid "Unable to get the destination of this link."
 msgstr "Não posso obter o destino deste link."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4387
+#: globalCommands.py:4385
 msgid "Not a link."
 msgstr "Não é link."
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#: globalCommands.py:4392
+#: globalCommands.py:4390
 msgid "Displays the destination URL of the link at the position of caret or focus in a window, instead of just speaking it. May be preferred by braille users."
 msgstr "Anuncia o endereço de destino do link na posição do cursor ou do foco numa janela ao invés de apenas falar. Pode ser preferível para usuários de braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4405
+#: globalCommands.py:4403
 msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
 msgstr "Move para o próximo objeto numa visão plana da hierarquia dos objetos de navegação"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4443
+#: globalCommands.py:4441
 msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
 msgstr "Move para o objeto anterior numa visão plana da hierarquia dos objetos de navegação"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4476
+#: globalCommands.py:4474
 msgid "Toggles the support of touch interaction"
 msgstr "Alterna o suporte a interação por toque"
 
 #. Translators: Presented when attempting to toggle touch interaction support
-#: globalCommands.py:4486
+#: globalCommands.py:4484
 msgid "Touch interaction not supported"
 msgstr "Interação por toque não suportada"
 
 #. Translators: Presented when support of touch interaction has been enabled
-#: globalCommands.py:4492
+#: globalCommands.py:4490
 msgid "Touch interaction enabled"
 msgstr "Habilitada interação por toque"
 
 #. Translators: Presented when support of touch interaction has been disabled
-#: globalCommands.py:4495
+#: globalCommands.py:4493
 msgid "Touch interaction disabled"
 msgstr "Desabilitada interação por toque"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4499
+#: globalCommands.py:4497
 msgid "Cycles between available touch modes"
 msgstr "Alterna entre os modos de toque disponíveis"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
-#: globalCommands.py:4513
+#: globalCommands.py:4511
 #, python-format
 msgid "%s mode"
 msgstr "modo %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4518
+#: globalCommands.py:4516
 msgid "Reports the object and content directly under your finger"
 msgstr "Anuncia o objeto ou conteúdo atualmente sob o dedo"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4528
+#: globalCommands.py:4526
 msgid "Reports the new object or content under your finger if different to where your finger was last"
 msgstr "Anuncia o novo objeto ou conteúdo sob o dedo se este for diferente daquele onde o dedo estava antes"
 
 #. Translators: Input help mode message for touch right click command.
-#: globalCommands.py:4554
+#: globalCommands.py:4552
 msgid "Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."
 msgstr "Clica o botão direito do mouse na posição de toque atual. Geralmente é usado para ativar um menu de contexto."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:4578
+#: globalCommands.py:4576
 msgid "object has no location"
 msgstr "objeto não possui local"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#: globalCommands.py:4590
+#: globalCommands.py:4588
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Exibe o diálogo de perfis de configurações do NVDA"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#: globalCommands.py:4600
+#: globalCommands.py:4598
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
 msgstr "Alterna a desabilitação de todos os disparadores de perfil. A desabilitação tem efeito até o NVDA ser reiniciado"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#: globalCommands.py:4609
+#: globalCommands.py:4607
 msgid "Configuration profile triggers disabled"
 msgstr "Desabilitados disparadores de perfis de configurações"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#: globalCommands.py:4617
+#: globalCommands.py:4615
 msgid "Configuration profile triggers enabled"
 msgstr "Habilitados disparadores de perfis de configurações"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4622
+#: globalCommands.py:4620
 msgid "Begins interaction with math content"
 msgstr "Inicia interação com conteúdo matemático"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
-#: globalCommands.py:4639
+#: globalCommands.py:4637
 msgid "Not math"
 msgstr "Não matemática"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4645
+#: globalCommands.py:4643
 msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "Faz o reconhecimento do conteúdo do objeto de navegação atual com o OCR do Windows"
 
 #. Translators: Reported when Windows OCR is not available.
-#: globalCommands.py:4651 globalCommands.py:4674 globalCommands.py:4695
+#: globalCommands.py:4649 globalCommands.py:4672 globalCommands.py:4693
 msgid "Windows OCR not available"
 msgstr "OCR do Windows não disponível"
 
 #. Translators: Reported when screen curtain is enabled.
-#: globalCommands.py:4660
+#: globalCommands.py:4658
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Por favor desabilite a cortina de tela antes de usar o OCR do Windows."
 
 #. Translators: Describes a command.
-#: globalCommands.py:4669
+#: globalCommands.py:4667
 msgid "Cycles through the available languages for Windows OCR"
 msgstr "Alterna entre os diferentes idiomas do OCR do Windows"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4690
+#: globalCommands.py:4688
 msgid "Toggle periodical refresh of a Windows OCR result"
 msgstr "Alterna a atualização periódica do resultado de um OCR do Windows"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4701
+#: globalCommands.py:4699
 msgid "Automatic refresh enabled"
 msgstr "Atualização automática habilitada"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4703
+#: globalCommands.py:4701
 msgid "Automatic refresh disabled"
 msgstr "Atualização automática desabilitada"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#: globalCommands.py:4713
+#: globalCommands.py:4711
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Liga e desliga o anúncio de caracteres CLDR, tais como emojis"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4722
+#: globalCommands.py:4720
 msgid "report CLDR characters off"
 msgstr "desligado o anúncio de caracteres CLDR"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4726
+#: globalCommands.py:4724
 msgid "report CLDR characters on"
 msgstr "ligado o anúncio de caracteres CLDR"
 
 #. Translators: Input help mode message for speech Unicode normalization command.
-#: globalCommands.py:4734
+#: globalCommands.py:4732
 msgid "Cycle through the speech Unicode normalization states"
 msgstr "Circula pelos estados de normalização Unicode de fala"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:4749
+#: globalCommands.py:4747
 #, python-brace-format
 msgid "Speech Unicode normalization default ({default})"
 msgstr "({default}), padrão de normalização Unicode de fala"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:4755
+#: globalCommands.py:4753
 #, python-brace-format
 msgid "Speech Unicode normalization {state}"
 msgstr "{state}, normalização Unicode de fala"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4767
+#: globalCommands.py:4765
 msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
 msgstr "Alterna o estado da cortina de tela, tornando a tela preta ou MOSTRANDO o conteúdo da tela. Se pressionada uma vez, a cortina de tela é habilitada até que você reinicie o NVDA. Se pressionada duas vezes, a cortina de tela é habilitada até que você a desabilite"
 
 #. Translators: Reported when the screen curtain is disabled.
-#: globalCommands.py:4826
+#: globalCommands.py:4824
 msgid "Screen curtain disabled"
 msgstr "Desabilitada cortina de tela"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4833
+#: globalCommands.py:4831
 msgid "Could not disable screen curtain"
 msgstr "Não consegui desabilitar a cortina de tela"
 
 #. Translators: Reported when the screen curtain is not available.
-#: globalCommands.py:4844
+#: globalCommands.py:4842
 msgid "Screen curtain not available"
 msgstr "Cortina de tela não disponível"
 
 #. Translators: Reported when the screen curtain is enabled.
-#: globalCommands.py:4856
+#: globalCommands.py:4854
 msgid "Screen curtain enabled"
 msgstr "Habilitada cortina de tela"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
-#: globalCommands.py:4859
+#: globalCommands.py:4857
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "Cortina de tela temporária, habilitada até o próximo reinício"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4872
+#: globalCommands.py:4870
 msgid "Could not enable screen curtain"
 msgstr "Não consegui habilitar a cortina de tela"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
-#: globalCommands.py:4905 visionEnhancementProviders\screenCurtain.py:287
+#: globalCommands.py:4903 visionEnhancementProviders\screenCurtain.py:287
 msgid "Could not enable screen curtain when performing content recognition"
 msgstr "Não consegui habilitar cortina de tela ao executar reconhecimento de conteúdo"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4913
+#: globalCommands.py:4911
 msgid "Cycles through paragraph navigation styles"
 msgstr "Alterna entre estilos de navegação de parágrafo"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4927
+#: globalCommands.py:4925
 msgid "Cycles through sound split modes"
 msgstr "Alterna entre modos de divisão do som"
 
 #. Translators: Input help mode message for report language for caret command.
-#: globalCommands.py:4939
+#: globalCommands.py:4937
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr ""
 
+#. Translators: Reported when the language of the text at caret is not defined.
+#: globalCommands.py:4952
+msgctxt "reportLanguage"
+msgid "Unknown language"
+msgstr ""
+
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-#: globalCommands.py:4960
+#: globalCommands.py:4963
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
 msgstr ""
 
 #. Translators: title for report caret language dialog.
-#: globalCommands.py:4969
+#: globalCommands.py:4972
 msgctxt "reportLanguage"
 msgid "Language at caret position"
 msgstr ""
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
-#: globalCommands.py:4974
+#: globalCommands.py:4977
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
 msgstr "Silencia ou reativa a fala vinda do computador remoto"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
-#: globalCommands.py:4984
+#: globalCommands.py:4987
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
 msgstr "Envia o conteúdo da área de transferência para o computador remoto"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
-#: globalCommands.py:4992
+#: globalCommands.py:4995
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
 msgstr "Copia um link da sessão atual de Acesso Remoto para a área de transferÊncia"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
-#: globalCommands.py:5002
+#: globalCommands.py:5005
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
 msgstr "Desconecta da sessão atual de Acesso Remoto"
@@ -4778,7 +4784,7 @@ msgstr "Desconecta da sessão atual de Acesso Remoto"
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
-#: globalCommands.py:5008 _remoteClient\client.py:125
+#: globalCommands.py:5011 _remoteClient\client.py:125
 #: _remoteClient\client.py:149 _remoteClient\client.py:171
 #: _remoteClient\client.py:187 _remoteClient\client.py:522
 msgctxt "remote"
@@ -4786,44 +4792,44 @@ msgid "Not connected"
 msgstr "Não conectado"
 
 #. Translators: Documentation string for the script that starts a new Remote Access session.
-#: globalCommands.py:5014
+#: globalCommands.py:5017
 msgctxt "remote"
 msgid "Connects to a remote computer"
 msgstr "Conecta a um computador remoto"
 
 #. Translators: A message indicating that the remote client is already connected.
-#: globalCommands.py:5025
+#: globalCommands.py:5028
 msgid "Already connected"
 msgstr "Já conectado"
 
 #. Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
-#: globalCommands.py:5031
+#: globalCommands.py:5034
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
 msgstr "Alterna se o Acesso Remoto está conectado ou desconectado"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
-#: globalCommands.py:5046
+#: globalCommands.py:5049
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
 msgstr "Alterna se o teclado controla o computador local ou o remoto"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-#: globalCommands.py:5088
+#: globalCommands.py:5091
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr "Não posso alterar o perfil de configuração ativo enquanto um diálogo do NVDA está aberto"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5093
+#: globalCommands.py:5096
 #, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "perfil {profile} desativado"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5098
+#: globalCommands.py:5101
 #, python-brace-format
 msgid "{profile} profile activated"
 msgstr "perfil {profile} ativado"
@@ -4831,7 +4837,7 @@ msgstr "perfil {profile} ativado"
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5114
+#: globalCommands.py:5117
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "Ativa ou desativa o perfil de configuração {profile}"
@@ -6962,18 +6968,18 @@ msgid "Copied: {text}"
 msgstr "Copiado: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
-#: updateCheck.py:398
+#: updateCheck.py:413
 msgid "Checking for Update"
 msgstr "Procurando Atualização"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
-#: updateCheck.py:400
+#: updateCheck.py:415
 msgid "Checking for update"
 msgstr "Procurando atualização"
 
 #. Translators: A suggestion of what to do when checking for NVDA updates fails and an update mirror is being used.
 #. {url} will be replaced with the mirror URL.
-#: updateCheck.py:409
+#: updateCheck.py:424
 #, python-brace-format
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
@@ -6982,14 +6988,14 @@ msgstr "Certifique-se que está conectado à internet e que o endereço do espel
 "Endereço do espelho: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
-#: updateCheck.py:416
+#: updateCheck.py:431
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
 msgstr ""
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
-#: updateCheck.py:422
+#: updateCheck.py:437
 #, python-brace-format
 msgctxt "updateCheck"
 msgid "Error checking for update.\n"
@@ -6999,106 +7005,106 @@ msgstr "Erro ao procurar atualização.\n"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to apply an NVDA update.
-#: updateCheck.py:493 updateCheck.py:631
+#: updateCheck.py:508 updateCheck.py:646
 msgid "NVDA Update"
 msgstr "Atualização do NVDA"
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:509
+#: updateCheck.py:524
 msgid "No update available."
 msgstr "Nenhuma atualização disponível."
 
 #. Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 #. applied.
-#: updateCheck.py:514
+#: updateCheck.py:529
 #, python-brace-format
 msgid "Update to NVDA version {version} has been downloaded and is ready to be applied."
 msgstr "Atualização para a versão {version} do NVDA foi baixada e está pronta para ser aplicada."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:539 updateCheck.py:659 gui\installerGui.py:278
+#: updateCheck.py:554 updateCheck.py:674 gui\installerGui.py:278
 msgid "&Review add-ons..."
 msgstr "&Revisar complementos..."
 
 #. Translators: The label of a button to apply a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:545
+#: updateCheck.py:560
 #, python-brace-format
 msgid "&Update to NVDA {version}"
 msgstr "At&ualizar para NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#: updateCheck.py:555
+#: updateCheck.py:570
 msgid "Re-&download update"
 msgstr "&Baixar atualização novamente"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:560
+#: updateCheck.py:575
 #, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Disponível versão {version} do NVDA."
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:564
+#: updateCheck.py:579
 msgid "&Download update"
 msgstr "&Baixar atualização"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:569 gui\startupDialogs.py:311
+#: updateCheck.py:584 gui\startupDialogs.py:311
 msgid "Remind me &later"
 msgstr "&Lembre-me depois"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:578 gui\addonGui.py:377
+#: updateCheck.py:593 gui\addonGui.py:377
 msgid "&Close"
 msgstr "&Fechar"
 
 #. Translators: A message indicating that an update to NVDA is ready to be applied.
-#: updateCheck.py:635
+#: updateCheck.py:650
 #, python-brace-format
 msgid "Update to NVDA version {version} is ready to be applied.\n"
 msgstr "Atualização para NVDA versão {version} está pronta para ser aplicada.\n"
 
 #. Translators: The label of a button to update NVDA.
-#: updateCheck.py:662
+#: updateCheck.py:677
 msgid "&Update now"
 msgstr "At&ualizar agora"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#: updateCheck.py:675
+#: updateCheck.py:690
 msgid "&Postpone update"
 msgstr "&Adiar atualização"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#: updateCheck.py:741
+#: updateCheck.py:756
 msgid "Unable to postpone update."
 msgstr "Não foi possível adiar atualizações."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:798
+#: updateCheck.py:813
 msgid "Downloading Update"
 msgstr "Baixando Atualização"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:800
+#: updateCheck.py:815
 msgid "Connecting"
 msgstr "Conectando"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:893
+#: updateCheck.py:908
 msgid "Downloading"
 msgstr "Baixando"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:912
+#: updateCheck.py:927
 msgid "Error downloading update."
 msgstr "Erro ao baixar atualização."
 
 #. Translators: The message requesting donations from users.
-#: updateCheck.py:935
+#: updateCheck.py:950
 msgid "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 "If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
@@ -7111,26 +7117,26 @@ msgstr "Precisamos de seu auxílio a fim de continuar melhorando o NVDA.\n"
 "Agradecemos o seu apoio."
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:944
+#: updateCheck.py:959
 msgid "Please Donate"
 msgstr "Favor Doar"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 #. Translators: The label for the menu item to open donate page.
-#: updateCheck.py:953 gui\__init__.py:700
+#: updateCheck.py:968 gui\__init__.py:700
 msgid "&Donate"
 msgstr "&Doar"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:958
+#: updateCheck.py:973
 msgid "&Not now"
 msgstr "Agora &não"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:974
+#: updateCheck.py:989
 msgid "&Done"
 msgstr "&Concluído"
 
@@ -7179,14 +7185,14 @@ msgstr "Não é possível instalar o complemento do NVDA a partir do caminho {pa
 "Você tem de estar executando o NVDA para poder instalar complementos."
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:212
+#: addonStore\dataManager.py:213
 msgctxt "addonStore"
 msgid "Add-on data update failure"
 msgstr "Falha ao atualizar dados de complementos"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and a metadata mirror is being used.
 #. {url} will be replaced with the mirror URL.
-#: addonStore\dataManager.py:217
+#: addonStore\dataManager.py:218
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
@@ -7195,19 +7201,19 @@ msgstr "Certifique-se que está conectado à internet e que o endereço do espel
 "Endereço do espelho: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
-#: addonStore\dataManager.py:223
+#: addonStore\dataManager.py:224
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
 msgstr ""
 
 #. Translators: A message shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:256
+#: addonStore\dataManager.py:257
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
 msgstr "Não consigo obter dados mais recentes de complementos compatíveis."
 
 #. Translators: A message shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:292
+#: addonStore\dataManager.py:293
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
 msgstr "Não consigo obter dados mais recentes de complementos incompatíveis."
@@ -8633,7 +8639,7 @@ msgid "Nattiq nBraille"
 msgstr "Nattiq nBraille"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers\nlseReaderZoomax.py:88
+#: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
 msgstr ""
 
@@ -12955,7 +12961,7 @@ msgstr "Alternância automática de dialeto (quando suportado)"
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
 #: gui\settingsDialogs.py:1712
 msgctxt "reportLanguage"
-msgid "Report lan&guage changes"
+msgid "Report lan&guage changes while reading"
 msgstr ""
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
@@ -15672,39 +15678,39 @@ msgstr "{val:.2f} pol"
 msgid "{val:.2f} cm"
 msgstr "{val:.2f} cm"
 
-#: NVDAObjects\UIA\__init__.py:2287
+#: NVDAObjects\UIA\__init__.py:2290
 msgid "invoke"
 msgstr "chamar"
 
 #. Translators: message from to note the number of suggestions
-#: NVDAObjects\UIA\__init__.py:2718
+#: NVDAObjects\UIA\__init__.py:2721
 msgid "{} suggestion"
 msgid_plural "{} suggestions"
 msgstr[0] "{} sugestão"
 msgstr[1] "{} sugestões"
 
 #. Translators: the description of a script
-#: NVDAObjects\UIA\excel.py:195
+#: NVDAObjects\UIA\excel.py:196
 msgctxt "excel-UIA"
 msgid "Shows a browseable message Listing information about a cell's appearance such as outline and fill colors, rotation and size"
 msgstr "Mostra uma mensagem navegável listando informações de aparência da célula como cor, giro e tamanho do esboço e do preenchimento"
 
 #. Translators: The width of the cell in points
-#: NVDAObjects\UIA\excel.py:205
+#: NVDAObjects\UIA\excel.py:206
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
 msgstr "Largura da célula: {0.x:.1f} pt"
 
 #. Translators: The height of the cell in points
-#: NVDAObjects\UIA\excel.py:212
+#: NVDAObjects\UIA\excel.py:213
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
 msgstr "Altura da célula: {0.y:.1f} pt"
 
 #. Translators: The rotation in degrees of an Excel cell
-#: NVDAObjects\UIA\excel.py:221
+#: NVDAObjects\UIA\excel.py:222
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
@@ -15713,116 +15719,116 @@ msgstr[0] "Rotação: {0} grau"
 msgstr[1] "Rotação: {0} graus"
 
 #. Translators: The outline (border) colors of an Excel cell.
-#: NVDAObjects\UIA\excel.py:231
+#: NVDAObjects\UIA\excel.py:232
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
 msgstr "Cor do esboço: superior={0.name}, inferior={1.name}, esquerdo={2.name}, inferior={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
-#: NVDAObjects\UIA\excel.py:239
+#: NVDAObjects\UIA\excel.py:240
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
 msgstr "Grossura do esboço: superior={0}, inferior={1}, esquerdo={2}, direito={3}"
 
 #. Translators: The fill color of an Excel cell
-#: NVDAObjects\UIA\excel.py:247
+#: NVDAObjects\UIA\excel.py:248
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
 msgstr "Cor do preenchimento: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
-#: NVDAObjects\UIA\excel.py:255
+#: NVDAObjects\UIA\excel.py:256
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
 msgstr "Tipo de preenchimento: {0}"
 
 #. Translators: the number format of an Excel cell
-#: NVDAObjects\UIA\excel.py:263
+#: NVDAObjects\UIA\excel.py:264
 #, python-brace-format
 msgid "Number format: {0}"
 msgstr "Formato de números: {0}"
 
 #. Translators: If an excel cell has data validation set
-#: NVDAObjects\UIA\excel.py:270
+#: NVDAObjects\UIA\excel.py:271
 msgid "Has data validation"
 msgstr "Contém validação de dados"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
-#: NVDAObjects\UIA\excel.py:277
+#: NVDAObjects\UIA\excel.py:278
 #, python-brace-format
 msgid "Data validation prompt: {0}"
 msgstr "Prompt de validação de dados: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#: NVDAObjects\UIA\excel.py:284
+#: NVDAObjects\UIA\excel.py:285
 msgid "Has conditional formatting"
 msgstr "Contém formatação condicional"
 
 #. Translators: If an excel cell has visible gridlines
-#: NVDAObjects\UIA\excel.py:288
+#: NVDAObjects\UIA\excel.py:289
 msgid "Gridlines are visible"
 msgstr "Linhas de grade estão visíveis"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
-#: NVDAObjects\UIA\excel.py:296
+#: NVDAObjects\UIA\excel.py:297
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
 msgstr "Aparência da célula"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
-#: NVDAObjects\UIA\excel.py:326
+#: NVDAObjects\UIA\excel.py:327
 #, python-brace-format
 msgid "Error: {errorText}"
 msgstr "Erro: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
-#: NVDAObjects\UIA\excel.py:333
+#: NVDAObjects\UIA\excel.py:334
 #, python-brace-format
 msgid "{author} is editing"
 msgstr "{author} está editando"
 
 #. Translators: Excel, report selected range of cell coordinates
-#: NVDAObjects\UIA\excel.py:464
+#: NVDAObjects\UIA\excel.py:465
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} até {lastAddress} {lastValue}"
 
 #. Translators: Excel, report merged range of cell coordinates
-#: NVDAObjects\UIA\excel.py:496
+#: NVDAObjects\UIA\excel.py:497
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} até {lastAddress}"
 
 #. Translators: the description  for a script for Excel
-#: NVDAObjects\UIA\excel.py:506
+#: NVDAObjects\UIA\excel.py:507
 msgid "Reports the note or comment thread on the current cell"
 msgstr "Anuncia a nota ou o tópico de comentários da célula atual"
 
 #. Translators: a note on a cell in Microsoft excel.
-#: NVDAObjects\UIA\excel.py:516
+#: NVDAObjects\UIA\excel.py:517
 #, python-brace-format
 msgid "{name}: {desc}"
 msgstr "{name}: {desc}"
 
 #. Translators: message when a cell in Excel contains no note
-#: NVDAObjects\UIA\excel.py:520
+#: NVDAObjects\UIA\excel.py:521
 msgid "No note on this cell"
 msgstr "Nenhuma nota nesta célula"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#: NVDAObjects\UIA\excel.py:530
+#: NVDAObjects\UIA\excel.py:531
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author}"
 msgstr "Tópico de comentários: {comment}  de {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#: NVDAObjects\UIA\excel.py:537
+#: NVDAObjects\UIA\excel.py:538
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
@@ -15830,12 +15836,12 @@ msgstr[0] "Conversação de comentários: {comment}  por {author} com {numReplie
 msgstr[1] "Conversação de comentários: {comment}  por {author} com {numReplies} respostas"
 
 #. Translators: A message in Excel when there is no comment thread
-#: NVDAObjects\UIA\excel.py:544
+#: NVDAObjects\UIA\excel.py:545
 msgid "No comment thread on this cell"
 msgstr "Nenhum tópico de comentários nesta célula"
 
 #. Translators: announced when moving outside of a table in an Excel spreadsheet.
-#: NVDAObjects\UIA\excel.py:596
+#: NVDAObjects\UIA\excel.py:603
 msgid "Out of table"
 msgstr "Fora de tabela"
 
