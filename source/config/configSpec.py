@@ -227,7 +227,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
 	# 0: Off, 1: Speech, 2: Sound
-	reportSpellingErrors = integer(min=0, max=2, default=1)
+	reportSpellingErrors2 = integer(min=0, max=2, default=1)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones

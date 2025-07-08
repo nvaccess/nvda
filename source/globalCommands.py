@@ -802,7 +802,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportSpellingErrors(self, gesture):
 		toggleIntegerValue(
 			configSection="documentFormatting",
-			configKey="reportSpellingErrors",
+			configKey="reportSpellingErrors2",
 			enumClass=ReportSpellingErrors,
 			# Translators: Reported when the user cycles through the choices to report spelling errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
@@ -2539,7 +2539,7 @@ class GlobalCommands(ScriptableObject):
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
-			"reportSpellingErrors",
+			"reportSpellingErrors2",
 			"reportLineIndentation",
 			"reportParagraphIndentation",
 			"reportLineSpacing",

@@ -196,13 +196,13 @@ class ReportSpellingErrors(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: A choice in a combo box in the document formatting dialog to not report spelling errors.
-			ReportSpellingErrors.OFF: pgettext("line indentation setting", "Off"),
+			ReportSpellingErrors.OFF: pgettext("reportSpellingErrorsSetting", "Off"),
 			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
 			# with Speech.
-			ReportSpellingErrors.SPEECH: pgettext("line indentation setting", "Speech"),
+			ReportSpellingErrors.SPEECH: pgettext("reportSpellingErrorsSetting", "Speech"),
 			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
 			# with a sound.
-			ReportSpellingErrors.SOUND: pgettext("line indentation setting", "Sound"),
+			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
 		}
 
 

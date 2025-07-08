@@ -6,7 +6,7 @@
 
 ### New Features
 
-* While reading text, spelling errors can now be reported with a sound. (#4233, @jcsteh, @CyrilleB79)
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
 
 ### Changes
 
