@@ -27,6 +27,7 @@ import languageHandler
 from logHandler import log
 import NVDAState
 from NVDAState import WritePaths
+from utils.networking import _fetchUrlAndUpdateRootCertificates
 
 from .models.addon import (
 	AddonStoreModel,
@@ -135,11 +136,11 @@ class _DataManager:
 			return None
 		return response.content
 
-	def _getCacheHash(self) -> Optional[str]:
+	def _getCacheHash(self) -> str | None:
 		url = _getCacheHashURL()
 		try:
 			log.debug(f"Fetching add-on data from {url}")
-			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
+			response = _fetchUrlAndUpdateRootCertificates(url)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to get cache hash: {e}")
 			return None
@@ -219,8 +220,8 @@ class _DataManager:
 	)
 	_updateFailureDefaultSuggestion = pgettext(
 		"addonStore",
-		# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
-		"Make sure you are connected to the internet and try again.",
+		# Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
+		"Unable to establish a connection to the Add-on Store server.",
 	)
 
 	def getLatestCompatibleAddons(

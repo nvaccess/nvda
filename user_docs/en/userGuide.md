@@ -242,6 +242,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
+|Report language |Not assigned |Not assigned |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
 #### Toggle which information NVDA reads {#ToggleWhichInformationNVDAReads}
@@ -370,9 +371,9 @@ To learn more about and configure this behaviour, refer to ["Update Notification
 ### Community {#Community}
 
 NVDA has a vibrant user community.
-There is a main [English language email list](https://nvda.groups.io/g/nvda) and a page full of [local language groups](https://github.com/nvaccess/nvda/wiki/Connect).
-NV Access, makers of NVDA, are active on [Twitter](https://twitter.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
+NV Access, makers of NVDA, are active on [Mastodon](https://fosstodon.org/@NVAccess), [Twitter/X](https://x.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
 NV Access also have a regular [In-Process blog](https://www.nvaccess.org/category/in-process/).
+There is a main [NV Access owned email list](https://groups.google.com/a/nvaccess.org/g/nvda-users) and a page full of [other community groups](https://github.com/nvaccess/nvda/wiki/Connect).
 
 There is also an [NVDA Certified Expert](https://certification.nvaccess.org/) program.
 This is an online exam you can complete to demonstrate your skills in NVDA.
@@ -474,7 +475,10 @@ This includes disabling usage of the [Add-on Store](#AddonsManager).
 Portable and temporary copies of NVDA have the following restrictions:
 
 * The inability to automatically start during and/or after log-on.
-* The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
+* The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended). Examples include:
+  * Command Prompt and PowerShell running in admin mode
+  * Task Manager
+  * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 * The inability to support input from a touchscreen.
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
@@ -1131,7 +1135,13 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it (Mozilla Firefox, and any browser based on Chromium 134 or newer) which causes the document's native selection to follow NVDA's Browse Mode selection.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it.
+Native Selection causes the document's native selection to follow NVDA's Browse Mode selection, which enables details such as formatting, links, and tables to be copied.
+Currently, Native Selection Mode is supported in:
+
+* Mozilla Firefox
+* Mozilla Thunderbird
+* Chrome, Edge, and any browser based on Chromium 134 or newer
 
 <!-- KC:beginInclude -->
 
@@ -1921,6 +1931,22 @@ This option is enabled by default.
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
+
+##### Report language changes while reading {#ReportLanguage}
+
+This checkbox allows you to toggle whether NVDA should report the detected language of the text being read, when the language changes from the default language.
+The language configured to be used by default won't be reported.
+This option is disabled by default.
+
+##### Report when switching to language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
+
+This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer.
+If [Automatic Language switching](#SpeechSettingsLanguageSwitching) is disabled, this option won't take effect, and the combo box will be readonly.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Speech, Beep, Off|
+|Default |Speech|
 
 <!-- KC:setting -->
 
@@ -3290,7 +3316,7 @@ This setting contains the following values:
 
 * Default (where suitable)
 * Only where necessary: where the Microsoft Word object model is not available at all
-* Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+* Where suitable: Microsoft Word version 16.0.15000 or higher on Windows 11, or where the Microsoft Word object model is unavailable
 * Always: where ever UI automation is available in Microsoft word (no matter how complete).
 
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
@@ -4184,6 +4210,7 @@ The following displays support this automatic detection functionality.
 * Nattiq nBraille displays
 * Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
 * Tivomatic Caiku Albatross 46/80 displays
+* NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
@@ -4496,8 +4523,7 @@ The following extra devices are also supported (and do not require any special d
 * APH Mantis Q40
 * APH Chameleon 20
 * Humanware BrailleOne
-* NLS eReader
-  * Note that the Zoomax is currently not supported without external drivers
+* NLS eReader HumanWare
 
 Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5357,6 +5383,34 @@ Please see the display's documentation for descriptions of where these keys can 
 |`Windows+e` key (this computer) |`attribute2`|
 |`Windows+b` key (focus system tray) |`attribute3`|
 |`Windows+i` key (Windows settings) |`attribute4`|
+
+<!-- KC:endInclude -->
+
+### NLS eReader Zoomax {#Zoomax}
+
+The NLS eReader Zoomax device supports USB or bluetooth connections.
+The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.
+For computers where the Internet connection is disabled or not available, you can manually [download and install the USB to serial CH340 chip driver](https://www.wch-ic.com/downloads/CH341SER_EXE.html) to support this display over USB.
+
+By default, NVDA can automatically detect and connect to this display via USB or bluetooth.
+However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back |`d2`|
+|Scroll braille display forward |`d5`|
+|Move braille display to previous line |`d1`|
+|Move braille display to next line |`d3`|
+|Route to braille cell |`routing`|
+|Up arrow key |`up`|
+|Down arrow key |`down`|
+|Left arrow key |`left`|
+|Right arrow key |`right`|
+|Enter key |`select`|
 
 <!-- KC:endInclude -->
 

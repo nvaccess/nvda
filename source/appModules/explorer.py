@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2025 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -26,7 +26,9 @@ from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, Edit
 import config
+import ui
 from winAPI.types import HWNDValT
+from comInterfaces import UIAutomationClient
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -559,4 +561,38 @@ class AppModule(appModuleHandler.AppModule):
 					positionInfo=obj.positionInfo,
 				),
 			)
+		nextHandler()
+
+	def shouldProcessUIANotificationEvent(
+		self,
+		sender: UIAutomationClient.IUIAutomationElement,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
+	) -> bool:
+		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
+			return True
+		return super().shouldProcessUIANotificationEvent(
+			sender,
+			notificationKind=notificationKind,
+			notificationProcessing=notificationProcessing,
+			displayString=displayString,
+			activityId=activityId,
+		)
+
+	def event_UIA_notification(
+		self,
+		obj: NVDAObject,
+		nextHandler: Callable[[], None],
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
+	) -> None:
+		# #17841: announce window states across apps (Windows 11 24H2 and later).
+		# These messages come from a File Explorer (shell) element and there is no native window handle.
+		if activityId == "Windows.Shell.SnapComponent.SnapHotKeyResults":
+			ui.message(displayString)
+			return
 		nextHandler()
