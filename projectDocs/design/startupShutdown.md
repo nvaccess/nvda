@@ -33,6 +33,7 @@
 1. Windows shutting down (terminates unsafely) (uses `wx.EVT_END_SESSION`)
 
 ## Manual testing
+
 Check the [manual test guide](../../tests/manual/nvdaUI/startupShutdown.md).
 
 ## Technical notes
