@@ -458,7 +458,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 	[[Other]]
 		DecimalSeparators = string(default=".") # [default]
-		BlockSeparators = string(default=", \u00A0\u202F") # [default -- includes two forms of non-breaking spaces]
+		BlockSeparators = string(default=", \u00a0\u202f") # [default -- includes two forms of non-breaking spaces]
 		DecimalSeparator = string(default="Auto") # Auto, '.', ',', Custom
 """
 
