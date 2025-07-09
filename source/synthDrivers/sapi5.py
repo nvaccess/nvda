@@ -377,7 +377,7 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
 
-		self.tts.AudioOutput = self.tts.AudioOutput  # Reset the audio and its format parameters
+		self.tts.AudioOutput = self.tts.GetAudioOutputs()[0]  # Reset the audio and its format parameters
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
 		# Force the wave format to be 16-bit integer (which Sonic uses internally).
