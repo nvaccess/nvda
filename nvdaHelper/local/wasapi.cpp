@@ -608,7 +608,7 @@ HRESULT WasapiPlayer::stop() {
 void WasapiPlayer::completeStop() {
 	HRESULT hr = client->Reset();
 	if (FAILED(hr)) {
-		LOG_ERROR(L"Couldn't reset stream: " << hr);
+		LOG_INFO(L"Couldn't reset stream: " << hr);
 		// We deliberately continue here. If Reset failed, the stream is probably
 		// already cleared or unusable anyway. We should always reset our state.
 	}
