@@ -2640,10 +2640,13 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 
+
 class MathSettingsPanel(SettingsPanel):
 	title = _("Math")
 	helpId = _("MathSettings")
-	panelDescription = _("The following options control the presentation of mathematical content using MathCAT.")
+	panelDescription = _(
+		"The following options control the presentation of mathematical content using MathCAT."
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2704,7 +2707,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("Decimal separators", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(config.conf["math"]["Speech"]["DecimalSeparator"])
 
-		speechStyleText = _("Speech style:"),
+		speechStyleText = (_("Speech style:"),)
 		speechStyleOptions = ["XXX"]
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
@@ -2716,27 +2719,27 @@ class MathSettingsPanel(SettingsPanel):
 
 		speechAmountText = _("Speech verbosity")
 		speechAmountOptions = [
-    		# Translators: options for speech verbosity -- "terse" = use less words
-    		_("Terse"),
-    		# Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
-    		_("Medium"),
-    		# Translators: options for speech verbosity -- "verbose" = use more words
-    		_("Verbose"),
+			# Translators: options for speech verbosity -- "terse" = use less words
+			_("Terse"),
+			# Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
+			_("Medium"),
+			# Translators: options for speech verbosity -- "verbose" = use more words
+			_("Verbose"),
 		]
 		self.speechAmountList = speechGroup.addLabeledControl(
-    		speechAmountText,
-	    	wx.Choice,
-    		choices=speechAmountOptions,
+			speechAmountText,
+			wx.Choice,
+			choices=speechAmountOptions,
 		)
 		self.bindHelpEvent("Control how verbose MathCAT’s speech output should be", self.speechAmountList)
 		self.speechAmountList.SetSelection(config.conf["math"]["Speech"]["SpeechAmount"])
 
 		relativeSpeedText = _("Relative speech rate")
 		self.relativeSpeedSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
-    		relativeSpeedText,
-    		nvdaControls.EnhancedInputSlider,
-    		minValue=10,
-    		maxValue=100,
+			relativeSpeedText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=10,
+			maxValue=100,
 		)
 		self.bindHelpEvent("Set the relative speed for math speech output", self.relativeSpeedSlider)
 		self.relativeSpeedSlider.SetValue(config.conf["math"]["Speech"]["RelativeSpeed"])
@@ -2744,10 +2747,10 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 		pauseFactorText = _("Pause factor")
 		self.pauseFactorSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
-    		pauseFactorText,
-    		nvdaControls.EnhancedInputSlider,
-    		minValue=0,
-    		maxValue=14,
+			pauseFactorText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=14,
 		)
 		self.bindHelpEvent("Controls how long the pauses are in math speech", self.pauseFactorSlider)
 		self.pauseFactorSlider.SetValue(config.conf["math"]["Speech"]["PauseFactor"])
