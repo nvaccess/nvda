@@ -8,7 +8,8 @@ from ctypes import POINTER, c_ubyte, c_ulong, c_wchar_p, cast, windll, _Pointer
 from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
-from typing import TYPE_CHECKING
+import threading
+from typing import TYPE_CHECKING, NamedTuple
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult
@@ -49,6 +50,11 @@ class SpeechVoiceEvents(IntEnum):
 	Bookmark = 16
 
 
+class _SpeakRequest(NamedTuple):
+	text: str
+	bookmarks: deque[int]
+
+
 if TYPE_CHECKING:
 	LP_c_ubyte = _Pointer[c_ubyte]
 	LP_c_ulong = _Pointer[c_ulong]
@@ -69,7 +75,7 @@ class SynthDriverAudioStream(COMObject):
 
 	_com_interfaces_ = [IStream]
 
-	def __init__(self, synthRef: weakref.ReferenceType):
+	def __init__(self, synthRef: weakref.ReferenceType["SynthDriver"]):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
 
@@ -93,7 +99,7 @@ class SynthDriverAudioStream(COMObject):
 		if synth is None:
 			log.debugWarning("Called Write method on AudioStream while driver is dead")
 			return hresult.E_UNEXPECTED
-		if not synth.isSpeaking:
+		if synth._isCancelling:
 			return hresult.E_FAIL
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
 		audioData = synth.sonicStream.readShort()
@@ -143,7 +149,7 @@ class SapiSink(COMObject):
 
 	_com_interfaces_ = [ISpNotifySink]
 
-	def __init__(self, synthRef: weakref.ReferenceType):
+	def __init__(self, synthRef: weakref.ReferenceType["SynthDriver"]):
 		self.synthRef = synthRef
 
 	def ISpNotifySink_Notify(self):
@@ -180,14 +186,11 @@ class SapiSink(COMObject):
 				windll.ole32.CoTaskMemFree(event.lParam)
 
 	def StartStream(self, streamNum: int, pos: int):
-		synth = self.synthRef()
-		# The stream has been started. Move the bookmark list to _streamBookmarks.
-		synth._streamBookmarks[streamNum] = synth._streamBookmarksNew.popleft()
-		synth.isSpeaking = True
+		pass  # nothing here yet
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
-		if not synth.isSpeaking:
+		if synth._isCancelling:
 			return
 		# Bookmark event is raised before the audio after that point.
 		# Queue an IndexReached event at this point.
@@ -195,21 +198,19 @@ class SapiSink(COMObject):
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		if synth._isCancelling:
+			return
 		# Flush the stream and get the remaining data.
 		synth.sonicStream.flush()
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
-		if len(synth._streamBookmarks) == 1:
-			# This is the last closing stream. Safe to call idle().
-			synth.player.idle()
 		# trigger all untriggered bookmarks
-		if streamNum in synth._streamBookmarks:
-			if synth.isSpeaking:
-				for bookmark in synth._streamBookmarks[streamNum]:
-					synthIndexReached.notify(synth=synth, index=bookmark)
-			del synth._streamBookmarks[streamNum]
-		synth.isSpeaking = False
+		for bookmark in synth._bookmarks:
+			synthIndexReached.notify(synth=synth, index=bookmark)
 		synthDoneSpeaking.notify(synth=synth)
+		# notify the thread
+		with synth._threadCond:
+			synth._threadCond.notify()
 
 	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
@@ -218,11 +219,9 @@ class SapiSink(COMObject):
 			return
 		synthIndexReached.notify(synth=synth, index=index)
 		# remove already triggered bookmarks
-		if streamNum in synth._streamBookmarks:
-			bookmarks = synth._streamBookmarks[streamNum]
-			while bookmarks:
-				if bookmarks.popleft() == index:
-					break
+		while synth._bookmarks:
+			if synth._bookmarks.popleft() == index:
+				break
 
 
 class SynthDriver(SynthDriver):
@@ -269,14 +268,22 @@ class SynthDriver(SynthDriver):
 		self._rate = 50
 		self._volume = 100
 		self.player = None
-		self.isSpeaking = False
+		self._isCancelling = False
+		self._isTerminating = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
-		# key = stream num, value = deque of bookmarks
-		self._streamBookmarks: dict[int, deque[int]] = dict()  # bookmarks in currently speaking streams
-		self._streamBookmarksNew: deque[deque[int]] = deque()  # bookmarks for streams that haven't been started
+		self._bookmarks: deque[int] = deque()
+		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
+		self._threadCond = threading.Condition()
+		self._speakRequests: deque[_SpeakRequest] = deque()
+		self._thread.start()
 
 	def terminate(self):
+		# Wake up and wait for the speak thread.
+		self._isTerminating = True
+		with self._threadCond:
+			self._threadCond.notify_all()
+		self._thread.join()
 		self.tts = None
 		if self.player:
 			self.player.close()
@@ -446,6 +453,45 @@ class SynthDriver(SynthDriver):
 			out.append(outAfter)
 		return " ".join(out)
 
+	def _speakThread(self):
+		# Handles speak requests in the queue one by one.
+		# Only one request will be processed (spoken) at a time.
+		# We don't use SAPI5's built-in speech queue,
+		# because SpVoice.Speak() waits for SAPI5's audio thread,
+		# and if the audio thread waits for WavePlayer.idle(),
+		# SpVoice.Speak() will also block, causing dead-locks sometimes (#18298).
+		# Here we manage the queue ourselves, and call WavePlayer.idle() here
+		# to avoid blocking the audio thread or the main thread.
+		with self._threadCond:
+			while not self._isTerminating:
+				if self._speakRequests:
+					text, bookmarks = self._speakRequests.popleft()
+					self._bookmarks = bookmarks
+					try:
+						# Process one request, and wait for it to finish
+						self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
+						self._threadCond.wait()
+					except Exception:
+						log.error("Error speaking", exc_info=True)
+					self._bookmarks = None
+					if not self._speakRequests:
+						# No more requests after that, so call idle().
+						# Release the lock while idle() is blocking.
+						try:
+							self._threadCond.release()
+							self.player.idle()
+						finally:
+							self._threadCond.acquire()
+				else:  # No request now, just wait.
+					self._threadCond.wait()
+				if self._isCancelling:
+					self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+					# clear the queue
+					self._speakRequests.clear()
+					self.sonicStream.flush()
+					self.sonicStream.readShort()  # discard data left in stream
+					self._isCancelling = False
+
 	def speak(self, speechSequence):
 		textList = []
 		bookmarks: deque[int] = deque()
@@ -550,27 +596,17 @@ class SynthDriver(SynthDriver):
 		outputTags()
 
 		text = "".join(textList)
-		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		# Add the bookmark list before speaking to avoid race conditions.
-		# Although the actual assigned stream number is unknown until Speak() returns,
-		# and we cannot ensure that Speak() can return before StartStream arrives,
-		# we can assume that the StartStream events will arrive in the same order
-		# as our Speak() calls, so we can put the bookmark list in a queue.
-		self._streamBookmarksNew.append(bookmarks)
-		try:
-			self.tts.Speak(text, flags)
-		except:
-			self._streamBookmarksNew.pop()
-			raise
+		with self._threadCond:  # put the request in queue and wake up the thread
+			self._speakRequests.append(_SpeakRequest(text, bookmarks))
+			self._threadCond.notify()
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
 		# Therefore  instruct the audio player to stop first, before interupting and purging any remaining speech.
-		self.isSpeaking = False
-		self.player.stop()
-		self.sonicStream.flush()
-		self.sonicStream.readShort()  # discard data left in stream
-		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+		self._isCancelling = True
+		self.player.stop()  # stop the audio and stop waiting for idle()
+		with self._threadCond:  # wake up the thread
+			self._threadCond.notify()
 
 	def pause(self, switch: bool):
 		self.player.pause(switch)
