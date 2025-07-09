@@ -2640,6 +2640,123 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 
+class MathSettingsPanel(SettingsPanel):
+	title = _("Math")
+	helpId = _("MathSettings")
+	panelDescription = _("The following options control the presentation of mathematical content using MathCAT.")
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
+
+		speechGroupText = _("Speech")
+		speechGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=speechGroupText)
+		speechGroupBox = speechGroupSizer.GetStaticBox()
+		speechGroup = guiHelper.BoxSizerHelper(self, sizer=speechGroupSizer)
+		sHelper.addItem(speechGroup)
+
+		impairmentText = _("Impairment")
+		impairmentOptions = [
+			# Translators: these are the categories of impairments that MathCAT supports
+			# Translators: Learning disabilities includes dyslexia and ADHD
+			_("Learning disabilities"),
+			# Translators: target people who are blind
+			_("Blindness"),
+			# Translators: target people who have low vision
+			_("Low vision"),
+		]
+		self.impairmentList = speechGroup.addLabeledControl(
+			impairmentText,
+			wx.Choice,
+			choices=impairmentOptions,
+		)
+		self.bindHelpEvent("Have MathCAT generate speech for specific impairments", self.impairmentList)
+		self.impairmentList.SetSelection(config.conf["math"]["Speech"]["Impairment"])
+
+		languageText = _("Language")
+		languageOptions = ["XXX"]
+		self.languageList = speechGroup.addLabeledControl(
+			languageText,
+			wx.Choice,
+			choices=languageOptions,
+		)
+		self.bindHelpEvent("MathCAT language setting", self.languageList)
+		self.languageList.SetSelection(config.conf["math"]["Speech"]["Language"])
+
+		decimalSeparatorText = _("Decimal separator for numbers:")
+		decimalSeparatorOptions = [
+			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
+			_("Auto"),
+			# options for decimal separator -- use "."  (and use ", " for block separators)
+			("."),
+			# options for decimal separator -- use ","  (and use ". " for block separators)
+			(","),
+			# Translators: options for decimal separator -- "Custom" = user sets it
+			#   Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
+			_("Custom"),
+		]
+		self.decimalSeparatorList = speechGroup.addLabeledControl(
+			decimalSeparatorText,
+			wx.Choice,
+			choices=decimalSeparatorOptions,
+		)
+		self.bindHelpEvent("Decimal separators", self.decimalSeparatorList)
+		self.decimalSeparatorList.SetSelection(config.conf["math"]["Speech"]["DecimalSeparator"])
+
+		speechStyleText = _("Speech style:"),
+		speechStyleOptions = ["XXX"]
+		self.speechStyleList = speechGroup.addLabeledControl(
+			speechStyleText,
+			wx.Choice,
+			choices=speechStyleOptions,
+		)
+		self.bindHelpEvent("MathCAT speech style setting", self.speechStyleList)
+		self.speechStyleList.SetSelection(config.conf["math"]["Speech"]["SpeechStyle"])
+
+		speechAmountText = _("Speech verbosity")
+		speechAmountOptions = [
+    		# Translators: options for speech verbosity -- "terse" = use less words
+    		_("Terse"),
+    		# Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
+    		_("Medium"),
+    		# Translators: options for speech verbosity -- "verbose" = use more words
+    		_("Verbose"),
+		]
+		self.speechAmountList = speechGroup.addLabeledControl(
+    		speechAmountText,
+	    	wx.Choice,
+    		choices=speechAmountOptions,
+		)
+		self.bindHelpEvent("Control how verbose MathCAT’s speech output should be", self.speechAmountList)
+		self.speechAmountList.SetSelection(config.conf["math"]["Speech"]["SpeechAmount"])
+
+		relativeSpeedText = _("Relative speech rate")
+		self.relativeSpeedSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
+    		relativeSpeedText,
+    		nvdaControls.EnhancedInputSlider,
+    		minValue=10,
+    		maxValue=100,
+		)
+		self.bindHelpEvent("Set the relative speed for math speech output", self.relativeSpeedSlider)
+		self.relativeSpeedSlider.SetValue(config.conf["math"]["Speech"]["RelativeSpeed"])
+
+		# Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
+		pauseFactorText = _("Pause factor")
+		self.pauseFactorSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
+    		pauseFactorText,
+    		nvdaControls.EnhancedInputSlider,
+    		minValue=0,
+    		maxValue=14,
+		)
+		self.bindHelpEvent("Controls how long the pauses are in math speech", self.pauseFactorSlider)
+		self.pauseFactorSlider.SetValue(config.conf["math"]["Speech"]["PauseFactor"])
+
+		# Translators: label for check box controlling a beep sound when math speech starts/ends
+		speechSoundText = _("Make a sound when starting/ending math speech")
+		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
+		self.speechSoundCheckBox.SetValue(config.conf["math"]["Speech"]["SpeechSound"])
+
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
@@ -5474,6 +5591,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		MathSettingsPanel,
 		RemoteSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
