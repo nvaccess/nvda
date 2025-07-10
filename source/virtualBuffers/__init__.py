@@ -10,7 +10,6 @@ import ctypes
 import collections  # noqa: F401
 import itertools  # noqa: F401
 from typing import (
-	Optional,
 	Dict,
 )
 import weakref

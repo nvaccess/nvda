@@ -12,7 +12,6 @@ from .types import RelationType  # noqa: F401
 import re
 import struct
 from typing import (
-	Optional,
 	Tuple,
 	Dict,
 	Union,

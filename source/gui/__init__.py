@@ -24,7 +24,6 @@ import queueHandler
 import core
 from typing import (
 	Any,
-	Optional,
 	Type,
 )
 import systemUtils

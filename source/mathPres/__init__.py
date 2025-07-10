@@ -12,7 +12,7 @@ using L{registerProvider}.
 
 import re
 import typing
-from typing import List, Optional, Union
+from typing import List, Union
 
 from NVDAObjects.window import Window
 import controlTypes

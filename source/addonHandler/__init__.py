@@ -22,7 +22,6 @@ from typing import (
 	Dict,
 	IO,
 	Literal,
-	Optional,
 	Set,
 	TYPE_CHECKING,
 	Tuple,

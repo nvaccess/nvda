@@ -14,7 +14,6 @@ using modules in the visionEnhancementProviders package containing a L{VisionEnh
 from .visionHandler import VisionHandler
 import visionEnhancementProviders  # noqa: F401
 import config
-from typing import Optional
 
 handler: VisionHandler | None = None
 

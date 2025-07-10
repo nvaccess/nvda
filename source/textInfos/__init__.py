@@ -18,7 +18,6 @@ from typing import (
 	Any,
 	Union,
 	List,
-	Optional,
 	Dict,
 	Tuple,
 	Self,

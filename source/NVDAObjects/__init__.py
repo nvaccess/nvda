@@ -12,7 +12,6 @@ import time
 import typing
 from typing import (
 	Dict,
-	Optional,
 	TYPE_CHECKING,
 )
 import weakref

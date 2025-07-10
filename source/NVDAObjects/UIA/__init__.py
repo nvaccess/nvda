@@ -11,7 +11,6 @@ import typing
 from typing import (
 	Generator,
 	List,
-	Optional,
 	Dict,
 	Tuple,
 	Callable,

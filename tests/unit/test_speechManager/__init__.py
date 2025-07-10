@@ -6,7 +6,7 @@
 """Unit tests for speech/manager module"""
 
 import unittest
-from typing import Optional, Callable
+from typing import Callable
 
 import config
 import speech
