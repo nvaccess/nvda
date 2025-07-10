@@ -348,7 +348,7 @@ class SynthDriverAudio(COMObject):
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._comThread = comThread
 
-	def IUnknown_Release(self, this: int, *args, **kwargs):
+	def IUnknown_Release(self, this: int, *args, **kwargs) -> int:
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("SynthDriverAudio was released too many times")
 			return 1
@@ -731,7 +731,7 @@ class SynthDriverMMAudio(COMObject):
 		self.audio = self.mmdev.QueryInterface(IAudio)
 		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
 
-	def IUnknown_Release(self, this: int, *args, **kwargs):
+	def IUnknown_Release(self, this: int, *args, **kwargs) -> int:
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("SynthDriverMMAudio was released too many times")
 			return 1
