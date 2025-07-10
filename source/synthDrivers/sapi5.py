@@ -435,7 +435,7 @@ class SynthDriver(SynthDriver):
 			log.debugWarning("SAPI5 voice does not support ISPAudio")
 			self.ttsAudioStream = None
 
-	def _initTts(self, voice=None):
+	def _initTts(self, voice: str | None = None):
 		self.tts = comtypes.client.CreateObject(self.COM_CLASS)
 		if voice:
 			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
@@ -655,7 +655,7 @@ class SynthDriver(SynthDriver):
 		finally:
 			if tempAudioDucker:
 				if audioDucking._isDebug():
-					log.debug("Disabling audio ducking  after speak call")
+					log.debug("Disabling audio ducking after speak call")
 				tempAudioDucker.disable()
 		# When Speak returns, the previous stream may not have been ended.
 		# So the bookmark list is stored in another dict until this stream starts.

@@ -222,7 +222,7 @@ class SynthDriver(driverHandler.Driver):
 		)
 
 	@classmethod
-	def UseWasapiSetting(cls):
+	def UseWasapiSetting(cls) -> BooleanDriverSetting:
 		"""Factory function for creating 'Use WASAPI' setting."""
 		return BooleanDriverSetting(
 			"useWasapi",

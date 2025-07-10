@@ -1669,7 +1669,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	def getSettings(self) -> AutoSettings:
 		return self.driver
 
-	def _getSettingControlHelpId(self, controlId):
+	def _getSettingControlHelpId(self, controlId: str) -> str:
 		standardSettings = [
 			"voice",
 			"variant",
