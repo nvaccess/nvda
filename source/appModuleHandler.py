@@ -66,6 +66,7 @@ since appModules in add-ons should take precedence over the one bundled in NVDA.
 
 class processEntry32W(ctypes.Structure):
 	"""See https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w"""
+
 	_fields_ = [
 		("dwSize", ctypes.wintypes.DWORD),
 		("cntUsage", ctypes.wintypes.DWORD),
