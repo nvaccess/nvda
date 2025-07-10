@@ -298,18 +298,9 @@ class DummyTCPSocket:
 
 class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 	def setUp(self):
-		# Prevent pip_system_certs from replacing certifi with system certificates for testing.
-		self.patcher_truststore = mock.patch(
-			"pip._vendor.truststore._api._verify_peercerts",
-			lambda *a, **kw: None,
-		)
-		self.patcher_truststore.start()
 		self.serializer = FakeSerializer()
 		self.host = "localhost"
 		self.port = 8090
-
-	def tearDown(self):
-		self.patcher_truststore.stop()
 
 	def test_createOutboundSocketOnion(self):
 		t = TCPTransport(self.serializer, (self.host + ".onion", self.port))
