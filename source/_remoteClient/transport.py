@@ -437,6 +437,7 @@ class TCPTransport(Transport):
 		ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 		ctx.minimum_version = ssl.TLSVersion.TLSv1_2
 		ctx.maximum_version = ssl.TLSVersion.TLSv1_3
+		# Must be set before verify_mode.
 		ctx.check_hostname = not insecure
 		if insecure:
 			log.warn(f"Skipping certificate verification for {host}:{port}")
