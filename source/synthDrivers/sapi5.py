@@ -377,7 +377,16 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
 
-		self.tts.AudioOutput = self.tts.GetAudioOutputs()[0]  # Reset the audio and its format parameters
+		# Set the audio output device to reset the audio format parameters
+		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
+			("audio", "outputDevice"),
+		).default:
+			for audioOutput in self.tts.GetAudioOutputs():
+				# SAPI's audio output IDs are registry keys. It seems that the final path segment is the endpoint ID.
+				if audioOutput.Id.endswith(outputDevice):
+					self.tts.audioOutput = audioOutput
+					break
+
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
 		# Force the wave format to be 16-bit integer (which Sonic uses internally).
