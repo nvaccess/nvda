@@ -97,7 +97,7 @@ def setupProfile(
 	repoRoot: str,
 	settingsFileName: str,
 	stagingDir: str,
-	gesturesFileName: Optional[str] = None,
+	gesturesFileName: str | None = None,
 ):
 	builtIn.log("Copying files into NVDA profile", level="DEBUG")
 	opSys.copy_file(

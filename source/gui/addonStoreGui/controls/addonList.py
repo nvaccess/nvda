@@ -73,7 +73,7 @@ class AddonVirtualList(
 			self.AppendColumn(col.displayString, width=self.scaleSize(col.width))
 		self.Layout()
 
-	def _getListSelectionPosition(self) -> Optional[wx.Position]:
+	def _getListSelectionPosition(self) -> wx.Position | None:
 		firstSelectedIndex: int = self.GetFirstSelected()
 		if firstSelectedIndex < 0:
 			return None

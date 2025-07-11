@@ -58,7 +58,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	description: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
@@ -114,18 +114,18 @@ class _AddonStoreModel(_AddonGUIModel):
 	description: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
 	publisher: str
 	license: str
-	licenseURL: Optional[str]
+	licenseURL: str | None
 	sourceURL: str
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
-	reviewURL: Optional[str]
+	reviewURL: str | None
 	submissionTime: int | None
 
 	@property
@@ -200,7 +200,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	addonId: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	manifest: "AddonManifest"
@@ -216,7 +216,7 @@ class _AddonManifestModel(_AddonGUIModel):
 
 	@property
 	def description(self) -> str:
-		description: Optional[str] = self.manifest.get("description")
+		description: str | None = self.manifest.get("description")
 		if description is None:
 			return ""
 		return description
@@ -239,7 +239,7 @@ class AddonManifestModel(_AddonManifestModel):
 	addonId: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	manifest: "AddonManifest"
@@ -260,16 +260,16 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	publisher: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	license: str
-	licenseURL: Optional[str]
+	licenseURL: str | None
 	sourceURL: str
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	reviewURL: Optional[str]
+	reviewURL: str | None
 	submissionTime: int | None
 	legacy: bool = False
 	"""
@@ -297,16 +297,16 @@ class AddonStoreModel(_AddonStoreModel):
 	publisher: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	license: str
-	licenseURL: Optional[str]
+	licenseURL: str | None
 	sourceURL: str
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	reviewURL: Optional[str]
+	reviewURL: str | None
 	submissionTime: int | None
 	legacy: bool = False
 	"""
@@ -318,7 +318,7 @@ class AddonStoreModel(_AddonStoreModel):
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
-	cacheHash: Optional[str]
+	cacheHash: str | None
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
@@ -369,7 +369,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 
 
 def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestModel:
-	homepage: Optional[str] = addon.manifest.get("url")
+	homepage: str | None = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None

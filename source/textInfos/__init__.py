@@ -246,7 +246,7 @@ class FieldCommand(object):
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
+	def __init__(self, command: str, field: Union[ControlField, FormatField] | None):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
@@ -418,7 +418,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	TextOrFieldsT = Union[str, FieldCommand]
 	TextWithFieldsT = List[TextOrFieldsT]
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
@@ -637,9 +637,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		attrs: ControlField,
 		ancestorAttrs: List[Field],
 		fieldType: str,
-		formatConfig: Optional[Dict[str, bool]] = None,
+		formatConfig: Dict[str, bool] | None = None,
 		extraDetail: bool = False,
-		reason: Optional[OutputReason] = None,
+		reason: OutputReason | None = None,
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -664,10 +664,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getFormatFieldSpeech(
 		self,
 		attrs: Field,
-		attrsCache: Optional[Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: Field | None = None,
+		formatConfig: Dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:

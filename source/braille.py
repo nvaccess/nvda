@@ -539,7 +539,7 @@ class Region(object):
 		#: @type: [int, ...]
 		self.brailleToRawPos = []
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
-		self.brailleCursorPos: Optional[int] = None
+		self.brailleCursorPos: int | None = None
 		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
 		#: @type: int
 		self.brailleSelectionStart = None
@@ -680,7 +680,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	name = propertyValues.get("name")
 	if name:
 		textList.append(name)
-	role: Optional[Union[controlTypes.Role, int]] = propertyValues.get("role")
+	role: Union[controlTypes.Role, int] | None = propertyValues.get("role")
 	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
@@ -903,7 +903,7 @@ def getControlFieldBraille(
 	ancestors: typing.List[textInfos.Field],
 	reportStart: bool,
 	formatConfig: config.AggregatedSection,
-) -> Optional[str]:
+) -> str | None:
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -1010,13 +1010,13 @@ def getControlFieldBraille(
 
 
 def _getControlFieldForLayoutPresentation(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
 	role: controlTypes.Role,
-	content: Optional[str],
-) -> Optional[str]:
+	content: str | None,
+) -> str | None:
 	text = []
 	if description:
 		text.append(getPropertiesBraille(description=description))
@@ -1033,7 +1033,7 @@ def _getControlFieldForLayoutPresentation(
 
 
 def _getControlFieldForTableCell(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
@@ -1061,18 +1061,18 @@ def _getControlFieldForTableCell(
 
 
 def _getControlFieldForReportStart(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
 	field: textInfos.Field,
 	role: controlTypes.Role,
 	states: Set[controlTypes.State],
-	content: Optional[str],
+	content: str | None,
 	info: textInfos.TextInfo,
-	value: Optional[str],
+	value: str | None,
 	roleText: str,
-	placeholder: Optional[str],
+	placeholder: str | None,
 	errorMessage: str | None,
 ) -> str:
 	props = {
@@ -2147,7 +2147,7 @@ def invalidateCachedFocusAncestors(index):
 
 def getFocusContextRegions(
 	obj: "NVDAObject",
-	oldFocusRegions: Optional[List[Region]] = None,
+	oldFocusRegions: List[Region] | None = None,
 ) -> Generator[Region, None, None]:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
@@ -2369,7 +2369,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_REVIEW = TetherTo.REVIEW.value
 	tetherValues = [(v.value, v.displayString) for v in TetherTo]
 
-	queuedWrite: Optional[List[int]] = None
+	queuedWrite: List[int] | None = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
 	_regionsPendingUpdate: Set[Union[NVDAObjectRegion, TextInfoRegion]]
@@ -2381,7 +2381,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
-		self.display: Optional[BrailleDisplayDriver] = None
+		self.display: BrailleDisplayDriver | None = None
 		self._displayDimensions: DisplayDimensions = DisplayDimensions(1, 0)
 		"""
 		Internal cache for the displayDimensions property.
@@ -2649,7 +2649,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		name: str,
 		isFallback: bool = False,
-		detected: typing.Optional[bdDetect.DeviceMatch] = None,
+		detected: bdDetect.DeviceMatch | None = None,
 	) -> bool:
 		if name == AUTO_DISPLAY_NAME:
 			# Calling _enableDetection will set the display to noBraille until a display is detected.
@@ -2719,7 +2719,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		newDisplayClass: Type["BrailleDisplayDriver"],
 		isFallback: bool = False,
-		detected: typing.Optional[bdDetect.DeviceMatch] = None,
+		detected: bdDetect.DeviceMatch | None = None,
 	):
 		kwargs = {}
 		if detected:
@@ -2823,7 +2823,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleDisplayUnavailable()
 			return
 		with self.queuedWriteLock:
-			alreadyQueued: Optional[List[int]] = self.queuedWrite
+			alreadyQueued: List[int] | None = self.queuedWrite
 			self.queuedWrite = cells
 		# If a write was already queued, we don't need to queue another;
 		# we just replace the data.
@@ -3013,7 +3013,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self._regionsPendingUpdate:
 			return
 		try:
-			scrollTo: Optional[TextInfoRegion] = None
+			scrollTo: TextInfoRegion | None = None
 			self.mainBuffer.saveWindow()
 			for region in self._regionsPendingUpdate:
 				from treeInterceptorHandler import TreeInterceptor
@@ -3206,7 +3206,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		usb: bool = True,
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: List[str] | None = None,
 	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
@@ -3244,7 +3244,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Do not write cells when we are awaiting an ACK
 			return
 		with self.queuedWriteLock:
-			data: Optional[List[int]] = self.queuedWrite
+			data: List[int] | None = self.queuedWrite
 			self.queuedWrite = None
 		if not data:
 			return
@@ -3282,7 +3282,7 @@ RENAMED_DRIVERS = {
 	"hid": "hidBrailleStandard",
 }
 
-handler: Optional[BrailleHandler] = None
+handler: BrailleHandler | None = None
 
 
 def initialize():
@@ -3566,7 +3566,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	gestureMap: Optional[inputCore.GlobalGestureMap] = None
+	gestureMap: inputCore.GlobalGestureMap | None = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):
@@ -3782,7 +3782,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 
-	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
+	def _get_speechEffectWhenExecuted(self) -> str | None:
 		from globalCommands import commands
 
 		if not config.conf["braille"]["interruptSpeechWhileScrolling"] and self.script in {
@@ -3855,7 +3855,7 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 
 
 def getDisplayDrivers(
-	filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None,
+	filterFunc: Callable[[Type[BrailleDisplayDriver]], bool] | None = None,
 ) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
 	"""Gets an iterator of braille display drivers meeting the given filter callable.
 	@param filterFunc: an optional callable that receives a driver as its only argument and returns

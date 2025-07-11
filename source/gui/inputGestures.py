@@ -97,7 +97,7 @@ class _ScriptVM:
 	def __init__(self, displayName: str, scriptInfo: inputCore.AllGesturesScriptInfo):
 		self.displayName = displayName
 		self.scriptInfo = scriptInfo
-		self.pending: Optional[_PendingGesture] = None
+		self.pending: _PendingGesture | None = None
 		self.addedGestures = []
 		self.removedGestures = {}
 		self.gestures = []
@@ -213,7 +213,7 @@ class _EmuCategoryVM:
 		self.addedKbEmulation = []
 		self.removedKbEmulation = {}
 		self.scripts = []
-		self.pending: Optional[_PendingEmulatedGestureVM] = None
+		self.pending: _PendingEmulatedGestureVM | None = None
 		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
 			if isinstance(emuG, inputCore.KbEmuScriptInfo):
@@ -269,16 +269,16 @@ _GestureVMTypes = Union[_GestureVM, _PendingGesture]
 
 _VmSelection = Tuple[
 	_CategoryVMTypes,
-	Optional[_ScriptVMTypes],
-	Optional[_GestureVMTypes],
+	_ScriptVMTypes | None,
+	_GestureVMTypes | None,
 ]
 
 
 class _InputGesturesViewModel:
 	allGestures: List[_CategoryVMTypes]
 	filteredGestures: List[_CategoryVMTypes]
-	isExpectingNewEmuGesture: Optional[_EmuCategoryVM] = None
-	isExpectingNewGesture: Optional[_ScriptVM] = None
+	isExpectingNewEmuGesture: _EmuCategoryVM | None = None
+	isExpectingNewGesture: _ScriptVM | None = None
 
 	def __init__(self):
 		self.reset()
@@ -485,7 +485,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		gesture = scriptVm.gestures[gestureIndex]
 		return gesture.displayName
 
-	def getSelectedItemData(self) -> Optional[_VmSelection]:
+	def getSelectedItemData(self) -> _VmSelection | None:
 		selection = self.GetSelection()
 		try:
 			selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
@@ -498,13 +498,13 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			return None
 		# ensure that the length of tuple is 3, missing elements replaced with None
 		nonesForMissingElements = (None,) * (3 - len(selIdx))
-		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
+		selIdx: Tuple[int, int | None, int | None] = selIdx + nonesForMissingElements
 		return self.getData(selIdx)
 
 	def getData(
 		self,
-		index: Tuple[int, Optional[int], Optional[int]],
-	) -> Optional[_VmSelection]:
+		index: Tuple[int, int | None, int | None],
+	) -> _VmSelection | None:
 		assert 3 == len(index) and index[0] is not None
 		if len(self.gesturesVM.filteredGestures) == 0:
 			log.debug("No filtered gestures available.")
@@ -524,7 +524,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		if scriptIndex is None:
 			return (catVM, None, None)
 		try:
-			scriptVM: Optional[_ScriptVMTypes] = catVM.scripts[scriptIndex]
+			scriptVM: _ScriptVMTypes | None = catVM.scripts[scriptIndex]
 		except IndexError:
 			log.error(
 				"Exceeded expected script bounds, use _PendingEmulatedGestureVM as a placeholder."
@@ -552,7 +552,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			raise
 		return (catVM, scriptVM, gestureVM)
 
-	def doRefresh(self, postFilter=False, focus: Optional[_VmSelection] = None):
+	def doRefresh(self, postFilter=False, focus: _VmSelection | None = None):
 		with guiHelper.autoThaw(self):
 			self.RefreshItems()
 			if postFilter:

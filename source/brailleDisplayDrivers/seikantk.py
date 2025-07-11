@@ -127,12 +127,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numRoutingKeys = 0
 		self.handle = None
 		self._hidBuffer = b""
-		self._command: typing.Optional[bytes] = None
-		self._argsLen: typing.Optional[int] = None
-		self._dev: Optional[hwIo.IoBase] = None
+		self._command: bytes | None = None
+		self._argsLen: int | None = None
+		self._dev: hwIo.IoBase | None = None
 
 		log.debug(f"Seika Notetaker braille driver: ({port!r})")
-		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
+		dev: typing.Union[hwIo.Hid, hwIo.Serial] | None = None
 		for match in self._getTryPorts(port):
 			self.isHid = match.type == bdDetect.ProtocolType.HID
 			self.isSerial = match.type == bdDetect.ProtocolType.SERIAL

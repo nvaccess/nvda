@@ -139,7 +139,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleKeyPresses(self):
 		while True:
-			key: Optional[int] = None
+			key: int | None = None
 			try:
 				# Python 3: review required
 				# The code seems to assume this returns an int.

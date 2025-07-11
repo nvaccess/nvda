@@ -74,7 +74,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 		return tuple(self._rolesGenerator)
 
 	@property
-	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+	def _rolesGenerator(self) -> Generator[controlTypes.Role | None, None, None]:
 		"""
 		Since Chromium exposes the roles via the "details-roles" IA2Attributes, an optimisation can be used
 		to return them.
@@ -127,7 +127,7 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
-		ia2attrDescriptionFrom: Optional[str] = self.IA2Attributes.get("description-from")
+		ia2attrDescriptionFrom: str | None = self.IA2Attributes.get("description-from")
 		try:
 			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
 		except ValueError:
@@ -143,7 +143,7 @@ class Ia2Web(IAccessible):
 		annotationOrigin = IA2WebAnnotation(self)
 		return annotationOrigin
 
-	def _get_detailsSummary(self) -> Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -159,7 +159,7 @@ class Ia2Web(IAccessible):
 		)
 		return bool(self.annotations)
 
-	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,

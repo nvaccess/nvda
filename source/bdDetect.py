@@ -189,7 +189,7 @@ def _isDebug():
 
 
 def getDriversForConnectedUsbDevices(
-	limitToDevices: Optional[List[str]] = None,
+	limitToDevices: List[str] | None = None,
 ) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
@@ -271,7 +271,7 @@ def HIDUsagePageMatchFuncFactory(usagePage: int) -> MatchFuncT:
 
 
 def getDriversForPossibleBluetoothDevices(
-	limitToDevices: Optional[List[str]] = None,
+	limitToDevices: List[str] | None = None,
 ) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
@@ -380,7 +380,7 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 
-deviceInfoFetcher: Optional[_DeviceInfoFetcher] = None
+deviceInfoFetcher: _DeviceInfoFetcher | None = None
 
 
 class _Detector:
@@ -393,19 +393,19 @@ class _Detector:
 		After construction, a scan should be queued with L{queueBgScan}.
 		"""
 		self._executor = ThreadPoolExecutor(1)
-		self._queuedFuture: Optional[Future] = None
+		self._queuedFuture: Future | None = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
 		self._detectUsb = True
 		self._detectBluetooth = True
-		self._limitToDevices: Optional[List[str]] = None
+		self._limitToDevices: List[str] | None = None
 
 	def _queueBgScan(
 		self,
 		usb: bool = False,
 		bluetooth: bool = False,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: List[str] | None = None,
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
@@ -438,7 +438,7 @@ class _Detector:
 	@staticmethod
 	def _bgScanUsb(
 		usb: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: List[str] | None = None,
 	):
 		"""Handler for L{scanForDevices} that yields USB devices.
 		See the L{scanForDevices} documentation for information about the parameters.
@@ -451,14 +451,14 @@ class _Detector:
 	@staticmethod
 	def _bgScanBluetooth(
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: List[str] | None = None,
 	):
 		"""Handler for L{scanForDevices} that yields Bluetooth devices and keeps an internal cache of devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
 		if not bluetooth:
 			return
-		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = deviceInfoFetcher.btDevsCache
+		btDevs: Iterable[Tuple[str, DeviceMatch]] | None = deviceInfoFetcher.btDevsCache
 		if btDevs is None:
 			btDevs = getDriversForPossibleBluetoothDevices(limitToDevices)
 			# Cache Bluetooth devices for next time.
@@ -476,7 +476,7 @@ class _Detector:
 		self,
 		usb: bool,
 		bluetooth: bool,
-		limitToDevices: Optional[List[str]],
+		limitToDevices: List[str] | None,
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
@@ -505,7 +505,7 @@ class _Detector:
 		self,
 		usb: bool = True,
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: List[str] | None = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.

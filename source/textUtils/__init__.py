@@ -245,7 +245,7 @@ class WideStringOffsetConverter(OffsetConverter):
 def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
-	encoding: Optional[str] = None,
+	encoding: str | None = None,
 	errorsFallback: str = "replace",
 ):
 	"""

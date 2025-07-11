@@ -21,7 +21,7 @@ if typing.TYPE_CHECKING:
 	# at run time)
 	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
 
-supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
+supportedAriaDetailsRoles: Dict[str, controlTypes.Role | None] = {
 	"unknown": None,  # no explicit role, should be reported as "details"
 	"comment": controlTypes.Role.COMMENT,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,

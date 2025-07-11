@@ -53,9 +53,9 @@ class MathPresentationProvider(object):
 		raise NotImplementedError
 
 
-speechProvider: Optional[MathPresentationProvider] = None
-brailleProvider: Optional[MathPresentationProvider] = None
-interactionProvider: Optional[MathPresentationProvider] = None
+speechProvider: MathPresentationProvider | None = None
+brailleProvider: MathPresentationProvider | None = None
+interactionProvider: MathPresentationProvider | None = None
 
 
 def registerProvider(
@@ -147,7 +147,7 @@ def stripExtraneousXml(xml):
 	return RE_STRIP_XML_PREFIX.sub("", xml)
 
 
-def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> Optional[str]:
+def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> str | None:
 	"""Get MathML (if any) at the start of a TextInfo.
 	@param pos: The TextInfo in question.
 	@return: The MathML or C{None} if there is no math.

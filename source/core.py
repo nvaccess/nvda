@@ -211,8 +211,8 @@ def doStartupDialogs():
 @dataclass
 class NewNVDAInstance:
 	filePath: str
-	parameters: Optional[str] = None
-	directory: Optional[str] = None
+	parameters: str | None = None
+	directory: str | None = None
 
 
 def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
@@ -454,14 +454,14 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 	)
 
 
-def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+def _doShutdown(newNVDA: NewNVDAInstance | None):
 	_handleNVDAModuleCleanupBeforeGUIExit()
 	_closeAllWindows()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
 
 
-def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
+def triggerNVDAExit(newNVDA: NewNVDAInstance | None = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.

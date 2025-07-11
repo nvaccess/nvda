@@ -71,7 +71,7 @@ def _getCacheHashURL() -> str:
 
 class AddonFileDownloader:
 	OnCompleteT = Callable[
-		["AddonListItemVM[_AddonStoreModel]", Optional[os.PathLike]],
+		["AddonListItemVM[_AddonStoreModel]", os.PathLike | None],
 		None,
 	]
 
@@ -92,7 +92,7 @@ class AddonFileDownloader:
 		"""
 
 		self._pending: Dict[
-			Future[Optional[os.PathLike]],
+			Future[os.PathLike | None],
 			Tuple[
 				"AddonListItemVM[_AddonStoreModel]",
 				AddonFileDownloader.OnCompleteT,
@@ -102,7 +102,7 @@ class AddonFileDownloader:
 		self.complete: Dict[
 			"AddonListItemVM[_AddonStoreModel]",
 			# Path to downloaded file
-			Optional[os.PathLike],
+			os.PathLike | None,
 		] = {}
 		self._executor = ThreadPoolExecutor(
 			max_workers=10,
@@ -128,14 +128,14 @@ class AddonFileDownloader:
 		# No lock is needed here, as the download task will not have started yet.
 		self.progress[addonData] = 0
 		assert self._executor
-		f: Future[Optional[os.PathLike]] = self._executor.submit(
+		f: Future[os.PathLike | None] = self._executor.submit(
 			self._download,
 			addonData,
 		)
 		self._pending[f] = addonData, onComplete, onDisplayableError
 		f.add_done_callback(self._done)
 
-	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
+	def _done(self, downloadAddonFuture: Future[os.PathLike | None]):
 		with self.DOWNLOAD_LOCK:
 			isCancelled = (
 				downloadAddonFuture.cancelled()
@@ -163,7 +163,7 @@ class AddonFileDownloader:
 
 		addonData, onComplete, onDisplayableError = self._pending[downloadAddonFuture]
 		downloadAddonFutureException = downloadAddonFuture.exception()
-		cacheFilePath: Optional[os.PathLike]
+		cacheFilePath: os.PathLike | None
 		if downloadAddonFutureException:
 			cacheFilePath = None
 			from gui.message import DisplayableError
@@ -236,7 +236,7 @@ class AddonFileDownloader:
 							return False  # The download was cancelled
 		return True
 
-	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> Optional[os.PathLike]:
+	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> os.PathLike | None:
 		from gui.message import DisplayableError
 
 		# Translators: A title for a dialog notifying a user of an add-on download failure.

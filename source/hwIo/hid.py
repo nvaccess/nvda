@@ -129,8 +129,8 @@ class Hid(IoBase):
 		path: str,
 		onReceive: Callable[[bytes], None],
 		exclusive: bool = True,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.

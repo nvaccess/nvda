@@ -195,7 +195,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 	#: Use the default device, this is the configSpec default value.
 	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
-	_silenceDevice: typing.Optional[str] = None
+	_silenceDevice: str | None = None
 
 	def __init__(
 		self,
@@ -243,7 +243,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
-		self._lastActiveTime: typing.Optional[float] = None
+		self._lastActiveTime: float | None = None
 		self._isPaused: bool = False
 		if config.conf["audio"]["audioAwakeTime"] > 0 and WavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.
@@ -309,8 +309,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def feed(
 		self,
 		data: typing.Union[bytes, c_void_p],
-		size: typing.Optional[int] = None,
-		onDone: typing.Optional[typing.Callable] = None,
+		size: int | None = None,
+		onDone: typing.Callable | None = None,
 	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This will block until there is sufficient space in the buffer.
@@ -409,9 +409,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def setVolume(
 		self,
 		*,
-		all: Optional[float] = None,
-		left: Optional[float] = None,
-		right: Optional[float] = None,
+		all: float | None = None,
+		left: float | None = None,
+		right: float | None = None,
 	):
 		"""Set the volume of one or more channels in this stream.
 		Levels must be specified as a number between 0 and 1.
@@ -528,7 +528,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				break
 
 
-fileWavePlayer: Optional[WavePlayer] = None
+fileWavePlayer: WavePlayer | None = None
 fileWavePlayerThread: threading.Thread | None = None
 
 

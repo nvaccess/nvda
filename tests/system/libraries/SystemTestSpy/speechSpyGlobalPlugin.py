@@ -122,7 +122,7 @@ class NVDASpyLib:
 		gesture: str,
 		module: str,
 		className: str,
-		script: Optional[str],
+		script: str | None,
 		replace: bool = False,
 	):
 		import inputCore
@@ -135,7 +135,7 @@ class NVDASpyLib:
 			replace,
 		)
 
-	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
+	fakeTranslations: gettext.NullTranslations | None = None
 
 	def override_translationString(self, invariantString: str, replacementString: str):
 		import languageHandler
@@ -246,7 +246,7 @@ class NVDASpyLib:
 		with self._speechLock:
 			return len(self._nvdaSpeech_requiresLock) - 1
 
-	def _getIndexOfSpeech(self, speech, searchAfterIndex: Optional[int] = None):
+	def _getIndexOfSpeech(self, speech, searchAfterIndex: int | None = None):
 		if searchAfterIndex is None:
 			firstIndexToCheck = 0
 		else:
@@ -259,7 +259,7 @@ class NVDASpyLib:
 					return index
 			return -1
 
-	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
+	def _hasSpeechFinished(self, speechStartedIndex: int | None = None):
 		with self._speechLock:
 			nextIndex = self.get_next_speech_index()
 			started = speechStartedIndex is None or speechStartedIndex < nextIndex
@@ -379,10 +379,10 @@ class NVDASpyLib:
 	def _has_speech_occurred_before_timeout(
 		self,
 		speech: str,
-		afterIndex: Optional[int],
+		afterIndex: int | None,
 		maxWaitSeconds: float,
 		intervalBetweenSeconds: float,
-	) -> Tuple[bool, Optional[int]]:
+	) -> Tuple[bool, int | None]:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
@@ -401,10 +401,10 @@ class NVDASpyLib:
 	def wait_for_specific_speech_no_raise(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = 5.0,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
-	) -> Optional[int]:
+	) -> int | None:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
@@ -425,7 +425,7 @@ class NVDASpyLib:
 	def wait_for_specific_speech(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = 5.0,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> int:
@@ -453,7 +453,7 @@ class NVDASpyLib:
 	def ensure_speech_did_not_occur(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> None:
@@ -481,8 +481,8 @@ class NVDASpyLib:
 	def wait_for_speech_to_finish(
 		self,
 		maxWaitSeconds=5.0,
-		speechStartedIndex: Optional[int] = None,
-		errorMessage: Optional[str] = "Speech did not finish before timeout",
+		speechStartedIndex: int | None = None,
+		errorMessage: str | None = "Speech did not finish before timeout",
 	) -> bool:
 		"""speechStartedIndex should generally be fetched with get_next_speech_index
 		@param errorMessage: Supply None to bypass assert.
@@ -586,7 +586,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 		self._server.stop()
 
 
-def _crashNVDA(param: Optional[int] = None):
+def _crashNVDA(param: int | None = None):
 	# Causes a breakpoint exception to occur in the current process.
 	# This allows the calling thread to signal the debugger to handle the exception.
 	#

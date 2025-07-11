@@ -41,7 +41,7 @@ stdNamesToRoles = {
 }
 
 
-def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, typing.Optional[str]]:
+def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, str | None]:
 	"""
 	@param stdName:
 	@return: Tuple with the NVDA role and optionally the level number of the heading as a string, E.G.:

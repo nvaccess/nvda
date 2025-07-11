@@ -49,7 +49,7 @@ from NVDAState import WritePaths
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
 ScriptNameT = str
 
-InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
+InputGestureScriptT = Tuple[InputGestureBindingClassT, ScriptNameT | None]
 """
 The Python class and script name for each script;
 the script name may be C{None} indicating that the gesture should be unbound for this class.
@@ -190,9 +190,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	#: typing information for autoproperty _get_scriptableObject
-	scriptableObject: Optional[baseObject.ScriptableObject]
+	scriptableObject: baseObject.ScriptableObject | None
 
-	def _get_scriptableObject(self) -> Optional[baseObject.ScriptableObject]:
+	def _get_scriptableObject(self) -> baseObject.ScriptableObject | None:
 		"""An object which contains scripts specific to this  gesture or type of gesture.
 		This object will be searched for scripts before any other object when handling this gesture.
 		@return: The gesture specific scriptable object or C{None} if there is none.
@@ -230,8 +230,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 FlattenedGestureMapT = Dict[
 	str,  # moduleName.className
 	Dict[
-		Optional[ScriptNameT],  # Script name
-		Optional[Union[str, List[str]]],  # Normalized gestures
+		ScriptNameT | None,  # Script name
+		Union[str, List[str]] | None,  # Normalized gestures
 	],
 ]
 ScriptT = Callable[[InputGesture], None]
@@ -241,7 +241,7 @@ _InternalGestureMapT = Dict[
 		Tuple[
 			str,  # module
 			str,  # class name
-			Optional[ScriptNameT],  # script
+			ScriptNameT | None,  # script
 		],
 	],
 ]
@@ -255,7 +255,7 @@ class GlobalGestureMap:
 	See that method for details of the file format.
 	"""
 
-	def __init__(self, entries: Optional[FlattenedGestureMapT] = None):
+	def __init__(self, entries: FlattenedGestureMapT | None = None):
 		"""Constructor.
 		@param entries: Initial entries to add; see L{update} for the format.
 		"""
@@ -263,7 +263,7 @@ class GlobalGestureMap:
 		#: Indicates that the last load or update contained an error.
 		self.lastUpdateContainedError: bool = False
 		#: The file name for this gesture map, if any.
-		self.fileName: Optional[str] = None
+		self.fileName: str | None = None
 		if entries:
 			self.update(entries)
 
@@ -277,7 +277,7 @@ class GlobalGestureMap:
 		gesture: str,
 		module: str,
 		className: str,
-		script: Optional[ScriptNameT],
+		script: ScriptNameT | None,
 		replace: bool = False,
 	):
 		"""Add a gesture mapping.
@@ -984,7 +984,7 @@ def getDisplayTextForGestureIdentifier(identifier):
 
 
 #: The singleton input manager instance.
-manager: Optional[InputManager] = None
+manager: InputManager | None = None
 
 
 def initialize():

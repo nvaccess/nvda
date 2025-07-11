@@ -328,7 +328,7 @@ class WordDocumentTextInfo(UIATextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: Dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell

@@ -615,7 +615,7 @@ def SetThreadExecutionState(esFlags):
 	return res
 
 
-def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+def LCIDToLocaleName(windowsLCID: LCID) -> str | None:
 	# NVDA cannot run with this imported at module level
 	from logHandler import log
 

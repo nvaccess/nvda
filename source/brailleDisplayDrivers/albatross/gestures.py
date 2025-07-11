@@ -110,7 +110,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		if self.id and not self.script:
 			self.script = self._get_script()
 
-	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
+	def _getRoutingIndex(self, key: int) -> Tuple[str, int] | None:
 		"""Get the routing index, if the key is in a routing index range,
 		returns the name of the range and the index within that range.
 		See L{ROUTING_KEY_RANGES}.

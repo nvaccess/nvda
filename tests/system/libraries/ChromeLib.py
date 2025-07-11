@@ -45,9 +45,9 @@ class ChromeLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	_chromeWindow: _Optional[Window] = None
+	_chromeWindow: Window | None = None
 	"""Chrome Hwnd used to control Chrome via Windows functions."""
-	_processRFHandleForStart: _Optional[int] = None
+	_processRFHandleForStart: int | None = None
 	"""RF process handle, will wait for the chrome process to exit."""
 
 	@staticmethod

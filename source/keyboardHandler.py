@@ -127,7 +127,7 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
+def getNVDAModifierKeys() -> List[Tuple[int, bool | None]]:
 	keys = []
 	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])

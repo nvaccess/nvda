@@ -344,8 +344,8 @@ class BoxSizerHelper:
 	def __init__(
 		self,
 		parent: wx.Dialog,
-		orientation: Optional[int] = None,
-		sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None,
+		orientation: int | None = None,
+		sizer: Union[wx.BoxSizer, wx.StaticBoxSizer] | None = None,
 	):
 		"""Init. Pass in either orientation OR sizer.
 		@param parent: An instance of the parent wx window. EG wx.Dialog

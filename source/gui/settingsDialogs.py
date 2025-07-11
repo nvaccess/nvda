@@ -434,7 +434,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None,
+		category: str | None = None,
 	):
 		if category is None:
 			category = self.title
@@ -5161,7 +5161,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
 
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> vision.providerBase.VisionEnhancementProvider | None:
 		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
@@ -5237,7 +5237,7 @@ class VisionSettingsPanel(SettingsPanel):
 	def _createProviderSettingsPanel(
 		self,
 		providerInfo: vision.providerInfo.ProviderInfo,
-	) -> Optional[SettingsPanel]:
+	) -> SettingsPanel | None:
 		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 		if not settingsPanelCls:
 			if gui._isDebug():
@@ -5396,7 +5396,7 @@ class VisionProviderSubPanel_Wrapper(
 		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
-		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettings: VisionProviderSubPanel_Settings | None = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 

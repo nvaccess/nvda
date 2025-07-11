@@ -2605,7 +2605,7 @@ class GlobalCommands(ScriptableObject):
 	def _getTIAtCaret(
 		fallbackToPOSITION_FIRST: bool = False,
 		reportFailure: bool = True,
-	) -> Optional[textInfos.TextInfo]:
+	) -> textInfos.TextInfo | None:
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is no caret this fact is announced in speech and braille
 		# unless reportFailure is set to C{False}
@@ -2694,7 +2694,7 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
-	def _getNvdaObjWithAnnotationUnderCaret(self) -> Optional[NVDAObject]:
+	def _getNvdaObjWithAnnotationUnderCaret(self) -> NVDAObject | None:
 		"""If it has an annotation, get the NVDA object for the single character under the caret or the object
 		with system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
@@ -2842,7 +2842,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
 	@staticmethod
-	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
+	def _getStatusBarText(setReviewCursor: bool = False) -> str | None:
 		"""Returns text of the current status bar and optionally sets review cursor to it.
 		If no status bar has been found `None` is returned and this fact is announced in speech and braille.
 		"""
@@ -4756,8 +4756,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	_tempEnableScreenCurtain = True
-	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
-	_toggleScreenCurtainMessage: Optional[str] = None
+	_waitingOnScreenCurtainWarningDialog: wx.Dialog | None = None
+	_toggleScreenCurtainMessage: str | None = None
 
 	@script(
 		description=_(

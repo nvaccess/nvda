@@ -286,7 +286,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			text += ", " + _("Page {pageNumber}").format(pageNumber=pageNumber)
 		return text
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
@@ -306,10 +306,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 	def getFormatFieldSpeech(
 		self,
 		attrs: textInfos.Field,
-		attrsCache: Optional[textInfos.Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: textInfos.Field | None = None,
+		formatConfig: Dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:

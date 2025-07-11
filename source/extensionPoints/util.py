@@ -51,7 +51,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	def __init__(
 		self,
 		target: HandlerT,
-		onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None,
+		onDelete: Callable[[BoundMethodWeakref], None] | None = None,
 	):
 		if onDelete:
 
@@ -65,7 +65,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		self.weakInst = weakref.ref(inst, onRefDelete)
 		self.weakFunc = weakref.ref(func, onRefDelete)
 
-	def __call__(self) -> Optional[HandlerT]:
+	def __call__(self) -> HandlerT | None:
 		inst = self.weakInst()
 		if not inst:
 			return

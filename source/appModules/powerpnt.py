@@ -1370,7 +1370,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0, self._getStoryLength())
 		raise LookupError
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = self.obj.rootNVDAObject.basicTextFields
 		text = self.obj.rootNVDAObject.basicText
 		out = []

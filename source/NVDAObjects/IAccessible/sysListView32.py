@@ -249,7 +249,7 @@ class List(List):
 			return 1
 		return count
 
-	def _getColumnOrderArrayRawInProc(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRawInProc(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves a list of column indexes for a given list control.
 		See `_getColumnOrderArrayRaw` for more comments.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
@@ -267,7 +267,7 @@ class List(List):
 			return None
 		return columnOrderArray
 
-	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves a list of column indexes for a given list control.
 		See `_getColumnOrderArrayRaw` for more comments.
 		Note that this method operates out of process and has to reserve memory inside a given application.
@@ -307,7 +307,7 @@ class List(List):
 			winKernel.virtualFreeEx(processHandle, internalCoa, 0, winKernel.MEM_RELEASE)
 		return coa
 
-	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRaw(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves an array of column indexes for a given list.
 		The indexes are placed in order in which columns are displayed on screen from left to right.
 		Note that when columns are reordered the indexes remain the same - only their order differs.
@@ -316,7 +316,7 @@ class List(List):
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+	def _getMappedColumn(self, presentationIndex: int) -> int | None:
 		"""
 		Multi-column SysListViews can have their columns re-ordered.
 		To keep a consistent internal mapping, a column order array is used
@@ -493,7 +493,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return localRect
 
-	def _getColumnLocationRaw(self, index: int) -> Optional[RectLTRB]:
+	def _getColumnLocationRaw(self, index: int) -> RectLTRB | None:
 		if not self.appModule.helperLocalBindingHandle:
 			rect = self._getColumnLocationRawOutProc(index)
 		else:
@@ -514,13 +514,13 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			top = bottom
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
-	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
+	def _getColumnLocation(self, column: int) -> RectLTRB | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnLocationRaw(mappedColumn)
 
-	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
+	def _getColumnContentRawInProc(self, index: int) -> str | None:
 		"""Retrieves text for a given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
 		i.e when running as a Windows Store application or when no focus event was received on startup.
@@ -542,7 +542,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnContentRawOutProc(self, index: int) -> Optional[str]:
+	def _getColumnContentRawOutProc(self, index: int) -> str | None:
 		"""Retrieves text for a given column.
 		Note that this method operates out of process and has to reserve memory inside a given application.
 		As a consequence it may fail when reserved memory is above the range available
@@ -603,12 +603,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle, internalItem, 0, winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnContentRaw(self, index: int) -> Optional[str]:
+	def _getColumnContentRaw(self, index: int) -> str | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnContentRawOutProc(index)
 		return self._getColumnContentRawInProc(index)
 
-	def _getColumnContent(self, column: int) -> Optional[str]:
+	def _getColumnContent(self, column: int) -> str | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
@@ -644,7 +644,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return self._getColumnImageIDRaw(mappedColumn)
 
-	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRawOutProc(self, index: int) -> str | None:
 		"""Retrieves text of the header for the given column.
 		Note that this method operates out of process and has to reserve memory inside a given application.
 		As a consequence it may fail when reserved memory is above the range available
@@ -704,7 +704,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle, internalColumn, 0, winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnHeaderRawInProc(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRawInProc(self, index: int) -> str | None:
 		"""Retrieves text of the header for the given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
 		i.e when running as a Windows Store application or when no focus event was received on startup.
@@ -724,12 +724,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRaw(self, index: int) -> str | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnHeaderRawOutProc(index)
 		return self._getColumnHeaderRawInProc(index)
 
-	def _getColumnHeader(self, column: int) -> Optional[str]:
+	def _getColumnHeader(self, column: int) -> str | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None

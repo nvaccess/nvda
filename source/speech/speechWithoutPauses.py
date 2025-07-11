@@ -53,7 +53,7 @@ class SpeechWithoutPauses:
 
 	def speakWithoutPauses(
 		self,
-		speechSequence: Optional[SpeechSequence],
+		speechSequence: SpeechSequence | None,
 		detectBreaks: bool = True,
 	) -> bool:
 		"""
@@ -75,7 +75,7 @@ class SpeechWithoutPauses:
 
 	def getSpeechWithoutPauses(  # noqa: C901
 		self,
-		speechSequence: Optional[SpeechSequence],
+		speechSequence: SpeechSequence | None,
 		detectBreaks: bool = True,
 	) -> Generator[SpeechSequence, None, bool]:
 		"""

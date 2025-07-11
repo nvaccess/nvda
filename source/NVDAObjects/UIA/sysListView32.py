@@ -83,7 +83,7 @@ class SysListViewItem(ListItem):
 			textList.append(text)
 		return "; ".join(textList)
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount == 0:
 			return super().indexInParent

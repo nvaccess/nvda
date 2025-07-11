@@ -42,14 +42,14 @@ Address = Tuple[str, int]  # (hostname, port)
 class RemoteClient:
 	localScripts: Set[scriptHandler._ScriptFunctionT]
 	localMachine: LocalMachine
-	leaderSession: Optional[LeaderSession]
-	followerSession: Optional[FollowerSession]
+	leaderSession: LeaderSession | None
+	followerSession: FollowerSession | None
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
-	leaderTransport: Optional[RelayTransport]
-	followerTransport: Optional[RelayTransport]
-	localControlServer: Optional[server.LocalRelayServer]
+	leaderTransport: RelayTransport | None
+	followerTransport: RelayTransport | None
+	localControlServer: server.LocalRelayServer | None
 	sendingKeys: bool
 
 	def __init__(
@@ -62,9 +62,9 @@ class RemoteClient:
 		self.localMachine = LocalMachine()
 		self.followerSession = None
 		self.leaderSession = None
-		self.menu: Optional[RemoteMenu] = None
+		self.menu: RemoteMenu | None = None
 		if not isRunningOnSecureDesktop():
-			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
+			self.menu: RemoteMenu | None = RemoteMenu(self)
 		self.connecting = False
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None

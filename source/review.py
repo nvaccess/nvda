@@ -120,7 +120,7 @@ def getCurrentMode():
 def setCurrentMode(
 	mode: Union[int, str],
 	updateReviewPosition: bool = True,
-) -> Optional[str]:
+) -> str | None:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).

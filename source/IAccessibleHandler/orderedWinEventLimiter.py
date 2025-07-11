@@ -82,7 +82,7 @@ class OrderedWinEventLimiter(object):
 
 	def flushEvents(
 		self,
-		alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
+		alwaysAllowedObjects: List[IAccessibleObjectIdentifierType] | None = None,
 	) -> List:
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.

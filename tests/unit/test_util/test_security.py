@@ -123,7 +123,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 	windows will change.
 	"""
 
-	_queuedMove: Optional[_MoveWindow] = None
+	_queuedMove: _MoveWindow | None = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
 		self._triggerQueuedMove(hwnd)
@@ -149,8 +149,8 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 		move: _MoveWindow,
 		aboveWindow: winUser.HWNDVal,
 		belowWindow: winUser.HWNDVal,
-		aboveRaises: Optional[Type[Exception]] = None,
-		belowRaises: Optional[Type[Exception]] = None,
+		aboveRaises: Type[Exception] | None = None,
+		belowRaises: Type[Exception] | None = None,
 		aboveExpectFailure: bool = False,
 		belowExpectFailure: bool = False,
 	):

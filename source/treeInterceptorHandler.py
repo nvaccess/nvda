@@ -262,7 +262,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self.innerTextInfo.boundingRects
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 
 	def expand(self, unit):
@@ -280,10 +280,10 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def getFormatFieldSpeech(
 		self,
 		attrs: textInfos.Field,
-		attrsCache: Optional[textInfos.Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: textInfos.Field | None = None,
+		formatConfig: Dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:

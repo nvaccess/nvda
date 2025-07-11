@@ -144,7 +144,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 	def _getFormatFieldAndOffsetsFromAttributes(
 		self,
 		offset: int,
-		formatConfig: Optional[dict],
+		formatConfig: dict | None,
 		calculateOffsets: bool,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		"""Get format field and offset information from either
@@ -190,7 +190,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 	def _getFormatFieldAndOffsets(
 		self,
 		offset: int,
-		formatConfig: Optional[dict],
+		formatConfig: dict | None,
 		calculateOffsets: bool = True,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		formatField, (startOffset, endOffset) = self._getFormatFieldAndOffsetsFromAttributes(
@@ -621,7 +621,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.description = None
 			obj.treeInterceptorClass = SymphonyDocument
 
-	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> Optional[NVDAObject]:
+	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> NVDAObject | None:
 		"""Searches for and returns the status bar object
 		if either the object itself or one of its recursive children
 		(up to the given depth) has the corresponding role."""
@@ -641,7 +641,7 @@ class AppModule(appModuleHandler.AppModule):
 				return status_bar
 		return None
 
-	def _get_statusBar(self) -> Optional[NVDAObject]:
+	def _get_statusBar(self) -> NVDAObject | None:
 		return self.searchStatusBar(api.getForegroundObject())
 
 	def getStatusBarText(self, obj: NVDAObject) -> str:

@@ -348,7 +348,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 		]
 		return commandList
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:

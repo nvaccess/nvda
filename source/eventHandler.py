@@ -41,7 +41,7 @@ lastQueuedFocusObject = None
 
 
 # Handle virtual desktop switch announcements in Windows 10 and later
-_virtualDesktopName: Optional[str] = None
+_virtualDesktopName: str | None = None
 _canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
 
 
@@ -296,7 +296,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 def _getFocusLossCancellableSpeechCommand(
 	obj,
 	reason: controlTypes.OutputReason,
-) -> Optional[_CancellableSpeechCommand]:
+) -> _CancellableSpeechCommand | None:
 	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
 	from NVDAObjects import NVDAObject

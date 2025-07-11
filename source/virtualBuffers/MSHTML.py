@@ -39,7 +39,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f"textPositionValue={textPositionValue}")
 			return TextPosition.BASELINE
 
-	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
+	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> TextAlign | None:
 		textAlignValue = attrs.get("text-align")
 		try:
 			return TextAlign(textAlignValue)

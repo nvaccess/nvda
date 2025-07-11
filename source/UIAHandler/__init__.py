@@ -1512,7 +1512,7 @@ class UIAHandler(COMObject):
 		return False
 
 
-handler: Optional[UIAHandler] = None
+handler: UIAHandler | None = None
 
 
 def initialize():

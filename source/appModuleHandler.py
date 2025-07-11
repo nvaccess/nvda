@@ -150,7 +150,7 @@ def doesAppModuleExist(name: str) -> bool:
 	return True
 
 
-def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
+def _importAppModuleForExecutable(executableName: str) -> ModuleType | None:
 	"""Import and return appModule for a given executable or `None` if there is no module."""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		# First, check whether the module exists.
@@ -485,7 +485,7 @@ class AppModule(baseObject.ScriptableObject):
 			False,
 			processID,
 		)
-		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		self.helperLocalBindingHandle: ctypes.c_long | None = None
 		"""RPC binding handle pointing to the RPC server for this process"""
 
 		self._inprocRegistrationHandle = None

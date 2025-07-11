@@ -237,8 +237,8 @@ def browseableMessage(
 
 def message(
 	text: str,
-	speechPriority: Optional[speech.Spri] = None,
-	brailleText: Optional[str] = None,
+	speechPriority: speech.Spri | None = None,
+	brailleText: str | None = None,
 ):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
@@ -277,7 +277,7 @@ def delayedMessage(
 	)
 
 
-def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
+def reviewMessage(text: str, speechPriority: speech.Spri | None = None):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
@@ -288,7 +288,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 		braille.handler.message(text)
 
 
-def reportTextCopiedToClipboard(text: Optional[str] = None):
+def reportTextCopiedToClipboard(text: str | None = None):
 	"""Notify about the result of a "Copy to clipboard" operation.
 	@param text: The text that has been copied. Set to `None` to notify of a failed operation.
 	See: `api.copyToClip`

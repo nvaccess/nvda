@@ -473,10 +473,10 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 
 	def event_UIA_notification(
 		self,
-		notificationKind: Optional[int] = None,
-		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-		displayString: Optional[str] = None,
-		activityId: Optional[str] = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: str | None = None,
+		activityId: str | None = None,
 	):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:

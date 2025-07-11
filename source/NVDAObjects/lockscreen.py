@@ -17,19 +17,19 @@ class LockScreenObject(NVDAObject):
 	the user from moving to the object, this overlay class prevents reading neighbouring objects.
 	"""
 
-	def _get_next(self) -> Optional[NVDAObject]:
+	def _get_next(self) -> NVDAObject | None:
 		nextObject = super()._get_next()
 		if nextObject and nextObject.appModule.appName == self.appModule.appName:
 			return nextObject
 		return None
 
-	def _get_previous(self) -> Optional[NVDAObject]:
+	def _get_previous(self) -> NVDAObject | None:
 		previousObject = super()._get_previous()
 		if previousObject and previousObject.appModule.appName == self.appModule.appName:
 			return previousObject
 		return None
 
-	def _get_parent(self) -> Optional[NVDAObject]:
+	def _get_parent(self) -> NVDAObject | None:
 		parentObject = super()._get_parent()
 		if parentObject and parentObject.appModule.appName == self.appModule.appName:
 			return parentObject

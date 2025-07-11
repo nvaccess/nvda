@@ -410,7 +410,7 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 	refresh: bool = False,
-	filterFunc: Optional[Callable[["Addon"], bool]] = None,
+	filterFunc: Callable[["Addon"], bool] | None = None,
 	isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Gets all available addons on the system.
@@ -507,7 +507,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 	def manifest(self) -> "AddonManifest": ...
 
 	@property
-	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
+	def _addonStoreData(self) -> "InstalledAddonStoreModel" | None:
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
@@ -549,7 +549,7 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> Optional[str]:
+	def completeInstall(self) -> str | None:
 		if not os.path.exists(self.pendingInstallPath):
 			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
 			return None
@@ -792,7 +792,7 @@ class Addon(AddonBase):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
-	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
+	def getDocFilePath(self, fileName: str | None = None) -> str | None:
 		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
@@ -936,7 +936,7 @@ class AddonBundle(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def extract(self, addonPath: Optional[str] = None):
+	def extract(self, addonPath: str | None = None):
 		"""Extracts the bundle content to the specified path.
 		The addon will be extracted to L{addonPath}
 		@param addonPath: Path where to extract contents.

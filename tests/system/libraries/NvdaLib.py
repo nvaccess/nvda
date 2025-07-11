@@ -88,7 +88,7 @@ class _NvdaLocationData:
 			"nvdaTestRunLogs",
 		)
 
-	def getPy2exeBootLogPath(self) -> _Optional[str]:
+	def getPy2exeBootLogPath(self) -> str | None:
 		if self.whichNVDA == "installed":
 			executablePath = _locations.findInstalledNVDAPath()
 			# py2exe names this log file after the executable, see py2exe/boot_common.py
@@ -96,7 +96,7 @@ class _NvdaLocationData:
 		elif self.whichNVDA == "source":
 			return None  # Py2exe not used for source.
 
-	def findInstalledNVDAPath(self) -> _Optional[str]:
+	def findInstalledNVDAPath(self) -> str | None:
 		NVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "nvda", "nvda.exe")
 		legacyNVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "NVDA", "nvda.exe")
 		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"
@@ -131,9 +131,9 @@ class NvdaLib:
 	"""
 
 	def __init__(self):
-		self.nvdaSpy: _Optional["NVDASpyLib"] = None
-		self.nvdaHandle: _Optional[int] = None
-		self.lastNVDAStart: _Optional[_datetime] = None
+		self.nvdaSpy: "NVDASpyLib" | None = None
+		self.nvdaHandle: int | None = None
+		self.lastNVDAStart: _datetime | None = None
 
 	@staticmethod
 	def _createTestIdFileName(name):
@@ -144,7 +144,7 @@ class NvdaLib:
 		return outputFileName
 
 	@staticmethod
-	def setup_nvda_profile(configFileName, gesturesFileName: _Optional[str] = None):
+	def setup_nvda_profile(configFileName, gesturesFileName: str | None = None):
 		configManager.setupProfile(
 			_locations.repoRoot,
 			configFileName,
@@ -294,7 +294,7 @@ class NvdaLib:
 				],
 			)
 
-	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
+	def start_NVDA(self, settingsFileName: str, gesturesFileName: str | None = None):
 		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
@@ -380,9 +380,9 @@ class NvdaLib:
 
 	@staticmethod
 	def check_for_crash_dump(
-		since: _Optional[_datetime],
-		overridePath: _Optional[str] = None,
-	) -> _Optional[str]:
+		since: _datetime | None,
+		overridePath: str | None = None,
+	) -> str | None:
 		"""
 		Checks if a crash.dmp exits and returns the crash dmp path if so
 		"""
@@ -396,7 +396,7 @@ class NvdaLib:
 			if crashTime >= since:
 				return crashPath
 
-	def save_crash_dump_if_exists(self, deleteCachedAfter: bool = True) -> _Optional[str]:
+	def save_crash_dump_if_exists(self, deleteCachedAfter: bool = True) -> str | None:
 		crashPath = self.check_for_crash_dump(self.lastNVDAStart)
 		if crashPath is None:
 			return None

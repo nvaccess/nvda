@@ -12,7 +12,7 @@ FULL_WIDTH_TERMINATORS = "[。！？](?:\r|\n)*"
 TERMINATORS_PATTERN: re.Pattern = re.compile(WESTERN_TERMINATORS + "|" + FULL_WIDTH_TERMINATORS)
 
 
-def _findNextEndOfSentence(sentence: str, offset: int) -> Optional[int]:
+def _findNextEndOfSentence(sentence: str, offset: int) -> int | None:
 	"""
 	Returns an index which points one character past the end of the current sentence,
 	or if the sentence is at the end of the string, returns the length of the string.

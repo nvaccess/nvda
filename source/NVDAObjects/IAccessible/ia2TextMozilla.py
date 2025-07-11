@@ -34,7 +34,7 @@ def _getRawTextInfo(obj) -> Type[offsets.OffsetsTextInfo]:
 	return IA2TextTextInfo
 
 
-def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
+def _getEmbedded(obj, offset) -> IAccessible | None:
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
@@ -319,7 +319,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int):  # Embedded object.
-				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
+				embedded: IAccessible | None = _getEmbedded(ti.obj, item)
 				if embedded is None:
 					continue
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
@@ -453,7 +453,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(self._getText(False))
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
 	def _adjustIfEndOfLine(

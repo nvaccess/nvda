@@ -191,7 +191,7 @@ class SpeechManager(object):
 
 	_cancelCommandsForUtteranceBeingSpokenBySynth: Dict[_CancellableSpeechCommand, _IndexT]
 	_priQueues: Dict[Any, _ManagerPriorityQueue]
-	_curPriQueue: Optional[_ManagerPriorityQueue]  # None indicates no more speech.
+	_curPriQueue: _ManagerPriorityQueue | None  # None indicates no more speech.
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -540,9 +540,9 @@ class SpeechManager(object):
 	def _isIndexAAfterIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
 		return indexA != indexB and not cls._isIndexABeforeIndexB(indexA, indexB)
 
-	def _getMostRecentlyCancelledUtterance(self) -> Optional[_IndexT]:
+	def _getMostRecentlyCancelledUtterance(self) -> _IndexT | None:
 		# Index of the most recently cancelled utterance.
-		latestCancelledUtteranceIndex: Optional[_IndexT] = None
+		latestCancelledUtteranceIndex: _IndexT | None = None
 		log._speechManagerDebug(
 			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
 			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
@@ -718,7 +718,7 @@ class SpeechManager(object):
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
-	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
+	def _onSynthDoneSpeaking(self, synth: synthDriverHandler.SynthDriver | None = None):
 		log._speechManagerUnitTest(f"synthDoneSpeaking synth:{synth}")
 		if synth != getSynth():
 			return

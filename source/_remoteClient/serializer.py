@@ -47,7 +47,7 @@ class Serializer(metaclass=ABCMeta):
 	"""
 
 	@abstractmethod
-	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
+	def serialize(self, type: str | None = None, **obj: Any) -> bytes:
 		"""Convert a message to bytes for transmission.
 
 		:param type: Message type identifier, used for routing
@@ -79,7 +79,7 @@ class JSONSerializer(Serializer):
 	SEP: bytes = b"\n"
 	"""Message separator for streaming protocols"""
 
-	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
+	def serialize(self, type: str | None = None, **obj: Any) -> bytes:
 		"""Serialize a message to JSON bytes.
 
 		Converts message type and payload to JSON format, handling Enum types

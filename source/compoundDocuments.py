@@ -331,7 +331,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		text = info._getTextRange(0, info._startOffset)
 		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		# Get the initial control fields.
 		fields = []
 		rootObj = self.obj.rootNVDAObject

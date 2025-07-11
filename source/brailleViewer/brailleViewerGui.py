@@ -31,7 +31,7 @@ def _linearInterpolate(value, start, end):
 	return tuple(map(lambda i, j: i + value * j, start, difference))
 
 
-def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> Optional[int]:
+def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> int | None:
 	"""Get the index of the character under the mouse.
 	@note: Assumes all characters are on one line
 	"""
@@ -133,7 +133,7 @@ class TextCellHover:
 		self._normalBGColor = textCtrl.GetBackgroundColour()
 		self._charIndex = None
 		self._doneRouteCall = False
-		self._cellAnimation: Optional[CharCellBackgroundColorAnimation] = None
+		self._cellAnimation: CharCellBackgroundColorAnimation | None = None
 		self._setStage(self.Stage.NOT_STARTED)
 
 	def isInProgress(self) -> bool:
@@ -148,7 +148,7 @@ class TextCellHover:
 		self._stageStartTime = time.time()
 
 	def cancelPendingHover(self):
-		self._charIndex: Optional[int] = None  # cancels a pending hover action
+		self._charIndex: int | None = None  # cancels a pending hover action
 		self._setStage(self.Stage.CANCELLED)
 
 	def startPendingHover(self, index):
@@ -272,9 +272,9 @@ class BrailleViewerFrame(
 			log.debug("Setting brailleViewer window position")
 			brailleViewSection = config.conf["brailleViewer"]
 			dialogPos = wx.Point(x=brailleViewSection["x"], y=brailleViewSection["y"])
-		self._newBraille: Optional[str] = None
-		self._newRawText: Optional[str] = None
-		self._newCellCount: Optional[int] = None
+		self._newBraille: str | None = None
+		self._newRawText: str | None = None
+		self._newCellCount: int | None = None
 
 		super().__init__(
 			gui.mainFrame,

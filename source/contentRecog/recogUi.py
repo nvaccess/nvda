@@ -120,7 +120,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		self,
 		recognizer: ContentRecognizer,
 		imageInfo: RecogImageInfo,
-		obj: Optional[NVDAObjects.NVDAObject] = None,
+		obj: NVDAObjects.NVDAObject | None = None,
 	):
 		self.recognizer = recognizer
 		self.imageInfo = imageInfo

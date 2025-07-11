@@ -218,7 +218,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self,
 		command: int,
 		arg: int,
-		arg2: Optional[str] = None,
+		arg2: str | None = None,
 	):
 		space = False
 		if command == THUMB_KEYS_TAG:
@@ -313,13 +313,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(
 		self,
-		keys: Optional[int] = None,
-		dots: Optional[int] = None,
+		keys: int | None = None,
+		dots: int | None = None,
 		space: bool = False,
-		routing: Optional[int] = None,
-		wheel: Optional[int] = None,
-		qtMod: Optional[int] = None,
-		qtData: Optional[str] = None,
+		routing: int | None = None,
+		wheel: int | None = None,
+		qtMod: int | None = None,
+		qtData: str | None = None,
 	):
 		super(braille.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.

@@ -46,7 +46,7 @@ _language: str | None = None
 """Language of NVDA's UI.
 """
 
-installedTranslation: Optional[weakref.ReferenceType] = None
+installedTranslation: weakref.ReferenceType | None = None
 """Saved copy of the installed translation for ease of wrapping.
 """
 
@@ -123,7 +123,7 @@ def localeNameToWindowsLCID(localeName: str) -> int:
 	return LCID
 
 
-def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
+def windowsLCIDToLocaleName(lcid: int) -> str | None:
 	"""
 	Gets a normalized locale from a Windows LCID.
 
@@ -143,7 +143,7 @@ def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 		return normalizeLanguage(localeName)
 
 
-def getLanguageDescription(language: str) -> Optional[str]:
+def getLanguageDescription(language: str) -> str | None:
 	"""Finds out the description (localized full name) of a given local name"""
 	if language == "Windows":
 		# Translators: the label for the Windows default NVDA interface language.
@@ -172,7 +172,7 @@ def getLanguageDescription(language: str) -> Optional[str]:
 	return desc
 
 
-def englishLanguageNameFromNVDALocale(localeName: str) -> Optional[str]:
+def englishLanguageNameFromNVDALocale(localeName: str) -> str | None:
 	"""Returns either English name of the given language  using `GetLocaleInfoEx` or None
 	if the given locale is not known to Windows."""
 	localeName = normalizeLocaleForWin32(localeName)
@@ -205,7 +205,7 @@ def englishLanguageNameFromNVDALocale(localeName: str) -> Optional[str]:
 	return None
 
 
-def englishCountryNameFromNVDALocale(localeName: str) -> Optional[str]:
+def englishCountryNameFromNVDALocale(localeName: str) -> str | None:
 	"""Returns either English name of the given country using GetLocaleInfoEx or None
 	if the given locale is not known to Windows."""
 	localeName = normalizeLocaleForWin32(localeName)
@@ -224,7 +224,7 @@ def englishCountryNameFromNVDALocale(localeName: str) -> Optional[str]:
 	return None
 
 
-def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
+def ansiCodePageFromNVDALocale(localeName: str) -> str | None:
 	"""Returns either ANSI code page for a given locale using GetLocaleInfoEx or None
 	if the given locale is not known to Windows."""
 	localeName = normalizeLocaleForWin32(localeName)
@@ -442,7 +442,7 @@ def getLanguage() -> str:
 	return _language
 
 
-def normalizeLanguage(lang: str) -> Optional[str]:
+def normalizeLanguage(lang: str) -> str | None:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.

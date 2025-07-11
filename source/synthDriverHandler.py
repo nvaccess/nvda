@@ -48,7 +48,7 @@ class LanguageInfo(StringParameterInfo):
 class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice."""
 
-	def __init__(self, id, displayName, language: Optional[str] = None):
+	def __init__(self, id, displayName, language: str | None = None):
 		"""
 		@param language: The ID of the language this voice speaks,
 			C{None} if not known or the synth implements language separate from voices.
@@ -114,10 +114,10 @@ class SynthDriver(driverHandler.Driver):
 	availableVoices: OrderedDict[str, VoiceInfo]
 	# type information for auto property _get_language
 	# the current voice's language
-	language: Optional[str]
+	language: str | None
 	# type information for auto property _get_availableLanguages
 	# the set of languages available in the availableVoices
-	availableLanguages: Set[Optional[str]]
+	availableLanguages: Set[str | None]
 
 	@classmethod
 	def LanguageSetting(cls):
@@ -233,13 +233,13 @@ class SynthDriver(driverHandler.Driver):
 	def cancel(self):
 		"""Silence speech immediately."""
 
-	def _get_language(self) -> Optional[str]:
+	def _get_language(self) -> str | None:
 		return self.availableVoices[self.voice].language
 
 	def _set_language(self, language):
 		raise NotImplementedError
 
-	def _get_availableLanguages(self) -> Set[Optional[str]]:
+	def _get_availableLanguages(self) -> Set[str | None]:
 		return {self.availableVoices[v].language for v in self.availableVoices}
 
 	def _get_voice(self):
@@ -402,7 +402,7 @@ class SynthDriver(driverHandler.Driver):
 		return None
 
 
-_curSynth: Optional[SynthDriver] = None
+_curSynth: SynthDriver | None = None
 _audioOutputDevice = None
 
 
@@ -457,7 +457,7 @@ def getSynthList() -> List[Tuple[str, str]]:
 	return synthList
 
 
-def getSynth() -> Optional[SynthDriver]:
+def getSynth() -> SynthDriver | None:
 	return _curSynth
 
 
@@ -478,7 +478,7 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 	defaultSynthPriorityList.insert(0, "oneCore")
 
 
-def setSynth(name: Optional[str], isFallback: bool = False):
+def setSynth(name: str | None, isFallback: bool = False):
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
 	asDefault = False

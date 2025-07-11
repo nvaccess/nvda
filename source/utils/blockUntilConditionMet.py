@@ -36,7 +36,7 @@ def blockUntilConditionMet(
 	intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 ) -> Tuple[
 	EvaluatorWasMetT,  # Was evaluator met?
-	Optional[GetValueResultT],  # None or the value when the evaluator was met
+	GetValueResultT | None,  # None or the value when the evaluator was met
 ]:
 	"""Repeatedly tries to get a value up until a time limit expires.
 	Tries are separated by a time interval.

@@ -49,7 +49,7 @@ class DpiScalingHelperMixinWithoutInit:
 	"""
 
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
-	_scaleFactor: Optional[int] = None
+	_scaleFactor: int | None = None
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		if self._scaleFactor is None:

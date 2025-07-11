@@ -308,7 +308,7 @@ def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
 	return states
 
 
-def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
+def NVDARoleFromAttr(accRole: str | None) -> Role:
 	if not accRole:  # empty string or None
 		return controlTypes.Role.UNKNOWN
 	assert isinstance(accRole, str)
@@ -519,7 +519,7 @@ def winEventToNVDAEvent(  # noqa: C901
 	objectID: int,
 	childID: int,
 	useCache: bool = True,
-) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
+) -> Tuple[str, NVDAObjects.IAccessible.IAccessible] | None:
 	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
 	@param eventID: the win event ID (type)

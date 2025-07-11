@@ -38,9 +38,9 @@ if TYPE_CHECKING:
 class DefaultAppArgs(argparse.Namespace):
 	quit: bool = False
 	check_running: bool = False
-	logFileName: Optional[os.PathLike] = ""
+	logFileName: os.PathLike | None = ""
 	logLevel: int = 0
-	configPath: Optional[os.PathLike] = None
+	configPath: os.PathLike | None = None
 	language: str | None = None
 	minimal: bool = False
 	secure: bool = False
@@ -65,9 +65,9 @@ class DefaultAppArgs(argparse.Namespace):
 	installSilent: bool = False
 	createPortable: bool = False
 	createPortableSilent: bool = False
-	portablePath: Optional[os.PathLike] = None
+	portablePath: os.PathLike | None = None
 	launcher: bool = False
-	enableStartOnLogon: Optional[bool] = None
+	enableStartOnLogon: bool | None = None
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
@@ -86,7 +86,7 @@ focusObject: Optional["NVDAObjects.NVDAObject"] = None
 focusAncestors: List["NVDAObjects.NVDAObject"] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
 
-focusDifferenceLevel: Optional[int] = None
+focusDifferenceLevel: int | None = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
 
 mouseObject: Optional["NVDAObjects.NVDAObject"] = None

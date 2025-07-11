@@ -83,7 +83,7 @@ class _AnnotationNavigationNode:
 
 	_TargetIndex = int  # Type for target index
 	origin: "NVDAObject"  # this is the last known location
-	indexOfLastReportedSummary: Optional[_TargetIndex] = None  # this would be the next destination
+	indexOfLastReportedSummary: _TargetIndex | None = None  # this would be the next destination
 
 
 class _AnnotationNavigation:
@@ -92,5 +92,5 @@ class _AnnotationNavigation:
 	For example, reporting a summary of each comment for an object with multiple comment annotation targets.
 	"""
 
-	lastReported: Optional[_AnnotationNavigationNode] = None
+	lastReported: _AnnotationNavigationNode | None = None
 	priorOrigins: List["NVDAObject"] = []

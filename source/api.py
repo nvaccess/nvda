@@ -395,7 +395,7 @@ def processPendingEvents(processEventQueue=True):
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
 
-def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
+def copyToClip(text: str, notify: bool | None = False) -> bool:
 	"""Copies the given text to the windows clipboard.
 	@returns: True if it succeeds, False otherwise.
 	@param text: the text which will be copied to the clipboard
@@ -434,7 +434,7 @@ def getClipData():
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or ""
 
 
-def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
+def getStatusBar() -> NVDAObjects.NVDAObject | None:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
 	"""

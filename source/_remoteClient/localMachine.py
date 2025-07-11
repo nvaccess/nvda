@@ -108,7 +108,7 @@ class LocalMachine:
 		self.receivingBraille: bool = False
 		"""When True, braille output comes from remote"""
 
-		self._cachedSizes: Optional[List[int]] = None
+		self._cachedSizes: List[int] | None = None
 		"""Cached braille display sizes from remote machines"""
 
 		braille.decide_enabled.register(self.handleDecideEnabled)
@@ -257,9 +257,9 @@ class LocalMachine:
 
 	def sendKey(
 		self,
-		vk_code: Optional[int] = None,
-		extended: Optional[bool] = None,
-		pressed: Optional[bool] = None,
+		vk_code: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
 	) -> None:
 		"""Simulate a keyboard event on the local machine.
 

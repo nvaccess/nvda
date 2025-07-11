@@ -63,7 +63,7 @@ class RemoteExtensionPoint:
 	messageType: RemoteMessageType
 	"""The remote message type to send"""
 
-	filter: Optional[Callable[..., dict[str, Any]]] = None
+	filter: Callable[..., dict[str, Any]] | None = None
 	"""Optional function to transform arguments before sending"""
 
 	transport: Optional["Transport"] = None
@@ -214,7 +214,7 @@ class Transport(ABC):
 		self,
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
-		filter: Optional[Callable[..., dict[str, Any]]] = None,
+		filter: Callable[..., dict[str, Any]] | None = None,
 	) -> None:
 		"""Register an extension point to a message type.
 

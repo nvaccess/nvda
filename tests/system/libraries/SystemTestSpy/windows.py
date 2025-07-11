@@ -110,7 +110,7 @@ def SetForegroundWindow(window: Window, logger: Logger) -> bool:
 	return windll.user32.SetForegroundWindow(window.hwndVal)
 
 
-def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
+def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Window | None:
 	windows = _GetWindows(
 		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title)),
 	)

@@ -51,7 +51,7 @@ class BrailleInputHandler(AutoPropertyObject):
 	untranslatedBraille: str
 	untranslatedStart: int
 	untranslatedCursorPos: int
-	_uncontSentTime: Optional[float]
+	_uncontSentTime: float | None
 	currentModifiers: Set[str]
 
 	def __init__(self):
@@ -471,7 +471,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 
 #: The singleton BrailleInputHandler instance.
-handler: Optional[BrailleInputHandler] = None
+handler: BrailleInputHandler | None = None
 
 
 def initialize():

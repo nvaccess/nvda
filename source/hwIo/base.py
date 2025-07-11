@@ -64,10 +64,10 @@ class IoBase(object):
 		self,
 		fileHandle: Union[ctypes.wintypes.HANDLE],
 		onReceive: Callable[[bytes], None],
-		writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
+		writeFileHandle: ctypes.wintypes.HANDLE | None = None,
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -174,7 +174,7 @@ class IoBase(object):
 			if _isDebug():
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
-	def _asyncRead(self, param: Optional[int] = None):
+	def _asyncRead(self, param: int | None = None):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
@@ -229,8 +229,8 @@ class Serial(IoBase):
 		self,
 		*args,
 		onReceive: Callable[[bytes], None],
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 		**kwargs,
 	):
 		"""Constructor.
@@ -288,7 +288,7 @@ class Serial(IoBase):
 		super(Serial, self)._notifyReceive(data)
 		self._setTimeout(None)
 
-	def _setTimeout(self, timeout: Optional[int]):
+	def _setTimeout(self, timeout: int | None):
 		# #6035: pyserial reconfigures all settings of the port when setting a timeout.
 		# This can cause error 'Cannot configure port, some setting was wrong.'
 		# Therefore, manually set the timeouts using the Win32 API.
@@ -321,8 +321,8 @@ class Bulk(IoBase):
 		epOut: int,
 		onReceive: Callable[[bytes], None],
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.

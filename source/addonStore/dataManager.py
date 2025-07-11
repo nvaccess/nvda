@@ -121,7 +121,7 @@ class _DataManager:
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
 
-	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
+	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> bytes | None:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			log.debug(f"Fetching add-on data from {url}")
@@ -152,7 +152,7 @@ class _DataManager:
 		cacheHash = response.json()
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str | None):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
@@ -166,7 +166,7 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: str | None):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
@@ -180,7 +180,7 @@ class _DataManager:
 		with open(self._cacheLatestFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
+	def _getCachedAddonData(self, cacheFilePath: str) -> CachedAddonsModel | None:
 		if not os.path.exists(cacheFilePath):
 			return None
 		try:
@@ -338,7 +338,7 @@ class _DataManager:
 		with open(addonCachePath, "w", encoding="utf-8") as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> InstalledAddonStoreModel | None:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None

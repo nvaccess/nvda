@@ -469,7 +469,7 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		obj: NVDAObject,
 		position: str,
-		_rangeObj: Optional[IUIAutomationTextRangeT] = None,
+		_rangeObj: IUIAutomationTextRangeT | None = None,
 	):
 		super(UIATextInfo, self).__init__(obj, position)
 		if _rangeObj:
@@ -508,7 +508,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if isinstance(position, UIA):
 				position = position.UIAElement
 			try:
-				self._rangeObj: Optional[IUIAutomationTextRangeT] = self.obj.UIATextPattern.rangeFromChild(
+				self._rangeObj: IUIAutomationTextRangeT | None = self.obj.UIATextPattern.rangeFromChild(
 					position,
 				)
 			except COMError:
@@ -655,7 +655,7 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
-		UIAFormatUnits: Optional[List[int]] = None,
+		UIAFormatUnits: List[int] | None = None,
 	) -> Generator[textInfos.FieldCommand, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
@@ -1028,7 +1028,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		fields = list(self._getTextWithFieldsForUIARange(self.obj.UIAElement, self._rangeObj, formatConfig))
@@ -1063,7 +1063,7 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		unit: str,
 		direction: int,
-		endPoint: Optional[str] = None,
+		endPoint: str | None = None,
 	):
 		UIAUnit = UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint == "start":
@@ -1671,9 +1671,9 @@ class UIA(Window):
 		return 0
 
 	#: Typing information for auto-property: _get_selectionContainer
-	selectionContainer: "typing.Optional[UIA]"
+	selectionContainer: "UIA | None"
 
-	def _get_selectionContainer(self) -> "typing.Optional[UIA]":
+	def _get_selectionContainer(self) -> "UIA | None":
 		p = self.UIASelectionItemPattern
 		if not p:
 			return None
@@ -2071,9 +2071,9 @@ class UIA(Window):
 		return self.correctAPIForRelation(UIA(UIAElement=previousElement))
 
 	#: Typing information for auto-property: _get_next
-	next: "typing.Optional[UIA]"
+	next: "UIA | None"
 
-	def _get_next(self) -> "typing.Optional[UIA]":
+	def _get_next(self) -> "UIA | None":
 		try:
 			nextElement = UIAHandler.handler.baseTreeWalker.GetNextSiblingElementBuildCache(
 				self.UIAElement,
@@ -2158,7 +2158,7 @@ class UIA(Window):
 			return val
 		return 1
 
-	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> typing.Optional[str]:
+	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> str | None:
 		obj = UIA(
 			windowHandle=self.windowHandle,
 			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest),
@@ -2259,19 +2259,19 @@ class UIA(Window):
 		# r is a tuple of floats representing left, top, width and height.
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
-	def _get_UIAValue(self) -> typing.Optional[str]:
+	def _get_UIAValue(self) -> str | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		return None
 
-	def _get_UIARangeValue(self) -> typing.Optional[float]:
+	def _get_UIARangeValue(self) -> float | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		return None
 
-	def _get_value(self) -> typing.Optional[str]:
+	def _get_value(self) -> str | None:
 		if self.UIAValue is not None:
 			return self.UIAValue
 		if self.UIARangeValue is not None:
@@ -2777,7 +2777,7 @@ class ProgressBar(UIA, ProgressBar):
 	This overlay class ensures that the reported value wil be between the accepted range of progress bar values.
 	"""
 
-	def _get_value(self) -> typing.Optional[str]:
+	def _get_value(self) -> str | None:
 		val = self.UIARangeValue
 		if val is None:
 			return self.UIAValue

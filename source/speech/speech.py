@@ -117,7 +117,7 @@ class SpeechState:
 	#: The number of typed characters for which to suppress speech.
 	_suppressSpeakTypedCharactersNumber = 0
 	#: The time at which suppressed typed characters were sent.
-	_suppressSpeakTypedCharactersTime: Optional[float] = None
+	_suppressSpeakTypedCharactersTime: float | None = None
 	# Property values that are kept from getPropertiesSpeech
 	oldTreeLevel = None
 	oldTableID = None
@@ -237,7 +237,7 @@ def _getSpeakMessageSpeech(
 
 def speakMessage(
 	text: str,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ) -> None:
 	"""Speaks a given message.
 	@param text: the message to speak
@@ -307,7 +307,7 @@ def getCurrentLanguage() -> str:
 def spellTextInfo(
 	info: textInfos.TextInfo,
 	useCharacterDescriptions: bool = False,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ) -> None:
 	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
 	if not languageHandling.shouldMakeLangChangeCommand():
@@ -328,9 +328,9 @@ def spellTextInfo(
 
 def speakSpelling(
 	text: str,
-	locale: Optional[str] = None,
+	locale: str | None = None,
 	useCharacterDescriptions: bool = False,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ) -> None:
 	# This could be a very large list. In future we could convert this into chunks.
 	seq = list(
@@ -522,7 +522,7 @@ def getSingleCharDescriptionDelayMS() -> int:
 
 def getSingleCharDescription(
 	text: str,
-	locale: Optional[str] = None,
+	locale: str | None = None,
 ) -> Generator[SequenceItemT, None, None]:
 	"""
 	Returns a speech sequence:
@@ -561,7 +561,7 @@ def getSingleCharDescription(
 
 def getSpellingSpeech(
 	text: str,
-	locale: Optional[str] = None,
+	locale: str | None = None,
 	useCharacterDescriptions: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
 	synth = getSynth()
@@ -623,8 +623,8 @@ def getCharDescListFromText(text, locale):
 def speakObjectProperties(
 	obj: "NVDAObjects.NVDAObject",
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
-	priority: Optional[Spri] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
+	priority: Spri | None = None,
 	**allowedProperties,
 ):
 	speechSequence = getObjectPropertiesSpeech(
@@ -643,7 +643,7 @@ def speakObjectProperties(
 def getObjectPropertiesSpeech(  # noqa: C901
 	obj: "NVDAObjects.NVDAObject",
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
 	**allowedProperties,
 ) -> SpeechSequence:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
@@ -797,8 +797,8 @@ def _getPlaceholderSpeechIfTextEmpty(
 def speakObject(
 	obj,
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
-	priority: Optional[Spri] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
+	priority: Spri | None = None,
 ):
 	sequence = getObjectSpeech(
 		obj,
@@ -812,7 +812,7 @@ def speakObject(
 def getObjectSpeech(
 	obj: "NVDAObjects.NVDAObject",
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
 ) -> SpeechSequence:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return []
@@ -1173,7 +1173,7 @@ def speak(  # noqa: C901
 
 def speakPreselectedText(
 	text: str,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ):
 	"""Helper method to announce that a newly focused control already has
 	text selected. This method is in contrast with L{speakTextSelected}.
@@ -1213,7 +1213,7 @@ def getPreselectedTextSpeech(
 
 def speakTextSelected(
 	text: str,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ):
 	"""Helper method to announce that the user has caused text to be selected.
 	This method is in contrast with L{speakPreselectedText}.
@@ -1231,7 +1231,7 @@ def speakTextSelected(
 def speakSelectionMessage(
 	message: str,
 	text: str,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ):
 	seq = _getSelectionMessageSpeech(message, text)
 	if seq:
@@ -1263,7 +1263,7 @@ def speakSelectionChange(  # noqa: C901
 	speakSelected: bool = True,
 	speakUnselected: bool = True,
 	generalize: bool = False,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
@@ -1460,12 +1460,12 @@ def speakTextInfo(
 	info: textInfos.TextInfo,
 	useCache: Union[bool, SpeakTextInfoState] = True,
 	formatConfig: Dict[str, bool] = None,
-	unit: Optional[str] = None,
+	unit: str | None = None,
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
 	onlyInitialFields: bool = False,
 	suppressBlanks: bool = False,
-	priority: Optional[Spri] = None,
+	priority: Spri | None = None,
 ) -> bool:
 	speechGen = getTextInfoSpeech(
 		info,
@@ -1491,9 +1491,9 @@ def getTextInfoSpeech(  # noqa: C901
 	info: textInfos.TextInfo,
 	useCache: Union[bool, SpeakTextInfoState] = True,
 	formatConfig: Dict[str, bool] = None,
-	unit: Optional[str] = None,
+	unit: str | None = None,
 	reason: OutputReason = OutputReason.QUERY,
-	_prefixSpeechCommand: Optional[SpeechCommand] = None,
+	_prefixSpeechCommand: SpeechCommand | None = None,
 	onlyInitialFields: bool = False,
 	suppressBlanks: bool = False,
 ) -> Generator[SpeechSequence, None, bool]:
@@ -1884,7 +1884,7 @@ def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
 
 
 def _getTextInfoSpeech_considerSpelling(
-	unit: Optional[textInfos.TextInfo],
+	unit: textInfos.TextInfo | None,
 	onlyInitialFields: bool,
 	textWithFields: textInfos.TextInfo.TextWithFieldsT,
 	reason: OutputReason,
@@ -1936,7 +1936,7 @@ def getPropertiesSpeech(  # noqa: C901
 	**propertyValues,
 ) -> SpeechSequence:
 	textList: SpeechSequence = []
-	name: Optional[str] = propertyValues.get("name")
+	name: str | None = propertyValues.get("name")
 	if name:
 		textList.append(name)
 	if "role" in propertyValues:
@@ -1949,17 +1949,17 @@ def getPropertiesSpeech(  # noqa: C901
 		speakRole = False
 		role = controlTypes.Role.UNKNOWN
 	role = controlTypes.Role(role)
-	value: Optional[str] = (
+	value: str | None = (
 		propertyValues.get("value") if role not in controlTypes.silentValuesForRoles else None
 	)
-	cellCoordsText: Optional[str] = propertyValues.get("cellCoordsText")
+	cellCoordsText: str | None = propertyValues.get("cellCoordsText")
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 
 	if role == controlTypes.Role.CHARTELEMENT:
 		speakRole = False
-	roleText: Optional[str] = propertyValues.get("roleText")
+	roleText: str | None = propertyValues.get("roleText")
 	if (
 		speakRole
 		and (
@@ -1999,11 +1999,11 @@ def getPropertiesSpeech(  # noqa: C901
 		labelStates = controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates)
 		textList.extend(labelStates)
 	# sometimes description key is present but value is None
-	description: Optional[str] = propertyValues.get("description")
+	description: str | None = propertyValues.get("description")
 	if description:
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
-	keyboardShortcut: Optional[str] = propertyValues.get("keyboardShortcut")
+	keyboardShortcut: str | None = propertyValues.get("keyboardShortcut")
 	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
@@ -2022,7 +2022,7 @@ def getPropertiesSpeech(  # noqa: C901
 		if rowNumber and (
 			not sameTable or rowNumber != _speechState.oldRowNumber or rowSpan != _speechState.oldRowSpan
 		):
-			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
+			rowHeaderText: str | None = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
 			if includeTableCellCoords and not cellCoordsText:
@@ -2042,7 +2042,7 @@ def getPropertiesSpeech(  # noqa: C901
 			or columnNumber != _speechState.oldColumnNumber
 			or columnSpan != _speechState.oldColumnSpan
 		):
-			columnHeaderText: Optional[str] = propertyValues.get("columnHeaderText")
+			columnHeaderText: str | None = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
 			if includeTableCellCoords and not cellCoordsText:
@@ -2097,7 +2097,7 @@ def getPropertiesSpeech(  # noqa: C901
 				_("has details"),
 			)
 
-	placeholder: Optional[str] = propertyValues.get("placeholder", None)
+	placeholder: str | None = propertyValues.get("placeholder", None)
 	if placeholder:
 		textList.append(placeholder)
 	indexInGroup = propertyValues.get("positionInfo_indexInGroup", 0)
@@ -2133,7 +2133,7 @@ def getPropertiesSpeech(  # noqa: C901
 	return textList
 
 
-def _rowAndColumnCountText(rowCount: int, columnCount: int) -> Optional[str]:
+def _rowAndColumnCountText(rowCount: int, columnCount: int) -> str | None:
 	if rowCount and columnCount:
 		rowCountTranslation: str = _rowCountText(rowCount)
 		colCountTranslation: str = _columnCountText(columnCount)
@@ -2212,9 +2212,9 @@ def getControlFieldSpeech(  # noqa: C901
 	attrs: textInfos.ControlField,
 	ancestorAttrs: List[textInfos.Field],
 	fieldType: str,
-	formatConfig: Optional[Dict[str, bool]] = None,
+	formatConfig: Dict[str, bool] | None = None,
 	extraDetail: bool = False,
-	reason: Optional[OutputReason] = None,
+	reason: OutputReason | None = None,
 ) -> SpeechSequence:
 	if attrs.get("isHidden"):
 		return []
@@ -2244,7 +2244,7 @@ def getControlFieldSpeech(  # noqa: C901
 		errorMessage = attrs.get("errorMessage", None)
 	value = attrs.get("value", "")
 
-	description: Optional[str] = None
+	description: str | None = None
 	_descriptionFrom = attrs.get("_description-from", controlTypes.DescriptionFrom.UNKNOWN)
 	_descriptionIsContent: bool = attrs.get("descriptionIsContent", False)
 	_reportDescriptionAsAnnotation: bool = (
@@ -2542,10 +2542,10 @@ def getControlFieldSpeech(  # noqa: C901
 # and move logic out into smaller helper functions.
 def getFormatFieldSpeech(  # noqa: C901
 	attrs: textInfos.Field,
-	attrsCache: Optional[textInfos.Field] = None,
-	formatConfig: Optional[Dict[str, bool]] = None,
-	reason: Optional[OutputReason] = None,
-	unit: Optional[str] = None,
+	attrsCache: textInfos.Field | None = None,
+	formatConfig: Dict[str, bool] | None = None,
+	reason: OutputReason | None = None,
+	unit: str | None = None,
 	extraDetail: bool = False,
 	initialFormat: bool = False,
 ) -> SpeechSequence:
@@ -3040,8 +3040,8 @@ def getFormatFieldSpeech(  # noqa: C901
 
 
 def getTableInfoSpeech(
-	tableInfo: Optional[Dict[str, Any]],
-	oldTableInfo: Optional[Dict[str, Any]],
+	tableInfo: Dict[str, Any] | None,
+	oldTableInfo: Dict[str, Any] | None,
 	extraDetail: bool = False,
 ) -> SpeechSequence:
 	if tableInfo is None and oldTableInfo is None:

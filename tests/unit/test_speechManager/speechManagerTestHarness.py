@@ -121,7 +121,7 @@ class SpeechManagerInteractions:
 		#: Number of cancel calls we are waiting for
 		self._awaitingCancelCalls: int = 0
 		#: Index and Callbacks for callback commands
-		self._awaitingCallbackForIndex: List[Tuple[_IndexT, Optional[Callable[[], None]]]] = []
+		self._awaitingCallbackForIndex: List[Tuple[_IndexT, Callable[[], None] | None]] = []
 		#: Map of mocks to the number of times that we expect for them get called in this expect block.
 		self._awaitingMockCalls: typing.Dict[MagicMock, int] = {}
 
@@ -375,7 +375,7 @@ class SpeechManagerInteractions:
 	def expect_indexReachedCallback(
 		self,
 		forIndex: _IndexT,
-		sideEffect: Optional[Callable[[], None]] = None,
+		sideEffect: Callable[[], None] | None = None,
 	):
 		"""Expect that upon exiting the expectation block, forIndex will have been reached.
 		If a side effect is required (such as speaking more text) this must be called before
@@ -429,8 +429,8 @@ class SpeechManagerInteractions:
 
 	def expect_synthSpeak(
 		self,
-		sequenceNumbers: Optional[Union[int, typing.Iterable[int]]] = None,
-		sequence: Optional[List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex]]] = None,
+		sequenceNumbers: Union[int, typing.Iterable[int]] | None = None,
+		sequence: List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex]] | None = None,
 	):
 		isSpeechSpecified = sequence is not None
 		areNumbersSpecified = sequenceNumbers is not None

@@ -119,7 +119,7 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created." % storeUpdatesDir)
 
 #: Persistent state information.
-state: Optional[Dict[str, Any]] = None
+state: Dict[str, Any] | None = None
 
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
@@ -287,7 +287,7 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0, 0, 0)
 
 
-def getPendingUpdate() -> Optional[Tuple]:
+def getPendingUpdate() -> Tuple | None:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise."""
 	try:
 		pendingUpdateFile = state["pendingUpdateFile"]
@@ -446,7 +446,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			wx.OK | wx.ICON_ERROR,
 		)
 
-	def _result(self, info: Optional[UpdateInfo]) -> None:
+	def _result(self, info: UpdateInfo | None) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)

@@ -195,15 +195,15 @@ class AddonListItemVM(Generic[_AddonModelT]):
 class AddonDetailsVM:
 	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
-		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
+		self._listItem: AddonListItemVM | None = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property
-	def listItem(self) -> Optional[AddonListItemVM]:
+	def listItem(self) -> AddonListItemVM | None:
 		return self._listItem
 
 	@listItem.setter
-	def listItem(self, newListItem: Optional[AddonListItemVM]):
+	def listItem(self, newListItem: AddonListItemVM | None):
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
@@ -221,10 +221,10 @@ class AddonListVM:
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
 		self.selectionChanged = extensionPoints.Action()
-		self.selectedAddonId: Optional[str] = None
+		self.selectedAddonId: str | None = None
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
-		self._filterString: Optional[str] = None
+		self._filterString: str | None = None
 		self._reverseSort: bool = False
 
 		self._setSelectionPending = False
@@ -270,7 +270,7 @@ class AddonListVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify)
 
-	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
+	def getAddonFieldText(self, index: int, field: AddonListField) -> str | None:
 		"""Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
@@ -303,7 +303,7 @@ class AddonListVM:
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
 
-	def getSelectedIndex(self) -> Optional[int]:
+	def getSelectedIndex(self) -> int | None:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
@@ -313,7 +313,7 @@ class AddonListVM:
 		selectedAddonId = self._addonsFilteredOrdered[index]
 		return self._addons[selectedAddonId]
 
-	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
+	def setSelection(self, index: int | None) -> AddonListItemVM | None:
 		self._validate(selectionIndex=index)
 		self.selectedAddonId = None
 		if index is not None:
@@ -322,22 +322,22 @@ class AddonListVM:
 			except IndexError:
 				# Failed to get addonId, index may have been lost in refresh.
 				pass
-		selectedItemVM: Optional[AddonListItemVM] = self.getSelection()
+		selectedItemVM: AddonListItemVM | None = self.getSelection()
 		log.debug(f"selected Item: {selectedItemVM}")
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.selectionChanged.notify)
 		return selectedItemVM
 
-	def getSelection(self) -> Optional[AddonListItemVM]:
+	def getSelection(self) -> AddonListItemVM | None:
 		if self.selectedAddonId is None:
 			return None
 		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
 		self,
-		sortField: Optional[AddonListField] = None,
-		selectionIndex: Optional[int] = None,
-		selectionId: Optional[str] = None,
+		sortField: AddonListField | None = None,
+		selectionIndex: int | None = None,
+		selectionId: str | None = None,
 	):
 		if sortField is not None:
 			assert sortField in AddonListField
@@ -416,7 +416,7 @@ class AddonListVM:
 	def _tryPersistSelection(
 		self,
 		newOrder: List[str],
-	) -> Optional[str]:
+	) -> str | None:
 		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet."""
 		selectedIndex = self.getSelectedIndex()
 		selectedId = self.selectedAddonId

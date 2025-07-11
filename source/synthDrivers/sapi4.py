@@ -876,7 +876,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._comThread = _ComThread()
-		self._finalIndex: Optional[int] = None
+		self._finalIndex: int | None = None
 		self._ttsCentral = None
 		self._sinkRegKey = DWORD()
 		self._bookmarks = None

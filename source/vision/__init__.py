@@ -16,7 +16,7 @@ import visionEnhancementProviders  # noqa: F401
 import config
 from typing import Optional
 
-handler: Optional[VisionHandler] = None
+handler: VisionHandler | None = None
 
 
 def initialize() -> None:

@@ -621,7 +621,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys: Optional[Union[bytes, int]], driver: BrailleDisplayDriver):
+	def __init__(self, keys: Union[bytes, int] | None, driver: BrailleDisplayDriver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
 		self.id = ""

@@ -217,7 +217,7 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
-def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def _getDownloadableStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None
@@ -330,7 +330,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 			raise ValueError(f"Unexpected value: {canUpdateAddon}")
 
 
-def _getInstalledStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def _getInstalledStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	from addonHandler import state as addonHandlerState
 	from ..dataManager import addonDataManager
 

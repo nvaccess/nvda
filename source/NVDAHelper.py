@@ -55,8 +55,8 @@ if not NVDAState.isRunningAsSource():
 
 
 _remoteLib = None
-_remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
-_remoteLoaderARM64: "Optional[_RemoteLoader]" = None
+_remoteLoaderAMD64: "_RemoteLoader | None" = None
+_remoteLoaderARM64: "_RemoteLoader | None" = None
 localLib = None
 generateBeep = None
 onSsmlMarkReached = None

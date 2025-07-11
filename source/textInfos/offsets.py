@@ -159,7 +159,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	#: Use uniscribe to calculate word offsets etc.
 	useUniscribe: bool = True
 	#: The encoding internal to the underlying text info implementation.
-	encoding: Optional[str] = textUtils.WCHAR_ENCODING
+	encoding: str | None = textUtils.WCHAR_ENCODING
 
 	def __eq__(self, other):
 		if self is other or (
@@ -327,7 +327,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText: str,
 		unit: str,
 		relOffset: int,
-	) -> Optional[Tuple[int, int]]:
+	) -> Tuple[int, int] | None:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -607,7 +607,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			else:
 				self._startOffset = self._endOffset
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:

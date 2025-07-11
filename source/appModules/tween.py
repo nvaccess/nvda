@@ -26,7 +26,7 @@ class TweetListItem(ListItem):
 		finally:
 			self._isGettingName = False
 
-	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRaw(self, index: int) -> str | None:
 		if self._isGettingName and index in (1, 2):
 			# If this is for use in the name property,
 			# don't include the headers for the Name and Post columns.
@@ -36,7 +36,7 @@ class TweetListItem(ListItem):
 			res = res.replace("▾", "")
 		return res
 
-	def _getColumnContentRaw(self, index: int) -> Optional[str]:
+	def _getColumnContentRaw(self, index: int) -> str | None:
 		if controlTypes.State.INVISIBLE not in self.states and index == 3:
 			# This is the date column.
 			# Its content is overridden on screen,

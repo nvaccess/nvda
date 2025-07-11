@@ -65,7 +65,7 @@ https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-secur
 Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
-_lockStateTracker: Optional["_WindowsLockedState"] = None
+_lockStateTracker: "_WindowsLockedState" | None = None
 """
 Caches the Windows lock state as an auto property object.
 """
@@ -213,7 +213,7 @@ def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T, None, None]:
 		)
 
 
-def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
+def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:
 	"""
 	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.

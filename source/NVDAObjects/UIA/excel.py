@@ -133,36 +133,36 @@ class ExcelCell(ExcelObject):
 			return False
 
 	#: Typing information for auto-property: _get_outlineColor
-	outlineColor: Optional[Tuple[colors.RGB]]
+	outlineColor: Tuple[colors.RGB] | None
 
-	def _get_outlineColor(self) -> Optional[Tuple[colors.RGB]]:
+	def _get_outlineColor(self) -> Tuple[colors.RGB] | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineColorPropertyId, True)
 		if isinstance(val, tuple):
 			return tuple(colors.RGB.fromCOLORREF(v) for v in val)
 		return None
 
 	#: Typing information for auto-property: _get_outlineThickness
-	outlineThickness: Optional[Tuple[float]]
+	outlineThickness: Tuple[float] | None
 
-	def _get_outlineThickness(self) -> Optional[Tuple[float]]:
+	def _get_outlineThickness(self) -> Tuple[float] | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineThicknessPropertyId, True)
 		if isinstance(val, tuple):
 			return val
 		return None
 
 	#: Typing information for auto-property: _get_fillColor
-	fillColor: Optional[colors.RGB]
+	fillColor: colors.RGB | None
 
-	def _get_fillColor(self) -> Optional[colors.RGB]:
+	def _get_fillColor(self) -> colors.RGB | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillColorPropertyId, True)
 		if isinstance(val, int):
 			return colors.RGB.fromCOLORREF(val)
 		return None
 
 	#: Typing information for auto-property: _get_fillType
-	fillType: Optional[UIAHandler.constants.FillType]
+	fillType: UIAHandler.constants.FillType | None
 
-	def _get_fillType(self) -> Optional[UIAHandler.constants.FillType]:
+	def _get_fillType(self) -> UIAHandler.constants.FillType | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillTypePropertyId, True)
 		if isinstance(val, int):
 			try:
@@ -172,9 +172,9 @@ class ExcelCell(ExcelObject):
 		return None
 
 	#: Typing information for auto-property: _get_rotation
-	rotation: Optional[float]
+	rotation: float | None
 
-	def _get_rotation(self) -> Optional[float]:
+	def _get_rotation(self) -> float | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_RotationPropertyId, True)
 		if isinstance(val, float):
 			return val

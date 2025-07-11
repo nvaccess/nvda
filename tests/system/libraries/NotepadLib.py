@@ -47,8 +47,8 @@ class NotepadLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	notepadWindow: _Optional[_Window] = None
-	processRFHandleForStart: _Optional[int] = None
+	notepadWindow: _Window | None = None
+	processRFHandleForStart: int | None = None
 
 	@staticmethod
 	def _getTestCasePath(filename):

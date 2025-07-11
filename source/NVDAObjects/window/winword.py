@@ -1004,7 +1004,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: Dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed:
 			return []

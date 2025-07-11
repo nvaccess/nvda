@@ -159,7 +159,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._deviceID: Optional[str] = None
+		self._deviceID: str | None = None
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.

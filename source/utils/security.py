@@ -309,7 +309,7 @@ def _isWindowBelowWindowMatchesCond(
 	currentWindow = bottomWindow
 	currentIndex = 0  # 0 is the last/lowest window
 	window1Indexes: List[int] = []
-	window2Index: Optional[int] = None
+	window2Index: int | None = None
 	while currentWindow != winUser.GW_RESULT_NOT_FOUND:
 		if currentWindow == window:
 			window1Indexes.append(currentIndex)

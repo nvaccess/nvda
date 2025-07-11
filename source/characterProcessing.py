@@ -122,7 +122,7 @@ class CharacterDescriptions(object):
 		log.debug("Loaded %d entries." % len(self._entries))
 		f.close()
 
-	def getCharacterDescription(self, character: str) -> Optional[List[str]]:
+	def getCharacterDescription(self, character: str) -> List[str] | None:
 		"""
 		Looks up the given character and returns a list containing all the description strings found.
 		"""
@@ -132,7 +132,7 @@ class CharacterDescriptions(object):
 _charDescLocaleDataMap: LocaleDataMap[CharacterDescriptions] = LocaleDataMap(CharacterDescriptions)
 
 
-def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
+def getCharacterDescription(locale: str, character: str) -> List[str] | None:
 	"""
 	Finds a description or examples for the given character, which makes sense in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.

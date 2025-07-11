@@ -105,7 +105,7 @@ def messageBox(
 	message: str,
 	caption: str = wx.MessageBoxCaptionStr,
 	style: int = wx.OK | wx.CENTER,
-	parent: Optional[wx.Window] = None,
+	parent: wx.Window | None = None,
 ) -> int:
 	"""Display a modal message dialog.
 
@@ -149,7 +149,7 @@ class DisplayableError(Exception):
 	@type displayableError: DisplayableError
 	"""
 
-	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
+	def __init__(self, displayMessage: str, titleMessage: str | None = None):
 		"""
 		@param displayMessage: A translated message, to be displayed to the user.
 		@param titleMessage: A translated message, to be used as a title for the display message.

@@ -378,7 +378,7 @@ class NVDAHighlighterGuiPanel(
 		else:
 			self._updateEnabledState()
 
-		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
+		providerInst: NVDAHighlighter | None = self._providerControl.getProviderInstance()
 		if providerInst:
 			providerInst.refresh()
 
@@ -393,7 +393,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
 	_settings = NVDAHighlighterSettings()
-	_window: Optional[customWindowClass] = None
+	_window: customWindowClass | None = None
 	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
 	@classmethod  # override

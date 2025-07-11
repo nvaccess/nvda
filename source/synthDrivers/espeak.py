@@ -73,7 +73,7 @@ class SynthDriver(SynthDriver):
 		"fr": "fr-fr",
 	}
 
-	availableLanguages: Set[Optional[str]]
+	availableLanguages: Set[str | None]
 	"""
 	For eSpeak commit 7e5457f91e10, this is equivalent to:
 	{
@@ -261,7 +261,7 @@ class SynthDriver(SynthDriver):
 		langWithLocale = command.lang if command.lang else self._language
 		langWithLocale = langWithLocale.lower().replace("_", "-")
 
-		langWithoutLocale: Optional[str] = stripLocaleFromLangCode(langWithLocale)
+		langWithoutLocale: str | None = stripLocaleFromLangCode(langWithLocale)
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
 		matchingLangs = filter(
