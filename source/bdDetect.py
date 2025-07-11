@@ -318,7 +318,7 @@ def getDriversForPossibleBluetoothDevices(
 			yield (hidName, match)
 
 
-btDevsCacheT = Optional[List[Tuple[str, DeviceMatch]]]
+btDevsCacheT = List[Tuple[str, DeviceMatch]] | None
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
