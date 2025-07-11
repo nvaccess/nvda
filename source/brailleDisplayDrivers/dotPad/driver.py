@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024-2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -101,7 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		driverRegistrar.addUsbDevices(
 			bdDetect.ProtocolType.SERIAL,
 			{
-				"VID_0403&PID_6010",  # FTDI Dual RS232
+				"VID_0403&PID_6010",  # FTDI Dual RS232 as used in DotPad320A
 			},
 		)
 
