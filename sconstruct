@@ -7,6 +7,7 @@
 
 import multiprocessing
 import os
+import platform
 import sys
 from pathlib import Path
 
@@ -104,6 +105,20 @@ vars.Add(
 		allowed_values=[str(x) for x in range(60)],
 	)
 )
+vars.Add(
+	EnumVariable(
+		'targetArch',
+		help="Target architecture of the build output",
+		default='x86',
+		allowed_values=('x86', 'x86_64'),
+		map={
+			'32bit': 'x86',
+			'64bit': 'x86_64',
+			'x64': 'x86_64',
+		},
+		ignorecase=2  # Always downcase,
+	)
+)
 
 # Base environment for this and sub sconscripts
 env = Environment(
@@ -117,6 +132,7 @@ env = Environment(
 		"m4",
 	],
 )
+
 
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider("MD5-timestamp")
@@ -172,13 +188,13 @@ sourceDir = env.Dir("source")
 Export("sourceDir")
 clientDir = Dir("extras/controllerClient")
 Export("clientDir")
-sourceLibDir = sourceDir.Dir("lib")
+sourceLibDir = sourceDir.Dir("lib/x86")
 Export("sourceLibDir")
 sourceTypelibDir = sourceDir.Dir("typelibs")
 Export("sourceTypelibDir")
-sourceLibDir64 = sourceDir.Dir("lib64")
+sourceLibDir64 = sourceDir.Dir("lib/x64")
 Export("sourceLibDir64")
-sourceLibDirArm64 = sourceDir.Dir("libArm64")
+sourceLibDirArm64 = sourceDir.Dir("lib/arm64")
 Export("sourceLibDirArm64")
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
@@ -236,7 +252,10 @@ env32["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 env64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 envArm64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 
-env = env32
+if platform.architecture()[0].startswith("64"):
+	env = env64
+else:
+	env = env32
 
 projectRCSubstDict = {
 	"%version_year%": env["version_year"],
