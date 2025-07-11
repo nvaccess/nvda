@@ -9,9 +9,6 @@ features.
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import typing as _typing
-from typing import (
-	Optional as _Optional,
-)
 from SystemTestSpy import (
 	_getLib,
 )

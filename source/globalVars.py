@@ -27,7 +27,6 @@ from typing import (
 	TYPE_CHECKING,
 	List,
 	Literal,
-	Optional,
 )
 
 if TYPE_CHECKING:

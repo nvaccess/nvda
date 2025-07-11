@@ -9,7 +9,6 @@ import re
 from typing import (
 	Dict,
 	NamedTuple,
-	Optional,
 	TYPE_CHECKING,
 )
 

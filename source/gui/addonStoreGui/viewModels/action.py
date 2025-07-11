@@ -8,7 +8,6 @@ from typing import (
 	Callable,
 	Generic,
 	Iterable,
-	Optional,
 	TypeVar,
 	TYPE_CHECKING,
 )

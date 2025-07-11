@@ -9,7 +9,6 @@ from os import (
 from typing import (
 	TYPE_CHECKING,
 	cast,
-	Optional,
 )
 
 import systemUtils

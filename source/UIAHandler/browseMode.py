@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
-from typing import Optional
 from ctypes import byref
 from comtypes import COMError
 from comtypes.automation import VARIANT, VT_EMPTY

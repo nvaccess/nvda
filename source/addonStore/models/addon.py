@@ -13,7 +13,6 @@ from typing import (
 	Dict,
 	Generator,
 	List,
-	Optional,
 	Protocol,
 	Union,
 )

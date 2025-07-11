@@ -10,7 +10,6 @@ import pathlib
 import threading
 from typing import (
 	TYPE_CHECKING,
-	Optional,
 	Set,
 	Tuple,
 )

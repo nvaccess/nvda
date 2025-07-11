@@ -11,7 +11,6 @@ from typing import (
 	TYPE_CHECKING,
 	Any,
 	List,
-	Optional,
 )
 import comtypes
 import sys

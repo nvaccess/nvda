@@ -27,7 +27,6 @@ from typing import (
 	Iterator,
 	List,
 	NamedTuple,
-	Optional,
 	OrderedDict,
 	Tuple,
 	Type,

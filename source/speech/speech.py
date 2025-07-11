@@ -52,7 +52,6 @@ from .types import (
 )
 from typing import (
 	Iterable,
-	Optional,
 	Dict,
 	List,
 	Any,

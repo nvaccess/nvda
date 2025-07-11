@@ -13,7 +13,6 @@ import typing
 from typing import (
 	Tuple,
 	List,
-	Optional,
 	Any,
 	TypeAlias,
 )

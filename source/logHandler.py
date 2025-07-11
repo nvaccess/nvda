@@ -22,7 +22,6 @@ import buildVersion
 from typing import (
 	Literal,
 	NamedTuple,
-	Optional,
 	Protocol,
 	TYPE_CHECKING,
 )
