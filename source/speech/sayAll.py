@@ -6,7 +6,7 @@
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
-from typing import Callable, TYPE_CHECKING, Optional
+from typing import Callable, TYPE_CHECKING
 import weakref
 import garbageHandler
 from logHandler import log
@@ -108,8 +108,8 @@ class _SayAllHandler:
 	def readText(
 		self,
 		cursor: CURSOR,
-		startPos: Optional[textInfos.TextInfo] = None,
-		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		startPos: textInfos.TextInfo | None = None,
+		nextLineFunc: Callable[[textInfos.TextInfo], textInfos.TextInfo] | None = None,
 		shouldUpdateCaret: bool = True,
 		startedFromScript: bool | None = False,
 	) -> None:
@@ -431,8 +431,8 @@ class _TableTextReader(_CaretTextReader):
 	def __init__(
 		self,
 		handler: _SayAllHandler,
-		startPos: Optional[textInfos.TextInfo] = None,
-		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		startPos: textInfos.TextInfo | None = None,
+		nextLineFunc: Callable[[textInfos.TextInfo], textInfos.TextInfo] | None = None,
 		shouldUpdateCaret: bool = True,
 	):
 		self.startPos = startPos

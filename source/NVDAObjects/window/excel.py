@@ -10,7 +10,6 @@ import enum
 from typing import (
 	Any,
 	Dict,
-	Optional,
 )
 
 from comtypes import COMError, BSTR
@@ -1571,10 +1570,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 
 class ExcelCell(ExcelBase):
-	excelCellInfo: Optional[ExcelCellInfo]
+	excelCellInfo: ExcelCellInfo | None
 	"""Type info for auto property: _get_excelCellInfo"""
 
-	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
+	def _get_excelCellInfo(self) -> ExcelCellInfo | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci = ExcelCellInfo()

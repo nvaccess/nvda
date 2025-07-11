@@ -10,7 +10,7 @@ A c(lang) reference implementation is available in brltty.
 
 from io import BytesIO
 import itertools
-from typing import List, Optional
+from typing import List
 
 import braille
 import inputCore
@@ -229,9 +229,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._keyBits = 0
 		self._extendedKeyBits = 0
 		self._ignoreKeyReleases = False
-		self._model: Optional[str] = None
-		self._manufacturer: Optional[str] = None
-		self._firmwareVersion: Optional[str] = None
+		self._model: str | None = None
+		self._manufacturer: str | None = None
+		self._firmwareVersion: str | None = None
 		self.translationTable = None
 		self.leftWizWheelActionCycle = itertools.cycle(self.wizWheelActions)
 		action = next(self.leftWizWheelActionCycle)

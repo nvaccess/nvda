@@ -27,7 +27,6 @@ from threading import (
 )
 from typing import (
 	List,
-	Optional,
 )
 
 import braille
@@ -430,7 +429,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		self._handleReadQueue()
 
-	def _somethingToRead(self) -> Optional[bytes]:
+	def _somethingToRead(self) -> bytes | None:
 		"""All but connecting/reconnecting related read operations.
 		@return: on success returns data, on failure C{None}
 		"""

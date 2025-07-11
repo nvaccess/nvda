@@ -12,7 +12,6 @@ from collections import OrderedDict
 from typing import (
 	Dict,
 	List,
-	Optional,
 	Union,
 )
 
@@ -753,7 +752,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
+	_dev: Union[hwIo.Hid, hwIo.Serial] | None
 
 	def __new__(cls, *args, **kwargs):
 		obj = super().__new__(cls, *args, **kwargs)

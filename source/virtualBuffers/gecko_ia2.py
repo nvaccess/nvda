@@ -7,7 +7,6 @@
 from dataclasses import dataclass
 from typing import (
 	Iterable,
-	Optional,
 )
 import typing
 from ctypes import byref
@@ -218,7 +217,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
 		return super()._normalizeControlField(attrs)
 
-	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
+	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[controlTypes.Role | None]:
 		"""
 		The attribute has been added directly to the buffer as a string, containing a comma separated list
 		of values, each value is either:

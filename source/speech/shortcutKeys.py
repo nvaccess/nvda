@@ -15,19 +15,18 @@ import config
 from .commands import CharacterModeCommand
 from .types import SpeechSequence
 from typing import (
-	Optional,
 	List,
 	Tuple,
 )
 
 
-def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> None:
+def speakKeyboardShortcuts(keyboardShortcutsStr: str | None) -> None:
 	from .speech import speak
 
 	speak(getKeyboardShortcutsSpeech(keyboardShortcutsStr))
 
 
-def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSequence:
+def getKeyboardShortcutsSpeech(keyboardShortcutsStr: str | None) -> SpeechSequence:
 	"""Gets the speech sequence for a shortcuts string containing one or more shortcuts.
 	@param keyboardShortcutsStr: the shortcuts string.
 	"""

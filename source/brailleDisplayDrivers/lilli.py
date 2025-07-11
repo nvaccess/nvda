@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
-from typing import Optional, List
+from typing import List
 
 import os
 import globalVars
@@ -139,7 +139,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleKeyPresses(self):
 		while True:
-			key: Optional[int] = None
+			key: int | None = None
 			try:
 				# Python 3: review required
 				# The code seems to assume this returns an int.

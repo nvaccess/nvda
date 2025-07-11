@@ -772,9 +772,9 @@ class IAccessible(Window):
 	# C901: 'IAccessible.__init__' is too complex
 	def __init__(  # noqa: C901
 		self,
-		windowHandle: Optional[int] = None,
-		IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
-		IAccessibleChildID: Optional[int] = None,
+		windowHandle: int | None = None,
+		IAccessibleObject: Union[IUnknown, IA.IAccessible, IA2.IAccessible2] | None = None,
+		IAccessibleChildID: int | None = None,
 		event_windowHandle: Optional = None,
 		event_objectID: Optional = None,
 		event_childID: Optional = None,
@@ -1881,7 +1881,7 @@ class IAccessible(Window):
 	def _getIA2RelationFirstTarget(
 		self,
 		relationType: typing.Union[str, "IAccessibleHandler.RelationType"],
-	) -> typing.Optional["IAccessible"]:
+	) -> "IAccessible | None":
 		"""Get the first target for the relation of type.
 		@param relationType: The type of relation to fetch.
 		"""

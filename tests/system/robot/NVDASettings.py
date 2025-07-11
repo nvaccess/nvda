@@ -19,7 +19,6 @@ from robot.libraries.Process import Process as _ProcessLib
 from AssertsLib import AssertsLib as _AssertsLib
 
 import os
-from typing import Optional
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
 
@@ -47,7 +46,7 @@ def navigate_to_settings(settingsName):
 	spy.reset_all_speech_index()
 
 
-def read_settings(settingsName, cacheFolder, currentVersion, compareVersion: Optional[str] = None):
+def read_settings(settingsName, cacheFolder, currentVersion, compareVersion: str | None = None):
 	spy = _nvdaLib.getSpyLib()
 	start_speech_index = spy.get_next_speech_index()
 	advancedWarning = "I understand that changing these settings may cause NVDA to function incorrectly."

@@ -15,7 +15,7 @@ import comtypes
 import ctypes
 from enum import Enum
 import functools
-from typing import Optional, Union
+from typing import Union
 
 
 class FolderId(str, Enum):
@@ -42,7 +42,7 @@ class FolderId(str, Enum):
 def SHGetKnownFolderPath(
 	folderGuid: Union[FolderId, str],
 	dwFlags: int = 0,
-	hToken: Optional[int] = None,
+	hToken: int | None = None,
 ) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""

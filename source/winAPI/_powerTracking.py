@@ -21,7 +21,6 @@ from enum import (
 )
 from typing import (
 	List,
-	Optional,
 )
 
 from logHandler import log
@@ -163,7 +162,7 @@ def _reportPowerStatus(context: _ReportContext) -> None:
 		_powerState = systemPowerStatus.ACLineStatus
 
 
-def _getPowerStatus() -> Optional[SystemPowerStatus]:
+def _getPowerStatus() -> SystemPowerStatus | None:
 	sps = SystemPowerStatus()
 	systemPowerStatusUpdateResult = winKernel.GetSystemPowerStatus(sps)
 	if not systemPowerStatusUpdateResult:
@@ -173,7 +172,7 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 
 def _getSpeechForBatteryStatus(
-	systemPowerStatus: Optional[SystemPowerStatus],
+	systemPowerStatus: SystemPowerStatus | None,
 	context: _ReportContext,
 	oldPowerState: PowerState,
 ) -> List[str]:

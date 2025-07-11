@@ -27,7 +27,6 @@ from typing import (
 	TYPE_CHECKING,
 	List,
 	Literal,
-	Optional,
 )
 
 if TYPE_CHECKING:
@@ -38,9 +37,9 @@ if TYPE_CHECKING:
 class DefaultAppArgs(argparse.Namespace):
 	quit: bool = False
 	check_running: bool = False
-	logFileName: Optional[os.PathLike] = ""
+	logFileName: os.PathLike | None = ""
 	logLevel: int = 0
-	configPath: Optional[os.PathLike] = None
+	configPath: os.PathLike | None = None
 	language: str | None = None
 	minimal: bool = False
 	secure: bool = False
@@ -65,40 +64,40 @@ class DefaultAppArgs(argparse.Namespace):
 	installSilent: bool = False
 	createPortable: bool = False
 	createPortableSilent: bool = False
-	portablePath: Optional[os.PathLike] = None
+	portablePath: os.PathLike | None = None
 	launcher: bool = False
-	enableStartOnLogon: Optional[bool] = None
+	enableStartOnLogon: bool | None = None
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
 
 # Encapsulated by api module,
 # refer to #14037 for removal strategy.
-desktopObject: Optional["NVDAObjects.NVDAObject"] = None
+desktopObject: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use `setDesktopObject|getDesktopObject` from `api` instead"""
 
-foregroundObject: Optional["NVDAObjects.NVDAObject"] = None
+foregroundObject: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use `setForegroundObject|getForegroundObject` from `api` instead"""
 
-focusObject: Optional["NVDAObjects.NVDAObject"] = None
+focusObject: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use `setFocusObject|getFocusObject` from `api` instead"""
 
 focusAncestors: List["NVDAObjects.NVDAObject"] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
 
-focusDifferenceLevel: Optional[int] = None
+focusDifferenceLevel: int | None = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
 
-mouseObject: Optional["NVDAObjects.NVDAObject"] = None
+mouseObject: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use ``setMouseObject|getMouseObject`` from `api` instead"""
 
-navigatorObject: Optional["NVDAObjects.NVDAObject"] = None
+navigatorObject: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
 
-reviewPosition: Optional["documentBase.TextContainerObject"] = None
+reviewPosition: "documentBase.TextContainerObject | None" = None
 """Deprecated, use ``getReviewPosition|setReviewPosition`` from `api` instead"""
 
-reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None
+reviewPositionObj: "NVDAObjects.NVDAObject | None" = None
 """Deprecated, use ``api.getReviewPosition().obj`` instead"""
 
 

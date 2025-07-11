@@ -44,7 +44,6 @@ from typing import (
 	Any,
 	Dict,
 	List,
-	Optional,
 	Set,
 	Tuple,
 )
@@ -186,7 +185,7 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-def getInstalledUserConfigPath() -> Optional[str]:
+def getInstalledUserConfigPath() -> str | None:
 	try:
 		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 	except FileNotFoundError:
@@ -254,7 +253,7 @@ def getScratchpadDir(ensureExists: bool = False) -> str:
 	return path
 
 
-def initConfigPath(configPath: Optional[str] = None) -> None:
+def initConfigPath(configPath: str | None = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
@@ -536,7 +535,7 @@ class ConfigManager(object):
 		self.spec = confspec
 		_transformSpec(self.spec)
 		#: All loaded profiles by name.
-		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
+		self._profileCache: Dict[str | None, ConfigObj] | None = {}
 		#: The active profiles.
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
@@ -546,13 +545,13 @@ class ConfigManager(object):
 				"_featureFlag": _validateConfig_featureFlag,
 			},
 		)
-		self.rootSection: Optional[AggregatedSection] = None
+		self.rootSection: AggregatedSection | None = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
-		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
+		self._suspendedTriggers: List[ProfileTrigger] | None = None
 		self._initBaseConf()
 		#: Maps triggers to profiles.
-		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
+		self.triggersToProfiles: Dict[ProfileTrigger, ConfigObj] | None = None
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: Set[str] = set()

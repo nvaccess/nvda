@@ -18,7 +18,6 @@ from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LP
 from typing import (
 	TYPE_CHECKING,
 	Any,
-	Optional,
 	Union,
 )
 
@@ -615,7 +614,7 @@ def SetThreadExecutionState(esFlags):
 	return res
 
 
-def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+def LCIDToLocaleName(windowsLCID: LCID) -> str | None:
 	# NVDA cannot run with this imported at module level
 	from logHandler import log
 

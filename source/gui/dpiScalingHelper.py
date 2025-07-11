@@ -3,7 +3,7 @@
 # Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, Any, Callable, Tuple, Union
+from typing import Any, Callable, Tuple, Union
 
 
 _FloatInt = Union[int, float]
@@ -49,7 +49,7 @@ class DpiScalingHelperMixinWithoutInit:
 	"""
 
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
-	_scaleFactor: Optional[int] = None
+	_scaleFactor: int | None = None
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		if self._scaleFactor is None:

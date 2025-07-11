@@ -29,7 +29,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
-from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
+from typing import TYPE_CHECKING, Callable, NamedTuple
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -890,7 +890,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._comThread = _ComThread()
-		self._finalIndex: Optional[int] = None
+		self._finalIndex: int | None = None
 		self._ttsCentral = None
 		self._ttsAudio = None
 		self._sinkRegKey = DWORD()

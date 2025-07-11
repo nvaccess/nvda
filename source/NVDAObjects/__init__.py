@@ -12,7 +12,6 @@ import time
 import typing
 from typing import (
 	Dict,
-	Optional,
 	TYPE_CHECKING,
 )
 import weakref
@@ -434,10 +433,10 @@ class NVDAObject(
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	treeInterceptor: typing.Optional[TreeInterceptor]
+	treeInterceptor: TreeInterceptor | None
 	"""Type definition for auto prop '_get_treeInterceptor'"""
 
-	def _get_treeInterceptor(self) -> typing.Optional[TreeInterceptor]:
+	def _get_treeInterceptor(self) -> TreeInterceptor | None:
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -458,7 +457,7 @@ class NVDAObject(
 				self._treeInterceptor = weakref.ref(ti)
 			return ti
 
-	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
+	def _set_treeInterceptor(self, obj: TreeInterceptor | None):
 		"""Specifically sets a treeInterceptor to be associated with this object."""
 		if obj:
 			self._treeInterceptor = weakref.ref(obj)
@@ -496,9 +495,9 @@ class NVDAObject(
 		return controlTypes.Role.UNKNOWN
 
 	#: Type definition for auto prop '_get_roleText'
-	roleText: typing.Optional[str]
+	roleText: str | None
 
-	def _get_roleText(self) -> typing.Optional[str]:
+	def _get_roleText(self) -> str | None:
 		"""
 		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
 		No string is provided by default, meaning that NVDA will fall back to using role.
@@ -544,20 +543,20 @@ class NVDAObject(
 	"""Typing information for auto property _get_annotations
 	"""
 
-	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
+	def _get_annotations(self) -> AnnotationOrigin | None:
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(
 				f"Fetching annotations not supported on: {self.__class__.__qualname__}",
 			)
 		return None
 
-	detailsSummary: typing.Optional[str]
+	detailsSummary: str | None
 	"""
 	Typing information for auto property _get_detailsSummary
 	Deprecated, use self.annotations.targets instead.
 	"""
 
-	def _get_detailsSummary(self) -> typing.Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -575,12 +574,12 @@ class NVDAObject(
 		)
 		return bool(self.annotations)
 
-	detailsRole: typing.Optional[controlTypes.Role]
+	detailsRole: controlTypes.Role | None
 	"""Typing information for auto property _get_detailsRole
 	Deprecated, use self.annotations.roles instead.
 	"""
 
-	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -670,10 +669,10 @@ class NVDAObject(
 		).format(left=percentFromLeft, top=percentFromTop, width=percentWidth, height=percentHeight)
 
 	#: Typing information for auto-property: _get_parent
-	parent: typing.Optional["NVDAObject"]
+	parent: "NVDAObject | None"
 	"This object's parent (the object that contains this object)."
 
-	def _get_parent(self) -> typing.Optional["NVDAObject"]:
+	def _get_parent(self) -> "NVDAObject | None":
 		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
 		"""
@@ -689,38 +688,38 @@ class NVDAObject(
 		return parent
 
 	#: Typing information for auto-property: _get_next
-	next: typing.Optional["NVDAObject"]
+	next: "NVDAObject | None"
 	"The object directly after this object with the same parent."
 
-	def _get_next(self) -> typing.Optional["NVDAObject"]:
+	def _get_next(self) -> "NVDAObject | None":
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
 		"""
 		return None
 
 	#: Typing information for auto-property: _get_previous
-	previous: typing.Optional["NVDAObject"]
+	previous: "NVDAObject | None"
 	"The object directly before this object with the same parent."
 
-	def _get_previous(self) -> typing.Optional["NVDAObject"]:
+	def _get_previous(self) -> "NVDAObject | None":
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
 		"""
 		return None
 
 	#: Type definition for auto prop '_get_firstChild'
-	firstChild: typing.Optional["NVDAObject"]
+	firstChild: "NVDAObject | None"
 
-	def _get_firstChild(self) -> typing.Optional["NVDAObject"]:
+	def _get_firstChild(self) -> "NVDAObject | None":
 		"""Retrieves the first object that this object contains.
 		@return: the first child object if it exists else None.
 		"""
 		return None
 
 	#: Type definition for auto prop '_get_lastChild'
-	lastChild: typing.Optional["NVDAObject"]
+	lastChild: "NVDAObject | None"
 
-	def _get_lastChild(self) -> typing.Optional["NVDAObject"]:
+	def _get_lastChild(self) -> "NVDAObject | None":
 		"""Retrieves the last object that this object contains.
 		@return: the last child object if it exists else None.
 		"""
@@ -798,9 +797,9 @@ class NVDAObject(
 		raise NotImplementedError
 
 	#: Typing information for auto-property: _get_cellCoordsText
-	cellCoordsText: typing.Optional[str]
+	cellCoordsText: str | None
 
-	def _get_cellCoordsText(self) -> typing.Optional[str]:
+	def _get_cellCoordsText(self) -> str | None:
 		"""
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
@@ -1135,9 +1134,9 @@ class NVDAObject(
 		return isProtected
 
 	#: Type definition for auto prop '_get_indexInParent'
-	indexInParent: Optional[int]
+	indexInParent: int | None
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		"""The index of this object in its parent object.
 		@return: The 0 based index, C{None} if there is no parent.
 		@raise NotImplementedError: If not supported by the underlying object.
@@ -1177,9 +1176,9 @@ class NVDAObject(
 		return True
 
 	#: Type definition for auto prop '_get_statusBar'
-	statusBar: Optional["NVDAObject"]
+	statusBar: "NVDAObject | None"
 
-	def _get_statusBar(self) -> Optional["NVDAObject"]:
+	def _get_statusBar(self) -> "NVDAObject | None":
 		"""Finds the closest status bar in relation to this object.
 		@return: the found status bar else None
 		"""
@@ -1217,11 +1216,11 @@ class NVDAObject(
 		log.debug("Potential unimplemented child class: %r" % self)
 		return None
 
-	landmark: typing.Optional[str]
+	landmark: str | None
 	"""Typing information for auto property _get_landmark
 	"""
 
-	def _get_landmark(self) -> typing.Optional[str]:
+	def _get_landmark(self) -> str | None:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
 		"""

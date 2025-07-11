@@ -8,7 +8,6 @@
 from typing import (
 	Any,
 	Callable,
-	Optional,
 	Set,
 	Union,
 )
@@ -155,7 +154,7 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 		self.__instances[self] = None
 		return self
 
-	def _getPropertyViaCache(self, getterMethod: Optional[GetterMethodT] = None) -> GetterReturnT:
+	def _getPropertyViaCache(self, getterMethod: GetterMethodT | None = None) -> GetterReturnT:
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
 		missing = False

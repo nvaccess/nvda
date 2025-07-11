@@ -11,7 +11,6 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 import datetime as _datetime
 from os.path import join as _pJoin
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -45,9 +44,9 @@ class ChromeLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	_chromeWindow: _Optional[Window] = None
+	_chromeWindow: Window | None = None
 	"""Chrome Hwnd used to control Chrome via Windows functions."""
-	_processRFHandleForStart: _Optional[int] = None
+	_processRFHandleForStart: int | None = None
 	"""RF process handle, will wait for the chrome process to exit."""
 
 	@staticmethod

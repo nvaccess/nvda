@@ -21,7 +21,7 @@ from gui.settingsDialogs import (
 	VisionProviderStateControl,
 )
 from logHandler import log
-from typing import Optional, Type
+from typing import Type
 import nvwave
 import globalVars
 import NVDAHelper
@@ -327,7 +327,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		return True
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> Type | None:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.

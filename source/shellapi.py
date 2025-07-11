@@ -5,7 +5,6 @@
 
 from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
-from typing import Optional
 
 
 shell32 = windll.shell32  # noqa: F405
@@ -40,11 +39,11 @@ SEE_MASK_NOCLOSEPROCESS = 0x00000040
 
 
 def ShellExecute(
-	hwnd: Optional[int],
-	operation: Optional[str],
+	hwnd: int | None,
+	operation: str | None,
 	file: str,
-	parameters: Optional[str],
-	directory: Optional[str],
+	parameters: str | None,
+	directory: str | None,
 	showCmd: int,
 ) -> None:
 	if not file:

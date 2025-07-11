@@ -11,7 +11,6 @@ NVDA config before NVDA is started by the system tests.
 from os.path import join as _pJoin
 from .getLib import _getLib
 import sys
-from typing import Optional
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -97,7 +96,7 @@ def setupProfile(
 	repoRoot: str,
 	settingsFileName: str,
 	stagingDir: str,
-	gesturesFileName: Optional[str] = None,
+	gesturesFileName: str | None = None,
 ):
 	builtIn.log("Copying files into NVDA profile", level="DEBUG")
 	opSys.copy_file(

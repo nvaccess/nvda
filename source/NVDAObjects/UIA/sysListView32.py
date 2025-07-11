@@ -6,7 +6,7 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
-from typing import Dict, List, Optional, Type
+from typing import Dict, List, Type
 from comtypes import COMError
 import config
 from logHandler import log
@@ -83,7 +83,7 @@ class SysListViewItem(ListItem):
 			textList.append(text)
 		return "; ".join(textList)
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount == 0:
 			return super().indexInParent

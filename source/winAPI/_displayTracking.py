@@ -13,9 +13,6 @@ and we notify the user of changes to the orientation.
 from ctypes import windll
 from dataclasses import dataclass
 import enum
-from typing import (
-	Optional,
-)
 
 from logHandler import log
 import ui
@@ -36,7 +33,7 @@ class OrientationState:
 	style: Orientation
 
 
-_orientationState: Optional[OrientationState] = None
+_orientationState: OrientationState | None = None
 
 
 def initialize():
@@ -76,7 +73,7 @@ def _getNewOrientationStyle(
 	previousState: OrientationState,
 	height: int,
 	width: int,
-) -> Optional[Orientation]:
+) -> Orientation | None:
 	"""
 	@returns: Orientation if there has been an orientation state change, otherwise None
 	"""

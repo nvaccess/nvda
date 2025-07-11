@@ -6,7 +6,6 @@
 
 from typing import (
 	Generator,
-	Optional,
 	Tuple,
 )
 
@@ -36,7 +35,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		return self._target.summarizeInProcess()
 
 	@property
-	def role(self) -> Optional[controlTypes.Role]:
+	def role(self) -> controlTypes.Role | None:
 		# details-roles is currently only defined in Chromium
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
@@ -83,7 +82,7 @@ class MozAnnotation(AnnotationOrigin):
 		return tuple(self._rolesGenerator)
 
 	@property
-	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+	def _rolesGenerator(self) -> Generator[controlTypes.Role | None, None, None]:
 		# Unlike base Ia2Web implementation, the details-roles
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
@@ -145,7 +144,7 @@ class Mozilla(ia2Web.Ia2Web):
 		annotationOrigin = MozAnnotation(self)
 		return annotationOrigin
 
-	def _get_detailsSummary(self) -> Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -153,7 +152,7 @@ class Mozilla(ia2Web.Ia2Web):
 		# just take the first for now.
 		return self.annotations.targets[0].summary
 
-	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,

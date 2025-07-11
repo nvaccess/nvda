@@ -9,7 +9,6 @@
 Naming of these classes is historical, kept for backwards compatibility purposes.
 """
 
-from typing import Optional
 from baseObject import AutoPropertyObject
 
 
@@ -44,7 +43,7 @@ class DriverSetting(AutoPropertyObject):
 		displayNameWithAccelerator: str,
 		availableInSettingsRing: bool = False,
 		defaultVal: object = None,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		useConfig: bool = True,
 	):
 		"""
@@ -94,7 +93,7 @@ class NumericDriverSetting(DriverSetting):
 		minStep: int = 1,
 		normalStep: int = 5,
 		largeStep: int = 10,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		useConfig: bool = True,
 	):
 		"""
@@ -136,7 +135,7 @@ class BooleanDriverSetting(DriverSetting):
 		id: str,
 		displayNameWithAccelerator: str,
 		availableInSettingsRing: bool = False,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		defaultVal: bool = False,
 		useConfig: bool = True,
 	):

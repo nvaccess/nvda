@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
 from typing import (
-	Optional,
 	Dict,
 )
 
@@ -270,7 +269,7 @@ class UIAWebTextInfo(UIATextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: Dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,

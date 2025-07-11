@@ -8,7 +8,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting,
 import gui
 from autoSettingsUtils.utils import StringParameterInfo
 from autoSettingsUtils.autoSettings import SupportedSettingType
-from typing import Optional, Type, Any, List
+from typing import Type, Any, List
 
 """Example provider, which demonstrates using the automatically constructed GUI. Rename this file, removing
  the first underscore to test it with NVDA.
@@ -133,7 +133,7 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 		return True  # Check any dependencies (Windows version, Hardware access, Installed applications)
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> Type | None:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.

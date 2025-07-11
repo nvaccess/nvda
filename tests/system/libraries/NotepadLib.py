@@ -11,7 +11,6 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 from os.path import join as _pJoin
 import datetime as _datetime
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -47,8 +46,8 @@ class NotepadLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	notepadWindow: _Optional[_Window] = None
-	processRFHandleForStart: _Optional[int] = None
+	notepadWindow: _Window | None = None
+	processRFHandleForStart: int | None = None
 
 	@staticmethod
 	def _getTestCasePath(filename):

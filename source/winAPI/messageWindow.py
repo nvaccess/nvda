@@ -10,9 +10,6 @@ Message windows can be used to handle communications from other processes, new N
 """
 
 from enum import IntEnum
-from typing import (
-	Optional,
-)
 
 
 from . import (
@@ -82,7 +79,7 @@ class _MessageWindow(windowUtils.CustomWindow):
 	We don't need to do anything else because wx handles WM_QUIT for all windows.
 	"""
 
-	def __init__(self, windowName: Optional[str] = None):
+	def __init__(self, windowName: str | None = None):
 		super().__init__(windowName)
 		_displayTracking.initialize()
 		_powerTracking.initialize()

@@ -11,7 +11,6 @@ import os
 from typing import (
 	Iterable,
 	List,
-	Optional,
 	cast,
 )
 import threading
@@ -110,7 +109,7 @@ class AddonStoreVM:
 			action.actionTarget = selectedVM
 
 	def _makeActionsList(self):
-		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
+		selectedListItem: AddonListItemVM | None = self.listVM.getSelection()
 		return [
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
@@ -542,7 +541,7 @@ class AddonStoreVM:
 	def _downloadComplete(
 		cls,
 		listItemVM: AddonListItemVM[_AddonStoreModel],
-		fileDownloaded: Optional[PathLike],
+		fileDownloaded: PathLike | None,
 	):
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)

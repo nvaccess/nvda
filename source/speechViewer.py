@@ -5,7 +5,6 @@
 
 from typing import (
 	Callable,
-	Optional,
 )
 import wx
 import gui
@@ -156,7 +155,7 @@ class SpeechViewerFrame(
 		config.conf["speechViewer"]["autoPositionWindow"] = False
 
 
-_guiFrame: Optional[SpeechViewerFrame] = None
+_guiFrame: SpeechViewerFrame | None = None
 isActive: bool = False
 
 
@@ -170,7 +169,7 @@ def activate():
 
 def _setActive(
 	isNowActive: bool,
-	speechViewerFrame: Optional[SpeechViewerFrame] = None,
+	speechViewerFrame: SpeechViewerFrame | None = None,
 ) -> None:
 	global _guiFrame, isActive
 	isActive = isNowActive

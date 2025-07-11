@@ -13,7 +13,7 @@ import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Generator, Optional, Tuple, Type
+from typing import Generator, Tuple, Type
 
 from logHandler import log
 
@@ -245,7 +245,7 @@ class WideStringOffsetConverter(OffsetConverter):
 def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
-	encoding: Optional[str] = None,
+	encoding: str | None = None,
 	errorsFallback: str = "replace",
 ):
 	"""

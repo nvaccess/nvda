@@ -7,7 +7,7 @@
 # minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
-from typing import List, Union, Optional
+from typing import List, Union
 
 import wx
 import braille
@@ -621,7 +621,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys: Optional[Union[bytes, int]], driver: BrailleDisplayDriver):
+	def __init__(self, keys: Union[bytes, int] | None, driver: BrailleDisplayDriver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
 		self.id = ""

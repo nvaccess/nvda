@@ -24,7 +24,6 @@ import queueHandler
 import core
 from typing import (
 	Any,
-	Optional,
 	Type,
 )
 import systemUtils
@@ -101,7 +100,7 @@ ICON_PATH = os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = f"{versionInfo.url}/donate/"
 
 ### Globals
-mainFrame: Optional["MainFrame"] = None
+mainFrame: "MainFrame | None" = None
 """Set by initialize. Should be used as the parent for "top level" dialogs.
 """
 

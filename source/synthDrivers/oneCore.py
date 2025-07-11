@@ -11,7 +11,6 @@ from typing import (
 	Callable,
 	Generator,
 	List,
-	Optional,
 	Set,
 	Tuple,
 	Union,
@@ -102,7 +101,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> speechXml.SetAttrCommand | None:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning(f"Invalid language: {command.lang}")
@@ -235,7 +234,7 @@ class OneCoreSynthDriver(SynthDriver):
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
-		self._ocSpeechToken: Optional[ctypes.POINTER] = self._dll.ocSpeech_initialize(self._callbackInst)
+		self._ocSpeechToken: ctypes.POINTER | None = self._dll.ocSpeech_initialize(self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None

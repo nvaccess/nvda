@@ -22,7 +22,7 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import queueHandler
-from typing import Type, Dict, List, Optional, Set
+from typing import Type, Dict, List, Set
 from . import exceptions
 
 
@@ -154,7 +154,7 @@ class VisionHandler(AutoPropertyObject):
 					)
 		return providerList
 
-	def getProviderInfo(self, providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
+	def getProviderInfo(self, providerId: providerInfo.ProviderIdT) -> providerInfo.ProviderInfo | None:
 		for p in self._allProviders:
 			if p.providerId == providerId:
 				return p
@@ -176,7 +176,7 @@ class VisionHandler(AutoPropertyObject):
 	def getProviderInstance(
 		self,
 		provider: providerInfo.ProviderInfo,
-	) -> Optional[VisionEnhancementProvider]:
+	) -> VisionEnhancementProvider | None:
 		return self._providers.get(provider.providerId)
 
 	def terminateProvider(

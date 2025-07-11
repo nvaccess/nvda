@@ -13,7 +13,6 @@ from typing import (
 	Union,
 	Iterable,
 	Any,
-	Optional,
 	Generator,
 )
 
@@ -50,7 +49,7 @@ class GeneratorWithReturn(Iterable):
 
 def _flattenNestedSequences(
 	nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn],
-) -> Generator[SequenceItemT, Any, Optional[bool]]:
+) -> Generator[SequenceItemT, Any, bool | None]:
 	"""Turns [[a,b,c],[d,e]] into [a,b,c,d,e]"""
 	yield from (i for seq in nestedSequences for i in seq)
 	if isinstance(nestedSequences, GeneratorWithReturn):

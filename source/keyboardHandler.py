@@ -13,7 +13,6 @@ import typing
 from typing import (
 	Tuple,
 	List,
-	Optional,
 	Any,
 	TypeAlias,
 )
@@ -42,7 +41,7 @@ if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject  # noqa: F401
 	from watchdog import WatchdogObserver
 
-_watchdogObserver: typing.Optional["WatchdogObserver"] = None
+_watchdogObserver: "WatchdogObserver | None" = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
@@ -127,7 +126,7 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
+def getNVDAModifierKeys() -> List[Tuple[int, bool | None]]:
 	keys = []
 	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])
@@ -138,7 +137,7 @@ def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
 	return keys
 
 
-def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
+def shouldUseToUnicodeEx(focus: "NVDAObject | None" = None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
 		focus = api.getFocusObject()

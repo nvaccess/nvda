@@ -10,7 +10,7 @@ and present the result to the user so they can read it with cursor keys, etc.
 NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recognizer they wish to use.
 """
 
-from typing import Optional, Union, TYPE_CHECKING
+from typing import Union, TYPE_CHECKING
 import api
 import ui
 import screenBitmap
@@ -120,7 +120,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		self,
 		recognizer: ContentRecognizer,
 		imageInfo: RecogImageInfo,
-		obj: Optional[NVDAObjects.NVDAObject] = None,
+		obj: NVDAObjects.NVDAObject | None = None,
 	):
 		self.recognizer = recognizer
 		self.imageInfo = imageInfo

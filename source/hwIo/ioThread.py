@@ -241,7 +241,7 @@ class IoThread(threading.Thread):
 		self._completionRoutineStore[addr] = (reference, overlapped)
 		return self._internalCompletionRoutine
 
-	def stop(self, timeout: typing.Optional[float] = None):
+	def stop(self, timeout: float | None = None):
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
 		self.exit = True

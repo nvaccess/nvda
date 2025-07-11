@@ -9,7 +9,6 @@ from os import (
 from typing import (
 	TYPE_CHECKING,
 	cast,
-	Optional,
 )
 
 import systemUtils
@@ -60,7 +59,7 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 	return bundle
 
 
-def _getPreviouslyInstalledAddonById(addon: "AddonBundle") -> Optional["AddonHandlerModel"]:
+def _getPreviouslyInstalledAddonById(addon: "AddonBundle") -> "AddonHandlerModel | None":
 	assert addonDataManager
 	installedAddon = addonDataManager._installedAddonsCache.installedAddons.get(addon.name)
 	if installedAddon is None or installedAddon.isPendingRemove:

@@ -6,7 +6,6 @@
 """Functions to add python modules within addon directories to python module paths."""
 
 import os.path
-from typing import Optional
 from types import ModuleType
 import globalVars
 import config
@@ -35,7 +34,7 @@ def initializeModulePackagePaths():
 		addDirsToPythonPackagePath(module)
 
 
-def addDirsToPythonPackagePath(module: ModuleType, subdir: Optional[str] = None):
+def addDirsToPythonPackagePath(module: ModuleType, subdir: str | None = None):
 	"""Add add-on and scratchpath directories for a module to the search path (__path__) of a Python package.
 	C{subdir} is added to each directory. It defaults to the name of the Python package.
 	@param module: The root module of the package.

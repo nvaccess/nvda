@@ -16,7 +16,6 @@ from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
-from typing import Optional
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 
@@ -155,7 +154,7 @@ class CustomWindow(AutoPropertyObject):
 	but it can be explicitly destroyed using L{destroy}.
 	"""
 
-	handle: Optional[int] = None
+	handle: int | None = None
 
 	@classmethod
 	def __new__(cls, *args, **kwargs):
@@ -188,10 +187,10 @@ class CustomWindow(AutoPropertyObject):
 
 	def __init__(
 		self,
-		windowName: Optional[str] = None,
+		windowName: str | None = None,
 		windowStyle: int = 0,
 		extendedWindowStyle: int = 0,
-		parent: Optional[int] = None,
+		parent: int | None = None,
 	):
 		"""Constructor.
 		@param windowName: The name of the window.

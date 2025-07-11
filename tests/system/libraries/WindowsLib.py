@@ -9,9 +9,6 @@ features.
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import typing as _typing
-from typing import (
-	Optional as _Optional,
-)
 from SystemTestSpy import (
 	_getLib,
 )
@@ -154,7 +151,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			)
 
 
-def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
+def _tryOpenTaskSwitcher() -> "_SpeechIndexT | None":
 	"""
 	@return: If the task switcher 'row 1' was spoken, the speech index for the start of the task switcher
 	speech.
@@ -164,7 +161,7 @@ def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
 	spy.emulateKeyPress("control+alt+tab")  # opens the task switcher until enter or escape is pressed.
 	# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
 	firstRow = "row 1"
-	indexOfSpeech: _Optional[int] = spy.wait_for_specific_speech_no_raise(
+	indexOfSpeech: int | None = spy.wait_for_specific_speech_no_raise(
 		firstRow,
 		afterIndex=expectedStartOfKeypressSpeechIndex - 1,
 		maxWaitSeconds=5,

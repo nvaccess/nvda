@@ -26,7 +26,6 @@ import textUtils
 from typing import (
 	List,
 	Tuple,
-	Optional,
 	Dict,
 )
 
@@ -550,7 +549,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:

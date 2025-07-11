@@ -9,9 +9,6 @@ Commands that can be embedded in a speech sequence for changing synth parameters
 """
 
 from abc import ABCMeta, abstractmethod
-from typing import (
-	Optional,
-)
 
 import config
 from synthDriverHandler import getSynth
@@ -426,7 +423,7 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback, name: Optional[str] = None):
+	def __init__(self, callback, name: str | None = None):
 		self._callback = callback
 		self._name = name if name else repr(callback)
 

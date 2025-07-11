@@ -11,7 +11,6 @@ import api
 import locationHelper
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
-from typing import Optional
 import textInfos
 import mouseHandler
 
@@ -20,7 +19,7 @@ def getReviewRect() -> locationHelper.RectLTRB:
 	return getRectFromTextInfo(api.getReviewPosition())
 
 
-def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.RectLTRB:
+def getCaretRect(obj: TextContainerObject | None = None) -> locationHelper.RectLTRB:
 	if obj is None:
 		obj = api.getCaretObject()
 	if api.isObjectInActiveTreeInterceptor(obj):
@@ -64,8 +63,8 @@ def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 
 def getContextRect(
 	context: Context,
-	obj: Optional[TextContainerObject] = None,
-) -> Optional[locationHelper.RectLTRB]:
+	obj: TextContainerObject | None = None,
+) -> locationHelper.RectLTRB | None:
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:
 		return getObjectRect(obj or api.getFocusObject())

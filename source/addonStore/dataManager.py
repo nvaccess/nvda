@@ -10,7 +10,6 @@ import pathlib
 import threading
 from typing import (
 	TYPE_CHECKING,
-	Optional,
 	Set,
 	Tuple,
 )
@@ -57,7 +56,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError  # noqa: F401
 
 
-addonDataManager: Optional["_DataManager"] = None
+addonDataManager: "_DataManager | None" = None
 FETCH_TIMEOUT_S = 120  # seconds
 
 
@@ -121,7 +120,7 @@ class _DataManager:
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
 
-	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
+	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> bytes | None:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			log.debug(f"Fetching add-on data from {url}")
@@ -152,7 +151,7 @@ class _DataManager:
 		cacheHash = response.json()
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str | None):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
@@ -166,7 +165,7 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: str | None):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
@@ -180,7 +179,7 @@ class _DataManager:
 		with open(self._cacheLatestFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
+	def _getCachedAddonData(self, cacheFilePath: str) -> CachedAddonsModel | None:
 		if not os.path.exists(cacheFilePath):
 			return None
 		try:
@@ -226,7 +225,7 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -263,7 +262,7 @@ class _DataManager:
 
 	def getLatestAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -338,7 +337,7 @@ class _DataManager:
 		with open(addonCachePath, "w", encoding="utf-8") as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> InstalledAddonStoreModel | None:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None

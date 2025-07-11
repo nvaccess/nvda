@@ -221,7 +221,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
 		# as latter is not yet supported for unions potentially containing two instances of `None`
 		# (see CPython issue 107271).
-		self.funcRes: Optional[_execAndPumpResT] = None
+		self.funcRes: Optional[_execAndPumpResT] = None  # noqa: UP045
 		fname = repr(func)
 		super().__init__(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})",

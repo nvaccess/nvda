@@ -9,7 +9,7 @@
 
 from collections import OrderedDict
 import time
-from typing import List, Optional
+from typing import List
 
 import wx
 import braille
@@ -294,9 +294,9 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 	def __init__(
 		self,
-		keyindex: Optional[int],
-		pressed: Optional[int],
-		keys: Optional[int],
+		keyindex: int | None,
+		pressed: int | None,
+		keys: int | None,
 		driver: BrailleDisplayDriver,
 	):
 		super(InputGesture, self).__init__()
