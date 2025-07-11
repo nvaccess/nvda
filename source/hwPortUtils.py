@@ -72,7 +72,7 @@ class DEVPROPKEY(ctypes.Structure):
 class dummy(ctypes.Structure):
 	_fields_ = (("d1", DWORD), ("d2", WCHAR))
 	# SetupAPI.h in the Windows headers includes pshpack8.h when 64 bit, pshpack1.h otherwise
-	_pack_ = 8 if platform.architecture()[0].startswith("64") else 1
+	_pack_ = 8 if sys.maxsize > 2**32 else 1
 
 
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
