@@ -202,7 +202,8 @@ class WasapiPlayer {
 
 	// Reset our state due to being stopped. This runs on the feeder thread
 	// rather than on the thread which called stop() because writing to a vector
-	// isn't thread safe.
+	// isn't thread safe. We also reset the stream here because this can't be done
+	// in stop() if the feeder thread is currently writing to the buffer.
 	void completeStop();
 
 	// Convert frames into ms.
@@ -586,22 +587,21 @@ bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
 }
 
 HRESULT WasapiPlayer::stop() {
-	playState = PlayState::stopping;
 	HRESULT hr = client->Stop();
+	// It's important that we set playState *after*
+	// calling client->Stop() because otherwise, the feeder thread might see the
+	// playState change and call client->Reset() before client->Stop() runs,
+	// causing AUDCLNT_E_NOT_STOPPED.
+	playState = PlayState::stopping;
 	// If the device has been invalidated, it has already stopped. Just ignore
 	// this and behave as if we were successful to avoid a cascade of breakage.
 	// feed() will attempt to reopen the device next time it is called.
 	if (
 		hr != AUDCLNT_E_DEVICE_INVALIDATED
 		&& hr != AUDCLNT_E_NOT_INITIALIZED
+		&& FAILED(hr)
 	) {
-		if (FAILED(hr)) {
-			return hr;
-		}
-		hr = client->Reset();
-		if (FAILED(hr)) {
-			return hr;
-		}
+		return hr;
 	}
 	// If there is a feed/sync call waiting, wake it up so it can immediately
 	// return to the caller.
@@ -610,6 +610,14 @@ HRESULT WasapiPlayer::stop() {
 }
 
 void WasapiPlayer::completeStop() {
+	HRESULT hr = client->Reset();
+	if (FAILED(hr)) {
+		// We must not use LOG_ERROR here because that plays a sound and we might be
+		// in the middle of stopping our sound player.
+		LOG_DEBUGWARNING(L"Couldn't reset stream: " << hr);
+		// We deliberately continue here. If Reset failed, the stream is probably
+		// already cleared or unusable anyway. We should always reset our state.
+	}
 	nextFeedId = 0;
 	sentFrames = 0;
 	feedEnds.clear();
