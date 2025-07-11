@@ -36,7 +36,7 @@ from speech.commands import (
 from ._sonic import SonicStream, initialize as sonicInitialize
 
 
-class SPAudioState(IntEnum):
+class _SPAudioState(IntEnum):
 	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
 	CLOSED = 0
 	STOP = 1
@@ -670,7 +670,7 @@ class SynthDriver(SynthDriver):
 			self.sonicStream.flush()
 			self.sonicStream.readShort()  # discard data left in stream
 		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
+			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
 		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 		if self._audioDucker:
 			if audioDucking._isDebug():
@@ -685,17 +685,17 @@ class SynthDriver(SynthDriver):
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
 			oldState = self.ttsAudioStream.GetStatus().State
-			if switch and oldState == SPAudioState.RUN:
+			if switch and oldState == _SPAudioState.RUN:
 				# pausing
 				if self._audioDucker:
 					if audioDucking._isDebug():
 						log.debug("Disabling audio ducking due to setting output audio state to pause")
 					self._audioDucker.disable()
-				self.ttsAudioStream.setState(SPAudioState.PAUSE, 0)
-			elif not switch and oldState == SPAudioState.PAUSE:
+				self.ttsAudioStream.setState(_SPAudioState.PAUSE, 0)
+			elif not switch and oldState == _SPAudioState.PAUSE:
 				# unpausing
 				if self._audioDucker:
 					if audioDucking._isDebug():
 						log.debug("Enabling audio ducking due to setting output audio state to run")
 					self._audioDucker.enable()
-				self.ttsAudioStream.setState(SPAudioState.RUN, 0)
+				self.ttsAudioStream.setState(_SPAudioState.RUN, 0)
