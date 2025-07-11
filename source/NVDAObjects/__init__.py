@@ -670,10 +670,10 @@ class NVDAObject(
 		).format(left=percentFromLeft, top=percentFromTop, width=percentWidth, height=percentHeight)
 
 	#: Typing information for auto-property: _get_parent
-	parent: typing.Optional["NVDAObject"]
+	parent: "NVDAObject | None"
 	"This object's parent (the object that contains this object)."
 
-	def _get_parent(self) -> typing.Optional["NVDAObject"]:
+	def _get_parent(self) -> "NVDAObject | None":
 		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
 		"""
@@ -689,38 +689,38 @@ class NVDAObject(
 		return parent
 
 	#: Typing information for auto-property: _get_next
-	next: typing.Optional["NVDAObject"]
+	next: "NVDAObject | None"
 	"The object directly after this object with the same parent."
 
-	def _get_next(self) -> typing.Optional["NVDAObject"]:
+	def _get_next(self) -> "NVDAObject | None":
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
 		"""
 		return None
 
 	#: Typing information for auto-property: _get_previous
-	previous: typing.Optional["NVDAObject"]
+	previous: "NVDAObject | None"
 	"The object directly before this object with the same parent."
 
-	def _get_previous(self) -> typing.Optional["NVDAObject"]:
+	def _get_previous(self) -> "NVDAObject | None":
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
 		"""
 		return None
 
 	#: Type definition for auto prop '_get_firstChild'
-	firstChild: typing.Optional["NVDAObject"]
+	firstChild: "NVDAObject | None"
 
-	def _get_firstChild(self) -> typing.Optional["NVDAObject"]:
+	def _get_firstChild(self) -> "NVDAObject | None":
 		"""Retrieves the first object that this object contains.
 		@return: the first child object if it exists else None.
 		"""
 		return None
 
 	#: Type definition for auto prop '_get_lastChild'
-	lastChild: typing.Optional["NVDAObject"]
+	lastChild: "NVDAObject | None"
 
-	def _get_lastChild(self) -> typing.Optional["NVDAObject"]:
+	def _get_lastChild(self) -> "NVDAObject | None":
 		"""Retrieves the last object that this object contains.
 		@return: the last child object if it exists else None.
 		"""
@@ -1177,9 +1177,9 @@ class NVDAObject(
 		return True
 
 	#: Type definition for auto prop '_get_statusBar'
-	statusBar: Optional["NVDAObject"]
+	statusBar: "NVDAObject | None"
 
-	def _get_statusBar(self) -> Optional["NVDAObject"]:
+	def _get_statusBar(self) -> "NVDAObject | None":
 		"""Finds the closest status bar in relation to this object.
 		@return: the found status bar else None
 		"""

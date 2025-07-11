@@ -66,7 +66,7 @@ class RemoteExtensionPoint:
 	filter: Callable[..., dict[str, Any]] | None = None
 	"""Optional function to transform arguments before sending"""
 
-	transport: Optional["Transport"] = None
+	transport: "Transport | None" = None
 	"""The transport instance (set on registration)"""
 
 	def remoteBridge(self, *args: Any, **kwargs: Any) -> Literal[True]:

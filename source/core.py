@@ -413,7 +413,7 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLangOrNone() -> Optional["wx.LanguageInfo"]:
+def getWxLangOrNone() -> "wx.LanguageInfo | None":
 	import wx
 
 	lang = languageHandler.getLanguage()

@@ -177,7 +177,7 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 def UIAHeadingQuicknavIterator(
 	itemType: str,
 	document: "UIABrowseModeDocument",
-	position: Optional["UIABrowseModeDocumentTextInfo"],
+	position: "UIABrowseModeDocumentTextInfo | None",
 	direction: str = "next",
 ):
 	reverse = bool(direction == "previous")

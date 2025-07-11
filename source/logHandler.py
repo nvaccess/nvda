@@ -153,7 +153,7 @@ def getCodePath(f):
 	return ".".join(x for x in (path, className, funcName) if x)
 
 
-_onErrorSoundRequested: Optional["extensionPoints.Action"] = None
+_onErrorSoundRequested: "extensionPoints.Action | None" = None
 """
 Triggered every time an error sound needs to be played.
 When nvwave is initialized, it registers the handler responsible for playing the error sound.

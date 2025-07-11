@@ -81,7 +81,7 @@ if typing.TYPE_CHECKING:
 	import NVDAObjects
 	from speechXml import MarkCallbackT
 
-_speechState: Optional["SpeechState"] = None
+_speechState: "SpeechState | None" = None
 _curWordChars: List[str] = []
 
 

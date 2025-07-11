@@ -30,7 +30,7 @@ __all__ = [
 	"_AnnotationRolesT",
 ]
 
-_AnnotationRolesT = Tuple[Optional["controlTypes.Role"]]
+_AnnotationRolesT = Tuple["controlTypes.Role | None"]
 
 
 class AnnotationTarget:
@@ -40,7 +40,7 @@ class AnnotationTarget:
 	"""
 
 	@property
-	def role(self) -> Optional["controlTypes.Role"]:
+	def role(self) -> "controlTypes.Role | None":
 		raise NotImplementedError
 
 	@property

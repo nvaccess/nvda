@@ -2692,7 +2692,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _switchDisplay(
 		self,
-		oldDisplay: Optional["BrailleDisplayDriver"],
+		oldDisplay: "BrailleDisplayDriver | None",
 		newDisplayClass: Type["BrailleDisplayDriver"],
 		**kwargs,
 	) -> "BrailleDisplayDriver":

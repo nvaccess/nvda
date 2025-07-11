@@ -154,7 +154,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			)
 
 
-def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
+def _tryOpenTaskSwitcher() -> "_SpeechIndexT | None":
 	"""
 	@return: If the task switcher 'row 1' was spoken, the speech index for the start of the task switcher
 	speech.

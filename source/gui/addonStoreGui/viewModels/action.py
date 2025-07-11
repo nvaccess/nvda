@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 	from .addonList import AddonListItemVM
 
 
-ActionTargetT = TypeVar("ActionTargetT", Optional["AddonListItemVM"], Iterable["AddonListItemVM"])
+ActionTargetT = TypeVar("ActionTargetT", "AddonListItemVM | None", Iterable["AddonListItemVM"])
 
 
 class _AddonAction(Generic[ActionTargetT], ABC):
@@ -65,7 +65,7 @@ class _AddonAction(Generic[ActionTargetT], ABC):
 		callLater(delay=0, callable=self.updated.notify, addonActionVM=self)
 
 
-class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
+class AddonActionVM(_AddonAction["AddonListItemVM | None"]):
 	"""Actions/behaviour that can be embedded within other views/viewModels that can apply to a single
 	L{AddonListItemVM}.
 	Use the L{AddonActionVM.updated} extensionPoint.Action to be notified about changes.
@@ -80,7 +80,7 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		displayName: str,
 		actionHandler: Callable[["AddonListItemVM"], None],
 		validCheck: Callable[["AddonListItemVM"], bool],
-		actionTarget: Optional["AddonListItemVM"],
+		actionTarget: "AddonListItemVM | None",
 	):
 		"""
 		@param displayName: Translated string, to be displayed to the user. Should describe the action / behaviour.
@@ -89,11 +89,11 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		@param actionTarget: The listItemVM this action will be applied to. L{updated} notifies of modification.
 		"""
 
-		def _validCheck(listItemVM: Optional["AddonListItemVM"]) -> bool:
+		def _validCheck(listItemVM: "AddonListItemVM | None") -> bool:
 			# Handle the None case so that each validCheck doesn't have to.
 			return listItemVM is not None and validCheck(listItemVM)
 
-		def _actionHandler(listItemVM: Optional["AddonListItemVM"]):
+		def _actionHandler(listItemVM: "AddonListItemVM | None"):
 			# Handle the None case so that each actionHandler doesn't have to.
 			if listItemVM is not None:
 				actionHandler(listItemVM)
@@ -104,13 +104,13 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		if actionTarget:
 			actionTarget.updated.register(self._listItemChanged)
 
-	def _listItemChanged(self, addonListItemVM: Optional["AddonListItemVM"]):
+	def _listItemChanged(self, addonListItemVM: "AddonListItemVM | None"):
 		"""Something inside the AddonListItemVM has changed"""
 		assert self._actionTarget == addonListItemVM
 		self._notify()
 
 	@_AddonAction.actionTarget.setter
-	def actionTarget(self, newActionTarget: Optional["AddonListItemVM"]):
+	def actionTarget(self, newActionTarget: "AddonListItemVM | None"):
 		if self._actionTarget == newActionTarget:
 			return
 		if self._actionTarget:

@@ -78,7 +78,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 		return self.lastTestedVersion
 
 	@property
-	def _addonHandlerModel(self) -> Optional["AddonHandlerModel"]:
+	def _addonHandlerModel(self) -> "AddonHandlerModel | None":
 		"""Returns the Addon model tracked in addonHandler, if it exists."""
 		from ..dataManager import addonDataManager
 

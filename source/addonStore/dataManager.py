@@ -57,7 +57,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError  # noqa: F401
 
 
-addonDataManager: Optional["_DataManager"] = None
+addonDataManager: "_DataManager | None" = None
 FETCH_TIMEOUT_S = 120  # seconds
 
 
@@ -226,7 +226,7 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -263,7 +263,7 @@ class _DataManager:
 
 	def getLatestAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (

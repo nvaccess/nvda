@@ -42,7 +42,7 @@ if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject  # noqa: F401
 	from watchdog import WatchdogObserver
 
-_watchdogObserver: typing.Optional["WatchdogObserver"] = None
+_watchdogObserver: "WatchdogObserver | None" = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
@@ -138,7 +138,7 @@ def getNVDAModifierKeys() -> List[Tuple[int, bool | None]]:
 	return keys
 
 
-def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
+def shouldUseToUnicodeEx(focus: "NVDAObject | None" = None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
 		focus = api.getFocusObject()

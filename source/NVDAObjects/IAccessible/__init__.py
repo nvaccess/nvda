@@ -1881,7 +1881,7 @@ class IAccessible(Window):
 	def _getIA2RelationFirstTarget(
 		self,
 		relationType: typing.Union[str, "IAccessibleHandler.RelationType"],
-	) -> typing.Optional["IAccessible"]:
+	) -> "IAccessible | None":
 		"""Get the first target for the relation of type.
 		@param relationType: The type of relation to fetch.
 		"""

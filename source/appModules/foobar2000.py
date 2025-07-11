@@ -118,7 +118,7 @@ class _StatusBarTimes(NamedTuple):
 
 
 class AppModule(appModuleHandler.AppModule):
-	_statusBar: Optional["NVDAObject"] = None
+	_statusBar: "NVDAObject | None" = None
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not self._statusBar:

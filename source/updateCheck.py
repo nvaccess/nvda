@@ -123,7 +123,7 @@ state: Dict[str, Any] | None = None
 
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
-autoChecker: Optional["AutoUpdateChecker"] = None
+autoChecker: "AutoUpdateChecker | None" = None
 
 
 @dataclass
