@@ -7,7 +7,6 @@
 import ctypes
 import itertools
 import math
-import sys
 import typing
 import winreg
 from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG, USHORT, WCHAR
