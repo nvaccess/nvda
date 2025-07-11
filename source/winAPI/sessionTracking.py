@@ -65,7 +65,7 @@ https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-secur
 Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
-_lockStateTracker: "_WindowsLockedState" | None = None
+_lockStateTracker: "_WindowsLockedState | None" = None
 """
 Caches the Windows lock state as an auto property object.
 """

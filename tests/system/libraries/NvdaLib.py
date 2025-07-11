@@ -131,7 +131,7 @@ class NvdaLib:
 	"""
 
 	def __init__(self):
-		self.nvdaSpy: "NVDASpyLib" | None = None
+		self.nvdaSpy: "NVDASpyLib | None" = None
 		self.nvdaHandle: int | None = None
 		self.lastNVDAStart: _datetime | None = None
 
