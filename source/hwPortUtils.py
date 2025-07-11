@@ -410,6 +410,7 @@ def _listDevices(
 					("cbSize", DWORD),
 					(
 						"DevicePath",
+						# Round up to the next WCHAR count to ensure proper memory alignment
 						WCHAR * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR)),
 					),
 				)
