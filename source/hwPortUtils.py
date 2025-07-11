@@ -410,7 +410,7 @@ def _listDevices(
 					("cbSize", DWORD),
 					(
 						"DevicePath",
-						WCHAR * math.ceil(((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR))),
+						WCHAR * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR)),
 					),
 				)
 				_pack_ = dummy._pack_
