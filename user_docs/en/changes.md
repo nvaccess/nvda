@@ -9,6 +9,7 @@
 ### Changes
 
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* The Dot Pad braille display driver now supports automatic detection of USB-connected devices. (@bramd)
 
 ### Bug Fixes
 
