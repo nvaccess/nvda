@@ -587,8 +587,12 @@ bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
 }
 
 HRESULT WasapiPlayer::stop() {
-	playState = PlayState::stopping;
 	HRESULT hr = client->Stop();
+	// It's important that we set playState *after*
+	// calling client->Stop() because otherwise, the feeder thread might see the
+	// playState change and call client->Reset() before client->Stop() runs,
+	// causing AUDCLNT_E_NOT_STOPPED.
+	playState = PlayState::stopping;
 	// If the device has been invalidated, it has already stopped. Just ignore
 	// this and behave as if we were successful to avoid a cascade of breakage.
 	// feed() will attempt to reopen the device next time it is called.
