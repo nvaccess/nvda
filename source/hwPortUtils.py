@@ -407,7 +407,7 @@ def _listDevices(
 			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
 				_fields_ = (
 					("cbSize", DWORD),
-					("DevicePath", WCHAR * ((dwNeeded.value - ctypes.sizeof(DWORD)) // ctypes.sizeof(WCHAR))),
+					("DevicePath", WCHAR * math.ceil(((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR)))),
 				)
 				_pack_ = dummy._pack_
 
