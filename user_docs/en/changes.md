@@ -13,6 +13,7 @@
 ### Bug Fixes
 
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+* A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
 
 ### Changes for Developers
 
