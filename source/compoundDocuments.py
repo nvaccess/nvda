@@ -4,7 +4,6 @@
 # Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
 
 from typing import (
-	Optional,
 	Dict,
 	Self,
 )

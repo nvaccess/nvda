@@ -11,7 +11,6 @@ NVDA config before NVDA is started by the system tests.
 from os.path import join as _pJoin
 from .getLib import _getLib
 import sys
-from typing import Optional
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn

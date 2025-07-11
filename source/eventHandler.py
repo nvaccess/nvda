@@ -5,7 +5,6 @@
 
 import threading
 import typing
-from typing import Optional
 from comtypes import COMError
 
 import garbageHandler

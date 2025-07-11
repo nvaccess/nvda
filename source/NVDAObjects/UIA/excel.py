@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
-from typing import Optional, Tuple
+from typing import Tuple
 from comtypes import COMError
 import winVersion
 import UIAHandler

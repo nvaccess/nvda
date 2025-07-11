@@ -27,7 +27,6 @@ from threading import (
 )
 from typing import (
 	List,
-	Optional,
 )
 
 import braille

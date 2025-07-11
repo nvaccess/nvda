@@ -7,7 +7,6 @@
 
 from logHandler import log
 from typing import (
-	Optional,
 	Set,
 	Tuple,
 )

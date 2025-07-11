@@ -28,7 +28,7 @@ import watchdog
 import exceptions
 import appModuleHandler
 import cursorManager
-from typing import Any, Optional
+from typing import Any
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:

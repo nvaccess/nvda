@@ -16,7 +16,6 @@ from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from dataclasses import dataclass
 from typing import (
-	Optional,
 	Tuple,
 	Dict,
 	List,

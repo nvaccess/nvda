@@ -21,7 +21,6 @@ from enum import (
 )
 from typing import (
 	List,
-	Optional,
 )
 
 from logHandler import log

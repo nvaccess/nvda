@@ -5,7 +5,7 @@
 
 """Default highlighter based on GDI Plus."""
 
-from typing import Optional, Tuple
+from typing import Tuple
 
 from autoSettingsUtils.autoSettings import SupportedSettingType
 from autoSettingsUtils.driverSetting import BooleanDriverSetting

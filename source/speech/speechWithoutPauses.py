@@ -19,7 +19,6 @@ from .types import (
 )
 
 from typing import (
-	Optional,
 	Generator,
 	Callable,
 )

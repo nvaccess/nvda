@@ -9,7 +9,6 @@
 
 import itertools
 from typing import (
-	Optional,
 	Tuple,
 	Union,
 )

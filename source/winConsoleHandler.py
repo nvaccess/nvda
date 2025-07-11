@@ -15,7 +15,6 @@ import textInfos
 import config
 import locationHelper
 from typing import (
-	Optional,
 	Dict,
 )
 

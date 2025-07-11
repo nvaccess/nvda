@@ -22,7 +22,7 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import queueHandler
-from typing import Type, Dict, List, Optional, Set
+from typing import Type, Dict, List, Set
 from . import exceptions
 
 

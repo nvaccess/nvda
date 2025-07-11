@@ -3,9 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited
 
-from typing import (
-	Optional,
-)
 
 from NVDAObjects import NVDAObject
 

@@ -14,7 +14,7 @@ from collections import deque
 from collections.abc import Callable, Collection
 from enum import Enum, IntEnum, auto
 from functools import partialmethod, singledispatchmethod, wraps
-from typing import Any, Literal, NamedTuple, Optional, Self, TypeAlias
+from typing import Any, Literal, NamedTuple, Self, TypeAlias
 
 import core
 import extensionPoints

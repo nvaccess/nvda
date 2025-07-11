@@ -5,7 +5,6 @@
 
 
 from typing import (
-	Optional,
 	Any,
 	Generator,
 	cast,

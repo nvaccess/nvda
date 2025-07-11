@@ -7,7 +7,6 @@
 from dataclasses import dataclass
 from typing import (
 	Iterable,
-	Optional,
 )
 import typing
 from ctypes import byref

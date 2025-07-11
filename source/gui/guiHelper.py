@@ -52,7 +52,6 @@ import weakref
 from typing import (
 	Any,
 	Generic,
-	Optional,
 	ParamSpec,
 	Type,
 	TypeVar,

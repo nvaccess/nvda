@@ -23,7 +23,7 @@ Supported Data Types
 import json
 from abc import ABCMeta, abstractmethod
 from enum import Enum
-from typing import Any, Dict, Optional, Type, TypeVar, Union
+from typing import Any, Dict, Type, TypeVar, Union
 
 import speech.commands
 from logHandler import log

@@ -19,7 +19,6 @@ from robot.libraries.Process import Process as _ProcessLib
 from AssertsLib import AssertsLib as _AssertsLib
 
 import os
-from typing import Optional
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
 

@@ -8,7 +8,6 @@ from typing import (
 	Generator,
 	Iterator,
 	List,
-	Optional,
 	Tuple,
 )
 import time

@@ -12,7 +12,6 @@ from typing import (
 	Callable,
 	Tuple,
 	Union,
-	Optional,
 	List,
 )
 from unittest import mock

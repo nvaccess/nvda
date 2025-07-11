@@ -20,7 +20,6 @@ from typing import (
 	Dict,
 	Generator,
 	List,
-	Optional,
 	Tuple,
 	TypeVar,
 	Union,

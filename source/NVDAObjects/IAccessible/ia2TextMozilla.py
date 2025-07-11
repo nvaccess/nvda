@@ -7,9 +7,7 @@
 This is now used by other applications as well.
 """
 
-import typing
 from typing import (
-	Optional,
 	Dict,
 	Type,
 )

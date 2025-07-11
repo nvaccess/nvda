@@ -15,7 +15,7 @@ import comtypes
 import ctypes
 from enum import Enum
 import functools
-from typing import Optional, Union
+from typing import Union
 
 
 class FolderId(str, Enum):

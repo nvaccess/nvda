@@ -5,7 +5,6 @@
 
 """App module for Tween"""
 
-from typing import Optional
 import appModuleHandler
 import controlTypes
 from NVDAObjects.window import Window

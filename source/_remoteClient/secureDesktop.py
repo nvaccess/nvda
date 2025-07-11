@@ -24,7 +24,7 @@ import socket
 import threading
 import uuid
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from ctypes import c_bool, windll, c_wchar_p, c_ushort, create_unicode_buffer
 from ctypes.wintypes import DWORD, HANDLE
 

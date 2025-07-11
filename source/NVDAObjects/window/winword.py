@@ -8,7 +8,6 @@
 import ctypes
 import time
 from typing import (
-	Optional,
 	Dict,
 	Generator,
 	Self,

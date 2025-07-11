@@ -9,7 +9,7 @@
 
 from collections import OrderedDict
 import time
-from typing import List, Optional
+from typing import List
 
 import wx
 import braille

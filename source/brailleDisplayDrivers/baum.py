@@ -6,7 +6,7 @@
 # Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
 from io import BytesIO
-from typing import Union, List, Optional
+from typing import Union, List
 
 import braille
 from hwIo import intToByte, boolToByte

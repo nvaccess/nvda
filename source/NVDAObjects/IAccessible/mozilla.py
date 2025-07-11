@@ -6,7 +6,6 @@
 
 from typing import (
 	Generator,
-	Optional,
 	Tuple,
 )
 

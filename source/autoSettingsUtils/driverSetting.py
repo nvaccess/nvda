@@ -9,7 +9,6 @@
 Naming of these classes is historical, kept for backwards compatibility purposes.
 """
 
-from typing import Optional
 from baseObject import AutoPropertyObject
 
 

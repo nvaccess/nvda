@@ -5,7 +5,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional, Tuple, Union
+from typing import Any, Tuple, Union
 from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos

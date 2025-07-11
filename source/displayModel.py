@@ -26,7 +26,6 @@ import textUtils
 from typing import (
 	List,
 	Tuple,
-	Optional,
 	Dict,
 )
 

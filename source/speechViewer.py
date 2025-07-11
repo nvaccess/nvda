@@ -5,7 +5,6 @@
 
 from typing import (
 	Callable,
-	Optional,
 )
 import wx
 import gui

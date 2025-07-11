@@ -8,9 +8,6 @@
 
 import threading
 import typing
-from typing import (
-	Optional,
-)
 from enum import Enum, auto
 from ctypes import (
 	Structure,

@@ -4,7 +4,6 @@
 # Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
-	Optional,
 	Dict,
 	Generator,
 )

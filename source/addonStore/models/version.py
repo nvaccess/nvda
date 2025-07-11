@@ -6,7 +6,6 @@
 
 from typing import (
 	NamedTuple,
-	Optional,
 	Protocol,
 )
 import addonAPIVersion

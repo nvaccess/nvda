@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
-from typing import Optional, List
+from typing import List
 
 import os
 import globalVars

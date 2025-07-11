@@ -7,7 +7,7 @@
 # minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
-from typing import List, Union, Optional
+from typing import List, Union
 
 import wx
 import braille

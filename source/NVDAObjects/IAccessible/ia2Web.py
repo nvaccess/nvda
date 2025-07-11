@@ -7,7 +7,6 @@
 
 from typing import (
 	Generator,
-	Optional,
 	Tuple,
 )
 from ctypes import c_short

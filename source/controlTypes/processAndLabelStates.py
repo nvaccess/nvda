@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Set
 
 from .role import Role, clickableRoles
 from .state import State, STATES_SORTED, STATES_LINK_TYPE

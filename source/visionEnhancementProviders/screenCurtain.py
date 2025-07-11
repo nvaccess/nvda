@@ -21,7 +21,7 @@ from gui.settingsDialogs import (
 	VisionProviderStateControl,
 )
 from logHandler import log
-from typing import Optional, Type
+from typing import Type
 import nvwave
 import globalVars
 import NVDAHelper

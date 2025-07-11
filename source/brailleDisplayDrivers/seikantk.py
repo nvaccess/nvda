@@ -11,7 +11,7 @@ see www.seika-braille.com for more details
 import re
 from io import BytesIO
 import typing
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Set
 
 import serial
 

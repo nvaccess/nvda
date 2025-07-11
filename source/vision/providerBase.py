@@ -11,7 +11,7 @@ import config
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import Optional, Any
+from typing import Any
 
 
 class VisionEnhancementProviderSettings(AutoSettings):

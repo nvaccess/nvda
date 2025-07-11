@@ -11,7 +11,6 @@ from typing import (
 	Callable,
 	Generator,
 	List,
-	Optional,
 	Set,
 	Tuple,
 	Union,

@@ -16,7 +16,7 @@ import sys
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD
-from typing import Optional, Any, Union, Tuple, Callable
+from typing import Any, Union, Tuple, Callable
 import weakref
 import serial
 from serial.win32 import (

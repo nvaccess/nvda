@@ -9,7 +9,6 @@ from typing import (
 	BinaryIO,
 	Callable,
 	List,
-	Optional,
 	Set,
 	TYPE_CHECKING,
 )

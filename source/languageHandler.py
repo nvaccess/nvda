@@ -22,7 +22,6 @@ import winKernel
 from typing import (
 	FrozenSet,
 	List,
-	Optional,
 	Tuple,
 )
 

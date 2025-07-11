@@ -55,7 +55,6 @@ import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
 from utils import urlUtils
-from typing import Optional
 
 
 def reportPassThrough(treeInterceptor, onlyIfChanged=True):

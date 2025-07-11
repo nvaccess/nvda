@@ -68,7 +68,6 @@ from typing import (
 	Any,
 	Callable,
 	List,
-	Optional,
 	Set,
 )
 import core

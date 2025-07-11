@@ -10,9 +10,6 @@ Message windows can be used to handle communications from other processes, new N
 """
 
 from enum import IntEnum
-from typing import (
-	Optional,
-)
 
 
 from . import (

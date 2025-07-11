@@ -5,7 +5,6 @@
 
 from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
-from typing import Optional
 
 
 shell32 = windll.shell32  # noqa: F405

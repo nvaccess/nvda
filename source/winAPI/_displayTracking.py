@@ -13,9 +13,6 @@ and we notify the user of changes to the orientation.
 from ctypes import windll
 from dataclasses import dataclass
 import enum
-from typing import (
-	Optional,
-)
 
 from logHandler import log
 import ui

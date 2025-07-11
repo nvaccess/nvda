@@ -11,7 +11,6 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 import datetime as _datetime
 from os.path import join as _pJoin
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,

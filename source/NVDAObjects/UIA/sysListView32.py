@@ -6,7 +6,7 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
-from typing import Dict, List, Optional, Type
+from typing import Dict, List, Type
 from comtypes import COMError
 import config
 from logHandler import log

@@ -8,7 +8,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting,
 import gui
 from autoSettingsUtils.utils import StringParameterInfo
 from autoSettingsUtils.autoSettings import SupportedSettingType
-from typing import Optional, Type, Any, List
+from typing import Type, Any, List
 
 """Example provider, which demonstrates using the automatically constructed GUI. Rename this file, removing
  the first underscore to test it with NVDA.

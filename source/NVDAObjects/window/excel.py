@@ -10,7 +10,6 @@ import enum
 from typing import (
 	Any,
 	Dict,
-	Optional,
 )
 
 from comtypes import COMError, BSTR

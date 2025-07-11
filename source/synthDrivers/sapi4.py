@@ -29,7 +29,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
-from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
+from typing import TYPE_CHECKING, Callable, NamedTuple
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,

@@ -11,7 +11,6 @@ from typing import (
 	FrozenSet,
 	Generic,
 	List,
-	Optional,
 	TYPE_CHECKING,
 	TypeVar,
 )

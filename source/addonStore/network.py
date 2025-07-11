@@ -15,7 +15,6 @@ from typing import (
 	cast,
 	Callable,
 	Dict,
-	Optional,
 	Tuple,
 )
 

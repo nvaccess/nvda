@@ -25,7 +25,6 @@ from os.path import (
 )
 import tempfile as _tempFile
 from typing import (
-	Optional as _Optional,
 	Tuple as _Tuple,
 )
 from urllib.parse import quote as _quoteStr

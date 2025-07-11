@@ -30,7 +30,6 @@ from typing import (
 	Any,
 	List,
 	Tuple,
-	Optional,
 	cast,
 )
 

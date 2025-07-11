@@ -4,7 +4,7 @@
 # Copyright (C) 2012-2024 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 import time
-from typing import Optional, List, Set
+from typing import List, Set
 
 import louis
 import brailleTables

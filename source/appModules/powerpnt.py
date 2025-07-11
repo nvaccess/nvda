@@ -5,7 +5,6 @@
 
 from typing import (
 	Any,
-	Optional,
 	Dict,
 )
 

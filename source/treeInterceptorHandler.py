@@ -6,7 +6,6 @@
 from typing import (
 	TYPE_CHECKING,
 	Dict,
-	Optional,
 )
 
 from logHandler import log

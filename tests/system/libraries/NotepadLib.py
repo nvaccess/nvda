@@ -11,7 +11,6 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 from os.path import join as _pJoin
 import datetime as _datetime
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,

@@ -6,7 +6,6 @@
 """Functions to add python modules within addon directories to python module paths."""
 
 import os.path
-from typing import Optional
 from types import ModuleType
 import globalVars
 import config

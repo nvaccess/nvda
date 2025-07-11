@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from dataclasses import dataclass
-from typing import Optional
 import time
 import wx
 import gui

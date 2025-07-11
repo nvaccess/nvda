@@ -11,7 +11,6 @@ import api
 import locationHelper
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
-from typing import Optional
 import textInfos
 import mouseHandler
 

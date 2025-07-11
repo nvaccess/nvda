@@ -6,7 +6,7 @@
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
-from typing import Callable, TYPE_CHECKING, Optional
+from typing import Callable, TYPE_CHECKING
 import weakref
 import garbageHandler
 from logHandler import log

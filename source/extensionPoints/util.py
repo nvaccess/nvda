@@ -15,7 +15,6 @@ from typing import (
 	Callable,
 	Generator,
 	Generic,
-	Optional,
 	OrderedDict,
 	Tuple,
 	TypeVar,

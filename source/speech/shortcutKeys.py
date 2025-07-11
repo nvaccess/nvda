@@ -15,7 +15,6 @@ import config
 from .commands import CharacterModeCommand
 from .types import SpeechSequence
 from typing import (
-	Optional,
 	List,
 	Tuple,
 )

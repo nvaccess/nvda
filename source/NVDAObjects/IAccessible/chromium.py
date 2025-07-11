@@ -6,7 +6,7 @@
 """NVDAObjects for the Chromium browser project"""
 
 import typing
-from typing import Dict, Optional
+from typing import Dict
 from comtypes import COMError
 
 import config

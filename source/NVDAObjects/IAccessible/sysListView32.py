@@ -21,7 +21,6 @@ import config
 from config.configFlags import ReportTableHeaders
 from locationHelper import RectLTRB
 from logHandler import log
-from typing import Optional
 
 # Window messages
 LVM_FIRST = 0x1000

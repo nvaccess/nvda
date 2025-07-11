@@ -24,7 +24,6 @@ from ctypes.wintypes import (
 import enum
 from typing import (
 	Generator,
-	Optional,
 )
 
 from baseObject import AutoPropertyObject

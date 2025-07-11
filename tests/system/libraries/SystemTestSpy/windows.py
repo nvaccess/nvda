@@ -19,7 +19,6 @@ from typing import (
 	Callable,
 	List,
 	NamedTuple,
-	Optional,
 )
 import re
 from SystemTestSpy.blockUntilConditionMet import _blockUntilConditionMet

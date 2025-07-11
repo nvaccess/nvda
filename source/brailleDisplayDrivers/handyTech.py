@@ -12,7 +12,6 @@ from collections import OrderedDict
 from typing import (
 	Dict,
 	List,
-	Optional,
 	Union,
 )
 

@@ -17,7 +17,7 @@ import wx.lib.newevent
 import gui
 from logHandler import log
 
-from typing import List, Optional
+from typing import List
 import keyboardHandler
 from . import guiHelper
 import inputCore

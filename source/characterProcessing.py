@@ -18,7 +18,6 @@ from typing import (
 	Dict,
 	Generic,
 	List,
-	Optional,
 	TypeVar,
 )
 

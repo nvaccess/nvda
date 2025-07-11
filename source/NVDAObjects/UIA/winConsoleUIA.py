@@ -17,9 +17,6 @@ import UIAHandler
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
-from typing import (
-	Optional,
-)
 from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo

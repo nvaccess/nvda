@@ -8,7 +8,6 @@ import pkgutil
 import importlib
 from typing import (
 	List,
-	Optional,
 	OrderedDict,
 	Set,
 	Tuple,

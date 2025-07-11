@@ -10,7 +10,7 @@ A c(lang) reference implementation is available in brltty.
 
 from io import BytesIO
 import itertools
-from typing import List, Optional
+from typing import List
 
 import braille
 import inputCore

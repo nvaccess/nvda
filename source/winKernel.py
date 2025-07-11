@@ -18,7 +18,6 @@ from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LP
 from typing import (
 	TYPE_CHECKING,
 	Any,
-	Optional,
 	Union,
 )
 

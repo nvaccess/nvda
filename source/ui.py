@@ -29,7 +29,7 @@ import speech
 import braille
 from config.configFlags import TetherTo
 import globalVars
-from typing import Final, Optional
+from typing import Final
 from collections.abc import Callable
 
 from utils.security import isRunningOnSecureDesktop

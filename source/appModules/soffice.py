@@ -4,7 +4,6 @@
 # Copyright (C) 2006-2025 NV Access Limited, Bill Dengler, Leonard de Ruijter, Cyrille Bougot
 
 from typing import (
-	Optional,
 	Union,
 )
 

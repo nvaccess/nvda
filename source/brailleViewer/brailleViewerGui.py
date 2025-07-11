@@ -7,7 +7,6 @@ import time
 from typing import (
 	Callable,
 	List,
-	Optional,
 )
 
 import wx

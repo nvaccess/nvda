@@ -5,7 +5,6 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import re
-from typing import Optional
 
 WESTERN_TERMINATORS = "[.?!](?: |\r|\n|$)+"
 FULL_WIDTH_TERMINATORS = "[。！？](?:\r|\n)*"

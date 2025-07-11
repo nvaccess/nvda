@@ -20,7 +20,6 @@ import config
 import exceptions
 from typing import (
 	Dict,
-	Optional,
 )
 
 FORMATSTATE_INSERTED = 1

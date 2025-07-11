@@ -11,7 +11,6 @@ import os
 from typing import (
 	Iterable,
 	List,
-	Optional,
 	cast,
 )
 import threading

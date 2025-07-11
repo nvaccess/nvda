@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
 from typing import (
-	Optional,
 	Dict,
 )
 

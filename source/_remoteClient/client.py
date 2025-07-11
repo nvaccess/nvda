@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import threading
-from typing import Optional, Set, Tuple
+from typing import Set, Tuple
 
 import api
 import braille
