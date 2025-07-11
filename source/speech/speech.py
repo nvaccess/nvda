@@ -1948,9 +1948,7 @@ def getPropertiesSpeech(  # noqa: C901
 		speakRole = False
 		role = controlTypes.Role.UNKNOWN
 	role = controlTypes.Role(role)
-	value: str | None = (
-		propertyValues.get("value") if role not in controlTypes.silentValuesForRoles else None
-	)
+	value: str | None = propertyValues.get("value") if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: str | None = propertyValues.get("cellCoordsText")
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
