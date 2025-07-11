@@ -70,7 +70,6 @@ There have also been a number of other fixes and improvements, including to mous
 * In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
 * It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
 * When typing into a cell in Microsoft Excel, the braille display is now correctly updated to show the new content. (#18391)
-* Fixed bug where NLS eReader Zoomax driver did not work with all devices. (#18406, @florin-trutiu)
 
 ### Changes for Developers
 
