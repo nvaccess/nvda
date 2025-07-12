@@ -20,7 +20,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * Updated `include` dependencies:
-  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#xxx, @LeonarddeR)
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 
 #### Deprecations
 
