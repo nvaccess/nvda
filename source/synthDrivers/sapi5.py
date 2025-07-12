@@ -205,11 +205,13 @@ class SapiSink(COMObject):
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
 		# trigger all untriggered bookmarks
-		for bookmark in synth._bookmarks:
-			synthIndexReached.notify(synth=synth, index=bookmark)
+		if synth._bookmarks:
+			for bookmark in synth._bookmarks:
+				synthIndexReached.notify(synth=synth, index=bookmark)
 		synthDoneSpeaking.notify(synth=synth)
 		# notify the thread
 		with synth._threadCond:
+			synth._requestCompleted = True
 			synth._threadCond.notify()
 
 	def onIndexReached(self, streamNum: int, index: int):
@@ -272,10 +274,11 @@ class SynthDriver(SynthDriver):
 		self._isTerminating = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
-		self._bookmarks: deque[int] = deque()
+		self._bookmarks: deque[int] | None = None  # reference to the current bookmark list
 		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
+		self._requestCompleted = False
 		self._thread.start()
 
 	def terminate(self):
@@ -471,31 +474,38 @@ class SynthDriver(SynthDriver):
 		# SpVoice.Speak() will also block, causing dead-locks sometimes (#18298).
 		# Here we manage the queue ourselves, and call WavePlayer.idle() here
 		# to avoid blocking the audio thread or the main thread.
-		with self._threadCond:
-			while not self._isTerminating:
+
+		# condition variable predicates
+		def requestsAvailable() -> bool:
+			return self._speakRequests or self._isCancelling or self._isTerminating
+
+		def requestCompleted() -> bool:
+			return self._requestCompleted or self._isCancelling or self._isTerminating
+
+		# Process requests one by one.
+		while not self._isTerminating:
+			# Fetch the next request
+			with self._threadCond:
+				self._threadCond.wait_for(requestsAvailable)
 				if self._speakRequests:
-					text, bookmarks = self._speakRequests.popleft()
-					self._bookmarks = bookmarks
-					try:
-						# Process one request, and wait for it to finish
-						self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
-						self._threadCond.wait()
-					except Exception:
-						log.error("Error speaking", exc_info=True)
-					self._bookmarks = None
-					if not self._speakRequests:
-						# No more requests after that, so call idle().
-						# Release the lock while idle() is blocking.
-						try:
-							self._threadCond.release()
-							self.player.idle()
-						finally:
-							self._threadCond.acquire()
-				else:  # No request now, just wait.
-					self._threadCond.wait()
-				if self._isCancelling:
-					self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
-					# clear the queue
+					text, self._bookmarks = self._speakRequests.popleft()
+					self._requestCompleted = False
+			if self._bookmarks is not None:  # There is one request
+				try:
+					# Process one request, and wait for it to finish
+					self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
+					with self._threadCond:
+						self._threadCond.wait_for(requestCompleted)
+				except Exception:
+					log.error("Error speaking", exc_info=True)
+				self._bookmarks = None
+				if not requestsAvailable():
+					# No more requests, so call idle().
+					self.player.idle()
+			if self._isCancelling:
+				self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+				# clear the queue
+				with self._threadCond:
 					self._speakRequests.clear()
 					self.sonicStream.flush()
 					self.sonicStream.readShort()  # discard data left in stream
