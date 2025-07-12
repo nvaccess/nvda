@@ -591,7 +591,12 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	logger.debug(f"Full addon spec: {addon_spec}")
 
 	# Set up proxies - add the art directory so we can import art.runtime.proxies
-	art_path = Path(__file__).parent / "art"
+	if getattr(sys, "frozen", None) is None:
+		# Running from source
+		art_path = Path(__file__).parent / "art"
+	else:
+		# Running as py2exe executable
+		art_path = Path(sys.prefix) / "art"
 	sys.path.insert(0, str(art_path))
 	logger.debug(f"Added art to path: {art_path}")
 

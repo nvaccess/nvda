@@ -6,6 +6,7 @@
 """GlobalVars module proxy for add-ons running in ART."""
 
 import os
+import sys
 from pathlib import Path
 from .base import ServiceProxyMixin
 
@@ -44,9 +45,10 @@ class AppArgsProxy(ServiceProxyMixin):
 # Create the appArgs proxy object
 appArgs = AppArgsProxy()
 
-# Set appDir for compatibility with code expecting it
-# This points to where ART is running from (the NVDA source directory)
-appDir = str(Path(__file__).parent.parent.parent.parent)
+if getattr(sys, "frozen", None) is None:
+	appDir = str(Path(__file__).parent.parent.parent.parent.resolve())
+else:
+	appDir = sys.prefix
 
 # For compatibility - ART doesn't use these but some code might expect them
 appPid = os.getpid()
