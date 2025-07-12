@@ -76,6 +76,7 @@ ART_CONFIG = ProcessConfig(
 	sourceScriptPath=Path("../source/nvda_art.pyw"),
 	builtExeName="nvda_art.exe",
 	popenFlags={
+		"creationflags": subprocess.CREATE_NO_WINDOW,
 		"bufsize": 0,
 		"stdin": subprocess.PIPE,
 		"stdout": subprocess.PIPE,
