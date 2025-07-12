@@ -91,7 +91,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 46.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
-* [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`
+* [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
