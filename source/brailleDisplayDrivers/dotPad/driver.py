@@ -240,8 +240,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _tryConnect(self, port: str) -> bool:
 		"""Try to connect to a DotPad device on the given port.
-		@param port: The port to connect to.
-		@return: True if connection successful, False otherwise.
+
+		Attempts to open a serial connection to the specified port and verifies that
+		the connected device is a DotPad. Updates internal state with device model,
+		board information, and braille destination if successful.
+
+		Side effects:
+			- Sets self._dev to the opened serial device on success.
+			- Sets self.model and self._boardInformation based on the connected device.
+			- Sets self._brailleDestination depending on device features.
+			- Closes self._dev and resets related attributes on failure.
+
+		:param port: The port to connect to.
+		:return: True if connection successful, False otherwise.
 		"""
 		try:
 			self._dev = hwIo.Serial(
