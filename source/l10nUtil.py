@@ -16,6 +16,8 @@ import codecs
 import re
 import subprocess
 import sys
+import zipfile
+import time
 
 CROWDIN_PROJECT_ID = 598017
 
@@ -278,6 +280,96 @@ def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: st
 		importEqSuggestions=True,
 	)
 	print("Done")
+
+
+def exportTranslations(outputDir: str, language: str | None = None):
+	"""
+	Export translation files from Crowdin as a bundle.
+	:param outputDir: Directory to save translation files.
+	:param language: The language code to export (e.g., 'es', 'fr', 'de').
+		If None, exports all languages.
+	"""
+
+	# Create output directory if it doesn't exist
+	os.makedirs(outputDir, exist_ok=True)
+
+	client = getCrowdinClient()
+
+	requestData = {
+		# Avoids build warning "Warning: line 392 contained a corrupt empty translation. Using source"
+		"skipUntranslatedStrings": True,
+		"skipUntranslatedFiles": False,
+		"exportApprovedOnly": False,
+	}
+
+	if language is not None:
+		requestData["targetLanguageIds"] = [language]
+
+	if language is None:
+		print("Requesting export of all translations from Crowdin...")
+	else:
+		print(f"Requesting export of all translations for language: {language}")
+	build_res = client.translations.build_project_translation(request_data=requestData)
+
+	if language is None:
+		zip_filename = "translations.zip"
+	else:
+		zip_filename = f"translations_{language}.zip"
+
+	if build_res is None:
+		raise ValueError("Failed to start translation build")
+
+	build_id = build_res["data"]["id"]
+	print(f"Build started with ID: {build_id}")
+
+	# Wait for the build to complete
+	print("Waiting for build to complete...")
+	while True:
+		status_res = client.translations.check_project_build_status(build_id)
+		if status_res is None:
+			raise ValueError("Failed to check build status")
+
+		status = status_res["data"]["status"]
+		progress = status_res["data"]["progress"]
+		print(f"Build status: {status} ({progress}%)")
+
+		if status == "finished":
+			break
+		elif status == "failed":
+			raise ValueError("Translation build failed")
+
+		time.sleep(5)
+
+	# Download the completed build
+	print("Downloading translations archive...")
+	download_res = client.translations.download_project_translations(build_id)
+	if download_res is None:
+		raise ValueError("Failed to get download URL")
+
+	download_url = download_res["data"]["url"]
+	print(f"Downloading from {download_url}")
+
+	# Download and extract the ZIP file
+	zip_path = os.path.join(outputDir, zip_filename)
+	response = requests.get(download_url)
+	response.raise_for_status()
+
+	with open(zip_path, "wb") as f:
+		f.write(response.content)
+
+	print(f"Archive saved to {zip_path}")
+	print("Extracting translations...")
+
+	with zipfile.ZipFile(zip_path, "r") as zip_ref:
+		zip_ref.extractall(outputDir)
+
+	# Remove the zip file
+	os.remove(zip_path)
+
+	if language is None:
+		print(f"\nExport complete! All translations extracted to '{outputDir}' directory.")
+	else:
+		print(f"\nExport complete! All {language} translations extracted to '{outputDir}' directory.")
 
 
 _MSGFMT = r"miscDeps\\tools\\msgfmt.exe"
@@ -669,6 +761,24 @@ def main():
 		default=None,
 		help="The path to the local file to be uploaded. If not provided, the Crowdin file path will be used.",
 	)
+
+	exportTranslationsCommand = commands.add_parser(
+		"exportTranslations",
+		help="Export translation files from Crowdin as a bundle. If no language is specified, exports all languages.",
+	)
+	exportTranslationsCommand.add_argument(
+		"-o",
+		"--output",
+		help="Directory to save translation files",
+		required=True,
+	)
+	exportTranslationsCommand.add_argument(
+		"-l",
+		"--language",
+		help="Language code to export (e.g., 'es', 'fr', 'de'). If not specified, exports all languages.",
+		default=None,
+	)
+
 	args = args.parse_args()
 	match args.command:
 		case "xliff2md":
@@ -732,6 +842,8 @@ def main():
 			uploadTranslationFile(args.crowdinFilePath, localFilePath, args.language)
 			if needsDelete:
 				os.remove(localFilePath)
+		case "exportTranslations":
+			exportTranslations(args.output, args.language)
 		case _:
 			raise ValueError(f"Unknown command {args.command}")
 
