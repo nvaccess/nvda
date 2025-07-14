@@ -77,10 +77,12 @@ jobs:
 
   checkPo:
     name: Check po files for errors
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        submodules: true
     - name: Set up python
       uses: actions/setup-python@v5
       with:
