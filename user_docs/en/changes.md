@@ -34,6 +34,8 @@ Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
 Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 * `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
 Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
+* `nvwave.WAVEFORMATEX` is deprecated.
+Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 
 ## 2025.2
 
