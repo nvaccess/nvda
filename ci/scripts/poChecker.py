@@ -113,7 +113,7 @@ class PoChecker:
 		self._msgstr = None
 		nextFuzzy = False
 		self._fuzzy = False
-		for lineNum, line in enumerate(self._po, 1):
+		for lineNum, line in enumerate(self._poContent, 1):
 			line = line.strip()
 			if line.startswith(self.FUZZY):
 				nextFuzzy = True
