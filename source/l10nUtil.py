@@ -569,7 +569,8 @@ def checkPo(poFilePath: str) -> str | None:
 		report = c.getReport()
 		if report:
 			return report.encode("cp1252", errors="backslashreplace").decode(
-				"utf-8", errors="backslashreplace"
+				"utf-8",
+				errors="backslashreplace",
 			)
 	return None
 
