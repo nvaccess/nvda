@@ -227,6 +227,7 @@ class SynthDriver(driverHandler.Driver):
 		return BooleanDriverSetting(
 			"useWasapi",
 			# Translators: Label for a setting in voice settings dialog.
+			# "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 			_("Use modern audio output system (WASAPI)"),
 			availableInSettingsRing=False,
 			defaultVal=True,
