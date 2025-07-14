@@ -298,7 +298,9 @@ def main():
 		if not c.check():
 			report = c.getReport() + "\n\n"
 			encoding = "cp1252" if sys.platform == "win32" else "utf-8"
-			print(report.encode(encoding, errors="backslashreplace").decode("utf-8", errors="backslashreplace"))
+			print(
+				report.encode(encoding, errors="backslashreplace").decode("utf-8", errors="backslashreplace")
+			)
 		if c.errorCount > 0:
 			exitCode = 1
 	return exitCode
