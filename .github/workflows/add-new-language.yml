@@ -50,7 +50,7 @@ jobs:
         pre-commit install
 
     # Job will fail if pre-commit checks fail
-    - name: Commit tracked files only
+    - name: Commit language files only
       id: commit
       shell: bash
       run: |
