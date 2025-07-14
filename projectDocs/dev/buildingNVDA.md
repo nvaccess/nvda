@@ -126,7 +126,7 @@ $env:UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
 or
 
 ```cmd
-set UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
+set UV_PYTHON=cpython-3.11.9-windows-x86_64-none
 ```
 
 * This will apply to all projects managed by UV.

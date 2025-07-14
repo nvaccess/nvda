@@ -61,7 +61,7 @@ match sysconfig.get_platform():
 def __getattr__(name: str) -> Any:
 	def warnDeprecatedWithReplacement(deprecated: str, replacement: str):
 		warnings.warn(
-			f"NVDAHelper.{deprecated}is deprecated. Use {replacement} instead.",
+			f"NVDAHelper.{deprecated} is deprecated. Use {replacement} instead.",
 			DeprecationWarning,
 			stacklevel=3,
 		)
@@ -72,7 +72,7 @@ def __getattr__(name: str) -> Any:
 				warnDeprecatedWithReplacement(name, "NVDAHelper.versionedLibX86Path")
 				return versionedLibX86Path
 			case "generateBeep":
-				warnDeprecatedWithReplacement("generateBeep", "NVDAHelper.localLib.generateBeep")
+				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.generateBeep")
 				return localLib.generateBeep
 			case "VBuf_getTextInRange":
 				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.VBuf_getTextInRange")
