@@ -292,7 +292,8 @@ class SynthDriver(SynthDriver):
 		self._rate = 50
 		self._volume = 100
 		self._useWasapi = True
-		self.player = None
+		self.player: nvwave.WavePlayer | None = None
+		self.sonicStream: SonicStream | None = None
 		self.isSpeaking = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
@@ -621,6 +622,16 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
+		if self.useWasapi:
+			streamNum = self.tts.Speak(text, flags)
+		else:
+			streamNum = self._speak_legacy(text, flags)
+		# When Speak returns, the previous stream may not have been ended.
+		# So the bookmark list is stored in another dict until this stream starts.
+		self._streamBookmarksNew[streamNum] = bookmarks
+
+	def _speak_legacy(self, text: str, flags: int) -> int:
+		"""Legacy way of calling SpVoice.Speak that uses a temporary audio ducker."""
 		# Ducking should be complete before the synth starts producing audio.
 		# For this to happen, the speech method must block until ducking is complete.
 		# Ducking should be disabled when the synth is finished producing audio.
@@ -645,7 +656,7 @@ class SynthDriver(SynthDriver):
 		# in order to unduck there must be no remaining enabled audio ducker instances.
 		# Due to this a temporary audio ducker is used around the call to speak.
 		# SAPISink.StartStream: Ducking here may allow the early speech to start before ducking is completed.
-		if self._audioDucker:
+		if audioDucking.isAudioDuckingSupported():
 			tempAudioDucker = audioDucking.AudioDucker()
 		else:
 			tempAudioDucker = None
@@ -654,15 +665,12 @@ class SynthDriver(SynthDriver):
 				log.debug("Enabling audio ducking due to speak call")
 			tempAudioDucker.enable()
 		try:
-			streamNum = self.tts.Speak(text, flags)
+			return self.tts.Speak(text, flags)
 		finally:
 			if tempAudioDucker:
 				if audioDucking._isDebug():
 					log.debug("Disabling audio ducking after speak call")
 				tempAudioDucker.disable()
-		# When Speak returns, the previous stream may not have been ended.
-		# So the bookmark list is stored in another dict until this stream starts.
-		self._streamBookmarksNew[streamNum] = bookmarks
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
