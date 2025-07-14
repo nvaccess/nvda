@@ -86,7 +86,7 @@ jobs:
       id: precommit
       run: |
         # Run pre-commit on the translations
-        pre-commit run checkPo --from-ref  ${{ env.branchName }} --to-ref beta &> pre-commit.log
+        pre-commit run checkPo --from-ref  ${{ env.branchName }} --to-ref beta
 
     - name: Comment failure message
       if: steps.commit.outputs.has_changes == 'true' && steps.precommit.outcome != 'success'
@@ -94,7 +94,7 @@ jobs:
       run: |
         # If pre-commit fails, comment on the PR with the failure message
         gh pr comment ${{ env.branchName }} \
-        --body-file pre-commit.log
+        --body "Pre-commit checks failed. Please fix the issues before merging the pull request."
 
     - name: Merge pull request
       if: steps.commit.outputs.has_changes == 'true'
