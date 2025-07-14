@@ -100,6 +100,7 @@ class ARTAddonProcess:
 		"""Check if we're running on Windows secure desktop."""
 		try:
 			from utils.security import isRunningOnSecureDesktop
+
 			return isRunningOnSecureDesktop()
 		except ImportError:
 			# Fallback if import fails
@@ -182,6 +183,7 @@ class ARTAddonProcess:
 			try:
 				proxy = Pyro5.api.Proxy(uri)
 				proxy._pyroTimeout = 10.0  # Increase timeout to match ART config
+				proxy._pyroSerializer = "msgpack"
 				proxy._pyroMaxRetries = 3  # Allow retries on temporary failures
 				self.artServices[service_name] = proxy
 				log.info(f"Connected to ART service for {self.addon_name}: {service_name}")
@@ -364,7 +366,7 @@ class ARTManager:
 				if hasattr(synth_class, "_artAddonName") and hasattr(synth_class, "_artSynthName"):
 					art_proxy_modules.append(module_name)
 					log.debug(f"Found ART proxy synth: {synth_name} from addon {synth_class._artAddonName}")
-					
+
 					# Verify the addon is still running
 					addon_running = self.isAddonRunning(synth_class._artAddonName)
 					log.debug(f"Addon {synth_class._artAddonName} running: {addon_running}")
@@ -381,7 +383,10 @@ class ARTManager:
 								log.debug(f"ART synth {synth_name} failed check(), excluding from list")
 						except Exception:
 							# If check() fails, skip this synth
-							log.debug(f"ART synth {synth_name} failed check() with exception, excluding from list", exc_info=True)
+							log.debug(
+								f"ART synth {synth_name} failed check() with exception, excluding from list",
+								exc_info=True,
+							)
 					else:
 						log.debug(f"ART synth {synth_name} excluded - addon not running")
 
