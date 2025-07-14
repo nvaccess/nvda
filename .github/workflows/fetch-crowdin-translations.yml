@@ -42,6 +42,7 @@ jobs:
 
     - name: Commit tracked files only
       id: commit
+      shell: bash
       run: |
         git checkout -b ${{ env.branchName }}
         git config --local user.name "GitHub Actions"
