@@ -479,6 +479,17 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 				art_logger.debug("Setting NVDA_ART_DEBUG=1 from config")
 				os.environ["NVDA_ART_DEBUG"] = "1"
 
+			# Check for secure desktop mode
+			is_secure_desktop = config.get("secureDesktop", False)
+			if is_secure_desktop:
+				art_logger.info("=== SD-ART MODE: Running on Secure Desktop ===")
+				art_logger.info("Enhanced security restrictions will be applied")
+			else:
+				art_logger.info("=== Regular ART MODE: Running on normal desktop ===")
+
+			# Set environment variable for later use
+			os.environ["NVDA_ART_SECURE_DESKTOP"] = "1" if is_secure_desktop else "0"
+
 			if config_path := config.get("configPath"):
 				art_logger.debug(f"Setting NVDA_ART_CONFIG_PATH={config_path}")
 				os.environ["NVDA_ART_CONFIG_PATH"] = config_path
@@ -588,6 +599,14 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	# Log startup information
 	logger.info(f"Starting ART for addon: {addon_spec['name']}")
 	logger.info(f"Addon path: {addon_spec.get('path', 'Unknown')}")
+
+	# Log secure mode status
+	is_secure = os.environ.get("NVDA_ART_SECURE_DESKTOP", "0") == "1"
+	mode_str = "SD-ART (Secure Desktop)" if is_secure else "Regular ART"
+	logger.info(f"Runtime mode: {mode_str}")
+	if is_secure:
+		logger.warning("Running in secure desktop mode - restricted capabilities")
+
 	logger.debug(f"Full addon spec: {addon_spec}")
 
 	# Set up proxies - add the art directory so we can import art.runtime.proxies
