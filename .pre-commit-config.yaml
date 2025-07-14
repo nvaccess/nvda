@@ -137,7 +137,7 @@ repos:
   hooks:
     - id: checkPo
       name: Check po files
-      entry: python ci/scripts/poChecker.py
+      entry: python source/l10nUtil.py checkPo
       language: python
       types: [pofile]
     - id: scons-source
