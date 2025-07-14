@@ -30,7 +30,8 @@ class PoChecker:
 		:param po: The path to the po file to check.
 		"""
 		self._poPath = po
-		self._po = codecs.open(po, "r", "utf-8")
+		with codecs.open(po, "r", "utf-8") as file:
+			self._poContent = file.readlines()
 		self._string: str | None = None
 
 		self.alerts: list[str] = []
