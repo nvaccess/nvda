@@ -82,6 +82,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        # Include gettext
         submodules: true
     - name: Set up python
       uses: actions/setup-python@v5
