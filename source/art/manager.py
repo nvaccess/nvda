@@ -96,6 +96,15 @@ class ARTAddonProcess:
 		self.artServices: Dict[str, Pyro5.api.Proxy] = {}
 		self._shutdownEvent = threading.Event()
 
+	def _isRunningOnSecureDesktop(self) -> bool:
+		"""Check if we're running on Windows secure desktop."""
+		try:
+			from utils.security import isRunningOnSecureDesktop
+			return isRunningOnSecureDesktop()
+		except ImportError:
+			# Fallback if import fails
+			return False
+
 	def start(self) -> bool:
 		"""Start the ART process for this addon."""
 		log.info(f"Starting ART process for addon: {self.addon_name}")
@@ -126,6 +135,7 @@ class ARTAddonProcess:
 			"core_services": self.core_service_uris,
 			"config": {
 				"debug": getattr(__import__("globalVars").appArgs, "debugLogging", False),
+				"secureDesktop": self._isRunningOnSecureDesktop(),
 			},
 		}
 
