@@ -391,6 +391,18 @@ class SynthDriver(SynthDriver):
 		self._volume = value
 		self.tts.Volume = value
 
+	def _initAudioDevice(self):
+		# SAPI5 automatically selects the system default audio device, so there's no use doing work if the user has selected to use the system default.
+		# Besides, our default value is not a valid endpoint ID.
+		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
+			("audio", "outputDevice"),
+		).default:
+			for audioOutput in self.tts.GetAudioOutputs():
+				# SAPI's audio output IDs are registry keys. It seems that the final path segment is the endpoint ID.
+				if audioOutput.Id.endswith(outputDevice):
+					self.tts.audioOutput = audioOutput
+					break
+
 	def _initWasapiAudio(self):
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
@@ -415,16 +427,6 @@ class SynthDriver(SynthDriver):
 		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
 
 	def _initLegacyAudio(self):
-		# SAPI5 automatically selects the system default audio device, so there's no use doing work if the user has selected to use the system default.
-		# Besides, our default value is not a valid endpoint ID.
-		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
-			("audio", "outputDevice"),
-		).default:
-			for audioOutput in self.tts.GetAudioOutputs():
-				# SAPI's audio output IDs are registry keys. It seems that the final path segment is the endpoint ID.
-				if audioOutput.Id.endswith(outputDevice):
-					self.tts.audioOutput = audioOutput
-					break
 		if audioDucking.isAudioDuckingSupported():
 			self._audioDucker = audioDucking.AudioDucker()
 		from comInterfaces.SpeechLib import ISpAudio
@@ -451,6 +453,7 @@ class SynthDriver(SynthDriver):
 		self.ttsAudioStream = None
 		self._audioDucker = None
 
+		self._initAudioDevice()
 		if self.useWasapi:
 			self._initWasapiAudio()
 		else:
