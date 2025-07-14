@@ -1,0 +1,61 @@
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+
+"base_path": ".."
+
+"preserve_hierarchy": true
+
+"files": [
+  {
+    "source": "/source/locale/en/LC_MESSAGES/nvda.po",
+    "translation": "/source/locale/%two_letters_code%/LC_MESSAGES/nvda.po",
+    "excluded_target_languages": [
+      "en",
+      "zzTest",
+      "az",
+      "be",
+      "et",
+      "kk",
+      "km"
+    ]
+  },
+  {
+    "source": "nvda.pot",
+    "translation": "/source/locale/%two_letters_code%/LC_MESSAGES/nvda.po",
+    "excluded_target_languages": [
+      "en",
+      "zzTest",
+      "az",
+      "be",
+      "et",
+      "kk",
+      "km"
+    ]
+  },
+  {
+    "source": "/user_docs/en/changes.xliff",
+    "translation": "/user_docs/%two_letters_code%/changes.xliff",
+    "excluded_target_languages": [
+      "en",
+      "zzTest",
+      "az",
+      "be",
+      "et",
+      "kk",
+      "km"
+    ]
+  },
+  {
+    "source": "/user_docs/en/userGuide.xliff",
+    "translation": "/user_docs/%two_letters_code%/userGuide.xliff",
+    "excluded_target_languages": [
+      "en",
+      "zzTest",
+      "az",
+      "be",
+      "et",
+      "kk",
+      "km"
+    ]
+  }
+]
