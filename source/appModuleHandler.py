@@ -44,6 +44,7 @@ import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
 from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
+from comInterfaces import UIAutomationClient as UIA
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -764,6 +765,36 @@ class AppModule(baseObject.ScriptableObject):
 		shouldAcceptEvent returns False, etc.
 		"""
 		return True
+
+	def shouldProcessUIANotificationEvent(
+		self,
+		sender: UIA.IUIAutomationElement,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
+	) -> bool:
+		"""
+		Determines whether NVDA should process a UIA notification event.
+
+		By default, events from elements with window handle value set
+		and traversable back to the desktop will be accepted.
+		Returning ``False`` will cause the event to be dropped completely.
+		Returning ``True`` means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+
+		:param sender: UIA element raising the notification event.
+		:param notificationKind: notification kind such as activity completion.
+		:param notificationProcessing: how NVDA should process notifications such as canceling speech.
+		:param displayString: notification content/text.
+		:param activityId: notification description.
+		:return: Whether NVDA components including ap modules and NVDA objects should process notification events.
+		"""
+		import UIAHandler
+
+		# By default, see if UIA tree can be traversed to arrive at the desktop element.
+		return bool(UIAHandler.handler.getNearestWindowHandle(sender))
 
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
