@@ -161,6 +161,13 @@ exclude = [
 	"./source/userConfig/addons/*",
 ]
 
+# While exclude tells pyright not to scan files in the first instance,
+# it will still analyse files included by other files.
+ignore = [
+	# We do not care about errors in our dependencies.
+	".venv",
+]
+
 # Tell pyright where to load python code from
 extraPaths = [
 	"./source",
@@ -301,7 +308,7 @@ members = [
 dev = [
 	"nvda-misc-deps",
 	# NVDA's build system is SCons
-	"SCons==4.8.1",
+	"SCons==4.9.1",
 	# Packaging NVDA
 	"py2exe==0.13.0.2",
 	"setuptools~=72.0",

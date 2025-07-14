@@ -29,7 +29,7 @@ $tagsForTest = "installer NVDA"  # include the tests tagged with installer, or N
 if ($env:INCLUDE_SYSTEM_TEST_TAGS) {
 	if ($env:INCLUDE_SYSTEM_TEST_TAGS -eq $SKIP_SYS_TESTS) {
 		# Indicate the tests were skipped, and exit early.
-		"Skipped: System tests." >> $env:GITHUB_STEP_SUMMARY
+		Write-Output "Skipped: System tests." >> $env:GITHUB_STEP_SUMMARY
 		return
 	}
 	$tagsForTest = $env:INCLUDE_SYSTEM_TEST_TAGS
@@ -51,10 +51,7 @@ $nvdaLauncherFile=$(Resolve-Path "$env:nvdaLauncherDir\nvda*.exe")
 @includeTags `
 # last line intentionally blank, allowing all lines to have line continuations.
 if ($LastExitCode -ne 0) {
-	$MESSAGE = "FAIL: System tests (tags: ${tagsForTest}). See test results for more information."
+	Write-Output "FAIL: System tests (tags: ${tagsForTest}). See test results for more information."  >> $env:GITHUB_STEP_SUMMARY
 	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-} else {
-	$MESSAGE = "PASS: System tests (tags: ${tagsForTest})."
 }
-$MESSAGE >> $env:GITHUB_STEP_SUMMARY
 exit $LastExitCode

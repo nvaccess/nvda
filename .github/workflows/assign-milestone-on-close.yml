@@ -4,13 +4,10 @@ env:
   MILESTONE_ID: ${{ vars.MILESTONE_ID }}
 
 on:
-  issues:
-    types: [closed]
   pull_request_target:
     types: [closed]
 
 permissions:
-  issues: write
   pull-requests: write
 
 jobs:
@@ -23,21 +20,20 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPr = context.payload.issue || context.payload.pull_request;
-            if (!issueOrPr.milestone) {
+            const pr = context.payload.pull_request;
+            if (!pr.milestone) {
               core.setOutput('milestoneNotSet', 'true');
             } else {
               core.setOutput('milestoneNotSet', 'false');
             }
 
-      - name: Check completed or merged
+      - name: Check merged
         id: check-done
         uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            if ((context.payload.issue && context.payload.issue.state_reason === "completed")
-                || (context.payload.pull_request && context.payload.pull_request.merged === true)) {
+            if (context.payload.pull_request.merged === true) {
               core.setOutput('isDone', 'true');
             } else {
               core.setOutput('isDone', 'false');
@@ -49,10 +45,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPrNumber = (context.payload.issue || context.payload.pull_request).number;
+            const prNumber = context.payload.pull_request.number;
             const repository = context.repo;
             await github.rest.issues.update({
               ...repository,
-              issue_number: issueOrPrNumber,
+              issue_number: prNumber,
               milestone: process.env.MILESTONE_ID
             });
