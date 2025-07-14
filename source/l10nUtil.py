@@ -28,6 +28,10 @@ def fetchCrowdinAuthToken() -> str:
 	If provided by the user, the token will be saved to the ~/.nvda_crowdin file.
 	:return: The auth token
 	"""
+	crowdinAuthToken = os.getenv("crowdinAuthToken", "")
+	if crowdinAuthToken:
+		print("Using Crowdin auth token from environment variable.")
+		return crowdinAuthToken
 	token_path = os.path.expanduser("~/.nvda_crowdin")
 	if os.path.exists(token_path):
 		with open(token_path, "r") as f:
