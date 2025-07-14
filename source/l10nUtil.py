@@ -568,7 +568,9 @@ def checkPo(poFilePath: str) -> str | None:
 	if not c.check():
 		report = c.getReport()
 		if report:
-			return report.encode("cp1252", errors="backslashreplace").decode("utf-8", errors="backslashreplace")
+			return report.encode("cp1252", errors="backslashreplace").decode(
+				"utf-8", errors="backslashreplace"
+			)
 	return None
 
 
@@ -708,7 +710,7 @@ def main():
 					print(report)
 					badFilePaths.append(poFilePath)
 			if badFilePaths:
-				print(f"\nOne or more po files had errors: {',' .join(badFilePaths)}")
+				print(f"\nOne or more po files had errors: {','.join(badFilePaths)}")
 				sys.exit(1)
 		case "uploadTranslationFile":
 			localFilePath = args.localFilePath or args.crowdinFilePath
