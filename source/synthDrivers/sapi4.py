@@ -331,6 +331,7 @@ class SynthDriverAudio(COMObject):
 		:param comThread: The COM thread that `IAudioDestNotifySink` methods will be called on."""
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Initializing WASAPI implementation")
+		self._allowDelete = False
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = _AudioState.INVALID
 		self._waveFormat: nvwave.WAVEFORMATEX | None = None
@@ -348,16 +349,22 @@ class SynthDriverAudio(COMObject):
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._comThread = comThread
 
-	def _final_release_(self):
-		"""This will be called automatically when this COM object is being destroyed."""
+	def IUnknown_Release(self, this: int, *args, **kwargs) -> int:
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("SynthDriverAudio was released too many times")
+			return 1
+		return super().IUnknown_Release(this, *args, **kwargs)
+
+	def terminate(self):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Terminating audio")
 		with self._audioCond:
 			self._audioStopped = True
 			self._audioCond.notify()
-		if self._audioThread is not threading.current_thread():
+		if self._audioThread is not threading.current_thread() and self._audioThread.is_alive():
 			self._audioThread.join()
 		self._notifySink = None
+		self._allowDelete = True
 
 	def _queueNotification(self, func: Callable, *args, **kwargs) -> None:
 		"""Queue a notification to be sent to the engine via IAudioDestNotifySink.
@@ -719,13 +726,20 @@ class SynthDriverMMAudio(COMObject):
 	def __init__(self):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Initializing WinMM implementation")
+		self._allowDelete = False
 		self.mmdev = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
 		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		self.audio = self.mmdev.QueryInterface(IAudio)
 		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
 
+	def IUnknown_Release(self, this: int, *args, **kwargs) -> int:
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("SynthDriverMMAudio was released too many times")
+			return 1
+		return super().IUnknown_Release(this, *args, **kwargs)
+
 	def terminate(self):
-		pass  # do nothing
+		self._allowDelete = True
 
 	@_logTrace(logAll=True)
 	def IAudio_Flush(self) -> None:
@@ -878,6 +892,7 @@ class SynthDriver(SynthDriver):
 		self._comThread = _ComThread()
 		self._finalIndex: int | None = None
 		self._ttsCentral = None
+		self._ttsAudio = None
 		self._sinkRegKey = DWORD()
 		self._bookmarks = None
 		self._bookmarkLists = deque()
@@ -907,6 +922,9 @@ class SynthDriver(SynthDriver):
 		# Release all COM objects before stopping the COM thread.
 		self._ttsAttrs = None
 		self._ttsCentral = None
+		if self._ttsAudio:
+			self._ttsAudio.terminate()
+			self._ttsAudio = None
 		self._ttsEngines = None
 		self._comThread.stop()
 
@@ -1045,12 +1063,14 @@ class SynthDriver(SynthDriver):
 			# before the next _ttsCentral is created.
 			self._ttsAttrs = None
 			self._ttsCentral = None
+			self._ttsAudio.terminate()
+			self._ttsAudio = None
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
-			ttsAudio = self._comThread.invoke(SynthDriverAudio, self._comThread)
+			self._ttsAudio = self._comThread.invoke(SynthDriverAudio, self._comThread)
 		else:
-			ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
+			self._ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
 		self._ttsCentral = POINTER(ITTSCentralW)()
-		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), ttsAudio)
+		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral = _ComProxy(self._ttsCentral, self._comThread)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
 		self._ttsAttrs = _ComProxy(self._ttsCentral.QueryInterface(ITTSAttributes), self._comThread)
