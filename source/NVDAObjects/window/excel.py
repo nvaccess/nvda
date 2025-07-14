@@ -4,12 +4,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
 import abc
 import ctypes
 import enum
-from typing import Any
+from typing import Any, Callable
 import warnings
-
 from comtypes import COMError, BSTR
 import comtypes.automation
 import inputCore
@@ -51,6 +51,10 @@ from utils.displayString import DisplayStringIntEnum
 import NVDAState
 from globalCommands import SCRCAT_SYSTEMCARET
 from ._msOffice import MsoHyperlink
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from ._msOfficeChart import OfficeChart
 
 excel2010VersionMajor = 14
 
@@ -811,6 +815,15 @@ class ExcelBase(Window):
 			obj.parent = selection
 		return obj
 
+	def _getActiveCell(self) -> "ExcelCell":
+		cell = self.excelWindowObject.ActiveCell
+		obj = ExcelCell(
+			windowHandle=self.windowHandle,
+			excelWindowObject=self.excelWindowObject,
+			excelCellObject=cell,
+		)
+		return obj
+
 	def _getSelection(self):
 		selection = self.excelWindowObject.Selection
 		try:
@@ -867,7 +880,7 @@ class Excel7Window(ExcelBase):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def _get_focusRedirect(self):
-		selection = self._getSelection()
+		selection = self._getActiveCell()
 		dropdown = self._getDropdown(selection=selection)
 		if dropdown:
 			return dropdown
@@ -1110,6 +1123,22 @@ class ExcelWorksheet(ExcelBase):
 			"kb:numpadEnter",
 			"kb:shift+enter",
 			"kb:shift+numpadEnter",
+		),
+		canPropagate=True,
+	)
+	def script_changeActiveCell(self, gesture: inputCore.InputGesture) -> None:
+		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		if isChartActive:
+			objGetter = self._getSelection
+		else:
+			objGetter = self._getActiveCell
+		self.changeSelectionOrActiveCell(
+			gesture=gesture,
+			objGetter=objGetter,
+		)
+
+	@scriptHandler.script(
+		gestures=(
 			"kb:upArrow",
 			"kb:downArrow",
 			"kb:leftArrow",
@@ -1156,8 +1185,18 @@ class ExcelWorksheet(ExcelBase):
 		),
 		canPropagate=True,
 	)
-	def script_changeSelection(self, gesture):
-		oldSelection = self._getSelection()
+	def script_changeSelection(self, gesture: inputCore.InputGesture) -> None:
+		self.changeSelectionOrActiveCell(
+			gesture=gesture,
+			objGetter=self._getSelection,
+		)
+
+	def changeSelectionOrActiveCell(
+		self,
+		gesture: inputCore.InputGesture,
+		objGetter: Callable[[], ExcelCell | ExcelSelection | OfficeChart],
+	):
+		oldSelection = objGetter()
 		gesture.send()
 		newSelection = None
 		start = time.time()
@@ -1173,7 +1212,7 @@ class ExcelWorksheet(ExcelBase):
 			if eventHandler.isPendingEvents("gainFocus"):
 				# This object is no longer focused.
 				return
-			newSelection = self._getSelection()
+			newSelection = objGetter()
 			if newSelection and newSelection != oldSelection:
 				log.debug(f"Detected new selection after {elapsed} sec")
 				break
