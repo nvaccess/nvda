@@ -49,6 +49,7 @@ jobs:
         pip install pre-commit
         pre-commit install
 
+    # Job will fail if pre-commit checks fail
     - name: Commit tracked files only
       id: commit
       shell: bash
@@ -69,7 +70,7 @@ jobs:
         fi
 
     - name: Create pull request
-      if: steps.commit.outputs.has_changes == 'true' && steps.commit.outcome == 'success' 
+      if: steps.commit.outputs.has_changes == 'true'
       shell: bash
       run: |
         git push --set-upstream origin ${{ env.branchName }}
@@ -82,7 +83,7 @@ jobs:
 
 
     - name: Comment failure message
-      if: steps.commit.outputs.has_changes == 'true' && steps.commit.outcome != 'success'
+      if: steps.commit.outputs.has_changes == 'true'
       shell: bash
       run: |
         # If pre-commit fails, comment on the PR with the failure message
@@ -90,7 +91,7 @@ jobs:
         --body "Po file checks failed. Please fix the issues before merging the pull request."
 
     - name: Merge pull request
-      if: steps.commit.outputs.has_changes == 'true' && steps.commit.outcome == 'success'
+      if: steps.commit.outputs.has_changes == 'true'
       shell: bash
       # Sets PR to auto-merge when checks have passed
       run: |
