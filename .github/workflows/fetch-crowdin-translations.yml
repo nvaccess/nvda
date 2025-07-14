@@ -1,9 +1,7 @@
 name: Fetch Crowdin Translations
 
-# Note: This workflow only updates tracked languages from Crowdin.concurrency:
-# It may fail if new languages are added to Crowdin which are not tracked in git.
+# Note: This workflow only updates tracked languages from Crowdin.
 # If you want to add new languages, use the "Add new languages to track from Crowdin" workflow.
-# If the new language is not ready to be tracked, exclude it in ci/crowdin.yml.
 
 on:
   workflow_dispatch:
@@ -61,7 +59,7 @@ jobs:
 
     - name: Create pull request
       if: steps.commit.outputs.has_changes == 'true'
-      id: createPullRequest
+      shell: bash
       run: |
         # Create a pull request for the changes
         gh pr create --base beta --head ${{ env.branchName }} \
@@ -91,6 +89,7 @@ jobs:
 
     - name: Comment failure message
       if: steps.commit.outputs.has_changes == 'true' && steps.precommit.outcome != 'success'
+      shell: bash
       run: |
         # If pre-commit fails, comment on the PR with the failure message
         gh pr comment ${{ env.branchName }} \
@@ -98,6 +97,7 @@ jobs:
 
     - name: Merge pull request
       if: steps.commit.outputs.has_changes == 'true'
+      shell: bash
       # Sets PR to auto-merge when checks have passed
       run: |
         gh pr merge ${{ env.branchName }} \

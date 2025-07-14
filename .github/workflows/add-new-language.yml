@@ -59,7 +59,7 @@ jobs:
 
     - name: Create pull request
       if: steps.commit.outputs.has_changes == 'true'
-      id: createPullRequest
+      shell: bash
       run: |
         # Create a pull request for the changes
         gh pr create --base beta --head ${{ env.branchName }} \
@@ -89,6 +89,7 @@ jobs:
 
     - name: Comment failure message
       if: steps.commit.outputs.has_changes == 'true' && steps.precommit.outcome != 'success'
+      shell: bash
       run: |
         # If pre-commit fails, comment on the PR with the failure message
         gh pr comment ${{ env.branchName }} \
