@@ -95,10 +95,10 @@ for key, value in os.environ.items():
 	if "NVDA" in key or "ART" in key:
 		art_logger.info(f"  {key} = {value}")
 
-Pyro5.config.SERIALIZER = "json"
+Pyro5.config.SERIALIZER = "msgpack"
 Pyro5.config.COMMTIMEOUT = 0.0
 Pyro5.config.HOST = "127.0.0.1"
-#Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
+# Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
 Pyro5.config.THREADPOOL_SIZE = 16  # More threads to handle concurrent requests
 Pyro5.config.SERVERTYPE = "thread"  # Use thread server type (not threadpool)
 
@@ -560,12 +560,13 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 			art_logger.debug("Flushing stdout")
 			sys.stdout.flush()
 			art_logger.info("Handshake response sent successfully")
-			
+
 			# Redirect stdout/stderr to prevent pipe buffer deadlock
 			art_logger.debug("Redirecting stdout/stderr to prevent pipe buffer deadlock")
 			import os
-			sys.stdout = open(os.devnull, 'w')
-			sys.stderr = open(os.devnull, 'w')
+
+			sys.stdout = open(os.devnull, "w")
+			sys.stderr = open(os.devnull, "w")
 
 		return service_uris
 
