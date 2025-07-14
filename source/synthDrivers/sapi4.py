@@ -12,6 +12,7 @@ import queue
 import threading
 import time
 import winreg
+from winBindings.mmeapi import WAVEFORMATEX
 from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
 	addressof,
@@ -333,7 +334,7 @@ class SynthDriverAudio(COMObject):
 			log.debug("SAPI4: Initializing WASAPI implementation")
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = _AudioState.INVALID
-		self._waveFormat: nvwave.WAVEFORMATEX | None = None
+		self._waveFormat: WAVEFORMATEX | None = None
 		self._player: nvwave.WavePlayer | None = None
 		self._writtenBytes = 0
 		self._playedBytes = 0
@@ -566,7 +567,7 @@ class SynthDriverAudio(COMObject):
 			Should be freed by the caller using CoTaskMemFree."""
 		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		size = sizeof(nvwave.WAVEFORMATEX)
+		size = sizeof(WAVEFORMATEX)
 		ptr = windll.ole32.CoTaskMemAlloc(size)
 		if not ptr:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
@@ -579,7 +580,7 @@ class SynthDriverAudio(COMObject):
 		size = 18  # SAPI4 uses 18 bytes without the final padding
 		if not dWFEX.pData or dWFEX.dwSize < size:
 			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
-		wfx = nvwave.WAVEFORMATEX()
+		wfx = WAVEFORMATEX()
 		memmove(addressof(wfx), dWFEX.pData, size)
 		if self._deviceState != _AudioState.INVALID:
 			# Setting wave format more than once is not allowed.

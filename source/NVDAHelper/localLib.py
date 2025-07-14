@@ -26,7 +26,6 @@ from ctypes import (
 	c_uint,
 )
 from ctypes.wintypes import (
-	WORD,
 	DWORD,
 	HANDLE,
 	HWND,
@@ -39,6 +38,7 @@ from comtypes import (
 	GUID,
 )
 from comtypes.automation import VARIANT
+from winBindings.mmeapi import WAVEFORMATEX
 from . import coreArchLibPath
 
 
@@ -527,19 +527,6 @@ rateLimitedUIAEventHandler_terminate.argtypes = (
 )
 
 HWasapiPlayer = HANDLE
-
-
-class WAVEFORMATEX(Structure):
-	_fields_ = [
-		("wFormatTag", WORD),
-		("nChannels", WORD),
-		("nSamplesPerSec", DWORD),
-		("nAvgBytesPerSec", DWORD),
-		("nBlockAlign", WORD),
-		("wBitsPerSample", WORD),
-		("cbSize", WORD),
-	]
-
 
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
 

@@ -37,7 +37,7 @@ import globalVars
 from speech import SpeechSequence
 from speech.commands import BreakCommand
 from synthDriverHandler import pre_synthSpeak
-from NVDAHelper.localLib import WAVEFORMATEX
+from winBindings.mmeapi import WAVEFORMATEX
 
 
 __all__ = (
