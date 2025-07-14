@@ -213,7 +213,10 @@ class PoChecker:
 		return unnamedPercent, namedPercent, formats
 
 	def _formatInterpolations(
-		self, unnamedPercent: list[str], namedPercent: set[str], formats: set[str]
+		self,
+		unnamedPercent: list[str],
+		namedPercent: set[str],
+		formats: set[str],
 	) -> str:
 		"""Format the interpolations for display in an error message.
 		:param unnamedPercent: The unnamed percent interpolations.
