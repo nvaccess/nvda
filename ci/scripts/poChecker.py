@@ -93,19 +93,14 @@ class PoChecker:
 		"""Check the syntax of the po file using msgfmt.
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
-		p = subprocess.Popen(
+		result = subprocess.run(
 			(MSGFMT, "-o", "-", self._poPath),
-			stdout=open("NUL:" if sys.platform == "win32" else "/dev/null", "w"),
+			stdout=subprocess.DEVNULL,
 			stderr=subprocess.PIPE,
-			errors="UTF-8",
+			text=True,  # Ensures stderr is a text stream
 		)
-		# https://docs.python.org/3.7/library/subprocess.html#subprocess.Popen.stderr
-		#  If the encoding or errors arguments were specified or the universal_newlines argument was True,
-		#  the stream is a text stream, otherwise it is a byte stream. If the stderr argument was not PIPE,
-		#  this attribute is None.
-		output = p.stderr.read()
-		if p.wait() != 0:
-			output = output.rstrip().replace("\r\n", "\n")
+		if result.returncode != 0:
+			output = result.stderr.rstrip().replace("\r\n", "\n")
 			self.alerts.append(output)
 			self.hasSyntaxError = True
 			self.errorCount = 1
