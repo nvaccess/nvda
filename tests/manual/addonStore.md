@@ -197,7 +197,7 @@ For example: "Clock".
 
 1. Repeatedly [create updatable add-ons](#simulate-creating-an-updatable-add-on).
 1. Start NVDA
-1. Ensure Automatic update notifications are enabled in the Add-on Store panel
+1. Ensure Automatic update notifications is set to "Notify" in the Add-on Store panel
 1. Trigger the update notification manually, or alternatively wait for the notification to occur
     1. From the NVDA Python console, find the scheduled thread
         ```py
@@ -215,7 +215,21 @@ For example: "Clock".
 
 ### Automatic updating
 
-Full automatic updating is not currently supported.
+1. Repeatedly [create updatable add-ons](#simulate-creating-an-updatable-add-on).
+1. Start NVDA
+1. Ensure Automatic update notifications is set to "Update Automatically" in the Add-on Store panel
+1. Trigger the update notification manually, or alternatively wait for the notification to occur
+    1. From the NVDA Python console, find the scheduled thread
+        ```py
+        import schedule
+        schedule.jobs
+        ```
+    1. Replace `i` with the index of the scheduled thread to find the job
+        ```py
+        schedule.jobs[i].run()
+        ```
+1. Wait for NVDA to announce that updates have been completed
+1. Check the Add-on Store to confirm the updated add-ons are pending install.
 
 ## Other add-on actions
 
