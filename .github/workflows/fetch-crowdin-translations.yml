@@ -29,6 +29,7 @@ jobs:
       with:
         ref: beta
         fetch-depth: 1
+        submodules: true
 
     - name: setup uv
       uses: astral-sh/setup-uv@v6
