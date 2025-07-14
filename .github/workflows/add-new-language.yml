@@ -61,6 +61,7 @@ jobs:
       if: steps.commit.outputs.has_changes == 'true'
       shell: bash
       run: |
+        git push --set-upstream origin ${{ env.branchName }}
         # Create a pull request for the changes
         gh pr create --base beta --head ${{ env.branchName }} \
         --title "Add new language ${{ matrix.newLanguage }} from Crowdin" \
