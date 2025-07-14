@@ -379,11 +379,9 @@ class WavePlayer:
 
 			# Send audio via thread-specific proxy (same logic as _sendAudioData but with our proxy)
 			MAX_CHUNK_SIZE = 64 * 1024  # 64KB chunks
-			import base64
 
 			for i in range(0, len(data), MAX_CHUNK_SIZE):
 				chunk = data[i : i + MAX_CHUNK_SIZE]
-				encoded_chunk = base64.b64encode(chunk).decode("ascii")
 				chunk_num = i // MAX_CHUNK_SIZE + 1
 				total_chunks = (len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE
 				logger.debug(f"Sending audio chunk {chunk_num} of {total_chunks} via thread proxy")
@@ -394,7 +392,7 @@ class WavePlayer:
 				
 				speech_service.receiveAudioData(
 					synthName=self._synthInstance.name,
-					audioData=encoded_chunk,
+					audioData=chunk,
 					sampleRate=sampleRate,
 					channels=channels,
 					bitsPerSample=bitsPerSample,

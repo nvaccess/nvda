@@ -871,13 +871,8 @@ class SynthDriver(ABC):
 				# For large audio data, we might need to chunk it
 				MAX_CHUNK_SIZE = 64 * 1024  # 64KB chunks
 				
-				# Import base64 for encoding bytes data
-				import base64
-				
 				for i in range(0, len(data), MAX_CHUNK_SIZE):
 					chunk = data[i:i + MAX_CHUNK_SIZE]
-					# Encode bytes as base64 string for JSON serialization
-					encoded_chunk = base64.b64encode(chunk).decode('ascii')
 					chunk_num = i//MAX_CHUNK_SIZE + 1
 					total_chunks = (len(data) + MAX_CHUNK_SIZE - 1) // MAX_CHUNK_SIZE
 					self.logger.debug(f"Sending audio chunk {chunk_num} of {total_chunks}")
@@ -885,7 +880,7 @@ class SynthDriver(ABC):
 					chunk_start = time.time()
 					self._speechService.receiveAudioData(
 						synthName=self.name,
-						audioData=encoded_chunk,
+						audioData=chunk,
 						sampleRate=sampleRate,
 						channels=channels,
 						bitsPerSample=bitsPerSample,
