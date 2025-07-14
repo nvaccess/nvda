@@ -4,6 +4,8 @@
 
 ### Important notes
 
+* This release breaks support for reading some embedded objects in editable text in applications such as Windows Live Mail and Outlook Express. (#18456)
+
 ### New Features
 
 ### Changes
