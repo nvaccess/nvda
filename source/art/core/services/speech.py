@@ -169,12 +169,9 @@ class SpeechService(BaseService):
 		@return: True if audio was queued successfully
 		"""
 		try:
-			# Decode base64 audio data back to bytes
-			import base64
-			decoded_audio = base64.b64decode(audioData.encode('ascii'))
-			log.debug(f"Received {len(decoded_audio)} bytes from {synthName}")
+			log.debug(f"Received {len(audioData)} bytes from {synthName}")
 		except Exception as e:
-			log.error(f"Failed to decode base64 audio data from {synthName}: {e}")
+			log.error(f"Failed to process audio data from {synthName}: {e}")
 			return False
 		
 		try:
@@ -187,8 +184,8 @@ class SpeechService(BaseService):
 				log.info(f"Creating new audio player for {synthName}")
 				self._createAudioPlayer(synthName, sampleRate, channels, bitsPerSample)
 
-			# Queue the decoded audio data with callback information
-			self._audioQueues[synthName].put((decoded_audio, isLastChunk, callback_id))
+			# Queue the audio data with callback information
+			self._audioQueues[synthName].put((audioData, isLastChunk, callback_id))
 
 			# Start playback thread if not running
 			if synthName not in self._playbackThreads or not self._playbackThreads[synthName].is_alive():
