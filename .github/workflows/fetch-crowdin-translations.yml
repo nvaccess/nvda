@@ -81,15 +81,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
-
-    - name: Comment failure message
-      if: steps.commit.outputs.has_changes == 'true'
-      shell: bash
-      run: |
-        # If pre-commit fails, comment on the PR with the failure message
-        gh pr comment ${{ env.branchName }} \
-        --body "Po file checks failed. Please fix the issues before merging the pull request."
-
     - name: Merge pull request
       if: steps.commit.outputs.has_changes == 'true'
       shell: bash
