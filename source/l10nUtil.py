@@ -357,13 +357,32 @@ class _PoChecker:
 			f"{'Error' if isError else 'Warning'}: {alert}",
 		)
 
+	@property
+	def MSGFMT_PATH(self) -> str:
+		try:
+			# When running from source, miscDeps is the sibling of parent this script.
+			_MSGFMT = os.path.join(os.path.dirname(__file__), "..", "miscDeps", "tools", "msgfmt.exe")
+		except NameError:
+			# When running from a frozen executable, __file__ is not defined.
+			# In this case, we use the distribution path.
+			# When running from a distribution, source/l10nUtil.py is built to l10nUtil.exe.
+			# miscDeps is the sibling of this script in the distribution.
+			_MSGFMT = os.path.join(sys.prefix, "miscDeps", "tools", "msgfmt.exe")
+	
+		if not os.path.exists(_MSGFMT):
+			raise FileNotFoundError(
+				"msgfmt executable not found. "
+				"Please ensure that miscDeps/tools/msgfmt.exe exists in the source tree or distribution."
+			)
+		return _MSGFMT
+
 	def _checkSyntax(self) -> None:
 		"""Check the syntax of the po file using msgfmt.
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
-		_MSGFMT = os.path.join(os.getcwd(), "miscDeps", "tools", "msgfmt.exe")
+		
 		result = subprocess.run(
-			(_MSGFMT, "-o", "-", self._poPath),
+			(self.MSGFMT_PATH, "-o", "-", self._poPath),
 			stdout=subprocess.DEVNULL,
 			stderr=subprocess.PIPE,
 			text=True,  # Ensures stderr is a text stream
