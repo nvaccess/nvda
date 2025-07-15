@@ -223,9 +223,10 @@ class SapiSink(COMObject):
 			audioData = synth.sonicStream.readShort()
 			synth.player.feed(audioData, len(audioData) * 2)
 		# trigger all untriggered bookmarks
-		if synth._bookmarks:
-			for bookmark in synth._bookmarks:
+		if synth._bookmarkLists:
+			for bookmark in synth._bookmarkLists[0]:
 				synthIndexReached.notify(synth=synth, index=bookmark)
+			synth._bookmarkLists.pop()
 		synthDoneSpeaking.notify(synth=synth)
 		if synth.player:
 			# notify the thread
@@ -244,9 +245,11 @@ class SapiSink(COMObject):
 			return
 		synthIndexReached.notify(synth=synth, index=index)
 		# remove already triggered bookmarks
-		while synth._bookmarks:
-			if synth._bookmarks.popleft() == index:
-				break
+		if synth._bookmarkLists:
+			bookmarks = synth._bookmarkLists[0]
+			while bookmarks:
+				if bookmarks.popleft() == index:
+					break
 
 
 class SynthDriver(SynthDriver):
@@ -305,7 +308,7 @@ class SynthDriver(SynthDriver):
 		self._isTerminating = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
-		self._bookmarks: deque[int] | None = None  # reference to the current bookmark list
+		self._bookmarkLists: deque[deque[int]] = deque()
 		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
@@ -550,23 +553,28 @@ class SynthDriver(SynthDriver):
 		def requestCompleted() -> bool:
 			return self._requestCompleted or self._isCancelling or self._isTerminating
 
+		request: _SpeakRequest | None = None
+
 		# Process requests one by one.
 		while not self._isTerminating:
 			# Fetch the next request
 			with self._threadCond:
 				self._threadCond.wait_for(requestsAvailable)
 				if self._speakRequests:
-					text, self._bookmarks = self._speakRequests.popleft()
+					request = self._speakRequests.popleft()
 					self._requestCompleted = False
-			if self._bookmarks is not None:  # There is one request
+			if request is not None:  # There is one request
+				text, bookmarks = request
+				self._bookmarkLists.append(bookmarks)
 				try:
 					# Process one request, and wait for it to finish
 					self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
 					with self._threadCond:
 						self._threadCond.wait_for(requestCompleted)
 				except Exception:
+					self._bookmarkLists.pop()
 					log.error("Error speaking", exc_info=True)
-				self._bookmarks = None
+				request = None
 				if not requestsAvailable():
 					# No more requests, so call idle().
 					self.player.idle()
@@ -689,8 +697,12 @@ class SynthDriver(SynthDriver):
 				self._speakRequests.append(_SpeakRequest(text, bookmarks))
 				self._threadCond.notify()
 		else:
-			self._bookmarks = bookmarks
-			self._speak_legacy(text, flags)
+			self._bookmarkLists.append(bookmarks)
+			try:
+				self._speak_legacy(text, flags)
+			except:
+				self._bookmarkLists.pop()
+				raise
 
 	def _speak_legacy(self, text: str, flags: int) -> int:
 		"""Legacy way of calling SpVoice.Speak that uses a temporary audio ducker."""
@@ -749,6 +761,7 @@ class SynthDriver(SynthDriver):
 			if audioDucking._isDebug():
 				log.debug("Disabling audio ducking due to setting output audio state to stop")
 			self._audioDucker.disable()
+		self._bookmarkLists.clear()
 
 	def pause(self, switch: bool):
 		if self.player:
