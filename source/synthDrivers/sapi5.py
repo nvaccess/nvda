@@ -4,14 +4,34 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import POINTER, c_ubyte, c_ulong, c_wchar_p, cast, windll, _Pointer
+from ctypes import (
+	HRESULT,
+	POINTER,
+	WINFUNCTYPE,
+	byref,
+	c_ubyte,
+	c_ulong,
+	c_void_p,
+	c_wchar_p,
+	cast,
+	create_unicode_buffer,
+	memmove,
+	memset,
+	sizeof,
+	windll,
+)
 from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
 import threading
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, Generator
 import audioDucking
-from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
+from comInterfaces.SpeechLib import (
+	ISpEventSource,
+	ISpNotifySource,
+	ISpNotifySink,
+	SPEVENT,
+)
 import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult
 import winreg
@@ -65,13 +85,90 @@ class _SpeakRequest(NamedTuple):
 
 
 if TYPE_CHECKING:
-	LP_c_ubyte = _Pointer[c_ubyte]
-	LP_c_ulong = _Pointer[c_ulong]
-	LP__ULARGE_INTEGER = _Pointer[_ULARGE_INTEGER]
+	from ctypes import _Pointer
 else:
-	LP_c_ubyte = POINTER(c_ubyte)
-	LP_c_ulong = POINTER(c_ulong)
-	LP__ULARGE_INTEGER = POINTER(_ULARGE_INTEGER)
+
+	class _Pointer:
+		def __class_getitem__(cls, item: type) -> type:
+			return POINTER(item)
+
+
+class _SPEventLParamType(IntEnum):
+	UNDEFINED = 0
+	TOKEN = 1
+	OBJECT = 2
+	POINTER = 3
+	STRING = 4
+
+
+# Function types for calling COM methods
+_Com_AddRef = WINFUNCTYPE(c_ulong)(1, "AddRef")
+_Com_Release = WINFUNCTYPE(c_ulong)(2, "Release")
+_ISpEventSource_GetEvents = WINFUNCTYPE(HRESULT, c_ulong, POINTER(SPEVENT), POINTER(c_ulong))(11, "GetEvents")
+
+
+class _SapiEvent(SPEVENT):
+	def clear(self) -> None:
+		"""Clear and free related data."""
+		if self.elParamType in (_SPEventLParamType.TOKEN, _SPEventLParamType.OBJECT):
+			_Com_Release(cast(self.lParam, c_void_p))
+		elif self.elParamType in (_SPEventLParamType.POINTER, _SPEventLParamType.STRING):
+			windll.ole32.CoTaskMemFree(cast(self.lParam, c_void_p))
+		memset(byref(self), 0, sizeof(self))
+
+	def __del__(self):
+		self.clear()
+
+	@staticmethod
+	def copy(dst: SPEVENT, src: SPEVENT) -> None:
+		memmove(byref(dst), byref(src), sizeof(src))
+		if not src.lParam:
+			return dst
+		if src.elParamType == _SPEventLParamType.POINTER:
+			dst.lParam = windll.ole32.CoTaskMemAlloc(src.wParam)
+			if not dst.lParam:
+				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
+			memmove(dst.lParam, src.lParam, src.wParam)
+		elif src.elParamType == _SPEventLParamType.STRING:
+			strbuf = create_unicode_buffer(cast(src.lParam, c_wchar_p).value)
+			bufsize = sizeof(strbuf)
+			dst.lParam = windll.ole32.CoTaskMemAlloc(bufsize)
+			if not dst.lParam:
+				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
+			memmove(dst.lParam, byref(strbuf), bufsize)
+		elif src.elParamType in (_SPEventLParamType.TOKEN, _SPEventLParamType.OBJECT):
+			_Com_AddRef(cast(src.lParam, c_void_p))
+
+	def copyTo(self, dst: SPEVENT) -> None:
+		_SapiEvent.copy(dst, self)
+
+	def copyFrom(self, src: SPEVENT) -> None:
+		_SapiEvent.copy(self, src)
+
+	def getFrom(self, eventSource: _Pointer[ISpEventSource]) -> bool:
+		"""Get one event from the event source and store it in this object.
+		Return False if there is no event."""
+		self.clear()
+		# Use the raw ctypes.WINFUNCTYPE to call ISpEventSource::GetEvents()
+		# instead of using comtypes, because we want to retrieve the event in-place
+		# rather than letting comtypes allocating a new SPEVENT structure.
+		hr = _ISpEventSource_GetEvents(eventSource, 1, byref(self), None)
+		return hr == hresult.S_OK
+
+	@staticmethod
+	def enumerateFrom(eventSource: _Pointer[ISpEventSource]) -> Generator["_SapiEvent", None, None]:
+		"""Enumerate all events in the event source."""
+		while True:
+			event = _SapiEvent()
+			if not event.getFrom(eventSource):
+				break
+			yield event
+
+	def getString(self) -> str:
+		"""Get the string parameter stored in lParam."""
+		if self.elParamType != _SPEventLParamType.STRING:
+			raise TypeError("The lParam of this event is not a string")
+		return cast(self.lParam, c_wchar_p).value
 
 
 class SynthDriverAudioStream(COMObject):
@@ -91,9 +188,9 @@ class SynthDriverAudioStream(COMObject):
 	def ISequentialStream_RemoteWrite(
 		self,
 		this: int,
-		pv: LP_c_ubyte,
+		pv: _Pointer[c_ubyte],
 		cb: int,
-		pcbWritten: LP_c_ulong,
+		pcbWritten: _Pointer[c_ulong],
 	) -> int:
 		"""This is called when SAPI wants to write (output) a wave data chunk.
 		:param pv: A pointer to the first wave data byte.
@@ -123,7 +220,7 @@ class SynthDriverAudioStream(COMObject):
 		this: int,
 		dlibMove: _LARGE_INTEGER,
 		dwOrigin: int,
-		plibNewPosition: LP__ULARGE_INTEGER,
+		plibNewPosition: _Pointer[_ULARGE_INTEGER],
 	) -> int:
 		"""This is called when SAPI wants to get the current stream position.
 		Seeking to another position is not supported.
@@ -170,12 +267,7 @@ class SapiSink(COMObject):
 			return
 		# Get all queued events
 		eventSource = synth.tts.QueryInterface(ISpEventSource)
-		while True:
-			# returned tuple: (event, numFetched)
-			eventTuple = eventSource.GetEvents(1)  # Get one event
-			if eventTuple[1] != 1:
-				break
-			event = eventTuple[0]
+		for event in _SapiEvent.enumerateFrom(eventSource):
 			if event.eEventId == 1:  # SPEI_START_INPUT_STREAM
 				self.StartStream(event.ulStreamNum, event.ullAudioStreamOffset)
 			elif event.eEventId == 2:  # SPEI_END_INPUT_STREAM
@@ -184,15 +276,9 @@ class SapiSink(COMObject):
 				self.Bookmark(
 					event.ulStreamNum,
 					event.ullAudioStreamOffset,
-					cast(event.lParam, c_wchar_p).value,
+					event.getString(),
 					event.wParam,
 				)
-			# free lParam
-			if event.elParamType == 1 or event.elParamType == 2:  # token or object
-				pUnk = cast(event.lParam, POINTER(IUnknown))
-				del pUnk
-			elif event.elParamType == 3 or event.elParamType == 4:  # pointer or string
-				windll.ole32.CoTaskMemFree(event.lParam)
 
 	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
