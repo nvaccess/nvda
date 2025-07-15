@@ -280,9 +280,6 @@ def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: st
 	print("Done")
 
 
-_MSGFMT = r"miscDeps\tools\msgfmt.exe"
-
-
 class _PoChecker:
 	"""Checks a po file for errors not detected by msgfmt.
 	This first runs msgfmt to check for syntax errors.
@@ -364,6 +361,7 @@ class _PoChecker:
 		"""Check the syntax of the po file using msgfmt.
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
+		_MSGFMT = os.path.join(os.path.dirname(__file__), "..", "miscDeps", "tools", "msgfmt.exe")
 		result = subprocess.run(
 			(_MSGFMT, "-o", "-", self._poPath),
 			stdout=subprocess.DEVNULL,
