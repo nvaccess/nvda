@@ -583,8 +583,10 @@ class SynthDriver(SynthDriver):
 				# clear the queue
 				with self._threadCond:
 					self._speakRequests.clear()
-					self.sonicStream.flush()
-					self.sonicStream.readShort()  # discard data left in stream
+					self._bookmarkLists.clear()
+					if self.sonicStream:
+						self.sonicStream.flush()
+						self.sonicStream.readShort()  # discard data left in stream
 					self._isCancelling = False
 
 	def speak(self, speechSequence):
@@ -756,12 +758,12 @@ class SynthDriver(SynthDriver):
 				self._threadCond.notify()
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
-		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
-		if self._audioDucker:
-			if audioDucking._isDebug():
-				log.debug("Disabling audio ducking due to setting output audio state to stop")
-			self._audioDucker.disable()
-		self._bookmarkLists.clear()
+			self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+			if self._audioDucker:
+				if audioDucking._isDebug():
+					log.debug("Disabling audio ducking due to setting output audio state to stop")
+				self._audioDucker.disable()
+			self._bookmarkLists.clear()
 
 	def pause(self, switch: bool):
 		if self.player:
