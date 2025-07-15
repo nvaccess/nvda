@@ -5055,42 +5055,36 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
-		
-		
+
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
 		description=_("image caption using local model"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
-		gesture="kb:NVDA+windows+,"
+		gesture="kb:NVDA+windows+,",
 	)
 	def script_runCaption(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.runCaption(gesture)
-		
+
 	@scriptHandler.script(
 		# Translators: Description for the release model script
 		description=_("release local model"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
-		gesture="kb:NVDA+windows+shift+,"
+		gesture="kb:NVDA+windows+shift+,",
 	)
 	def script_releaseModel(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.releaseModel(gesture)
-		
+
 	@scriptHandler.script(
 		# Translators: Description for the open model manager script
 		description=_("open model manager"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
-		gesture="kb:NVDA+windows+control+,"
+		gesture="kb:NVDA+windows+control+,",
 	)
 	def script_openManager(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.openManager(gesture)
-		
-	
-
-
-
 
 
 #: The single global commands instance.

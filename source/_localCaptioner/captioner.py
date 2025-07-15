@@ -5,6 +5,7 @@ This module provides a lightweight image captioning solution using ONNX Runtime
 without PyTorch dependencies. It supports Vision Transformer (ViT) encoder and
 GPT-2 decoder models for generating descriptive captions from images.
 """
+
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2025 NV Access Limited, tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
@@ -12,7 +13,6 @@ GPT-2 decoder models for generating descriptive captions from images.
 from __future__ import unicode_literals
 
 import os
-import sys
 import json
 import re
 import io
@@ -24,17 +24,21 @@ from PIL import Image
 import onnxruntime as ort
 
 
-
 class ImageCaptioner:
 	"""Lightweight ONNX Runtime image captioning model.
-	
+
 	This class provides image captioning functionality using ONNX models
 	without PyTorch dependencies. It uses a Vision Transformer encoder
 	and GPT-2 decoder for generating captions.
 	"""
 
-	def __init__(self, encoder_path: str, decoder_path: str, config_path: str, 
-				 enableProfiling: bool = False) -> None:
+	def __init__(
+		self,
+		encoder_path: str,
+		decoder_path: str,
+		config_path: str,
+		enableProfiling: bool = False,
+	) -> None:
 		"""Initialize the lightweight ONNX image captioning model.
 
 		Args:
@@ -42,19 +46,19 @@ class ImageCaptioner:
 			decoder_path: Path to the GPT-2 decoder ONNX model.
 			config_path: Path to the configuration file (required).
 			enableProfiling: Whether to enable ONNX Runtime profiling.
-			
+
 		Raises:
 			FileNotFoundError: If config file is not found.
 			Exception: If model initialization fails.
 		"""
 		# Load configuration file
 		try:
-			with open(config_path, 'r', encoding='utf-8') as f:
+			with open(config_path, "r", encoding="utf-8") as f:
 				self.config = json.load(f)
 		except FileNotFoundError:
 			raise FileNotFoundError(
 				f"Caption model config file {config_path} not found, "
-				"please download models and config file first!"
+				"please download models and config file first!",
 			)
 		except Exception as e:
 			print(e)
@@ -62,7 +66,7 @@ class ImageCaptioner:
 
 		# Load vocabulary from vocab.json in the same directory as config
 		configDir = os.path.dirname(config_path)
-		vocabPath = os.path.join(configDir, 'vocab.json')
+		vocabPath = os.path.join(configDir, "vocab.json")
 		self.vocab = self._loadVocab(vocabPath)
 		self.vocabSize = len(self.vocab)
 
@@ -86,39 +90,39 @@ class ImageCaptioner:
 	def _loadModelParams(self) -> None:
 		"""Load all model parameters from configuration file."""
 		# Encoder parameters
-		encoderConfig = self.config.get('encoder', {})
-		self.imageSize = encoderConfig.get('image_size', 224)
-		self.numChannels = encoderConfig.get('num_channels', 3)
-		self.patchSize = encoderConfig.get('patch_size', 16)
-		self.encoderHiddenSize = encoderConfig.get('hidden_size', 768)
-		self.encoderNumLayers = encoderConfig.get('num_hidden_layers', 12)
-		self.encoderNumHeads = encoderConfig.get('num_attention_heads', 12)
-		self.encoderIntermediateSize = encoderConfig.get('intermediate_size', 3072)
+		encoderConfig = self.config.get("encoder", {})
+		self.imageSize = encoderConfig.get("image_size", 224)
+		self.numChannels = encoderConfig.get("num_channels", 3)
+		self.patchSize = encoderConfig.get("patch_size", 16)
+		self.encoderHiddenSize = encoderConfig.get("hidden_size", 768)
+		self.encoderNumLayers = encoderConfig.get("num_hidden_layers", 12)
+		self.encoderNumHeads = encoderConfig.get("num_attention_heads", 12)
+		self.encoderIntermediateSize = encoderConfig.get("intermediate_size", 3072)
 
 		# Decoder parameters
-		decoderConfig = self.config.get('decoder', {})
-		self.maxLength = decoderConfig.get('max_length', 20)
-		self.decoderVocabSize = decoderConfig.get('vocab_size', 50257)
-		self.nEmbd = decoderConfig.get('n_embd', 768)
-		self.nLayer = decoderConfig.get('n_layer', 12)
-		self.nHead = decoderConfig.get('n_head', 12)
-		self.nCtx = decoderConfig.get('n_ctx', 1024)
-		self.nPositions = decoderConfig.get('n_positions', 1024)
+		decoderConfig = self.config.get("decoder", {})
+		self.maxLength = decoderConfig.get("max_length", 20)
+		self.decoderVocabSize = decoderConfig.get("vocab_size", 50257)
+		self.nEmbd = decoderConfig.get("n_embd", 768)
+		self.nLayer = decoderConfig.get("n_layer", 12)
+		self.nHead = decoderConfig.get("n_head", 12)
+		self.nCtx = decoderConfig.get("n_ctx", 1024)
+		self.nPositions = decoderConfig.get("n_positions", 1024)
 
 		# Special token IDs
-		self.bosTokenId = self.config.get('bos_token_id', 50256)
-		self.eosTokenId = self.config.get('eos_token_id', 50256)
-		self.padTokenId = self.config.get('pad_token_id', 50256)
+		self.bosTokenId = self.config.get("bos_token_id", 50256)
+		self.eosTokenId = self.config.get("eos_token_id", 50256)
+		self.padTokenId = self.config.get("pad_token_id", 50256)
 
 		# Generation parameters
-		generationConfig = self.config.get('generation', {})
-		self.doSample = generationConfig.get('do_sample', False)
-		self.numBeams = generationConfig.get('num_beams', 1)
-		self.temperature = generationConfig.get('temperature', 1.0)
-		self.topK = generationConfig.get('top_k', 50)
-		self.topP = generationConfig.get('top_p', 1.0)
-		self.repetitionPenalty = generationConfig.get('repetition_penalty', 1.0)
-		self.lengthPenalty = generationConfig.get('length_penalty', 1.0)
+		generationConfig = self.config.get("generation", {})
+		self.doSample = generationConfig.get("do_sample", False)
+		self.numBeams = generationConfig.get("num_beams", 1)
+		self.temperature = generationConfig.get("temperature", 1.0)
+		self.topK = generationConfig.get("top_k", 50)
+		self.topP = generationConfig.get("top_p", 1.0)
+		self.repetitionPenalty = generationConfig.get("repetition_penalty", 1.0)
+		self.lengthPenalty = generationConfig.get("length_penalty", 1.0)
 
 	def _loadVocab(self, vocabPath: str) -> Dict[int, str]:
 		"""Load vocabulary file.
@@ -130,7 +134,7 @@ class ImageCaptioner:
 			Dictionary mapping token IDs to tokens.
 		"""
 		try:
-			with open(vocabPath, 'r', encoding='utf-8') as f:
+			with open(vocabPath, "r", encoding="utf-8") as f:
 				vocabData = json.load(f)
 
 			# Convert to id -> token format
@@ -149,27 +153,112 @@ class ImageCaptioner:
 
 	def _getFallbackVocab(self) -> Dict[int, str]:
 		"""Build a simplified fallback vocabulary.
-		
+
 		Returns:
 			Dictionary with basic vocabulary for fallback use.
 		"""
 		# Basic special tokens
 		vocab = {
-			50256: '<|endoftext|>',  # BOS/EOS/PAD token
-			50257: '<|pad|>',
+			50256: "<|endoftext|>",  # BOS/EOS/PAD token
+			50257: "<|pad|>",
 		}
 
 		# Common words (example set - would need complete vocabulary in practice)
 		commonWords = [
-			"a", "an", "the", "and", "or", "but", "in", "on", "at", "to", "for", "of", "with", "by",
-			"man", "woman", "person", "people", "child", "children", "boy", "girl", "dog", "cat",
-			"car", "truck", "bus", "bike", "motorcycle", "train", "plane", "boat", "house", "building",
-			"tree", "flower", "grass", "sky", "cloud", "sun", "moon", "water", "river", "ocean",
-			"red", "blue", "green", "yellow", "black", "white", "brown", "orange", "purple", "pink",
-			"big", "small", "tall", "short", "old", "young", "new", "beautiful", "ugly", "good", "bad",
-			"sitting", "standing", "walking", "running", "eating", "drinking", "playing", "working",
-			"is", "are", "was", "were", "has", "have", "had", "will", "would", "could", "should",
-			"very", "quite", "really", "too", "also", "just", "only", "even", "still", "already"
+			"a",
+			"an",
+			"the",
+			"and",
+			"or",
+			"but",
+			"in",
+			"on",
+			"at",
+			"to",
+			"for",
+			"of",
+			"with",
+			"by",
+			"man",
+			"woman",
+			"person",
+			"people",
+			"child",
+			"children",
+			"boy",
+			"girl",
+			"dog",
+			"cat",
+			"car",
+			"truck",
+			"bus",
+			"bike",
+			"motorcycle",
+			"train",
+			"plane",
+			"boat",
+			"house",
+			"building",
+			"tree",
+			"flower",
+			"grass",
+			"sky",
+			"cloud",
+			"sun",
+			"moon",
+			"water",
+			"river",
+			"ocean",
+			"red",
+			"blue",
+			"green",
+			"yellow",
+			"black",
+			"white",
+			"brown",
+			"orange",
+			"purple",
+			"pink",
+			"big",
+			"small",
+			"tall",
+			"short",
+			"old",
+			"young",
+			"new",
+			"beautiful",
+			"ugly",
+			"good",
+			"bad",
+			"sitting",
+			"standing",
+			"walking",
+			"running",
+			"eating",
+			"drinking",
+			"playing",
+			"working",
+			"is",
+			"are",
+			"was",
+			"were",
+			"has",
+			"have",
+			"had",
+			"will",
+			"would",
+			"could",
+			"should",
+			"very",
+			"quite",
+			"really",
+			"too",
+			"also",
+			"just",
+			"only",
+			"even",
+			"still",
+			"already",
 		]
 
 		# Add common words to vocabulary
@@ -180,7 +269,7 @@ class ImageCaptioner:
 		print(f"Built fallback vocabulary with {len(vocab)} tokens")
 		return vocab
 
-	def preprocessImage(self, image: str| bytes) -> np.ndarray:
+	def preprocessImage(self, image: str | bytes) -> np.ndarray:
 		"""Preprocess image for model input.
 
 		Args:
@@ -190,9 +279,9 @@ class ImageCaptioner:
 			Preprocessed image array ready for model input.
 		"""
 		if isinstance(image, str):
-			img = Image.open(image).convert('RGB')
+			img = Image.open(image).convert("RGB")
 		else:
-			img = Image.open(io.BytesIO(image)).convert('RGB')
+			img = Image.open(io.BytesIO(image)).convert("RGB")
 
 		# Resize image
 		img = img.resize((self.imageSize, self.imageSize), Image.LANCZOS)
@@ -243,21 +332,21 @@ class ImageCaptioner:
 		for tokenId in tokenIds:
 			if tokenId in self.vocab:
 				token = self.vocab[tokenId]
-				if token not in ['<|endoftext|>', '<|pad|>']:
+				if token not in ["<|endoftext|>", "<|pad|>"]:
 					tokens.append(token)
 
 		# Simple text post-processing
-		text = ' '.join(tokens).replace("Ġ", " ")
+		text = " ".join(tokens).replace("Ġ", " ")
 
 		# Basic text cleaning
-		text = re.sub(r'\s+', ' ', text)  # Merge multiple spaces
+		text = re.sub(r"\s+", " ", text)  # Merge multiple spaces
 		text = text.strip()
 
 		return text
 
 	def getDecoderInputNames(self) -> List[str]:
 		"""Get decoder input names for debugging.
-		
+
 		Returns:
 			List of decoder input names.
 		"""
@@ -265,7 +354,7 @@ class ImageCaptioner:
 
 	def getDecoderOutputNames(self) -> List[str]:
 		"""Get decoder output names for debugging.
-		
+
 		Returns:
 			List of decoder output names.
 		"""
@@ -305,13 +394,16 @@ class ImageCaptioner:
 			keyShape = (batchSize, self.nHead, 0, headDim)
 			valueShape = (batchSize, self.nHead, 0, headDim)
 
-			pastKeyValues[f'past_key_values.{layerIdx}.key'] = np.zeros(keyShape, dtype=np.float32)
-			pastKeyValues[f'past_key_values.{layerIdx}.value'] = np.zeros(valueShape, dtype=np.float32)
+			pastKeyValues[f"past_key_values.{layerIdx}.key"] = np.zeros(keyShape, dtype=np.float32)
+			pastKeyValues[f"past_key_values.{layerIdx}.value"] = np.zeros(valueShape, dtype=np.float32)
 
 		return pastKeyValues
 
-	def generateWithGreedy(self, encoderHiddenStates: np.ndarray, 
-						   maxLength: int |None = None) -> str:
+	def generateWithGreedy(
+		self,
+		encoderHiddenStates: np.ndarray,
+		maxLength: int | None = None,
+	) -> str:
 		"""Generate text using greedy search.
 
 		Args:
@@ -334,8 +426,8 @@ class ImageCaptioner:
 		for step in range(maxLength):
 			# Prepare decoder inputs
 			decoderInputs = {
-				'input_ids': inputIds if step == 0 else np.array([[generatedTokens[-1]]], dtype=np.int64),
-				'encoder_hidden_states': encoderHiddenStates,
+				"input_ids": inputIds if step == 0 else np.array([[generatedTokens[-1]]], dtype=np.int64),
+				"encoder_hidden_states": encoderHiddenStates,
 				"use_cache_branch": np.array([1], dtype=np.bool_),
 			}
 
@@ -360,8 +452,10 @@ class ImageCaptioner:
 			if len(decoderOutputs) > 1:
 				for layerIdx in range(self.nLayer):
 					if len(decoderOutputs) > 1 + layerIdx * 2 + 1:
-						pastKeyValues[f'past_key_values.{layerIdx}.key'] = decoderOutputs[1 + layerIdx * 2]
-						pastKeyValues[f'past_key_values.{layerIdx}.value'] = decoderOutputs[1 + layerIdx * 2 + 1]
+						pastKeyValues[f"past_key_values.{layerIdx}.key"] = decoderOutputs[1 + layerIdx * 2]
+						pastKeyValues[f"past_key_values.{layerIdx}.value"] = decoderOutputs[
+							1 + layerIdx * 2 + 1
+						]
 
 			# Avoid sequences that are too long
 			if len(generatedTokens) >= self.nCtx - 1:
@@ -372,18 +466,21 @@ class ImageCaptioner:
 
 	def _softmax(self, x: np.ndarray) -> np.ndarray:
 		"""Compute softmax activation.
-		
+
 		Args:
 			x: Input array.
-			
+
 		Returns:
 			Softmax-activated array.
 		"""
 		expX = np.exp(x - np.max(x))
 		return expX / np.sum(expX)
 
-	def generate_caption(self, image: str| bytes, 
-						 maxLength: int| None = None) -> str:
+	def generate_caption(
+		self,
+		image: str | bytes,
+		maxLength: int | None = None,
+	) -> str:
 		"""Generate image caption.
 
 		Args:
@@ -405,8 +502,11 @@ class ImageCaptioner:
 		return caption
 
 
-def benchmarkInference(captioner: ImageCaptioner, 
-					   imagePath: str, numRuns: int = 5) -> None:
+def benchmarkInference(
+	captioner: ImageCaptioner,
+	imagePath: str,
+	numRuns: int = 5,
+) -> None:
 	"""Benchmark inference performance.
 
 	Args:
@@ -425,7 +525,7 @@ def benchmarkInference(captioner: ImageCaptioner,
 		captioner.generate_caption(imagePath)
 	greedyTime = (time.time() - startTime) / numRuns
 
-	print(f"Average inference time:")
+	print("Average inference time:")
 	print(f"  Greedy search: {greedyTime:.3f}s")
 
 
@@ -436,7 +536,7 @@ def main() -> None:
 		encoder_path="../../models/Xenova/vit-gpt2-image-captioning/onnx/encoder_model_quantized.onnx",
 		decoder_path="../../models/Xenova/vit-gpt2-image-captioning/onnx/decoder_model_merged_quantized.onnx",
 		config_path="../../models/Xenova/vit-gpt2-image-captioning/config.json",
-		enableProfiling=True
+		enableProfiling=True,
 	)
 
 	print("=== Single Image Caption ===")
@@ -444,7 +544,6 @@ def main() -> None:
 	caption1 = captioner.generate_caption(image=imagePath)
 	print(f"result: {caption1}")
 	benchmarkInference(captioner=captioner, imagePath=imagePath)
-
 
 
 if __name__ == "__main__":
