@@ -284,6 +284,7 @@ freeze(
 		("fonts", glob("fonts/*.ttf")),
 		("louis/tables", glob("louis/tables/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
+		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ["message.html"]),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
