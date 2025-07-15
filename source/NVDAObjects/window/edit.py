@@ -32,6 +32,8 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+import NVDAHelper.localLib
+
 
 selOffsetsAtLastCaretEvent = None
 
@@ -830,6 +832,26 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			locationHelper.RectLTRB(left, top, right, bottom),
 		).text
 		if label and not label.isspace():
+			return label
+		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
+		text = comtypes.BSTR()
+		try:
+			NVDAHelper.localLib.getOleClipboardText(o, ctypes.byref(text))
+		except WindowsError:
+			pass
+		else:
+			label = text.value
+		if label:
+			return label
+		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
+		userType = comtypes.BSTR()
+		try:
+			NVDAHelper.localLib.getOleUserType(o, 0, ctypes.byref(userType))
+		except WindowsError:
+			pass
+		else:
+			label = userType.value
+		if label:
 			return label
 
 	def _getTextAtRange(self, rangeObj):

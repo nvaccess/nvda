@@ -397,8 +397,16 @@ VBuf_locateControlFieldNodeAtOffset.argtypes = (
 getOleClipboardText = dll.getOleClipboardText
 getOleClipboardText.restype = HRESULT
 getOleClipboardText.argtypes = (
-	c_void_p,  # IDataObject* dataObject
-	POINTER(c_wchar_p),  # BSTR* text
+	POINTER(IUnknown),  # object that supports IDataObject
+	POINTER(BSTR),  # BSTR* text
+)
+
+getOleUserType = dll.getOleUserType
+getOleUserType.restype = HRESULT
+getOleUserType.argtypes = (
+	POINTER(IUnknown),  # object supporting IOLEObject
+	DWORD,  # dwFlags
+	POINTER(BSTR),  # BSTR* userType
 )
 
 audioDucking_shouldDelay = dll.audioDucking_shouldDelay
