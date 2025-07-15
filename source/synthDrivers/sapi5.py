@@ -27,16 +27,23 @@ import threading
 from typing import TYPE_CHECKING, NamedTuple, Generator
 import audioDucking
 from comInterfaces.SpeechLib import (
+	_LARGE_INTEGER,
+	_ULARGE_INTEGER,
+	GUID,
+	ISpAudio,
 	ISpEventSource,
+	ISpEventSink,
 	ISpNotifySource,
 	ISpNotifySink,
+	ISpVoice,
+	SPAUDIOSTATE,
 	SPEVENT,
+	WAVEFORMATEX,
 )
 import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult
 import winreg
 import nvwave
-from objidl import _LARGE_INTEGER, _ULARGE_INTEGER, IStream
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 from logHandler import log
@@ -105,6 +112,8 @@ class _SPEventLParamType(IntEnum):
 _Com_AddRef = WINFUNCTYPE(c_ulong)(1, "AddRef")
 _Com_Release = WINFUNCTYPE(c_ulong)(2, "Release")
 _ISpEventSource_GetEvents = WINFUNCTYPE(HRESULT, c_ulong, POINTER(SPEVENT), POINTER(c_ulong))(11, "GetEvents")
+
+SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
 
 
 class _SapiEvent(SPEVENT):
@@ -179,11 +188,15 @@ class SynthDriverAudioStream(COMObject):
 	then set as the AudioOutputStream.
 	"""
 
-	_com_interfaces_ = [IStream]
+	_com_interfaces_ = [ISpAudio, ISpEventSource, ISpEventSink]
 
 	def __init__(self, synthRef: weakref.ReferenceType["SynthDriver"]):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
+		self.waveFormat = WAVEFORMATEX()
+		self._writeDefaultFormat(self.waveFormat)
+		self._events: deque[_SapiEvent] = deque()
+		self._notifySink = None
 
 	def ISequentialStream_RemoteWrite(
 		self,
@@ -232,10 +245,10 @@ class SynthDriverAudioStream(COMObject):
 			Can be null.
 		:returns: HRESULT code.
 		"""
-		if dwOrigin == 1 and dlibMove.QuadPart == 0:
+		if dwOrigin == 1 and dlibMove == 0:
 			# SAPI is querying the current position.
 			if plibNewPosition:
-				plibNewPosition[0].QuadPart = self._writtenBytes
+				plibNewPosition[0] = self._writtenBytes
 			return hresult.S_OK
 		return hresult.E_NOTIMPL
 
@@ -243,6 +256,80 @@ class SynthDriverAudioStream(COMObject):
 		"""This is called when MSSP wants to flush the written data.
 		Does nothing."""
 		pass
+
+	def ISpStreamFormat_GetFormat(self, pguidFormatId: _Pointer[GUID]) -> _Pointer[WAVEFORMATEX]:
+		# pguidFormatId is actually an out parameter
+		pguidFormatId.contents = SPDFID_WaveFormatEx
+		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		if not pwfx:
+			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
+		memmove(pwfx, byref(self.waveFormat), sizeof(WAVEFORMATEX))
+		return pwfx
+
+	def ISpAudio_SetState(self, NewState: SPAUDIOSTATE, ullReserved: int):
+		pass
+
+	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
+		if rguidFmtId.contents != SPDFID_WaveFormatEx:
+			return
+		memmove(byref(self.waveFormat), pWaveFormatEx, sizeof(WAVEFORMATEX))
+		# Force the wave format to be 16-bit integer (which Sonic uses internally).
+		# SAPI will convert the format for us if it isn't supported by the voice.
+		wfx = self.waveFormat
+		wfx.wFormatTag = nvwave.WAVE_FORMAT_PCM
+		wfx.cbSize = 0
+		if wfx.nChannels > 2:
+			wfx.nChannels = 2
+		wfx.wBitsPerSample = 16
+		wfx.nBlockAlign = wfx.nChannels * 2
+		wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign
+
+	@staticmethod
+	def _writeDefaultFormat(wfx: WAVEFORMATEX) -> None:
+		# default format: 48kHz 16-bit stereo
+		wfx.wFormatTag = nvwave.WAVE_FORMAT_PCM
+		wfx.cbSize = 0
+		wfx.nChannels = 2
+		wfx.nSamplesPerSec = 48000
+		wfx.wBitsPerSample = 16
+		wfx.nBlockAlign = 4
+		wfx.nAvgBytesPerSec = 48000 * 4
+
+	def ISpAudio_GetDefaultFormat(self) -> tuple[GUID, _Pointer[WAVEFORMATEX]]:
+		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		if not pwfx:
+			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
+		self._writeDefaultFormat(pwfx.contents)
+		return (SPDFID_WaveFormatEx, pwfx)
+
+	def ISpAudio_EventHandle(self) -> c_void_p:
+		return None
+
+	def ISpNotifySource_SetNotifySink(self, pNotifySink: _Pointer[ISpNotifySink]):
+		self._notifySink = pNotifySink
+
+	def ISpNotifySource_GetNotifyEventHandle(self) -> c_void_p:
+		return None
+
+	def ISpEventSource_SetInterest(self, ullEventInterest: int, ullQueuedInterest: int):
+		pass
+
+	def ISpEventSource_GetEvents(
+		self, this: int, ulCount: int, pEventArray: _Pointer[SPEVENT], pulFetched: _Pointer[c_ulong]
+	):
+		countToFetch = min(ulCount, len(self._events))
+		if pulFetched:
+			pulFetched[0] = countToFetch
+		for i in range(countToFetch):
+			self._events.popleft().copyTo(pEventArray[i])
+
+	def ISpEventSink_AddEvents(self, pEventArray: _Pointer[SPEVENT], ulCount: int):
+		for i in range(ulCount):
+			event = _SapiEvent()
+			event.copyFrom(pEventArray[i])
+			self._events.append(event)
+		if self._notifySink:
+			self._notifySink.Notify()
 
 
 class SapiSink(COMObject):
@@ -497,40 +584,21 @@ class SynthDriver(SynthDriver):
 		self._volume = value
 		self.tts.Volume = value
 
-	def _initAudioDevice(self):
-		# SAPI5 automatically selects the system default audio device, so there's no use doing work if the user has selected to use the system default.
-		# Besides, our default value is not a valid endpoint ID.
-		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
-			("audio", "outputDevice"),
-		).default:
-			for audioOutput in self.tts.GetAudioOutputs():
-				# SAPI's audio output IDs are registry keys. It seems that the final path segment is the endpoint ID.
-				if audioOutput.Id.endswith(outputDevice):
-					self.tts.audioOutput = audioOutput
-					break
-
 	def _initWasapiAudio(self):
-		fmt = self.tts.AudioOutputStream.Format
-		wfx = fmt.GetWaveFormatEx()
-		# Force the wave format to be 16-bit integer (which Sonic uses internally).
-		# SAPI will convert the format for us if it isn't supported by the voice.
-		wfx.FormatTag = nvwave.WAVE_FORMAT_PCM
-		wfx.BitsPerSample = 16
-		fmt.SetWaveFormatEx(wfx)
+		audioObject = SynthDriverAudioStream(weakref.ref(self))
+		spVoice = self.tts.QueryInterface(ISpVoice)
+		spVoice.SetOutput(audioObject, True)
+		wfx = audioObject.waveFormat
+
 		self.player = nvwave.WavePlayer(
-			channels=wfx.Channels,
-			samplesPerSec=wfx.SamplesPerSec,
-			bitsPerSample=wfx.BitsPerSample,
+			channels=wfx.nChannels,
+			samplesPerSec=wfx.nSamplesPerSec,
+			bitsPerSample=wfx.wBitsPerSample,
 			outputDevice=config.conf["audio"]["outputDevice"],
 		)
-		audioStream = SynthDriverAudioStream(weakref.ref(self))
-		# Use SpCustomStream to wrap our IStream implementation and the correct wave format
-		customStream = comtypes.client.CreateObject(self.CUSTOMSTREAM_COM_CLASS)
-		customStream.BaseStream = audioStream
-		customStream.Format = fmt
-		self.tts.AudioOutputStream = customStream
+
 		sonicInitialize()
-		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
+		self.sonicStream = SonicStream(wfx.nSamplesPerSec, wfx.nChannels)
 
 	def _initLegacyAudio(self):
 		if audioDucking.isAudioDuckingSupported():
@@ -559,7 +627,6 @@ class SynthDriver(SynthDriver):
 		self.ttsAudioStream = None
 		self._audioDucker = None
 
-		self._initAudioDevice()
 		if self.useWasapi:
 			self._initWasapiAudio()
 		else:
