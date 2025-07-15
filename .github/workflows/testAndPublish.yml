@@ -75,6 +75,35 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
 
+  checkPo:
+    name: Check po files for errors
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        # Include gettext
+        submodules: true
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v6
+    - name: Run pre-commit
+      run: |
+        # Run pre-commit on the translations
+        pre-commit run checkPo --all-files
+    - name: Add job summary
+      if: ${{ failure() }}
+      shell: bash
+      run: |
+        echo "PO files contain errors. Please fix them before merging." >> $GITHUB_STEP_SUMMARY
+
   checkPot:
     name: Check translator comments
     runs-on: windows-latest
@@ -362,7 +391,7 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    needs: [checkPot, licenseCheck, unitTests, systemTests, createSymbols]
+    needs: [checkPot, checkPo, licenseCheck, unitTests, systemTests, createSymbols]
     if: startsWith(github.ref_name, 'release-')
     steps:
     - name: Get normalized tag names

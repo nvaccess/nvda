@@ -9,7 +9,7 @@ ci:
   # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
   # Can't run licenseCheck as it relies on telemetry,
   # which CI blocks.
-  skip: [scons-source, checkPot, unitTest, licenseCheck, pyrightLocal]
+  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyrightLocal]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
@@ -135,6 +135,11 @@ repos:
 
 - repo: local
   hooks:
+    - id: checkPo
+      name: Check po files
+      entry: uv run source/l10nUtil.py checkPo
+      language: python
+      types: [pofile]
     - id: scons-source
       name: build c/c++ files
       entry: cmd.exe /c "scons source --all-cores"
