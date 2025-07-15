@@ -15,6 +15,7 @@ import Pyro5.api
 from logHandler import log
 from processManager import ProcessConfig, SubprocessManager
 
+from .core.services.braille import BrailleService
 from .core.services.config import ConfigService
 from .core.services.globalVars import GlobalVarsService
 from .core.services.languageHandler import LanguageHandlerService
@@ -215,6 +216,7 @@ class ARTManager:
 		self.addonProcesses: Dict[str, ARTAddonProcess] = {}
 		self.coreDaemon: Optional[Pyro5.api.Daemon] = None
 		self.coreDaemonThread: Optional[threading.Thread] = None
+		self.brailleService: Optional[BrailleService] = None
 		self.configService: Optional[ConfigService] = None
 		self.loggingService: Optional[LoggingService] = None
 		self.globalVarsService: Optional[GlobalVarsService] = None
@@ -239,6 +241,7 @@ class ARTManager:
 		"""Register core services that run in NVDA process."""
 		self.coreDaemon = Pyro5.api.Daemon(host="127.0.0.1", port=0)
 
+		self.brailleService = BrailleService()
 		self.configService = ConfigService()
 		self.loggingService = LoggingService()
 		self.globalVarsService = GlobalVarsService()
@@ -247,6 +250,7 @@ class ARTManager:
 		self.uiService = UIService()
 		self.speechService = SpeechService()  # Add this line
 
+		braille_uri = self.coreDaemon.register(self.brailleService, "nvda.core.braille")
 		config_uri = self.coreDaemon.register(self.configService, "nvda.core.config")
 		logging_uri = self.coreDaemon.register(self.loggingService, "nvda.core.logging")
 		globalvars_uri = self.coreDaemon.register(self.globalVarsService, "nvda.core.globalvars")
@@ -256,6 +260,7 @@ class ARTManager:
 		speech_uri = self.coreDaemon.register(self.speechService, "nvda.core.speech")
 
 		# Store URIs for later retrieval
+		self._coreServiceURIs["braille"] = str(braille_uri)
 		self._coreServiceURIs["config"] = str(config_uri)
 		self._coreServiceURIs["logging"] = str(logging_uri)
 		self._coreServiceURIs["globalvars"] = str(globalvars_uri)
@@ -264,6 +269,7 @@ class ARTManager:
 		self._coreServiceURIs["ui"] = str(ui_uri)
 		self._coreServiceURIs["speech"] = str(speech_uri)
 
+		log.info(f"BrailleService registered at: {braille_uri}")
 		log.info(f"ConfigService registered at: {config_uri}")
 		log.info(f"LoggingService registered at: {logging_uri}")
 		log.info(f"GlobalVarsService registered at: {globalvars_uri}")
