@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 04:27+0000\n"
-"PO-Revision-Date: 2025-07-07 23:53\n"
+"POT-Creation-Date: 2025-07-15 01:41+0000\n"
+"PO-Revision-Date: 2025-07-15 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -1342,22 +1342,22 @@ msgstr "não existe texto antes do bloco de links"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1033
 msgid "moves to the next landmark"
-msgstr "move para a secção seguinte"
+msgstr "move para a seção seguinte"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1035
 msgid "no next landmark"
-msgstr "não existe secção seguinte"
+msgstr "não existe seção seguinte"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1037
 msgid "moves to the previous landmark"
-msgstr "move para a secção anterior"
+msgstr "move para a seção anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1039
 msgid "no previous landmark"
-msgstr "não existe secção anterior"
+msgstr "não existe seção anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1046
@@ -1691,7 +1691,7 @@ msgstr "&botões"
 #. in the browse mode Elements List dialog.
 #: browseMode.py:1248
 msgid "Lan&dmarks"
-msgstr "&Secções"
+msgstr "&Seções"
 
 #. Translators: The title of the browse mode Elements List dialog.
 #: browseMode.py:1261
@@ -1775,17 +1775,17 @@ msgstr "Não suportado neste documento."
 #. Translators: input help message for toggle native selection command
 #: browseMode.py:2633
 msgid "Toggles native selection mode on and off"
-msgstr "Activa e desactiva o modo de seleção nativa"
+msgstr "Ativa e desativa o modo de seleção nativa"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2639
 msgid "Native selection mode unsupported in this browse mode document"
-msgstr "Modo de selecção nativo não suportado neste documento em modo de navegação"
+msgstr "Modo de seleção nativo não suportado neste documento em modo de navegação"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2642
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr "O modo de selecção nativo não pode ser desactivado neste documento em modo de navegação"
+msgstr "O modo de seleção nativo não pode ser desativado neste documento em modo de navegação"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2654
@@ -1795,12 +1795,12 @@ msgstr "Modo de seleção nativo não suportado neste documento"
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2658
 msgid "Native app selection mode enabled"
-msgstr "Modo de selecção nativo da aplicação activado"
+msgstr "Modo de seleção nativo da aplicação activado"
 
 #. Translators: reported when native selection mode is toggled off.
 #: browseMode.py:2666
 msgid "Native app selection mode disabled"
-msgstr "Modo de selecção nativo da aplicação desactivado"
+msgstr "Modo de seleção nativo da aplicação desactivado"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:171
@@ -2107,28 +2107,28 @@ msgid "brown-yellow"
 msgstr "cCastanho amarelado"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:85
+#: core.py:87
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "A actualização do seguinte extra falhou: {}."
 msgstr[1] "A actualização dos seguintes extras falhou: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:94
+#: core.py:96
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "A remoção do seguinte extra falhou: {}."
 msgstr[1] "A remoção dos seguintes extras falhou: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:103
+#: core.py:105
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Não foi possível instalar o seguinte extra: {}."
 msgstr[1] "Não foi possível instalar os seguintes extras: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
-#: core.py:116
+#: core.py:118
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{}"
 msgstr "Algumas operações sobre os extras falharam. Veja o ficheiro de registo para mais detalhes.\n"
@@ -2161,7 +2161,7 @@ msgstr "Algumas operações sobre os extras falharam. Veja o ficheiro de registo
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
+#: core.py:121 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
 #: updateCheck.py:928 gui\__init__.py:238 gui\__init__.py:246
 #: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
 #: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:217
@@ -2179,46 +2179,46 @@ msgid "Error"
 msgstr "Erro"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:149
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Os seguintes parâmetros de linha de comando são desconhecidos para o NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:154
 msgid "Unknown command line parameters"
 msgstr "Parâmetros de linha de comando desconhecidos"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:163
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "O seu ficheiro de configurações contém erros. A sua configuração foi restaurada para os valores de fábrica.\n"
 "Mais informações sobre os erros podem ser encontrados no ficheiro de registo."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:168
 msgid "Configuration File Error"
 msgstr "Erro no ficheiro de configurações"
 
-#: core.py:184
+#: core.py:186
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "O seu ficheiro de mapa de comandos contém erros.\n"
 "Mais informações sobre os erros no ficheiro de registo."
 
-#: core.py:187
+#: core.py:189
 msgid "gesture map File Error"
 msgstr "erro no ficheiro de mapa de comandos"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:792
+#: core.py:799
 msgid "Loading NVDA. Please wait..."
 msgstr "A carregar o NVDA. Por favor aguarde..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:934
+#: core.py:941
 msgid "NVDA started"
 msgstr "NVDA iniciado"
 
@@ -2274,7 +2274,7 @@ msgstr "localiza a ocorrência anterior do texto escrito previamente apartir da 
 #: cursorManager.py:541 globalCommands.py:132 globalCommands.py:400
 #: appModules\eclipse.py:69
 msgid "No selection"
-msgstr "Sem selecção"
+msgstr "Sem seleção"
 
 #. Translators: Abbreviation for points, a measurement of font size.
 #: displayModel.py:576 appModules\powerpnt.py:1223 appModules\soffice.py:99
@@ -4739,7 +4739,7 @@ msgstr "Anuncia o idioma do texto sob o cursor. Se pressionado duas vezes, apres
 #: globalCommands.py:4952
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Idioma Desconhecido"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4963
@@ -7243,27 +7243,36 @@ msgid "Failed to install add-on from %s"
 msgstr "Falha ao instalar o extra de %s"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
-#: addonStore\network.py:243
+#: addonStore\network.py:251
 msgctxt "addonStore"
 msgid "Add-on download failure"
 msgstr "Falha na transferência do extra"
 
+#. Translators: A message to the user if an add-on download fails.
+#. url is replaced with the base URL of the add-on download e.g. (github.com).
+#. fingerprint is replaced with the SHA256 fingerprint of the certificate.
+#: addonStore\network.py:271
+#, python-brace-format
+msgctxt "addonStore"
+msgid "The website where you are downloading the add-on from has a certificate that is not trusted. Do you want to trust the root certificate for {url}? This will allow you to download add-ons from this website in the future. Only do this if you trust the website. The certificate's SHA256 fingerprint is: {fingerprint}. "
+msgstr ""
+
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:266
+#: addonStore\network.py:291 addonStore\network.py:322
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
 msgstr "Não é possível transferir o extra: {name}"
 
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:276
+#: addonStore\network.py:332
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
 msgstr "Não é possível guardar o extra como um ficheiro: {name}"
 
 #. Translators: A message to the user if an add-on download is not safe
-#: addonStore\network.py:288
+#: addonStore\network.py:344
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
@@ -12963,7 +12972,7 @@ msgstr "Alterar o dialecto automaticamente (quando suportado)"
 #: gui\settingsDialogs.py:1712
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Anunciar alterações de &idioma ao ler"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
