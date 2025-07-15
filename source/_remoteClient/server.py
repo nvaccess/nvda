@@ -33,6 +33,7 @@ from pathlib import Path
 from select import select
 from itertools import count
 from typing import Any, Final
+from unittest import mock
 
 import cffi  # noqa # required for cryptography
 from cryptography import x509
@@ -294,7 +295,13 @@ class LocalRelayServer:
 		"""
 		serverSocket = socket.socket(family, type)
 		sslContext = self.certManager.createSSLContext()
-		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
+
+		# Prevent pip_system_certs from patching wrap_socket due to a bug.
+		with mock.patch(
+			"pip._vendor.truststore._api._verify_peercerts",
+			lambda *a, **kw: None,
+		):
+			serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bindAddress)
 		serverSocket.listen(5)  # Set the maximum number of queued connections
 		return serverSocket

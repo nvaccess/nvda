@@ -271,6 +271,11 @@ freeze(
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
+		# Include the developer guide HTML file if it has been built.
+		(
+			"documentation",
+			[file for file in ["../output/devDocs/developerGuide.html"] if os.path.isfile(file)],
+		),
 		("lib/%s" % version, glob("lib/*.dll") + glob("lib/*.manifest")),
 		("lib64/%s" % version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("libArm64/%s" % version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
@@ -312,7 +317,6 @@ freeze(
 				"*/user_docs/styles.css",
 				"*/user_docs/numberedHeadings.css",
 				"*/user_docs/favicon.ico",
-				"*/developerGuide.*",
 			),
 		)
 	),

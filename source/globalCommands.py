@@ -31,7 +31,6 @@ import speech
 from speech import (
 	sayAll,
 	shortcutKeys,
-	languageHandling,
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
@@ -2330,14 +2329,11 @@ class GlobalCommands(ScriptableObject):
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 
-	def _getCurrentLanguageForTextInfo(self, info):
+	def _getCurrentLanguageForTextInfo(self, info: textInfos.TextInfo):
 		curLanguage = None
-		if languageHandling.shouldMakeLangChangeCommand():
-			for field in info.getTextWithFields({}):
-				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-					curLanguage = field.field.get("language")
-		if curLanguage is None:
-			curLanguage = speech.getCurrentLanguage()
+		for field in info.getTextWithFields({}):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+				curLanguage = field.field.get("language")
 		return curLanguage
 
 	@script(
@@ -2353,6 +2349,8 @@ class GlobalCommands(ScriptableObject):
 		info = api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
 		text = info.text
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		if expandedSymbol == text:
@@ -4944,23 +4942,28 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
 		info = self._getTIAtCaret()
+		if info is None:
+			log.debugWarning("No caret")
+			return
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
-		langToReport = languageHandling.getLangToReport(curLanguage)
-		languageDescription = languageHandler.getLanguageDescription(langToReport)
+		if curLanguage is None:
+			# Translators: Reported when the language of the text at caret is not defined.
+			languageDescription = pgettext("reportLanguage", "Unknown language")
+		else:
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
-			languageDescription = langToReport
+			languageDescription = curLanguage
 		message = languageDescription
-		if languageHandling.shouldReportNotSupported():
-			curSynth = synthDriverHandler.getSynth()
-			if not curSynth.languageIsSupported(langToReport):
-				message = pgettext(
-					"reportLanguage",
-					# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-					"{languageDescription} (not supported)",
-				).format(
-					languageDescription=languageDescription,
-				)
+		curSynth = synthDriverHandler.getSynth()
+		if not curSynth.languageIsSupported(curLanguage):
+			message = pgettext(
+				"reportLanguage",
+				# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+				"{languageDescription} (not supported)",
+			).format(
+				languageDescription=languageDescription,
+			)
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(message)
