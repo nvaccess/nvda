@@ -203,11 +203,15 @@ class SapiSink(COMObject):
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
-		if synth._isCancelling or not synth.player:
+		if synth._isCancelling:
 			return
-		# Bookmark event is raised before the audio after that point.
-		# Queue an IndexReached event at this point.
-		synth.player.feed(None, 0, lambda: self.onIndexReached(streamNum, bookmarkId))
+		if synth.player:
+			# Bookmark event is raised before the audio after that point.
+			# Queue an IndexReached event at this point.
+			synth.player.feed(None, 0, lambda: self.onIndexReached(streamNum, bookmarkId))
+		else:
+			# Bookmark notifications should be sent immediately when WASAPI is off.
+			self.onIndexReached(streamNum, bookmarkId)
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
