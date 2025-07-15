@@ -24,7 +24,7 @@ Support for cursor routing with the point and click action on the Humanware Mona
 LibLouis has been updated, adding new Biblical Hebrew, Russian 6 dot computer braille and Thai Grade 2 braille tables.
 eSpeak NG has been updated, adding support for Aromanian, Crimean Tatar, Mongolian, and Pashto.
 
-There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, Google Chrome.
+There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, and Google Chrome.
 
 ### New Features
 
