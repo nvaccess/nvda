@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 04:27+0000\n"
-"PO-Revision-Date: 2025-07-07 23:52\n"
+"POT-Creation-Date: 2025-07-15 01:41+0000\n"
+"PO-Revision-Date: 2025-07-15 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2107,7 +2107,7 @@ msgid "brown-yellow"
 msgstr "hnědožlutá"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:85
+#: core.py:87
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Nezdařilo se aktualizovat následující doplněk: {}."
@@ -2116,7 +2116,7 @@ msgstr[2] "Nezdařilo se aktualizovat následující doplňky: {}."
 msgstr[3] "Nezdařilo se aktualizovat následující doplňky: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:94
+#: core.py:96
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Nezdařilo se odinstalovat následující doplněk: {}."
@@ -2125,7 +2125,7 @@ msgstr[2] "Nezdařilo se odinstalovat následující doplňky: {}."
 msgstr[3] "Nezdařilo se odinstalovat následující doplňky: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:103
+#: core.py:105
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Nezdařilo se nainstalovat následující doplněk: {}."
@@ -2134,7 +2134,7 @@ msgstr[2] "Nezdařilo se nainstalovat následující doplňky: {}."
 msgstr[3] "Nezdařilo se nainstalovat následující doplňky: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
-#: core.py:116
+#: core.py:118
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{}"
 msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete v protokolu.\n"
@@ -2167,7 +2167,7 @@ msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete 
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
+#: core.py:121 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
 #: updateCheck.py:928 gui\__init__.py:238 gui\__init__.py:246
 #: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
 #: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:217
@@ -2185,46 +2185,46 @@ msgid "Error"
 msgstr "Chyba"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:149
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Následující parametry jsou pro NVDA neznámé: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:154
 msgid "Unknown command line parameters"
 msgstr "Neznámé parametry příkazového řádku"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:163
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Konfigurační soubor s nastavením NVDA obsahuje chyby. Vaše nastavení byla obnovena na výchozí hodnoty.\n"
 "Více informací o chybách naleznete v protokolu."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:168
 msgid "Configuration File Error"
 msgstr "Chyba konfiguračního souboru"
 
-#: core.py:184
+#: core.py:186
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Uživatelský soubor s mapou vstupních příkazů obsahuje chyby.\n"
 "Více informací o chybách naleznete v protokolu."
 
-#: core.py:187
+#: core.py:189
 msgid "gesture map File Error"
 msgstr "chyba souboru mapy vstupních příkazů"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:792
+#: core.py:799
 msgid "Loading NVDA. Please wait..."
 msgstr "Načítám, prosím čekejte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:934
+#: core.py:941
 msgid "NVDA started"
 msgstr "NVDA spuštěn"
 
@@ -7255,27 +7255,36 @@ msgid "Failed to install add-on from %s"
 msgstr "Instalace doplňku z umístění %s se nezdařila"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
-#: addonStore\network.py:243
+#: addonStore\network.py:251
 msgctxt "addonStore"
 msgid "Add-on download failure"
 msgstr "Stažení doplňku se nezdařilo"
 
+#. Translators: A message to the user if an add-on download fails.
+#. url is replaced with the base URL of the add-on download e.g. (github.com).
+#. fingerprint is replaced with the SHA256 fingerprint of the certificate.
+#: addonStore\network.py:271
+#, python-brace-format
+msgctxt "addonStore"
+msgid "The website where you are downloading the add-on from has a certificate that is not trusted. Do you want to trust the root certificate for {url}? This will allow you to download add-ons from this website in the future. Only do this if you trust the website. The certificate's SHA256 fingerprint is: {fingerprint}. "
+msgstr ""
+
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:266
+#: addonStore\network.py:291 addonStore\network.py:322
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
 msgstr "Stažení doplňku {name} se nezdařilo"
 
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:276
+#: addonStore\network.py:332
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
 msgstr "Stažení doplňku {name} se nezdařilo"
 
 #. Translators: A message to the user if an add-on download is not safe
-#: addonStore\network.py:288
+#: addonStore\network.py:344
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
@@ -7363,14 +7372,14 @@ msgstr "Vývojové verze"
 #: addonStore\models\status.py:132
 msgctxt "addonStore"
 msgid "Enabled"
-msgstr "Povolené doplňky"
+msgstr "Povolené"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:43 addonStore\models\status.py:112
 msgctxt "addonStore"
 msgid "Disabled"
-msgstr "Zakázané doplňky"
+msgstr "Zakázané"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:86
@@ -7382,7 +7391,7 @@ msgstr "Čeká na odstranění"
 #: addonStore\models\status.py:88
 msgctxt "addonStore"
 msgid "Available"
-msgstr "Dostupný"
+msgstr "Dostupné"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:90
@@ -7442,43 +7451,43 @@ msgstr "Instalace se nezdařila"
 #: addonStore\models\status.py:108
 msgctxt "addonStore"
 msgid "Installed, pending restart"
-msgstr "Nainstalováno, čeká se na restart NVDA"
+msgstr "Nainstalováno, čeká se na restart Nvda"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:110
 msgctxt "addonStore"
 msgid "Disabled, pending restart"
-msgstr "Zakázán, čeká se na restart NVDA"
+msgstr "Zakázáno, čeká se na restart Nvda"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:116
 msgctxt "addonStore"
 msgid "Disabled (incompatible), pending restart"
-msgstr "Zakázán (nekompatibilní), čeká se na restart NVDA"
+msgstr "Zakázáno (nekompatibilní), čeká se na restart Nvda"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:119
 msgctxt "addonStore"
 msgid "Disabled (incompatible)"
-msgstr "Zakázán (nekompatibilní)"
+msgstr "Zakázané (nekompatibilní)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:123
 msgctxt "addonStore"
 msgid "Enabled (incompatible), pending restart"
-msgstr "Povolen (nekompatibilní), čeká se na restart NVDA"
+msgstr "Povoleno (nekompatibilní), čeká se na restart Nvda"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:126
 msgctxt "addonStore"
 msgid "Enabled (incompatible)"
-msgstr "Povolen (nekompatibilní)"
+msgstr "Povolené (nekompatibilní)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:128
 msgctxt "addonStore"
 msgid "Enabled, pending restart"
-msgstr "Povolen, čeká se na restart NVDA"
+msgstr "Povoleno, čeká se na restart Nvda"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:134
@@ -11325,7 +11334,7 @@ msgstr "neviditelné"
 #. Translators: This is presented when a visited link is encountered.
 #: controlTypes\state.py:139
 msgid "visited"
-msgstr "navštíveno"
+msgstr "navštívený"
 
 #. Translators: This is presented when a link is encountered.
 #: controlTypes\state.py:141
@@ -11504,7 +11513,7 @@ msgstr "otevře strom"
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:212
 msgid "same page"
-msgstr "stejná stránka"
+msgstr "stejný"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:218
@@ -15327,7 +15336,7 @@ msgstr "Katalog Doplňků"
 #: gui\addonStoreGui\controls\storeDialog.py:122
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
-msgstr "Instalovat z e&externího zdroje"
+msgstr "Instalovat z &externího zdroje"
 
 #. Translators: Banner notice that is displayed in the Add-on Store.
 #: gui\addonStoreGui\controls\storeDialog.py:134
