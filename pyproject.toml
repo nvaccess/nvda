@@ -47,6 +47,8 @@ dependencies = [
 	"mdx_truly_sane_lists==1.3",
 	"markdown-link-attr-modifier==0.2.1",
 	"mdx-gh-links==0.4",
+	# local image caption
+	"onnxruntime == 1.19.2",
 ]
 
 [project.urls]
@@ -319,11 +321,11 @@ lint = [
 	"pyright==1.1.401",
 ]
 license-check = [
-	"licensecheck==2024.3",
+	"licensecheck==2025.1",
 ]
 dev-docs = [
 	# For building developer documentation
-	"sphinx==8.1.2",
+	"sphinx==8.1.3",
 	"sphinx_rtd_theme==3.0.1",
 ]
 system-tests = [
