@@ -219,7 +219,7 @@ jobs:
     runs-on: windows-latest
     needs: buildNVDA
     outputs:
-      launcherUrl: ${{ steps.uploadLauncher.outputs.artifact-url }}
+      launcherArtifactId: ${{ steps.uploadLauncher.outputs.artifact-id }}
       launcherSha256: ${{ steps.addJobSummary.outputs.SHA256 }}
     steps:
     - name: Checkout cached build
@@ -442,7 +442,7 @@ jobs:
           -f "environment=snapshot" \
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
-          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_ARTIFACT_ID]=${{ needs.createLauncher.outputs.launcherArtifactId }}" \
           -f "payload[SYMBOLS_DOWNLOAD_URL]=${{ needs.createSymbols.outputs.symbolsUrl }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
@@ -508,7 +508,7 @@ jobs:
           -f "environment=production" \
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
-          -f "payload[NVDA_DOWNLOAD_URL]=${{ needs.createLauncher.outputs.launcherUrl }}" \
+          -f "payload[NVDA_ARTIFACT_ID]=${{ needs.createLauncher.outputs.launcherArtifactId }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
           -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
