@@ -376,7 +376,7 @@ def exportTranslations(outputDir: str, language: str | None = None):
 		print(f"\nExport complete! All {language} translations extracted to '{outputDir}' directory.")
 
 
-_MSGFMT = r"miscDeps\\tools\\msgfmt.exe"
+_MSGFMT = r"miscDeps\tools\msgfmt.exe"
 
 
 class _PoChecker:
@@ -560,7 +560,7 @@ class _PoChecker:
 	def _getInterpolations(self, text: str) -> tuple[list[str], set[str], set[str]]:
 		"""Get the percent and brace interpolations in a string.
 		:param text: The text to check.
-		:return: A tuple of three sets:
+		:return: A tuple of a list and two sets:
 			- unnamed percent interpolations (e.g. %s, %d)
 			- named percent interpolations (e.g. %(name)s)
 			- brace format interpolations (e.g. {name}, {name:format})
@@ -825,7 +825,7 @@ def main():
 					print(report)
 					badFilePaths.append(poFilePath)
 			if badFilePaths:
-				print(f"\nOne or more po files had errors: {','.join(badFilePaths)}")
+				print(f"\nOne or more po files had errors: {', '.join(badFilePaths)}")
 				sys.exit(1)
 		case "uploadTranslationFile":
 			localFilePath = args.localFilePath or args.crowdinFilePath
