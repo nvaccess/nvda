@@ -361,7 +361,7 @@ class _PoChecker:
 		"""Check the syntax of the po file using msgfmt.
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
-		_MSGFMT = os.path.join("..", "miscDeps", "tools", "msgfmt.exe")
+		_MSGFMT = os.path.join(os.getcwd(), "miscDeps", "tools", "msgfmt.exe")
 		result = subprocess.run(
 			(_MSGFMT, "-o", "-", self._poPath),
 			stdout=subprocess.DEVNULL,
