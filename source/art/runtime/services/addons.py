@@ -162,6 +162,29 @@ class AddOnLifecycleService:
 									self.logger.exception(f"Failed to instantiate SynthDriver: {module_name}")
 							else:
 								self.logger.warning(f"No SynthDriver class found in {module_name}")
+						
+						elif plugin_dir_name == "brailleDisplayDrivers":
+							sys.modules[f"brailleDisplayDrivers.{module_name}"] = module
+							self.logger.info(f"Successfully imported brailleDisplayDriver module: {module_name}")
+							
+							# Check if module has BrailleDisplayDriver class
+							if hasattr(module, 'BrailleDisplayDriver'):
+								self.logger.info(f"Found BrailleDisplayDriver class in {module_name}")
+								braille_class = getattr(module, 'BrailleDisplayDriver')
+								self.logger.debug(f"BrailleDisplayDriver class: {braille_class}")
+								
+								# Instantiate the braille display driver to trigger registration (like NVDA does)
+								self.logger.debug(f"Instantiating BrailleDisplayDriver from {module_name}")
+								try:
+									braille_instance = braille_class()
+									self.logger.info(f"Successfully instantiated BrailleDisplayDriver: {module_name}")
+									
+									# Register the braille driver with NVDA Core to generate proxy
+									self._registerBrailleWithCore(braille_instance, module_name)
+								except Exception:
+									self.logger.exception(f"Failed to instantiate BrailleDisplayDriver: {module_name}")
+							else:
+								self.logger.warning(f"No BrailleDisplayDriver class found in {module_name}")
 					
 					except (ImportError, SyntaxError, AttributeError) as e:
 						self.logger.exception(f"Failed to import {plugin_dir_name}.{module_name}: {e}")
@@ -275,6 +298,70 @@ class AddOnLifecycleService:
 				
 		except Exception:
 			self.logger.exception(f"Error registering synthesizer {module_name} with NVDA Core")
+			return False
+
+	def _registerBrailleWithCore(self, braille_instance, module_name):
+		"""Register a braille display driver instance with NVDA Core to generate proxy."""
+		try:
+			self.logger.info(f"Registering braille display driver {module_name} with NVDA Core")
+			
+			# Get braille service URI from environment
+			braille_uri = os.environ.get("NVDA_ART_BRAILLE_SERVICE_URI")
+			if not braille_uri:
+				self.logger.error("No NVDA_ART_BRAILLE_SERVICE_URI found in environment")
+				return False
+			
+			# Connect to NVDA Core's braille service
+			import Pyro5.api
+			braille_service = Pyro5.api.Proxy(braille_uri)
+			braille_service._pyroTimeout = 5.0
+			
+			# Get addon name from environment
+			addon_name = os.environ.get("NVDA_ART_ADDON_NAME", self.addon_name or "unknown")
+			
+			# Extract metadata from braille display driver instance
+			braille_name = getattr(braille_instance, 'name', module_name)
+			braille_description = getattr(braille_instance, 'description', f"{module_name} Braille Display")
+			
+			# Get display properties
+			num_cells = getattr(braille_instance, 'numCells', 0)
+			num_rows = getattr(braille_instance, 'numRows', 1) if hasattr(braille_instance, 'numRows') else 1
+			num_cols = num_cells if num_cells > 0 else 0
+			
+			# Get supported gestures
+			supported_gestures = []
+			if hasattr(braille_instance, 'gestureMap') and braille_instance.gestureMap:
+				supported_gestures = list(braille_instance.gestureMap.keys())
+			
+			# Get device information
+			device_info = {}
+			for attr in ['isThreadSafe', 'supportsAutomaticDetection']:
+				if hasattr(braille_instance, attr):
+					device_info[attr] = getattr(braille_instance, attr)
+			
+			# Register with NVDA Core
+			self.logger.debug(f"Calling registerBrailleDriver for {braille_name}")
+			result = braille_service.registerBrailleDriver(
+				name=braille_name,
+				description=braille_description,
+				addon_name=addon_name,
+				numCells=num_cells,
+				numRows=num_rows,
+				numCols=num_cols,
+				supportedGestures=supported_gestures,
+				deviceInfo=device_info,
+				art_service_proxy=None  # This will be set by the BrailleService
+			)
+			
+			if result:
+				self.logger.info(f"Successfully registered {braille_name} with NVDA Core")
+				return True
+			else:
+				self.logger.error(f"Failed to register {braille_name} - registerBrailleDriver returned False")
+				return False
+				
+		except Exception:
+			self.logger.exception(f"Error registering braille display driver {module_name} with NVDA Core")
 			return False
 
 	def getLoadedAddons(self) -> List[str]:

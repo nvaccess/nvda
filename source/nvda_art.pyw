@@ -275,6 +275,11 @@ class ARTRuntime:
 
 		service_definitions.append(("synth", SynthService(), "nvda.art.synth"))
 
+		# Import and add braille service
+		from art.runtime.services.braille import BrailleDisplayService
+
+		service_definitions.append(("braille", BrailleDisplayService(), "nvda.art.braille"))
+
 		# Register all services
 		for service_name, service_instance, pyro_name in service_definitions:
 			# Set runtime reference for services that need it
