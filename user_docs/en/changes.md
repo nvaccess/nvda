@@ -1,5 +1,28 @@
 # What's New in NVDA
 
+## 2025.3
+
+### Important notes
+
+### New Features
+
+### Changes
+
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+
+### Bug Fixes
+
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
+
+#### Deprecations
+
 ## 2025.2
 
 This release includes improvements in Windows 11, browse mode, and Microsoft Word.
@@ -24,7 +47,7 @@ Support for cursor routing with the point and click action on the Humanware Mona
 LibLouis has been updated, adding new Biblical Hebrew, Russian 6 dot computer braille and Thai Grade 2 braille tables.
 eSpeak NG has been updated, adding support for Aromanian, Crimean Tatar, Mongolian, and Pashto.
 
-There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, Google Chrome.
+There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, and Google Chrome.
 
 ### New Features
 
@@ -69,6 +92,9 @@ There have also been a number of other fixes and improvements, including to mous
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
 * In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
 * It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
+* When typing into a cell in Microsoft Excel, the braille display is now correctly updated to show the new content. (#18391)
+* Fixed bug when trying to access the Add-on Store from certain environments such as corporates. (#18354)
+* When using NVDA Remote Access, speech from User Account Control screens on the remote computer now works reliably. (#18101, @jcsteh)
 
 ### Changes for Developers
 
@@ -91,6 +117,10 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 * NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
+
+#### Deprecations
+
+* The following symbols in `updateCheck` are deprecated for removal without replacement: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`, `UPDATE_FETCH_TIMEOUT_S`. (#18354)
 
 ## 2025.1.2
 

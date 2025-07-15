@@ -220,12 +220,15 @@ Community members are welcome and encouraged to interact with staff tickets in t
 By refraining from closing or consolidating staff tickets, we can ensure that the NV Access team maintains control over their internal workflow and prioritisation, while still benefiting from the valuable insights and contributions of the community.
 
 ## Extra permissions for triage
+
 GitHub allows NV Access to grant "triage" permissions to active contributors in the repository.
 This grants the ability to manage issues, pull requests and discussions, such as closing/opening, labeling, and assigning.
 Refer to [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) for more information on triage permissions.
 
-To request triage permissions, email info@nvaccess.org.
+To request triage permissions, email <info@nvaccess.org>.
 A consistent history of helpful activity in the repository is expected, for example helping debug issues, asking for missing information, providing constructive feedback on pull requests, submitting well-documented pull requests, constructively participating in discussions, mentoring new contributors or improving documentation.
 Candidates will be considered on a case by case basis.
 
 If conflict arises between how best to triage an issue, please defer to NV Access and keep the issue in an open, untriaged state i.e. with the labels "needs triage" and "blocked/needs-product-decision".
+Please do not close feature requests on the grounds of rejecting a feature.
+Allow the community to discuss the proposed feature and NV Access to make the decision on accepting it.

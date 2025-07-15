@@ -10,6 +10,7 @@ import locale
 from collections import OrderedDict, deque
 import threading
 from typing import TYPE_CHECKING, NamedTuple
+import audioDucking
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult
@@ -34,6 +35,14 @@ from speech.commands import (
 	SpeechCommand,
 )
 from ._sonic import SonicStream, initialize as sonicInitialize
+
+
+class _SPAudioState(IntEnum):
+	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
+	CLOSED = 0
+	STOP = 1
+	PAUSE = 2
+	RUN = 3
 
 
 class SpeechVoiceSpeakFlags(IntEnum):
@@ -186,11 +195,15 @@ class SapiSink(COMObject):
 				windll.ole32.CoTaskMemFree(event.lParam)
 
 	def StartStream(self, streamNum: int, pos: int):
-		pass  # nothing here yet
+		synth = self.synthRef()
+		if synth._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Enabling audio ducking due to starting speech stream")
+			synth._audioDucker.enable()
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
-		if synth._isCancelling:
+		if synth._isCancelling or not synth.player:
 			return
 		# Bookmark event is raised before the audio after that point.
 		# Queue an IndexReached event at this point.
@@ -200,19 +213,25 @@ class SapiSink(COMObject):
 		synth = self.synthRef()
 		if synth._isCancelling:
 			return
-		# Flush the stream and get the remaining data.
-		synth.sonicStream.flush()
-		audioData = synth.sonicStream.readShort()
-		synth.player.feed(audioData, len(audioData) * 2)
+		if synth.player:
+			# Flush the stream and get the remaining data.
+			synth.sonicStream.flush()
+			audioData = synth.sonicStream.readShort()
+			synth.player.feed(audioData, len(audioData) * 2)
 		# trigger all untriggered bookmarks
 		if synth._bookmarks:
 			for bookmark in synth._bookmarks:
 				synthIndexReached.notify(synth=synth, index=bookmark)
 		synthDoneSpeaking.notify(synth=synth)
-		# notify the thread
-		with synth._threadCond:
-			synth._requestCompleted = True
-			synth._threadCond.notify()
+		if synth.player:
+			# notify the thread
+			with synth._threadCond:
+				synth._requestCompleted = True
+				synth._threadCond.notify()
+		if synth._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to speech stream end")
+			synth._audioDucker.disable()
 
 	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
@@ -233,6 +252,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.VolumeSetting(),
+		SynthDriver.UseWasapiSetting(),
 	)
 	supportedCommands = {
 		IndexCommand,
@@ -261,6 +281,11 @@ class SynthDriver(SynthDriver):
 		except:  # noqa: E722
 			return False
 
+	ttsAudioStream = (
+		None  #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
+	)
+	_audioDucker: audioDucking.AudioDucker | None = None
+
 	def __init__(self, _defaultVoiceToken=None):
 		"""
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
@@ -269,7 +294,9 @@ class SynthDriver(SynthDriver):
 		self._pitch = 50
 		self._rate = 50
 		self._volume = 100
-		self.player = None
+		self._useWasapi = True
+		self.player: nvwave.WavePlayer | None = None
+		self.sonicStream: SonicStream | None = None
 		self._isCancelling = False
 		self._isTerminating = False
 		self._rateBoost = False
@@ -329,6 +356,9 @@ class SynthDriver(SynthDriver):
 	def _get_voice(self):
 		return self.tts.voice.Id
 
+	def _get_useWasapi(self) -> bool:
+		return self._useWasapi
+
 	def _get_lastIndex(self):
 		bookmark = self.tts.status.LastBookmark
 		if bookmark != "" and bookmark is not None:
@@ -346,6 +376,9 @@ class SynthDriver(SynthDriver):
 
 	def _set_rate(self, rate):
 		self._rate = rate
+		if not self.sonicStream:
+			self.tts.Rate = self._percentToRate(rate)
+			return
 		if self._rateBoost:
 			# When rate boost is enabled, use sonicStream to change the speed.
 			# Supports 0.5x~6x speed.
@@ -371,16 +404,9 @@ class SynthDriver(SynthDriver):
 		self._volume = value
 		self.tts.Volume = value
 
-	def _initTts(self, voice=None):
-		self.tts = comtypes.client.CreateObject(self.COM_CLASS)
-		if voice:
-			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
-			# but only when the audio output is changed.
-			# Therefore, set the voice before setting the audio output.
-			# Otherwise, we will get poor speech quality in some cases.
-			self.tts.voice = voice
-
-		# Set the audio output device to reset the audio format parameters
+	def _initAudioDevice(self):
+		# SAPI5 automatically selects the system default audio device, so there's no use doing work if the user has selected to use the system default.
+		# Besides, our default value is not a valid endpoint ID.
 		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
 			("audio", "outputDevice"),
 		).default:
@@ -390,6 +416,7 @@ class SynthDriver(SynthDriver):
 					self.tts.audioOutput = audioOutput
 					break
 
+	def _initWasapiAudio(self):
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
 		# Force the wave format to be 16-bit integer (which Sonic uses internally).
@@ -397,8 +424,6 @@ class SynthDriver(SynthDriver):
 		wfx.FormatTag = nvwave.WAVE_FORMAT_PCM
 		wfx.BitsPerSample = 16
 		fmt.SetWaveFormatEx(wfx)
-		if self.player:
-			self.player.close()
 		self.player = nvwave.WavePlayer(
 			channels=wfx.Channels,
 			samplesPerSec=wfx.SamplesPerSec,
@@ -413,6 +438,39 @@ class SynthDriver(SynthDriver):
 		self.tts.AudioOutputStream = customStream
 		sonicInitialize()
 		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
+
+	def _initLegacyAudio(self):
+		if audioDucking.isAudioDuckingSupported():
+			self._audioDucker = audioDucking.AudioDucker()
+		from comInterfaces.SpeechLib import ISpAudio
+
+		try:
+			self.ttsAudioStream = self.tts.audioOutputStream.QueryInterface(ISpAudio)
+		except COMError:
+			log.debugWarning("SAPI5 voice does not support ISPAudio")
+			self.ttsAudioStream = None
+
+	def _initTts(self, voice: str | None = None):
+		self.tts = comtypes.client.CreateObject(self.COM_CLASS)
+		if voice:
+			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
+			# but only when the audio output is changed.
+			# Therefore, set the voice before setting the audio output.
+			# Otherwise, we will get poor speech quality in some cases.
+			self.tts.voice = voice
+
+		if self.player:
+			self.player.close()
+			self.player = None
+		self.sonicStream = None
+		self.ttsAudioStream = None
+		self._audioDucker = None
+
+		self._initAudioDevice()
+		if self.useWasapi:
+			self._initWasapiAudio()
+		else:
+			self._initLegacyAudio()
 
 		# Set event notify sink
 		self.tts.EventInterests = (
@@ -436,6 +494,12 @@ class SynthDriver(SynthDriver):
 		# As _initTts resets the voice parameters on the tts object, set them back to current values.
 		self._set_rate(self._rate)
 		self._set_volume(self._volume)
+
+	def _set_useWasapi(self, value: bool):
+		if value == self._useWasapi:
+			return
+		self._useWasapi = value
+		self.voice = self.voice  # reload the current voice
 
 	def _percentToPitch(self, percent):
 		return percent // 2 - 25
@@ -615,17 +679,92 @@ class SynthDriver(SynthDriver):
 		outputTags()
 
 		text = "".join(textList)
-		with self._threadCond:  # put the request in queue and wake up the thread
-			self._speakRequests.append(_SpeakRequest(text, bookmarks))
-			self._threadCond.notify()
+		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
+		if self.useWasapi:
+			with self._threadCond:  # put the request in queue and wake up the thread
+				self._speakRequests.append(_SpeakRequest(text, bookmarks))
+				self._threadCond.notify()
+		else:
+			self._bookmarks = bookmarks
+			self._speak_legacy(text, flags)
+
+	def _speak_legacy(self, text: str, flags: int) -> int:
+		"""Legacy way of calling SpVoice.Speak that uses a temporary audio ducker."""
+		# Ducking should be complete before the synth starts producing audio.
+		# For this to happen, the speech method must block until ducking is complete.
+		# Ducking should be disabled when the synth is finished producing audio.
+		# Note that there may be calls to speak with a string that results in no audio,
+		# it is important that in this case the audio does not get stuck ducked.
+		# When there is no audio produced the startStream and endStream handlers are not called.
+		# To prevent audio getting stuck ducked, it is unducked at the end of speech.
+		# There are some known issues:
+		# - When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
+		# - If the call to startStream handler is delayed significantly, users may notice a variation in volume
+		# (as ducking is disabled at the end of speak, and re-enabled when the startStream handler is called)
+
+		# A note on the synchronicity of components of this approach:
+		# SAPISink.StartStream event handler (callback):
+		# the synth speech is not blocked by this event callback.
+		# SAPISink.EndStream event handler (callback):
+		# assumed also to be async but not confirmed. Synchronicity is irrelevant to the current approach.
+		# AudioDucker.disable returns before the audio is completely unducked.
+		# AudioDucker.enable() ducking will complete before the function returns.
+		# It is not possible to "double duck the audio", calling twice yields the same result as calling once.
+		# AudioDucker class instances count the number of enables/disables,
+		# in order to unduck there must be no remaining enabled audio ducker instances.
+		# Due to this a temporary audio ducker is used around the call to speak.
+		# SAPISink.StartStream: Ducking here may allow the early speech to start before ducking is completed.
+		if audioDucking.isAudioDuckingSupported():
+			tempAudioDucker = audioDucking.AudioDucker()
+		else:
+			tempAudioDucker = None
+		if tempAudioDucker:
+			if audioDucking._isDebug():
+				log.debug("Enabling audio ducking due to speak call")
+			tempAudioDucker.enable()
+		try:
+			return self.tts.Speak(text, flags)
+		finally:
+			if tempAudioDucker:
+				if audioDucking._isDebug():
+					log.debug("Disabling audio ducking after speak call")
+				tempAudioDucker.disable()
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
 		# Therefore  instruct the audio player to stop first, before interupting and purging any remaining speech.
 		self._isCancelling = True
-		self.player.stop()  # stop the audio and stop waiting for idle()
-		with self._threadCond:  # wake up the thread
-			self._threadCond.notify()
+		if self.player:
+			self.player.stop()  # stop the audio and stop waiting for idle()
+			with self._threadCond:  # wake up the thread
+				self._threadCond.notify()
+		if self.ttsAudioStream:
+			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
+		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+		if self._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to setting output audio state to stop")
+			self._audioDucker.disable()
 
 	def pause(self, switch: bool):
-		self.player.pause(switch)
+		if self.player:
+			self.player.pause(switch)
+		# SAPI5's default means of pausing in most cases is either extremely slow
+		# (e.g. takes more than half a second) or does not work at all.
+		# Therefore instruct the underlying audio interface to pause instead.
+		if self.ttsAudioStream:
+			oldState = self.ttsAudioStream.GetStatus().State
+			if switch and oldState == _SPAudioState.RUN:
+				# pausing
+				if self._audioDucker:
+					if audioDucking._isDebug():
+						log.debug("Disabling audio ducking due to setting output audio state to pause")
+					self._audioDucker.disable()
+				self.ttsAudioStream.setState(_SPAudioState.PAUSE, 0)
+			elif not switch and oldState == _SPAudioState.PAUSE:
+				# unpausing
+				if self._audioDucker:
+					if audioDucking._isDebug():
+						log.debug("Enabling audio ducking due to setting output audio state to run")
+					self._audioDucker.enable()
+				self.ttsAudioStream.setState(_SPAudioState.RUN, 0)

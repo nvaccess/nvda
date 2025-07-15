@@ -72,6 +72,8 @@ New gestures will be announced there, and localisations can be added to `gesture
     - `gestures.ini`: This file doesn't require a base file, gestures can be added as needed.
 1. Edit the relevant file
     - Tab to the "edit file" button to open the editor for the file.
+    - If it's your first time doing this, GitHub will ask you to fork this repository.
+    Click "Fork this repository".
     - English example: <https://github.com/nvaccess/nvda/edit/beta/source/locale/en/symbols.dic>
     - Format (replace `{lang}` and `{fileName}`): `https://github.com/nvaccess/nvda/edit/beta/source/locale/{lang}/{fileName}`
     - Refer to [background](#background) for more information on the format of the files

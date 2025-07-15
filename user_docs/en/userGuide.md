@@ -371,9 +371,9 @@ To learn more about and configure this behaviour, refer to ["Update Notification
 ### Community {#Community}
 
 NVDA has a vibrant user community.
-There is a main [English language email list](https://nvda.groups.io/g/nvda) and a page full of [local language groups](https://github.com/nvaccess/nvda/wiki/Connect).
-NV Access, makers of NVDA, are active on [Twitter](https://twitter.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
+NV Access, makers of NVDA, are active on [Mastodon](https://fosstodon.org/@NVAccess), [Twitter/X](https://x.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
 NV Access also have a regular [In-Process blog](https://www.nvaccess.org/category/in-process/).
+There is a main [NV Access owned email list](https://groups.google.com/a/nvaccess.org/g/nvda-users) and a page full of [other community groups](https://github.com/nvaccess/nvda/wiki/Connect).
 
 There is also an [NVDA Certified Expert](https://certification.nvaccess.org/) program.
 This is an online exam you can complete to demonstrate your skills in NVDA.
@@ -1921,6 +1921,24 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
+
+This option enables audio output via the Windows Audio Session API (WASAPI).
+This may improve the responsiveness of some voices.
+However, some voices might not work with the current WASAPI implementation.
+If you find that the voice you are using stops working, you may disable this option.
+
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+
+* For Microsoft Speech API version 4 voices:
+  * Audio ducking
+  * Leading silence trimming
+  * Keep audio device awake
+* For Microsoft Speech API version 5 voices:
+  * Rate boost
+  * Leading silence trimming
+  * Keep audio device awake
+
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
@@ -1932,7 +1950,7 @@ This checkbox allows you to toggle whether or not dialect changes should be made
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
 
-##### Report language changes {#ReportLanguage}
+##### Report language changes while reading {#ReportLanguage}
 
 This checkbox allows you to toggle whether NVDA should report the detected language of the text being read, when the language changes from the default language.
 The language configured to be used by default won't be reported.
@@ -3303,7 +3321,7 @@ This setting contains the following values:
 
 * Default (where suitable)
 * Only where necessary: where the Microsoft Word object model is not available at all
-* Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+* Where suitable: Microsoft Word version 16.0.15000 or higher on Windows 11, or where the Microsoft Word object model is unavailable
 * Always: where ever UI automation is available in Microsoft word (no matter how complete).
 
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
