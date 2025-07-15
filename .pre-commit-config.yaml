@@ -10,7 +10,7 @@ ci:
   # Can't run licenseCheck as it relies on telemetry,
   # which CI blocks.
   # Pyright does not seem to work in pre-commit CI
-  skip: [scons-source, checkPot, unitTest, licenseCheck, pyright]
+  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyright]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
@@ -125,6 +125,11 @@ repos:
 
 - repo: local
   hooks:
+    - id: checkPo
+      name: Check po files
+      entry: uv run source/l10nUtil.py checkPo
+      language: python
+      types: [pofile]
     - id: scons-source
       name: build c/c++ files
       entry: cmd.exe /c "scons source --all-cores"
