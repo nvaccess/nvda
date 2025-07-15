@@ -41,7 +41,7 @@ from comInterfaces.SpeechLib import (
 	WAVEFORMATEX,
 )
 import comtypes.client
-from comtypes import COMError, COMObject, IUnknown, hresult
+from comtypes import COMError, COMObject, hresult
 import winreg
 import nvwave
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
@@ -319,7 +319,11 @@ class SynthDriverAudio(COMObject):
 		pass  # do nothing
 
 	def ISpEventSource_GetEvents(
-		self, this: int, ulCount: int, pEventArray: _Pointer[SPEVENT], pulFetched: _Pointer[c_ulong]
+		self,
+		this: int,
+		ulCount: int,
+		pEventArray: _Pointer[SPEVENT],
+		pulFetched: _Pointer[c_ulong],
 	) -> None:
 		countToFetch = min(ulCount, len(self._events))
 		if pulFetched:
