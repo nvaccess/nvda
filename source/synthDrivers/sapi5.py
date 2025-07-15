@@ -180,12 +180,15 @@ class _SapiEvent(SPEVENT):
 		return cast(self.lParam, c_wchar_p).value
 
 
-class SynthDriverAudioStream(COMObject):
+class SynthDriverAudio(COMObject):
 	"""
-	Implements IStream to receive streamed-in audio data.
-	Should be wrapped in an SpCustomStream
-	(which also provides the wave format information),
-	then set as the AudioOutputStream.
+	Implements ISpAudio, ISpEventSource, and ISpEventSink.
+	ISpAudio extends IStream which is used to stream in audio data,
+	and also has `SetFormat` to tell the audio object what wave format is preferred.
+	Should be set as the audio output via `ISpAudio::SetOutput`.
+	ISpEventSource and ISpEventSink are also required for `SetOutput` to work,
+	although we only need to pass the event from the sink to the source,
+	and leave most functions unimplemented.
 	"""
 
 	_com_interfaces_ = [ISpAudio, ISpEventSource, ISpEventSink]
@@ -266,8 +269,9 @@ class SynthDriverAudioStream(COMObject):
 		memmove(pwfx, byref(self.waveFormat), sizeof(WAVEFORMATEX))
 		return pwfx
 
-	def ISpAudio_SetState(self, NewState: SPAUDIOSTATE, ullReserved: int):
-		pass
+	def ISpAudio_SetState(self, NewState: SPAUDIOSTATE, ullReserved: int) -> None:
+		"""This is called when the audio state changes, for example, when the audio stream is paused or closed."""
+		pass  # do nothing
 
 	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
 		if rguidFmtId.contents != SPDFID_WaveFormatEx:
@@ -302,28 +306,28 @@ class SynthDriverAudioStream(COMObject):
 		self._writeDefaultFormat(pwfx.contents)
 		return (SPDFID_WaveFormatEx, pwfx)
 
-	def ISpAudio_EventHandle(self) -> c_void_p:
-		return None
+	def ISpAudio_EventHandle(self) -> int:
+		return 0
 
-	def ISpNotifySource_SetNotifySink(self, pNotifySink: _Pointer[ISpNotifySink]):
+	def ISpNotifySource_SetNotifySink(self, pNotifySink: _Pointer[ISpNotifySink]) -> None:
 		self._notifySink = pNotifySink
 
-	def ISpNotifySource_GetNotifyEventHandle(self) -> c_void_p:
-		return None
+	def ISpNotifySource_GetNotifyEventHandle(self) -> int:
+		return 0
 
-	def ISpEventSource_SetInterest(self, ullEventInterest: int, ullQueuedInterest: int):
-		pass
+	def ISpEventSource_SetInterest(self, ullEventInterest: int, ullQueuedInterest: int) -> None:
+		pass  # do nothing
 
 	def ISpEventSource_GetEvents(
 		self, this: int, ulCount: int, pEventArray: _Pointer[SPEVENT], pulFetched: _Pointer[c_ulong]
-	):
+	) -> None:
 		countToFetch = min(ulCount, len(self._events))
 		if pulFetched:
 			pulFetched[0] = countToFetch
 		for i in range(countToFetch):
 			self._events.popleft().copyTo(pEventArray[i])
 
-	def ISpEventSink_AddEvents(self, pEventArray: _Pointer[SPEVENT], ulCount: int):
+	def ISpEventSink_AddEvents(self, pEventArray: _Pointer[SPEVENT], ulCount: int) -> None:
 		for i in range(ulCount):
 			event = _SapiEvent()
 			event.copyFrom(pEventArray[i])
@@ -585,7 +589,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Volume = value
 
 	def _initWasapiAudio(self):
-		audioObject = SynthDriverAudioStream(weakref.ref(self))
+		audioObject = SynthDriverAudio(weakref.ref(self))
 		spVoice = self.tts.QueryInterface(ISpVoice)
 		spVoice.SetOutput(audioObject, True)
 		wfx = audioObject.waveFormat
