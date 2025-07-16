@@ -530,7 +530,9 @@ class MathCAT(mathPres.MathPresentationProvider):
 				"..",
 				"..",
 				"..",
-				"mathcatAssets",
+				"include",
+				"nvda-mathcat",
+				"assets",
 				"Rules",
 			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")

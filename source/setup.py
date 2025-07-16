@@ -286,7 +286,7 @@ freeze(
 	+ (
 		getLocaleDataFiles()
 		+ getRecursiveDataFiles(
-			"mathcatAssets",
+			"../include/nvda-mathcat/assets",
 			"../include/nvda-mathcat/assets",
 		)
 		+ getRecursiveDataFiles(
