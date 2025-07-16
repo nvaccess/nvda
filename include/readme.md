@@ -4,7 +4,7 @@ Updates should be reflected in the [createDevEnvironment guide](../projectDocs/d
 ### Detours
 https://github.com/microsoft/Detours
 
-Fetch latest from master.
+Fetch latest from main.
 Test using [the steps here](../projectDocs/design/displayModel.md).
 An example control is the file properties dialog from file explorer.
 
