@@ -3972,6 +3972,11 @@ class AdvancedPanelControls(
 			_("Diff Match Patch"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
+			# by character, using an internal (native) implementation of the
+			# diff match patch algorithm.
+			_("Diff Match Patch (native)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA detect changes in terminals
 			# by line, using the difflib algorithm.
 			_("Difflib"),
 		]
@@ -3980,6 +3985,7 @@ class AdvancedPanelControls(
 		self.diffAlgoVals = (
 			"auto",
 			"dmp",
+			"dmp-native",
 			"difflib",
 		)
 		self.diffAlgoCombo = terminalsGroup.addLabeledControl(
