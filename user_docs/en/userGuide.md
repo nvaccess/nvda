@@ -3425,7 +3425,7 @@ In untrusted environments, you may temporarily disable [speak typed characters](
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has four options:
 
-* Automatic: This option causes NVDA to prefer Diff Match Patch in most situations, but fall back to Difflib in problematic applications, such as older versions of the Windows Console and Mintty.
+* Automatic: This option causes NVDA to prefer Diff Match Patch (native) in most situations, but fall back to Difflib in problematic applications, such as older versions of the Windows Console and Mintty.
 * Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character, even in situations where it is not recommended.
 It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
 However, in some applications, reading of new text may be choppy or inconsistent.

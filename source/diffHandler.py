@@ -231,7 +231,7 @@ def prefer_dmp():
 	does not allow DMP, this function returns a Difflib instance instead.
 	"""
 	diffAlgo = config.conf["terminals"]["diffAlgo"]
-	return _difflib if diffAlgo == "difflib" else _dmp_native if diffAlgo == "dmp-native" else _dmp
+	return _difflib if diffAlgo == "difflib" else _dmp if diffAlgo == "dmp" else _dmp_native
 
 
 def prefer_difflib():
