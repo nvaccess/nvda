@@ -4,6 +4,7 @@
 # Copyright (C) 2011-2023 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
+import ctypes
 import os
 import subprocess
 import sys
@@ -22,7 +23,18 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
 import ui
 from NVDAState import WritePaths
-from .message import displayDialogAsModal
+from .message import MessageDialog, displayDialogAsModal
+
+
+def _shouldDoInstall() -> bool:
+	from _remoteClient import _remoteClient
+
+	isUserAnAdmin = ctypes.windll.shell32.IsUserAnAdmin
+	isUserAnAdmin.argtypes = []
+	isUserAnAdmin.restype = ctypes.wintypes.BOOL
+	if _remoteClient is not None:
+		return not (_remoteClient.isConnectedAsFollower and not isUserAnAdmin())
+	return True
 
 
 def _canPortableConfigBeCopied() -> bool:
@@ -300,6 +312,17 @@ class InstallerDialog(
 		self.CentreOnScreen()
 
 	def onInstall(self, evt):
+		if not _shouldDoInstall():
+			MessageDialog.alert(
+				_(
+					# Translators: Message displayed when attempting to install NVDA from the launcher
+					# when connected as the controlled computer with NVDA Remote Access.
+					"Installing NVDA is not supported when NVDA is running from a portable copy and connected as the controlled computer.",
+				),
+				# Translators: Title of a dialog.
+				_("Unable to Install NVDA"),
+			)
+			return
 		self.Hide()
 		doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
