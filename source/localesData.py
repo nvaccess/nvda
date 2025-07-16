@@ -9,12 +9,9 @@ As there are localizable strings at module level,
 this can only be imported once localization is set up via `languageHandler.initialize`.
 """
 
-from typing import Dict
-
-
 # Maps names of languages supported by NVDA to their translated names
 # for langs for which Windows does not contain a translated description.
-LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
+LANG_NAMES_TO_LOCALIZED_DESCS: dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"aa": pgettext("languageName", "Afar"),
 	# Translators: The name of a language supported by NVDA.
@@ -28,7 +25,7 @@ LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"ay": pgettext("languageName", "Aymara"),
 	# Translators: The name of a language supported by NVDA.
-	"bh": pgettext("languageName", "Unknown"),
+	"bh": pgettext("languageName", "Bihari"),
 	# Translators: The name of a language supported by NVDA.
 	"bi": pgettext("languageName", "Bislama"),
 	# Translators: The name of a language supported by NVDA.
@@ -60,7 +57,7 @@ LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"hz": pgettext("languageName", "Herero"),
 	# Translators: The name of a language supported by NVDA.
-	"ia": pgettext("languageName", "Interlingua (International Auxiliary Language Association)"),
+	"ia": pgettext("languageName", "Interlingua"),
 	# Translators: The name of a language supported by NVDA.
 	"ik": pgettext("languageName", "Inupiaq"),
 	# Translators: The name of a language supported by NVDA.
@@ -92,7 +89,7 @@ LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"mh": pgettext("languageName", "Marshallese"),
 	# Translators: The name of a language supported by NVDA.
-	"mo": pgettext("languageName", "Unknown"),
+	"mo": pgettext("languageName", "Moldovan"),
 	# Translators: The name of a language supported by NVDA.
 	"my": pgettext("languageName", "Burmese"),
 	# Translators: The name of a language supported by NVDA.
@@ -136,7 +133,7 @@ LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"ty": pgettext("languageName", "Tahitian"),
 	# Translators: The name of a language supported by NVDA.
-	"vo": pgettext("languageName", "Volap�k"),
+	"vo": pgettext("languageName", "Volapük"),
 	# Translators: The name of a language supported by NVDA.
 	"wa": pgettext("languageName", "Walloon"),
 	# Translators: The name of a language supported by NVDA.
