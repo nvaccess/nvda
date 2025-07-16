@@ -408,7 +408,7 @@ jobs:
       contents: write
       deployments: write
     runs-on: ubuntu-latest
-    needs: [buildNVDA, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    needs: [buildNVDA, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
     concurrency:
       group: snapshot
