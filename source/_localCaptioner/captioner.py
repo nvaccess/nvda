@@ -544,5 +544,3 @@ def main() -> None:
 	caption1 = captioner.generate_caption(image=imagePath)
 	print(f"result: {caption1}")
 	benchmarkInference(captioner=captioner, imagePath=imagePath)
-
-
