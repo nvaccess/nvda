@@ -327,13 +327,15 @@ class ModelManagerFrame(wx.Frame):
 
 		# Translators: Model name display format
 		self.modelInfoText = wx.StaticText(
-			panel, label=_("Model: {modelName}").format(modelName=self.modelName)
+			panel,
+			label=_("Model: {modelName}").format(modelName=self.modelName),
 		)
 		infoBox.Add(self.modelInfoText, 0, wx.ALL, 5)
 
 		# Translators: File count display format
 		self.filesInfoText = wx.StaticText(
-			panel, label=_("File Count: {count}").format(count=len(self.filesToDownload))
+			panel,
+			label=_("File Count: {count}").format(count=len(self.filesToDownload)),
 		)
 		infoBox.Add(self.filesInfoText, 0, wx.ALL, 5)
 

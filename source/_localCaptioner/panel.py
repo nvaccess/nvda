@@ -71,7 +71,7 @@ class CaptionLocalSettingsPanel(gui.settingsDialogs.SettingsPanel):
 
 		# Translators: A setting in addon settings dialog.
 		self.loadModelWhenInit = sHelper.addItem(
-			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)"))
+			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
 		)
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
 
@@ -104,5 +104,5 @@ class CaptionLocalSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			config.conf["captionLocal"]["loadModelWhenInit"] = self.loadModelWhenInit.GetValue()
 		else:
 			log.debugWarning(
-				"No configuration saved for CaptionLocal since the current profile is not the default one."
+				"No configuration saved for CaptionLocal since the current profile is not the default one.",
 			)

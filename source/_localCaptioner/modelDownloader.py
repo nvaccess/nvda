@@ -297,8 +297,8 @@ def downloadModelsMultithreaded(
 
 	print(
 		_(
-			f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}"
-		)
+			f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}",
+		),
 	)
 
 	localModelDir = os.path.join(modelsDir, modelName)
