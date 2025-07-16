@@ -499,6 +499,8 @@ class SynthDriver(SynthDriver):
 	def terminate(self):
 		# Wake up and wait for the speak thread.
 		self._isTerminating = True
+		if self.player:
+			self.player.stop()  # Ensure the player is stopped to avoid blocking the thread.
 		with self._threadCond:
 			self._threadCond.notify_all()
 		self._thread.join()
@@ -911,7 +913,7 @@ class SynthDriver(SynthDriver):
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
-		# Therefore  instruct the audio player to stop first, before interupting and purging any remaining speech.
+		# Therefore  instruct the audio player to stop first, before interrupting and purging any remaining speech.
 		self._isCancelling = True
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
