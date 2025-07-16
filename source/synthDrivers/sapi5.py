@@ -188,7 +188,7 @@ class _SapiEvent(SPEVENT):
 		return cast(self.lParam, c_wchar_p).value
 
 
-class SynthDriverAudio(COMObject):
+class SynthDriverAudioStream(COMObject):
 	"""
 	Implements ISpAudio, ISpEventSource, and ISpEventSink.
 	ISpAudio extends IStream which is used to stream in audio data,
@@ -603,7 +603,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Volume = value
 
 	def _initWasapiAudio(self):
-		audioObject = SynthDriverAudio(weakref.ref(self))
+		audioObject = SynthDriverAudioStream(weakref.ref(self))
 		spVoice = self.tts.QueryInterface(ISpVoice)
 		spVoice.SetOutput(audioObject, True)
 		wfx = audioObject.waveFormat
