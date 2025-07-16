@@ -5,7 +5,6 @@
 
 from __future__ import unicode_literals
 
-from typing import Optional
 import wx
 
 import gui
