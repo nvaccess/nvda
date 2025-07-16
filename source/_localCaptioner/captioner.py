@@ -546,5 +546,3 @@ def main() -> None:
 	benchmarkInference(captioner=captioner, imagePath=imagePath)
 
 
-if __name__ == "__main__":
-	main()
