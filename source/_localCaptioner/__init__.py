@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 import os
 import sys
-from typing import Optional
+
 import base64
 import json
 import io
@@ -124,8 +124,8 @@ class LocalCaptioner:
 		"""Initialize the global plugin."""
 		# super().__init__()
 		self.isModelLoaded = False
-		self.captioner: Optional[ImageCaptioner] = None
-		self.managerFrame: Optional[ModelManagerFrame] = None
+		self.captioner: ImageCaptioner | None = None
+		self.managerFrame: ModelManagerFrame | None = None
 
 		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
 		# Load model when initializing plugin (may cause high memory usage)

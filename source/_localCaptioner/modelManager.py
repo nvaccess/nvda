@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 import wx
 import threading
-from typing import List, Optional
+from typing import List 
 import winsound  # Windows sound API for audio notifications
 
 # Assume modelDownloader.py is in the same directory
@@ -34,7 +34,7 @@ class AdvancedSettingsDialog(wx.Dialog):
 		self,
 		parent,
 		modelName: str = "Xenova/vit-gpt2-image-captioning",
-		filesList: Optional[List[str]] = None,
+		filesList: List[str] | None = None,
 		resolvePath: str = "/resolve/main",
 		useMirror: bool = False,
 	):

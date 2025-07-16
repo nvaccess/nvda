@@ -521,18 +521,21 @@ def benchmarkInference(
 	print(f"  Greedy search: {greedyTime:.3f}s")
 
 
-def main() -> None:
-	"""Main function example."""
+def manualTest(imagePath: str) -> None:
+	"""manual Test captioner """
+	_here = os.path.dirname(__file__)
+	_modelsDir = os.path.join(_here, "..", "..", "models")
+	_modelsDir = os.path.abspath(_modelsDir)
 	# Initialize model - config_path is now required
 	captioner = ImageCaptioner(
-		encoder_path="../../models/Xenova/vit-gpt2-image-captioning/onnx/encoder_model_quantized.onnx",
-		decoder_path="../../models/Xenova/vit-gpt2-image-captioning/onnx/decoder_model_merged_quantized.onnx",
-		config_path="../../models/Xenova/vit-gpt2-image-captioning/config.json",
+		encoder_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/onnx/encoder_model_quantized.onnx",
+		decoder_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/onnx/decoder_model_merged_quantized.onnx",
+		config_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/config.json",
 		enableProfiling=True,
 	)
 
 	print("=== Single Image Caption ===")
-	imagePath = input("enter path of image to generate caption ")
+	
 	caption1 = captioner.generate_caption(image=imagePath)
 	print(f"result: {caption1}")
-	benchmarkInference(captioner=captioner, imagePath=imagePath)
+	# benchmarkInference(captioner=captioner, imagePath=imagePath)

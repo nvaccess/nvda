@@ -9,13 +9,14 @@ Multi‑threaded model downloader
 Download ONNX / tokenizer assets from *Hugging Face* (or any HTTP host)
 with progress callbacks.
 
-Run this file directly for a CLI demonstration.
+Run manualTest function to directly download model required.
 
 Example
 -------
-.. code:: bash
+.. code:: python
 
-	python download_models.py  # will download to ``models`` sibling dir
+	from _localCaptioner.modelDownloader import manualTest 
+	manualTest()
 """
 
 from __future__ import annotations
@@ -127,10 +128,10 @@ def downloadSingleFile(
 
 	# Check if file already exists and is complete
 	if os.path.exists(localPath):
-		# 先尝试获取远程文件大小来验证本地文件是否完整
+		# First try to get the remote file size to verify that the local file is complete
 		try:
 			req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-			req.get_method = lambda: "HEAD"  # 只获取头部信息
+			req.get_method = lambda: "HEAD"  # only get header information
 			with urllib.request.urlopen(req, timeout=10) as resp:
 				remoteSize = int(resp.headers.get("Content-Length", "0"))
 				localSize = os.path.getsize(localPath)
@@ -141,10 +142,10 @@ def downloadSingleFile(
 					print(f"[Thread-{threadId}] File already complete: {localPath}")
 					return True, f"File already complete: {localPath}"
 				elif remoteSize > 0 and localSize > remoteSize:
-					# 本地文件比远程文件大，可能损坏，删除重新下载
+					# Local files are larger than remote files and may be corrupted. Delete and download again.
 					os.remove(localPath)
 		except:
-			# 如果无法获取远程大小，保持现有行为
+			# If the size cannot be retrieved from remote, the existing behavior is maintained
 			if progressCallback:
 				size = os.path.getsize(localPath)
 				progressCallback(fileName, size, size, 100.0)
@@ -155,13 +156,13 @@ def downloadSingleFile(
 		try:
 			print(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{maxRetries}): {url}")
 
-			# 检查是否存在部分下载的文件
+			# Check if exist any downloaded files 
 			resumePos = 0
 			if os.path.exists(localPath):
 				resumePos = os.path.getsize(localPath)
 				print(f"[Thread-{threadId}] Resuming from byte {resumePos}")
 
-			# 构建请求头，支持断点续传
+			# Build request header to support breakpoint continuous transmission
 			headers = {"User-Agent": "Mozilla/5.0"}
 			if resumePos > 0:
 				headers["Range"] = f"bytes={resumePos}-"
@@ -169,16 +170,16 @@ def downloadSingleFile(
 			req = urllib.request.Request(url, headers=headers)
 
 			with urllib.request.urlopen(req, timeout=30) as resp:
-				# 检查服务器是否支持断点续传
+				# Check whether the server supports breakpoint continuous transmission
 				if resumePos > 0 and resp.status != 206:
 					print(f"[Thread-{threadId}] Server doesn't support resume, starting from beginning")
 					resumePos = 0
 					if os.path.exists(localPath):
 						os.remove(localPath)
 
-				# 获取文件总大小
+				# Get the total file size
 				if resp.status == 206:
-					# 断点续传响应，从 Content-Range 头获取总大小
+					# Response to be transmitted on breakpoints, obtaining the total size from the Content-Range header
 					contentRange = resp.headers.get("Content-Range", "")
 					if contentRange:
 						total = int(contentRange.split("/")[-1])
@@ -193,7 +194,7 @@ def downloadSingleFile(
 				downloaded = resumePos
 				lastReported = downloaded
 
-				# 选择文件打开模式
+				# Select file opening mode
 				mode = "ab" if resumePos > 0 else "wb"
 
 				with open(localPath, mode) as fh:
@@ -214,19 +215,19 @@ def downloadSingleFile(
 								progressCallback(fileName, downloaded, total, percent)
 								lastReported = downloaded
 
-				# 验证下载完整性
+				# Verify download integrity
 				actualSize = os.path.getsize(localPath)
 
-				# 检查文件是否为空
+				# Check if the file is empty
 				if actualSize == 0:
 					raise RuntimeError("Downloaded file is empty")
 
-				# 如果知道总大小，验证是否完整
+				# If you know the total size, verify that it is complete
 				if total > 0 and actualSize != total:
-					# 文件不完整，但不删除，下次重试时可以继续
+					# The file is incomplete, but it is not deleted.  can continue when  try again next time
 					raise RuntimeError(f"File incomplete: {actualSize}/{total} bytes downloaded")
 
-				# 最终进度回调
+				# Final progress callback
 				if progressCallback:
 					progressCallback(fileName, actualSize, max(total, actualSize), 100.0)
 
@@ -235,7 +236,7 @@ def downloadSingleFile(
 
 		except urllib.error.HTTPError as err:
 			if err.code == 416:  # Range Not Satisfiable
-				# 可能是文件已经完整，检查一下
+				# Maybe the file is complete, check it
 				if os.path.exists(localPath):
 					actualSize = os.path.getsize(localPath)
 					if actualSize > 0:
@@ -249,7 +250,7 @@ def downloadSingleFile(
 		except Exception as err:
 			msg = f"Unexpected error: {err}"
 
-		# 失败处理，但不删除部分下载的文件
+		# Failed to process, but did not delete some downloaded files
 		print(f"[Thread-{threadId}] {msg} – {url}")
 		if attempt < maxRetries - 1:
 			wait = BACKOFF_BASE**attempt
@@ -361,10 +362,6 @@ def getModelFilePaths(
 	}
 
 
-# --------------------------------------------------------------------------- #
-# CLI Demo
-# --------------------------------------------------------------------------- #
-
 
 def _exampleProgress(fileName: str, done: int, total: int, pct: float) -> None:
 	"""
@@ -373,7 +370,7 @@ def _exampleProgress(fileName: str, done: int, total: int, pct: float) -> None:
 	print(f"[PROGRESS] {fileName}: {pct:5.1f}% ({done:,}/{total:,} B)")
 
 
-def main() -> None:  # pragma: no cover – CLI only
+def manualTest() -> None:  # pragma: no cover – CLI only
 	"""
 	Download the default model when executed as a script.
 	"""
@@ -390,5 +387,3 @@ def main() -> None:  # pragma: no cover – CLI only
 		print("\n⚠️	 Some files failed to download:", failed)
 
 
-if __name__ == "__main__":
-	main()
