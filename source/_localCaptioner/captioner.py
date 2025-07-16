@@ -1,11 +1,3 @@
-# -*- coding: UTF-8 -*-
-"""Lightweight ONNX Runtime Image Captioning Model.
-
-This module provides a lightweight image captioning solution using ONNX Runtime
-without PyTorch dependencies. It supports Vision Transformer (ViT) encoder and
-GPT-2 decoder models for generating descriptive captions from images.
-"""
-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2025 NV Access Limited, tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
