@@ -1921,6 +1921,24 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
+
+This option enables audio output via the Windows Audio Session API (WASAPI).
+This may improve the responsiveness of some voices.
+However, some voices might not work with the current WASAPI implementation.
+If you find that the voice you are using stops working, you may disable this option.
+
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+
+* For Microsoft Speech API version 4 voices:
+  * Audio ducking
+  * Leading silence trimming
+  * Keep audio device awake
+* For Microsoft Speech API version 5 voices:
+  * Rate boost
+  * Leading silence trimming
+  * Keep audio device awake
+
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
