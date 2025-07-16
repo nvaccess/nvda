@@ -76,7 +76,7 @@ class CaptionLocalSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
 
 	@staticmethod
-	def getParameterBound(name: str, boundType: str) -> Optional[int]:
+	def getParameterBound(name: str, boundType: str) -> int | None:
 		"""Get the bound of a parameter in the "ndtt" section of the config.
 
 		Args:
