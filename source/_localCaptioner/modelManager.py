@@ -681,8 +681,3 @@ class ModelManagerFrame(wx.Frame):
 		self.Destroy()
 
 
-if __name__ == "__main__":
-	app = wx.App()
-	frame = ModelManagerFrame()
-	frame.Show()
-	app.MainLoop()
