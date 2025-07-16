@@ -113,7 +113,7 @@ _Com_AddRef = WINFUNCTYPE(c_ulong)(1, "AddRef")
 _Com_Release = WINFUNCTYPE(c_ulong)(2, "Release")
 _ISpEventSource_GetEvents = WINFUNCTYPE(HRESULT, c_ulong, POINTER(SPEVENT), POINTER(c_ulong))(11, "GetEvents")
 
-SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
+_SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
 
 
 class _SapiEvent(SPEVENT):
