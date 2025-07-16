@@ -2645,7 +2645,7 @@ class MathSettingsPanel(SettingsPanel):
 	title = _("Math")
 	helpId = _("MathSettings")
 	panelDescription = _(
-		"The following options control the presentation of mathematical content using MathCAT."
+		"The following options control the presentation of mathematical content using MathCAT.",
 	)
 
 	def makeSettings(self, settingsSizer):
