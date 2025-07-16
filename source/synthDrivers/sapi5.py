@@ -262,7 +262,7 @@ class SynthDriverAudio(COMObject):
 
 	def ISpStreamFormat_GetFormat(self, pguidFormatId: _Pointer[GUID]) -> _Pointer[WAVEFORMATEX]:
 		# pguidFormatId is actually an out parameter
-		pguidFormatId.contents = SPDFID_WaveFormatEx
+		pguidFormatId.contents = _SPDFID_WaveFormatEx
 		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
@@ -274,7 +274,7 @@ class SynthDriverAudio(COMObject):
 		pass  # do nothing
 
 	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
-		if rguidFmtId.contents != SPDFID_WaveFormatEx:
+		if rguidFmtId.contents != _SPDFID_WaveFormatEx:
 			return
 		memmove(byref(self.waveFormat), pWaveFormatEx, sizeof(WAVEFORMATEX))
 		# Force the wave format to be 16-bit integer (which Sonic uses internally).
@@ -304,7 +304,7 @@ class SynthDriverAudio(COMObject):
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		self._writeDefaultFormat(pwfx.contents)
-		return (SPDFID_WaveFormatEx, pwfx)
+		return (_SPDFID_WaveFormatEx, pwfx)
 
 	def ISpAudio_EventHandle(self) -> int:
 		return 0
