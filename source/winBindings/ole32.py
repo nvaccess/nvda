@@ -5,7 +5,6 @@
 
 """Functions exported by ole32.dll, and supporting data structures and enumerations."""
 
-
 from ctypes import (
 	c_voidp,
 	windll,
