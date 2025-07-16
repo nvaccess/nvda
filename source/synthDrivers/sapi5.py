@@ -101,11 +101,19 @@ else:
 
 
 class _SPEventLParamType(IntEnum):
+	# https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms717255(v=vs.85)
 	UNDEFINED = 0
 	TOKEN = 1
 	OBJECT = 2
 	POINTER = 3
 	STRING = 4
+
+
+class _SPEventEnum(IntEnum):
+	# https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms717254(v=vs.85)
+	START_INPUT_STREAM = 1
+	END_INPUT_STREAM = 2
+	TTS_BOOKMARK = 4
 
 
 # Function types for calling COM methods
@@ -363,11 +371,11 @@ class SapiSink(COMObject):
 		# Get all queued events
 		eventSource = synth.tts.QueryInterface(ISpEventSource)
 		for event in _SapiEvent.enumerateFrom(eventSource):
-			if event.eEventId == 1:  # SPEI_START_INPUT_STREAM
+			if event.eEventId == _SPEventEnum.START_INPUT_STREAM:
 				self.StartStream(event.ulStreamNum, event.ullAudioStreamOffset)
-			elif event.eEventId == 2:  # SPEI_END_INPUT_STREAM
+			elif event.eEventId == _SPEventEnum.END_INPUT_STREAM:
 				self.EndStream(event.ulStreamNum, event.ullAudioStreamOffset)
-			elif event.eEventId == 4:  # SPEI_TTS_BOOKMARK
+			elif event.eEventId == _SPEventEnum.TTS_BOOKMARK:
 				self.Bookmark(
 					event.ulStreamNum,
 					event.ullAudioStreamOffset,
