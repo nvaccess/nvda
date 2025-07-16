@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Bill Dengler
+# Copyright (C) 2020-2025 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import config
+import fast_diff_match_patch
 import globalVars
 import os
 import struct
@@ -132,6 +133,35 @@ class DiffMatchPatch(DiffAlgo):
 				DiffMatchPatch._proc = None
 
 
+class DiffMatchPatchNative(DiffAlgo):
+	"""
+	A character-based diffing approach that calls diff-match-patch directly
+	(without nvda_dmp).
+	"""
+
+	_GOOD_LINE_ENDINGS = ("\n", "\r")
+
+	def _getText(self, ti: TextInfo) -> str:
+		return ti.text
+
+	def diff(self, newText: str, oldText: str) -> List[str]:
+		try:
+			outLines: List[str] = []
+			for op, text in fast_diff_match_patch.diff(oldText, newText, counts_only=False):
+				if op != "+":
+					continue
+				# Ensure a trailing newline so .splitlines() keeps the final fragment
+				if not text.endswith(self._GOOD_LINE_ENDINGS):
+					text += "\n"
+				for line in text.splitlines():
+					if line and not line.isspace():
+						outLines.append(line)
+			return outLines
+		except Exception:
+			log.exception("Exception in native diff-match-patch, falling back to difflib")
+			return _difflib.diff(newText, oldText)
+
+
 class Difflib(DiffAlgo):
 	"A line-based diffing approach in pure Python, using the Python standard library."
 
@@ -200,7 +230,8 @@ def prefer_dmp():
 	DMP is new and can be explicitly disabled by a user setting. If config
 	does not allow DMP, this function returns a Difflib instance instead.
 	"""
-	return _difflib if config.conf["terminals"]["diffAlgo"] == "difflib" else _dmp
+	diffAlgo = config.conf["terminals"]["diffAlgo"]
+	return _difflib if diffAlgo == "difflib" else _dmp_native if diffAlgo == "dmp-native" else _dmp
 
 
 def prefer_difflib():
@@ -209,8 +240,10 @@ def prefer_difflib():
 	Difflib can be explicitly disabled by a user setting. If config
 	does not allow Difflib, this function returns a DMP instance instead.
 	"""
-	return _dmp if config.conf["terminals"]["diffAlgo"] == "dmp" else _difflib
+	diffAlgo = config.conf["terminals"]["diffAlgo"]
+	return _dmp if diffAlgo == "dmp" else _dmp_native if diffAlgo == "dmp-native" else _difflib
 
 
 _difflib = Difflib()
 _dmp = DiffMatchPatch()
+_dmp_native = DiffMatchPatchNative()
