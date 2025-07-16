@@ -502,6 +502,7 @@ class SynthDriver(SynthDriver):
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
 		self._requestCompleted = False
+		self._cancellationCond = threading.Condition()
 		self._thread.start()
 
 	def terminate(self):
@@ -754,11 +755,13 @@ class SynthDriver(SynthDriver):
 				# clear the queue
 				with self._threadCond:
 					self._speakRequests.clear()
-					self._bookmarkLists.clear()
-					if self.sonicStream:
-						self.sonicStream.flush()
-						self.sonicStream.readShort()  # discard data left in stream
+				self._bookmarkLists.clear()
+				if self.sonicStream:
+					self.sonicStream.flush()
+					self.sonicStream.readShort()  # discard data left in stream
+				with self._cancellationCond:
 					self._isCancelling = False
+					self._cancellationCond.notify_all()
 
 	def speak(self, speechSequence):
 		textList = []
@@ -927,6 +930,9 @@ class SynthDriver(SynthDriver):
 			self.player.stop()  # stop the audio and stop waiting for idle()
 			with self._threadCond:  # wake up the thread
 				self._threadCond.notify()
+			with self._cancellationCond:  # wait for cancellation to complete
+				while self._isCancelling:
+					self._cancellationCond.wait()
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
 			self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
