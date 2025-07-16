@@ -41,6 +41,7 @@ from config.configFlags import (
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
@@ -2126,7 +2127,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("KeyboardSettingsAlertForSpellingErrors", self.alertForSpellingErrorsCheckBox)
 		self.alertForSpellingErrorsCheckBox.SetValue(config.conf["keyboard"]["alertForSpellingErrors"])
-		if not config.conf["documentFormatting"]["reportSpellingErrors"]:
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] == ReportSpellingErrors.DISABLE.value:
 			self.alertForSpellingErrorsCheckBox.Disable()
 
 		# Translators: This is the label for a checkbox in the
@@ -2802,11 +2803,18 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
-		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
+		self.spellingErrorsCombo = docInfoGroup.addLabeledControl(
+			# Translators: This is the label for a checkbox in the
+			# document formatting settings panel.
+			_("Spelling e&rrors"),
+			wx.Choice,
+			choices=[i.displayString for i in ReportSpellingErrors],
+		)
+		self.bindHelpEvent(
+			"reportSpellingErrors",
+			self.spellingErrorsCombo,
+		)
+		self.spellingErrorsCombo.SetSelection(config.conf["documentFormatting"]["reportSpellingErrors2"])
 
 		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
@@ -3029,7 +3037,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"] = self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"] = self.styleCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportSpellingErrors"] = self.spellingErrorsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = self.spellingErrorsCombo.GetSelection()
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
