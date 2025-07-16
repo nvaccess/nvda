@@ -72,7 +72,7 @@ def ensureModelsDirectory(basePath: str | None = None) -> str:
 	try:
 		Path(modelsDir).mkdir(parents=True, exist_ok=True)
 		# Translators: Logged when the local models directory is created / found.
-		_(f"Models directory ensured:{modelsDir} ")
+		_("Models directory ensured: {modelsDir}").format(modelsDir=modelsDir)
 		return modelsDir
 	except OSError as err:
 		raise OSError(f"Failed to create models directory {modelsDir}: {err}") from err
