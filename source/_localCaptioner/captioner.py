@@ -522,7 +522,7 @@ def benchmarkInference(
 
 
 def manualTest(imagePath: str) -> None:
-	"""manual Test captioner """
+	"""manual Test captioner"""
 	_here = os.path.dirname(__file__)
 	_modelsDir = os.path.join(_here, "..", "..", "models")
 	_modelsDir = os.path.abspath(_modelsDir)
@@ -535,7 +535,7 @@ def manualTest(imagePath: str) -> None:
 	)
 
 	print("=== Single Image Caption ===")
-	
+
 	caption1 = captioner.generate_caption(image=imagePath)
 	print(f"result: {caption1}")
 	# benchmarkInference(captioner=captioner, imagePath=imagePath)

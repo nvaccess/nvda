@@ -15,7 +15,7 @@ Example
 -------
 .. code:: python
 
-	from _localCaptioner.modelDownloader import manualTest 
+	from _localCaptioner.modelDownloader import manualTest
 	manualTest()
 """
 
@@ -156,7 +156,7 @@ def downloadSingleFile(
 		try:
 			print(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{maxRetries}): {url}")
 
-			# Check if exist any downloaded files 
+			# Check if exist any downloaded files
 			resumePos = 0
 			if os.path.exists(localPath):
 				resumePos = os.path.getsize(localPath)
@@ -362,7 +362,6 @@ def getModelFilePaths(
 	}
 
 
-
 def _exampleProgress(fileName: str, done: int, total: int, pct: float) -> None:
 	"""
 	Simple CLI progress reporter.
@@ -385,5 +384,3 @@ def manualTest() -> None:  # pragma: no cover – CLI only
 			print(f"{k}: {v}")
 	else:
 		print("\n⚠️	 Some files failed to download:", failed)
-
-
