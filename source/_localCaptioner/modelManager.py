@@ -679,5 +679,3 @@ class ModelManagerFrame(wx.Frame):
 			dlg.Destroy()
 
 		self.Destroy()
-
-
