@@ -20,6 +20,8 @@ import zipfile
 import time
 
 CROWDIN_PROJECT_ID = 598017
+POLLING_INTERVAL_SECONDS = 5
+EXPORT_TIMEOUT_SECONDS = 60 * 10  # 10 minutes
 
 
 def fetchCrowdinAuthToken() -> str:
@@ -342,7 +344,7 @@ def exportTranslations(outputDir: str, language: str | None = None):
 		elif status == "failed":
 			raise ValueError("Translation build failed")
 
-		time.sleep(5)
+		time.sleep(POLLING_INTERVAL_SECONDS)
 
 	# Download the completed build
 	print("Downloading translations archive...")
@@ -355,11 +357,12 @@ def exportTranslations(outputDir: str, language: str | None = None):
 
 	# Download and extract the ZIP file
 	zip_path = os.path.join(outputDir, zip_filename)
-	response = requests.get(download_url)
+	response = requests.get(download_url, stream=True, timeout=EXPORT_TIMEOUT_SECONDS)
 	response.raise_for_status()
 
 	with open(zip_path, "wb") as f:
-		f.write(response.content)
+		for chunk in response.iter_content(chunk_size=8192):
+			f.write(chunk)
 
 	print(f"Archive saved to {zip_path}")
 	print("Extracting translations...")
