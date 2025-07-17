@@ -5,7 +5,7 @@
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß., tianze
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -3617,6 +3617,82 @@ class RemoteSettingsPanel(SettingsPanel):
 				_remoteClient.terminate()
 
 
+class LocalCaptionerSettingsPanel(SettingsPanel):
+	"""Settings panel for Local captioner configuration.
+
+	This panel allows users to configure the local model path and
+	initialization settings for the local captioner.
+	"""
+
+	# Translators: This is the label for the local captioner settings panel.
+	title = _("Local Captioner")
+	helpId = "LocalCaptionerSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		"""Create the settings controls for the panel.
+
+		Args:
+			settingsSizer: The sizer to add settings controls to.
+		"""
+
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is a label for an edit field in the local captioner  Settings panel.
+		modelPathLabel = _("model path")
+
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=modelPathLabel)
+		groupBox = groupSizer.GetStaticBox()
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
+
+		# Translators: The label of a button to browse for a directory or a file.
+		browseText = _("Browse...")
+		# Translators: The title of the dialog presented when browsing for the directory.
+		dirDialogTitle = _("Select a directory")
+
+		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
+		self.modelPathEdit = directoryEntryControl.pathControl
+		self.modelPathEdit.Value = config.conf["captionLocal"]["localModelPath"]
+
+		# Translators: A setting in addon settings dialog.
+		self.loadModelWhenInit = sHelper.addItem(
+			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
+		)
+		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
+
+	@staticmethod
+	def getParameterBound(name: str, boundType: str) -> int | None:
+		"""Get the bound of a parameter in the "ndtt" section of the config.
+
+		Args:
+			name: The name of the parameter.
+			boundType: Either "min" or "max".
+
+		Returns:
+			The bound value if found, None otherwise.
+		"""
+		try:
+			return config.conf.getConfigValidation(("ndtt", name)).kwargs[boundType]
+		except TypeError:
+			# For older version of configObj (e.g. used in NVDA 2019.2.1)
+			return config.conf.getConfigValidationParameter(["ndtt", name], boundType)
+
+	def onSave(self) -> None:
+		"""Save the configuration settings.
+
+		Only saves if operating in the default profile to prevent
+		configuration issues with custom profiles.
+		"""
+		# Make sure we're operating in the "normal" profile
+		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
+			config.conf["captionLocal"]["localModelPath"] = self.modelPathEdit.GetValue()
+			config.conf["captionLocal"]["loadModelWhenInit"] = self.loadModelWhenInit.GetValue()
+		else:
+			log.debugWarning(
+				"No configuration saved for CaptionLocal since the current profile is not the default one.",
+			)
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -5518,6 +5594,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
+		LocalCaptionerSettingsPanel
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
@@ -5914,3 +5991,4 @@ def _isResponseUpdateMetadata(response: requests.Response) -> bool:
 	except Exception:
 		return False
 	return True
+
