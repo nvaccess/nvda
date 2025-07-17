@@ -998,6 +998,7 @@ class SynthDriver(SynthDriver):
 					log.debug("Disabling audio ducking due to setting output audio state to stop")
 				self._audioDucker.disable()
 			self._bookmarkLists.clear()
+			self._isCancelling = False
 
 	def pause(self, switch: bool):
 		if self.player:
