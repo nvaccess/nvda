@@ -5594,7 +5594,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
-		LocalCaptionerSettingsPanel
+		LocalCaptionerSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
@@ -5991,4 +5991,3 @@ def _isResponseUpdateMetadata(response: requests.Response) -> bool:
 	except Exception:
 		return False
 	return True
-

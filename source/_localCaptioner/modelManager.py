@@ -14,7 +14,6 @@ except ImportError:
 	from modelDownloader import downloadModelsMultithreaded, ensureModelsDirectory
 
 
-
 from logHandler import log
 
 
@@ -553,7 +552,7 @@ class ModelManagerFrame(wx.Frame):
 			# Determine remote host
 			remoteHost = "hf-mirror.com" if self.useMirror else "huggingface.co"
 
-			# Translators: Log message for remote host to download models 
+			# Translators: Log message for remote host to download models
 			self.log(_("Remote host: {host}").format(host=remoteHost))
 			# Translators: Log message for model name
 			self.log(_("Model name: {name}").format(name=self.modelName))

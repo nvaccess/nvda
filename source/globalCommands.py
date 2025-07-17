@@ -3451,7 +3451,7 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateRemoteAccessSettings(self, gesture: "inputCore.InputGesture"):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
-	
+
 	@script(
 		# Translators: Input help mode message for go to local captioner settings command.
 		description=_("Shows the local captioner settings"),

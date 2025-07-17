@@ -289,7 +289,9 @@ def downloadModelsMultithreaded(
 	if not filesToDownload:
 		raise ValueError("filesToDownload cannot be empty")
 
-	log.info(f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}")
+	log.info(
+		f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}"
+	)
 
 	localModelDir = os.path.join(modelsDir, modelName)
 	successful: list[str] = []
