@@ -33,7 +33,6 @@ from pathlib import Path
 from select import select
 from itertools import count
 from typing import Any, Final
-from unittest import mock
 
 import cffi  # noqa # required for cryptography
 from cryptography import x509
