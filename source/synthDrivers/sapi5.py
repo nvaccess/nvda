@@ -976,8 +976,6 @@ class SynthDriver(SynthDriver):
 				tempAudioDucker.disable()
 
 	def cancel(self):
-		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
-		# Therefore  instruct the audio player to stop first, before interrupting and purging any remaining speech.
 		self._isCancelling = True
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
@@ -987,6 +985,9 @@ class SynthDriver(SynthDriver):
 				while self._isCancelling:
 					self._cancellationCond.wait()
 		if self.ttsAudioStream:
+			# For legacy audio
+			# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
+			# Therefore instruct the audio player to stop first, before interrupting and purging any remaining speech.
 			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
 			self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 			if self._audioDucker:
@@ -1002,6 +1003,7 @@ class SynthDriver(SynthDriver):
 		# (e.g. takes more than half a second) or does not work at all.
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
+			# For legacy audio
 			oldState = self.ttsAudioStream.GetStatus().State
 			if switch and oldState == _SPAudioState.RUN:
 				# pausing
