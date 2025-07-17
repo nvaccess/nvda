@@ -26,9 +26,8 @@ from collections import OrderedDict, deque
 import threading
 from typing import TYPE_CHECKING, NamedTuple, Generator
 import audioDucking
+from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
 from comInterfaces.SpeechLib import (
-	_LARGE_INTEGER,
-	_ULARGE_INTEGER,
 	GUID,
 	ISpAudio,
 	ISpEventSource,
@@ -94,10 +93,18 @@ class _SpeakRequest(NamedTuple):
 if TYPE_CHECKING:
 	from ctypes import _Pointer
 else:
-
+	# ctypes._Pointer is not available at run time.
+	# A custom class is created to make `_Pointer[type]` still work.
 	class _Pointer:
 		def __class_getitem__(cls, item: type) -> type:
 			return POINTER(item)
+
+
+# The following types are kept to prevent breaking the API.
+# They are deprecated and no longer used.
+LP_c_ubyte = _Pointer[c_ubyte]
+LP_c_ulong = _Pointer[c_ulong]
+LP__ULARGE_INTEGER = _Pointer[_ULARGE_INTEGER]
 
 
 class _SPEventLParamType(IntEnum):
@@ -125,6 +132,8 @@ _SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
 
 
 class _SapiEvent(SPEVENT):
+	"""Enhanced version of the SPEVENT structure that supports freeing lParam data automatically."""
+
 	def clear(self) -> None:
 		"""Clear and free related data."""
 		if self.elParamType in (_SPEventLParamType.TOKEN, _SPEventLParamType.OBJECT):
@@ -217,6 +226,7 @@ class SynthDriverAudioStream(COMObject):
 		pcbWritten: _Pointer[c_ulong],
 	) -> int:
 		"""This is called when SAPI wants to write (output) a wave data chunk.
+
 		:param pv: A pointer to the first wave data byte.
 		:param cb: The number of bytes to write.
 		:param pcbWritten: A pointer to a variable where the actual number of bytes written will be stored.
@@ -242,12 +252,13 @@ class SynthDriverAudioStream(COMObject):
 	def IStream_RemoteSeek(
 		self,
 		this: int,
-		dlibMove: _LARGE_INTEGER,
+		dlibMove: _LARGE_INTEGER,  # same as c_longlong
 		dwOrigin: int,
-		plibNewPosition: _Pointer[_ULARGE_INTEGER],
+		plibNewPosition: _Pointer[_ULARGE_INTEGER],  # same as pointer to c_ulonglong
 	) -> int:
 		"""This is called when SAPI wants to get the current stream position.
 		Seeking to another position is not supported.
+
 		:param dlibMove: The displacement to be added to the location indicated by the dwOrigin parameter.
 			Only 0 is supported.
 		:param dwOrigin: The origin for the displacement specified in dlibMove.
@@ -269,6 +280,14 @@ class SynthDriverAudioStream(COMObject):
 		pass
 
 	def ISpStreamFormat_GetFormat(self, pguidFormatId: _Pointer[GUID]) -> _Pointer[WAVEFORMATEX]:
+		"""This is called when SAPI wants to get the current wave format.
+
+		:param pguidFormatId: Receives the current format GUID.
+			Should be SPDFID_WaveFormatEx for WAVEFORMATEX formats.
+			This parameter is incorrectly marked as "in" by comtypes,
+			but is actually an out parameter.
+		:returns: Pointer to a WAVEFORMATEX structure that is allocated by CoTaskMemAlloc.
+		"""
 		# pguidFormatId is actually an out parameter
 		pguidFormatId.contents = _SPDFID_WaveFormatEx
 		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
@@ -282,6 +301,12 @@ class SynthDriverAudioStream(COMObject):
 		pass  # do nothing
 
 	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
+		"""This is called when SAPI wants to tell us what wave format we should use.
+		We can get the best format for the specific voice here.
+
+		:param rguidFmtId: Format GUID. Should be SPDFID_WaveFormatEx.
+		:param pWaveFormatEx: Pointer to a WAVEFORMATEX structure.
+			We should copy the data to our own structure to keep the format data."""
 		if rguidFmtId.contents != _SPDFID_WaveFormatEx:
 			return
 		memmove(byref(self.waveFormat), pWaveFormatEx, sizeof(WAVEFORMATEX))
@@ -298,7 +323,7 @@ class SynthDriverAudioStream(COMObject):
 
 	@staticmethod
 	def _writeDefaultFormat(wfx: WAVEFORMATEX) -> None:
-		# default format: 48kHz 16-bit stereo
+		"""Put the default format into wfx. The default format is 48kHz 16-bit stereo."""
 		wfx.wFormatTag = nvwave.WAVE_FORMAT_PCM
 		wfx.cbSize = 0
 		wfx.nChannels = 2
@@ -308,6 +333,10 @@ class SynthDriverAudioStream(COMObject):
 		wfx.nAvgBytesPerSec = 48000 * 4
 
 	def ISpAudio_GetDefaultFormat(self) -> tuple[GUID, _Pointer[WAVEFORMATEX]]:
+		"""Returns the default format that is guaranteed to work on this audio object.
+
+		:returns: A tuple of a GUID, which should always be SPDFID_WaveFormatEx,
+			and a pointer to a WAVEFORMATEX structure, allocated by CoTaskMemAlloc."""
 		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
@@ -318,12 +347,20 @@ class SynthDriverAudioStream(COMObject):
 		return 0
 
 	def ISpNotifySource_SetNotifySink(self, pNotifySink: _Pointer[ISpNotifySink]) -> None:
+		"""SAPI will pass in an ISpNotifySink pointer to be notified of events.
+		We just need to pass the events we have received back to the sink."""
 		self._notifySink = pNotifySink
 
 	def ISpNotifySource_GetNotifyEventHandle(self) -> int:
 		return 0
 
 	def ISpEventSource_SetInterest(self, ullEventInterest: int, ullQueuedInterest: int) -> None:
+		"""SAPI uses this to tell us the types of events it is interested in.
+		We just ignore this and assume that it's interested in everything.
+
+		:param ullEventInterest: Types of events that should cause ISpNotifySink::Notify() to be called.
+		:param ullQueuedInterest: Types of events than should be stored in the event queue
+			and can be retrieved later with ISpEventSource::GetEvents()."""
 		pass  # do nothing
 
 	def ISpEventSource_GetEvents(
@@ -333,6 +370,14 @@ class SynthDriverAudioStream(COMObject):
 		pEventArray: _Pointer[SPEVENT],
 		pulFetched: _Pointer[c_ulong],
 	) -> None:
+		"""Send the events that was passed in via AddEvents back to the event sink.
+		Events that has been retrieved will be removed.
+
+		:param ulCount: The maximum number of events pEventArray can hold.
+		:param pEventArray: Pointer to an array of SPEVENT structures
+			that is used to receive the event data.
+		:param pulFetched: Used to store the actual number of events fetched.
+			This pointer can be NULL when ulCount is 1."""
 		countToFetch = min(ulCount, len(self._events))
 		if pulFetched:
 			pulFetched[0] = countToFetch
@@ -340,10 +385,19 @@ class SynthDriverAudioStream(COMObject):
 			self._events.popleft().copyTo(pEventArray[i])
 
 	def ISpEventSink_AddEvents(self, pEventArray: _Pointer[SPEVENT], ulCount: int) -> None:
+		"""SAPI will send all events to our ISpAudio implementation,
+		such as StartStream events and Bookmark events.
+		To let the ISpVoice client get notified as well, we should store those events,
+		then pass the events to the ISpNotifySink we got earlier.
+
+		:param pEventArray: Pointer to an array of SPEVENT structures.
+		:param ulCount: Number of events."""
+		# Store the events
 		for i in range(ulCount):
 			event = _SapiEvent()
 			event.copyFrom(pEventArray[i])
 			self._events.append(event)
+		# Notify the sink to check the events
 		if self._notifySink:
 			self._notifySink.Notify()
 
