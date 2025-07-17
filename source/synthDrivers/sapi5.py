@@ -63,6 +63,9 @@ from speech.commands import (
 from ._sonic import SonicStream, initialize as sonicInitialize
 
 
+windll.ole32.CoTaskMemAlloc.restype = c_void_p
+
+
 class _SPAudioState(IntEnum):
 	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
 	CLOSED = 0
