@@ -2769,7 +2769,9 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"])
 
 		# Translators: label for pull down to specify a subject area (Geometry, Calculus, ...)
-		subjectAreaText = pgettext("math", "Subject area to be used when it cannot be determined automatically"),
+		subjectAreaText = (
+			pgettext("math", "Subject area to be used when it cannot be determined automatically"),
+		)
 		# Translators: a generic (non-specific) math subject area
 		subjectAreaOptions: list[str] = [pgettext("math", "General")]
 		self.subjectAreaList = speechGroup.addLabeledControl(
@@ -2812,7 +2814,7 @@ class MathSettingsPanel(SettingsPanel):
 			# Translators: "Character" moves around by character, automatically moving into fractions, etc
 			pgettext("math", "Character"),
 		]
-		self.navModeList= speechGroup.addLabeledControl(
+		self.navModeList = speechGroup.addLabeledControl(
 			navModeText,
 			wx.Choice,
 			choices=navModeOptions,
@@ -2863,7 +2865,10 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=navSpeechAmountOptions,
 		)
-		self.bindHelpEvent("Select whether you want a terse or verbose reading of navigation commands", self.navSpeechAmountList)
+		self.bindHelpEvent(
+			"Select whether you want a terse or verbose reading of navigation commands",
+			self.navSpeechAmountList,
+		)
 		self.navSpeechAmountList.SetSelection(config.conf["math"]["navigation"]["navigationSpeech"])
 
 		# Translators: label for pull down to specify how math will be copied to the clipboard
@@ -2893,7 +2898,7 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(brailleGroup)
 
 		# Translators: label for pull down to specify which braille code to use
-		brailleMathCodeText = pgettext("math", "Braille math code for refreshable displays:"),
+		brailleMathCodeText = (pgettext("math", "Braille math code for refreshable displays:"),)
 		brailleMathCodeOptions: list[str] = ["xxxxxxxxxxx"]
 		self.brailleMathCodeList = navGroup.addLabeledControl(
 			brailleMathCodeText,
@@ -2923,6 +2928,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Select braille highlights option", self.navCopyAsList)
 		self.brailleMathCodeList.SetSelection(config.conf["math"]["braille"]["highlights"])
+
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
