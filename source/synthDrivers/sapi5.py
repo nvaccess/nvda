@@ -474,7 +474,7 @@ class SapiSink(COMObject):
 		if synth.player:
 			# notify the thread
 			with synth._threadCond:
-				synth._requestCompleted = True
+				synth._isCompleted = True
 				synth._threadCond.notify()
 		if synth._audioDucker:
 			if audioDucking._isDebug():
@@ -555,8 +555,8 @@ class SynthDriver(SynthDriver):
 		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
-		self._requestCompleted = False
-		self._cancellationCond = threading.Condition()
+		self._isCompleted = False  # True when the last speak request reaches EndStream
+		self._cancellationCond = threading.Condition()  # used to wait for cancellation to complete
 		self._thread.start()
 
 	def terminate(self):
@@ -762,6 +762,12 @@ class SynthDriver(SynthDriver):
 			out.append(outAfter)
 		return " ".join(out)
 
+	def _requestsAvailable(self) -> bool:
+		return self._speakRequests or self._isCancelling or self._isTerminating
+
+	def _requestCompleted(self) -> bool:
+		return self._isCompleted or self._isCancelling or self._isTerminating
+
 	def _speakThread(self):
 		# Handles speak requests in the queue one by one.
 		# Only one request will be processed (spoken) at a time.
@@ -772,23 +778,16 @@ class SynthDriver(SynthDriver):
 		# Here we manage the queue ourselves, and call WavePlayer.idle() here
 		# to avoid blocking the audio thread or the main thread.
 
-		# condition variable predicates
-		def requestsAvailable() -> bool:
-			return self._speakRequests or self._isCancelling or self._isTerminating
-
-		def requestCompleted() -> bool:
-			return self._requestCompleted or self._isCancelling or self._isTerminating
-
 		request: _SpeakRequest | None = None
 
 		# Process requests one by one.
 		while not self._isTerminating:
 			# Fetch the next request
 			with self._threadCond:
-				self._threadCond.wait_for(requestsAvailable)
+				self._threadCond.wait_for(self._requestsAvailable)
 				if self._speakRequests:
 					request = self._speakRequests.popleft()
-					self._requestCompleted = False
+					self._isCompleted = False
 			if request is not None:  # There is one request
 				text, bookmarks = request
 				self._bookmarkLists.append(bookmarks)
@@ -796,12 +795,12 @@ class SynthDriver(SynthDriver):
 					# Process one request, and wait for it to finish
 					self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
 					with self._threadCond:
-						self._threadCond.wait_for(requestCompleted)
+						self._threadCond.wait_for(self._requestCompleted)
 				except Exception:
 					self._bookmarkLists.pop()
 					log.error("Error speaking", exc_info=True)
 				request = None
-				if not requestsAvailable():
+				if not self._requestsAvailable():
 					# No more requests, so call idle().
 					self.player.idle()
 			if self._isCancelling:
