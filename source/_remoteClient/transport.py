@@ -445,12 +445,7 @@ class TCPTransport(Transport):
 
 		ctx.load_default_certs()
 
-		# Prevent pip_system_certs from patching wrap_socket due to a bug.
-		with mock.patch(
-			"pip._vendor.truststore._api._verify_peercerts",
-			lambda *a, **kw: None,
-		):
-			serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
+		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
 		return serverSock
 
 	def getpeercert(
