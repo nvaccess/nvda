@@ -443,6 +443,7 @@ class SapiSink(COMObject):
 			if audioDucking._isDebug():
 				log.debug("Enabling audio ducking due to starting speech stream")
 			synth._audioDucker.enable()
+		synth.isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
@@ -470,6 +471,7 @@ class SapiSink(COMObject):
 			for bookmark in synth._bookmarkLists[0]:
 				synthIndexReached.notify(synth=synth, index=bookmark)
 			synth._bookmarkLists.pop()
+		synth.isSpeaking = False
 		synthDoneSpeaking.notify(synth=synth)
 		if synth.player:
 			# notify the thread
@@ -547,6 +549,7 @@ class SynthDriver(SynthDriver):
 		self._useWasapi = True
 		self.player: nvwave.WavePlayer | None = None
 		self.sonicStream: SonicStream | None = None
+		self.isSpeaking = False  # Deprecated, preserved to not break the API
 		self._isCancelling = False
 		self._isTerminating = False
 		self._rateBoost = False
