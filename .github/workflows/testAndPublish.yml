@@ -509,6 +509,7 @@ jobs:
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
           -f "payload[NVDA_ARTIFACT_ID]=${{ needs.createLauncher.outputs.launcherArtifactId }}" \
+          -f "payload[SYMBOLS_ARTIFACT_ID]=${{ needs.createSymbols.outputs.symbolsArtifactId }}" \
           -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
           -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
           -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
