@@ -14,13 +14,8 @@ except ImportError:
 	from modelDownloader import downloadModelsMultithreaded, ensureModelsDirectory
 
 
-try:
-	from logHandler import log
-	import addonHandler
 
-	addonHandler.initTranslation()
-except:
-	_ = format
+from logHandler import log
 
 
 class AdvancedSettingsDialog(wx.Dialog):
@@ -161,8 +156,10 @@ class AdvancedSettingsDialog(wx.Dialog):
 			event: Button click event
 		"""
 		# Translators: Dialog title for adding a file
+		enterFilePathText = _("Enter file path:")
 		# Translators: Prompt text for entering file path
-		dlg = wx.TextEntryDialog(self, _("Enter file path:"), _("Add File"))
+		addFileText = _("Add File")
+		dlg = wx.TextEntryDialog(self, enterFilePathText, addFileText)
 		if dlg.ShowModal() == wx.ID_OK:
 			filePath = dlg.GetValue().strip()
 			if filePath and filePath not in self.filesList:
@@ -528,7 +525,7 @@ class ModelManagerFrame(wx.Frame):
 			# Use gentle notification instead of message box
 			SoundNotification.playError()
 			# Translators: Error message for no files selected
-			self.log(_("❌ Error: Please select files to download in Advanced Settings"))
+			self.log(_("Error: Please select files to download in Advanced Settings"))
 			# Translators: Status message for no files selected
 			self.updateStatus(_("Error: No files selected"))
 			return
@@ -556,7 +553,7 @@ class ModelManagerFrame(wx.Frame):
 			# Determine remote host
 			remoteHost = "hf-mirror.com" if self.useMirror else "huggingface.co"
 
-			# Translators: Log message for remote host
+			# Translators: Log message for remote host to download models 
 			self.log(_("Remote host: {host}").format(host=remoteHost))
 			# Translators: Log message for model name
 			self.log(_("Model name: {name}").format(name=self.modelName))
@@ -608,7 +605,7 @@ class ModelManagerFrame(wx.Frame):
 			# All successful
 			# Translators: Success message for all files downloaded
 			self.log(
-				_("✅ All files downloaded successfully! ({success}/{total})").format(
+				_("All files downloaded successfully! ({success}/{total})").format(
 					success=len(successful),
 					total=total,
 				),
@@ -634,7 +631,7 @@ class ModelManagerFrame(wx.Frame):
 			# Partial success
 			# Translators: Warning message for partial download success
 			self.log(
-				_("⚠️ Partial download success ({success}/{total})").format(
+				_("Partial download success ({success}/{total})").format(
 					success=len(successful),
 					total=total,
 				),
@@ -665,11 +662,13 @@ class ModelManagerFrame(wx.Frame):
 		if self.downloadThread and self.downloadThread.is_alive():
 			self.downloadCancelled = True
 			# Translators: Confirmation dialog message for exit during download
+			confirmationMSg = _("Download is in progress. Are you sure you want to exit?")
 			# Translators: Confirmation dialog title for exit
+			confirmText = _("Confirm Exit")
 			dlg = wx.MessageDialog(
 				self,
-				_("Download is in progress. Are you sure you want to exit?"),
-				_("Confirm Exit"),
+				confirmationMSg,
+				confirmText,
 				wx.YES_NO | wx.ICON_QUESTION,
 			)
 			if dlg.ShowModal() != wx.ID_YES:

@@ -32,7 +32,7 @@ import api
 
 from .captioner import ImageCaptioner
 from .modelManager import ModelManagerFrame
-from .panel import CaptionLocalSettingsPanel
+
 
 try:
 	import addonHandler
@@ -131,15 +131,6 @@ class LocalCaptioner:
 		# Load model when initializing plugin (may cause high memory usage)
 		if loadModelWhenInit:
 			threading.Thread(target=self._loadModel, daemon=True).start()
-
-		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(CaptionLocalSettingsPanel)
-
-	def terminate(self) -> None:
-		"""Clean up resources when the plugin is terminated."""
-		try:
-			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(CaptionLocalSettingsPanel)
-		except (ValueError, AttributeError):
-			pass
 
 	def runCaption(self, gesture) -> None:
 		# def script_runCaption(self) -> None:

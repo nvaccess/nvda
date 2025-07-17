@@ -30,13 +30,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Callable
 
-try:
-	import addonHandler
-
-	addonHandler.initTranslation()
-except:
-	_ = format
-	pass
+from logHandler import log
 
 
 _: Callable[[str], str]  # translation alias injected by NVDA
@@ -71,8 +65,8 @@ def ensureModelsDirectory(basePath: str | None = None) -> str:
 
 	try:
 		Path(modelsDir).mkdir(parents=True, exist_ok=True)
-		# Translators: Logged when the local models directory is created / found.
-		_("Models directory ensured: {modelsDir}").format(modelsDir=modelsDir)
+
+		log.info("Models directory ensured: {modelsDir}".format(modelsDir=modelsDir))
 		return modelsDir
 	except OSError as err:
 		raise OSError(f"Failed to create models directory {modelsDir}: {err}") from err
@@ -139,7 +133,7 @@ def downloadSingleFile(
 				if remoteSize > 0 and localSize == remoteSize:
 					if progressCallback:
 						progressCallback(fileName, localSize, localSize, 100.0)
-					print(f"[Thread-{threadId}] File already complete: {localPath}")
+					log.info(f"[Thread-{threadId}] File already complete: {localPath}")
 					return True, f"File already complete: {localPath}"
 				elif remoteSize > 0 and localSize > remoteSize:
 					# Local files are larger than remote files and may be corrupted. Delete and download again.
@@ -149,18 +143,18 @@ def downloadSingleFile(
 			if progressCallback:
 				size = os.path.getsize(localPath)
 				progressCallback(fileName, size, size, 100.0)
-			print(f"[Thread-{threadId}] File already exists: {localPath}")
+			log.info(f"[Thread-{threadId}] File already exists: {localPath}")
 			return True, f"File already exists: {localPath}"
 
 	for attempt in range(maxRetries):
 		try:
-			print(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{maxRetries}): {url}")
+			log.info(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{maxRetries}): {url}")
 
 			# Check if exist any downloaded files
 			resumePos = 0
 			if os.path.exists(localPath):
 				resumePos = os.path.getsize(localPath)
-				print(f"[Thread-{threadId}] Resuming from byte {resumePos}")
+				log.info(f"[Thread-{threadId}] Resuming from byte {resumePos}")
 
 			# Build request header to support breakpoint continuous transmission
 			headers = {"User-Agent": "Mozilla/5.0"}
@@ -172,7 +166,7 @@ def downloadSingleFile(
 			with urllib.request.urlopen(req, timeout=30) as resp:
 				# Check whether the server supports breakpoint continuous transmission
 				if resumePos > 0 and resp.status != 206:
-					print(f"[Thread-{threadId}] Server doesn't support resume, starting from beginning")
+					log.info(f"[Thread-{threadId}] Server doesn't support resume, starting from beginning")
 					resumePos = 0
 					if os.path.exists(localPath):
 						os.remove(localPath)
@@ -189,7 +183,7 @@ def downloadSingleFile(
 					total = int(resp.headers.get("Content-Length", "0"))
 
 				if total:
-					print(f"[Thread-{threadId}] Total file size: {total:,} bytes")
+					log.info(f"[Thread-{threadId}] Total file size: {total:,} bytes")
 
 				downloaded = resumePos
 				lastReported = downloaded
@@ -231,7 +225,7 @@ def downloadSingleFile(
 				if progressCallback:
 					progressCallback(fileName, actualSize, max(total, actualSize), 100.0)
 
-				print(f"[Thread-{threadId}] Successfully downloaded: {localPath}")
+				log.info(f"[Thread-{threadId}] Successfully downloaded: {localPath}")
 				return True, "Download completed"
 
 		except urllib.error.HTTPError as err:
@@ -240,7 +234,7 @@ def downloadSingleFile(
 				if os.path.exists(localPath):
 					actualSize = os.path.getsize(localPath)
 					if actualSize > 0:
-						print(f"[Thread-{threadId}] File appears to be complete: {localPath}")
+						log.info(f"[Thread-{threadId}] File appears to be complete: {localPath}")
 						if progressCallback:
 							progressCallback(fileName, actualSize, actualSize, 100.0)
 						return True, "Download completed"
@@ -251,10 +245,10 @@ def downloadSingleFile(
 			msg = f"Unexpected error: {err}"
 
 		# Failed to process, but did not delete some downloaded files
-		print(f"[Thread-{threadId}] {msg} – {url}")
+		log.info(f"[Thread-{threadId}] {msg} – {url}")
 		if attempt < maxRetries - 1:
 			wait = BACKOFF_BASE**attempt
-			print(f"[Thread-{threadId}] Waiting {wait}s before retry…")
+			log.info(f"[Thread-{threadId}] Waiting {wait}s before retry…")
 			time.sleep(wait)
 		else:
 			return False, msg
@@ -295,11 +289,7 @@ def downloadModelsMultithreaded(
 	if not filesToDownload:
 		raise ValueError("filesToDownload cannot be empty")
 
-	print(
-		_(
-			f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}",
-		),
-	)
+	log.info(f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}")
 
 	localModelDir = os.path.join(modelsDir, modelName)
 	successful: list[str] = []
@@ -323,20 +313,20 @@ def downloadModelsMultithreaded(
 				ok, _msg = future.result()
 				if ok:
 					successful.append(filePath)
-					print("✓ " + filePath)
+					log.info("✓ " + filePath)
 				else:
 					failed.append(filePath)
-					print("✗ " + filePath)
+					log.info("✗ " + filePath)
 			except Exception as err:  # noqa: BLE001
 				failed.append(filePath)
-				print(f"✗ {filePath} – {err}")
+				log.info(f"✗ {filePath} – {err}")
 
 	# Summary
-	print("\n=== Download Summary ===")
-	print(f"Total: {len(filesToDownload)}")
-	print(f"Successful: {len(successful)}")
-	print(f"Failed: {len(failed)}")
-	print(f"\nLocal model directory: {localModelDir}")
+	log.info("\n=== Download Summary ===")
+	log.info(f"Total: {len(filesToDownload)}")
+	log.info(f"Successful: {len(successful)}")
+	log.info(f"Failed: {len(failed)}")
+	log.info(f"\nLocal model directory: {localModelDir}")
 
 	return successful, failed
 
@@ -366,7 +356,7 @@ def _exampleProgress(fileName: str, done: int, total: int, pct: float) -> None:
 	"""
 	Simple CLI progress reporter.
 	"""
-	print(f"[PROGRESS] {fileName}: {pct:5.1f}% ({done:,}/{total:,} B)")
+	log.info(f"[PROGRESS] {fileName}: {pct:5.1f}% ({done:,}/{total:,} B)")
 
 
 def manualTest() -> None:  # pragma: no cover – CLI only
@@ -379,8 +369,8 @@ def manualTest() -> None:  # pragma: no cover – CLI only
 		progressCallback=_exampleProgress,
 	)
 	if not failed:
-		print("\n🎉	All files downloaded successfully!")
+		log.info("\n🎉	All files downloaded successfully!")
 		for k, v in getModelFilePaths().items():
-			print(f"{k}: {v}")
+			log.info(f"{k}: {v}")
 	else:
-		print("\n⚠️	 Some files failed to download:", failed)
+		log.info("\n⚠️	 Some files failed to download:", failed)
