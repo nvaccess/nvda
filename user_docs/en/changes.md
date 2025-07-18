@@ -21,7 +21,26 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 
+#### API Breaking Changes
+
+* `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
+Most API consumers should not be impacted by this change.
+Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
+
 #### Deprecations
+
+* `NVDAHelper.versionedLibPath` is deprecated.
+Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.generateBeep` is deprecated.
+Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
+* `NVDAHelper.VBuf_getTextInRange` is deprecated.
+Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
+* `NVDAHelper.onSsmlMarkReached` is deprecated.
+Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
+* `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
+Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
+* `nvwave.WAVEFORMATEX` is deprecated.
+Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 
 ## 2025.2
 

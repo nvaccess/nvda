@@ -12,9 +12,7 @@ from typing import (
 import comtypes.client
 import ctypes
 from comtypes import COMError
-import oleTypes
 import colors
-import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -34,6 +32,8 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+import NVDAHelper.localLib
+
 
 selOffsetsAtLastCaretEvent = None
 
@@ -834,23 +834,25 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if label and not label.isspace():
 			return label
 		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
+		text = comtypes.BSTR()
 		try:
-			dataObj = o.QueryInterface(oleTypes.IDataObject)
-		except comtypes.COMError:
-			dataObj = None
-		if dataObj:
-			text = comtypes.BSTR()
-			NVDAHelper.localLib.getOleClipboardText(dataObj, ctypes.byref(text))
+			NVDAHelper.localLib.getOleClipboardText(o, ctypes.byref(text))
+		except WindowsError:
+			pass
+		else:
 			label = text.value
 		if label:
 			return label
 		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
+		userType = comtypes.BSTR()
 		try:
-			oleObj = o.QueryInterface(oleTypes.IOleObject)
-			label = oleObj.GetUserType(1)
-		except comtypes.COMError:
+			NVDAHelper.localLib.getOleUserType(o, 0, ctypes.byref(userType))
+		except WindowsError:
 			pass
-		return label
+		else:
+			label = userType.value
+		if label:
+			return label
 
 	def _getTextAtRange(self, rangeObj):
 		embedRangeObj = None

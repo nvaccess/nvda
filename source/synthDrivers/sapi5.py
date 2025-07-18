@@ -4,7 +4,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import POINTER, c_ubyte, c_ulong, c_wchar_p, cast, windll, _Pointer
+from ctypes import (
+	POINTER,
+	c_ubyte,
+	c_ulong,
+	c_wchar_p,
+	cast,
+	_Pointer,
+)
 from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
@@ -21,6 +28,7 @@ import config
 from logHandler import log
 import weakref
 import languageHandler
+import winBindings.ole32
 
 from speech.commands import (
 	IndexCommand,
@@ -186,7 +194,7 @@ class SapiSink(COMObject):
 				pUnk = cast(event.lParam, POINTER(IUnknown))
 				del pUnk
 			elif event.elParamType == 3 or event.elParamType == 4:  # pointer or string
-				windll.ole32.CoTaskMemFree(event.lParam)
+				winBindings.ole32.CoTaskMemFree(event.lParam)
 
 	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
