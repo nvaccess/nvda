@@ -58,7 +58,11 @@ function windowOnClick(e) {
 	if (target.tagName == 'A') {
 		// If clicked on a link, open with the system default browser,
 		// instead of in a new IE window.
-		new ActiveXObject('WScript.Shell').Run(target.href);
+		try {
+			new ActiveXObject('WScript.Shell').Run(target.href);
+		} catch (err) {
+			return;  // fallback to standard behavior
+		}
 		return false;  // cancels default processing
 	}
 }
