@@ -5,6 +5,7 @@ Write-Output $pythonVersion
 if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release-")) {
 	# Strip "release-" prefix.
 	$version = $env:GITHUB_REF_NAME.Substring(8)
+	$release = 1
 	Write-Output "release=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 	if ($env:GITHUB_REF_TYPE -eq "tag" -and ($env:GITHUB_REF_NAME.Contains("rc") -or $env:GITHUB_REF_NAME.Contains("beta"))) {
 		$versionType = "beta"
