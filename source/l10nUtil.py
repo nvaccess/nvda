@@ -303,7 +303,7 @@ def exportTranslations(outputDir: str, language: str | None = None):
 
 	requestData = {
 		# Avoids build warning "Warning: line 392 contained a corrupt empty translation. Using source"
-		"skipUntranslatedStrings": True,
+		"skipUntranslatedStrings": False,
 		"skipUntranslatedFiles": False,
 		"exportApprovedOnly": False,
 	}
