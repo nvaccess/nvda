@@ -5,11 +5,11 @@
 
 import sys
 
-Import("env", "outputDir", "sourceDir")
+Import("env", "userDocsDir", "sourceDir")
 
 env = env.Clone()
 
-devDocsOutputDir = outputDir.Dir("devDocs")
+devDocsOutputDir = userDocsDir.Dir("devDocs")
 
 # Build the developer guide and move it to the output directory
 mdFile = env.File("developerGuide.md")
@@ -92,3 +92,6 @@ sphinxHtml = env.Command(
 devDocs_nvda = env.Command(devDocsOutputDir.Dir("NVDA"), sphinxHtml, Move("$TARGET", "$SOURCE"))
 env.Alias("devDocs", [devGuide, devDocs_nvda])
 env.Clean("devDocs", [devGuide, devDocs_nvda])
+
+# Return the developer docs targets so they can be used as dependencies
+Return(["devGuide"])
