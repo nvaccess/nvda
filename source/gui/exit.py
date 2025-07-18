@@ -163,6 +163,14 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
 		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
 			if updateCheck:
+				from _remoteClient import _remoteClient
+
+				if (
+					_remoteClient is not None
+					and _remoteClient.isConnectedAsFollower
+					and not updateCheck._warnAndConfirmIfUpdatingRemotely()
+				):
+					return
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame
