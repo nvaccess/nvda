@@ -572,8 +572,11 @@ class _PoChecker:
 			return False
 		return True
 
-	RE_UNNAMED_PERCENT = re.compile(r"(?<!%)%[.\d]*[a-zA-Z]")
+	# e.g. %s %d %%
+	RE_UNNAMED_PERCENT = re.compile(r"(?<!%)%[.\d]*[a-zA-Z%]")
+	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
+	# e.g. {name} {name:format}
 	RE_FORMAT = re.compile(r"(?<!{){([^{}:]+):?[^{}]*}")
 
 	def _getInterpolations(self, text: str) -> tuple[list[str], set[str], set[str]]:
