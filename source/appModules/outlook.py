@@ -45,6 +45,7 @@ import languageHandler
 from typing import Generator
 import documentBase
 import browseMode
+import vision
 
 PR_LAST_VERB_EXECUTED = 0x10810003
 VERB_REPLYTOSENDER = 102
@@ -341,6 +342,10 @@ class AutoCompleteListItem(Window):
 			if not text:
 				text = self.parent.name
 			ui.message(text)
+
+			if vision.handler:
+				vision.handler.handleGainFocus(self)
+			api.setNavigatorObject(self)
 
 
 class CalendarView(IAccessible):
