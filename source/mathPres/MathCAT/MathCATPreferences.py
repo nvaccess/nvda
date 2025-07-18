@@ -5,7 +5,6 @@ import yaml
 import os
 import glob
 import webbrowser
-import gettext
 from logHandler import log  # logging
 from languageHandler import getLanguageDescription
 from collections.abc import Callable

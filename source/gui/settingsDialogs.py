@@ -2654,6 +2654,7 @@ class MathSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization
+
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
@@ -2771,7 +2772,9 @@ class MathSettingsPanel(SettingsPanel):
 		# self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"])
 
 		# Translators: label for pull down to specify a subject area (Geometry, Calculus, ...)
-		subjectAreaText = pgettext("math", "Subject area to be used when it cannot be determined automatically")
+		subjectAreaText = pgettext(
+			"math", "Subject area to be used when it cannot be determined automatically"
+		)
 		# Translators: a generic (non-specific) math subject area
 		subjectAreaOptions: list[str] = [pgettext("math", "General")]
 		self.subjectAreaList = speechGroup.addLabeledControl(

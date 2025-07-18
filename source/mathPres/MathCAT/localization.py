@@ -6,6 +6,7 @@ from collections.abc import Callable
 from .MathCATPreferences import UserInterface
 from languageHandler import getLanguageDescription
 
+
 def getLanguages() -> list[str]:
 	"""Populate the language choice dropdown with available languages and their regional variants.
 
@@ -56,6 +57,7 @@ def getLanguages() -> list[str]:
 					languageOptions.append(language + " (" + language + ")")
 	return languageOptions
 
+
 def getLanguageCode(langChoice: wx.Choice) -> str:
 	"""Extract the language code from the selected language string in the UI.
 		The selected language string is expected to contain the language code in parentheses,
@@ -65,6 +67,7 @@ def getLanguageCode(langChoice: wx.Choice) -> str:
 	langSelection: str = langChoice.GetStringSelection()
 	langCode: str = langSelection[langSelection.find("(") + 1 : langSelection.find(")")]
 	return langCode
+
 
 def getRulesFiles(
 	pathToDir: str,
@@ -88,7 +91,7 @@ def getRulesFiles(
 			if processSubDirs:
 				ruleFiles.extend(processSubDirs(dir, language))
 		if len(ruleFiles) == 0:
-		# look in the .zip file for the style files, including regional subdirs -- it might not have been unzipped
+			# look in the .zip file for the style files, including regional subdirs -- it might not have been unzipped
 			try:
 				zip_file: ZipFile = ZipFile(f"{pathToDir}\\{language}.zip", "r")
 				for file in zip_file.namelist():
@@ -99,6 +102,7 @@ def getRulesFiles(
 			except Exception as e:
 				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zip_file}. Error: {e}")
 	return ruleFiles
+
 
 languagesSet = frozenset(
 	[
