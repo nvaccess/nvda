@@ -302,7 +302,6 @@ def exportTranslations(outputDir: str, language: str | None = None):
 	client = getCrowdinClient()
 
 	requestData = {
-		# Avoids build warning "Warning: line 392 contained a corrupt empty translation. Using source"
 		"skipUntranslatedStrings": False,
 		"skipUntranslatedFiles": False,
 		"exportApprovedOnly": False,
