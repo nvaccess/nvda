@@ -545,3 +545,7 @@ jobs:
           --notes-file /tmp/releaseNotes.md \
           --verify-tag \
           --discussion-category Releases
+        gh release upload ${{github.ref_name }} \
+            --repo ${{ github.repository }} \
+            --clobber \
+            output/nvda*.exe#Installer
