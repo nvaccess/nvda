@@ -49,6 +49,24 @@ function onCloseButtonPress() {
 	window.close();
 }
 
+function windowOnClick(e) {
+	// This is only supported in IE browsers.
+	if (!window.ActiveXObject) {
+		return;
+	}
+	var target = window.event.srcElement;
+	if (target.tagName == 'A') {
+		// If clicked on a link, open with the system default browser,
+		// instead of in a new IE window.
+		try {
+			new ActiveXObject('WScript.Shell').Run(target.href);
+		} catch (err) {
+			return;  // fallback to standard behavior
+		}
+		return false;  // cancels default processing
+	}
+}
+
 function windowOnLoad() {
 	if (args) {
 		document.title = args.item('title');
@@ -79,7 +97,7 @@ function windowOnLoad() {
 //-->
 </SCRIPT>
 </HEAD>
-<body tabindex='0' id='main_body' style="margin:1em" onload="return windowOnLoad()" onkeydown="return handleKeyPress()" >
+<body tabindex='0' id='main_body' style="margin:1em" onload="return windowOnLoad()" onkeydown="return handleKeyPress()" onclick="return windowOnClick()">
 <div id="messageDiv"></div>
 
 <!-- "tabindex" is needed to circumvent an old IE/MSHTML bug in the handling of aria-labelledby.
