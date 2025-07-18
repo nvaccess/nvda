@@ -23,10 +23,10 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
 import ui
 from NVDAState import WritePaths
-from .message import MessageDialog, displayDialogAsModal
+from .message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 
 
-def _shouldDoInstall() -> bool:
+def _shouldWarnBeforeUpdate() -> bool:
 	from _remoteClient import _remoteClient
 
 	isUserAnAdmin = ctypes.windll.shell32.IsUserAnAdmin
@@ -312,16 +312,7 @@ class InstallerDialog(
 		self.CentreOnScreen()
 
 	def onInstall(self, evt):
-		if not _shouldDoInstall():
-			MessageDialog.alert(
-				_(
-					# Translators: Message displayed when attempting to install NVDA from the launcher
-					# when connected as the controlled computer with NVDA Remote Access.
-					"Installing NVDA is not supported when NVDA is running from a portable copy and connected as the controlled computer.",
-				),
-				# Translators: Title of a dialog.
-				_("Unable to Install NVDA"),
-			)
+		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
 		self.Hide()
 		doInstall(
@@ -451,6 +442,43 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 		_("Directory Exists"),
 		wx.YES_NO | wx.ICON_QUESTION,
 	)
+
+
+def _warnAndConfirmIfInstallingRemotely(isUpdate: bool) -> bool:
+	if _shouldWarnBeforeUpdate():
+		confirmationDialog = (
+			MessageDialog(
+				gui.mainFrame,
+				(
+					_(
+						# Translators: Message shown to users when attempting to update NVDA
+						# on a computer which is being remotely controled via NVDA Remote Access
+						"Updating NVDA when connected to NVDA Remote Access as the controled computer is not recommended. ",
+					)
+					if isUpdate
+					else _(
+						# Translators: Message shown to users when attempting to install NVDA
+						# on a computer which is being remotely controled via NVDA Remote Access
+						"Installing NVDA when connected to NVDA Remote Access as the controled computer is not recommended. ",
+					)
+				)
+				+ _(
+					# Translators: Message shown to users when attempting to install or update NVDA from the launcher
+					# on a computer which is being remotely controled via NVDA Remote Access
+					"You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
+					"You should only procede if you have physical access to the controlled computer.\n\n"
+					"Are you sure you want to continue?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
+	return True
 
 
 def _getUniqueNewPortableDirectory(basePath: str) -> str:
