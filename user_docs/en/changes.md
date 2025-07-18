@@ -6,6 +6,7 @@
 
 ### New Features
 
+* In add-on lists of the add-on store, add-ons can be sorted by last tested NVDA version (#18440, @nvdaes)
 ### Changes
 
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
