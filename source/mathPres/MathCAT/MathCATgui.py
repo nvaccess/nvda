@@ -1,7 +1,6 @@
 import wx
 
 # import wx.xrc
-import gettext
 
 ###########################################################################
 # Class MathCATPreferencesDialog
