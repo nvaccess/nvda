@@ -10,6 +10,7 @@
 
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+* The Dot Pad braille display driver now supports automatic detection of USB-connected devices. (#18444, @bramd)
 
 ### Bug Fixes
 
