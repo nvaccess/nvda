@@ -361,9 +361,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
 [math]
-	[[Speech]]
-    	Impairment = string(default="Blindness")       # LearningDisability, LowVision, Blindness
-    	Language = string(default="Auto")                # any known language code and sub-code -- could be en-uk, etc
+	[[speech]]
+    	impairment = integer(default=1) # 0: LearningDisability, 1: Blindness, 2: LowVision
+    	language = string(default="Auto")                # any known language code and sub-code -- could be en-uk, etc
     	SpeechStyle = string(default="ClearSpeak")     # Any known speech style (falls back to ClearSpeak)
     	Verbosity = string(default="Medium")           # Terse, Medium, Verbose
     	MathRate = integer(default=100)               # Change from text speech rate (%)

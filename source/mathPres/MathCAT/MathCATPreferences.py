@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 import math
 import wx
 from . import MathCATgui
@@ -14,8 +12,6 @@ from collections.abc import Callable
 from .MathCAT import convertSSMLTextForNVDA
 from speech import speak
 from zipfile import ZipFile
-
-_ = gettext.gettext
 
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
@@ -98,7 +94,17 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 
 		:return: Absolute path to the Languages folder as a string.
 		"""
-		return os.path.join(os.path.dirname(os.path.abspath(__file__)), "Rules", "Languages")
+		return os.path.join(
+			os.path.dirname(os.path.abspath(__file__)),
+			"..",
+			"..",
+			"..",
+			"include",
+			"nvda-mathcat",
+			"assets",
+			"Rules",
+			"Languages",
+		)
 
 	@staticmethod
 	def pathToBrailleFolder() -> str:
