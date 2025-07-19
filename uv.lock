@@ -430,6 +430,16 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/fa/b2ba8229b9381e8f6381c1dcae6f4159a7f72349e414ed19cfbbd1817173/MouseInfo-0.1.3.tar.gz", hash = "sha256:2c62fb8885062b8e520a3cce0a297c657adcc08c60952eb05bc8256ef6f7f6e7", size = 10850, upload-time = "2020-03-27T21:20:10.136Z" }
 
 [[package]]
+name = "msgpack"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/45/b1/ea4f68038a18c77c9467400d166d74c4ffa536f34761f7983a104357e614/msgpack-1.1.1.tar.gz", hash = "sha256:77b79ce34a2bdab2594f490c8e80dd62a02d650b91a75159a63ec413b8d104cd", size = 173555, upload-time = "2025-06-13T06:52:51.324Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a2/3b/1f717e17e53e0ed0b68fa59e9188f3f610c79d7151f0e52ff3cd8eb6b2dc/msgpack-1.1.1-cp311-cp311-win32.whl", hash = "sha256:7da8831f9a0fdb526621ba09a281fadc58ea12701bc709e7b8cbc362feabc295", size = 65016, upload-time = "2025-06-13T06:52:01.294Z" },
+    { url = "https://files.pythonhosted.org/packages/48/45/9d1780768d3b249accecc5a38c725eb1e203d44a191f7b7ff1941f7df60c/msgpack-1.1.1-cp311-cp311-win_amd64.whl", hash = "sha256:5fd1b58e1431008a57247d6e7cc4faa41c3607e8e7d4aaf81f7c29ea013cb458", size = 72267, upload-time = "2025-06-13T06:52:02.568Z" },
+]
+
+[[package]]
 name = "mss"
 version = "10.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -494,11 +504,13 @@ dependencies = [
     { name = "markdown-link-attr-modifier", marker = "sys_platform == 'win32'" },
     { name = "mdx-gh-links", marker = "sys_platform == 'win32'" },
     { name = "mdx-truly-sane-lists", marker = "sys_platform == 'win32'" },
+    { name = "msgpack", marker = "sys_platform == 'win32'" },
     { name = "nh3", marker = "sys_platform == 'win32'" },
     { name = "pycaw", marker = "sys_platform == 'win32'" },
     { name = "pymdown-extensions", marker = "sys_platform == 'win32'" },
     { name = "pyro5", marker = "sys_platform == 'win32'" },
     { name = "pyserial", marker = "sys_platform == 'win32'" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
     { name = "requests", marker = "sys_platform == 'win32'" },
     { name = "schedule", marker = "sys_platform == 'win32'" },
     { name = "typing-extensions", marker = "sys_platform == 'win32'" },
@@ -547,11 +559,13 @@ requires-dist = [
     { name = "markdown-link-attr-modifier", specifier = "==0.2.1" },
     { name = "mdx-gh-links", specifier = "==0.4" },
     { name = "mdx-truly-sane-lists", specifier = "==1.3" },
+    { name = "msgpack", specifier = ">=1.1.1" },
     { name = "nh3", specifier = "==0.2.19" },
     { name = "pycaw", specifier = "==20240210" },
     { name = "pymdown-extensions", specifier = "==10.16.1" },
     { name = "pyro5", specifier = ">=5.15" },
     { name = "pyserial", specifier = "==3.5" },
+    { name = "pywin32" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "schedule", specifier = "==1.2.2" },
     { name = "typing-extensions", specifier = "==4.12.2" },
@@ -839,6 +853,16 @@ name = "pytweening"
 version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/79/0c/c16bc93ac2755bac0066a8ecbd2a2931a1735a6fffd99a2b9681c7e83e90/pytweening-1.2.0.tar.gz", hash = "sha256:243318b7736698066c5f362ec5c2b6434ecf4297c3c8e7caa8abfe6af4cac71b", size = 171241, upload-time = "2024-02-20T03:37:56.809Z" }
+
+[[package]]
+name = "pywin32"
+version = "311"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/af/449a6a91e5d6db51420875c54f6aff7c97a86a3b13a0b4f1a5c13b988de3/pywin32-311-cp311-cp311-win32.whl", hash = "sha256:184eb5e436dea364dcd3d2316d577d625c0351bf237c4e9a5fabbcfa5a58b151", size = 8697031, upload-time = "2025-07-14T20:13:13.266Z" },
+    { url = "https://files.pythonhosted.org/packages/51/8f/9bb81dd5bb77d22243d33c8397f09377056d5c687aa6d4042bea7fbf8364/pywin32-311-cp311-cp311-win_amd64.whl", hash = "sha256:3ce80b34b22b17ccbd937a6e78e7225d80c52f5ab9940fe0506a1a16f3dab503", size = 9508308, upload-time = "2025-07-14T20:13:15.147Z" },
+    { url = "https://files.pythonhosted.org/packages/44/7b/9c2ab54f74a138c491aba1b1cd0795ba61f144c711daea84a88b63dc0f6c/pywin32-311-cp311-cp311-win_arm64.whl", hash = "sha256:a733f1388e1a842abb67ffa8e7aad0e70ac519e09b0f6a784e65a136ec7cefd2", size = 8703930, upload-time = "2025-07-14T20:13:16.945Z" },
+]
 
 [[package]]
 name = "pyyaml"
