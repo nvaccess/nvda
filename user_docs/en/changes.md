@@ -13,6 +13,7 @@
 
 ### Bug Fixes
 
+* Fixed missing MathML attributes for `mspace` in PDF documents. Also passed along attributes for elementary math elements.
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 
 ### Changes for Developers
