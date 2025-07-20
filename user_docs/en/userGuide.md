@@ -2812,6 +2812,11 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
+##### Report when lists support multiple selection {#ReportMultiSelect}
+
+When this option is enabled, NVDA wil report when a list box supports selecting multiple items.
+As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.
+
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
 
 Uncheck this checkbox if you don't wish to have the description reported along with objects (i.e. search suggestions, reporting of whole dialog window right after the dialog opens, etc.).
