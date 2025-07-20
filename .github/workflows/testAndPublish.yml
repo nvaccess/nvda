@@ -261,7 +261,7 @@ jobs:
           output/devDocs
           output/*.html
           output/*.css
-    - name: Upload build artifacts
+    - name: Upload Controller client and packaging metadata
       uses: actions/upload-artifact@v4
       id: uploadBuildArtifacts
       with:
