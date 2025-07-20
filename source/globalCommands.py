@@ -5090,10 +5090,9 @@ class GlobalCommands(ScriptableObject):
 		description=_("open model manager"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
-		gesture="kb:NVDA+windows+control+,",
 	)
 	def script_openManager(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.openManager(gesture)
+		wx.CallAfter(gui.mainFrame.onOpenModelManagerCommand , None)
 
 
 #: The single global commands instance.

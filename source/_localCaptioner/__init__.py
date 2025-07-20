@@ -31,17 +31,12 @@ import globalPluginHandler
 import api
 
 from .captioner import ImageCaptioner
-from .modelManager import ModelManagerFrame
 
 
-try:
-	import addonHandler
 
-	addonHandler.initTranslation()
-except:
-	pass
 
 # Module-level configuration
+_localCaptioner = None
 _here = os.path.dirname(__file__)
 _modelsDir = os.path.join(_here, "..", "..", "models")
 _modelsDir = os.path.abspath(_modelsDir)
@@ -125,12 +120,15 @@ class LocalCaptioner:
 		# super().__init__()
 		self.isModelLoaded = False
 		self.captioner: ImageCaptioner | None = None
-		self.managerFrame: ModelManagerFrame | None = None
+
 
 		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
 		# Load model when initializing plugin (may cause high memory usage)
 		if loadModelWhenInit:
 			threading.Thread(target=self._loadModel, daemon=True).start()
+
+	def terminate(self):
+		self.captioner = None
 
 	def runCaption(self, gesture) -> None:
 		# def script_runCaption(self) -> None:
@@ -180,6 +178,9 @@ class LocalCaptioner:
 		Args:
 			gesture: The input gesture that triggered this script.
 		"""
+		self.doReleaseModel()
+
+	def doReleaseModel(self) -> None:
 		# Translators: Message when releasing the model
 		ui.message(_("releasing model..."))
 		try:
@@ -192,48 +193,6 @@ class LocalCaptioner:
 		except Exception as e:
 			ui.message(str(e))
 			raise
-
-	def openManager(self, gesture) -> None:
-		"""Script to open the model manager window.
-
-		Args:
-			gesture: The input gesture that triggered this script.
-		"""
-		# Translators: Message when opening model manager
-		ui.message(_("opening model manager..."))
-		try:
-			self._openModelManager()
-		except Exception as e:
-			ui.message(str(e))
-			raise
-
-	def _openModelManager(self) -> None:
-		"""Open the model manager frame window."""
-
-		def showManager() -> None:
-			"""Show the model manager window."""
-			try:
-				# Use existing wx.App if available
-				app = wx.GetApp()
-				if app is None:
-					app = wx.App()
-
-				if not hasattr(self, "managerFrame") or not self.managerFrame:
-					self.managerFrame = ModelManagerFrame()
-
-				self.managerFrame.Show()
-				self.managerFrame.Raise()
-
-			except Exception as e:
-				ui.message(str(e))
-
-		# Ensure execution in main thread
-		wx.CallAfter(showManager)
-
-
-def getLocalCaptionerConfig():
-	return config.conf["localcaptioner"]
-
 
 def initialize():
 	"""Initialise the local captioner."""
