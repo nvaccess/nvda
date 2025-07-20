@@ -1018,15 +1018,15 @@ def _warnAndConfirmIfUpdatingRemotely() -> bool:
 				gui.mainFrame,
 				_(
 					# Translators: Message shown to users when attempting to update NVDA
-					# on a computer which is being remotely controled via NVDA Remote Access
-					"Updating NVDA when connected to NVDA Remote Access as the controled computer is not recommended. ",
+					# on a computer which is being remotely controlled via NVDA Remote Access
+					"Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
 				)
 				+ _(
 					# Translators: Message shown to users when attempting to update NVDA from an installed copy
-					# on a computer which is being remotely controled via NVDA Remote Access.
+					# on a computer which is being remotely controlled via NVDA Remote Access.
 					"The currently active connection may not be continued during or after the update. "
 					"Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
-					"You should only procede if you have physical access to the controlled computer.\n\n"
+					"You should only proceed if you have physical access to the controlled computer.\n\n"
 					"Are you sure you want to continue?",
 				),
 				# Translators: The title of a dialog.
