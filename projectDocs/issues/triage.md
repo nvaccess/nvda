@@ -204,6 +204,22 @@ NV Access migrated tickets from our old issue tracker (Trac) into Github issues.
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not.
 These attachments have been lost.
 
+## Deprecated features
+Our core development focus is on modern technologies (like UIA) to ensure the project's long-term health and compatibility.
+
+However, we recognise that some legacy features or settings remain in NVDA out of necessity for specific user workflows. 
+This creates a special class of issues that require a distinct triage process. 
+Our goal is to be transparent about our priorities without dismissing the real-world needs of our users.
+
+When triaging an issue related to a feature that involves a deprecated technology or is otherwise no longer under active development by the core team:
+- Identify and label: The first step is to identify if the issue is tied to a legacy component (eg the legacy Word object model).
+Apply a specific label for that component (eg `word-object-model`).
+- Assign low priority: These issues should be assigned a low priority (`p5`) to reflect that they are not on the core team's active roadmap.
+- Keep open for community: Crucially, these issues should remain open.
+This keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
+- Set expectations: It is appropriate to add a comment clarifying the status, for example: "This issue is related to a legacy component that is not in active development.
+We are keeping it open for tracking and for potential community contributions, but it is not on the core team's roadmap."
+
 ## NV Access staff-created tickets
 
 The NVDA project greatly appreciates the involvement and contributions of its vibrant community, and we strongly encourage community members to actively engage with the project's issues and pull requests.
@@ -219,6 +235,16 @@ Community members are welcome and encouraged to interact with staff tickets in t
 
 By refraining from closing or consolidating staff tickets, we can ensure that the NV Access team maintains control over their internal workflow and prioritisation, while still benefiting from the valuable insights and contributions of the community.
 
+## Handling disagreements
+If a strong disagreement arises over the status of an issue (eg its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (eg a "reopen/close war"). 
+This is counter-productive and creates a negative atmosphere.
+
+The correct procedure is to:
+1.  **Stop:** Leave the issue in its current state.
+2.  **Label:** Apply the `blocked/needs-product-decision` label.
+3.  **Escalate:** Add a comment explaining the disagreement and tag a relevant NV Access staff member to make a final decision.
+This moves the debate from a public power struggle to a productive internal resolution.
+
 ## Extra permissions for triage
 
 GitHub allows NV Access to grant "triage" permissions to active contributors in the repository.
@@ -232,3 +258,4 @@ Candidates will be considered on a case by case basis.
 If conflict arises between how best to triage an issue, please defer to NV Access and keep the issue in an open, untriaged state i.e. with the labels "needs triage" and "blocked/needs-product-decision".
 Please do not close feature requests on the grounds of rejecting a feature.
 Allow the community to discuss the proposed feature and NV Access to make the decision on accepting it.
+Triagers with extra permissions are expected to lead by example in de-escalating conflict. Repeatedly changing an issue's state in opposition to another triager or staff member is a misuse of permissions and may lead to them being revoked.
