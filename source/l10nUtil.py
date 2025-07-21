@@ -572,8 +572,8 @@ class _PoChecker:
 			return False
 		return True
 
-	# e.g. %s %d (but not %%)
-	RE_UNNAMED_PERCENT = re.compile(r"(?<!%)%(?!%)[.\d]*[a-zA-Z]")
+	# e.g. %s %d (but not %%) or %%(name)s %(name)d
+	RE_UNNAMED_PERCENT = re.compile(r"%(?!%)[a-zA-Z]")
 	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
 	# e.g. {name} {name:format}
