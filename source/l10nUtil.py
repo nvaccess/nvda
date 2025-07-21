@@ -574,7 +574,7 @@ class _PoChecker:
 
 	# e.g. %s %d %10.2f %-5s (but not %%) or %%(name)s %(name)d
 	RE_UNNAMED_PERCENT = re.compile(
-		r"(?<!%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]|(?<=%%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]"
+		r"(?<!%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]|(?<=%%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]",
 	)
 	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
