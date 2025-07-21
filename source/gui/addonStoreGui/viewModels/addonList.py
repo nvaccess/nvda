@@ -107,6 +107,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		50,
 	)
 
+
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 
