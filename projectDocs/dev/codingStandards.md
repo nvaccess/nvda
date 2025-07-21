@@ -159,6 +159,17 @@ Type hints make reasoning about code much easier, and allow static analysis tool
 * Prefer union shorthand (`X | Y`) over explicitly using `typing.Union`.
   * Corollary: prefer `T | None` over `typing.Optional[T]`.
 
+### Calling non-python code
+
+When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
+
+* When providing ctypes type information for foreign functions, structures and data types, prefer to use the same name as used in the external library.
+  * E.g. `GetModuleFileName` not `getModuleFileName`, even though the latter is a more Pythonic function name.
+  * Pythonic names should be reserved for wrappers that provide more pythonic access to functions.
+* All Windows API functions, types and data structures should be defined in the `winBindings` package, in modules named according to the DLL which exports the function.
+  * E.g. `winBindings.kernel32`.
+* Ctypes code for nvdaHelper should be defined in the `NVDAHelper.localLib` module.
+
 ### Language choices
 
 The NVDA community is large and diverse, and we have a responsibility to make everyone feel welcome in it.
