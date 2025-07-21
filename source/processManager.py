@@ -81,7 +81,7 @@ class SubprocessManager:
 			# Create sandbox config for ART process
 			sandbox_config = SandboxConfig()
 			sandbox_config.enable_sid_restrictions = True
-			sandbox_config.restrict_user_sid = False
+			sandbox_config.restrict_user_sid = not NVDAState.isRunningAsSource()
 			sandbox_config.enable_restricted_token = True
 			sandbox_config.enable_low_integrity = False
 			sandbox_config.enable_ui_restrictions = True
