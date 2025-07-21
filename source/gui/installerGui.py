@@ -25,16 +25,16 @@ import ui
 from NVDAState import WritePaths
 from .message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 
-IsUserAnAdmin = ctypes.windll.shell32.IsUserAnAdmin
-IsUserAnAdmin.argtypes = []
-IsUserAnAdmin.restype = ctypes.wintypes.BOOL
+_IsUserAnAdmin = ctypes.windll.shell32.IsUserAnAdmin
+_IsUserAnAdmin.argtypes = []
+_IsUserAnAdmin.restype = ctypes.wintypes.BOOL
 
 
 def _shouldWarnBeforeUpdate() -> bool:
 	"""Whether or not a warning about being unable to complete installation when connected as follower should be shown to the user."""
 	from _remoteClient import _remoteClient
 
-	return _remoteClient is not None and _remoteClient.isConnectedAsFollower and not IsUserAnAdmin()
+	return _remoteClient is not None and _remoteClient.isConnectedAsFollower and not _IsUserAnAdmin()
 
 
 def _canPortableConfigBeCopied() -> bool:

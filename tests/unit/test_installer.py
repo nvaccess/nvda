@@ -131,7 +131,7 @@ class testFollowerWarning(unittest.TestCase):
 		isUserAnAdmin: bool,
 		expectedReturn: bool,
 	):
-		with patch("gui.installerGui.IsUserAnAdmin", return_value=isUserAnAdmin):
+		with patch("gui.installerGui._IsUserAnAdmin", return_value=isUserAnAdmin):
 			with patch(
 				"_remoteClient.client.RemoteClient",
 				isConnectedAsFollower=isConnectedAsFollower,
