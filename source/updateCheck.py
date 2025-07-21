@@ -56,7 +56,7 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
-from gui.message import displayDialogAsModal  # noqa: E402
+from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
 from addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
@@ -602,6 +602,8 @@ class UpdateResultDialog(
 		self.Show()
 
 	def onUpdateButton(self, destPath):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -774,6 +776,8 @@ class UpdateAskInstallDialog(
 		return callback
 
 	def onUpdateButton(self, evt):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
@@ -1002,6 +1006,39 @@ def saveState():
 			pickle.dump(state, f, protocol=0)
 	except:  # noqa: E722
 		log.debugWarning("Error saving state", exc_info=True)
+
+
+def _warnAndConfirmIfUpdatingRemotely() -> bool:
+	# Import late to avoid circular import
+	from _remoteClient import _remoteClient
+
+	if _remoteClient is not None and _remoteClient.isConnectedAsFollower:
+		confirmationDialog = (
+			MessageDialog(
+				gui.mainFrame,
+				_(
+					# Translators: Message shown to users when attempting to update NVDA
+					# on a computer which is being remotely controlled via NVDA Remote Access
+					"Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
+				)
+				+ _(
+					# Translators: Message shown to users when attempting to update NVDA from an installed copy
+					# on a computer which is being remotely controlled via NVDA Remote Access.
+					"The currently active connection may not be continued during or after the update. "
+					"Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
+					"You should only proceed if you have physical access to the controlled computer.\n\n"
+					"Are you sure you want to continue?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
+	return True
 
 
 def initialize():

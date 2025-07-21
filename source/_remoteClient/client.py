@@ -669,6 +669,13 @@ class RemoteClient:
 			return connector.connected
 		return False
 
+	@property
+	def isConnectedAsFollower(self) -> bool:
+		"""Check if we are connected as the controlled computer."""
+		if self.followerTransport is not None:
+			return self.followerTransport.connected
+		return False
+
 	def registerLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Add a script to be handled locally instead of sent to remote.
 
