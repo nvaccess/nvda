@@ -237,17 +237,6 @@ Community members are welcome and encouraged to interact with staff tickets in t
 
 By refraining from closing or consolidating staff tickets, we can ensure that the NV Access team maintains control over their internal workflow and prioritisation, while still benefiting from the valuable insights and contributions of the community.
 
-## Handling disagreements
-
-If a strong disagreement arises over the status of an issue (e.g. its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (e.g. a "reopen/close war").
-This is counter-productive and creates a negative atmosphere.
-
-The correct procedure is to:
-1.  **Stop:** Leave the issue in its current state.
-2.  **Label:** Apply the `blocked/needs-product-decision` label.
-3.  **Escalate:** Add a comment explaining the disagreement and tag a relevant NV Access staff member to make a final decision.
-This moves the debate from a public power struggle to a productive internal resolution.
-
 ## Extra permissions for triage
 
 GitHub allows NV Access to grant "triage" permissions to active contributors in the repository.
@@ -258,7 +247,21 @@ To request triage permissions, email <info@nvaccess.org>.
 A consistent history of helpful activity in the repository is expected, for example helping debug issues, asking for missing information, providing constructive feedback on pull requests, submitting well-documented pull requests, constructively participating in discussions, mentoring new contributors or improving documentation.
 Candidates will be considered on a case by case basis.
 
+
+### Handling disagreements
+
 If conflict arises between how best to triage an issue, please defer to NV Access and keep the issue in an open, untriaged state i.e. with the labels "needs triage" and "blocked/needs-product-decision".
 Please do not close feature requests on the grounds of rejecting a feature.
 Allow the community to discuss the proposed feature and NV Access to make the decision on accepting it.
+
+If a strong disagreement arises over the status of an issue (e.g. its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (e.g. a "reopen/close war").
+This is counter-productive and creates a negative atmosphere.
+
+The correct procedure is to:
+1.  **Stop:** Leave the issue in its current state.
+2.  **Label:** Apply the `blocked/needs-product-decision` label.
+3.  **Escalate:** Add a comment explaining the disagreement and tag a relevant NV Access staff member to make a final decision.
+
+This moves the debate from a public power struggle to a productive internal resolution.
+
 Triagers with extra permissions are expected to lead by example in de-escalating conflict. Repeatedly changing an issue's state in opposition to another triager or staff member is a misuse of permissions and may lead to them being revoked.
