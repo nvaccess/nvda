@@ -6,7 +6,7 @@ class TestGetInterpolations(unittest.TestCase):
 		# _PoChecker requires a po file path, but _getInterpolations only uses regexes and self._messageAlert
 		# We'll mock _messageAlert to avoid side effects
 		self.checker = _PoChecker.__new__(_PoChecker)
-		self.checker._messageAlert = lambda msg: setattr(self, "alerted", msg)
+		self.checker._messageAlert = lambda msg, isError: setattr(self, "alerted", msg)
 		self.checker.RE_UNNAMED_PERCENT = _PoChecker.RE_UNNAMED_PERCENT
 		self.checker.RE_NAMED_PERCENT = _PoChecker.RE_NAMED_PERCENT
 		self.checker.RE_FORMAT = _PoChecker.RE_FORMAT
@@ -67,8 +67,7 @@ class TestGetInterpolations(unittest.TestCase):
 		self.assertEqual(unnamed, [])
 		self.assertEqual(named, set())
 		self.assertEqual(formats, {"{}"})
-		# Warning is currently skipped as many of these cases have been introduced in the source .po files
-		# self.assertEqual(self.alerted, "Unspecified positional argument in brace format")
+		self.assertEqual(self.alerted, "Unspecified positional argument in brace format")
 
 	def test_complex_percent_formats(self):
 		"""Test complex percent format specifiers like %10.2f and %-5s"""

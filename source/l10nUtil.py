@@ -592,9 +592,16 @@ class _PoChecker:
 		formats = set()
 		for m in self.RE_FORMAT.finditer(text):
 			if not m.group(1):
-				# Skip warning as many of these had been introduced in the source .po files
-				# self._messageAlert("Unspecified positional argument in brace format")
-				pass
+				self._messageAlert(
+					"Unspecified positional argument in brace format",
+					# Skip as error as many of these had been introduced in the source .po files.
+					# These should be fixed in the source .po files to remove instances of "{}" without a name.
+					# This causes issues where the order of the arguments change in the string.
+					# e.g. "Character: {}\nReplacement: {}" being translated to "Replacement: {}\nCharacter: {}"
+					# will result in the expected interpolation being in the wrong place.
+					# This should be changed isError=True.
+					isError=False,
+				)
 			formats.add(m.group(0))
 		return unnamedPercent, namedPercent, formats
 
