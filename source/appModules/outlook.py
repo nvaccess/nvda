@@ -41,6 +41,7 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+from NVDAObjects import NVDAObject
 import languageHandler
 from typing import Generator
 import documentBase
@@ -230,6 +231,9 @@ class AppModule(appModuleHandler.AppModule):
 			windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")
 		):
 			clsList.insert(0, AutoCompleteListItem)
+		if role == controlTypes.Role.EDITABLETEXT and windowClassName.startswith("RichEdit20W"):
+			clsList.insert(0, ContactEditField)
+
 		#  all   remaining classes are IAccessible
 		if not isinstance(obj, IAccessible):
 			return
@@ -323,6 +327,23 @@ class AddressBookEntry(IAccessible):
 	def initOverlayClass(self):
 		for gesture in self.__moveByEntryGestures:
 			self.bindGesture(gesture, "moveByEntry")
+
+
+class ContactEditField(NVDAObject):
+	@script(gestures=["kb:escape"])
+	def script_hide(self, gesture):
+		"""The auto-complete list is getting closed, set focus back to the edit field."""
+		if vision.handler:
+			vision.handler.handleGainFocus(self)
+		api.setNavigatorObject(self)
+		gesture.send()
+
+	def event_valueChange(self):
+		"""Set focus back to the edit field when an auto-complete list item is confirmed."""
+		if vision.handler:
+			vision.handler.handleGainFocus(self)
+		api.setNavigatorObject(self)
+		return super(ContactEditField, self).event_valueChange()
 
 
 class AutoCompleteListItem(Window):
