@@ -6,6 +6,8 @@
 
 ### New Features
 
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+
 ### Changes
 
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
