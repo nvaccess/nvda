@@ -98,7 +98,7 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "Date"),
+		pgettext("addonStore", "Publication Date"),
 		50,
 	)
 
