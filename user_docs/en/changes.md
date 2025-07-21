@@ -10,6 +10,7 @@
 
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+* In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
 
 ### Bug Fixes
 
@@ -20,6 +21,7 @@
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
+* The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 
 #### Deprecations
 
