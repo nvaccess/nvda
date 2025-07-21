@@ -452,7 +452,7 @@ class _PoChecker:
 			f"{msgType} starting on line {self._messageLineNum}\n"
 			f'Original: "{self._msgid}"\n'
 			f'Translated: "{self._msgstr[-1]}"\n'
-			f"{'Error' if isError else 'Warning'}: {alert}",
+			f"{'ERROR' if isError else 'WARNING'}: {alert}",
 		)
 
 	@property
