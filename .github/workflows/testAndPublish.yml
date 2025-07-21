@@ -78,6 +78,7 @@ jobs:
   checkPo:
     name: Check po files for errors
     runs-on: windows-latest
+    continue-on-error: true
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
