@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
-<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a97baf20ff57c9bb81db999afa6a70fcfeb1f378/user_docs/en/changes.md">
+<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/86c97c26667bd2be83917d5ec0536e88be82279a/user_docs/en/changes.md">
 <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -57,6 +57,7 @@ $(ID:6143bf8c-88f7-4e3c-a0d0-fdf3f3c6802a)
 * $(ID:99ece375-76f9-42eb-aebf-3717a21896bc)
 * $(ID:1b6d64d6-3630-4465-be17-b760965bd7e6)
 * $(ID:888ae1a3-d647-405d-878f-e8dc82d269cf)
+* $(ID:5dc94101-b1f3-4471-b976-f1ce7ab77789)
 
 ### $(ID:efaf3b3c-3bf1-4be4-96ab-9ed06e855cce)
 
@@ -72,8 +73,6 @@ $(ID:6143bf8c-88f7-4e3c-a0d0-fdf3f3c6802a)
   * $(ID:02458b35-16ed-43a2-9b81-7e1dfe1abde0)
   * $(ID:46f2364c-fb06-48ad-abae-1e072d21cd21)
 * $(ID:7a37c4b1-5426-4bb4-9546-388362694c0e)
-* $(ID:fd77332b-d60c-4817-8306-f55632ba0018)
-* $(ID:49efea65-1510-4c7c-8956-1d0e51d21751)
 * $(ID:5f486c92-625b-45ab-b8a2-f332171bd6d7)
 * $(ID:7e21cc9d-721d-43b3-9b33-49b5c137da93)
 * $(ID:fef32b1e-2a24-4d43-885a-ec1caa5f7811)
@@ -99,6 +98,7 @@ $(ID:d265f758-9b3b-4124-afe0-3b7f62c51f58)
 $(ID:c6c8918e-271b-46f3-b86b-e01efda39efa)
 * $(ID:1e687c9a-8351-44fa-97c0-3462cb688e0a)
 * $(ID:6689a4b4-3f39-4e43-b6a9-510a2bd3341a)
+* $(ID:c0b66923-bc17-415e-9e3c-204e506b2c7c)
 
 #### $(ID:f62d0bba-ab16-48b4-bf4f-d226e453ac6d)
 
@@ -5868,9 +5868,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 <source>In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)</source>
 </segment>
 </unit>
+<unit id="5dc94101-b1f3-4471-b976-f1ce7ab77789">
+<notes>
+<note appliesTo="source">line: 57</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>NVDA will now warn before updating when connected as the controlled computer with NVDA Remote Access. (#18455)</source>
+</segment>
+</unit>
 <unit id="efaf3b3c-3bf1-4be4-96ab-9ed06e855cce">
 <notes>
-<note appliesTo="source">line: 58</note>
+<note appliesTo="source">line: 59</note>
 <note appliesTo="source">prefix: ### </note>
 </notes>
 <segment>
@@ -5879,7 +5888,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="b7ec2e04-e695-4474-95d2-1851bc6ed982">
 <notes>
-<note appliesTo="source">line: 60</note>
+<note appliesTo="source">line: 61</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5888,7 +5897,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="66e6038e-9c92-4f78-8ca0-931d53599ee0">
 <notes>
-<note appliesTo="source">line: 61</note>
+<note appliesTo="source">line: 62</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5897,7 +5906,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="c3a7e291-6454-4680-b1a7-fd4369f90405">
 <notes>
-<note appliesTo="source">line: 62</note>
+<note appliesTo="source">line: 63</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5906,7 +5915,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="4427930b-22ca-47a1-8dee-2483373f2dbe">
 <notes>
-<note appliesTo="source">line: 63</note>
+<note appliesTo="source">line: 64</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5915,7 +5924,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="b714a33a-03b8-49b1-8d0a-e4a4acd902d2">
 <notes>
-<note appliesTo="source">line: 64</note>
+<note appliesTo="source">line: 65</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5924,7 +5933,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="2562bb0b-07e0-4096-8583-1092051654e9">
 <notes>
-<note appliesTo="source">line: 65</note>
+<note appliesTo="source">line: 66</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5933,7 +5942,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="53c6df7c-78ef-42eb-bd14-915cc00af54b">
 <notes>
-<note appliesTo="source">line: 66</note>
+<note appliesTo="source">line: 67</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5942,7 +5951,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="60f1da11-e150-4032-9097-aff9bb78c9ec">
 <notes>
-<note appliesTo="source">line: 67</note>
+<note appliesTo="source">line: 68</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -5951,7 +5960,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="d792c6fc-3164-43a8-b863-a66435c358d7">
 <notes>
-<note appliesTo="source">line: 68</note>
+<note appliesTo="source">line: 69</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -5960,7 +5969,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="02458b35-16ed-43a2-9b81-7e1dfe1abde0">
 <notes>
-<note appliesTo="source">line: 69</note>
+<note appliesTo="source">line: 70</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -5969,7 +5978,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="46f2364c-fb06-48ad-abae-1e072d21cd21">
 <notes>
-<note appliesTo="source">line: 70</note>
+<note appliesTo="source">line: 71</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -5978,34 +5987,16 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="7a37c4b1-5426-4bb4-9546-388362694c0e">
 <notes>
-<note appliesTo="source">line: 71</note>
+<note appliesTo="source">line: 72</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
 <source>In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)</source>
 </segment>
 </unit>
-<unit id="fd77332b-d60c-4817-8306-f55632ba0018">
-<notes>
-<note appliesTo="source">line: 72</note>
-<note appliesTo="source">prefix: * </note>
-</notes>
-<segment>
-<source>In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)</source>
-</segment>
-</unit>
-<unit id="49efea65-1510-4c7c-8956-1d0e51d21751">
-<notes>
-<note appliesTo="source">line: 73</note>
-<note appliesTo="source">prefix: * </note>
-</notes>
-<segment>
-<source>It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)</source>
-</segment>
-</unit>
 <unit id="5f486c92-625b-45ab-b8a2-f332171bd6d7">
 <notes>
-<note appliesTo="source">line: 74</note>
+<note appliesTo="source">line: 73</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6014,7 +6005,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="7e21cc9d-721d-43b3-9b33-49b5c137da93">
 <notes>
-<note appliesTo="source">line: 75</note>
+<note appliesTo="source">line: 74</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6023,7 +6014,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="fef32b1e-2a24-4d43-885a-ec1caa5f7811">
 <notes>
-<note appliesTo="source">line: 76</note>
+<note appliesTo="source">line: 75</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6032,7 +6023,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="d20c0153-d1c5-477c-9099-28a28dbef92d">
 <notes>
-<note appliesTo="source">line: 78</note>
+<note appliesTo="source">line: 77</note>
 <note appliesTo="source">prefix: ### </note>
 </notes>
 <segment>
@@ -6041,7 +6032,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="d265f758-9b3b-4124-afe0-3b7f62c51f58">
 <notes>
-<note appliesTo="source">line: 80</note>
+<note appliesTo="source">line: 79</note>
 </notes>
 <segment>
 <source>Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
@@ -6049,7 +6040,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="d63f10d6-b535-4a37-80cb-2096ebb48685">
 <notes>
-<note appliesTo="source">line: 82</note>
+<note appliesTo="source">line: 81</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6058,7 +6049,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="5735c4e6-904f-4656-ad83-98fbd6d88cef">
 <notes>
-<note appliesTo="source">line: 83</note>
+<note appliesTo="source">line: 82</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6067,7 +6058,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="8d58e256-4c65-4c11-9503-015570425b68">
 <notes>
-<note appliesTo="source">line: 84</note>
+<note appliesTo="source">line: 83</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6076,7 +6067,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="9aa0c4a9-0b44-4259-93c1-4b45b5abbc76">
 <notes>
-<note appliesTo="source">line: 85</note>
+<note appliesTo="source">line: 84</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6085,7 +6076,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="f58b3483-5950-4042-8b54-7006c4052ff7">
 <notes>
-<note appliesTo="source">line: 86</note>
+<note appliesTo="source">line: 85</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6094,7 +6085,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="c812c954-dd45-4ea3-80ab-6a2ec00e5ecb">
 <notes>
-<note appliesTo="source">line: 87</note>
+<note appliesTo="source">line: 86</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6103,7 +6094,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="4f704675-7579-4e42-9c71-4056505f83cd">
 <notes>
-<note appliesTo="source">line: 88</note>
+<note appliesTo="source">line: 87</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6112,7 +6103,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="55c254bb-e088-4023-abaa-956b2e566080">
 <notes>
-<note appliesTo="source">line: 89</note>
+<note appliesTo="source">line: 88</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6121,7 +6112,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="5197e604-3980-4e5c-a393-9631443d3a30">
 <notes>
-<note appliesTo="source">line: 90</note>
+<note appliesTo="source">line: 89</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6130,7 +6121,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="10054134-1c80-4aec-a21e-ff9747d683e0">
 <notes>
-<note appliesTo="source">line: 91</note>
+<note appliesTo="source">line: 90</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6139,7 +6130,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="38759c3f-d4ef-41f6-92bd-fdec7eedc257">
 <notes>
-<note appliesTo="source">line: 92</note>
+<note appliesTo="source">line: 91</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6148,7 +6139,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="75232ac6-5b16-4dce-8e0f-683bc4220e79">
 <notes>
-<note appliesTo="source">line: 93</note>
+<note appliesTo="source">line: 92</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6157,7 +6148,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="a6cafd3d-feb4-4141-b68f-6696377c5f79">
 <notes>
-<note appliesTo="source">line: 94</note>
+<note appliesTo="source">line: 93</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -6166,7 +6157,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="2f42ed66-ae4b-4c70-9433-d12ebe2d5170">
 <notes>
-<note appliesTo="source">line: 95</note>
+<note appliesTo="source">line: 94</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6175,7 +6166,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="c6c8918e-271b-46f3-b86b-e01efda39efa">
 <notes>
-<note appliesTo="source">line: 96</note>
+<note appliesTo="source">line: 95</note>
 </notes>
 <segment>
 <source>The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)</source>
@@ -6183,7 +6174,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="1e687c9a-8351-44fa-97c0-3462cb688e0a">
 <notes>
-<note appliesTo="source">line: 97</note>
+<note appliesTo="source">line: 96</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -6192,11 +6183,20 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="6689a4b4-3f39-4e43-b6a9-510a2bd3341a">
 <notes>
-<note appliesTo="source">line: 98</note>
+<note appliesTo="source">line: 97</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
 <source>NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)</source>
+</segment>
+</unit>
+<unit id="c0b66923-bc17-415e-9e3c-204e506b2c7c">
+<notes>
+<note appliesTo="source">line: 98</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`ssl.SSLContext` now uses Windows' trusted certificate stores, not `certifi` via `truststore` patching. (#15905)</source>
 </segment>
 </unit>
 <unit id="f62d0bba-ab16-48b4-bf4f-d226e453ac6d">

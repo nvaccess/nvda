@@ -31,8 +31,7 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
-
-import pip_system_certs.wrapt_requests
+import truststore
 
 if TYPE_CHECKING:
 	import wx
@@ -676,7 +675,7 @@ def main():
 	log.debug("Core starting")
 
 	# Use Windows root certificates for requests rather than certifi.
-	pip_system_certs.wrapt_requests.inject_truststore()
+	truststore.inject_into_ssl()
 
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
@@ -1099,15 +1098,6 @@ def main():
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	_terminate(schedule, name="task scheduler")
-	# DMP is only started if needed.
-	# Terminate manually (and let it write to the log if necessary)
-	# as core._terminate always writes an entry.
-	try:
-		import diffHandler
-
-		diffHandler._dmp._terminate()
-	except Exception:
-		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
