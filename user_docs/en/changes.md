@@ -28,6 +28,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
+* `hwPortUtils.ValidHandle` has been removed with no public replacement.
 
 #### Deprecations
 
