@@ -239,7 +239,7 @@ By refraining from closing or consolidating staff tickets, we can ensure that th
 
 ## Handling disagreements
 
-If a strong disagreement arises over the status of an issue (eg its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (eg a "reopen/close war").
+If a strong disagreement arises over the status of an issue (e.g. its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (e.g. a "reopen/close war").
 This is counter-productive and creates a negative atmosphere.
 
 The correct procedure is to:
