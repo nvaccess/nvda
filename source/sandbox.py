@@ -20,7 +20,6 @@ try:
     import win32api
     import win32con
     import win32event  # noqa: F401
-    import win32file
     import win32job
     import win32process
     import win32security
@@ -414,9 +413,6 @@ class SandboxConfig:
     enable_ui_restrictions: bool = True
     enable_kill_on_job_close: bool = True
 
-    # Directory restrictions
-    enable_directory_restrictions: bool = True
-    enable_low_integrity_directories: bool = True
 
     # Process creation flags
     enable_suspended_creation: bool = True
@@ -448,11 +444,6 @@ class SandboxConfig:
             f"  UI Restrictions: {'ENABLED' if self.enable_ui_restrictions else 'DISABLED'}")
         logger.info(
             f"  Kill on Job Close: {'ENABLED' if self.enable_kill_on_job_close else 'DISABLED'}")
-        logger.info("Directory Restrictions:")
-        logger.info(
-            f"  Directory Restrictions: {'ENABLED' if self.enable_directory_restrictions else 'DISABLED'}")
-        logger.info(
-            f"  Low Integrity Dirs: {'ENABLED' if self.enable_low_integrity_directories else 'DISABLED'}")
         logger.info("Process Creation:")
         logger.info(
             f"  Suspended Creation: {'ENABLED' if self.enable_suspended_creation else 'DISABLED'}")
@@ -467,239 +458,6 @@ logger = logging.getLogger(__name__)
 
 
 
-# ============================================================================
-# Directory Permission Helpers (extracted from launcher.py)
-# ============================================================================
-
-def create_directory_with_low_integrity_access(directory_path):
-    """Create directory with Low Integrity SACL from the start."""
-    try:
-        logger.info(
-            f"Creating directory with Low Integrity access: {directory_path}")
-
-        # If directory already exists, try to modify its permissions
-        if os.path.exists(directory_path):
-            logger.info(
-                f"Directory exists, setting low integrity permissions: {directory_path}")
-            return grant_low_integrity_access_sddl(directory_path)
-
-        try:
-            current_user_sid = win32security.GetTokenInformation(
-                win32security.OpenProcessToken(
-                    win32api.GetCurrentProcess(), win32security.TOKEN_QUERY),
-                win32security.TokenUser
-            )[0]
-            owner_sid_string = win32security.ConvertSidToStringSid(
-                current_user_sid)
-        except Exception:
-            owner_sid_string = None
-
-        dacl_part = "D:(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)"
-
-        if owner_sid_string:
-            dacl_part += f"(A;OICI;FA;;;{owner_sid_string})"
-        else:
-            dacl_part += "(A;OICI;FA;;;OW)"
-
-        dacl_part += "(A;OICI;0x1301ff;;;S-1-16-4096)"
-        sacl_part = "S:(ML;;NW;;;LW)"
-        sddl_string = dacl_part + sacl_part
-
-        logger.debug(f"Using SDDL for creation: {sddl_string}")
-
-        sd = win32security.ConvertStringSecurityDescriptorToSecurityDescriptor(
-            sddl_string, win32security.SDDL_REVISION_1
-        )
-
-        security_attrs = win32security.SECURITY_ATTRIBUTES()
-        security_attrs.SECURITY_DESCRIPTOR = sd
-        security_attrs.bInheritHandle = False
-
-        try:
-            win32file.CreateDirectory(directory_path, security_attrs)
-            logger.info("Created directory with embedded Low Integrity SACL")
-            return verify_low_integrity_access(directory_path)
-        except pywintypes.error as e:
-            logger.error(f"CreateDirectory failed: {e}")
-            return False
-
-    except Exception as e:
-        logger.error(f"Directory creation with SACL failed: {e}")
-        return False
-
-
-def grant_low_integrity_access_sddl(directory_path):
-    """Grant Low Integrity access using SDDL strings."""
-    try:
-        logger.debug("Attempting SDDL approach...")
-
-        try:
-            current_sd = win32security.GetNamedSecurityInfo(
-                directory_path,
-                win32security.SE_FILE_OBJECT,
-                win32security.OWNER_SECURITY_INFORMATION
-            )
-            owner_sid = current_sd.GetSecurityDescriptorOwner()
-            owner_sid_string = win32security.ConvertSidToStringSid(
-                owner_sid) if owner_sid else None
-        except Exception:
-            owner_sid_string = None
-
-        dacl_part = "D:(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)"
-
-        if owner_sid_string:
-            dacl_part += f"(A;OICI;FA;;;{owner_sid_string})"
-
-        dacl_part += "(A;OICI;0x1301ff;;;S-1-16-4096)"
-        sacl_part = "S:(ML;;NW;;;LW)"
-        sddl_string = dacl_part + sacl_part
-
-        logger.debug(f"Using SDDL: {sddl_string}")
-
-        sd = win32security.ConvertStringSecurityDescriptorToSecurityDescriptor(
-            sddl_string, win32security.SDDL_REVISION_1
-        )
-
-        win32security.SetNamedSecurityInfo(
-            directory_path,
-            win32security.SE_FILE_OBJECT,
-            win32security.DACL_SECURITY_INFORMATION | win32security.SACL_SECURITY_INFORMATION,
-            None,
-            None,
-            sd.GetSecurityDescriptorDacl(),
-            sd.GetSecurityDescriptorSacl()
-        )
-
-        logger.info("Successfully applied SDDL security descriptor")
-        return verify_low_integrity_access(directory_path)
-
-    except Exception as e:
-        logger.error(f"SDDL approach failed: {e}")
-        return False
-
-
-def verify_low_integrity_access(directory_path):
-    """Verify both DACL and SACL permissions for Low Integrity access."""
-    try:
-        logger.debug(f"Verifying DACL and SACL for {directory_path}...")
-
-        try:
-            verified_sd = win32security.GetNamedSecurityInfo(
-                directory_path,
-                win32security.SE_FILE_OBJECT,
-                win32security.DACL_SECURITY_INFORMATION | win32security.SACL_SECURITY_INFORMATION
-            )
-            sacl_readable = True
-        except pywintypes.error as e:
-            if e.winerror == 1314:  # Privilege required
-                logger.warning(
-                    "Cannot read SACL (privilege required), checking DACL only")
-                verified_sd = win32security.GetNamedSecurityInfo(
-                    directory_path,
-                    win32security.SE_FILE_OBJECT,
-                    win32security.DACL_SECURITY_INFORMATION
-                )
-                sacl_readable = False
-            else:
-                raise
-
-        dacl_ok = verify_low_integrity_dacl_from_sd(verified_sd)
-        sacl_ok = True
-        if sacl_readable:
-            sacl_ok = verify_low_integrity_sacl_from_sd(verified_sd)
-
-        success = dacl_ok and sacl_ok
-        if success:
-            logger.info("Successfully verified Low Integrity access")
-        else:
-            logger.error(
-                f"Verification failed - DACL: {dacl_ok}, SACL: {sacl_ok}")
-
-        return success
-
-    except Exception as e:
-        logger.error(f"Verification error: {e}")
-        return False
-
-
-def verify_low_integrity_dacl_from_sd(sd, expected_access_mask=None):
-    """Verify DACL from security descriptor."""
-    try:
-        low_integrity_sid = win32security.ConvertStringSidToSid("S-1-16-4096")
-
-        dacl = sd.GetSecurityDescriptorDacl()
-        if not dacl:
-            logger.error("No DACL found")
-            return False
-
-        for i in range(dacl.GetAceCount()):
-            ace = dacl.GetAce(i)
-            if ace[0][0] == win32security.ACCESS_ALLOWED_ACE_TYPE:
-                ace_sid = ace[2]
-                ace_mask = ace[1]
-
-                raw_low_integrity_sid_bytes = bytes(low_integrity_sid)
-                ctypes_low_integrity_sid_buffer = ctypes.create_string_buffer(
-                    raw_low_integrity_sid_bytes, len(
-                        raw_low_integrity_sid_bytes)
-                )
-
-                raw_ace_sid_bytes = bytes(ace_sid)
-                ctypes_ace_sid_buffer = ctypes.create_string_buffer(
-                    raw_ace_sid_bytes, len(raw_ace_sid_bytes)
-                )
-
-                if _equal_sid_buffers(ctypes_ace_sid_buffer, ctypes_low_integrity_sid_buffer):
-                    if expected_access_mask is None or (ace_mask & expected_access_mask) == expected_access_mask:
-                        logger.debug(
-                            f"DACL ACE for Low Integrity SID found (Mask: {hex(ace_mask)})")
-                        return True
-
-        logger.error("No matching DACL ACE found for Low Integrity SID")
-        return False
-
-    except Exception as e:
-        logger.error(f"DACL verification error: {e}")
-        return False
-
-
-def verify_low_integrity_sacl_from_sd(sd):
-    """Verify SACL from security descriptor."""
-    try:
-        low_integrity_sid = win32security.ConvertStringSidToSid("S-1-16-4096")
-
-        sacl = sd.GetSecurityDescriptorSacl()
-        if not sacl:
-            logger.error("No SACL found")
-            return False
-
-        for i in range(sacl.GetAceCount()):
-            ace = sacl.GetAce(i)
-            if ace[0][0] == 0x11:  # Mandatory Label ACE
-                ace_sid = ace[2]
-
-                raw_low_integrity_sid_bytes = bytes(low_integrity_sid)
-                ctypes_low_integrity_sid_buffer = ctypes.create_string_buffer(
-                    raw_low_integrity_sid_bytes, len(
-                        raw_low_integrity_sid_bytes)
-                )
-
-                raw_ace_sid_bytes = bytes(ace_sid)
-                ctypes_ace_sid_buffer = ctypes.create_string_buffer(
-                    raw_ace_sid_bytes, len(raw_ace_sid_bytes)
-                )
-
-                if _equal_sid_buffers(ctypes_ace_sid_buffer, ctypes_low_integrity_sid_buffer):
-                    logger.debug(
-                        "SACL Mandatory Label ACE found for Low Integrity SID")
-                    return True
-
-        logger.error("No Mandatory Label ACE found in SACL")
-        return False
-
-    except Exception as e:
-        logger.error(f"SACL verification error: {e}")
-        return False
 
 
 # ============================================================================
@@ -1086,23 +844,6 @@ class SandboxPopen(subprocess.Popen):
         # Call parent constructor
         super().__init__(*args, **kwargs)
 
-    def _setup_low_integrity_directories(self):
-        """Set up directories with low integrity access."""
-        dirs_to_setup = []
-
-        if self.allowed_directory:
-            dirs_to_setup.append(self.allowed_directory)
-        if self.sandbox_temp_dir:
-            dirs_to_setup.append(self.sandbox_temp_dir)
-        dirs_to_setup.extend(self.low_integrity_dirs)
-
-        for directory in dirs_to_setup:
-            if directory and os.path.exists(directory):
-                logger.debug(
-                    f"Setting up low integrity access for: {directory}")
-                if not create_directory_with_low_integrity_access(directory):
-                    logger.warning(
-                        f"Warning: Failed to set up low integrity access for {directory}")
 
     def _execute_child(self, *args, **kwargs):
         """
@@ -1304,79 +1045,4 @@ class SandboxPopen(subprocess.Popen):
         return result
 
 
-# ============================================================================
-# CLI Entry Point (optional)
-# ============================================================================
 
-def main():
-    """Main entry point for command-line usage."""
-    import argparse
-
-    # Set up logging FIRST so we can see what's happening
-    setup_logging(level=logging.DEBUG)
-
-    parser = argparse.ArgumentParser(
-        description="Mos Eisley Windows Process Sandbox"
-    )
-    parser.add_argument("command", nargs="+", help="Command to run in sandbox")
-    parser.add_argument(
-        "--allowed-dir", help="Directory the process can access"
-    )
-    parser.add_argument(
-        "--no-user-sid", action="store_true",
-        help="Don't restrict user SID (keep user access)"
-    )
-    parser.add_argument(
-        "--no-low-integrity", action="store_true",
-        help="Don't use low integrity level"
-    )
-    parser.add_argument(
-        "--no-process-limits", action="store_true",
-        help="Don't limit subprocess creation"
-    )
-
-    args = parser.parse_args()
-
-    logger.info(f"CLI Debug: Command to execute: {args.command}")
-    logger.info(f"CLI Debug: Allowed directory: {args.allowed_dir}")
-
-    # Create configuration
-    config = SandboxConfig()
-    if args.no_user_sid:
-        config.restrict_user_sid = False
-        logger.info("CLI Debug: Disabled user SID restrictions")
-    if args.no_low_integrity:
-        config.enable_low_integrity = False
-        config.enable_low_integrity_directories = False
-        logger.info("CLI Debug: Disabled low integrity")
-    if args.no_process_limits:
-        config.enable_process_limits = False
-        logger.info("CLI Debug: Disabled process limits")
-
-    # Show configuration (but don't let it interfere with output)
-    logger.info("CLI Debug: About to show sandbox configuration")
-    config.log_config()
-
-    try:
-        logger.info("CLI Debug: About to create SandboxPopen")
-        # Run the sandboxed process
-        with SandboxPopen(
-            args.command,
-            config=config,
-            allowed_directory=args.allowed_dir
-        ) as proc:
-            logger.info(f"CLI Debug: SandboxPopen created successfully, PID: {proc.pid}")
-            logger.info("CLI Debug: About to wait for process")
-            proc.wait()
-            logger.info(f"CLI Debug: Process completed with exit code: {proc.returncode}")
-            print(f"Process exit code: {proc.returncode}", file=sys.stderr)
-            return proc.returncode
-    except Exception as e:
-        logger.error(f"CLI Debug: Exception occurred: {e}")
-        logger.exception("CLI Debug: Full exception traceback")
-        print(f"ERROR: {e}", file=sys.stderr)
-        return 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
