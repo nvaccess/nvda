@@ -207,8 +207,8 @@ These attachments have been lost.
 ## Deprecated features
 Our core development focus is on modern technologies (like UIA) to ensure the project's long-term health and compatibility.
 
-However, we recognise that some legacy features or settings remain in NVDA out of necessity for specific user workflows. 
-This creates a special class of issues that require a distinct triage process. 
+However, we recognise that some legacy features or settings remain in NVDA out of necessity for specific user workflows.
+This creates a special class of issues that require a distinct triage process.
 Our goal is to be transparent about our priorities without dismissing the real-world needs of our users.
 
 When triaging an issue related to a feature that involves a deprecated technology or is otherwise no longer under active development by the core team:
@@ -236,7 +236,7 @@ Community members are welcome and encouraged to interact with staff tickets in t
 By refraining from closing or consolidating staff tickets, we can ensure that the NV Access team maintains control over their internal workflow and prioritisation, while still benefiting from the valuable insights and contributions of the community.
 
 ## Handling disagreements
-If a strong disagreement arises over the status of an issue (eg its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (eg a "reopen/close war"). 
+If a strong disagreement arises over the status of an issue (eg its priority, whether it should be closed), do not engage in repeatedly changing the issue's state (eg a "reopen/close war").
 This is counter-productive and creates a negative atmosphere.
 
 The correct procedure is to:
