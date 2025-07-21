@@ -1,6 +1,7 @@
 import unittest
 from l10nUtil import _PoChecker
 
+
 class TestGetInterpolations(unittest.TestCase):
 	def setUp(self):
 		# _PoChecker requires a po file path, but _getInterpolations only uses regexes and self._messageAlert
@@ -122,6 +123,7 @@ class TestGetInterpolations(unittest.TestCase):
 		self.assertEqual(unnamed, ["%s"])
 		self.assertEqual(named, set())
 		self.assertEqual(formats, set())
+
 
 if __name__ == "__main__":
 	unittest.main()

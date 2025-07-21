@@ -573,7 +573,9 @@ class _PoChecker:
 		return True
 
 	# e.g. %s %d %10.2f %-5s (but not %%) or %%(name)s %(name)d
-	RE_UNNAMED_PERCENT = re.compile(r"(?<!%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]|(?<=%%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]")
+	RE_UNNAMED_PERCENT = re.compile(
+		r"(?<!%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]|(?<=%%)%(?!%)[-#+0]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[hlL]?[a-zA-Z]"
+	)
 	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
 	# e.g. {name} {name:format}
@@ -691,7 +693,7 @@ class _PoChecker:
 def checkPo(poFilePath: str) -> tuple[bool, str | None]:
 	"""Check a po file for errors.
 	:param poFilePath: The path to the po file to check.
-	:return: 
+	:return:
 	True if the file is okay or has warnings, False if there were fatal errors.
 	A report about the errors or warnings found, or None if there were no problems.
 	"""
