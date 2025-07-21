@@ -53,6 +53,7 @@ There have also been a number of other fixes and improvements, including to mous
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
 * When the Elements List or Find dialog is opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 * In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)
+* NVDA will now warn before updating when connected as the controlled computer with NVDA Remote Access. (#18455)
 
 ### Bug Fixes
 
