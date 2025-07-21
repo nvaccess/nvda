@@ -260,22 +260,15 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentLine(self, gesture):
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
-		isNavigable: bool = False
 		if (
 			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
 			and not treeInterceptor.passThrough
 		):
 			obj = treeInterceptor
-			isNavigable = True
-		else:
-			isNavigable = obj._hasNavigableText
-		if isNavigable:
-			try:
-				info = obj.makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError):
-				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
-		else:
-			info = NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST)
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:

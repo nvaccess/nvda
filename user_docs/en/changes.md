@@ -68,8 +68,6 @@ There have also been a number of other fixes and improvements, including to mous
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
-* In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via `aria-label` or `aria-labelledby`. (#15159, @jcsteh)
-* It is now possible to review and spell the labels of controls in Google Chrome menus and dialogs. (#11285, @jcsteh)
 * When typing into a cell in Microsoft Excel, the braille display is now correctly updated to show the new content. (#18391)
 * Fixed bug when trying to access the Add-on Store from certain environments such as corporates. (#18354)
 * When using NVDA Remote Access, speech from User Account Control screens on the remote computer now works reliably. (#18101, @jcsteh)
