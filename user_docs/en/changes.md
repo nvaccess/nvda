@@ -6,7 +6,8 @@
 
 ### New Features
 
-* In add-on lists of the add-on store, add-ons can be sorted by minimum and last tested NVDA version. Additionally, minimum and last tested version will be shown in the Details area for all tabs of the store (#18440, @nvdaes)
+* In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
+Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
 
 ### Changes
 
