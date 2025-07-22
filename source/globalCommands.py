@@ -2368,7 +2368,7 @@ class GlobalCommands(ScriptableObject):
 			)
 			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
-			title = _("Expanded symbol ({language})").format(language=languageDescription)
+			title = _("Expanded symbol ({lang})").format(lang=languageDescription)
 			ui.browseableMessage(message, title)
 
 	@script(

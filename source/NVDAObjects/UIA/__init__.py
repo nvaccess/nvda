@@ -2718,7 +2718,7 @@ class SuggestionsList(UIA):
 		suggestionsCount: int = self.childCount
 		suggestionsMessage = (
 			# Translators: message from to note the number of suggestions
-			ngettext("{} suggestion", "{} suggestions", suggestionsCount).format(suggestionsCount)
+			ngettext("{num} suggestion", "{num} suggestions", suggestionsCount).format(num=suggestionsCount)
 		)
 		ui.message(suggestionsMessage)
 

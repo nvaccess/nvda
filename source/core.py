@@ -114,8 +114,8 @@ def _showAddonsErrors() -> None:
 		gui.messageBox(
 			_(
 				# Translators: Shown when one or more actions on add-ons failed.
-				"Some operations on add-ons failed. See the log file for more details.\n{}",
-			).format("\n".join(addonFailureMessages)),
+				"Some operations on add-ons failed. See the log file for more details.\n{failureMsg}",
+			).format(failureMsg="\n".join(addonFailureMessages)),
 			# Translators: Title of message shown when requested action on add-ons failed.
 			_("Error"),
 			wx.ICON_ERROR | wx.OK,

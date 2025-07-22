@@ -600,10 +600,10 @@ class FeatureFlagCombo(wx.Choice):
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
 		# Translators: Label for the default option for some feature-flag combo boxes
 		# Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
-		# The placeholder {} is replaced with the label of the option which describes current default behavior
+		# The placeholder {default} is replaced with the label of the option which describes current default behavior
 		# in NVDA. EG "Default (Yes)".
-		defaultOptionLabel: str = _("Default ({})").format(
-			translatedStringForBehaviorOfDefault,
+		defaultOptionLabel: str = _("Default ({default})").format(
+			default=translatedStringForBehaviorOfDefault,
 		)
 		return collections.OrderedDict(
 			{
