@@ -125,7 +125,7 @@ class _DataManager:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			log.debug(f"Fetching add-on data from {url}")
-			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
+			response = _fetchUrlAndUpdateRootCertificates(url)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
 			return None

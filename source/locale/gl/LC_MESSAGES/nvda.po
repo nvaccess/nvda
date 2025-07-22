@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 04:27+0000\n"
-"PO-Revision-Date: 2025-07-07 23:52\n"
+"POT-Creation-Date: 2025-07-15 01:41+0000\n"
+"PO-Revision-Date: 2025-07-15 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -946,28 +946,28 @@ msgstr "Non se admite neste documento"
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr ""
+msgstr "Móvese cara a seguinte cabeceira no nivel {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr ""
+msgstr "Non hai seguinte cabeceira no nivel {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr ""
+msgstr "Móvese cara a cabeceira anterior no nivel {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr ""
+msgstr "Non hai anterior cabeceira no nivel {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -2107,28 +2107,28 @@ msgid "brown-yellow"
 msgstr "marrón amarelo"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:85
+#: core.py:87
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "O seguinte complemento fallou ao se actualizar: {}."
 msgstr[1] "Os seguintes complementos fallaron ao se actualizar: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:94
+#: core.py:96
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "O seguinte complemento fallóu ao se desinstalar: {}."
 msgstr[1] "Os seguintes complementos fallaron ao se desinstalar: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:103
+#: core.py:105
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "O seguinte complemento fallou ao se instalar: {}."
 msgstr[1] "Os seguintes complementos fallaron ao se instalar: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
-#: core.py:116
+#: core.py:118
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{}"
 msgstr "Algunhas operacións sobre os complementos fallaron. Consulta o ficheiro de rexistro para máis detalles.\n"
@@ -2161,7 +2161,7 @@ msgstr "Algunhas operacións sobre os complementos fallaron. Consulta o ficheiro
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
+#: core.py:121 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
 #: updateCheck.py:928 gui\__init__.py:238 gui\__init__.py:246
 #: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
 #: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:217
@@ -2179,46 +2179,46 @@ msgid "Error"
 msgstr "Erro"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:149
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Os seguintes parámetros de liña de ordes son descoñecidos para NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:154
 msgid "Unknown command line parameters"
 msgstr "Parámetros de liña de ordes descoñecidos"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:163
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "O ficheiro de configuración contén erros. A configuración reiniciouse ós valores predeterminados de fábrica.\n"
 "Pódese atopar máis información acerca dos erros no ficheiro de rexistro."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:168
 msgid "Configuration File Error"
 msgstr "Erro no Ficheiro de Configuración"
 
-#: core.py:184
+#: core.py:186
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "O teu ficheiro de mapa de xestos contén erros.\n"
 "Poden atoparse Máis detalles acerca dos erros no ficheiro de rexistro."
 
-#: core.py:187
+#: core.py:189
 msgid "gesture map File Error"
 msgstr "erro no ficheiro de mapa de xestos"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:792
+#: core.py:799
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Agarda por favor..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:934
+#: core.py:941
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -2488,7 +2488,7 @@ msgstr "Audio"
 #: globalCommands.py:126 gui\settingsDialogs.py:3365
 msgctxt "remote"
 msgid "Remote Access"
-msgstr ""
+msgstr "Aceso Remoto"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -3973,7 +3973,7 @@ msgstr "Amosa as opcións do audio do NVDA"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3370
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "Amosa as opcións visuais do NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3379
@@ -4014,22 +4014,22 @@ msgstr "Amosa as opcións de Formateado de documentos do NVDA"
 #: globalCommands.py:3447
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
-msgstr ""
+msgstr "Amosa as opcións do Aceso Remoto"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3456
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "Amosa as opcións da Tenda de Complementos do NVDA"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3465
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "Amosa as opcións do OCR de Windows do NVDA"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3474
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "Amosa as opcións avanzadas do NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3483
@@ -4223,7 +4223,7 @@ msgstr "Activa e desactiva a fala cando se le por liñas ou por parágrafos co b
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3807
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "Falar ao navegar por liñas ou por parágrafos co braille activado"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3809
@@ -4733,50 +4733,50 @@ msgstr "Percorre modos de separación de son"
 #: globalCommands.py:4937
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Anuncia a lingua para o texto baixo o cursor do sistema. Se se preme dúas veces, presenta a información en modo exploración"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4952
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Lingua descoñecida"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4963
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (non admitido)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4972
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "Lingua na posición do cursor do sistema"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4977
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
-msgstr ""
+msgstr "Silencia ou desilencia a voz que chega dende o computador remoto"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
 #: globalCommands.py:4987
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
-msgstr ""
+msgstr "Envía o contido do portapapeis ao computador remoto"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
 #: globalCommands.py:4995
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
-msgstr ""
+msgstr "Copia unha ligazón da sesión actual do Aceso Remoto ao portapapeis"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
 #: globalCommands.py:5005
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
-msgstr ""
+msgstr "Desconecta dende a actual sesión do Aceso Remoto"
 
 #. Translators: A message indicating that the remote client is not connected.
 #. Translators: Message shown when attempting to mute the remote computer when no session is connected.
@@ -4795,7 +4795,7 @@ msgstr "No conectado"
 #: globalCommands.py:5017
 msgctxt "remote"
 msgid "Connects to a remote computer"
-msgstr ""
+msgstr "Conecta a un computador remoto"
 
 #. Translators: A message indicating that the remote client is already connected.
 #: globalCommands.py:5028
@@ -4806,13 +4806,13 @@ msgstr "Xa conectado"
 #: globalCommands.py:5034
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
-msgstr ""
+msgstr "Conmuta se un Aceso Remoto está conectado"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
 #: globalCommands.py:5049
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
-msgstr ""
+msgstr "Cambia se o teclado controla o computador local ou o remoto"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6991,7 +6991,7 @@ msgstr "Asegúrate de que estás conectado a Internet e de que a URL da réplica
 #: updateCheck.py:431
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "Imposible estabrecer unha conexión co servidor de NV Access."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7204,7 +7204,7 @@ msgstr "Asegúrate de que estás conectado a Internet e de que a URL da tenda de
 #: addonStore\dataManager.py:224
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "Imposible estabrecer unha conexión co servidor da Tenda de Complementos."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:257
@@ -7243,27 +7243,36 @@ msgid "Failed to install add-on from %s"
 msgstr "Fallo ao instalar o complemento dende %s"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
-#: addonStore\network.py:243
+#: addonStore\network.py:251
 msgctxt "addonStore"
 msgid "Add-on download failure"
 msgstr "Fallo na descarga do complemento"
 
+#. Translators: A message to the user if an add-on download fails.
+#. url is replaced with the base URL of the add-on download e.g. (github.com).
+#. fingerprint is replaced with the SHA256 fingerprint of the certificate.
+#: addonStore\network.py:271
+#, python-brace-format
+msgctxt "addonStore"
+msgid "The website where you are downloading the add-on from has a certificate that is not trusted. Do you want to trust the root certificate for {url}? This will allow you to download add-ons from this website in the future. Only do this if you trust the website. The certificate's SHA256 fingerprint is: {fingerprint}. "
+msgstr ""
+
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:266
+#: addonStore\network.py:291 addonStore\network.py:322
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
 msgstr "Non se pode descargar o complemento: {name}"
 
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:276
+#: addonStore\network.py:332
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
 msgstr "Non se pode gardar o complemento coma un ficheiro: {name}"
 
 #. Translators: A message to the user if an add-on download is not safe
-#: addonStore\network.py:288
+#: addonStore\network.py:344
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
@@ -8641,7 +8650,7 @@ msgstr "Nattiq nBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -9163,19 +9172,19 @@ msgstr "Español para texto grego"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "Hebreo (Bíblico) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "Hebreo (Bíblico) cantilación compreta"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "Hebreo (Bíblico) Slim"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9523,13 +9532,13 @@ msgstr "Romanés"
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "Braille computerizado ruso de 6 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:465
 msgid "Russian 8 dot computer braille"
-msgstr ""
+msgstr "Braille computerizado ruso de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9715,7 +9724,7 @@ msgstr "Thai grao 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Thai grade 2"
-msgstr ""
+msgstr "Thai grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10077,31 +10086,31 @@ msgstr "Marca de parágrafo (¶)"
 #: config\configFlags.py:313
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "Voz"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:315
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "Pitar"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "Desactivado"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
 msgctxt "remote"
 msgid "Allow this computer to be controlled"
-msgstr ""
+msgstr "Permitir a este computador seren controlado"
 
 #. Translators: Option that allows this computer to control the remote computer.
 #: config\configFlags.py:341
 msgctxt "remote"
 msgid "Control another computer"
-msgstr ""
+msgstr "Controlar outro computador"
 
 #. Translators: Use an existing Remote control server
 #: config\configFlags.py:369
@@ -12051,7 +12060,7 @@ msgstr "Acción non disponible mentras o modo braille se configura a saída de f
 #: gui\blockAction.py:87
 msgctxt "remote"
 msgid "Action unavailable when Remote Access is disabled"
-msgstr ""
+msgstr "Acción non dispoñible cando estea desactivado o Aceso Remoto"
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -12962,14 +12971,14 @@ msgstr "Cambio automático de dialecto (cando se soporte)"
 #: gui\settingsDialogs.py:1712
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Anunciar cambios de lin&gua mentras se le"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1728
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Anuncia cando cambiar a una lingua non está &admitido polo sintetizador"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13757,7 +13766,7 @@ msgstr "Habilitar Acceso Remoto"
 #: gui\settingsDialogs.py:3392
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr ""
+msgstr "Confirmar antes de desconectar cando se controla"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3402
@@ -13820,25 +13829,26 @@ msgstr "Borrar todas as pegadas de confianza"
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Esto fará que o NVDA esqueza todos os servidores de Aceso Remoto nos que se confiaba anteriormente. Ao conectarte a un servidor non recoñecido no que se confiaba previamente, voltaráseche a preguntar se confías no seu certificado.\n\n"
+"Estás seguro de que queres continuar?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3560
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
-msgstr ""
+msgstr "Eliminar todas as pegadas dixitais de confianza"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
 #: gui\settingsDialogs.py:3577
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr ""
+msgstr "Tanto o host como a chave deben estar configurados na sección Acceso remoto para conectar automaticamente usando un servidor existente despois de que se inicie o NVDA."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3583
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr ""
+msgstr "Tanto o porto como a chave deben estar configurados na categoría Acceso remoto para conectar automaticamente usando un servidor aloxado localmente despois de que se inicie o NVDA."
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3589
@@ -17734,7 +17744,7 @@ msgstr "{val:g} pt espazo antes de parágrafo"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (non admitida)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98
@@ -18558,7 +18568,7 @@ msgstr "Ninguén máis está conectado"
 #: _remoteClient\client.py:161
 msgctxt "remote"
 msgid "Unable to send clipboard"
-msgstr ""
+msgstr "Imposible enviar o portapapeis"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: _remoteClient\client.py:176
@@ -18569,13 +18579,13 @@ msgstr "Liga copiada"
 #: _remoteClient\client.py:226
 msgctxt "remote"
 msgid "Confirm Disconnection"
-msgstr ""
+msgstr "Confirmar Desconexión"
 
 #. Translators: Message shown when disconnecting from the remote computer.
 #: _remoteClient\client.py:230
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
-msgstr ""
+msgstr "Estás seguro de que queres desconectarte dende a sesión do Aceso Remoto?"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:282
@@ -18626,45 +18636,45 @@ msgstr "Controlando computador remoto"
 #: _remoteClient\client.py:617
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr ""
+msgstr "Xa hai unha sesión de acceso remoto en curso. Desconéctate antes de iniciar unha nova sesión."
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:620
 msgctxt "remote"
 msgid "Already Connected"
-msgstr ""
+msgstr "Xa Conectado"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:635
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
-msgstr ""
+msgstr "Dexesas controlar o computador no servidor {server} ca chave {key}?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:641
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Desexas permitir a este computador seren controlado no servidor {server} coa chave {key}?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:647
 msgctxt "remote"
 msgid "Remote Access Connection Request"
-msgstr ""
+msgstr "Solicitude de conexión de Aceso Remoto"
 
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
 #: _remoteClient\cues.py:32
 msgctxt "remote"
 msgid "Connected as controlled computer"
-msgstr ""
+msgstr "Conectado coma computador controlado"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
 #: _remoteClient\cues.py:43
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr ""
+msgstr "Enviar portapapeis"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:48
@@ -18721,7 +18731,7 @@ msgstr "Obter enderezo &IP externo"
 #: _remoteClient\dialogs.py:209
 msgctxt "remote"
 msgid "&Key"
-msgstr ""
+msgstr "&Chave"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:230
@@ -18767,7 +18777,7 @@ msgstr "Tanto porto coma clave deben estar establecidos."
 #: _remoteClient\dialogs.py:429
 msgctxt "remote"
 msgid "Security Warning"
-msgstr ""
+msgstr "Aviso de seguridade"
 
 #. Translators: Message presented when attempting to connect to a server with an untrusted certificate.
 #. {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
@@ -18778,7 +18788,10 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "Non se puido verificar o certificado deste servidor. O uso dunha pegada dixital incorrecta pode permitir que un terceiro acceda á sesión de acceso remoto.\n\n"
+"Antes de continuar, asegúrate de que a seguinte pegada dixital do certificado do servidor sexa correcta.\n"
+"Pegada SHA256 do servidor: {fingerprint}\n\n"
+"Continuar coa conexión de todos os xeitos?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:449
@@ -18794,7 +18807,7 @@ msgstr "Conectar"
 #: _remoteClient\localMachine.py:289
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr ""
+msgstr "Non se pode activar control+alt+supr"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
@@ -18805,19 +18818,19 @@ msgstr "Silenciar equipo remoto"
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr ""
+msgstr "Silenciar a voz e os sons do ordenador remoto."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr ""
+msgstr "&Enviar portapapeis"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr ""
+msgstr "Envía o texto do portapapeis ao computador remoto."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
@@ -18828,31 +18841,31 @@ msgstr "Copiar &liga"
 #: _remoteClient\menu.py:57
 msgctxt "remote"
 msgid "Copy a link to the current Remote Access session to the clipboard."
-msgstr ""
+msgstr "Copia unha ligazón á sesión de acceso remoto actual no portapapeis."
 
 #. Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 #: _remoteClient\menu.py:68
 msgctxt "remote"
 msgid "S&end control+alt+delete"
-msgstr ""
+msgstr "&Enviar control+alt+supr"
 
 #. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
 msgctxt "remote"
 msgid "Send control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Envia control+alt+supr ao computador controlado."
 
 #. Translators: Label of the Remote Access submenu in the NVDA tools menu.
 #: _remoteClient\menu.py:81
 msgctxt "remote"
 msgid "R&emote Access"
-msgstr ""
+msgstr "Aceso R&emoto"
 
 #. Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 #: _remoteClient\menu.py:85
 msgctxt "remote"
 msgid "Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one."
-msgstr ""
+msgstr "Permite que alguén controle este ordenador desde outro lugar ou que controle outro ordenador que execute NVDA con este."
 
 #. Translators: Item in the Remote Access submenu to connect to another computer.
 #: _remoteClient\menu.py:156
@@ -18863,7 +18876,7 @@ msgstr "Conectar..."
 #: _remoteClient\menu.py:158
 msgctxt "remote"
 msgid "Remotely connect to another computer running NVDA."
-msgstr ""
+msgstr "Conectar remotamente a outro ordenador que execute NVDA."
 
 #. Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 #: _remoteClient\menu.py:176
@@ -18874,23 +18887,23 @@ msgstr "Desconectar"
 #: _remoteClient\menu.py:178
 msgctxt "remote"
 msgid "Disconnect from the current Remote Access session."
-msgstr ""
+msgstr "Desconectar da sesión actual de acceso remoto."
 
 #. Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr ""
+msgstr "O servidor de acceso remoto ao que te conectaches non é compatible con esta versión do NVDA. Usa un servidor diferente."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
 msgctxt "remote"
 msgid "Message from Remote Access Server"
-msgstr ""
+msgstr "Mensaxe dende o servidor de Aceso Remoto"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr ""
+msgstr "NVDA remoto non conectado"
 
