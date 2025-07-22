@@ -43,14 +43,27 @@ class Test_FuncSPec(unittest.TestCase):
 		)
 		self.assertEqual(actualFuncSPec, expectedFuncSpec)
 
+	def testUnionTypesInOnly(self):
+		"""Tests that getFuncSPec can extract a function signature with union ctypes type hints."""
+
+		def GetClientRect(hWnd: int | HWND, lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
+
+		actualFuncSPec = getFuncSPec(GetClientRect)
+		expectedFuncSpec = FuncSpec(
+			BOOL,
+			(HWND, POINTER(RECT)),
+			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.IN, "lpRect")),
+		)
+		self.assertEqual(actualFuncSPec, expectedFuncSpec)
+
 	def testAnnotatedTypesInOut(self):
 		"""Tests that getFuncSPec can extract a function signature with
 		annotated ctypes type hints, including output parameters.
 		"""
 
 		def GetClientRect(
-			hWnd: Annotated[int, HWND],
-		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 2)]: ...
+			hWnd: int | HWND,
+		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 1)]: ...
 
 		actualFuncSPec = getFuncSPec(GetClientRect, restype=BOOL)
 		expectedFuncSpec = FuncSpec(
@@ -74,6 +87,11 @@ class Test_FuncSPecRaises(unittest.TestCase):
 
 	def testUnsupportedTypes(self):
 		def GetClientRect(hWnd: int) -> bool: ...
+
+		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
+
+	def testUnsupportedTypesMultiple(self):
+		def GetClientRect(hWnd: int | float | str) -> bool: ...
 
 		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
 
@@ -127,7 +145,7 @@ class Test_dllFunc(unittest.TestCase):
 		@dllFunc(windll.user32, "GetClientRect", BOOL)
 		def GetClientRect(
 			hWnd: Annotated[int, HWND],
-		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 2)]: ...
+		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 1)]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
 		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))

@@ -21,6 +21,7 @@ class ParamDirectionFlag(IntEnum):
 	"""Specifies an input parameter to the function."""
 	OUT = 2
 	"""Output parameter. The foreign function fills in a value."""
+	# Note: IN | OUT is not supported, as ctypes will require this as input parameter and will also return it, which is useless.
 
 
 @runtime_checkable
@@ -39,7 +40,7 @@ class OutParam:
 	"""The type of the output parameter. This should be a pointer type."""
 	name: str
 	"""The name of the output parameter."""
-	position: int
+	position: int = 0
 	"""The position of the output parameter in argtypes."""
 
 
@@ -74,7 +75,7 @@ def getFuncSPec(
 			t = t.__metadata__[0]
 		if not isinstance(t, _SupportsFromParam):
 			raise TypeError(
-				f"Expected a ctypes compatible type for parameter: {param.name}, got {t.__name__!r}",
+				f"Expected a ctypes compatible type for parameter: {param.name}, got {t!r}",
 			)
 		argtypes.append(t)
 		if param.default is inspect.Parameter.empty:
@@ -95,11 +96,22 @@ def getFuncSPec(
 		requireOutParamAnnotations = restype is not None
 		restypes = [expectedRestype]
 	for i, t in enumerate(restypes):
+		handledPositions = []
 		isAnnotated = get_origin(t) is Annotated and len(t.__metadata__) == 1
 		if requireOutParamAnnotations:
 			if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
 				raise TypeError(f"Expected single annotation of type 'OutParam' for parameter: {param.name}")
 			outParam = t.__metadata__[0]
+			if len(argtypes) < outParam.position:
+				raise IndexError(
+					f"Output parameter {outParam.name} at position {outParam.position} "
+					f"exceeds the number of processed input parameters ({len(argtypes)})",
+				)
+			elif outParam.position in handledPositions:
+				raise IndexError(
+					f"Output parameter at position {outParam.position} has already been processed",
+				)
+			handledPositions.append(outParam.position)
 			argtypes.insert(outParam.position, outParam.type)
 			paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
 		elif isAnnotated:
@@ -129,24 +141,39 @@ def dllFunc(
 	wrapNewCFunc=True,
 	errcheck=None,
 ):
+	"""
+	Decorator to bind a Python function to a C function from a loaded DLL using ctypes.
+	This function creates a decorator that can be applied to a Python function, specifying its argument and return types,
+	and optionally wrapping it as a new ctypes function. It also allows for annotating the original C function with
+	the correct ctypes metadata and setting custom error checking.
+	:param library: The loaded DLL containing the target C function.
+	:param funcName: The name of the C function to bind.
+	:param restype: The ctypes return type of the C function. Defaults to None.
+	:param cFunctype: The ctypes function type constructor (e.g., ctypes.WINFUNCTYPE)
+	:param annotateOriginalCFunc: Whether to set ctypes metadata (argtypes, restype) on the original C function.
+	:param wrapNewCFunc: Whether to wrap the function as a new ctypes function. If False, returns the original C function wrapped.
+	:param errcheck: An optional error checking function to assign to the new ctypes function.
+	:returns: A decorator that can be applied to a Python function to bind it to the specified C function.
+	"""
+
 	cFunc = getattr(library, funcName)
 
 	def decorator(pyFunc: types.FunctionType):
 		nonlocal restype
 		if not isinstance(pyFunc, types.FunctionType):
-			raise TypeError(f"Expected a function, got {type(pyFunc).__name__!r}")
+			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
 		spec = getFuncSPec(pyFunc, restype)
 		# Set ctypes metadata for the original function in case it is called from outside
 		if annotateOriginalCFunc:
 			if cFunc.argtypes is not None:
 				log.warning(
-					f"Overriding existing argtypes for {pyFunc.__name__!r}: {cFunc.argtypes} -> {spec.argtypes}",
+					f"Overriding existing argtypes for {pyFunc!r}: {cFunc.argtypes} -> {spec.argtypes}",
 					stack_info=True,
 				)
 			cFunc.argtypes = spec.argtypes
 			if cFunc.restype is not None:
 				log.warning(
-					f"Overriding existing restype for {pyFunc.__name__!r}: {cFunc.restype} -> {spec.restype}",
+					f"Overriding existing restype for {pyFunc!r}: {cFunc.restype} -> {spec.restype}",
 					stack_info=True,
 				)
 			cFunc.restype = spec.restype
