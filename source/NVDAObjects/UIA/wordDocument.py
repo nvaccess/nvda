@@ -373,7 +373,7 @@ class WordDocumentTextInfo(UIATextInfo):
 							mathStartIndex = index
 					elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
 						if curLevel == mathLevel and field.field.get("mathml"):
-							del fields[mathStartIndex + 1: index]
+							del fields[mathStartIndex + 1 : index]
 							index = mathStartIndex + 1
 						curLevel -= 1
 					index += 1
