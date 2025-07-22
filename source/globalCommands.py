@@ -2368,6 +2368,7 @@ class GlobalCommands(ScriptableObject):
 			)
 			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			# {lang} will be replaced with the current voice's language.
 			title = _("Expanded symbol ({lang})").format(lang=languageDescription)
 			ui.browseableMessage(message, title)
 
