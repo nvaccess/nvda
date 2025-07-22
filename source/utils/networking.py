@@ -41,9 +41,10 @@ class _CERT_CHAIN_PARA(ctypes.Structure):
 	)
 
 
-def _getCertificate(url: str) -> bytes:
-	"""Gets the certificate from the server."""
-	log.debug(f"Getting certificate from: {url}")
+def _updateWindowsRootCertificates(url: str) -> None:
+	"""Updates the Windows root certificates by fetching the latest certificate from the server."""
+	log.debug("Updating Windows root certificates")
+	crypt = ctypes.windll.crypt32
 	with requests.get(
 		url,
 		timeout=_FETCH_TIMEOUT_S,
@@ -52,13 +53,7 @@ def _getCertificate(url: str) -> bytes:
 		stream=True,
 	) as response:
 		# Get the server certificate.
-		return response.raw.connection.sock.getpeercert(True)
-
-
-def _updateWindowsRootCertificates(cert: bytes) -> None:
-	"""Adds the certificate to the Windows root certificates."""
-	log.debug("Updating Windows root certificates")
-	crypt = ctypes.windll.crypt32
+		cert = response.raw.connection.sock.getpeercert(True)
 	# Convert to a form usable by Windows.
 	certCont = crypt.CertCreateCertificateContext(
 		0x00000001,  # X509_ASN_ENCODING
@@ -92,7 +87,6 @@ def _is_cert_verification_error(exception: requests.exceptions.SSLError) -> bool
 		and exception.__context__.__cause__
 		and exception.__context__.__cause__.__context__
 		and isinstance(exception.__context__.__cause__.__context__, ssl.SSLCertVerificationError)
-		and hasattr(exception.__context__.__cause__.__context__, "reason")
 		and exception.__context__.__cause__.__context__.reason == "CERTIFICATE_VERIFY_FAILED"
 	)
 
@@ -112,8 +106,7 @@ def _fetchUrlAndUpdateRootCertificates(url: str, certFetchUrl: str | None = None
 		if _is_cert_verification_error(e):
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves.
-			cert = _getCertificate(certFetchUrl or url)
-			_updateWindowsRootCertificates(cert)
+			_updateWindowsRootCertificates(certFetchUrl or url)
 			log.debug(f"Retrying fetching data from: {url}")
 			result = requests.get(url, timeout=_FETCH_TIMEOUT_S)
 		else:
