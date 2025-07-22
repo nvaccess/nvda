@@ -31,7 +31,8 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
-import truststore
+
+import pip_system_certs.wrapt_requests
 
 if TYPE_CHECKING:
 	import wx
@@ -675,7 +676,7 @@ def main():
 	log.debug("Core starting")
 
 	# Use Windows root certificates for requests rather than certifi.
-	truststore.inject_into_ssl()
+	pip_system_certs.wrapt_requests.inject_truststore()
 
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
