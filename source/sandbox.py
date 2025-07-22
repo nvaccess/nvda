@@ -401,21 +401,44 @@ class SandboxConfig:
 
     # Token restrictions
     enable_restricted_token: bool = True
+    """Create a restricted security token for the process."""
+    
     enable_privilege_removal: bool = True
+    """Remove dangerous privileges like SE_DEBUG_NAME, SE_TCB_NAME, SE_BACKUP_NAME, 
+    SE_RESTORE_NAME, SE_SHUTDOWN_NAME, SE_LOAD_DRIVER_NAME, SE_SYSTEM_PROFILE_NAME."""
+    
     enable_low_integrity: bool = True
+    """Run the process at low integrity level (prevents writing to most system locations)."""
+    
     enable_sid_restrictions: bool = True
-    restrict_user_sid: bool = True  # Whether to disable the current user SID
+    """Enable Security Identifier (SID) restrictions on the token."""
+    
+    restrict_user_sid: bool = True
+    """Disable the current user SID in the restricted token. 
+    WARNING: This prevents access to user files and directories. 
+    Set to False if the process needs to access user data/addons."""
 
     # Job object restrictions
     enable_job_object: bool = True
+    """Create a job object to contain and limit the process."""
+    
     enable_memory_limits: bool = True
+    """Limit process memory usage to 100MB."""
+    
     enable_process_limits: bool = True
+    """Limit the number of active processes in the job to 1."""
+    
     enable_ui_restrictions: bool = True
+    """Prevent the process from creating/switching desktops and accessing clipboard.
+    Specifically blocks: JOB_OBJECT_UILIMIT_DESKTOP, JOB_OBJECT_UILIMIT_READCLIPBOARD, 
+    JOB_OBJECT_UILIMIT_WRITECLIPBOARD."""
+    
     enable_kill_on_job_close: bool = True
-
+    """Automatically terminate the process when the job object is closed."""
 
     # Process creation flags
     enable_suspended_creation: bool = True
+    """Create the process in suspended state initially (for setup before execution)."""
 
     def log_config(self):
         """Log the current configuration"""

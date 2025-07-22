@@ -76,7 +76,7 @@ ART_CONFIG = ProcessConfig(
 	name="NVDA ART",
 	sourceScriptPath=Path("../source/nvda_art.pyw"),
 	builtExeName="nvda_art.exe",
-	sandbox_enabled=True,
+	sandboxEnabled=True,
 	popenFlags={
 		"creationflags": subprocess.CREATE_NO_WINDOW,
 		"bufsize": 0,
