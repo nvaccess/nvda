@@ -10,7 +10,7 @@ import inspect
 from dataclasses import dataclass
 from functools import wraps
 import types
-from typing import Annotated, Any, get_origin, Type, Protocol, runtime_checkable
+from typing import Annotated, Any, Union, get_args, get_origin, Type, Protocol, runtime_checkable
 from enum import IntEnum
 
 from logHandler import log
@@ -66,6 +66,8 @@ def getFuncSPec(
 		t = param.annotation
 		if t is inspect.Parameter.empty:
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
+		elif get_origin(t) in (Union, types.UnionType):
+			t = next((c for c in get_args(t) if isinstance(c, _SupportsFromParam)), t)
 		elif get_origin(t) is Annotated:
 			if len(t.__metadata__) != 1 or not isinstance(t.__metadata__[0], _SupportsFromParam):
 				raise TypeError(f"Expected single annotation of a ctypes type for parameter: {param.name}")

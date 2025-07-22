@@ -8,8 +8,10 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 """
 
 import os
+import typing
+from utils.ctypesUtils import OutParam, dllFunc
 from vision import providerBase
-from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
+from ctypes import Structure, windll, c_float, POINTER, WinError
 from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
@@ -54,42 +56,30 @@ class Magnification:
 
 	_magnification = windll.Magnification
 
-	# Set full screen color effect
-	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
-	MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-		("MagSetFullscreenColorEffect", _magnification),
-		_MagSetFullscreenColorEffectArgTypes,
-	)
-	MagSetFullscreenColorEffect.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, "MagSetFullscreenColorEffect", errcheck=_errCheck)
+	def MagSetFullscreenColorEffect(
+		effect: POINTER(MAGCOLOREFFECT) | MAGCOLOREFFECT,
+	) -> typing.Annotated[int, BOOL]: ...
 
-	# Get full screen color effect
-	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
-	MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-		("MagGetFullscreenColorEffect", _magnification),
-		_MagGetFullscreenColorEffectArgTypes,
-	)
-	MagGetFullscreenColorEffect.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, "MagGetFullscreenColorEffect", restype=BOOL, errcheck=_errCheck)
+	def MagGetFullscreenColorEffect() -> typing.Annotated[
+		MAGCOLOREFFECT,
+		OutParam(POINTER(MAGCOLOREFFECT), "effect", 1),
+	]: ...
 
-	# show system cursor
-	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
-	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
-	MagShowSystemCursor = _MagShowSystemCursorFuncType(
-		("MagShowSystemCursor", _magnification),
-		_MagShowSystemCursorArgTypes,
-	)
-	MagShowSystemCursor.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, "MagShowSystemCursor", errcheck=_errCheck)
+	def MagShowSystemCursor(showCursor: bool | BOOL) -> typing.Annotated[int, BOOL]: ...
 
-	# initialize
-	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
-	MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
-	MagInitialize.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, "MagInitialize", errcheck=_errCheck)
+	def MagInitialize() -> typing.Annotated[int, BOOL]: ...
 
-	# uninitialize
-	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
-	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
-	MagUninitialize.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, "MagUninitialize", errcheck=_errCheck)
+	def MagUninitialize() -> typing.Annotated[int, BOOL]: ...
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
