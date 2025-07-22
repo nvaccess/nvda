@@ -6,6 +6,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Any, Dict, Tuple
 
+import config
 import globalVars
 import NVDAState
 from logHandler import log
@@ -16,7 +17,7 @@ class ProcessConfig:
 	name: str  # Process name for logging/debugging
 	sourceScriptPath: Path  # Path relative to include dir
 	builtExeName: str  # e.g. "nvdaDmp.pyw"
-	sandbox_enabled: bool = False  # Whether to run process in sandbox
+	sandboxEnabled: bool = False  # Whether to run process in sandbox
 	popenFlags: Dict[str, Any] = field(
 		default_factory=lambda: {
 			"creationflags": subprocess.CREATE_NO_WINDOW,
@@ -69,7 +70,7 @@ class SubprocessManager:
 		log.debug(f"Starting {self._config.name} process with command: {command}")
 
 		# Use sandboxing if enabled
-		if self._config.sandbox_enabled:
+		if self._config.sandboxEnabled:
 			log.info(f"ART process launching WITH sandbox restrictions enabled")
 			from sandbox import SandboxConfig, SandboxPopen
 			import tempfile
@@ -79,18 +80,18 @@ class SubprocessManager:
 			log.info(f"Created sandbox temp directory: {self._sandbox_temp_dir}")
 
 			# Create sandbox config for ART process
-			sandbox_config = SandboxConfig()
-			sandbox_config.enable_sid_restrictions = True
-			sandbox_config.restrict_user_sid = not NVDAState.isRunningAsSource()
-			sandbox_config.enable_restricted_token = True
-			sandbox_config.enable_low_integrity = False
-			sandbox_config.enable_ui_restrictions = True
-			sandbox_config.enable_process_limits = False  # Allow subprocess creation for ART
+			sandboxConfig = SandboxConfig()
+			sandboxConfig.enable_sid_restrictions = True
+			sandboxConfig.restrict_user_sid = False
+			sandboxConfig.enable_restricted_token = True
+			sandboxConfig.enable_low_integrity = False
+			sandboxConfig.enable_ui_restrictions = True
+			sandboxConfig.enable_process_limits = False  # Allow subprocess creation for ART
 
 
 			self.subprocess = SandboxPopen(
 				command,
-				config=sandbox_config,
+				config=sandboxConfig,
 				allowed_directory=self._sandbox_temp_dir,
 				**self._config.popenFlags
 			)
