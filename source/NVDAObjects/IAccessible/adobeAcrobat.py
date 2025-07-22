@@ -154,12 +154,28 @@ class AcrobatNode(IAccessible):
 				answer += AcrobatNode.getMathMLAttributes(node, ["encoding"])
 			case "ms":
 				answer += AcrobatNode.getMathMLAttributes(node, ["open", "close"])
+			case "mspace":
+				answer += AcrobatNode.getMathMLAttributes(node, ["width"])
+			case "msgroup":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "shift"])
+			case "msrow":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position"])
+			case "msline":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "length"])
+			case "mscarries":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "crossout"])
+			case "mscarry":
+				answer += AcrobatNode.getMathMLAttributes(node, ["crossout"])
+			case "mstack":
+				answer += AcrobatNode.getMathMLAttributes(node, ["align", "stackalign"])
+			case "mlongdiv":
+				answer += AcrobatNode.getMathMLAttributes(node, ["longdivstyle"])
 			case _:
 				pass
 		answer += ">"
 		val = node.GetValue()
 		if val:
-			answer += val
+			answer += html.escape(val)
 		else:
 			for childNum in range(node.GetChildCount()):
 				try:
@@ -214,7 +230,7 @@ class AcrobatNode(IAccessible):
 
 		# not MathML -- fall back to return the contents, which is hopefully alt text, inside an <mtext>
 		# note: we need to convert '<' and '%' to entity names
-		answer = f"<math><mtext>{html.escape(mathMl)}</mtext></math>"
+		answer = f"<math><mtext>{html.escape(s=mathMl)}</mtext></math>"
 		log.debug(f"_get_mathMl: didn't find MathML -- returning value as mtext: {answer}")
 		return answer
 
