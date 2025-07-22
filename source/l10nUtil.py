@@ -452,7 +452,7 @@ class _PoChecker:
 			f"{msgType} starting on line {self._messageLineNum}\n"
 			f'Original: "{self._msgid}"\n'
 			f'Translated: "{self._msgstr[-1]}"\n'
-			f"{'Error' if isError else 'Warning'}: {alert}",
+			f"{'ERROR' if isError else 'WARNING'}: {alert}",
 		)
 
 	@property
@@ -572,12 +572,23 @@ class _PoChecker:
 			return False
 		return True
 
-	# e.g. %s %d (but not %%)
-	RE_UNNAMED_PERCENT = re.compile(r"(?<!%)%(?!%)[.\d]*[a-zA-Z]")
+	# e.g. %s %d %10.2f %-5s (but not %%) or %%(name)s %(name)d
+	RE_UNNAMED_PERCENT = re.compile(
+		# Does not include optional mapping key, as that's handled by a different regex
+		r"""
+		(?:(?<=%%)|(?<!%))?%  # Percent sign, optionally preceded by 2 percent signs, but not by just 1
+		[#0+-]*  # Optional conversion flags
+		\d*  # Optional minimum field width
+		(?:\.\d+)?  # Optional precision specifier - if present, must be a full stop followed by 1-or-more digits
+		[hlL]?  # Optional length specifier - has no effect in Python
+		[diouxXeEfFgGcrsa]  # Conversion type
+		""",
+		flags=re.VERBOSE,
+	)
 	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
 	# e.g. {name} {name:format}
-	RE_FORMAT = re.compile(r"(?<!{){([^{}:]+):?[^{}]*}")
+	RE_FORMAT = re.compile(r"(?<!{){([^{}:]*):?[^{}]*}")
 
 	def _getInterpolations(self, text: str) -> tuple[list[str], set[str], set[str]]:
 		"""Get the percent and brace interpolations in a string.
@@ -592,7 +603,16 @@ class _PoChecker:
 		formats = set()
 		for m in self.RE_FORMAT.finditer(text):
 			if not m.group(1):
-				self._messageAlert("Unspecified positional argument in brace format")
+				self._messageAlert(
+					"Unspecified positional argument in brace format",
+					# Skip as error as many of these had been introduced in the source .po files.
+					# These should be fixed in the source .po files to add names to instances of "{}".
+					# This causes issues where the order of the arguments change in the string.
+					# e.g. "Character: {}\nReplacement: {}" being translated to "Replacement: {}\nCharacter: {}"
+					# will result in the expected interpolation being in the wrong place.
+					# This should be changed isError=True.
+					isError=False,
+				)
 			formats.add(m.group(0))
 		return unnamedPercent, namedPercent, formats
 
@@ -633,6 +653,7 @@ class _PoChecker:
 				alerts.append("unexpected presence of unnamed percent interpolations")
 		if idNamedPercent - strNamedPercent:
 			alerts.append("missing named percent interpolation")
+			error = True
 		if strNamedPercent - idNamedPercent:
 			if idNamedPercent:
 				alerts.append("extra named percent interpolation")
@@ -641,6 +662,7 @@ class _PoChecker:
 				alerts.append("unexpected presence of named percent interpolations")
 		if idFormats - strFormats:
 			alerts.append("missing brace format interpolation")
+			error = True
 		if strFormats - idFormats:
 			if idFormats:
 				alerts.append("extra brace format interpolation")
@@ -677,20 +699,23 @@ class _PoChecker:
 		return report
 
 
-def checkPo(poFilePath: str) -> str | None:
+def checkPo(poFilePath: str) -> tuple[bool, str | None]:
 	"""Check a po file for errors.
 	:param poFilePath: The path to the po file to check.
-	:return: A report about the errors or warnings found, or None if there were no problems.
+	:return:
+	True if the file is okay or has warnings, False if there were fatal errors.
+	A report about the errors or warnings found, or None if there were no problems.
 	"""
 	c = _PoChecker(poFilePath)
+	report = None
 	if not c.check():
 		report = c.getReport()
 		if report:
-			return report.encode("cp1252", errors="backslashreplace").decode(
+			report = report.encode("cp1252", errors="backslashreplace").decode(
 				"utf-8",
 				errors="backslashreplace",
 			)
-	return None
+	return not bool(c.errorCount), report
 
 
 def main():
@@ -834,20 +859,22 @@ def main():
 			if args.crowdinFilePath.endswith(".xliff"):
 				preprocessXliff(localFilePath, localFilePath)
 			elif localFilePath.endswith(".po"):
-				report = checkPo(localFilePath)
+				success, report = checkPo(localFilePath)
 				if report:
 					print(report)
-					print(f"\nWarning: Po file {localFilePath} has errors.")
+				if not success:
+					print(f"\nWarning: Po file {localFilePath} has fatal errors.")
 		case "checkPo":
 			poFilePaths = args.poFilePaths
 			badFilePaths: list[str] = []
 			for poFilePath in poFilePaths:
-				report = checkPo(poFilePath)
+				success, report = checkPo(poFilePath)
 				if report:
 					print(report)
+				if not success:
 					badFilePaths.append(poFilePath)
 			if badFilePaths:
-				print(f"\nOne or more po files had errors: {', '.join(badFilePaths)}")
+				print(f"\nOne or more po files had fatal errors: {', '.join(badFilePaths)}")
 				sys.exit(1)
 		case "uploadTranslationFile":
 			localFilePath = args.localFilePath or args.crowdinFilePath
@@ -860,9 +887,10 @@ def main():
 				localFilePath = tmp.name
 				needsDelete = True
 			elif localFilePath.endswith(".po"):
-				report = checkPo(localFilePath)
+				success, report = checkPo(localFilePath)
 				if report:
 					print(report)
+				if not success:
 					print(f"\nPo file {localFilePath} has errors. Upload aborted.")
 					sys.exit(1)
 			uploadTranslationFile(args.crowdinFilePath, localFilePath, args.language)
