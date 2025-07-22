@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 02:31+0000\n"
-"PO-Revision-Date: 2025-07-21 02:39\n"
+"POT-Creation-Date: 2025-07-22 05:05+0000\n"
+"PO-Revision-Date: 2025-07-22 05:13\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -2107,32 +2107,33 @@ msgid "brown-yellow"
 msgstr "Кафяво-жълто"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:86
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Следната добавка не успя да се обнови: {}."
 msgstr[1] "Следните добавки не успяха да се обновят: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:95
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Следната добавка не успя да се деинсталира: {}."
 msgstr[1] "Следните добавки не успяха да се деинсталират: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:104
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Следната добавка не успя да бъде инсталирана: {}."
 msgstr[1] "Следните добавки не успяха да бъдат инсталирани: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
+#. {failureMsg} will be replaced with the specific error message.
 #: core.py:117
+#, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
-"{}"
-msgstr "Някои операции с добавките са неуспешни. Вижте протоколния файл за повече подробности.\n"
-"{}"
+"{failureMsg}"
+msgstr ""
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -2161,16 +2162,16 @@ msgstr "Някои операции с добавките са неуспешн�
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:120 documentationUtils.py:74 updateCheck.py:445 updateCheck.py:758
-#: updateCheck.py:928 gui\__init__.py:238 gui\__init__.py:246
+#: core.py:120 documentationUtils.py:74 updateCheck.py:430 updateCheck.py:745
+#: updateCheck.py:917 gui\__init__.py:238 gui\__init__.py:246
 #: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
-#: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:217
-#: gui\configProfiles.py:270 gui\configProfiles.py:282
-#: gui\configProfiles.py:291 gui\configProfiles.py:335
-#: gui\configProfiles.py:513 gui\configProfiles.py:528
-#: gui\configProfiles.py:539 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:112 gui\installerGui.py:520 gui\installerGui.py:535
-#: gui\installerGui.py:607 gui\logViewer.py:112 gui\logViewer.py:143
+#: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:219
+#: gui\configProfiles.py:272 gui\configProfiles.py:284
+#: gui\configProfiles.py:293 gui\configProfiles.py:337
+#: gui\configProfiles.py:515 gui\configProfiles.py:530
+#: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
+#: gui\installerGui.py:124 gui\installerGui.py:571 gui\installerGui.py:586
+#: gui\installerGui.py:658 gui\logViewer.py:112 gui\logViewer.py:143
 #: gui\message.py:161 gui\settingsDialogs.py:1077 gui\settingsDialogs.py:5472
 #: gui\settingsDialogs.py:5832 gui\startupDialogs.py:128
 #: _remoteClient\dialogs.py:62 _remoteClient\dialogs.py:300
@@ -2212,12 +2213,12 @@ msgid "gesture map File Error"
 msgstr "Грешка във файла на картата на жестовете"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:798
+#: core.py:793
 msgid "Loading NVDA. Please wait..."
 msgstr "Зареждане на NVDA. Моля, изчакайте ..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:940
+#: core.py:935
 msgid "NVDA started"
 msgstr "NVDA е стартиран"
 
@@ -3385,7 +3386,7 @@ msgstr "Еднократно натискане премества клавиа�
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-#: globalCommands.py:1559 globalCommands.py:2818
+#: globalCommands.py:1559 globalCommands.py:2822
 msgid "No focus"
 msgstr "Няма фокус"
 
@@ -3396,7 +3397,7 @@ msgstr "Преместване на фокуса"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 #. Translators: Reported when there is no caret.
-#: globalCommands.py:1585 globalCommands.py:2620
+#: globalCommands.py:1585 globalCommands.py:2624
 msgid "No caret"
 msgstr "Няма каретка"
 
@@ -3417,7 +3418,7 @@ msgstr "Премества навигационния обект до следв
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
-#: globalCommands.py:1639 globalCommands.py:4419
+#: globalCommands.py:1639 globalCommands.py:4423
 msgid "No next"
 msgstr "Няма следващ"
 
@@ -3428,7 +3429,7 @@ msgstr "Премества навигационния обект до преди
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
-#: globalCommands.py:1668 globalCommands.py:4453
+#: globalCommands.py:1668 globalCommands.py:4457
 msgid "No previous"
 msgstr "Няма предишен"
 
@@ -3572,361 +3573,363 @@ msgstr "Няма заместител за символа"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 #: globalCommands.py:2358
-msgid "Character: {}\n"
-"Replacement: {}"
-msgstr "Символ: {}\n"
-"Заместител: {}"
+#, python-brace-format
+msgid "Character: {character}\n"
+"Replacement: {replacement}"
+msgstr ""
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
-#: globalCommands.py:2361
-msgid "Expanded symbol ({})"
-msgstr "Описание на символа ({})"
+#. {lang} will be replaced with the current voice's language.
+#: globalCommands.py:2365
+#, python-brace-format
+msgid "Expanded symbol ({lang})"
+msgstr ""
 
 #. Translators: Input help mode message for cycle speech mode command.
-#: globalCommands.py:2367
+#: globalCommands.py:2371
 msgid "Cycles between speech modes."
 msgstr "Превключва между режимите на реч."
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
-#: globalCommands.py:2390
+#: globalCommands.py:2394
 #, python-brace-format
 msgid "Speech mode {mode}"
 msgstr "Режим на речта: {mode}"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-#: globalCommands.py:2397
+#: globalCommands.py:2401
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
 msgstr "Премества фокуса от текущия вграден обект към документа, който го съдържа"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#: globalCommands.py:2422 NVDAObjects\window\_msOfficeChart.py:634
+#: globalCommands.py:2426 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "Превключва между режимите фокус и разглеждане. Когато сте в режим фокус, клавишите се предават на приложението, което позволява неговото контролиране. Когато сте в режим на разглеждане, клавишите се използват за навигация и преглед на съдържанието."
 
 #. Translators: Input help mode message for quit NVDA command.
-#: globalCommands.py:2472
+#: globalCommands.py:2476
 msgid "Quits NVDA!"
 msgstr "Изход от NVDA"
 
 #. Translators: Input help mode message for restart NVDA command.
-#: globalCommands.py:2480
+#: globalCommands.py:2484
 msgid "Restarts NVDA!"
 msgstr "Рестартиране на NVDA"
 
 #. Translators: Input help mode message for show NVDA menu command.
-#: globalCommands.py:2487
+#: globalCommands.py:2491
 msgid "Shows the NVDA menu"
 msgstr "Показва менюто на NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#: globalCommands.py:2497
+#: globalCommands.py:2501
 msgid "Reads from the review cursor up to the end of the current text, moving the review cursor as it goes"
 msgstr "Чете от курсора за преглед до края на текущия текст, като в същото време премества и самия курсор за преглед"
 
 #. Translators: Input help mode message for say all with system caret command.
-#: globalCommands.py:2511
+#: globalCommands.py:2515
 msgid "Reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "Чете от каретката до края, като в същото време премества и самата каретка"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
-#: globalCommands.py:2572 globalCommands.py:2583 globalCommands.py:4106
+#: globalCommands.py:2576 globalCommands.py:2587 globalCommands.py:4110
 msgid "No formatting information"
 msgstr "Няма информация за форматирането"
 
 #. Translators: title for formatting information dialog.
-#: globalCommands.py:2592
+#: globalCommands.py:2596
 msgid "Formatting"
 msgstr "Форматиране"
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2624
+#: globalCommands.py:2628
 msgid "Reports formatting info for the current review cursor position."
 msgstr "Докладва информация за форматирането за текущата позиция на курсора за преглед."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
-#: globalCommands.py:2633
+#: globalCommands.py:2637
 msgid "Presents, in browse mode, formatting info for the current review cursor position."
 msgstr "Представя, в режим на разглеждане, информация за форматирането за текущата позиция на курсора за преглед."
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2642
+#: globalCommands.py:2646
 msgid "Reports formatting info for the current review cursor position. If pressed twice, presents the information in browse mode"
 msgstr "Докладва информация за форматирането за текущата позиция на курсора за преглед. При двукратно натискане представя информацията в режим на разглеждане"
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2658
+#: globalCommands.py:2662
 msgid "Reports formatting info for the text under the caret."
 msgstr "Докладва информация за форматирането на текста под каретката."
 
 #. Translators: Input help mode message for show formatting at caret position command.
-#: globalCommands.py:2667
+#: globalCommands.py:2671
 msgid "Presents, in browse mode, formatting info for the text under the caret."
 msgstr "Представя, в режим на разглеждане, информация за форматирането на текста под каретката."
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2676
+#: globalCommands.py:2680
 msgid "Reports formatting info for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Докладва информация за форматирането на текста под каретката. При двукратно натискане представя информацията в режим на разглеждане"
 
 #. Translators: the description for the reportDetailsSummary script.
-#: globalCommands.py:2742
+#: globalCommands.py:2746
 msgid "Report summary of any annotation details at the system caret."
 msgstr "Докладва обобщение на всички подробности за анотация на позицията на системната каретка."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
-#: globalCommands.py:2760
+#: globalCommands.py:2764
 msgid "No additional details"
 msgstr "Няма допълнителни подробности"
 
 #. Translators: Input help mode message for report current focus command.
-#: globalCommands.py:2804
+#: globalCommands.py:2808
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
 msgstr "Докладва фокусирания обект. Двукратното натискане спелува информацията. Трикратното натискане я спелува с помощта на описания на символи."
 
 #. Translators: Reported when there is no status line for the current program or window.
-#: globalCommands.py:2880
+#: globalCommands.py:2884
 msgid "No status line found"
 msgstr "Лентата на състоянието не е намерена"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
-#: globalCommands.py:2889
+#: globalCommands.py:2893
 msgid "Reads the current application status bar."
 msgstr "Прочита лентата на състоянието на текущото приложение."
 
 #. Translators: Reported when status line exist, but is empty.
-#: globalCommands.py:2900 globalCommands.py:2918 globalCommands.py:2952
+#: globalCommands.py:2904 globalCommands.py:2922 globalCommands.py:2956
 msgid "no status bar information"
 msgstr "Няма информация в лентата на състоянието"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
-#: globalCommands.py:2907
+#: globalCommands.py:2911
 msgid "Spells the current application status bar."
 msgstr "Спелува лентата на състоянието на текущото приложение."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
-#: globalCommands.py:2925
+#: globalCommands.py:2929
 msgid "Copies content of the status bar  of current application to the clipboard."
 msgstr "Копира в клипборда съдържанието на лентата на състоянието на текущото приложение."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
-#: globalCommands.py:2935
+#: globalCommands.py:2939
 msgid "Unable to copy status bar content to clipboard"
 msgstr "Съдържанието на лентата на състоянието не може да се копира в клипборда"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
-#: globalCommands.py:2942
+#: globalCommands.py:2946
 msgid "Reads the current application status bar and moves navigator object into it."
 msgstr "Прочита лентата на състоянието на текущото приложение и премества навигационния обект в нея."
 
 #. Translators: Input help mode message for report status line text command.
-#: globalCommands.py:2959
+#: globalCommands.py:2963
 msgid "Reads the current application status bar. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
 msgstr "Прочита лентата на състоянието на текущото приложение. При двукратно натискане спелува информацията. При трикратно натискане копира лентата на състоянието в клипборда"
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
-#: globalCommands.py:2983
+#: globalCommands.py:2987
 msgid "Reports the shortcut key of the currently focused object"
 msgstr "Докладва клавиша за бърз достъп на текущо фокусирания обект"
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
-#: globalCommands.py:2998
+#: globalCommands.py:3002
 msgid "No shortcut key"
 msgstr "Няма клавиш за бърз достъп"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
-#: globalCommands.py:3002
+#: globalCommands.py:3006
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Включва или изключва докладването на информация при движение на мишката"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3009
+#: globalCommands.py:3013
 msgid "Mouse tracking off"
 msgstr "Следенето на мишката е изключено"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3013
+#: globalCommands.py:3017
 msgid "Mouse tracking on"
 msgstr "Следенето на мишката е включено"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
-#: globalCommands.py:3019
+#: globalCommands.py:3023
 msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr "Определя какво количество текст ще бъде изговаряно при движение на мишката"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
-#: globalCommands.py:3036
+#: globalCommands.py:3040
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "Обхватът на докладвания текст е %s"
 
 #. Translators: Input help mode message for report title bar command.
-#: globalCommands.py:3041
+#: globalCommands.py:3045
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
 msgstr "Докладва заглавието на текущото приложение или прозорец. При двукратно натискане го спелува. При трикратно натискане го копира в клипборда"
 
 #. Translators: Reported when there is no title text for current program or window.
-#: globalCommands.py:3062
+#: globalCommands.py:3066
 msgid "No title"
 msgstr "Няма заглавие"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#: globalCommands.py:3073
+#: globalCommands.py:3077
 msgid "Reads all controls in the active window"
 msgstr "Прочита всички контроли в активния прозорец"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
-#: globalCommands.py:3095
+#: globalCommands.py:3099
 msgid "Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
 msgstr "Отваря инструмента за проверка на ГПИ на WX. Използва се за получаване на повече информация за състоянието на компонентите на ГПИ."
 
 #. Translators: Input help mode message for developer info for current navigator object command,
 #. used by developers to examine technical info on navigator object.
 #. This command also serves as a shortcut to open NVDA log viewer.
-#: globalCommands.py:3110
+#: globalCommands.py:3114
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Протоколира информация за текущия навигационен обект, която е полезна за разработчици, и отваря прозореца за преглед на протоколи."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
-#: globalCommands.py:3131
+#: globalCommands.py:3135
 msgid "Mark the current end of the log as the start of the fragment to be copied to clipboard by pressing again."
 msgstr "Отбелязва текущия край на протокола като начало на фрагмента, който ще се копира в клипборда при повторно натискане."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
-#: globalCommands.py:3143
+#: globalCommands.py:3147
 msgid "Log fragment start position marked, press again to copy to clipboard"
 msgstr "Началната позиция на фрагмента от протокола е отбелязана, натиснете отново, за да копирате в клипборда"
 
 #. Translators: Message when failed to mark the start of a
 #. fragment of the log file for later copy to clipboard
-#: globalCommands.py:3147
+#: globalCommands.py:3151
 msgid "Unable to mark log position"
 msgstr "Не може да се отбележи позицията в протокола"
 
 #. Translators: Message when attempting to copy an empty fragment of the log file
-#: globalCommands.py:3152
+#: globalCommands.py:3156
 msgid "No new log entry to copy"
 msgstr "Няма нов запис за копиране от протокола"
 
 #. Translators: Message when a fragment of the log file has been
 #. copied to clipboard
-#: globalCommands.py:3157
+#: globalCommands.py:3161
 msgid "Log fragment copied to clipboard"
 msgstr "Фрагментът от протокола е копиран в клипборда"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
 #. Translators: Presented when unable to copy to the clipboard because of an error
 #. or the clipboard content did not match what was just copied.
-#: globalCommands.py:3160 ui.py:299
+#: globalCommands.py:3164 ui.py:299
 msgid "Unable to copy"
 msgstr "Копирането е невъзможно"
 
 #. Translators: Input help mode message for Open user configuration directory command.
-#: globalCommands.py:3164
+#: globalCommands.py:3168
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Отваряне на директорията с настройките на NVDA за текущия потребител."
 
 #. Translators: Input help mode message for toggle progress bar output command.
-#: globalCommands.py:3174
+#: globalCommands.py:3178
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Превключва между бибипкане, изговаряне, бибипкане и изговаряне и изключено за режимите на съобщаване на обновленията за лентата на напредъка"
 
 #. Translators: A mode where no progress bar updates are given.
-#: globalCommands.py:3184
+#: globalCommands.py:3188
 msgid "No progress bar updates"
 msgstr "Без уведомяване при обновяване на лентите на напредъка"
 
 #. Translators: A mode where progress bar updates will be spoken.
-#: globalCommands.py:3188
+#: globalCommands.py:3192
 msgid "Speak progress bar updates"
 msgstr "Изговаряне на обновленията на лентата на напредъка"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-#: globalCommands.py:3192
+#: globalCommands.py:3196
 msgid "Beep for progress bar updates"
 msgstr "Бибипкане при обновяване на лентите на напредъка"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-#: globalCommands.py:3196
+#: globalCommands.py:3200
 msgid "Beep and speak progress bar updates"
 msgstr "Изговаряне и бибипкане при обновяване на лентите на напредъка"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
-#: globalCommands.py:3202
+#: globalCommands.py:3206
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Включва или изключва докладването на динамично обновяващо се съдържание, като например, нов текст в командния промпт"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3211
+#: globalCommands.py:3215
 msgid "report dynamic content changes off"
 msgstr "Докладването на динамично обновяващото се съдържание е изключено"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3215
+#: globalCommands.py:3219
 msgid "report dynamic content changes on"
 msgstr "Докладването на динамично обновяващото се съдържание е включено"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
-#: globalCommands.py:3221
+#: globalCommands.py:3225
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Включва или изключва местенето на курсора за преглед заедно с каретката."
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3228
+#: globalCommands.py:3232
 msgid "caret moves review cursor off"
 msgstr "Местенето на курсора за преглед с каретката е изключено"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3232
+#: globalCommands.py:3236
 msgid "caret moves review cursor on"
 msgstr "Местенето на курсора за преглед с каретката е включено"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
-#: globalCommands.py:3238
+#: globalCommands.py:3242
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Включва или изключва местенето на навигационния обект в резултат на промяна на фокуса"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3245
+#: globalCommands.py:3249
 msgid "focus moves navigator object off"
 msgstr "Преместването на навигационния обект с фокуса е изключено"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3249
+#: globalCommands.py:3253
 msgid "focus moves navigator object on"
 msgstr "Преместването на навигационния обект с фокуса е включено"
 
 #. Translators: Input help mode message for report battery status command.
-#: globalCommands.py:3256
+#: globalCommands.py:3260
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "Докладва състоянието на батерията и оставащото време до изчерпването й, ако не е включено външно захранване"
 
 #. Translators: Input help mode message for pass next key through command.
-#: globalCommands.py:3267
+#: globalCommands.py:3271
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "Предава следващия клавиш или клавишна комбинация директно на Windows или  активното приложение."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-#: globalCommands.py:3276
+#: globalCommands.py:3280
 msgid "Pass next key through"
 msgstr "Препредай следващия клавиш"
 
 #. Translators: Input help mode message for report current program name and app module name command.
-#: globalCommands.py:3281
+#: globalCommands.py:3285
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Изговаря името на файла на текущото приложение заедно с името на текущо заредения модул"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
-#: globalCommands.py:3294
+#: globalCommands.py:3298
 #, python-format
 msgid " %s module is loaded. "
 msgstr " Текущо зареденият модул е %s. "
@@ -3934,381 +3937,381 @@ msgstr " Текущо зареденият модул е %s. "
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
-#: globalCommands.py:3299
+#: globalCommands.py:3303
 #, python-format
 msgid " %s is currently running."
 msgstr " Текущо зареденото приложение е %s."
 
 #. Translators: Input help mode message for go to general settings command.
-#: globalCommands.py:3304
+#: globalCommands.py:3308
 msgid "Shows NVDA's general settings"
 msgstr "Показва основните настройки на NVDA"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#: globalCommands.py:3314
+#: globalCommands.py:3318
 msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "Показва прозореца за избор на синтезатор"
 
 #. Translators: Input help mode message for go to speech settings command.
-#: globalCommands.py:3324
+#: globalCommands.py:3328
 msgid "Shows NVDA's speech settings"
 msgstr "Показва настройките за реч на NVDA"
 
 #. Translators: Input help mode message for go to select braille display command.
-#: globalCommands.py:3334
+#: globalCommands.py:3338
 msgid "Shows the NVDA braille display selection dialog"
 msgstr "Показва прозореца на NVDA за избор на брайлов дисплей"
 
 #. Translators: Input help mode message for go to braille settings command.
-#: globalCommands.py:3344
+#: globalCommands.py:3348
 msgid "Shows NVDA's braille settings"
 msgstr "Показва брайловите настройки на NVDA"
 
 #. Translators: Input help mode message for go to audio settings command.
-#: globalCommands.py:3353
+#: globalCommands.py:3357
 msgid "Shows NVDA's audio settings"
 msgstr "Показва аудио настройките на NVDA"
 
 #. Translators: Input help mode message for go to vision settings command.
-#: globalCommands.py:3363
+#: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
 msgstr "Показва настройките за визуални подобрения на NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#: globalCommands.py:3372
+#: globalCommands.py:3376
 msgid "Shows NVDA's keyboard settings"
 msgstr "Показва настройките на NVDA за клавиатурата"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#: globalCommands.py:3382
+#: globalCommands.py:3386
 msgid "Shows NVDA's mouse settings"
 msgstr "Показва настройките на NVDA за мишката"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#: globalCommands.py:3392
+#: globalCommands.py:3396
 msgid "Shows NVDA's review cursor settings"
 msgstr "Показва настройките за курсора за преглед на NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#: globalCommands.py:3401
+#: globalCommands.py:3405
 msgid "Shows NVDA's input composition settings"
 msgstr "Показва настройките за съставното въвеждане на символи на NVDA"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#: globalCommands.py:3410
+#: globalCommands.py:3414
 msgid "Shows NVDA's object presentation settings"
 msgstr "Показва настройките на NVDA за представянето на обектите"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#: globalCommands.py:3420
+#: globalCommands.py:3424
 msgid "Shows NVDA's browse mode settings"
 msgstr "Показва настройките на NVDA за режима на разглеждане"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#: globalCommands.py:3430
+#: globalCommands.py:3434
 msgid "Shows NVDA's document formatting settings"
 msgstr "Показва настройките на NVDA за форматирането на документите"
 
 #. Translators: Input help mode message for go to Remote Access settings command.
-#: globalCommands.py:3440
+#: globalCommands.py:3444
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
 msgstr "Показва настройките за отдалечен достъп"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
-#: globalCommands.py:3449
+#: globalCommands.py:3453
 msgid "Shows NVDA's Add-on Store settings"
 msgstr "Показва настройките за магазина за добавки на NVDA"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
-#: globalCommands.py:3458
+#: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
 msgstr "Показва настройките за OCR на Windows на NVDA"
 
 #. Translators: Input help mode message for go to Advanced settings command.
-#: globalCommands.py:3467
+#: globalCommands.py:3471
 msgid "Shows NVDA's Advanced settings"
 msgstr "Показва разширените настройки на NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
-#: globalCommands.py:3476
+#: globalCommands.py:3480
 msgid "Shows the NVDA default dictionary dialog"
 msgstr "Показва прозореца за речника по подразбиране на NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
-#: globalCommands.py:3485
+#: globalCommands.py:3489
 msgid "Shows the NVDA voice-specific dictionary dialog"
 msgstr "Показва прозореца за гласовия речник на NVDA"
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#: globalCommands.py:3494
+#: globalCommands.py:3498
 msgid "Shows the NVDA temporary dictionary dialog"
 msgstr "Показва прозореца за временния речник на NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#: globalCommands.py:3503
+#: globalCommands.py:3507
 msgid "Shows the NVDA symbol pronunciation dialog"
 msgstr "Показва прозореца за произнасянето на символите на NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#: globalCommands.py:3512
+#: globalCommands.py:3516
 msgid "Shows the NVDA input gestures dialog"
 msgstr "Показва прозореца за жестовете на въвеждане на NVDA"
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#: globalCommands.py:3521
+#: globalCommands.py:3525
 msgid "Reports the name of the current NVDA configuration profile"
 msgstr "Докладва името на текущия конфигурационен профил на NVDA"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
-#: globalCommands.py:3531
+#: globalCommands.py:3535
 msgid "normal configuration profile active"
 msgstr "Активен е профилът \"Обичайни настройки\""
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#: globalCommands.py:3535
+#: globalCommands.py:3539
 #, python-brace-format
 msgid "{profileName} configuration profile active"
 msgstr "Активен е профилът \"{profileName}\""
 
 #. Translators: Input help mode message for save current configuration command.
-#: globalCommands.py:3542
+#: globalCommands.py:3546
 msgid "Saves the current NVDA configuration"
 msgstr "Запазва текущите настройки на NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-#: globalCommands.py:3552
+#: globalCommands.py:3556
 msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory defaults."
 msgstr "Еднократно натискане връща настройките до последно запазеното състояние. Трикратно натискане ги връща до заводските им стойности."
 
 #. Translators: Input help mode message for activate python console command.
-#: globalCommands.py:3567
+#: globalCommands.py:3571
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Активира конзолата на Python на NVDA, главно използвана за разработка"
 
 #. Translators: Input help mode message to activate Add-on Store command.
-#: globalCommands.py:3587
+#: globalCommands.py:3591
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr "Отваря магазина за добавки за разглеждане и управление на пакети с добавки за NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
-#: globalCommands.py:3596
+#: globalCommands.py:3600
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
 msgstr "Показва или скрива прозореца за прегледа на речта в NVDA - подвижен прозорец, който ви позволява да преглеждате текста, който NVDA изговаря в момента"
 
 #. Translators: The message announced when disabling speech viewer.
-#: globalCommands.py:3605
+#: globalCommands.py:3609
 msgid "speech viewer disabled"
 msgstr "Прегледът на речта е изключен"
 
 #. Translators: The message announced when enabling speech viewer.
-#: globalCommands.py:3610
+#: globalCommands.py:3614
 msgid "speech viewer enabled"
 msgstr "Прегледът на речта е включен"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
-#: globalCommands.py:3618
+#: globalCommands.py:3622
 msgid "Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, and the text equivalent for each braille character"
 msgstr "Превключва брайловия визуализатор на NVDA – плаващ прозорец, който ви позволява да преглеждате брайловия изход и еквивалента на текста за всеки брайлов знак"
 
 #. Translators: The message announced when disabling braille viewer.
-#: globalCommands.py:3629
+#: globalCommands.py:3633
 msgid "Braille viewer disabled"
 msgstr "Брайловият визуализатор е изключен"
 
 #. Translators: The message announced when enabling Braille viewer.
-#: globalCommands.py:3634
+#: globalCommands.py:3638
 msgid "Braille viewer enabled"
 msgstr "Брайловият визуализатор е включен"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
-#: globalCommands.py:3642
+#: globalCommands.py:3646
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Превключва обвързването на брайловия дисплей между фокуса и курсора за преглед"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
-#: globalCommands.py:3662
+#: globalCommands.py:3666
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Брайлът е обвързан %s"
 
 #. Translators: Input help mode message for toggle braille mode command
-#: globalCommands.py:3666
+#: globalCommands.py:3670
 msgid "Toggles braille mode"
 msgstr "Превключва режима на брайла"
 
 #. Translators: The message reported when switching braille modes
-#: globalCommands.py:3681
+#: globalCommands.py:3685
 #, python-brace-format
 msgid "Braille mode {brailleMode}"
 msgstr "Режим на брайла {brailleMode}"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#: globalCommands.py:3692
+#: globalCommands.py:3696
 msgid "Cycle through the braille move system caret when routing review cursor states"
 msgstr "Превключва между режимите за преместване на системната каретка от брайла при преместване на курсора за преглед"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#: globalCommands.py:3702
+#: globalCommands.py:3706
 msgid "Action unavailable. Braille is tethered to focus"
 msgstr "Действието не е налично. Брайлът е обвързан с фокуса"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
-#: globalCommands.py:3718
+#: globalCommands.py:3722
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
 msgstr "Брайлът премества системната каретка  при преместване на курсора за преглед: по подразбиране (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
-#: globalCommands.py:3726
+#: globalCommands.py:3730
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
 msgstr "Брайлът премества системната каретка  при преместване на курсора за преглед: %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
-#: globalCommands.py:3734
+#: globalCommands.py:3738
 msgid "Toggle the way context information is presented in braille"
 msgstr "Променя начина, по който бива представяна контекстната информация на брайл"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
-#: globalCommands.py:3752
+#: globalCommands.py:3756
 #, python-format
 msgid "Braille focus context presentation: %s"
 msgstr "Брайлово представяне на контекста на фокуса: %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
-#: globalCommands.py:3756
+#: globalCommands.py:3760
 msgid "Toggle the braille cursor on and off"
 msgstr "Включва и изключва брайловия курсор"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3763
+#: globalCommands.py:3767
 msgid "Braille cursor off"
 msgstr "Брайловият курсор е изключен"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3767
+#: globalCommands.py:3771
 msgid "Braille cursor on"
 msgstr "Брайловият курсор е включен"
 
 #. Translators: Input help mode message for speak on routing command.
-#: globalCommands.py:3775
+#: globalCommands.py:3779
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
 msgstr "Превключва изговарянето на знака под курсора при преместване на курсора в текст"
 
 #. Translators: The message announced when toggling on speaking character when routing.
-#: globalCommands.py:3783
+#: globalCommands.py:3787
 msgid "Enabled speak character when routing cursor in text"
 msgstr "Изговарянето на знака при преместване на курсора в текст е включено"
 
 #. Translators: The message announced when toggling off speaking character when routing.
-#: globalCommands.py:3786
+#: globalCommands.py:3790
 msgid "Disabled speak character when routing cursor in text"
 msgstr "Изговарянето на знака при преместване на курсора в текст е изключено"
 
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
-#: globalCommands.py:3791
+#: globalCommands.py:3795
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
 msgstr "Включва или изключва прочитането при навигация с брайл по редове или абзаци"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3800
+#: globalCommands.py:3804
 msgid "Speak when navigating by line or paragraph with braille on"
 msgstr "Прочитането при навигиране с брайл по ред или абзац е включено"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3802
+#: globalCommands.py:3806
 msgid "Speak when navigating by line or paragraph with braille off"
 msgstr "Прочитането при навигиране с брайл по ред или абзац е изключено"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
-#: globalCommands.py:3807
+#: globalCommands.py:3811
 msgid "Cycle through the braille cursor shapes"
 msgstr "Превключва между формите на брайловия курсор"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
-#: globalCommands.py:3814
+#: globalCommands.py:3818
 msgid "Braille cursor is turned off"
 msgstr "В момента брайловият курсор е изключен"
 
 #. Translators: Reports which braille cursor shape is activated.
-#: globalCommands.py:3830
+#: globalCommands.py:3834
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Брайлов курсор %s"
 
 #. Translators: Input help mode message for cycle through braille show messages command.
-#: globalCommands.py:3834
+#: globalCommands.py:3838
 msgid "Cycle through the braille show messages modes"
 msgstr "Превключване между режимите за показване на съобщенията на брайл"
 
 #. Translators: Reports which show braille message mode is used
 #. (disabled, timeout or indefinitely).
-#: globalCommands.py:3847
+#: globalCommands.py:3851
 #, python-format
 msgid "Braille show messages %s"
 msgstr "Показване на съобщенията на брайл: %s"
 
 #. Translators: Input help mode message for cycle through braille show selection command.
-#: globalCommands.py:3852
+#: globalCommands.py:3856
 msgid "Cycle through the braille show selection states"
 msgstr "Превключване между режимите за показване на маркирането на брайл"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
-#: globalCommands.py:3869
+#: globalCommands.py:3873
 #, python-format
 msgid "Braille show selection default (%s)"
 msgstr "Брайлът показва маркирането: по подразбиране (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
-#: globalCommands.py:3873
+#: globalCommands.py:3877
 #, python-format
 msgid "Braille show selection %s"
 msgstr "Показвай маркирането на брайл: %s"
 
 #. Translators: Input help mode message for Braille Unicode normalization command.
-#: globalCommands.py:3880
+#: globalCommands.py:3884
 msgid "Cycle through the braille Unicode normalization states"
 msgstr "Превключване между състоянията на брайловата уникод нормализация"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:3895
+#: globalCommands.py:3899
 #, python-brace-format
 msgid "Braille Unicode normalization default ({default})"
 msgstr "Брайлова уникод нормализация по подразбиране ({default})"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:3901
+#: globalCommands.py:3905
 #, python-brace-format
 msgid "Braille Unicode normalization {state}"
 msgstr "Брайлова уникод нормализация {state}"
 
 #. Translators: Input help mode message for report clipboard text command.
-#: globalCommands.py:3909
+#: globalCommands.py:3913
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
 msgstr "Докладва текста в клипборда на Windows. Двукратното натискане спелува тази информация. Трикратното натискане я спелува с помощта на описания на символи."
 
 #. Translators: Presented when there is no text on the clipboard.
-#: globalCommands.py:3924
+#: globalCommands.py:3928
 msgid "There is no text on the clipboard"
 msgstr "Няма текст в клипборда"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this
 #. message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large amount of text. It is 2300 characters long.
-#: globalCommands.py:3939
+#: globalCommands.py:3943
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
@@ -4317,462 +4320,462 @@ msgstr[1] "Клипбордът съдържа голямо количество
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
-#: globalCommands.py:3950
+#: globalCommands.py:3954
 msgid "Marks the current position of the review cursor as the start of text to be selected or copied"
 msgstr "Отбелязва позицията на курсора за преглед като начало на текст, който да бъде маркиран или копиран"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
-#: globalCommands.py:3963
+#: globalCommands.py:3967
 msgid "Start marked"
 msgstr "Началото е маркирано"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
-#: globalCommands.py:3969
+#: globalCommands.py:3973
 msgid "Move the review cursor to the position marked as the start of text to be selected or copied"
 msgstr "Премества курсора за преглед до позицията, отбелязана като начало на текст, който да бъде маркиран или копиран"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
-#: globalCommands.py:3978 globalCommands.py:4011
+#: globalCommands.py:3982 globalCommands.py:4015
 msgid "No start marker set"
 msgstr "Няма зададен маркер за начало"
 
 #. Translators: Input help mode message for the select then copy command.
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-#: globalCommands.py:4001
+#: globalCommands.py:4005
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
 msgstr "При еднократно натискане текстът от предварително зададения начален маркер до и включително текущата позиция на курсора за преглед бива маркиран. При двукратно натискане текстът се копира в клипборда"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
-#: globalCommands.py:4019
+#: globalCommands.py:4023
 msgid "Press twice to copy or reset the start marker"
 msgstr "Натиснете два пъти, за да копирате или нулирате маркера за начало"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
-#: globalCommands.py:4038
+#: globalCommands.py:4042
 msgid "No text to copy"
 msgstr "Няма текст който да бъде копиран."
 
 #. Translators: Presented when unable to select the marked text.
-#: globalCommands.py:4060
+#: globalCommands.py:4064
 msgid "Can't select text, press twice to copy"
 msgstr "Не може да се маркира текстът. Натиснете два пъти, за да го копирате"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4073
+#: globalCommands.py:4077
 msgid "Scrolls the braille display back"
 msgstr "Превърта брайловия дисплей назад"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4082
+#: globalCommands.py:4086
 msgid "Scrolls the braille display forward"
 msgstr "Превърта брайловия дисплей напред"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4091
+#: globalCommands.py:4095
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Премества курсора или активира обекта под тази брайлова клетка"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#: globalCommands.py:4099
+#: globalCommands.py:4103
 msgid "Reports formatting info for the text under this braille cell"
 msgstr "Докладва информация за форматирането на текста на тази брайлова клетка"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4112
+#: globalCommands.py:4116
 msgid "Moves the braille display to the previous line"
 msgstr "Премества брайловия дисплей на предишния ред"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4121
+#: globalCommands.py:4125
 msgid "Moves the braille display to the next line"
 msgstr "Премества брайловия дисплей на следващия ред"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4130
+#: globalCommands.py:4134
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Въвежда брайлови точки чрез брайлова клавиатура"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4139
+#: globalCommands.py:4143
 msgid "Moves the braille display to the current focus"
 msgstr "Премества брайловия дисплей до фокуса"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4161
+#: globalCommands.py:4165
 msgid "Erases the last entered braille cell or character"
 msgstr "Изтрива последно въведената брайлова клетка или знак"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4170
+#: globalCommands.py:4174
 msgid "Translates any braille input and presses the enter key"
 msgstr "Преобразува въведеното на брайл и задейства клавиша ENTER"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4179
+#: globalCommands.py:4183
 msgid "Translates any braille input"
 msgstr "Преобразува въведеното на брайл"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4188
+#: globalCommands.py:4192
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавиша Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4197
+#: globalCommands.py:4201
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавиша Control с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4206
+#: globalCommands.py:4210
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавиша Alt с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4216
+#: globalCommands.py:4220
 msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва левия клавиш с емблемата на Windows с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4226
+#: globalCommands.py:4230
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавиша на NVDA с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4236
+#: globalCommands.py:4240
 msgid "Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите Control и Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4247
+#: globalCommands.py:4251
 msgid "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите Alt и Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4258
+#: globalCommands.py:4262
 msgid "Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите ляв Windows и Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4270
+#: globalCommands.py:4274
 msgid "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите NVDA и Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4281
+#: globalCommands.py:4285
 msgid "Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите Control и Alt с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4292
+#: globalCommands.py:4296
 msgid "Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Виртуално превключва клавишите Control, Alt и Shift с цел емулиране на клавишна комбинация при брайлово въвеждане"
 
 #. Translators: Input help mode message for reload plugins command.
-#: globalCommands.py:4304
+#: globalCommands.py:4308
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Презарежда модулите на приложението и глобалните добавки без да се рестартира NVDA, което може да е полезно за разработчиците"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-#: globalCommands.py:4316
+#: globalCommands.py:4320
 msgid "Plugins reloaded"
 msgstr "Добавките са презаредени."
 
 #. Translators: input help mode message for Report destination URL of a link command
-#: globalCommands.py:4321
+#: globalCommands.py:4325
 msgid "Report the destination URL of the link at the position of caret or focus. If pressed twice, shows the URL in a window for easier review."
 msgstr "Докладва целевия URL адрес на връзката на позицията на каретката или фокуса. При двукратно натискане показва URL адреса в прозорец, за по-лесен преглед."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4351
+#: globalCommands.py:4355
 msgid "Link has no apparent destination"
 msgstr "Връзката няма явна дестинация"
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
-#: globalCommands.py:4360 brailleDisplayDrivers\dotPad\driver.py:257
+#: globalCommands.py:4364 brailleDisplayDrivers\dotPad\driver.py:257
 msgid "Graphic"
 msgstr "Графика"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
-#: globalCommands.py:4365
+#: globalCommands.py:4369
 #, python-brace-format
 msgid "Destination of: {name}"
 msgstr "Местоназначение на: {name}"
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4375
+#: globalCommands.py:4379
 msgid "Unable to get the destination of this link."
 msgstr "Не може да се получи местоназначението на тази връзка."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4378
+#: globalCommands.py:4382
 msgid "Not a link."
 msgstr "Не е връзка."
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#: globalCommands.py:4383
+#: globalCommands.py:4387
 msgid "Displays the destination URL of the link at the position of caret or focus in a window, instead of just speaking it. May be preferred by braille users."
 msgstr "Извежда целевия URL адрес на връзката на позицията на каретката или фокуса в прозорец, вместо просто да го изговаря. Може да се предпочита от потребителите на брайлови дисплеи."
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4396
+#: globalCommands.py:4400
 msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
 msgstr "Премества навигационния обект до следващия обект в равнинния изглед на обектната йерархична структура"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4434
+#: globalCommands.py:4438
 msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
 msgstr "Премества навигационния обект до предишния обект в равнинния изглед на обектната йерархична структура"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4467
+#: globalCommands.py:4471
 msgid "Toggles the support of touch interaction"
 msgstr "Включва или изключва поддръжката за сензорно взаимодействие"
 
 #. Translators: Presented when attempting to toggle touch interaction support
-#: globalCommands.py:4477
+#: globalCommands.py:4481
 msgid "Touch interaction not supported"
 msgstr "Сензорното взаимодействие не се поддържа"
 
 #. Translators: Presented when support of touch interaction has been enabled
-#: globalCommands.py:4483
+#: globalCommands.py:4487
 msgid "Touch interaction enabled"
 msgstr "Сензорното взаимодействие е включено"
 
 #. Translators: Presented when support of touch interaction has been disabled
-#: globalCommands.py:4486
+#: globalCommands.py:4490
 msgid "Touch interaction disabled"
 msgstr "Сензорното взаимодействие е изключено"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4490
+#: globalCommands.py:4494
 msgid "Cycles between available touch modes"
 msgstr "Превключва между наличните режими на въвеждане чрез докосване"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
-#: globalCommands.py:4504
+#: globalCommands.py:4508
 #, python-format
 msgid "%s mode"
 msgstr "Режим %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4509
+#: globalCommands.py:4513
 msgid "Reports the object and content directly under your finger"
 msgstr "Докладва обекта и съдържанието точно под пръста ви"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4519
+#: globalCommands.py:4523
 msgid "Reports the new object or content under your finger if different to where your finger was last"
 msgstr "Докладва новия обект или съдържание под пръста ви, ако се различава от този върху който е бил последно"
 
 #. Translators: Input help mode message for touch right click command.
-#: globalCommands.py:4545
+#: globalCommands.py:4549
 msgid "Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."
 msgstr "Щраква с десния бутон на мишката в текущата позиция на докосване. Това обикновено се използва за извикване на контекстно меню."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:4569
+#: globalCommands.py:4573
 msgid "object has no location"
 msgstr "Обектът няма местоположение"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#: globalCommands.py:4581
+#: globalCommands.py:4585
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Показва прозореца с конфигурационните профили на NVDA"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#: globalCommands.py:4591
+#: globalCommands.py:4595
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
 msgstr "Превключва забраняването на всички превключватели за конфигурационни профили. Забраняването остава в сила, докато NVDA не бъде рестартиран"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#: globalCommands.py:4600
+#: globalCommands.py:4604
 msgid "Configuration profile triggers disabled"
 msgstr "Превключвателите за конфигурационните профили са забранени"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#: globalCommands.py:4608
+#: globalCommands.py:4612
 msgid "Configuration profile triggers enabled"
 msgstr "Превключвателите за конфигурационните профили са разрешени"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4613
+#: globalCommands.py:4617
 msgid "Begins interaction with math content"
 msgstr "Стартира взаимодействието с математическо съдържание"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
-#: globalCommands.py:4630
+#: globalCommands.py:4634
 msgid "Not math"
 msgstr "Това не е математическо съдържание"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4636
+#: globalCommands.py:4640
 msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "Разпознава съдържанието на текущия навигационен обект с OCR на Windows"
 
 #. Translators: Reported when Windows OCR is not available.
-#: globalCommands.py:4642 globalCommands.py:4665 globalCommands.py:4686
+#: globalCommands.py:4646 globalCommands.py:4669 globalCommands.py:4690
 msgid "Windows OCR not available"
 msgstr "OCR на Windows не е налично"
 
 #. Translators: Reported when screen curtain is enabled.
-#: globalCommands.py:4651
+#: globalCommands.py:4655
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Моля, забранете екранната завеса, преди да използвате OCR на Windows."
 
 #. Translators: Describes a command.
-#: globalCommands.py:4660
+#: globalCommands.py:4664
 msgid "Cycles through the available languages for Windows OCR"
 msgstr "Превключва между наличните езици за OCR на Windows"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4681
+#: globalCommands.py:4685
 msgid "Toggle periodical refresh of a Windows OCR result"
 msgstr "Превключва периодичното опресняване на резултата от OCR на Windows"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4692
+#: globalCommands.py:4696
 msgid "Automatic refresh enabled"
 msgstr "Автоматичното опресняване е включено"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4694
+#: globalCommands.py:4698
 msgid "Automatic refresh disabled"
 msgstr "Автоматичното опресняване е изключено"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#: globalCommands.py:4704
+#: globalCommands.py:4708
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Включва или изключва докладването на CLDR знаци, като например емоджи"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4713
+#: globalCommands.py:4717
 msgid "report CLDR characters off"
 msgstr "Докладването на CLDR знаците е изключено"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4717
+#: globalCommands.py:4721
 msgid "report CLDR characters on"
 msgstr "Докладването на CLDR знаците е включено"
 
 #. Translators: Input help mode message for speech Unicode normalization command.
-#: globalCommands.py:4725
+#: globalCommands.py:4729
 msgid "Cycle through the speech Unicode normalization states"
 msgstr "Превключване между състоянията на речевата уникод нормализация"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:4740
+#: globalCommands.py:4744
 #, python-brace-format
 msgid "Speech Unicode normalization default ({default})"
 msgstr "Речева уникод нормализация по подразбиране ({default})"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:4746
+#: globalCommands.py:4750
 #, python-brace-format
 msgid "Speech Unicode normalization {state}"
 msgstr "Речева уникод нормализация {state}"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4758
+#: globalCommands.py:4762
 msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
 msgstr "Превключва състоянието на екранната завеса. Включването й прави екрана черен, а изключването й прави съдържанието на екрана видимо. При еднократно натискане, екранната завеса остава включена до следващото рестартиране на NVDA. При двукратно натискане, екранната завеса остава включена, докато не я изключите"
 
 #. Translators: Reported when the screen curtain is disabled.
-#: globalCommands.py:4817
+#: globalCommands.py:4821
 msgid "Screen curtain disabled"
 msgstr "Екранната завеса е изключена"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4824
+#: globalCommands.py:4828
 msgid "Could not disable screen curtain"
 msgstr "Не може да се изключи екранната завеса"
 
 #. Translators: Reported when the screen curtain is not available.
-#: globalCommands.py:4835
+#: globalCommands.py:4839
 msgid "Screen curtain not available"
 msgstr "Екранната завеса не е налична"
 
 #. Translators: Reported when the screen curtain is enabled.
-#: globalCommands.py:4847
+#: globalCommands.py:4851
 msgid "Screen curtain enabled"
 msgstr "Екранната завеса е включена"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
-#: globalCommands.py:4850
+#: globalCommands.py:4854
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "Временна екранна завеса, включена до следващото рестартиране"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4863
+#: globalCommands.py:4867
 msgid "Could not enable screen curtain"
 msgstr "Не може да се включи екранната завеса"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
-#: globalCommands.py:4896 visionEnhancementProviders\screenCurtain.py:287
+#: globalCommands.py:4900 visionEnhancementProviders\screenCurtain.py:287
 msgid "Could not enable screen curtain when performing content recognition"
 msgstr "Не може да се включи екранната завеса при извършване на разпознаване на съдържание"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4904
+#: globalCommands.py:4908
 msgid "Cycles through paragraph navigation styles"
 msgstr "Превключва между стиловете за навигация по абзаци"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4918
+#: globalCommands.py:4922
 msgid "Cycles through sound split modes"
 msgstr "Превключва между режимите на разделяне на звука"
 
 #. Translators: Input help mode message for report language for caret command.
-#: globalCommands.py:4930
+#: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Докладва езика на текста под каретката. При двукратно натискане представя информацията в режим на разглеждане."
 
 #. Translators: Reported when the language of the text at caret is not defined.
-#: globalCommands.py:4945
+#: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
 msgstr "Непознат език"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-#: globalCommands.py:4956
+#: globalCommands.py:4960
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
 msgstr "{languageDescription} (не се поддържа)"
 
 #. Translators: title for report caret language dialog.
-#: globalCommands.py:4965
+#: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
 msgstr "Език на позицията на каретката"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
-#: globalCommands.py:4970
+#: globalCommands.py:4974
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
 msgstr "Изключва или включва речта, идваща от отдалечения компютър"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
-#: globalCommands.py:4980
+#: globalCommands.py:4984
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
 msgstr "Изпраща съдържанието на клипборда до отдалечения компютър"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
-#: globalCommands.py:4988
+#: globalCommands.py:4992
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
 msgstr "Копира в клипборда връзка към текущата сесия за отдалечен достъп"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
-#: globalCommands.py:4998
+#: globalCommands.py:5002
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
 msgstr "Прекъсва връзката с текущата сесия за отдалечен достъп"
@@ -4783,7 +4786,7 @@ msgstr "Прекъсва връзката с текущата сесия за о
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
-#: globalCommands.py:5004 _remoteClient\client.py:125
+#: globalCommands.py:5008 _remoteClient\client.py:125
 #: _remoteClient\client.py:149 _remoteClient\client.py:171
 #: _remoteClient\client.py:187 _remoteClient\client.py:522
 msgctxt "remote"
@@ -4791,44 +4794,44 @@ msgid "Not connected"
 msgstr "Няма установена връзка"
 
 #. Translators: Documentation string for the script that starts a new Remote Access session.
-#: globalCommands.py:5010
+#: globalCommands.py:5014
 msgctxt "remote"
 msgid "Connects to a remote computer"
 msgstr "Свързване с отдалечен компютър"
 
 #. Translators: A message indicating that the remote client is already connected.
-#: globalCommands.py:5021
+#: globalCommands.py:5025
 msgid "Already connected"
 msgstr "Вече има установена връзка"
 
 #. Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
-#: globalCommands.py:5027
+#: globalCommands.py:5031
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
 msgstr "Установява или прекъсва връзка чрез отдалечен достъп"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
-#: globalCommands.py:5042
+#: globalCommands.py:5046
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
 msgstr "Превключва управлението с клавиатура между локалния или отдалечения компютър"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-#: globalCommands.py:5084
+#: globalCommands.py:5088
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr "Не може да се промени активният профил, докато е отворен диалогов прозорец на NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5089
+#: globalCommands.py:5093
 #, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "Профилът {profile} е деактивиран."
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5094
+#: globalCommands.py:5098
 #, python-brace-format
 msgid "{profile} profile activated"
 msgstr "Профилът {profile} е активиран."
@@ -4836,7 +4839,7 @@ msgstr "Профилът {profile} е активиран."
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5110
+#: globalCommands.py:5114
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "Активира или деактивира конфигурационния профил {profile}"
@@ -6973,18 +6976,18 @@ msgid "Copied: {text}"
 msgstr "Копирано: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
-#: updateCheck.py:413
+#: updateCheck.py:398
 msgid "Checking for Update"
 msgstr "Проверка за обновления"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
-#: updateCheck.py:415
+#: updateCheck.py:400
 msgid "Checking for update"
 msgstr "Проверка за обновления"
 
 #. Translators: A suggestion of what to do when checking for NVDA updates fails and an update mirror is being used.
 #. {url} will be replaced with the mirror URL.
-#: updateCheck.py:424
+#: updateCheck.py:409
 #, python-brace-format
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
@@ -6993,14 +6996,14 @@ msgstr "Уверете се, че сте свързани с интернет и
 "URL адрес на огледалния сървър: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
-#: updateCheck.py:431
+#: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
 msgstr "Не може да се установи връзка със сървъра на NV Access."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
-#: updateCheck.py:437
+#: updateCheck.py:422
 #, python-brace-format
 msgctxt "updateCheck"
 msgid "Error checking for update.\n"
@@ -7010,106 +7013,106 @@ msgstr "Грешка при проверката за обновление.\n"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to apply an NVDA update.
-#: updateCheck.py:508 updateCheck.py:646
+#: updateCheck.py:493 updateCheck.py:633
 msgid "NVDA Update"
 msgstr "Обновяване на NVDA"
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:524
+#: updateCheck.py:509
 msgid "No update available."
 msgstr "Няма налични обновления."
 
 #. Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 #. applied.
-#: updateCheck.py:529
+#: updateCheck.py:514
 #, python-brace-format
 msgid "Update to NVDA version {version} has been downloaded and is ready to be applied."
 msgstr "Обновлението до версия {version} на NVDA е изтеглено и е готово за прилагане."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:554 updateCheck.py:674 gui\installerGui.py:278
+#: updateCheck.py:539 updateCheck.py:661 gui\installerGui.py:290
 msgid "&Review add-ons..."
 msgstr "&Преглед на добавките..."
 
 #. Translators: The label of a button to apply a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:560
+#: updateCheck.py:545
 #, python-brace-format
 msgid "&Update to NVDA {version}"
 msgstr "&Обнови до NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#: updateCheck.py:570
+#: updateCheck.py:555
 msgid "Re-&download update"
 msgstr "&Свали повторно обновлението"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:575
+#: updateCheck.py:560
 #, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Налична е версия {version} на NVDA."
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:579
+#: updateCheck.py:564
 msgid "&Download update"
 msgstr "&Свали обновлението"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:584 gui\startupDialogs.py:311
+#: updateCheck.py:569 gui\startupDialogs.py:311
 msgid "Remind me &later"
 msgstr "&Напомни ми по-късно"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:593 gui\addonGui.py:377
+#: updateCheck.py:578 gui\addonGui.py:378
 msgid "&Close"
 msgstr "&Затвори"
 
 #. Translators: A message indicating that an update to NVDA is ready to be applied.
-#: updateCheck.py:650
+#: updateCheck.py:637
 #, python-brace-format
 msgid "Update to NVDA version {version} is ready to be applied.\n"
 msgstr "Обновлението до версия {version} на NVDA е готово за прилагане.\n"
 
 #. Translators: The label of a button to update NVDA.
-#: updateCheck.py:677
+#: updateCheck.py:664
 msgid "&Update now"
 msgstr "&Обнови сега"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#: updateCheck.py:690
+#: updateCheck.py:677
 msgid "&Postpone update"
 msgstr "&Отложи обновяването"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#: updateCheck.py:756
+#: updateCheck.py:743
 msgid "Unable to postpone update."
 msgstr "Обновяването не може да бъде отложено."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:813
+#: updateCheck.py:802
 msgid "Downloading Update"
 msgstr "Сваляне на обновлението"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:815
+#: updateCheck.py:804
 msgid "Connecting"
 msgstr "Свързване"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:908
+#: updateCheck.py:897
 msgid "Downloading"
 msgstr "Сваляне"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:927
+#: updateCheck.py:916
 msgid "Error downloading update."
 msgstr "Грешка при сваляне на обновлението."
 
 #. Translators: The message requesting donations from users.
-#: updateCheck.py:950
+#: updateCheck.py:939
 msgid "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 "If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
@@ -7122,28 +7125,56 @@ msgstr "Нуждаем се от вашата помощ за да продъл�
 "Благодарим ви за вашата подкрепа."
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:959
+#: updateCheck.py:948
 msgid "Please Donate"
 msgstr "Моля, направете дарение"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 #. Translators: The label for the menu item to open donate page.
-#: updateCheck.py:968 gui\__init__.py:700
+#: updateCheck.py:957 gui\__init__.py:700
 msgid "&Donate"
 msgstr "Направи &дарение"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:973
+#: updateCheck.py:962
 msgid "&Not now"
 msgstr "&Не сега"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:989
+#: updateCheck.py:978
 msgid "&Done"
 msgstr "&Готово"
+
+#. Translators: Message shown to users when attempting to update NVDA
+#. on a computer which is being remotely controlled via NVDA Remote Access
+#: updateCheck.py:1007 gui\installerGui.py:456
+msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
+msgstr "Не се препоръчва обновяването на NVDA, когато сте свързани като управляващ компютър към функцията за отдалечен достъп на NVDA."
+
+#. Translators: Message shown to users when attempting to update NVDA from an installed copy
+#. on a computer which is being remotely controlled via NVDA Remote Access.
+#: updateCheck.py:1012
+msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
+"Are you sure you want to continue?"
+msgstr "Текущо активната връзка може да не бъде възобновена по време на или след обновяването. Дори ако връзката бъде възобновена, няма да можете да отговаряте на подканите на „Управление на потребителските акаунти“ (UAC) от управляващия компютър. Трябва да продължите само ако имате физически достъп до управлявания компютър.\n\n"
+"Наистина ли искате да продължите?"
+
+#. Translators: The title of a dialog.
+#. Translators: The title of a warning dialog.
+#. Translators: The title of a dialog.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
+#. Translators: Title of the warning message.
+#. Translators: Title of warning dialog
+#: updateCheck.py:1018 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
+#: gui\installerGui.py:348 gui\installerGui.py:473 gui\settingsDialogs.py:1039
+#: gui\settingsDialogs.py:1981 visionEnhancementProviders\screenCurtain.py:152
+#: _remoteClient\dialogs.py:285
+msgid "Warning"
+msgstr "Предупреждение"
 
 #: versionInfo.py:14
 msgid "NonVisual Desktop Access"
@@ -7190,14 +7221,14 @@ msgstr "Добавката за NVDA от {path} не може да бъде и�
 "NVDA трябва да е стартиран, за да може да инсталирате добавки."
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:213
+#: addonStore\dataManager.py:212
 msgctxt "addonStore"
 msgid "Add-on data update failure"
 msgstr "Неуспешно обновяване на данните за добавките"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and a metadata mirror is being used.
 #. {url} will be replaced with the mirror URL.
-#: addonStore\dataManager.py:218
+#: addonStore\dataManager.py:217
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
@@ -7206,19 +7237,19 @@ msgstr "Уверете се, че сте свързани с интернет и
 "URL адрес на огледалния сървър: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
-#: addonStore\dataManager.py:224
+#: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
 msgstr "Не може да се установи връзка със сървъра на магазина за добавки."
 
 #. Translators: A message shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:257
+#: addonStore\dataManager.py:256
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
 msgstr "Неуспешно извличане на най-новите данни за съвместими добавки."
 
 #. Translators: A message shown when fetching add-on data from the store fails
-#: addonStore\dataManager.py:293
+#: addonStore\dataManager.py:292
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
 msgstr "Неуспешно извличане на най-новите данни за несъвместими добавки."
@@ -7248,36 +7279,27 @@ msgid "Failed to install add-on from %s"
 msgstr "Неуспешно инсталиране на добавка от %s"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
-#: addonStore\network.py:251
+#: addonStore\network.py:243
 msgctxt "addonStore"
 msgid "Add-on download failure"
 msgstr "Неуспешно изтегляне на добавка"
 
-#. Translators: A message to the user if an add-on download fails.
-#. url is replaced with the base URL of the add-on download e.g. (github.com).
-#. fingerprint is replaced with the SHA256 fingerprint of the certificate.
-#: addonStore\network.py:271
-#, python-brace-format
-msgctxt "addonStore"
-msgid "The website where you are downloading the add-on from has a certificate that is not trusted. Do you want to trust the root certificate for {url}? This will allow you to download add-ons from this website in the future. Only do this if you trust the website. The certificate's SHA256 fingerprint is: {fingerprint}. "
-msgstr "Уеб сайтът, от който изтегляте добавката, има сертификат, който не е надежден. Искате ли да се доверите на главния сертификат за {url}? Това ще ви позволи да изтегляте добавки от този уеб сайт в бъдеще. Направете това само ако имате доверие на уеб сайта. SHA256 пръстовият отпечатък на сертификата е: {fingerprint}. "
-
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:291 addonStore\network.py:322
+#: addonStore\network.py:266
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
 msgstr "Следната добавка не може да бъде изтеглена: {name}"
 
 #. Translators: A message to the user if an add-on download fails
-#: addonStore\network.py:332
+#: addonStore\network.py:276
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
 msgstr "Следната добавка не може да се запази като файл: {name}"
 
 #. Translators: A message to the user if an add-on download is not safe
-#: addonStore\network.py:344
+#: addonStore\network.py:288
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
@@ -11531,18 +11553,6 @@ msgstr "Въведеният от вас URL адрес не премина ус
 msgid "The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?"
 msgstr "Въведеният от вас URL адрес не е тестван. Наистина ли искате да го запазите, без първо да се опитате да се свържете с него?"
 
-#. Translators: The title of a dialog.
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to
-#. copy settings for use in secure screens.
-#. Translators: Title of the warning message.
-#. Translators: Title of warning dialog
-#: gui\_SetURLDialog.py:113 gui\configProfiles.py:498 gui\installerGui.py:334
-#: gui\settingsDialogs.py:1039 gui\settingsDialogs.py:1981
-#: visionEnhancementProviders\screenCurtain.py:152 _remoteClient\dialogs.py:285
-msgid "Warning"
-msgstr "Предупреждение"
-
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
 msgid "Validating URL..."
@@ -11558,7 +11568,7 @@ msgstr "Успешно свързване с указания URL адрес."
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:129 gui\installerGui.py:618
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:141 gui\installerGui.py:669
 #: gui\settingsDialogs.py:1083 _remoteClient\dialogs.py:274
 msgid "Success"
 msgstr "Операцията беше успешна"
@@ -11919,7 +11929,7 @@ msgstr "Рестартиране на NVDA"
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:65 gui\addonGui.py:103 gui\addonGui.py:373
+#: gui\addonGui.py:65 gui\addonGui.py:103 gui\addonGui.py:374
 msgid "&About add-on..."
 msgstr "За &добавката..."
 
@@ -12003,28 +12013,30 @@ msgstr "Във версията на NVDA за магазина на Windows 10 
 msgid "Incompatible Add-ons"
 msgstr "Несъвместими добавки"
 
-#. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:349
-msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr "Следните добавки са несъвместими с версия {} на NVDA. Тези добавки не могат да бъдат включени. Моля, свържете се с автора на добавката за допълнителна помощ."
+#. Translators: The title of the Incompatible Addons Dialog.
+#. {version} will be replaced with the API version number.
+#: gui\addonGui.py:350
+#, python-brace-format
+msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
+msgstr ""
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:357
+#: gui\addonGui.py:358
 msgid "Incompatible add-ons"
 msgstr "Несъвместими добавки"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:365
+#: gui\addonGui.py:366
 msgid "Package"
 msgstr "Пакет"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:367
+#: gui\addonGui.py:368
 msgid "Version"
 msgstr "Версия"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:369
+#: gui\addonGui.py:370
 msgid "Incompatible reason"
 msgstr "Причина за несъвместимостта"
 
@@ -12129,121 +12141,122 @@ msgid "Error activating profile."
 msgstr "Грешка при активиране на профила."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+#. The placeholder {name} is replaced with the name of the configuration profile that will be deleted.
 #: gui\configProfiles.py:200
-msgid "The profile {} will be permanently deleted. This action cannot be undone."
-msgstr "Профилът {} ще бъде изтрит окончателно. Това действие не може да бъде отменено."
+#, python-brace-format
+msgid "The profile {name} will be permanently deleted. This action cannot be undone."
+msgstr ""
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
-#: gui\configProfiles.py:202
+#: gui\configProfiles.py:204
 msgid "Confirm Deletion"
 msgstr "Потвърдете изтриването"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
-#: gui\configProfiles.py:215
+#: gui\configProfiles.py:217
 msgid "Error deleting profile."
 msgstr "Грешка при изтриването на профила."
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
-#: gui\configProfiles.py:236
+#: gui\configProfiles.py:238
 msgid "Manual deactivate"
 msgstr "Ръчно деактивиране"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
-#: gui\configProfiles.py:240
+#: gui\configProfiles.py:242
 msgid "Manual activate"
 msgstr "Ръчно активиране"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
-#: gui\configProfiles.py:255
+#: gui\configProfiles.py:257
 msgid "New name:"
 msgstr "Ново име:"
 
 #. Translators: The title of the dialog to rename a configuration profile.
-#: gui\configProfiles.py:257
+#: gui\configProfiles.py:259
 msgid "Rename Profile"
 msgstr "Преименуване на профил"
 
 #. Translators: An error displayed when the user attempts to rename a configuration profile
 #. with an empty name.
-#: gui\configProfiles.py:268
+#: gui\configProfiles.py:270
 msgid "A profile cannot have an empty name."
 msgstr "Профилът не може да има празно име."
 
 #. Translators: An error displayed when the user attempts to create
 #. a configuration profile which already exists.
-#: gui\configProfiles.py:281 gui\configProfiles.py:526
+#: gui\configProfiles.py:283 gui\configProfiles.py:528
 msgid "That profile already exists. Please choose a different name."
 msgstr "Профил с това име вече съществува. Моля, изберете друго име."
 
-#: gui\configProfiles.py:290
+#: gui\configProfiles.py:292
 msgid "Error renaming profile."
 msgstr "Грешка при преименуване на профила."
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
-#: gui\configProfiles.py:311
+#: gui\configProfiles.py:313
 #, python-format
 msgid "Current application (%s)"
 msgstr "Текущото приложение (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
-#: gui\configProfiles.py:315
+#: gui\configProfiles.py:317
 msgid "Say all"
 msgstr "Прочитане на всичко"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-#: gui\configProfiles.py:333
+#: gui\configProfiles.py:335
 msgid "Error saving configuration profile triggers - probably read only file system."
 msgstr "Грешка при запазване на превключвателите за профила от настройки - вероятно заради режим само за четене на файловата система."
 
 #. Translators: The title of the configuration profile triggers dialog.
-#: gui\configProfiles.py:358
+#: gui\configProfiles.py:360
 msgid "Profile Triggers"
 msgstr "Превключватели за профила"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
-#: gui\configProfiles.py:380
+#: gui\configProfiles.py:382
 #, python-format
 msgid "%s application"
 msgstr "%s приложение"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
-#: gui\configProfiles.py:386
+#: gui\configProfiles.py:388
 msgid "Triggers"
 msgstr "Превключватели"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
-#: gui\configProfiles.py:393
+#: gui\configProfiles.py:395
 msgid "Profile"
 msgstr "Профил"
 
 #. Translators: The title of the dialog to create a new configuration profile.
-#: gui\configProfiles.py:450
+#: gui\configProfiles.py:452
 msgid "New Profile"
 msgstr "Нов профил"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
-#: gui\configProfiles.py:455
+#: gui\configProfiles.py:457
 msgid "Profile name:"
 msgstr "Име на профила:"
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
-#: gui\configProfiles.py:460
+#: gui\configProfiles.py:462
 msgid "Manual activation"
 msgstr "Ръчно активиране"
 
-#: gui\configProfiles.py:465
+#: gui\configProfiles.py:467
 msgid "Use this profile for:"
 msgstr "Използвай този профил за:"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
-#: gui\configProfiles.py:494
+#: gui\configProfiles.py:496
 msgid "This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr "Този превключвател вече е асоцииран с друг профил. Ако продължите, превключвателя ще бъде премахнат от стария профил и добавен към този.\n"
@@ -12251,25 +12264,25 @@ msgstr "Този превключвател вече е асоцииран с д
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
-#: gui\configProfiles.py:511
+#: gui\configProfiles.py:513
 msgid "You must choose a name for this profile."
 msgstr "Трябва да изберете име за този профил."
 
 #. Translators: An error displayed when creating a configuration profile fails.
-#: gui\configProfiles.py:537
+#: gui\configProfiles.py:539
 msgid "Error creating profile - probably read only file system."
 msgstr "Грешка при създаването на профила - вероятно заради режим само за четене на файловата система."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
-#: gui\configProfiles.py:556
+#: gui\configProfiles.py:558
 msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
 msgstr "За да редактирате този профил, ще трябва да го активирате ръчно. След като приключите редактирането, ще трябва отново ръчно да го деактивирате за да се върнете към обичайните настройки.\n"
 "Желаете ли да го активирате сега?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
-#: gui\configProfiles.py:561
+#: gui\configProfiles.py:563
 msgid "Manual Activation"
 msgstr "Ръчно активиране"
 
@@ -12407,234 +12420,248 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr "Грешка при запазване на потребителските жестове на въвеждане - вероятно заради режим само за четене на файловата система."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:59
+#: gui\installerGui.py:71
 msgid "Updating NVDA"
 msgstr "Обновяване на NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:62
+#: gui\installerGui.py:74
 msgid "Installing NVDA"
 msgstr "Инсталиране на NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:64
+#: gui\installerGui.py:76
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "Моля, изчакайте докато вашата предишна версия на NVDA се обновява."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:67
+#: gui\installerGui.py:79
 msgid "Please wait while NVDA is being installed"
 msgstr "Моля, изчакайте докато NVDA се инсталира"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:91
+#: gui\installerGui.py:103
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "Инсталаторът не може да премахне или презапише определен файл. Друго копие на NVDA може да е активно под друг вписан потребител. Моля, уверете се, че всички копия на NVDA са затворени и опитайте инсталацията отново."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:96 gui\installerGui.py:599
+#: gui\installerGui.py:108 gui\installerGui.py:650
 msgid "File in Use"
 msgstr "Файлът се използва"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:110
+#: gui\installerGui.py:122
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "Инсталацията се провали. За повече информация, моля, вижте протокола на NVDA."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
-#: gui\installerGui.py:119
+#: gui\installerGui.py:131
 msgid "Successfully installed NVDA. "
 msgstr "Успешно инсталиране на NVDA. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
-#: gui\installerGui.py:122
+#: gui\installerGui.py:134
 msgid "Successfully updated your installation of NVDA. "
 msgstr "Успешно обновяване на вашата инсталация на NVDA. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
-#: gui\installerGui.py:127
+#: gui\installerGui.py:139
 msgid "Please press OK to start the installed copy."
 msgstr "Моля, натиснете OK за да стартирате инсталираното копие."
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:190
+#: gui\installerGui.py:202
 msgid "Install NVDA"
 msgstr "Инсталиране на NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:208
+#: gui\installerGui.py:220
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "За да инсталирате NVDA на вашия твърд диск, моля натиснете бутона продължи."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:212
+#: gui\installerGui.py:224
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "Предишно копие на NVDA е открито на вашата система. Това копие ще бъде обновено."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:217
+#: gui\installerGui.py:229
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "Пътят до инсталацията на NVDA сега е променен. Вече ще бъде инсталиран в {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:235 gui\startupDialogs.py:64
+#: gui\installerGui.py:247 gui\startupDialogs.py:64
 msgid "Options"
 msgstr "Опции"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:241
+#: gui\installerGui.py:253
 msgid "Use NVDA during sign-in"
 msgstr "Използвай NVDA в екрана за вписване"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:252
+#: gui\installerGui.py:264
 msgid "&Keep existing desktop shortcut"
 msgstr "&Запази съществуващата икона на работния плот"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:259
+#: gui\installerGui.py:271
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Създай икона на работния плот и бърз клавиш (Control+Alt+N)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:266
+#: gui\installerGui.py:278
 msgid "Copy &portable configuration to current user account"
 msgstr "Копирай преносимите &настройки в текущия потребителски акаунт"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:283 gui\installerGui.py:500 gui\nvdaControls.py:384
+#: gui\installerGui.py:295 gui\installerGui.py:551 gui\nvdaControls.py:384
 msgid "&Continue"
 msgstr "&Продължи"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:343
+#: gui\installerGui.py:357
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Опитвате се да инсталирате по-ранна версия на NVDA от текущо-инсталираната версия. Ако наистина искате да се върнете към по-ранна версия, първо трябва да прекратите тази инсталация и напълно да премахнете NVDA преди инсталиране на по-ранната версия."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:359
+#: gui\installerGui.py:373
 msgid "&Proceed with installation (not recommended)"
 msgstr "&Продължи с инсталацията (не се препоръчва)"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:410
+#: gui\installerGui.py:424
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "В директорията \"{portableDirectory}\" вече съществува преносимо копие. Желаете ли да го обновите?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:415
+#: gui\installerGui.py:429
 msgid "Portable Copy Exists"
 msgstr "Съществува преносимо копие"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:422
+#: gui\installerGui.py:436
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "Посочената директория \"{portableDirectory}\" не е празна. Продължаването ще изтрие и замени съществуващите файлове в директорията. Искате ли да презапишете съдържанието на тази папка?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:428
+#: gui\installerGui.py:442
 msgid "Directory Exists"
 msgstr "Директорията съществува"
 
+#. Translators: Message shown to users when attempting to install NVDA
+#. on a computer which is being remotely controlled via NVDA Remote Access
+#: gui\installerGui.py:462
+msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
+msgstr "Не се препоръчва инсталирането на NVDA, когато сте свързани като управляван компютър към функцията за отдалечен достъп на NVDA."
+
+#. Translators: Message shown to users when attempting to install or update NVDA from the launcher
+#. on a computer which is being remotely controlled via NVDA Remote Access
+#: gui\installerGui.py:468
+msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
+"Are you sure you want to continue?"
+msgstr "Няма да можете да отговаряте на подканите на „Управление на потребителските акаунти“ (UAC) от управляващия компютър. Трябва да продължите само ако имате физически достъп до управлявания компютър.\n\n"
+"Наистина ли искате да продължите?"
+
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:455
+#: gui\installerGui.py:506
 msgid "Create Portable NVDA"
 msgstr "Създаване на преносим NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:461
+#: gui\installerGui.py:512
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "За да създадете преносимо копие на NVDA, моля, изберете пътя до желаната папка и другите настройки и натиснете бутона продължи."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:467
+#: gui\installerGui.py:518
 msgid "Portable directory:"
 msgstr "Преносима папка:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:472
+#: gui\installerGui.py:523
 msgid "Browse..."
 msgstr "Преглед..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:475
+#: gui\installerGui.py:526
 msgid "Select portable directory"
 msgstr "Избор на папка за преносимото копие"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:483
+#: gui\installerGui.py:534
 msgid "Create a &new folder for the portable copy"
 msgstr "Създай &нова папка за преносимото копие"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:488
+#: gui\installerGui.py:539
 msgid "Copy current &user configuration"
 msgstr "Копиране на текущите потребителски &настройки"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:494
+#: gui\installerGui.py:545
 msgid "&Start the new portable copy after creation"
 msgstr "&Стартирай новото преносимо копие след създаването му"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:518
+#: gui\installerGui.py:569
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Моля, посочете папка в която да бъде създадено преносимото копие."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:530
+#: gui\installerGui.py:581
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (%temp%, %homepath%, etc.)."
 msgstr "Моля, посочете пълния път, където трябва да бъде създадено преносимото копие. Може да включва системни променливи (%temp%, %homepath% и др.)."
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:581
+#: gui\installerGui.py:632
 msgid "Portable copy creation cancelled."
 msgstr "Създаването на преносимо копие е отменено."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:586
+#: gui\installerGui.py:637
 msgid "Creating Portable Copy"
 msgstr "Създаване на преносимо копие"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:588
+#: gui\installerGui.py:639
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Моля, изчакайте докато преносимото копие на NVDA бъде създадено."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:597
+#: gui\installerGui.py:648
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA не може да премахне или презапише файл."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:605
+#: gui\installerGui.py:656
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "Неуспешно създаване на преносимо копие: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:616
+#: gui\installerGui.py:667
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "Успешно създадено преносимо копие на NVDA в {dir}"
@@ -12701,13 +12728,15 @@ msgstr "Помощ"
 msgid "Do&n't save"
 msgstr "&Не запазвай"
 
-#. Translators: Label for the default option for some feature-flag combo boxes
-#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
-#. The placeholder {} is replaced with the label of the option which describes current default behavior
-#. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:605
-msgid "Default ({})"
-msgstr "По подразбиране ({})"
+#. Translators: Label for the default option for some feature-flag combo boxes.
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'.
+#. e.g. "Default (Yes)".
+#. The placeholder {default} is replaced with the label of the option which describes current default behavior
+#. in NVDA.
+#: gui\nvdaControls.py:606
+#, python-brace-format
+msgid "Default ({default})"
+msgstr ""
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -15242,33 +15271,13 @@ msgstr "Състояние"
 #. Translators: Message shown when updating add-ons in the updatable add-ons dialog
 #. Translators: Message shown when updating add-ons automatically
 #: gui\addonStoreGui\controls\messageDialogs.py:504
-#: gui\addonStoreGui\controls\messageDialogs.py:627
+#: gui\addonStoreGui\controls\messageDialogs.py:613
 msgctxt "addonStore"
 msgid "Updating add-ons..."
 msgstr "Обновяване на добавките..."
 
-#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
-#. The placeholder {} will be replaced with the number of add-ons to be installed
-#: gui\addonStoreGui\controls\messageDialogs.py:529
-#: gui\addonStoreGui\controls\storeDialog.py:231
-msgctxt "addonStore"
-msgid "Download of {} add-on in progress, cancel downloading?"
-msgid_plural "Download of {} add-ons in progress, cancel downloading?"
-msgstr[0] "В ход е изтегляне на {} добавка. Анулиране на изтеглянето?"
-msgstr[1] "В ход е изтегляне на {} добавки. Анулиране на изтеглянето?"
-
-#. Translators: Message shown while installing add-ons after closing the add-on store dialog
-#. The placeholder {} will be replaced with the number of add-ons to be installed
-#: gui\addonStoreGui\controls\messageDialogs.py:553
-#: gui\addonStoreGui\controls\storeDialog.py:255
-msgctxt "addonStore"
-msgid "Installing {} add-on, please wait."
-msgid_plural "Installing {} add-ons, please wait."
-msgstr[0] "Инсталира се {} добавка. Моля, изчакайте."
-msgstr[1] "Инсталират се {} добавки. Моля, изчакайте."
-
 #. Translators: Message shown when updating add-ons automatically
-#: gui\addonStoreGui\controls\messageDialogs.py:646
+#: gui\addonStoreGui\controls\messageDialogs.py:632
 msgctxt "addonStore"
 msgid "Add-ons updated, restart NVDA to activate changes"
 msgstr "Обновени са добавки. Рестартирайте NVDA, за да се приложат промените."
@@ -15327,16 +15336,36 @@ msgctxt "addonStore"
 msgid "Add-on installation"
 msgstr "Инсталиране на добавка"
 
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {num} will be replaced with the number of add-ons to be installed
+#: gui\addonStoreGui\controls\storeDialog.py:229
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Installing {num} add-on, please wait."
+msgid_plural "Installing {num} add-ons, please wait."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {num} will be replaced with the number of add-ons to be installed
+#: gui\addonStoreGui\controls\storeDialog.py:240
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Download of {num} add-on in progress, cancel downloading?"
+msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
+msgstr[0] ""
+msgstr[1] ""
+
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
-#: gui\addonStoreGui\controls\storeDialog.py:314
+#: gui\addonStoreGui\controls\storeDialog.py:322
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{category}:"
 msgstr "{category}:"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#: gui\addonStoreGui\controls\storeDialog.py:407
+#: gui\addonStoreGui\controls\storeDialog.py:415
 #, python-brace-format
 msgctxt "addonStore"
 msgid "NVDA Add-on Package (*.{ext})"
@@ -15344,7 +15373,7 @@ msgstr "Пакет с добавка за NVDA (*.{ext})"
 
 #. Translators: The message displayed in the dialog that
 #. allows you to choose an add-on package for installation.
-#: gui\addonStoreGui\controls\storeDialog.py:412
+#: gui\addonStoreGui\controls\storeDialog.py:420
 msgctxt "addonStore"
 msgid "Choose Add-on Package File"
 msgstr "Избор на пакет с добавка"
@@ -15696,12 +15725,15 @@ msgstr "{val:.2f} сантиметра"
 msgid "invoke"
 msgstr "извикване"
 
-#. Translators: message from to note the number of suggestions
-#: NVDAObjects\UIA\__init__.py:2721
-msgid "{} suggestion"
-msgid_plural "{} suggestions"
-msgstr[0] "{} предложение"
-msgstr[1] "{} предложения"
+#. Translators: message noting the number of suggestions that are available,
+#. for example in the Windows 11 Start Menu.
+#. {num} will be replaced with the number of suggestions
+#: NVDAObjects\UIA\__init__.py:2723
+#, python-brace-format
+msgid "{num} suggestion"
+msgid_plural "{num} suggestions"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
