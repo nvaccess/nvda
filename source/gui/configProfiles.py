@@ -198,7 +198,7 @@ class ProfilesDialog(
 				# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 				# The placeholder {name} is replaced with the name of the configuration profile that will be deleted.
 				_("The profile {name} will be permanently deleted. This action cannot be undone.").format(
-					name=name
+					name=name,
 				),
 				# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 				_("Confirm Deletion"),

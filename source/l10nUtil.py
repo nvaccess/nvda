@@ -583,7 +583,7 @@ class _PoChecker:
 		[hlL]?  # Optional length specifier - has no effect in Python
 		[diouxXeEfFgGcrsa]  # Conversion type
 		""",
-		flags=re.VERBOSE
+		flags=re.VERBOSE,
 	)
 	# e.g. %(name)s %(name)d
 	RE_NAMED_PERCENT = re.compile(r"(?<!%)%\([^(]+\)[.\d]*[a-zA-Z]")
