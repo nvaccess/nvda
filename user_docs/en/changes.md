@@ -13,8 +13,7 @@
 
 ### Bug Fixes
 
-* Fixed '<' not being escaped in MathML in PDF documents. Most likely this will happen in `mo` elements.
-* Fixed missing MathML attributes for `mspace` in PDF documents. Also passed along attributes for elementary math elements.
+* Fixed problem with multiple expressions on a line in word documents: everything after the first expression was dropped (not spoken or brailled)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 
 ### Changes for Developers
