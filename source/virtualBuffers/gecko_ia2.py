@@ -273,6 +273,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 class Gecko_ia2(VirtualBuffer):
 	TextInfo = Gecko_ia2_TextInfo
+	_nativeAppSelectionMode = True
 	_nativeAppSelectionModeSupported = True
 
 	def __init__(self, rootNVDAObject):

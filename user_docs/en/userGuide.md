@@ -1133,9 +1133,9 @@ A key command is provided to return to the original page containing the embedded
 
 ### Native Selection Mode {#NativeSelectionMode}
 
-By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
+Without native selection, when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it.
+NVDA has a Native Selection Mode which can be toggled on or off in particular Browse Mode documents which can support it.
 Native Selection causes the document's native selection to follow NVDA's Browse Mode selection, which enables details such as formatting, links, and tables to be copied.
 Currently, Native Selection Mode is supported in:
 
