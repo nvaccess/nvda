@@ -2355,10 +2355,14 @@ class GlobalCommands(ScriptableObject):
 			ui.message(expandedSymbol)
 		else:
 			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
-			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			message = _("Character: {character}\nReplacement: {replacement}").format(
+				character=text,
+				replacement=expandedSymbol,
+			)
 			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
-			title = _("Expanded symbol ({})").format(languageDescription)
+			# {lang} will be replaced with the current voice's language.
+			title = _("Expanded symbol ({lang})").format(lang=languageDescription)
 			ui.browseableMessage(message, title)
 
 	@script(
