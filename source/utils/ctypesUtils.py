@@ -21,8 +21,6 @@ class ParamDirectionFlag(IntEnum):
 	"""Specifies an input parameter to the function."""
 	OUT = 2
 	"""Output parameter. The foreign function fills in a value."""
-	IN_ZERO = 4
-	"""Input parameter which defaults to the integer zero."""
 
 
 @runtime_checkable
@@ -77,10 +75,8 @@ def getFuncSPec(
 				f"Expected a ctypes compatible type for parameter: {param.name}, got {t.__name__!r}",
 			)
 		argtypes.append(t)
-		if param.default in (inspect.Parameter.empty, 0):
-			paramFlags.append(
-				(ParamDirectionFlag.IN_ZERO if param.default == 0 else ParamDirectionFlag.IN, param.name),
-			)
+		if param.default is inspect.Parameter.empty:
+			paramFlags.append((ParamDirectionFlag.IN, param.name))
 		else:
 			paramFlags.append((ParamDirectionFlag.IN, param.name, param.default))
 
@@ -129,6 +125,7 @@ def dllFunc(
 	cFunctype=ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc=True,
 	wrapNewCFunc=True,
+	errcheck=None,
 ):
 	cFunc = getattr(library, funcName)
 
@@ -157,6 +154,8 @@ def dllFunc(
 			return wrapper(cFunc)
 		newCFuncClass = cFunctype(spec.restype, *spec.argtypes)
 		newCFunc = newCFuncClass((funcName, library), spec.paramFlags)
+		if errcheck:
+			newCFunc.errcheck = errcheck
 		return wrapper(newCFunc)
 
 	return decorator

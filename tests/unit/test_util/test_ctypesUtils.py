@@ -6,10 +6,10 @@
 """Unit tests for the displayString submodule."""
 
 import unittest
-from ctypes import POINTER
+from ctypes import POINTER, windll
 from ctypes.wintypes import BOOL, HWND, RECT
 from typing import Annotated
-from utils.ctypesUtils import FuncSpec, getFuncSPec, OutParam, ParamDirectionFlag
+from utils.ctypesUtils import FuncSpec, dllFunc, getFuncSPec, OutParam, ParamDirectionFlag
 
 
 class Test_FuncSPec(unittest.TestCase):
@@ -106,3 +106,28 @@ class Test_FuncSPecRaises(unittest.TestCase):
 		) -> BOOL: ...
 
 		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
+
+
+class Test_dllFunc(unittest.TestCase):
+	def testBasicTypes(self):
+		@dllFunc(windll.user32, "GetClientRect")
+		def GetClientRect(hWnd: HWND, lpRect: POINTER(RECT)) -> BOOL: ...
+
+		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
+
+	def testAnnotatedTypesInOnly(self):
+		@dllFunc(windll.user32, "GetClientRect")
+		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
+
+		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
+
+	def testAnnotatedTypesInOut(self):
+		@dllFunc(windll.user32, "GetClientRect", BOOL)
+		def GetClientRect(
+			hWnd: Annotated[int, HWND],
+		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 2)]: ...
+
+		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
