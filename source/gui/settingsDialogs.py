@@ -3654,8 +3654,8 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		self.modelPathEdit = directoryEntryControl.pathControl
 		self.modelPathEdit.Value = config.conf["captionLocal"]["localModelPath"]
 
-		# Translators: A configuration in settings dialog.
 		self.loadModelWhenInit = sHelper.addItem(
+		# Translators: A configuration in settings dialog.
 			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
 		)
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])

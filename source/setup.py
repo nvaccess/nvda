@@ -227,8 +227,6 @@ freeze(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
-			# numpy is an optional dependency of comtypes but we don't require it.
-			"numpy",
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
@@ -259,6 +257,8 @@ freeze(
 			"markdown_link_attr_modifier",
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
+			# Required for local image captioning
+"numpy",			
 		],
 		"includes": [
 			"nvdaBuiltin",
@@ -266,6 +266,9 @@ freeze(
 			"bisect",
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
+			# required for import numpy without error
+			"numpy._core._exceptions",
+			"numpy._core._multiarray_umath",
 		],
 	},
 	data_files=[

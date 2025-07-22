@@ -38,9 +38,9 @@ class AdvancedSettingsDialog(wx.Dialog):
 			resolvePath: Path resolution string
 			useMirror: Whether to use HuggingFace mirror
 		"""
-		# Translators: A message presented in the settings panel
 		super().__init__(
 			parent,
+			# Translators: A message presented in the settings panel
 			title=_("Advanced Settings"),
 			size=(500, 400),
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
@@ -444,8 +444,8 @@ class ModelManagerFrame(wx.Frame):
 			total: Total number of bytes to download
 			progressPercent: Download progress percentage
 		"""
-		# Translators: Progress log message format
 		self.log(
+			# Translators: Progress log message format
 			_("file: {fileName}  progress: {progress:.2f}%").format(
 				fileName=fileName,
 				progress=progressPercent,
@@ -495,8 +495,8 @@ class ModelManagerFrame(wx.Frame):
 
 			# Translators: Mirror usage indicator
 			mirrorInfo = _(" (using mirror)") if self.useMirror else ""
-			# Translators: Settings update log message
 			self.log(
+				# Translators: Settings update log message
 				_("Settings updated: {modelName}{mirrorInfo}, {count} files").format(
 					modelName=self.modelName,
 					mirrorInfo=mirrorInfo,
@@ -599,8 +599,8 @@ class ModelManagerFrame(wx.Frame):
 
 		if not failed:
 			# All successful
-			# Translators: Success message for all files downloaded
 			self.log(
+				# Translators: Success message for all files downloaded
 				_("All files downloaded successfully! ({success}/{total})").format(
 					success=len(successful),
 					total=total,
@@ -611,9 +611,9 @@ class ModelManagerFrame(wx.Frame):
 			SoundNotification.playSuccess()
 		elif not successful:
 			# All failed
-			# Translators: Error message for all files failed
 			self.log(
-				_("❌ All files download failed! ({failed}/{total})").format(
+				# Translators: Error message for all files failed
+				_("All files download failed! ({failed}/{total})").format(
 					failed=len(failed),
 					total=total,
 				),
@@ -625,8 +625,8 @@ class ModelManagerFrame(wx.Frame):
 			SoundNotification.playError()
 		else:
 			# Partial success
-			# Translators: Warning message for partial download success
 			self.log(
+				# Translators: Warning message for partial download success
 				_("Partial download success ({success}/{total})").format(
 					success=len(successful),
 					total=total,
@@ -634,8 +634,8 @@ class ModelManagerFrame(wx.Frame):
 			)
 			# Translators: Log message for successful files count
 			self.log(_("Successful: {count} files").format(count=len(successful)))
-			# Translators: Log message for failed files count and list
 			self.log(
+				# Translators: Log message for failed files count and list
 				_("Failed: {count} files - {files}").format(
 					count=len(failed),
 					files=", ".join(failed),
