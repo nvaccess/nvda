@@ -57,28 +57,28 @@ class Magnification:
 	_magnification = windll.Magnification
 
 	@staticmethod
-	@dllFunc(_magnification, "MagSetFullscreenColorEffect", errcheck=_errCheck)
+	@dllFunc(_magnification, errcheck=_errCheck)
 	def MagSetFullscreenColorEffect(
 		effect: POINTER(MAGCOLOREFFECT) | MAGCOLOREFFECT,
 	) -> typing.Annotated[int, BOOL]: ...
 
 	@staticmethod
-	@dllFunc(_magnification, "MagGetFullscreenColorEffect", restype=BOOL, errcheck=_errCheck)
+	@dllFunc(_magnification, restype=BOOL, errcheck=_errCheck)
 	def MagGetFullscreenColorEffect() -> typing.Annotated[
 		MAGCOLOREFFECT,
 		OutParam(POINTER(MAGCOLOREFFECT), "effect"),
 	]: ...
 
 	@staticmethod
-	@dllFunc(_magnification, "MagShowSystemCursor", errcheck=_errCheck)
+	@dllFunc(_magnification, errcheck=_errCheck)
 	def MagShowSystemCursor(showCursor: bool | BOOL) -> typing.Annotated[int, BOOL]: ...
 
 	@staticmethod
-	@dllFunc(_magnification, "MagInitialize", errcheck=_errCheck)
+	@dllFunc(_magnification, errcheck=_errCheck)
 	def MagInitialize() -> typing.Annotated[int, BOOL]: ...
 
 	@staticmethod
-	@dllFunc(_magnification, "MagUninitialize", errcheck=_errCheck)
+	@dllFunc(_magnification, errcheck=_errCheck)
 	def MagUninitialize() -> typing.Annotated[int, BOOL]: ...
 
 

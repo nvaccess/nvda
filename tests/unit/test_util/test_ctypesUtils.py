@@ -128,21 +128,21 @@ class Test_FuncSPecRaises(unittest.TestCase):
 
 class Test_dllFunc(unittest.TestCase):
 	def testBasicTypes(self):
-		@dllFunc(windll.user32, "GetClientRect")
+		@dllFunc(windll.user32)
 		def GetClientRect(hWnd: HWND, lpRect: POINTER(RECT)) -> BOOL: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
 		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
 
 	def testAnnotatedTypesInOnly(self):
-		@dllFunc(windll.user32, "GetClientRect")
+		@dllFunc(windll.user32)
 		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
 		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
 
 	def testAnnotatedTypesInOut(self):
-		@dllFunc(windll.user32, "GetClientRect", BOOL)
+		@dllFunc(windll.user32, restype=BOOL)
 		def GetClientRect(
 			hWnd: Annotated[int, HWND],
 		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 1)]: ...

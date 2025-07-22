@@ -133,7 +133,7 @@ def getFuncSPec(
 
 def dllFunc(
 	library: ctypes.CDLL,
-	funcName: str,
+	funcName: str | None = None,
 	restype: Type[ctypes._SimpleCData] = None,
 	*,
 	cFunctype=ctypes.WINFUNCTYPE,
@@ -148,6 +148,7 @@ def dllFunc(
 	the correct ctypes metadata and setting custom error checking.
 	:param library: The loaded DLL containing the target C function.
 	:param funcName: The name of the C function to bind.
+	When not provided, the name is fetched from the decorated python function.
 	:param restype: The ctypes return type of the C function. Defaults to None.
 	:param cFunctype: The ctypes function type constructor (e.g., ctypes.WINFUNCTYPE)
 	:param annotateOriginalCFunc: Whether to set ctypes metadata (argtypes, restype) on the original C function.
@@ -156,12 +157,12 @@ def dllFunc(
 	:returns: A decorator that can be applied to a Python function to bind it to the specified C function.
 	"""
 
-	cFunc = getattr(library, funcName)
-
 	def decorator(pyFunc: types.FunctionType):
-		nonlocal restype
 		if not isinstance(pyFunc, types.FunctionType):
 			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
+		nonlocal restype, funcName
+		funcName = funcName or pyFunc.__name__
+		cFunc = getattr(library, funcName)
 		spec = getFuncSPec(pyFunc, restype)
 		# Set ctypes metadata for the original function in case it is called from outside
 		if annotateOriginalCFunc:
