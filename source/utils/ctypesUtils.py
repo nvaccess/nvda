@@ -13,7 +13,6 @@ import types
 from typing import Annotated, Any, get_origin, Type, Protocol, runtime_checkable
 from enum import IntEnum
 
-
 from logHandler import log
 
 
@@ -50,8 +49,8 @@ class OutParam:
 class FuncSpec:
 	"""Specification of a ctypes function."""
 
-	restype: Type[ctypes._SimpleCData]
-	argtypes: tuple[Type[_SupportsFromParam]]
+	restype: Type[_SupportsFromParam]
+	argtypes: tuple[_SupportsFromParam]
 	paramFlags: tuple[
 		tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, int | ctypes._SimpleCData]
 	]
@@ -70,10 +69,10 @@ def getFuncSPec(
 		if t is inspect.Parameter.empty:
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
 		elif get_origin(t) is Annotated:
-			if len(t.__metadata__) != 1 or not issubclass(t.__metadata__[0], _SupportsFromParam):
+			if len(t.__metadata__) != 1 or not isinstance(t.__metadata__[0], _SupportsFromParam):
 				raise TypeError(f"Expected single annotation of a ctypes type for parameter: {param.name}")
 			t = t.__metadata__[0]
-		if not issubclass(t, _SupportsFromParam):
+		if not isinstance(t, _SupportsFromParam):
 			raise TypeError(
 				f"Expected a ctypes compatible type for parameter: {param.name}, got {t.__name__!r}",
 			)
@@ -107,7 +106,7 @@ def getFuncSPec(
 			paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
 		elif isAnnotated:
 			annotation = t.__metadata__[0]
-			if not issubclass(annotation, _SupportsFromParam):
+			if not isinstance(annotation, _SupportsFromParam):
 				raise TypeError(
 					f"Expected single annotation of a ctypes type for result type, got {annotation!r}",
 				)
