@@ -111,9 +111,9 @@ class TestGetInterpolations(unittest.TestCase):
 		"""Test that literal percent signs followed by words are not matched.
 		Note: This tests a common gray area where interpolation could be valid.
 		i.e.
-		>>> "12.5% gray, 50% off, 100% complete" % (999, 123, 65)                                                               
+		>>> "12.5% gray, 50% off, 100% complete" % (999, 123, 65)
 		'12.5 999ray, 50 173ff, 100Aomplete'
-		
+
 		this was a deliberate choice as this form of formatting is rarely going to be a proper string interpolation.
 		e.g. there are many english strings like this, that would be incorrectly treated as having 3 interpolations,
 		and that the translation will have none.
