@@ -219,7 +219,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 	_installationPromptTitle = pgettext("addonStore", "Add-on installation")
-	
+
 	@staticmethod
 	def _installationPromptMsg(nAddonsPendingInstall: int) -> str:
 		return npgettext(
