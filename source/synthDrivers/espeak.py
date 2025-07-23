@@ -320,10 +320,10 @@ class SynthDriver(SynthDriver):
 	# C901 'speak' is too complex
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
-		textList: List[str] = []
+	def speak(self, speechSequence: SpeechSequence): # noqa: C901
+		textList: list[str] = []
 		langChanged = False
-		prosody: Dict[str, int] = {}
+		prosody: dict[str, int] = {}
 		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
@@ -340,9 +340,15 @@ class SynthDriver(SynthDriver):
 				langChanged = True
 			elif isinstance(item, BreakCommand):
 				textList.append(f'<break time="{item.time}ms" />')
+			elif isinstance(item, RateCommand):
+				if item.multiplier == 1:
+					textList.append("<prosody/>")
+				else:
+					textList.append(f"<prosody rate={int(item.multiplier * 100)}%>")
 			elif type(item) in self.PROSODY_ATTRS:
 				if prosody:
 					# Close previous prosody tag.
+					textList.append('<break time="1ms" />')  # hack added for cutoff speech (issue #55)
 					textList.append("</prosody>")
 				attr = self.PROSODY_ATTRS[type(item)]
 				if item.multiplier == 1:
@@ -362,7 +368,7 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, PhonemeCommand):
 				# We can't use str.translate because we want to reject unknown characters.
 				try:
-					phonemes = "".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
+					phonemes: str = "".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
 					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
 					textList.append("[[%s]] " % phonemes)
@@ -378,7 +384,11 @@ class SynthDriver(SynthDriver):
 		if prosody:
 			textList.append("</prosody>")
 		text = "".join(textList)
+		oldRate: int = self._get_rate()
 		_espeak.speak(text)
+		# try to get around espeak bug where voice slows down
+		self._set_rate(oldRate)
+
 
 	def cancel(self):
 		_espeak.stop()
