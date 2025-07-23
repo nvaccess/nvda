@@ -30,6 +30,7 @@ from addonStore.models.status import (
 )
 import core
 import extensionPoints
+from buildVersion import formatVersionForGUI
 from logHandler import log
 
 
@@ -92,7 +93,17 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "Date"),
+		pgettext("addonStore", "Publication Date"),
+		50,
+	)
+	minimumNVDAVersion = (
+		# Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
+		pgettext("addonStore", "Minimum NVDA version"),
+		50,
+	)
+	lastTestedVersion = (
+		# Translators: The name of the column that contains the last version of NVDA tested with this add-on.
+		pgettext("addonStore", "Last tested NVDA version"),
 		50,
 	)
 
@@ -298,6 +309,10 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
+		if field is AddonListField.minimumNVDAVersion:
+			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
+		if field is AddonListField.lastTestedVersion:
+			return formatVersionForGUI(*listItemVM.model.lastTestedVersion)
 		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
