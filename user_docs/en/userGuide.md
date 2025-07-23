@@ -1924,20 +1924,18 @@ This option is a slider that lets you choose how much inflection (rise and fall 
 ##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
-This may improve the responsiveness of some voices.
+This option only exists for Microsoft Speech API version 5 (SAPI 5) voices.
+This may improve the responsiveness of some SAPI 5 voices.
 However, some voices might not work with the current WASAPI implementation.
 If you find that the voice you are using stops working, you may disable this option.
 
-Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+Note that for these SAPI 5 voices, the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
 
-* For Microsoft Speech API version 4 voices:
-  * Audio ducking
-  * Leading silence trimming
-  * Keep audio device awake
-* For Microsoft Speech API version 5 voices:
-  * Rate boost
-  * Leading silence trimming
-  * Keep audio device awake
+* Rate boost
+* Leading silence trimming
+* Keep audio device awake
+
+Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
@@ -3471,6 +3469,8 @@ This option enables Microsoft Speech API version 4 (SAPI 4) voices to output aud
 This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](SpeechSettingsUseWasapi), not to be confused with this one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
