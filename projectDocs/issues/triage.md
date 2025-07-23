@@ -1,4 +1,5 @@
 ## Intent
+
 This page intends to outline some of the information that might be helpful to those trying to triage issues.
 
 Most of the issues raised on the NVDA GitHub repository fall into one of the following categories:
@@ -21,23 +22,29 @@ Secondly, we want to ensure that there is enough information on the issue so tha
 Most of the information required is asked for in the Github issue templates, so this is a great place to start.
 
 ## Check for duplicates
+
 Pick a few keywords and search the NVDA repository on Github. We can also check if there is already a pull request in the works that may fix this issue.
 
 ## What kind of issue is it?
+
 Can we label this as a regression, a requested change of behaviour, or a requested new feature?
 
 ### Regression
+
 The behaviour of NVDA, or NVDA interacting with an application/software has changed to something worse.
 This may mean that a feature has stopped working altogether, something isn't being announced accurately or perhaps a crash.
 A regression can be caused by NVDA changing something, or an application/website changing.
 
 ### New features
+
 This is something new, that NVDA does not do yet.
 
 ### Change of behaviour
+
 The issue describes "Currently NVDA does something, but I would like it to do something else instead."
 
 ## Is there a work around?
+
 We may already know of a work around, any existing alternatives, or if there is any way to achieve the request already?
 
 ## Information to collect.
@@ -95,6 +102,7 @@ Essentially this boils down to:
 - How does it differ from the intended use case of the feature?
 
 ## Use cases / user stories
+
 There are three things we are trying to define: Who, What, and Why.
 This can often fairly naturally be stated in the following form. As a BLANK (the who), I want to be able to BLANK (the what) so that I can BLANK (the why).
 
@@ -116,6 +124,7 @@ Here is an example from a recent Github issue:
  - Particularly when working with other software, it's helpful if an example document or file can be provided. Perhaps a relevant test case?
 
 ### Why
+
 Often the hardest one, but also the most valuable.
 
 - Why do they want to do this?
@@ -124,6 +133,7 @@ Often the hardest one, but also the most valuable.
 Perhaps once we have this background, a simpler what can be proposed.
 
 ## Summarise the issue
+
 It's common that this process of collecting information will result in many comments on the issue.
 As the GitHub issue grows, with more comments, questions, and discussion, it's useful to summarise the issues periodically.
 This helps to condense various back and forth discussions into the final result.
@@ -131,6 +141,7 @@ This will make it easier for someone to quickly pick up the issue and understand
 This also serves to re-iterate decisions that have been made throughout the discussion and ensure that everyone is on the same page.
 
 ## Labelling
+
 NV Access can grant people who help triage issues the ability to label issues.
 Labelling issues help indicate the priority and current state, helping NV Access and the community to decide on how to prioritise it.
 
@@ -139,6 +150,7 @@ Issues can generally be labelled `bug` or `feature`.
 We also have a label for `enhancement`, think of this as a more internal facing change. For instance, editing code comments to provide clearer / more complete information, or extending an internal framework/API to unblock other issues.
 
 ### Triaged status
+
 An issue is triaged if it is ready to be worked on.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
 Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
@@ -167,6 +179,7 @@ If it is a complex issue, technical investigation may be required.
 This can be indicated with adding the label `blocked/needs-technical-investigation`.
 
 ### Priority
+
 Bugs/regressions are given priorities based on an estimate of their severity and impact.
 
 - `P1`:
@@ -195,6 +208,7 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   - Other feature requests affecting a small subset of users
 
 ## Legacy issues
+
 Many older issues do not follow our issue template and have missing information.
 Often they have conversation spanning years.
 Summarising this information and opening a new issue filling out the issue template would be extremely useful in triaging these issues.
