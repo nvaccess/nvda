@@ -162,6 +162,13 @@ exclude = [
 	"./source/userConfig/addons/*",
 ]
 
+# While exclude tells pyright not to scan files in the first instance,
+# it will still analyse files included by other files.
+ignore = [
+	# We do not care about errors in our dependencies.
+	".venv",
+]
+
 # Tell pyright where to load python code from
 extraPaths = [
 	"./source",

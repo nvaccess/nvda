@@ -1,12 +1,76 @@
 # What's New in NVDA
 
-## 2025.2
+## 2025.3
 
 ### Important notes
 
 ### New Features
 
+* In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
+Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
+
+### Changes
+
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+* In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
+
+### Bug Fixes
+
+* Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
+* Updated `include` dependencies:
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+* The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+
+#### Deprecations
+
+## 2025.2
+
+This release includes improvements in Windows 11, browse mode, and Microsoft Word.
+
+In browse mode, quick navigation keys for headings 7 through 9 have been added.
+The Elements List and Find dialogs no longer cause application profiles to be deactivated.
+In Microsoft Edge, notifications like "loading complete" no longer stop say all.
+
+In Microsoft Word, when using the shortcuts to switch to page view or outline view, the new view is now reported.
+When UIA is enabled, redundant table end markers are no longer brailled when the cursor is in a table cell.
+
+On Windows 11, NVDA will no longer announce emoji panel items twice while browsing them.
+Performance and reliability in the Start Menu on Windows 11 24H2 has been improved.
+On Windows 11 24H2 and newer, window state will be announced when resizing windows with `Windows+arrow` keys.
+Support has also been added for Windows 11 Voice Access.
+
+Options have been added to report the language of the text being read, and report when the language is not supported by the current synthesizer.
+
+Support for the NLS eReader Zoomax braille display has been added.
+Support for cursor routing with the point and click action on the Humanware Monarch has been added.
+
+LibLouis has been updated, adding new Biblical Hebrew, Russian 6 dot computer braille and Thai Grade 2 braille tables.
+eSpeak NG has been updated, adding support for Aromanian, Crimean Tatar, Mongolian, and Pashto.
+
+There have also been a number of other fixes and improvements, including to mouse and touch interaction, Windows 11 Notepad, and Google Chrome.
+
+### New Features
+
+* NVDA can now report the language of the text being read. (#17664, @nvdaes):
+  * New options are available to:
+    * Report the language of the text being read.
+    * Report if the language of the text being read is not supported.
+  * A new unassigned command has been added to report the language of the text at the caret position.
 * In Microsoft Word, the new view is now reported when using the shortcuts to switch to page view (`control+alt+p`) or outline view (`control+alt+o`). (#18091, @CyrilleB79)
+* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
+* In Windows 11 2024 Update and Server 2025 and later, NVDA will announce foreground window states such as restore, maximize, and snap when changing window position by pressing `windows+arrow` keys. (#17841, #18175, @josephsl)
+* Unassigned commands have been added to open the NVDA settings dialog in the following categories: Vision, Windows OCR, Add-on Store and Advanced. (#18313, @CyrilleB79)
+* Introduced support for Windows 11 Voice Access, including reporting dictated text and microphone status from everywhere (requires NVDA to be installed). (#16862, #17384, @josephsl)
+* Support for the NLS eReader Zoomax braille display has been added. (#15863, @florin-trutiu)
+* A checkbox has been added in the speech settings to allow users to disable WASAPI for SAPI5 voices. (#18309, @gexgd0419)
 
 ### Changes
 
@@ -15,9 +79,12 @@
     * Added new tables for Biblical Hebrew as well as for Russian 6 dot computer braille and Thai Grade 2.
     * Substantial updates to Lithuanian braille tables.
     * Small improvements to Hungarian, Dutch, Norwegian and Turkish tables.
+  * Updated eSpeak NG to [commit `e93d3a9`](https://github.com/espeak-ng/espeak-ng/commit/e93d3a97ee9237f7e170cc8870f44c14de9032a9). (#17896)
+    * Added new languages Aromanian, Crimean Tatar, Mongolian, and Pashto.
 * In browse mode, it is now possible to use number keys 1 to 9 (previously 1 to 6), to navigate to the corresponding heading. (#18014, @CyrilleB79)
-* When Elements List or Find dialogs are opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
+* When the Elements List or Find dialog is opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)
 * In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)
+* NVDA will now warn before updating when connected as the controlled computer with NVDA Remote Access. (#18455)
 
 ### Bug Fixes
 
@@ -33,7 +100,8 @@
   * NVDA no longer sometimes freezes when navigating in browse mode.
   * Search suggestions are now reported reliably.
 * In Windows 11, NVDA will no longer announce emoji panel items twice while browsing them. (#18236, @josephsl)
-* It is now possible to route to any braille cell on the Humanware Monarch multiline braille device, using their point and click action. (#18248)
+* When typing into a cell in Microsoft Excel, the braille display is now correctly updated to show the new content. (#18391)
+* When using NVDA Remote Access, speech from User Account Control screens on the remote computer now works reliably. (#18101, @jcsteh)
 
 ### Changes for Developers
 
@@ -45,14 +113,17 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Updated Ruff to 0.11.12. (#17671)
   * Updated pre-commit to 4.2.0. (#17671)
   * Updated pyright to 1.1.401. (#17671)
-* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, #17978, @LeonarddeR)
+* NVDA now uses [uv](https://docs.astral.sh/uv/) as Python package/project manager. (#17935, @LeonarddeR)
   * Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.
 * Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)
+* Several additions to report the language of the text being read. (#17685, @nvdaes)
+  * The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.
+  * A `languageHandling` module has been added to report the language within speech sequences.
+  * `LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text being read, and switch synthesizer voice.
 * The `brailleTables` module is now a package.
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
-
-#### Deprecations
+* NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
 
 ## 2025.1.2
 

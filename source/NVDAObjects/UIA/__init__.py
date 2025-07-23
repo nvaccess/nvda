@@ -1438,8 +1438,11 @@ class UIA(Window):
 
 			sysListView32.findExtraOverlayClasses(self, clsList)
 
-		# Add editableText support if UIA supports a text pattern
-		if self.TextInfo == UIATextInfo:
+		# Add editableText support if UIA supports a text pattern and the control either has navigable text or supports selection.
+		if self.TextInfo == UIATextInfo and (
+			self._hasNavigableText
+			or self.UIATextPattern.SupportedTextSelection != UIAHandler.UIA.SupportedTextSelection_None
+		):
 			if self.UIAFrameworkId == "XAML":
 				# This UIA element is being exposed by the XAML framework.
 				clsList.append(XamlEditableText)
@@ -2714,8 +2717,10 @@ class SuggestionsList(UIA):
 		# Item count must be the last one spoken.
 		suggestionsCount: int = self.childCount
 		suggestionsMessage = (
-			# Translators: message from to note the number of suggestions
-			ngettext("{} suggestion", "{} suggestions", suggestionsCount).format(suggestionsCount)
+			# Translators: message noting the number of suggestions that are available,
+			# for example in the Windows 11 Start Menu.
+			# {num} will be replaced with the number of suggestions
+			ngettext("{num} suggestion", "{num} suggestions", suggestionsCount).format(num=suggestionsCount)
 		)
 		ui.message(suggestionsMessage)
 
