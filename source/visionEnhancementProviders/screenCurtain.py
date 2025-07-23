@@ -9,9 +9,9 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 
 import os
 import typing
-from utils.ctypesUtils import OutParam, dllFunc
+from utils.ctypesUtils import OutParam, dllFunc, Pointer
 from vision import providerBase
-from ctypes import Structure, windll, c_float, POINTER, WinError
+from ctypes import Structure, windll, c_float, WinError
 from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
@@ -59,14 +59,14 @@ class Magnification:
 	@staticmethod
 	@dllFunc(_magnification, errcheck=_errCheck)
 	def MagSetFullscreenColorEffect(
-		effect: POINTER(MAGCOLOREFFECT) | MAGCOLOREFFECT,
+		effect: Pointer[MAGCOLOREFFECT] | MAGCOLOREFFECT,
 	) -> typing.Annotated[int, BOOL]: ...
 
 	@staticmethod
 	@dllFunc(_magnification, restype=BOOL, errcheck=_errCheck)
 	def MagGetFullscreenColorEffect() -> typing.Annotated[
 		MAGCOLOREFFECT,
-		OutParam(POINTER(MAGCOLOREFFECT), "effect"),
+		OutParam(Pointer[MAGCOLOREFFECT], "effect"),
 	]: ...
 
 	@staticmethod

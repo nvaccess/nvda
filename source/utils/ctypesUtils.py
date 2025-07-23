@@ -5,6 +5,7 @@
 
 """Utilities to annotate ctypes dll exports."""
 
+import abc
 import ctypes
 import functools
 import inspect
@@ -24,12 +25,31 @@ class ParamDirectionFlag(IntEnum):
 	# Note: IN | OUT is not supported, as ctypes will require this as input parameter and will also return it, which is useless.
 
 
-@typing.runtime_checkable
-class _SupportsFromParam(typing.Protocol):
-	"""Protocol for types that can be used as input parameters to ctypes functions."""
+class CType(abc.ABC):
+	"""Abstract class for ctypes types.
+	This class is used to validate type annotations for ctypes functions.
+	"""
+
+	def __new__(cls, *args, **kwargs):
+		raise TypeError(
+			f"{cls.__name__} may not be instantiated. "
+			"It is only used as an abstract class to annotate ctypes objects or parameters.",
+		)
+
+
+# Hacky, but there's no other way to get to the base class for ctypes types.
+CType.register(ctypes.c_int.__mro__[2])
+
+
+class Pointer(CType):
+	"""A pointer type that can be used as a type annotation for ctypes functions."""
 
 	@classmethod
-	def from_param(cls, value: typing.Any) -> typing.Self: ...
+	def __class_getitem__(cls, t: type) -> type:
+		return ctypes.POINTER(t)
+
+
+Pointer.register(ctypes._Pointer)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -48,8 +68,8 @@ class OutParam:
 class FuncSpec:
 	"""Specification of a ctypes function."""
 
-	restype: typing.Type[_SupportsFromParam]
-	argtypes: tuple[_SupportsFromParam]
+	restype: type[CType]
+	argtypes: tuple[CType]
 	paramFlags: tuple[
 		tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, int | ctypes._SimpleCData]
 	]
@@ -57,7 +77,7 @@ class FuncSpec:
 
 def getFuncSPec(
 	pyFunc: types.FunctionType,
-	restype: typing.Type[ctypes._SimpleCData] | None = None,
+	restype: type[ctypes._SimpleCData] | None = None,
 ) -> FuncSpec:
 	sig = inspect.signature(pyFunc)
 	# Extract argument types from annotations
@@ -73,12 +93,12 @@ def getFuncSPec(
 		if t is inspect.Parameter.empty:
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
 		elif typing.get_origin(t) in (typing.Union, types.UnionType):
-			t = next((c for c in typing.get_args(t) if isinstance(c, _SupportsFromParam)), t)
+			t = next((c for c in typing.get_args(t) if issubclass(c, CType)), t)
 		elif typing.get_origin(t) is typing.Annotated:
-			if len(t.__metadata__) != 1 or not isinstance(t.__metadata__[0], _SupportsFromParam):
+			if len(t.__metadata__) != 1 or not issubclass(t.__metadata__[0], CType):
 				raise TypeError(f"Expected single annotation of a ctypes type for parameter: {param.name}")
 			t = t.__metadata__[0]
-		if not isinstance(t, _SupportsFromParam):
+		if not issubclass(t, CType):
 			raise TypeError(
 				f"Expected a ctypes compatible type for parameter: {param.name}, got {t!r}",
 			)
@@ -121,7 +141,7 @@ def getFuncSPec(
 			paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
 		elif isAnnotated:
 			annotation = t.__metadata__[0]
-			if not isinstance(annotation, _SupportsFromParam):
+			if not issubclass(annotation, CType):
 				raise TypeError(
 					f"Expected single annotation of a ctypes type for result type, got {annotation!r}",
 				)
@@ -139,7 +159,7 @@ def getFuncSPec(
 def dllFunc(
 	library: ctypes.CDLL,
 	funcName: str | None = None,
-	restype: typing.Type[ctypes._SimpleCData] = None,
+	restype: type[ctypes._SimpleCData] = None,
 	*,
 	cFunctype=ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc=True,

@@ -6,10 +6,10 @@
 """Unit tests for the ctypesUtils submodule."""
 
 import unittest
-from ctypes import POINTER, windll
+from ctypes import windll
 from ctypes.wintypes import BOOL, HWND, RECT
 from typing import Annotated
-from utils.ctypesUtils import FuncSpec, dllFunc, getFuncSPec, OutParam, ParamDirectionFlag
+from utils.ctypesUtils import FuncSpec, Pointer, dllFunc, getFuncSPec, OutParam, ParamDirectionFlag
 
 
 class Test_FuncSPec(unittest.TestCase):
@@ -20,12 +20,12 @@ class Test_FuncSPec(unittest.TestCase):
 	def testBasicTypes(self):
 		"""Tests that getFuncSPec can extract a function signature with basic ctypes type hints."""
 
-		def GetClientRect(hWnd: HWND, lpRect: POINTER(RECT)) -> BOOL: ...
+		def GetClientRect(hWnd: HWND, lpRect: Pointer[RECT]) -> BOOL: ...
 
 		actualFuncSPec = getFuncSPec(GetClientRect)
 		expectedFuncSpec = FuncSpec(
 			BOOL,
-			(HWND, POINTER(RECT)),
+			(HWND, Pointer[RECT]),
 			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.IN, "lpRect")),
 		)
 		self.assertEqual(actualFuncSPec, expectedFuncSpec)
@@ -33,12 +33,12 @@ class Test_FuncSPec(unittest.TestCase):
 	def testAnnotatedTypesInOnly(self):
 		"""Tests that getFuncSPec can extract a function signature with annotated ctypes type hints."""
 
-		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
+		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
 
 		actualFuncSPec = getFuncSPec(GetClientRect)
 		expectedFuncSpec = FuncSpec(
 			BOOL,
-			(HWND, POINTER(RECT)),
+			(HWND, Pointer[RECT]),
 			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.IN, "lpRect")),
 		)
 		self.assertEqual(actualFuncSPec, expectedFuncSpec)
@@ -46,12 +46,12 @@ class Test_FuncSPec(unittest.TestCase):
 	def testUnionTypesInOnly(self):
 		"""Tests that getFuncSPec can extract a function signature with union ctypes type hints."""
 
-		def GetClientRect(hWnd: int | HWND, lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
+		def GetClientRect(hWnd: int | HWND, lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
 
 		actualFuncSPec = getFuncSPec(GetClientRect)
 		expectedFuncSpec = FuncSpec(
 			BOOL,
-			(HWND, POINTER(RECT)),
+			(HWND, Pointer[RECT]),
 			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.IN, "lpRect")),
 		)
 		self.assertEqual(actualFuncSPec, expectedFuncSpec)
@@ -63,12 +63,12 @@ class Test_FuncSPec(unittest.TestCase):
 
 		def GetClientRect(
 			hWnd: int | HWND,
-		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 1)]: ...
+		) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
 
 		actualFuncSPec = getFuncSPec(GetClientRect, restype=BOOL)
 		expectedFuncSpec = FuncSpec(
 			BOOL,
-			(HWND, POINTER(RECT)),
+			(HWND, Pointer[RECT]),
 			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.OUT, "lpRect")),
 		)
 		self.assertEqual(actualFuncSPec, expectedFuncSpec)
@@ -106,7 +106,7 @@ class Test_FuncSPecRaises(unittest.TestCase):
 		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
 
 	def testOutParamWithoutResType(self):
-		def GetClientRect(hWnd: HWND) -> Annotated[int, OutParam(POINTER(RECT), "lpRect", 2)]: ...
+		def GetClientRect(hWnd: HWND) -> Annotated[int, OutParam(Pointer[RECT], "lpRect", 2)]: ...
 
 		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
 
@@ -120,7 +120,7 @@ class Test_FuncSPecRaises(unittest.TestCase):
 	def testOutParamInArgTypes(self):
 		def GetClientRect(
 			hWnd: HWND,
-			lpRect: Annotated[int, OutParam(POINTER(RECT), "lpRect", 2)],
+			lpRect: Annotated[int, OutParam(Pointer[RECT], "lpRect", 2)],
 		) -> BOOL: ...
 
 		self.assertRaises(TypeError, getFuncSPec, GetClientRect)
@@ -129,23 +129,23 @@ class Test_FuncSPecRaises(unittest.TestCase):
 class Test_dllFunc(unittest.TestCase):
 	def testBasicTypes(self):
 		@dllFunc(windll.user32)
-		def GetClientRect(hWnd: HWND, lpRect: POINTER(RECT)) -> BOOL: ...
+		def GetClientRect(hWnd: HWND, lpRect: Pointer[RECT]) -> BOOL: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
-		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, Pointer[RECT]))
 
 	def testAnnotatedTypesInOnly(self):
 		@dllFunc(windll.user32)
-		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: POINTER(RECT)) -> Annotated[int, BOOL]: ...
+		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
-		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, Pointer[RECT]))
 
 	def testAnnotatedTypesInOut(self):
 		@dllFunc(windll.user32, restype=BOOL)
 		def GetClientRect(
 			hWnd: Annotated[int, HWND],
-		) -> Annotated[RECT, OutParam(POINTER(RECT), "lpRect", 1)]: ...
+		) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
-		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, POINTER(RECT)))
+		self.assertEqual(windll.user32.GetClientRect.argtypes, (HWND, Pointer[RECT]))
