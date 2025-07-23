@@ -40,23 +40,27 @@ class CType(abc.ABC):
 # Hacky, but there's no other way to get to the base class for ctypes types.
 CType.register(ctypes.c_int.__mro__[2])
 
+if typing.TYPE_CHECKING:
+	from ctypes import _Pointer as Pointer
+else:
 
-class Pointer(CType):
-	"""A pointer type that can be used as a type annotation for ctypes functions."""
+	class Pointer(CType):
+		"""A pointer type that can be used as a type annotation for ctypes functions."""
 
-	@classmethod
-	def __class_getitem__(cls, t: type) -> type:
-		return ctypes.POINTER(t)
+		@classmethod
+		def __class_getitem__(cls, t: type) -> type:
+			return ctypes.POINTER(t)
 
-
-Pointer.register(ctypes._Pointer)
+	# Register known pointer types
+	for t in (ctypes._Pointer, ctypes._CFuncPtr, ctypes.c_void_p, ctypes.c_char_p, ctypes.c_wchar_p):
+		Pointer.register(t)
 
 
 @dataclasses.dataclass(frozen=True)
 class OutParam:
 	"""Annotation for output parameters in function signatures."""
 
-	type: ctypes._Pointer
+	type: Pointer
 	"""The type of the output parameter. This should be a pointer type."""
 	name: str
 	"""The name of the output parameter."""
