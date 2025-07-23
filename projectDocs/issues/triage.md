@@ -218,7 +218,7 @@ NV Access migrated tickets from our old issue tracker (Trac) into Github issues.
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not.
 These attachments have been lost.
 
-## Deprecated features
+## Deprecated / legacy features
 
 Our core development focus is on modern technologies (like UIA) to ensure the project's long-term health and compatibility.
 
@@ -228,13 +228,14 @@ Our goal is to be transparent about our priorities without dismissing the real-w
 
 When triaging an issue related to a feature that involves a deprecated technology or is otherwise no longer under active development by the core team:
 
-- Identify and label: The first step is to identify if the issue is tied to a legacy component (e.g. the legacy Word object model).
-Apply a specific label for that component (e.g. `word-object-model`).
-- Assign low priority: These issues should be assigned a low priority (`p5`) to reflect that they are not on the core team's active roadmap.
-- Keep open for community: Crucially, these issues should remain open.
-This keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
-- Set expectations: It is appropriate to add a comment clarifying the status, for example: "This issue is related to a legacy component that is not in active development.
-We are keeping it open for tracking and for potential community contributions, but it is not on the core team's roadmap."
+- Migration blockers: Ensure that there is information in the issue on what prevents the user from using the modern alternative (e.g. UIA in Word).
+If the user identifies a specific gap or bug in the modern technology (e.g. "I can't use UIA because it doesn't read table headers correctly"), a new issue must be created to track that specific blocker and linked to the legacy issue.
+If there a viable, fully-functional path forward for the user today, then the ticket will be closed.
+Confirming this may require verification from the user.
+- Identify and label: Identify if the issue is tied to a specific legacy component and apply the relevant label.
+Apply the labels `legacy/community-support` and `help wanted`.
+- Keep open for community: These issues should remain open as this keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
+- User impact priority: Assign a priority appropriate for the impact on users. This represents the immediate-term pain being caused by the issue. 
 
 ## NV Access staff-created tickets
 
