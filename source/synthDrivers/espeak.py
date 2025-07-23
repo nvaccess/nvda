@@ -318,7 +318,7 @@ class SynthDriver(SynthDriver):
 	# C901 'speak' is too complex
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def speak(self, speechSequence: SpeechSequence): # noqa: C901
+	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
 		textList: list[str] = []
 		langChanged = False
 		prosody: dict[str, int] = {}
@@ -386,7 +386,6 @@ class SynthDriver(SynthDriver):
 		_espeak.speak(text)
 		# try to get around espeak bug where voice slows down
 		self._set_rate(oldRate)
-
 
 	def cancel(self):
 		_espeak.stop()
