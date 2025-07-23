@@ -6,11 +6,11 @@
 """Utilities to annotate ctypes dll exports."""
 
 import ctypes
+import functools
 import inspect
-from dataclasses import dataclass
-from functools import wraps
+import dataclasses
 import types
-from typing import Annotated, Any, Union, get_args, get_origin, Type, Protocol, runtime_checkable
+import typing
 from enum import IntEnum
 
 from logHandler import log
@@ -24,15 +24,15 @@ class ParamDirectionFlag(IntEnum):
 	# Note: IN | OUT is not supported, as ctypes will require this as input parameter and will also return it, which is useless.
 
 
-@runtime_checkable
-class _SupportsFromParam(Protocol):
+@typing.runtime_checkable
+class _SupportsFromParam(typing.Protocol):
 	"""Protocol for types that can be used as input parameters to ctypes functions."""
 
 	@classmethod
-	def from_param(cls, value: Any) -> Any: ...
+	def from_param(cls, value: typing.Any) -> typing.Self: ...
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class OutParam:
 	"""Annotation for output parameters in function signatures."""
 
@@ -44,11 +44,11 @@ class OutParam:
 	"""The position of the output parameter in argtypes."""
 
 
-@dataclass
+@dataclasses.dataclass
 class FuncSpec:
 	"""Specification of a ctypes function."""
 
-	restype: Type[_SupportsFromParam]
+	restype: typing.Type[_SupportsFromParam]
 	argtypes: tuple[_SupportsFromParam]
 	paramFlags: tuple[
 		tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, int | ctypes._SimpleCData]
@@ -57,19 +57,24 @@ class FuncSpec:
 
 def getFuncSPec(
 	pyFunc: types.FunctionType,
-	restype: Type[ctypes._SimpleCData] | None = None,
+	restype: typing.Type[ctypes._SimpleCData] | None = None,
 ) -> FuncSpec:
 	sig = inspect.signature(pyFunc)
 	# Extract argument types from annotations
 	argtypes = []
 	paramFlags = []
 	for param in sig.parameters.values():
+		if param.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
+			raise TypeError(
+				f"Unsupported parameter kind: {param.kind} for parameter: {param.name} "
+				"*args and **kwargs are not supported.",
+			)
 		t = param.annotation
 		if t is inspect.Parameter.empty:
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
-		elif get_origin(t) in (Union, types.UnionType):
-			t = next((c for c in get_args(t) if isinstance(c, _SupportsFromParam)), t)
-		elif get_origin(t) is Annotated:
+		elif typing.get_origin(t) in (typing.Union, types.UnionType):
+			t = next((c for c in typing.get_args(t) if isinstance(c, _SupportsFromParam)), t)
+		elif typing.get_origin(t) is typing.Annotated:
 			if len(t.__metadata__) != 1 or not isinstance(t.__metadata__[0], _SupportsFromParam):
 				raise TypeError(f"Expected single annotation of a ctypes type for parameter: {param.name}")
 			t = t.__metadata__[0]
@@ -97,7 +102,7 @@ def getFuncSPec(
 		restypes = [expectedRestype]
 	for i, t in enumerate(restypes):
 		handledPositions = []
-		isAnnotated = get_origin(t) is Annotated and len(t.__metadata__) == 1
+		isAnnotated = typing.get_origin(t) is typing.Annotated and len(t.__metadata__) == 1
 		if requireOutParamAnnotations:
 			if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
 				raise TypeError(f"Expected single annotation of type 'OutParam' for parameter: {param.name}")
@@ -134,7 +139,7 @@ def getFuncSPec(
 def dllFunc(
 	library: ctypes.CDLL,
 	funcName: str | None = None,
-	restype: Type[ctypes._SimpleCData] = None,
+	restype: typing.Type[ctypes._SimpleCData] = None,
 	*,
 	cFunctype=ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc=True,
@@ -160,6 +165,9 @@ def dllFunc(
 	def decorator(pyFunc: types.FunctionType):
 		if not isinstance(pyFunc, types.FunctionType):
 			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
+		if typing.TYPE_CHECKING:
+			# Return early when type checking.
+			return pyFunc
 		nonlocal restype, funcName
 		funcName = funcName or pyFunc.__name__
 		cFunc = getattr(library, funcName)
@@ -179,7 +187,7 @@ def dllFunc(
 				)
 			cFunc.restype = spec.restype
 
-		wrapper = wraps(pyFunc)
+		wrapper = functools.wraps(pyFunc)
 		if not wrapNewCFunc:
 			return wrapper(cFunc)
 		newCFuncClass = cFunctype(spec.restype, *spec.argtypes)
