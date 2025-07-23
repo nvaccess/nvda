@@ -14,6 +14,7 @@
 
 ### Bug Fixes
 
+* Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 
 ### Changes for Developers
