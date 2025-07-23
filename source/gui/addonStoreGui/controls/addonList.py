@@ -151,6 +151,7 @@ class AddonVirtualList(
 		colIndex = evt.GetColumn()
 		log.debug(f"col clicked: {colIndex}")
 		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[colIndex])
+		self.Parent.columnFilterCtrl.SetSelection(colIndex * 2)
 
 	def _doRefresh(self):
 		with guiHelper.autoThaw(self):
