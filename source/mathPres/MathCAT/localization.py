@@ -1,10 +1,13 @@
-import wx
-import os
 import glob
-from zipfile import ZipFile
+import os
 from collections.abc import Callable
-from .MathCATPreferences import UserInterface
+from zipfile import ZipFile
+
+import wx
 from languageHandler import getLanguageDescription
+from logHandler import log
+
+from .MathCATPreferences import UserInterface
 
 
 def getLanguages() -> list[str]:
@@ -23,21 +26,16 @@ def getLanguages() -> list[str]:
 		# codes https://en.wikipedia.org/wiki/ISO_3166-2
 		# check if there are language variants in the language folder
 		if subDir != "SharedRules":
-			languagesSet: set[str] = UserInterface.languagesSet()
 			# add to the listbox the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
-			if regionalCode in languagesSet:
-				languageOptions.append(
-					f"{getLanguageDescription(regionalCode)} ({language}-{subDir})",
-				)
-			elif language in languagesSet:
-				languageOptions.append(f"{getLanguageDescription(language)} ({regionalCode})")
+			langDesc = getLanguageDescription(regionalCode)
+			if langDesc is not None:
+				languageOptions.append(langDesc)
 			else:
-				languageOptions.append(f"{language} ({regionalCode})")
+				languageOptions.Append(f"{language} ({regionalCode})")
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
 
-	languagesSet: set[str] = UserInterface.languagesSet()
 	# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 	# "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
 	languageOptions.append(pgettext("math", "Use Voice's Language (Auto)"))

@@ -10,52 +10,56 @@ The goal of this add-on is to replicate/improve upon the functionality of MathPl
 #   python3.dll has "Copyright © 2001-2022 Python Software Foundation; All Rights Reserved"
 
 # Note: this code is a lot of cut/paste from other code and very likely could be substantially improved/cleaned.
-import braille  # we generate braille
-import mathPres  # math plugin stuff
-import re  # regexp patter match
-import speech  # speech commands
-import config  # look up caps setting
-import ui  # copy message
-import winUser  # clipboard manipulation
 import gettext
-import winKernel
-import gui
-
-import libmathcat_py as libmathcat
+import re  # regexp patter match
+from collections.abc import Callable, Generator
+from ctypes import (
+	Array,
+	WinError,
+	c_wchar,
+	windll,  # register clipboard formats
+)
+from os import path  # set rule dir path
 from typing import Type
-from collections.abc import Generator, Callable
+
+import braille  # we generate braille
+import config  # look up caps setting
+import gui
+import libmathcat_py as libmathcat
+import speech  # speech commands
+import ui  # copy message
+import winKernel
+import winUser  # clipboard manipulation
+from api import getClipData
 from keyboardHandler import KeyboardInputGesture  # navigation key strokes
 from logHandler import log  # logging
-from os import path  # set rule dir path
 from scriptHandler import script  # copy MathML via ctrl-c
-from synthDriverHandler import (
-	getSynth,
-	SynthDriver,
-)
-from ctypes import windll  # register clipboard formats
 from speech import getCurrentLanguage
-from speech.types import SpeechSequence
 
 # speech/SSML processing borrowed from NVDA's mathPres/mathPlayer.py
 from speech.commands import (
+	BaseProsodyCommand,
 	BeepCommand,
-	PitchCommand,
-	VolumeCommand,
-	RateCommand,
-	LangChangeCommand,
 	BreakCommand,
 	CharacterModeCommand,
-	PhonemeCommand,
 	IndexCommand,
-	BaseProsodyCommand,
+	LangChangeCommand,
+	PhonemeCommand,
+	PitchCommand,
+	RateCommand,
 	SpeechCommand,
 	SynthCommand,
+	VolumeCommand,
 )
-
-from textUtils import WCHAR_ENCODING
-from ctypes import c_wchar, WinError, Array
-from api import getClipData
+from speech.types import SpeechSequence
+from synthDriverHandler import (
+	SynthDriver,
+	getSynth,
+)
 from synthDrivers import _espeak
+from textUtils import WCHAR_ENCODING
+
+import mathPres  # math plugin stuff
 
 _ = gettext.gettext
 

@@ -1,16 +1,18 @@
-import math
-import wx
-from . import MathCATgui
-import yaml
-import os
 import glob
+import math
+import os
 import webbrowser
-from logHandler import log  # logging
-from languageHandler import getLanguageDescription
 from collections.abc import Callable
-from .MathCAT import convertSSMLTextForNVDA
-from speech import speak
 from zipfile import ZipFile
+
+import wx
+import yaml
+from languageHandler import getLanguageDescription
+from logHandler import log  # logging
+from speech import speak
+
+from . import MathCATgui
+from .MathCAT import convertSSMLTextForNVDA
 
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14

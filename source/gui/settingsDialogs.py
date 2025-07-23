@@ -9,60 +9,15 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Container
-import logging
-from abc import ABCMeta, abstractmethod
 import copy
+import logging
 import os
-from enum import IntEnum
-from locale import strxfrm
 import re
 import typing
-import requests
-import wx
-import wx.adv
-from NVDAState import WritePaths
-
-from utils import mmdevice
-from vision.providerBase import VisionEnhancementProviderSettings
-from wx.lib.expando import ExpandoTextCtrl
-import wx.lib.newevent
-import winUser
-import logHandler
-import installer
-from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
-import config
-from config.configFlags import (
-	AddonsAutomaticUpdate,
-	NVDAKey,
-	RemoteConnectionMode,
-	RemoteServerType,
-	ShowMessages,
-	TetherTo,
-	ParagraphStartMarker,
-	ReportLineIndentation,
-	ReportTableHeaders,
-	ReportCellBorders,
-	OutputMode,
-	TypingEcho,
-)
-import languageHandler
-import speech
-import systemUtils
-import gui
-import gui.contextHelp
-import globalVars
-from logHandler import log
-import audio
-import audioDucking
-import queueHandler
-import braille
-import brailleTables
-import brailleInput
-from addonStore.models.channel import UpdateChannel
-import vision
-import vision.providerInfo
-import vision.providerBase
+from abc import ABCMeta, abstractmethod
+from collections.abc import Container
+from enum import IntEnum
+from locale import strxfrm
 from typing import (
 	Any,
 	Callable,
@@ -70,23 +25,72 @@ from typing import (
 	Optional,
 	Set,
 )
-import core
-import keyboardHandler
+
+import audio
+import audioDucking
+import braille
+import brailleInput
+import brailleTables
 import characterProcessing
+import config
+import core
+import globalVars
+import installer
+import keyboardHandler
+import languageHandler
+import logHandler
+import queueHandler
+import requests
+import speech
+import systemUtils
+import vision
+import vision.providerBase
+import vision.providerInfo
+import winUser
+import wx
+import wx.adv
+import wx.lib.newevent
+from addonStore.models.channel import UpdateChannel
+from config.configFlags import (
+	AddonsAutomaticUpdate,
+	NVDAKey,
+	OutputMode,
+	ParagraphStartMarker,
+	RemoteConnectionMode,
+	RemoteServerType,
+	ReportCellBorders,
+	ReportLineIndentation,
+	ReportTableHeaders,
+	ShowMessages,
+	TetherTo,
+	TypingEcho,
+)
+from logHandler import log
+from NVDAState import WritePaths
+from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
+from utils import mmdevice
+from vision.providerBase import VisionEnhancementProviderSettings
+from wx.lib.expando import ExpandoTextCtrl
+
+import gui
+import gui.contextHelp
+
 from . import guiHelper
 
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
-from . import nvdaControls
-from autoSettingsUtils.utils import UnsupportedConfigParameterError
-from autoSettingsUtils.autoSettings import AutoSettings
-from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting, DriverSetting
+import time
+import weakref
+
 import touchHandler
 import winVersion
-import weakref
-import time
+from autoSettingsUtils.autoSettings import AutoSettings
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
+from autoSettingsUtils.utils import UnsupportedConfigParameterError
+
+from . import nvdaControls
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
 #: The size that settings panel text descriptions should be wrapped at.
@@ -2646,9 +2650,9 @@ class MathSettingsPanel(SettingsPanel):
 	title = pgettext("math", "Math")
 	# Translators: The Help ID of the math settings panel.
 	helpId = pgettext("math", "MathSettings")
-	# Translators: The description of the math settings panel.
 	panelDescription = pgettext(
 		"math",
+		# Translators: The description of the math settings panel.
 		"The following options control the presentation of mathematical content using MathCAT.",
 	)
 
@@ -2665,6 +2669,7 @@ class MathSettingsPanel(SettingsPanel):
 		speechGroup = guiHelper.BoxSizerHelper(self, sizer=speechGroupSizer)
 		sHelper.addItem(speechGroup)
 
+		# Translators: Select an impairment for MathCAT
 		impairmentText = pgettext("math", "Impairment")
 		impairmentOptions = [
 			# Translators: these are the categories of impairments that MathCAT supports
@@ -2716,6 +2721,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("Decimal separators", self.decimalSeparatorList)
 		# self.decimalSeparatorList.SetSelection(config.conf["math"]["Speech"]["DecimalSeparator"])
 
+		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style")
 		speechStyleOptions = ["XXX"]
 		self.speechStyleList = speechGroup.addLabeledControl(
@@ -2771,9 +2777,10 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
 		# self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"])
 
-		# Translators: label for pull down to specify a subject area (Geometry, Calculus, ...)
 		subjectAreaText = pgettext(
-			"math", "Subject area to be used when it cannot be determined automatically"
+			"math",
+			# Translators: label for pull down to specify a subject area (Geometry, Calculus, ...)
+			"Subject area to be used when it cannot be determined automatically",
 		)
 		# Translators: a generic (non-specific) math subject area
 		subjectAreaOptions: list[str] = [pgettext("math", "General")]
@@ -2801,6 +2808,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("Control how MathCAT speaks chemistry", self.speechForChemicalList)
 		# self.speechForChemicalList.SetSelection(config.conf["math"]["speech"]["speechForChemical"])
 
+		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
 		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
 		navGroupBox = navGroupSizer.GetStaticBox()
@@ -2894,6 +2902,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("Select format for copying", self.navCopyAsList)
 		# self.navCopyAsList.SetSelection(config.conf["math"]["navigation"]["copyAs"])
 
+		# Translators: Text for the braille group.
 		brailleGroupText = pgettext("math", "Braille")
 		brailleGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=brailleGroupText)
 		# brailleGroupBox = brailleGroupSizer.GetStaticBox()
