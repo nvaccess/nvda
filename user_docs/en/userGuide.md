@@ -3470,13 +3470,7 @@ This can allow SAPI 4 voices to work with more features, such as audio ducking, 
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
 
-Note that for these SAPI 4 voices, the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
-
-* Audio ducking
-* Leading silence trimming
-* Keep audio device awake
-
-Note that in Speech settings, there is a similar [option for SAPI 5 voices](SpeechSettingsUseWasapi), not to be confused with this one.
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
