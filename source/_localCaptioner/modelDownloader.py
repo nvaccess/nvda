@@ -33,7 +33,7 @@ from typing import Callable
 from logHandler import log
 
 
-_: Callable[[str], str]  # translation alias injected by NVDA
+
 
 # --------------------------------------------------------------------------- #
 # Type Aliases & Constants
@@ -144,6 +144,7 @@ def downloadSingleFile(
 				size = os.path.getsize(localPath)
 				progressCallback(fileName, size, size, 100.0)
 			log.info(f"[Thread-{threadId}] File already exists: {localPath}")
+			log.warn(f"size cannot be retrieved from remote")
 			return True, f"File already exists: {localPath}"
 
 	for attempt in range(maxRetries):
@@ -214,12 +215,12 @@ def downloadSingleFile(
 
 				# Check if the file is empty
 				if actualSize == 0:
-					raise RuntimeError("Downloaded file is empty")
+					return (False, f"Downloaded file is empty")
 
 				# If you know the total size, verify that it is complete
 				if total > 0 and actualSize != total:
 					# The file is incomplete, but it is not deleted.  can continue when  try again next time
-					raise RuntimeError(f"File incomplete: {actualSize}/{total} bytes downloaded")
+					return (False, f"File incomplete: {actualSize}/{total} bytes downloaded")
 
 				# Final progress callback
 				if progressCallback:
@@ -243,6 +244,8 @@ def downloadSingleFile(
 			msg = f"URL Error: {err.reason}"
 		except Exception as err:
 			msg = f"Unexpected error: {err}"
+			log.error(msg)
+
 
 		# Failed to process, but did not delete some downloaded files
 		log.info(f"[Thread-{threadId}] {msg} – {url}")

@@ -280,6 +280,7 @@ class ModelManagerFrame(wx.Frame):
 
 		# Center display
 		self.Centre()
+		self.isClosing =False
 
 	def _initUI(self):
 		"""Initialize the main user interface components."""
@@ -414,6 +415,9 @@ class ModelManagerFrame(wx.Frame):
 		Args:
 			message: Log message to add
 		"""
+		if self.isClosing:
+			return
+
 		if not self.IsBeingDeleted():
 			self.logText.AppendText(f"{message}\n")
 			self.logText.SetInsertionPointEnd()
@@ -432,6 +436,8 @@ class ModelManagerFrame(wx.Frame):
 		Args:
 			status: Status message to display
 		"""
+		if self.isClosing:
+			return
 		if not self.IsBeingDeleted():
 			self.statusText.SetLabel(status)
 
@@ -656,7 +662,6 @@ class ModelManagerFrame(wx.Frame):
 			event: Close event
 		"""
 		if self.downloadThread and self.downloadThread.is_alive():
-			self.downloadCancelled = True
 			# Translators: Confirmation dialog message for exit during download
 			confirmationMSg = _("Download is in progress. Are you sure you want to exit?")
 			# Translators: Confirmation dialog title for exit
@@ -670,6 +675,8 @@ class ModelManagerFrame(wx.Frame):
 			if dlg.ShowModal() != wx.ID_YES:
 				dlg.Destroy()
 				return
+			self.downloadCancelled = True
+			self.isClosing = True
 			dlg.Destroy()
 
 		self.Destroy()

@@ -100,18 +100,11 @@ def caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		log.error(e)
 
 
-def disableInSecureMode(decoratedCls):
-	if globalVars.appArgs.secure:
-		return globalPluginHandler.GlobalPlugin
-	return decoratedCls
 
-
-@disableInSecureMode
-# class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 class LocalCaptioner:
-	"""Global plugin for Caption Local functionality.
+	"""module for local image caption functionality.
 
-	This plugin provides image captioning using local ONNX models.
+	This module provides image captioning using local ONNX models.
 	It can capture screen regions and generate descriptive captions.
 	"""
 
@@ -123,7 +116,7 @@ class LocalCaptioner:
 
 
 		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
-		# Load model when initializing plugin (may cause high memory usage)
+		# Load model when initializing  (may cause high memory usage)
 		if loadModelWhenInit:
 			threading.Thread(target=self._loadModel, daemon=True).start()
 
