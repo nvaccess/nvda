@@ -235,7 +235,7 @@ Confirming this may require verification from the user.
 - Identify and label: Identify if the issue is tied to a specific legacy component and apply the relevant label.
 Apply the labels `legacy/community-support` and `help wanted`.
 - Keep open for community: These issues should remain open as this keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
-- User impact priority: Assign a priority appropriate for the impact on users. This represents the immediate-term pain being caused by the issue. 
+- User impact priority: Assign a priority appropriate for the impact on users. This represents the immediate-term pain being caused by the issue.
 
 ## NV Access staff-created tickets
 
