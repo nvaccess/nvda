@@ -28,6 +28,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
