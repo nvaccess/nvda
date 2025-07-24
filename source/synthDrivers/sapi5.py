@@ -152,7 +152,7 @@ class _SapiEvent(SPEVENT):
 	def copy(dst: SPEVENT, src: SPEVENT) -> None:
 		memmove(byref(dst), byref(src), sizeof(src))
 		if not src.lParam:
-			return dst
+			return
 		if src.elParamType == _SPEventLParamType.POINTER:
 			dst.lParam = windll.ole32.CoTaskMemAlloc(src.wParam)
 			if not dst.lParam:
@@ -935,7 +935,7 @@ class SynthDriver(SynthDriver):
 			self._bookmarkLists.append(bookmarks)
 			try:
 				self._speak_legacy(text, flags)
-			except:
+			except Exception:
 				self._bookmarkLists.pop()
 				raise
 
