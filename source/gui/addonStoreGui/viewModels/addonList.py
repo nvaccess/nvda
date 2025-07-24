@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from dataclasses import dataclass
 from enum import Enum
 
+from datetime import datetime, MINYEAR
 from locale import strxfrm
 from typing import (
 	FrozenSet,
@@ -93,8 +94,14 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "Publication Date"),
+		pgettext("addonStore", "Publication date"),
 		50,
+	)
+	displayableInstallDate = (
+		# Translators: The name of the column that contains the installation date of the add-on.
+		pgettext("addonStore", "Install date"),
+		50,
+		frozenset({_StatusFilterKey.AVAILABLE}),
 	)
 	minimumNVDAVersion = (
 		# Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
@@ -403,6 +410,14 @@ class AddonListVM:
 				if getattr(listItemVM.model, "submissionTime", None):
 					return listItemVM.model.submissionTime
 				return 0
+			if self._sortByModelField == AddonListField.displayableInstallDate:
+				log.info(f'{getattr(listItemVM.model, "installDate", None)} - {listItemVM.model.name}')
+				if getattr(listItemVM.model, "installDate", None):
+					return listItemVM.model.installDate
+				else:
+					import globalVars as gv
+					gv.dbg = listItemVM.model
+				return datetime(MINYEAR, 1, 1)
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
