@@ -24,7 +24,7 @@ from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
 import threading
-from typing import TYPE_CHECKING, NamedTuple, Generator
+from typing import TYPE_CHECKING, Any, NamedTuple, Generator
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
 from comInterfaces.SpeechLib import (
@@ -61,6 +61,8 @@ from speech.commands import (
 	SpeechCommand,
 )
 from ._sonic import SonicStream, initialize as sonicInitialize
+
+import NVDAState
 
 
 windll.ole32.CoTaskMemAlloc.restype = c_void_p
@@ -103,11 +105,29 @@ else:
 			return POINTER(item)
 
 
-# The following types are kept to prevent breaking the API.
-# They are deprecated and no longer used.
-LP_c_ubyte = _Pointer[c_ubyte]
-LP_c_ulong = _Pointer[c_ulong]
-LP__ULARGE_INTEGER = _Pointer[_ULARGE_INTEGER]
+# The following types are deprecated and no longer used.
+# Definitions are kept here in order not to break static type checking.
+if TYPE_CHECKING and NVDAState._allowDeprecatedAPI():
+	LP_c_ubyte = _Pointer[c_ubyte]
+	LP_c_ulong = _Pointer[c_ulong]
+	LP__ULARGE_INTEGER = _Pointer[_ULARGE_INTEGER]
+
+_deprecatedTypes: dict[str, type] = {
+	"LP_c_ubyte": _Pointer[c_ubyte],
+	"LP_c_ulong": _Pointer[c_ulong],
+	"LP__ULARGE_INTEGER": _Pointer[_ULARGE_INTEGER],
+}
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName in _deprecatedTypes and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			f"Importing {attrName} from here is deprecated. ",
+			stack_info=True,
+		)
+		return _deprecatedTypes[attrName]
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class _SPEventLParamType(IntEnum):
@@ -446,7 +466,7 @@ class SapiSink(COMObject):
 			if audioDucking._isDebug():
 				log.debug("Enabling audio ducking due to starting speech stream")
 			synth._audioDucker.enable()
-		synth.isSpeaking = True
+		synth._isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
@@ -474,7 +494,7 @@ class SapiSink(COMObject):
 			for bookmark in synth._bookmarkLists[0]:
 				synthIndexReached.notify(synth=synth, index=bookmark)
 			synth._bookmarkLists.pop()
-		synth.isSpeaking = False
+		synth._isSpeaking = False
 		synthDoneSpeaking.notify(synth=synth)
 		if synth.player:
 			# notify the thread
@@ -552,7 +572,10 @@ class SynthDriver(SynthDriver):
 		self._useWasapi = True
 		self.player: nvwave.WavePlayer | None = None
 		self.sonicStream: SonicStream | None = None
-		self.isSpeaking = False  # Deprecated, preserved to not break the API
+		self._isSpeaking = False
+		"""Backing variable for the deprecated property "isSpeaking".
+		This variable is not doing anything useful, and may be removed together with all its references
+		when the property "isSpeaking" is removed."""
 		self._isCancelling = False
 		self._isTerminating = False
 		self._rateBoost = False
@@ -1026,3 +1049,16 @@ class SynthDriver(SynthDriver):
 						log.debug("Enabling audio ducking due to setting output audio state to run")
 					self._audioDucker.enable()
 				self.ttsAudioStream.setState(_SPAudioState.RUN, 0)
+
+	def __getattr__(self, attrName: str) -> Any:
+		"""This is used to reserve backward compatibility."""
+		if attrName == "isSpeaking" and NVDAState._allowDeprecatedAPI():
+			log.warning(
+				"The property isSpeaking is deprecated. ",
+				stack_info=True,
+			)
+			# When the property is removed, the backing variable `_isSpeaking`,
+			# and all its references can also be removed,
+			# as it is not doing anything useful.
+			return self._isSpeaking
+		return super().__getattr__(attrName)
