@@ -117,9 +117,9 @@ localLib = env.SharedLibrary(
 	],
 )
 
-cppjiebaPath = Dir("#include/cppjieba")
+cppjiebaPath = Dir("#include/cppjieba") # for Chinese word segmentation
 cppjiebaSrcPath = cppjiebaPath.Dir("include/cppjieba")
-LimonpPath = cppjiebaPath.Dir("deps/limonp")
+LimonpPath = cppjiebaPath.Dir("deps/limonp") # cppjieba's dependency
 LimonpSrcPath = LimonpPath.Dir("include/limonp")
 
 env.Prepend(CPPPATH=[
