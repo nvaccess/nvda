@@ -1929,7 +1929,7 @@ This may improve the responsiveness of some SAPI 5 voices.
 However, some voices might not work with the current WASAPI implementation.
 If you find that the voice you are using stops working, you may disable this option.
 
-Note that for these SAPI 5 voices, the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off:
 
 * Rate boost
 * Leading silence trimming
