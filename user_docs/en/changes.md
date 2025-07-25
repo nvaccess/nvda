@@ -30,9 +30,9 @@ A model manager for downloading image recognition models has been added. It can 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Component updates:
-  * Updated **sphinx** to version 8.1.3. (#18475)
-  * Updated **licensecheck** to version 2025.1. (#18475)
-  * Introduced **onnxruntime** version 1.19.2. (#18475)
+  * Updated sphinx to 8.1.3. (#18475)
+  * Updated licensecheck to 2025.1. (#18475)
+  * Introduced onnxruntime 1.19.2 for model inference. (#18475)
 
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 
