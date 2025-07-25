@@ -34,10 +34,19 @@ from ctypes import (
 
 import buildVersion
 import globalVars
+import winVersion
 
 versionedLibX86Path = os.path.join(globalVars.appDir, "lib", "x86")
 versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
-versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
+arch = winVersion.getWinVer().processorArchitecture
+versionedLibAMD64Path = os.path.join(
+	globalVars.appDir,
+	"lib",
+	(
+		# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
+		"arm64ec" if arch == "ARM64" else "x64"
+	),
+)
 
 import NVDAState  # noqa: E402
 
@@ -86,7 +95,6 @@ def __getattr__(name: str) -> Any:
 
 
 from . import localLib  # noqa: E402
-import winVersion  # noqa: E402
 import winKernel  # noqa: E402
 import config  # noqa: E402
 import winUser  # noqa: E402
@@ -882,7 +890,6 @@ def initialize() -> None:
 		log.error("Error installing IA2 support")
 	# Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	arch = winVersion.getWinVer().processorArchitecture
 	if arch == "AMD64" and coreArchLibPath != versionedLibAMD64Path:
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 	elif arch == "ARM64" and coreArchLibPath != versionedLibARM64Path:

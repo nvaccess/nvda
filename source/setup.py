@@ -259,6 +259,7 @@ freeze(
 		("lib/x86/%s" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.manifest")),
 		("lib/x64/%s" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.manifest")),
 		("lib/arm64/%s" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.manifest")),
+		("lib/arm64ec/%s" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.manifest")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),
