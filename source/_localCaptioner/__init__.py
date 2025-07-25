@@ -94,9 +94,10 @@ def caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	try:
 		description = captioner.generate_caption(image=imageData)
 		ui.message(description)
-		result = api.copyToClip(text=description, notify=False)
-	except Exception as e:
+		api.copyToClip(text=description, notify=False)
+	except FileNotFoundError as e:
 		ui.message(str(e))
+	except Exception as e:
 		log.error(e)
 
 
