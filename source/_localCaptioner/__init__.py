@@ -11,23 +11,14 @@ It allows users to capture screen regions and generate captions using local AI m
 from __future__ import unicode_literals
 
 import os
-import sys
 
-import base64
-import json
 import io
 import threading
 
 import wx
-import gui
-from gui import guiHelper
-import globalVars
 import config
 from logHandler import log
-from keyboardHandler import KeyboardInputGesture
-import scriptHandler
 import ui
-import globalPluginHandler
 import api
 
 from .captioner import ImageCaptioner

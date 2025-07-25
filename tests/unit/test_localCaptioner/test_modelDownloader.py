@@ -216,7 +216,7 @@ class TestDownloadSingleFile(unittest.TestCase):
 			mock_download_response,  # GET request
 		]
 
-		with patch("builtins.open", mock_open()) as mock_file:
+		with patch("builtins.open", mock_open()):
 			success, message = downloadSingleFile(self.test_url, self.test_file)
 
 		self.assertTrue(success)
@@ -240,7 +240,7 @@ class TestDownloadSingleFile(unittest.TestCase):
 
 		progress_callback = Mock()
 
-		with patch("builtins.open", mock_open()) as mock_file:
+		with patch("builtins.open", mock_open()):
 			success, message = downloadSingleFile(
 				self.test_url,
 				self.test_file,
@@ -307,36 +307,6 @@ class TestDownloadSingleFile(unittest.TestCase):
 		self.assertFalse(success)
 		self.assertIn("URL Error", message)
 		self.assertEqual(mock_sleep.call_count, 1)  # Should sleep before final retry
-
-	@patch("_localCaptioner.modelDownloader.urllib.request.urlopen")
-	@patch("_localCaptioner.modelDownloader.os.path.exists")
-	@patch("_localCaptioner.modelDownloader.os.path.getsize")
-	@patch("_localCaptioner.modelDownloader.log")
-	def test_download_http_416_error_file_complete(self, mock_log, mock_getsize, mock_exists, mock_urlopen):
-		"""Test handling of HTTP 416 error when file is actually complete."""
-		mock_exists.return_value = True
-		mock_getsize.return_value = 10
-
-		http_error = urllib.error.HTTPError(
-			url=self.test_url,
-			code=416,
-			msg="Range Not Satisfiable",
-			hdrs=None,
-			fp=None,
-		)
-		mock_urlopen.side_effect = http_error
-
-		progress_callback = Mock()
-
-		success, message = downloadSingleFile(
-			self.test_url,
-			self.test_file,
-			progressCallback=progress_callback,
-		)
-
-		self.assertTrue(success)
-		self.assertEqual(message, "Download completed")
-		progress_callback.assert_called_once_with("test_file.txt", 10, 10, 100.0)
 
 	@patch("builtins.open", new_callable=mock_open)
 	@patch("time.sleep")

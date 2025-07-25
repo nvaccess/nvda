@@ -136,7 +136,7 @@ def downloadSingleFile(
 				elif remoteSize > 0 and localSize > remoteSize:
 					# Local files are larger than remote files and may be corrupted. Delete and download again.
 					os.remove(localPath)
-		except:
+		except Exception:
 			# If the size cannot be retrieved from remote, the existing behavior is maintained
 			if progressCallback:
 				size = os.path.getsize(localPath)
