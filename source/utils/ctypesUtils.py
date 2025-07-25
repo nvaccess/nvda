@@ -18,6 +18,8 @@ from logHandler import log
 
 
 class ParamDirectionFlag(IntEnum):
+	"""Flags to indicate the direction of parameters in ctypes function signatures."""
+
 	IN = 1
 	"""Specifies an input parameter to the function."""
 	OUT = 2
@@ -58,7 +60,8 @@ else:
 
 @dataclasses.dataclass(frozen=True)
 class OutParam:
-	"""Annotation for output parameters in function signatures."""
+	"""Annotation for output parameters in function signatures.
+	This is used to specify that a parameter is an output parameter, which will be filled by the wrapped foreign function."""
 
 	type: Pointer
 	"""The type of the output parameter. This should be a pointer type."""
@@ -66,6 +69,12 @@ class OutParam:
 	"""The name of the output parameter."""
 	position: int = 0
 	"""The position of the output parameter in argtypes."""
+
+
+def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: typing.Any) -> typing.Any:
+	if result == 0:
+		raise ctypes.WinError()
+	return args
 
 
 @dataclasses.dataclass
@@ -81,8 +90,23 @@ class FuncSpec:
 
 def getFuncSPec(
 	pyFunc: types.FunctionType,
-	restype: type[ctypes._SimpleCData] | None = None,
+	restype: type[CType] | None = None,
 ) -> FuncSpec:
+	"""
+	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
+
+	This function inspects the signature and type annotations of the given Python function to determine the argument types,
+	parameter flags (input/output), and return type(s) for use with ctypes. It enforces that all parameters and the return
+	type are properly annotated with ctypes-compatible types, and supports handling of output parameters via `Annotated` types.
+
+	:param pyFunc: The Python function to inspect. Must have type annotations for all parameters and the return type.
+	:param restype: Optional explicit ctypes return type. Required if the function has output parameters.
+
+	:raises TypeError: If parameter kinds are unsupported, type annotations are missing or invalid, or output parameter annotations are incorrect.
+	:raises IndexError: If output parameter positions are invalid or duplicated.
+
+	:returns: A `FuncSpec` object containing the ctypes-compatible function specification.
+	"""
 	sig = inspect.signature(pyFunc)
 	# Extract argument types from annotations
 	argtypes = []
@@ -163,7 +187,7 @@ def getFuncSPec(
 def dllFunc(
 	library: ctypes.CDLL,
 	funcName: str | None = None,
-	restype: type[ctypes._SimpleCData] = None,
+	restype: type[CType] = None,
 	*,
 	cFunctype=ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc=True,
@@ -171,19 +195,41 @@ def dllFunc(
 	errcheck=None,
 ):
 	"""
-	Decorator to bind a Python function to a C function from a loaded DLL using ctypes.
-	This function creates a decorator that can be applied to a Python function, specifying its argument and return types,
-	and optionally wrapping it as a new ctypes function. It also allows for annotating the original C function with
-	the correct ctypes metadata and setting custom error checking.
-	:param library: The loaded DLL containing the target C function.
-	:param funcName: The name of the C function to bind.
-	When not provided, the name is fetched from the decorated python function.
-	:param restype: The ctypes return type of the C function. Defaults to None.
-	:param cFunctype: The ctypes function type constructor (e.g., ctypes.WINFUNCTYPE)
-	:param annotateOriginalCFunc: Whether to set ctypes metadata (argtypes, restype) on the original C function.
-	:param wrapNewCFunc: Whether to wrap the function as a new ctypes function. If False, returns the original C function wrapped.
-	:param errcheck: An optional error checking function to assign to the new ctypes function.
-	:returns: A decorator that can be applied to a Python function to bind it to the specified C function.
+	Decorator to bind a Python function to a C function from a DLL using ctypes,
+	automatically setting argument and return types based on the Python function's signature.
+
+	This decorator simplifies the process of wrapping C functions from a DLL,
+	by inferring argument and return types from the Python function and applying them to the C function pointer.
+
+	:param library: The ctypes.CDLL instance representing the loaded DLL.
+	:param funcName: The name of the function in the DLL. If None, uses the Python function's name.
+	:param restype: Optional explicit ctypes return type. Required if the function has output parameters.
+	:param cFunctype: The ctypes function type to use (e.g., ctypes.WINFUNCTYPE or ctypes.CFUNCTYPE).
+	:param annotateOriginalCFunc: Whether to annotate the original C function with argtypes/restype.
+	:param wrapNewCFunc: Whether to return a new ctypes function pointer or the original.
+	:param errcheck: Optional error checking function to attach to the ctypes function.
+		this parameter only applies when `wrapNewCFunc` is True.
+
+	:raises TypeError: If the decorated object is not a function, if parameter kinds are unsupported, type annotations are missing or invalid, or output parameter annotations are incorrect.
+	:raises IndexError: If output parameter positions are invalid or duplicated.
+
+	:returns: The decorated function, now bound to the C function from the DLL.
+
+	:example:
+
+
+		user32 = ctypes.windll.user32
+
+		@dllFunc(user32, restype=ctypes.c_bool, errcheck=windowsErrCheck)
+		def GetClientRect(
+			hWnd: int | HWND,
+		) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
+			'''Wraps the GetClientRect function from user32.dll.
+			:param hWnd: Handle to the window.
+			:return: A RECT structure that contains the coordinates of the client area.
+			:raise WindowsError: If the function fails, an exception is raised with the error'''
+			pass
+
 	"""
 
 	def decorator(pyFunc: types.FunctionType):
