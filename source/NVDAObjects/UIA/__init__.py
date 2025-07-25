@@ -2717,8 +2717,10 @@ class SuggestionsList(UIA):
 		# Item count must be the last one spoken.
 		suggestionsCount: int = self.childCount
 		suggestionsMessage = (
-			# Translators: message from to note the number of suggestions
-			ngettext("{} suggestion", "{} suggestions", suggestionsCount).format(suggestionsCount)
+			# Translators: message noting the number of suggestions that are available,
+			# for example in the Windows 11 Start Menu.
+			# {num} will be replaced with the number of suggestions
+			ngettext("{num} suggestion", "{num} suggestions", suggestionsCount).format(num=suggestionsCount)
 		)
 		ui.message(suggestionsMessage)
 
