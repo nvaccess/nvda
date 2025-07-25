@@ -95,7 +95,7 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 This quick start guide contains three main sections:
 
-* [Downloading](#GettingAndSettingUpNVDA): Where to get it and how
+* [Downloading](#GettingAndSettingUpNVDA): Where to get NVDA and how
 * [Initial setup](#SettingUpNVDA): Installing NVDA
 * [Running NVDA](#RunningNVDA): Commonly used keystrokes and NVDA features 
   
