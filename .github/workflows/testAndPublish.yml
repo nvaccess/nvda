@@ -351,6 +351,14 @@ jobs:
         name: Symbols
         path: output/symbols.zip
 
+  allTestsPass:
+    # Is a no-op action.
+    # Rulesets require specifying every job you wish to block a PR/push.
+    # Used to protect branches as a general status check so we can check a single job for all rulesets.
+    name: Check if all tests pass
+    runs-on: ubuntu-latest
+    needs: [checkPot, checkPo, licenseCheck, unitTests, systemTests, crowdinUpload, createSymbols]
+
   uploadSymbols:
     name: Upload symbols
     runs-on: windows-latest
