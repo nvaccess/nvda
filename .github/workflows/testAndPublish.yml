@@ -459,7 +459,7 @@ jobs:
           -f "task=release" \
           -f "description=Release of $NVDA_EXE_NAME" \
           -f "ref=${{ github.ref_name }}" \
-          -F "auto_merge=true" \
+          -F "auto_merge=false" \
           -f "environment=snapshot" \
           -f "required_contexts[]" \
           -f "payload[NVDA_HASH]=$NVDA_HASH" \
