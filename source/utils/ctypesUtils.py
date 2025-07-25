@@ -91,7 +91,7 @@ class FuncSpec:
 	]
 
 
-def getFuncSPec(
+def getFuncSpec(
 	pyFunc: types.FunctionType,
 	restype: type[CType] | None = None,
 ) -> FuncSpec:
@@ -254,7 +254,7 @@ def dllFunc(
 		nonlocal restype, funcName
 		funcName = funcName or pyFunc.__name__
 		cFunc = getattr(library, funcName)
-		spec = getFuncSPec(pyFunc, restype)
+		spec = getFuncSpec(pyFunc, restype)
 		# Set ctypes metadata for the original function in case it is called from outside
 		if annotateOriginalCFunc:
 			if cFunc.argtypes is not None:
