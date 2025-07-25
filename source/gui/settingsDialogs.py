@@ -3653,12 +3653,14 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.modelPathEdit = directoryEntryControl.pathControl
 		self.modelPathEdit.Value = config.conf["captionLocal"]["localModelPath"]
+		self.bindHelpEvent("LocalCaptionerSettingsModelPath", self.modelPathEdit)
 
 		self.loadModelWhenInit = sHelper.addItem(
 		# Translators: A configuration in settings dialog.
 			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
 		)
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
+		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.loadModelWhenInit)
 
 	@staticmethod
 	def getParameterBound(name: str, boundType: str) -> int | None:

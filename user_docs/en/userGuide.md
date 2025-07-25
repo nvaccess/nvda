@@ -3211,6 +3211,21 @@ You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
+#### Local Image Description Settings Panel {#LocalCaptionerSettings}
+
+This panel provides options to customize the behavior and default settings for the local image description feature. You can configure how and when the model used for describing images is loaded.
+
+##### Model Path {#LocalCaptionerSettingsModelPath}
+
+Use this edit box to specify the path from which the model should be loaded.
+This allows you to use a custom model located on your local system.
+
+##### Load Model when init  {#LocalCaptionerSettingsLoadWhenInit}
+
+When this checkbox is enabled, NVDA will automatically load the model during startup.
+This can reduce the wait time when performing the first image recognition.
+However, loading the model at initialization may increase memory usage, especially if you do not use the image description feature frequently.
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3826,6 +3841,62 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
+<!-- KC:endInclude -->
+
+## Local Image Description {#LocalCaptioner}
+
+NVDA supports generating image descriptions using a local model. This feature allows NVDA to describe image objects encountered during navigation. It supports shortcut key activation, and the result is automatically copied to the clipboard.
+
+Note:
+To reduce the NVDA installer size, the image captioning model is not bundled with NVDA by default.
+You must first download the model via the NVDA menu → Tools → Model Manager before using this feature.
+
+### Getting Started {#LocalCaptionerGettingStarted}
+
+Before using this feature:
+
+1. Open the Model Manager from the NVDA menu → Tools → Model Manager.
+2. In the dialog, locate the Download button using the Tab key and press it.
+3. Wait for the model to download. You can monitor progress in the Download Log area.
+4. Once the model is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+
+### Model Download {#LocalCaptionerModelDownload}
+
+The Model Manager allows you to manage the download and configuration of local image description models.
+
+#### Download Path
+
+Use this edit box to set the path where model files should be stored. By default, this is the main NVDA directory.
+
+#### Start Download
+
+Press this button to begin downloading the default image description model.
+
+#### Advanced Options
+
+Advanced settings are available in the Model Config tab for users who require more control:
+
+* Resolve Path: Edit box for the resolved download path. 
+* Model Name: Edit box for specifying the model name. The default values are sufficient for most users and will download a model suitable for English image descriptions.
+* Use HuggingFace Mirror: A checkbox to enable use of a mirror server. This is useful if access to [huggingface.co](https://huggingface.co) is slow or restricted. When enabled, downloads will use an alternate domain.
+
+In the File List tab (next to Model Config), you can select specific files to download. This feature allows future expansion to support models for different languages and tasks. For now, keeping the default selection is recommended.
+
+#### Download Log
+
+This area displays real-time download progress and error messages. It will play a sound when the model download succeeds or fails.
+
+### Local Captioner Key Commands Summary {#LocalCaptionerGestures}
+
+<!-- KC:beginInclude -->
+
+| Name                                  | Key                    | Description                                                                                |
+| ------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------ |
+| image caption using local model       | `NVDA+Windows+,`       | Use a local model to generate a description of the image object currently navigated by NVDA. |
+| release local model              | `NVDA+Windows+Shift+,` | Unload the model from memory to reduce memory usage.                                       |
+| Open Model Manager                    | Unassigned           | Opens the Model Manager to download and manage models.                                     |
+| Shows the local captioner settings  | Unassigned           | Opens the Local Image Description settings panel.                                          |
+
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}

@@ -2,9 +2,19 @@
 
 ## 2025.3
 
+This release introduces a new local model-based image description feature. You can now use a shortcut key to describe images you encounter. (#18475)  
+Two new commands have been added: Describe image using local model and Release model memory. (#18475)  
+A model manager for downloading image recognition models has been added. It can be accessed via the NVDA menu -> Tools. (#18475)
+
 ### Important notes
 
 ### New Features
+
+* The local model-based image description feature is now integrated into NVDA. (#18475)
+* Two new commands have been added: Describe image using local model and Release model memory, assigned to `NVDA+Windows+,` and `NVDA+Windows+Shift+,` respectively. (#18475)
+* A Model Manager has been added under NVDA menu -> Tools for downloading local image description models. (#18475)
+* An unassigned gesture has been added to open the Model Manager. (#18475)
+* A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
 
 ### Changes
 
@@ -18,6 +28,11 @@
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Component updates:
+  * Updated **sphinx** to version 8.1.3. (#18475)
+  * Updated **licensecheck** to version 2025.1. (#18475)
+  * Introduced **onnxruntime** version 1.19.2. (#18475)
 
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 
