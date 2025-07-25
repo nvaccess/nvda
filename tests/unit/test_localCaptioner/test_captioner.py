@@ -423,6 +423,6 @@ if __name__ == "__main__":
 	print(
 		f"Success rate: {((result.testsRun - len(result.failures) - len(result.errors)) / result.testsRun * 100):.1f}%"
 		if result.testsRun > 0
-		else "N/A"
+		else "N/A",
 	)
 	print(f"{'=' * 60}")

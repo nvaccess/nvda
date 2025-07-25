@@ -193,7 +193,12 @@ class TestDownloadSingleFile(unittest.TestCase):
 	@patch("_localCaptioner.modelDownloader.os.remove")
 	@patch("_localCaptioner.modelDownloader.log")
 	def test_download_file_local_larger_than_remote(
-		self, mock_log, mock_remove, mock_getsize, mock_exists, mock_urlopen
+		self,
+		mock_log,
+		mock_remove,
+		mock_getsize,
+		mock_exists,
+		mock_urlopen,
 	):
 		"""Test when local file is larger than remote file (corrupted)."""
 		mock_exists.return_value = True
