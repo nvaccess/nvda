@@ -243,7 +243,7 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			# Required for local image captioning
-"numpy",			
+			"numpy",
 		],
 		"includes": [
 			"nvdaBuiltin",

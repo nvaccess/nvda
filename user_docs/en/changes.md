@@ -2,8 +2,8 @@
 
 ## 2025.3
 
-This release introduces a new local model-based image description feature. You can now use a shortcut key to describe images you encounter. (#18475)  
-Two new commands have been added: Describe image using local model and Release model memory. (#18475)  
+This release introduces a new local model-based image description feature. You can now use a shortcut key to describe images you encounter. (#18475)
+Two new commands have been added: Describe image using local model and Release model memory. (#18475)
 A model manager for downloading image recognition models has been added. It can be accessed via the NVDA menu -> Tools. (#18475)
 
 ### Important notes

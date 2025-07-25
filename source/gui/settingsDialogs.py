@@ -3663,7 +3663,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("LocalCaptionerSettingsModelPath", self.modelPathEdit)
 
 		self.loadModelWhenInit = sHelper.addItem(
-		# Translators: A configuration in settings dialog.
+			# Translators: A configuration in settings dialog.
 			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
 		)
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])

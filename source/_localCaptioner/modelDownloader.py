@@ -33,8 +33,6 @@ from typing import Callable
 from logHandler import log
 
 
-
-
 # --------------------------------------------------------------------------- #
 # Type Aliases & Constants
 # --------------------------------------------------------------------------- #
@@ -144,7 +142,7 @@ def downloadSingleFile(
 				size = os.path.getsize(localPath)
 				progressCallback(fileName, size, size, 100.0)
 			log.info(f"[Thread-{threadId}] File already exists: {localPath}")
-			log.warn(f"size cannot be retrieved from remote")
+			log.warn("size cannot be retrieved from remote")
 			return True, f"File already exists: {localPath}"
 
 	for attempt in range(maxRetries):
@@ -215,7 +213,7 @@ def downloadSingleFile(
 
 				# Check if the file is empty
 				if actualSize == 0:
-					return (False, f"Downloaded file is empty")
+					return (False, "Downloaded file is empty")
 
 				# If you know the total size, verify that it is complete
 				if total > 0 and actualSize != total:
@@ -245,7 +243,6 @@ def downloadSingleFile(
 		except Exception as err:
 			msg = f"Unexpected error: {err}"
 			log.error(msg)
-
 
 		# Failed to process, but did not delete some downloaded files
 		log.info(f"[Thread-{threadId}] {msg} – {url}")
@@ -293,7 +290,7 @@ def downloadModelsMultithreaded(
 		raise ValueError("filesToDownload cannot be empty")
 
 	log.info(
-		f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}"
+		f"Starting download of {len(filesToDownload)} files for model: {modelName}\nRemote host: {remoteHost}\nMax workers: {maxWorkers}",
 	)
 
 	localModelDir = os.path.join(modelsDir, modelName)

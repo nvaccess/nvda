@@ -33,8 +33,6 @@ import api
 from .captioner import ImageCaptioner
 
 
-
-
 # Module-level configuration
 _localCaptioner = None
 _here = os.path.dirname(__file__)
@@ -101,7 +99,6 @@ def caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		log.error(e)
 
 
-
 class LocalCaptioner:
 	"""module for local image caption functionality.
 
@@ -114,7 +111,6 @@ class LocalCaptioner:
 		# super().__init__()
 		self.isModelLoaded = False
 		self.captioner: ImageCaptioner | None = None
-
 
 		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
 		# Load model when initializing  (may cause high memory usage)
@@ -187,6 +183,7 @@ class LocalCaptioner:
 		except Exception as e:
 			ui.message(str(e))
 			raise
+
 
 def initialize():
 	"""Initialise the local captioner."""

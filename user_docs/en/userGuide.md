@@ -3899,7 +3899,7 @@ Press this button to begin downloading the default image description model.
 
 Advanced settings are available in the Model Config tab for users who require more control:
 
-* Resolve Path: Edit box for the resolved download path. 
+* Resolve Path: Edit box for the resolved download path.
 * Model Name: Edit box for specifying the model name. The default values are sufficient for most users and will download a model suitable for English image descriptions.
 * Use HuggingFace Mirror: A checkbox to enable use of a mirror server. This is useful if access to [huggingface.co](https://huggingface.co) is slow or restricted. When enabled, downloads will use an alternate domain.
 

@@ -14,6 +14,7 @@ from logHandler import log
 #: The singleton instance of the model frame UI.
 managerFrame = None
 
+
 class AdvancedSettingsDialog(wx.Dialog):
 	"""Advanced Settings Dialog for model download configuration.
 
@@ -280,7 +281,7 @@ class ModelManagerFrame(wx.Frame):
 
 		# Center display
 		self.Centre()
-		self.isClosing =False
+		self.isClosing = False
 
 	def _initUI(self):
 		"""Initialize the main user interface components."""
@@ -681,8 +682,10 @@ class ModelManagerFrame(wx.Frame):
 
 		self.Destroy()
 
+
 def activate() -> None:
 	"""Open the model manager frame window."""
+
 	def showManager() -> None:
 		"""Show the model manager window."""
 		global managerFrame
@@ -698,4 +701,3 @@ def activate() -> None:
 
 	# Ensure execution in main thread
 	wx.CallAfter(showManager)
-

@@ -5089,7 +5089,7 @@ class GlobalCommands(ScriptableObject):
 		category=_("Local Captioner"),
 	)
 	def script_openManager(self, gesture: "inputCore.InputGesture"):
-		wx.CallAfter(gui.mainFrame.onOpenModelManagerCommand , None)
+		wx.CallAfter(gui.mainFrame.onOpenModelManagerCommand, None)
 
 
 #: The single global commands instance.
