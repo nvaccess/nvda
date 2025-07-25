@@ -96,7 +96,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Publication date"),
 		50,
 	)
-	displayableInstallDate = (
+	installDate = (
 		# Translators: The name of the column that contains the installation date of the add-on.
 		pgettext("addonStore", "Install date"),
 		50,
@@ -315,7 +315,7 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		if field is AddonListField.displayableInstallDate:
+		if field is AddonListField.installDate:
 			return listItemVM.model.installDate.strftime("%x")
 		if field is AddonListField.minimumNVDAVersion:
 			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
@@ -411,7 +411,7 @@ class AddonListVM:
 				if getattr(listItemVM.model, "submissionTime", None):
 					return listItemVM.model.submissionTime
 				return 0
-			if self._sortByModelField == AddonListField.displayableInstallDate:
+			if self._sortByModelField == AddonListField.installDate:
 				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
