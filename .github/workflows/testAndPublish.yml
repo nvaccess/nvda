@@ -7,6 +7,8 @@ on:
       - beta
       - rc
       - 'try-**'
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
     # Currently disabled while the 2025.1 release is in progress.
     # Blocked by #17878
     # tags:
@@ -17,6 +19,8 @@ on:
       - master
       - beta
       - rc
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
 
   workflow_dispatch:
 
@@ -86,6 +90,22 @@ jobs:
         Write-Output VERSION_TYPE=$env:versionType >> $env:GITHUB_OUTPUT
         Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $env:GITHUB_OUTPUT
         Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $env:GITHUB_OUTPUT
+
+  typeCheck:
+    name: Check types with Pyright
+    runs-on: windows-latest
+    needs: buildNVDA
+    steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}
+        key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v6
+    - name: Static type analysis
+      run: ci/scripts/tests/typeCheck.ps1
 
   checkPo:
     name: Check po files for errors

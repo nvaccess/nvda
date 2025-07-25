@@ -1,5 +1,37 @@
 # What's New in NVDA
 
+## 2025.3
+
+### Important notes
+
+### New Features
+
+* In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
+Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
+
+### Changes
+
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+* In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
+* NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+
+### Bug Fixes
+
+* Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
+* Updated `include` dependencies:
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+* The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+
+#### Deprecations
+
 ## 2025.2
 
 This release includes improvements in Windows 11, browse mode, and Microsoft Word.
