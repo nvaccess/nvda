@@ -14,6 +14,7 @@ Additionally, minimum and last tested version will now be also shown in the deta
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
+* NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
 
 ### Bug Fixes
 
@@ -24,6 +25,9 @@ Additionally, minimum and last tested version will now be also shown in the deta
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Component updates:
+  * Updated Pyright to 1.1.403. (#18424)
+  * Updated Ruff to 0.12.5. (#18424)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
