@@ -159,6 +159,69 @@ Type hints make reasoning about code much easier, and allow static analysis tool
 * Prefer union shorthand (`X | Y`) over explicitly using `typing.Union`.
   * Corollary: prefer `T | None` over `typing.Optional[T]`.
 
+### Calling non-python code
+
+Todo: Merge with section in #18207
+
+#### using the `ctypesUtils` module
+
+The goal of the `utils.ctypesUtils` module is to make calling external C functions easier.
+It does so by aiding in two areas:
+
+1. Annotating the ctypes C function pointer with type information (restype and argtypes) so that parameters passed to the function are properly validated by ctypes.
+2. Providing type hints to the several parameters of the function.
+
+The decorator is best explained by a basic example.
+
+```python
+from ctypes import windll
+from ctypes.wintypes import BOOL, HANDLE
+from typing import Annotated
+from utils.ctypesUtils import dllFunc
+
+@dllFunc(windll.kernel32)
+def CloseHandle(hObject: int | HANDLE) -> Annotated[int, BOOL]:
+	...
+```
+
+A properly annotated function is a function of the form:
+`def FunctionNameINDll(param1: hint1, param2: hint2) -> ReturnHint:`
+
+* By default, the `dllFunc` decorator infers the function name from the name of the Python function. It can be overridden by passing an additional parameter to the decorator.
+* Parameter type hints can be of several forms, but should at least reference a ctypes compatible type.
+  * Form 1: Just a ctypes type, e.g. `HWND`
+  * Form 2: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers. The first ctypes type found (`HWND`) is used in `restypes`. This is the prefered approach.
+  * Form 3: `typing.Annotated[int, HWND]`. Only `int` is reported as valid by type checkers. The annotation (i.e. `HWND`) is used in `restypes`. This can be used when the desired ctypes type might be incompatible with type checkers.
+* Return type hints can also be of several forms.
+  * Form 1: Just a ctypes type, e.g. `BOOL`. It will be used as `restype`.
+  * Form 2: `typing.Annotated[int, BOOL]`. Prefer, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
+    * Note that the `int | BOOL` form (e.g. input parameter form 2) is not supported here, since a ctypes function will never return a `BOOL`, it will always create a more pythonic value whenever possible.
+
+Output parameters are more complex.
+When ctypes knows that a certain parameter is an output parameter, it will automatically create an object and passes a pointer to that object to the C function.
+Therefore,output parameters are defined in a `typing.Annotated` hint as a `OutParam` object. E.g.
+
+```python
+from ctypes import windll
+from ctypes.wintypes import BOOL, HWND, RECT
+from typing import Annotated
+from utils.ctypesUtils import dllFunc, OutParam, Pointer
+
+@dllFunc(windll.user32, restype=BOOL)
+def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
+	...
+```
+
+Note that:
+
+* Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly. Not doing so results in a `TypeError`.
+* ctypes automatically returns the contained value of a pointer object. So the return annotation here means:
+  * Treat `RECT` as the return type. Type checkers will communicate as such.
+  * Treat Pointer[RECT] as the type in `argtypes`. Note that `Pointer[RECT]` is syntactic sugar for `ctypes.POINTER(RECT)` that also satisfies static and runtime type checking.
+  * The out param is the second entry in the `argtypes` array, index=1.
+
+For a function with multiple arg types, specify a type hint like `tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]`.
+
 ### Language choices
 
 The NVDA community is large and diverse, and we have a responsibility to make everyone feel welcome in it.

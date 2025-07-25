@@ -66,7 +66,7 @@ class Magnification:
 	@dllFunc(_magnification, restype=BOOL, errcheck=_errCheck)
 	def MagGetFullscreenColorEffect() -> typing.Annotated[
 		MAGCOLOREFFECT,
-		OutParam(Pointer[MAGCOLOREFFECT], "effect"),
+		OutParam("effect"),
 	]: ...
 
 	@staticmethod

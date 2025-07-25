@@ -58,17 +58,20 @@ else:
 		Pointer.register(t)
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass
 class OutParam:
 	"""Annotation for output parameters in function signatures.
 	This is used to specify that a parameter is an output parameter, which will be filled by the wrapped foreign function."""
 
-	type: Pointer
-	"""The type of the output parameter. This should be a pointer type."""
 	name: str
 	"""The name of the output parameter."""
 	position: int = 0
 	"""The position of the output parameter in argtypes."""
+	type: Pointer | None = None
+	"""The type of the output parameter. This should be a pointer type.
+	If None, the type from the annotation is used and a pointer type is created from it automatically."""
+	default: CType | inspect.Parameter.empty = inspect.Parameter.empty
+	"""The default value for the output parameter."""
 
 
 def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: typing.Any) -> typing.Any:
@@ -164,9 +167,19 @@ def getFuncSPec(
 				raise IndexError(
 					f"Output parameter at position {outParam.position} has already been processed",
 				)
+			if outParam.type is None:
+				outParam.type = (
+					t.__origin__ if isinstance(t.__origin__, ctypes.Array) else ctypes.POINTER(t.__origin__)
+				)
 			handledPositions.append(outParam.position)
 			argtypes.insert(outParam.position, outParam.type)
-			paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
+			if outParam.default is inspect.Parameter.empty:
+				paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
+			else:
+				paramFlags.insert(
+					outParam.position,
+					(ParamDirectionFlag.OUT, outParam.name, outParam.default),
+				)
 		elif isAnnotated:
 			annotation = t.__metadata__[0]
 			if not issubclass(annotation, CType):
