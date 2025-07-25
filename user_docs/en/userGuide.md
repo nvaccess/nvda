@@ -5468,7 +5468,9 @@ You can configure whether NVDA displays braille on the dedicated braille display
 Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
-When a compatible device is detected, NVDA will automatically connect to it.
+However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
+To enable automatic detection, go to NVDA's Braille settings and check "Dot Pad" in the automatic detection list.
+When automatic detection is enabled and a compatible device is detected, NVDA will automatically connect to it.
 You can also manually select a specific USB or Bluetooth virtual serial port if needed.
 
 Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
