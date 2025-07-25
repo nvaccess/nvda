@@ -93,8 +93,13 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 ## NVDA Quick Start Guide {#NVDAQuickStartGuide}
 
-This quick start guide contains three main sections: downloading, initial setup, and running NVDA.
-These are followed by information on adjusting preferences, using add-ons, participating in the community and getting help.
+This quick start guide contains three main sections:
+
+* [Downloading](#GettingAndSettingUpNVDA): Where to get it and how
+* [Initial setup](#SettingUpNVDA): Installing NVDA
+* [Running NVDA](#RunningNVDA): Commonly used keystrokes and NVDA features 
+  
+These are followed by information on [adjusting preferences](#Preferences), [using add-ons](#Addons), [participating in the community](#Community) and [getting help](#GettingHelp).
 The information in this guide is condensed from other parts of the NVDA User Guide.
 Please refer to the full User Guide for more detailed information on each topic.
 
