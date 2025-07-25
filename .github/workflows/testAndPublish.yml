@@ -528,7 +528,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh release create ${{github.ref_name }} \
+        gh release create ${{ github.ref_name }} \
           --repo ${{ github.repository }} \
           --prerelease \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
@@ -540,13 +540,13 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh release create ${{github.ref_name }} \
+        gh release create ${{ github.ref_name }} \
           --repo ${{ github.repository }} \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
           --notes-file /tmp/releaseNotes.md \
           --verify-tag \
           --discussion-category Releases
-        gh release upload ${{github.ref_name }} \
+        gh release upload ${{ github.ref_name }} \
             --repo ${{ github.repository }} \
             --clobber \
             output/nvda*.exe#Installer
