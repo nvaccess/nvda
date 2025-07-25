@@ -6,7 +6,6 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from datetime import datetime, MINYEAR
 from locale import strxfrm
 from typing import (
 	FrozenSet,
@@ -316,6 +315,8 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
+		if field is AddonListField.displayableInstallDate:
+			return listItemVM.model.installDate.strftime("%x")
 		if field is AddonListField.minimumNVDAVersion:
 			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
 		if field is AddonListField.lastTestedVersion:
@@ -411,13 +412,7 @@ class AddonListVM:
 					return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.displayableInstallDate:
-				log.info(f'{getattr(listItemVM.model, "installDate", None)} - {listItemVM.model.name}')
-				if getattr(listItemVM.model, "installDate", None):
-					return listItemVM.model.installDate
-				else:
-					import globalVars as gv
-					gv.dbg = listItemVM.model
-				return datetime(MINYEAR, 1, 1)
+				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:

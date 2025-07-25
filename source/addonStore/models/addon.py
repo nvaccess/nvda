@@ -191,12 +191,6 @@ class _AddonStoreModel(_AddonGUIModel):
 		# Convert `self.submissionTime` to seconds.
 		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
 
-	@property
-	def displayableInstallDate(self) -> str | None:
-		if self.installDate is None:
-			return None
-		return self.installDate.strftime("%x")
-
 
 class _AddonManifestModel(_AddonGUIModel):
 	"""Get data from an add-on's manifest.
