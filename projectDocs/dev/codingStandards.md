@@ -208,7 +208,7 @@ from typing import Annotated
 from utils.ctypesUtils import dllFunc, OutParam, Pointer
 
 @dllFunc(windll.user32, restype=BOOL)
-def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
+def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
 	...
 ```
 
@@ -217,7 +217,7 @@ Note that:
 * Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly. Not doing so results in a `TypeError`.
 * ctypes automatically returns the contained value of a pointer object. So the return annotation here means:
   * Treat `RECT` as the return type. Type checkers will communicate as such.
-  * Treat Pointer[RECT] as the type in `argtypes`. Note that `Pointer[RECT]` is syntactic sugar for `ctypes.POINTER(RECT)` that also satisfies static and runtime type checking.
+  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1)`. To override the pointer type, use the `type` parameter of the `OutParam` class.
   * The out param is the second entry in the `argtypes` array, index=1.
 
 For a function with multiple arg types, specify a type hint like `tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]`.
