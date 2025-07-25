@@ -279,4 +279,5 @@ The correct procedure is to:
 
 This moves the debate from a public power struggle to a productive internal resolution.
 
-Triagers with extra permissions are expected to lead by example in de-escalating conflict. Repeatedly changing an issue's state in opposition to another triager or staff member is a misuse of permissions and may lead to them being revoked.
+Triagers with extra permissions are expected to lead by example in de-escalating conflict.
+Repeatedly changing an issue's state in opposition to another triager or staff member is a misuse of permissions and may lead to them being revoked.
