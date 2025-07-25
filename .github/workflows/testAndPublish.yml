@@ -7,8 +7,10 @@ on:
       - beta
       - rc
       - 'try-**'
-    tags:
-      - 'release-**'
+    # Currently disabled while the 2025.1 release is in progress.
+    # Blocked by #17878
+    # tags:
+    #  - 'release-**'
 
   pull_request:
     branches:
