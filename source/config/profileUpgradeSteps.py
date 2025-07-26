@@ -590,6 +590,7 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj) -> None:
 
 	# Only add dotPad if it's not already in the list
 	excludedDisplays = profile["braille"]["auto"]["excludedDisplays"]
+
 	if "dotPad" not in excludedDisplays:
 		excludedDisplays.append("dotPad")
 		log.debug(
