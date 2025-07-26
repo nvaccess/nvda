@@ -100,7 +100,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the installation date of the add-on.
 		pgettext("addonStore", "Install date"),
 		50,
-		frozenset({_StatusFilterKey.AVAILABLE}),
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
 	)
 	minimumNVDAVersion = (
 		# Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
