@@ -35,6 +35,7 @@ from comInterfaces.SpeechLib import (
 	ISpNotifySource,
 	ISpNotifySink,
 	ISpVoice,
+	ISpeechVoice,
 	SPAUDIOSTATE,
 	SPEVENT,
 	WAVEFORMATEX,
@@ -556,7 +557,7 @@ class SynthDriver(SynthDriver):
 		except:  # noqa: E722
 			return False
 
-	ttsAudioStream = (
+	ttsAudioStream: ISpAudio | None = (
 		None  #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
 	)
 	_audioDucker: audioDucking.AudioDucker | None = None
@@ -621,7 +622,7 @@ class SynthDriver(SynthDriver):
 
 	def _getVoiceTokens(self):
 		"""Provides a collection of sapi5 voice tokens. Can be overridden by subclasses if tokens should be looked for in some other registry location."""
-		return self.tts.getVoices()
+		return self.tts.GetVoices()
 
 	def _get_rate(self):
 		return self._rate
@@ -636,13 +637,13 @@ class SynthDriver(SynthDriver):
 		return self._volume
 
 	def _get_voice(self):
-		return self.tts.voice.Id
+		return self.tts.Voice.Id
 
 	def _get_useWasapi(self) -> bool:
 		return self._useWasapi
 
 	def _get_lastIndex(self):
-		bookmark = self.tts.status.LastBookmark
+		bookmark = self.tts.Status.LastBookmark
 		if bookmark != "" and bookmark is not None:
 			return int(bookmark)
 		else:
@@ -708,19 +709,19 @@ class SynthDriver(SynthDriver):
 		from comInterfaces.SpeechLib import ISpAudio
 
 		try:
-			self.ttsAudioStream = self.tts.audioOutputStream.QueryInterface(ISpAudio)
+			self.ttsAudioStream = self.tts.AudioOutputStream.QueryInterface(ISpAudio)
 		except COMError:
 			log.debugWarning("SAPI5 voice does not support ISPAudio")
 			self.ttsAudioStream = None
 
 	def _initTts(self, voice: str | None = None):
-		self.tts = comtypes.client.CreateObject(self.COM_CLASS)
+		self.tts: ISpeechVoice | None = comtypes.client.CreateObject(self.COM_CLASS)
 		if voice:
 			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
 			# but only when the audio output is changed.
 			# Therefore, set the voice before setting the audio output.
 			# Otherwise, we will get poor speech quality in some cases.
-			self.tts.voice = voice
+			self.tts.Voice = voice
 
 		if self.player:
 			self.player.close()
@@ -775,7 +776,7 @@ class SynthDriver(SynthDriver):
 		# We only know about US English phonemes.
 		# Rather than just ignoring unknown phonemes, SAPI throws an exception.
 		# Therefore, don't bother with any other language.
-		if self.tts.voice.GetAttribute("language") != "409":
+		if self.tts.Voice.GetAttribute("language") != "409":
 			raise LookupError("No data for this language")
 		out = []
 		outAfter = None
@@ -1017,7 +1018,7 @@ class SynthDriver(SynthDriver):
 			# For legacy audio
 			# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
 			# Therefore instruct the audio player to stop first, before interrupting and purging any remaining speech.
-			self.ttsAudioStream.setState(_SPAudioState.STOP, 0)
+			self.ttsAudioStream.SetState(_SPAudioState.STOP, 0)
 			self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 			if self._audioDucker:
 				if audioDucking._isDebug():
@@ -1041,14 +1042,14 @@ class SynthDriver(SynthDriver):
 					if audioDucking._isDebug():
 						log.debug("Disabling audio ducking due to setting output audio state to pause")
 					self._audioDucker.disable()
-				self.ttsAudioStream.setState(_SPAudioState.PAUSE, 0)
+				self.ttsAudioStream.SetState(_SPAudioState.PAUSE, 0)
 			elif not switch and oldState == _SPAudioState.PAUSE:
 				# unpausing
 				if self._audioDucker:
 					if audioDucking._isDebug():
 						log.debug("Enabling audio ducking due to setting output audio state to run")
 					self._audioDucker.enable()
-				self.ttsAudioStream.setState(_SPAudioState.RUN, 0)
+				self.ttsAudioStream.SetState(_SPAudioState.RUN, 0)
 
 	def __getattr__(self, attrName: str) -> Any:
 		"""This is used to reserve backward compatibility."""
