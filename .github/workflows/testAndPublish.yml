@@ -351,6 +351,17 @@ jobs:
         name: Symbols
         path: output/symbols.zip
 
+  allTestsPass:
+    # Is a no-op action.
+    # Rulesets require specifying every job you wish to block a PR/push.
+    # Used to protect branches/tags as a general status check so we can check a single job for all rulesets.
+    name: Check if all tests pass
+    runs-on: ubuntu-latest
+    needs: [buildNVDA, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, crowdinUpload, createSymbols]
+    steps:
+    - name: Check if all tests pass
+      run: echo "All tests passed successfully."
+
   uploadSymbols:
     name: Upload symbols
     runs-on: windows-latest
@@ -392,7 +403,7 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
-    needs: [checkPot, licenseCheck, unitTests, systemTests, crowdinUpload, createSymbols]
+    needs: [allTestsPass, uploadSymbols]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     steps:
@@ -409,7 +420,7 @@ jobs:
       contents: write
       deployments: write
     runs-on: ubuntu-latest
-    needs: [buildNVDA, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
     concurrency:
       group: snapshot
@@ -457,7 +468,7 @@ jobs:
       deployments: write
       discussions: write
     runs-on: ubuntu-latest
-    needs: [buildNVDA, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
     if: startsWith(github.ref_name, 'release-')
     concurrency:
       group: release
