@@ -529,8 +529,10 @@ uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
 if certFile or apiSigningToken:
 	env.AddPostAction(uninstaller, [env["signExec"]])
 
+devDocTargets = env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "userDocsDir"])
 dist = env.NVDADist("dist", [sourceDir, userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
 env.Depends(dist, uninstaller)
+env.Depends(dist, devDocTargets)
 # dist will always be considered obsolete
 AlwaysBuild(dist)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
@@ -658,11 +660,6 @@ def makePot(target, source, env):
 			out.write(line)
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
-
-
-env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir"])
-
-
 def getSubDirs(path):
 	for root, dirNames, fileNames in os.walk(path):
 		yield root

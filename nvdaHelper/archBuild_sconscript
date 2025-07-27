@@ -112,9 +112,15 @@ env.Append(
 		"/incremental:no",
 		"/WX",
 		subsystem,
+		"/release",  # We always want a checksum in the header
 	]
 )
-env.Append(LINKFLAGS="/release")  # We always want a checksum in the header
+env.Append(
+	ARFLAGS=[
+		"/WX",
+		subsystem,
+	]
+)
 if TARGET_ARCH == "x86_64":
 	env.Append(MIDLFLAGS="/x64")
 elif TARGET_ARCH == "arm64":
@@ -128,6 +134,7 @@ else:
 	env.Append(CCFLAGS="/O2")
 	env.Append(CCFLAGS="/GL")
 	env.Append(LINKFLAGS=["/LTCG"])
+	env.Append(ARFLAGS=["/LTCG"])
 
 if "debugCRT" not in debug:
 	env.Append(CPPDEFINES="NDEBUG")
