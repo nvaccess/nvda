@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-07-25 02:24+0000\n"
+"PO-Revision-Date: 2025-07-27 22:52\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -893,13 +893,13 @@ msgstr "клавиатура брайля"
 #. along with any dots on a braille keyboard.
 #: brailleInput.py:570
 msgid "space with any dots"
-msgstr "пробел с любыми точками"
+msgstr "пробел плюс брайлевские точки"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
 #: brailleInput.py:574
 msgid "any dots"
-msgstr "любые точки"
+msgstr "брайлевские точки"
 
 #. Translators: The mode to interact with controls in documents
 #: browseMode.py:75
@@ -1780,12 +1780,12 @@ msgstr "Переключает режим исходного выделения"
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2639
 msgid "Native selection mode unsupported in this browse mode document"
-msgstr "Режим исходного выделения не поддерживается в этом документе в режиме обзора"
+msgstr "Режим исходного выделения в режиме обзора не поддерживается в этом документе "
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2642
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr "Режим исходного выделения не может быть выключен в этом документе в режиме обзора"
+msgstr "Режим исходного выделения в режиме обзора не может быть выключен в этом документе"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2654
@@ -2139,7 +2139,8 @@ msgstr[3] "Не удалось установить дополнения: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Некоторые операции с дополнениями не удались. Смотрите файл журнала для более подробной информации.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3583,14 +3584,15 @@ msgstr "Нет замены для символа"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Символ: {character}\n"
+"Замена: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Расширенный символ ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -7165,14 +7167,16 @@ msgstr "&Уже пожертвовал"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Обновление NVDA при подключении к удалённому доступу NVDA, когда компьютер управляемый, не рекомендуется. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "В настоящее время активное соединение не может быть продолжено во время или после обновления. Даже если соединение будет продолжено, вы не сможете ответить на подсказки управления учетной записью пользователя (UAC) с управляемого компьютера. Вы должны продолжить, только если у вас есть физический доступ к управляемому компьютеру.\n"
+"\\v\n"
+"Вы действительно хотите продолжить?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -10727,32 +10731,32 @@ msgstr "заголовок"
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:295
 msgid "heading 1"
-msgstr "заголовок 1"
+msgstr "заголовок уровня 1"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:297
 msgid "heading 2"
-msgstr "заголовок 2"
+msgstr "заголовок уровня 2"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:299
 msgid "heading 3"
-msgstr "заголовок 3"
+msgstr "заголовок уровня 3"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:301
 msgid "heading 4"
-msgstr "заголовок 4"
+msgstr "заголовок уровня 4"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:303
 msgid "heading 5"
-msgstr "заголовок 5"
+msgstr "заголовок уровня 5"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:305
 msgid "heading 6"
-msgstr "заголовок 6"
+msgstr "заголовок уровня 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 #: controlTypes\role.py:307 textInfos\__init__.py:332
@@ -12069,7 +12073,7 @@ msgstr "Несовместимые дополнения"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Следующие дополнения несовместимы с NVDA версиии  {version}. Эти дополнения не могут быть включены. Пожалуйста, свяжитесь с авторами дополнений для получения дополнительной помощи."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12196,7 +12200,7 @@ msgstr "Ошибка активации профиля."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Профиль {name} будет навсегда удалён. Это действие не может быть отменено."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12621,14 +12625,15 @@ msgstr "Папка уже существует"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Установка NVDA при подключении к удалённому доступу NVDA, когда компьютер является управляемым, не рекомендуется. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Вы не сможете ответить на подсказки управления учетной записью пользователя (UAC) с управляющего компьютера. Вы должны продолжить, только если у вас есть физический доступ к управляемому компьютеру.\n\n"
+"Вы действительно хотите продолжить?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12788,7 +12793,7 @@ msgstr "&Не сохранять"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "По умолчанию ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13928,13 +13933,13 @@ msgstr "Удалить все отпечатки доверенных серти
 #: gui\settingsDialogs.py:3586
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr "В категории Удалённый доступ должны быть установлены как хост, так и ключ, чтобы после запуска NVDA автоматически подключаться с использованием существующего сервера."
+msgstr "В категории Удалённый доступ должны быть установлены как адрес сервера, так и ключ, чтобы после запуска NVDA можно было автоматически подключаться с использованием существующего сервера."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3592
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr "В категории удалённый доступа должны быть установлены Как порт, так и ключ , чтобы после запуска NVDA можно было автоматически подключаться с помощью локального сервера."
+msgstr "В категории удалённый доступ должны быть установлены Как порт, так и ключ , чтобы после запуска NVDA можно было автоматически подключаться с помощью локального сервера."
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3598
@@ -15397,9 +15402,9 @@ msgstr "Установка дополнений"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Устанавливается {num} дополнение, подождите."
+msgstr[1] "Устанавливается {num} дополнения, подождите."
+msgstr[2] "Устанавливается {num} дополнений, подождите."
 msgstr[3] ""
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
@@ -15409,9 +15414,9 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Идёт загрузка {num} дополнения. Отменить загрузку?"
+msgstr[1] "Идёт загрузка {num} дополнений. Отменить загрузку?"
+msgstr[2] "Идёт загрузка {num} дополнений. Отменить загрузку?"
 msgstr[3] ""
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
@@ -15792,9 +15797,9 @@ msgstr "активировать"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{num} предложение"
+msgstr[1] "{num} предложения"
+msgstr[2] "{num} предложений"
 msgstr[3] ""
 
 #. Translators: the description of a script
