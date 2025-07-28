@@ -26,7 +26,9 @@ from winBindings.setupapi import (
 	SP_DEVICE_INTERFACE_DATA,
 	SetupDiGetDeviceInterfaceDetail,
 	SetupDiGetDeviceRegistryProperty,
+	SetupDiOpenDevRegKey,
 )
+from winBindings.advapi32 import RegCloseKey
 import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
@@ -145,7 +147,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			hwID = entry["hardwareID"] = buf.value
 
 		# Port info
-		regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(
+		regKey = SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
 			DICS_FLAG_GLOBAL,
@@ -161,7 +163,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 				port = portInfo["port"]
 				entry.update(portInfo)
 		finally:
-			ctypes.windll.advapi32.RegCloseKey(regKey)
+			RegCloseKey(regKey)
 
 		# friendly name
 		if not SetupDiGetDeviceRegistryProperty(

@@ -6,7 +6,7 @@
 """Functions exported by setupapi.dll, and supporting data structures and enumerations."""
 
 from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, windll
-from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG
+from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, ULONG
 from comtypes import GUID
 
 dll = windll.setupapi
@@ -119,3 +119,7 @@ SetupDiGetDeviceRegistryProperty.restype = BOOL
 SetupDiEnumDeviceInfo = dll.SetupDiEnumDeviceInfo
 SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
 SetupDiEnumDeviceInfo.restype = BOOL
+
+SetupDiOpenDevRegKey = dll.SetupDiOpenDevRegKey
+SetupDiOpenDevRegKey.argTypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, DWORD, DWORD, DWORD)
+SetupDiOpenDevRegKey.restype = HKEY
