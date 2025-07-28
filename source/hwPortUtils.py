@@ -9,12 +9,13 @@ import itertools
 import math
 import typing
 import winreg
-from ctypes.wintypes import BOOL, DWORD, ULONG, USHORT, WCHAR
+from ctypes.wintypes import DWORD, ULONG, USHORT, WCHAR
 
 from comtypes import GUID
 
 import config
 import hidpi
+from winBindings.bthprops import BLUETOOTH_DEVICE_INFO
 from winBindings.setupapi import (
 	SetupDiDestroyDeviceInfoList,
 	HDEVINFO,
@@ -32,7 +33,6 @@ from winBindings.advapi32 import RegCloseKey
 import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
-from winKernel import SYSTEMTIME
 
 def ValidHandle(value):
 	if value == 0:
@@ -187,27 +187,6 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 	if _isDebug():
 		log.debug("Finished listing com ports")
-
-
-BLUETOOTH_MAX_NAME_SIZE = 248
-BTH_ADDR = BLUETOOTH_ADDRESS = ctypes.c_ulonglong
-
-
-class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
-	_fields_ = (
-		("dwSize", DWORD),
-		("address", BLUETOOTH_ADDRESS),
-		("ulClassofDevice", ULONG),
-		("fConnected", BOOL),
-		("fRemembered", BOOL),
-		("fAuthenticated", BOOL),
-		("stLastSeen", SYSTEMTIME),
-		("stLastUsed", SYSTEMTIME),
-		("szName", WCHAR * BLUETOOTH_MAX_NAME_SIZE),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(dwSize=ctypes.sizeof(self), **kwargs)
 
 
 def getBluetoothDeviceInfo(address):
