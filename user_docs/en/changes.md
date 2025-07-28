@@ -32,6 +32,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+* `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 
 #### Deprecations
 
