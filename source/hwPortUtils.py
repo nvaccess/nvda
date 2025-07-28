@@ -13,18 +13,20 @@ from ctypes.wintypes import BOOL, DWORD, ULONG, USHORT, WCHAR
 
 from comtypes import GUID
 
-from winBindings.setupapi import SetupDiDestroyDeviceInfoList
 import config
 import hidpi
-from winBindings.setupapi import HDEVINFO
-from winBindings.setupapi import SetupDiGetClassDevs
-from winBindings.setupapi import SetupDiGetDeviceProperty
-from winBindings.setupapi import DEVPROPKEY
-from winBindings.setupapi import SP_DEVINFO_DATA
-from winBindings.setupapi import SetupDiEnumDeviceInterfaces
-from winBindings.setupapi import SP_DEVICE_INTERFACE_DATA
-from winBindings.setupapi import SetupDiGetDeviceInterfaceDetail
-from winBindings.setupapi import SetupDiGetDeviceRegistryProperty
+from winBindings.setupapi import (
+	SetupDiDestroyDeviceInfoList,
+	HDEVINFO,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceProperty,
+	DEVPROPKEY,
+	SP_DEVINFO_DATA,
+	SetupDiEnumDeviceInterfaces,
+	SP_DEVICE_INTERFACE_DATA,
+	SetupDiGetDeviceInterfaceDetail,
+	SetupDiGetDeviceRegistryProperty,
+)
 import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
