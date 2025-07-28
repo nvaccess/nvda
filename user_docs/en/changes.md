@@ -56,6 +56,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
 
+#### API Breaking Changes
+
+* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPROPKEY`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`. (#18207)
+* `hwPortUtils.CM_Get_Device_ID` has been moved to `winBindings.cfgmgr32`. (#18207)
+
 #### Deprecations
 
 * The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
