@@ -152,8 +152,7 @@ if "RTC" in debug:
 # We always want debug symbols
 env.Append(PDB="${TARGET}.pdb")
 env.Append(
-	LINKFLAGS="/OPT:REF",
-	ARFLAGS="/LTCG"
+	LINKFLAGS="/OPT:REF"
 )  # having symbols usually turns this off but we have no need for unused symbols
 
 env.Append(
