@@ -57,6 +57,7 @@ from .settingsDialogs import (
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
+	LocalCaptionerSettingsPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
@@ -74,6 +75,7 @@ from .settingsDialogs import (
 from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
 from . import logViewer
+from . import modelManager
 import speechViewer
 import winUser
 import api
@@ -385,6 +387,14 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onOpenModelManagerCommand(self, evt):
+		modelManager.activate()
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onLocalCaptionerSettingsCommand(self, evt):
+		self.popupSettingsDialog(NVDASettingsDialog, LocalCaptionerSettingsPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAdvancedSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AdvancedPanel)
 
@@ -640,6 +650,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open NVDA Log Viewer.
 			item = menu_tools.Append(wx.ID_ANY, _("View &log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+
+			# Translators: The label for the menu item to open model manager .
+			item = menu_tools.Append(wx.ID_ANY, _("model manager"))
+			self.Bind(wx.EVT_MENU, frame.onOpenModelManagerCommand, item)
 
 			item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(
 				wx.ID_ANY,

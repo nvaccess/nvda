@@ -72,6 +72,7 @@ import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
+import _localCaptioner
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -3449,6 +3450,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to local captioner settings command.
+		description=_("Shows the local captioner settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateLocalCaptionerSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onLocalCaptionerSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to Add-on Store settings command.
 		description=_("Shows NVDA's Add-on Store settings"),
 		category=SCRCAT_CONFIG,
@@ -5051,6 +5061,35 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
+
+	@scriptHandler.script(
+		# Translators: Description for the image caption script
+		description=_("image caption using local model"),
+		# Translators: Category of addon in input gestures.
+		category=_("Local Captioner"),
+		gesture="kb:NVDA+windows+,",
+	)
+	def script_runCaption(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.runCaption(gesture)
+
+	@scriptHandler.script(
+		# Translators: Description for the release model script
+		description=_("release local model"),
+		# Translators: Category of addon in input gestures.
+		category=_("Local Captioner"),
+		gesture="kb:NVDA+windows+shift+,",
+	)
+	def script_releaseModel(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.releaseModel(gesture)
+
+	@scriptHandler.script(
+		# Translators: Description for the open model manager script
+		description=_("open model manager"),
+		# Translators: Category of addon in input gestures.
+		category=_("Local Captioner"),
+	)
+	def script_openManager(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onOpenModelManagerCommand, None)
 
 
 #: The single global commands instance.
