@@ -230,8 +230,6 @@ When triaging an issue related to a feature that involves a deprecated technolog
 
 - Migration blockers: Ensure that there is information in the issue on what prevents the user from using the modern alternative (e.g. UIA in Word).
 If the user identifies a specific gap or bug in the modern technology (e.g. "I can't use UIA because it doesn't read table headers correctly"), a new issue must be created to track that specific blocker and linked to the legacy issue.
-If there a viable, fully-functional path forward for the user today, then the ticket will be closed.
-Confirming this may require verification from the user.
 - Identify and label: Identify if the issue is tied to a specific legacy component and apply the relevant label.
 Apply the labels `legacy/community-support` and `help wanted`.
 - Keep open for community: These issues should remain open as this keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
