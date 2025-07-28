@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import sysconfig
 from enum import IntEnum, IntFlag
 import os
 import queue
@@ -1137,7 +1138,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibX86Path, "windowsaccessbridge-32.dll"),
+			os.path.join(NVDAHelper.coreArchLibPath, "windowsaccessbridge.dll"),
 		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
