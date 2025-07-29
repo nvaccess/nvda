@@ -124,7 +124,7 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName in _deprecatedTypes and NVDAState._allowDeprecatedAPI():
 		log.warning(
-			f"Importing {attrName} from is deprecated for removal with no replacement. ",
+			f"Importing {attrName} is deprecated for removal with no replacement. ",
 			stack_info=True,
 		)
 		return _deprecatedTypes[attrName]
