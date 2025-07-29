@@ -5082,15 +5082,6 @@ class GlobalCommands(ScriptableObject):
 	def script_releaseModel(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.releaseModel(gesture)
 
-	@scriptHandler.script(
-		# Translators: Description for the open model manager script
-		description=_("open model manager"),
-		# Translators: Category of addon in input gestures.
-		category=_("Local Captioner"),
-	)
-	def script_openManager(self, gesture: "inputCore.InputGesture"):
-		wx.CallAfter(gui.mainFrame.onOpenModelManagerCommand, None)
-
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
