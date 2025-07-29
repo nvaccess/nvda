@@ -92,10 +92,11 @@ def playWaveFile(
 	isSpeechWaveFileCommand: bool = False,
 ):
 	"""plays a specified wave file.
-	@param fileName: the path to the wave file, usually absolute.
-	@param asynchronous: whether the wave file should be played asynchronously
-		If C{False}, the calling thread is blocked until the wave has finished playing.
-	@param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
+
+	:param fileName: the path to the wave file, usually absolute.
+	:param asynchronous: whether the wave file should be played asynchronously
+		If ``False``, the calling thread is blocked until the wave has finished playing.
+	:param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName, "r")
