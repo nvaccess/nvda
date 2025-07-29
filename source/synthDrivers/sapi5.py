@@ -124,7 +124,7 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName in _deprecatedTypes and NVDAState._allowDeprecatedAPI():
 		log.warning(
-			f"Importing {attrName} from here is deprecated. ",
+			f"Importing {attrName} from is deprecated for removal with no replacement. ",
 			stack_info=True,
 		)
 		return _deprecatedTypes[attrName]
@@ -1055,7 +1055,7 @@ class SynthDriver(SynthDriver):
 		"""This is used to reserve backward compatibility."""
 		if attrName == "isSpeaking" and NVDAState._allowDeprecatedAPI():
 			log.warning(
-				"The property isSpeaking is deprecated. ",
+				"The property isSpeaking is deprecated for removal with no replacement. ",
 				stack_info=True,
 			)
 			# When the property is removed, the backing variable `_isSpeaking`,
