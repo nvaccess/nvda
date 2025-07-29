@@ -136,14 +136,26 @@ def playWaveFile(
 		# player for the next file anyway - so just destroy it now.
 		fileWavePlayer = None
 
-	fileWavePlayer = WavePlayer(
-		channels=f.getnchannels(),
-		samplesPerSec=f.getframerate(),
-		bitsPerSample=f.getsampwidth() * 8,
-		outputDevice=config.conf["audio"]["outputDevice"],
-		wantDucking=False,
-		purpose=AudioPurpose.SOUNDS,
-	)
+	try:
+		fileWavePlayer = WavePlayer(
+			channels=f.getnchannels(),
+			samplesPerSec=f.getframerate(),
+			bitsPerSample=f.getsampwidth() * 8,
+			outputDevice=config.conf["audio"]["outputDevice"],
+			wantDucking=False,
+			purpose=AudioPurpose.SOUNDS,
+		)
+	except OSError as exception:
+		# If there are no enabled audio render endpoints connected to the system,
+		# attempting to initialise a WASAPI session will fail.
+		# Fail gracefully in this case.
+		if exception.winerror == -2147023728:  # 0x80070490: ERROR_NOT_FOUND
+			# We mustn't log at error level as it may try to play a sound,
+			# and that's what caused this exception.
+			log.debugWarning("Unable to play wave file as the render endpoint was not found.", exc_info=True)
+			return
+		# In other cases, we should still raise.
+		raise exception
 	if asynchronous:
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
