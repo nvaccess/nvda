@@ -7,7 +7,7 @@
 ### New Features
 
 * Add-on Store:
-  * Add-ons can be sorted by minimum and last tested NVDA version as welle as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
+  * Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
   * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 
