@@ -33,9 +33,6 @@ from typing import Callable
 from logHandler import log
 
 
-# --------------------------------------------------------------------------- #
-# Type Aliases & Constants
-# --------------------------------------------------------------------------- #
 
 # (fileName, downloadedBytes, totalBytes, progressPercent)
 ProgressCallback = Callable[[str, int, int, float], None]
