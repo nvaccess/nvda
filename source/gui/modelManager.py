@@ -26,7 +26,7 @@ class AdvancedSettingsDialog(wx.Dialog):
 		self,
 		parent,
 		modelName: str = "Xenova/vit-gpt2-image-captioning",
-		filesList: List[str] | None = None,
+		filesList: list[str] | None = None,
 		resolvePath: str = "/resolve/main",
 		useMirror: bool = False,
 	):
