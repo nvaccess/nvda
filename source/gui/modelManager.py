@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 import wx
 import threading
-from typing import List
 import winsound  # Windows sound API for audio notifications
 
 from _localCaptioner.modelDownloader import downloadModelsMultithreaded, ensureModelsDirectory
