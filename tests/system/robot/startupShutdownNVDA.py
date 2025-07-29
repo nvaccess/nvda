@@ -15,7 +15,12 @@ from SystemTestSpy import (
 	_getLib,
 	_blockUntilConditionMet,
 )
-from SystemTestSpy.windows import getWindowHandle, sendKeyboardEvent, waitUntilWindowFocused, windowWithHandleExists
+from SystemTestSpy.windows import (
+	getWindowHandle,
+	sendKeyboardEvent,
+	waitUntilWindowFocused,
+	windowWithHandleExists,
+)
 
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
@@ -127,7 +132,7 @@ def test_desktop_shortcut():
 	VK_CONTROL = 17
 	# Press Control+Alt+N using keybd_event
 	VK_MENU = 18  # Alt key
-	VK_N = 78     # 'N' key
+	VK_N = 78  # 'N' key
 	KEYEVENTF_KEYDOWN = 0
 	KEYEVENTF_KEYUP = 2
 

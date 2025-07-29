@@ -154,12 +154,15 @@ def windowWithHandleExists(handle: HWNDVal) -> bool:
 
 
 def sendKeyboardEvent(
-		vk: int,
-		scanCode: int,
-		flags: int,
-		extraInfo: int,
-	):
+	vk: int,
+	scanCode: int,
+	flags: int,
+	extraInfo: int,
+):
 	"""Wrapper for ctypes.windll.user32.keybd_event to simulate keyboard events."""
 	return windll.user32.keybd_event(
-		vk, scanCode, flags, extraInfo
+		vk,
+		scanCode,
+		flags,
+		extraInfo,
 	)
