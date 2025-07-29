@@ -13,6 +13,11 @@
 
 ### Changes
 
+* Component updates:
+  * Updated eSpeak NG to [commit `a4ca101`](https://github.com/espeak-ng/espeak-ng/commit/a4ca101c99de35345f89df58195b2159748b7092).
+  There have been improvements to Farsi/Persian. (#18342)
+  * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
+  Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
