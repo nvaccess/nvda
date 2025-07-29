@@ -9,12 +9,13 @@ You can now use `NVDA+Windows+,` to describe images you encounter.
 
 ### New Features
 
-
-* The local model-based image description feature is now integrated into NVDA. (#18475)
-* Two new commands have been added: Describe image using local model and Release model memory, assigned to `NVDA+Windows+,` and `NVDA+Windows+Shift+,` respectively. (#18475)
-* A Model Manager has been added under NVDA menu -> Tools for downloading local image description models. (#18475)
-* An unassigned gesture has been added to open the Model Manager. (#18475)
-* A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+* Automated Image Descriptions:
+  * Press `NVDA+Windows+,` to get an AI generated Image description. (#18475)
+  * This is generated locally on the device - no information is sent to the internet.
+  * Two new commands have been added: Describe image using local model and Release model memory, assigned to  and `NVDA+Windows+Shift+,` respectively. (#18475)
+  * A Model Manager has been added under NVDA menu -> Tools for downloading local image description models. (#18475)
+  * An unassigned gesture has been added to open the Model Manager. (#18475)
+  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
 * In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
 Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
 
