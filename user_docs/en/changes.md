@@ -22,6 +22,8 @@
 
 * Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+* Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
+* Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
 
 ### Changes for Developers
 
@@ -37,6 +39,12 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 
 #### Deprecations
+
+* The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
+  * `LP_c_ubyte`
+  * `LP_c_ulong`
+  * `LP__ULARGE_INTEGER`
+  * `SynthDriver.isSpeaking`
 
 ## 2025.2
 
