@@ -24,6 +24,7 @@
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
 * Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+* Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 
 ### Changes for Developers
 
