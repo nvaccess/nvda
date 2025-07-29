@@ -402,7 +402,6 @@ jobs:
         path: output
     - name: Upload symbols to Mozilla
       continue-on-error: true
-      # TODO: this script should be moved to ci/scripts
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\mozillaSyms.py
       env:
         mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_TOKEN }}
