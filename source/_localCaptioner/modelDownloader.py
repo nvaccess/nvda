@@ -354,25 +354,3 @@ def getModelFilePaths(
 	}
 
 
-def _exampleProgress(fileName: str, done: int, total: int, pct: float) -> None:
-	"""
-	Simple CLI progress reporter.
-	"""
-	log.info(f"[PROGRESS] {fileName}: {pct:5.1f}% ({done:,}/{total:,} B)")
-
-
-def manualTest() -> None:  # pragma: no cover – CLI only
-	"""
-	Download the default model when executed as a script.
-	"""
-	modelsDir = ensureModelsDirectory()
-	ok, failed = downloadModelsMultithreaded(
-		modelsDir=modelsDir,
-		progressCallback=_exampleProgress,
-	)
-	if not failed:
-		log.info("\n🎉	All files downloaded successfully!")
-		for k, v in getModelFilePaths().items():
-			log.info(f"{k}: {v}")
-	else:
-		log.info("\n⚠️	 Some files failed to download:", failed)
