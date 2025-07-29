@@ -3,24 +3,22 @@ name: CI/CD
 on:
   push:
     branches:
-    - master
-    - beta
-    - rc
-    - 'try-**'
-    # Temporarily enabled during the 64bit migration
-    - wip-buildX64
-    # Currently disabled while the 2025.2 release is in progress.
-    # Blocked by #17878
-    # tags:
-    #  - 'release-**'
+      - master
+      - beta
+      - rc
+      - 'try-**'
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
+    tags:
+      - 'release-**'
 
   pull_request:
     branches:
-    - master
-    - beta
-    - rc
-    # Temporarily enabled during the 64bit migration
-    - wip-buildX64
+      - master
+      - beta
+      - rc
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
 
 
   workflow_dispatch:
