@@ -49,7 +49,7 @@ Simply enable GitHub Actions on your fork.
 The following configuration is required only for more advanced development such as:
 
 * signed builds
-* Crowdin syncronisation
+* Crowdin synchronisation
 * publishing releases to a server
 
 ### Publisher name
