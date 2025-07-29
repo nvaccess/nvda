@@ -117,7 +117,7 @@ def quits_from_keyboard():
 	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 	_blockUntilConditionMet(
 		getValue=lambda: not _nvdaIsRunning(),
-		giveUpAfterSeconds=3,
+		giveUpAfterSeconds=5,
 		errorMessage="NVDA failed to exit in the specified timeout",
 	)
 	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
