@@ -343,7 +343,7 @@ class ContactEditField(NVDAObject):
 		if vision.handler:
 			vision.handler.handleGainFocus(self)
 		api.setNavigatorObject(self)
-		return super(ContactEditField, self).event_valueChange()
+		super().event_valueChange()
 
 
 class AutoCompleteListItem(Window):
