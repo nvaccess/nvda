@@ -189,8 +189,8 @@ def removeOldLibFiles(destPath, rebootOK=False):
 	for topDir in ("lib", "lib64", "libArm64"):
 		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
 		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
-			if parent == currentLibPath:
-				# Lib dir for current installation. Don't touch this!
+			if parent.startswith(currentLibPath):
+				# We are in the lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r" % parent)
 				continue
 			for d in subdirs:
