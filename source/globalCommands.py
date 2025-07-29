@@ -5064,7 +5064,7 @@ class GlobalCommands(ScriptableObject):
 
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
-		description=_("image caption using local model"),
+		description=_("get an AI generated Image description"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
 		gesture="kb:NVDA+windows+,",
@@ -5073,14 +5073,13 @@ class GlobalCommands(ScriptableObject):
 		_localCaptioner._localCaptioner.runCaption(gesture)
 
 	@scriptHandler.script(
-		# Translators: Description for the release model script
-		description=_("release local model"),
+		# Translators: Description for the toggle image captioning script
+		description=_("toggle image captioning"),
 		# Translators: Category of addon in input gestures.
 		category=_("Local Captioner"),
-		gesture="kb:NVDA+windows+shift+,",
 	)
-	def script_releaseModel(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.releaseModel(gesture)
+	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
 
 #: The single global commands instance.

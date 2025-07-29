@@ -9,13 +9,13 @@ import json
 import re
 import io
 import time
-from typing import List, Dict
+from typing import Dict
 
 import numpy as np
 from PIL import Image
 import onnxruntime as ort
 
-
+from logHandler import log
 class ImageCaptioner:
 	"""Lightweight ONNX Runtime image captioning model.
 
@@ -53,7 +53,7 @@ class ImageCaptioner:
 				"please download models and config file first!",
 			)
 		except Exception as e:
-			print(e)
+			log.error(e)
 			raise
 
 		# Load vocabulary from vocab.json in the same directory as config
@@ -74,10 +74,10 @@ class ImageCaptioner:
 		self.encoderSession = ort.InferenceSession(encoder_path, sess_options=sessionOptions)
 		self.decoderSession = ort.InferenceSession(decoder_path, sess_options=sessionOptions)
 
-		print(f"Loaded ONNX models - Encoder: {encoder_path}, Decoder: {decoder_path}")
-		print(f"Loaded config from: {config_path}")
-		print(f"Loaded vocabulary from: {vocabPath}")
-		print(f"Model config - Image size: {self.imageSize}, Max length: {self.maxLength}")
+		log.info(f"Loaded ONNX models - Encoder: {encoder_path}, Decoder: {decoder_path}")
+		log.info(f"Loaded config from: {config_path}")
+		log.info(f"Loaded vocabulary from: {vocabPath}")
+		log.info(f"Model config - Image size: {self.imageSize}, Max length: {self.maxLength}")
 
 	def _loadModelParams(self) -> None:
 		"""Load all model parameters from configuration file."""
@@ -131,135 +131,15 @@ class ImageCaptioner:
 
 			# Convert to id -> token format
 			vocab = {v: k for k, v in vocabData.items()}
-			print(f"Successfully loaded vocabulary with {len(vocab)} tokens")
+			log.info(f"Successfully loaded vocabulary with {len(vocab)} tokens")
 			return vocab
 
 		except FileNotFoundError:
-			print(f"Warning: vocab.json not found at {vocabPath}")
-			print("Using fallback vocabulary")
-			return self._getFallbackVocab()
+			log.error(f"vocab.json not found at {vocabPath}")
+			raise
 		except Exception as e:
-			print(f"Warning: Could not load vocabulary from {vocabPath}: {e}")
-			print("Using fallback vocabulary")
-			return self._getFallbackVocab()
-
-	def _getFallbackVocab(self) -> Dict[int, str]:
-		"""Build a simplified fallback vocabulary.
-
-		Returns:
-			Dictionary with basic vocabulary for fallback use.
-		"""
-		# Basic special tokens
-		vocab = {
-			50256: "<|endoftext|>",  # BOS/EOS/PAD token
-			50257: "<|pad|>",
-		}
-
-		# Common words (example set - would need complete vocabulary in practice)
-		commonWords = [
-			"a",
-			"an",
-			"the",
-			"and",
-			"or",
-			"but",
-			"in",
-			"on",
-			"at",
-			"to",
-			"for",
-			"of",
-			"with",
-			"by",
-			"man",
-			"woman",
-			"person",
-			"people",
-			"child",
-			"children",
-			"boy",
-			"girl",
-			"dog",
-			"cat",
-			"car",
-			"truck",
-			"bus",
-			"bike",
-			"motorcycle",
-			"train",
-			"plane",
-			"boat",
-			"house",
-			"building",
-			"tree",
-			"flower",
-			"grass",
-			"sky",
-			"cloud",
-			"sun",
-			"moon",
-			"water",
-			"river",
-			"ocean",
-			"red",
-			"blue",
-			"green",
-			"yellow",
-			"black",
-			"white",
-			"brown",
-			"orange",
-			"purple",
-			"pink",
-			"big",
-			"small",
-			"tall",
-			"short",
-			"old",
-			"young",
-			"new",
-			"beautiful",
-			"ugly",
-			"good",
-			"bad",
-			"sitting",
-			"standing",
-			"walking",
-			"running",
-			"eating",
-			"drinking",
-			"playing",
-			"working",
-			"is",
-			"are",
-			"was",
-			"were",
-			"has",
-			"have",
-			"had",
-			"will",
-			"would",
-			"could",
-			"should",
-			"very",
-			"quite",
-			"really",
-			"too",
-			"also",
-			"just",
-			"only",
-			"even",
-			"still",
-			"already",
-		]
-
-		# Add common words to vocabulary
-		for i, word in enumerate(commonWords):
-			if i < 50256:  # Avoid conflicts with special tokens
-				vocab[i] = word
-
-		print(f"Built fallback vocabulary with {len(vocab)} tokens")
-		return vocab
+			log.error(f"Warning: Could not load vocabulary from {vocabPath}: {e}")
+			raise
 
 	def preprocessImage(self, image: str | bytes) -> np.ndarray:
 		"""Preprocess image for model input.
@@ -311,7 +191,7 @@ class ImageCaptioner:
 		# Return last hidden state
 		return encoderOutputs[0]
 
-	def decodeTokens(self, tokenIds: List[int]) -> str:
+	def decodeTokens(self, tokenIds: list[int]) -> str:
 		"""Decode token IDs to text.
 
 		Args:
@@ -336,7 +216,7 @@ class ImageCaptioner:
 
 		return text
 
-	def getDecoderInputNames(self) -> List[str]:
+	def getDecoderInputNames(self) -> list[str]:
 		"""Get decoder input names for debugging.
 
 		Returns:
@@ -344,27 +224,13 @@ class ImageCaptioner:
 		"""
 		return [inp.name for inp in self.decoderSession.get_inputs()]
 
-	def getDecoderOutputNames(self) -> List[str]:
+	def getDecoderOutputNames(self) -> list[str]:
 		"""Get decoder output names for debugging.
 
 		Returns:
 			List of decoder output names.
 		"""
 		return [out.name for out in self.decoderSession.get_outputs()]
-
-	def printModelInfo(self) -> None:
-		"""Print model information for debugging."""
-		print("=== Encoder Model Info ===")
-		for i, inp in enumerate(self.encoderSession.get_inputs()):
-			print(f"Input {i}: {inp.name}, shape: {inp.shape}, type: {inp.type}")
-		for i, out in enumerate(self.encoderSession.get_outputs()):
-			print(f"Output {i}: {out.name}, shape: {out.shape}, type: {out.type}")
-
-		print("\n=== Decoder Model Info ===")
-		for i, inp in enumerate(self.decoderSession.get_inputs()):
-			print(f"Input {i}: {inp.name}, shape: {inp.shape}, type: {inp.type}")
-		for i, out in enumerate(self.decoderSession.get_outputs()):
-			print(f"Output {i}: {out.name}, shape: {out.shape}, type: {out.type}")
 
 	def _initializePastKeyValues(self, batchSize: int = 1) -> Dict[str, np.ndarray]:
 		"""Initialize past_key_values for decoder.
@@ -506,7 +372,7 @@ def benchmarkInference(
 		imagePath: Test image path.
 		numRuns: Number of runs for benchmarking.
 	"""
-	print(f"Running benchmark with {numRuns} iterations...")
+	log.info(f"Running benchmark with {numRuns} iterations...")
 
 	# Warm up
 	captioner.generate_caption(imagePath)
@@ -517,8 +383,8 @@ def benchmarkInference(
 		captioner.generate_caption(imagePath)
 	greedyTime = (time.time() - startTime) / numRuns
 
-	print("Average inference time:")
-	print(f"  Greedy search: {greedyTime:.3f}s")
+	log.info("Average inference time:")
+	log.info(f"  Greedy search: {greedyTime:.3f}s")
 
 
 def manualTest(imagePath: str) -> None:
@@ -534,8 +400,8 @@ def manualTest(imagePath: str) -> None:
 		enableProfiling=True,
 	)
 
-	print("=== Single Image Caption ===")
+	log.info("=== Single Image Caption ===")
 
 	caption1 = captioner.generate_caption(image=imagePath)
-	print(f"result: {caption1}")
+	log.info(f"result: {caption1}")
 	# benchmarkInference(captioner=captioner, imagePath=imagePath)

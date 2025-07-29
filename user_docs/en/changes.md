@@ -12,8 +12,9 @@ You can now use `NVDA+Windows+,` to describe images you encounter.
 * Automated Image Descriptions:
   * Press `NVDA+Windows+,` to get an AI generated Image description. (#18475)
   * This is generated locally on the device - no information is sent to the internet.
-  * Two new commands have been added: Describe image using local model and Release model memory, assigned to  and `NVDA+Windows+Shift+,` respectively. (#18475)
-  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+  * a new commands have been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
+  * a new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+  * another new unassigned command is available for toggle image captioning. (#18475)
 * In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
 Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
 

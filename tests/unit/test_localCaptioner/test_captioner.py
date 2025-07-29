@@ -139,18 +139,6 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.vocab, expected_vocab)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_load_vocab_fallback(self, mock_session):
-		"""Test fallback vocabulary when vocab file is missing."""
-		os.remove(self.vocab_path)
-		captioner = ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
-		)
-		self.assertIn(50256, captioner.vocab)
-		self.assertEqual(captioner.vocab[50256], "<|endoftext|>")
-
-	@patch("onnxruntime.InferenceSession")
 	def test_preprocess_image_from_path(self, mock_session):
 		"""Test preprocessing image from file path."""
 		captioner = ImageCaptioner(
@@ -371,20 +359,6 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.numBeams, 1)
 		self.assertEqual(captioner.temperature, 1.0)
 
-	def test_fallback_vocab_creation(self):
-		"""Test fallback vocabulary creation logic."""
-		os.remove(self.vocab_path)
-		with patch("onnxruntime.InferenceSession"):
-			captioner = ImageCaptioner(
-				encoder_path=self.encoder_path,
-				decoder_path=self.decoder_path,
-				config_path=self.config_path,
-			)
-			self.assertIn(50256, captioner.vocab)
-			self.assertEqual(captioner.vocab[50256], "<|endoftext|>")
-			vocab_tokens = list(captioner.vocab.values())
-			self.assertIn("a", vocab_tokens)
-			self.assertIn("the", vocab_tokens)
 
 
 class TestImageCaptionerBenchmark(unittest.TestCase):

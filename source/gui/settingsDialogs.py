@@ -3664,7 +3664,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		self.loadModelWhenInit = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
-			wx.CheckBox(self, label=_("load model when init (may cause high use of memory)")),
+			wx.CheckBox(self, label=_("enable image captioning")),
 		)
 		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.loadModelWhenInit)

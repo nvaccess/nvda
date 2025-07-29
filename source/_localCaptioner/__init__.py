@@ -83,11 +83,12 @@ def caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	try:
 		description = captioner.generate_caption(image=imageData)
 		ui.message(description)
-		api.copyToClip(text=description, notify=False)
-	except FileNotFoundError as e:
-		ui.message(str(e))
 	except Exception as e:
+		# Translators: error message when fail to generate caption
+		ui.message(_("fail to generate caption"))
 		log.error(e)
+
+	api.copyToClip(text=description, notify=False)
 
 
 class LocalCaptioner:
@@ -112,7 +113,6 @@ class LocalCaptioner:
 		self.captioner = None
 
 	def runCaption(self, gesture) -> None:
-		# def script_runCaption(self) -> None:
 		"""Script to run image captioning on the current navigator object.
 
 		Args:
@@ -121,13 +121,11 @@ class LocalCaptioner:
 		imageData = shootImage()
 
 		if not self.isModelLoaded:
-			# Translators: Message when loading the model
-			ui.message(_("loading model..."))
 			self._loadModel()
 
 		imageThread = threading.Thread(target=caption, args=(self.captioner, imageData))
 		# Translators: Message when starting image recognition
-		ui.message(_("starting recognize"))
+		ui.message(_("getting Image description..."))
 		imageThread.start()
 
 	def _loadModel(self) -> None:
@@ -136,6 +134,9 @@ class LocalCaptioner:
 		Raises:
 			Exception: If the model cannot be loaded.
 		"""
+		# Translators: Message when loading the model
+		ui.message(_("loading model..."))
+
 		try:
 			localModelDirPath = config.conf["captionLocal"]["localModelPath"]
 			encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
@@ -148,20 +149,21 @@ class LocalCaptioner:
 				config_path=configPath,
 			)
 			self.isModelLoaded = True
+			# Translators: Message when successfully load the model
+			ui.message(_("image captioning on"))
+		except FileNotFoundError as e:
+			self.isModelLoaded = False
+			# Translators: error Message when fail to load the model
+			ui.message(_("models And config file not found or incomplete, please download models and config file first!"))
+			log.error(e)
 		except Exception as e:
 			self.isModelLoaded = False
-			ui.message(str(e))
+			# Translators: error message when fail to load model
+			ui.message(_("fail to load model."))
+			log.error(e)
 			raise
 
-	def releaseModel(self, gesture) -> None:
-		"""Script to release the loaded model from memory.
-
-		Args:
-			gesture: The input gesture that triggered this script.
-		"""
-		self.doReleaseModel()
-
-	def doReleaseModel(self) -> None:
+	def _doReleaseModel(self) -> None:
 		# Translators: Message when releasing the model
 		ui.message(_("releasing model..."))
 		try:
@@ -169,11 +171,22 @@ class LocalCaptioner:
 				del self.captioner
 				self.captioner = None
 				# Translators: Message when model is successfully released
-				ui.message(_("model released and memory freed"))
+				ui.message(_("image captioning off"))
 				self.isModelLoaded = False
 		except Exception as e:
 			ui.message(str(e))
 			raise
+
+	def toggleImageCaptioning(self, gesture) -> None:
+		"""Script to load/unload the model from memory.
+
+		Args:
+			gesture: The input gesture that triggered this script.
+		"""
+		if self.isModelLoaded:
+			self._doReleaseModel()
+		else:
+			self._loadModel()
 
 
 def initialize():
