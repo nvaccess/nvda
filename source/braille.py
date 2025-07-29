@@ -64,6 +64,7 @@ import hwPortUtils
 import bdDetect
 import queueHandler
 import brailleViewer
+
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
@@ -2240,16 +2241,25 @@ def getFocusRegions(
 		return
 
 	# Late import to avoid circular import.
+	from review import getCurrentMode
 	from treeInterceptorHandler import TreeInterceptor, DocumentTreeInterceptor
 	from cursorManager import CursorManager
 	from NVDAObjects import NVDAObject
 
 	if isinstance(obj, CursorManager):
-		region2 = (ReviewCursorManagerRegion if review else CursorManagerRegion)(obj)
+		if not (review and getCurrentMode() == "object"):
+			region2 = (ReviewCursorManagerRegion if review else CursorManagerRegion)(obj)
+		else:
+			region2 = None
+	elif review:
+		if getCurrentMode() != "object":
+			region2 = ReviewTextInfoRegion(obj)
+		else:
+			region2 = None
 	elif isinstance(obj, DocumentTreeInterceptor) or (
-		isinstance(obj, NVDAObject) and NVDAObjectHasUsefulText(obj)
+		isinstance(obj, NVDAObject) and (not review and NVDAObjectHasUsefulText(obj))
 	):
-		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
+		region2 = TextInfoRegion(obj)
 	else:
 		region2 = None
 	if isinstance(obj, TreeInterceptor):

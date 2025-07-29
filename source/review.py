@@ -22,12 +22,47 @@ import config
 
 def getObjectPosition(obj):
 	"""
-	Fetches a TextInfo instance suitable for reviewing the text in  the given object.
+	Fetches a TextInfo instance suitable for reviewing the name, value, and description for the given object
 	@param obj: the NVDAObject to review
 	@type obj: L{NVDAObject}
 	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
+	position = None
+	try:
+		position = obj.makeTextInfo(textInfos.POSITION_FIRST)
+		if isinstance(position, NVDAObjects.NVDAObjectTextInfo):
+			return(position, position.obj)
+	except:
+		pass
+	info = NVDAObjectTextInfo
+	position = info(obj, textInfos.POSITION_FIRST)
+	return(position, position.obj)
+
+
+def getTextPosition(obj):
+	"""
+	Fetches a TextInfo instance suitable for reviewing the text content of the given object.
+	@param obj: the NVDAObject to review
+	@type obj: L{NVDAObject}
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
+	@rtype: (L{TextInfo},L{ScriptableObject})
+	"""
+	if issubclass(obj.TextInfo, NVDAObjectTextInfo):
+		if not obj.TextReviewTextInfo:
+			return
+		try:
+			pos = obj.TextReviewTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			# No caret supported, try first position instead
+			try:
+				pos = obj.TextReviewTextInfo(obj, textInfos.POSITION_FIRST)
+			except (NotImplementedError, RuntimeError):
+				log.debugWarning(
+					"%s does not support POSITION_FIRST, treating as unavailable"
+				)
+				# First position not supported either, treat as unavailable
+				return
 	try:
 		pos = obj.makeTextInfo(textInfos.POSITION_CARET)
 	except (NotImplementedError, RuntimeError):
@@ -36,11 +71,11 @@ def getObjectPosition(obj):
 			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
 			log.debugWarning(
-				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+				"%s does not support POSITION_FIRST, treating as unavailable"
 			)
-			# First position not supported either, return first position from a generic NVDAObjectTextInfo
-			return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
-	return pos, pos.obj
+			# First position not supported either, treat as unavailable
+			return
+	return(pos, pos.obj)
 
 
 def getDocumentPosition(obj):
@@ -87,6 +122,8 @@ def getScreenPosition(obj):
 modes = [
 	# Translators: One of the review modes.
 	("object", _("Object review"), getObjectPosition),
+	# Translators: One of the review modes.
+	("text", _("Text review"), getTextPosition),
 	# Translators: One of the review modes.
 	("document", _("Document review"), getDocumentPosition),
 	# Translators: One of the review modes.
@@ -176,10 +213,10 @@ def handleCaretMove(pos):
 		obj = pos
 	mode = getCurrentMode()
 	if isinstance(obj, NVDAObject):
-		if not mode == "object" or obj != api.getNavigatorObject():
+		if not mode == "text" or obj != api.getNavigatorObject():
 			return
 	elif isinstance(obj, DocumentTreeInterceptor):
-		if mode not in ("object", "document"):
+		if mode not in ("object", "text", "document"):
 			return
 		if mode != "document":
 			if obj.passThrough:
