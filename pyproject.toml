@@ -29,8 +29,6 @@ dependencies = [
 	# pinned to a commit in tool.uv.sources
 	"configobj",
 	"requests==2.32.3",
-	# Overrides certifi so that requests uses system certificates instead
-	"pip_system_certs==5.2",
 	"url-normalize==1.4.3",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
@@ -124,7 +122,6 @@ only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
-	"pip_system_certs",  # BSD 2-Clause "Simplified" License, but not in PyPI
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
 	"urllib3",  # MIT license, but not in PyPI
@@ -317,9 +314,9 @@ dev = [
 	"setuptools~=72.0",
 ]
 lint = [
-	"ruff==0.11.12",
+	"ruff==0.12.5",
 	"pre-commit==4.2.0",
-	"pyright==1.1.401",
+	"pyright==1.1.403",
 ]
 license-check = [
 	"licensecheck==2024.3",
