@@ -36,7 +36,8 @@ comtypes.client._generate._my_import = new_my_import
 
 
 def codeReplacer(
-	template: str, indentedGroups: tuple[int | str] | None = None
+	template: str,
+	indentedGroups: tuple[int | str] | None = None,
 ) -> Callable[[re.Match[str]], str]:
 	"""
 	Return a function for the `repl` parameter of `re.sub()`,
