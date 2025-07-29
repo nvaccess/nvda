@@ -104,7 +104,7 @@ class LocalCaptioner:
 		self.captioner: ImageCaptioner | None = None
 
 		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
-		# Load model when initializing  (may cause high memory usage)
+		# Load model when initializing (may cause high memory usage)
 		if loadModelWhenInit:
 			threading.Thread(target=self._loadModel, daemon=True).start()
 
