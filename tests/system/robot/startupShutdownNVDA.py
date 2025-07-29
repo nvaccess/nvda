@@ -129,8 +129,8 @@ def quits_from_keyboard():
 
 
 def test_desktop_shortcut():
-	VK_CONTROL = 17
 	# Press Control+Alt+N using keybd_event
+	VK_CONTROL = 17
 	VK_MENU = 18  # Alt key
 	VK_N = 78  # 'N' key
 	KEYEVENTF_KEYDOWN = 0
