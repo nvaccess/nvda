@@ -103,6 +103,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Static type analysis
@@ -149,6 +154,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Check comments for translators
@@ -173,6 +183,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: License check
@@ -189,6 +204,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Run unit tests
@@ -230,6 +250,11 @@ jobs:
       with:
         name: makePot results
         path: output
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
@@ -252,6 +277,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set version variables
@@ -314,6 +344,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get NVDA launcher
@@ -396,6 +431,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.9'
+        architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get symbols
