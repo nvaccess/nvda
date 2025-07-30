@@ -51,7 +51,6 @@ ARIA treegrid
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
-	[Tags]	excluded_from_build
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
