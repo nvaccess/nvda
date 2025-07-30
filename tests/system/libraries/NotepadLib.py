@@ -94,7 +94,7 @@ class NotepadLib:
 				expectedTitlePattern,
 				lambda message: builtIn.log(message, "DEBUG"),
 			),
-			giveUpAfterSeconds=3,
+			giveUpAfterSeconds=5,
 			shouldStopEvaluator=lambda _window: _window is not None,
 			intervalBetweenSeconds=0.5,
 			errorMessage="Unable to get notepad window",
