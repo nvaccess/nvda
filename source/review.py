@@ -32,12 +32,12 @@ def getObjectPosition(obj):
 	try:
 		position = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		if isinstance(position, NVDAObjects.NVDAObjectTextInfo):
-			return(position, position.obj)
+			return (position, position.obj)
 	except:
 		pass
 	info = NVDAObjectTextInfo
 	position = info(obj, textInfos.POSITION_FIRST)
-	return(position, position.obj)
+	return (position, position.obj)
 
 
 def getTextPosition(obj):
@@ -53,7 +53,7 @@ def getTextPosition(obj):
 	if isinstance(info, NVDAObjectTextInfo):
 		if not obj.TextReviewTextInfo:
 			return
-		
+
 		try:
 			pos = obj.TextReviewTextInfo(obj, textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
@@ -62,12 +62,12 @@ def getTextPosition(obj):
 				pos = obj.TextReviewTextInfo(obj, textInfos.POSITION_FIRST)
 			except (NotImplementedError, RuntimeError):
 				log.debugWarning(
-					"%s does not support POSITION_FIRST, treating as unavailable"
+					"%s does not support POSITION_FIRST, treating as unavailable",
 				)
 				# First position not supported either, treat as unavailable
 				return
 	if pos:
-		return(pos, pos.obj)
+		return (pos, pos.obj)
 	try:
 		pos = obj.makeTextInfo(textInfos.POSITION_CARET)
 	except (NotImplementedError, RuntimeError):
@@ -76,11 +76,11 @@ def getTextPosition(obj):
 			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
 			log.debugWarning(
-				"%s does not support POSITION_FIRST, treating as unavailable"
+				"%s does not support POSITION_FIRST, treating as unavailable",
 			)
 			# First position not supported either, treat as unavailable
 			return
-	return(pos, pos.obj)
+	return (pos, pos.obj)
 
 
 def getDocumentPosition(obj):

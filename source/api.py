@@ -340,7 +340,6 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		or not obj.treeInterceptor.isReady
 		or obj.treeInterceptor.passThrough
 	):
-
 		shouldSwichReviewMode = True
 	elif (
 		isinstance(obj.treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
@@ -354,7 +353,7 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		if isFocus:
 			globalVars.reviewPosition = obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj = globalVars.reviewPosition
-	
+
 	if shouldUseDocumentReview:
 		eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 		return True
@@ -366,7 +365,6 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		review.setCurrentMode("object", False)
 	eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 	return True
-	
 
 
 def isTypingProtected():
