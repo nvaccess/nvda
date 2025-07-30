@@ -183,6 +183,7 @@ class NotepadLib:
 			windowsLib.logForegroundWindowTitle()
 
 		self._waitForNotepadFocus(uniqueTitleRegex)
+		spy.wait_for_speech_to_finish()
 		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
 		_NvdaLib.getSpeechAfterKey("control+home")
