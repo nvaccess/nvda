@@ -1191,12 +1191,12 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our",
+		"Unlabeled graphic  Our",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"logo  out of drawing",
+		"logo  out of graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
@@ -1275,7 +1275,7 @@ def test_ariaRoleDescription_inline_contentEditable():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our logo    out of drawing",
+		"Unlabeled graphic  Our logo    out of graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
