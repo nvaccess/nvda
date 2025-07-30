@@ -55,7 +55,7 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: 'python-3.11.9-win32-x86'
+        python-version: 'python-3.11.9'
         architecture: x86
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
@@ -120,7 +120,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: 'python-3.11.9-win32-x86'
+        python-version: 'python-3.11.9'
         architecture: 'x86'
     - name: Install pre-commit
       run: |
