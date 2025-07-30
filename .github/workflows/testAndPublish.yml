@@ -399,7 +399,7 @@ jobs:
         fail-on-cache-miss: true
     - name: Create build symbols
       env:
-        symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+        symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\symstore.exe
       run: ci/scripts/buildSymbolStore.ps1
     - name: Upload symbols artifact
       id: uploadArtifact
