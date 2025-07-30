@@ -186,4 +186,5 @@ class NotepadLib:
 		self._waitForNotepadFocus(uniqueTitleRegex)
 		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
-		_NvdaLib.getSpeechAfterKey("home")
+		spy.emulateKeyPress("home")
+		spy.wait_for_speech_to_finish()
