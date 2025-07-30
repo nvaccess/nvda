@@ -1164,6 +1164,7 @@ def test_ariaRoleDescription_focus():
 		"Meat  pizza",
 	)
 
+
 IMG_DESC_MSG = "To get missing image descriptions, open the context menu."
 
 
