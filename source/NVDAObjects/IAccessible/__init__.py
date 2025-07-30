@@ -179,13 +179,13 @@ def normalizeIA2TextFormatField(formatField):
 		invalid = formatField.pop("invalid")
 	except KeyError:
 		invalid = None
-	if invalid:
-		# aria-invalid can contain multiple values separated by a comma.
-		invalidList = [x.lower().strip() for x in invalid.split(",")]
-		if "spelling" in invalidList:
+	match invalid:
+		case "spelling":
 			formatField["invalid-spelling"] = True
-		if "grammar" in invalidList:
+		case "grammar":
 			formatField["invalid-grammar"] = True
+		case _:
+			pass
 	color = formatField.get("color")
 	if color:
 		try:

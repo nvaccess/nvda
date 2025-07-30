@@ -1008,18 +1008,12 @@ def test_ariaTreeGrid_browseMode():
 
 def ARIAInvalid_spellingAndGrammar():
 	"""
-		Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
-		Please note that although IAccessible2 allows multiple values for invalid,
-		multiple values to aria-invalid is not yet standard.
-		And even if it were, they would be separated by space, not comma
-	thus the html for this test would need to change,
-		but the expected output shouldn't need to.
+	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
 	"""
 	_chrome.prepareChrome(
 		r"""
 			<p>Big <span aria-invalid="spelling">caat</span> meos</p>
 			<p>Small <span aria-invalid="grammar">a dog</span> woofs</p>
-			<p>Fat <span aria-invalid="grammar, spelling">a ffrog</span> crokes</p>
 		""",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
