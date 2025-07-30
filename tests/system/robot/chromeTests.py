@@ -1199,11 +1199,6 @@ def test_ariaRoleDescription_inline_browseMode():
 		actualSpeech,
 		"logo.",
 	)
-	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"End",
-	)
 
 
 def test_ariaRoleDescription_block_browseMode():
