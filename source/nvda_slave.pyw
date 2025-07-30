@@ -8,11 +8,13 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
 import sys
+import sysconfig
 import os
 import globalVars
 import logHandler
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
+import winBindings.kernel32
 
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
@@ -38,15 +40,25 @@ def getNvdaHelperRemote():
 	import winKernel
 
 	# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h = winKernel.kernel32.LoadLibraryExW(
-		os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll"),
+	versionedLibPath = os.path.join(globalVars.appDir, "lib", buildVersion.version)
+	match sysconfig.get_platform():
+		case "win-amd64":
+			coreArchLibPath = os.path.join(versionedLibPath, 'x64')
+		case "win-arm64":
+			coreArchLibPath = os.path.join(versionedLibPath, 'arch64')
+		case "win32":
+			coreArchLibPath = os.path.join(versionedLibPath, 'x86')
+		case _:
+			raise RuntimeError("Unsupported platform")
+	h = winBindings.kernel32.LoadLibraryEx(
+		os.path.join(coreArchLibPath, 'nvdaHelperRemote.dll'),
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
 		# such as IAccessible2proxy.dll.
 		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH,
 	)
-	remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
+	remoteLib = ctypes.CDLL("nvdaHelperRemote", handle=h)
 	return remoteLib
 
 

@@ -6,6 +6,7 @@
 
 """Utilities and classes to manage logging in NVDA"""
 
+import sysconfig
 import os
 import ctypes
 import sys
@@ -375,11 +376,26 @@ class Logger(logging.Logger):
 class RemoteHandler(logging.Handler):
 	def __init__(self):
 		# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
-		h = ctypes.windll.kernel32.LoadLibraryExW(path, 0, LOAD_WITH_ALTERED_SEARCH_PATH)
-		if not h:
-			raise OSError("Could not load %s" % path)
-		self._remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
+		versionedLibPath = os.path.join(globalVars.appDir, "lib", buildVersion.version)
+		match sysconfig.get_platform():
+			case "win-amd64":
+				coreArchLibPath = os.path.join(versionedLibPath, 'x64')
+			case "win-arm64":
+				coreArchLibPath = os.path.join(versionedLibPath, 'arch64')
+			case "win32":
+				coreArchLibPath = os.path.join(versionedLibPath, 'x86')
+			case _:
+				raise RuntimeError("Unsupported platform")
+		import winBindings.kernel32
+		h = winBindings.kernel32.LoadLibraryEx(
+			os.path.join(coreArchLibPath, 'nvdaHelperRemote.dll'),
+			0,
+			# Using an altered search path is necessary here
+			# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+			# such as IAccessible2proxy.dll.
+			winKernel.LOAD_WITH_ALTERED_SEARCH_PATH,
+		)
+		self._remoteLib = ctypes.CDLL("nvdaHelperRemote", handle=h)
 		logging.Handler.__init__(self)
 
 	def emit(self, record):
