@@ -48,11 +48,14 @@ def getTextPosition(obj):
 	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
-	if issubclass(obj.TextInfo, NVDAObjectTextInfo):
+	pos = None
+	info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+	if isinstance(info, NVDAObjectTextInfo):
 		if not obj.TextReviewTextInfo:
 			return
+		
 		try:
-			pos = obj.TextReviewTextInfo(textInfos.POSITION_CARET)
+			pos = obj.TextReviewTextInfo(obj, textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			# No caret supported, try first position instead
 			try:
@@ -63,6 +66,8 @@ def getTextPosition(obj):
 				)
 				# First position not supported either, treat as unavailable
 				return
+	if pos:
+		return(pos, pos.obj)
 	try:
 		pos = obj.makeTextInfo(textInfos.POSITION_CARET)
 	except (NotImplementedError, RuntimeError):

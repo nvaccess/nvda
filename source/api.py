@@ -358,9 +358,11 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 	if shouldUseDocumentReview:
 		eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 		return True
-	if reviewMode in ("object", "document") and not issubclass(obj.TextInfo, NVDAObjects.NVDAObjectTextInfo):
+	info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+	isUsingNVDAObjectTextInfo = isinstance(info, NVDAObjects.NVDAObjectTextInfo)
+	if reviewMode in ("object", "document") and not isUsingNVDAObjectTextInfo:
 		review.setCurrentMode("text", False)
-	elif reviewMode in ("text", "document") and issubclass(obj.TextInfo, NVDAObjects.NVDAObjectTextInfo):
+	elif reviewMode in ("text", "document") and isUsingNVDAObjectTextInfo:
 		review.setCurrentMode("object", False)
 	eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 	return True
