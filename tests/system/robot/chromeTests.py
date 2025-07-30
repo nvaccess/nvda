@@ -1185,7 +1185,7 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}    End",
+		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}  End",
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
@@ -1197,7 +1197,7 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"logo  out of graphic",
+		"logo  out of Unlabeled graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
@@ -1276,7 +1276,7 @@ def test_ariaRoleDescription_inline_contentEditable():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Unlabeled graphic  Our logo    out of graphic",
+		f"Unlabeled graphic  Our logo. {IMG_DESC_MSG}    out of Unlabeled graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
