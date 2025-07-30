@@ -397,6 +397,14 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Windows SDK
+      run:
+        choco install -y windows-sdk-10.0
+    - name: List directories
+      run: |
+        ls "C:\Program Files (x86)\Windows Kits\10"
+        ls "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86"
+        ls "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
     - name: Create build symbols
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\symstore.exe
