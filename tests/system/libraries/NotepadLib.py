@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.plaintext
 
@@ -11,7 +11,6 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 from os.path import join as _pJoin
 import datetime as _datetime
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -47,8 +46,8 @@ class NotepadLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	notepadWindow: _Optional[_Window] = None
-	processRFHandleForStart: _Optional[int] = None
+	notepadWindow: _Window | None = None
+	processRFHandleForStart: int | None = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
@@ -186,4 +185,4 @@ class NotepadLib:
 		self._waitForNotepadFocus(uniqueTitleRegex)
 		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
-		_NvdaLib.getSpeechAfterKey("home")
+		_NvdaLib.getSpeechAfterKey("control+home")
