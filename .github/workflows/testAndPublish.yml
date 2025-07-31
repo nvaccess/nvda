@@ -365,7 +365,7 @@ jobs:
         echo "    * Packaging metadata: library modules, installed python packages" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
-    name: Run system tests (${{ matrix.arch }})
+    name: Run system tests
     runs-on: windows-2025
     needs: createLauncher
     strategy:
