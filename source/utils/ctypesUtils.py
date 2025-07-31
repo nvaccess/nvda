@@ -13,7 +13,7 @@ import dataclasses
 import types
 import typing
 from enum import IntEnum
-from typing import Annotated, Any
+from typing import Annotated, Any, Callable
 
 
 from logHandler import log
@@ -86,7 +86,21 @@ class OutParam:
 	"""The default value for the output parameter."""
 
 
-def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: Any) -> Any:
+ErrcheckType = Callable[[Any, ctypes._CFuncPtr, tuple[Any, ...]], Any]
+
+
+def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...]) -> Any:
+	"""
+	Checks the result of a Windows API call and raises a WinError if the result indicates failure.
+	This function can be used as an error checking callback
+	for ctypes functions that call Windows API functions that return zero on failure, usually ``ctypes.wintypes.BOOL``.
+	:param result: The result returned by the Windows API function.
+	:param func: The ctypes function pointer that was called.
+	:param args: The arguments passed to the function.
+	:raises WinError: If the result is 0, indicating an error.
+	:returns: The arguments passed to the function.
+	"""
+
 	if result == 0:
 		raise ctypes.WinError()
 	return args
@@ -214,10 +228,10 @@ def dllFunc(
 	funcName: str | None = None,
 	restype: type[CType] = None,
 	*,
-	cFunctype=ctypes.WINFUNCTYPE,
-	annotateOriginalCFunc=True,
-	wrapNewCFunc=True,
-	errcheck=None,
+	cFunctype: Callable = ctypes.WINFUNCTYPE,
+	annotateOriginalCFunc: bool = True,
+	wrapNewCFunc: bool = True,
+	errcheck: ErrcheckType | None = None,
 ):
 	"""
 	Decorator to bind a Python function to a C function from a DLL using ctypes,
@@ -237,6 +251,7 @@ def dllFunc(
 
 	:raises TypeError: If the decorated object is not a function, if parameter kinds are unsupported, type annotations are missing or invalid, or output parameter annotations are incorrect.
 	:raises IndexError: If output parameter positions are invalid or duplicated.
+	:raises ValueError: If neither `annotateOriginalCFunc` nor `wrapNewCFunc` is True.
 
 	:returns: The decorated function, now bound to the C function from the DLL.
 
@@ -260,6 +275,10 @@ def dllFunc(
 	def decorator(pyFunc: types.FunctionType):
 		if not isinstance(pyFunc, types.FunctionType):
 			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
+		if not annotateOriginalCFunc and not wrapNewCFunc:
+			raise ValueError(
+				"At least one of annotateOriginalCFunc or wrapNewCFunc must be True.",
+			)
 		if typing.TYPE_CHECKING:
 			# Return early when type checking.
 			return pyFunc
