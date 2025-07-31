@@ -116,7 +116,17 @@ class UserInterface(MathCATgui.MathCATPreferencesDialog):
 
 		:return: Absolute path to the Braille folder as a string.
 		"""
-		return os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "include", "nvda-mathcat", "assets", "Rules", "Braille")
+		return os.path.join(
+			os.path.dirname(os.path.abspath(__file__)),
+			"..",
+			"..",
+			"..",
+			"include",
+			"nvda-mathcat",
+			"assets",
+			"Rules",
+			"Braille",
+		)
 
 	@staticmethod
 	def languagesSet() -> frozenset[str]:
