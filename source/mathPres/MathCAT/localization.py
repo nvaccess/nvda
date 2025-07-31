@@ -1,6 +1,5 @@
 import glob
 import os
-from collections.abc import Callable
 from zipfile import ZipFile
 
 import wx
@@ -8,9 +7,9 @@ from languageHandler import getLanguageDescription
 from logHandler import log
 
 from .MathCATPreferences import UserInterface
+from . import rulesUtils
 
-
-def getLanguages() -> list[str]:
+def getLanguages() -> tuple[list[str], list[str]]:
 	"""Populate the language choice dropdown with available languages and their regional variants.
 
 	This method scans the language folders and adds entries for each language and its
@@ -20,6 +19,7 @@ def getLanguages() -> list[str]:
 	"""
 
 	languageOptions: list[str] = []
+	languageCodes: list[str] = []
 
 	def addRegionalLanguages(subDir: str, language: str) -> list[str]:
 		# the language variants are in folders named using ISO 3166-1 alpha-2
@@ -29,16 +29,19 @@ def getLanguages() -> list[str]:
 			# add to the listbox the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
+			log.info(f'regionalCode: {regionalCode}, langDesc: {langDesc}')
 			if langDesc is not None:
-				languageOptions.append(langDesc)
+				languageOptions.append(f"{langDesc} ({regionalCode})")
 			else:
 				languageOptions.Append(f"{language} ({regionalCode})")
+			languageCodes.append(regionalCode)
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
 
 	# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 	# "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
 	languageOptions.append(pgettext("math", "Use Voice's Language (Auto)"))
+	languageCodes.append("Auto")
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1
 	#   code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -47,13 +50,14 @@ def getLanguages() -> list[str]:
 		pathToLanguageDir: str = os.path.join(UserInterface.pathToLanguagesFolder(), language)
 		if os.path.isdir(pathToLanguageDir):
 			# only add this language if there is a xxx_Rules.yaml file
-			if len(getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
+			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 				# add to the listbox the text for this language together with the code
 				if language in languagesSet:
 					languageOptions.append(getLanguageDescription(language) + " (" + language + ")")
 				else:
 					languageOptions.append(language + " (" + language + ")")
-	return languageOptions
+				languageCodes.append(language)
+	return languageOptions, languageCodes
 
 
 def getLanguageCode(langChoice: wx.Choice) -> str:
@@ -66,40 +70,67 @@ def getLanguageCode(langChoice: wx.Choice) -> str:
 	langCode: str = langSelection[langSelection.find("(") + 1 : langSelection.find(")")]
 	return langCode
 
+def getSpeechStyles(languageCode: str) -> list[str]:
+	"""Get all the speech styles for the current language.
+	This sets the SpeechStyles dialog entry.
 
-def getRulesFiles(
-	pathToDir: str,
-	processSubDirs: Callable[[str, str], list[str]] | None,
-) -> list[str]:
-	"""Get the rule files from a directory, optionally processing subdirectories.
-		Searches for files ending with '_Rules.yaml' in the specified directory.
-	If no rule files are found, attempts to find them inside a corresponding ZIP archive,
-	including checking any subdirectories inside the ZIP.
-		:param pathToDir: Path to the directory to search for rule files.
-	:param processSubDirs: Optional callable to process subdirectories. It should take the subdirectory name
-		and the language code as arguments, returning a list of rule filenames found in that subdirectory.
-	:return: A list of rule file names found either directly in the directory or inside the ZIP archive.
+	:param thisSpeechStyle: The speech style to set or highlight in the dialog.
 	"""
-	language: str = os.path.basename(pathToDir)
-	ruleFiles: list[str] = [
-		os.path.basename(file) for file in glob.glob(os.path.join(pathToDir, "*_Rules.yaml"))
-	]
-	for dir in os.listdir(pathToDir):
-		if os.path.isdir(os.path.join(pathToDir, dir)):
-			if processSubDirs:
-				ruleFiles.extend(processSubDirs(dir, language))
-		if len(ruleFiles) == 0:
-			# look in the .zip file for the style files, including regional subdirs -- it might not have been unzipped
+	from speech import getCurrentLanguage
+
+	def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
+		r"""Get the speech styles from any regional dialog, from the main language, dir and if there isn't from the zip file.
+		The 'lang', if it has a region dialect, is of the form 'en\uk'
+		The returned list is sorted alphabetically
+
+		:param dir: The directory path to search for speech styles.
+		:param lang: Language code which may include a regional dialect (e.g., 'en\uk').
+		:return: A list of speech styles sorted alphabetically.
+		"""
+		# start with the regional dialect, then add on any (unique) styles in the main dir
+		mainLang: str = lang.split("\\")[0]  # does the right thing even if there is no regional directory
+		allStyleFiles: list[str] = []
+		if lang.find("\\") >= 0:
+			allStyleFiles: list[str] = [
+				os.path.basename(name) for name in glob.glob(dir + lang + "\\*_Rules.yaml")
+			]
+		allStyleFiles.extend(
+			[os.path.basename(name) for name in glob.glob(dir + mainLang + "\\*_Rules.yaml")],
+		)
+		allStyleFiles = list(set(allStyleFiles))  # make them unique
+		if len(allStyleFiles) == 0:
+			# look in the .zip file for the style files -- this will have regional variants, but also have that dir
 			try:
-				zip_file: ZipFile = ZipFile(f"{pathToDir}\\{language}.zip", "r")
-				for file in zip_file.namelist():
-					if file.endswith("_Rules.yaml"):
-						ruleFiles.append(file)
-					elif zip_file.getinfo(file).is_dir() and processSubDirs:
-						ruleFiles.extend(processSubDirs(dir, language))
+				zipFilePath: str = dir + mainLang + "\\" + mainLang + ".zip"
+				zipFile: ZipFile = ZipFile(zipFilePath, "r")  # file might not exist
+				allStyleFiles = [
+					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
+				]
 			except Exception as e:
-				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zip_file}. Error: {e}")
-	return ruleFiles
+				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zipFile}. Error: {e}")
+		allStyleFiles.sort()
+		return allStyleFiles
+
+	resultSpeechStyles = []
+	if languageCode == "Auto":
+		# list the speech styles for the current voice rather than have none listed
+		languageCode = getCurrentLanguage().lower().replace("_", "-")
+	languageCode = languageCode.replace("-", "\\")
+
+	languagePath = UserInterface.pathToLanguagesFolder() + "\\"
+	# log.info(f"languagePath={languagePath}")
+	# populate the m_choiceSpeechStyle choices
+	allStyleFiles = [
+		# remove "_Rules.yaml" from the list
+		name[: name.find("_Rules.yaml")]
+		for name in getSpeechStyleFromDirectory(languagePath, languageCode)
+	]
+	# There isn't a LiteralSpeak rules file since it has no language-specific rules. We add it at the end.
+	# Translators: at the moment, do NOT translate this string as some code specifically looks for this name.
+	allStyleFiles.append("LiteralSpeak")
+	for name in allStyleFiles:
+		resultSpeechStyles.append((name))
+	return resultSpeechStyles
 
 
 languagesSet = frozenset(

@@ -364,104 +364,104 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		confirmDisconnectAsFollower = boolean(default=True)
 [math]
 	[[speech]]
-    	impairment = integer(default=1) # 0: LearningDisability, 1: Blindness, 2: LowVision
+    	impairment = string(default="Blindness") # LearningDisability, Blindness, LowVision
     	language = string(default="Auto")                # any known language code and sub-code -- could be en-uk, etc
-    	SpeechStyle = string(default="ClearSpeak")     # Any known speech style (falls back to ClearSpeak)
-    	Verbosity = string(default="Medium")           # Terse, Medium, Verbose
-    	MathRate = integer(default=100)               # Change from text speech rate (%)
-    	PauseFactor = integer(default=100)            # Change from normal pause length (%)
-    	SpeechSound = string(default="None")           # make a sound when starting/ending math speech -- None, Beep
-    	SubjectArea = string(default="General")        # FIX: still working on this
-    	Chemistry = string(default="SpellOut")         # SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
-		MathSpeak = string(default="Verbose")          # Brief, SuperBrief
+    	speechStyle = string(default="ClearSpeak")     # Any known speech style (falls back to ClearSpeak)
+    	verbosity = string(default="Medium")           # Terse, Medium, Verbose
+    	mathRate = integer(default=100)               # Change from text speech rate (%)
+    	pauseFactor = integer(default=100)            # Change from normal pause length (%)
+    	speechSound = string(default="None")           # make a sound when starting/ending math speech -- None, Beep
+    	subjectArea = string(default="General")        # FIX: still working on this
+    	chemistry = string(default="SpellOut")         # SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
+		mathSpeak = string(default="Verbose")          # Brief, SuperBrief
 
-		[[Speech.SpeechOverrides]]
-			CapitalLetters = string(default="")        # word to say as a prefix/postfix for capital letters; empty string leaves it calling AT with Unicode fallback
-			LeftParen = string(default="")             # word used as override (not implemented)
-			RightParen = string(default="")            # word used as override (not implemented)
+		[[speech.speechOverrides]]
+			capitalLetters = string(default="")        # word to say as a prefix/postfix for capital letters; empty string leaves it calling AT with Unicode fallback
+			leftParen = string(default="")             # word used as override (not implemented)
+			rightParen = string(default="")            # word used as override (not implemented)
 
 		[[Speech.ClearSpeak]]                 # see ClearSpeak speak for meanings
-			CapitalLetters = string(default="Auto")      # SayCaps or use pitch
-			AbsoluteValue = string(default="Auto")       # AbsEnd, Cardinality, Determinant
-			Fractions = string(default="Auto")           # Ordinal, Over, FracOver, General, EndFrac, GeneralEndFrac, OverEndFrac, Per
-			Exponents = string(default="Auto")           # Ordinal, OrdinalPower, AfterPower
-			Roots = string(default="Auto")               # PosNegSqRoot, RootEnd, PosNegSqRootEnd
-			Functions = string(default="Auto")           # None
-			Trig = string(default="Auto")                # TrigInverse, ArcTrig
-			Log = string(default="Auto")                 # LnAsNaturalLog
-			ImpliedTimes = string(default="Auto")        # MoreImpliedTimes , None
-			Paren = string(default="Auto")               # Speak, SpeakNestingLevel, Silent, CoordPoint, Interval
-			Matrix = string(default="Auto")              # SpeakColNum, SilentColNum, EndMatrix, Vector, EndVector, Combinatorics
-			MultiLineLabel = string(default="Auto")      # Case, Constraint, Equation, Line, None, Row, Step
-			MultiLineOverview = string(default="Auto")   # None,
-			MultiLinePausesBetweenColumns = string(default="Short")  # Long
-			Sets = string(default="Auto")                # woAll, SilentBracket
-			MultSymbolX = string(default="Auto")         # By, Cross
-			MultSymbolDot = string(default="Auto")       # Dot
-			TriangleSymbol = string(default="Auto")      # Delta
-			Ellipses = string(default="Auto")            # AndSoOn,
-			VerticalLine = string(default="Auto")        # SuchThat, Divides, Given
-			SetMemberSymbol = string(default="Auto")     # Belongs, Element, Member
-			Prime = string(default="Auto")               # Angle, Length
-			CombinationPermutation = string(default="Auto")  # ChoosePermute
-			Bar = string(default="Auto")                 # Bar, Conjugate, Mean
+			capitalLetters = string(default="Auto")      # SayCaps or use pitch
+			absoluteValue = string(default="Auto")       # AbsEnd, Cardinality, Determinant
+			fractions = string(default="Auto")           # Ordinal, Over, FracOver, General, EndFrac, GeneralEndFrac, OverEndFrac, Per
+			exponents = string(default="Auto")           # Ordinal, OrdinalPower, AfterPower
+			roots = string(default="Auto")               # PosNegSqRoot, RootEnd, PosNegSqRootEnd
+			functions = string(default="Auto")           # None
+			trig = string(default="Auto")                # TrigInverse, ArcTrig
+			log = string(default="Auto")                 # LnAsNaturalLog
+			impliedTimes = string(default="Auto")        # MoreImpliedTimes , None
+			paren = string(default="Auto")               # Speak, SpeakNestingLevel, Silent, CoordPoint, Interval
+			matrix = string(default="Auto")              # SpeakColNum, SilentColNum, EndMatrix, Vector, EndVector, Combinatorics
+			multiLineLabel = string(default="Auto")      # Case, Constraint, Equation, Line, None, Row, Step
+			multiLineOverview = string(default="Auto")   # None,
+			multiLinePausesBetweenColumns = string(default="Short")  # Long
+			sets = string(default="Auto")                # woAll, SilentBracket
+			multSymbolX = string(default="Auto")         # By, Cross
+			multSymbolDot = string(default="Auto")       # Dot
+			triangleSymbol = string(default="Auto")      # Delta
+			ellipses = string(default="Auto")            # AndSoOn,
+			verticalLine = string(default="Auto")        # SuchThat, Divides, Given
+			setMemberSymbol = string(default="Auto")     # Belongs, Element, Member
+			prime = string(default="Auto")               # Angle, Length
+			combinationPermutation = string(default="Auto")  # ChoosePermute
+			bar = string(default="Auto")                 # Bar, Conjugate, Mean
 
-	[[Navigation]]
-		NavMode = string(default="Enhanced")         # Enhanced, Simple, Character
-		ResetNavMode = boolean(default=false)       # remember previous value and use it
-		Overview = boolean(default=false)             # speak the expression or give a description/overview
-		ResetOverview = boolean(default=true)        # remember previous value and use it
-		NavVerbosity = string(default="Medium")        # Terse, Medium, Full (words to say for nav command)
-		AutoZoomOut = boolean(default=true)           # Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
-		CopyAs = string(default="MathML")       # MathML, LaTeX, ASCIIMath
+	[[navigation]]
+		navMode = string(default="Enhanced")         # Enhanced, Simple, Character
+		resetNavMode = boolean(default=false)       # remember previous value and use it
+		overview = boolean(default=false)             # speak the expression or give a description/overview
+		resetOverview = boolean(default=true)        # remember previous value and use it
+		navVerbosity = string(default="Medium")        # Terse, Medium, Full (words to say for nav command)
+		autoZoomOut = boolean(default=true)           # Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
+		copyAs = string(default="MathML")       # MathML, LaTeX, ASCIIMath
 
-	[[Braille]]
-		BrailleCode = string(default="Nemeth")                # Any supported braille code (currently Nemeth, UEB)
-		BrailleNavHighlight = string(default="EndPoints")   # Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
-		UseSpacesAroundAllOperators = boolean(default=false)  # true/false
+	[[braille]]
+		brailleCode = string(default="Nemeth")                # Any supported braille code (currently Nemeth, UEB)
+		brailleNavHighlight = string(default="EndPoints")   # Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
+		useSpacesAroundAllOperators = boolean(default=false)  # true/false
 
-		[[Braille.Nemeth]]
+		[[braille.nemeth]]
 			# Nemeth defines the typeforms: Bold, Italic, SansSerif, and Script. That leaves out DoubleStruck (Blackboard Bold)
 			# Here we provide an option to specify a transcriber-defined typeform changes, with the default mapping DoubleStruck to Italic
-			SansSerif = string(default="⠠⠨")     # first transcriber-defined typeform prefix indicator
-			Bold = string(default="⠸")     # t
-			DoubleStruck = string(default="⠨")     # script
-			Script = string(default="⠈")     # script
-			Italic = string(default="⠨")     # script
+			sansSerif = string(default="⠠⠨")     # first transcriber-defined typeform prefix indicator
+			bold = string(default="⠸")     # t
+			doubleStruck = string(default="⠨")     # script
+			script = string(default="⠈")     # script
+			italic = string(default="⠨")     # script
 
-		[[Braille.UEB]]
-			StartMode = string(default="Grade2")   # Grade1/Grade2 -- assumed starting mode UEB braille (Grade1 assumes we are in G1 passage mode)
-			UseSpacesAroundAllOperators = string(default=false)  # true/false
+		[[braille.UEB]]
+			startMode = string(default="Grade2")   # Grade1/Grade2 -- assumed starting mode UEB braille (Grade1 assumes we are in G1 passage mode)
+			useSpacesAroundAllOperators = string(default=false)  # true/false
 
 			# UEB Guide to Technical Material (https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf)
 			#   says to normally treat Fraktur and DoubleStruck as Script
 			# Here we provide an option to specify a transcriber-defined typeform prefix indicator instead
 			# Note: here are prefixes for 1st - 5th: "⠈⠼", "⠘⠼", "⠸⠼", "⠐⠼", "⠨⠼"
-			DoubleStruck = string(default="⠈")     # script
-			Fraktur  = string(default="⠈")     # script
-			SansSerif = string(default="⠈⠼")     # first transcriber-defined typeform prefix indicator
-			GreekVariant = string(default="⠨")     # default to Greek
+			doubleStruck = string(default="⠈")     # script
+			fraktur  = string(default="⠈")     # script
+			sansSerif = string(default="⠈⠼")     # first transcriber-defined typeform prefix indicator
+			greekVariant = string(default="⠨")     # default to Greek
 
-		[[Braille.Vietnam]]
-			UseDropNumbers = boolean(default=false)    # drop digits down a row in simple numeric fractions
+		[[braille.vietnam]]
+			useDropNumbers = boolean(default=false)    # drop digits down a row in simple numeric fractions
 			# The guideline is being revised -- current guidance is to follow UEB for alternative scripts
 			# UEB Guide to Technical Material (https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf)
 			#   says to normally treat Fraktur and DoubleStruck as Script
 			# Here we provide an option to specify a transcriber-defined typeform prefix indicator instead
 			# Note: here are prefixes for 1st - 5th: "⠈⠼", "⠘⠼", "⠸⠼", "⠐⠼", "⠨⠼"
-			DoubleStruck = string(default="⠈")     # script
-			Fraktur = string(default="⠈")     # script
-			SansSerif = string(default="⠈⠼")    # first transcriber-defined typeform prefix indicator
-			GreekVariant = string(default="⠸")     # default to Greek
+			doubleStruck = string(default="⠈")     # script
+			fraktur = string(default="⠈")     # script
+			sansSerif = string(default="⠈⠼")    # first transcriber-defined typeform prefix indicator
+			greekVariant = string(default="⠸")     # default to Greek
 
-		[[Braille.LaTeX]]
-			UseShortName = boolean(default=false)   # Use the short form for the latex (e.g., "~a" instead of "\alpha")
+		[[braille.LaTeX]]
+			useShortName = boolean(default=false)   # Use the short form for the latex (e.g., "~a" instead of "\alpha")
 
 
-	[[Other]]
-		DecimalSeparators = string(default=".") # [default]
-		BlockSeparators = string(default=", \u00a0\u202f") # [default -- includes two forms of non-breaking spaces]
-		DecimalSeparator = string(default="Auto") # Auto, '.', ',', Custom
+	[[other]]
+		decimalSeparators = string(default=".") # [default]
+		blockSeparators = string(default=", \u00a0\u202f") # [default -- includes two forms of non-breaking spaces]
+		decimalSeparator = string(default="Auto") # Auto, '.', ',', Custom
 """
 
 #: The configuration specification
