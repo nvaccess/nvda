@@ -1008,7 +1008,7 @@ def test_ariaTreeGrid_browseMode():
 
 def ARIAInvalid_spellingAndGrammar():
 	"""
-	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	Tests ARIA invalid values of "spelling" and "grammar".
 	"""
 	_chrome.prepareChrome(
 		r"""
