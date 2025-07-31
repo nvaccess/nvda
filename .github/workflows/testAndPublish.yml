@@ -78,7 +78,7 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
     - name: Set cache key for SCons MSVC Cache
       shell: bash
-      run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}-${{ matrix.pythonVersion }}-${{ matrix.arch }}" >> $GITHUB_ENV
+      run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
     # On Github Actions, it can take more than two minutes for SCons to collect information about MSVC tooling, majorly impacting build performance.
     # This information is static for the current Github Actions runner image.
     # Therefore, cache this information with a key scoped to the current image version, ensuring that subsequent workflow runs will be much faster.
