@@ -3037,7 +3037,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("Select braille highlights option", self.navCopyAsList)
 		self.brailleHighlightsList.SetSelection(
 			BrailleOptions.BrailleNavHighlight.value.index(
-				config.conf["math"]["braille"]["brailleNavHighlight"]
+				config.conf["math"]["braille"]["brailleNavHighlight"],
 			),
 		)
 

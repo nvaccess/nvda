@@ -91,7 +91,7 @@ class MathCATUserPreferences:
 					prefs[key1][key2] = mathConf[convertedKey1][convertedKey2]
 				except Exception:
 					log.warning(
-						f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default."
+						f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.",
 					)
 		return MathCATUserPreferences(prefs)
 
