@@ -40,7 +40,7 @@ class CType(abc.ABC):
 
 
 # Hacky, but there's no other way to get to the base class for ctypes types.
-CType.register(ctypes.c_int.__mro__[2])
+CType.register(ctypes.c_int.__mro__[-2])
 
 if typing.TYPE_CHECKING:
 	from ctypes import _Pointer as Pointer
@@ -100,7 +100,7 @@ def getFuncSpec(
 
 	This function inspects the signature and type annotations of the given Python function to determine the argument types,
 	parameter flags (input/output), and return type(s) for use with ctypes. It enforces that all parameters and the return
-	type are properly annotated with ctypes-compatible types, and supports handling of output parameters via `Annotated` types.
+	type are properly annotated with ctypes-compatible types, and supports handling of output parameters via ``Annotated`` types.
 
 	:param pyFunc: The Python function to inspect. Must have type annotations for all parameters and the return type.
 	:param restype: Optional explicit ctypes return type. Required if the function has output parameters.
@@ -108,7 +108,7 @@ def getFuncSpec(
 	:raises TypeError: If parameter kinds are unsupported, type annotations are missing or invalid, or output parameter annotations are incorrect.
 	:raises IndexError: If output parameter positions are invalid or duplicated.
 
-	:returns: A `FuncSpec` object containing the ctypes-compatible function specification.
+	:returns: A :class:`FuncSpec` object containing the ctypes-compatible function specification.
 	"""
 	sig = inspect.signature(pyFunc)
 	# Extract argument types from annotations
