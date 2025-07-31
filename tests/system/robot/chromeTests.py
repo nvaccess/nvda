@@ -1154,6 +1154,9 @@ def test_ariaRoleDescription_focus():
 	)
 
 
+IMG_DESC_MSG = "To get missing image descriptions, open the context menu."
+
+
 def test_ariaRoleDescription_inline_browseMode():
 	"""
 	NVDA should report the custom role for inline elements in browse mode.
@@ -1171,24 +1174,19 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Start  drawing  Our logo  End",
+		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}  End",
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our",
+		"Unlabeled graphic  Our",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"logo  out of drawing",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"End",
+		"logo.",
 	)
 
 
@@ -1255,14 +1253,14 @@ def test_ariaRoleDescription_inline_contentEditable():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Start  drawing  Our logo    End",
+		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}    End",
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our logo    out of drawing",
+		f"Unlabeled graphic  Our logo. {IMG_DESC_MSG}    out of Unlabeled graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
