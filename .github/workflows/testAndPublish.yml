@@ -68,8 +68,8 @@ jobs:
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
-      with:
-        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
+      env:
+        UV_PYTHON: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -211,7 +211,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64, x86]
+        arch: [x64, x86]
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -289,7 +289,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64, x86]
+        arch: [x64, x86]
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     outputs:
@@ -370,7 +370,7 @@ jobs:
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
-        arch: [x86_64, x86]
+        arch: [x64, x86]
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -429,7 +429,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64, x86]
+        arch: [x64, x86]
     outputs:
       # Note: each output variable is overwritten by the last job in the matrix.
       # So we only set the output variables for the default architecture.
