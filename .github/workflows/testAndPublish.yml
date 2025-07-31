@@ -127,7 +127,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: 3.11.9
+        python-version: ${{ env.pythonVersion }}
         architecture: ${{ env.arch }}
     - name: Install pre-commit
       run: |
