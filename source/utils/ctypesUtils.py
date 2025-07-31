@@ -13,6 +13,8 @@ import dataclasses
 import types
 import typing
 from enum import IntEnum
+from typing import Annotated, Any
+
 
 from logHandler import log
 
@@ -24,7 +26,17 @@ class ParamDirectionFlag(IntEnum):
 	"""Specifies an input parameter to the function."""
 	OUT = 2
 	"""Output parameter. The foreign function fills in a value."""
-	# Note: IN | OUT is not supported, as ctypes will require this as input parameter and will also return it, which is useless.
+	IN_OUT = IN
+	"""
+	Synonym to IN.
+	Note that ctypes also supports a value of IN | OUT.
+	However, marking a parameter as such makes no sense, as it must be provided as input parameter but is also returned as output parameter.
+	In other words, it would behave like this:
+		def func(in): return in
+	Therefore, such parameters can simply be treated as input parameters.
+	ctypes will still be able to fill in values in these parameters.
+	This synonym is therefore only meant for convenience, to make it clear that the parameter is both an input and output parameter.
+	"""
 
 
 class CType(abc.ABC):
@@ -74,7 +86,7 @@ class OutParam:
 	"""The default value for the output parameter."""
 
 
-def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: typing.Any) -> typing.Any:
+def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: Any) -> Any:
 	if result == 0:
 		raise ctypes.WinError()
 	return args
@@ -125,7 +137,7 @@ def getFuncSpec(
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
 		elif typing.get_origin(t) in (typing.Union, types.UnionType):
 			t = next((c for c in typing.get_args(t) if issubclass(c, CType)), t)
-		elif typing.get_origin(t) is typing.Annotated:
+		elif typing.get_origin(t) is Annotated:
 			if len(t.__metadata__) != 1 or not issubclass(t.__metadata__[0], CType):
 				raise TypeError(f"Expected single annotation of a ctypes type for parameter: {param.name}")
 			t = t.__metadata__[0]
@@ -153,7 +165,7 @@ def getFuncSpec(
 		restypes = [expectedRestype]
 	for i, t in enumerate(restypes):
 		handledPositions = []
-		isAnnotated = typing.get_origin(t) is typing.Annotated and len(t.__metadata__) == 1
+		isAnnotated = typing.get_origin(t) is Annotated and len(t.__metadata__) == 1
 		if requireOutParamAnnotations:
 			if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
 				raise TypeError(f"Expected single annotation of type 'OutParam' for parameter: {param.name}")
