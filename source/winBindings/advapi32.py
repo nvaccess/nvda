@@ -13,6 +13,8 @@ from ctypes.wintypes import (
 	BOOL,
 	DWORD,
 	HANDLE,
+	HKEY,
+	LONG,
 )
 
 __all__ = ("OpenProcessToken",)
@@ -31,3 +33,7 @@ OpenProcessToken.argtypes = (
 	POINTER(HANDLE),  # TokenHandle
 )
 OpenProcessToken.restype = BOOL
+
+RegCloseKey = dll.RegCloseKey
+RegCloseKey.argtypes = (HKEY,)
+RegCloseKey.restype = LONG

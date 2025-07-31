@@ -51,6 +51,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 * `hwPortUtils.ValidHandle` has been removed with no public replacement.
+* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPROPKEY`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`. (#18207)
+* `hwPortUtils.CM_Get_Device_ID` has been moved to `winBindings.cfgmgr32`. (#18207)
 
 #### Deprecations
 
