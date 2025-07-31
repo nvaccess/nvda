@@ -342,7 +342,7 @@ jobs:
       uses: actions/upload-artifact@v4
       id: uploadBuildArtifacts
       with:
-        name: Documentation files and packaging metadata
+        name: Documentation files and packaging metadata ((${{ matrix.pythonVersion }}, ${{ matrix.arch }}))
         path: |
           output/*.html
           output/*.css
