@@ -10,6 +10,7 @@ from . import rulesUtils
 from .MathCATPreferences import UserInterface
 
 
+
 def getLanguages() -> tuple[list[str], list[str]]:
 	"""Populate the language choice dropdown with available languages and their regional variants.
 
@@ -30,7 +31,7 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			# add to the listbox the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
-			log.info(f'regionalCode: {regionalCode}, langDesc: {langDesc}')
+			log.info(f"regionalCode: {regionalCode}, langDesc: {langDesc}")
 			if langDesc is not None:
 				languageOptions.append(f"{langDesc} ({regionalCode})")
 			else:
@@ -70,6 +71,7 @@ def getLanguageCode(langChoice: wx.Choice) -> str:
 	langSelection: str = langChoice.GetStringSelection()
 	langCode: str = langSelection[langSelection.find("(") + 1 : langSelection.find(")")]
 	return langCode
+
 
 def getSpeechStyles(languageCode: str) -> list[str]:
 	"""Get all the speech styles for the current language.

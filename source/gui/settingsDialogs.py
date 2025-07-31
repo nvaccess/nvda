@@ -2696,25 +2696,30 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 
+
 class SpeechOptions(Enum):
-    DecimalSeparator = ("Auto", ".", ",", "Custom")
-    Impairment = ("LearningDisability", "Blindness", "LowVision")
-    Verbosity = ("Terse", "Medium", "Verbose")
-    SubjectArea = ("General",)
-    Chemistry = ("SpellOut", "Off")
+	DecimalSeparator = ("Auto", ".", ",", "Custom")
+	Impairment = ("LearningDisability", "Blindness", "LowVision")
+	Verbosity = ("Terse", "Medium", "Verbose")
+	SubjectArea = ("General",)
+	Chemistry = ("SpellOut", "Off")
+
 
 class NavigationOptions(Enum):
-    NavMode = ("Enhanced", "Simple", "Character")
-    NavVerbosity = ("Terse", "Medium", "Verbose")
-    CopyAs = ("MathML", "LaTeX", "ASCIIMath", "Speech")
+	NavMode = ("Enhanced", "Simple", "Character")
+	NavVerbosity = ("Terse", "Medium", "Verbose")
+	CopyAs = ("MathML", "LaTeX", "ASCIIMath", "Speech")
+
 
 class BrailleOptions(Enum):
-    BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
+	BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
+
 
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
 PAUSE_FACTOR_SCALE: float = 9.5
 PAUSE_FACTOR_LOG_BASE: float = 1.4
+
 
 class MathSettingsPanel(SettingsPanel):
 	# Translators: Title of the math settings panel.
@@ -2758,7 +2763,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Have MathCAT generate speech for specific impairments", self.impairmentList)
 		self.impairmentList.SetSelection(
-			SpeechOptions.Impairment.value.index(config.conf["math"]["speech"]["impairment"])
+			SpeechOptions.Impairment.value.index(config.conf["math"]["speech"]["impairment"]),
 		)
 
 		# Translators: MathCAT language option
@@ -2793,7 +2798,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Decimal separators", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
-			SpeechOptions.DecimalSeparator.value.index(config.conf["math"]["other"]["decimalSeparator"])
+			SpeechOptions.DecimalSeparator.value.index(config.conf["math"]["other"]["decimalSeparator"]),
 		)
 
 		# Translators: Select a speech style.
@@ -2824,7 +2829,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Control how verbose MathCAT’s speech output should be", self.speechAmountList)
 		self.speechAmountList.SetSelection(
-			SpeechOptions.Verbosity.value.index(config.conf["math"]["speech"]["verbosity"])
+			SpeechOptions.Verbosity.value.index(config.conf["math"]["speech"]["verbosity"]),
 		)
 
 		# Translators: MathCAT's relative speed setting
@@ -2868,7 +2873,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Select subject area", self.subjectAreaList)
 		self.subjectAreaList.SetSelection(
-			SpeechOptions.SubjectArea.value.index(config.conf["math"]["speech"]["subjectArea"])
+			SpeechOptions.SubjectArea.value.index(config.conf["math"]["speech"]["subjectArea"]),
 		)
 
 		# Translators: label for pull down to specify how verbose/terse the speech should be
@@ -2914,7 +2919,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Select MathCAT's navigation mode", self.navModeList)
 		self.navModeList.SetSelection(
-			NavigationOptions.NavMode.value.index(config.conf["math"]["navigation"]["navMode"])
+			NavigationOptions.NavMode.value.index(config.conf["math"]["navigation"]["navMode"]),
 		)
 
 		# Translators: label for pull down to specify whether the expression is spoken or described (an overview)
@@ -2968,7 +2973,7 @@ class MathSettingsPanel(SettingsPanel):
 			self.navSpeechAmountList,
 		)
 		self.navSpeechAmountList.SetSelection(
-			NavigationOptions.NavVerbosity.value.index(config.conf["math"]["navigation"]["navVerbosity"])
+			NavigationOptions.NavVerbosity.value.index(config.conf["math"]["navigation"]["navVerbosity"]),
 		)
 
 		# Translators: label for pull down to specify how math will be copied to the clipboard
@@ -2990,7 +2995,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Select format for copying", self.navCopyAsList)
 		self.navCopyAsList.SetSelection(
-			NavigationOptions.CopyAs.value.index(config.conf["math"]["navigation"]["copyAs"])
+			NavigationOptions.CopyAs.value.index(config.conf["math"]["navigation"]["copyAs"]),
 		)
 
 		# Translators: Text for the braille group.
@@ -3031,26 +3036,24 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("Select braille highlights option", self.navCopyAsList)
 		self.brailleHighlightsList.SetSelection(
-			BrailleOptions.BrailleNavHighlight.value.index(config.conf["math"]["braille"]["brailleNavHighlight"])
+			BrailleOptions.BrailleNavHighlight.value.index(
+				config.conf["math"]["braille"]["brailleNavHighlight"]
+			),
 		)
 
 	def onSave(self):
-
 		import math
 
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
+
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = SpeechOptions.Impairment.value[self.impairmentList.GetSelection()]
-		mathConf["speech"]["language"] = self.languageCodes[
-			self.languageList.GetSelection()
-		]
+		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
 		mathConf["other"]["decimalSeparator"] = SpeechOptions.DecimalSeparator.value[
 			self.decimalSeparatorList.GetSelection()
 		]
 		mathConf["speech"]["speechStyle"] = self.speechStyleList.GetStringSelection()
-		mathConf["speech"]["verbosity"] = SpeechOptions.Verbosity.value[
-			self.speechAmountList.GetSelection()
-		]
+		mathConf["speech"]["verbosity"] = SpeechOptions.Verbosity.value[self.speechAmountList.GetSelection()]
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
@@ -3064,9 +3067,7 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["speech"]["chemistry"] = SpeechOptions.Chemistry.value[
 			self.speechForChemicalList.GetSelection()
 		]
-		mathConf["navigation"]["navMode"] = NavigationOptions.NavMode.value[
-			self.navModeList.GetSelection()
-		]
+		mathConf["navigation"]["navMode"] = NavigationOptions.NavMode.value[self.navModeList.GetSelection()]
 		mathConf["navigation"]["resetNavMode"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["navVerbosity"] = NavigationOptions.NavVerbosity.value[
 			self.navSpeechAmountList.GetSelection()
@@ -3074,9 +3075,7 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["navigation"]["overview"] = self.navSpeechList.GetSelection() != 0
 		mathConf["navigation"]["resetOverview"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["autoZoomOut"] = self.navAutoZoomCheckBox.GetValue()
-		mathConf["navigation"]["copyAs"] = NavigationOptions.CopyAs.value[
-			self.navCopyAsList.GetSelection()
-		]
+		mathConf["navigation"]["copyAs"] = NavigationOptions.CopyAs.value[self.navCopyAsList.GetSelection()]
 
 		mathConf["braille"]["brailleNavHighlight"] = BrailleOptions.BrailleNavHighlight.value[
 			self.brailleHighlightsList.GetSelection()
@@ -3084,6 +3083,7 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["braille"]["brailleCode"] = self.brailleMathCodeList.GetStringSelection()
 		mcPrefs: MathCATUserPreferences = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.save()
+
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.

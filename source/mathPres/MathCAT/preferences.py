@@ -24,6 +24,7 @@ def getBrailleCodes() -> list[str]:
 				resultBrailleCodes.append(brailleCode)
 	return resultBrailleCodes
 
+
 def toNVDAConfigKey(key: str) -> str:
 	"""Converts a key for MathCAT's preferences (UpperCamelCase) to a
 	key for NVDA's configobj-based configuration (lowerCamelCase).
@@ -35,16 +36,17 @@ def toNVDAConfigKey(key: str) -> str:
 	else:
 		return key[0].lower() + key[1:]
 
+
 PreferencesDict: TypeAlias = dict[str, dict[str, int | str | bool]]
 
-class MathCATUserPreferences:
 
+class MathCATUserPreferences:
 	_prefs: PreferencesDict
 
 	@staticmethod
 	def defaults() -> PreferencesDict:
 		return {
-			"Speech" : {
+			"Speech": {
 				"Impairment": "Blindness",
 				"Language": "en",
 				"Verbosity": "Medium",
@@ -88,7 +90,9 @@ class MathCATUserPreferences:
 				try:
 					prefs[key1][key2] = mathConf[convertedKey1][convertedKey2]
 				except Exception:
-					log.warning(f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.")
+					log.warning(
+						f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default."
+					)
 		return MathCATUserPreferences(prefs)
 
 	def save(self) -> None:
@@ -224,9 +228,9 @@ class MathCATUserPreferences:
 			# any value between lower and upper bounds is valid
 			if (
 				int(self._prefs[key1][key2]) >= validValues[0]
-					and int(self._prefs[key1][key2]) <= validValues[1]
-				):
-					return
+				and int(self._prefs[key1][key2]) <= validValues[1]
+			):
+				return
 		except Exception as e:
 			log.exception(f"MathCAT: An exception occurred in validateInt: {e}")
 		# the preferences entry does not exist
