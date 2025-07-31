@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:13\n"
+"POT-Creation-Date: 2025-07-27 23:59+0000\n"
+"PO-Revision-Date: 2025-07-28 00:17\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2139,7 +2139,8 @@ msgstr[3] "Nezdařilo se nainstalovat následující doplňky: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete v protokolu.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3256,7 +3257,7 @@ msgstr "Interpunkce %s"
 #. Translators: Input help mode message for toggle delayed character description command.
 #: globalCommands.py:1224
 msgid "Toggles on and off delayed descriptions for characters on cursor movement"
-msgstr "Zapíná a vypíná prodlevu při popisu znaků při pohybu kurzorem"
+msgstr "Zapíná a vypíná prodlevu při popisu znaků při pohybu kurzoru"
 
 #. Translators: The message announced when toggling the delayed character description setting.
 #: globalCommands.py:1232
@@ -3463,7 +3464,7 @@ msgstr "Žádná výchozí akce"
 #. Translators: Input help mode message for move review cursor to top line command.
 #: globalCommands.py:1767
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na horní řádek aktuálně prohlíženého objektu a přečte ho"
+msgstr "Přesune čtecí kurzor na vrchní řádek aktuálně prohlíženého objektu a přečte ho"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 #: globalCommands.py:1792
@@ -3583,14 +3584,15 @@ msgstr "Žádný popis znaku"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Znak: {character}\n"
+"Popis: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Rozšířený znak ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -3714,7 +3716,7 @@ msgstr "žádné informace na stavovém řádku"
 #. Translators: Input help mode message for command which spells content of the status bar.
 #: globalCommands.py:2911
 msgid "Spells the current application status bar."
-msgstr "Hláskuje stavový řádek aktuální aplikace."
+msgstr "Vyhláskuje stavový řádek aktuální aplikace."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 #: globalCommands.py:2929
@@ -5396,12 +5398,12 @@ msgstr "%s kurzor"
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 #: mouseHandler.py:383
 msgid "Left mouse button lock"
-msgstr "Levé tlačítko myši uzamknuto"
+msgstr "Levé tlačítko myši uzamčeno"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 #: mouseHandler.py:390
 msgid "Left mouse button unlock"
-msgstr "Levé tlačítko myši odemknuto"
+msgstr "Levé tlačítko myši odemčeno"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 #: mouseHandler.py:402
@@ -5712,7 +5714,7 @@ msgstr "Dvojitá hranatá závorka"
 #: msoAutoShapeTypes.py:321
 msgctxt "shape"
 msgid "Double wave"
-msgstr "Dvojitá vlna"
+msgstr "Dvojitá vlnovka"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6573,7 +6575,7 @@ msgstr "Svislý posuv"
 #: msoAutoShapeTypes.py:720
 msgctxt "shape"
 msgid "Wave"
-msgstr "Vlna"
+msgstr "Vlnovka"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7172,7 +7174,7 @@ msgstr "Nedoporučuje se aktualizovat NVDA při vzdáleném ovládání jako ovl
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "Současné připojení nemusí pokračovat při aktualizaci nebo po ní. I když bude pokračovat, nebudete schopni reagovat na výzvy kontroly uživatelských účtů (UAC) z ovládaného počítače. Měli byste pokračovat jen v případě, že máte fyzický přístup k ovládanému počítači.\n\n"
+msgstr "Současné připojení nemusí pokračovat při aktualizaci nebo po ní. I když bude pokračovat, nebudete schopni reagovat na výzvy kontroly uživatelských účtů (UAC) z ovládacího počítače. Měli byste pokračovat jen v případě, že máte fyzický přístup k ovládanému počítači.\n\n"
 "Opravdu chcete pokračovat?"
 
 #. Translators: The title of a dialog.
@@ -7413,7 +7415,7 @@ msgstr "Zakázané"
 #: addonStore\models\status.py:86
 msgctxt "addonStore"
 msgid "Pending removal"
-msgstr "Čeká na odstranění"
+msgstr "Čekající na odstranění"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:88
@@ -11713,7 +11715,7 @@ msgstr "Oprava systému"
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 #: gui\__init__.py:556
 msgid "Please wait while NVDA attempts to fix your system's COM registrations..."
-msgstr "Vyčkejte prosím na dokončení opravy systému..."
+msgstr "Prosím vyčkejte na dokončení opravy systému..."
 
 #. Translators: message shown to the user on COM Registration Fix fail
 #: gui\__init__.py:583
@@ -12069,7 +12071,7 @@ msgstr "Nekompatibilní doplňky"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Následující doplňky nejsou kompatibilní s NVDA {version}. Tyto doplňky nelze povolit. Pro další informace kontaktujte vývojáře doplňků."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12196,7 +12198,7 @@ msgstr "Chyba při aktivaci profilu."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Profil {name} bude trvale odstraněn. Tuto akci nelze vrátit zpět."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12628,7 +12630,7 @@ msgstr "Nedoporučuje se instalovat NVDA při vzdáleném ovládání jako ovlá
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "Nebudete schopni reagovat na výzvy kontroly uživatelských účtů (UAC) z ovládaného počítače. Měli byste pokračovat jen v případě, že máte fyzický přístup k ovládanému počítači.\n\n"
+msgstr "Nebudete schopni reagovat na výzvy kontroly uživatelských účtů (UAC) z ovládacího počítače. Měli byste pokračovat jen v případě, že máte fyzický přístup k ovládanému počítači.\n\n"
 "Opravdu chcete pokračovat?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
@@ -12789,7 +12791,7 @@ msgstr "&Neukládat"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Výchozí ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13916,7 +13918,7 @@ msgstr "Smazat všechny důvěryhodné otisky"
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr "Tímto budou odstraněny z paměti NVDA všechny dříve důvěryhodné servery vzdáleného ovládání. Při připojení k dříve důvěryhodnému neznámému serveru budete znovu dotázáni na důvěryhodnost certifikátů.\n\n"
+msgstr "Tímto budou odstraněny z paměti NVDA všechny dříve důvěryhodné servery vzdáleného ovládání. Při připojení k dříve důvěryhodnému neznámému serveru budete znovu dotázáni na důvěryhodnost certifikátu.\n\n"
 "Opravdu chcete pokračovat?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
@@ -15398,10 +15400,10 @@ msgstr "Instalace doplňku"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Probíhá instalace {num} doplňku, prosím čekejte."
+msgstr[1] "Probíhá instalace {num} doplňků, prosím čekejte."
+msgstr[2] "Probíhá instalace {num} doplňku, prosím čekejte."
+msgstr[3] "Probíhá instalace {num} doplňků, prosím čekejte."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15410,10 +15412,10 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Probíhá stahování {num} doplňku, zrušit stahování?"
+msgstr[1] "Probíhá stahování {num} doplňků, zrušit stahování?"
+msgstr[2] "Probíhá stahování {num} doplňku, zrušit stahování?"
+msgstr[3] "Probíhá stahování {num} doplňků, zrušit stahování?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15793,10 +15795,10 @@ msgstr "aktivovat"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{num} návrh"
+msgstr[1] "{num} návrhy"
+msgstr[2] "{num} návrhu"
+msgstr[3] "{num} návrhů"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -18924,7 +18926,7 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Continue connecting anyway?"
 msgstr "Nelze ověřit certifikát tohoto serveru. Použitím nesprávného otisku může třetí strana získat přístup k relaci vzdáleného ovládání.\n\n"
 "Než budete pokračovat, ujistěte se, že následující otisk certifikátu serveru je správný.\n"
-"Server SHA256 otisk: {fingerprint}\n\n"
+"Otisk serveru SHA256: {fingerprint}\n\n"
 "I přesto si přejete pokračovat?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
