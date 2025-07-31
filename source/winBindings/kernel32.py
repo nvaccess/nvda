@@ -13,6 +13,7 @@ from ctypes.wintypes import (
 	DWORD,
 	HANDLE,
 	HMODULE,
+	LPCWSTR,
 )
 
 __all__ = (
@@ -42,3 +43,17 @@ Retrieves the fully qualified path for the file that contains the specified modu
 """
 GetModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
 GetModuleFileName.restype = DWORD
+
+LoadLibraryEx = dll.LoadLibraryExW
+"""
+Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw
+"""
+LoadLibraryEx.argtypes = (
+	LPCWSTR,  # lpLibFileName
+	HANDLE,  # hFile
+	DWORD,  # dwFlags
+)
+LoadLibraryEx.restype = HMODULE

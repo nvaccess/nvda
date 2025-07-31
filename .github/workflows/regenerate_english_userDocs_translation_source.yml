@@ -9,7 +9,7 @@ on:
 
 jobs:
   rebuild-translation-source:
-    runs-on: windows-latest
+    runs-on: windows-2025
 
     steps:
     - name: Checkout repository
@@ -17,10 +17,11 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up python
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.11.9'
+        architecture: 'x86'
 
     - name: Install dependencies
       run: |

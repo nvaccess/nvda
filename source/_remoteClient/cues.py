@@ -9,6 +9,7 @@ from typing import TypedDict
 import globalVars
 import nvwave
 import ui
+from logHandler import log
 
 
 class Cue(TypedDict, total=False):
@@ -54,7 +55,13 @@ def _playCue(cueName: str) -> None:
 	"""Helper function to play a cue by name"""
 	# Play wave file
 	if wave := CUES[cueName].get("wave"):
-		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
+		filePath = os.path.join(globalVars.appDir, "waves", wave + ".wav")
+		try:
+			nvwave.playWaveFile(filePath)
+		except Exception:
+			# We mustn't log at error level, as this may play a sound
+			# and playing a sound is what caused this exception.
+			log.debugWarning(f"Failed to play cue {filePath!r}.", exc_info=True)
 
 	# Show message if specified
 	if message := CUES[cueName].get("message"):

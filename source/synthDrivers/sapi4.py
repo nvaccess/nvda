@@ -87,6 +87,9 @@ from speech.commands import (
 from speech.types import SpeechSequence
 
 
+windll.ole32.CoTaskMemAlloc.restype = c_void_p
+
+
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
 

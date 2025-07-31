@@ -7,10 +7,6 @@ version: "{branch}-{build}"
 
 branches:
  only:
-  - master
-  - beta
-  - rc
-  - /try-.*/
   - /release-.*/
 
 environment:
