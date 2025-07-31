@@ -47,7 +47,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64, x86]
+        arch: [x64, x86]
+    env:
+      uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     outputs:
       # Note: each output variable is overwritten by the last job in the matrix.
       version: ${{ steps.releaseInfo.outputs.VERSION }}
@@ -67,7 +69,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
       with:
-        python-version: cpython-${{ env.pythonVersion }}-windows-${{ matrix.arch }}-none
+        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -210,6 +212,8 @@ jobs:
       fail-fast: false
       matrix:
         arch: [x86_64, x86]
+    env:
+      uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -225,7 +229,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
       with:
-        python-version: cpython-${{ env.pythonVersion }}-windows-${{ matrix.arch }}-none
+        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
@@ -286,6 +290,8 @@ jobs:
       fail-fast: false
       matrix:
         arch: [x86_64, x86]
+    env:
+      uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     outputs:
       # Note: each output variable is overwritten by the last job in the matrix.
       # So we only set the output variables for the default architecture.
@@ -306,7 +312,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
       with:
-        python-version: cpython-${{ env.pythonVersion }}-windows-${{ matrix.arch }}-none
+        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -365,6 +371,8 @@ jobs:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
         arch: [x86_64, x86]
+    env:
+      uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -380,7 +388,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
       with:
-        python-version: cpython-${{ env.pythonVersion }}-windows-${{ matrix.arch }}-none
+        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Get NVDA launcher
       id: getLauncher
       uses: actions/download-artifact@v4
