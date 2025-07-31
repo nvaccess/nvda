@@ -200,6 +200,7 @@ class RemoteClient:
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
+		self.connecting = True
 		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
@@ -299,6 +300,19 @@ class RemoteClient:
 				stack_info=True,
 			)
 			return
+		if self.isConnected() or self.connecting:
+			gui.messageBox(
+				pgettext(
+					"remote",
+					# Translators: Message shown when trying to connect while already connected.
+					"A Remote Access session is already in progress. Disconnect before starting a new session.",
+				),
+				# Translators: Title of the connection error dialog.
+				pgettext("remote", "Already Connected"),
+				wx.OK | wx.ICON_WARNING,
+			)
+			return
+
 		previousConnections = configuration.getRemoteConfig()["connections"]["lastConnected"]
 		hostnames = list(reversed(previousConnections))
 		dlg = dialogs.DirectConnectDialog(
@@ -343,6 +357,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
 		log.info("Successfully connected as leader")
+		self.connecting = False
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
@@ -391,6 +406,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
+		self.connecting = False
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
