@@ -463,7 +463,7 @@ jobs:
     - name: Save artifact metadata
       shell: bash
       id: defaultArtifact
-      if: ${{ matrix.arch }} == ${{ env.defaultArch }} && ${{ matrix.pythonVersion }} == ${{ env.defaultPythonVersion }}
+      if: ${{ matrix.arch == env.defaultArch && matrix.pythonVersion == env.defaultPythonVersion }}
       run: echo artifactId=${{ steps.uploadArtifact.outputs.artifact-id }} >> $GITHUB_OUTPUT
 
   allTestsPass:
