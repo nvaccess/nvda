@@ -156,7 +156,7 @@ def playWaveFile(
 			log.debugWarning("Unable to play wave file as the render endpoint was not found.", exc_info=True)
 			return
 		# In other cases, we should still raise.
-		raise exception
+		raise
 	if asynchronous:
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
