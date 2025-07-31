@@ -68,8 +68,8 @@ jobs:
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
-      env:
-        UV_PYTHON: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
+      with:
+        python-version: cpython-${{ env.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
