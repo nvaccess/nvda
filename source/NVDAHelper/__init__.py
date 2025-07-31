@@ -43,9 +43,9 @@ if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
 
-versionedLibX86Path = os.path.join(versionedLibPath, 'x86')
-versionedLibAMD64Path = os.path.join(versionedLibPath, 'x64')
-versionedLibARM64Path = os.path.join(versionedLibPath, 'arm64')
+versionedLibX86Path = os.path.join(versionedLibPath, "x86")
+versionedLibAMD64Path = os.path.join(versionedLibPath, "x64")
+versionedLibARM64Path = os.path.join(versionedLibPath, "arm64")
 
 match sysconfig.get_platform():
 	case "win-amd64":
