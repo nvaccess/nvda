@@ -60,11 +60,11 @@ from config.configFlags import (
 	RemoteServerType,
 	ReportCellBorders,
 	ReportLineIndentation,
+	ReportNotSupportedLanguage,
 	ReportTableHeaders,
 	ShowMessages,
 	TetherTo,
 	TypingEcho,
-	ReportNotSupportedLanguage,
 )
 from logHandler import log
 from NVDAState import WritePaths
@@ -2728,8 +2728,7 @@ class MathSettingsPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		from mathPres.MathCAT import localization
-		from mathPres.MathCAT import preferences
+		from mathPres.MathCAT import localization, preferences
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 

@@ -6,8 +6,9 @@ import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
 
-from .MathCATPreferences import UserInterface
 from . import rulesUtils
+from .MathCATPreferences import UserInterface
+
 
 def getLanguages() -> tuple[list[str], list[str]]:
 	"""Populate the language choice dropdown with available languages and their regional variants.

@@ -1,10 +1,13 @@
-from .MathCATPreferences import UserInterface
 import os
+from typing import TypeAlias
+
+import config
 import yaml
 from logHandler import log
-from typing import TypeAlias
-import config
+
+from .MathCATPreferences import UserInterface
 from .rulesUtils import getRulesFiles
+
 
 def getBrailleCodes() -> list[str]:
 	"""Initializes and populates the braille code choice control with available braille codes.

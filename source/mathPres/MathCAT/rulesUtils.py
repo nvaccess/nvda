@@ -5,6 +5,7 @@ from zipfile import ZipFile
 
 from logHandler import log
 
+
 def getRulesFiles(
 	pathToDir: str,
 	processSubDirs: Callable[[str, str], list[str]] | None,
