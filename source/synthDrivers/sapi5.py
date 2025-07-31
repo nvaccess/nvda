@@ -49,7 +49,6 @@ import config
 from logHandler import log
 import weakref
 import languageHandler
-import winBindings.ole32
 
 from speech.commands import (
 	IndexCommand,
