@@ -457,7 +457,7 @@ jobs:
       id: uploadArtifact
       uses: actions/upload-artifact@v4
       with:
-        name: Symbols (${{ matrix.arch }})
+        name: Symbols (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output/symbols.zip
     - name: Save artifact metadata
       shell: bash
@@ -498,7 +498,7 @@ jobs:
     - name: Get symbols
       uses: actions/download-artifact@v4
       with:
-        name: Symbols (${{ env.defaultArch }})
+        name: Symbols (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
     - name: Upload symbols to Mozilla
       continue-on-error: true
