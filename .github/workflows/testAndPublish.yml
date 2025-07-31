@@ -37,6 +37,8 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
+  arch: x86
+  pythonVersion: '3.11.9'
 
 jobs:
   buildNVDA:
@@ -55,8 +57,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set version variables
@@ -106,8 +108,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Static type analysis
@@ -125,8 +127,8 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: 'x86'
+        python-version: 3.11.9
+        architecture: ${{ env.arch }}
     - name: Install pre-commit
       run: |
         python -m pip install --upgrade pip
@@ -157,8 +159,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Check comments for translators
@@ -186,8 +188,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: License check
@@ -207,8 +209,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Run unit tests
@@ -253,8 +255,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
@@ -280,8 +282,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set version variables
@@ -347,8 +349,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get NVDA launcher
@@ -437,8 +439,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.9'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get symbols
