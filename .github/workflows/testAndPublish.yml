@@ -334,7 +334,7 @@ jobs:
       id: uploadLauncher
       uses: actions/upload-artifact@v4
       with:
-        name: NVDA launcher ((${{ matrix.pythonVersion }}, ${{ matrix.arch }}))
+        name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: |
           output/nvda*.exe
           output/nvda*controllerClient.zip
@@ -342,7 +342,7 @@ jobs:
       uses: actions/upload-artifact@v4
       id: uploadBuildArtifacts
       with:
-        name: Documentation files and packaging metadata ((${{ matrix.pythonVersion }}, ${{ matrix.arch }}))
+        name: Documentation files and packaging metadata (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: |
           output/*.html
           output/*.css
