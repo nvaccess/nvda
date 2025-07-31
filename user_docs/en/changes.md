@@ -6,11 +6,18 @@
 
 ### New Features
 
-* In the Add-on Store, add-ons can be sorted by minimum and last tested NVDA version.
-Additionally, minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
+* Add-on Store:
+  * Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
+  * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
+  * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 
 ### Changes
 
+* Component updates:
+  * Updated eSpeak NG to [commit `a4ca101`](https://github.com/espeak-ng/espeak-ng/commit/a4ca101c99de35345f89df58195b2159748b7092).
+  There have been improvements to Farsi/Persian. (#18342)
+  * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
+  Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
@@ -20,6 +27,9 @@ Additionally, minimum and last tested version will now be also shown in the deta
 
 * Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+* Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
+* Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+* Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 
 ### Changes for Developers
 
@@ -32,6 +42,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+* `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 
 #### API Breaking Changes
 
@@ -54,6 +65,11 @@ Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
 * `nvwave.WAVEFORMATEX` is deprecated.
 Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
+* The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
+  * `LP_c_ubyte`
+  * `LP_c_ulong`
+  * `LP__ULARGE_INTEGER`
+  * `SynthDriver.isSpeaking`
 
 ## 2025.2
 
