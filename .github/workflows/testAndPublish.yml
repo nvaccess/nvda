@@ -481,7 +481,7 @@ jobs:
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}
-        key: ${{ github.ref }}-${{ github.run_id }}
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -520,10 +520,14 @@ jobs:
     needs: [allTestsPass, crowdinUpload, uploadSymbols]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, x86]
     steps:
       - name: Cleanup cache
         shell: bash
-        run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
+        run: gh cache delete ${{ github.ref }}-${{ github.run_id }}-${{ matrix.arch }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -545,7 +549,7 @@ jobs:
     - name: Get NVDA launcher
       uses: actions/download-artifact@v4
       with:
-        name: NVDA launcher (${{ env.defaultArch}})
+        name: NVDA launcher (${{ env.defaultArch }})
         path: output
     - name: Deploy snapshot
       shell: bash
