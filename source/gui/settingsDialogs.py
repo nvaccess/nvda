@@ -2711,6 +2711,10 @@ class NavigationOptions(Enum):
 class BrailleOptions(Enum):
     BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
 
+# two constants to scale "PauseFactor"
+# these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
+PAUSE_FACTOR_SCALE: float = 9.5
+PAUSE_FACTOR_LOG_BASE: float = 1.4
 
 class MathSettingsPanel(SettingsPanel):
 	# Translators: Title of the math settings panel.
@@ -3031,141 +3035,51 @@ class MathSettingsPanel(SettingsPanel):
 			BrailleOptions.BrailleNavHighlight.value.index(config.conf["math"]["braille"]["brailleNavHighlight"])
 		)
 
-	def setUIValues(self) -> None:
-		"""Sets the UI elements based on the values read from the user preferences.
-
-		Attempts to match preference values to UI controls; falls back to defaults if values are invalid
-		or missing.
-		"""
-		mathConf = config.conf["math"]
-		try:
-			self.impairmentList.SetSelection(
-				self.impairmentOptions.index(mathConf["speech"]["impairment"]),
-			)
-			try:
-				langPref: str = mathConf["speech"]["language"]
-				self.languageList.SetSelection(0)
-				i: int = 1  # no need to test i == 0
-				while i < self.languageList.GetCount():
-					if f"({langPref})" in self.languageList.GetString(i):
-						self.languageList.SetSelection(i)
-						break
-					i += 1
-			except Exception as e:
-				log.exception(
-					f"MathCAT: An exception occurred in setUIValues ('{mathConf['speech']['language']}'): {e}",
-				)
-				# the language in the settings file is not in the folder structure, something went wrong,
-				# set to the first in the list
-				self.languageChoices.SetSelection(0)
-			try:
-				# now get the available SpeechStyles from the folder structure and set to the preference setting is possible
-				self.getSpeechStyles(str(userPreferences["Speech"]["SpeechStyle"]))
-			except Exception as e:
-				log.exception(f"MathCAT: An exception occurred in set_ui_values (getting SpeechStyle): {e}")
-				self._choiceSpeechStyle.Append(
-					"Error when setting SpeechStyle for " + self._choiceLanguage.GetStringSelection(),
-				)
-			# set the rest of the UI elements
-			self._choiceDecimalSeparator.SetSelection(
-				self.decimalSeparatorOptions.index(mathConf["other"]["decimalSeparator"]),
-			)
-			self._choiceSpeechAmount.SetSelection(
-				self.speechAmountOptions.index(mathConf["speech"]["verbosity"]),
-			)
-			self.relativeSpeedSlider.SetValue(mathConf["speech"]["mathRate"])
-			pause_factor = (
-				0
-				if int(mathConf["Speech"]["PauseFactor"]) <= 1
-				else round(
-					math.log(
-						int(mathConf["speech"]["pauseFactor"]) / PAUSE_FACTOR_SCALE,
-						PAUSE_FACTOR_LOG_BASE,
-					),
-				)
-			)
-			self.pauseFactorSlider.SetValue(pause_factor)
-			self.speechSoundCheckBox.SetValue(userPreferences["Speech"]["SpeechSound"] == "Beep")
-			self.speechForChemicalList.SetSelection(
-				self.speechForChemicalOptions.index(mathConf["speech"]["chemistry"]),
-			)
-
-			self.navModeList.SetSelection(
-				self.navModeOptions.index(mathConf["navigation"]["navMode"]),
-			)
-			self.resetNavModeCheckBox.SetValue(mathConf["navigation"]["resetNavMode"])
-			self._navVerbosityList.SetSelection(
-				self.navVerbosityOptions.index(mathConf["navigation"]["navVerbosity"]),
-			)
-			if mathConf["Navigation"]["Overview"]:
-				self.navSpeechList.SetSelection(1)
-			else:
-				self.navSpeechList.SetSelection(0)
-			self.resetNavSpeechCheckBox.SetValue(mathConf["navigation"]["resetOverview"])
-			self.autoZoomCheckBox.SetValue(mathConf["navigation"]["autoZoomOut"])
-			self.copyAsList.SetSelection(
-				self.copyAsOptions.index(mathConf["navigation"]["copyAs"]),
-			)
-
-			self.brailleHighlightsList.SetSelection(
-				self.brailleNavHighlightOptions.index(mathConf["braille"]["brailleNavHighlight"]),
-			)
-			try:
-				braillePref: str = mathConf["braille"]["brailleCode"]
-				i = 0
-				while braillePref != self.brailleMathCodeList.GetString(i):
-					i = i + 1
-					if i == self.brailleMathCodeList.GetCount():
-						break
-				if braillePref == self.brailleMathCodeList.GetString(i):
-					self.brailleMathCodeList.SetSelection(i)
-				else:
-					self.brailleMathCodeList.SetSelection(0)
-			except Exception as e:
-				log.exception(f"MathCAT: An exception occurred while trying to set the Braille code: {e}")
-				# the braille code in the settings file is not in the folder structure, something went wrong,
-				# set to the first in the list
-				self.brailleMathCodeList.SetSelection(0)
-		except KeyError as err:
-			print("Key not found", err)
-
-
 	def onSave(self):
+
+		import math
+
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		mathConf = config.conf["math"]
-		mathConf["speech"]["impairment"] = self.impairmentOptions[self.impairmentList.GetSelection()]
-		mathConf["speech"]["language"] = self.getLanguageCode()
-		mathConf["other"]["decimalSeparator"] = self.decimalSeperatorOptions[
+		mathConf["speech"]["impairment"] = SpeechOptions.Impairment.value[self.impairmentList.GetSelection()]
+		mathConf["speech"]["language"] = self.languageCodes[
+			self.languageList.GetSelection()
+		]
+		mathConf["other"]["decimalSeparator"] = SpeechOptions.DecimalSeparator.value[
 			self.decimalSeparatorList.GetSelection()
 		]
 		mathConf["speech"]["speechStyle"] = self.speechStyleList.GetStringSelection()
-		mathConf["speech"]["verbosity"] = self.verbosityOptions[self.verbosityList.GetSelection()]
-		mathConf["speech"]["mathRate"] = self.rateSlider.GetValue()
+		mathConf["speech"]["verbosity"] = SpeechOptions.Verbosity.value[
+			self.speechAmountList.GetSelection()
+		]
+		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
 			0 if pfSlider == 0 else round(PAUSE_FACTOR_SCALE * math.pow(PAUSE_FACTOR_LOG_BASE, pfSlider))
 		)  # avoid log(0)
 		mathConf["speech"]["pauseFactor"] = pauseFactor
-		if self.speechSoundCheckbox.GetValue():
+		if self.speechSoundCheckBox.GetValue():
 			mathConf["speech"]["speechSound"] = "Beep"
 		else:
 			mathConf["speech"]["speechSound"] = "None"
-		mathConf["speech"]["chemistry"] = self.speechForChemicalOptions[
+		mathConf["speech"]["chemistry"] = SpeechOptions.Chemistry.value[
 			self.speechForChemicalList.GetSelection()
 		]
-		mathConf["navigation"]["navMode"] = self.navModeOptions[
+		mathConf["navigation"]["navMode"] = NavigationOptions.NavMode.value[
 			self.navModeList.GetSelection()
 		]
-		mathConf["navigation"]["resetNavMode"] = self.resetNavigationModeCheckBox.GetValue()
-		mathConf["navigation"]["navVerbosity"] = self.navVerbosityOptions[
-			self.navVerbosity.GetSelection()
+		mathConf["navigation"]["resetNavMode"] = self.resetNavSpeechCheckBox.GetValue()
+		mathConf["navigation"]["navVerbosity"] = NavigationOptions.NavVerbosity.value[
+			self.navSpeechAmountList.GetSelection()
 		]
-		mathConf["navigation"]["overview"] = self._choiceNavigationSpeech.GetSelection() != 0
+		mathConf["navigation"]["overview"] = self.navSpeechList.GetSelection() != 0
 		mathConf["navigation"]["resetOverview"] = self.resetNavSpeechCheckBox.GetValue()
-		mathConf["navigation"]["autoZoomOut"] = self.automaticZoomCheckBox.GetValue()
-		mathConf["navigation"]["copyAs"] = self.copyAsOptions[self.copyAsList.GetSelection()]
+		mathConf["navigation"]["autoZoomOut"] = self.navAutoZoomCheckBox.GetValue()
+		mathConf["navigation"]["copyAs"] = NavigationOptions.CopyAs.value[
+			self.navCopyAsList.GetSelection()
+		]
 
-		mathConf["braille"]["brailleNavHighlight"] = self.brailleNavHighlightOptions[
+		mathConf["braille"]["brailleNavHighlight"] = BrailleOptions.BrailleNavHighlight.value[
 			self.brailleHighlightsList.GetSelection()
 		]
 		mathConf["braille"]["brailleCode"] = self.brailleMathCodeList.GetStringSelection()

@@ -95,7 +95,7 @@ class MathCATUserPreferences:
 		folder exists, and saves the preferences to disk.
 		"""
 		# Language is special because it is set elsewhere by SetPreference which overrides the user_prefs -- so set it here
-		from . import libmathcat_py as libmathcat
+		import libmathcat_py as libmathcat
 
 		try:
 			libmathcat.SetPreference("Language", self._prefs["Speech"]["Language"])
