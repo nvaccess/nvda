@@ -50,8 +50,7 @@ ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
-	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
-	[Tags]	excluded_from_build
+	[Documentation]	Tests ARIA invalid values of "spelling" and "grammar".
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
