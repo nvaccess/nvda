@@ -248,6 +248,7 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
+		self.connecting = False
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
@@ -263,6 +264,7 @@ class RemoteClient:
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
+		self.connecting = False
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
@@ -270,6 +272,7 @@ class RemoteClient:
 		self.followerSession = None
 		self.followerTransport = None
 		self.sdHandler.followerSession = None
+		self.connecting = False
 
 	@alwaysCallAfter
 	def onConnectAsLeaderFailed(self):
