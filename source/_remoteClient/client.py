@@ -46,7 +46,7 @@ class RemoteClient:
 	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
-	connecting: bool
+	_connecting: bool
 	leaderTransport: Optional[RelayTransport]
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
@@ -65,7 +65,7 @@ class RemoteClient:
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
-		self.connecting = False
+		self._connecting = False
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
@@ -200,7 +200,7 @@ class RemoteClient:
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
-		self.connecting = True
+		self._connecting = True
 		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
@@ -248,7 +248,7 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
-		self.connecting = False
+		self._connecting = False
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
@@ -264,7 +264,7 @@ class RemoteClient:
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
-		self.connecting = False
+		self._connecting = False
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
@@ -272,7 +272,7 @@ class RemoteClient:
 		self.followerSession = None
 		self.followerTransport = None
 		self.sdHandler.followerSession = None
-		self.connecting = False
+		self._connecting = False
 
 	@alwaysCallAfter
 	def onConnectAsLeaderFailed(self):
@@ -303,7 +303,7 @@ class RemoteClient:
 				stack_info=True,
 			)
 			return
-		if self.isConnected() or self.connecting:
+		if self.isConnected() or self._connecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -360,7 +360,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
 		log.info("Successfully connected as leader")
-		self.connecting = False
+		self._connecting = False
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
@@ -409,7 +409,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
-		self.connecting = False
+		self._connecting = False
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
@@ -628,7 +628,7 @@ class RemoteClient:
 		:note: Shows confirmation dialog before connecting
 		:raises: Displays error if already connected
 		"""
-		if self.isConnected() or self.connecting:
+		if self.isConnected() or self._connecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -641,7 +641,7 @@ class RemoteClient:
 			)
 			return
 
-		self.connecting = True
+		self._connecting = True
 		try:
 			serverAddr = conInfo.getAddress()
 			key = conInfo.key
@@ -676,7 +676,7 @@ class RemoteClient:
 			):
 				self.connect(conInfo)
 		finally:
-			self.connecting = False
+			self._connecting = False
 
 	def isConnected(self) -> bool:
 		"""Check if there is an active connection.
