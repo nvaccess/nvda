@@ -5034,7 +5034,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
-		if _remoteClient._remoteClient.isConnected():
+		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.isConnecting:
 			self.script_disconnectFromRemote(gesture)
 		else:
 			self.script_connectToRemote(gesture)
