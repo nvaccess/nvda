@@ -289,6 +289,7 @@ env.recursiveCopy(sourceDir, Dir("miscdeps/source"))
 for targetDir, jabDll in (
 	(sourceLibDir, "windowsaccessbridge-32.dll"),
 	(sourceLibDir64, "windowsaccessbridge-64.dll"),
+	(sourceLibDirArm64EC, "windowsaccessbridge-64.dll"),
 ):
 	Command(
 		targetDir.File("windowsaccessbridge.dll"), env.Dir("#include/javaAccessBridge32").File(jabDll), Copy("$TARGET", "$SOURCE")
