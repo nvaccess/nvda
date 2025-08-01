@@ -31,6 +31,8 @@ class FakeMenu:
 		def Check(self, value):
 			self.checked = value
 
+	def handleConnected(self, *args, **kwargs): ...
+
 
 class FakeTransport:
 	def __init__(self):

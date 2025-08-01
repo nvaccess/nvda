@@ -31,6 +31,7 @@
 * Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
+* Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
 
 ### Changes for Developers
 
