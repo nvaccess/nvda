@@ -29,7 +29,7 @@ Some of these steps run concurrently.
   * Build launcher
   * Install NVDA
   * Run systems tests
-* Deploy (not fully active currently):
+* Deploy:
   * On tagged/snapshot builds, upload symbols to Mozilla
   * On beta branch builds, upload translation to Crowdin.
   * On snapshot builds, deploy to the server.

@@ -76,6 +76,9 @@ def getLangToReport(lang: str) -> str:
 	:param lang: A language code corresponding to the text been read.
 	:return: A language code corresponding to the language to be reported.
 	"""
+	# Ensure the language is in a standard form of xx[_YY],
+	# E.g. en_AU rather than en-au.
+	lang = languageHandler.normalizeLanguage(lang)
 	if config.conf["speech"]["autoLanguageSwitching"] and not config.conf["speech"]["autoDialectSwitching"]:
 		return lang.split("_")[0]
 	return lang

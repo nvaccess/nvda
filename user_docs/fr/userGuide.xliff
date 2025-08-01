@@ -18275,7 +18275,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Rate boost</source>
-        <target>Débit augmenté</target>
+        <target>Débit accéléré</target>
       </segment>
     </unit>
     <unit id="d4345468-4156-49cf-8fcc-9f1cb7c298d1">
@@ -18284,7 +18284,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Enabling this option will significantly increase the speech rate, if supported by the current synthesizer.</source>
-        <target>Activer cette option augmentera significativement le débit de la parole, si le synthétiseur courant le permet.</target>
+        <target>L'activation de cette option augmentera significativement le débit de la parole, si le synthétiseur courant le permet.</target>
       </segment>
     </unit>
     <unit id="5d9c0c5e-ae41-41b0-ae9c-403f7bd54f69">
@@ -18362,54 +18362,54 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#SpeechSettingsUseWasapi}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use modern audio output system (WASAPI)</source>
-        <target>Use modern audio output system (WASAPI)</target>
+        <target>Utilisez le système de sortie audio moderne (WASAPI)</target>
       </segment>
     </unit>
     <unit id="593b7200-9735-43fd-9a06-7064fdb43ff4">
       <notes>
         <note appliesTo="source">line: 1927</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option enables audio output via the Windows Audio Session API (WASAPI).</source>
-        <target>This option enables audio output via the Windows Audio Session API (WASAPI).</target>
+        <target>Cette option active la sortie audio via l'API Windows Audio Session (WASAPI).</target>
       </segment>
     </unit>
     <unit id="f2a9e98d-98ed-4974-878d-d356f3fe9709">
       <notes>
         <note appliesTo="source">line: 1928</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This may improve the responsiveness of some voices.</source>
-        <target>This may improve the responsiveness of some voices.</target>
+        <target>Cela peut améliorer la réactivité de certaines voix.</target>
       </segment>
     </unit>
     <unit id="b84b3b73-0a19-472f-85ed-2331d6590ad9">
       <notes>
         <note appliesTo="source">line: 1929</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, some voices might not work with the current WASAPI implementation.</source>
-        <target>However, some voices might not work with the current WASAPI implementation.</target>
+        <target>Cependant, certaines voix peuvent ne pas fonctionner avec l’implémentation actuelle de WASAPI.</target>
       </segment>
     </unit>
     <unit id="374f8759-e67f-4d52-bbef-abac3fc4b094">
       <notes>
         <note appliesTo="source">line: 1930</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If you find that the voice you are using stops working, you may disable this option.</source>
-        <target>If you find that the voice you are using stops working, you may disable this option.</target>
+        <target>Si vous constatez que la voix que vous utilisez cesse de fonctionner, vous pouvez désactiver cette option.</target>
       </segment>
     </unit>
     <unit id="15fa7772-f9bd-4c7e-8b30-b30fcf0e8e67">
       <notes>
         <note appliesTo="source">line: 1932</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.</source>
-        <target>Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.</target>
+        <target>Notez que les fonctionnalités suivantes dépendent de WASAPI et seront désactivées si WASAPI est désactivé.</target>
       </segment>
     </unit>
     <unit id="387f1d64-171d-4788-a48e-ce8208693262">
@@ -18417,9 +18417,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1934</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For Microsoft Speech API version 4 voices:</source>
-        <target>For Microsoft Speech API version 4 voices:</target>
+        <target>Pour les voix Microsoft Speech API version 4 :</target>
       </segment>
     </unit>
     <unit id="cc618523-bdda-483c-a716-6b14fb062bbd">
@@ -18427,9 +18427,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1935</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Audio ducking</source>
-        <target>Audio ducking</target>
+        <target>Atténuation audio</target>
       </segment>
     </unit>
     <unit id="425f7d44-95c3-4163-8443-db06243488a8">
@@ -18437,9 +18437,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1936</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Leading silence trimming</source>
-        <target>Leading silence trimming</target>
+        <target>Suppression du silence en début de flux audio</target>
       </segment>
     </unit>
     <unit id="eb49790b-5aa8-480a-9b50-b604a610caa4">
@@ -18447,9 +18447,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1937</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Keep audio device awake</source>
-        <target>Keep audio device awake</target>
+        <target>Maintien en éveil du périphérique audio</target>
       </segment>
     </unit>
     <unit id="ae99530d-6b4b-4869-aba6-eea69405b4de">
@@ -18457,9 +18457,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1938</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For Microsoft Speech API version 5 voices:</source>
-        <target>For Microsoft Speech API version 5 voices:</target>
+        <target>Pour les voix Microsoft Speech API version 5 :</target>
       </segment>
     </unit>
     <unit id="31ce8b52-6917-4ae6-af59-810db0f54494">
@@ -18467,9 +18467,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1939</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Rate boost</source>
-        <target>Rate boost</target>
+        <target>Débit accéléré</target>
       </segment>
     </unit>
     <unit id="9cf7271c-813b-489b-8875-91a2dabeccf3">
@@ -18477,9 +18477,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1940</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Leading silence trimming</source>
-        <target>Leading silence trimming</target>
+        <target>Suppression du silence en début de flux audio</target>
       </segment>
     </unit>
     <unit id="1e78ee63-a710-4857-a4d5-7020a17462be">
@@ -18487,9 +18487,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1941</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Keep audio device awake</source>
-        <target>Keep audio device awake</target>
+        <target>Maintien en éveil du périphérique audio</target>
       </segment>
     </unit>
     <unit id="aefb6bcc-25d5-4cba-bc91-f2f8c73e756a">
