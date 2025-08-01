@@ -197,7 +197,7 @@ if apiSigningToken:
 		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
-				ps_cmd = rf"PowerShell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				ps_cmd = rf"PowerShell -File ci\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
@@ -699,6 +699,5 @@ env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
 env.Tool("listModules")
 source = env.Dir(os.path.join(os.getcwd(), "dist"))
-# Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))
