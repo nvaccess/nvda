@@ -264,6 +264,8 @@ class RemoteClient:
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.LEADER, False)
 		self._connecting = False
 
 	def disconnectAsFollower(self):
@@ -272,6 +274,8 @@ class RemoteClient:
 		self.followerSession = None
 		self.followerTransport = None
 		self.sdHandler.followerSession = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 		self._connecting = False
 
 	@alwaysCallAfter
