@@ -30,12 +30,14 @@ class ParamDirectionFlag(IntEnum):
 	"""
 	Synonym to IN.
 	Note that ctypes also supports a value of IN | OUT.
-	However, marking a parameter as such makes no sense, as it must be provided as input parameter but is also returned as output parameter.
+	However, marking a parameter as such makes no sense, as it must be provided as input parameter
+	but is also returned.
 	In other words, it would behave like this:
 		def func(in): return in
 	Therefore, such parameters can simply be treated as input parameters.
 	ctypes will still be able to fill in values in these parameters.
-	This synonym is therefore only meant for convenience, to make it clear that the parameter is both an input and output parameter.
+	This synonym is therefore only meant for convenience,
+	to make it clear that the parameter is both an input and output parameter.
 	"""
 
 
@@ -103,7 +105,9 @@ def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...
 	"""
 	Checks the result of a Windows API call and raises a WinError if the result indicates failure.
 	This function can be used as an error checking callback
-	for ctypes functions that call Windows API functions that return zero on failure, usually ``ctypes.wintypes.BOOL``.
+	for ctypes functions that call Windows API functions that return zero on failure,
+	usually ``ctypes.wintypes.BOOL``.
+
 	:param result: The result returned by the Windows API function.
 	:param func: The ctypes function pointer that was called.
 	:param args: The arguments passed to the function.
@@ -138,14 +142,18 @@ def getFuncSpec(
 	"""
 	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
 
-	This function inspects the signature and type annotations of the given Python function to determine the argument types,
-	parameter flags (input/output), and return type(s) for use with ctypes. It enforces that all parameters and the return
-	type are properly annotated with ctypes-compatible types, and supports handling of output parameters via ``Annotated`` types.
+	This function inspects the signature and type annotations of the given Python function
+	to determine the argument types, parameter flags (input/output), and return type(s) for use with ctypes.
+	It enforces that all parameters and the return type are properly annotated with ctypes-compatible types,
+	and supports handling of output parameters via ``Annotated`` types.
 
-	:param pyFunc: The Python function to inspect. Must have type annotations for all parameters and the return type.
-	:param restype: Optional explicit ctypes return type. Required if the function has output parameters.
+	:param pyFunc: The Python function to inspect.
+		Must have type annotations for all parameters and the return type.
+	:param restype: Optional explicit ctypes return type.
+		Required if the function has output parameters.
 
-	:raises TypeError: If parameter kinds are unsupported, type annotations are missing or invalid, or output parameter annotations are incorrect.
+	:raises TypeError: If parameter kinds are unsupported,
+		type annotations are missing or invalid, or output parameter annotations are incorrect.
 	:raises IndexError: If output parameter positions are invalid or duplicated.
 
 	:returns: A :class:`FuncSpec` object containing the ctypes-compatible function specification.
@@ -252,11 +260,14 @@ def dllFunc(
 	automatically setting argument and return types based on the Python function's signature.
 
 	This decorator simplifies the process of wrapping C functions from a DLL,
-	by inferring argument and return types from the Python function and applying them to the C function pointer.
+	by inferring argument and return types from the Python function and applying them
+	to a new and/or the existing C function pointer.
 
 	:param library: The ctypes.CDLL instance representing the loaded DLL.
-	:param funcName: The name of the function in the DLL. If None, uses the Python function's name.
-	:param restype: Optional explicit ctypes return type. Required if the function has output parameters.
+	:param funcName: The name of the function in the DLL.
+		If None, uses the Python function's name.
+	:param restype: Optional explicit ctypes return type.
+		Required if the function has output parameters.
 	:param cFunctype: The ctypes function type to use (e.g., ctypes.WINFUNCTYPE or ctypes.CFUNCTYPE).
 	:param annotateOriginalCFunc: Whether to annotate the original C function with argtypes/restype.
 	:param wrapNewCFunc: Whether to return a new ctypes function pointer or the original.
