@@ -22,6 +22,7 @@
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
 * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+* The NVDA Remote Access connection dialog now remembers the connection mode of the last manual connection. (#18512)
 
 ### Bug Fixes
 
