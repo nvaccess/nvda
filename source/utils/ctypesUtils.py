@@ -79,9 +79,9 @@ class OutParam:
 	"""The name of the output parameter."""
 	position: int = 0
 	"""The position of the output parameter in argtypes."""
-	type: Pointer | None = None
+	type: Pointer | inspect.Parameter.empty = inspect.Parameter.empty
 	"""The type of the output parameter. This should be a pointer type.
-	If None, the type from the annotation is used and a pointer type is created from it automatically."""
+	If ``inspect.Parameter.empty`` (default), the type from the annotation is used and a pointer type is created from it automatically."""
 	default: CType | inspect.Parameter.empty = inspect.Parameter.empty
 	"""The default value for the output parameter."""
 
@@ -114,7 +114,7 @@ _pyfuncReturn = TypeVar("_pyfuncReturn")
 class FuncSpec(typing.Generic[_pyfuncParams, _pyfuncReturn]):
 	"""Specification of a ctypes function."""
 
-	restype: type[CType]
+	restype: type[CType] | None
 	argtypes: tuple[CType]
 	paramFlags: tuple[
 		tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, int | ctypes._SimpleCData]
@@ -123,7 +123,7 @@ class FuncSpec(typing.Generic[_pyfuncParams, _pyfuncReturn]):
 
 def getFuncSpec(
 	pyFunc: Callable[_pyfuncParams, _pyfuncReturn],
-	restype: type[CType] | None = None,
+	restype: type[CType] | None | inspect.Parameter.empty = inspect.Parameter.empty,
 ) -> FuncSpec[_pyfuncParams, _pyfuncReturn]:
 	"""
 	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
@@ -174,12 +174,12 @@ def getFuncSpec(
 	if expectedRestype is inspect.Signature.empty:
 		raise TypeError("Missing return type annotation")
 	elif isinstance(expectedRestype, tuple):
-		if restype is None:
+		if restype is inspect.Parameter.empty:
 			raise TypeError("restype should be provided when using a tuple for return type")
 		requireOutParamAnnotations = True
 		restypes = list(expectedRestype)
 	else:
-		requireOutParamAnnotations = restype is not None
+		requireOutParamAnnotations = restype is not inspect.Parameter.empty
 		restypes = [expectedRestype]
 	for i, t in enumerate(restypes):
 		handledPositions = []
@@ -197,7 +197,7 @@ def getFuncSpec(
 				raise IndexError(
 					f"Output parameter at position {outParam.position} has already been processed",
 				)
-			if outParam.type is None:
+			if outParam.type is inspect.Parameter.empty:
 				outParam.type = (
 					t.__origin__ if isinstance(t.__origin__, ctypes.Array) else ctypes.POINTER(t.__origin__)
 				)
@@ -230,7 +230,7 @@ def getFuncSpec(
 def dllFunc(
 	library: ctypes.CDLL,
 	funcName: str | None = None,
-	restype: type[CType] = None,
+	restype: type[CType] | None | inspect.Parameter.empty = inspect.Parameter.empty,
 	*,
 	cFunctype: Callable = ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc: bool = False,
@@ -292,13 +292,13 @@ def dllFunc(
 		spec = getFuncSpec(pyFunc, restype)
 		# Set ctypes metadata for the original function in case it is called from outside
 		if annotateOriginalCFunc:
-			if cFunc.argtypes is not None:
+			if cFunc.argtypes != spec.argtypes:
 				log.warning(
 					f"Overriding existing argtypes for {pyFunc!r}: {cFunc.argtypes} -> {spec.argtypes}",
 					stack_info=True,
 				)
 			cFunc.argtypes = spec.argtypes
-			if cFunc.restype is not None:
+			if cFunc.restype != spec.restype:
 				log.warning(
 					f"Overriding existing restype for {pyFunc!r}: {cFunc.restype} -> {spec.restype}",
 					stack_info=True,
