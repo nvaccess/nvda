@@ -161,7 +161,14 @@ Type hints make reasoning about code much easier, and allow static analysis tool
 
 ### Calling non-python code
 
-Todo: Merge with section in #18207
+When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
+
+* When providing ctypes type information for foreign functions, structures and data types, prefer to use the same name as used in the external library.
+  * E.g. `GetModuleFileName` not `getModuleFileName`, even though the latter is a more Pythonic function name.
+  * Pythonic names should be reserved for wrappers that provide more pythonic access to functions.
+* All Windows API functions, types and data structures should be defined in the `winBindings` package, in modules named according to the DLL which exports the function.
+  * E.g. `winBindings.kernel32`.
+* Ctypes code for nvdaHelper should be defined in the `NVDAHelper.localLib` module.
 
 #### using the `ctypesUtils` module
 
@@ -194,10 +201,13 @@ It can be overridden by passing an additional parameter to the decorator.
   * Form 2: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
   The first ctypes type found (`HWND`) is used in `restypes`.
   This is the preferred approach.
-  * Form 3: `typing.Annotated[int, HWND]`. Only `int` is reported as valid by type checkers. The annotation (i.e. `HWND`) is used in `restypes`. This can be used when the desired ctypes type might be incompatible with type checkers.
+  * Form 3: `typing.Annotated[int, HWND]`. Only `int` is reported as valid by type checkers.
+  The annotation (i.e. `HWND`) is used in `restypes`.
+  This can be used when the desired ctypes type might be incompatible with type checkers.
 * Return type hints can also be of several forms.
-  * Form 1: Just a ctypes type, e.g. `BOOL`. It will be used as `restype`.
-  * Form 2: `typing.Annotated[int, BOOL]`. Prefer, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
+  * Form 1: Just a ctypes type, e.g. `BOOL`.
+  It will be used as `restype`.
+  * Form 2: `typing.Annotated[int, BOOL]`. Preferred, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
     * Note that the `int | BOOL` form (e.g. input parameter form 2) is not supported here, since a ctypes function will never return a `BOOL`, it will always create a more pythonic value whenever possible.
 
 Output parameters are more complex.
@@ -217,10 +227,13 @@ def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRec
 
 Note that:
 
-* Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly. Not doing so results in a `TypeError`.
-* ctypes automatically returns the contained value of a pointer object. So the return annotation here means:
+* Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly.
+Not doing so results in a `TypeError`.
+* ctypes automatically returns the contained value of a pointer object.
+So the return annotation here means:
   * Treat `RECT` as the return type. Type checkers will communicate as such.
-  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1)`. To override the pointer type, use the `type` parameter of the `OutParam` class.
+  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1)`.
+  To override the pointer type, use the `type` parameter of the `OutParam` class.
   * The out param is the second entry in the `argtypes` array, index=1.
 
 For a function with multiple arg types, specify a type hint like `tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]`.
