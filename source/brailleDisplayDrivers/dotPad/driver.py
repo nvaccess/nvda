@@ -275,11 +275,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return True
 		except Exception:
 			# Clean up on failure
-			if hasattr(self, "_dev"):
-				try:
-					self._dev.close()
-				except Exception:
-					pass
+			try:
+				self._dev.close()
+			except Exception:
+				pass
 			return False
 
 	def terminate(self):
