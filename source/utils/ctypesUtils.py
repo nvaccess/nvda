@@ -12,8 +12,9 @@ import inspect
 import dataclasses
 import types
 import typing
+from collections.abc import Callable
 from enum import IntEnum
-from typing import Annotated, Any, Callable, ParamSpec, TypeVar
+from typing import Annotated, Any, ParamSpec, TypeVar
 
 
 from logHandler import log
@@ -41,26 +42,31 @@ class ParamDirectionFlag(IntEnum):
 	"""
 
 
-class CType(abc.ABC):
-	"""Abstract class for ctypes types.
-	This class is used to validate type annotations for ctypes functions.
-	"""
-
-	def __new__(cls, *args, **kwargs):
-		raise TypeError(
-			f"{cls.__name__} may not be instantiated. "
-			"It is only used as an abstract class to annotate ctypes objects or parameters.",
-		)
-
-
-# Hacky, but there's no other way to get to the base class for ctypes types.
-CType.register(ctypes.c_int.__mro__[-2])
-
 if typing.TYPE_CHECKING:
-	from ctypes import _Pointer, _CArgObject
+	from ctypes import (
+		_Pointer,
+		_CFuncPtr,
+		_CArgObject,
+		_CDataType as CType,
+	)
 
-	Pointer = _Pointer | _CArgObject
+	Pointer = _Pointer | _CFuncPtr | _CArgObject
+
 else:
+
+	class CType(abc.ABC):
+		"""Abstract class for ctypes types.
+		This class is used to validate type annotations for ctypes functions.
+		"""
+
+		def __new__(cls, *args, **kwargs):
+			raise TypeError(
+				f"{cls.__name__} may not be instantiated. "
+				"It is only used as an abstract class to annotate ctypes objects or parameters.",
+			)
+
+	# Hacky, but there's no other way to get to the base class for ctypes types.
+	CType.register(ctypes.c_int.__mro__[-2])
 
 	class Pointer(CType):
 		"""A pointer type that can be used as a type annotation for ctypes functions."""
@@ -91,10 +97,10 @@ class OutParam:
 	"""The name of the output parameter."""
 	position: int = 0
 	"""The position of the output parameter in argtypes."""
-	type: Pointer | inspect.Parameter.empty = inspect.Parameter.empty
+	cType: type[Pointer] | type[inspect.Parameter.empty] = inspect.Parameter.empty
 	"""The type of the output parameter. This should be a pointer type.
 	If ``inspect.Parameter.empty`` (default), the type from the annotation is used and a pointer type is created from it automatically."""
-	default: CType | inspect.Parameter.empty = inspect.Parameter.empty
+	default: CType | type[inspect.Parameter.empty] = inspect.Parameter.empty
 	"""The default value for the output parameter."""
 
 
@@ -128,16 +134,14 @@ _pyfuncReturn = TypeVar("_pyfuncReturn")
 class FuncSpec(typing.Generic[_pyfuncParams, _pyfuncReturn]):
 	"""Specification of a ctypes function."""
 
-	restype: type[CType] | None
-	argtypes: tuple[CType]
-	paramFlags: tuple[
-		tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, int | ctypes._SimpleCData]
-	]
+	restype: type[CType | Pointer] | None
+	argtypes: tuple[type[CType | Pointer], ...]
+	paramFlags: tuple[tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, Any], ...]
 
 
 def getFuncSpec(
 	pyFunc: Callable[_pyfuncParams, _pyfuncReturn],
-	restype: type[CType] | None | inspect.Parameter.empty = inspect.Parameter.empty,
+	restype: type[CType] | type[Pointer] | None | type[inspect.Parameter.empty] = inspect.Parameter.empty,
 ) -> FuncSpec[_pyfuncParams, _pyfuncReturn]:
 	"""
 	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
@@ -160,8 +164,8 @@ def getFuncSpec(
 	"""
 	sig = inspect.signature(pyFunc)
 	# Extract argument types from annotations
-	argtypes = []
-	paramFlags = []
+	argtypes: list[type[CType]] = []
+	paramFlags: list[tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, Any]] = []
 	for param in sig.parameters.values():
 		if param.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
 			raise TypeError(
@@ -199,13 +203,13 @@ def getFuncSpec(
 	else:
 		requireOutParamAnnotations = restype is not inspect.Parameter.empty
 		restypes = [expectedRestype]
-	for i, t in enumerate(restypes):
-		handledPositions = []
+	for t in restypes:
+		handledPositions: list[int] = []
 		isAnnotated = typing.get_origin(t) is Annotated and len(t.__metadata__) == 1
 		if requireOutParamAnnotations:
 			if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
 				raise TypeError(f"Expected single annotation of type 'OutParam' for parameter: {param.name}")
-			outParam = t.__metadata__[0]
+			outParam: OutParam = t.__metadata__[0]
 			if len(argtypes) < outParam.position:
 				raise IndexError(
 					f"Output parameter {outParam.name} at position {outParam.position} "
@@ -215,12 +219,12 @@ def getFuncSpec(
 				raise IndexError(
 					f"Output parameter at position {outParam.position} has already been processed",
 				)
-			if outParam.type is inspect.Parameter.empty:
-				outParam.type = (
+			if outParam.cType is inspect.Parameter.empty:
+				outParam.cType = (
 					t.__origin__ if isinstance(t.__origin__, ctypes.Array) else ctypes.POINTER(t.__origin__)
 				)
 			handledPositions.append(outParam.position)
-			argtypes.insert(outParam.position, outParam.type)
+			argtypes.insert(outParam.position, outParam.cType)
 			if outParam.default is inspect.Parameter.empty:
 				paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
 			else:
@@ -248,7 +252,7 @@ def getFuncSpec(
 def dllFunc(
 	library: ctypes.CDLL,
 	funcName: str | None = None,
-	restype: type[CType] | None | inspect.Parameter.empty = inspect.Parameter.empty,
+	restype: type[CType] | None | type[inspect.Parameter.empty] = inspect.Parameter.empty,
 	*,
 	cFunctype: Callable = ctypes.WINFUNCTYPE,
 	annotateOriginalCFunc: bool = False,
