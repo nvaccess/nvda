@@ -1137,7 +1137,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"),
+			os.path.join(NVDAHelper.coreArchLibPath, "windowsaccessbridge.dll"),
 		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
