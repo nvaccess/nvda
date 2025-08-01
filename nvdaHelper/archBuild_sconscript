@@ -3,7 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+import glob
+import os
 import sysconfig
+
+from SCons.Tool.MSCommon.vc import find_vc_pdir
 
 Import(
 	"env",
@@ -68,12 +72,13 @@ def COMProxyDllBuilder(env, target, source, proxyClsid):
 
 env.AddMethod(COMProxyDllBuilder, "COMProxyDll")
 
-# We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 2):
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
+# We only support compiling with MSVC 14.3 (2022) or newer
+if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 3):
+	raise RuntimeError("Visual C++ 14.3 (Visual Studio 2022) or newer not found")
 
 PYTHON_PLATFORM = sysconfig.get_platform()
 TARGET_ARCH = env["TARGET_ARCH"]
+isArm64EC = env.get("isArm64EC", False)
 
 
 isNVDACoreArch = (
@@ -81,8 +86,9 @@ isNVDACoreArch = (
 	or (PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "x86_64")
 	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
 )
-
-
+isNVDAHelperLocalArch = isNVDACoreArch or (
+	PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "arm64" and isArm64EC
+)
 debug = env["nvdaHelperDebugFlags"]
 release = env["release"]
 signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
@@ -124,7 +130,7 @@ env.Append(
 if TARGET_ARCH == "x86_64":
 	env.Append(MIDLFLAGS="/x64")
 elif TARGET_ARCH == "arm64":
-	env.Append(MIDLFLAGS="/arm64")
+	env.Append(MIDLFLAGS="/x64" if isArm64EC else "/arm64")
 else:
 	env.Append(MIDLFLAGS="/win32")
 
@@ -159,6 +165,11 @@ env.Append(
 		# included by the files that you include.
 	]
 )
+
+if isArm64EC:
+	env.Append(CCFLAGS="/arm64EC")
+	env.Append(LINKFLAGS="/machine:arm64ec")
+	env.Append(ARFLAGS="/machine:arm64ec")
 
 if "debugCRT" in debug:
 	env.Append(CCFLAGS=["/MTd"])
@@ -221,7 +232,7 @@ Export("detoursLib")
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
 
-if isNVDACoreArch:
+if isNVDAHelperLocalArch:
 	localLib = env.SConscript("local/sconscript")
 	Export("localLib")
 	if signExec:
@@ -250,11 +261,41 @@ if signExec:
 	env.AddPostAction(remoteLib[0], [signExec])
 env.Install(libInstallDir, remoteLib)
 
-remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
-if signExec:
-	env.AddPostAction(remoteLoaderProgram, [signExec])
-env.Install(libInstallDir, remoteLoaderProgram)
+if not isNVDAHelperLocalArch:
+	remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
+	if signExec:
+		env.AddPostAction(remoteLoaderProgram, [signExec])
+	env.Install(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
+
+	# UWP dlls can only be dynamically linked with the CRT,
+	# but some systems might not have this version of the CRT.
+	# Therefore, we must include it.
+	# VS keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
+	# Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
+	msvc = env.get("MSVC_VERSION")
+	vcRedistDirs = glob.glob(
+		os.path.join(
+			find_vc_pdir(msvc, env), rf"Redist\MSVC\{msvc[:2]}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
+		)
+	)
+	if len(vcRedistDirs) == 0:
+		raise RuntimeError(
+			"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+		)
+	vcRedistDirs.sort(reverse=True)
+	for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
+		for vcRedistDir in vcRedistDirs:
+			path = os.path.join(vcRedistDir, fn)
+			if os.path.isfile(path):
+				env.Install(sourceDir, path)
+				break
+			else:
+				raise RuntimeError(
+					"Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+					% fn
+				)
+
