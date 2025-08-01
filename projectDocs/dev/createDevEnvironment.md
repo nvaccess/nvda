@@ -98,8 +98,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
-* [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
-* [cppjieba](https://github.com/yanyiwu/cppjieba), commit '9b40903ed6cbd795367ea64f9a7d3f3bc4aa4714'
+* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `9b40903ed6cbd795367ea64f9a7d3f3bc4aa4714`
 
 #### Build time dependencies
 
