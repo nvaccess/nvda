@@ -13,7 +13,7 @@ import dataclasses
 import types
 import typing
 from enum import IntEnum
-from typing import Annotated, Any, Callable
+from typing import Annotated, Any, Callable, ParamSpec, TypeVar
 
 
 from logHandler import log
@@ -106,8 +106,12 @@ def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...
 	return args
 
 
+_pyfuncParams = ParamSpec("_pyfuncParams")
+_pyfuncReturn = TypeVar("_pyfuncReturn")
+
+
 @dataclasses.dataclass
-class FuncSpec:
+class FuncSpec(typing.Generic[_pyfuncParams, _pyfuncReturn]):
 	"""Specification of a ctypes function."""
 
 	restype: type[CType]
@@ -118,9 +122,9 @@ class FuncSpec:
 
 
 def getFuncSpec(
-	pyFunc: types.FunctionType,
+	pyFunc: Callable[_pyfuncParams, _pyfuncReturn],
 	restype: type[CType] | None = None,
-) -> FuncSpec:
+) -> FuncSpec[_pyfuncParams, _pyfuncReturn]:
 	"""
 	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
 
@@ -232,7 +236,7 @@ def dllFunc(
 	annotateOriginalCFunc: bool = True,
 	wrapNewCFunc: bool = True,
 	errcheck: ErrcheckType | None = None,
-):
+) -> Callable[[Callable[_pyfuncParams, _pyfuncReturn]], Callable[_pyfuncParams, _pyfuncReturn]]:
 	"""
 	Decorator to bind a Python function to a C function from a DLL using ctypes,
 	automatically setting argument and return types based on the Python function's signature.
@@ -272,7 +276,7 @@ def dllFunc(
 
 	"""
 
-	def decorator(pyFunc: types.FunctionType):
+	def decorator(pyFunc: Callable[_pyfuncParams, _pyfuncReturn]) -> Callable[_pyfuncParams, _pyfuncReturn]:
 		if not isinstance(pyFunc, types.FunctionType):
 			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
 		if not annotateOriginalCFunc and not wrapNewCFunc:
