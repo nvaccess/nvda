@@ -319,7 +319,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			wx.Choice,
 			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
 		)
-		self._connectionModeControl.SetSelection(0)
+		self._connectionModeControl.SetSelection(configuration.getRemoteConfig()["ui"]["lastConnectionMode"])
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
 			pgettext("remote", "&Server:"),
@@ -387,6 +387,9 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			if focusTarget is not None:
 				focusTarget.SetFocus()
 		else:
+			configuration.getRemoteConfig()["ui"]["lastConnectionMode"] = (
+				self._connectionModeControl.GetSelection()
+			)
 			evt.Skip()
 
 	def _getKey(self) -> str:
