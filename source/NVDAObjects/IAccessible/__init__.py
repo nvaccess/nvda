@@ -891,10 +891,9 @@ class IAccessible(Window):
 		"""
 		return True
 
-	def _get_TextInfo(self):
+	def _get_TextReviewTextInfo(self):
 		if hasattr(self, "IAccessibleTextObject"):
 			return IA2TextTextInfo
-		return super(IAccessible, self).TextInfo
 
 	def _isEqual(self, other):
 		if self.IAccessibleChildID != other.IAccessibleChildID:
