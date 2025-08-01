@@ -233,7 +233,7 @@ def dllFunc(
 	restype: type[CType] = None,
 	*,
 	cFunctype: Callable = ctypes.WINFUNCTYPE,
-	annotateOriginalCFunc: bool = True,
+	annotateOriginalCFunc: bool = False,
 	wrapNewCFunc: bool = True,
 	errcheck: ErrcheckType | None = None,
 ) -> Callable[[Callable[_pyfuncParams, _pyfuncReturn]], Callable[_pyfuncParams, _pyfuncReturn]]:

@@ -140,7 +140,7 @@ class Test_dllFunc(unittest.TestCase):
 	def testBasicTypes(self):
 		"""Tests that dllFunc can set restype and argtypes for a function with basic ctypes type hints."""
 
-		@dllFunc(windll.user32)
+		@dllFunc(windll.user32, annotateOriginalCFunc=True)
 		def GetClientRect(hWnd: HWND, lpRect: Pointer[RECT]) -> BOOL: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
@@ -149,7 +149,7 @@ class Test_dllFunc(unittest.TestCase):
 	def testAnnotatedTypesInOnly(self):
 		"""Tests that dllFunc can set restype and argtypes for a function with annotated ctypes type hints on parameters."""
 
-		@dllFunc(windll.user32)
+		@dllFunc(windll.user32, annotateOriginalCFunc=True)
 		def GetClientRect(hWnd: Annotated[int, HWND], lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
@@ -160,7 +160,7 @@ class Test_dllFunc(unittest.TestCase):
 		including output parameters.
 		"""
 
-		@dllFunc(windll.user32, restype=BOOL)
+		@dllFunc(windll.user32, restype=BOOL, annotateOriginalCFunc=True)
 		def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
 
 		self.assertEqual(windll.user32.GetClientRect.restype, BOOL)
