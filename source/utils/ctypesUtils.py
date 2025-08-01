@@ -55,7 +55,9 @@ class CType(abc.ABC):
 CType.register(ctypes.c_int.__mro__[-2])
 
 if typing.TYPE_CHECKING:
-	from ctypes import _Pointer as Pointer
+	from ctypes import _Pointer, _CArgObject
+
+	Pointer = _Pointer | _CArgObject
 else:
 
 	class Pointer(CType):
@@ -66,7 +68,15 @@ else:
 			return ctypes.POINTER(t)
 
 	# Register known pointer types
-	for t in (ctypes._Pointer, ctypes._CFuncPtr, ctypes.c_void_p, ctypes.c_char_p, ctypes.c_wchar_p):
+	for t in (
+		ctypes._Pointer,
+		ctypes._CFuncPtr,
+		ctypes.c_void_p,
+		ctypes.c_char_p,
+		ctypes.c_wchar_p,
+		# Hacky, but the only way to get this type at runtime
+		type(ctypes.byref(ctypes.c_int(0))),
+	):
 		Pointer.register(t)
 
 
