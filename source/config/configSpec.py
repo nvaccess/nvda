@@ -362,6 +362,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+		# 0: follower, 1: leader
+		lastConnectionMode = integer(default=0, min=0, max=1)
 """
 
 #: The configuration specification
