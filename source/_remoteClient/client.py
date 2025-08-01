@@ -303,7 +303,7 @@ class RemoteClient:
 				stack_info=True,
 			)
 			return
-		if self.isConnected() or self._connecting:
+		if self.isConnected() or self.isConnecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -628,7 +628,7 @@ class RemoteClient:
 		:note: Shows confirmation dialog before connecting
 		:raises: Displays error if already connected
 		"""
-		if self.isConnected() or self._connecting:
+		if self.isConnected() or self.isConnecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -678,13 +678,16 @@ class RemoteClient:
 		finally:
 			self._connecting = False
 
+	@property
+	def _transport(self) -> RelayTransport | None:
+		return self.followerTransport or self.leaderTransport
+
 	def isConnected(self) -> bool:
 		"""Check if there is an active connection.
 
 		:return: True if either follower or leader transport is connected
 		"""
-		connector = self.followerTransport or self.leaderTransport
-		if connector is not None:
+		if (connector := self._transport) is not None:
 			return connector.connected
 		return False
 
@@ -694,6 +697,15 @@ class RemoteClient:
 		if self.followerTransport is not None:
 			return self.followerTransport.connected
 		return False
+
+	@property
+	def isConnecting(self) -> bool:
+		"""Whether or not a session is being connected or reconnected to."""
+		return self._connecting or (
+			not self.isConnected()
+			and self._transport is not None
+			and self._transport.reconnectorThread.running
+		)
 
 	def registerLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Add a script to be handled locally instead of sent to remote.

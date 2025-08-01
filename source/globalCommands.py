@@ -5020,7 +5020,7 @@ class GlobalCommands(ScriptableObject):
 		gui.blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
-		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.connecting:
+		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.isConnecting:
 			# Translators: A message indicating that the remote client is already connected.
 			ui.message(_("Already connected"))
 			return
