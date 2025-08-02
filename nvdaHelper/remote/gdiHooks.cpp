@@ -107,7 +107,7 @@ void queueTextChangeNotify(HWND hwnd, RECT& rc) {
 	}
 }
 
-displayModelsMap_t<HGDIOBJ> displayModelsByMemoryDC;
+displayModelsMap_t<HDC> displayModelsByMemoryDC;
 displayModelsMap_t<HWND> displayModelsByWindow;
 
 /**
@@ -136,18 +136,10 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 		if(model) model->acquire();
 		displayModelsByWindow.release();
 	} else {
-		HGDIOBJ bitmap = GetCurrentObject(hdc, OBJ_BITMAP);
-		if (!bitmap) {
-			return(NULL);
-		}
 		displayModelsByMemoryDC.acquire();
-		displayModelsMap_t<HGDIOBJ>::iterator i=displayModelsByMemoryDC.find(bitmap);
+		displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
 		if(i!=displayModelsByMemoryDC.end()) {
 			model=i->second;
-		}
-		else if (!noCreate) {
-			model = new displayModel_t();
-			displayModelsByMemoryDC.insert(make_pair(bitmap, model));
 		}
 		if(model) model->acquire();
 		displayModelsByMemoryDC.release();
@@ -448,7 +440,6 @@ void ExtTextOutHelper(
 	if(!lpString||cbCount<=0) return;
 	wstring newText=L"";
 	bool fromGlyphs=false;
-	
 	if(fuOptions&ETO_GLYPH_INDEX) {
 		GlyphTranslator* gt=glyphTranslatorCache.fetchGlyphTranslator(hdc);
 		if(gt) {
@@ -539,7 +530,7 @@ void ExtTextOutHelper(
 		textTop-=tm.tmAscent;
 	}
 	LOG_DEBUG(L"using offset of "<<textLeft<<L","<<textTop);
-	RECT textRect = { textLeft,textTop,textLeft + resultTextSize->cx,textTop + resultTextSize->cy };
+	RECT textRect={textLeft,textTop,textLeft+resultTextSize->cx,textTop+resultTextSize->cy};
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
 	POINT baselinePoint={textRect.left,textRect.top+tm.tmAscent};
@@ -845,21 +836,21 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 
 //CreateCompatibleDC hook function
 //Hooked so we know when a memory DC is created, as its possible that its contents may at some point be bit blitted back to a window DC (double buffering).
-//typedef HDC(WINAPI *CreateCompatibleDC_funcType)(HDC);
-//CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
-//HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
+typedef HDC(WINAPI *CreateCompatibleDC_funcType)(HDC);
+CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
+HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 	//Call the real CreateCompatibleDC
-	//HDC newHdc=real_CreateCompatibleDC(hdc);
+	HDC newHdc=real_CreateCompatibleDC(hdc);
 	//If the creation was successful, and the DC that was used in the creation process is a window DC,
 	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC.
 	//We also need to acquire access to the model maps while we do this
-	//if(!newHdc) return NULL;
-	//displayModel_t* model=new displayModel_t();
-	//displayModelsByMemoryDC.acquire();
-	//displayModelsByMemoryDC.insert(make_pair(newHdc,model));
-	//displayModelsByMemoryDC.release();
-	//return newHdc;
-//}
+	if(!newHdc) return NULL;
+	displayModel_t* model=new displayModel_t();
+	displayModelsByMemoryDC.acquire();
+	displayModelsByMemoryDC.insert(make_pair(newHdc,model));
+	displayModelsByMemoryDC.release();
+	return newHdc;
+}
 
 //SelectObject hook function
 //If a bitmap is being selected, then  we fully clear the display model for this DC if it exists.
@@ -880,15 +871,15 @@ HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
 
 //DeleteDC hook function
 //Hooked so we can get rid of any memory DC no longer needed by the application.
-typedef BOOL(WINAPI *DeleteObject_funcType)(HGDIOBJ);
-DeleteObject_funcType real_DeleteObject=NULL;
-BOOL WINAPI fake_DeleteObject(HGDIOBJ object) {
+typedef BOOL(WINAPI *DeleteDC_funcType)(HDC);
+DeleteDC_funcType real_DeleteDC=NULL;
+BOOL WINAPI fake_DeleteDC(HDC hdc) {
 	//Call the real DeleteDC
-	BOOL res=real_DeleteObject(object);
-	if(res==0 || GetObjectType(object) != OBJ_BITMAP) return res;
+	BOOL res=real_DeleteDC(hdc);
+	if(res==0) return res;
 	//If the DC was successfully deleted, we should remove  the displayModel we have for it, if it exists.
 	displayModelsByMemoryDC.acquire();
-	displayModelsMap_t<HGDIOBJ>::iterator i=displayModelsByMemoryDC.find(object);
+	displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
 	if(i!=displayModelsByMemoryDC.end()) {
 		i->second->requestDelete();
 		displayModelsByMemoryDC.erase(i);
@@ -1235,9 +1226,9 @@ void gdiHooks_inProcess_initialize() {
 	apiHook_hookFunction_safe(PolyTextOutW, hookClass_PolyTextOut<POLYTEXTW>::fakeFunction, &hookClass_PolyTextOut<POLYTEXTW>::realFunction);
 	apiHook_hookFunction_safe(ExtTextOutA, hookClass_ExtTextOut<char>::fakeFunction, &hookClass_ExtTextOut<char>::realFunction);
 	apiHook_hookFunction_safe(ExtTextOutW, hookClass_ExtTextOut<wchar_t>::fakeFunction, &hookClass_ExtTextOut<wchar_t>::realFunction);
-	//apiHook_hookFunction_safe(CreateCompatibleDC, fake_CreateCompatibleDC, &real_CreateCompatibleDC);
-	//apiHook_hookFunction_safe(SelectObject, fake_SelectObject, &real_SelectObject);
-	apiHook_hookFunction_safe(DeleteObject, fake_DeleteObject, &real_DeleteObject);
+	apiHook_hookFunction_safe(CreateCompatibleDC, fake_CreateCompatibleDC, &real_CreateCompatibleDC);
+	apiHook_hookFunction_safe(SelectObject, fake_SelectObject, &real_SelectObject);
+	apiHook_hookFunction_safe(DeleteDC, fake_DeleteDC, &real_DeleteDC);
 	apiHook_hookFunction_safe(FillRect, fake_FillRect, &real_FillRect);
 	apiHook_hookFunction_safe(DrawFocusRect, fake_DrawFocusRect, &real_DrawFocusRect);
 	apiHook_hookFunction_safe(BeginPaint, fake_BeginPaint, &real_BeginPaint);
@@ -1268,7 +1259,7 @@ void gdiHooks_inProcess_terminate() {
 	}
 	displayModelsByWindow.release();
 	displayModelsByMemoryDC.acquire();
-	displayModelsMap_t<HGDIOBJ>::iterator j=displayModelsByMemoryDC.begin();
+	displayModelsMap_t<HDC>::iterator j=displayModelsByMemoryDC.begin();
 	while(j!=displayModelsByMemoryDC.end()) {
 		j->second->requestDelete();
 		displayModelsByMemoryDC.erase(j++);
