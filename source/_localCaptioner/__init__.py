@@ -156,6 +156,7 @@ class LocalCaptioner:
 			# Translators: error Message when fail to load the model
 			ui.message(_("models And config file not found or incomplete, please download models and config file first!"))
 			log.error(e)
+			raise
 		except Exception as e:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model

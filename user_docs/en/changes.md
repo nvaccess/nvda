@@ -38,6 +38,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated sphinx to 8.1.3. (#18475)
   * Updated licensecheck to 2025.1. (#18475)
   * Introduced onnxruntime 1.19.2 for model inference. (#18475)
+  * Introduced onnx 1.18.0 for generating mock models. (#18475)
   * Updated Pyright to 1.1.403. (#18424)
   * Updated Ruff to 0.12.5. (#18424)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)

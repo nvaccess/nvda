@@ -322,18 +322,6 @@ class ImageCaptioner:
 		# Decode generated text
 		return self.decodeTokens(generatedTokens)
 
-	def _softmax(self, x: np.ndarray) -> np.ndarray:
-		"""Compute softmax activation.
-
-		Args:
-			x: Input array.
-
-		Returns:
-			Softmax-activated array.
-		"""
-		expX = np.exp(x - np.max(x))
-		return expX / np.sum(expX)
-
 	def generate_caption(
 		self,
 		image: str | bytes,
@@ -387,21 +375,3 @@ def benchmarkInference(
 	log.info(f"  Greedy search: {greedyTime:.3f}s")
 
 
-def manualTest(imagePath: str) -> None:
-	"""manual Test captioner"""
-	_here = os.path.dirname(__file__)
-	_modelsDir = os.path.join(_here, "..", "..", "models")
-	_modelsDir = os.path.abspath(_modelsDir)
-	# Initialize model - config_path is now required
-	captioner = ImageCaptioner(
-		encoder_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/onnx/encoder_model_quantized.onnx",
-		decoder_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/onnx/decoder_model_merged_quantized.onnx",
-		config_path=f"{_modelsDir}/Xenova/vit-gpt2-image-captioning/config.json",
-		enableProfiling=True,
-	)
-
-	log.info("=== Single Image Caption ===")
-
-	caption1 = captioner.generate_caption(image=imagePath)
-	log.info(f"result: {caption1}")
-	# benchmarkInference(captioner=captioner, imagePath=imagePath)

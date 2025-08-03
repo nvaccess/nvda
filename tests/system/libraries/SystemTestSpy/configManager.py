@@ -105,6 +105,9 @@ def setupProfile(
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
 		_pJoin(stagingDir, "nvdaProfile", "nvda.ini"),
 	)
+	if settingsFileName == "standard-doLoadMockModel.ini":
+		_configModels()
+		
 	if gesturesFileName is not None:
 		opSys.copy_file(
 			# Despite duplication, specify full paths for clarity.
@@ -128,3 +131,63 @@ def teardownProfile(stagingDir: str):
 		_pJoin(stagingDir, "nvdaProfile"),
 		recursive=True,
 	)
+
+def _configModels():
+	import tempfile
+	import os
+	from .mockModels import MockVisionEncoderDecoderGenerator
+	generator = MockVisionEncoderDecoderGenerator(random_seed=8)
+	# Generate all files relative to repo root
+	tempDir = tempfile.gettempdir()
+	ini_path = os.path.join(tempDir, "nvdaProfile", "nvda.ini")
+	models_directory = os.path.join(tempDir, "nvdaProfile", "models", "mock", "vit-gpt2-image-captioning")
+	generator.generateAllFiles(models_directory)
+	#The location of the temp folder can notbe determined in the nvda.ini file, so change it manually  
+	_updateIniForModels(ini_path, models_directory)
+
+def _updateIniForModels(ini_path, output_dir):
+	"""
+	Update only the value of 'localModelPath' under [captionLocal] section
+	in the INI file, preserving original formatting, indentation, and casing.
+	"""
+	import os
+	# Normalize the path for Windows (e.g., use backslashes)
+	new_path = os.path.normpath(output_dir)
+
+	# Path to the INI file
+	# ini_path = os.path.join(
+		# os.path.dirname(__file__),
+		# "..", "nvdaSettingsFiles", "standard-doLoadMockModel.ini"
+	# )
+
+	# Read original lines
+	with open(ini_path, "r", encoding="utf-8") as f:
+		lines = f.readlines()
+
+	# Flags to track if we are in the [captionLocal] section
+	in_caption_section = False
+
+	# Updated lines will be stored here
+	updated_lines = []
+
+	for line in lines:
+		# Detect section headers
+		strip_line = line.strip()
+		if strip_line.startswith("[") and strip_line.endswith("]"):
+			in_caption_section = (strip_line.lower() == "[captionlocal]")
+
+		# If inside captionLocal section, and line contains localModelPath (case-insensitive)
+		if in_caption_section and "localModelPath" in line:
+			# Preserve original indentation and formatting
+			prefix, sep, _ = line.partition("=")
+			updated_line = f"{prefix}{sep} {new_path}\n"
+			updated_lines.append(updated_line)
+		else:
+			# Keep line as is
+			updated_lines.append(line)
+
+	# Write back the updated lines
+	print(f"init file realpath: {os.path.realpath(ini_path)}")
+	with open(ini_path, "w", encoding="utf-8") as f:
+		f.writelines(updated_lines)
+ 
