@@ -4,17 +4,14 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 """Logic for runLocalCaptioner tests."""
 
-import tempfile
-import os
-
 import NvdaLib as _nvdaLib
+
 
 def NVDA_Caption():
 	spy = _nvdaLib.getSpyLib()
-	# open menu to generate caption 
+	# open menu to generate caption
 	spy.emulateKeyPress("NVDA+n")
 	spy.emulateKeyPress("NVDA+windows+,")
-	spy.wait_for_specific_speech("non-visual desktop access access access access access access access access access")
-
-
-
+	spy.wait_for_specific_speech(
+		"non-visual desktop access access access access access access access access access"
+	)

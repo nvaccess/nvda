@@ -360,7 +360,6 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.temperature, 1.0)
 
 
-
 class TestImageCaptionerBenchmark(unittest.TestCase):
 	"""Benchmark tests for inference performance."""
 

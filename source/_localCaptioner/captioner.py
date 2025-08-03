@@ -16,6 +16,8 @@ from PIL import Image
 import onnxruntime as ort
 
 from logHandler import log
+
+
 class ImageCaptioner:
 	"""Lightweight ONNX Runtime image captioning model.
 
@@ -373,5 +375,3 @@ def benchmarkInference(
 
 	log.info("Average inference time:")
 	log.info(f"  Greedy search: {greedyTime:.3f}s")
-
-
