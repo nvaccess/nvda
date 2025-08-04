@@ -15,7 +15,7 @@ Please refer to [our license](./copying.txt) for more information.
 
 ## Important temporary notice for contributors: Proposed license update
 
-We are proposing an update to the NVDA license and are seeking feedback from all historical contributors. 
+We are proposing an update to the NVDA license and are seeking feedback from all historical contributors.
 To ensure you have an opportunity to contribute to the discussion, please review the proposal:
 [Proposed update to the NVDA license](https://github.com/nvaccess/nvda/discussions/18574).
 The consultation period ends on 28 September 2025.
