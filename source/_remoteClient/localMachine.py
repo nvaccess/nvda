@@ -26,7 +26,7 @@ import winreg
 
 import api
 import braille
-from config import RegistryKey
+from config.registry import RegistryKey
 import inputCore
 import nvwave
 import speech

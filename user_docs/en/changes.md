@@ -53,7 +53,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP_c_ulong`
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
-* `easeOfAccess.RegistryKey` is deprecated, use `config.RegistryKey` instead. (#18608)
+* `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 
 ## 2025.2
 

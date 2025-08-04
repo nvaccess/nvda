@@ -165,7 +165,7 @@ class _TrackNVDAInitialization:
 
 
 def _forceSecureModeEnabled() -> bool:
-	from config import RegistryKey
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -176,7 +176,7 @@ def _forceSecureModeEnabled() -> bool:
 
 
 def _serviceDebugEnabled() -> bool:
-	from config import RegistryKey
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -187,7 +187,7 @@ def _serviceDebugEnabled() -> bool:
 
 
 def _configInLocalAppDataEnabled() -> bool:
-	from config import RegistryKey
+	from config.registry import RegistryKey
 	from logHandler import log
 
 	try:

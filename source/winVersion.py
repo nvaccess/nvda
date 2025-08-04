@@ -17,7 +17,7 @@ import functools
 import winreg
 import platform
 import NVDAState
-from config import RegistryKey
+from config.registry import RegistryKey
 from logHandler import log
 
 

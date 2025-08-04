@@ -8,6 +8,7 @@
 from enum import Enum, IntEnum
 from typing import Any
 
+from config.registry import RegistryKey as _RegistryKey
 from logHandler import log
 import NVDAState
 import winreg
@@ -16,8 +17,6 @@ import winUser
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
-	from config import RegistryKey as _RegistryKey
-
 	if attrName == "RegistryKey" and NVDAState._allowDeprecatedAPI():
 		log.warning("easeOfAccess.RegistryKey is deprecated, use config.RegistryKey instead.")
 
@@ -51,14 +50,11 @@ class AutoStartContext(IntEnum):
 
 
 def isRegistered() -> bool:
-	from config import RegistryKey
-
 	try:
 		winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.EASE_OF_ACCESS_APP.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS_APP.value,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 		return True
 	except FileNotFoundError:
@@ -69,12 +65,10 @@ def isRegistered() -> bool:
 
 
 def notify(signal):
-	from config import RegistryKey
-
 	if not isRegistered():
 		return
-	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, RegistryKey.EASE_OF_ACCESS_TEMP.value) as rkey:
-		winreg.SetValueEx(rkey, RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME, None, winreg.REG_DWORD, signal)
+	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, _RegistryKey.EASE_OF_ACCESS_TEMP.value) as rkey:
+		winreg.SetValueEx(rkey, _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME, None, winreg.REG_DWORD, signal)
 	keys = []
 	# The user might be holding unwanted modifiers.
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
@@ -107,9 +101,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	from config import RegistryKey
-
-	return RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
+	return _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
 def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
@@ -119,21 +111,18 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 
 	Returns an empty list on failure.
 	"""
-	from config import RegistryKey
-
 	try:
 		k = winreg.OpenKey(
 			autoStartContext.value,
-			RegistryKey.EASE_OF_ACCESS.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS.value,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 	except FileNotFoundError:
-		log.debug(f"Unable to find existing {autoStartContext} {RegistryKey.EASE_OF_ACCESS}")
+		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
 	except WindowsError:
 		log.error(
-			f"Unable to open {autoStartContext} {RegistryKey.EASE_OF_ACCESS} for reading",
+			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
 			exc_info=True,
 		)
 		return []
@@ -141,10 +130,10 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	try:
 		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
 	except FileNotFoundError:
-		log.debug(f"Unable to find {autoStartContext} {RegistryKey.EASE_OF_ACCESS} configuration")
+		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
 	except WindowsError:
 		log.error(
-			f"Unable to query {autoStartContext} {RegistryKey.EASE_OF_ACCESS} configuration",
+			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
 			exc_info=True,
 		)
 	else:
@@ -165,25 +154,22 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 
 	Raises `Union[WindowsError, FileNotFoundError]`
 	"""
-	from config import RegistryKey
-
 	conf = _getAutoStartConfiguration(autoStartContext)
-	currentlyEnabled = RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in conf
+	currentlyEnabled = _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in conf
 	changed = False
 
 	if enable and not currentlyEnabled:
-		conf.append(RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
+		conf.append(_RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 	elif not enable and currentlyEnabled:
-		conf.remove(RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
+		conf.remove(_RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 
 	if changed:
 		k = winreg.OpenKey(
 			autoStartContext.value,
-			RegistryKey.EASE_OF_ACCESS.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS.value,
+			access=winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
 		)
 		winreg.SetValueEx(
 			k,

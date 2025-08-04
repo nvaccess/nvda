@@ -16,7 +16,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
-from config import RegistryKey
+from config.registry import RegistryKey
 import versionInfo
 from logHandler import log
 import addonHandler
@@ -627,7 +627,7 @@ def unregisterAddonFileAssociation():
 
 # Windows API call regDeleteTree is only available on vist and above so rule our own.
 def _deleteKeyAndSubkeys(key, subkey):
-	with winreg.OpenKey(key, subkey, 0, winreg.KEY_WRITE | winreg.KEY_READ) as k:
+	with winreg.OpenKey(key, subkey, access=winreg.KEY_WRITE | winreg.KEY_READ) as k:
 		# Recursively delete subkeys (Depth first search order)
 		# So Pythonic... </rant>
 		for i in itertools.count():
