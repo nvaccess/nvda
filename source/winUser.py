@@ -27,6 +27,11 @@ import enum
 import NVDAState
 from logHandler import log
 
+
+from winBindings.user32 import WNDCLASSEXW  # noqa: F401
+from winBindings.user32 import WNDPROC  # noqa: F401
+
+
 # dll handles
 user32 = windll.user32  # noqa: F405
 
