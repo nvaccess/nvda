@@ -254,7 +254,7 @@ class CustomWindow(AutoPropertyObject):
 		if not winBindings.user32.UnregisterClass(
 			# The class atom should be stored as the low word of the class name string pointer.
 			ctypes.cast(ctypes.c_void_p(self._classAtom), ctypes.wintypes.LPCWSTR),
-			appInstance
+			appInstance,
 		):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",

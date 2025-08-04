@@ -12,7 +12,7 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 from ctypes import *  # noqa: F403
-from ctypes import byref, WinError, Structure, c_int, c_char
+from ctypes import byref, WinError, Structure, c_int
 from ctypes.wintypes import *  # noqa: F403
 from ctypes.wintypes import HWND, RECT, DWORD
 from typing import (
@@ -43,8 +43,6 @@ CS_HREDRAW = 0x0002
 #: Redraws the entire window if a movement or size adjustment changes the height of the client area.
 CS_VREDRAW = 0x0001
 
-from winBindings.user32 import WNDPROC
-
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
@@ -67,8 +65,6 @@ def __getattr__(attrName: str) -> Any:
 		)
 		return replacementSymbol
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-from winBindings.user32 import WNDCLASSEXW
 
 
 class NMHdrStruct(Structure):
@@ -798,8 +794,8 @@ def SendInput(inputs):
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))  # noqa: F405
 
-from winBindings.user32 import PAINTSTRUCT
 
+from winBindings.user32 import PAINTSTRUCT
 
 
 @contextlib.contextmanager

@@ -7,7 +7,6 @@
 
 from ctypes import (
 	windll,
-	c_int,
 )
 from ctypes.wintypes import (
 	HANDLE,
@@ -24,6 +23,6 @@ Retrieves a process handle from a window handle.
 	https://learn.microsoft.com/en-us/windows/win32/winauto/getprocesshandlefromhwnd
 """
 GetProcessHandleFromHwnd.argtypes = (
-	HWND, # windowHandle
+	HWND,  # windowHandle
 )
 GetProcessHandleFromHwnd.restype = HANDLE

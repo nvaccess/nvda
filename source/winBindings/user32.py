@@ -39,6 +39,7 @@ from ctypes.wintypes import (
 	ATOM,
 )
 
+
 class PAINTSTRUCT(Structure):
 	_fields_ = [
 		("hdc", HDC),
@@ -48,6 +49,7 @@ class PAINTSTRUCT(Structure):
 		("fIncUpdate", BOOL),
 		("rgbReserved", BYTE * 32),
 	]
+
 
 __all__ = (
 	"LRESULT",
@@ -71,6 +73,7 @@ else:
 HCURSOR = HANDLE
 
 WNDPROC = WINFUNCTYPE(LRESULT, HWND, c_uint, WPARAM, LPARAM)
+
 
 class WNDCLASSEXW(Structure):
 	_fields_ = [
@@ -198,7 +201,7 @@ Begins painting in the specified window by filling a PAINTSTRUCT structure with 
 """
 BeginPaint.argtypes = (
 	HWND,  # hWnd
-	POINTER(PAINTSTRUCT), # lpPaint
+	POINTER(PAINTSTRUCT),  # lpPaint
 )
 BeginPaint.restype = HDC
 

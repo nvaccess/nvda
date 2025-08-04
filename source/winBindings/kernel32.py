@@ -96,8 +96,8 @@ Waits until the specified object is in the signaled state or the time-out interv
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject
 """
 WaitForSingleObject.argtypes = (
-	HANDLE, # hHandle
-	DWORD, # dwMilliseconds
+	HANDLE,  # hHandle
+	DWORD,  # dwMilliseconds
 )
 WaitForSingleObject.restype = DWORD
 
