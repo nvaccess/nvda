@@ -124,7 +124,8 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		return []
 	except WindowsError:
 		log.error(
-			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading", exc_info=True
+			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
+			exc_info=True,
 		)
 		return []
 
@@ -134,7 +135,8 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
 	except WindowsError:
 		log.error(
-			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration", exc_info=True
+			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
+			exc_info=True,
 		)
 	else:
 		if not conf[0]:
