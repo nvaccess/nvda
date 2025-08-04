@@ -14,6 +14,7 @@ from ctypes.wintypes import (
 	HANDLE,
 	HMODULE,
 	LPCWSTR,
+	BOOL,
 )
 
 __all__ = (
@@ -57,3 +58,12 @@ LoadLibraryEx.argtypes = (
 	DWORD,  # dwFlags
 )
 LoadLibraryEx.restype = HMODULE
+
+FreeLibrary = dll.FreeLibrary
+"""
+Frees the loaded module and decrements its reference count. If the reference count reaches zero, the module is unloaded from the address space of the calling process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-freelibrary
+"""
+FreeLibrary.argtypes = (HMODULE,)
+FreeLibrary.restype = BOOL

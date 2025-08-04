@@ -30,6 +30,7 @@ from ctypes import (
 )
 from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
+from winBindings.kernel32 import FreeLibrary
 import queueHandler
 from logHandler import log
 import winUser
@@ -1180,7 +1181,7 @@ def terminate():
 	bridgeDll.setPropertyCaretChangeFP(None)
 	h = bridgeDll._handle
 	bridgeDll = None
-	windll.kernel32.FreeLibrary(h)
+	FreeLibrary(h)
 	isRunning = False
 
 
