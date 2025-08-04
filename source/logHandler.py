@@ -117,7 +117,7 @@ def getCodePath(f):
 			# If an Exception is currently stored as a local variable on that frame,
 			# A reference cycle will be created, holding the frame and all its variables.
 			# Therefore clear f_locals manually.
-			for key in f_locals:
+			for key in list(f_locals.keys()):
 				try:
 					# Note: Python changed how to clear frame locals
 					# https://github.com/python/cpython/issues/125590
