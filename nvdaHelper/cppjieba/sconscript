@@ -1,0 +1,33 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Wang Chong.
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
+Import(["thirdPartyEnv"])
+
+import typing  # noqa: E402
+import os
+
+thirdPartyEnv: Environment = thirdPartyEnv
+env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
+
+cppjiebaPath = Dir("#include/cppjieba")
+cppjiebaSrcPath = cppjiebaPath.Dir("include/cppjieba")
+LimonpPath = cppjiebaPath.Dir("deps/limonp")  # cppjieba's dependency
+LimonpSrcPath = LimonpPath.Dir("include/limonp")
+
+env.Prepend(
+	CPPPATH=[
+		cppjiebaSrcPath,
+		LimonpSrcPath.Dir(".."),
+	]
+)
+
+sourceFiles = [
+	"cppjieba.cpp",
+	"cppjieba.def",
+]
+
+cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
+
+Return("cppjiebaLib")
