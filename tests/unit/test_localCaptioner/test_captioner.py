@@ -244,20 +244,6 @@ class TestImageCaptioner(unittest.TestCase):
 			self.assertEqual(past_kv[value_name].shape, expected_shape)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_softmax(self, mock_session):
-		"""Test softmax function."""
-		captioner = ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
-		)
-		x = np.array([1.0, 2.0, 3.0])
-		result = captioner._softmax(x)
-		self.assertAlmostEqual(np.sum(result), 1.0, places=6)
-		self.assertTrue(np.all(result >= 0))
-		self.assertTrue(np.all(result <= 1))
-
-	@patch("onnxruntime.InferenceSession")
 	def test_generate_with_greedy_mock(self, mock_session):
 		"""Test greedy generation with mocked outputs."""
 		mock_encoder = Mock()

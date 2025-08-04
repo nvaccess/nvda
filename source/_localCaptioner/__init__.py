@@ -26,17 +26,6 @@ from .captioner import ImageCaptioner
 
 # Module-level configuration
 _localCaptioner = None
-_here = os.path.dirname(__file__)
-_modelsDir = os.path.join(_here, "..", "..", "models")
-_modelsDir = os.path.abspath(_modelsDir)
-
-CONFSPEC = {
-	"localModelPath": f"string(default={_modelsDir}/Xenova/vit-gpt2-image-captioning)",
-	"loadModelWhenInit": "boolean(default=false)",
-}
-
-config.conf.spec["captionLocal"] = CONFSPEC
-
 
 def shootImage() -> bytes:
 	"""Capture a screenshot of the current navigator object.
