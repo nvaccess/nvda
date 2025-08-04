@@ -158,6 +158,7 @@ class _RegistryKeyX86(str, Enum):
 	Used to access the 32-bit registry view on x64 systems.
 	For cleaning up legacy 32-bit NVDA copies.
 	"""
+
 	SOFTWARE = r"SOFTWARE\WOW6432Node"
 	CURRENT_VERSION = rf"{SOFTWARE}\Microsoft\Windows\CurrentVersion"
 	INSTALLED_COPY = rf"{CURRENT_VERSION}\Uninstall\NVDA"
