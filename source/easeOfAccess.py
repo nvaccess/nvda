@@ -21,9 +21,9 @@ def __getattr__(attrName: str) -> Any:
 		log.warning("easeOfAccess.RegistryKey is deprecated, use config.RegistryKey instead.")
 
 		class RegistryKey(str, Enum):
-			ROOT = _RegistryKey.EASE_OF_ACCESS
-			TEMP = _RegistryKey.EASE_OF_ACCESS_TEMP
-			APP = _RegistryKey.EASE_OF_ACCESS_APP
+			ROOT = _RegistryKey.EASE_OF_ACCESS.value
+			TEMP = _RegistryKey.EASE_OF_ACCESS_TEMP.value
+			APP = _RegistryKey.EASE_OF_ACCESS_APP.value
 
 		return RegistryKey
 
