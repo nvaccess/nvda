@@ -10,8 +10,6 @@ It allows users to capture screen regions and generate captions using local AI m
 
 from __future__ import unicode_literals
 
-import os
-
 import io
 import threading
 
