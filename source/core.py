@@ -31,6 +31,7 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
+import truststore
 
 if TYPE_CHECKING:
 	import wx
@@ -673,6 +674,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
+
+	# Use Windows root certificates for requests rather than certifi.
+	truststore.inject_into_ssl()
+
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
 		from winAPI.dpiAwareness import setDPIAwareness
@@ -695,6 +700,7 @@ def main():
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
+
 	# Initialize the config path (make sure it exists)
 	config.initConfigPath()
 	log.info(f"Config dir: {WritePaths.configDir}")

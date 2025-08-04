@@ -29,6 +29,8 @@ dependencies = [
 	# pinned to a commit in tool.uv.sources
 	"configobj",
 	"requests==2.32.3",
+	# Overrides certifi so that requests uses system certificates instead
+	"truststore==0.10.1",
 	"url-normalize==1.4.3",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
