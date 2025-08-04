@@ -21,7 +21,6 @@ from typing import (
 )
 
 import winBindings.user32
-from winBindings.user32 import WNDPROC, WNDCLASSEXW
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum

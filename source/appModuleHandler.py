@@ -588,7 +588,7 @@ class AppModule(baseObject.ScriptableObject):
 			if e.winerror == winKernel.ERROR_INVALID_HANDLE:
 				# The process handle is invalid, so the process is dead.
 				log.debugWarning(
-					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead."
+					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.",
 				)
 				return False
 			raise
