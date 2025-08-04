@@ -89,8 +89,6 @@ class LocalCaptioner:
 	"""
 
 	def __init__(self) -> None:
-		"""Initialize the global plugin."""
-		# super().__init__()
 		self.isModelLoaded = False
 		self.captioner: ImageCaptioner | None = None
 
