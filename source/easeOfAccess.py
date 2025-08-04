@@ -52,6 +52,7 @@ class AutoStartContext(IntEnum):
 
 def isRegistered() -> bool:
 	from config import RegistryKey
+
 	try:
 		winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -69,6 +70,7 @@ def isRegistered() -> bool:
 
 def notify(signal):
 	from config import RegistryKey
+
 	if not isRegistered():
 		return
 	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, RegistryKey.EASE_OF_ACCESS_TEMP.value) as rkey:
@@ -106,6 +108,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 	Returns False on failure
 	"""
 	from config import RegistryKey
+
 	return RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
@@ -117,6 +120,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	Returns an empty list on failure.
 	"""
 	from config import RegistryKey
+
 	try:
 		k = winreg.OpenKey(
 			autoStartContext.value,
@@ -162,6 +166,7 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 	Raises `Union[WindowsError, FileNotFoundError]`
 	"""
 	from config import RegistryKey
+
 	conf = _getAutoStartConfiguration(autoStartContext)
 	currentlyEnabled = RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in conf
 	changed = False
