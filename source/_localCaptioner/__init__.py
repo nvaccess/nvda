@@ -28,7 +28,7 @@ from .captioner import ImageCaptioner
 _localCaptioner = None
 
 
-def shootImage() -> bytes:
+def _screenshotNavigator() -> bytes:
 	"""Capture a screenshot of the current navigator object.
 
 	Returns:
@@ -63,7 +63,7 @@ def shootImage() -> bytes:
 	return imageData
 
 
-def caption(captioner: ImageCaptioner, imageData: bytes) -> None:
+def _caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	"""Generate a caption for the given image data.
 
 	Args:
@@ -106,12 +106,12 @@ class LocalCaptioner:
 		Args:
 			gesture: The input gesture that triggered this script.
 		"""
-		imageData = shootImage()
+		imageData = _screenshotNavigator()
 
 		if not self.isModelLoaded:
 			self._loadModel()
 
-		imageThread = threading.Thread(target=caption, args=(self.captioner, imageData))
+		imageThread = threading.Thread(target=_caption, args=(self.captioner, imageData))
 		# Translators: Message when starting image recognition
 		ui.message(_("getting Image description..."))
 		imageThread.start()
