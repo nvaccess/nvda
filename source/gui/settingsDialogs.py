@@ -3645,7 +3645,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is a label for an edit field in the local captioner  Settings panel.
-		modelPathLabel = _("model path")
+		modelPathLabel = _("Model Path")
 
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=modelPathLabel)
 		groupBox = groupSizer.GetStaticBox()
