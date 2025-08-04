@@ -191,6 +191,5 @@ def _updateIniForModels(ini_path, output_dir):
 			updated_lines.append(line)
 
 	# Write back the updated lines
-	logging.info(f"init file realpath: {os.path.realpath(ini_path)}")
 	with open(ini_path, "w", encoding="utf-8") as f:
 		f.writelines(updated_lines)

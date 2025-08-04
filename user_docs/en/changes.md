@@ -10,7 +10,7 @@ You can now use `NVDA+Windows+,` to describe images you encounter.
 ### New Features
 
 * Automated Image Descriptions:
-  * Press `NVDA+Windows+,` to get an AI generated Image description. (#18475)
+  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475)
   * This is generated locally on the device - no information is sent to the internet.
   * a new command has been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
   * a new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
