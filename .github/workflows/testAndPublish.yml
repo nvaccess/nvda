@@ -38,17 +38,32 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultArch: x86
+  supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.11.9'
+  supportedPythonVersions: '["3.11.9"]'
 
 jobs:
+  matrix:
+    name: Set up matrix
+    runs-on: ubuntu-latest
+    outputs:
+      supportedArchitectures: ${{ steps.setMatrix.outputs.supportedArchitectures }}
+      supportedPythonVersions: ${{ steps.setMatrix.outputs.supportedPythonVersions }}
+    steps:
+    - name: Set architecture and python version
+      id: setMatrix
+      run: |
+        echo "supportedArchitectures=$(jq -c <<< '${{ env.supportedArchitectures }}')" >> "$GITHUB_OUTPUT"
+        echo "supportedPythonVersions=$(jq -c <<< '${{ env.supportedPythonVersions }}')" >> "$GITHUB_OUTPUT"
   buildNVDA:
     name: Build NVDA
+    needs: matrix
     runs-on: windows-2025
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     outputs:
@@ -209,12 +224,12 @@ jobs:
   unitTests:
     name: Run unit tests
     runs-on: windows-2025
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -288,12 +303,12 @@ jobs:
   createLauncher:
     name: Create launcher
     runs-on: windows-2025
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     outputs:
@@ -368,14 +383,14 @@ jobs:
   systemTests:
     name: Run system tests
     runs-on: windows-2025
-    needs: createLauncher
+    needs: [matrix, createLauncher]
     strategy:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -430,12 +445,12 @@ jobs:
   createSymbols:
     name: Create symbols
     runs-on: windows-2025
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     outputs:
       # Note: each output variable is overwritten by the last job in the matrix.
       # So we only set the output variables for the default architecture.
@@ -523,14 +538,14 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
-    needs: [allTestsPass, crowdinUpload, uploadSymbols]
+    needs: [matrix, allTestsPass, crowdinUpload, uploadSymbols]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, x86]
-        pythonVersion: [3.11.9]
+        arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
+        pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     steps:
       - name: Cleanup cache
         shell: bash
