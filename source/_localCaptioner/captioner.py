@@ -77,7 +77,7 @@ class ImageCaptioner:
 		self.decoderSession = ort.InferenceSession(decoder_path, sess_options=sessionOptions)
 
 		log.info(
-			f"Loaded ONNX models - Encoder: {os.path.basename(encoder_path)}, Decoder: {os.path.basename(decoder_path)}"
+			f"Loaded ONNX models - Encoder: {os.path.basename(encoder_path)}, Decoder: {os.path.basename(decoder_path)}",
 		)
 		log.info(f"Loaded config from: {os.path.basename(config_path)}")
 		log.info(f"Loaded vocabulary from: {os.path.basename(vocabPath)}")
