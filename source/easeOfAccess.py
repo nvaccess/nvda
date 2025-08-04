@@ -24,6 +24,7 @@ def __getattr__(attrName: str) -> Any:
 			ROOT = _RegistryKey.EASE_OF_ACCESS
 			TEMP = _RegistryKey.EASE_OF_ACCESS_TEMP
 			APP = _RegistryKey.EASE_OF_ACCESS_APP
+
 		return RegistryKey
 
 	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
@@ -122,7 +123,9 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
 	except WindowsError:
-		log.error(f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading", exc_info=True)
+		log.error(
+			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading", exc_info=True
+		)
 		return []
 
 	try:
@@ -130,7 +133,9 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	except FileNotFoundError:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
 	except WindowsError:
-		log.error(f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration", exc_info=True)
+		log.error(
+			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration", exc_info=True
+		)
 	else:
 		if not conf[0]:
 			# "".split(",") returns [""], so remove the empty string.
