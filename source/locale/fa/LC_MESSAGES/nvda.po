@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 23:59+0000\n"
-"PO-Revision-Date: 2025-07-28 00:17\n"
+"POT-Creation-Date: 2025-07-29 04:35+0000\n"
+"PO-Revision-Date: 2025-08-04 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Language: fa_IR\n"
@@ -25,32 +25,32 @@ msgstr "ورودیِ بومی"
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 #: NVDAHelper.py:488
 msgid "Alpha numeric input"
-msgstr "ورودیِ الفبا‌شماره‌ای"
+msgstr "ورودیِ الفبایی-عددی"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 #: NVDAHelper.py:492
 msgid "Full shaped mode"
-msgstr "حالتِ شکلِ کامل"
+msgstr "حالتِ تمام‌عرض"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
 #: NVDAHelper.py:494
 msgid "Half shaped mode"
-msgstr "حالتِ شکلِ نیمه"
+msgstr "حالتِ نیم‌عرض"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 #: NVDAHelper.py:500 NVDAHelper.py:510
 msgid "half alphanumeric"
-msgstr "نیمه الفبا‌شماره‌ای"
+msgstr "حروف و اعدادِ نیم‌عرض"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 #: NVDAHelper.py:502
 msgid "half katakana"
-msgstr "نیمه کاتاکانا"
+msgstr "کاتاکانای نیم‌عرض"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 #: NVDAHelper.py:504 NVDAHelper.py:514
 msgid "alphanumeric"
-msgstr "الفبا شماره‌ای"
+msgstr "الفبایی-عددی"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 #: NVDAHelper.py:506
@@ -65,27 +65,27 @@ msgstr "کاتاکانا"
 #. Translators: For Japanese character input: half katakana roman input mode.
 #: NVDAHelper.py:512
 msgid "half katakana roman"
-msgstr "نیمه کاتاکانا رو‌می"
+msgstr "کاتاکانای نیم‌عرض لاتین"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 #: NVDAHelper.py:516
 msgid "hiragana roman"
-msgstr "هیراگانا رو‌می"
+msgstr "هیراگانای لاتین"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 #: NVDAHelper.py:518
 msgid "katakana roman"
-msgstr "کاتاکانا رو‌می"
+msgstr "کاتاکانای لاتین"
 
 #. Translators: a message when the IME open status changes to opened
 #: NVDAHelper.py:560
 msgid "IME opened"
-msgstr "ویرایشگرِ روشِ ورودی (IME) باز شد"
+msgstr "ویرایشگرِ روشِ ورودی باز شد"
 
 #. Translators: a message when the IME open status changes to closed
 #: NVDAHelper.py:563
 msgid "IME closed"
-msgstr "ویرایشگرِ روشِ ورودی (IME) بسته شد"
+msgstr "ویرایشگرِ روشِ ورودی بسته شد"
 
 #. Translators: the label for an unknown language when switching input methods.
 #: NVDAHelper.py:600
@@ -946,28 +946,28 @@ msgstr "در این سند پشتیبانی نمی‌شود"
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr ""
+msgstr "به سرنوشتارِ بعدی در سطحِ {i} می‌بَرَد"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr ""
+msgstr "سرنوشتارِ سطحِ {i}ِ بعدی‌ای نیست"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr ""
+msgstr "به سرنوشتارِ قبلی در سطحِ {i} می‌بَرَد"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr ""
+msgstr "سرنوشتارِ سطحِ {i}ِ قبلیی نیست"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -2133,7 +2133,8 @@ msgstr[1] "افزونه‌های زیر هنگامِ نصب دچارِ خطا ش
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "بعضی کارها روی افزونه‌ها انجام نشد. برای اطلاعاتِ بیشتر، فایلِ لاگ را ببینید.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3577,14 +3578,15 @@ msgstr "جایگزینی برای نماد نیست"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "نویسه: {character}\n"
+"جایگزین: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "نمادِ باز ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -3976,7 +3978,7 @@ msgstr "تنظیماتِ صدای NVDA را نشان می‌دهد"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "تنظیماتِ بیناییِ NVDA را نمایش می‌دهد"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3376
@@ -4022,17 +4024,17 @@ msgstr "تنظیماتِ دسترسیِ راهِ دور را نمایش می‌�
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3453
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "تنظیماتِ فروشگاه افزونه‌های NVDA را نمایش می‌دهد"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "تنظیماتِ نویسه‌خوانِ نوریِ ویندوز در NVDA را نمایش می‌دهد"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3471
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "تنظیماتِ پیشرفته‌ی NVDA را نمایش می‌دهد"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3480
@@ -4100,32 +4102,32 @@ msgstr "فروشگاهِ افزونه‌ها را برای مرور و مدیر�
 #. Translators: Input help mode message for toggle speech viewer command.
 #: globalCommands.py:3600
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
-msgstr "نمایشگرِ گفتارِ NVDA را فعال می‌کند. این نمایشگر، پنجره‌ایست شناور که به شما امکان می‌دهد تمامِ آنچه را که در حالِ حاضر توسط NVDA خوانده می‌شود ببینید"
+msgstr "گفتارنمای NVDA را فعال می‌کند. این نمایشگر، پنجره‌ایست شناور که به شما امکان می‌دهد تمامِ آنچه را که در حالِ حاضر توسط NVDA خوانده می‌شود ببینید"
 
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3609
 msgid "speech viewer disabled"
-msgstr "نمایشگرِ گفتار ِیرِ فعال شد"
+msgstr "گفتارنما غیرِ فعال شد"
 
 #. Translators: The message announced when enabling speech viewer.
 #: globalCommands.py:3614
 msgid "speech viewer enabled"
-msgstr "نمایشگرِ گفتار فعال شد"
+msgstr "گفتارنما فعال شد"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3622
 msgid "Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, and the text equivalent for each braille character"
-msgstr "نمایشگرِ مجازیِ بریلِ NVDA را فعال یا غیرفعال می‌کند. این نمایشگر، پنجره‌ایست شناور که به شما امکان می‌دهد خروجیِ بریل و متنِ معادلِ هر نویسه‌ی بریل را مشاهده کنید"
+msgstr "بریل‌نمای NVDA را فعال یا غیرفعال می‌کند. این نمایشگر، پنجره‌ایست شناور که به شما امکان می‌دهد خروجیِ بریل و متنِ معادلِ هر نویسه‌ی بریل را مشاهده کنید"
 
 #. Translators: The message announced when disabling braille viewer.
 #: globalCommands.py:3633
 msgid "Braille viewer disabled"
-msgstr "نمایشگرِ مجازیِ بریل غیرفعال شد"
+msgstr "بریل‌نما غیرفعال شد"
 
 #. Translators: The message announced when enabling Braille viewer.
 #: globalCommands.py:3638
 msgid "Braille viewer enabled"
-msgstr "نمایشگرِ مجازیِ بریل فعال شد"
+msgstr "بریل‌نما فعال شد"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
@@ -4226,7 +4228,7 @@ msgstr "خواندن هنگامِ پیمایشِ خطّی و پاراگرافی 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3804
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "خواندن هنگامِ پیمایشِ خطّی یا پاراگرافی با بریل روشن"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3806
@@ -4736,26 +4738,26 @@ msgstr "حالت‌های تقسیمِ صدا را تغییر می‌دهد"
 #: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "زبانِ متنِ زیرِ نشانگر را اعلام می‌کند. اگر دو بار فشرده شود، اطلاعات را در حالتِ مرور نمایش می‌دهد"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "زبانِ ناشناس"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4960
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (پشتیبانی نمی‌شود)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "زبان در موقعیتِ نشانگر"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4974
@@ -5480,7 +5482,7 @@ msgstr "ستاره‌ی ۸ پَر"
 #: msoAutoShapeTypes.py:225
 msgctxt "shape"
 msgid "Arc"
-msgstr "هلال"
+msgstr "کمان"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5508,49 +5510,49 @@ msgstr "فِلِشِ خمیده به بالا"
 #: msoAutoShapeTypes.py:237
 msgctxt "shape"
 msgid "Bevel"
-msgstr "گونیا"
+msgstr "لبه‌دار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:240
 msgctxt "shape"
 msgid "Block arc"
-msgstr "قوسِ بلوکی"
+msgstr "کمانِ بلوکی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:243
 msgctxt "shape"
 msgid "Can"
-msgstr "قوطی"
+msgstr "استوانه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:246
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "نمودارِ نمادِ به‌علاوه"
+msgstr "نمادِ مثبتِ نمودار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:249
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "نمودارِ نمادِ ستاره"
+msgstr "نمادِ ستاره‌ی نمودار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:252
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "نمودارِ نمادِ ضربدر"
+msgstr "نمادِ ضربدرِ نمودار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:255
 msgctxt "shape"
 msgid "Chevron"
-msgstr "بازوبند"
+msgstr "نمادِ هفتی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5571,14 +5573,14 @@ msgstr "فِلِشِ مدور"
 #: msoAutoShapeTypes.py:264
 msgctxt "shape"
 msgid "Cloud shape"
-msgstr "ابر‌شکل"
+msgstr "شکلِ ابر"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:267
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr "فراخوانِ ابری"
+msgstr "ابرِ توضیح"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5592,7 +5594,7 @@ msgstr "گوشه"
 #: msoAutoShapeTypes.py:273
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "چهار گوشه‌ی برش‌خورده"
+msgstr "مستطیل با چهار گوشه‌ی بریده"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5620,7 +5622,7 @@ msgstr "فِلِشِ خمیده به پایین"
 #: msoAutoShapeTypes.py:285 msoAutoShapeTypes.py:330 msoAutoShapeTypes.py:711
 msgctxt "shape"
 msgid "Ribbon banner"
-msgstr "نشانِ روبان"
+msgstr "بنرِ روبانی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5662,7 +5664,7 @@ msgstr "ده‌ضلعی"
 #: msoAutoShapeTypes.py:303
 msgctxt "shape"
 msgid "Diagonal stripe"
-msgstr "نوارِ راهراهِ اریب"
+msgstr "نوارِ مورب"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5683,42 +5685,42 @@ msgstr "دوازده‌ضلعی"
 #: msoAutoShapeTypes.py:312
 msgctxt "shape"
 msgid "Donut"
-msgstr "دونات"
+msgstr "حلقه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:315
 msgctxt "shape"
 msgid "Double brace"
-msgstr "دو آکولاد"
+msgstr "آکولادِ دوبل"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:318
 msgctxt "shape"
 msgid "Double bracket"
-msgstr "دو کروشه"
+msgstr "کروشه‌ی دوبل"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:321
 msgctxt "shape"
 msgid "Double wave"
-msgstr "دو موج"
+msgstr "موجِ دوبل"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:324
 msgctxt "shape"
 msgid "Down Arrow"
-msgstr "فِلِشِ پایین‌نما"
+msgstr "فِلِشِ رو به پایین"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:327
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr "فراخوان با جهتنمای پایین"
+msgstr "توضیح با جهتنمای پایین"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5746,14 +5748,14 @@ msgstr "نمادِ نمودارِ کارت"
 #: msoAutoShapeTypes.py:345
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "نمادِ نمودارِ ترکیبی"
+msgstr "نمادِ نمودارِ تجمیع"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:348
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr "نمادِ نمودارِ رابط"
+msgstr "نمادِ نمودارِ اتصال"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5781,7 +5783,7 @@ msgstr "نمادِ نمودارِ تأخیر"
 #: msoAutoShapeTypes.py:360
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr "نمادِ نمودارِ دسترسیِ مستقیم به ذخیره‌سازی"
+msgstr "نمادِ نمودارِ حافظه دسترسیِ مستقیم"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5809,7 +5811,7 @@ msgstr "نمادِ نمودارِ استخراج"
 #: msoAutoShapeTypes.py:372
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr "نمادِ نمودارِ ذخیره‌سازِ داخلی"
+msgstr "نمادِ نمودارِ حافظه‌ی داخلی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5851,14 +5853,14 @@ msgstr "نمادِ نمودارِ چندسندی"
 #: msoAutoShapeTypes.py:390
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr "نمادِ نمودارِ ذخیره‌سازِ برون‌خط"
+msgstr "نمادِ نمودارِ حافظه‌ی آفلاین"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:393
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr "نمادِ نمودارِ رابطِ خارج از صفحه"
+msgstr "نمادِ نمودارِ اتصالِ خارج از صفحه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5893,21 +5895,21 @@ msgstr "نمادِ نمودارِ فرایند"
 #: msoAutoShapeTypes.py:408
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr "نمادِ نمودارِ نوارِ پانچ‌شده"
+msgstr "نمادِ نمودارِ نوارِ پانچ"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:411
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr "نمادِ نمودارِ دسترسیِ متوالی به ذخیره‌سازی"
+msgstr "نمادِ نمودارِ ذخیره‌سازی با دسترسیِ ترتیبی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:414
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr "نمادِ نمودارِ ترتیب"
+msgstr "نمادِ نمودارِ مرتب‌سازی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5921,7 +5923,7 @@ msgstr "نمادِ نمودارِ داده‌ی ذخیره‌شده"
 #: msoAutoShapeTypes.py:420
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr "نمادِ نمودارِ پیوندِ جمعبندی"
+msgstr "نمادِ نمودارِ نقطه‌ی جمع‌کننده"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5956,14 +5958,14 @@ msgstr "قیف"
 #: msoAutoShapeTypes.py:435
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr "دنده‌ی ۶ دندانه"
+msgstr "چرخ‌دنده‌ی ۶ دندانه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:438
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr "دنده‌ی ۹ دندانه"
+msgstr "چرخ‌دنده‌ی ۹ دندانه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5998,7 +6000,7 @@ msgstr "شش‌ضلعی"
 #: msoAutoShapeTypes.py:453
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "جابجاکننده‌ی افقی"
+msgstr "نوارِ پیمایشِ افقی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6019,7 +6021,7 @@ msgstr "فِلِشِ چپ‌نما"
 #: msoAutoShapeTypes.py:462
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr "فراخوان با جهتنمای چپ"
+msgstr "توضیح با جهتنمای چپ"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6054,7 +6056,7 @@ msgstr "فِلِشِ افقیِ دو‌سر"
 #: msoAutoShapeTypes.py:477
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr "فراخوان با فِلِشِ افقیِ دو‌سر"
+msgstr "کادرِ توضیح با فِلِشِ افقیِ دو‌سر"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6068,21 +6070,21 @@ msgstr "فِلِشِ دایره‌ایِ دو‌سر"
 #: msoAutoShapeTypes.py:483
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr "روبان با فِلِشِ چپ و راست‌نما"
+msgstr "روبان با فِلِشِ چپ و راست"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:486
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "فِلِش‌های چپ راست و بالانما"
+msgstr "فِلِش‌های چپ، راست و بالا"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:489
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "فِلِش‌های چپ و بالانما"
+msgstr "فِلِش‌های چپ و بالا"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6096,112 +6098,112 @@ msgstr "صاعقه"
 #: msoAutoShapeTypes.py:495
 msgctxt "shape"
 msgid "Line Callout"
-msgstr "فراخوانِ خطّی"
+msgstr "کادرِ توضیحِ خطّی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:498
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr "فراخوان با نوارِ تاکیدیِ افقی"
+msgstr "کادرِ توضیح با نوارِ تاکیدیِ افقی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:503
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr "فراخوان با حاشیه و نوارِ تاکیدیِ افقی"
+msgstr "کادرِ توضیح با حاشیه و نوارِ تاکیدیِ افقی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:507
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "فراخوان با خطِّ افقی"
+msgstr "کادرِ توضیح با خطِّ افقی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:510
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "فراخوان با خطِّ مستقیمِ مورب"
+msgstr "کادرِ توضیح دارای خطِّ مورب"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:513
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr "فراخوانی با خطِّ فراخوانِ مورب و نوارِ تاکیدی"
+msgstr "کادر توضیح دارای خط مورب و نوار تأکیدی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:518
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr "فراخوان با حاشیه، خطِّ مستقیمِ مورب و نوارِ تاکیدی"
+msgstr "کادرِ توضیح با حاشیه، خطِّ مورب و نوارِ تاکیدی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:522
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr "فراخوان بدونِ حاشیه و خطِّ فراخوانِ مورب"
+msgstr "کادرِ توضیح بدونِ حاشیه و با خطِّ مورب"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:525
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr "فراخوان با خطِّ زاویه‌دار"
+msgstr "کادرِ توضیح با خطِّ زاویه‌دار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:528
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr "فراخوان با خطِّ فراخوانِ زاویه‌دار و نوارِ تاکیدی"
+msgstr "کادر توضیح دارای خط زاویه‌دار و نوار تأکیدی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:533
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr "فراخوان با حاشیه، خطِّ فراخوانِ زاویه‌دار و نوارِ تاکیدی"
+msgstr "کادرِ توضیح دارای حاشیه، خطِّ زاویه‌دار و نوار تأکیدی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:537
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr "فراخوان بدونِ حاشیه و خطِّ فراخوانِ زاویه‌دار"
+msgstr "کادرِ توضیح بدونِ حاشیه و با خطِّ زاویه‌دار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:540
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr "فراخوانی با بخش‌های خطِّ فراخوان که یک U شکل را تشکیل می‌دهند"
+msgstr "کادرِ توضیح دارای خطوطِ راهنما به شکلِ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:545
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
-msgstr "فراخوانی با نوارِ تاکیدی و بخش‌های خطِّ فراخوان که یک U شکل را تشکیل می‌دهند"
+msgstr "کادرِ توضیح دارای نوارِ تأکیدی و خطوطِ راهنما به شکلِ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:551
 msgctxt "shape"
 msgid "Callout with border, accent bar, and callout line segments forming a U-shape"
-msgstr "فراخوانی با حاشیه، نوارِ تاکیدی، و بخش‌های خطِّ فراخوان که یک U شکل را تشکیل می‌دهند"
+msgstr "کادرِ توضیح دارای حاشیه، نوارِ تأکیدی و خطوطِ راهنما به شکلِ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:557
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
-msgstr "فراخوانی بدونِ حاشیه و بخش‌های خطِّ فراخوان که یک U شکل را تشکیل می‌دهند"
+msgstr "کادرِ توضیح بدونِ حاشیه و دارای خطوطِ راهنما به شکلِ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6278,7 +6280,7 @@ msgstr "نمادِ نه"
 #: msoAutoShapeTypes.py:591
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr "فِلِشِ راست‌نمای شکافدار"
+msgstr "فِلِشِ راست‌نمای دندانه‌دار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6299,7 +6301,7 @@ msgstr "بیضی"
 #: msoAutoShapeTypes.py:600
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr "فراخوانِ بیضی‌شکل"
+msgstr "کادرِ توضیحِ بیضی‌شکل"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6320,42 +6322,42 @@ msgstr "پنج‌ضلعی"
 #: msoAutoShapeTypes.py:609
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr "پایِ ناقص با گُوه‌ی گم‌شده"
+msgstr "دایره‌ی ناقص با یک قطاعِ حذف‌شده"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:612
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr "گُوه با یک‌چهارمِ پای"
+msgstr "قطاعِ ربعِ دایره"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:615
 msgctxt "shape"
 msgid "Plaque"
-msgstr "پلاک"
+msgstr "لوح"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:618
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr "زبانه‌های پلاک"
+msgstr "لوحِ زبانه‌دار"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:621
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr "فِلِش‌هایی که به چپ راست بالا و پایین اشاره می‌کنند"
+msgstr "فِلِش‌های چهارجهته"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:624
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr "فراخوان با فِلِش‌هایی که به چپ راست بالا و پایین اشاره می‌کنند"
+msgstr "کادرِ توضیح با فِلِش‌های چهارجهته"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6369,7 +6371,7 @@ msgstr "مستطیل"
 #: msoAutoShapeTypes.py:630
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "فراخوانِ مستطیل‌شکل"
+msgstr "کادرِ توضیحِ مستطیلی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6383,7 +6385,7 @@ msgstr "فِلِشِ راست‌نما"
 #: msoAutoShapeTypes.py:639
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr "فراخوان با جهتنمای راست"
+msgstr "کادرِ توضیح با جهتنمای راست"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6404,7 +6406,7 @@ msgstr "کروشه‌ی راست"
 #: msoAutoShapeTypes.py:648
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "مثلث"
+msgstr "مثلثِ قائم‌الزاویه"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6418,28 +6420,28 @@ msgstr "مستطیل با یک گوشه‌ی گِرد"
 #: msoAutoShapeTypes.py:654
 msgctxt "shape"
 msgid "Rectangle with two rounded corners diagonally-opposed"
-msgstr "مستطیل با دو گوشه‌ی گِرد به صورتِ مورب"
+msgstr "مستطیل با دو گوشه‌ی گِرد در قطرِ مقابلِ هم"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:657
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr "مستطیل با دو گوشه‌ی گِرد که یک ضلعِ مشترک دارند"
+msgstr "مستطیل با دو گوشه‌ی گِرد در یک ضلع مشترک"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:660
 msgctxt "shape"
 msgid "Rounded rectangle"
-msgstr "مستطیلِ گِرد"
+msgstr "مستطیل با گوشه‌های گِرد"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:663
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr "فراخوانِ مستطیل‌شکلِ گِرد"
+msgstr "کادرِ توضیح مستطیل‌شکل با گوشه‌های گِرد"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6460,14 +6462,14 @@ msgstr "مستطیل با یک گوشه‌ی بریده‌شده"
 #: msoAutoShapeTypes.py:672
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr "مستطیل با دو گوشه‌ی بریده‌شده به صورتِ مورب"
+msgstr "مستطیل با دو گوشه‌ی بریده در دو قطرِ مخالف"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:675
 msgctxt "shape"
 msgid "Rectangle with two snipped corners that share a side"
-msgstr "مستطیل با دو گوشه‌ی بریده‌شده که یک ضلعِ مشترک دارند"
+msgstr "مستطیل با دو گوشه‌ی بریده در یک ضلع مشترک**"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6481,7 +6483,7 @@ msgstr "مستطیل با یک گوشه‌ی بریده‌شده و یک گوش�
 #: msoAutoShapeTypes.py:681
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr "چهار مربعِ کوچک که یک شکلِ مستطیلی را درست می کنند"
+msgstr "چهار مربعِ کوچک که یک مستطیل درست می کنند"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6502,14 +6504,14 @@ msgstr "خورشید"
 #: msoAutoShapeTypes.py:690
 msgctxt "shape"
 msgid "Curved arrow"
-msgstr "فِلِشِ منحنی"
+msgstr "فِلِشِ خمیده"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:693
 msgctxt "shape"
 msgid "Water droplet"
-msgstr "شبنم"
+msgstr "قطره‌ی آب"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6523,28 +6525,28 @@ msgstr "ذوزنقه"
 #: msoAutoShapeTypes.py:699
 msgctxt "shape"
 msgid "Up Arrow"
-msgstr "فِلِشِ بالانما"
+msgstr "جهت‌نمای بالا"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:702
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr "فراخوان با جهتنمای بالا"
+msgstr "کادرِ توضیح با جهتنمای بالا"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:705
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr "فِلِشِ دو‌سری که به بالا و پایین اشاره می‌کند"
+msgstr "فِلِشِ دو‌سرِ عمودی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:708
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr "فراخوان با فِلِش‌هایی که به بالا و پایین اشاره می‌کنند"
+msgstr "کادرِ توضیح با فِلِش‌هایی به بالا و پایین"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6558,7 +6560,7 @@ msgstr "فِلِشِ یو‌شکل"
 #: msoAutoShapeTypes.py:717
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr "جابجاکننده‌ی عمودی"
+msgstr "نوارِ پیمایشِ عمودی"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6607,7 +6609,7 @@ msgstr "بعدی"
 #: msoAutoShapeTypes.py:741
 msgctxt "action"
 msgid "Help"
-msgstr "کمک"
+msgstr "راهنما"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6779,7 +6781,7 @@ msgstr "انعطافِ صدا"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "استفاده از سیستمِ مدرنِ خروجیِ صوتی (WASAPI)"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7000,7 +7002,7 @@ msgstr "مطمئن شوید که به اینترنت متصل هستید و نش
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "نمی‌توانم ارتباطی با سِروِرِ NV Access برقرار کنم."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7153,14 +7155,15 @@ msgstr "&انجام شد"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "بروزرسانیِ NVDA هنگامی که به دسترسی از راهِ دورِ NVDA به عنوانِ رایانه‌ی کنترل‌شونده متصل هستید توصیه نمی‌شود. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "اتصالِ فعالِ جاری نمی‌تواند در هنگام یا پس از بروزرسانی ادامه پیدا کند. حتی اگر اتصال ادامه یابد، شما نمی‌توانید به اعلان‌های کنترلِ حساب کاربری (UAC) از رایانه‌ی کنترل‌کننده پاسخ بدهید. تنها زمانی که بطور فیزیکی به رایانه‌ی کنترل‌شونده دسترسی دارید باید ادامه دهید.\n\n"
+"آیا مطمئنید که می‌خواهید ادامه بدهید؟"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7240,7 +7243,7 @@ msgstr "مطمئن شوید که به اینترنت متصل هستید و نش
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "نمی‌توانم ارتباطی با سِروِرِ فروشگاهِ افزونه‌ها برقرار کنم."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -8120,12 +8123,12 @@ msgstr "جایبانِ عکس"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:193
 msgid "Slide view"
-msgstr "نمایشِ اسلاید"
+msgstr "نمای اسلاید"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:195
 msgid "Slide Master view"
-msgstr "نمایشِ اصلیِ اسلاید"
+msgstr "نمای اسلایدِ مادر"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:197
@@ -8135,47 +8138,47 @@ msgstr "صفحه‌ی یادداشت‌ها"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:199
 msgid "Handout Master view"
-msgstr "نمایشِ اصلیِ دست‌نوشته"
+msgstr "نمای اصلیِ جزوه"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:201
 msgid "Notes Master view"
-msgstr "نمایشِ اصلیِ یادداشت‌ها"
+msgstr "نمای اصلیِ یادداشت‌ها"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:203
 msgid "Outline view"
-msgstr "نمایشِ نمای کلی"
+msgstr "نمای طرحِ کلی"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:205
 msgid "Slide Sorter view"
-msgstr "نمایشِ مرتب‌کننده‌ی اسلاید‌ها"
+msgstr "نمای مرتب‌سازِ اسلاید‌ها"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:207
 msgid "Title Master view"
-msgstr "نمایشِ اصلیِ عنوان"
+msgstr "نمای اصلیِ عنوان"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:209
 msgid "Normal view"
-msgstr "نمایشِ معمولی"
+msgstr "نمای معمولی"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:211
 msgid "Print Preview"
-msgstr "پیش‌نمایشِ چاپ"
+msgstr "نمای پیش‌نمایشِ چاپ"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:213
 msgid "Thumbnails"
-msgstr "تصاویرِ کوچک"
+msgstr "تصاویرِ بند‌انگشتی"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:215
 msgid "Master Thumbnails"
-msgstr "نمایشِ اصلیِ تصاویرِ کوچک"
+msgstr "نمای اصلیِ تصاویرِ بند‌انگشتی"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 #: appModules\powerpnt.py:572
@@ -8677,7 +8680,7 @@ msgstr "NBraille از شرکتِ ناطق"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -9199,19 +9202,19 @@ msgstr "اسپانیایی برای متنِ یونانی"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "عبری (کتاب مقدس) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "عبری (کتابِ مقدس)، تلاوت کامل"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "عبری (کتابِ مقدس)، کم‌حجم"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9559,13 +9562,13 @@ msgstr "رومانیایی"
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "روسی بریلِ ۶ نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:465
 msgid "Russian 8 dot computer braille"
-msgstr ""
+msgstr "روسی بریلِ ۸ نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9751,7 +9754,7 @@ msgstr "تایلندی درجه ۱"
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Thai grade 2"
-msgstr ""
+msgstr "تایلندی درجه ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10113,19 +10116,19 @@ msgstr "پیلکرو (¶)"
 #: config\configFlags.py:313
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "گفتار"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:315
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "بوق"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "غیرفعال"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
@@ -11681,7 +11684,8 @@ msgstr "ابزارِ تعمیرِ رجیستری ناموفق بود"
 #: gui\__init__.py:594
 msgid "The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr "ابزارِ تعمیرِ رجیستری با موفقیت به پایان رسید. توصیه می‌شود که اکنون رایانه‌تان را دوباره راه‌اندازی کنید تا مطمئن شوید تغییرات به‌طور کامل اِعمال می‌شوند."
+msgstr "ابزارِ تعمیرِ رجیستری با موفقیت به پایان رسید.\n"
+"توصیه می‌شود که اکنون رایانه‌تان را دوباره راه‌اندازی کنید تا مطمئن شوید تغییرات به‌طور کامل اِعمال می‌شوند."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:621
@@ -12017,7 +12021,7 @@ msgstr "افزونه‌های ناسازگار"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "افزونه‌های زیر با نسخه‌ی {version}ِ NVDA سازگار نیستند. این افزونه‌ها را نمی‌توان فعال کرد. لطفاً برای دریافت کمک بیشتر با نویسنده‌ی افزونه تماس بگیرید."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12144,7 +12148,7 @@ msgstr "خطا در فعال کردنِ پروفایل."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "پروفایلِ {name} بطور دائمی حذف خواهد شد. این اقدام بازگشت‌پذیر نیست."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12529,7 +12533,7 @@ msgstr "&ادامه"
 #. to an older version.
 #: gui\installerGui.py:357
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr "شما قصد دارید نگارشی قدیمیتر از نگارشی که در حالِ حاضر نصب‌شده را از NVDA نصب کنید. اگر واقعا می‌خواهید به نگارش قدیمیتر برگردید، باید ابتدا عملیات نصب را لغو کرده، NVDA را بطور کامل حذف کنید، و سپس نگارشِ قدیمیتر را نصب کنید."
+msgstr "شما قصد دارید نگارشی قدیمیتر از نگارشی که در حالِ حاضر نصب‌شده را از NVDA نصب کنید. اگر واقعا می‌خواهید به نگارش قدیمیتر برگردید، باید ابتدا عملیات نصب را لغو کرده، NVDA را کامل حذف کنید، و سپس نگارشِ قدیمیتر را نصب کنید."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -12567,14 +12571,15 @@ msgstr "پوشه موجود است"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "نصبِ NVDA زمانی که به عنوانِ رایانه‌ی کنترل‌شونده به دسترسی از راهِ دورِ NVDA متصل هستید توصیه نمی‌شود. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "شما نمی‌توانید به پیام‌های کنترل حساب کاربری (UAC) از طریق رایانه‌ی کنترل‌کننده پاسخ دهید. فقط در صورتی باید ادامه دهید که به رایانه‌ی کنترل‌شونده دسترسی فیزیکی داشته باشید.\n\n"
+"آیا مطمئن هستید که می‌خواهید ادامه دهید؟"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12734,7 +12739,7 @@ msgstr "ذخیره &نکن"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "پیش‌فرض ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13003,14 +13008,14 @@ msgstr "تعویضِ خودکارِ &لهجه (هرگاه پشتیبانی شو�
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "اعلامِ تغییراتِ ز&بان هنگامِ خواندن"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "اعلام هنگامِ تغییر به زبانی که توسط موتورِ سخنگو &پشتیبانی نمی‌شود"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13930,7 +13935,7 @@ msgstr "توسعه‌ی NVDA"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:3724
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr "فعال کردنِ کدِ شخصی‌سازی‌شده از پوشه‌ی چرک‌نویسِ برنامه‌نویس"
+msgstr "فعال کردنِ بارگزاریِ کدِ شخصی‌سازی‌شده از پوشه‌ی چرک‌نویسِ برنامه‌نویس"
 
 #. Translators: the label for a button in the Advanced settings category
 #: gui\settingsDialogs.py:3737
@@ -15342,8 +15347,8 @@ msgstr "نصبِ افزونه"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "در حالِ نصبِ {num} افزونه؛ لطفا شکیبا باشید."
+msgstr[1] "در حالِ نصبِ {num} افزونه؛ لطفا شکیبا باشید."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15352,8 +15357,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "دانلودِ {num} افزونه در جریان است. دانلود را لغو می‌کنید؟"
+msgstr[1] "دانلودِ {num} افزونه در جریان است. دانلود را لغو می‌کنید؟"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15731,8 +15736,8 @@ msgstr "فراخوانی"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} پیشنهاد"
+msgstr[1] "{num} پیشنهاد"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -15962,116 +15967,116 @@ msgstr "میزِ کار"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:139
 msgid "3D Area"
-msgstr "ناحیه‌ی سه‌بُعدی"
+msgstr "سطحیِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:142
 msgid "3D Stacked Area"
-msgstr "ناحیه‌ی انباشته‌ی سه‌بُعدی"
+msgstr "سطحیِ انباشته‌ی سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:145
 #: NVDAObjects\window\_msOfficeChart.py:184
 msgid "100 percent Stacked Area"
-msgstr "ناحیه‌ی انباشته‌ی صد درصد"
+msgstr "سطحیِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:148
 msgid "3D Clustered Bar"
-msgstr "نوارِ گروهیِ سه‌بُعدی"
+msgstr "میله‌ایِ خوشه‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:151
 msgid "3D Stacked Bar"
-msgstr "نوارِ انباشته‌ی سه‌بُعدی"
+msgstr "میله‌ایِ پشته‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:154
 msgid "3D 100 percent Stacked Bar"
-msgstr "نوارِ انباشته‌ی صد درصدِ سه‌بُعدی"
+msgstr "میله‌ایِ پشته‌ایِ سه‌بُعدیِ صد‌درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:157
 msgid "3D Column"
-msgstr "ستونِ سه‌بُعدی"
+msgstr "ستونیِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:160
 msgid "3D Clustered Column"
-msgstr "ستونِ گروهیِ سه‌بُعدی"
+msgstr "ستونیِ خوشه‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:163
 msgid "3D Stacked Column"
-msgstr "ستونِ انباشته‌ی سه‌بُعدی"
+msgstr "ستونیِ پشته‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:166
 msgid "3D 100 percent Stacked Column"
-msgstr "ستونِ انباشته‌ی سه‌بُعدیِ صد درصد"
+msgstr "ستونیِ پشته‌ایِ سه‌بُعدیِ صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:169
 msgid "3D Line"
-msgstr "خطِ سه‌بُعدی"
+msgstr "خطّیِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:172
 msgid "3D Pie"
-msgstr "کلوچه‌ایِ سه‌بُعدی"
+msgstr "دایره‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:175
 msgid "Exploded 3D Pie"
-msgstr "کلوچه‌ایِ سه‌بُعدیِ تفکیک‌شده"
+msgstr "دایره‌ایِ سه‌بُعدیِ منفصل"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:178
 msgid "Area"
-msgstr "ناحیه"
+msgstr "سطحی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:181
 msgid "Stacked Area"
-msgstr "ناحیه‌ی انباشته"
+msgstr "سطحیِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:187
 msgid "Clustered Bar"
-msgstr "نوارِ گروهی"
+msgstr "میله‌ایِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:190
 msgid "Bar of Pie"
-msgstr "نوارِ دایره‌ای"
+msgstr "میله‌ایِ دایره‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:193
 msgid "Stacked Bar"
-msgstr "نوارِ انباشته"
+msgstr "میله‌ایِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:196
 msgid "100 percent Stacked Bar"
-msgstr "نوارِ انباشته‌ی صد درصد"
+msgstr "میله‌ایِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16089,37 +16094,37 @@ msgstr "حبابی با جلوه‌های سه‌بُعدی"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:205
 msgid "Clustered Column"
-msgstr "ستونِ گروهی"
+msgstr "ستونیِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:208
 msgid "Stacked Column"
-msgstr "ستونِ انباشته"
+msgstr "ستونیِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:211
 msgid "100 percent Stacked Column"
-msgstr "ستونِ انباشته‌ی صد درصد"
+msgstr "ستونیِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:214
 msgid "Clustered Cone Bar"
-msgstr "میله‌ای مخروطیِ سه‌بُعدی"
+msgstr "میله‌ایِ مخروطیِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:217
 msgid "Stacked Cone Bar"
-msgstr "میله‌ای مخروطیِ انباشته"
+msgstr "میله‌ایِ مخروطیِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:220
 msgid "100 percent Stacked Cone Bar"
-msgstr "میله‌ای مخروطیِ انباشته‌ی صد درصد"
+msgstr "میله‌ایِ مخروطیِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -16132,7 +16137,7 @@ msgstr "ستونیِ مخروطیِ سه‌بُعدی"
 #: NVDAObjects\window\_msOfficeChart.py:226
 #: NVDAObjects\window\_msOfficeChart.py:247
 msgid "Clustered Cone Column"
-msgstr "ستونیِ مخروطیِ گروهی"
+msgstr "ستونیِ مخروطیِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -16145,37 +16150,37 @@ msgstr "ستونیِ مخروطیِ انباشته"
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:232
 msgid "100 percent Stacked Cone Column"
-msgstr "ستونیِ مخروطیِ صد‌درصد انباشته"
+msgstr "ستونیِ مخروطیِ انباشته‌ی صد‌درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:235
 msgid "Clustered Cylinder Bar"
-msgstr "میله‌ای استوانه‌ایِ گروهی"
+msgstr "میله‌ایِ استوانه‌ایِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:238
 msgid "Stacked Cylinder Bar"
-msgstr "میله‌ای استوانه‌ایِ انباشته"
+msgstr "میله‌ایِ استوانه‌ایِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:241
 msgid "100 percent Stacked Cylinder Bar"
-msgstr "میله‌ای استوانه‌ایِ صد‌درصد انباشته"
+msgstr "میله‌ایِ استوانه‌ایِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:244
 msgid "3D Cylinder Column"
-msgstr "ستونی استوانه‌ایِ سه‌بُعدی"
+msgstr "ستونیِ استوانه‌ایِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:253
 msgid "100 percent Stacked Cylinder Column"
-msgstr "ستونی استوانه‌ایِ صد‌درصد انباشته"
+msgstr "ستونیِ استوانه‌ایِ انباشته‌ی صد درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16187,7 +16192,7 @@ msgstr "حلقه‌ای"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:259
 msgid "Exploded Doughnut"
-msgstr "حلقه‌ایِ باز‌شده"
+msgstr "حلقه‌ایِ منفصل"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16199,19 +16204,19 @@ msgstr "خطّی"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:265
 msgid "Line with Markers"
-msgstr "خطّیِ نشان‌دار"
+msgstr "خطّی با نشانگر"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:268
 msgid "Stacked Line with Markers"
-msgstr "خطّیِ نشان‌دارِ انباشته"
+msgstr "خطّیِ انباشته با نشانگر"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:271
 msgid "100 percent Stacked Line with Markers"
-msgstr "خطّیِ نشان‌دارِ صد‌درصد انباشته"
+msgstr "خطّیِ انباشته‌ی صد‌درصدی با نشانگر"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16223,67 +16228,67 @@ msgstr "خطّیِ انباشته"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:277
 msgid "100 percent Stacked Line"
-msgstr "خطّیِ صد‌درصد انباشته"
+msgstr "خطّیِ انباشته‌ی صد‌درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:280
 msgid "Pie"
-msgstr "کلوچه‌ای"
+msgstr "دایره‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:283
 msgid "Exploded Pie"
-msgstr "کلوچه‌ایِ تفکیک‌شده"
+msgstr "دایره‌ایِ منفصل"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:286
 msgid "Pie of Pie"
-msgstr "کفِ دایره‌ای"
+msgstr "دایره‌ایِ دایره‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:289
 msgid "Clustered Pyramid Bar"
-msgstr "میله‌ای هرمیِ گروهی"
+msgstr "میله‌ایِ هرمیِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:292
 msgid "Stacked Pyramid Bar"
-msgstr "میله‌ای هرمیِ انباشته"
+msgstr "میله‌ایِ هرمیِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:295
 msgid "100 percent Stacked Pyramid Bar"
-msgstr "میله‌ایِ هرمیِ صد‌درصد انباشته"
+msgstr "میله‌ایِ هرمیِ انباشته‌ی صد‌درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:298
 msgid "3D Pyramid Column"
-msgstr "ستونی هرمیِ سه‌بُعدی"
+msgstr "ستونیِ هرمیِ سه‌بُعدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:301
 msgid "Clustered Pyramid Column"
-msgstr "ستونی هرمیِ گروهی"
+msgstr "ستونیِ هرمیِ خوشه‌ای"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:304
 msgid "Stacked Pyramid Column"
-msgstr "ستونی هرمیِ انباشته"
+msgstr "ستونیِ هرمیِ انباشته"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:307
 msgid "100 percent Stacked Pyramid Column"
-msgstr "ستونی هرمیِ صد‌درصد انباشته"
+msgstr "ستونیِ هرمیِ انباشته‌ی صد‌درصدی"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16301,31 +16306,31 @@ msgstr "رادارِ پر‌شده"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:316
 msgid "Radar with Data Markers"
-msgstr "رادار با نشان‌های داده"
+msgstr "رادار با نشانگرِ داده‌ها"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:319
 msgid "High-Low-Close"
-msgstr "بالا پایینِ بسته"
+msgstr "بالاترین -  پایینترین - بسته شدن"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:322
 msgid "Open-High-Low-Close"
-msgstr "بالا باز پایین بسته"
+msgstr "باز شدن - بالاترین - پایین‌ترین - بسته شدن"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:325
 msgid "Volume-High-Low-Close"
-msgstr "بالا پایینِ بسته‌ی حجمی"
+msgstr "حجم - بالاترین - پایین‌ترین - بسته شدن"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:328
 msgid "Volume-Open-High-Low-Close"
-msgstr "بالا باز پایین بسته‌ی حجمی"
+msgstr "حجم - باز شدن - بیشترین - کمترین - بسته شدن"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16337,19 +16342,19 @@ msgstr "سطحِ سه‌بُعدی"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:334
 msgid "Surface (Top View)"
-msgstr "سطح (نمای بالا)"
+msgstr "سطحی (نمای بالا)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:337
 msgid "Surface (Top View wireframe)"
-msgstr "سطح (شطرنجیِ نمای بالا("
+msgstr "سطحی (نمای بالا، طرحِ سیمی("
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:340
 msgid "3D Surface (wireframe)"
-msgstr "سطحِ سه‌بُعدی (شطرنجی)"
+msgstr "سطحِ سه‌بُعدی (طرحِ سیمی)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16361,13 +16366,13 @@ msgstr "پراکندگی"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:346
 msgid "Scatter with Lines"
-msgstr "پراکندگیِ خط‌دار"
+msgstr "پراکندگی با خطوط"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:349
 msgid "Scatter with Lines and No Data Markers"
-msgstr "پراکندگیِ خط‌دار بدونِ علامت‌زنِ داده"
+msgstr "پراکندگی با خطوط و بدونِ نشانگرِ داده‌ها"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16379,12 +16384,12 @@ msgstr "پراکندگی با خط‌های صاف"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:355
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "پراکندگی با خط‌های صاف بدونِ علامت‌زنِ داده"
+msgstr "پراکندگی با خط‌های صاف بدونِ نشانگرِ داده‌ها"
 
 #. Translators: A slice in a pie chart.
 #: NVDAObjects\window\_msOfficeChart.py:391
 msgid "slice"
-msgstr "سهمی"
+msgstr "برش"
 
 #. Translators: A column in a column chart.
 #: NVDAObjects\window\_msOfficeChart.py:402
@@ -16395,12 +16400,12 @@ msgstr "ستون"
 #. Translators: A data point in a line chart.
 #: NVDAObjects\window\_msOfficeChart.py:413
 msgid "data point"
-msgstr "نقطه‌ی داده‌ها"
+msgstr "نقطه‌ی داده"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 #: NVDAObjects\window\_msOfficeChart.py:416
 msgid "item"
-msgstr "جزء"
+msgstr "مورد"
 
 #. Translators: Message to be spoken to report Series Color
 #: NVDAObjects\window\_msOfficeChart.py:437
@@ -16417,52 +16422,52 @@ msgstr "برچسبِ واحدِ نمایش"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:448
 msgid "Major Gridlines"
-msgstr "خطوطِ شطرنجیِ اصلی"
+msgstr "خطوطِ شبکه‌ی اصلی"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:450
 msgid "Minor Gridlines"
-msgstr "خطوطِ شطرنجیِ فرعی"
+msgstr "خطوطِ شبکه‌ی فرعی"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:452
 msgid "Pivot Chart Drop Zone"
-msgstr "منطقه‌ی فرودِ نمودارِ پاشنه‌ای"
+msgstr "ناحیه‌ی رهاسازیِ نمودارِ محوری"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:454
 msgid "Pivot Chart Field Button"
-msgstr "دکمه‌ی فیلدِ نمودارِ پاشنه‌ای"
+msgstr "دکمه‌ی فیلدِ نمودارِ محوری"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:456
 msgid "Down Bars"
-msgstr "نوارهای پایین"
+msgstr "میله‌های نزولی"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:458
 msgid "Drop Lines"
-msgstr "خطوطِ نقطه‌دار"
+msgstr "خطوط ریزش"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:460
 msgid "Hi Lo Lines"
-msgstr "خطوطِ بالا پایین"
+msgstr "خطوط بیشینه و کمینه"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:462
 msgid "Radar Axis Labels"
-msgstr "برچسب‌های محورِ رادار"
+msgstr "برچسب‌های محورِ راداری"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:464
 msgid "Series Lines"
-msgstr "خط‌های ردیفی"
+msgstr "خطوطِ سِری"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:466
 msgid "Up Bars"
-msgstr "نوار‌های بالا"
+msgstr "میله‌های صعودی"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:468
@@ -16499,17 +16504,17 @@ msgstr "برچسبِ داده‌ها"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:480
 msgid "Error Bars"
-msgstr "نوارهای خطا"
+msgstr "میله‌های خطا"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:482
 msgid "X Error Bars"
-msgstr "نوارهای خطای X"
+msgstr "میله‌های خطای محورِ X"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:484
 msgid "Y Error Bars"
-msgstr "نوارهای خطای Y"
+msgstr "میله‌های خطای محورِ Y"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:486
@@ -16571,7 +16576,7 @@ msgstr "بدونِ تغییر از نقطه‌ی {previousIndex}, "
 #: NVDAObjects\window\_msOfficeChart.py:871
 #, python-brace-format
 msgid "increased by {incrementValue} from point {previousIndex}, "
-msgstr "به اندازه‌ی {incrementValue} از نقطه‌ی {previousIndex} افزوده شد، "
+msgstr "افزایش به اندازه‌ی {incrementValue} از نقطه‌ی {previousIndex}، "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #: NVDAObjects\window\_msOfficeChart.py:877
@@ -16585,7 +16590,7 @@ msgstr "کاهش به اندازه‌ی {decrementValue} از نقطه‌ی {pre
 #: NVDAObjects\window\_msOfficeChart.py:889
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle}ِ {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
@@ -16600,7 +16605,7 @@ msgstr "رده‌ی {categoryAxisData}: "
 #: NVDAObjects\window\_msOfficeChart.py:902
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle}ِ {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -16614,44 +16619,44 @@ msgstr "مقدارِ {valueAxisData}"
 #: NVDAObjects\window\_msOfficeChart.py:918
 #, python-brace-format
 msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr " کسرِ {fractionValue:.2f} درصد سهمِ {pointIndex} از {pointCount}"
+msgstr " کسرِ {fractionValue:.2f} درصد برشِ {pointIndex} از {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 #: NVDAObjects\window\_msOfficeChart.py:929
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} از {pointCount}"
+msgstr " {segmentType}ِ {pointIndex} از {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
 #: NVDAObjects\window\_msOfficeChart.py:946
 msgid "Primary Category Axis"
-msgstr "محورِ دسته‌ی اولیه"
+msgstr "محورِ دسته‌بَندیِ اصلی"
 
 #. Translators: Indicates Secondary Category Axis
 #: NVDAObjects\window\_msOfficeChart.py:948
 msgid "Secondary Category Axis"
-msgstr "محورِ دسته‌ی ثانویه"
+msgstr "محورِ دسته‌بَندیِ فرعی"
 
 #. Translators: Indicates Primary Value Axis
 #: NVDAObjects\window\_msOfficeChart.py:952
 msgid "Primary Value Axis"
-msgstr "محورِ مقدارِ اولیه"
+msgstr "محورِ مقادیرِ اصلی"
 
 #. Translators: Indicates Secondary Value Axis
 #: NVDAObjects\window\_msOfficeChart.py:954
 msgid "Secondary Value Axis"
-msgstr "محورِ مقدارِ ثانویه"
+msgstr "محورِ مقادیرِ فرعی"
 
 #. Translators: Indicates Primary Series Axis
 #: NVDAObjects\window\_msOfficeChart.py:958
 msgid "Primary Series Axis"
-msgstr "محورِ مجموعه‌ی اولیه"
+msgstr "محورِ سِری‌های اصلی"
 
 #. Translators: Indicates Secondary Series Axis
 #: NVDAObjects\window\_msOfficeChart.py:960
 msgid "Secondary Series Axis"
-msgstr "محورِ مجموعه‌ی ثانویه"
+msgstr "محورِ سِری‌های فرعی"
 
 #. Translators: the title of a chart axis
 #: NVDAObjects\window\_msOfficeChart.py:1024
@@ -16662,7 +16667,7 @@ msgstr " عنوان: {axisTitle}"
 #. Translators: Indicates that trendline type is Exponential
 #: NVDAObjects\window\_msOfficeChart.py:1036
 msgid "Exponential"
-msgstr "تشریحی"
+msgstr "نمایی"
 
 #. Translators: Indicates that trendline type is Linear
 #: NVDAObjects\window\_msOfficeChart.py:1038
@@ -16677,12 +16682,12 @@ msgstr "لگاریتمی"
 #. Translators: Indicates that trendline type is Moving Average
 #: NVDAObjects\window\_msOfficeChart.py:1042
 msgid "Moving Average"
-msgstr "میانگینِ حرکت"
+msgstr "میانگین متحرک"
 
 #. Translators: Indicates that trendline type is Polynomial
 #: NVDAObjects\window\_msOfficeChart.py:1044
 msgid "Polynomial"
-msgstr "چند‌فرمولی"
+msgstr "چندجمله‌ای"
 
 #. Translators: Indicates that trendline type is Power
 #: NVDAObjects\window\_msOfficeChart.py:1046
@@ -16692,7 +16697,7 @@ msgstr "توان"
 #. Translators: Substitute superscript two by square for R square value
 #: NVDAObjects\window\_msOfficeChart.py:1067
 msgid " square "
-msgstr " گِرد‌شده "
+msgstr " مربع "
 
 #. Translators: Substitute - by minus in trendline equations.
 #: NVDAObjects\window\_msOfficeChart.py:1072
@@ -16703,13 +16708,13 @@ msgstr " منفی "
 #: NVDAObjects\window\_msOfficeChart.py:1075
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} "
-msgstr "{seriesName} نوعِ روندِ خطی: {trendlineType}، نام: {trendlineName}، برچسب: {trendlineLabel} "
+msgstr "{seriesName} نوعِ خطِ روند: {trendlineType}، نام: {trendlineName}، برچسب: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
 #: NVDAObjects\window\_msOfficeChart.py:1084
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
-msgstr "{seriesName} نوعِ روندِ خطی: {trendlineType}، نام: {trendlineName} "
+msgstr "{seriesName} نوعِ خطِ روند: {trendlineType}، نام: {trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
 #: NVDAObjects\window\_msOfficeChart.py:1108
@@ -17780,7 +17785,7 @@ msgstr "{val:g} نقطه فاصله پیش از پاراگراف"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (پشتیبانی نمی‌شود)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98

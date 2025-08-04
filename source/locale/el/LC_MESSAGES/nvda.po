@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 23:59+0000\n"
-"PO-Revision-Date: 2025-07-28 00:17\n"
+"POT-Creation-Date: 2025-07-29 04:35+0000\n"
+"PO-Revision-Date: 2025-08-04 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -946,28 +946,28 @@ msgstr "Δεν υποστηρίζεται σε αυτό το έγγραφο"
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr "Μεταβαίνει στην επόμενη επικεφαλίδα στο επίπεδο {i}"
+msgstr "Μετακινείται στην επόμενη επικεφαλίδα επιπέδου {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr "Δεν υπάρχει επόμενη επικεφαλίδα στο επίπεδο {i}"
+msgstr "Δεν υπάρχει επόμενη επικεφαλίδα επιπέδου {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr "Μεταβαίνει στην προηγούμενη επικεφαλίδα στο επίπεδο {i}"
+msgstr "Μετακινείται στην προηγούμενη επικεφαλίδα επιπέδου {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr "Δεν υπάρχει προηγούμενη επικεφαλίδα στο επίπεδο {i}"
+msgstr "Δεν υπάρχει προηγούμενη επικεφαλίδα επιπέδου {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -12373,7 +12373,7 @@ msgstr "Εισαγάγετε χειρονομία εισόδου προς προ
 msgid "{category} ({nbResults} result)"
 msgid_plural "{category} ({nbResults} results)"
 msgstr[0] "{category} ({nbResults} αποτέλεσμα)"
-msgstr[1] ""
+msgstr[1] "{category} ({nbResults} αποτέλεσμα)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:586
@@ -12547,39 +12547,40 @@ msgstr "&Προχωρήστε στην εγκατάσταση (δε συστήν
 #: gui\installerGui.py:424
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
-msgstr ""
+msgstr "Ένα φορητό αντίγραφο υπάρχει ήδη στον φάκελο «{portableDirectory}». Θέλετε να το ενημερώσετε;"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
 #: gui\installerGui.py:429
 msgid "Portable Copy Exists"
-msgstr ""
+msgstr "Υπάρχει Φορητό Αντίγραφο"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
 #: gui\installerGui.py:436
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
-msgstr ""
+msgstr "Ο καθορισμένος φάκελος «{portableDirectory}» δεν είναι άδειος. Αν συνεχίσετε, τα υπάρχοντα αρχεία στον φάκελο θα διαγραφούν και θα αντικατασταθούν. Θέλετε να αντικαταστήσετε τα περιεχόμενα αυτού του φακέλου; "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
 #: gui\installerGui.py:442
 msgid "Directory Exists"
-msgstr ""
+msgstr "Ο Φάκελος Υπάρχει"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Η εγκατάσταση του NVDA ενώ είστε συνδεδεμένοι μέσω του NVDA Remote Access ως ελεγχόμενος υπολογιστής δεν συνιστάται. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Δε θα μπορείτε να απαντήσετε στις προτροπές Ελέγχου Λογαριασμού Χρήστη (UAC) από τον υπολογιστή που ελέγχει. Πρέπει να συνεχίσετε μόνο αν έχετε φυσική πρόσβαση στον ελεγχόμενο υπολογιστή.\n\n"
+"Είστε βέβαιοι ότι θέλετε να συνεχίσετε;"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12595,7 +12596,7 @@ msgstr "Για να δημιουργήσετε ένα φορητό αντίγρ�
 #. in the Create Portable NVDA dialog.
 #: gui\installerGui.py:518
 msgid "Portable directory:"
-msgstr ""
+msgstr "Φάκελος φορητής εγκατάστασης:"
 
 #. Translators: The label of a button to browse for a directory.
 #: gui\installerGui.py:523
@@ -12606,12 +12607,12 @@ msgstr "&Περιήγηση..."
 #. destination directory when creating a portable copy of NVDA.
 #: gui\installerGui.py:526
 msgid "Select portable directory"
-msgstr ""
+msgstr "Επιλογή φακέλου φορητής εγκατάστασης"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui\installerGui.py:534
 msgid "Create a &new folder for the portable copy"
-msgstr ""
+msgstr "Δημιουργία &νέου φακέλου για το φορητό αντίγραφο"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui\installerGui.py:539
@@ -12638,7 +12639,7 @@ msgstr "Παρακαλώ προσδιορίστε το ακριβές μονοπ
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:632
 msgid "Portable copy creation cancelled."
-msgstr ""
+msgstr "Η δημιουργία φορητού αντιγράφου ακυρώθηκε."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 #: gui\installerGui.py:637
@@ -12714,22 +12715,22 @@ msgstr "Ακύρωση"
 #. Translators: A save button on a message dialog.
 #: gui\message.py:336
 msgid "&Save"
-msgstr ""
+msgstr "&Αποθήκευση"
 
 #. Translators: An apply button on a message dialog.
 #: gui\message.py:338
 msgid "&Apply"
-msgstr ""
+msgstr "&Εφαρμογή"
 
 #. Translators: A help button on a message dialog.
 #: gui\message.py:342
 msgid "Help"
-msgstr ""
+msgstr "Βοήθεια"
 
 #. Translators: A don't save button on a message dialog.
 #: gui\message.py:364
 msgid "Do&n't save"
-msgstr ""
+msgstr "&Να μη γίνει αποθήκευση"
 
 #. Translators: Label for the default option for some feature-flag combo boxes.
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'.
@@ -12739,7 +12740,7 @@ msgstr ""
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Προεπιλογή ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -12747,12 +12748,14 @@ msgstr ""
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
 "Option: \"{option}\""
-msgstr ""
+msgstr "{message}\n\n"
+"Κατηγορία: «{category}»\n"
+"Επιλογή: «{option}»"
 
 #. Translators: The title of the message box when a setting's configuration is not valid.
 #: gui\settingsDialogs.py:451
 msgid "Invalid configuration"
-msgstr ""
+msgstr "Μη έγκυρη ρύθμιση"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 #: gui\settingsDialogs.py:560
@@ -12865,12 +12868,12 @@ msgstr "Ειδοποίηση για &εκκρεμή ενημέρωση κατά 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:950
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr ""
+msgstr "Να επιτρέπεται στη NV Access η συλλογή στατιστικών χρήσης του NVDA"
 
 #. Translators: The label for the update mirror on the General Settings panel.
 #: gui\settingsDialogs.py:959
 msgid "Update mirror"
-msgstr ""
+msgstr "Είδωλο Ενημέρωσης"
 
 #. Translators: This is the label for the button used to change the NVDA update mirror URL,
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
@@ -12878,17 +12881,17 @@ msgstr ""
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
 #: gui\settingsDialogs.py:977 gui\settingsDialogs.py:3311
 msgid "Change..."
-msgstr ""
+msgstr "Αλλαγή..."
 
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:993
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr ""
+msgstr "Αποτροπή απενεργοποίησης της &οθόνης κατά την εκφώνηση όλων ή την ανάγνωση με braille"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1007
 msgid "Set NVDA Update Mirror"
-msgstr ""
+msgstr "Ορισμός Ειδώλου Ενημέρωσης NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -12938,7 +12941,7 @@ msgstr "Μη επαρκή Δικαιώματα"
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1134 gui\settingsDialogs.py:3357
 msgid "No mirror"
-msgstr ""
+msgstr "Χωρίς είδωλο"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 #: gui\settingsDialogs.py:1153
@@ -12963,7 +12966,7 @@ msgstr "Επανεκκίνηση &αργότερα"
 #. Translators: A label for the synthesizer on the speech panel.
 #: gui\settingsDialogs.py:1192
 msgid "Synthesizer"
-msgstr ""
+msgstr "Συνθέτης"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
@@ -13006,14 +13009,14 @@ msgstr "Αυτόματη εναλλαγή διαλέκτου (όταν υποσ�
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Αναφορά αλ&λαγών γλώσσας κατά την ανάγνωση"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Αναφορά όταν η αλλαγή γλώσσας δεν υ&ποστηρίζεται από τον συνθέτη"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13031,13 +13034,13 @@ msgstr "Αποδοχή της γλώσσας της φωνής κατά την �
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:1784 gui\settingsDialogs.py:5001
 msgid "Unicode normali&zation"
-msgstr ""
+msgstr "Κανονικοποίηση &Unicode"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
 #: gui\settingsDialogs.py:1795
 msgid "Report '&Normalized' when navigating by character"
-msgstr ""
+msgstr "Αναφορά «&Κανονικοποιημένο» κατά την πλοήγηση ανά χαρακτήρα"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -13066,12 +13069,12 @@ msgstr "Χρήση λειτουργίας &εκφώνησης ανά χαρακ�
 #. Translators: Label of the list where user can enable or disable symbol dictionaires.
 #: gui\settingsDialogs.py:1884
 msgid "E&xtra dictionaries for character and symbol processing:"
-msgstr ""
+msgstr "Ε&πιπλέον λεξικά για επεξεργασία χαρακτήρων και συμβόλων:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1898
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr ""
+msgstr "&Λειτουργίες διαθέσιμες στην εντολή κυκλικής εναλλαγής λειτουργίας εκφώνησης:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1912
@@ -13081,18 +13084,18 @@ msgstr "&Καθυστερημένη περιγραφή χαρακτήρων κα
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
 #: gui\settingsDialogs.py:1976
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
-msgstr ""
+msgstr "Δεν επιλέξατε την Εκφώνηση ως μία από τις επιλογές λειτουργίας εκφώνησης. Σημειώστε ότι αυτό μπορεί να έχει ως αποτέλεσμα την πλήρη απουσία εκφωνούμενου αποτελέσματος. Είστε βέβαιοι ότι θέλετε να συνεχίσετε;"
 
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:2004
 msgid "At least two speech modes have to be checked."
-msgstr ""
+msgstr "Πρέπει να είναι επιλεγμένες τουλάχιστον δύο λειτουργίες εκφώνησης."
 
 #. Translators: Same as the label for the list of checkboxes where user can select speech modes that will
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
 #: gui\settingsDialogs.py:2007
 msgid "Modes available in the Cycle speech mode command"
-msgstr ""
+msgstr "Λειτουργίες διαθέσιμες στην εντολή κυκλικής εναλλαγής λειτουργίας εκφώνησης"
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:2016
@@ -13115,12 +13118,12 @@ msgstr "&Επιλέξτε πλήκτρα τροποποίησης NVDA"
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2053
 msgid "Speak typed &characters:"
-msgstr ""
+msgstr "Εκφώνηση πληκτρολογημένων &χαρακτήρων:"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2064
 msgid "Speak typed &words:"
-msgstr ""
+msgstr "Εκφώνηση πληκτρολογημένων &λέξεων:"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -13167,7 +13170,7 @@ msgstr "Διαχείριση εντολών από άλλες εφαρμογές
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:2142
 msgid "&Multiple key press timeout (ms):"
-msgstr ""
+msgstr "&Χρονικό όριο πολλαπλών πατημάτων πλήκτρων (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2158
@@ -13178,7 +13181,7 @@ msgstr "Τουλάχιστον ένα πλήκτρο πρέπει να χρησ�
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
 #: gui\settingsDialogs.py:2161
 msgid "Select NVDA Modifier Keys"
-msgstr ""
+msgstr "Επιλογή Πλήκτρων Τροποποίησης NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -13202,7 +13205,7 @@ msgstr "Ανάλυση &μονάδας κειμένου:"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:2229
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "Αναφορά &αντικειμένου όταν το ποντίκι εισέρχεται σε αυτό"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -13566,7 +13569,7 @@ msgstr "Αναφορά &εσοχής γραμμής: με:"
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
 #: gui\settingsDialogs.py:2849
 msgid "Ignore &blank lines for line indentation reporting"
-msgstr ""
+msgstr "Παράβλεψη &κενών γραμμών στην αναφορά εσοχής γραμμής"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -13626,7 +13629,7 @@ msgstr "Στοιχεία"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2941
 msgid "Link type"
-msgstr ""
+msgstr "Τύπος συνδέσμου"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13674,7 +13677,7 @@ msgstr "&Πλαίσια"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2986
 msgid "&Figures and captions"
-msgstr ""
+msgstr "&Εικόνες και λεζάντες"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13715,7 +13718,7 @@ msgstr "Σφάλμα Συνθέτη Φωνής"
 #. Examples of an output device are default soundcard, usb headphones, etc.
 #: gui\settingsDialogs.py:3104
 msgid "Audio output &device:"
-msgstr ""
+msgstr "Συσκευή &εξόδου ήχου:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
 #: gui\settingsDialogs.py:3119
@@ -13726,40 +13729,40 @@ msgstr "Λειτουργία &βύθισης ήχου:"
 #. Audio settings panel.
 #: gui\settingsDialogs.py:3133
 msgid "Volume of NVDA sounds follows voice volume"
-msgstr ""
+msgstr "Η ένταση των ηχητικών εφέ του NVDA ακολουθεί την ένταση της φωνής"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
 #: gui\settingsDialogs.py:3141
 msgid "Volume of NVDA sounds"
-msgstr ""
+msgstr "Ένταση ηχητικών εφέ του NVDA"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
 #: gui\settingsDialogs.py:3152
 msgid "&Sound split mode:"
-msgstr ""
+msgstr "Λειτουργία &διαχωρισμού ήχου:"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
 #: gui\settingsDialogs.py:3169
 msgid "Time to &keep audio device awake after speech (seconds)"
-msgstr ""
+msgstr "Χρόνος &διατήρησης ενεργής της συσκευής ήχου μετά την εκφώνηση (δευτερόλεπτα)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
 #: gui\settingsDialogs.py:3186
 msgid "&Modes available in the 'Cycle sound split mode' command:"
-msgstr ""
+msgstr "&Λειτουργίες διαθέσιμες στην εντολή «Κυκλική εναλλαγή λειτουργίας διαχωρισμού ήχου»:"
 
 #. Translators: Message shown when no sound split modes are enabled.
 #: gui\settingsDialogs.py:3244
 msgid "At least one sound split mode has to be checked."
-msgstr ""
+msgstr "Πρέπει να είναι επιλεγμένη τουλάχιστον μία λειτουργία διαχωρισμού ήχου."
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
 #: gui\settingsDialogs.py:3247
 msgid "Modes available in the 'Cycle sound split mode' command"
-msgstr ""
+msgstr "Λειτουργίες διαθέσιμες στην εντολή «Κυκλική εναλλαγή λειτουργίας διαχωρισμού ήχου»"
 
 #. Translators: This is the label for the addon navigation settings panel.
 #: gui\settingsDialogs.py:3255
@@ -13769,51 +13772,51 @@ msgstr "Κατάστημα Πρόσθετων"
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3261
 msgid "Automatic &updates:"
-msgstr ""
+msgstr "Αυτόματες &ενημερώσεις:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3273
 msgid "Default update &channel:"
-msgstr ""
+msgstr "Προεπιλεγμένο &κανάλι ενημερώσεων:"
 
 #. Translators: Mute other apps checkbox in settings
 #: gui\settingsDialogs.py:3287
 msgid "Allow automatic updates to install incompatible add-ons"
-msgstr ""
+msgstr "Να επιτρέπεται στις αυτόματες ενημερώσεις η εγκατάσταση μη συμβατών προσθέτων"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
 #: gui\settingsDialogs.py:3293
 msgid "Mirror server"
-msgstr ""
+msgstr "Διακομιστής ειδώλου"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
 #: gui\settingsDialogs.py:3330
 msgid "Set Add-on Store Mirror Server"
-msgstr ""
+msgstr "Ορισμός Διακομιστή Ειδώλου Καταστήματος Προσθέτων"
 
 #. Translators: Label of a checkbox in Remote Access settings
 #: gui\settingsDialogs.py:3384
 msgctxt "remote"
 msgid "Enable Remote Access"
-msgstr ""
+msgstr "Ενεργοποίηση Απομακρυσμένης Πρόσβασης"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
 #: gui\settingsDialogs.py:3401
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr ""
+msgstr "Επιβεβαίωση πριν την αποσύνδεση όταν ελέγχεται"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3411
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
-msgstr ""
+msgstr "Αυτόματη &σύνδεση μετά την εκκίνηση του NVDA"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
 #: gui\settingsDialogs.py:3421
 msgctxt "remote"
 msgid "Automatic connection"
-msgstr ""
+msgstr "Αυτόματη σύνδεση"
 
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
@@ -13821,7 +13824,7 @@ msgstr ""
 #: gui\settingsDialogs.py:3430 _remoteClient\dialogs.py:318
 msgctxt "remote"
 msgid "&Mode:"
-msgstr ""
+msgstr "&Λειτουργία:"
 
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
@@ -13829,14 +13832,14 @@ msgstr ""
 #: gui\settingsDialogs.py:3439 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Server:"
-msgstr ""
+msgstr "&Διακομιστής:"
 
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
 #: gui\settingsDialogs.py:3449 _remoteClient\dialogs.py:41
 msgid "&Host:"
-msgstr ""
+msgstr "&Φιλοξενία:"
 
 #. Translators: Label for the port field in Remote Access settings.
 #. This is the port on which the local control server will be accessible,
@@ -13852,43 +13855,44 @@ msgstr "&Θύρα:"
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 #: gui\settingsDialogs.py:3479 _remoteClient\dialogs.py:46
 msgid "&Key:"
-msgstr ""
+msgstr "&Κλειδί:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
 #: gui\settingsDialogs.py:3486
 msgid "Delete all trusted fingerprints"
-msgstr ""
+msgstr "Διαγραφή όλων των αξιόπιστων αποτυπωμάτων ταυτότητας"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3564
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Αυτό θα έχει ως αποτέλεσμα το NVDA να ξεχάσει όλους τους προηγουμένως αξιόπιστους διακομιστές Απομακρυσμένης Πρόσβασης. Κατά τη σύνδεση σε προηγουμένως αξιόπιστο αλλά μη αναγνωρισμένο διακομιστή, θα σας ζητηθεί ξανά να επιλέξετε αν θέλετε να εμπιστευθείτε το πιστοποιητικό του.\n\n"
+"Είστε βέβαιοι ότι θέλετε να συνεχίσετε;"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3569
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
-msgstr ""
+msgstr "Διαγραφή Όλων των Αξιόπιστων Αποτυπωμάτων Ταυτότητας"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
 #: gui\settingsDialogs.py:3586
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr ""
+msgstr "Πρέπει να έχουν οριστεί και η φιλοξενία και το κλειδί στην ενότητα Απομακρυσμένης Πρόσβασης, ώστε να πραγματοποιείται αυτόματη σύνδεση με χρήση υπάρχοντος διακομιστή μετά την εκκίνηση του NVDA."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3592
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr ""
+msgstr "Πρέπει να έχουν οριστεί και η θύρα και το κλειδί στην κατηγορία Απομακρυσμένης Πρόσβασης, ώστε να πραγματοποιείται αυτόματη σύνδεση με τοπικά φιλοξενούμενο διακομιστή μετά την εκκίνηση του NVDA."
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3598
 msgctxt "remote"
 msgid "Remote Access Error"
-msgstr ""
+msgstr "Σφάλμα Απομακρυσμένης Πρόσβασης"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:3631
@@ -13920,7 +13924,7 @@ msgstr "Γλώσσα &αναγνώρισης"
 #. Translators: Label for an option in the Windows OCR settings panel.
 #: gui\settingsDialogs.py:3685
 msgid "Periodically &refresh recognized content"
-msgstr ""
+msgstr "Περιοδική &ανανέωση αναγνωρισμένου περιεχομένου"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14074,7 +14078,7 @@ msgstr "Όχι"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3882
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "Χρήση &βελτιωμένης επεξεργασίας συμβάντων (απαιτείται επανεκκίνηση)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14137,14 +14141,14 @@ msgstr "Αυτόματο (προτιμώμενο Diff Match Patch)"
 #. by character, using the diff match patch algorithm.
 #: gui\settingsDialogs.py:3972
 msgid "Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 #: gui\settingsDialogs.py:3976
 msgid "Difflib"
-msgstr ""
+msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:4002
@@ -14178,13 +14182,13 @@ msgstr "Προσπάθεια απενεργοποίησης της εκφώνη�
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4047
 msgid "Trim leading silence in speech audio"
-msgstr ""
+msgstr "Περικοπή σίγασης που προηγείται στον ήχο εκφώνησης"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4055
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Χρήση WASAPI για έξοδο ήχου SAPI 4:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14248,13 +14252,13 @@ msgstr "Ναι"
 #. advanced settings panel.
 #: gui\settingsDialogs.py:4191
 msgid "Regular expression for text paragraph navigation"
-msgstr ""
+msgstr "Κανονική έκφραση για πλοήγηση σε παραγράφους κειμένου"
 
 #. Translators: Message shown when invalid text paragraph regex entered
 #: gui\settingsDialogs.py:4213
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
-msgstr ""
+msgstr "Αποτυχία μεταγλώττισης της κανονικής έκφρασης για τις παραγράφους κειμένου: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
 #: gui\settingsDialogs.py:4343
@@ -14285,7 +14289,7 @@ msgstr "Επαναφορά προεπιλογών"
 #. Translators: A label for the braille display on the braille panel.
 #: gui\settingsDialogs.py:4433
 msgid "Braille display"
-msgstr ""
+msgstr "Οθόνη braille"
 
 #. Translators: This is the label for the braille display selection dialog.
 #: gui\settingsDialogs.py:4502
@@ -14300,7 +14304,7 @@ msgstr "&Οθόνη Braille:"
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
 #: gui\settingsDialogs.py:4517
 msgid "&Displays to detect automatically:"
-msgstr ""
+msgstr "&Οι οθόνες να ανιχνεύονται αυτόματα:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
@@ -14324,7 +14328,7 @@ msgstr "Πίνακας &εξόδου:"
 #: gui\settingsDialogs.py:4677 gui\settingsDialogs.py:4704
 #, python-brace-format
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Αυτόματα ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 #: gui\settingsDialogs.py:4696
@@ -14334,7 +14338,7 @@ msgstr "&Πίνακας εισόδου:"
 #. Translators: The label for a setting in braille settings to select which braille mode to use
 #: gui\settingsDialogs.py:4722
 msgid "Braille mode:"
-msgstr ""
+msgstr "Λειτουργία braille:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 #: gui\settingsDialogs.py:4737
@@ -14395,7 +14399,7 @@ msgstr "Ανάγνωση κατά &παράγραφο"
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
 #: gui\settingsDialogs.py:4915
 msgid "Paragraph start marker:"
-msgstr ""
+msgstr "Δείκτης αρχής παραγράφου:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 #: gui\settingsDialogs.py:4930
@@ -14410,17 +14414,17 @@ msgstr "&Εμφάνιση επιλογής"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4963
 msgid "Formatting &display"
-msgstr ""
+msgstr "&Μορφοποίηση οθόνης"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4972
 msgid "Spea&k character when routing cursor in text"
-msgstr ""
+msgstr "&Εκφώνηση χαρακτήρα κατά τη δρομολόγηση του δρομέα στο κείμενο"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:4980
 msgid "Speak when navigating by &line or paragraph"
-msgstr ""
+msgstr "&Εκφώνηση κατά την πλοήγηση ανά γραμμή ή παράγραφο"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14721,7 +14725,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "Οι περισσότερες εντολές για τον έλεγχο του NVDA απαιτούν να κρατάτε πατημένο το πλήκτρο NVDA ενώ πατάτε άλλα πλήκτρα.\n"
+"Από προεπιλογή, τα πλήκτρα Insert και Insert του αριθμητικού πληκτρολογίου μπορούν και τα δύο να χρησιμοποιούνται ως πλήκτρο NVDA.\n"
+"Μπορείτε επίσης να ρυθμίσετε το NVDA ώστε να χρησιμοποιεί το CapsLock ως πλήκτρο NVDA.\n"
+"Πατήστε NVDA+n οποιαδήποτε στιγμή για να ανοίξετε το μενού του NVDA.\n"
+"Από αυτό το μενού, μπορείτε να ρυθμίσετε το NVDA, να λάβετε βοήθεια και να αποκτήσετε πρόσβαση σε άλλες λειτουργίες του NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:49
@@ -14773,12 +14781,12 @@ msgstr "Σύμβαση Άδειας Χρήσης"
 #. Translators: The label of a button in NVDA installation process to view the license agreement.
 #: gui\startupDialogs.py:225
 msgid "&View License"
-msgstr ""
+msgstr "&Προβολή Άδειας Χρήσης"
 
 #. Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 #: gui\startupDialogs.py:230
 msgid "I have read and &agree to the license agreement"
-msgstr ""
+msgstr "Έχω διαβάσει και &συμφωνώ με την άδεια χρήσης"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:276
@@ -14798,56 +14806,56 @@ msgstr "Για να βελτιώσουμε το NVDA στο μέλλον, η NV 
 #. channel of the selected add-on
 #: gui\addonStoreGui\controls\actions.py:171
 msgid "Upd&ate channel"
-msgstr ""
+msgstr "Κανάλι &ενημέρωσης"
 
 #. Translators: a message displayed when activating the context menu on multiple selected add-ons,
 #. but no actions are available for the add-ons.
 #: gui\addonStoreGui\controls\actions.py:198
 msgctxt "addonStore"
 msgid "No actions available for the selected add-ons"
-msgstr ""
+msgstr "Δε διατίθενται ενέργειες για τα επιλεγμένα πρόσθετα"
 
 #. Translators: Label for an action that installs the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:209
 msgctxt "addonStore"
 msgid "&Install selected add-ons"
-msgstr ""
+msgstr "&Εγκατάσταση επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that updates the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:219
 msgctxt "addonStore"
 msgid "&Update selected add-ons"
-msgstr ""
+msgstr "&Ενημέρωση επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:226
 msgctxt "addonStore"
 msgid "Re&try installing selected add-ons"
-msgstr ""
+msgstr "&Επανάληψη προσπάθειας εγκατάστασης επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that cancel install of the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:233
 msgctxt "addonStore"
 msgid "Ca&ncel install of selected add-ons"
-msgstr ""
+msgstr "&Ακύρωση εγκατάστασης επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
 msgctxt "addonStore"
 msgid "&Remove selected add-ons"
-msgstr ""
+msgstr "&Αφαίρεση επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that enables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:256
 msgctxt "addonStore"
 msgid "&Enable selected add-ons"
-msgstr ""
+msgstr "&Ενεργοποίηση επιλεγμένων προσθέτων"
 
 #. Translators: Label for an action that disables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:263
 msgctxt "addonStore"
 msgid "&Disable selected add-ons"
-msgstr ""
+msgstr "&Απενεργοποίηση επιλεγμένων προσθέτων"
 
 #. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:38
@@ -14896,8 +14904,8 @@ msgstr "Άλλες &Πληροφορίες:"
 msgctxt "addonStore"
 msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Πρόσθετο {num} επιλέχθηκε."
+msgstr[1] "Πρόσθετο {num} επιλέχθηκε."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:250
@@ -14927,13 +14935,13 @@ msgstr "Εγκατεστημένη έκδοση:"
 #: gui\addonStoreGui\controls\details.py:277
 msgctxt "addonStore"
 msgid "Minimum NVDA version:"
-msgstr ""
+msgstr "Ελάχιστη έκδοση NVDA:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:283
 msgctxt "addonStore"
 msgid "Last tested NVDA version:"
-msgstr ""
+msgstr "Τελευταία δοκιμασμένη έκδοση NVDA:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:290
@@ -14987,19 +14995,19 @@ msgstr "URL πηγής:"
 #: gui\addonStoreGui\controls\details.py:343
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr ""
+msgstr "Διεύθυνση URL αξιολογήσεων:"
 
 #. Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:351
 msgctxt "addonStore"
 msgid "Install date:"
-msgstr ""
+msgstr "Ημερομηνία εγκατάστασης:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:358
 msgctxt "addonStore"
 msgid "Publication date:"
-msgstr ""
+msgstr "Ημερομηνία δημοσίευσης:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15025,7 +15033,7 @@ msgstr "&Όχι"
 #: gui\addonStoreGui\controls\messageDialogs.py:97
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr ""
+msgstr "Απομνημόνευση αυτής της επιλογής για μελλοντικά πρόσθετα"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -15042,7 +15050,7 @@ msgstr "Προσοχή: η εγκατάσταση του πρόσθετου ίσ
 #: gui\addonStoreGui\controls\messageDialogs.py:189
 msgctxt "addonStore"
 msgid "Install add-on"
-msgstr ""
+msgstr "Εγκατάσταση προσθέτου"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 #. {addon} is replaced with the add-on name.
@@ -15056,7 +15064,7 @@ msgstr "Είστε βέβαιοι ότι επιθυμείτε να αφαιρέ�
 #: gui\addonStoreGui\controls\messageDialogs.py:156
 msgctxt "addonStore"
 msgid "Remove add-on"
-msgstr ""
+msgstr "Αφαίρεση προσθέτου"
 
 #. Translators: The message displayed when installing an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -15065,7 +15073,8 @@ msgstr ""
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr ""
+msgstr "Προειδοποίηση: το πρόσθετο δεν είναι συμβατό: {name} {version}. Αν είναι δυνατόν, ελέγξτε για ενημερωμένη έκδοση αυτού του προσθέτου. Το πρόσθετο δοκιμάστηκε τελευταία φορά με το NVDA {lastTestedNVDAVersion}. Το NVDA απαιτεί αυτό το πρόσθετο να έχει δοκιμαστεί με την έκδοση {nvdaVersion} ή νεότερη. Η εγκατάσταση ενδέχεται να προκαλέσει μη σταθερή λειτουργία του NVDA.\n"
+"Θέλετε να συνεχίσετε την εγκατάσταση; "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -15074,13 +15083,14 @@ msgstr ""
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr ""
+msgstr "Προειδοποίηση: το πρόσθετο δεν είναι συμβατό: {name} {version}. Αν είναι δυνατόν, ελέγξτε για ενημερωμένη έκδοση αυτού του προσθέτου. Το πρόσθετο δοκιμάστηκε τελευταία φορά με το NVDA {lastTestedNVDAVersion}. Το NVDA απαιτεί αυτό το πρόσθετο να έχει δοκιμαστεί με την έκδοση {nvdaVersion} ή νεότερη. Η ενεργοποίηση ενδέχεται να προκαλέσει μη σταθερή λειτουργία του NVDA.\n"
+"Θέλετε να συνεχίσετε την ενεργοποίηση; "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:222
 msgctxt "addonStore"
 msgid "Enable add-on"
-msgstr ""
+msgstr "Ενεργοποίηση προσθέτου"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -15093,7 +15103,7 @@ msgstr "Η εγκατάσταση του {summary} {version} δεν είναι �
 #: gui\addonStoreGui\controls\messageDialogs.py:250
 msgctxt "addonStore"
 msgid "Add-on installation failure"
-msgstr ""
+msgstr "Αποτυχία εγκατάστασης προσθέτου"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui\addonStoreGui\controls\messageDialogs.py:263
@@ -15109,7 +15119,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να εγκαταστήσ�
 #: gui\addonStoreGui\controls\messageDialogs.py:275
 msgctxt "addonStore"
 msgid "Add-on Installation"
-msgstr ""
+msgstr "Εγκατάσταση Προσθέτου"
 
 #. Translators: message shown in the Addon Information dialog.
 #: gui\addonStoreGui\controls\messageDialogs.py:287
@@ -15165,7 +15175,7 @@ msgstr "Πληροφορίες Για Το Πρόσθετο"
 #: gui\addonStoreGui\controls\messageDialogs.py:329
 msgctxt "addonStore"
 msgid "Add-on Store Warning"
-msgstr ""
+msgstr "Προειδοποίηση Καταστήματος Προσθέτων"
 
 #. Translators: Warning that is displayed before using the Add-on Store.
 #: gui\addonStoreGui\controls\messageDialogs.py:336
@@ -15183,43 +15193,43 @@ msgstr "&Να μην εμφανιστεί αυτό το μήνυμα ξανά"
 #: gui\addonStoreGui\controls\messageDialogs.py:366
 msgctxt "addonStore"
 msgid "&OK"
-msgstr ""
+msgstr "&OK"
 
 #. Translators: The warning of a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:390
 msgctxt "addonStore"
 msgid "Add-on updates available"
-msgstr ""
+msgstr "Διατίθενται ενημερώσεις προσθέτων"
 
 #. Translators: Message displayed when updates are available for some installed add-ons.
 #: gui\addonStoreGui\controls\messageDialogs.py:418
 msgctxt "addonStore"
 msgid "Updates are available for some of your installed add-ons. "
-msgstr ""
+msgstr "Διατίθενται ενημερώσεις για ορισμένα από τα εγκατεστημένα πρόσθετά σας. "
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:431
 msgctxt "addonStore"
 msgid "Open Add-on &Store"
-msgstr ""
+msgstr "Άνοιγμα &Καταστήματος Προσθέτων"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:439
 msgctxt "addonStore"
 msgid "&Update all"
-msgstr ""
+msgstr "&Ενημέρωση όλων"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:444
 msgctxt "addonStore"
 msgid "&Close"
-msgstr ""
+msgstr "&Κλείσιμο"
 
 #. Translators: the label for the addons list in the updatable addons dialog.
 #: gui\addonStoreGui\controls\messageDialogs.py:449
 msgctxt "addonStore"
 msgid "Updatable Add-ons"
-msgstr ""
+msgstr "Πρόσθετα με διαθέσιμη ενημέρωση"
 
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains names of addons.
@@ -15268,13 +15278,13 @@ msgstr "Κατάσταση"
 #: gui\addonStoreGui\controls\messageDialogs.py:613
 msgctxt "addonStore"
 msgid "Updating add-ons..."
-msgstr ""
+msgstr "Ενημέρωση προσθέτων σε εξέλιξη..."
 
 #. Translators: Message shown when updating add-ons automatically
 #: gui\addonStoreGui\controls\messageDialogs.py:632
 msgctxt "addonStore"
 msgid "Add-ons updated, restart NVDA to activate changes"
-msgstr ""
+msgstr "Τα πρόσθετα ενημερώθηκαν, επανεκκινήστε το NVDA για να ενεργοποιηθούν οι αλλαγές."
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:40
@@ -15298,7 +15308,7 @@ msgstr "Σημείωση: Το NVDA εκκίνησε με τα πρόσθετα 
 #: gui\addonStoreGui\controls\storeDialog.py:156
 msgctxt "addonStore"
 msgid "Sort by colu&mn:"
-msgstr ""
+msgstr "Ταξινόμηση κατά &στήλη:"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:165
@@ -15310,7 +15320,7 @@ msgstr "&Κανάλι:"
 #: gui\addonStoreGui\controls\storeDialog.py:173
 msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
-msgstr ""
+msgstr "Συμπερίληψη μη &συμβατών προσθέτων"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:187
@@ -15337,8 +15347,8 @@ msgstr "Εγκατάσταση πρόσθετου"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Εγκατάσταση {num} προσθέτων σε εξέλιξη, παρακαλώ περιμένετε."
+msgstr[1] "Εγκατάσταση {num} προσθέτων σε εξέλιξη, παρακαλώ περιμένετε."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15347,8 +15357,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Λήψη {num} προσθέτων σε εξέλιξη, θέλετε να την ακυρώσετε;"
+msgstr[1] "Λήψη {num} προσθέτων σε εξέλιξη. Θέλετε να ακυρωθεί η λήψη;"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15356,7 +15366,7 @@ msgstr[1] ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{category}:"
-msgstr ""
+msgstr "{category}:"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:415
@@ -15388,7 +15398,7 @@ msgstr "Συντάκτης"
 #: gui\addonStoreGui\viewModels\addonList.py:95
 msgctxt "addonStore"
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -15396,7 +15406,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
-msgstr ""
+msgstr "{column} (αύξουσα)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
@@ -15404,7 +15414,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
-msgstr ""
+msgstr "{column} (φθίνουσα)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:117
@@ -15428,13 +15438,13 @@ msgstr "&Ενημέρωση"
 #: gui\addonStoreGui\viewModels\store.py:138
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr ""
+msgstr "&Ενημέρωση (παράβλεψη μη συμβατότητας)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:145
 msgctxt "addonStore"
 msgid "Re&try install"
-msgstr ""
+msgstr "&Επανάληψη εγκατάστασης"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -15447,7 +15457,7 @@ msgstr "Αντι&κατάσταση"
 #: gui\addonStoreGui\viewModels\store.py:160
 msgctxt "addonStore"
 msgid "Ca&ncel install"
-msgstr ""
+msgstr "&Ακύρωση εγκατάστασης"
 
 #. Translators: Label for an action that disables the selected addon
 #: gui\addonStoreGui\viewModels\store.py:167
@@ -15501,7 +15511,7 @@ msgstr "Πηγαίος &Κώδικας"
 #: gui\addonStoreGui\viewModels\store.py:250
 msgctxt "addonStore"
 msgid "Community re&views"
-msgstr ""
+msgstr "Α&ξιολογήσεις κοινότητας"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -15538,7 +15548,7 @@ msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μ�
 #: NVDAObjects\__init__.py:666
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
-msgstr ""
+msgstr "Οι πλευρές του αντικειμένου βρίσκονται σε απόσταση {left:.1f}% από την αριστερή πλευρά της οθόνης, {top:.1f}% από την επάνω πλευρά της οθόνης, το πλάτος είναι {width:.1f}% της οθόνης και το ύψος είναι {height:.1f}% της οθόνης."
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -15563,7 +15573,7 @@ msgstr "{symbol} όπως στο {description}"
 #: NVDAObjects\behaviors.py:657
 #, python-brace-format
 msgid "{number} {candidate}"
-msgstr ""
+msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:736
@@ -15625,13 +15635,13 @@ msgstr "RGB κόκκινο {rgb.red}, πράσινο {rgb.green}, μπλε {rgb.
 #, python-format
 msgid "%s item"
 msgid_plural "%s items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s στοιχείο"
+msgstr[1] "%s στοιχείο"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:242
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Ορισμός κεφαλίδας στήλης. Πατώντας μία φορά, αυτό το κελί θα οριστεί ως η πρώτη κεφαλίδα στήλης για οποιοδήποτε κελί βρίσκεται πιο κάτω και δεξιά μέσα σε αυτόν τον πίνακα. Πατώντας δύο φορές, θα ξεχαστεί η τρέχουσα κεφαλίδα στήλης για αυτό το κελί."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:260
@@ -15649,18 +15659,18 @@ msgstr "Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNu
 #: NVDAObjects\IAccessible\winword.py:277
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from column headers"
-msgstr ""
+msgstr "Διαγράφηκε η γραμμή {rowNumber}, στήλη {columnNumber} από τις κεφαλίδες στηλών"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:285
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in column headers"
-msgstr ""
+msgstr "Δε βρέθηκε η γραμμή {rowNumber}, στήλη {columnNumber} στις κεφαλίδες στηλών"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:295
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Ορισμός κεφαλίδας γραμμής. Πατώντας μία φορά, αυτό το κελί θα οριστεί ως η πρώτη κεφαλίδα γραμμής για οποιοδήποτε κελί βρίσκεται πιο κάτω και δεξιά μέσα σε αυτόν τον πίνακα. Πατώντας δύο φορές, θα ξεχαστεί η τρέχουσα κεφαλίδα γραμμής για αυτό το κελί."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:312
@@ -15678,18 +15688,18 @@ msgstr "Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNu
 #: NVDAObjects\IAccessible\winword.py:329
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr ""
+msgstr "Διαγράφηκε η γραμμή {rowNumber}, στήλη {columnNumber} από τις κεφαλίδες γραμμών"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:337
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in row headers"
-msgstr ""
+msgstr "Δε βρέθηκε η γραμμή {rowNumber}, στήλη {columnNumber} στις κεφαλίδες γραμμών"
 
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr ""
+msgstr "Αναφέρει το κείμενο του σχολίου όπου βρίσκεται ο δρομέας συστήματος. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε λειτουργία περιήγησης."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:719
@@ -15726,8 +15736,8 @@ msgstr "επίκληση"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} πρόταση"
+msgstr[1] "{num} πρόταση"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -15755,8 +15765,8 @@ msgstr "Ύψος κελιού: {0.y:.1f} στιγμές"
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Περιστροφή: {0} μοίρα"
+msgstr[1] "Περιστροφή: {0} μοίρα"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:232
@@ -15854,7 +15864,7 @@ msgstr "Αναφέρει τη σημείωση ή τα σχόλια στο τρ�
 #: NVDAObjects\UIA\excel.py:517
 #, python-brace-format
 msgid "{name}: {desc}"
-msgstr ""
+msgstr "{name}: {desc}"
 
 #. Translators: message when a cell in Excel contains no note
 #: NVDAObjects\UIA\excel.py:521
@@ -15872,8 +15882,8 @@ msgstr "Νήμα σχολίων: {comment} από {author}"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Νήμα σχολίων: {comment} από {author} με {numReplies} απάντηση"
+msgstr[1] "Νήμα σχολίων: {comment} από {author} με {numReplies} απάντηση"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:545
@@ -15935,19 +15945,19 @@ msgstr "Η πλοήγηση κατά πρόταση δεν υποστηρίζε�
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:697
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr ""
+msgstr "Αναφέρει το κείμενο του σχολίου όπου βρίσκεται ο δρομέας συστήματος. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε μορφή μηνύματος με δυνατότητα περιήγησης."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:728
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "Η εντολή δεν υποστηρίζεται σε αυτόν τον τύπο εγγράφου. Τα κελιά της πρώτης γραμμής των πινάκων ορίζονται αυτόματα ως κεφαλίδες στήλης."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:739
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "Η εντολή δεν υποστηρίζεται σε αυτόν τον τύπο εγγράφου. Τα κελιά της πρώτης στήλης των πινάκων ορίζονται αυτόματα ως κεφαλίδες γραμμής."
 
 #: NVDAObjects\window\__init__.py:410
 msgid "Desktop"
@@ -16402,7 +16412,7 @@ msgstr "στοιχείο"
 #: NVDAObjects\window\_msOfficeChart.py:805
 #, python-brace-format
 msgid "Series color: {colorName}"
-msgstr ""
+msgstr "Χρώμα σειράς: {colorName}"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:446
@@ -16522,8 +16532,8 @@ msgstr "Τίτλος γραφήματος: {chartTitle}, τύπος: {chartType}
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Υπάρχουν %d σειρές σε αυτό το γράφημα"
+msgstr[1] "Υπάρχουν %d σειρές σε αυτό το γράφημα"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:620
@@ -16580,7 +16590,7 @@ msgstr "μειωμένο κατά {decrementValue} από σημείο {previous
 #: NVDAObjects\window\_msOfficeChart.py:889
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
@@ -16595,7 +16605,7 @@ msgstr "Κατηγορία {categoryAxisData}: "
 #: NVDAObjects\window\_msOfficeChart.py:902
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -16993,7 +17003,7 @@ msgstr "Διακριτή διαγραφή ενεργοποιημένη"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1633
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Ορίζει το τρέχον κελί ως αρχή της κεφαλίδας στήλης. Πατώντας μία φορά, αυτό το κελί ορίζεται ως η πρώτη κεφαλίδα στήλης για οποιοδήποτε κελί κάτω και δεξιά εντός αυτής της περιοχής. Πατώντας δύο φορές, ξεχνιέται η τρέχουσα κεφαλίδα στήλης για αυτό το κελί."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1645
@@ -17011,18 +17021,18 @@ msgstr "Έχετε είδη ορίσει {address} ως αρχή των κεφα
 #: NVDAObjects\window\excel.py:1654
 #, python-brace-format
 msgid "Removed {address} from column headers"
-msgstr ""
+msgstr "Το {address} αφαιρέθηκε από τις κεφαλίδες στηλών"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1658
 #, python-brace-format
 msgid "Cannot find {address} in column headers"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η εύρεση του {address} στις κεφαλίδες στηλών"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1664
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Ορίζει το τρέχον κελί ως αρχή της κεφαλίδας γραμμής. Πατώντας μία φορά, αυτό το κελί ορίζεται ως η πρώτη κεφαλίδα γραμμής για οποιοδήποτε κελί κάτω και δεξιά εντός αυτής της περιοχής. Πατώντας δύο φορές, ξεχνιέται η τρέχουσα κεφαλίδα γραμμής για αυτό το κελί."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1676
@@ -17067,7 +17077,7 @@ msgstr "Μήνυμα εισόδου είναι {message}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1887
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Αναφέρει τη σημείωση στο τρέχον κελί. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε λειτουργία περιήγησης."
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
@@ -17223,13 +17233,13 @@ msgstr "μέτρια διακεκομμένο"
 #: NVDAObjects\window\excelCellBorder.py:122
 #, python-brace-format
 msgid "{weight} {style}"
-msgstr ""
+msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:128
 #, python-brace-format
 msgid "{color} {desc}"
-msgstr ""
+msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:140
@@ -17259,137 +17269,137 @@ msgstr "{desc} προς τα πάνω δεξιά και προς τα κάτω �
 #: NVDAObjects\window\excelCellBorder.py:163
 #, python-brace-format
 msgid "{desc} {position}"
-msgstr ""
+msgstr "{desc} {position}"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:116
 msgid "Words only"
-msgstr ""
+msgstr "Μόνο λέξεις"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:118
 msgid "Double"
-msgstr ""
+msgstr "Διπλό"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:120
 msgid "Dotted"
-msgstr ""
+msgstr "Διακεκομμένο"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:122
 msgid "Thick"
-msgstr ""
+msgstr "Παχύ"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:124
 msgid "Dash"
-msgstr ""
+msgstr "Παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:126
 msgid "Dot dash"
-msgstr ""
+msgstr "Κουκκίδα παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:128
 msgid "Dot dot dash"
-msgstr ""
+msgstr "Κουκκίδα κουκκίδα παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:130
 msgid "Wave"
-msgstr ""
+msgstr "Κύμα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:132
 msgid "Dotted heavy"
-msgstr ""
+msgstr "Βαριά διακεκομμένη"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:134
 msgid "Dashed heavy"
-msgstr ""
+msgstr "Βαριά διακεκομμένη με παύλες"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:136
 msgid "Dot dash heavy"
-msgstr ""
+msgstr "Βαριά κουκκίδα παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:138
 msgid "Dot dot dash heavy"
-msgstr ""
+msgstr "Βαριά κουκκίδα κουκκίδα παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:140
 msgid "Wave heavy"
-msgstr ""
+msgstr "Βαρύ κύμα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:142
 msgid "Dashed long"
-msgstr ""
+msgstr "Μακριά παύλα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:144
 msgid "Wave double"
-msgstr ""
+msgstr "Διπλό κύμα"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:146
 msgid "Dashed long heavy"
-msgstr ""
+msgstr "Βαριά μακριά παύλα"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:309
 msgid "No case"
-msgstr ""
+msgstr "Χωρίς πεζοκεφαλαία"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:311
 msgid "Lowercase"
-msgstr ""
+msgstr "Πεζά"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:313
 msgid "Uppercase"
-msgstr ""
+msgstr "Κεφαλαία"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:315
 msgid "Each word capitalized"
-msgstr ""
+msgstr "Κάθε λέξη με κεφαλαίο"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:317
 msgid "Sentence case"
-msgstr ""
+msgstr "Πρόταση με κεφαλαίο"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:319
 msgid "Mixed case"
-msgstr ""
+msgstr "Μικτά πεζοκεφαλαία"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:321
 msgid "Half width"
-msgstr ""
+msgstr "Ημιδιαστήματος"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:323
 msgid "Full width"
-msgstr ""
+msgstr "Πλήρους διαστήματος"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:325
 msgid "Katakana"
-msgstr ""
+msgstr "Κατακάνα"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:327
 msgid "Hiragana"
-msgstr ""
+msgstr "Χιραγκάνα"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:405
@@ -17606,22 +17616,22 @@ msgstr "αυτόματο χρώμα"
 #: NVDAObjects\window\winword.py:1738
 #, python-brace-format
 msgid "Underline {style}on"
-msgstr ""
+msgstr "Υπογράμμιση {style} ενεργοποιημένη"
 
 #. Translators: a message when toggling formatting to 'all capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1764
 msgid "All caps on"
-msgstr ""
+msgstr "Όλα κεφαλαία ενεργοποιημένα"
 
 #. Translators: a message when toggling formatting to 'small capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1767
 msgid "Small caps on"
-msgstr ""
+msgstr "Μικρά κεφαλαία ενεργοποιημένα"
 
 #. Translators: a message when toggling formatting to 'No capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1770
 msgid "Caps off"
-msgstr ""
+msgstr "Κεφαλαία απενεργοποιημένα"
 
 #. Translators: a an alignment in Microsoft Word
 #: NVDAObjects\window\winword.py:1813
@@ -17707,32 +17717,32 @@ msgstr "Απόκρυψη μη εκτυπώσιμων χαρακτήρων"
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{offset:.3g} χαρακτήρας"
+msgstr[1] "{offset:.3g} χαρακτήρας"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2003
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{offset:.3g} ίντσα"
+msgstr[1] "{offset:.3g} ίντσα"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2011
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{offset:.3g} εκατοστό"
+msgstr[1] "{offset:.3g} εκατοστό"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2019
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{offset:.3g} χιλιοστό"
+msgstr[1] "{offset:.3g} χιλιοστό"
 
 #. Translators: a measurement in Microsoft Word (points)
 #: NVDAObjects\window\winword.py:2025
@@ -17746,8 +17756,8 @@ msgstr "{offset:.3g} στιγμές"
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{offset:.3g} πίκα"
+msgstr[1] "{offset:.3g} πίκα"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:2049
@@ -17768,39 +17778,39 @@ msgstr "Διάστιχο γραμμής 1.5"
 #: NVDAObjects\window\winword.py:2070
 #, python-brace-format
 msgid "{val:g} pt space before paragraph"
-msgstr ""
+msgstr "Διάστημα {val:g} στιγμών πριν την παράγραφο"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 #: speech\languageHandling.py:43
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (δεν υποστηρίζονται)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98
 msgctxt "speechModes"
 msgid "off"
-msgstr ""
+msgstr "απενεργοποιημένη"
 
 #. Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
 #: speech\speech.py:100
 msgctxt "speechModes"
 msgid "beeps"
-msgstr ""
+msgstr "μπιπ"
 
 #. Translators: Name of the speech mode which causes NVDA to speak normally.
 #: speech\speech.py:102
 msgctxt "speechModes"
 msgid "talk"
-msgstr ""
+msgstr "εκφώνηση"
 
 #. Translators: Name of the on-demand speech mode,
 #. in which NVDA only speaks in response to commands that report content.
 #: speech\speech.py:105
 msgctxt "speechModes"
 msgid "on-demand"
-msgstr ""
+msgstr "κατόπιν αιτήματος"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #: speech\speech.py:385
@@ -17812,7 +17822,7 @@ msgstr "κεφαλαίο %s"
 #: speech\speech.py:392
 #, python-format
 msgid "%s normalized"
-msgstr ""
+msgstr "%s κανονικοποιημένο"
 
 #. Translators: This is spoken when the given line has no indentation.
 #: speech\speech.py:1032
@@ -17892,23 +17902,23 @@ msgstr "επίπεδο %s"
 #: speech\speech.py:2143
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr ""
+msgstr "με {rowCountTranslation} και {colCountTranslation}"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:2149
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "με %s στήλες"
+msgstr[1] "με %s στήλες"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:2152
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "με %s γραμμές"
+msgstr[1] "με %s γραμμές"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -17916,8 +17926,8 @@ msgstr[1] ""
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{rowCount} γραμμή"
+msgstr[1] "{rowCount} γραμμές"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -17925,8 +17935,8 @@ msgstr[1] ""
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{columnCount} στήλες"
+msgstr[1] "{columnCount} στήλες"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2359
@@ -17970,8 +17980,8 @@ msgstr "στήλη {0} από {1}"
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "στήλη %s"
+msgstr[1] "στήλη %s"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2607
@@ -18050,7 +18060,7 @@ msgstr "{color} σε {backgroundColor}"
 #: speech\speech.py:2724
 #, python-brace-format
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
@@ -18284,7 +18294,7 @@ msgstr "εκτός πίνακα"
 #: speech\speech.py:3067
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr ""
+msgstr "πίνακας με {columnCountText} και {rowCountText}"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:416
@@ -18316,7 +18326,7 @@ msgstr "θέση {x}, {y}"
 #: textInfos\offsets.py:184
 #, python-brace-format
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 #: textInfos\offsets.py:191
@@ -18374,7 +18384,7 @@ msgstr "μοτίβο"
 #, python-brace-format
 msgctxt "time format"
 msgid "{S}"
-msgstr ""
+msgstr "{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes
@@ -18382,7 +18392,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{M}:{S}"
-msgstr ""
+msgstr "{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours
@@ -18390,7 +18400,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{H}:{M}:{S}"
-msgstr ""
+msgstr "{H}:{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
@@ -18411,7 +18421,7 @@ msgstr "{D} ημέρες {H}:{M}:{S}"
 #. Translators: Value to show when choosing to use the default audio output device.
 #: utils\mmdevice.py:44
 msgid "Default output device"
-msgstr ""
+msgstr "Προεπιλεγμένη συσκευή εξόδου"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -18546,8 +18556,8 @@ msgstr "Αποσυνδεδεμένο από την πρίζα"
 #, python-brace-format
 msgid "{hours:d} hour"
 msgid_plural "{hours:d} hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{hours:d} ώρα"
+msgstr[1] "{hours:d} ώρες"
 
 #. Translators: This is the minute string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "34 minutes".
@@ -18555,15 +18565,15 @@ msgstr[1] ""
 #, python-brace-format
 msgid "{minutes:d} minute"
 msgid_plural "{minutes:d} minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{minutes:d} λεπτό"
+msgstr[1] "{minutes:d} λεπτά"
 
 #. Translators: This is the main string for the estimated remaining runtime of the laptop battery.
 #. E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
 #: winAPI\_powerTracking.py:248
 #, python-brace-format
 msgid "{hourText} and {minuteText} remaining"
-msgstr ""
+msgstr "Απομένουν {hourText} και {minuteText}"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: winAPI\secureDesktop.py:53
@@ -18577,162 +18587,162 @@ msgstr "Ασφαλής Επιφάνεια Εργασίας"
 #: _remoteClient\client.py:526
 msgctxt "remote"
 msgid "Not the controlling computer"
-msgstr ""
+msgstr "Δεν είναι ο υπολογιστής ελέγχου"
 
 #. Translators: Displayed when muting speech and sounds from the remote computer
 #: _remoteClient\client.py:134
 msgid "Muted remote"
-msgstr ""
+msgstr "Σίγαση απομακρυσμένου"
 
 #. Translators: Displayed when unmuting speech and sounds from the remote computer
 #: _remoteClient\client.py:136
 msgid "Unmuted remote"
-msgstr ""
+msgstr "Αναίρεση σίγασης απομακρυσμένου"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
 #: _remoteClient\client.py:153
 msgctxt "remote"
 msgid "No one else is connected"
-msgstr ""
+msgstr "Κανείς άλλος δεν είναι συνδεδεμένος"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
 #: _remoteClient\client.py:161
 msgctxt "remote"
 msgid "Unable to send clipboard"
-msgstr ""
+msgstr "Αδυναμία αποστολής πρόχειρου"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: _remoteClient\client.py:176
 msgid "Copied link"
-msgstr ""
+msgstr "Ο σύνδεσμος αντιγράφηκε"
 
 #. Translators: Title of the Remote Access disconnection confirmation dialog.
 #: _remoteClient\client.py:226
 msgctxt "remote"
 msgid "Confirm Disconnection"
-msgstr ""
+msgstr "Επιβεβαίωση Αποσύνδεσης"
 
 #. Translators: Message shown when disconnecting from the remote computer.
 #: _remoteClient\client.py:230
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
-msgstr ""
+msgstr "Είστε βέβαιοι ότι θέλετε να αποσυνδεθείτε από την περίοδο Απομακρυσμένης Πρόσβασης;"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:282
 msgid "Error Connecting"
-msgstr ""
+msgstr "Σφάλμα Σύνδεσης"
 
 #. Translators: Message shown when unable to connect to the remote computer.
 #: _remoteClient\client.py:284
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Αδυναμία σύνδεσης με τον απομακρυσμένο υπολογιστή"
 
 #. Translators: Title of the Remote Access connection dialog.
 #: _remoteClient\client.py:308
 msgctxt "remote"
 msgid "Connect to Another Computer"
-msgstr ""
+msgstr "Σύνδεση Με Άλλον Υπολογιστή"
 
 #. Translators: Presented when connected to the remote computer.
 #: _remoteClient\client.py:351
 msgid "Connected"
-msgstr ""
+msgstr "Συνδεδεμένο"
 
 #. Translators: Presented when connection to a remote computer was interupted.
 #. Translators: Message shown when the connection to the remote computer is lost.
 #: _remoteClient\client.py:369 _remoteClient\cues.py:27
 msgid "Disconnected"
-msgstr ""
+msgstr "Αποσυνδεδεμένο"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 #: _remoteClient\client.py:530
 msgctxt "remote"
 msgid "No controlled computers are connected"
-msgstr ""
+msgstr "Κανένας ελεγχόμενος υπολογιστής δεν είναι συνδεδεμένος"
 
 #. Translators: Presented when keyboard control is back to the controlling computer.
 #: _remoteClient\client.py:544
 msgctxt "remote"
 msgid "Controlling local computer"
-msgstr ""
+msgstr "Έλεγχος τοπικού υπολογιστή"
 
 #. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 #: _remoteClient\client.py:553
 msgctxt "remote"
 msgid "Controlling remote computer"
-msgstr ""
+msgstr "Έλεγχος απομακρυσμένου υπολογιστή"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:617
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr ""
+msgstr "Μια περίοδος Απομακρυσμένης Πρόσβασης είναι ήδη σε εξέλιξη. Αποσυνδεθείτε πριν ξεκινήσετε νέα περίοδο."
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:620
 msgctxt "remote"
 msgid "Already Connected"
-msgstr ""
+msgstr "Ήδη Συνδεδεμένο"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:635
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
-msgstr ""
+msgstr "Επιθυμείτε να ελέγξετε τον υπολογιστή στο διακομιστή {server} με κλειδί {key};"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:641
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Επιθυμείτε να επιτρέψετε τον έλεγχο αυτού του υπολογιστή στο διακομιστή {server} με κλειδί {key};"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:647
 msgctxt "remote"
 msgid "Remote Access Connection Request"
-msgstr ""
+msgstr "Αίτημα Σύνδεσης Απομακρυσμένης Πρόσβασης"
 
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
 #: _remoteClient\cues.py:32
 msgctxt "remote"
 msgid "Connected as controlled computer"
-msgstr ""
+msgstr "Συνδεδεμένο ως ελεγχόμενος υπολογιστής"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
 #: _remoteClient\cues.py:43
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr ""
+msgstr "Πρόχειρο απεστάλη"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:48
 msgid "Clipboard received"
-msgstr ""
+msgstr "Πρόχειρο ελήφθη"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:211
 msgid "&Generate Key"
-msgstr ""
+msgstr "&Δημιουργία Κλειδιού"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:60
 msgid "Host must be set."
-msgstr ""
+msgstr "Πρέπει να οριστεί ο κεντρικός υπολογιστής."
 
 #. Translators: Title of a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:74
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "Δημιουργία κλειδιού"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:76
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "Δημιουργία κλειδιού σε εξέλιξη..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
@@ -18740,75 +18750,75 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "Αδυναμία σύνδεσης με το {host}. Βεβαιωθείτε ότι έχετε πρόσβαση στο διαδίκτυο και ότι δεν υπάρχουν σφάλματα στο πεδίο του κεντρικού υπολογιστή."
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:123
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "Αποτυχία σύνδεσης με τον κεντρικό υπολογιστή"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:187
 msgid "&External IP:"
-msgstr ""
+msgstr "&Εξωτερική IP:"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:192
 msgid "Get External &IP"
-msgstr ""
+msgstr "Λήψη Εξωτερικής &IP"
 
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 #: _remoteClient\dialogs.py:209
 msgctxt "remote"
 msgid "&Key"
-msgstr ""
+msgstr "&Κλειδί"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:230
 msgctxt "remote"
 msgid "Getting external IP"
-msgstr ""
+msgstr "Λήψη εξωτερικής IP"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:232
 msgctxt "remote"
 msgid "Getting external IP..."
-msgstr ""
+msgstr "Λήψη εξωτερικής IP σε εξέλιξη..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
 #: _remoteClient\dialogs.py:272
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr ""
+msgstr "Η διεύθυνση IP ελήφθη επιτυχώς. Η θύρα {port} είναι ανοιχτή."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
 #: _remoteClient\dialogs.py:283
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
-msgstr ""
+msgstr "Η εξωτερική IP ελήφθη, αλλά η θύρα {port} πιθανότατα δεν είναι προωθημένη αυτή τη στιγμή."
 
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:298
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr ""
+msgstr "Αδυναμία επικοινωνίας με τον διακομιστή ελέγχου θύρας. Παρακαλώ ανακτήστε χειροκίνητα τη διεύθυνση IP σας."
 
 #. Translators: Message displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:368
 msgid "Both host and key must be set."
-msgstr ""
+msgstr "Πρέπει να οριστούν τόσο ο κεντρικός υπολογιστής όσο και το κλειδί."
 
 #. Translators: Message displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:376
 msgid "Both port and key must be set."
-msgstr ""
+msgstr "Πρέπει να οριστούν τόσο η θύρα όσο και το κλειδί."
 
 #. Translators: Title of the dialog presented when attempting to connect to a server with an untrusted certificate.
 #: _remoteClient\dialogs.py:429
 msgctxt "remote"
 msgid "Security Warning"
-msgstr ""
+msgstr "Προειδοποίηση Ασφαλείας"
 
 #. Translators: Message presented when attempting to connect to a server with an untrusted certificate.
 #. {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
@@ -18819,119 +18829,122 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η επαλήθευση του πιστοποιητικού αυτού του διακομιστή. Η χρήση λανθασμένου αποτυπώματος ενδέχεται να επιτρέψει σε τρίτους την πρόσβαση στην περίοδο Απομακρυσμένης Πρόσβασης.\n\n"
+"Πριν συνεχίσετε, βεβαιωθείτε ότι το παρακάτω αποτύπωμα πιστοποιητικού του διακομιστή είναι σωστό.\n"
+"Αποτύπωμα SHA256 διακομιστή: {fingerprint}\n\n"
+"Θέλετε να συνεχίσετε οπωσδήποτε τη σύνδεση;"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:449
 msgid "Connect and do not ask again for this server"
-msgstr ""
+msgstr "Σύνδεση και να μην ερωτηθώ ξανά για αυτόν το διακομιστή"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:451
 msgid "Connect"
-msgstr ""
+msgstr "Σύνδεση"
 
 #. Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
 #: _remoteClient\localMachine.py:289
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr ""
+msgstr "Αδυναμία ενεργοποίησης του Control+Alt+Delete"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
 msgid "Mute remote"
-msgstr ""
+msgstr "Σίγαση απομακρυσμένου"
 
 #. Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr ""
+msgstr "Σίγαση εκφώνησης και ήχων από τον απομακρυσμένο υπολογιστή."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr ""
+msgstr "&Αποστολή πρόχειρου"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr ""
+msgstr "Αποστολή του κειμένου του πρόχειρου στον απομακρυσμένο υπολογιστή."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
 msgid "Copy &link"
-msgstr ""
+msgstr "Αντιγραφή &συνδέσμου"
 
 #. Translators: Tooltip for the Copy Link menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:57
 msgctxt "remote"
 msgid "Copy a link to the current Remote Access session to the clipboard."
-msgstr ""
+msgstr "Αντιγραφή συνδέσμου της τρέχουσας περιόδου απομακρυσμένης πρόσβασης στο πρόχειρο."
 
 #. Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 #: _remoteClient\menu.py:68
 msgctxt "remote"
 msgid "S&end control+alt+delete"
-msgstr ""
+msgstr "Αποστολή &Control+Alt+Delete"
 
 #. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
 msgctxt "remote"
 msgid "Send control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Αποστολή του Control+Alt+Delete στον ελεγχόμενο υπολογιστή."
 
 #. Translators: Label of the Remote Access submenu in the NVDA tools menu.
 #: _remoteClient\menu.py:81
 msgctxt "remote"
 msgid "R&emote Access"
-msgstr ""
+msgstr "Απομακρυσμένη &Πρόσβαση"
 
 #. Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 #: _remoteClient\menu.py:85
 msgctxt "remote"
 msgid "Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one."
-msgstr ""
+msgstr "Επιτρέψτε σε κάποιον να ελέγχει αυτόν τον υπολογιστή από αλλού ή να ελέγξετε έναν άλλο υπολογιστή που εκτελεί το NVDA από αυτόν."
 
 #. Translators: Item in the Remote Access submenu to connect to another computer.
 #: _remoteClient\menu.py:156
 msgid "Connect..."
-msgstr ""
+msgstr "Σύνδεση..."
 
 #. Translators: Tooltip for the Connect menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:158
 msgctxt "remote"
 msgid "Remotely connect to another computer running NVDA."
-msgstr ""
+msgstr "Απομακρυσμένη σύνδεση με άλλον υπολογιστή που εκτελεί το NVDA."
 
 #. Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 #: _remoteClient\menu.py:176
 msgid "Disconnect"
-msgstr ""
+msgstr "Αποσύνδεση"
 
 #. Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:178
 msgctxt "remote"
 msgid "Disconnect from the current Remote Access session."
-msgstr ""
+msgstr "Αποσύνδεση από την τρέχουσα περίοδο Απομακρυσμένης Πρόσβασης."
 
 #. Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr ""
+msgstr "Ο διακομιστής Απομακρυσμένης Πρόσβασης στον οποίο έχετε συνδεθεί δεν είναι συμβατός με αυτήν την έκδοση του NVDA. Παρακαλώ χρησιμοποιήστε διαφορετικό διακομιστή."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
 msgctxt "remote"
 msgid "Message from Remote Access Server"
-msgstr ""
+msgstr "Μήνυμα Από Το Διακομιστή Απομακρυσμένης Πρόσβασης"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr ""
+msgstr "Το απομακρυσμένο NVDA δεν είναι συνδεδεμένο"
 
