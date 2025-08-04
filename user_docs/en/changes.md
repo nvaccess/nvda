@@ -53,6 +53,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP_c_ulong`
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
+* `easeOfAccess.RegistryKey` is deprecated, use `config.RegistryKey` instead. (#18608)
 
 ## 2025.2
 
@@ -2063,7 +2064,7 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
 * Moved the UWP/OneCore interaction layer of NVDAHelper [from C++/CX to C++/Winrt](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx). (#10662)
 * It is now mandatory to subclass `DictionaryDialog` to use it. (#13268)
 * `config.RUN_REGKEY`, `config.NVDA_REGKEY` are deprecated, please use `config.RegistryKey.RUN`, `config.RegistryKey.NVDA` instead. These will be removed in 2023. (#13242)
-* `easeOfAccess.ROOT_KEY`, `easeOfAccess.APP_KEY_PATH` are deprecated, please use`easeOfAccess.RegistryKey.ROOT`, `easeOfAccess.RegistryKey.APP` instead. These will be removed in 2023. (#13242)
+* `easeOfAccess.ROOT_KEY`, `easeOfAccess.APP_KEY_PATH` are deprecated, please use`easeOfAccess.RegistryKey.EASE_OF_ACCESS`, `easeOfAccess.RegistryKey.APP` instead. These will be removed in 2023. (#13242)
 * `easeOfAccess.APP_KEY_NAME` has been deprecated, to be removed in 2023. (#13242)
 * `DictionaryDialog` and `DictionaryEntryDialog` are moved from `gui.settingsDialogs` to `gui.speechDict`. (#13294)
 * IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
