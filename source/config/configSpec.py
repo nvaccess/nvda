@@ -362,6 +362,106 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+[math]
+	[[speech]]
+    	impairment = string(default="Blindness") # LearningDisability, Blindness, LowVision
+    	language = string(default="Auto")                # any known language code and sub-code -- could be en-uk, etc
+    	speechStyle = string(default="ClearSpeak")     # Any known speech style (falls back to ClearSpeak)
+    	verbosity = string(default="Medium")           # Terse, Medium, Verbose
+    	mathRate = integer(default=100)               # Change from text speech rate (%)
+    	pauseFactor = integer(default=100)            # Change from normal pause length (%)
+    	speechSound = string(default="None")           # make a sound when starting/ending math speech -- None, Beep
+    	subjectArea = string(default="General")        # FIX: still working on this
+    	chemistry = string(default="SpellOut")         # SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
+		mathSpeak = string(default="Verbose")          # Brief, SuperBrief
+
+		[[speech.speechOverrides]]
+			capitalLetters = string(default="")        # word to say as a prefix/postfix for capital letters; empty string leaves it calling AT with Unicode fallback
+			leftParen = string(default="")             # word used as override (not implemented)
+			rightParen = string(default="")            # word used as override (not implemented)
+
+		[[Speech.ClearSpeak]]                 # see ClearSpeak speak for meanings
+			capitalLetters = string(default="Auto")      # SayCaps or use pitch
+			absoluteValue = string(default="Auto")       # AbsEnd, Cardinality, Determinant
+			fractions = string(default="Auto")           # Ordinal, Over, FracOver, General, EndFrac, GeneralEndFrac, OverEndFrac, Per
+			exponents = string(default="Auto")           # Ordinal, OrdinalPower, AfterPower
+			roots = string(default="Auto")               # PosNegSqRoot, RootEnd, PosNegSqRootEnd
+			functions = string(default="Auto")           # None
+			trig = string(default="Auto")                # TrigInverse, ArcTrig
+			log = string(default="Auto")                 # LnAsNaturalLog
+			impliedTimes = string(default="Auto")        # MoreImpliedTimes , None
+			paren = string(default="Auto")               # Speak, SpeakNestingLevel, Silent, CoordPoint, Interval
+			matrix = string(default="Auto")              # SpeakColNum, SilentColNum, EndMatrix, Vector, EndVector, Combinatorics
+			multiLineLabel = string(default="Auto")      # Case, Constraint, Equation, Line, None, Row, Step
+			multiLineOverview = string(default="Auto")   # None,
+			multiLinePausesBetweenColumns = string(default="Short")  # Long
+			sets = string(default="Auto")                # woAll, SilentBracket
+			multSymbolX = string(default="Auto")         # By, Cross
+			multSymbolDot = string(default="Auto")       # Dot
+			triangleSymbol = string(default="Auto")      # Delta
+			ellipses = string(default="Auto")            # AndSoOn,
+			verticalLine = string(default="Auto")        # SuchThat, Divides, Given
+			setMemberSymbol = string(default="Auto")     # Belongs, Element, Member
+			prime = string(default="Auto")               # Angle, Length
+			combinationPermutation = string(default="Auto")  # ChoosePermute
+			bar = string(default="Auto")                 # Bar, Conjugate, Mean
+
+	[[navigation]]
+		navMode = string(default="Enhanced")         # Enhanced, Simple, Character
+		resetNavMode = boolean(default=false)       # remember previous value and use it
+		overview = boolean(default=false)             # speak the expression or give a description/overview
+		resetOverview = boolean(default=true)        # remember previous value and use it
+		navVerbosity = string(default="Medium")        # Terse, Medium, Full (words to say for nav command)
+		autoZoomOut = boolean(default=true)           # Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
+		copyAs = string(default="MathML")       # MathML, LaTeX, ASCIIMath
+
+	[[braille]]
+		brailleCode = string(default="Nemeth")                # Any supported braille code (currently Nemeth, UEB)
+		brailleNavHighlight = string(default="EndPoints")   # Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
+		useSpacesAroundAllOperators = boolean(default=false)  # true/false
+
+		[[braille.nemeth]]
+			# Nemeth defines the typeforms: Bold, Italic, SansSerif, and Script. That leaves out DoubleStruck (Blackboard Bold)
+			# Here we provide an option to specify a transcriber-defined typeform changes, with the default mapping DoubleStruck to Italic
+			sansSerif = string(default="⠠⠨")     # first transcriber-defined typeform prefix indicator
+			bold = string(default="⠸")     # t
+			doubleStruck = string(default="⠨")     # script
+			script = string(default="⠈")     # script
+			italic = string(default="⠨")     # script
+
+		[[braille.UEB]]
+			startMode = string(default="Grade2")   # Grade1/Grade2 -- assumed starting mode UEB braille (Grade1 assumes we are in G1 passage mode)
+			useSpacesAroundAllOperators = string(default=false)  # true/false
+
+			# UEB Guide to Technical Material (https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf)
+			#   says to normally treat Fraktur and DoubleStruck as Script
+			# Here we provide an option to specify a transcriber-defined typeform prefix indicator instead
+			# Note: here are prefixes for 1st - 5th: "⠈⠼", "⠘⠼", "⠸⠼", "⠐⠼", "⠨⠼"
+			doubleStruck = string(default="⠈")     # script
+			fraktur  = string(default="⠈")     # script
+			sansSerif = string(default="⠈⠼")     # first transcriber-defined typeform prefix indicator
+			greekVariant = string(default="⠨")     # default to Greek
+
+		[[braille.vietnam]]
+			useDropNumbers = boolean(default=false)    # drop digits down a row in simple numeric fractions
+			# The guideline is being revised -- current guidance is to follow UEB for alternative scripts
+			# UEB Guide to Technical Material (https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf)
+			#   says to normally treat Fraktur and DoubleStruck as Script
+			# Here we provide an option to specify a transcriber-defined typeform prefix indicator instead
+			# Note: here are prefixes for 1st - 5th: "⠈⠼", "⠘⠼", "⠸⠼", "⠐⠼", "⠨⠼"
+			doubleStruck = string(default="⠈")     # script
+			fraktur = string(default="⠈")     # script
+			sansSerif = string(default="⠈⠼")    # first transcriber-defined typeform prefix indicator
+			greekVariant = string(default="⠸")     # default to Greek
+
+		[[braille.LaTeX]]
+			useShortName = boolean(default=false)   # Use the short form for the latex (e.g., "~a" instead of "\alpha")
+
+
+	[[other]]
+		decimalSeparators = string(default=".") # [default]
+		blockSeparators = string(default=", \u00a0\u202f") # [default -- includes two forms of non-breaking spaces]
+		decimalSeparator = string(default="Auto") # Auto, '.', ',', Custom
 """
 
 #: The configuration specification
