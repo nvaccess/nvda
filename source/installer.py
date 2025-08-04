@@ -16,6 +16,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
+from config import RegistryKey
 import versionInfo
 from logHandler import log
 import addonHandler
@@ -44,7 +45,7 @@ def _getWSH():
 
 
 defaultStartMenuFolder = versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k:
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.CURRENT_VERSION.value) as k:
 	programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
 defaultInstallPath = os.path.join(programFilesPath, versionInfo.name)
 
@@ -89,24 +90,24 @@ def createShortcut(
 
 def getStartMenuFolder(noDefault=False):
 	try:
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value) as k:
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 			return winreg.QueryValueEx(k, "Start Menu Folder")[0]
 	except WindowsError:
 		return defaultStartMenuFolder if not noDefault else None
 
 
-def getInstallPath(noDefault=False):
+def getInstallPath(noDefault: bool = False) -> str | None:
 	try:
 		k = winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
+			RegistryKey.INSTALLED_COPY.value,
 		)
 		return winreg.QueryValueEx(k, "UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
 
 
-def comparePreviousInstall():
+def comparePreviousInstall() -> int | None:
 	"""Returns 1 if the existing installation is newer than this running version,
 	0 if it is the same, -1 if it is older,
 	None if there is no existing installation.
@@ -119,10 +120,6 @@ def comparePreviousInstall():
 		newTime = os.path.getmtime("nvda_slave.exe")
 	except OSError:
 		return None
-	# cmp no longer exists in Python3.
-	# Per the Python3 What's New docs:
-	# cmp can be replaced with (a>b)-(a<b).
-	# In other words, False and True coerce to 0 and 1 respectively.
 	return (oldTime > newTime) - (oldTime < newTime)
 
 
@@ -309,7 +306,7 @@ def registerInstallation(
 	log.debug(f"Estimated install size: {calculatedUninstallerRegInfo.get('EstimatedSize')} KiB")
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
-		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
+		RegistryKey.INSTALLED_COPY.value,
 		0,
 		winreg.KEY_WRITE,
 	) as k:
@@ -329,14 +326,14 @@ def registerInstallation(
 			)
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
-		"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",
+		RegistryKey.APP_PATH.value,
 		0,
 		winreg.KEY_WRITE,
 	) as k:
 		winreg.SetValueEx(k, "", None, winreg.REG_SZ, os.path.join(installDir, "nvda.exe"))
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
-		config.RegistryKey.NVDA.value,
+		RegistryKey.NVDA.value,
 		0,
 		winreg.KEY_WRITE,
 	) as k:
@@ -344,7 +341,7 @@ def registerInstallation(
 		if configInLocalAppData:
 			winreg.SetValueEx(
 				k,
-				config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value,
+				RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value,
 				None,
 				winreg.REG_DWORD,
 				int(configInLocalAppData),
@@ -352,7 +349,7 @@ def registerInstallation(
 		if NVDAState._forceSecureModeEnabled():
 			winreg.SetValueEx(
 				k,
-				config.RegistryKey.FORCE_SECURE_MODE_SUBKEY.value,
+				RegistryKey.FORCE_SECURE_MODE_SUBKEY.value,
 				None,
 				winreg.REG_DWORD,
 				1,
@@ -525,11 +522,11 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 
-def unregisterInstallation(keepDesktopShortcut=False):
+def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
-			easeOfAccess.RegistryKey.APP.value,
+			RegistryKey.EASE_OF_ACCESS_APP.value,
 			winreg.KEY_WOW64_64KEY,
 		)
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
@@ -551,19 +548,19 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",
+			RegistryKey.INSTALLED_COPY.value,
 		)
 	except WindowsError:
 		pass
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",
+			RegistryKey.APP_PATH.value,
 		)
 	except WindowsError:
 		pass
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value)
+		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 	except WindowsError:
 		pass
 	unregisterAddonFileAssociation()
@@ -864,7 +861,7 @@ def createPortableCopy(destPath, shouldCopyUserConfig=True):
 def registerEaseOfAccess(installDir):
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
-		easeOfAccess.RegistryKey.APP.value,
+		RegistryKey.EASE_OF_ACCESS_APP,
 		0,
 		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY,
 	) as appKey:

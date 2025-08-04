@@ -26,6 +26,7 @@ import winreg
 
 import api
 import braille
+from config import RegistryKey
 import inputCore
 import nvwave
 import speech
@@ -62,10 +63,10 @@ class SoftwareSASGeneration(IntEnum):
 	"""both services and Ease of Access applications can simulate the SAS."""
 
 	KEY: int = nonmember(winreg.HKEY_LOCAL_MACHINE)
-	SUBKEY: str = nonmember(r"Software\Microsoft\Windows\CurrentVersion\Policies\System")
+	SUBKEY: str = nonmember(rf"{RegistryKey.CURRENT_VERSION.value}\Policies\System")
 	VALUE_NAME: str = nonmember("SoftwareSASGeneration")
 	DISPLAY_PATH: str = nonmember(
-		r"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System!SoftwareSASGeneration",
+		rf"HKLM\{RegistryKey.CURRENT_VERSION.value}\Policies\System!SoftwareSASGeneration",
 	)
 
 

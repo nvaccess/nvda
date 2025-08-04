@@ -28,6 +28,7 @@ from typing_extensions import (
 	TypeVar,
 )
 
+from config import RegistryKey
 import winKernel
 import winreg
 import shellapi
@@ -194,7 +195,7 @@ def _isSystemClockSecondsVisible() -> bool:
 
 	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
 	"""
-	registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+	registry_path = rf"{RegistryKey.CURRENT_VERSION.value}\Explorer\Advanced"
 	value_name = "ShowSecondsInSystemClock"
 	try:
 		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
