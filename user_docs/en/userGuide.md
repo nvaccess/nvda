@@ -3916,7 +3916,7 @@ This area displays real-time download progress and error messages. It will play 
 | Name                                  | Key                    | Description                                                                                |
 | ------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------ |
 | get an AI generated Image description | `NVDA+Windows+,`       | Use a local model to generate a description of the image object currently navigated by NVDA. |
-| toggle image captioning | Unassigned | load/Unload the model from memory.                                       |
+| toggle image captioning | Unassigned | load/unload the model from memory.                                       |
 | Open Model Manager                    | Unassigned           | Opens the Model Manager to download and manage models.                                     |
 | Shows the local captioner settings  | Unassigned           | Opens the Local Image Description settings panel.                                          |
 

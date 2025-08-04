@@ -71,12 +71,11 @@ def _caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	try:
 		description = captioner.generate_caption(image=imageData)
 		ui.message(description)
+		api.copyToClip(text=description, notify=False)
 	except Exception as e:
 		# Translators: error message when fail to generate caption
 		ui.message(_("fail to generate caption"))
 		log.error(e)
-
-	api.copyToClip(text=description, notify=False)
 
 
 class LocalCaptioner:
