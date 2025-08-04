@@ -27,6 +27,7 @@ from .captioner import ImageCaptioner
 # Module-level configuration
 _localCaptioner = None
 
+
 def shootImage() -> bytes:
 	"""Capture a screenshot of the current navigator object.
 
@@ -145,8 +146,8 @@ class LocalCaptioner:
 			# Translators: error Message when fail to load the model
 			ui.message(
 				_(
-					"models And config file not found or incomplete, please download models and config file first!"
-				)
+					"models And config file not found or incomplete, please download models and config file first!",
+				),
 			)
 			log.error(e)
 			raise

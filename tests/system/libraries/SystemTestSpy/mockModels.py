@@ -249,7 +249,7 @@ class MockVisionEncoderDecoderGenerator:
 					TensorProto.BOOL,
 					["batch"],
 				),
-			]
+			],
 		)
 
 		# Past key-value cache inputs for each layer
@@ -266,7 +266,7 @@ class MockVisionEncoderDecoderGenerator:
 						TensorProto.FLOAT,
 						["batch", "num_heads", "past_seq_len", self.hidden_size],
 					),
-				]
+				],
 			)
 
 		return inputs
@@ -370,7 +370,7 @@ class MockVisionEncoderDecoderGenerator:
 						inputs=[f"cache_key_{layer_idx}_pooled", "shape_batch_1"],
 						outputs=[f"cache_key_{layer_idx}_feature"],
 					),
-				]
+				],
 			)
 
 			# Process value cache
@@ -387,14 +387,14 @@ class MockVisionEncoderDecoderGenerator:
 						inputs=[f"cache_value_{layer_idx}_pooled", "shape_batch_1"],
 						outputs=[f"cache_value_{layer_idx}_feature"],
 					),
-				]
+				],
 			)
 
 			cache_features.extend(
 				[
 					f"cache_key_{layer_idx}_feature",
 					f"cache_value_{layer_idx}_feature",
-				]
+				],
 			)
 
 		return cache_features

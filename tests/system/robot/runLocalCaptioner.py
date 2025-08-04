@@ -13,5 +13,5 @@ def NVDA_Caption():
 	spy.emulateKeyPress("NVDA+n")
 	spy.emulateKeyPress("NVDA+windows+,")
 	spy.wait_for_specific_speech(
-		"non-visual desktop access access access access access access access access access"
+		"non-visual desktop access access access access access access access access access",
 	)
