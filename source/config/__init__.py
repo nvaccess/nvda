@@ -153,7 +153,7 @@ class RegistryKey(str, Enum):
 	SERVICE_DEBUG_SUBKEY = "serviceDebug"
 
 
-class _RegistryKeyX86(str, Enum):
+class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 	"""
 	Used to access the 32-bit registry view on x64 systems.
 	For cleaning up legacy 32-bit NVDA copies.
