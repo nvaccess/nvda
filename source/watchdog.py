@@ -281,7 +281,7 @@ def _crashHandler(exceptionInfo):
 
 	log.info("Restarting due to crash")
 	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
-	core.restartUnsafely()
+	#core.restartUnsafely()
 	return 1  # EXCEPTION_EXECUTE_HANDLER
 
 

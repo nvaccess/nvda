@@ -20,6 +20,7 @@ from typing import (
 	Tuple,
 )
 
+import winBindings.user32
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
@@ -42,7 +43,7 @@ CS_HREDRAW = 0x0002
 #: Redraws the entire window if a movement or size adjustment changes the height of the client area.
 CS_VREDRAW = 0x0001
 
-WNDPROC = WINFUNCTYPE(LRESULT, HWND, c_uint, WPARAM, LPARAM)  # noqa: F405
+from winBindings.user32 import WNDPROC
 
 
 def __getattr__(attrName: str) -> Any:
@@ -67,22 +68,7 @@ def __getattr__(attrName: str) -> Any:
 		return replacementSymbol
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
-
-class WNDCLASSEXW(Structure):
-	_fields_ = [
-		("cbSize", c_uint),  # noqa: F405
-		("style", c_uint),  # noqa: F405
-		("lpfnWndProc", WNDPROC),
-		("cbClsExtra", c_int),
-		("cbWndExtra", c_int),
-		("hInstance", HINSTANCE),  # noqa: F405
-		("hIcon", HICON),  # noqa: F405
-		("HCURSOR", HCURSOR),
-		("hbrBackground", HBRUSH),  # noqa: F405
-		("lpszMenuName", LPWSTR),  # noqa: F405
-		("lpszClassName", LPWSTR),  # noqa: F405
-		("hIconSm", HICON),  # noqa: F405
-	]
+from winBindings.user32 import WNDCLASSEXW
 
 
 class NMHdrStruct(Structure):
@@ -472,7 +458,7 @@ def waitMessage():
 
 
 def getMessage(*args) -> int:
-	return user32.GetMessageW(*args)
+	return winBindings.user32.GetMessage(*args)
 
 
 def translateMessage(*args):
@@ -812,16 +798,8 @@ def SendInput(inputs):
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))  # noqa: F405
 
+from winBindings.user32 import PAINTSTRUCT
 
-class PAINTSTRUCT(Structure):
-	_fields_ = [
-		("hdc", c_int),
-		("fErase", c_int),
-		("rcPaint", RECT),
-		("fRestore", c_int),
-		("fIncUpdate", c_int),
-		("rgbReserved", c_char * 32),
-	]
 
 
 @contextlib.contextmanager
@@ -835,13 +813,13 @@ def paint(hwnd: int, paintStruct: PAINTSTRUCT | None = None):
 		paintStruct = PAINTSTRUCT()
 	elif not isinstance(paintStruct, PAINTSTRUCT):
 		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")
-	hdc = user32.BeginPaint(hwnd, byref(paintStruct))
+	hdc = winBindings.user32.BeginPaint(hwnd, byref(paintStruct))
 	if hdc == 0:
 		raise WinError()
 	try:
 		yield hdc
 	finally:
-		user32.EndPaint(hwnd, byref(paintStruct))
+		winBindings.user32.EndPaint(hwnd, byref(paintStruct))
 
 
 class WinTimer(object):

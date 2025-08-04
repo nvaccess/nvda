@@ -8,6 +8,8 @@
 from ctypes import (
 	c_wchar_p,
 	windll,
+	POINTER,
+	c_size_t,
 )
 from ctypes.wintypes import (
 	DWORD,
@@ -15,6 +17,7 @@ from ctypes.wintypes import (
 	HMODULE,
 	LPCWSTR,
 	BOOL,
+	LPVOID,
 )
 
 __all__ = (
@@ -67,3 +70,105 @@ Frees the loaded module and decrements its reference count. If the reference cou
 """
 FreeLibrary.argtypes = (HMODULE,)
 FreeLibrary.restype = BOOL
+
+CloseHandle = dll.CloseHandle
+"""
+Closes an open object handle. The handle must have been created by the calling process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
+"""
+CloseHandle.argtypes = (HANDLE,)
+CloseHandle.restype = BOOL
+
+ReleaseMutex = dll.ReleaseMutex
+"""
+Releases ownership of the specified mutex object. The calling thread must have owned the mutex object.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-releasemutex
+"""
+ReleaseMutex.argtypes = (HANDLE,)
+ReleaseMutex.restype = BOOL
+
+WaitForSingleObject = dll.WaitForSingleObject
+"""
+Waits until the specified object is in the signaled state or the time-out interval elapses.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject
+"""
+WaitForSingleObject.argtypes = (
+	HANDLE, # hHandle
+	DWORD, # dwMilliseconds
+)
+WaitForSingleObject.restype = DWORD
+
+OpenProcess = dll.OpenProcess
+"""
+Opens an existing local process object.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess
+"""
+OpenProcess.argtypes = (
+	DWORD,  # dwDesiredAccess
+	BOOL,  # bInheritHandle
+	DWORD,  # dwProcessId
+)
+OpenProcess.restype = HANDLE
+
+VirtualAllocEx = dll.VirtualAllocEx
+"""
+Allocates memory in the virtual address space of a specified process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualallocex
+"""
+VirtualAllocEx.argtypes = (
+	HANDLE,  # hProcess
+	LPVOID,  # lpAddress
+	c_size_t,  # dwSize
+	DWORD,  # flAllocationType
+	DWORD,  # flProtect
+)
+VirtualAllocEx.restype = LPVOID
+
+VirtualFreeEx = dll.VirtualFreeEx
+"""
+Frees or releases a region of memory within the virtual address space of a specified process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfreeex
+"""
+VirtualFreeEx.argtypes = (
+	HANDLE,  # hProcess
+	LPVOID,  # lpAddress
+	c_size_t,  # dwSize
+	DWORD,  # dwFreeType
+)
+VirtualFreeEx.restype = BOOL
+
+ReadProcessMemory = dll.ReadProcessMemory
+"""
+Reads data from the memory of a specified process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-readprocessmemory
+"""
+ReadProcessMemory.argtypes = (
+	HANDLE,  # hProcess
+	LPVOID,  # lpBaseAddress
+	LPVOID,  # lpBuffer
+	c_size_t,  # nSize
+	POINTER(c_size_t),  # lpNumberOfBytesRead
+)
+ReadProcessMemory.restype = BOOL
+
+WriteProcessMemory = dll.WriteProcessMemory
+"""
+Writes data to an area of memory in a specified process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory
+"""
+WriteProcessMemory.argtypes = (
+	HANDLE,  # hProcess
+	LPVOID,  # lpBaseAddress
+	LPVOID,  # lpBuffer
+	c_size_t,  # nSize
+	POINTER(c_size_t),  # lpNumberOfBytesWritten
+)
+WriteProcessMemory.restype = BOOL

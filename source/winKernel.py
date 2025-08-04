@@ -26,6 +26,9 @@ if TYPE_CHECKING:
 	from winAPI._powerTracking import SystemPowerStatus
 
 
+import winBindings.kernel32
+
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	import NVDAState
@@ -183,11 +186,11 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 
 
 def openProcess(*args):
-	return kernel32.OpenProcess(*args)
+	return winBindings.kernel32.OpenProcess(*args)
 
 
 def closeHandle(*args):
-	return kernel32.CloseHandle(*args)
+	return winBindings.kernel32.CloseHandle(*args)
 
 
 def GetSystemPowerStatus(sps: "SystemPowerStatus") -> int:
@@ -199,6 +202,7 @@ def getThreadLocale():
 
 
 ERROR_INVALID_FUNCTION = 0x1
+ERROR_INVALID_HANDLE = 0x6
 
 
 @contextlib.contextmanager
@@ -326,26 +330,26 @@ def GetTimeFormatEx(Locale, dwFlags, date, lpFormat):
 
 
 def virtualAllocEx(*args):
-	res = kernel32.VirtualAllocEx(*args)
+	res = winBindings.kernel32.VirtualAllocEx(*args)
 	if res == 0:
 		raise WinError()
 	return res
 
 
 def virtualFreeEx(*args):
-	return kernel32.VirtualFreeEx(*args)
+	return winBindings.kernel32.VirtualFreeEx(*args)
 
 
 def readProcessMemory(*args):
-	return kernel32.ReadProcessMemory(*args)
+	return winBindings.kernel32.ReadProcessMemory(*args)
 
 
 def writeProcessMemory(*args):
-	return kernel32.WriteProcessMemory(*args)
+	return winBindings.kernel32.WriteProcessMemory(*args)
 
 
 def waitForSingleObject(handle, timeout):
-	res = kernel32.WaitForSingleObject(handle, timeout)
+	res = winBindings.kernel32.WaitForSingleObject(handle, timeout)
 	if res == WAIT_FAILED:
 		raise ctypes.WinError()
 	return res

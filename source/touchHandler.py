@@ -13,6 +13,7 @@ from ctypes import *  # noqa: F403
 from ctypes import windll
 from ctypes.wintypes import *  # noqa: F403
 import re
+import winBindings.user32
 import gui
 import config
 import winUser
@@ -272,7 +273,7 @@ class TouchHandler(threading.Thread):
 		finally:
 			self.initializedEvent.set()
 		msg = MSG()  # noqa: F405
-		while windll.user32.GetMessageW(byref(msg), None, 0, 0):  # noqa: F405
+		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
 			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
 			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405

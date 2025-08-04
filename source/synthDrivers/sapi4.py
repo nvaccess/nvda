@@ -12,6 +12,7 @@ import queue
 import threading
 import time
 import winreg
+import winBindings.user32
 from winBindings.mmeapi import WAVEFORMATEX
 from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
@@ -219,7 +220,7 @@ class _ComThread(threading.Thread):
 		# Run a message loop, as it's required by SAPI 4.
 		# When queueing a new task, post a message to this thread to wake it up.
 		# When done, post WM_QUIT to this thread.
-		while windll.user32.GetMessageW(byref(msg), None, 0, 0):
+		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):
 			windll.user32.TranslateMessage(byref(msg))
 			windll.user32.DispatchMessageW(byref(msg))
 			# Process queued tasks outside window procedures

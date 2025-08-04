@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+import winBindings.kernel32
 import globalVars
 from argsParsing import getParser
 import ctypes
@@ -321,11 +322,11 @@ finally:
 	# > The system closes the handle automatically when the process terminates.
 	# > The mutex object is destroyed when its last handle has been closed.
 	# https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
-	releaseResult = ctypes.windll.kernel32.ReleaseMutex(mutex)
+	releaseResult = winBindings.kernel32.ReleaseMutex(mutex)
 	if 0 == releaseResult:
 		releaseError = winUser.GetLastError()
 		log.debug(f"Failed to release mutex, error: {releaseError}")
-	res = ctypes.windll.kernel32.CloseHandle(mutex)
+	res = winBindings.kernel32.CloseHandle(mutex)
 	if 0 == res:
 		error = winUser.GetLastError()
 		log.error(f"Unable to close mutex handle, last error: {winUser.WinError(error)}")

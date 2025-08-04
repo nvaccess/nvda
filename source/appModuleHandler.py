@@ -582,7 +582,14 @@ class AppModule(baseObject.ScriptableObject):
 	isAlive: bool
 
 	def _get_isAlive(self):
-		return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+		try:
+			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+		except OSError as e:
+			if e.winerror == winKernel.ERROR_INVALID_HANDLE:
+				# The process handle is invalid, so the process is dead.
+				log.debugWarning(f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.")
+				return False
+			raise
 
 	def terminate(self):
 		"""Terminate this app module.

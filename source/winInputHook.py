@@ -20,6 +20,7 @@ from ctypes.wintypes import (
 	POINT,
 )
 
+import winBindings.user32
 import watchdog
 import winUser
 from winBindings import user32, kernel32
@@ -120,7 +121,7 @@ def hookThreadFunc():
 	if mouseHookID == 0:
 		raise OSError("Could not register mouse hook")
 	msg = MSG()  # noqa: F405
-	while user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
+	while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
 		pass
 	if windll.user32.UnhookWindowsHookEx(keyHookID) == 0:  # noqa: F405
 		raise OSError("could not unregister key hook %s" % keyHookID)

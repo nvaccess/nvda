@@ -12,6 +12,7 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import ctypes.wintypes
 import weakref
+import winBindings.user32
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
@@ -215,12 +216,13 @@ class CustomWindow(AutoPropertyObject):
 			raise TypeError("extendedWindowStyle must be an integer")
 		if parent and not isinstance(parent, int):
 			raise TypeError("parent must be an integer")
-		res = self._classAtom = ctypes.windll.user32.RegisterClassExW(ctypes.byref(self._wClass))
+		res = self._classAtom = winBindings.user32.RegisterClassEx(ctypes.byref(self._wClass))
 		if res == 0:
 			raise ctypes.WinError()
-		res = ctypes.windll.user32.CreateWindowExW(
+		res = winBindings.user32.CreateWindowEx(
 			extendedWindowStyle,
-			self._classAtom,
+			# The class atom should be stored as the low word of the class name string pointer.
+			ctypes.cast(ctypes.c_void_p(self._classAtom), ctypes.wintypes.LPCWSTR),
 			windowName or self.className,
 			windowStyle,
 			0,
@@ -249,7 +251,11 @@ class CustomWindow(AutoPropertyObject):
 				exc_info=ctypes.WinError(),
 			)
 		self.handle = None
-		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
+		if not winBindings.user32.UnregisterClass(
+			# The class atom should be stored as the low word of the class name string pointer.
+			ctypes.cast(ctypes.c_void_p(self._classAtom), ctypes.wintypes.LPCWSTR),
+			appInstance
+		):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",
 				exc_info=ctypes.WinError(),
