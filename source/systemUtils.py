@@ -195,6 +195,7 @@ def _isSystemClockSecondsVisible() -> bool:
 	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
 	"""
 	from config.registry import RegistryKey
+
 	registry_path = rf"{RegistryKey.CURRENT_VERSION.value}\Explorer\Advanced"
 	value_name = "ShowSecondsInSystemClock"
 	try:
