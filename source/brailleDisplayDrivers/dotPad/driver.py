@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024-2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ import serial
 import inputCore
 import braille
 import hwIo
+import bdDetect
 from logHandler import log
 from autoSettingsUtils.driverSetting import DriverSetting
 from autoSettingsUtils.utils import StringParameterInfo
@@ -79,7 +80,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	isThreadSafe = True
 	# Translators: Description of the DotPad Braille / Tactile Graphic display.
 	description = _("DotPad Braille / Tactile Graphic display")
-	supportsAutomaticDetection = False
+	supportsAutomaticDetection = True
 	receivesAckPackets = False
 	timeout = 0.2
 	_boardInformation: DP_BoardInformation | None = None
@@ -94,6 +95,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(
+			bdDetect.ProtocolType.SERIAL,
+			{
+				"VID_0403&PID_6010",  # FTDI Dual RS232 as used in DotPad320A
+			},
+		)
 
 	supportedSettings = [
 		DriverSetting(
@@ -213,24 +223,63 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				except inputCore.NoInputGestureAction:
 					pass
 
-	def __init__(self, port: str):
-		self._dev = hwIo.Serial(
-			port=port,
-			baudrate=self.SERIAL_BAUD_RATE,
-			parity=self.SERIAL_PARITY,
-			timeout=self.timeout,
-			writeTimeout=self.timeout,
-			onReceive=self._onReceive,
-		)
-		self.model = self._requestDeviceName()
-		self._boardInformation = self._requestBoardInformation()
-		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
-			self._brailleDestination = BrailleDestination.TEXT
-		elif self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
-			self._brailleDestination = BrailleDestination.GRAPHIC
+	def __init__(self, port: str = "auto"):
+		if port == "auto":
+			# Try autodetection
+			for portType, portId, port, portInfo in self._getTryPorts(port):
+				if self._tryConnect(port):
+					break
+			else:
+				raise RuntimeError("No DotPad device found")
 		else:
-			raise RuntimeError("No text or graphics displays")
+			# Direct port connection
+			if not self._tryConnect(port):
+				raise RuntimeError(f"Could not connect to DotPad on port {port}")
+
 		super().__init__()
+
+	def _tryConnect(self, port: str) -> bool:
+		"""Try to connect to a DotPad device on the given port.
+
+		Attempts to open a serial connection to the specified port and verifies that
+		the connected device is a DotPad. Updates internal state with device model,
+		board information, and braille destination if successful.
+
+		Side effects:
+			- Sets self._dev to the opened serial device on success.
+			- Sets self.model and self._boardInformation based on the connected device.
+			- Sets self._brailleDestination depending on device features.
+			- Closes self._dev and resets related attributes on failure.
+
+		:param port: The port to connect to.
+		:return: True if connection successful, False otherwise.
+		"""
+		try:
+			self._dev = hwIo.Serial(
+				port=port,
+				baudrate=self.SERIAL_BAUD_RATE,
+				parity=self.SERIAL_PARITY,
+				timeout=self.timeout,
+				writeTimeout=self.timeout,
+				onReceive=self._onReceive,
+			)
+			# Verify this is actually a DotPad device
+			self.model = self._requestDeviceName()
+			self._boardInformation = self._requestBoardInformation()
+			if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
+				self._brailleDestination = BrailleDestination.TEXT
+			elif self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
+				self._brailleDestination = BrailleDestination.GRAPHIC
+			else:
+				raise RuntimeError("No text or graphics displays")
+			return True
+		except Exception:
+			# Clean up on failure
+			try:
+				self._dev.close()
+			except Exception:
+				pass
+			return False
 
 	def terminate(self):
 		try:
