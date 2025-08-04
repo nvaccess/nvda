@@ -192,6 +192,7 @@ def openProcess(*args):
 		# Compatibility: error should just be a handle of 0.
 		return 0
 
+
 def closeHandle(*args):
 	return winBindings.kernel32.CloseHandle(*args)
 
