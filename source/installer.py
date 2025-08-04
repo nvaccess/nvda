@@ -861,7 +861,7 @@ def createPortableCopy(destPath, shouldCopyUserConfig=True):
 def registerEaseOfAccess(installDir):
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
-		RegistryKey.EASE_OF_ACCESS_APP,
+		RegistryKey.EASE_OF_ACCESS_APP.value,
 		0,
 		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY,
 	) as appKey:
