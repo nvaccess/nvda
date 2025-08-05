@@ -99,9 +99,11 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 					if self._speechStarted:
 						self._doDoneSpeaking()
 						self._speechStarted = False
-					continue
-				self._speechStarted = True
-				self._processSpeechSequence(speechSequence)
+					else:
+						_yieldThread()
+				else:
+					self._speechStarted = True
+					self._processSpeechSequence(speechSequence)
 		log.debug("Stopping")
 
 	def _processSpeechSequence(self, speechSequence: SpeechSequence):

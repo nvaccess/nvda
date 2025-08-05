@@ -7,16 +7,21 @@ on:
     - beta
     - rc
     - 'try-**'
-    # Currently disabled while the 2025.1 release is in progress.
+    # Temporarily enabled during the 64bit migration
+    - wip-buildX64
+    # Currently disabled while the 2025.2 release is in progress.
     # Blocked by #17878
     # tags:
-    # - 'release-**'
+    #  - 'release-**'
 
   pull_request:
     branches:
     - master
     - beta
     - rc
+    # Temporarily enabled during the 64bit migration
+    - wip-buildX64
+
 
   workflow_dispatch:
 
@@ -32,11 +37,18 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
+  arch: x86
+  pythonVersion: '3.11.9'
 
 jobs:
   buildNVDA:
     name: Build NVDA
-    runs-on: windows-latest
+    runs-on: windows-2025
+    outputs:
+      version: ${{ steps.releaseInfo.outputs.VERSION }}
+      versionType: ${{ steps.releaseInfo.outputs.VERSION_TYPE }}
+      APIVersion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
+      APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
       uses: actions/checkout@v4
@@ -45,8 +57,8 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
-        architecture: x86
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set version variables
@@ -74,10 +86,17 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+    - name: Store release metadata information
+      id: releaseInfo
+      run: |
+        Write-Output VERSION=$env:version >> $env:GITHUB_OUTPUT
+        Write-Output VERSION_TYPE=$env:versionType >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $env:GITHUB_OUTPUT
+        Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $env:GITHUB_OUTPUT
 
   typeCheck:
     name: Check types with Pyright
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -86,14 +105,49 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Static type analysis
       run: ci/scripts/tests/typeCheck.ps1
 
+  checkPo:
+    name: Check po files for errors
+    runs-on: windows-2025
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        # Include gettext
+        submodules: true
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v6
+    - name: Run pre-commit
+      run: |
+        # Run pre-commit on the translations
+        pre-commit run checkPo --all-files
+    - name: Add job summary
+      if: ${{ failure() }}
+      shell: bash
+      run: |
+        echo "PO files contain errors. Please fix them before merging." >> $GITHUB_STEP_SUMMARY
+
   checkPot:
     name: Check translator comments
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -102,6 +156,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Check comments for translators
@@ -117,7 +176,7 @@ jobs:
 
   licenseCheck:
     name: Check license compatibility of dependencies
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -126,6 +185,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: License check
@@ -133,7 +197,7 @@ jobs:
 
   unitTests:
     name: Run unit tests
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -142,6 +206,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Run unit tests
@@ -168,7 +237,7 @@ jobs:
 
   crowdinUpload:
     name: Upload translations to Crowdin
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: [buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
     steps:
@@ -183,6 +252,11 @@ jobs:
       with:
         name: makePot results
         path: output
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Upload translations to Crowdin
@@ -193,8 +267,11 @@ jobs:
 
   createLauncher:
     name: Create launcher
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
+    outputs:
+      launcherArtifactId: ${{ steps.uploadLauncher.outputs.artifact-id }}
+      launcherSha256: ${{ steps.addJobSummary.outputs.SHA256 }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -202,6 +279,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set version variables
@@ -222,41 +304,40 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: NVDA launcher
-        path: output/nvda*.exe
-    - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v4
-      id: uploadDocsArtifacts
-      with:
-        name: Documentation files
         path: |
-          output/devDocs
-          output/*.html
-          output/*.css
-    - name: Upload build artifacts
+          output/nvda*.exe
+          output/nvda*controllerClient.zip
+    - name: Upload documentation artifacts
       uses: actions/upload-artifact@v4
       id: uploadBuildArtifacts
       with:
-        name: Controller client and packaging metadata
+        name: Documentation files and packaging metadata
         path: |
-          output/nvda*controllerClient.zip
+          output/*.html
+          output/*.css
           output/library_modules.txt
           output/installed_python_packages.txt
     - name: Add job summary
+      id: addJobSummary
       shell: bash
       run: |
-        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) (${{ steps.uploadLauncher.outputs.artifact-digest }})" >> $GITHUB_STEP_SUMMARY
-        echo "* [Download the documentation](${{ steps.uploadDocsArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
-        echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
-        echo "    * Controller client" >> $GITHUB_STEP_SUMMARY
-        echo "    * Packaging metadata (library modules, installed python packages)" >> $GITHUB_STEP_SUMMARY
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+        echo SHA256=$SHA256 >> $GITHUB_OUTPUT
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        echo "    * SHA256 of launcher exe file: \`$SHA256\`" >> $GITHUB_STEP_SUMMARY
+        echo "* [Download the documentation and other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
+        echo "    * User guide, change log, developer guide" >> $GITHUB_STEP_SUMMARY
+        echo "    * Packaging metadata: library modules, installed python packages" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
     strategy:
       fail-fast: false
       matrix:
-        testSuite: [chrome, installer, startupShutdown]
+        # To skip tests, and just run install, replace with [excluded_from_build]
+        testSuite: [chrome, installer, startupShutdown, symbols]
     name: Run system tests
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: createLauncher
     steps:
     - name: Checkout cached build
@@ -265,6 +346,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get NVDA launcher
@@ -302,8 +388,10 @@ jobs:
 
   createSymbols:
     name: Create symbols
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: buildNVDA
+    outputs:
+      symbolsArtifactId: ${{ steps.uploadArtifact.outputs.artifact-id }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -311,19 +399,34 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Windows SDK
+      # Installs symstore.exe to expected location.
+      run: choco install -y windows-sdk-10.0
     - name: Create build symbols
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
       run: ci/scripts/buildSymbolStore.ps1
-    - name: Upload symbols
+    - name: Upload symbols artifact
+      id: uploadArtifact
       uses: actions/upload-artifact@v4
       with:
         name: Symbols
         path: output/symbols.zip
 
+  allTestsPass:
+    # Is a no-op action.
+    # Rulesets require specifying every job you wish to block a PR/push.
+    # Used to protect branches/tags as a general status check so we can check a single job for all rulesets.
+    name: Check if all tests pass
+    runs-on: ubuntu-latest
+    needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    steps:
+    - name: Check if all tests pass
+      run: echo "All tests passed successfully."
+
   uploadSymbols:
     name: Upload symbols
-    runs-on: windows-latest
+    runs-on: windows-2025
     needs: createSymbols
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
@@ -333,6 +436,11 @@ jobs:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.pythonVersion }}
+        architecture: ${{ env.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Get symbols
@@ -362,7 +470,7 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
-    needs: [checkPot, licenseCheck, unitTests, systemTests, crowdinUpload, createSymbols]
+    needs: [allTestsPass, crowdinUpload, uploadSymbols]
     if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     steps:
@@ -373,13 +481,67 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
 
+  deploySnapshot:
+    name: Deploy NVDA snapshot
+    permissions:
+      contents: write
+      deployments: write
+    runs-on: ubuntu-latest
+    needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
+    if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
+    concurrency:
+      group: snapshot
+      cancel-in-progress: true
+    environment:
+      name: snapshot
+    steps:
+    - name: Get NVDA launcher
+      uses: actions/download-artifact@v4
+      with:
+        name: NVDA launcher
+        path: output
+    - name: Deploy snapshot
+      shell: bash
+      id: deploySnapshot
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "description=Release of $NVDA_EXE_NAME" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=false" \
+          -f "environment=snapshot" \
+          -f "required_contexts[]" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_ARTIFACT_ID]=${{ needs.createLauncher.outputs.launcherArtifactId }}" \
+          -f "payload[SYMBOLS_ARTIFACT_ID]=${{ needs.createSymbols.outputs.symbolsArtifactId }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIBackCompat }}"
+
   release:
     name: Release NVDA
     permissions:
       contents: write
+      deployments: write
+      discussions: write
     runs-on: ubuntu-latest
-    needs: [checkPot, licenseCheck, unitTests, systemTests, createSymbols]
+    needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
     if: startsWith(github.ref_name, 'release-')
+    concurrency:
+      group: release
+      cancel-in-progress: true
+    environment:
+      name: production
     steps:
     - name: Get normalized tag names
       id: getReleaseNotes
@@ -404,26 +566,65 @@ jobs:
       run: |
         vtUrl=$(echo ${{ steps.virusTotal.outputs.analysis }} | sed -E 's/([^=]*)=([^,]*).*/\2/')
         echo VT_URL=$vtUrl >> $GITHUB_OUTPUT
+    - name: Deploy release
+      shell: bash
+      id: deployRelease
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
+        NVDA_HASH=$(sha1sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
+
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/deployments \
+          -f "task=release" \
+          -f "description=Release of $NVDA_EXE_NAME" \
+          -f "ref=${{ github.ref_name }}" \
+          -F "auto_merge=false" \
+          -f "environment=production" \
+          -f "required_contexts[]" \
+          -f "payload[NVDA_HASH]=$NVDA_HASH" \
+          -f "payload[NVDA_ARTIFACT_ID]=${{ needs.createLauncher.outputs.launcherArtifactId }}" \
+          -f "payload[SYMBOLS_ARTIFACT_ID]=${{ needs.createSymbols.outputs.symbolsArtifactId }}" \
+          -f "payload[NVDA_VERSION]=${{ needs.buildNVDA.outputs.version }}" \
+          -f "payload[NVDA_VERSION_TYPE]=${{ needs.buildNVDA.outputs.versionType }}" \
+          -f "payload[NVDA_API_VERSION]=${{ needs.buildNVDA.outputs.APIVersion }}" \
+          -f "payload[NVDA_API_COMPAT_TO]=${{ needs.buildNVDA.outputs.APIBackCompat }}"
+    - name: Create release notes
+      id: createReleaseNotes
+      shell: bash
+      run: |
+        echo "* Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)." >> /tmp/releaseNotes.md
+        echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
+        echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: true
-        make_latest: false
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create ${{github.ref_name }} \
+          --repo ${{ github.repository }} \
+          --prerelease \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        prerelease: false
-        make_latest: true
-        discussion_category_name: Releases
-        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
-        files: output/nvda*.exe
-        body: |
-          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
-          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create ${{github.ref_name }} \
+          --repo ${{ github.repository }} \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag \
+          --discussion-category Releases
+        gh release upload ${{github.ref_name }} \
+            --repo ${{ github.repository }} \
+            --clobber \
+            output/nvda*.exe#Installer

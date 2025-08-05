@@ -579,7 +579,26 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 					)
 
 
-def upgradeConfigFrom_17_to_18(profile: ConfigObj):
+def upgradeConfigFrom_17_to_18(profile: ConfigObj) -> None:
+	"""Add dotPad to excluded braille displays by default due to generic USB PID/VID."""
+	# Only add to excludedDisplays if the auto section doesn't exist or excludedDisplays is empty/default
+	if "braille" not in profile:
+		profile["braille"] = {}
+	if "auto" not in profile["braille"]:
+		profile["braille"]["auto"] = {}
+	if "excludedDisplays" not in profile["braille"]["auto"]:
+		profile["braille"]["auto"]["excludedDisplays"] = []
+
+	# Only add dotPad if it's not already in the list
+	excludedDisplays = profile["braille"]["auto"]["excludedDisplays"]
+
+	if "dotPad" not in excludedDisplays:
+		excludedDisplays.append("dotPad")
+		log.debug(
+			"dotPad added to braille display auto detection excluded displays due to generic USB PID/VID. "
+			f"List is now: {excludedDisplays}",
+		)
+def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 	"""Convert report spelling errors configurations from boolean to integer values."""
 
 	section = "documentFormatting"
@@ -600,3 +619,4 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj):
 	log.debug(
 		f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name}).",
 	)
+
