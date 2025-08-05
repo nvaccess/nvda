@@ -226,6 +226,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
+	# Deprecated, and aliased to reportSpellingErrors2, to be removed in 2026.1
+	reportSpellingErrors = boolean(default=true)
 	# 0: Off, 1: Speech, 2: Sound
 	reportSpellingErrors2 = integer(min=0, max=2, default=1)
 	reportPage = boolean(default=true)

@@ -28,6 +28,7 @@ from logHandler import log
 import logging
 from logging import DEBUG
 from shlobj import FolderId, SHGetKnownFolderPath
+from addonAPIVersion import BACK_COMPAT_TO
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
@@ -36,6 +37,7 @@ import extensionPoints
 from . import profileUpgrader
 from . import aggregatedSection
 from .configSpec import confspec
+from .configFlags import ReportSpellingErrors
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
@@ -1305,9 +1307,9 @@ class AggregatedSection:
 		self._cache[key] = val
 
 		# Alias old config items to their new counterparts for backwards compatibility.
-		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
-		# self._linkDeprecatedValues(key, val)
+		# TODO: Comment out in 2026.1.
+		if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
+			self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		"""Link deprecated config keys and values to their replacements.
@@ -1335,6 +1337,24 @@ class AggregatedSection:
 		>>> ...
 		"""
 		match self.path:
+			case ("documentFormatting",):
+				match key:
+					case "reportSpellingErrors2":
+						# Alias documentFormatting.reportSpellingErrors2 to documentFormatting.reportSpellingErrors for backwards compatibility.
+						key = "reportSpellingErrors"
+						val = val != ReportSpellingErrors.OFF.value
+					case "reportSpellingErrors":
+						# Alias documentFormatting.reportSpellingErrors to documentFormatting.reportSpellingErrors2 for forwards compatibility.
+						log.warning(
+							"documentFormatting.reportSpellingErrors is deprecated. Use documentFormatting.reportSpellingErrors2 instead.",
+							# Include stack info so testers can report warning to add-on author.
+							stack_info=True,
+						)
+						key = "reportSpellingErrors2"
+						val = ReportSpellingErrors.SPEECH.value if val else ReportSpellingErrors.OFF.value
+					case _:
+						# We don't care about other keys in this section.
+						return
 			case _:
 				# We don't care about other sections.
 				return
