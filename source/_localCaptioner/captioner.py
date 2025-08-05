@@ -326,7 +326,7 @@ class ImageCaptioner:
 		# Decode generated text
 		return self.decodeTokens(generatedTokens)
 
-	def generate_caption(
+	def generateCaption(
 		self,
 		image: str | bytes,
 		maxLength: int | None = None,
@@ -367,12 +367,12 @@ def benchmarkInference(
 	log.info(f"Running benchmark with {numRuns} iterations...")
 
 	# Warm up
-	captioner.generate_caption(imagePath)
+	captioner.generateCaption(imagePath)
 
 	# Test greedy search
 	startTime = time.time()
 	for _ in range(numRuns):
-		captioner.generate_caption(imagePath)
+		captioner.generateCaption(imagePath)
 	greedyTime = (time.time() - startTime) / numRuns
 
 	log.info("Average inference time:")

@@ -69,7 +69,7 @@ def _caption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		imageData: The image data to caption.
 	"""
 	try:
-		description = captioner.generate_caption(image=imageData)
+		description = captioner.generateCaption(image=imageData)
 		ui.message(description)
 		api.copyToClip(text=description, notify=False)
 	except Exception as e:

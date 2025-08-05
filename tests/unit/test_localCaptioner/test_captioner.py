@@ -99,7 +99,7 @@ class TestImageCaptioner(unittest.TestCase):
 		shutil.rmtree(self.test_dir)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_init_success(self, mock_session):
+	def test_initSuccess(self, mock_session):
 		"""Test successful initialization."""
 		mock_encoder = Mock()
 		mock_decoder = Mock()
@@ -117,7 +117,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.vocabSize, len(self.vocab_data))
 		self.assertEqual(mock_session.call_count, 2)
 
-	def test_init_config_not_found(self):
+	def test_initConfigNotFound(self):
 		"""Test missing config file raises error."""
 		with self.assertRaises(FileNotFoundError) as context:
 			ImageCaptioner(
@@ -128,7 +128,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertIn("config file", str(context.exception))
 
 	@patch("onnxruntime.InferenceSession")
-	def test_load_vocab_success(self, mock_session):
+	def test_loadVocabSuccess(self, mock_session):
 		"""Test vocabulary loads successfully."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -139,7 +139,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.vocab, expected_vocab)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_preprocess_image_from_path(self, mock_session):
+	def test_preprocessImageFromPath(self, mock_session):
 		"""Test preprocessing image from file path."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -156,7 +156,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result.dtype, np.float64)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_preprocess_image_from_bytes(self, mock_session):
+	def test_preprocessImageFromBytes(self, mock_session):
 		"""Test preprocessing image from byte input."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -174,7 +174,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result.dtype, np.float64)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_encode_image(self, mock_session):
+	def test_encodeImage(self, mock_session):
 		"""Test image encoding using encoder."""
 		mock_encoder = Mock()
 		mock_decoder = Mock()
@@ -197,7 +197,7 @@ class TestImageCaptioner(unittest.TestCase):
 		mock_encoder.run.assert_called_once()
 
 	@patch("onnxruntime.InferenceSession")
-	def test_decode_tokens(self, mock_session):
+	def test_decodeTokens(self, mock_session):
 		"""Test decoding tokens to text."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -210,7 +210,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result, expected)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_decode_tokens_with_special_tokens(self, mock_session):
+	def test_decodeTokensWithSpecialTokens(self, mock_session):
 		"""Test decoding tokens with special tokens removed."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -223,7 +223,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result, expected)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_initialize_past_key_values(self, mock_session):
+	def test_initializePastKeyValues(self, mock_session):
 		"""Test initialization of past key values."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -244,7 +244,7 @@ class TestImageCaptioner(unittest.TestCase):
 			self.assertEqual(past_kv[value_name].shape, expected_shape)
 
 	@patch("onnxruntime.InferenceSession")
-	def test_generate_with_greedy_mock(self, mock_session):
+	def test_generateWithGreedyMock(self, mock_session):
 		"""Test greedy generation with mocked outputs."""
 		mock_encoder = Mock()
 		mock_decoder = Mock()
@@ -274,7 +274,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result, "cat")
 
 	@patch("onnxruntime.InferenceSession")
-	def test_get_decoder_info(self, mock_session):
+	def test_getDecoderInfo(self, mock_session):
 		"""Test retrieving decoder input/output names."""
 		mock_encoder = Mock()
 		mock_decoder = Mock()
@@ -303,7 +303,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch.object(ImageCaptioner, "preprocessImage")
 	@patch.object(ImageCaptioner, "encodeImage")
 	@patch.object(ImageCaptioner, "generateWithGreedy")
-	def test_generate_caption_integration(self, mock_greedy, mock_encode, mock_preprocess, mock_session):
+	def test_generateCaptionIntegration(self, mock_greedy, mock_encode, mock_preprocess, mock_session):
 		"""Test full caption generation pipeline integration."""
 		mock_preprocess.return_value = np.random.randn(1, 3, 224, 224)
 		mock_encode.return_value = np.random.randn(1, 196, 768)
@@ -315,7 +315,7 @@ class TestImageCaptioner(unittest.TestCase):
 			config_path=self.config_path,
 		)
 
-		result = captioner.generate_caption("test_image.jpg")
+		result = captioner.generateCaption("test_image.jpg")
 
 		mock_preprocess.assert_called_once_with("test_image.jpg")
 		mock_encode.assert_called_once()
@@ -323,7 +323,7 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(result, "a cat sitting on a table")
 
 	@patch("onnxruntime.InferenceSession")
-	def test_config_parameter_loading(self, mock_session):
+	def test_configParameterLoading(self, mock_session):
 		"""Test full config parameter parsing."""
 		captioner = ImageCaptioner(
 			encoder_path=self.encoder_path,
@@ -350,14 +350,14 @@ class TestImageCaptionerBenchmark(unittest.TestCase):
 	"""Benchmark tests for inference performance."""
 
 	@patch("time.time")
-	@patch.object(ImageCaptioner, "generate_caption")
-	def test_benchmark_inference(self, mock_generate, mock_time):
+	@patch.object(ImageCaptioner, "generateCaption")
+	def test_benchmarkInference(self, mock_generate, mock_time):
 		"""Test benchmark inference with mocked timing."""
 		mock_time.side_effect = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0]
 		mock_generate.return_value = "test caption"
 
 		mock_captioner = Mock(spec=ImageCaptioner)
-		mock_captioner.generate_caption = mock_generate
+		mock_captioner.generateCaption = mock_generate
 
 		from _localCaptioner.captioner import benchmarkInference
 
