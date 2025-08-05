@@ -256,9 +256,9 @@ freeze(
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
-		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.manifest")),
-		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.manifest")),
-		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.manifest")),
+		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
+		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
+		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),
