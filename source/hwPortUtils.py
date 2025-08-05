@@ -9,13 +9,23 @@ import itertools
 import math
 import typing
 import winreg
-from ctypes.wintypes import DWORD, ULONG, USHORT, WCHAR
+from ctypes.wintypes import DWORD, WCHAR
 
 from comtypes import GUID
 
 import config
 import hidpi
-from winBindings.bthprops import BLUETOOTH_DEVICE_INFO
+from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
+from winBindings.hid import (
+	HIDD_ATTRIBUTES,
+	HidD_FreePreparsedData,
+	HidD_GetAttributes,
+	HidD_GetHidGuid,
+	HidD_GetManufacturerString,
+	HidD_GetPreparsedData,
+	HidD_GetProductString,
+	HidP_GetCaps,
+)
 from winBindings.setupapi import (
 	SetupDiDestroyDeviceInfoList,
 	HDEVINFO,
@@ -191,7 +201,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 def getBluetoothDeviceInfo(address):
 	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
-	res = ctypes.windll["bthprops.cpl"].BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
+	res = BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
 	if res != 0:
 		raise ctypes.WinError(res)
 	return devInfo
@@ -382,18 +392,6 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing USB devices")
 
 
-class HIDD_ATTRIBUTES(ctypes.Structure):
-	_fields_ = (
-		("Size", ULONG),
-		("VendorID", USHORT),
-		("ProductID", USHORT),
-		("VersionNumber", USHORT),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
-
-
 _getHidInfoCache: dict[str, dict] = {}
 
 
@@ -443,7 +441,7 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 		return info
 	try:
 		attribs = HIDD_ATTRIBUTES()
-		if ctypes.windll.hid.HidD_GetAttributes(handle, ctypes.byref(attribs)):
+		if HidD_GetAttributes(handle, ctypes.byref(attribs)):
 			info["vendorID"] = attribs.VendorID
 			info["productID"] = attribs.ProductID
 			info["versionNumber"] = attribs.VersionNumber
@@ -452,18 +450,18 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
 		nrOfBytes = ctypes.sizeof(buf)
-		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, nrOfBytes):
+		if HidD_GetManufacturerString(handle, buf, nrOfBytes):
 			info["manufacturer"] = buf.value
-		if ctypes.windll.hid.HidD_GetProductString(handle, buf, nrOfBytes):
+		if HidD_GetProductString(handle, buf, nrOfBytes):
 			info["product"] = buf.value
 		pd = ctypes.c_void_p()
-		if ctypes.windll.hid.HidD_GetPreparsedData(handle, ctypes.byref(pd)):
+		if HidD_GetPreparsedData(handle, ctypes.byref(pd)):
 			try:
 				caps = hidpi.HIDP_CAPS()
-				ctypes.windll.hid.HidP_GetCaps(pd, ctypes.byref(caps))
+				HidP_GetCaps(pd, ctypes.byref(caps))
 				info["HIDUsagePage"] = caps.UsagePage
 			finally:
-				ctypes.windll.hid.HidD_FreePreparsedData(pd)
+				HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
 	_getHidInfoCache[path] = info
@@ -483,7 +481,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	global _hidGuid
 	if not _hidGuid:
 		_hidGuid = GUID()
-		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
+		HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
 	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
