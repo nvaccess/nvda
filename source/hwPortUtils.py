@@ -9,64 +9,40 @@ import itertools
 import math
 import typing
 import winreg
-from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG, USHORT, WCHAR
+from ctypes.wintypes import DWORD, WCHAR
 
 from comtypes import GUID
 
 import config
 import hidpi
+from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
+from winBindings.hid import (
+	HIDD_ATTRIBUTES,
+	HidD_FreePreparsedData,
+	HidD_GetAttributes,
+	HidD_GetHidGuid,
+	HidD_GetManufacturerString,
+	HidD_GetPreparsedData,
+	HidD_GetProductString,
+	HidP_GetCaps,
+)
+from winBindings.setupapi import (
+	SetupDiDestroyDeviceInfoList,
+	HDEVINFO,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceProperty,
+	DEVPROPKEY,
+	SP_DEVINFO_DATA,
+	SetupDiEnumDeviceInterfaces,
+	SP_DEVICE_INTERFACE_DATA,
+	SetupDiGetDeviceInterfaceDetail,
+	SetupDiGetDeviceRegistryProperty,
+	SetupDiOpenDevRegKey,
+)
+from winBindings.advapi32 import RegCloseKey
 import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
-from winKernel import SYSTEMTIME
-
-
-def _validHandle_errcheck(res, func, args):
-	if res == 0:
-		raise ctypes.WinError()
-	return res
-
-
-HDEVINFO = ctypes.c_void_p
-
-
-class SP_DEVINFO_DATA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", DWORD),
-		("ClassGuid", GUID),
-		("DevInst", DWORD),
-		("Reserved", ctypes.POINTER(ULONG)),
-	)
-
-	def __str__(self):
-		return f"ClassGuid:{self.ClassGuid} DevInst:{self.DevInst}"
-
-
-PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
-
-
-class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", DWORD),
-		("InterfaceClassGuid", GUID),
-		("Flags", DWORD),
-		("Reserved", ctypes.POINTER(ULONG)),
-	)
-
-	def __str__(self):
-		return f"InterfaceClassGuid:{self.InterfaceClassGuid} Flags:{self.Flags}"
-
-
-PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
-
-PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
-
-
-class DEVPROPKEY(ctypes.Structure):
-	_fields_ = (
-		("DEVPROPGUID", GUID),
-		("DEVPROPID", ULONG),
-	)
 
 
 class dummy(ctypes.Structure):
@@ -77,68 +53,7 @@ class dummy(ctypes.Structure):
 
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
-SetupDiDestroyDeviceInfoList = ctypes.windll.setupapi.SetupDiDestroyDeviceInfoList
-SetupDiDestroyDeviceInfoList.argtypes = (HDEVINFO,)
-SetupDiDestroyDeviceInfoList.restype = BOOL
 
-SetupDiGetClassDevs = ctypes.windll.setupapi.SetupDiGetClassDevsW
-SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), ctypes.c_wchar_p, HWND, DWORD)
-SetupDiGetClassDevs.restype = HDEVINFO
-SetupDiGetClassDevs.errcheck = _validHandle_errcheck  # HDEVINFO
-
-SetupDiGetDeviceProperty = ctypes.windll.setupapi.SetupDiGetDevicePropertyW
-SetupDiGetDeviceProperty.argtypes = (
-	HDEVINFO,  # [in]            HDEVINFO         DeviceInfoSet
-	PSP_DEVINFO_DATA,  # [in]            PSP_DEVINFO_DATA DeviceInfoData
-	ctypes.POINTER(DEVPROPKEY),  # [in]            const DEVPROPKEY *PropertyKey
-	PDWORD,  # [out]           DEVPROPTYPE      *PropertyType
-	ctypes.c_void_p,  # [out, optional] PBYTE            PropertyBuffer
-	DWORD,  # [in]            DWORD            PropertyBufferSize
-	PDWORD,  # [out, optional] PDWORD           RequiredSize
-	DWORD,  # [in]            DWORD            Flags
-)
-SetupDiGetDeviceProperty.restype = BOOL
-
-SetupDiEnumDeviceInterfaces = ctypes.windll.setupapi.SetupDiEnumDeviceInterfaces
-SetupDiEnumDeviceInterfaces.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	ctypes.POINTER(GUID),
-	DWORD,
-	PSP_DEVICE_INTERFACE_DATA,
-)
-SetupDiEnumDeviceInterfaces.restype = BOOL
-
-SetupDiGetDeviceInterfaceDetail = ctypes.windll.setupapi.SetupDiGetDeviceInterfaceDetailW
-SetupDiGetDeviceInterfaceDetail.argtypes = (
-	HDEVINFO,
-	PSP_DEVICE_INTERFACE_DATA,
-	PSP_DEVICE_INTERFACE_DETAIL_DATA,
-	DWORD,
-	PDWORD,
-	PSP_DEVINFO_DATA,
-)
-SetupDiGetDeviceInterfaceDetail.restype = BOOL
-
-SetupDiGetDeviceRegistryProperty = ctypes.windll.setupapi.SetupDiGetDeviceRegistryPropertyW
-SetupDiGetDeviceRegistryProperty.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	DWORD,
-	PDWORD,
-	ctypes.c_void_p,
-	DWORD,
-	PDWORD,
-)
-SetupDiGetDeviceRegistryProperty.restype = BOOL
-
-SetupDiEnumDeviceInfo = ctypes.windll.setupapi.SetupDiEnumDeviceInfo
-SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
-SetupDiEnumDeviceInfo.restype = BOOL
-
-CM_Get_Device_ID = ctypes.windll.cfgmgr32.CM_Get_Device_IDW
-CM_Get_Device_ID.argtypes = (DWORD, ctypes.c_wchar_p, ULONG, ULONG)
-CM_Get_Device_ID.restype = DWORD
 CR_SUCCESS = 0
 MAX_DEVICE_ID_LEN = 200
 
@@ -239,7 +154,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			hwID = entry["hardwareID"] = buf.value
 
 		# Port info
-		regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(
+		regKey = SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
 			DICS_FLAG_GLOBAL,
@@ -255,7 +170,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 				port = portInfo["port"]
 				entry.update(portInfo)
 		finally:
-			ctypes.windll.advapi32.RegCloseKey(regKey)
+			RegCloseKey(regKey)
 
 		# friendly name
 		if not SetupDiGetDeviceRegistryProperty(
@@ -281,30 +196,9 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing com ports")
 
 
-BLUETOOTH_MAX_NAME_SIZE = 248
-BTH_ADDR = BLUETOOTH_ADDRESS = ctypes.c_ulonglong
-
-
-class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
-	_fields_ = (
-		("dwSize", DWORD),
-		("address", BLUETOOTH_ADDRESS),
-		("ulClassofDevice", ULONG),
-		("fConnected", BOOL),
-		("fRemembered", BOOL),
-		("fAuthenticated", BOOL),
-		("stLastSeen", SYSTEMTIME),
-		("stLastUsed", SYSTEMTIME),
-		("szName", WCHAR * BLUETOOTH_MAX_NAME_SIZE),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(dwSize=ctypes.sizeof(self), **kwargs)
-
-
 def getBluetoothDeviceInfo(address):
 	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
-	res = ctypes.windll["bthprops.cpl"].BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
+	res = BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
 	if res != 0:
 		raise ctypes.WinError(res)
 	return devInfo
@@ -495,18 +389,6 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing USB devices")
 
 
-class HIDD_ATTRIBUTES(ctypes.Structure):
-	_fields_ = (
-		("Size", ULONG),
-		("VendorID", USHORT),
-		("ProductID", USHORT),
-		("VersionNumber", USHORT),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
-
-
 _getHidInfoCache: dict[str, dict] = {}
 
 
@@ -556,7 +438,7 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 		return info
 	try:
 		attribs = HIDD_ATTRIBUTES()
-		if ctypes.windll.hid.HidD_GetAttributes(handle, ctypes.byref(attribs)):
+		if HidD_GetAttributes(handle, ctypes.byref(attribs)):
 			info["vendorID"] = attribs.VendorID
 			info["productID"] = attribs.ProductID
 			info["versionNumber"] = attribs.VersionNumber
@@ -565,18 +447,18 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
 		nrOfBytes = ctypes.sizeof(buf)
-		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, nrOfBytes):
+		if HidD_GetManufacturerString(handle, buf, nrOfBytes):
 			info["manufacturer"] = buf.value
-		if ctypes.windll.hid.HidD_GetProductString(handle, buf, nrOfBytes):
+		if HidD_GetProductString(handle, buf, nrOfBytes):
 			info["product"] = buf.value
 		pd = ctypes.c_void_p()
-		if ctypes.windll.hid.HidD_GetPreparsedData(handle, ctypes.byref(pd)):
+		if HidD_GetPreparsedData(handle, ctypes.byref(pd)):
 			try:
 				caps = hidpi.HIDP_CAPS()
-				ctypes.windll.hid.HidP_GetCaps(pd, ctypes.byref(caps))
+				HidP_GetCaps(pd, ctypes.byref(caps))
 				info["HIDUsagePage"] = caps.UsagePage
 			finally:
-				ctypes.windll.hid.HidD_FreePreparsedData(pd)
+				HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
 	_getHidInfoCache[path] = info
@@ -596,7 +478,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	global _hidGuid
 	if not _hidGuid:
 		_hidGuid = GUID()
-		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
+		HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
 	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
