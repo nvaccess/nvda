@@ -172,3 +172,20 @@ WriteProcessMemory.argtypes = (
 	POINTER(c_size_t),  # lpNumberOfBytesWritten
 )
 WriteProcessMemory.restype = BOOL
+
+DuplicateHandle = dll.DuplicateHandle
+"""
+Duplicates an object handle.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-duplicatehandle
+"""
+DuplicateHandle.argtypes = (
+	HANDLE,  # hSourceProcessHandle
+	HANDLE,  # hSourceHandle
+	HANDLE,  # hTargetProcessHandle
+	POINTER(HANDLE),  # lpTargetHandle
+	DWORD,  # dwDesiredAccess
+	BOOL,  # bInheritHandle
+	DWORD,  # dwOptions
+)
+DuplicateHandle.restype = BOOL

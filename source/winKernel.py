@@ -521,7 +521,7 @@ def DuplicateHandle(
 ):
 	targetHandle = HANDLE()
 	if (
-		kernel32.DuplicateHandle(
+		winBindings.kernel32.DuplicateHandle(
 			sourceProcessHandle,
 			sourceHandle,
 			targetProcessHandle,

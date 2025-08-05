@@ -107,6 +107,7 @@ if typing.TYPE_CHECKING:
 windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 _remoteLib = None
+_remoteLoaderX86: "Optional[_RemoteLoader]" = None
 _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
 _remoteLoaderARM64: "Optional[_RemoteLoader]" = None
 lastLanguageID = None
@@ -810,7 +811,7 @@ class _RemoteLoader:
 
 
 def initialize() -> None:
-	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
+	global _remoteLib, _remoteLoaderX86, _remoteLoaderAMD64, _remoteLoaderARM64
 	global lastLanguageID, lastLayoutString
 	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID = winUser.LOWORD(hkl)
@@ -883,7 +884,9 @@ def initialize() -> None:
 	# Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	arch = winVersion.getWinVer().processorArchitecture
-	if arch == "AMD64" and coreArchLibPath != versionedLibAMD64Path:
+	if arch != "x86" and coreArchLibPath != versionedLibX86Path:
+		_remoteLoaderX86 = _RemoteLoader(versionedLibX86Path)
+	elif arch in ("AMD64", "ARM64") and coreArchLibPath != versionedLibAMD64Path:
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 	elif arch == "ARM64" and coreArchLibPath != versionedLibARM64Path:
 		_remoteLoaderARM64 = _RemoteLoader(versionedLibARM64Path)
