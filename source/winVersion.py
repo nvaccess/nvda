@@ -194,7 +194,12 @@ def getWinVer():
 		winreg.HKEY_LOCAL_MACHINE,
 		r"Software\Microsoft\Windows NT\CurrentVersion",
 	) as currentVersion:
-		buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
+		# #18617: in Windows 8.1, attempting to access the below registry path results inn an error.
+		# Therefore, set UBR (update build revision) to 0.
+		try:
+			buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
+		except FileNotFoundError:
+			buildRevision = 0
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
