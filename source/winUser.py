@@ -30,6 +30,7 @@ from logHandler import log
 
 from winBindings.user32 import WNDCLASSEXW  # noqa: F401
 from winBindings.user32 import WNDPROC  # noqa: F401
+from winBindings.user32 import PAINTSTRUCT 
 
 
 # dll handles
@@ -798,9 +799,6 @@ def SendInput(inputs):
 	n = len(inputs)
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))  # noqa: F405
-
-
-from winBindings.user32 import PAINTSTRUCT
 
 
 @contextlib.contextmanager
