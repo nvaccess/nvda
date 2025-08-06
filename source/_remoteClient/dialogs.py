@@ -12,6 +12,7 @@ from urllib import request
 import gui
 import wx
 from wx.lib.expando import ExpandoTextCtrl
+from wx.lib.agw import persist
 from gui.contextHelp import ContextHelpMixin
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
@@ -318,8 +319,11 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			pgettext("remote", "&Mode:"),
 			wx.Choice,
 			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
+			# For persistence
+			name="remote.connect.mode",
 		)
-		self._connectionModeControl.SetSelection(configuration.getRemoteConfig()["ui"]["lastConnectionMode"])
+		if not persist.PersistenceManager.Get().RegisterAndRestore(self._connectionModeControl):
+			self._connectionModeControl.SetSelection(0)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
 			pgettext("remote", "&Server:"),
@@ -387,9 +391,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			if focusTarget is not None:
 				focusTarget.SetFocus()
 		else:
-			configuration.getRemoteConfig()["ui"]["lastConnectionMode"] = (
-				self._connectionModeControl.GetSelection()
-			)
+			persist.PersistenceManager.Get().SaveAndUnregister(self._connectionModeControl)
 			evt.Skip()
 
 	def _getKey(self) -> str:
