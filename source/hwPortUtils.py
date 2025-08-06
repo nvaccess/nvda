@@ -21,7 +21,7 @@ from winAPI.constants import SystemErrorCodes
 from winKernel import SYSTEMTIME
 
 
-def _validHandle_errcheck(res, func, args):
+def _validHandle_errcheck(res: int, func, args) -> int:
 	if res == 0:
 		raise ctypes.WinError()
 	return res

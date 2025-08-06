@@ -1,41 +1,30 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Cyrille Bougot
+# Copyright (C) 2007-2025 NV Access Limited, Peter Vágner, Cyrille Bougot
 
 import time
 import threading
 import ctypes
-import collections  # noqa: F401
-import itertools  # noqa: F401
 from typing import (
 	Optional,
 	Dict,
 )
 import weakref
 import wx
-import review  # noqa: F401
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
 from scriptHandler import script
-import speech  # noqa: F401
-import NVDAObjects  # noqa: F401
 import api
 import controlTypes
 import textInfos.offsets
 import config
-import cursorManager  # noqa: F401
 import browseMode
-import gui  # noqa: F401
-import eventHandler  # noqa: F401
 import braille
 import queueHandler
 from logHandler import log
 import ui
-import aria  # noqa: F401
-import treeInterceptorHandler  # noqa: F401
 import watchdog
 from abc import abstractmethod
 import documentBase

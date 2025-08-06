@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
@@ -581,7 +580,7 @@ class AppModule(baseObject.ScriptableObject):
 
 	isAlive: bool
 
-	def _get_isAlive(self):
+	def _get_isAlive(self) -> bool:
 		try:
 			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
 		except OSError as e:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2023 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
+# Copyright (C) 2018-2025 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -34,7 +34,8 @@ def register32bitServer(fileName: str) -> None:
 	if sysconfig.get_platform() == "win32":
 		# NVDA is 32 bit.
 		# On 32-bit systems, the 32-bit version of regsvr32.exe is in System32.
-		# On 64-bit systems, the 32-bit version of regsvr32.exe is in SysWOW64, but system32 is automatically redirected to SysWOW64 for 32-bit applications.
+		# On 64-bit systems, the 32-bit version of regsvr32.exe is in SysWOW64,
+		# but system32 is automatically redirected to SysWOW64 for 32-bit applications.
 		regsvr32 = os.path.join(SYSTEM_ROOT, "system32", "regsvr32.exe")
 	else:
 		# NVDA is 64 bit, and therefore the OS is also 64 bit.
@@ -85,7 +86,8 @@ def apply32bitRegistryPatch(fileName: str) -> None:
 	if sysconfig.get_platform() == "win32":
 		# NVDA is 32 bit.
 		# On 32-bit systems, the 32-bit version of reg.exe is in System32.
-		# On 64-bit systems, the 32-bit version of reg.exe is in SysWOW64, but system32 is automatically redirected to SysWOW64 for 32-bit applications.
+		# On 64-bit systems, the 32-bit version of reg.exe is in SysWOW64,
+		# but system32 is automatically redirected to SysWOW64 for 32-bit applications.
 		regExe = os.path.join(SYSTEM_ROOT, "System32", "reg.exe")
 	else:
 		# NVDA is 64 bit, and therefore the OS is also 64 bit.
