@@ -8,7 +8,6 @@ import os
 import json
 import re
 import io
-import time
 
 import numpy as np
 from PIL import Image
@@ -349,5 +348,3 @@ class ImageCaptioner:
 		caption = self.generateWithGreedy(encoderHiddenStates, maxLength)
 
 		return caption
-
-
