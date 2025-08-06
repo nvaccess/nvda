@@ -3,16 +3,23 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-Import(["thirdPartyEnv"])
-
 import typing  # noqa: E402
 import os
 
+Import(
+	[
+		"thirdPartyEnv",
+		"sourceDir",
+	]
+)
 thirdPartyEnv: Environment = thirdPartyEnv
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 cppjiebaPath = Dir("#include/cppjieba")
 cppjiebaSrcPath = cppjiebaPath.Dir("include/cppjieba")
+cppjiebaDictPath = cppjiebaPath.Dir("dict")
+outDir = sourceDir.Dir("cppjieba")
+unitTestDictsDir = env.Dir("#tests/unit/cppjiebaDicts")
 LimonpPath = cppjiebaPath.Dir("deps/limonp")  # cppjieba's dependency
 LimonpSrcPath = LimonpPath.Dir("include/limonp")
 
@@ -29,5 +36,20 @@ sourceFiles = [
 ]
 
 cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
+
+if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDir.Dir("dicts").get_abspath()): # insure dicts installation happens only once and avoid a scons' warning
+	env.Install(
+		outDir.Dir("dicts"),
+		[
+			f
+			for f in env.Glob(f"{cppjiebaDictPath}/*")
+			if f.name
+			not in (
+				"README.md",
+				"pos_dict",
+			)
+			and not f.name.endswith(".in")
+		],
+	)
 
 Return("cppjiebaLib")
