@@ -128,14 +128,17 @@ class RemoteClient:
 			# Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		self.localMachine.isMuted = not self.localMachine.isMuted
-		self.menu.muteItem.Check(self.localMachine.isMuted)
+		self._doToggleMute()
 		# Translators: Displayed when muting speech and sounds from the remote computer
 		MUTE_MESSAGE = _("Muted remote")
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
 		ui.delayedMessage(status)
+
+	def _doToggleMute(self):
+		self.localMachine.isMuted = not self.localMachine.isMuted
+		self.menu.muteItem.Check(self.localMachine.isMuted)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -360,6 +363,8 @@ class RemoteClient:
 		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self._doToggleMute()
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
