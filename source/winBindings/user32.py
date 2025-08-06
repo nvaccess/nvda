@@ -51,8 +51,6 @@ class PAINTSTRUCT(Structure):
 	]
 
 
-
-
 # LRESULT is defined as LONG_PTR (signed type)
 if sizeof(c_long) == sizeof(c_void_p):
 	LRESULT = c_long
