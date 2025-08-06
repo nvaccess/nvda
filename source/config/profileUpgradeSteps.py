@@ -598,6 +598,8 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj) -> None:
 			"dotPad added to braille display auto detection excluded displays due to generic USB PID/VID. "
 			f"List is now: {excludedDisplays}",
 		)
+
+
 def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 	"""Convert report spelling errors configurations from boolean to integer values."""
 
@@ -622,4 +624,3 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 			" code."
 		),
 	)
-
