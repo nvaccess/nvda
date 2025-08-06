@@ -335,6 +335,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			pgettext("remote", "&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
+			# For persistence
 			name="remote.connect.server",
 		)
 		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
@@ -349,13 +350,10 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
 		simpleBook.AddPage(self._clientPanel, "Client")
 		simpleBook.AddPage(self._serverPanel, "Server")
-		# if not persist.PersistenceManager.Get().RegisterAndRestore(self._clientOrServerControl):
-		# self._clientOrServerControl.SetSelection(0)
-		self._registerAndRestorePersistentControls()
-
-		self._doSyncChoiceAndBook()
 		contentsSizerHelper.addItem(simpleBook)
-		# persist.PersistenceManager.Get().RegisterAndRestoreAll(self)
+		# Initialise persistence
+		self._registerAndRestorePersistentControls()
+		self._doSyncChoiceAndBook()
 		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
 		self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 		mainSizer.Add(contentsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
@@ -364,6 +362,8 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self.CenterOnScreen()
 		self._connectionModeControl.SetFocus()
 		self.Bind(wx.EVT_SHOW, self._onShow)
+		# EVT_CLOSE is not fired on modal dialogs
+		# Use EVT_WINDOW_DESTROY instead
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
 
 	def _registerAndRestorePersistentControls(self):
