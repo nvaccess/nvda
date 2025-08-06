@@ -631,7 +631,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			try:
 				watchdog.cancellableExecute(
 					NVDAHelper.localLib.VBuf_destroyBuffer,
-					ctypes.byref(ctypes.c_int(self.VBufHandle)),
+					ctypes.byref(self.VBufHandle),
 				)
 			except WindowsError:
 				pass
