@@ -44,7 +44,7 @@ GetModuleFileName = dll.GetModuleFileNameW
 """
 Retrieves the fully qualified path for the file that contains the specified module, which must have been loaded by the current process.
 
-..seealso::
+.. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulefilenamew
 """
 GetModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
@@ -52,7 +52,8 @@ GetModuleFileName.restype = DWORD
 
 LoadLibraryEx = dll.LoadLibraryExW
 """
-Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
+Loads the specified module into the address space of the calling process.
+The specified module may cause other modules to be loaded.
 
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw
@@ -66,7 +67,8 @@ LoadLibraryEx.restype = HMODULE
 
 FreeLibrary = dll.FreeLibrary
 """
-Frees the loaded module and decrements its reference count. If the reference count reaches zero, the module is unloaded from the address space of the calling process.
+Frees the loaded module and decrements its reference count.
+If the reference count reaches zero, the module is unloaded from the address space of the calling process.
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-freelibrary
 """
