@@ -9,6 +9,9 @@ import threading
 from typing import TypedDict
 from urllib import request
 
+import wx.lib
+import wx.lib.agw
+
 import gui
 import wx
 from wx.lib.expando import ExpandoTextCtrl
@@ -314,6 +317,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		super().__init__(parent, id, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
+		self._persistentControls: list[wx.Window] = []
 		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
 			pgettext("remote", "&Mode:"),
@@ -322,8 +326,10 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			# For persistence
 			name="remote.connect.mode",
 		)
-		if not persist.PersistenceManager.Get().RegisterAndRestore(self._connectionModeControl):
-			self._connectionModeControl.SetSelection(0)
+		# if not persist.PersistenceManager.Get().RegisterAndRestore(self._connectionModeControl):
+		# self._connectionModeControl.SetSelection(0)
+		self._connectionModeControl.SetSelection(0)
+		self._persistentControls.append(self._connectionModeControl)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
 			pgettext("remote", "&Server:"),
@@ -332,6 +338,8 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			name="remote.connect.server",
 		)
 		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		self._clientOrServerControl.SetSelection(0)
+		self._persistentControls.append(self._clientOrServerControl)
 		simpleBook = self._simpleBook = wx.Simplebook(self)
 		self._clientPanel = ClientPanel(simpleBook)
 		if hostnames:
@@ -341,12 +349,13 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
 		simpleBook.AddPage(self._clientPanel, "Client")
 		simpleBook.AddPage(self._serverPanel, "Server")
-		if not persist.PersistenceManager.Get().RegisterAndRestore(self._clientOrServerControl):
-			self._clientOrServerControl.SetSelection(0)
-		self._doSyncChoiceAndBook()
+		# if not persist.PersistenceManager.Get().RegisterAndRestore(self._clientOrServerControl):
 		# self._clientOrServerControl.SetSelection(0)
-		# self._selectedPanel = self._clientPanel
+		self._registerAndRestorePersistentControls()
+
+		self._doSyncChoiceAndBook()
 		contentsSizerHelper.addItem(simpleBook)
+		# persist.PersistenceManager.Get().RegisterAndRestoreAll(self)
 		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
 		self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 		mainSizer.Add(contentsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
@@ -355,6 +364,22 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self.CenterOnScreen()
 		self._connectionModeControl.SetFocus()
 		self.Bind(wx.EVT_SHOW, self._onShow)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
+
+	def _registerAndRestorePersistentControls(self):
+		persistenceManager = persist.PersistenceManager.Get()
+		for control in self._persistentControls:
+			persistenceManager.RegisterAndRestore(control)
+
+	def _savePersistentControls(self):
+		persistenceManager = persist.PersistenceManager.Get()
+		for control in self._persistentControls:
+			persistenceManager.Save(control)
+
+	def _unregisterPersistentControls(self):
+		persistenceManager = persist.PersistenceManager.Get()
+		for control in self._persistentControls:
+			persistenceManager.Unregister(control)
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		"""Respond to changing between using a control server or hosting it locally"""
@@ -401,9 +426,12 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			if focusTarget is not None:
 				focusTarget.SetFocus()
 		else:
-			persist.PersistenceManager.Get().SaveAndUnregister(self._connectionModeControl)
-			persist.PersistenceManager.Get().SaveAndUnregister(self._clientOrServerControl)
+			self._savePersistentControls()
 			evt.Skip()
+
+	def _onDestroy(self, evt: wx.WindowDestroyEvent):
+		self._unregisterPersistentControls()
+		evt.Skip()
 
 	def _getKey(self) -> str:
 		"""Get the connection key."""
