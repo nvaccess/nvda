@@ -329,6 +329,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			pgettext("remote", "&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
+			name="remote.connect.server",
 		)
 		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
 		simpleBook = self._simpleBook = wx.Simplebook(self)
@@ -340,8 +341,11 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
 		simpleBook.AddPage(self._clientPanel, "Client")
 		simpleBook.AddPage(self._serverPanel, "Server")
-		self._clientOrServerControl.SetSelection(0)
-		self._selectedPanel = self._clientPanel
+		if not persist.PersistenceManager.Get().RegisterAndRestore(self._clientOrServerControl):
+			self._clientOrServerControl.SetSelection(0)
+		self._doSyncChoiceAndBook()
+		# self._clientOrServerControl.SetSelection(0)
+		# self._selectedPanel = self._clientPanel
 		contentsSizerHelper.addItem(simpleBook)
 		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
 		self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
@@ -354,12 +358,18 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		"""Respond to changing between using a control server or hosting it locally"""
+		self._doSyncChoiceAndBook()
+		evt.Skip()
+
+	def _doSyncChoiceAndBook(self):
+		"""Set the page of the wx.SimpleBook to correspond to the selection in the server type control."""
 		selectedIndex = self._clientOrServerControl.GetSelection()
 		self._simpleBook.ChangeSelection(selectedIndex)
-		# Hack: setting or changing the selection of a wx.SimpleBook seems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
+		# Hack: setting or changing the selection of a wx.SimpleBook
+		# seems to cause focus to jump to the first focusable control in the newly selected page,
+		# so force focus back to the control that caused the change.
 		self._clientOrServerControl.SetFocus()
 		self._selectedPanel = self._simpleBook.GetPage(selectedIndex)
-		evt.Skip()
 
 	def _onOk(self, evt: wx.CommandEvent) -> None:
 		"""Respond to the OK button being pressed."""
@@ -392,6 +402,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 				focusTarget.SetFocus()
 		else:
 			persist.PersistenceManager.Get().SaveAndUnregister(self._connectionModeControl)
+			persist.PersistenceManager.Get().SaveAndUnregister(self._clientOrServerControl)
 			evt.Skip()
 
 	def _getKey(self) -> str:
