@@ -14,8 +14,8 @@
 ### Changes
 
 * Component updates:
-  * Updated eSpeak NG to [commit `a4ca101`](https://github.com/espeak-ng/espeak-ng/commit/a4ca101c99de35345f89df58195b2159748b7092).
-  There have been improvements to Farsi/Persian. (#18342)
+  * Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).
+  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)
   * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
   Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
