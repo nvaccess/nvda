@@ -53,7 +53,7 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v4
       with:
-        submodules: true
+        submodules: recursive
     - name: Install Python
       uses: actions/setup-python@v5
       with:
