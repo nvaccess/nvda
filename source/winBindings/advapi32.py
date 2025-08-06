@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Functions exported by advapi32.dll, and supporting data structurs and enumerations."""
+"""Functions exported by advapi32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
 	POINTER,
@@ -21,7 +21,7 @@ __all__ = ("OpenProcessToken",)
 dll = windll.advapi32
 OpenProcessToken = dll.OpenProcessToken
 """
-opens the access token associated with a process.
+Opens the access token associated with a process.
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken
 """
