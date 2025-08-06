@@ -8,7 +8,7 @@
 from enum import Enum, IntEnum
 from typing import Any
 
-from config.registry import RegistryKey as _RegistryKey
+from config.registry import RegistryKey as _RegistryKey, EASE_OF_ACCESS_APP_KEY_NAME
 from logHandler import log
 import NVDAState
 import winreg
@@ -18,7 +18,7 @@ import winUser
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "RegistryKey" and NVDAState._allowDeprecatedAPI():
-		log.warning("easeOfAccess.RegistryKey is deprecated, use config.RegistryKey instead.")
+		log.warning("easeOfAccess.RegistryKey is deprecated, use config.registry.RegistryKey instead.")
 
 		class RegistryKey(str, Enum):
 			ROOT = _RegistryKey.EASE_OF_ACCESS.value
@@ -28,14 +28,14 @@ def __getattr__(attrName: str) -> Any:
 		return RegistryKey
 
 	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
-		log.warning("ROOT_KEY is deprecated, use config.RegistryKey.EASE_OF_ACCESS instead.")
+		log.warning("ROOT_KEY is deprecated, use config.registry.RegistryKey.EASE_OF_ACCESS instead.")
 		return _RegistryKey.EASE_OF_ACCESS.value
 	if attrName == "APP_KEY_PATH" and NVDAState._allowDeprecatedAPI():
-		log.warning("APP_KEY_PATH is deprecated, use config.RegistryKey.EASE_OF_ACCESS_APP instead.")
+		log.warning("APP_KEY_PATH is deprecated, use config.registry.RegistryKey.EASE_OF_ACCESS_APP instead.")
 		return _RegistryKey.EASE_OF_ACCESS_APP.value
 	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
-		log.warning("APP_KEY_NAME is deprecated, use config.RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME instead.")
-		return _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME.value
+		log.warning("APP_KEY_NAME is deprecated, use config.registry.EASE_OF_ACCESS_APP_KEY_NAME instead.")
+		return EASE_OF_ACCESS_APP_KEY_NAME
 	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
 		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
 		return True
@@ -68,7 +68,7 @@ def notify(signal):
 	if not isRegistered():
 		return
 	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, _RegistryKey.EASE_OF_ACCESS_TEMP.value) as rkey:
-		winreg.SetValueEx(rkey, _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME, None, winreg.REG_DWORD, signal)
+		winreg.SetValueEx(rkey, EASE_OF_ACCESS_APP_KEY_NAME, None, winreg.REG_DWORD, signal)
 	keys = []
 	# The user might be holding unwanted modifiers.
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
@@ -101,7 +101,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	return _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
+	return EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
 def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
@@ -155,14 +155,14 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 	Raises `Union[WindowsError, FileNotFoundError]`
 	"""
 	conf = _getAutoStartConfiguration(autoStartContext)
-	currentlyEnabled = _RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME in conf
+	currentlyEnabled = EASE_OF_ACCESS_APP_KEY_NAME in conf
 	changed = False
 
 	if enable and not currentlyEnabled:
-		conf.append(_RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
+		conf.append(EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 	elif not enable and currentlyEnabled:
-		conf.remove(_RegistryKey.EASE_OF_ACCESS_APP_KEY_NAME)
+		conf.remove(EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 
 	if changed:

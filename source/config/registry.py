@@ -3,25 +3,29 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import Enum
+from enum import Enum, nonmember
+
+
+EASE_OF_ACCESS_APP_KEY_NAME = "nvda_nvda_v1"
 
 
 class RegistryKey(str, Enum):
-	SOFTWARE = "SOFTWARE"
+	_SOFTWARE = nonmember("SOFTWARE")
 	r"""
 	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 	Note that if NVDA is a 32-bit application, on x64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node"`
 	"""
-	CURRENT_VERSION = rf"{SOFTWARE}\Microsoft\Windows\CurrentVersion"
+	CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows\CurrentVersion"
 	INSTALLED_COPY = rf"{CURRENT_VERSION}\Uninstall\NVDA"
 	RUN = rf"{CURRENT_VERSION}\Run"
-	NVDA = rf"{SOFTWARE}\NVDA"
+	NVDA = rf"{_SOFTWARE}\NVDA"
 	APP_PATH = rf"{CURRENT_VERSION}\App Paths\nvda.exe"
-	NT_CURRENT_VERSION = rf"{SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
-	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
-	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
-	EASE_OF_ACCESS_APP_KEY_NAME = "nvda_nvda_v1"
+	EXPLORER_ADVANCED = rf"{CURRENT_VERSION}\Explorer\Advanced"
+	SYSTEM_POLICIES = rf"{CURRENT_VERSION}\Policies\System"
+	_NT_CURRENT_VERSION = nonmember(rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion")
+	EASE_OF_ACCESS = rf"{_NT_CURRENT_VERSION}\Accessibility"
+	EASE_OF_ACCESS_TEMP = rf"{_NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 
 	# Sub keys
@@ -46,14 +50,15 @@ class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 	For cleaning up legacy 32-bit NVDA copies.
 	"""
 
-	SOFTWARE = r"SOFTWARE\WOW6432Node"
-	CURRENT_VERSION = rf"{SOFTWARE}\Microsoft\Windows\CurrentVersion"
+	_SOFTWARE = nonmember(r"SOFTWARE\WOW6432Node")
+	CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows\CurrentVersion"
 	INSTALLED_COPY = rf"{CURRENT_VERSION}\Uninstall\NVDA"
 	RUN = rf"{CURRENT_VERSION}\Run"
-	NVDA = rf"{SOFTWARE}\NVDA"
+	NVDA = rf"{_SOFTWARE}\NVDA"
 	APP_PATH = rf"{CURRENT_VERSION}\App Paths\nvda.exe"
-	NT_CURRENT_VERSION = rf"{SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
-	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
-	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
-	EASE_OF_ACCESS_APP_KEY_NAME = "nvda_nvda_v1"
+	EXPLORER_ADVANCED = rf"{CURRENT_VERSION}\Explorer\Advanced"
+	SYSTEM_POLICIES = rf"{CURRENT_VERSION}\Policies\System"
+	_NT_CURRENT_VERSION = nonmember(rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion")
+	EASE_OF_ACCESS = rf"{_NT_CURRENT_VERSION}\Accessibility"
+	EASE_OF_ACCESS_TEMP = rf"{_NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"

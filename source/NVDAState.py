@@ -165,6 +165,7 @@ class _TrackNVDAInitialization:
 
 
 def _forceSecureModeEnabled() -> bool:
+	# Avoid circular import
 	from config.registry import RegistryKey
 
 	try:
@@ -176,6 +177,7 @@ def _forceSecureModeEnabled() -> bool:
 
 
 def _serviceDebugEnabled() -> bool:
+	# Avoid circular import
 	from config.registry import RegistryKey
 
 	try:
@@ -187,6 +189,7 @@ def _serviceDebugEnabled() -> bool:
 
 
 def _configInLocalAppDataEnabled() -> bool:
+	# Avoid circular imports
 	from config.registry import RegistryKey
 	from logHandler import log
 
