@@ -561,7 +561,7 @@ class HGLOBAL(HANDLE):
 
 	def __del__(self):
 		if self and self._autoFree:
-			windll.kernel32.GlobalFree(self)
+			winBindings.kernel32.GlobalFree(self)
 
 	@classmethod
 	def alloc(cls, flags, size):
@@ -570,7 +570,7 @@ class HGLOBAL(HANDLE):
 		providing it as an instance of this class.
 		This method Takes the same arguments as GlobalAlloc.
 		"""
-		h = windll.kernel32.GlobalAlloc(flags, size)
+		h = winBindings.kernel32.GlobalAlloc(flags, size)
 		return cls(h)
 
 	@contextlib.contextmanager
@@ -582,9 +582,9 @@ class HGLOBAL(HANDLE):
 		When the body completes, GlobalUnlock is automatically called.
 		"""
 		try:
-			yield windll.kernel32.GlobalLock(self)
+			yield winBindings.kernel32.GlobalLock(self)
 		finally:
-			windll.kernel32.GlobalUnlock(self)
+			winBindings.kernel32.GlobalUnlock(self)
 
 	def forget(self):
 		"""

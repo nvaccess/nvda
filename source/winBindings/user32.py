@@ -216,3 +216,46 @@ EndPaint.argtypes = (
 	POINTER(PAINTSTRUCT),  # lpPaint
 )
 EndPaint.restype = BOOL
+
+OpenClipboard = dll.OpenClipboard
+"""
+Opens the clipboard for examination and prevents other applications from modifying the clipboard content until the clipboard is closed.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-openclipboard
+"""
+OpenClipboard.argtypes = (
+	HWND,  # hWndNewOwner
+)
+OpenClipboard.restype = BOOL
+
+CloseClipboard = dll.CloseClipboard
+"""
+Closes the clipboard and releases ownership of the clipboard to other applications.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-closeclipboard
+"""
+CloseClipboard.argtypes = ()
+CloseClipboard.restype = BOOL
+
+GetClipboardData = dll.GetClipboardData
+"""
+Retrieves data from the clipboard in a specified format.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclipboarddata
+"""
+GetClipboardData.argtypes = (
+	UINT,  # uFormat
+)
+GetClipboardData.restype = HANDLE
+
+SetClipboardData = dll.SetClipboardData
+"""
+Places data on the clipboard in a specified format.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setclipboarddata
+"""
+SetClipboardData.argtypes = (
+	UINT,  # uFormat
+	HANDLE,  # hMem
+)
+SetClipboardData.restype = HANDLE

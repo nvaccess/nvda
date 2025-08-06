@@ -5,6 +5,7 @@
 
 """Functions exported by kernel32.dll, and supporting data structures and enumerations."""
 
+from asyncio.mixins import _global_lock
 from ctypes import (
 	c_wchar_p,
 	windll,
@@ -13,11 +14,13 @@ from ctypes import (
 )
 from ctypes.wintypes import (
 	DWORD,
+	UINT,
 	HANDLE,
 	HMODULE,
 	LPCWSTR,
 	BOOL,
 	LPVOID,
+	HGLOBAL,
 )
 
 __all__ = (
@@ -189,3 +192,49 @@ DuplicateHandle.argtypes = (
 	DWORD,  # dwOptions
 )
 DuplicateHandle.restype = BOOL
+
+GlobalAlloc = dll.GlobalAlloc
+"""
+Allocates global memory and returns a handle to the allocated memory.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globalalloc
+"""
+GlobalAlloc.argtypes = (
+	UINT,  # uFlags
+	c_size_t,  # dwBytes
+)
+GlobalAlloc.restype = HGLOBAL
+
+
+GlobalFree = dll.GlobalFree
+"""
+Frees the specified global memory object and invalidates its handle.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globalfree
+"""
+GlobalFree.argtypes = (
+	HGLOBAL,  # hMem
+)
+GlobalFree.restype = HGLOBAL
+
+GlobalLock = dll.GlobalLock
+"""
+Locks a global memory object and returns a pointer to the first byte of the object's memory block.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globallock
+"""
+GlobalLock.argtypes = (
+	HGLOBAL,  # hMem
+)
+GlobalLock.restype = LPVOID
+
+GlobalUnlock = dll.GlobalUnlock
+"""
+Unlocks a global memory object, allowing it to be accessed by other processes.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globalunlock
+"""
+GlobalUnlock.argtypes = (
+	HGLOBAL,  # hMem
+)
+GlobalUnlock.restype = BOOL

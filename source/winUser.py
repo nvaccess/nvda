@@ -865,12 +865,12 @@ def openClipboard(hwndOwner=None):
 	A context manager version of OpenClipboard from user32.
 	Use as the expression of a 'with' statement, and CloseClipboard will automatically be called at the end.
 	"""
-	if not windll.user32.OpenClipboard(hwndOwner):  # noqa: F405
+	if not winBindings.user32.OpenClipboard(hwndOwner):  # noqa: F405
 		raise ctypes.WinError()  # noqa: F405
 	try:
 		yield
 	finally:
-		windll.user32.CloseClipboard()  # noqa: F405
+		winBindings.user32.CloseClipboard()  # noqa: F405
 
 
 def emptyClipboard():
@@ -883,7 +883,7 @@ def getClipboardData(format):
 	if format != CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
 	# Fetch the data from the clipboard as a global memory handle
-	h = windll.user32.GetClipboardData(format)  # noqa: F405
+	h = winBindings.user32.GetClipboardData(format)  # noqa: F405
 	if not h:
 		raise ctypes.WinError()  # noqa: F405
 	# Lock the global memory  while we fetch the unicode string
@@ -908,7 +908,7 @@ def setClipboardData(format, data):
 		buf = (c_wchar * bufLen).from_address(addr)  # noqa: F405
 		buf.value = text
 	# Set the clipboard data with the global memory
-	if not windll.user32.SetClipboardData(format, h):  # noqa: F405
+	if not winBindings.user32.SetClipboardData(format, h):  # noqa: F405
 		raise ctypes.WinError()  # noqa: F405
 	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
 	h.forget()
