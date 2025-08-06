@@ -51,14 +51,6 @@ class PAINTSTRUCT(Structure):
 	]
 
 
-__all__ = (
-	"LRESULT",
-	"CallNextHookEx",
-	"GetMessage",
-	"HOOKPROC",
-	"SetWindowsHookEx",
-	"DefWindowProc",
-)
 
 
 # LRESULT is defined as LONG_PTR (signed type)
