@@ -208,6 +208,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			min=1,
 			max=65535,
 			initial=SERVER_PORT,
+			name="remote.connect.port",
 		)
 		# Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 		self.key = sizerHelper.addLabeledControl(pgettext("remote", "&Key"), wx.TextCtrl)
@@ -347,6 +348,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			self._clientPanel.host.AppendItems(hostnames)
 			self._clientPanel.host.SetSelection(0)
 		self._serverPanel = ServerPanel(simpleBook)
+		self._persistentControls.append(self._serverPanel.port)
 		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
 		simpleBook.AddPage(self._clientPanel, "Client")
 		simpleBook.AddPage(self._serverPanel, "Server")
