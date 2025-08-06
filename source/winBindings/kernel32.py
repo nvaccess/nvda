@@ -5,7 +5,6 @@
 
 """Functions exported by kernel32.dll, and supporting data structures and enumerations."""
 
-from asyncio.mixins import _global_lock
 from ctypes import (
 	c_wchar_p,
 	windll,
