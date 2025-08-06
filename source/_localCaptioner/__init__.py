@@ -71,7 +71,7 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		description = captioner.generateCaption(image=imageData)
 		ui.message(description)
 		api.copyToClip(text=description, notify=False)
-	except Exception as e:
+	except Exception:
 		# Translators: error message when an image description cannot be generated
 		ui.message(pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
