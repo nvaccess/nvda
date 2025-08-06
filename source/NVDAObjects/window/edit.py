@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,9 +9,8 @@ from typing import (
 	Union,
 )
 
-import comtypes.client
 import ctypes
-from comtypes import COMError
+from comtypes import BSTR, COMError
 import colors
 import eventHandler
 import comInterfaces.tom
@@ -802,7 +801,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		label = None
 		try:
 			o = embedRangeObj.GetEmbeddedObject()
-		except comtypes.COMError:
+		except COMError:
 			o = None
 		if not o:
 			return None
@@ -811,7 +810,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 		try:
 			label = o.QueryInterface(oleacc.IAccessible).accName(0)
-		except comtypes.COMError:
+		except COMError:
 			pass
 		if label:
 			return label
@@ -834,7 +833,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if label and not label.isspace():
 			return label
 		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
-		text = comtypes.BSTR()
+		text = BSTR()
 		try:
 			NVDAHelper.localLib.getOleClipboardText(o, ctypes.byref(text))
 		except WindowsError:
@@ -843,8 +842,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			label = text.value
 		if label:
 			return label
-		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
-		userType = comtypes.BSTR()
+		# As a final fallback (e.g. could not get display model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
+		userType = BSTR()
 		try:
 			NVDAHelper.localLib.getOleUserType(o, 0, ctypes.byref(userType))
 		except WindowsError:

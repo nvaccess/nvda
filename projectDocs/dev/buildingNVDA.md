@@ -22,8 +22,8 @@ While simply testing or committing changes, it may be faster usually just doing 
 
 You can speed up scons calls by appending the following CLI parameters:
 
-- `-j N`, where `N` is the number of cores to use while building
-- `--all-cores` to use all cores.
+* `-j N`, where `N` is the number of cores to use while building
+* `--all-cores` to use all cores.
 
 However note that building across cores can cause errors, and output will be scrambled.
 

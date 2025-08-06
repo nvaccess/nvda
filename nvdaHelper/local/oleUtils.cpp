@@ -1,15 +1,8 @@
 /*
-This file is a part of the NVDA project.
-URL: http://www.nvda-project.org/
-Copyright 2019 NV Access Limited.
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2.0, as published by
-    the Free Software Foundation.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-This license can be found at:
-http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2019-2025 NV Access Limited
+This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 */
 
 #include <windows.h>
@@ -35,7 +28,7 @@ HRESULT getOleClipboardText(IUnknown* pUnknown, BSTR* text) {
 	}
 	FORMATETC format={CF_UNICODETEXT,nullptr,DVASPECT_CONTENT,-1,TYMED_HGLOBAL};
 	STGMEDIUM  medium={0};
-	HRESULT res=pDataObject->GetData(&format,&medium);
+	HRESULT res = pDataObject->GetData(&format, &medium);
 	if(FAILED(res)) {
 		LOG_DEBUGWARNING(L"IDataObject::getData failed with error "<<res);
 		return res;
@@ -58,7 +51,7 @@ HRESULT getOleUserType(IUnknown* pUnknown, DWORD dwFlags, BSTR* userType) {
 		LOG_DEBUGWARNING(L"pUnknown is null.");
 		return E_INVALIDARG;
 	}
-	if(!userType) {
+	if (!userType) {
 		LOG_DEBUGWARNING(L"userType is null.");
 		return E_INVALIDARG;
 	}
