@@ -370,7 +370,7 @@ jobs:
         NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
         SHA256=$(sha256sum "$NVDA_EXE_NAME" | cut -d ' ' -f 1)
         # If architecture is default we save the build details to the output variable
-        if [ "${{ matrix.arch }}" == "${{ env.defaultArch }}" && "${{ matrix.pythonVersion }}" == "${{ env.defaultPythonVersion }}" ]; then
+        if [ "${{ matrix.arch == env.defaultArch && matrix.pythonVersion == env.defaultPythonVersion }}" == "true" ]; then
             echo SHA256=$SHA256 >> $GITHUB_OUTPUT
             echo artifactId=${{ steps.uploadLauncher.outputs.artifact-id }} >> $GITHUB_OUTPUT
         fi
