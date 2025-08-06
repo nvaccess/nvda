@@ -16,6 +16,9 @@ from ctypes import windll, oledll
 import ctypes.wintypes
 import msvcrt
 import comtypes
+import winBindings.dbgHelp
+from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
+from winBindings.kernel32 import UnhandledExceptionFilter
 import winUser
 import winKernel
 from logHandler import log
@@ -234,15 +237,7 @@ def _recoverAttempt():
 		pass
 
 
-class MINIDUMP_EXCEPTION_INFORMATION(ctypes.Structure):
-	_fields_ = (
-		("ThreadId", ctypes.wintypes.DWORD),
-		("ExceptionPointers", ctypes.c_void_p),
-		("ClientPointers", ctypes.wintypes.BOOL),
-	)
-
-
-@ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
+@UnhandledExceptionFilter
 def _crashHandler(exceptionInfo):
 	threadId = ctypes.windll.kernel32.GetCurrentThreadId()
 	# An exception might have been set for this thread.
@@ -260,8 +255,8 @@ def _crashHandler(exceptionInfo):
 				ExceptionPointers=exceptionInfo,
 				ClientPointers=False,
 			)
-			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
-				winKernel.kernel32.GetCurrentProcess(),
+			if not winBindings.dbgHelp.MiniDumpWriteDump(
+				winBindings.kernel32.GetCurrentProcess(),
 				globalVars.appPid,
 				msvcrt.get_osfhandle(mdf.fileno()),
 				0,  # MiniDumpNormal
@@ -307,7 +302,7 @@ def initialize():
 		raise RuntimeError("already running")
 	isRunning = True
 	# Catch application crashes.
-	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
+	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(

@@ -6,6 +6,8 @@
 """Functions exported by kernel32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
+	c_void_p,
 	c_wchar_p,
 	windll,
 	POINTER,
@@ -239,3 +241,28 @@ GlobalUnlock.argtypes = (
 	HGLOBAL,  # hMem
 )
 GlobalUnlock.restype = BOOL
+
+GetCurrentProcess = dll.GetCurrentProcess
+"""
+Retrieves a pseudo handle for the current process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess
+"""
+GetCurrentProcess.argtypes = ()
+GetCurrentProcess.restype = HANDLE
+
+UnhandledExceptionFilter = WINFUNCTYPE(
+	c_void_p,  # lpTopLevelExceptionFilter: The pointer to the old unhandled exception filter function.
+	c_void_p,  # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
+)
+
+SetUnhandledExceptionFilter = dll.SetUnhandledExceptionFilter
+"""
+Sets a new unhandled exception filter function for the current process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
+"""
+SetUnhandledExceptionFilter.argtypes = (
+	UnhandledExceptionFilter, # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
+)
+SetUnhandledExceptionFilter.restype = POINTER(c_void_p)
