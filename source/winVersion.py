@@ -17,6 +17,7 @@ import functools
 import winreg
 import platform
 import NVDAState
+from config.registry import RegistryKey
 from logHandler import log
 
 
@@ -54,7 +55,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE,
-		r"Software\Microsoft\Windows NT\CurrentVersion",
+		RegistryKey.NT_CURRENT_VERSION.value,
 	) as currentVersion:
 		# Version 20H2 and later where a separate display version string is used.
 		try:
@@ -192,7 +193,7 @@ def getWinVer():
 	# UBR is updated whenever cumulative updates are applied.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE,
-		r"Software\Microsoft\Windows NT\CurrentVersion",
+		RegistryKey.NT_CURRENT_VERSION.value,
 	) as currentVersion:
 		buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
 	return WinVersion(
