@@ -565,7 +565,7 @@ class RemoteClient:
 		self.releaseKeys()
 		# Translators: Presented when keyboard control is back to the controlling computer.
 		ui.message(pgettext("remote", "Controlling local computer"))
-		if not self.localMachine.isMuted:
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
 			self.toggleMute()
 
 	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
