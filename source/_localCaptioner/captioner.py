@@ -9,7 +9,6 @@ import json
 import re
 import io
 import time
-from typing import Dict
 
 import numpy as np
 from PIL import Image
@@ -120,7 +119,7 @@ class ImageCaptioner:
 		self.repetitionPenalty = generationConfig.get("repetition_penalty", 1.0)
 		self.lengthPenalty = generationConfig.get("length_penalty", 1.0)
 
-	def _loadVocab(self, vocabPath: str) -> Dict[int, str]:
+	def _loadVocab(self, vocabPath: str) -> dict[int, str]:
 		"""Load vocabulary file.
 
 		Args:
@@ -236,7 +235,7 @@ class ImageCaptioner:
 		"""
 		return [out.name for out in self.decoderSession.get_outputs()]
 
-	def _initializePastKeyValues(self, batchSize: int = 1) -> Dict[str, np.ndarray]:
+	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, np.ndarray]:
 		"""Initialize past_key_values for decoder.
 
 		Args:
@@ -352,28 +351,3 @@ class ImageCaptioner:
 		return caption
 
 
-def benchmarkInference(
-	captioner: ImageCaptioner,
-	imagePath: str,
-	numRuns: int = 5,
-) -> None:
-	"""Benchmark inference performance.
-
-	Args:
-		captioner: Model instance.
-		imagePath: Test image path.
-		numRuns: Number of runs for benchmarking.
-	"""
-	log.info(f"Running benchmark with {numRuns} iterations...")
-
-	# Warm up
-	captioner.generateCaption(imagePath)
-
-	# Test greedy search
-	startTime = time.time()
-	for _ in range(numRuns):
-		captioner.generateCaption(imagePath)
-	greedyTime = (time.time() - startTime) / numRuns
-
-	log.info("Average inference time:")
-	log.info(f"  Greedy search: {greedyTime:.3f}s")

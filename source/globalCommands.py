@@ -125,6 +125,7 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
+SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -5065,7 +5066,6 @@ class GlobalCommands(ScriptableObject):
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
 		description=_("get an AI generated Image description"),
-		# Translators: Category of addon in input gestures.
 		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+windows+,",
 	)
@@ -5075,7 +5075,6 @@ class GlobalCommands(ScriptableObject):
 	@scriptHandler.script(
 		# Translators: Description for the toggle image captioning script
 		description=_("toggle image captioning"),
-		# Translators: Category of addon in input gestures.
 		category=SCRCAT_IMAGE_DESC,
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):

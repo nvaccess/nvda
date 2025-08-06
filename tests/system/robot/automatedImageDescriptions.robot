@@ -8,7 +8,7 @@ Force Tags	NVDA	smoke test	imageDescriptions
 
 # for load model in Test Setup and Test Test Teardown
 Library	NvdaLib.py
-Library	runLocalCaptioner.py
+Library	automatedImageDescriptions.py
 Library	ScreenCapLibrary
 
 Test Setup	start NVDA	standard-doLoadMockModel.ini
@@ -21,7 +21,7 @@ default teardown
 	quit NVDA
 
 *** Test Cases ***
-RunCaption
+automatedImageDescriptions
 	[Documentation]	Ensure that local captioner work
 	[Setup]	start NVDA	standard-doLoadMockModel.ini
 	NVDA_Caption	# run test

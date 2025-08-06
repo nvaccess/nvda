@@ -346,26 +346,6 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.temperature, 1.0)
 
 
-class TestImageCaptionerBenchmark(unittest.TestCase):
-	"""Benchmark tests for inference performance."""
-
-	@patch("time.time")
-	@patch.object(ImageCaptioner, "generateCaption")
-	def test_benchmarkInference(self, mock_generate, mock_time):
-		"""Test benchmark inference with mocked timing."""
-		mock_time.side_effect = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0]
-		mock_generate.return_value = "test caption"
-
-		mock_captioner = Mock(spec=ImageCaptioner)
-		mock_captioner.generateCaption = mock_generate
-
-		from _localCaptioner.captioner import benchmarkInference
-
-		benchmarkInference(mock_captioner, "test_image.jpg", numRuns=5)
-
-		self.assertEqual(mock_generate.call_count, 6)
-
-
 if __name__ == "__main__":
 	# Run the test suite
 	test_loader = unittest.TestLoader()

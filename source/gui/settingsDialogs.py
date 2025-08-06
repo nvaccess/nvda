@@ -3659,15 +3659,15 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.modelPathEdit = directoryEntryControl.pathControl
-		self.modelPathEdit.Value = config.conf["captionLocal"]["localModelPath"]
+		self.modelPathEdit.Value = config.conf["automatedImageDescriptions"]["defaultModelPath"]
 		self.bindHelpEvent("LocalCaptionerSettingsModelPath", self.modelPathEdit)
 
-		self.loadModelWhenInit = sHelper.addItem(
+		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
 			wx.CheckBox(self, label=_("enable image captioning")),
 		)
-		self.loadModelWhenInit.SetValue(config.conf["captionLocal"]["loadModelWhenInit"])
-		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.loadModelWhenInit)
+		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
+		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
 
 	@staticmethod
 	def getParameterBound(name: str, boundType: str) -> int | None:
@@ -3694,11 +3694,11 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		"""
 		# Make sure we're operating in the "normal" profile
 		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
-			config.conf["captionLocal"]["localModelPath"] = self.modelPathEdit.GetValue()
-			config.conf["captionLocal"]["loadModelWhenInit"] = self.loadModelWhenInit.GetValue()
+			config.conf["automatedImageDescriptions"]["defaultModelPath"] = self.modelPathEdit.GetValue()
+			config.conf["automatedImageDescriptions"]["enable"] = self.enable.GetValue()
 		else:
 			log.debugWarning(
-				"No configuration saved for CaptionLocal since the current profile is not the default one.",
+				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
 			)
 
 

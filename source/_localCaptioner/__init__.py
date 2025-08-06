@@ -18,6 +18,7 @@ import config
 from logHandler import log
 import ui
 import api
+from keyboardHandler import KeyboardInputGesture
 
 from .captioner import ImageCaptioner
 
@@ -88,15 +89,15 @@ class LocalCaptioner:
 		self.isModelLoaded = False
 		self.captioner: ImageCaptioner | None = None
 
-		loadModelWhenInit = config.conf["captionLocal"]["loadModelWhenInit"]
+		enable = config.conf["automatedImageDescriptions"]["enable"]
 		# Load model when initializing (may cause high memory usage)
-		if loadModelWhenInit:
+		if enable:
 			threading.Thread(target=self._loadModel, daemon=True).start()
 
 	def terminate(self):
 		self.captioner = None
 
-	def runCaption(self, gesture) -> None:
+	def runCaption(self, gesture: KeyboardInputGesture) -> None:
 		"""Script to run image captioning on the current navigator object.
 
 		Args:
@@ -107,9 +108,9 @@ class LocalCaptioner:
 		if not self.isModelLoaded:
 			self._loadModel()
 
-		imageThread = threading.Thread(target=_caption, args=(self.captioner, imageData))
+		imageThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData))
 		# Translators: Message when starting image recognition
-		ui.message(_("getting Image description..."))
+		ui.message(pgettext("imageDesc", "getting Image description..."))
 		imageThread.start()
 
 	def _loadModel(self) -> None:
@@ -119,14 +120,14 @@ class LocalCaptioner:
 			Exception: If the model cannot be loaded.
 		"""
 		# Translators: Message when loading the model
-		ui.message(_("loading model..."))
+		ui.message(pgettext("imageDesc", "loading model..."))
+
+		localModelDirPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
+		encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
+		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
+		configPath = f"{localModelDirPath}/config.json"
 
 		try:
-			localModelDirPath = config.conf["captionLocal"]["localModelPath"]
-			encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
-			decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
-			configPath = f"{localModelDirPath}/config.json"
-
 			self.captioner = ImageCaptioner(
 				encoder_path=encoderPath,
 				decoder_path=decoderPath,
@@ -134,7 +135,7 @@ class LocalCaptioner:
 			)
 			self.isModelLoaded = True
 			# Translators: Message when successfully load the model
-			ui.message(_("image captioning on"))
+			ui.message(pgettext("imageDesc", "image captioning on"))
 		except FileNotFoundError as e:
 			self.isModelLoaded = False
 			# Translators: error Message when fail to load the model
@@ -148,25 +149,25 @@ class LocalCaptioner:
 		except Exception as e:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
-			ui.message(_("fail to load model."))
+			ui.message(pgettext("imageDesc", "fail to load model."))
 			log.error(e)
 			raise
 
 	def _doReleaseModel(self) -> None:
 		# Translators: Message when releasing the model
-		ui.message(_("releasing model..."))
+		ui.message(pgettext("imageDesc", "releasing model..."))
 		try:
 			if hasattr(self, "captioner") and self.captioner:
 				del self.captioner
 				self.captioner = None
 				# Translators: Message when model is successfully released
-				ui.message(_("image captioning off"))
+				ui.message(pgettext("imageDesc", "image captioning off"))
 				self.isModelLoaded = False
 		except Exception as e:
 			ui.message(str(e))
 			raise
 
-	def toggleImageCaptioning(self, gesture) -> None:
+	def toggleImageCaptioning(self, gesture: KeyboardInputGesture) -> None:
 		"""Script to load/unload the model from memory.
 
 		Args:

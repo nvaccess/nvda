@@ -150,7 +150,7 @@ def _configModels():
 
 def _updateIniForModels(ini_path, output_dir):
 	"""
-	Update only the value of 'localModelPath' under [captionLocal] section
+	Update only the value of 'defaultModelPath' under [automatedImageDescriptions] section
 	in the INI file, preserving original formatting, indentation, and casing.
 	"""
 	import os
@@ -158,17 +158,11 @@ def _updateIniForModels(ini_path, output_dir):
 	# Normalize the path for Windows (e.g., use backslashes)
 	new_path = os.path.normpath(output_dir)
 
-	# Path to the INI file
-	# ini_path = os.path.join(
-	# os.path.dirname(__file__),
-	# "..", "nvdaSettingsFiles", "standard-doLoadMockModel.ini"
-	# )
-
 	# Read original lines
 	with open(ini_path, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
-	# Flags to track if we are in the [captionLocal] section
+	# Flags to track if we are in the [automatedImageDescriptions] section
 	in_caption_section = False
 
 	# Updated lines will be stored here
@@ -178,10 +172,10 @@ def _updateIniForModels(ini_path, output_dir):
 		# Detect section headers
 		strip_line = line.strip()
 		if strip_line.startswith("[") and strip_line.endswith("]"):
-			in_caption_section = strip_line.lower() == "[captionlocal]"
+			in_caption_section = strip_line.lower() == "[automatedimagedescriptions]"
 
-		# If inside captionLocal section, and line contains localModelPath (case-insensitive)
-		if in_caption_section and "localModelPath" in line:
+		# If inside automatedImageDescriptions section, and line contains defaultModelPath (case-insensitive)
+		if in_caption_section and "defaultModelPath" in line:
 			# Preserve original indentation and formatting
 			prefix, sep, _ = line.partition("=")
 			updated_line = f"{prefix}{sep} {new_path}\n"
