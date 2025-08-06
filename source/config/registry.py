@@ -23,9 +23,9 @@ class RegistryKey(str, Enum):
 	APP_PATH = rf"{CURRENT_VERSION}\App Paths\nvda.exe"
 	EXPLORER_ADVANCED = rf"{CURRENT_VERSION}\Explorer\Advanced"
 	SYSTEM_POLICIES = rf"{CURRENT_VERSION}\Policies\System"
-	_NT_CURRENT_VERSION = nonmember(rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion")
-	EASE_OF_ACCESS = rf"{_NT_CURRENT_VERSION}\Accessibility"
-	EASE_OF_ACCESS_TEMP = rf"{_NT_CURRENT_VERSION}\AccessibilityTemp"
+	NT_CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
+	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
+	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 
 	# Sub keys
@@ -58,7 +58,7 @@ class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 	APP_PATH = rf"{CURRENT_VERSION}\App Paths\nvda.exe"
 	EXPLORER_ADVANCED = rf"{CURRENT_VERSION}\Explorer\Advanced"
 	SYSTEM_POLICIES = rf"{CURRENT_VERSION}\Policies\System"
-	_NT_CURRENT_VERSION = nonmember(rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion")
-	EASE_OF_ACCESS = rf"{_NT_CURRENT_VERSION}\Accessibility"
-	EASE_OF_ACCESS_TEMP = rf"{_NT_CURRENT_VERSION}\AccessibilityTemp"
+	NT_CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
+	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
+	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
