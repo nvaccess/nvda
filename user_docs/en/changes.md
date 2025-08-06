@@ -56,6 +56,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP_c_ulong`
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
+* config.conf['documentFormatting']['reportSpellingErrors'] is deprecated in favor of config.conf['documentFormatting']['reportSpellingErrors2'].
+* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` is deprecated for removal in 2026.1, instead use `[reportSpellingErrors2]`. (#17997, @CyrilleB79)
+  * The new key has an `int` value matching an `ReportSpellingErrors` `enum` with options for off, speech and sound.
+  * API consumers can use the `bool` value as previously, or check the `ReportSpellingErrors` if handling speech or sound specifically.
+  * These keys are currently synchronized until 2026.1.
 
 ## 2025.2
 

@@ -613,10 +613,13 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 		log.error(f"'{key}' is not a boolean, got {profile[section][key]!r}. No action taken.")
 		return
 
-	del profile[section][key]
 	newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
 	profile[section][newKey] = newValue
 	log.debug(
-		f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name}).",
+		(
+			f"Added '{newKey}' with value {newValue} ({ReportSpellingErrors(newValue).name})."
+			f" The old key '{key}' remains with its original value ({oldValue}) since the two keys are aliased in the"
+			" code."
+		),
 	)
 
