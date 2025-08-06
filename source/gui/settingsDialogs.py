@@ -3632,7 +3632,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	"""
 
 	# Translators: This is the label for the local captioner settings panel.
-	title = _("Local Captioner")
+	title = _("AI Image Descriptions")
 	helpId = "LocalCaptionerSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):

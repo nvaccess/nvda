@@ -61,21 +61,20 @@ def _screenshotNavigator() -> bytes:
 	return imageData
 
 
-def _caption(captioner: ImageCaptioner, imageData: bytes) -> None:
+def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	"""Generate a caption for the given image data.
 
-	Args:
-		captioner: The captioner instance to use for generation.
-		imageData: The image data to caption.
+	:param captioner: The captioner instance to use for generation.
+	:param imageData: The image data to caption.
 	"""
 	try:
 		description = captioner.generateCaption(image=imageData)
 		ui.message(description)
 		api.copyToClip(text=description, notify=False)
 	except Exception as e:
-		# Translators: error message when fail to generate caption
-		ui.message(_("fail to generate caption"))
-		log.error(e)
+		# Translators: error message when an image description cannot be generated
+		ui.message(pgettext("imageDesc", "Failed to generate description"))
+		log.exception("Failed to generate caption")
 
 
 class LocalCaptioner:

@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Local captioner tests
-Force Tags	NVDA	smoke test	startupShutdown
+Force Tags	NVDA	smoke test	imageDescriptions
 
 # for load model in Test Setup and Test Test Teardown
 Library	NvdaLib.py

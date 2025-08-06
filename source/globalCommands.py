@@ -5066,7 +5066,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Description for the image caption script
 		description=_("get an AI generated Image description"),
 		# Translators: Category of addon in input gestures.
-		category=_("Local Captioner"),
+		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+windows+,",
 	)
 	def script_runCaption(self, gesture: "inputCore.InputGesture"):
@@ -5076,7 +5076,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Description for the toggle image captioning script
 		description=_("toggle image captioning"),
 		# Translators: Category of addon in input gestures.
-		category=_("Local Captioner"),
+		category=SCRCAT_IMAGE_DESC,
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)

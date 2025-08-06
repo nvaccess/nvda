@@ -3234,7 +3234,8 @@ This option is only available if there are trusted fingerprints stored in your c
 
 #### Local Image Description Settings Panel {#LocalCaptionerSettings}
 
-This panel provides options to customize the behavior and default settings for the local image description feature. You can configure how and when the model used for describing images is loaded.
+This panel provides options to customize the behavior and default settings for the local image description feature.
+You can configure how and when the model used for describing images is loaded.
 
 ##### Model Path {#LocalCaptionerSettingsModelPath}
 
