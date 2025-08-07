@@ -1,6 +1,6 @@
 # Creating new issues on the NVDA project
 
-This page is meant to serve as an explanation for how to fill out our [GitHub issues](https://github.com/nvaccess/addon-datastore/issues/new/choose).
+This page is meant to serve as an explanation for how to fill out our [GitHub issues](https://github.com/nvaccess/nvda/issues/new/choose).
 
 **Warning**: In all but exceptional circumstances we require one of these templates to be completed.
 Your issue will likely be closed if a template has not been followed.

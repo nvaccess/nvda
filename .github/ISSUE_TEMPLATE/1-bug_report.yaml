@@ -96,7 +96,7 @@ body:
       label: NVDA type
       description: Is this reproduced with NVDA installed/portable/running from source?
       multiple: true
-      options: ["installed copy", "portable copy", installer/launcher copy", "source copy"]
+      options: ["installed copy", "portable copy", "installer/launcher copy", "source copy"]
     validations:
       required: true
 
@@ -200,5 +200,5 @@ body:
         The consequence is that NVDA in certain cases does not work properly.
         Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
         The COM registry fixing tool has been introduced in order to re-register those DLL files.
-        In any case, re-registering those DLL files does not have any negative impact on a computers' functionality.
+        In any case, re-registering those DLL files does not have any negative impact on a computer's functionality.
         Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
