@@ -1,0 +1,168 @@
+name: Special Case Issue
+description: A complex or exceptional issue that doesn't fit into the usual templates
+type: Task
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Attenion!
+
+        Please read [this guide](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) for guidance on how to fill in this template, including how to provide the required files.
+        If your issue doesn't neatly fit into either the bug report or feature request categories, and it involves a more complex or unique scenario, use this template.
+        Before proceeding, please review the existing templates to ensure that those do not better suit your needs:
+        - [Bug Report Template](https://github.com/nvaccess/nvda/issues/new?template=bug_report.yml)
+        - [Feature Request Template](https://github.com/nvaccess/nvda/issues/new?template=feature_request.yml)
+
+        If the required information is not provided upon request, the issue may be closed.
+
+        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
+        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+        This includes creating or commenting on issues and pull requests.
+
+  - type: textarea
+    id: detailed-description
+    attributes:
+      label: Detailed description of the issue
+      description: |
+        Provide a detailed description of the issue you are reporting.
+        Include specific details to help us understand the context.
+    validations:
+      required: true
+
+  - type: textarea
+    id: template-justification
+    attributes:
+      label: Why are the other templates not appropriate in this case?
+      description: Explain why this issue cannot be addressed using the standard bug report or feature request templates.
+    validations:
+      required: true
+
+  - type: input
+    id: community-discussion
+    attributes:
+      label: Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
+      description: |
+        Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket.
+        Include links to discussion threads if applicable, for example:
+        - [GitHub Discussions](https://github.com/nvaccess/nvda/discussions)
+        - [User mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-users)
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional information (if applicable)
+      description: Provide any additional context or information that you think may be helpful for understanding or resolving the issue.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Issue behaviour (if applicable)
+
+        If relevant, provide steps to demonstrate or reproduce the issue.
+        If this or the following sections are not applicable, write "N/A." or leave blank.
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce or illustrate the issue (if applicable)
+      description: |
+        This section should contain a clear and concise list of the steps you take to demonstrate the problem.
+        While performing the steps required, please make a copy of your [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
+        It's important to include any files that are required to reproduce an issue.
+        This might be an example file, or a link to a minimal code example using CodePen or JSFiddle.
+
+        *Example:*
+        >1. Open Chrome
+        >1. Browse to www.google.com
+        >1. Type "Hello"
+        >1. Press Enter
+
+  - type: textarea
+    id: expected-outcome
+    attributes:
+      label: Expected outcome or behaviour (if applicable)
+      description: Describe what you expected to happen or how you expect the project to handle this kind of issue.
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Logs, screenshots and other attachments (if applicable)
+      description: |
+        Attach any relevant logs or files that would help in diagnosing or understanding the issue.
+        Refer to [Attachments / Images](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md#attachments--images) for more information.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### System Configuration (if applicable)
+
+        The following questions are about the system you are using when encountering the issue.
+        If you are encountering the issue with multiple different configurations, please list them.
+        This helps us to be able to reproduce the issue, or help us to investigate why this issue occurs
+        for some users and not others.
+        If this or the following sections are not applicable, write "N/A." or leave blank.
+
+  - type: dropdown
+    id: nvdaType
+    attributes:
+      label: NVDA type
+      description: Is this reproduced with NVDA installed/portable/running from source?
+      multiple: true
+      options: ["installed copy", "portable copy", installer/launcher copy", "source copy"]
+
+  - type: input
+    id: nvdaVersion
+    attributes:
+      label: NVDA version
+      description: |
+        Which version(s) of NVDA can you reproduce this issue with?
+        This can be copied from the about dialog, from the NVDA help menu.
+
+  - type: textarea
+    id: otherNvdaVersions
+    attributes:
+      label: Have you tried any other versions of NVDA? If so, please report their behaviors.
+      description: |
+        Knowing whether this issue occurs in previous releases helps us to understand if this is a newly introduced issue.
+        It can help us determine if changes in NVDA or other software introduced the problem.
+
+        *Example:*
+        > * NVDA 2018.1 - no error sound
+        > * NVDA 2018.2 - has error sound
+
+  - type: input
+    id: winVersion
+    attributes:
+      label: Windows version
+      description: |
+        The version of Windows that you are using.
+        You can copy this from the "System Information" application:
+        1. Press `Windows+r` to open the run dialog
+        1. Type `msinfo32` and press enter
+        1. From the "System summary" tree-view item, press tab to get to the right pane.
+        1. Press down arrow twice to get to "Version"
+        1. Press `Control+C` to copy the version information.
+
+        *Example:*
+        > Windows 10 Version 1607 Build 14393.1066
+
+  - type: textarea
+    id: otherVersions
+    attributes:
+      label: Name and version of other software in use when reproducing the issue
+      description: |
+        Typically, you can get this information from the "About" dialog of the software.
+
+        *Example:*
+        > Chrome version: 67.0.3396.87
+
+  - type: textarea
+    id: otherSysInfo
+    attributes:
+      label: Other information about your system
+      description: |
+        This is other information about your setup that you think might be relevant to us.
+
+        *Example:*
+        > Running Windows 10 in a VM
