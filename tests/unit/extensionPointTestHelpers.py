@@ -29,16 +29,16 @@ def _extensionPointTester(
 	actualKwargs: dict,
 ):
 	"""A context manager that allows testing an Action.
-	@param testCase: The test case to apply assertions on.
-	@param extensionPoint: The extensionPoint that will be triggered by the test case.
-	@param expectedOutput: The expected output as returned by the extension point handler.
-	@param handler: The handler that will be registered to the extension point.
-	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+	:param testCase: The test case to apply assertions on.
+	:param extensionPoint: The extensionPoint that will be triggered by the test case.
+	:param expectedOutput: The expected output as returned by the extension point handler.
+	:param handler: The handler that will be registered to the extension point.
+	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
 		This can be used if an action is notified with dictionary values that can't be predicted at test time,
 		such as a driver instance.
-	@param expectedKwargs: The kwargs that are expected to be passed to the action
-	@param actualKwargs: The actual kwargs that were passed to the action
+	:param expectedKwargs: The kwargs that are expected to be passed to the extension point handler
+	:param actualKwargs: The actual kwargs that were passed to the extension point handler
 	"""
 	extensionPoint.register(handler)
 	try:
@@ -68,13 +68,13 @@ def actionTester(
 	**expectedKwargs,
 ):
 	"""A context manager that allows testing an Action.
-	@param testCase: The test case to apply assertions on.
-	@param action: The action that will be triggered by the test case.
-	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+	:param testCase: The test case to apply assertions on.
+	:param action: The action that will be triggered by the test case.
+	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
 		This can be used if an action is notified with dictionary values that can't be predicted at test time,
 		such as a driver instance.
-	@param expectedKwargs: The kwargs that are expected to be passed to the action
+	:param expectedKwargs: The kwargs that are expected to be passed to the action
 	"""
 	expectedKwargs["_called"] = True
 	actualKwargs = {}
@@ -104,15 +104,15 @@ def deciderTester(
 	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Decider.
-	@param testCase: The test case to apply the assertion on.
-	@param decider: The Decider that will be consulted by the test case.
-	@param expectedDecision: The expected decision as returned by L{Decider.decide}
+	:param testCase: The test case to apply the assertion on.
+	:param decider: The Decider that will be consulted by the test case.
+	:param expectedDecision: The expected decision as returned by L{Decider.decide}
 		it will also be yielded by the context manager.
-	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
 		This can be used if a decider is consulted with dictionary values that can't be predicted at test time,
 		such as a driver instance.
-	@param expectedKwargs: The kwargs that are expected to be passed to the decider handler
+	:param expectedKwargs: The kwargs that are expected to be passed to the decider handler
 	"""
 	expectedKwargs["_called"] = True
 	actualKwargs = {}
@@ -143,16 +143,16 @@ def filterTester(
 	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
-	@param testCase: The test case to apply the assertion on.
-	@param filter: The filter that will be applied by the test case.
-	@param expectedInput: The expected input as entering the filter handler.
-	@param expectedOutput: The expected output as returned by L{Filter.apply}
+	:param testCase: The test case to apply the assertion on.
+	:param filter: The filter that will be applied by the test case.
+	:param expectedInput: The expected input as entering the filter handler.
+	:param expectedOutput: The expected output as returned by L{Filter.apply}
 		it will also be yielded by the context manager
-	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
 		This can be used if a filter is applied with dictionary values that can't be predicted at test time,
 		such as a driver instance.
-	@param expectedKwargs: The kwargs that are expected to be passed to the filter handler.
+	:param expectedKwargs: The kwargs that are expected to be passed to the filter handler.
 	"""
 	expectedKwargs["_called"] = True
 	expectedKwargs["_value"] = expectedInput
@@ -184,15 +184,15 @@ def chainTester(
 	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
-	@param testCase: The test case to apply the assertion on.
-	@param chain: The Chain that will be iterated by the test case.
-	@param expectedOutput: The expected output as returned by L{Chain.iter}
+	:param testCase: The test case to apply the assertion on.
+	:param chain: The Chain that will be iterated by the test case.
+	:param expectedOutput: The expected output as returned by L{Chain.iter}
 		it will also be yielded by the context manager
-	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
 		This can be used if a Chain is iterated with dictionary values that can't be predicted at test time,
 		such as a driver instance.
-	@param expectedKwargs: The kwargs that are expected to be passed to the Chain handler.
+	:param expectedKwargs: The kwargs that are expected to be passed to the Chain handler.
 	"""
 	expectedKwargs["_called"] = True
 	actualKwargs = {}
