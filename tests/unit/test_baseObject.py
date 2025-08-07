@@ -149,7 +149,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 
 	def test_abstractProperty(self):
 		if sys.version_info.major == 3 and sys.version_info.minor == 13:
-			regex = r"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty without an implementation for abstract method x"
+			regex = r"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty without an implementation for abstract method 'x'"
 		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
 			regex = r"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty with abstract method x"
 		else:
@@ -164,7 +164,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 
 	def test_subclassedAbstractProperty(self):
 		if sys.version_info.major == 3 and sys.version_info.minor == 13:
-			regex = r"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty without an implementation for abstract method x"
+			regex = r"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty without an implementation for abstract method 'x'"
 		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
 			regex = r"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty with abstract method x"
 		else:

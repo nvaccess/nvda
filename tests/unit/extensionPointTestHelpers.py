@@ -5,8 +5,8 @@
 
 """Helper functions to test extension points."""
 
-from collections.abc import Callable, Iterable
-from typing import Any
+from collections.abc import Callable, Generator, Iterable
+from typing import Any, TypeVar
 from extensionPoints import (
 	Action,
 	Chain,
@@ -18,16 +18,18 @@ from extensionPoints import (
 import unittest
 from contextlib import contextmanager
 
+ExpectedOutputT = TypeVar("ExpectedOutputT", bound=Any)
+
 
 def _extensionPointTester(
 	testCase: unittest.TestCase,
 	extensionPoint: Action | Chain | Decider | Filter,
-	expectedOutput: Any,
+	expectedOutput: ExpectedOutputT,
 	handler: Callable[..., None],
 	useAssertDictContainsSubset: bool,
 	expectedKwargs: dict,
 	actualKwargs: dict,
-):
+) -> Generator[ExpectedOutputT, None, None]:
 	"""A helper function to test extension points.
 	:param testCase: The test case to apply assertions on.
 	:param extensionPoint: The extensionPoint that will be triggered by the test case.
@@ -84,7 +86,7 @@ def actionTester(
 		actualKwargs["_called"] = True
 
 	action.register(handler)
-	_extensionPointTester(
+	yield from _extensionPointTester(
 		testCase,
 		action,
 		None,  # No expected output for action
@@ -122,7 +124,7 @@ def deciderTester(
 		actualKwargs["_called"] = True
 		return expectedDecision
 
-	_extensionPointTester(
+	yield from _extensionPointTester(
 		testCase,
 		decider,
 		expectedDecision,
@@ -164,7 +166,7 @@ def filterTester(
 		actualKwargs["_value"] = value
 		return expectedOutput
 
-	_extensionPointTester(
+	yield from _extensionPointTester(
 		testCase,
 		filter,
 		expectedOutput,
@@ -202,7 +204,7 @@ def chainTester(
 		actualKwargs["_called"] = True
 		return expectedOutput
 
-	_extensionPointTester(
+	yield from _extensionPointTester(
 		testCase,
 		chain,
 		expectedOutput,
