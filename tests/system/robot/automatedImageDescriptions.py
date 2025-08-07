@@ -9,9 +9,13 @@ import NvdaLib as _nvdaLib
 
 def NVDA_Caption():
 	spy = _nvdaLib.getSpyLib()
-	# open menu to generate caption
+	# open welcome dialog to generate caption
 	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("l")
 	spy.emulateKeyPress("NVDA+windows+,")
 	spy.wait_for_specific_speech(
-		"non-visual desktop access access access access access access access access access",
+		# "non-visual desktop access access access access access access access access access",
+		# "at motorcycle cat access motorcycle cat access motorcycle cat access motorcycle cat access motorcycle cat access motorcycle cat access motorcycle",
+		"at non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual",
 	)

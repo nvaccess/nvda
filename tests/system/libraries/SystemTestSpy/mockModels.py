@@ -12,7 +12,7 @@ The generated files can be used for testing and development purposes.
 
 import json
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 import numpy as np
 import onnx
@@ -510,12 +510,12 @@ class MockVisionEncoderDecoderGenerator:
 		with open(output_path, "w", encoding="utf-8") as f:
 			json.dump(config, f, indent=2, ensure_ascii=False)
 
-	def _getModelConfig(self) -> Dict[str, Any]:
+	def _getModelConfig(self) -> dict[str, Any]:
 		"""
 		Get the complete model configuration dictionary.
 
 		Returns:
-			Dict[str, Any]: Complete model configuration.
+			dict[str, Any]: Complete model configuration.
 		"""
 		return {
 			"_name_or_path": "nlpconnect/vit-gpt2-image-captioning",
@@ -532,7 +532,7 @@ class MockVisionEncoderDecoderGenerator:
 			"transformers_version": "4.33.0.dev0",
 		}
 
-	def _getDecoderConfig(self) -> Dict[str, Any]:
+	def _getDecoderConfig(self) -> dict[str, Any]:
 		"""Get decoder-specific configuration."""
 		return {
 			"_name_or_path": "",
@@ -619,7 +619,7 @@ class MockVisionEncoderDecoderGenerator:
 			"vocab_size": self.vocab_size,
 		}
 
-	def _getEncoderConfig(self) -> Dict[str, Any]:
+	def _getEncoderConfig(self) -> dict[str, Any]:
 		"""Get encoder-specific configuration."""
 		return {
 			"_name_or_path": "",
@@ -705,12 +705,12 @@ class MockVisionEncoderDecoderGenerator:
 		with open(output_path, "w", encoding="utf-8") as f:
 			json.dump(vocab, f, indent=2, ensure_ascii=False)
 
-	def _getVocabulary(self) -> Dict[str, int]:
+	def _getVocabulary(self) -> dict[str, int]:
 		"""
 		Get the vocabulary mapping dictionary.
 
 		Returns:
-			Dict[str, int]: Token to ID mapping.
+			dict[str, int]: Token to ID mapping.
 		"""
 		return {
 			"<|endoftext|>": 50256,
@@ -738,12 +738,12 @@ class MockVisionEncoderDecoderGenerator:
 			"software": 20,
 			"girl": 21,
 			"dog": 22,
-			"cat": 23,
+			"desktop": 23,
 			"car": 24,
 			"truck": 25,
 			"bus": 26,
 			"bike": 27,
-			"motorcycle": 28,
+			"non-visual": 28,
 			"NVDA": 29,
 			"plane": 30,
 			"boat": 31,
