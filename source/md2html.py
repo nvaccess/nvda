@@ -37,7 +37,7 @@ def __getattr__(attrName: str) -> Any:
 		from logHandler import log
 		log.warning(
 			"Importing DEFAULT_EXTENSIONS from here is deprecated. "
-			"Do not import from md2html. ",
+			"Importing from md2html is discouraged. ",
 			# Include stack info so testers can report warning to add-on author.
 			stack_info=True,
 		)
