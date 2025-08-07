@@ -41,7 +41,7 @@ def __getattr__(attrName: str) -> Any:
 			# Include stack info so testers can report warning to add-on author.
 			stack_info=True,
 		)
-		# Ensure the API of deprecatedSymbolNameReplacement is the same as the deprecated symbol.
+		# Return a frozenset to match the API of the deprecated DEFAULT_EXTENSIONS symbol.
 		return frozenset(_DEFAULT_EXTENSIONS_ORDERED)
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
