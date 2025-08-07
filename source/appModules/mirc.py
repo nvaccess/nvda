@@ -1,19 +1,18 @@
-#appModules/mirc.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+# appModules/mirc.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
-"""App module for mIRC
-"""
+"""App module for mIRC"""
 
 import controlTypes
 from NVDAObjects.window import Window, DisplayModelLiveText
 from NVDAObjects.IAccessible import StaticText
 import appModuleHandler
 
-class Input(Window):
 
+class Input(Window):
 	def event_gainFocus(self):
 		super(Input, self).event_gainFocus()
 		try:
@@ -30,8 +29,8 @@ class Input(Window):
 		if self._output:
 			self._output.stopMonitoring()
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.role == controlTypes.Role.WINDOW:
 			return

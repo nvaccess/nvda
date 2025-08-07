@@ -9,7 +9,6 @@ As there are localizable strings at module level,
 this can only be imported once localization is set up via `languageHandler.initialize`.
 """
 
-
 from typing import Dict
 
 

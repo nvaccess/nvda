@@ -1,21 +1,26 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020-2025 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""Logic for startupShutdownNVDA tests.
-"""
+"""Logic for startupShutdownNVDA tests."""
 
 from datetime import datetime as _datetime
-from typing import Callable as _Callable
+from collections.abc import Callable as _Callable
 from robot.libraries.BuiltIn import BuiltIn
+
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
 	_getLib,
 	_blockUntilConditionMet,
 )
-from SystemTestSpy.windows import getWindowHandle, waitUntilWindowFocused, windowWithHandleExists
+from SystemTestSpy.windows import (
+	getWindowHandle,
+	sendKeyboardEvent,
+	waitUntilWindowFocused,
+	windowWithHandleExists,
+)
 
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
@@ -26,13 +31,13 @@ import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
 
 _nvdaRobot: _nvdaRobotLib = _getLib("NvdaLib")
-_opSys: _OpSysLib = _getLib('OperatingSystem')
+_opSys: _OpSysLib = _getLib("OperatingSystem")
 _builtIn: BuiltIn = BuiltIn()
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
 def _getNvdaMessageWindowhandle() -> int:
-	return getWindowHandle(windowClassName='wxWindowClassNR', windowName='NVDA')
+	return getWindowHandle(windowClassName="wxWindowClassNR", windowName="NVDA")
 
 
 def _nvdaIsRunning() -> bool:
@@ -40,7 +45,7 @@ def _nvdaIsRunning() -> bool:
 
 
 def NVDA_Starts():
-	""" Test that NVDA can start"""
+	"""Test that NVDA can start"""
 	_builtIn.should_be_true(_nvdaIsRunning(), msg="NVDA is not running")
 
 
@@ -74,10 +79,12 @@ def quits_from_menu(showExitDialog=True):
 
 		_asserts.strings_match(
 			actualSpeech,
-			"\n".join([
-				"Exit NVDA  dialog",
-				"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
-			])
+			"\n".join(
+				[
+					"Exit NVDA  dialog",
+					"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
+				],
+			),
 		)
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
 		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
@@ -85,7 +92,7 @@ def quits_from_menu(showExitDialog=True):
 	_blockUntilConditionMet(
 		getValue=lambda: not _nvdaIsRunning(),
 		giveUpAfterSeconds=3,
-		errorMessage="NVDA failed to exit in the specified timeout"
+		errorMessage="NVDA failed to exit in the specified timeout",
 	)
 	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
@@ -103,25 +110,45 @@ def quits_from_keyboard():
 
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
-			"Exit NVDA  dialog",
-			"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
-		])
+		"\n".join(
+			[
+				"Exit NVDA  dialog",
+				"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
+			],
+		),
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	_builtIn.should_be_true(_nvdaIsRunning(), msg="NVDA is not running")
 	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 	_blockUntilConditionMet(
 		getValue=lambda: not _nvdaIsRunning(),
-		giveUpAfterSeconds=3,
-		errorMessage="NVDA failed to exit in the specified timeout"
+		giveUpAfterSeconds=5,
+		errorMessage="NVDA failed to exit in the specified timeout",
 	)
 	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
 
 def test_desktop_shortcut():
-	spy = _nvdaLib.getSpyLib()
-	spy.emulateKeyPress("control+alt+n")
+	# Press Control+Alt+N using keybd_event
+	VK_CONTROL = 17
+	VK_MENU = 18  # Alt key
+	VK_N = 78  # 'N' key
+	KEYEVENTF_KEYDOWN = 0
+	KEYEVENTF_KEYUP = 2
+
+	# Press Control down
+	sendKeyboardEvent(VK_CONTROL, 0, KEYEVENTF_KEYDOWN, 0)
+	# Press Alt down
+	sendKeyboardEvent(VK_MENU, 0, KEYEVENTF_KEYDOWN, 0)
+	# Press N down
+	sendKeyboardEvent(VK_N, 0, KEYEVENTF_KEYDOWN, 0)
+	# Release N
+	sendKeyboardEvent(VK_N, 0, KEYEVENTF_KEYUP, 0)
+	# Release Alt
+	sendKeyboardEvent(VK_MENU, 0, KEYEVENTF_KEYUP, 0)
+	# Release Control
+	sendKeyboardEvent(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
+
 	# Takes some time to exit a running process and start a new one
 	waitUntilWindowFocused("Welcome to NVDA", timeoutSecs=7)
 
@@ -134,17 +161,19 @@ def read_welcome_dialog():
 
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
-			(
-				"Welcome to NVDA  dialog  Welcome to NVDA! Most commands for controlling NVDA require you to hold "
-				"down the NVDA key while pressing other keys. By default, the numpad Insert and main Insert keys "
-				"may both be used as the NVDA key. You can also configure NVDA to use the Caps Lock as the NVDA "
-				"key. Press NVDA plus n at any time to activate the NVDA menu. From this menu, you can configure "
-				"NVDA, get help and access other NVDA functions."
-			),
-			"Options  grouping",
-			"Keyboard layout:  combo box  desktop  collapsed  Alt plus k"
-		])
+		"\n".join(
+			[
+				(
+					"Welcome to NVDA  dialog  Welcome to NVDA! Most commands for controlling NVDA require you to hold "
+					"down the NVDA key while pressing other keys. By default, the Insert and numpad Insert keys "
+					"may both be used as the NVDA key. You can also configure NVDA to use the Caps Lock as the NVDA "
+					"key. Press NVDA plus n at any time to activate the NVDA menu. From this menu, you can configure "
+					"NVDA, get help, and access other NVDA functions."
+				),
+				"Options  grouping",
+				"Keyboard layout:  combo box  desktop  collapsed  Alt plus  k",
+			],
+		),
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	spy.emulateKeyPress("enter")
@@ -167,11 +196,11 @@ def NVDA_restarts():
 	_blockUntilConditionMet(
 		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
 		giveUpAfterSeconds=10,
-		errorMessage="Old NVDA is still running"
+		errorMessage="Old NVDA is still running",
 	)
 	_builtIn.should_not_be_true(
 		windowWithHandleExists(oldMsgWindowHandle),
-		msg="Old NVDA process is stil running"
+		msg="Old NVDA process is stil running",
 	)
 	waitUntilWindowFocused("Welcome to NVDA")
 
@@ -195,11 +224,11 @@ def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
 	_blockUntilConditionMet(
 		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
 		giveUpAfterSeconds=3,
-		errorMessage="Old NVDA is still running"
+		errorMessage="Old NVDA is still running",
 	)
 	_builtIn.should_not_be_true(
 		windowWithHandleExists(oldMsgWindowHandle),
-		msg="Old NVDA process is stil running"
+		msg="Old NVDA process is stil running",
 	)
 	crashOccurred, crashPath = _blockUntilConditionMet(
 		getValue=lambda: _nvdaRobot.check_for_crash_dump(startTime),

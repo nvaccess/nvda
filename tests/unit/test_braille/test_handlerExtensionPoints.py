@@ -1,11 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the extension points in the braille module.
-"""
-
+"""Unit tests for the extension points in the braille module."""
 
 import braille
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
@@ -21,7 +19,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		expectedKwargs = dict(
 			cells=cells,
 			rawText=braille.handler._rawText,
-			currentCellCount=braille.handler.displaySize
+			currentCellCount=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
@@ -29,19 +27,21 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 
 	def test_displaySizeChanged(self):
 		expectedKwargs = dict(
-			displaySize=braille.handler.displaySize
+			displaySize=braille.handler.displaySize,
+			numRows=1,
+			numCols=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
-			# Change the attribute that is compared with the value coming from filter_displaySize
-			braille.handler._displaySize = 0
+			# Change the internal cache of the display size to trigger the action when getting the display size.
+			braille.handler._displayDimensions = braille.DisplayDimensions(1, 0)
 			# The getter should now trigger the action.
 			braille.handler._get_displaySize()
 
 	def test_displayChanged(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			detected=None
+			detected=None,
 		)
 
 		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
@@ -50,14 +50,31 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler.display = None
 			braille.handler.setDisplayByName("noBraille")
 
+	def test_filter_displayDimensions(self):
+		cachedDisplayDimensions = braille.handler.displayDimensions
+		with filterTester(
+			self,
+			braille.filter_displayDimensions,
+			cachedDisplayDimensions,
+			braille.DisplayDimensions(5, 20),
+		) as expectedOutput:
+			self.assertEqual(braille.handler.displayDimensions, expectedOutput)
+			self.assertEqual(
+				braille.handler.displayDimensions.displaySize,
+				expectedOutput.numRows * expectedOutput.numCols,
+			)
+
 	def test_filter_displaySize(self):
+		cachedDisplaySize = braille.handler.displaySize
 		with filterTester(
 			self,
 			braille.filter_displaySize,
-			braille.handler._displaySize,  # The currently cached display size
-			20,   # The filter handler should change the display size to 40
+			cachedDisplaySize,  # The currently cached display size
+			20,  # The filter handler should change the display size to 20
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displaySize, expectedOutput)
+			self.assertEqual(braille.handler.displayDimensions.numCols, expectedOutput)
+			self.assertEqual(braille.handler.displayDimensions.numRows, 1)
 
 	def test_decide_enabled(self):
 		with deciderTester(

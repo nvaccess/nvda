@@ -24,13 +24,13 @@ For instance:
 
 #### nvdaHelperLocalWin10.dll
 Contains code specific to Windows 10 and above, that aides in accessing newer technologies such as Windows OneCore speech synthesis, the Windows in-built OCR service.
-This code is mostly C++/WinRT. 
+This code is mostly C++/WinRT.
 
 #### nvdaHelperLocal.dll
 This dll is loaded directly in to NVDA. It provides the following features:
 *  client stub methods for several RPC interfaces allowing NVDA to execute code in-process. These interfaces include nvdaInprocUtils, vbufBackends, and displayModel, which are implemented in nvdaHelperRemote.dll.
-* Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal. 
-* Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel 
+* Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal.
+* Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel
 * Several small utility functions that assist in processing text (which are faster in c++).
 
 #### NVDAHelperRemote.dll
@@ -42,11 +42,6 @@ It provides the following features:
 #### UIARemote.dll
 This dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
 It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaratively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
-
-##### microsoft-ui-uiAutomation remote ops library
-As a dependency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.
-This library contains both a low-level winrt API, and a higher-level pure C++ API which depends on the lower-level winrt API. UIARemote.dll tends to use the higher-level Operations abstraction API for its work.
-In order for the winrt API to be available, UIARemote must register it with the Windows winrt platform. this involves loading a manifest file (See `microsoft-ui-uiautomation/Microsoft.UI.UIAutomation.dll.manifest`) and activating an activation context.
 
 ### Configuring Visual Studio
 The following steps won't prepare a buildable solution, but it will enable intellisense.
@@ -70,7 +65,7 @@ You should still build on the command line to verify errors.
   - Press next
 -  Specify Debug Configuration Settings
   - Build command line: `scons source`
-  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;NOMINMAX`
+  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WINBLUE;NOMINMAX`
   - Include search paths (/I): `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
   - Forced Included files (/FI): `winuser.h`
   - Press next
@@ -90,7 +85,7 @@ You should still build on the command line to verify errors.
   ```
   cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
   /TP /EHsc /nologo /std:c++20 /permissive- /Od /MT /W3 /WX
-  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNOMINMAX /DNDEBUG
+  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WINBLUE /DNOMINMAX /DNDEBUG
   /Iinclude /Imiscdeps\include /Ibuild\x86
   /Z7
   ```
@@ -113,7 +108,7 @@ The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
 
 The special keywords none and all can also be used in place of the individual flags.
 
-An example follows that enables debug CRT and runtime checks 
+An example follows that enables debug CRT and runtime checks
 
 ```cmd
 scons source nvdaHelperDebugFlags=debugCRT,RTC

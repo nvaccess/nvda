@@ -37,6 +37,7 @@ class Role(DisplayStringIntEnum):
 	False
 	```
 	"""
+
 	@property
 	def _displayStringLabels(self):
 		return _roleLabels

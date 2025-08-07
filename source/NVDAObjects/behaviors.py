@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd.
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -31,18 +31,22 @@ import nvwave
 import globalVars
 from typing import List, Union
 import diffHandler
+from config.configFlags import TypingEcho
 
 
 class ProgressBar(NVDAObject):
-
-	progressValueCache={} #key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
+	progressValueCache = {}  # key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
 
 	def event_valueChange(self):
-		pbConf=config.conf["presentation"]["progressBarUpdates"]
-		states=self.states
-		if pbConf["progressBarOutputMode"]=="off" or controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states:
-			return super(ProgressBar,self).event_valueChange()
-		val=self.value
+		pbConf = config.conf["presentation"]["progressBarUpdates"]
+		states = self.states
+		if (
+			pbConf["progressBarOutputMode"] == "off"
+			or controlTypes.State.INVISIBLE in states
+			or controlTypes.State.OFFSCREEN in states
+		):
+			return super(ProgressBar, self).event_valueChange()
+		val = self.value
 		try:
 			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
 		except (AttributeError, ValueError):
@@ -52,48 +56,54 @@ class ProgressBar(NVDAObject):
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
 		try:
-			left,top,width,height=self.location
-		except:
-			left=top=width=height=0
+			left, top, width, height = self.location
+		except:  # noqa: E722
+			left = top = width = height = 0
 		x = left + (width // 2)
-		y = top+ (height // 2)
-		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
-		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
-			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
-			self.progressValueCache["beep,%d,%d"%(x,y)]=percentage
-		lastSpeechProgressValue=self.progressValueCache.get("speech,%d,%d"%(x,y),None)
-		if pbConf["progressBarOutputMode"] in ("speak","both") and (lastSpeechProgressValue is None or abs(percentage-lastSpeechProgressValue)>=pbConf["speechPercentageInterval"]):
+		y = top + (height // 2)
+		lastBeepProgressValue = self.progressValueCache.get("beep,%d,%d" % (x, y), None)
+		if pbConf["progressBarOutputMode"] in ("beep", "both") and (
+			lastBeepProgressValue is None
+			or abs(percentage - lastBeepProgressValue) >= pbConf["beepPercentageInterval"]
+		):
+			tones.beep(pbConf["beepMinHZ"] * 2 ** (percentage / 25.0), 40)
+			self.progressValueCache["beep,%d,%d" % (x, y)] = percentage
+		lastSpeechProgressValue = self.progressValueCache.get("speech,%d,%d" % (x, y), None)
+		if pbConf["progressBarOutputMode"] in ("speak", "both") and (
+			lastSpeechProgressValue is None
+			or abs(percentage - lastSpeechProgressValue) >= pbConf["speechPercentageInterval"]
+		):
 			queueHandler.queueFunction(
 				queueHandler.eventQueue,
 				speech.speakMessage,
 				# Translators: This is presented to inform the user of a progress bar percentage.
 				_("%d percent") % percentage,
 			)
-			self.progressValueCache["speech,%d,%d"%(x,y)]=percentage
+			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
+
 
 class Dialog(NVDAObject):
-	"""Overrides the description property to obtain dialog text.
-	"""
+	"""Overrides the description property to obtain dialog text."""
 
 	@classmethod
-	def getDialogText(cls,obj,allowFocusedDescendants=True):
+	def getDialogText(cls, obj, allowFocusedDescendants=True):
 		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
 		@param obj: the object who's children you want to collect the text from
 		@type obj: L{IAccessible}
 		@param allowFocusedDescendants: if false no text will be returned at all if one of the descendants is focused.
 		@type allowFocusedDescendants: boolean
 		"""
-		children=obj.children
-		textList=[]
-		childCount=len(children)
+		children = obj.children
+		textList = []
+		childCount = len(children)
 		for index in range(childCount):
-			child=children[index]
-			childStates=child.states
-			childRole=child.role
-			#We don't want to handle invisible or unavailable objects
-			if controlTypes.State.INVISIBLE in childStates or controlTypes.State.UNAVAILABLE in childStates: 
+			child = children[index]
+			childStates = child.states
+			childRole = child.role
+			# We don't want to handle invisible or unavailable objects
+			if controlTypes.State.INVISIBLE in childStates or controlTypes.State.UNAVAILABLE in childStates:
 				continue
-			#For particular objects, we want to descend in to them and get their children's message text
+			# For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
 				controlTypes.Role.OPTIONPANE,
 				controlTypes.Role.PROPERTYPAGE,
@@ -104,42 +114,66 @@ class Dialog(NVDAObject):
 				controlTypes.Role.PARAGRAPH,
 				controlTypes.Role.SECTION,
 				controlTypes.Role.TEXTFRAME,
-				controlTypes.Role.UNKNOWN
+				controlTypes.Role.UNKNOWN,
 			):
-				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
-				#Stops double reporting when focus is in a property page in a dialog
-				childText=cls.getDialogText(child,not isinstance(child,Dialog))
+				# Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
+				# Stops double reporting when focus is in a property page in a dialog
+				childText = cls.getDialogText(child, not isinstance(child, Dialog))
 				if childText:
 					textList.append(childText)
 				elif childText is None:
 					return None
 				continue
-			#If the child is focused  we should just stop and return None
+			# If the child is focused  we should just stop and return None
 			if not allowFocusedDescendants and controlTypes.State.FOCUSED in child.states:
 				return None
 			# We only want text from certain controls.
 			if not (
-				 # Static text, labels and links
-				 childRole in (controlTypes.Role.STATICTEXT,controlTypes.Role.LABEL,controlTypes.Role.LINK)
+				# Static text, labels and links
+				childRole in (controlTypes.Role.STATICTEXT, controlTypes.Role.LABEL, controlTypes.Role.LINK)
 				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.Role.EDITABLETEXT and controlTypes.State.READONLY in childStates and controlTypes.State.MULTILINE not in childStates)
+				or (
+					childRole == controlTypes.Role.EDITABLETEXT
+					and controlTypes.State.READONLY in childStates
+					and controlTypes.State.MULTILINE not in childStates
+				)
 			):
 				continue
-			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
-			if index>0 and children[index-1].role==controlTypes.Role.GROUPING:
+			# We should ignore a text object directly after a grouping object, as it's probably the grouping's description
+			if index > 0 and children[index - 1].role == controlTypes.Role.GROUPING:
 				continue
-			#Like the last one, but a graphic might be before the grouping's description
-			if index>1 and children[index-1].role==controlTypes.Role.GRAPHIC and children[index-2].role==controlTypes.Role.GROUPING:
+			# Like the last one, but a graphic might be before the grouping's description
+			if (
+				index > 1
+				and children[index - 1].role == controlTypes.Role.GRAPHIC
+				and children[index - 2].role == controlTypes.Role.GROUPING
+			):
 				continue
-			childName=child.name
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.Role.GRAPHIC,controlTypes.Role.STATICTEXT,controlTypes.Role.SEPARATOR,controlTypes.Role.WINDOW,controlTypes.Role.PANE,controlTypes.Role.BUTTON) and children[index+1].name==childName:
+			childName = child.name
+			if (
+				childName
+				and index < (childCount - 1)
+				and children[index + 1].role
+				not in (
+					controlTypes.Role.GRAPHIC,
+					controlTypes.Role.STATICTEXT,
+					controlTypes.Role.SEPARATOR,
+					controlTypes.Role.WINDOW,
+					controlTypes.Role.PANE,
+					controlTypes.Role.BUTTON,
+				)
+				and children[index + 1].name == childName
+			):
 				# This is almost certainly the label for the next object, so skip it.
 				continue
-			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.Role.LABEL,controlTypes.Role.STATICTEXT)
-			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
+			isNameIncluded = child.TextInfo is NVDAObjectTextInfo or childRole in (
+				controlTypes.Role.LABEL,
+				controlTypes.Role.STATICTEXT,
+			)
+			childText = child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
-				childText=child.basicText
-				isNameIncluded=True
+				childText = child.basicText
+				isNameIncluded = True
 			if not isNameIncluded:
 				# The label isn't in the text, so explicitly include it first.
 				if childName:
@@ -211,8 +245,8 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 		# As Pressing enter on an edit field can cause modal dialogs to appear,
 		# yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze.
 		if self.announceNewLineText and self.processID != globalVars.appPid:
-			self.bindGesture("kb:enter","caret_newLine")
-			self.bindGesture("kb:numpadEnter","caret_newLine")
+			self.bindGesture("kb:enter", "caret_newLine")
+			self.bindGesture("kb:numpadEnter", "caret_newLine")
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
 		if eventHandler.isPendingEvents("gainFocus"):
@@ -242,7 +276,10 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 			try:
 				fields = info.getTextWithFields()
 			except Exception:
-				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
+				log.debugWarning(
+					"Error fetching formatting for last character of previous word",
+					exc_info=True,
+				)
 				return
 			for command in fields:
 				if (
@@ -255,10 +292,11 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 				# No error.
 				return
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+
 		core.callLater(50, _delayedDetection)
 
 	def event_typedCharacter(self, ch: str):
-		if(
+		if (
 			config.conf["documentFormatting"]["reportSpellingErrors"]
 			and config.conf["keyboard"]["alertForSpellingErrors"]
 			and (
@@ -272,13 +310,13 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 
 
 class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
-	""" Represents an editable text field that shows suggestions as you type.
+	"""Represents an editable text field that shows suggestions as you type.
 	This is an empty class as functionality has been moved to the base InputFieldWithSuggestions class.
 	"""
 
 
 class EditableText(EditableTextWithSuggestions, EditableTextBase):
-	""" Represents an editable text field.
+	"""Represents an editable text field.
 	This is an empty class as functionality has been moved to the base EditableTextBase class.
 	This class also supports reporting of the appearance and disappearance of suggestions
 	by inheriting from the EditableTextWithSuggestions class.
@@ -302,7 +340,7 @@ class EditableTextWithAutoSelectDetection(EditableText):
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
-		if self is api.getFocusObject() and not eventHandler.isPendingEvents('gainFocus'):
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			self.detectPossibleSelectionChange()
 
 	def event_textChange(self):
@@ -314,12 +352,17 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	def event_textRemove(self):
 		self.hasContentChangedSinceLastSelection = True
 
-class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAutoSelectDetection, EditableText):
+
+class EditableTextWithoutAutoSelectDetection(
+	editableText.EditableTextWithoutAutoSelectDetection,
+	EditableText,
+):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
 	This should be used when an object does not notify of selection changes.
 	"""
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
+
 
 class LiveText(NVDAObject):
 	"""An object for which new text should be reported automatically.
@@ -328,12 +371,13 @@ class LiveText(NVDAObject):
 	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
 	The object should notify of text changes using the textChange event.
 	"""
+
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	announceNewLineText=False
+	announceNewLineText = False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
@@ -350,9 +394,9 @@ class LiveText(NVDAObject):
 			return
 		thread = self._monitorThread = threading.Thread(
 			name=f"{self.__class__.__qualname__}._monitorThread",
-			target=self._monitor
+			target=self._monitor,
+			daemon=True,
 		)
-		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
 		thread.start()
@@ -376,16 +420,16 @@ class LiveText(NVDAObject):
 
 	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
-			This property controls which diffing algorithm should be used by
-			this object. If the object contains a strictly contiguous
-			span of text (i.e. textInfos.POSITION_ALL refers to the entire
-			contents of the object and not just one visible screen of text),
-			then diffHandler.prefer_dmp (character-based diffing) is suitable.
-			Otherwise, use diffHandler.prefer_difflib.
-			
-			@Note: Return either diffHandler.prefer_dmp() or
-			diffHandler.prefer_difflib() so that the diffAlgo user
-			preference can override this choice.
+		This property controls which diffing algorithm should be used by
+		this object. If the object contains a strictly contiguous
+		span of text (i.e. textInfos.POSITION_ALL refers to the entire
+		contents of the object and not just one visible screen of text),
+		then diffHandler.prefer_dmp (character-based diffing) is suitable.
+		Otherwise, use diffHandler.prefer_difflib.
+
+		@Note: Return either diffHandler.prefer_dmp() or
+		diffHandler.prefer_difflib() so that the diffAlgo user
+		preference can override this choice.
 		"""
 		return diffHandler.prefer_dmp()
 
@@ -413,14 +457,13 @@ class LiveText(NVDAObject):
 			self._reportNewText(line)
 
 	def _reportNewText(self, line):
-		"""Report a line of new text.
-		"""
+		"""Report a line of new text."""
 		speech.speakText(line)
 
 	def _monitor(self):
 		try:
 			oldText = self._getText()
-		except:
+		except:  # noqa: E722
 			log.exception("Error getting initial text")
 			oldText = ""
 
@@ -446,9 +489,14 @@ class LiveText(NVDAObject):
 						# so ignore it.
 						del outLines[0]
 					if outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines, _immediate=True)
+						queueHandler.queueFunction(
+							queueHandler.eventQueue,
+							self._reportNewLines,
+							outLines,
+							_immediate=True,
+						)
 				oldText = newText
-			except:
+			except:  # noqa: E722
 				log.exception("Error getting or calculating new text")
 
 	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
@@ -460,6 +508,7 @@ class Terminal(LiveText, EditableText):
 	This is an L{EditableText} object,
 	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
+
 	role = controlTypes.Role.TERMINAL
 
 	def event_gainFocus(self):
@@ -488,6 +537,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 	Notably, it suppresses duplicate typed character announcements and can
 	hold typed characters in a queue and only dispatch once the screen updates.
 	This is useful for suppression of passwords, etc."""
+
 	#: Whether this object quickly and reliably sends textChange events
 	#: when its contents update.
 	#: Timely and reliable textChange events are required
@@ -515,7 +565,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 		super()._reportNewLines(lines)
 
 	def event_typedCharacter(self, ch):
-		if ch == '\t':
+		if ch == "\t":
 			self._hasTab = True
 			# Clear the typed word buffer for tab completion.
 			speech.clearTypedWordBuffer()
@@ -523,10 +573,10 @@ class EnhancedTermTypedCharSupport(Terminal):
 			self._hasTab = False
 		if (
 			(
-				config.conf['keyboard']['speakTypedCharacters']
-				or config.conf['keyboard']['speakTypedWords']
+				config.conf["keyboard"]["speakTypedCharacters"] != TypingEcho.OFF.value
+				or config.conf["keyboard"]["speakTypedWords"] != TypingEcho.OFF.value
 			)
-			and not config.conf['terminals']['speakPasswords']
+			and not config.conf["terminals"]["speakPasswords"]
 			and self._supportsTextChange
 		):
 			self._queuedChars.append(ch)
@@ -537,14 +587,16 @@ class EnhancedTermTypedCharSupport(Terminal):
 		self._dispatchQueue()
 		super().event_textChange()
 
-	@script(gestures=[
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:tab",
-		"kb:control+c",
-		"kb:control+d",
-		"kb:control+pause"
-	])
+	@script(
+		gestures=[
+			"kb:enter",
+			"kb:numpadEnter",
+			"kb:tab",
+			"kb:control+c",
+			"kb:control+d",
+			"kb:control+pause",
+		],
+	)
 	def script_flush_queuedChars(self, gesture):
 		"""
 		Flushes the typed word buffer and queue of typedCharacter events if present.
@@ -554,7 +606,6 @@ class EnhancedTermTypedCharSupport(Terminal):
 		self._queuedChars = []
 		speech.clearTypedWordBuffer()
 		gesture.send()
-
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
@@ -575,68 +626,86 @@ class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
 	Rather, it instructs keyboardHandler to use the toUnicodeEx Windows function, in particular
 	the flag to preserve keyboard state available in Windows 10 1607
 	and later."""
+
 	pass
 
 
 class CandidateItem(NVDAObject):
-
-	def getFormattedCandidateName(self,number,candidate):
+	def getFormattedCandidateName(self, number, candidate):
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
-			describedSymbols=[]
+			describedSymbols = []
 			for symbol in candidate:
 				try:
-					symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
+					symbolDescriptions = (
+						characterProcessing.getCharacterDescription(speech.getCurrentLanguage(), symbol) or []
+					)
 				except TypeError:
-					symbolDescriptions=[]
-				if len(symbolDescriptions)>=1:
-					description=symbolDescriptions[0]
-					if description.startswith('(') and description.endswith(')'):
+					symbolDescriptions = []
+				if len(symbolDescriptions) >= 1:
+					description = symbolDescriptions[0]
+					if description.startswith("(") and description.endswith(")"):
 						describedSymbols.append(description[1:-1])
 					else:
-						# Translators: a message announcing a candidate's character and description.
-						describedSymbols.append(_(u"{symbol} as in {description}").format(symbol=symbol,description=description))
+						describedSymbols.append(
+							# Translators: a message announcing a candidate's character and description.
+							_("{symbol} as in {description}").format(symbol=symbol, description=description),
+						)
 				else:
 					describedSymbols.append(symbol)
-			candidate=u", ".join(describedSymbols)
+			candidate = ", ".join(describedSymbols)
 		# Translators: a formatted message announcing a candidate's number and candidate text.
-		return _(u"{number} {candidate}").format(number=number,candidate=candidate)
+		return _("{number} {candidate}").format(number=number, candidate=candidate)
 
-	def getFormattedCandidateDescription(self,candidate):
-		descriptions=[]
-		numSymbols=len(candidate) if candidate else 0
-		if numSymbols!=1: return u""
-		symbol=candidate[0]
+	def getFormattedCandidateDescription(self, candidate):
+		numSymbols = len(candidate) if candidate else 0
+		if numSymbols != 1:
+			return ""
+		symbol = candidate[0]
 		try:
-			symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
+			symbolDescriptions = (
+				characterProcessing.getCharacterDescription(speech.getCurrentLanguage(), symbol) or []
+			)
 		except TypeError:
-			symbolDescriptions=[]
+			symbolDescriptions = []
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
-			symbolDescriptions=symbolDescriptions[1:]
-		if len(symbolDescriptions)<1: return u""
-		return u", ".join(symbolDescriptions)
+			symbolDescriptions = symbolDescriptions[1:]
+		if len(symbolDescriptions) < 1:
+			return ""
+		return ", ".join(symbolDescriptions)
 
 	def reportFocus(self):
-		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return
-		text=self.name
-		desc=self.description
+		if not config.conf["inputComposition"]["announceSelectedCandidate"]:
+			return
+		text = self.name
+		desc = self.description
 		if desc:
-			text+=u", "+desc
+			text += ", " + desc
 		speech.speakText(text)
 
 	def _get_visibleCandidateItemsText(self):
-		obj=self
-		textList=[]
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
+		obj = self
+		textList = []
+		while (
+			isinstance(obj, CandidateItem)
+			and isinstance(obj.candidateNumber, int)
+			and controlTypes.State.INVISIBLE not in obj.states
+		):
 			textList.append(obj.name)
-			obj=obj.previous
+			obj = obj.previous
 		textList.reverse()
-		obj=self.next
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
+		obj = self.next
+		while (
+			isinstance(obj, CandidateItem)
+			and isinstance(obj.candidateNumber, int)
+			and controlTypes.State.INVISIBLE not in obj.states
+		):
 			textList.append(obj.name)
-			obj=obj.next
-		if len(textList)<=1: return None
-		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
+			obj = obj.next
+		if len(textList) <= 1:
+			return None
+		self.visibleCandidateItemsText = (", ".join(textList)) + ", "
 		return self.visibleCandidateItemsText
+
 
 class RowWithFakeNavigation(NVDAObject):
 	"""Provides table navigation commands for a row which doesn't support them natively.
@@ -735,7 +804,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the first column"
+			"Moves the navigator object to the first column",
 		),
 		gesture="kb:Control+Alt+Home",
 		canPropagate=True,
@@ -749,7 +818,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the last column"
+			"Moves the navigator object to the last column",
 		),
 		gesture="kb:Control+Alt+End",
 		canPropagate=True,
@@ -766,7 +835,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object and focus to the first row"
+			"Moves the navigator object and focus to the first row",
 		),
 		gesture="kb:Control+Alt+PageUp",
 		canPropagate=True,
@@ -777,7 +846,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object and focus to the last row"
+			"Moves the navigator object and focus to the last row",
 		),
 		gesture="kb:Control+Alt+PageDown",
 		canPropagate=True,
@@ -797,7 +866,7 @@ class RowWithoutCellObjects(NVDAObject):
 	def _get_childCount(self):
 		return self.parent.columnCount
 
-	def _getColumnLocation(self,column):
+	def _getColumnLocation(self, column):
 		"""Get the screen location for the given column.
 		Subclasses may optionally  override this method.
 		@param column: The index of the column, starting at 1.
@@ -837,8 +906,8 @@ class RowWithoutCellObjects(NVDAObject):
 	def getChild(self, index):
 		return self._makeCell(index + 1)
 
-class _FakeTableCell(NVDAObject):
 
+class _FakeTableCell(NVDAObject):
 	role = controlTypes.Role.TABLECELL
 
 	def __init__(self, parent=None, column=None):
@@ -888,11 +957,19 @@ class _FakeTableCell(NVDAObject):
 		states.discard(controlTypes.State.CHECKED)
 		return states
 
+	def _isEqual(self, other: "_FakeTableCell") -> bool:
+		return (
+			self.parent == other.parent
+			and self.columnNumber == other.columnNumber
+			and self.rowNumber == other.rowNumber
+		)
+
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
 	One instance where this is useful is ARIA applications on the web where the author hasn't set a tabIndex.
 	"""
+
 	isFocusable = True
 
 	def setFocus(self):
@@ -901,10 +978,12 @@ class FocusableUnfocusableContainer(NVDAObject):
 				obj.setFocus()
 				break
 
+
 class ToolTip(NVDAObject):
 	"""Provides information about an item over which the user is hovering a cursor.
 	The object should fire a show event when it appears.
 	"""
+
 	role = controlTypes.Role.TOOLTIP
 
 	def event_show(self):
@@ -913,6 +992,7 @@ class ToolTip(NVDAObject):
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.

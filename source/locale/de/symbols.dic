@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA Contributors
+# Copyright (c) 2011-2024 NVDA Contributors
 # This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -11,7 +11,9 @@ complexSymbols:
 # Phrasenenden
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-# Andere
+# Reihe von Punkten zur visuellen Darstellung, z. B. im Inhaltsverzeichnis
+Füllzeichen .	\.{4,}
+# Weitere
 Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
 ' im Wort	(?<=[^\W_])['’]
 - im Wort	(?<=[^\W_])[-]
@@ -28,6 +30,7 @@ symbols:
 ? sentence ending	Fragezeichen	all	always
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
+Füllzeichen .	Gepunktete Linie	all	always
 Dezimaltrennzeichen		none	always
 ' im Wort	Apostroph	all	norep
 Negative Ziffer	Minus	none	norep
@@ -48,6 +51,7 @@ Datumstrennzeichen	Punkt	none	norep
 
 # Standardzeichensetzung/-symbole
 !	Ausrufezeichen	all
+！	Breites Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
 $	Dollar	all	norep
@@ -70,12 +74,16 @@ $	Dollar	all	norep
 ،	arabisches Komma	all	always
 -	Strich	most	always
 .	Punkt	some
+．	Breiter Satzpunkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most	norep
+：	Breiter Doppelpunkt	most	norep
 ;	Semikolon	most
 ؛	arabisches Semikolon	most
+；	Breites Semikolon	most
 ?	Fragezeichen	all
 ؟	arabisches Fragezeichen	all
+？	Breites Fragezeichen	all
 @	ät	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
@@ -131,7 +139,7 @@ _	Unterstrich	most
 ♣	Schwarzes Kreuz	some
 ♦	Karo	some
 ◆	Schwarzes Karo	some
-§	Paragraf	all
+§	Paragraf	some
 °	Grad	some
 «	Doppelt gewinkelte Klammer auf	most	always
 »	Doppelt gewinkelte Klammer zu	most	always
@@ -184,7 +192,7 @@ _	Unterstrich	most
 ⊕	Eingekreistes Plus	none
 ⊖	Eingekreistes Minus	none
 ⇄	Pfeil nach rechts über Pfeil nach links	none
-⇒	Doppelter nach rechtsweisender Pfeil	none
+⇒	daraus folgt	none
 ―	Waagerechter Strich
 ،	Arabisches Komma
 、	Ideografisches Komma
@@ -228,14 +236,14 @@ _	Unterstrich	most
 # Arithmetic Operators
 +	plus	some
 −	minus	some
-×	mal	some
+×	Kreuz	some
 ⋅	mal	some
 ⨯	mal	none
 ∕	geteilt durch	some
 ⁄	geteilt durch	some
 ÷	geteilt durch	some
-∓	minus oder plus	some
-±	plus oder minus	some
+∓	minus plus	some
+±	plus minus	some
 
 # Set Operations
 ∖	Differenzmenge	none
@@ -247,50 +255,50 @@ _	Unterstrich	most
 
 # Set Relations and Constructions
 ∅	Leere Menge	none
-⊂	ist Teilmenge von	none
-⊄	Keine Teilmenge von	none
-⊃	Obermenge von	none
-⊅	Keine Obermenge von	none
-⊆	Teilmenge von oder Gleichheit	none
-⊈	Weder Teilmenge von noch Gleichheit	none
-⊇	Obermenge von oder Gleichheit	none
-⊉	Weder Obermenge von noch Gleichheit	none
+⊂	Ist Teilmenge von	none
+⊄	Ist keine Teilmenge von	none
+⊃	Ist Obermenge von	none
+⊅	Ist keine Obermenge von	none
+⊆	Ist Teilmenge von oder Gleich	none
+⊈	Ist weder Teilmenge von noch Gleich	none
+⊇	Ist Obermenge von oder Gleich	none
+⊉	Ist weder Obermenge von noch Gleich	none
 ⊌	Multimenge	none
 
 # Gleichheitszeichen
 =	gleich	some
-≃	Asymptotisch Gleichheit	none
-≄	Keine asymptotische Gleichheit	none
-≅	ungefähr gleich zu	none
-≆	ungefähr, aber nicht wirklich gleich	none
-≈	fast gleich	none
+≃	Asymptotisch Gleich	none
+≄	nicht asymptotisch Gleich	none
+≅	ungefähr gleich	none
+≆	ungefähr, aber nicht genau gleich	none
+≈	ungefähr gleich	none
 ≌	alle gleich	none
-≍	gleichwertig	none
-≭	nicht gleichwertig mit	none
+≍	equivalent zu	none
+≭	Ungleich	none
 ≎	geometrisch äquivalent zu	none
 ≑	geometrisch gleich	none
 ≚	gleichwinklig zu	none
 ≬	zwischen	none
-≠	Nicht gleichwertig mit	none
+≠	Nicht equivalent zu	none
 ≡	identisch mit	none
 ≣	genau äquivalent mit	none
 ≢	nicht identisch mit	none
-∼	ähnlich mit	none
+∼	Proportional	none
 ≙	entspricht	none
-≟	fraglich gleich mit	none
+≟	Vielleicht gleich	none
 
 # Vergleichszeichen
 <	kleiner als	some
 >	größer als	some
-≤	gleich oder kleiner als	none
-≦	gleich oder kleiner als	none
+≤	kleiner gleich	none
+≦	kleiner als über gleich	none
 ≪	viel kleiner als	none
-≥	größer als oder gleich wie	none
-≧	größer als oder gleich wie	none
+≥	größer gleich	none
+≧	größer als über gleich	none
 ≫	viel größer als	none
-≶	kleiner oder größer als	none
-≷	größer oder kleiner als	none
-≮	nicht weniger als	none
+≶	kleiner größer	none
+≷	größer kleiner	none
+≮	nicht kleiner als	none
 ≯	nicht größer als	none
 
 # Functionen
@@ -320,27 +328,27 @@ _	Unterstrich	most
 ∃	es gibt	none
 ∄	es gibt kein	none
 ⇏	impliziert nicht	none
-⇐	wird impliziert durch	none
+⇐	folgt aus	none
 
 # Andere mathematische Operatoren
 ∈	Element von	none
 ∉	kein Element von	none
 ∊	kleines Element von	none
-∋	enthält als Mitglied	none
-∌	enthält nicht als Mitglied	none
-∍	klein enthält als Mitglied	none
+∋	enthält Element	none
+∌	enthält nicht Element	none
+∍	klein enthält Element	none
 ∎	Ende des Beweises	none
-∏	n-äres Produkt	none
-∐	n-äres Kuppelprodukt	none
-∑	n-äre Summation	none
+∏	Produkt von	none
+∐	Koprodukt von	none
+∑	Summe über	none
 √	Quadratwurzel	none
 ∛	Kubikwurzel	none
 ∜	vierte Wurzel	none
 ∝	proportional zu	none
 ∞	unendlich	none
-∧	Logisches Und	none
-∨	Logisches Oder	none
-¬	Logisches Nicht	none
+∧	Und	none
+∨	Oder	none
+¬	Nicht	none
 ∩	Schnittmenge	none
 ∪	Vereinigungsmenge	none
 ∫	Integral	none
@@ -359,17 +367,17 @@ _	Unterstrich	most
 ∹	exzess	none
 ∺	geometrische Proportion	none
 ≀	Kranzprodukt	none
-≏	Unterschied zwischen	none
+≏	Differenz zwischen	none
 ≐	nähert sich der Grenze	none
 ∙	Kreis-Operator	none
 ∣	teilt	none
 ∤	teilt nicht	none
-≔	Doppelpunkt ist gleich	none
-≕	ist gleich Doppelpunkt	none
-≺	geht voran	none
-≻	gelingt	none
-⊀	geht nicht voran	none
-⊁	gelingt nicht	none
+≔	Ergibt sich aus	none
+≕	Ergibt sich nicht aus	none
+≺	ist Bedingung für	none
+≻	Folgt aus	none
+⊀	Ist nicht Bedingung für	none
+⊁	Folgt nicht aus	none
 
 # Brüche (U+2150 bis U+215E)
 ¼	ein Viertel	none
@@ -402,15 +410,15 @@ _	Unterstrich	most
 ℝ	Großbuchstabe R mit Doppelstrich	none
 ℜ	Großbuchstabe Fraktur-R	none
 ℤ	Großbuchstabe Z mit Doppelstrich	none
-ℵ	Alef-Symbol	none
-ℶ	Bet-Symbol	none
+ℵ	Alef	none
+ℶ	Bet	none
 
 # Sonstiges Technisch
 ⌘	Mac-Befehlstaste	none
 ⌥	Mac-Optionstaste	none
 
-## 6-Punkt-Braille-Modul
-### Hinweis: Das Zeichen in der folgenden Zeile ist U+2800 (Braille-Leerzeichen), nicht U+0020 (ASCII-Leerzeichen)
+## Braille-Modul (6-Punkte)
+### Hinweis: Das folgende Zeichen ist ein Braille-Leerzeichen (U+2800), kein ASCII-Leerzeichen (U+0020)
 ⠀	Braille-Leerzeichen
 ⠁	Braille-Punkt 1
 ⠂	Braille-Punkt 2
@@ -419,7 +427,7 @@ _	Unterstrich	most
 ⠅	Braille-Punkte 1 3
 ⠆	Braille-Punkte 2 3
 ⠇	Braille-Punkte 1 2 3
-⠈	Braille-Punkt 4
+⠈	Braille-Punkte 4
 ⠉	Braille-Punkte 1 4
 ⠊	Braille-Punkte 2 4
 ⠋	Braille-Punkte 1 2 4
@@ -467,15 +475,16 @@ _	Unterstrich	most
 ⠵	Braille-Punkte 1 3 5 6
 ⠶	Braille-Punkte 2 3 5 6
 ⠷	Braille-Punkte 1 2 3 5 6
-⠸	Braille-Punkte 1 2 3
+⠸	Braille-Punkte 4 5 6
 ⠹	Braille-Punkte 1 4 5 6
 ⠺	Braille-Punkte 2 4 5 6
 ⠻	Braille-Punkte 1 2 4 5 6
 ⠼	Braille-Punkte 3 4 5 6
 ⠽	Braille-Punkte 1 3 4 5 6
 ⠾	Braille-Punkte 2 3 4 5 6
-⠿	Alle 6 Braille-Punkte 1 2 3 4 5 6
-## 8-Punkt-Braille-Modul
+⠿	Braille-Punkte 1 2 3 4 5 6
+
+## Braille-Modul (8-Punkte)
 ⡀	Braille-Punkt 7
 ⡁	Braille-Punkte 1 7
 ⡂	Braille-Punkte 2 7
@@ -667,4 +676,4 @@ _	Unterstrich	most
 ⣼	Braille-Punkte 3 4 5 6 7 8
 ⣽	Braille-Punkte 1 3 4 5 6 7 8
 ⣾	Braille-Punkte 2 3 4 5 6 7 8
-⣿	Alle 8 Braille-Punkte 1 2 3 4 5 6 7 8
+⣿	Braille-Punkte 1 2 3 4 5 6 7 8

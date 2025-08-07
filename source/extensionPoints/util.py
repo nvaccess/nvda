@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Utilities used withing the extension points framework. Generally it is expected that the class in __init__.py are
 used, however for more advanced requirements these utilities can be used directly.
 """
-
 
 # "annotations" Needed to reference BoundMethodWeakref in one of the init params of itself.
 from __future__ import annotations
@@ -23,13 +22,17 @@ from typing import (
 	Union,
 )
 
+import NVDAState
+
+from logHandler import log
+
 HandlerT = TypeVar("HandlerT", bound=Callable)
 HandlerKeyT = Union[int, Tuple[int, int]]
 
 
 class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):
-	"""A weakref.ref which allows annotation with custom attributes.
-	"""
+	"""A weakref.ref which allows annotation with custom attributes."""
+
 	handlerKey: int
 
 
@@ -42,17 +45,18 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	which can then be used to bind an instance method.
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
+
 	handlerKey: Tuple[int, int]
 
 	def __init__(
-			self,
-			target: HandlerT,
-			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None
+		self,
+		target: HandlerT,
+		onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None,
 	):
 		if onDelete:
+
 			def onRefDelete(weak):
-				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-				"""
+				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies."""
 				onDelete(self)
 		else:
 			onRefDelete = None
@@ -71,7 +75,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		return func.__get__(inst)
 
 
-def _getHandlerKey(handler: HandlerT) -> HandlerKeyT:
+def _getHandlerKey(handler: Callable) -> HandlerKeyT:
 	"""Get a key which identifies a handler function.
 	This is needed because we store weak references, not the actual functions.
 	We store the key on the weak reference.
@@ -96,13 +100,18 @@ class HandlerRegistrar(Generic[HandlerT]):
 	you probably want the L{Action} or L{Filter} subclasses instead.
 	"""
 
-	def __init__(self):
+	def __init__(self, *, _deprecationMessage: str | None = None):
+		"""Initialise the handler registrar.
+
+		:param _deprecationMessage: Optional deprecation message to be logged when :method:`register` is called on the handler.
+		"""
+		self._deprecationMessage = _deprecationMessage
 		#: Registered handler functions.
 		#: This is an OrderedDict where the keys are unique identifiers (as returned by _getHandlerKey)
 		#: and the values are weak references.
 		self._handlers = OrderedDict[
 			HandlerKeyT,
-			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]
+			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]],
 		]()
 
 	def register(self, handler: HandlerT):
@@ -115,6 +124,11 @@ class HandlerRegistrar(Generic[HandlerT]):
 			sig = inspect.signature(handler)
 			if sig.parameters and list(sig.parameters)[0] == "self":
 				raise TypeError("Registering unbound instance methods not supported.")
+		if self._deprecationMessage:
+			if NVDAState._allowDeprecatedAPI():
+				log.warning(self._deprecationMessage, stack_info=True)
+			else:
+				raise RuntimeError(self._deprecationMessage)
 		if inspect.ismethod(handler):
 			weak = BoundMethodWeakref(handler, self.unregister)
 		else:
@@ -141,7 +155,10 @@ class HandlerRegistrar(Generic[HandlerT]):
 			return False
 		return True
 
-	def unregister(self, handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT]):
+	def unregister(
+		self,
+		handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT],
+	):
 		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
 			key = handler.handlerKey
 		else:
@@ -160,7 +177,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		for weak in self._handlers.values():
 			handler = weak()
 			if not handler:
-				continue # Died.
+				continue  # Died.
 			yield handler
 
 
@@ -202,10 +219,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 
 	# Check whether func has a catch-all for kwargs (**kwargs)
 	# In this case, we do not need to filter to just the supported args.
-	if not any(
-		param for param in sig.parameters.values()
-		if param.kind == param.VAR_KEYWORD
-	):
+	if not any(param for param in sig.parameters.values() if param.kind == param.VAR_KEYWORD):
 		# Delete all the kwargs that are not supported by this callable.
 		# Wrap the items call in a list, as the dictionary changes during iteration.
 		for kwarg in list(kwargs.keys()):

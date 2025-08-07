@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2006-2024 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Babbage B.V.,
 # Aleksey Sadovoy, Peter Vágner
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,9 +26,9 @@ import os
 from typing import (
 	TYPE_CHECKING,
 	List,
+	Literal,
 	Optional,
 )
-from typing_extensions import Literal
 
 if TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only
@@ -41,7 +41,7 @@ class DefaultAppArgs(argparse.Namespace):
 	logFileName: Optional[os.PathLike] = ""
 	logLevel: int = 0
 	configPath: Optional[os.PathLike] = None
-	language: str = "en"
+	language: str | None = None
 	minimal: bool = False
 	secure: bool = False
 	"""
@@ -74,25 +74,25 @@ class DefaultAppArgs(argparse.Namespace):
 
 # Encapsulated by api module,
 # refer to #14037 for removal strategy.
-desktopObject: Optional['NVDAObjects.NVDAObject'] = None
+desktopObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setDesktopObject|getDesktopObject` from `api` instead"""
 
-foregroundObject: Optional['NVDAObjects.NVDAObject'] = None
+foregroundObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setForegroundObject|getForegroundObject` from `api` instead"""
 
-focusObject: Optional['NVDAObjects.NVDAObject'] = None
+focusObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setFocusObject|getFocusObject` from `api` instead"""
 
-focusAncestors: List['NVDAObjects.NVDAObject'] = []
+focusAncestors: List["NVDAObjects.NVDAObject"] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
 
 focusDifferenceLevel: Optional[int] = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
 
-mouseObject: Optional['NVDAObjects.NVDAObject'] = None
+mouseObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``setMouseObject|getMouseObject`` from `api` instead"""
 
-navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
+navigatorObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
 
 reviewPosition: Optional["documentBase.TextContainerObject"] = None
@@ -131,6 +131,11 @@ appPid: int = 0
 """The process ID of NVDA itself.
 """
 
+appDir: str
+"""
+The directory where NVDA is installed or running from.
+Set by nvda_slave.pyw and nvda.pyw.
+"""
 
 # TODO: encapsulate in synthDriverHandler
 settingsRing = None

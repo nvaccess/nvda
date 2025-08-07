@@ -10,8 +10,9 @@ One or more assistant functions can be implemented in vision enhancement provide
 Add-ons can provide their own provider
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
+
 from .visionHandler import VisionHandler
-import visionEnhancementProviders
+import visionEnhancementProviders  # noqa: F401
 import config
 from typing import Optional
 

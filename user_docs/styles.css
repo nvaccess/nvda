@@ -7,6 +7,10 @@ body {
   color: #333;
 }
 
+:lang(ar) body *, :lang(fa) body * {
+  font-family: "Simplified Arabic", "Traditional Arabic", "Arial", sans-serif !important;
+}
+
 h1 {
   color:white;
   background-color: #472F5F; /* NVDA purple */
@@ -56,19 +60,11 @@ pre {
   border-left: 2px solid #69c;
 }
 
-/* 
-Definition styling.
-https://txt2tags.org/markup.html
-In t2t, definition lists are defined as follows:
+/*
+Definition list
 
-: Definition list
-  A list with terms
-: Start term with colon
-  And its definition follows
-:
+Note these are not exposed correctly in NVDA: #3858
 */
-
-/* Definition list */
 dl {
   display: grid;
   grid-template-columns: auto;
@@ -89,4 +85,8 @@ dl > dd {
   margin-inline-start: 1em;
   font-size: small;
   font-style: italic;
+}
+
+thead:has(tr > th.hideHeaderRow) {
+  display: none;
 }

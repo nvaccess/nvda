@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
 
-"""Unit tests for the orderedWinEventLimiter module.
-"""
+"""Unit tests for the orderedWinEventLimiter module."""
+
 import inspect
 import re
 import unittest
@@ -29,7 +29,7 @@ specialCaseEvents = [
 	winUser.EVENT_SYSTEM_MENUSTART,
 	winUser.EVENT_SYSTEM_MENUEND,
 	winUser.EVENT_SYSTEM_MENUPOPUPSTART,
-	winUser.EVENT_SYSTEM_MENUPOPUPEND
+	winUser.EVENT_SYSTEM_MENUPOPUPEND,
 ]
 
 
@@ -44,10 +44,8 @@ nonSpecialCaseEvents: List[int] = list(_getNonSpecialCaseEvents())
 
 
 class TestOrderedWinEventLimiter(unittest.TestCase):
-
 	def test_nonSpecialCaseEvents(self):
-		"""Test that the list of events without special cases matches expectations
-		"""
+		"""Test that the list of events without special cases matches expectations"""
 		self.assertEqual(39, len(nonSpecialCaseEvents))
 
 	def test_maxFocusEvents(self):
@@ -55,7 +53,10 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		for n in range(0, 5):
 			limiter.addEvent(
 				eventID=winUser.EVENT_OBJECT_FOCUS,
-				window=n, objectID=n, childID=n, threadID=n,
+				window=n,
+				objectID=n,
+				childID=n,
+				threadID=n,
 			)
 		events = limiter.flushEvents()
 		windowIds = [
@@ -71,21 +72,29 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		n = 1
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_FOCUS,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		limiter.addEvent(
 			eventID=winUser.EVENT_SYSTEM_FOREGROUND,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [(
-			e[0],  # eventID
-			e[1],  # window
-		) for e in events
+		actualEvents = [
+			(
+				e[0],  # eventID
+				e[1],  # window
+			)
+			for e in events
 		]
 		expectedEvents = [
 			(winUser.EVENT_SYSTEM_FOREGROUND, n),
-			(winUser.EVENT_SYSTEM_FOREGROUND, n)
+			(winUser.EVENT_SYSTEM_FOREGROUND, n),
 		]
 		self.assertEqual(expectedEvents, actualEvents)
 
@@ -94,17 +103,20 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		n = 1
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_HIDE,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_SHOW,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [
-			(e[0], e[1])
-			for e in events
-		]
+		actualEvents = [(e[0], e[1]) for e in events]
 		expectedEvents = [
 			(winUser.EVENT_OBJECT_SHOW, n),
 		]
@@ -115,17 +127,20 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		n = 1
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_SHOW,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_HIDE,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [
-			(e[0], e[1])
-			for e in events
-		]
+		actualEvents = [(e[0], e[1]) for e in events]
 		expectedEvents = [
 			(winUser.EVENT_OBJECT_HIDE, n),
 		]
@@ -136,18 +151,21 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		n = 1
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_HIDE,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		n = 2
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_SHOW,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [
-			(e[0], e[1])
-			for e in events
-		]
+		actualEvents = [(e[0], e[1]) for e in events]
 		expectedEvents = [
 			(winUser.EVENT_OBJECT_HIDE, 1),
 			(winUser.EVENT_OBJECT_SHOW, 2),
@@ -159,18 +177,21 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		n = 1
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_SHOW,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		n = 2
 		limiter.addEvent(
 			eventID=winUser.EVENT_OBJECT_HIDE,
-			window=n, objectID=n, childID=n, threadID=n,
+			window=n,
+			objectID=n,
+			childID=n,
+			threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [
-			(e[0], e[1])
-			for e in events
-		]
+		actualEvents = [(e[0], e[1]) for e in events]
 		expectedEvents = [
 			(winUser.EVENT_OBJECT_SHOW, 1),
 			(winUser.EVENT_OBJECT_HIDE, 2),
@@ -186,7 +207,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		for n in range(2000):  # send many events, to saturate all limits.
 			eventId = specialCaseEvents[n % len(specialCaseEvents)]
 			limiter.addEvent(eventId, *allowedSource, threadID=0)
-		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource])
 
 		expected = [
 			# Two Foreground events, because they are added to multiple queues.
@@ -204,22 +225,21 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		# We have events from two unique objects:
 		# Window, objectID, childID
 		allowedSource = (1, 1, 1)
-		otherSource = (2, 2, 2,)
+		otherSource = (2, 2, 2)
 
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 		for n in range(50):  # send many value changed events
 			limiter.addEvent(winUser.EVENT_OBJECT_VALUECHANGE, *allowedSource, threadID=0)
 			limiter.addEvent(winUser.EVENT_OBJECT_VALUECHANGE, *otherSource, threadID=0)
-		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource])
 		# only the most recent event of each object is kept, all previous duplicates are discarded
 		self.assertEqual(2, len(events))
 
 	def test_threadLimit_singleObject(self):
-		"""Test that only the latest events are kept when the thread limit is exceeded
-		"""
+		"""Test that only the latest events are kept when the thread limit is exceeded"""
 		# We have events from two unique objects:
 		# Window, objectID, childID
-		source = (2, 2, 2,)
+		source = (2, 2, 2)
 
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
@@ -233,15 +253,14 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		self.assertEqual(expectedEventCount, len(events))
 
 	def test_threadLimit_noCanary(self):
-		"""Test that only the latest events are kept when the thread limit is exceeded
-		"""
+		"""Test that only the latest events are kept when the thread limit is exceeded"""
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
 		for n in range(500):  # exceed the limit for a single thread
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		events = limiter.flushEvents()
@@ -252,8 +271,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		self.assertListEqual([], errors)
 
 	def test_threadLimit_withCanaryAtStart(self):
-		"""Test that only the latest events are kept when the thread limit is exceeded
-		"""
+		"""Test that only the latest events are kept when the thread limit is exceeded"""
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
 		# Window, objectID, childID
@@ -265,7 +283,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		events = limiter.flushEvents()
@@ -277,8 +295,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		self.assertListEqual([], errors)
 
 	def test_threadLimit_canaryStartAndEnd(self):
-		"""Test that only the latest events are kept when the thread limit is exceeded
-		"""
+		"""Test that only the latest events are kept when the thread limit is exceeded"""
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
 		# Window, objectID, childID
@@ -290,7 +307,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		# Note event type must differ from start canary to ensure they are not duplicates
@@ -306,8 +323,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		self.assertListEqual([], errors)
 
 	def test_alwaysAllowedObjects(self):
-		"""Matches test_threadLimit_canaryStartAndEnd, but allows events from the first object
-		"""
+		"""Matches test_threadLimit_canaryStartAndEnd, but allows events from the first object"""
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
 		# Window, objectID, childID
@@ -315,17 +331,19 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		eventStartCanary = (winUser.EVENT_OBJECT_VALUECHANGE, *canaryObject)
 		limiter.addEvent(*eventStartCanary, threadID=0)
 
-		for n in range(orderedWinEventLimiter.MAX_WINEVENTS_PER_THREAD):  # exceed the limit for a single thread
+		for n in range(
+			orderedWinEventLimiter.MAX_WINEVENTS_PER_THREAD,
+		):  # exceed the limit for a single thread
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		eventEndCanary = (winUser.EVENT_OBJECT_NAMECHANGE, *canaryObject)
 		limiter.addEvent(*eventEndCanary, threadID=0)
 
-		events = limiter.flushEvents(alwaysAllowedObjects=[canaryObject, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[canaryObject])
 		# only the most recent event of each object is kept, all previous duplicates are discarded
 		self.assertEqual(11, len(events))
 		self.assertIn(eventStartCanary, events)
@@ -337,7 +355,9 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		for n in reversed(range(2000)):  # send many events, to saturate all limits.
 			limiter.addEvent(
 				eventID=specialCaseEvents[n % len(specialCaseEvents)],
-				window=n, objectID=n, childID=n,
+				window=n,
+				objectID=n,
+				childID=n,
 				threadID=0,  # all events for same thread
 			)
 		events = limiter.flushEvents()

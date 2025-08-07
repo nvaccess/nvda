@@ -9,6 +9,11 @@
 $inputFile = "../timing.csv"
 $processedTimesFile = "buildStageTimingWithElapsed.csv"
 
+# Don't run if timing record was not created for some reason
+if (!(Test-Path -LiteralPath $inputFile)) {
+	exit
+}
+
 $entries = Import-Csv -Path $inputFile -Header Stage, Time
 $lastTime = Get-Date -Date $entries[0].Time
 

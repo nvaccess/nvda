@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011 Sebastian Kruber <sebastian.kruber@hedo.de>
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011 Sebastian Kruber <sebastian.kruber@hedo.de>
 
 # Parts of this code are inherited from the baum braille driver
 # written by James Teh <jamie@jantrid.net>
@@ -22,7 +22,7 @@ from logHandler import log
 HEDO_TIMEOUT = 0.2
 HEDO_BAUDRATE = 19200
 HEDO_READ_INTERVAL = 50
-HEDO_ACK = b"\x7E"
+HEDO_ACK = b"\x7e"
 HEDO_INIT = b"\x01"
 HEDO_CR_BEGIN = 0x20
 HEDO_CR_END = 0x6F
@@ -32,7 +32,7 @@ HEDO_STATUS_CELL_COUNT = 4
 
 HEDO_KEYMAP = {
 	0x04: "K1",
-	0x03: "K2", # K2 or B1
+	0x03: "K2",  # K2 or B1
 	0x08: "K3",
 	0x07: "B2",
 	0x0B: "B3",
@@ -43,10 +43,13 @@ HEDO_KEYMAP = {
 	0x1F: "B8",
 }
 
-HEDO_USB_IDS = frozenset((
-	"VID_0403&PID_DE59", # Hedo ProfiLine
-	"VID_0403&PID_DE58", # Hedo MobiLine
-))
+HEDO_USB_IDS = frozenset(
+	(
+		"VID_0403&PID_DE59",  # Hedo ProfiLine
+		"VID_0403&PID_DE58",  # Hedo MobiLine
+	),
+)
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "hedoProfiLine"
@@ -64,7 +67,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
-			#log.info("Found port {port} with hardwareID {hwID}".format(port=port, hwID=hwID))
+			# log.info("Found port {port} with hardwareID {hwID}".format(port=port, hwID=hwID))
 			if not hwID.startswith(r"FTDIBUS\COMPORT"):
 				continue
 			try:
@@ -76,7 +79,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			try:
-				self._ser = serial.Serial(port, baudrate=HEDO_BAUDRATE, timeout=HEDO_TIMEOUT, writeTimeout=HEDO_TIMEOUT, parity=serial.PARITY_ODD, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE)
+				self._ser = serial.Serial(
+					port,
+					baudrate=HEDO_BAUDRATE,
+					timeout=HEDO_TIMEOUT,
+					writeTimeout=HEDO_TIMEOUT,
+					parity=serial.PARITY_ODD,
+					bytesize=serial.EIGHTBITS,
+					stopbits=serial.STOPBITS_ONE,
+				)
 			except serial.SerialException:
 				continue
 
@@ -98,7 +109,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		else:
 			raise RuntimeError("No hedo display found")
-		
+
 		self._readTimer = wx.PyTimer(self.handleResponses)
 		self._readTimer.Start(HEDO_READ_INTERVAL)
 
@@ -135,7 +146,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			wait = False
 
 	def handleData(self, data: int):
-
 		if HEDO_CR_BEGIN <= data <= HEDO_CR_END:
 			# Routing key is pressed
 			try:
@@ -168,22 +178,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					pass
 
 		# else:
-		#	log.debug("Key " + hex(data) + " not identified")
+		# log.debug("Key " + hex(data) + " not identified")
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(hedoProfiLine):K1",),
-			"braille_toggleTether": ("br(hedoProfiLine):K2",),
-			"braille_scrollForward": ("br(hedoProfiLine):K3",),
-			"braille_previousLine": ("br(hedoProfiLine):B2",),
-			"braille_nextLine": ("br(hedoProfiLine):B5",),
-			"sayAll": ("br(hedoProfiLine):B6",),
-			"braille_routeTo": ("br(hedoProfiLine):routing",),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(hedoProfiLine):K1",),
+				"braille_toggleTether": ("br(hedoProfiLine):K2",),
+				"braille_scrollForward": ("br(hedoProfiLine):K3",),
+				"braille_previousLine": ("br(hedoProfiLine):B2",),
+				"braille_nextLine": ("br(hedoProfiLine):B5",),
+				"sayAll": ("br(hedoProfiLine):B6",),
+				"braille_routeTo": ("br(hedoProfiLine):routing",),
+			},
 		},
-	})
+	)
+
 
 class InputGestureKeys(braille.BrailleDisplayGesture):
-
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -191,8 +203,8 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 
 		self.id = keys
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
 
+class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):

@@ -106,7 +106,7 @@ bool isInBackgroundTab(IAccessible* acc, HWND hwnd) {
 	return accDocId != fgDocId;
 }
 
-void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
+void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	HWND fgHwnd=GetForegroundWindow();
 	//Ignore events for windows that are invisible or are not in the foreground
 	if(!IsWindowVisible(hwnd)||(hwnd!=fgHwnd&&!IsChild(fgHwnd,hwnd))) return;
@@ -135,7 +135,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	}
 	//Retreave an IAccessible2 via IServiceProvider if it exists.
 	CComQIPtr<IServiceProvider> pserv(pacc);
-	if(!pserv) return; 
+	if(!pserv) return;
 	CComPtr<IAccessible2> pacc2;
 	pserv->QueryService(IID_IAccessible, IID_IAccessible2, (void**)(&pacc2));
 	if(!pacc2) return;
@@ -182,7 +182,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	} else { //we support additions if its specified, we support text if its specified
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
-	} 
+	}
 	// We only support additions or text
 	if(!allowAdditions&&!allowText) {
 		return;
@@ -191,7 +191,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
 		return;
 	}
-	// If this is a show event and this is not the root of the region and there is a text parent, 
+	// If this is a show event and this is not the root of the region and there is a text parent,
 	// We can ignore this event as there will be text events which can handle this better
 	if(eventID==EVENT_OBJECT_SHOW) {
 		bool ignoreShowEvent=false;
@@ -204,7 +204,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 				ignoreShowEvent=true;
 			}
 			if(!ignoreShowEvent) {
-				// Check for useful container-live on parent, as if missing or off, then child must be the root 
+				// Check for useful container-live on parent, as if missing or off, then child must be the root
 				// Firstly, we assume we are the root of the region and therefore should ignore the event
 				ignoreShowEvent=true;
 				CComQIPtr<IAccessible2> pacc2Parent(pdispParent);

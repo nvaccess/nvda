@@ -1,0 +1,157 @@
+exclude: ^user_docs/(?!en/).+/.+\.md$
+
+# https://pre-commit.ci/
+# Configuration for Continuous Integration service
+ci:
+  # Can't run Windows scons scripts on Linux.
+  # unit testing requires our python environment,
+  # which cannot be configured with pre-commit.ci:
+  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
+  # Can't run licenseCheck as it relies on telemetry,
+  # which CI blocks.
+  # Pyright does not seem to work in pre-commit CI
+  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyright]
+  autoupdate_schedule: monthly
+  autoupdate_commit_msg: "Pre-commit auto-update"
+  autofix_commit_msg: "Pre-commit auto-fix"
+  submodules: true
+
+default_language_version:
+  python: python3.11
+
+repos:
+- repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+  rev: v1.6.1
+  hooks:
+    - id: check-pre-commit-ci-config
+
+- repo: meta
+  hooks:
+    # ensures that exclude directives apply to any file in the repository.
+    - id: check-useless-excludes
+    # ensures that the configured hooks apply to at least one file in the repository.
+    - id: check-hooks-apply
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+    # Prevents commits to certain branches
+    - id: no-commit-to-branch
+      args: ["--branch", "master", "--branch", "beta", "--branch", "rc"]
+    # Checks that large files have not been added. Default cut-off for "large" files is 500kb.
+    - id: check-added-large-files
+      # POFiles and TTF fonts can't be made smaller
+      exclude_types: ["pofile", "ttf"]
+      # Same applies for NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
+      exclude: "\\.(dic|sfd)$"
+    # Checks python syntax
+    - id: check-ast
+    # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
+    - id: check-case-conflict
+    # Checks for artifacts from resolving merge conflicts.
+    - id: check-merge-conflict
+    # Checks Python files for debug statements, such as python's breakpoint function, or those inserted by some IDEs.
+    - id: debug-statements
+    # Removes trailing whitespace.
+    - id: trailing-whitespace
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
+    # Ensures all files end in 1 (and only 1) newline.
+    - id: end-of-file-fixer
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
+    # Removes the UTF-8 BOM from files that have it.
+    # See https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/codingStandards.md#encoding
+    - id: fix-byte-order-marker
+      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
+    # Validates TOML files.
+    - id: check-toml
+    # Validates YAML files.
+    - id: check-yaml
+    # Validates XML files.
+    - id: check-xml
+    # Ensures that links to lines in files under version control point to a particular commit.
+    - id: check-vcs-permalinks
+    # Avoids using reserved Windows filenames.
+    - id: check-illegal-windows-names
+    # Checks that tests are named test_*.py.
+    - id: name-tests-test
+      args: ["--unittest"]
+      # Exclude Python files under `tests/` that aren't unittest files.
+      # This is a Python verbose regular expression.
+      # See https://docs.python.org/3/library/re.html#re.VERBOSE
+      exclude: |
+        (?x)^tests/(
+          checkPot.py |  # Doesn't use unittest
+          system |  # Uses robot
+          unit/ (
+            # Test helpers
+            textProvider.py |
+            extensionPointTestHelpers.py |
+            objectProvider.py |
+            test_speechManager/speechManagerTestHarness.py
+          )
+        )
+
+- repo: https://github.com/asottile/add-trailing-comma
+  rev: v3.2.0
+  hooks:
+  # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
+  # if a trailing comma is added.
+  # This adds a trailing comma to args/iterable items in case it was missed.
+  - id: add-trailing-comma
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Matches Ruff version in pyproject.
+  rev: v0.12.5
+  hooks:
+    - id: ruff
+      name: lint with ruff
+      args: [ --fix ]
+    - id: ruff-format
+      name: format with ruff
+
+- repo: https://github.com/RobertCraigie/pyright-python
+  rev: v1.1.403
+  hooks:
+  - id: pyright
+    name: Check types with pyright
+
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.8.3
+  hooks:
+    - id: uv-lock
+      name: Verify uv lock file
+      # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
+      args: ["-p3.11"]
+
+- repo: local
+  hooks:
+    - id: checkPo
+      name: Check po files
+      entry: uv run source/l10nUtil.py checkPo
+      language: python
+      types: [pofile]
+    - id: scons-source
+      name: build c/c++ files
+      entry: cmd.exe /c "scons source --all-cores"
+      language: system
+      pass_filenames: false
+      types_or: [c, c++]
+    - id: checkPot
+      name: translation string check
+      entry: cmd.exe /c "scons checkPot --all-cores"
+      language: system
+      pass_filenames: false
+      types: [python]
+      files: ^source/.*$
+    - id: unitTest
+      name: unit tests
+      entry: ./rununittests.bat
+      language: script
+      pass_filenames: false
+      types_or: [python, c, c++, batch]
+    - id: licenseCheck
+      name: Check license compatibility of pip dependencies
+      files: ^(runlicensecheck\.bat|pyproject\.toml)$
+      entry: ./runlicensecheck.bat
+      language: script
+      pass_filenames: false

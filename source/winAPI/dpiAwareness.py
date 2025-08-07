@@ -35,7 +35,9 @@ def setDPIAwareness() -> None:
 		DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4
 		# Method introduced in Windows 10
 		# https://docs.microsoft.com/en-us/windows/win32/hidpi/dpi-awareness-context
-		success = ctypes.windll.user32.SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
+		success = ctypes.windll.user32.SetProcessDpiAwarenessContext(
+			DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
+		)
 	except AttributeError:
 		log.debug("Cannot set DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2")
 	else:
@@ -69,19 +71,6 @@ def setDPIAwareness() -> None:
 		# Windows 8 / Server 2012 - `shcore` library exists,
 		# but `SetProcessDpiAwareness` is not present yet.
 		log.debug("Cannot set PROCESS_PER_MONITOR_DPI_AWARE - SetProcessDpiAwareness missing")
-	except WindowsError as e:
-		# `ctypes` raises `WindowsError` for missing DLL's.
-		# On Windows 7 `shcore` library is not present.
-		# Inspect error code and either ignore the exception falling back to the legacy method
-		# if it is caused by missing dll, log an error otherwise.
-		# In Python 3.8 and later `ctypes` raises `FileNotFoundError`
-		# rather than `WindowsError` for missing libraries.
-		# When updating NVDA the exception has to be changed
-		# or, if support for Windows 7 is dropped, this section should be removed.
-		if e.winerror == SystemErrorCodes.MOD_NOT_FOUND:
-			log.debug("Cannot set PROCESS_PER_MONITOR_DPI_AWARE - shcore not found")
-		else:
-			log.error("Failed to set PROCESS_PER_MONITOR_DPI_AWARE", exc_info=True)
 	else:
 		if hResult == HResult.S_OK:
 			return

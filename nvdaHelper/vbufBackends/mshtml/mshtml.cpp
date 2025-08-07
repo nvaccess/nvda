@@ -54,7 +54,7 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 			pHTMLUniqueName->get_uniqueNumber((long*)&ID);
 			pHTMLUniqueName->Release();
 			if(ID!=0) {
-				VBufStorage_controlFieldNode_t* node=this->getControlFieldNodeWithIdentifier(this->rootDocHandle,ID); 
+				VBufStorage_controlFieldNode_t* node=this->getControlFieldNodeWithIdentifier(this->rootDocHandle,ID);
 				if(node) {
 					if(elementNeedsRelease) pHTMLElement->Release();
 					return node;
@@ -173,7 +173,7 @@ HRESULT hRes=0;
 	return hRes;
 }
 
-IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const wstring& ID) { 
+IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const wstring& ID) {
 	HRESULT hRes;
 	IHTMLElement* pHTMLElement=NULL;
 	//First try getting the element directly from this document
@@ -326,7 +326,7 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 			} else if(lastNotWhitespace||!strippingLeft) {
 				s+=L' ';
 				lastNotWhitespace=FALSE;
-			} 
+			}
 		}
 	}
 	SysFreeString(data);
@@ -407,8 +407,8 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
 
-// #8976: the string in the following macro  must be passed to the COM method as a BSTR 
-// otherwise the COM marshaller will try and read the BSTR length and hit either inaccessible memory or get back junk. 
+// #8976: the string in the following macro  must be passed to the COM method as a BSTR
+// otherwise the COM marshaller will try and read the BSTR length and hit either inaccessible memory or get back junk.
 // This is seen in optimized builds of NVDA when accessing some CHM files in hh.exe.
 #define macro_addHTMLAttributeToMap(attribName,allowEmpty,attribsObj,attribsMap,tempVar,tempAttrObj) {\
 	attribsObj->getNamedItem(CComBSTR(attribName),&tempAttrObj);\
@@ -587,7 +587,7 @@ inline void fillTextFormattingForNode(IHTMLDOMNode* pHTMLDOMNode, VBufStorage_fi
 inline void fillTextFormattingForTextNode(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_textFieldNode_t* textNode)
 	//text nodes don't support IHTMLElement2 interface, so using style information from parent node
 	{
-	IHTMLElement2* pHTMLElement2=NULL; 
+	IHTMLElement2* pHTMLElement2=NULL;
 	static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
 	if(pHTMLElement2) {
 		fillTextFormatting_helper(pHTMLElement2,textNode);
@@ -775,7 +775,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	wostringstream tempStringStream;
 
 	//Handle text nodes
-	if(!shouldSkipText) { 
+	if(!shouldSkipText) {
 		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->isBlock&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
@@ -812,7 +812,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	wstring nodeName=tempBSTR;
 	SysFreeString(tempBSTR);
 	tempBSTR=NULL;
-	for(wstring::iterator i=nodeName.begin();i!=nodeName.end();++i) 
+	for(wstring::iterator i=nodeName.begin();i!=nodeName.end();++i)
 		*i=towupper(*i);
 	LOG_DEBUG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
 
@@ -912,7 +912,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	if(!(formatState&FORMATSTATE_EMPH)&&nodeName.compare(L"EM")==0) {
 		formatState|=FORMATSTATE_EMPH;
 	}
-	
+
 	bool isDocRoot=!parentNode&&(!oldNode||!oldNode->getParent());
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,isDocRoot,pHTMLDOMNode,language);
 	((MshtmlVBufStorage_controlFieldNode_t*)node)->formatState=formatState;
@@ -1001,7 +1001,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else if(!hidden&&ariaRole.compare(L"presentation")==0) {
 			hidden=true;
 		}
-	} 
+	}
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
@@ -1059,7 +1059,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	if(!hidden) {
 		//Collect and update table information
-		tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
+		tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap);
 	}
 
 	// Whether the name is the content of this node.
@@ -1126,7 +1126,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		else if (isInteractive && !IAValue.empty()) {
 			// The graphic is unlabelled, but we should try to derive a name for it.
 			contentString=getNameForURL(IAValue);
-		} 
+		}
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {

@@ -34,7 +34,7 @@ long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 	if(textLength==0) {
 		return 0;
 	}
-	// Fetch font size and weight information 
+	// Fetch font size and weight information
 	CComPtr<IDispatch> pDispatchFont=nullptr;
 	res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont);
 	if(FAILED(res)) {
@@ -85,7 +85,7 @@ long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 	ReleaseDC(hwnd,windowDC);
 	HBITMAP hBmp=CreateCompatibleBitmap(tempDC,1,1);
 	HGDIOBJ hOldBmp=SelectObject(tempDC,hBmp);
-	// Create a GDI font object with all the font attributes fetched from Excel and load it into the device context. 
+	// Create a GDI font object with all the font attributes fetched from Excel and load it into the device context.
 	long dpi = GetDeviceCaps(tempDC, LOGPIXELSX);
 	long iFontWidth=0;
 	long iEscapement=0;
@@ -232,8 +232,8 @@ std::uint64_t getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			nvCellStates |= NvCellState::LINKED;
 		}
 	}
-	// Expose whether this cell's content flows outside the cell, 
-	// and if so, whether it is cropped by the next cell, or overflowing into the next cell. 
+	// Expose whether this cell's content flows outside the cell,
+	// and if so, whether it is cropped by the next cell, or overflowing into the next cell.
 	BOOL shrinkToFit=false;
 	res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_SHRINKTOFIT,VT_BOOL,&shrinkToFit);
 	if(FAILED(res)) {
@@ -459,9 +459,9 @@ error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const 
 	}
 	HWND hwnd=static_cast<HWND>(UlongToHandle(windowHandle));
 	long threadID=GetWindowThreadProcessId(hwnd,nullptr);
-	// Execute the following code in Excel's GUI thread. 
+	// Execute the following code in Excel's GUI thread.
 	execInThread(threadID,[&](){
-		// Fetch the Excel object model and create a range object for the given range address. 
+		// Fetch the Excel object model and create a range object for the given range address.
 		CComPtr<IDispatch> pDispatchWindow=nullptr;
 		HRESULT res=AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,reinterpret_cast<void**>(&pDispatchWindow));
 		if(res!=S_OK||!pDispatchWindow) {

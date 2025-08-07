@@ -1,14 +1,14 @@
-#NVDAObjects/IAccessible/SysMonthCal32.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# NVDAObjects/IAccessible/SysMonthCal32.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import controlTypes
 from . import IAccessible
 
-class SysMonthCal32(IAccessible):
 
+class SysMonthCal32(IAccessible):
 	def _get_role(self):
 		return controlTypes.Role.CALENDAR
 
@@ -16,9 +16,9 @@ class SysMonthCal32(IAccessible):
 		return ""
 
 	def _get_value(self):
-		return super(SysMonthCal32,self).name
+		return super(SysMonthCal32, self).name
 
-	def script_valueChange(self,gesture):
+	def script_valueChange(self, gesture):
 		gesture.send()
 		self.event_valueChange()
 

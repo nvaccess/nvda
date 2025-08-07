@@ -21,6 +21,7 @@ from typing import Optional, Union
 class FolderId(str, Enum):
 	"""Contains guids of known folders from Knownfolders.h. Full list is availabe at:
 	https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid"""
+
 	#: The file system directory that serves as a common repository for application-specific data.
 	#: A typical path is C:\Documents and Settings\username\Application Data.
 	ROAMING_APP_DATA = "{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}"
@@ -39,9 +40,9 @@ class FolderId(str, Enum):
 
 @functools.lru_cache(maxsize=128)
 def SHGetKnownFolderPath(
-		folderGuid: Union[FolderId, str],
-		dwFlags: int = 0,
-		hToken: Optional[int] = None
+	folderGuid: Union[FolderId, str],
+	dwFlags: int = 0,
+	hToken: Optional[int] = None,
 ) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""
@@ -54,7 +55,7 @@ def SHGetKnownFolderPath(
 		comtypes.byref(guid),
 		dwFlags,
 		hToken,
-		ctypes.byref(pathPointer)
+		ctypes.byref(pathPointer),
 	)
 	if res != 0:
 		raise RuntimeError(f"SHGetKnownFolderPath failed with error code {res}")

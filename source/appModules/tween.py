@@ -3,8 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""App module for Tween
-"""
+"""App module for Tween"""
 
 from typing import Optional
 import appModuleHandler
@@ -17,7 +16,6 @@ import locationHelper
 
 
 class TweetListItem(ListItem):
-
 	def initOverlayClass(self):
 		self._isGettingName = False
 
@@ -46,7 +44,7 @@ class TweetListItem(ListItem):
 			left, top, width, height = self._getColumnLocationRaw(index)
 			content = displayModel.DisplayModelTextInfo(
 				self,
-				locationHelper.RectLTRB(left, top, left + width, top + height)
+				locationHelper.RectLTRB(left, top, left + width, top + height),
 			).text
 			if content:
 				return content
@@ -54,7 +52,6 @@ class TweetListItem(ListItem):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_NVDAObject_init(self, obj):
 		if not isinstance(obj, Window):
 			return
@@ -66,7 +63,10 @@ class AppModule(appModuleHandler.AppModule):
 		if wclass == "Window.8" and role == controlTypes.Role.PANE:
 			# optimisation: There are quite a lot of these, so let's not instantiate parent NVDAObjects unnecessarily.
 			parentWindow = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
-			if parentWindow and Window.normalizeWindowClassName(winUser.getClassName(parentWindow)) == "SysTabControl32":
+			if (
+				parentWindow
+				and Window.normalizeWindowClassName(winUser.getClassName(parentWindow)) == "SysTabControl32"
+			):
 				obj.role = controlTypes.Role.PROPERTYPAGE
 
 		elif wclass == "SysTabControl32":

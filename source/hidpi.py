@@ -55,81 +55,81 @@ class HIDP_REPORT_TYPE(enum.IntEnum):
 
 class _HIDP_DATA_U1(Union):
 	_fields_ = [
-		('RawValue', ULONG),
-		('On', BOOLEAN),
+		("RawValue", ULONG),
+		("On", BOOLEAN),
 	]
 
 
 class HIDP_DATA(Structure):
 	_fields_ = [
-		('DataIndex', USHORT),
-		('Reserved', USHORT),
-		('u1', _HIDP_DATA_U1),
+		("DataIndex", USHORT),
+		("Reserved", USHORT),
+		("u1", _HIDP_DATA_U1),
 	]
 
 
 class _HIDP_VALUE_CAPS_U1_RANGE(Structure):
 	_fields_ = [
-		('UsageMin', USAGE),
-		('UsageMax', USAGE),
-		('StringMin', USHORT),
-		('StringMax', USHORT),
-		('DesignatorMin', USHORT),
-		('DesignatorMax', USHORT),
-		('DataIndexMin', USHORT),
-		('DataIndexMax', USHORT),
+		("UsageMin", USAGE),
+		("UsageMax", USAGE),
+		("StringMin", USHORT),
+		("StringMax", USHORT),
+		("DesignatorMin", USHORT),
+		("DesignatorMax", USHORT),
+		("DataIndexMin", USHORT),
+		("DataIndexMax", USHORT),
 	]
 
 
 class _HIDP_VALUE_CAPS_U1_NOT_RANGE(Structure):
 	_fields_ = [
-		('Usage', USAGE),
-		('Reserved1', USAGE),
-		('StringIndex', USHORT),
-		('Reserved2', USHORT),
-		('DesignatorIndex', USHORT),
-		('Reserved3', USHORT),
-		('DataIndex', USHORT),
-		('Reserved4', USHORT),
+		("Usage", USAGE),
+		("Reserved1", USAGE),
+		("StringIndex", USHORT),
+		("Reserved2", USHORT),
+		("DesignatorIndex", USHORT),
+		("Reserved3", USHORT),
+		("DataIndex", USHORT),
+		("Reserved4", USHORT),
 	]
 
 
 class _HIDP_VALUE_CAPS_U1(Union):
 	_fields_ = [
-		('Range', _HIDP_VALUE_CAPS_U1_RANGE),
-		('NotRange', _HIDP_VALUE_CAPS_U1_NOT_RANGE),
+		("Range", _HIDP_VALUE_CAPS_U1_RANGE),
+		("NotRange", _HIDP_VALUE_CAPS_U1_NOT_RANGE),
 	]
 
 
 class HIDP_VALUE_CAPS(Structure):
 	_fields_ = [
-		('UsagePage', USAGE),
-		('ReportID', UCHAR),
-		('IsAlias', BOOLEAN),
-		('BitField', USHORT),
-		('LinkCollection', USHORT),
-		('LinkUsage', USAGE),
-		('LinkUsagePage', USAGE),
-		('IsRange', BOOLEAN),
-		('IsStringRange', BOOLEAN),
-		('IsDesignatorRange', BOOLEAN),
-		('IsAbsolute', BOOLEAN),
-		('HasNull', BOOLEAN),
-		('Reserved1', UCHAR),
-		('BitSize', USHORT),
-		('ReportCount', USHORT),
-		('Reserved2', USHORT * 5),
-		('UnitsExp', ULONG),
-		('Units', ULONG),
-		('LogiclMin', LONG),
-		('LogicalMax', LONG),
-		('PhysicalMin', LONG),
-		('PhysicalMax', LONG),
-		('u1', _HIDP_VALUE_CAPS_U1),
+		("UsagePage", USAGE),
+		("ReportID", UCHAR),
+		("IsAlias", BOOLEAN),
+		("BitField", USHORT),
+		("LinkCollection", USHORT),
+		("LinkUsage", USAGE),
+		("LinkUsagePage", USAGE),
+		("IsRange", BOOLEAN),
+		("IsStringRange", BOOLEAN),
+		("IsDesignatorRange", BOOLEAN),
+		("IsAbsolute", BOOLEAN),
+		("HasNull", BOOLEAN),
+		("Reserved1", UCHAR),
+		("BitSize", USHORT),
+		("ReportCount", USHORT),
+		("Reserved2", USHORT * 5),
+		("UnitsExp", ULONG),
+		("Units", ULONG),
+		("LogiclMin", LONG),
+		("LogicalMax", LONG),
+		("PhysicalMin", LONG),
+		("PhysicalMax", LONG),
+		("u1", _HIDP_VALUE_CAPS_U1),
 	]
 
 
-class HIDP_CAPS (Structure):
+class HIDP_CAPS(Structure):
 	_fields_ = (
 		("Usage", USHORT),
 		("UsagePage", USHORT),
@@ -146,5 +146,5 @@ class HIDP_CAPS (Structure):
 		("NumberOutputDataIndices", USHORT),
 		("NumberFeatureButtonCaps", USHORT),
 		("NumberFeatureValueCaps", USHORT),
-		("NumberFeatureDataIndices", USHORT)
+		("NumberFeatureDataIndices", USHORT),
 	)

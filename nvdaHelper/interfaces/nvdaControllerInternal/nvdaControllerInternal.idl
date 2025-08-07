@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
+Copyright 2006-2025 NV Access Limited, rui Batista, Google LLC, Christopher Toth.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -102,4 +102,10 @@ interface NvdaControllerInternal {
  * Asks NVDA to open currently used configuration directory.
  */
 	error_status_t __stdcall openConfigDirectory();
+
+/**
+ * Handles a remote URL request from the slave process.
+ * @param url The nvdaremote:// URL to process.
+ */
+	error_status_t __stdcall handleRemoteURL([in,string] const wchar_t* url);
 };

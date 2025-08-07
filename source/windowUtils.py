@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013 NV Access Limited
+# Copyright (C) 2013-2023 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,13 +12,15 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import weakref
 import winUser
-from winUser import WNDCLASSEXW, WNDPROC, LRESULT
+from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from typing import Optional
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
+
+
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	"""Find a descendant window matching specified criteria.
 	@param parent: The handle of the parent window to search within.
@@ -35,6 +37,7 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	"""
 	# We need something mutable to store the result from the callback.
 	result = []
+
 	@WNDENUMPROC
 	def callback(window, data):
 		if (
@@ -45,11 +48,13 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 			result.append(window)
 			return False
 		return True
+
 	ctypes.windll.user32.EnumChildWindows(parent, callback, 0)
 	try:
 		return result[0]
 	except IndexError:
 		raise LookupError("No matching descendant window found")
+
 
 try:
 	# Windows >= 8.1
@@ -64,6 +69,7 @@ except AttributeError:
 		# Windows <= XP
 		_logicalToPhysicalPoint = None
 		_physicalToLogicalPoint = None
+
 
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
@@ -82,6 +88,7 @@ def logicalToPhysicalPoint(window, x, y):
 	_logicalToPhysicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
+
 def physicalToLogicalPoint(window, x, y):
 	"""Converts the physical coordinates of a point in a window to logical coordinates.
 	This should be used when sending points directly to a window that is not DPI aware.
@@ -99,13 +106,14 @@ def physicalToLogicalPoint(window, x, y):
 	_physicalToLogicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
-DEFAULT_DPI_LEVEL = 96.0
+
+DEFAULT_DPI_LEVEL = 96
 # The constant (defined in winGdi.h) to get the number of logical pixels per inch on the x axis
 # via the GetDeviceCaps function.
 LOGPIXELSX = 88
 
 
-def getWindowScalingFactor(window: int) -> float:
+def getWindowScalingFactor(window: int) -> int:
 	"""Gets the logical scaling factor used for the given window handle. This is based off the Dpi reported by windows
 	for the given window handle / divided by the "base" DPI level of 96. Typically this is a result of using the scaling
 	percentage in the windows display settings. 100% is typically 96 DPI, 150% is typically 144 DPI.
@@ -114,7 +122,7 @@ def getWindowScalingFactor(window: int) -> float:
 	user32 = ctypes.windll.user32
 	try:
 		winDpi: int = user32.GetDpiForWindow(window)
-	except:
+	except:  # noqa: E722
 		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
 		winDpi: int = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
@@ -126,13 +134,14 @@ def getWindowScalingFactor(window: int) -> float:
 	# There is little information about what GetDeviceCaps does in the case of a failure for LOGPIXELSX, however,
 	# a value of zero is certainly an error.
 	if winDpi <= 0:
-		log.debugWarning("Failed to get the DPI for the window, assuming a "
-		                 "DPI of {} and using a scaling of 1.0. The hWnd value "
-		                 "used was: {}".format(DEFAULT_DPI_LEVEL, window))
-		return 1.0
+		log.debugWarning(
+			"Failed to get the DPI for the window, assuming a "
+			"DPI of {} and using a scaling of 1. The hWnd value "
+			"used was: {}".format(DEFAULT_DPI_LEVEL, window),
+		)
+		return 1
 
-	return winDpi / DEFAULT_DPI_LEVEL
-
+	return round(winDpi / DEFAULT_DPI_LEVEL)
 
 
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
@@ -145,6 +154,7 @@ class CustomWindow(AutoPropertyObject):
 	The window will be destroyed when the instance is deleted,
 	but it can be explicitly destroyed using L{destroy}.
 	"""
+
 	handle: Optional[int] = None
 
 	@classmethod
@@ -177,11 +187,11 @@ class CustomWindow(AutoPropertyObject):
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
 	def __init__(
-			self,
-			windowName: Optional[str] = None,
-			windowStyle: int = 0,
-			extendedWindowStyle: int = 0,
-			parent: Optional[int] = None
+		self,
+		windowName: Optional[str] = None,
+		windowStyle: int = 0,
+		extendedWindowStyle: int = 0,
+		parent: Optional[int] = None,
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
@@ -217,7 +227,7 @@ class CustomWindow(AutoPropertyObject):
 			parent,
 			None,
 			appInstance,
-			None
+			None,
 		)
 		if res == 0:
 			raise ctypes.WinError()
@@ -231,12 +241,15 @@ class CustomWindow(AutoPropertyObject):
 		but you may wish to call it earlier.
 		"""
 		if not ctypes.windll.user32.DestroyWindow(self.handle):
-			log.error(f"Error destroying window for {self.__class__.__qualname__}", exc_info=ctypes.WinError())
+			log.error(
+				f"Error destroying window for {self.__class__.__qualname__}",
+				exc_info=ctypes.WinError(),
+			)
 		self.handle = None
 		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",
-				exc_info=ctypes.WinError()
+				exc_info=ctypes.WinError(),
 			)
 		self._classAtom = None
 
@@ -273,6 +286,6 @@ class CustomWindow(AutoPropertyObject):
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
 			if res is not None:
 				return res
-		except:
+		except:  # noqa: E722
 			log.exception("Error in wndProc")
 		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)

@@ -7,12 +7,13 @@ from collections import OrderedDict
 import synthDriverHandler
 from speech.commands import IndexCommand
 
+
 class SynthDriver(synthDriverHandler.SynthDriver):
-	"""A dummy synth driver used to disable speech in NVDA.
-	"""
-	name="silence"
+	"""A dummy synth driver used to disable speech in NVDA."""
+
+	name = "silence"
 	# Translators: Description for a speech synthesizer.
-	description=_("No speech")
+	description = _("No speech")
 
 	@classmethod
 	def check(cls):

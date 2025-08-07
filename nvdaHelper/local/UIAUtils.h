@@ -12,4 +12,3 @@ int registerUIAAnnotationType(GUID* guid);
 
 
 #endif
-

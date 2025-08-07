@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop";
-$sconsOutTargets = "launcher developerGuide  changes userGuide client"
-if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+$sconsOutTargets = "launcher developerGuide changes userGuide keyCommands client moduleList"
+if(!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_buildAppx) {
 	$sconsOutTargets += " appx"
 }
 $sconsArgs = "version=$env:version"
@@ -10,9 +10,9 @@ if ($env:release) {
 if ($env:versionType) {
 	$sconsArgs += " updateVersionType=$env:versionType"
 }
-$sconsArgs += ' publisher="NV Access"'
-if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-	$sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+$sconsArgs += " publisher=`"$env:scons_publisher`""
+if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_signing) {
+	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
 # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.

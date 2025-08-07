@@ -1,37 +1,44 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2006-2010 NVDA contributers.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 Import(
-	'env',
-	'sourceDir',
-	'clientDir',
-	'sourceLibDir',
-	'sourceLibDir64',
+	"env",
+	"sourceDir",
+	"clientDir",
+	"sourceLibDir",
+	"sourceLibDir64",
 )
 
-archLibInstallDirs={
-	'x86':sourceLibDir,
-	'x86_64':sourceLibDir64,
+archLibInstallDirs = {
+	"x86": sourceLibDir,
+	"x86_64": sourceLibDir64,
 }
 
-archClientInstallDirs={
-	'x86':clientDir.Dir('x86'),
-	'x86_64':clientDir.Dir('x64'),
+archClientInstallDirs = {
+	"x86": clientDir.Dir("x86"),
+	"x86_64": clientDir.Dir("x64"),
 }
 
-#Build nvdaHelper for needed architectures
-for arch in env['targetArchitectures']: 
-	archEnv = env.Clone(TARGET_ARCH = arch, HOST_ARCH = 'x86', tools = ['default', 'midl', 'msrpc'])
-	archEnv.SConscript('archBuild_sconscript',exports={'env':archEnv,'clientInstallDir':archClientInstallDirs[arch],'libInstallDir':archLibInstallDirs[arch]},variant_dir='build/%s'%arch)
-
+# Build nvdaHelper for needed architectures
+for arch in env["targetArchitectures"]:
+	archEnv = env.Clone(TARGET_ARCH=arch, HOST_ARCH="x86", tools=["default", "midl", "msrpc"])
+	archEnv.SConscript(
+		"archBuild_sconscript",
+		exports={
+			"env": archEnv,
+			"clientInstallDir": archClientInstallDirs[arch],
+			"libInstallDir": archLibInstallDirs[arch],
+		},
+		variant_dir="build/%s" % arch,
+	)

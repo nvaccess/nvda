@@ -2,10 +2,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2014-2022 NV Access Limited
+# Copyright (C) 2014-2023 NV Access Limited, Cyrille Bougot
 
-"""Support for math presentation using MathPlayer 4.
-"""
+"""Support for math presentation using MathPlayer 4."""
 
 import re
 from typing import (
@@ -14,12 +13,19 @@ from typing import (
 
 import comtypes.client
 from comtypes import COMError
-from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
+from comtypes.gen.MathPlayer import (  # type: ignore[reportMissingImports]
+	MPInterface,
+	IMathSpeech,
+	IMathSpeechSettings,
+	IMathNavigation,
+	IMathBraille,
+)
 import speech
 from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
+import config
 
 from speech.commands import (
 	PitchCommand,
@@ -48,12 +54,15 @@ RE_MP_SPEECH = re.compile(
 	# Commas indicating pauses in navigation messages.
 	r"| ?(?P<comma>,) ?"
 	# Actual content.
-	r"|(?P<content>[^<,]+)")
+	r"|(?P<content>[^<,]+)",
+)
 PROSODY_COMMANDS = {
 	"pitch": PitchCommand,
 	"volume": VolumeCommand,
 	"rate": RateCommand,
 }
+
+
 def _processMpSpeech(text, language):
 	# MathPlayer's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
@@ -68,7 +77,10 @@ def _processMpSpeech(text, language):
 		if m.lastgroup == "break":
 			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			if config.conf["speech"][synth.name]["useSpellingFunctionality"]:
+				out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			else:
+				out.append(m.group("char"))
 		elif m.lastgroup == "comma":
 			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
@@ -87,8 +99,8 @@ def _processMpSpeech(text, language):
 		out.append(LangChangeCommand(None))
 	return out
 
-class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
+class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 	def __init__(self, provider=None, mathMl=None):
 		super(MathPlayerInteraction, self).__init__(provider=provider, mathMl=mathMl)
 		provider._setSpeechLanguage(mathMl)
@@ -96,12 +108,16 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def reportFocus(self):
 		super(MathPlayerInteraction, self).reportFocus()
-		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
-			self.provider._language))
+		speech.speak(
+			_processMpSpeech(
+				self.provider._mpSpeech.GetSpokenText(),
+				self.provider._language,
+			),
+		)
 
 	def getBrailleRegions(
-			self,
-			review: bool = False,
+		self,
+		review: bool = False,
 	) -> Generator[braille.Region, None, None]:
 		if objectBelowLockScreenAndWindowsIsLocked(self):
 			return
@@ -114,13 +130,24 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def getScript(self, gesture):
 		# Pass most keys to MathPlayer. Pretty ugly.
-		if isinstance(gesture, KeyboardInputGesture) and "NVDA" not in gesture.modifierNames and (
-			gesture.mainKeyName in {
-				"leftArrow", "rightArrow", "upArrow", "downArrow",
-				"home", "end",
-				"space", "backspace", "enter",
-			}
-			or len(gesture.mainKeyName) == 1
+		if (
+			isinstance(gesture, KeyboardInputGesture)
+			and "NVDA" not in gesture.modifierNames
+			and (
+				gesture.mainKeyName
+				in {
+					"leftArrow",
+					"rightArrow",
+					"upArrow",
+					"downArrow",
+					"home",
+					"end",
+					"space",
+					"backspace",
+					"enter",
+				}
+				or len(gesture.mainKeyName) == 1
+			)
 		):
 			return self.script_navigate
 		return super(MathPlayerInteraction, self).getScript(gesture)
@@ -128,14 +155,19 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 	def script_navigate(self, gesture):
 		modNames = gesture.modifierNames
 		try:
-			text = self.provider._mpNavigation.DoNavigateKeyPress(gesture.vkCode,
-				"shift" in modNames, "control" in modNames, "alt" in modNames, False)
+			text = self.provider._mpNavigation.DoNavigateKeyPress(
+				gesture.vkCode,
+				"shift" in modNames,
+				"control" in modNames,
+				"alt" in modNames,
+				False,
+			)
 		except COMError:
 			return
 		speech.speak(_processMpSpeech(text, self.provider._language))
 
-class MathPlayer(mathPres.MathPresentationProvider):
 
+class MathPlayer(mathPres.MathPresentationProvider):
 	def __init__(self):
 		mpSpeech = self._mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
 		mpSpeechSettings = self._mpSpeechSettings = mpSpeech.QueryInterface(IMathSpeechSettings)

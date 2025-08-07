@@ -2,14 +2,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Leonard de Ruijter, Julien Cochuyt
-
-import watchdog
+# Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
+import watchdog
 import builtins
 import os
 from typing import Sequence
@@ -29,19 +28,22 @@ import gui
 from logHandler import log
 import braille
 import gui.contextHelp
+import textInfos
+
 
 class HelpCommand(object):
 	"""
 	Emulation of the 'help' command found in the Python interactive shell.
 	"""
 
-	_reprMessage=_("Type help(object) to get help about object.")
+	_reprMessage = _("Type help(object) to get help about object.")
 
 	def __repr__(self):
 		return self._reprMessage
 
-	def __call__(self,*args,**kwargs):
-		return pydoc.help(*args,**kwargs)
+	def __call__(self, *args, **kwargs):
+		return pydoc.help(*args, **kwargs)
+
 
 class ExitConsoleCommand(object):
 	"""
@@ -51,21 +53,77 @@ class ExitConsoleCommand(object):
 	def __init__(self, exitFunc):
 		self._exitFunc = exitFunc
 
-	_reprMessage=_("Type exit() to exit the console")
+	_reprMessage = _("Type exit() to exit the console")
+
 	def __repr__(self):
 		return self._reprMessage
 
 	def __call__(self):
 		self._exitFunc()
 
+
 #: The singleton Python console UI instance.
 consoleUI = None
 
+
 class Completer(rlcompleter.Completer):
+	def attr_matches(self, text: str) -> list[str]:
+		"""attr_matches implementation as used in Python 3.9.
+		In Python 3.10, attr_matches was changed in a way that filtered out property descriptors,
+		but more importantly, no longer catches exceptions when calling getattr.
+		This causes serious issues for baseObject.Getter descriptors
+		when a getter raises NotImplementedError, for example (#15872).
+		"""
+		import re
+
+		m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
+		if not m:
+			return []
+		expr, attr = m.group(1, 3)
+		try:
+			thisobject = eval(expr, self.namespace)
+		except Exception:
+			return []
+
+		# get the content of the object, except __builtins__
+		words = set(dir(thisobject))
+		words.discard("__builtins__")
+
+		if hasattr(thisobject, "__class__"):
+			words.add("__class__")
+			words.update(rlcompleter.get_class_members(thisobject.__class__))
+		matches = []
+		n = len(attr)
+		if attr == "":
+			noprefix = "_"
+		elif attr == "_":
+			noprefix = "__"
+		else:
+			noprefix = None
+		while True:
+			for word in words:
+				if word[:n] == attr and not (noprefix and word[: n + 1] == noprefix):
+					match = f"{expr}.{word}"
+					try:
+						val = getattr(thisobject, word)
+					except Exception:
+						pass  # Include even if attribute not set
+					else:
+						match = self._callable_postfix(val, match)
+					matches.append(match)
+			if matches or not noprefix:
+				break
+			if noprefix == "_":
+				noprefix = "__"
+			else:
+				noprefix = None
+		matches.sort()
+		return matches
 
 	def _callable_postfix(self, val, word):
 		# Just because something is callable doesn't always mean we want to call it.
 		return word
+
 
 class CommandCompiler(codeop.CommandCompiler):
 	"""
@@ -86,6 +144,7 @@ class CommandCompiler(codeop.CommandCompiler):
 		except:
 			self.error = True
 			raise
+
 
 class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	"""An interactive Python console for NVDA which directs output to supplied functions.
@@ -138,7 +197,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		sys.stdout, sys.stderr = stdout, stderr
 		if builtins._ is not saved_:
 			self.lastResult = builtins._
-			# Preserve the namespace if gettext has explicitly been pushed there 
+			# Preserve the namespace if gettext has explicitly been pushed there
 			if "_" not in self.namespace or self.namespace["_"] is not saved_:
 				self.namespace["_"] = builtins._
 		builtins._ = saved_
@@ -158,35 +217,36 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		sys.excepthook = excepthook
 
 	def initNamespace(self):
-		"""(Re-)Initialize the console namespace with useful globals.
-		"""
+		"""(Re-)Initialize the console namespace with useful globals."""
 		exitCmd = ExitConsoleCommand(self._exit)
 		import appModules
 		import config
 		import controlTypes
 		import globalPlugins
-		import textInfos
 		import vision
+
 		self.namespace.clear()
-		self.namespace.update({
-			"help": HelpCommand(),
-			"exit": exitCmd,
-			"quit": exitCmd,
-			"os": os,
-			"sys": sys,
-			"wx": wx,
-			"api": api,
-			"appModules": appModules,
-			"braille": braille,
-			"config": config,
-			"controlTypes": controlTypes,
-			"globalPlugins": globalPlugins,
-			"log": log,
-			"queueHandler": queueHandler,
-			"speech": speech,
-			"textInfos": textInfos,
-			"vision": vision,
-		})
+		self.namespace.update(
+			{
+				"help": HelpCommand(),
+				"exit": exitCmd,
+				"quit": exitCmd,
+				"os": os,
+				"sys": sys,
+				"wx": wx,
+				"api": api,
+				"appModules": appModules,
+				"braille": braille,
+				"config": config,
+				"controlTypes": controlTypes,
+				"globalPlugins": globalPlugins,
+				"log": log,
+				"queueHandler": queueHandler,
+				"speech": speech,
+				"textInfos": textInfos,
+				"vision": vision,
+			},
+		)
 
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
@@ -194,25 +254,35 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		Typically, used before the NVDA python console is opened, after which, calls
 		to the 'api' module will refer to this new focus.
 		"""
-		try:
-			caretPos = api.getCaretPosition()
-		except RuntimeError:
-			log.debug("Unable to set caretPos snapshot variable for python console.")
-			caretPos = None
 
-		self._namespaceSnapshotVars = {
-			"focus": api.getFocusObject(),
+		def _getCaretPos() -> textInfos.TextInfo | None:
+			try:
+				return api.getCaretPosition()
+			except RuntimeError:
+				log.debug("Unable to set caretPos snapshot variable for python console.")
+				return None
+
+		self._namespaceSnapshotVarsGetters = {
+			"focus": api.getFocusObject,
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
-			"focusAnc": list(api.getFocusAncestors()),
-			"fdl": api.getFocusDifferenceLevel(),
-			"fg": api.getForegroundObject(),
-			"nav": api.getNavigatorObject(),
-			"caretObj": api.getCaretObject(),
-			"caretPos": caretPos,
-			"review": api.getReviewPosition(),
-			"mouse": api.getMouseObject(),
-			"brlRegions": braille.handler.buffer.regions,
+			"focusAnc": (lambda: list(api.getFocusAncestors())),
+			"fdl": api.getFocusDifferenceLevel,
+			"fg": api.getForegroundObject,
+			"nav": api.getNavigatorObject,
+			"caretObj": api.getCaretObject,
+			"caretPos": _getCaretPos,
+			"review": api.getReviewPosition,
+			"mouse": api.getMouseObject,
+			"brlRegions": (lambda: braille.handler.buffer.regions),
 		}
+		self._namespaceSnapshotVars = {}
+		for name, getter in self._namespaceSnapshotVarsGetters.items():
+			try:
+				value = getter()
+			except Exception:
+				log.error(f"Unable to set {name} snapshot variable for python console.", exc_info=True)
+				value = None
+			self._namespaceSnapshotVars[name] = value
 		self.namespace.update(self._namespaceSnapshotVars)
 
 	def removeNamespaceSnapshotVars(self):
@@ -230,12 +300,11 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 
 
 class ConsoleUI(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	"""The NVDA Python console GUI.
-	"""
-	
+	"""The NVDA Python console GUI."""
+
 	helpId = "PythonConsole"
 
 	def __init__(self, parent):
@@ -243,7 +312,15 @@ class ConsoleUI(
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		self.outputCtrl = wx.TextCtrl(
+			self,
+			wx.ID_ANY,
+			size=(500, 500),
+			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
+		)
+		font = self.outputCtrl.GetFont()
+		font.SetFaceName("Consolas")
+		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
@@ -251,14 +328,24 @@ class ConsoleUI(
 		self.promptLabel = wx.StaticText(self, wx.ID_ANY)
 		inputSizer.Add(self.promptLabel, flag=wx.EXPAND)
 		self.inputCtrl = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_DONTWRAP | wx.TE_PROCESS_TAB)
+		font = self.inputCtrl.GetFont()
+		font.SetFaceName("Consolas")
+		self.inputCtrl.SetFont(font)
 		self.inputCtrl.Bind(wx.EVT_CHAR, self.onInputChar)
 		self.inputCtrl.Bind(wx.EVT_TEXT_PASTE, self.onInputPaste)
+		self.inputCtrl.Bind(wx.EVT_TEXT, self.onInputTextChange)
+		self.inputTextModified = False
 		inputSizer.Add(self.inputCtrl, proportion=1, flag=wx.EXPAND)
 		mainSizer.Add(inputSizer, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 
-		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
+		self.console = PythonConsole(
+			outputFunc=self.output,
+			echoFunc=self.echo,
+			setPromptFunc=self.setPrompt,
+			exitFunc=self.Close,
+		)
 		self.completer = Completer(namespace=self.console.namespace)
 		self.completionAmbiguous = False
 		# Even the most recent line has a position in the history, so initialise with one blank line.
@@ -281,8 +368,7 @@ class ConsoleUI(
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, data)
 
 	def clear(self):
-		"""Clear the output.
-		"""
+		"""Clear the output."""
 		self.outputCtrl.Clear()
 		self.outputPositions[:] = [0]
 
@@ -314,15 +400,17 @@ class ConsoleUI(
 			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
+		if self.inputTextModified:
+			self.inputHistoryPos = len(self.inputHistory) - 1
+			self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		newIndex = self.inputHistoryPos + movement
 		if not (0 <= newIndex < len(self.inputHistory)):
 			# No more lines in this direction.
 			return False
-		# Update the content of the history at the current position.
-		self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		self.inputHistoryPos = newIndex
 		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()
+		self.inputTextModified = False
 		return True
 
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
@@ -339,11 +427,13 @@ class ConsoleUI(
 			menu = wx.Menu()
 			for comp in completions:
 				# Only show text after the last dot (so as to not keep repeting the class or module in the context menu)
-				label=comp.rsplit('.',1)[-1]
+				label = comp.rsplit(".", 1)[-1]
 				item = menu.Append(wx.ID_ANY, label)
-				self.Bind(wx.EVT_MENU,
+				self.Bind(
+					wx.EVT_MENU,
 					lambda evt, completion=comp: self._insertCompletion(original, completion),
-					item)
+					item,
+				)
 			self.PopupMenu(menu)
 			menu.Destroy()
 			return True
@@ -392,7 +482,7 @@ class ConsoleUI(
 
 	def _insertCompletion(self, original, completed):
 		self.completionAmbiguous = False
-		insert = completed[len(original):]
+		insert = completed[len(original) :]
 		if not insert:
 			return
 		inputCtrl = self.inputCtrl
@@ -428,7 +518,7 @@ class ConsoleUI(
 			self.Close()
 			return
 		evt.Skip()
-	
+
 	def onInputPaste(self, evt):
 		cpText = api.getClipData()
 		if not cpText.strip():
@@ -458,6 +548,10 @@ class ConsoleUI(
 				self.inputCtrl.ChangeValue(suffix)
 				break
 
+	def onInputTextChange(self, evt: wx.CommandEvent):
+		self.inputTextModified = True
+		evt.Skip()
+
 	def onOutputKeyDown(self, evt):
 		key = evt.GetKeyCode()
 		# #3763: WX 3 no longer passes escape to evt_char for richEdit fields, therefore evt_key_down is used.
@@ -473,12 +567,14 @@ class ConsoleUI(
 			return
 		evt.Skip()
 
+
 def initialize():
 	"""Initialize the NVDA Python console GUI.
 	This creates a singleton instance of the console GUI. This is accessible as L{consoleUI}. This may be manipulated externally.
 	"""
 	global consoleUI
 	consoleUI = ConsoleUI(gui.mainFrame)
+
 
 def activate():
 	"""Activate the console GUI.

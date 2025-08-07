@@ -1,22 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Bill Dengler
+# Copyright (C) 2020-2025 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import config
-import globalVars
-import os
-import struct
-import subprocess
-import sys
+import fast_diff_match_patch
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from difflib import ndiff
 from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
-from threading import Lock
 from typing import List
-import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -30,89 +24,32 @@ class DiffAlgo(AutoPropertyObject):
 
 
 class DiffMatchPatch(DiffAlgo):
-	"""A character-based diffing approach, using the Google Diff Match Patch
-	library in a proxy process (to work around a licence conflict).
 	"""
-	#: A subprocess.Popen object for the nvda_dmp process.
-	_proc = None
-	#: A lock to control access to the nvda_dmp process.
-	#: Control access to avoid synchronization problems if multiple threads
-	#: attempt to use nvda_dmp at the same time.
-	_lock = Lock()
+	A character-based diffing approach, using the Google Diff Match
+	Patch library.
+	"""
 
-	def _initialize(self):
-		"""Start the nvda_dmp process if it is not already running.
-		@note: This should be run from within the context of an acquired lock."""
-		if not DiffMatchPatch._proc:
-			log.debug("Starting diff-match-patch proxy")
-			if NVDAState.isRunningAsSource():
-				dmp_path = (sys.executable, os.path.join(
-					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-				))
-			else:
-				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-			DiffMatchPatch._proc = subprocess.Popen(
-				dmp_path,
-				creationflags=subprocess.CREATE_NO_WINDOW,
-				bufsize=0,
-				stdin=subprocess.PIPE,
-				stdout=subprocess.PIPE
-			)
+	_GOOD_LINE_ENDINGS = ("\n", "\r")
 
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		try:
-			if not newText and not oldText:
-				# Return an empty list here to avoid exiting
-				# nvda_dmp uses two zero-length texts as a sentinal value
-				return []
-			with DiffMatchPatch._lock:
-				self._initialize()
-				old = oldText.encode("utf-8")
-				new = newText.encode("utf-8")
-				# Sizes are packed as 32-bit ints in native byte order.
-				# Since nvda and nvda_dmp are running on the same Python
-				# platform/version, this is okay.
-				tl = struct.pack("=II", len(old), len(new))
-				DiffMatchPatch._proc.stdin.write(tl)
-				DiffMatchPatch._proc.stdin.write(old)
-				DiffMatchPatch._proc.stdin.write(new)
-				buf = b""
-				sizeb = b""
-				SIZELEN = 4
-				while len(sizeb) < SIZELEN:
-					try:
-						sizeb += DiffMatchPatch._proc.stdout.read(SIZELEN - len(sizeb))
-					except TypeError:
-						pass
-				(size,) = struct.unpack("=I", sizeb)
-				while len(buf) < size:
-					buf += DiffMatchPatch._proc.stdout.read(size - len(buf))
-				DiffMatchPatch._proc.stdin.flush()
-				DiffMatchPatch._proc.stdout.flush()
-				return [
-					line
-					for line in buf.decode("utf-8").splitlines()
-					if line and not line.isspace()
-				]
+			outLines: List[str] = []
+			for op, text in fast_diff_match_patch.diff(oldText, newText, counts_only=False):
+				if op != "+":
+					continue
+				# Ensure a trailing newline so .splitlines() keeps the final fragment
+				if not text.endswith(self._GOOD_LINE_ENDINGS):
+					text += "\n"
+				for line in text.splitlines():
+					if line and not line.isspace():
+						outLines.append(line)
+			return outLines
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
-			self._terminate()
-			return Difflib().diff(newText, oldText)
-
-	def _terminate(self):
-		with DiffMatchPatch._lock:
-			if DiffMatchPatch._proc:
-				log.debug("Terminating diff-match-patch proxy")
-				# nvda_dmp exits when it receives two zero-length texts.
-				try:
-					DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
-					DiffMatchPatch._proc.wait(timeout=5)
-				except Exception:
-					log.exception("Exception during DMP termination")
-				DiffMatchPatch._proc = None
+			return _difflib.diff(newText, oldText)
 
 
 class Difflib(DiffAlgo):
@@ -179,28 +116,20 @@ class Difflib(DiffAlgo):
 
 def prefer_dmp():
 	"""
-		This function returns a Diff Match Patch object if allowed by the user.
-		DMP is new and can be explicitly disabled by a user setting. If config
-		does not allow DMP, this function returns a Difflib instance instead.
+	This function returns a Diff Match Patch object if allowed by the user.
+	DMP is new and can be explicitly disabled by a user setting. If config
+	does not allow DMP, this function returns a Difflib instance instead.
 	"""
-	return (
-		_difflib
-		if config.conf["terminals"]["diffAlgo"] == "difflib"
-		else _dmp
-	)
+	return _difflib if config.conf["terminals"]["diffAlgo"] == "difflib" else _dmp
 
 
 def prefer_difflib():
 	"""
-		This function returns a Difflib object if allowed by the user.
-		Difflib can be explicitly disabled by a user setting. If config
-		does not allow Difflib, this function returns a DMP instance instead.
+	This function returns a Difflib object if allowed by the user.
+	Difflib can be explicitly disabled by a user setting. If config
+	does not allow Difflib, this function returns a DMP instance instead.
 	"""
-	return (
-		_dmp
-		if config.conf["terminals"]["diffAlgo"] == "dmp"
-		else _difflib
-	)
+	return _dmp if config.conf["terminals"]["diffAlgo"] == "dmp" else _difflib
 
 
 _difflib = Difflib()

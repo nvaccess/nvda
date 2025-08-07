@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
@@ -13,9 +13,9 @@ from logHandler import log
 import config
 import controlTypes
 import api
+import systemUtils
 import textInfos
 import queueHandler
-import winKernel
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 from .commands import CallbackCommand, EndUtteranceCommand
@@ -45,10 +45,10 @@ SayAllHandler = None
 
 
 def initialize(
-		speakFunc: Callable[[SpeechSequence], None],
-		speakObject: 'speakObject',
-		getTextInfoSpeech: 'getTextInfoSpeech',
-		SpeakTextInfoState: 'SpeakTextInfoState',
+	speakFunc: Callable[[SpeechSequence], None],
+	speakObject: "speakObject",
+	getTextInfoSpeech: "getTextInfoSpeech",
+	SpeakTextInfoState: "SpeakTextInfoState",
 ):
 	log.debug("Initializing sayAllHandler")
 	global SayAllHandler
@@ -62,25 +62,25 @@ def initialize(
 
 class _SayAllHandler:
 	def __init__(
-			self,
-			speechWithoutPausesInstance: SpeechWithoutPauses,
-			speakObject: 'speakObject',
-			getTextInfoSpeech: 'getTextInfoSpeech',
-			SpeakTextInfoState: 'SpeakTextInfoState',
+		self,
+		speechWithoutPausesInstance: SpeechWithoutPauses,
+		speakObject: "speakObject",
+		getTextInfoSpeech: "getTextInfoSpeech",
+		SpeakTextInfoState: "SpeakTextInfoState",
 	):
 		self.lastSayAllMode = None
 		self.speechWithoutPausesInstance = speechWithoutPausesInstance
 		#: The active say all manager.
 		#: This is a weakref because the manager should be allowed to die once say all is complete.
-		self._getActiveSayAll = lambda: None  # noqa: Return None when called like a dead weakref.
+		self._getActiveSayAll = lambda: None  # Return None when called like a dead weakref.
 		self._speakObject = speakObject
 		self._getTextInfoSpeech = getTextInfoSpeech
 		self._makeSpeakTextInfoState = SpeakTextInfoState
 
 	def stop(self):
-		'''
+		"""
 		Stops any active objects reader and resets the SayAllHandler's SpeechWithoutPauses instance
-		'''
+		"""
 		active = self._getActiveSayAll()
 		if active:
 			active.stop()
@@ -93,19 +93,37 @@ class _SayAllHandler:
 		"""
 		return bool(self._getActiveSayAll())
 
-	def readObjects(self, obj: 'NVDAObjects.NVDAObject'):
+	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool | None = False):
+		"""Start or restarts the object reader.
+		:param obj: the object to be read
+		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			the last value unmodified, e.g. when the say all action is resumed during skim reading.
+		"""
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
 		self._getActiveSayAll = weakref.ref(reader)
 		reader.next()
 
 	def readText(
-			self,
-			cursor: CURSOR,
-			startPos: Optional[textInfos.TextInfo] = None,
-			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
-			shouldUpdateCaret: bool = True,
+		self,
+		cursor: CURSOR,
+		startPos: Optional[textInfos.TextInfo] = None,
+		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		shouldUpdateCaret: bool = True,
+		startedFromScript: bool | None = False,
 	) -> None:
+		"""Start or restarts the reader
+		:param cursor: the type of cursor used for say all
+		:param startPos: start position (only used for table say all)
+		:param nextLineFunc: function called to read the next line (only used for table say all)
+		:param shouldUpdateCaret: whether the caret should be updated during say all (only used for table say all)
+		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			the last value unmodified, e.g. when the say all action is resumed during skim reading.
+		"""
 		self.lastSayAllMode = cursor
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		try:
 			if cursor == CURSOR.CARET:
 				reader = _CaretTextReader(self)
@@ -119,23 +137,43 @@ class _SayAllHandler:
 			log.debugWarning("Unable to make reader", exc_info=True)
 			return
 		self._getActiveSayAll = weakref.ref(reader)
-		reader.nextLine()
+		reader.next()
 
 
-class _ObjectsReader(garbageHandler.TrackedObject):
+class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
+	"""Base class for readers in say all."""
 
-	def __init__(self, handler: _SayAllHandler, root: 'NVDAObjects.NVDAObject'):
+	def __init__(self, handler: _SayAllHandler):
 		self.handler = handler
+		systemUtils.preventSystemIdle(persistent=True)
+
+	@abstractmethod
+	def next(self): ...
+
+	@abstractmethod
+	def stop(self):
+		"""Stops the reader."""
+		systemUtils.resetThreadExecutionState()
+
+	def __del__(self):
+		self.stop()
+
+
+class _ObjectsReader(_Reader):
+	"""Manages continuous reading of objects."""
+
+	def __init__(self, handler: _SayAllHandler, root: "NVDAObjects.NVDAObject"):
+		super().__init__(handler)
 		self.walker = self.walk(root)
 		self.prevObj = None
 
-	def walk(self, obj: 'NVDAObjects.NVDAObject'):
+	def walk(self, obj: "NVDAObjects.NVDAObject"):
 		yield obj
-		child=obj.simpleFirstChild
+		child = obj.simpleFirstChild
 		while child:
 			for descendant in self.walk(child):
 				yield descendant
-			child=child.simpleNext
+			child = child.simpleNext
 
 	def next(self):
 		if not self.walker:
@@ -145,10 +183,9 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			# We just started speaking this object, so move the navigator to it.
 			if not api.setNavigatorObject(
 				self.prevObj,
-				isFocus=self.handler.lastSayAllMode == CURSOR.CARET
+				isFocus=self.handler.lastSayAllMode == CURSOR.CARET,
 			):
 				return
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -158,14 +195,17 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		SayAllHandler._speakObject(
 			obj,
 			reason=controlTypes.OutputReason.SAYALL,
-			_prefixSpeechCommand=callbackCommand
+			_prefixSpeechCommand=callbackCommand,
 		)
 
 	def stop(self):
+		if not self.walker:
+			return
 		self.walker = None
+		super().stop()
 
 
-class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
+class _TextReader(_Reader):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
@@ -185,11 +225,12 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	10. If there are no more pages, we're finished.
 	11. If there is another page, L{turnPage} calls L{nextLine}.
 	"""
+
 	MAX_BUFFERED_LINES = 10
 
 	def __init__(self, handler: _SayAllHandler):
 		self.reader = None
-		self.handler = handler
+		super().__init__(handler)
 		self.trigger = SayAllProfileTrigger()
 		self.reader = self.getInitialTextInfo()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
@@ -199,12 +240,10 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		self.initialIteration = True
 
 	@abstractmethod
-	def getInitialTextInfo(self) -> textInfos.TextInfo:
-		...
+	def getInitialTextInfo(self) -> textInfos.TextInfo: ...
 
 	@abstractmethod
-	def updateCaret(self, updater: textInfos.TextInfo) -> None:
-		...
+	def updateCaret(self, updater: textInfos.TextInfo) -> None: ...
 
 	def shouldReadInitialPosition(self) -> bool:
 		return False
@@ -247,6 +286,9 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			self.finish()
 			return False
 
+	def next(self):
+		self.nextLine()
+
 	def nextLine(self):
 		if not self.reader:
 			log.debug("no self.reader")
@@ -281,7 +323,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 		cb = CallbackCommand(
 			_onLineReached,
-			name="say-all:lineReached"
+			name="say-all:lineReached",
 		)
 
 		# Generate the speech sequence for the reader textInfo
@@ -292,7 +334,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.OutputReason.SAYALL,
-			useCache=state
+			useCache=state,
 		)
 		seq = list(_flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
@@ -323,7 +365,6 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		state.updateObj()
 		updater = obj.makeTextInfo(bookmark)
 		self.updateCaret(updater)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()
@@ -348,11 +389,13 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
 		cb = CallbackCommand(self.stop, name="say-all:stop")
-		self.handler.speechWithoutPausesInstance.speakWithoutPauses([
-			EndUtteranceCommand(),
-			cb,
-			EndUtteranceCommand()
-		])
+		self.handler.speechWithoutPausesInstance.speakWithoutPauses(
+			[
+				EndUtteranceCommand(),
+				cb,
+				EndUtteranceCommand(),
+			],
+		)
 
 	def stop(self):
 		if not self.reader:
@@ -360,9 +403,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		self.reader = None
 		self.trigger.exit()
 		self.trigger = None
-
-	def __del__(self):
-		self.stop()
+		super().stop()
 
 
 class _CaretTextReader(_TextReader):
@@ -388,11 +429,11 @@ class _ReviewTextReader(_TextReader):
 
 class _TableTextReader(_CaretTextReader):
 	def __init__(
-			self,
-			handler: _SayAllHandler,
-			startPos: Optional[textInfos.TextInfo] = None,
-			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
-			shouldUpdateCaret: bool = True,
+		self,
+		handler: _SayAllHandler,
+		startPos: Optional[textInfos.TextInfo] = None,
+		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		shouldUpdateCaret: bool = True,
 	):
 		self.startPos = startPos
 		self.nextLineFunc = nextLineFunc
@@ -422,6 +463,6 @@ class _TableTextReader(_CaretTextReader):
 
 
 class SayAllProfileTrigger(config.ProfileTrigger):
-	"""A configuration profile trigger for when say all is in progress.
-	"""
+	"""A configuration profile trigger for when say all is in progress."""
+
 	spec = "sayAll"

@@ -23,6 +23,7 @@ from .types import HWNDValT
 import extensionPoints
 import windowUtils
 
+__all__ = ["pre_handleWindowMessage", "WindowMessage", "_MessageWindow"]
 
 pre_handleWindowMessage = extensionPoints.Action()
 """
@@ -41,7 +42,7 @@ Handlers are called with three arguments.
 
 
 class WindowMessage(IntEnum):
-	DISPLAY_CHANGE = 0x7e
+	DISPLAY_CHANGE = 0x7E
 	"""
 	WM_DISPLAYCHANGE
 

@@ -8,9 +8,7 @@ This module assists in NVDA going global through language services
 such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import builtins
 import os
-import sys
 import ctypes
 
 import weakref
@@ -26,11 +24,9 @@ from typing import (
 	List,
 	Optional,
 	Tuple,
-	Union,
-	Callable,
 )
 
-#a few Windows locale constants
+# a few Windows locale constants
 LOCALE_USER_DEFAULT = 0x400
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 
@@ -42,9 +38,13 @@ CP_ACP = "0"
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
 #: because it is not a standardized locale name anywhere (e.g. "zz")
 #: or because it is not a legal locale name (e.g. "zzzz").
-LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
+LCID_NONE = 0  # 0 used instead of None for backwards compatibility.
 
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
+
+_language: str | None = None
+"""Language of NVDA's UI.
+"""
 
 installedTranslation: Optional[weakref.ReferenceType] = None
 """Saved copy of the installed translation for ease of wrapping.
@@ -54,7 +54,7 @@ LCIDS_TO_TRANSLATED_LOCALES = {
 	# Windows maps this to "ku-Arab-IQ", however a translation is added for
 	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
 	# and NVDA may drop "Arab-IQ" from this locale to get the language.
-	1170: 'ckb'
+	1170: "ckb",
 }
 """
 Map Windows locale identifiers to language codes.
@@ -71,7 +71,7 @@ class LOCALE(enum.IntEnum):
 	SLANGUAGE = 0x2
 	SLIST = 0xC
 	IMEASURE = 0xD
-	SLANGDISPLAYNAME = 0x6f
+	SLANGDISPLAYNAME = 0x6F
 	SENGLISHLANGUAGENAME = 0x00001001
 	SENGLISHCOUNTRYNAME = 0x00001002
 	IDEFAULTANSICODEPAGE = 0x00001004
@@ -101,7 +101,7 @@ def normalizeLocaleForWin32(localeName: str) -> str:
 	we would be unable to generate Python locale from their default UI language.
 	"""
 	if not isNormalizedWin32Locale(localeName):
-		localeName = localeName.replace('_', '-', 1)
+		localeName = localeName.replace("_", "-", 1)
 	return localeName
 
 
@@ -114,12 +114,12 @@ def localeNameToWindowsLCID(localeName: str) -> int:
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
 	localeName = normalizeLocaleForWin32(localeName)
-	LCID=ctypes.windll.kernel32.LocaleNameToLCID(localeName,0)
+	LCID = ctypes.windll.kernel32.LocaleNameToLCID(localeName, 0)
 	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
 	# This was observed for Aragonese ("an").
 	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
-	if LCID==LOCALE_CUSTOM_UNSPECIFIED:
-		LCID=LCID_NONE
+	if LCID == LOCALE_CUSTOM_UNSPECIFIED:
+		LCID = LCID_NONE
 	return LCID
 
 
@@ -148,26 +148,27 @@ def getLanguageDescription(language: str) -> Optional[str]:
 	if language == "Windows":
 		# Translators: the label for the Windows default NVDA interface language.
 		return _("User default")
-	desc=None
-	LCID=localeNameToWindowsLCID(language)
+	desc = None
+	LCID = localeNameToWindowsLCID(language)
 	if LCID is not LCID_NONE:
-		buf=ctypes.create_unicode_buffer(1024)
-		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
-		if '_' not in language:
+		buf = ctypes.create_unicode_buffer(1024)
+		# If the original locale didn't have country info (was just language) then make sure we just get language from Windows
+		if "_" not in language:
 			res = ctypes.windll.kernel32.GetLocaleInfoW(LCID, LOCALE.SLANGDISPLAYNAME, buf, 1024)
 		else:
-			res=0
-		if res==0:
+			res = 0
+		if res == 0:
 			res = ctypes.windll.kernel32.GetLocaleInfoW(LCID, LOCALE.SLANGUAGE, buf, 1024)
-		desc=buf.value
+		desc = buf.value
 	if not desc:
-		#Some hard-coded descriptions where we know the language fails on various configurations.
+		# Some hard-coded descriptions where we know the language fails on various configurations.
 		# Imported lazily since langs description are translatable
 		# and `languageHandler` is responsible for setting the translation.
 		import localesData
+
 		desc = localesData.LANG_NAMES_TO_LOCALIZED_DESCS.get(language, None)
 	if not desc:
-		log.debugWarning(f'Unable to provide a description for the following language: {language}')
+		log.debugWarning(f"Unable to provide a description for the following language: {language}")
 	return desc
 
 
@@ -250,13 +251,15 @@ def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
 
 def listNVDALocales() -> List[str]:
 	# Make a list of all the locales found in NVDA's locale dir
-	localesDir = os.path.join(globalVars.appDir, 'locale')
+	localesDir = os.path.join(globalVars.appDir, "locale")
 	locales = [
-		x for x in os.listdir(localesDir) if os.path.isfile(os.path.join(localesDir, x, 'LC_MESSAGES', 'nvda.mo'))
+		x
+		for x in os.listdir(localesDir)
+		if os.path.isfile(os.path.join(localesDir, x, "LC_MESSAGES", "nvda.mo"))
 	]
 	# Make sure that en (english) is in the list as it may not have any locale files, but is default
-	if 'en' not in locales:
-		locales.append('en')
+	if "en" not in locales:
+		locales.append("en")
 		locales.sort()
 	# include a 'user default, windows' language,
 	# which just represents the default language for this user account
@@ -290,77 +293,16 @@ def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]
 	return langs
 
 
-def makePgettext(translations):
-	"""Obtain a pgettext function for use with a gettext translations instance.
-	pgettext is used to support message contexts,
-	but Python 3.7's gettext module doesn't support this,
-	so NVDA must provide its own implementation.
-	"""
-	if isinstance(translations, gettext.GNUTranslations):
-		def pgettext(context, message):
-			try:
-				# Look up the message with its context.
-				return translations._catalog[u"%s\x04%s" % (context, message)]
-			except KeyError:
-				return message
-	elif isinstance(translations, gettext.NullTranslations):
-		# A language without a translation catalog, such as English.
-		def pgettext(context, message):
-			return message
-	else:
-		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
-	return pgettext
-
-
-def makeNpgettext(
-		translations: Union[None, gettext.GNUTranslations, gettext.NullTranslations],
-) -> Callable[[str, str, str, Union[int, float]], str]:
-	"""Obtain a  npgettext function for use with a gettext translations instance.
-	npgettext is used to support message contexts with respect to ngettext,
-	but Python 3.7's gettext module doesn't support this,
-	so NVDA must provide its own implementation.
-	"""
-	if isinstance(translations, gettext.GNUTranslations):
-		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
-			try:
-				# Look up the message with its context.
-				return translations._catalog[(f"{context}\x04{msgSingular}", translations.plural(n))]
-			except KeyError:
-				return msgSingular if n == 1 else msgPlural
-	elif isinstance(translations, gettext.NullTranslations):
-		# A language without a translation catalog, such as English.
-		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
-			return msgSingular if n == 1 else msgPlural
-	else:
-		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
-	return npgettext
-
-
-def getLanguageCliArgs() -> Tuple[str, ...]:
-	"""Returns all command line arguments which were used to set current NVDA language
-	or an empty tuple if language has not been specified from the CLI."""
-	for argIndex, argValue in enumerate(sys.argv):
-		if argValue == "--lang":
-			# Language was provided in a form `--lang lang_CODE`. The next position in `sys.argv` is a language code.
-			# It is impossible not to provide it in this case as it would be flagged as an error
-			# during arguments validation.
-			return (argValue, sys.argv[argIndex + 1])
-		if argValue.startswith("--lang="):
-			# Language in a form `--lang=lang_CODE`
-			return (argValue,)
-	return tuple()
-
-
 def isLanguageForced() -> bool:
 	"""Returns `True` if language is provided from the command line - `False` otherwise."""
-	return bool(getLanguageCliArgs())
+	return globalVars.appArgs.language is not None
 
 
 def getWindowsLanguage():
 	"""
 	Fetches the locale name of the user's configured language in Windows.
 	"""
-	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
+	windowsLCID = ctypes.windll.kernel32.GetUserDefaultUILanguage()
 	localeName = windowsLCIDToLocaleName(windowsLCID)
 	if localeName:
 		localeName = normalizeLanguage(localeName)
@@ -370,28 +312,28 @@ def getWindowsLanguage():
 
 
 def _createGettextTranslation(
-		localeName: str
-) -> Union[None, gettext.GNUTranslations, gettext.NullTranslations]:
+	localeName: str,
+) -> tuple[(None | gettext.GNUTranslations | gettext.NullTranslations), (str | None)]:
 	if localeName in LANGS_WITHOUT_TRANSLATIONS:
-		globalVars.appArgs.language = localeName
-		return gettext.translation("nvda", fallback=True)
+		return gettext.translation("nvda", fallback=True), localeName
 	try:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
-		globalVars.appArgs.language = localeName
-		return trans
+		return trans, localeName
 	except IOError:
 		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-		return None
+		return None, None
 
 
 def setLanguage(lang: str) -> None:
-	'''
+	"""
 	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
 	 - the windows locale for the thread (fallback to system locale)
 	 - the translation service (fallback to English)
 	 - Current NVDA language (match the translation service)
 	 - the python locale for the thread (match the translation service, fallback to system default)
-	'''
+	"""
+	global _language
+
 	if lang == "Windows":
 		localeName = getWindowsLanguage()
 	else:
@@ -401,18 +343,16 @@ def setLanguage(lang: str) -> None:
 		if winKernel.kernel32.SetThreadLocale(LCID) == 0:
 			log.debugWarning(f"couldn't set windows thread locale to {lang}")
 
-	trans = _createGettextTranslation(localeName)
+	trans, validatedLocalName = _createGettextTranslation(localeName)
 	if trans is None and "_" in localeName:
 		localeName = localeName.split("_")[0]
-		trans = _createGettextTranslation(localeName)
+		trans, validatedLocalName = _createGettextTranslation(localeName)
 	if trans is None:
-		trans = _createGettextTranslation("en")
+		trans, validatedLocalName = _createGettextTranslation("en")
+	_language = validatedLocalName
 
-	trans.install(names=['ngettext'])
+	trans.install(names=["pgettext", "npgettext", "ngettext"])
 	setLocale(getLanguage())
-	# Install our pgettext and npgettext functions.
-	builtins.pgettext = makePgettext(trans)
-	builtins.npgettext = makeNpgettext(trans)
 
 	global installedTranslation
 	installedTranslation = weakref.ref(trans)
@@ -452,7 +392,7 @@ def _setPythonLocale(localeString: str) -> bool:
 
 
 def setLocale(localeName: str) -> None:
-	'''
+	"""
 	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
 	Will fallback on current NVDA language if it cannot be set and finally fallback to the system locale.
 	Passing NVDA locales straight to python `locale.setlocale` does now work since it tries to normalize the
@@ -460,7 +400,7 @@ def setLocale(localeName: str) -> None:
 	For example executing: `locale.setlocale(locale.LC_ALL, "pl")`
 	results in locale being set to `('pl_PL', 'ISO8859-2')`
 	which is meaningless to Windows,
-	'''
+	"""
 	originalLocaleName = localeName
 	localeString = ""
 	try:
@@ -491,7 +431,7 @@ def setLocale(localeName: str) -> None:
 	if originalLocaleName == getLanguage():
 		# reset to system locale default if we can't set the current lang's locale
 		locale.setlocale(locale.LC_ALL, "")
-		log.debugWarning(f"set python locale to system default")
+		log.debugWarning("set python locale to system default")
 	else:
 		log.debugWarning(f"setting python locale to the current language {getLanguage()}")
 		# fallback and try to reset the locale to the current lang
@@ -499,7 +439,7 @@ def setLocale(localeName: str) -> None:
 
 
 def getLanguage() -> str:
-	return globalVars.appArgs.language
+	return _language
 
 
 def normalizeLanguage(lang: str) -> Optional[str]:
@@ -507,14 +447,14 @@ def normalizeLanguage(lang: str) -> Optional[str]:
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.
 	"""
-	lang=lang.replace('-','_')
-	ld=lang.split('_')
-	ld[0]=ld[0].lower()
-	#Filter out meta languages such as x-western
-	if ld[0]=='x':
+	lang = lang.replace("-", "_")
+	ld = lang.split("_")
+	ld[0] = ld[0].lower()
+	# Filter out meta languages such as x-western
+	if ld[0] == "x":
 		return None
-	if len(ld)>=2:
-		ld[1]=ld[1].upper()
+	if len(ld) >= 2:
+		ld[1] = ld[1].upper()
 	return "_".join(ld)
 
 
@@ -526,7 +466,7 @@ def useImperialMeasurements() -> bool:
 	buf = ctypes.create_unicode_buffer(bufLength)
 	if not winKernel.kernel32.GetLocaleInfoEx(None, LOCALE.IMEASURE, buf, bufLength):
 		raise RuntimeError("LOCALE.IMEASURE not supported")
-	return buf.value == '1'
+	return buf.value == "1"
 
 
 def stripLocaleFromLangCode(langWithOptionalLocale: str) -> str:

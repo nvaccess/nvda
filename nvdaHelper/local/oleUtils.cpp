@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 /*
  * Fetches a text representation of the given OLE data object
  * @param dataObject an IDataObject interface of an OLE object
- * @param text a pointer to a BSTR which will hold the resulting text 
+ * @param text a pointer to a BSTR which will hold the resulting text
  * @return S_OK on success or an OLE error code.
  */
 HRESULT getOleClipboardText(IDataObject* dataObject, BSTR* text) {

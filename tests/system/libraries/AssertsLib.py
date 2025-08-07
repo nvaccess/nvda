@@ -3,10 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""This module provides custom asserts for system tests.
-"""
+"""This module provides custom asserts for system tests."""
+
 from typing import List
 from robot.libraries.BuiltIn import BuiltIn
+
 builtIn: BuiltIn = BuiltIn()
 
 
@@ -14,19 +15,19 @@ builtIn: BuiltIn = BuiltIn()
 class AssertsLib:
 	@staticmethod
 	def strings_match(actual, expected, ignore_case=False, comparison="speech", message=""):
-		message += '\n' if message else ''
+		message += "\n" if message else ""
 		# Include expected text in robot test report so that the actual behavior
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
 			f"{message}assert {comparison} string matches (ignore case: {ignore_case}):  '{expected}'",
-			level="INFO"
+			level="INFO",
 		)
 		try:
 			builtIn.should_be_equal_as_strings(
 				actual,
 				expected,
 				msg=f"{message}{comparison} Actual != Expected",
-				ignore_case=ignore_case
+				ignore_case=ignore_case,
 			)
 		except AssertionError:
 			# Occasionally on assert failure the repr of the string makes it easier to determine the differences.
@@ -35,26 +36,26 @@ class AssertsLib:
 					comparison,
 					ignore_case,
 					repr(actual),
-					repr(expected)
+					repr(expected),
 				),
-				level="DEBUG"
+				level="DEBUG",
 			)
 			raise
 
 	@staticmethod
 	def string_contains_strings(
-			actual: str,
-			expectedSubStrings: List[str],
-			ignore_case: bool = False,
-			comparison: str = "speech",
-			message: str = ""
+		actual: str,
+		expectedSubStrings: List[str],
+		ignore_case: bool = False,
+		comparison: str = "speech",
+		message: str = "",
 	):
-		message += '\n' if message else ''
+		message += "\n" if message else ""
 		# Include expected text in robot test report so that the actual behavior
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
 			f"{message}assert {comparison} string matches (ignore case: {ignore_case}):  '{expectedSubStrings}'",
-			level="INFO"
+			level="INFO",
 		)
 		try:
 			for subString in expectedSubStrings:
@@ -62,7 +63,7 @@ class AssertsLib:
 					actual,
 					subString,
 					msg=f"{message}{comparison} Actual != Expected",
-					ignore_case=ignore_case
+					ignore_case=ignore_case,
 				)
 		except AssertionError:
 			# Occasionally on assert failure the repr of the string makes it easier to determine the differences.
@@ -71,9 +72,9 @@ class AssertsLib:
 					comparison,
 					ignore_case,
 					repr(actual),
-					repr(subString)
+					repr(subString),
 				),
-				level="DEBUG"
+				level="DEBUG",
 			)
 			raise
 
@@ -83,17 +84,17 @@ class AssertsLib:
 
 	@staticmethod
 	def speech_contains(
-			actual: str,
-			expectedSpeechParts: List[str],
-			ignore_case: bool = False,
-			message: str = ""
+		actual: str,
+		expectedSpeechParts: List[str],
+		ignore_case: bool = False,
+		message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,
 			expectedSpeechParts,
 			ignore_case,
 			comparison="speech",
-			message=message
+			message=message,
 		)
 
 	@staticmethod
@@ -102,15 +103,15 @@ class AssertsLib:
 
 	@staticmethod
 	def braille_contains(
-			actual: str,
-			expectedBrailleParts: List[str],
-			ignore_case: bool = False,
-			message: str = ""
+		actual: str,
+		expectedBrailleParts: List[str],
+		ignore_case: bool = False,
+		message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,
 			expectedBrailleParts,
 			ignore_case,
 			comparison="braille",
-			message=message
+			message=message,
 		)

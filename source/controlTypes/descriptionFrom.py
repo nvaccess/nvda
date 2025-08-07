@@ -13,6 +13,7 @@ class DescriptionFrom(Enum):
 	"""Values to use within NVDA to denote possible values for DescriptionFrom.
 	These are used to determine how the source of the 'description' property if an NVDAObject.
 	"""
+
 	UNKNOWN = auto()
 	ARIA_DESCRIPTION = "aria-description"
 	ARIA_DESCRIBED_BY = "aria-describedby"

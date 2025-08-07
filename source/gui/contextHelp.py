@@ -20,7 +20,7 @@ def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
 <meta http-equiv="refresh" content="0;url=file:///{helpFilePath}#{helpId}" />
 </head></html>
 	"""
-	with open(contextHelpPath, 'w') as f:
+	with open(contextHelpPath, "w") as f:
 		f.write(redirect)
 
 
@@ -32,6 +32,7 @@ def showHelp(helpId: str):
 
 	import ui
 	import queueHandler
+
 	if not helpId:
 		# Translators: Message indicating no context sensitive help is available for the control or dialog.
 		noHelpMessage = _("No help available here.")
@@ -39,11 +40,7 @@ def showHelp(helpId: str):
 		return
 	helpFile = documentationUtils.getDocFilePath("userGuide.html")
 	if helpFile is None:
-		# Translators: Message shown when trying to display context sensitive help,
-		# indicating that	the user guide could not be found.
-		noHelpMessage = _("No user guide found.")
-		log.debugWarning("No user guide found: possible cause - running from source without building user docs")
-		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		documentationUtils.reportNoDocumentation("userGuide.html")
 		return
 	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
 
@@ -90,7 +87,9 @@ class ContextHelpMixin:
 		super().__init__(*args, **kwargs)
 		helpId = getattr(self, "helpId", None)
 		if helpId is None or not isinstance(helpId, str):
-			log.warning(f"No helpId (or incorrect type) for: {self.__class__.__qualname__} helpId: {helpId!r}")
+			log.warning(
+				f"No helpId (or incorrect type) for: {self.__class__.__qualname__} helpId: {helpId!r}",
+			)
 			helpId = ""
 		window = typing.cast(wx.Window, self)
 		bindHelpEvent(helpId, window)

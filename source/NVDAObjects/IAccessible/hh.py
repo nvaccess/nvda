@@ -1,22 +1,24 @@
-#NVDAObjects/IAccessible/hh.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# NVDAObjects/IAccessible/hh.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""NVDAObjects for Microsoft HTML Help.
-"""
+"""NVDAObjects for Microsoft HTML Help."""
 
 import IAccessibleHandler
 from . import IAccessible
 
-class KeywordList(IAccessible):
 
+class KeywordList(IAccessible):
 	def _get_parent(self):
 		# Overridden so that accNavigate next/prev won't be called, as it causes the focus to move to another list item, even when called on the list.
 		res = IAccessibleHandler.accParent(self.IAccessibleObject, self.IAccessibleChildID)
 		if res:
-			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1]), relation="parent")
+			return self.correctAPIForRelation(
+				IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1]),
+				relation="parent",
+			)
 
 	def _get_next(self):
 		# accNavigate on this list returns a child and moves the focus, both of which are wrong. Grrr!
@@ -30,7 +32,14 @@ class KeywordList(IAccessible):
 		# accFocus doesn't work, but accSelection does.
 		sel = self.IAccessibleObject.accSelection
 		if sel:
-			return IAccessible(windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=sel, event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=sel)
+			return IAccessible(
+				windowHandle=self.windowHandle,
+				IAccessibleObject=self.IAccessibleObject,
+				IAccessibleChildID=sel,
+				event_windowHandle=self.event_windowHandle,
+				event_objectID=self.event_objectID,
+				event_childID=sel,
+			)
 		return None
 
 	def event_gainFocus(self):

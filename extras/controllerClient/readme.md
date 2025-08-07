@@ -1,4 +1,4 @@
-# NVDA Controller Client API 1.0 Documentation
+# NVDA Controller Client API 2.0 Documentation
 
 ## Introduction
 
@@ -6,15 +6,24 @@ This client API allows an application to communicate with NVDA, in order to do s
 
 The client API is implemented as a dll (dynamic link library). The functions in this dll can be called from any programming language that supports looking up and calling of any symbol in a dll (such as ctypes in Python), or by linking to it for languages like C and C++.
 
+## Compatibility notice
+
+Version 2.0 of the controller client was introduced in NVDA 2024.1, offering the following additional functions compared to version 1.0:
+- nvdaController_getProcessId
+- nvdaController_speakSsml
+
+These functions are supported in NVDA 2024.1 and newer. On older versions, they return error code 1717 (RPC_S_UNKNOWN_IF).
+
 ## Security practices
-Developers should be aware that NVDA runs on the lock screen and [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
+
+Developers should be aware that NVDA runs on the lock screen and [secure screens](https://download.nvaccess.org/documentation/userGuide.html#SecureScreens).
 Before providing information to the end user (e.g. via `nvdaController_speakText`), developers should check if Windows is locked or running on a secure screen to prevent secure data being leaked.
 
 ## How to get it?
 
 You can build locally or download pre-built, details:
 - **Built with the release:**
-  - Download the `*controllerClient.zip` from the releases folder: EG [Latest stable](https://www.nvaccess.org/files/nvda/releases/stable/)
+  - Download the `*controllerClient.zip` from the releases folder: e.g. [Latest stable](https://download.nvaccess.org/releases/stable/)
 - **Latest, in development version:**
   - The libraries are built by Appveyor (our CI).
   - Downloads are available from the artifacts tab.
@@ -32,14 +41,19 @@ You can build locally or download pre-built, details:
 * `nvdaController.h`
   - A C header file containing declarations for all the provided functions.
 
-The **`extras/controllerClient/x86` directory** also contains example usage:
+The **`extras/controllerClient/examples` directory** also contains example usage:
 
 * `example_python.py`
   - an example Python program that uses the NVDA controller client API.
 * `example_c.c`
   - The source code for an example C program that uses the NVDA controller client API.
-* `example_csharp.cs`
-  - The source code for an example C# program that uses the NVDA controller client API.
+* `example_csharp`
+  - The source code for an example C# project on NET Standard 2.0 that uses the NVDA controller client API.
+* `example_rust`
+  - The source code for an example Rust crate providing access to the NVDA controller client API, including example code.
+
+Running these examples requires a copy of **`nvdaControllerClient.dll`** in its path that matches the architecture of the example.
+For example, if you want to test the Python example on an X64 version of Python, you need the **`x64/nvdaControllerClient.dll`** file.
 
 ## Available Functions
 

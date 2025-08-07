@@ -46,10 +46,13 @@ EXPORTS
 	_nvdaControllerInternal_logMessage
 	_nvdaControllerInternal_typedCharacterNotify
 	_nvdaControllerInternal_installAddonPackageFromPath
+	_nvdaControllerInternal_handleRemoteURL
 	_nvdaControllerInternal_drawFocusRectNotify
 	_nvdaController_brailleMessage
 	_nvdaController_cancelSpeech
 	_nvdaController_speakText
+	_nvdaController_speakSsml
+	nvdaController_onSsmlMarkReached
 	_nvdaControllerInternal_vbufChangeNotify
 	displayModel_getWindowTextInRect
 	displayModel_getFocusRect
@@ -57,6 +60,7 @@ EXPORTS
 	displayModel_requestTextChangeNotificationsForWindow
 	calculateWordOffsets
 	calculateCharacterOffsets
+	calculateCharacterBoundaries
 	findWindowWithClassInThread
 	registerUIAProperty
 	registerUIAAnnotationType
@@ -67,6 +71,8 @@ EXPORTS
 	getOleClipboardText
 	_nvdaControllerInternal_reportLiveRegion
 	_nvdaControllerInternal_openConfigDirectory
+	rateLimitedUIAEventHandler_create
+	rateLimitedUIAEventHandler_terminate
 	wasPlay_create
 	wasPlay_destroy
 	wasPlay_open
@@ -77,5 +83,10 @@ EXPORTS
 	wasPlay_pause
 	wasPlay_resume
 	wasPlay_setChannelVolume
+	wasPlay_startTrimmingLeadingSilence
 	wasPlay_startup
-	wasPlay_getDevices
+	wasSilence_init
+	wasSilence_playFor
+	wasSilence_terminate
+	isScreenFullyBlack
+	localListeningSocketExists

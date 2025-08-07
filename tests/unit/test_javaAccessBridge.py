@@ -39,7 +39,7 @@ MODIFIER_COMBINATIONS = [
 	{
 		AccessibleKeystroke.ALT: "alt",
 		AccessibleKeystroke.CONTROL: "control",
-		AccessibleKeystroke.SHIFT: "shift"
+		AccessibleKeystroke.SHIFT: "shift",
 	},
 	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.SHIFT: "shift"},
 	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.CONTROL: "control"},
@@ -56,10 +56,10 @@ MODIFIER_COMBINATIONS = [
 		AccessibleKeystroke.ALT: "alt",
 		AccessibleKeystroke.META: "meta",
 		AccessibleKeystroke.CONTROL: "control",
-		AccessibleKeystroke.SHIFT: "shift"
-	}
+		AccessibleKeystroke.SHIFT: "shift",
+	},
 ]
-BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord("A"), ord("Z") + 1)]
 FKEY_SHORTCUTS = [chr(x) for x in range(1, 25)]
 
 
@@ -69,7 +69,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = 0
 				modLabels = []
-				for m, l in modifierCombination.items():
+				for m, l in modifierCombination.items():  # noqa: E741
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(character=c, modifiers=modifiers, modLabels=modLabels):
@@ -81,7 +81,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = AccessibleKeystroke.FKEY
 				modLabels = []
-				for m, l in modifierCombination.items():
+				for m, l in modifierCombination.items():  # noqa: E741
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(fkey=ord(c), modifiers=modifiers, modLabels=modLabels):
@@ -93,7 +93,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = AccessibleKeystroke.CONTROLCODE
 				modLabels = []
-				for m, l in modifierCombination.items():
+				for m, l in modifierCombination.items():  # noqa: E741
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(controlCode=c, label=v, modifiers=modifiers, modLabels=modLabels):

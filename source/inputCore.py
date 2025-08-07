@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
+# Copyright (C) 2010-2025 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
 # Leonard de Ruijter
 
 """Core framework for handling input from the user.
@@ -16,6 +16,7 @@ import weakref
 import time
 from typing import (
 	Any,
+	Callable,
 	Dict,
 	Generator,
 	List,
@@ -35,18 +36,19 @@ import speech
 import characterProcessing
 import config
 from fileUtils import FaultTolerantFile
+import systemUtils
 import watchdog
 from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
-import winKernel
 import extensionPoints
 from NVDAState import WritePaths
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
 ScriptNameT = str
+
 InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
 """
 The Python class and script name for each script;
@@ -63,29 +65,31 @@ SCRCAT_MISC = _("Miscellaneous")
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BROWSEMODE = _("Browse mode")
 
+
 class NoInputGestureAction(LookupError):
-	"""Informs that there is no action to execute for a gesture.
-	"""
+	"""Informs that there is no action to execute for a gesture."""
+
 
 class InputGesture(baseObject.AutoPropertyObject):
 	"""A single gesture of input from the user.
 	For example, this could be a key press on a keyboard or Braille display or a click of the mouse.
 	At the very least, subclasses must implement L{_get_identifiers}.
 	"""
+
 	cachePropertiesByDefault = True
 
 	#: indicates that sayAll was running before this gesture
 	#: @type: bool
-	wasInSayAll=False
+	wasInSayAll = False
 
 	#: Indicates that while in Input Help Mode, this gesture should be handled as if Input Help mode was currently off.
 	#: @type: bool
-	bypassInputHelp=False
+	bypassInputHelp = False
 
 	#: Indicates that this gesture should be reported in Input help mode. This would only be false
 	#: for flooding Gestures like touch screen hovers.
 	#: @type: bool
-	reportInInputHelp=True
+	reportInInputHelp = True
 
 	#: Indicates whether executing this gesture should explicitly prevent the system from being idle.
 	#: For example, the system is unaware of C{BrailleDisplayGesture} execution,
@@ -97,6 +101,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 	identifiers: Union[List[str], Tuple[str, ...]]
 
 	_abstract_identifiers = True
+
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be normalized and looked up in order until a match is found.
@@ -151,7 +156,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 	#: whether this gesture represents a character being typed (i.e. not a potential command)
 	#: @type bool
-	isCharacter=False
+	isCharacter = False
 
 	SPEECHEFFECT_CANCEL = "cancel"
 	SPEECHEFFECT_PAUSE = "pause"
@@ -174,7 +179,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@return: The script to be executed.
 		@rtype: script function
 		"""
-		self.script=scriptHandler.findScript(self)
+		self.script = scriptHandler.findScript(self)
 		return self.script
 
 	def send(self):
@@ -229,6 +234,7 @@ FlattenedGestureMapT = Dict[
 		Optional[Union[str, List[str]]],  # Normalized gestures
 	],
 ]
+ScriptT = Callable[[InputGesture], None]
 _InternalGestureMapT = Dict[
 	str,  # Normalized gesture
 	List[
@@ -262,18 +268,17 @@ class GlobalGestureMap:
 			self.update(entries)
 
 	def clear(self):
-		"""Clear this map.
-		"""
+		"""Clear this map."""
 		self._map.clear()
 		self.lastUpdateContainedError = False
 
 	def add(
-			self,
-			gesture: str,
-			module: str,
-			className: str,
-			script: Optional[ScriptNameT],
-			replace: bool = False
+		self,
+		gesture: str,
+		module: str,
+		className: str,
+		script: Optional[ScriptNameT],
+		replace: bool = False,
 	):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
@@ -311,7 +316,7 @@ class GlobalGestureMap:
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
 		except (configobj.ConfigObjError, UnicodeDecodeError) as e:
-			log.warning("Error in gesture map '%s': %s"%(filename, e))
+			log.warning("Error in gesture map '%s': %s" % (filename, e))
 			self.lastUpdateContainedError = True
 			return
 		self.update(conf)
@@ -338,7 +343,7 @@ class GlobalGestureMap:
 		for locationName, location in entries.items():
 			try:
 				module, className = locationName.rsplit(".", 1)
-			except:
+			except:  # noqa: E722
 				log.error("Invalid module/class specification: %s" % locationName)
 				self.lastUpdateContainedError = True
 				continue
@@ -352,7 +357,7 @@ class GlobalGestureMap:
 				for gesture in gestures:
 					try:
 						self.add(gesture, module, className, script)
-					except:
+					except:  # noqa: E722
 						log.error("Invalid gesture: %s" % gesture)
 						self.lastUpdateContainedError = True
 						continue
@@ -404,8 +409,7 @@ class GlobalGestureMap:
 		scripts.remove((module, className, script))
 
 	def export(self) -> FlattenedGestureMapT:
-		"""Exports this gesture map to a dictionary that can be saved to disk or imported into another gesture map.
-		"""
+		"""Exports this gesture map to a dictionary that can be saved to disk or imported into another gesture map."""
 		out: FlattenedGestureMapT = {}
 		for gesture, scripts in self._map.items():
 			for module, className, script in scripts:
@@ -448,6 +452,22 @@ class GlobalGestureMap:
 		return NotImplemented
 
 
+decide_handleRawKey = extensionPoints.Decider()
+"""
+Notifies when a raw keyboard event is received, before any NVDA processing.
+Handlers can decide whether the key should be processed by NVDA and/or passed to the OS.
+:param vkCode: The virtual key code
+:type vkCode: int
+:param scanCode: The scan code
+:type scanCode: int
+:param extended: Whether this is an extended key
+:type extended: bool
+:param pressed: Whether this is a key press or release
+:type pressed: bool
+:return: True to allow normal processing, False to block the key
+:rtype: bool
+"""
+
 decide_executeGesture = extensionPoints.Decider()
 """
 Notifies when a gesture is about to be executed,
@@ -467,7 +487,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	#: a modifier gesture was just executed while sayAll was running
 	#: @type: bool
-	lastModifierWasInSayAll=False
+	lastModifierWasInSayAll = False
 
 	def __init__(self):
 		#: The function to call when capturing gestures.
@@ -502,36 +522,62 @@ class InputManager(baseObject.AutoPropertyObject):
 			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
 			# when the decider decided not to execute it.
 			log.debug(
-				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
+				"Gesture execution canceled by handler registered to decide_executeGesture extension point",
 			)
 			return
 
 		script = gesture.script
 		focus = api.getFocusObject()
-		if focus.sleepMode is focus.SLEEP_FULL or (focus.sleepMode and not getattr(script, 'allowInSleepMode', False)):
+		if focus.sleepMode is focus.SLEEP_FULL or (
+			focus.sleepMode and not getattr(script, "allowInSleepMode", False)
+		):
 			raise NoInputGestureAction
 
-		wasInSayAll=False
+		wasInSayAll = False
 		if gesture.isModifier:
 			if not self.lastModifierWasInSayAll:
 				wasInSayAll = self.lastModifierWasInSayAll = sayAll.SayAllHandler.isRunning()
 		elif self.lastModifierWasInSayAll:
-			wasInSayAll=True
-			self.lastModifierWasInSayAll=False
+			wasInSayAll = True
+			self.lastModifierWasInSayAll = False
 		else:
 			wasInSayAll = sayAll.SayAllHandler.isRunning()
 		if wasInSayAll:
-			gesture.wasInSayAll=True
+			gesture.wasInSayAll = True
 
 		immediate = getattr(gesture, "_immediate", True)
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech, _immediate=immediate)
+			# Import late to avoid circular import.
+			import braille
+
+			if braille.handler:
+
+				@braille.handler.suppressClearBrailleRegions(script)
+				def suppressCancelSpeech():
+					speech.cancelSpeech()
+
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					suppressCancelSpeech,
+					_immediate=immediate,
+				)
+			else:
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					speech.cancelSpeech,
+					_immediate=immediate,
+				)
+
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.pauseSpeech,
+				speechEffect == gesture.SPEECHEFFECT_PAUSE,
+			)
 
 		if gesture.shouldPreventSystemIdle:
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
+			systemUtils.preventSystemIdle()
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			self._lastInputTime = time.time()
@@ -541,7 +587,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			try:
 				if self._captureFunc(gesture) is False:
 					return
-			except:
+			except:  # noqa: E722
 				log.error("Error in capture function, disabling", exc_info=True)
 				self._captureFunc = None
 
@@ -553,7 +599,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				queueHandler.eventQueue,
 				speech.speakMessage,
 				gesture.displayName,
-				_immediate=True
+				_immediate=True,
 			)
 
 		gesture.reportExtra()
@@ -561,8 +607,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
-			script=lambda gesture: gesture.send()
-
+			script = lambda gesture: gesture.send()  # noqa: E731
 
 		if script:
 			scriptHandler.queueScript(script, gesture)
@@ -593,7 +638,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			self._handleInputHelp,
 			gesture,
 			onlyLog=bypass or not gesture.reportInInputHelp,
-			_immediate=immediate
+			_immediate=immediate,
 		)
 		return bypass
 
@@ -601,10 +646,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
-		logMsg = "Input help: gesture %s"%gesture.identifiers[0]
+		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
-			logMsg+=", bound to script %s" % scriptName
+			logMsg += ", bound to script %s" % scriptName
 			scriptLocation = scriptHandler.getScriptLocation(script)
 			if scriptLocation:
 				logMsg += " on %s" % scriptLocation
@@ -620,12 +665,13 @@ class InputManager(baseObject.AutoPropertyObject):
 			return
 
 		import braille
+
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
 		speech.speakText(
 			textList[0],
 			reason=controlTypes.OutputReason.MESSAGE,
-			symbolLevel=characterProcessing.SymbolLevel.ALL
+			symbolLevel=characterProcessing.SymbolLevel.ALL,
 		)
 		for text in textList[1:]:
 			speech.speakMessage(text)
@@ -647,7 +693,9 @@ class InputManager(baseObject.AutoPropertyObject):
 			self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang, "gestures.ini"))
 		except IOError:
 			try:
-				self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang.split('_')[0], "gestures.ini"))
+				self.localeGestureMap.load(
+					os.path.join(globalVars.appDir, "locale", lang.split("_")[0], "gestures.ini"),
+				)
 			except IOError:
 				log.debugWarning("No locale gesture map for language %s" % lang)
 
@@ -673,14 +721,14 @@ class InputManager(baseObject.AutoPropertyObject):
 			ancestors = api.getFocusAncestors()
 		return _AllGestureMappingsRetriever(obj, ancestors).results
 
-class _AllGestureMappingsRetriever(object):
 
+class _AllGestureMappingsRetriever(object):
 	results: Dict[
 		str,  # category name
 		Dict[
 			str,  # command display name
 			Any,  # AllGesturesScriptInfo
-		]
+		],
 	]
 
 	def __init__(self, obj, ancestors):
@@ -691,12 +739,14 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
+
 		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 
 		# Global plugins.
 		import globalPluginHandler
+
 		for plugin in globalPluginHandler.runningPlugins:
 			self.addObj(plugin)
 
@@ -711,6 +761,7 @@ class _AllGestureMappingsRetriever(object):
 
 		# Vision enhancement provider
 		import vision
+
 		for provider in vision.handler.getActiveProviderInstances():
 			if isinstance(provider, baseObject.ScriptableObject):
 				self.addObj(provider)
@@ -726,6 +777,7 @@ class _AllGestureMappingsRetriever(object):
 			self.addObj(anc, isAncestor=True)
 
 		import globalCommands
+
 		# Configuration profiles
 		self.addObj(globalCommands.configProfileActivationCommands)
 
@@ -761,7 +813,9 @@ class _AllGestureMappingsRetriever(object):
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
 					except AttributeError:
-						log.debugWarning(f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.")
+						log.debugWarning(
+							f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.",
+						)
 						self.handledGestures.remove(key)
 						continue
 					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
@@ -779,7 +833,7 @@ class _AllGestureMappingsRetriever(object):
 		info = KbEmuScriptInfo(scriptCls, kbGestureIdentifier)
 		info.category = SCRCAT_KBEMU
 		info.displayName = getDisplayTextForGestureIdentifier(
-			normalizeGestureIdentifier(kbGestureIdentifier)
+			normalizeGestureIdentifier(kbGestureIdentifier),
 		)[1]
 		return info
 
@@ -832,6 +886,7 @@ class _AllGestureMappingsRetriever(object):
 			self.handledGestures.add(key)
 			scriptInfo.gestures.append(gesture)
 
+
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
 
@@ -869,10 +924,12 @@ def normalizeGestureIdentifier(identifier):
 	# We sort them by character.
 	main.sort()
 	main = "+".join(main)
-	return u"{0}:{1}".format(prefix, main)
+	return "{0}:{1}".format(prefix, main)
+
 
 #: Maps registered source prefix strings to L{InputGesture} classes.
 gestureSources = weakref.WeakValueDictionary()
+
 
 def registerGestureSource(source, gestureCls):
 	"""Register an input gesture class for a source prefix string.
@@ -890,9 +947,9 @@ def registerGestureSource(source, gestureCls):
 	"""
 	gestureSources[source] = gestureCls
 
+
 def _getGestureClsForIdentifier(identifier):
-	"""Get the registered gesture class for an identifier.
-	"""
+	"""Get the registered gesture class for an identifier."""
 	source = identifier.split(":", 1)[0]
 	try:
 		return gestureSources[source]
@@ -905,6 +962,7 @@ def _getGestureClsForIdentifier(identifier):
 		except KeyError:
 			pass
 	raise LookupError("Gesture source not registered: %s" % source)
+
 
 def getDisplayTextForGestureIdentifier(identifier):
 	"""Get the text to be presented to the user describing a given gesture identifier.
@@ -930,24 +988,26 @@ manager: Optional[InputManager] = None
 
 
 def initialize():
-	"""Initializes input core, creating a global L{InputManager} singleton.
-	"""
+	"""Initializes input core, creating a global L{InputManager} singleton."""
 	global manager
-	manager=InputManager()
+	manager = InputManager()
+
 
 def terminate():
-	"""Terminates input core.
-	"""
+	"""Terminates input core."""
 	global manager
-	manager=None
+	manager = None
 
-def  logTimeSinceInput():
+
+def logTimeSinceInput():
 	"""Log the time since the last input was received.
 	This does nothing if time since input logging is disabled.
 	"""
-	if (not log.isEnabledFor(log.IO)
+	if (
+		not log.isEnabledFor(log.IO)
 		or not config.conf["debugLog"]["timeSinceInput"]
-		or not manager or not manager._lastInputTime
+		or not manager
+		or not manager._lastInputTime
 	):
 		return
 	log.io("%.3f sec since input" % (time.time() - manager._lastInputTime))

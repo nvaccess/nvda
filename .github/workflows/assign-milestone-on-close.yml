@@ -1,0 +1,54 @@
+name: Assign Milestone on Close
+
+env:
+  MILESTONE_ID: ${{ vars.MILESTONE_ID }}
+
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  assign-milestone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if milestone is set
+        id: check-milestone
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr.milestone) {
+              core.setOutput('milestoneNotSet', 'true');
+            } else {
+              core.setOutput('milestoneNotSet', 'false');
+            }
+
+      - name: Check merged
+        id: check-done
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            if (context.payload.pull_request.merged === true) {
+              core.setOutput('isDone', 'true');
+            } else {
+              core.setOutput('isDone', 'false');
+            }
+
+      - name: Assign default milestone
+        if: steps.check-milestone.outputs.milestoneNotSet == 'true' && steps.check-done.outputs.isDone == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const repository = context.repo;
+            await github.rest.issues.update({
+              ...repository,
+              issue_number: prNumber,
+              milestone: process.env.MILESTONE_ID
+            });

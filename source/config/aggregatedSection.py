@@ -5,9 +5,9 @@
 
 from typing import (
 	Dict,
+	Protocol,
 	Union,
 )
-from typing_extensions import Protocol
 
 
 class _SupportsStrT(Protocol):
@@ -15,8 +15,8 @@ class _SupportsStrT(Protocol):
 	Valid config values must support str(),
 	as this is how they are written to disk
 	"""
-	def __str__(self) -> str:
-		...
+
+	def __str__(self) -> str: ...
 
 
 _cacheKeyT = str

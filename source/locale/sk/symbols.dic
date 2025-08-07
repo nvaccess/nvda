@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -11,6 +11,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -25,6 +27,7 @@ symbols:
 ? sentence ending	otáznik	all	always
 ; phrase ending	bodkočiarka	most	always
 : phrase ending	dvojbodka	most	always
+multiple .	skupina symbolov bodka	all	always
 decimal point		none	always
 in-word '	apostrof	all	norep
 negative number	mínus	none	norep
@@ -41,8 +44,10 @@ negative number	mínus	none	norep
 
 # Standard punctuation/symbols
 !	výkričník	all
+！	široký výkričník	all
 "	úvodzovky	most
-\#	krížik	some
+\#	mriežka	some
+❌	krížik	some
 $	dolár	all	norep
 £	libra	all	norep
 €	euro	all	norep
@@ -62,30 +67,46 @@ $	dolár	all	norep
 、	ideografická čiarka	all	always
 ،	arabská čiarka	all	always
 -	spojovník	most	always
-.	bodka	
+.	bodka	some
+．	široká bodka	some
 /	lomka	some
 :	dvojbodka	most	norep
+：	široká dvojbodka	most	norep
 ;	bodkočiarka	most
 ؛	arabská bodkočiarka	most
+；	široká bodkočiarka	most
 ?	otáznik	all
 ؟	arabský otáznik	all
- @	at	some@	zavináč	some
+？	široký otáznik	all
+@	zavináč	some
 [	hranatá zátvorka	most
 ]	hranatá zatvoriť	most
 \\	opačná lomka	most
 ^	vokáň	most
+ˆ	vokáň modifikátor	most
 _	podčiarkovník	most
 `	prízvuk	most
+̀	prízvuk	most
+ˋ	prízvuk modifikátor	most
 {	zložená zátvorka	most
 }	zložená zatvoriť	most
 |	zvislá čiara	most
 ¦	prerušená čiara	most
 ~	vlnovka	most
+̃	vlnovka	most
+˜	vlnovka modifikátor	most
 ¡	obrátený výkričník	some
 ¿	obrátený otáznik	some
 ·	bodka v prostriedku	most
 ‚	dolné jednoduché úvodzovky	most
+‛	pravá jednoduchá opačná úvodzovka	most
+“	horné úvodzovky	most
+”	pravá dvojitá úvodzovka	most
 „	dolné úvodzovky	most
+‟	horná dvojitá opačná úvodzovka	most
+‹	ľavá jednoduchá lomená úvodzovka	most
+›	pravá jednoduchá lomená úvodzovka	most
+⹂	dolná dvojitá opačná úvodzovka	most
 ′	indexová čiarka	some
 ″	dvojitá indexová čiarka	some
 ‴	trojitá indexová čiarka	some
@@ -94,8 +115,6 @@ _	podčiarkovník	most
 •	odrážka	some
 …	bodka bodka bodka	all	always
 ...	bodka bodka bodka	all	always
-“	horné úvodzovky	most
-”	dvojitá horná opačná úvodzovka	most
 ‘	horné jednoduché úvodzovky	most
 ’	odsuvník	most
 –	pomlčka	most	always
@@ -105,9 +124,45 @@ _	podčiarkovník	most
 ●	čierny kruh	most
 ○	biely kruh	most
 ¨	prehláska	most
-¯	pruh nad	most
+̈	prehláska	most
+̉	háčik nad	most
+̊	krúžok	most
+¯	makron	most
+̄	makron	most
+ˉ	makron modifikátor	most
 ´	dĺžeň	most
+́	dĺžeň	most
+ˊ	dĺžeň modifikátor	most
 ¸	cedila	most
+̧	cedila	most
+̨	ogonek	most
+˛	ogonek modifikátor	most
+̩	vertikálna čiara pod	most
+ˌ	vertikálna čiara pod modifikátor	most
+̭	vokáň pod	most
+̮	oblúčik breve pod	most
+̱	makron pod	most
+ˍ	makron pod modifikátor	most
+̲	vertikálna čiara pod	most
+˝	dvojitý dĺžeň modifikátor	most
+̋	dvojitý dĺžeň	most
+̇	bodka nad	most
+˙	bodka nad modifikátor	most
+̌	mäkčeň	most
+ˇ	mäkčeň modifikátor	most
+̆	oblúčik breve	most
+˘	oblúčik breve modifikátor	most
+̍	vertikálna čiara nad	most
+ˈ	vertikálna čiara modifikátor	most
+̏	dvojitý prízvuk	most
+˵	dvojitý prízvuk modifikátor	most
+̖	prízvuk pod	most
+ˎ	prízvuk pod modifikátor	most
+̗	dĺžeň pod	most
+ˏ	dĺžeň pod modifikátor	most
+̣	bodka pod	most
+̤	prehláska pod	most
+̥	krúžok pod	most
 ‎	znak z ľava do prava	char
 +‏	right to left mark	char
 ¶	označenie odseku	most
@@ -120,19 +175,27 @@ _	podčiarkovník	most
 ➔	šípka v pravo	some
 ➢	hrot šípky ukazujúcej vpravo	some
 ❖	čierny štvorec bez bieleho x	some
+♣	kríž	some
+♦	káro	some
+◆	čierny diamant	some
 ♠	pika	some
 ♡	Biele srdce	some
 ♢	Biele káro	some
-♣	kríž	some
 ♤	biela pika	some
 ♥	srdce	some
-♦	káro	some
 ♧	Biely kríž	some
-◆	čierny diamant	some
 §	paragraf	all
 °	stupňov	some
-«	dvojitá lomená zátvorka	most	always
-»	dvojitá lomená zatvoriť	most	always
+〈	lomená zátvorka	most
+〉	lomená zatvoriť	most
+《	dvojitá lomená zátvorka	most
+》	dvojitá lomená zatvoriť	most
+「	rohová zátvorka	most
+」	rohová zatvoriť	most
+『	dutá rohová zátvorka	most
+』	dutá rohová zatvoriť	most
+«	ľavá dvojitá lomená úvodzovka	most
+»	pravá dvojitá lomená úvodzovka	most
 µ	mí	some
 ⁰	horný index 0	some
 ¹	horný index 1	some
@@ -426,7 +489,7 @@ _	podčiarkovník	most
 ⠵	brail  1 3 5 6
 ⠶	brail  2 3 5 6
 ⠷	brail  1 2 3 5 6
-⠸	brail  1 2 3
+⠸	brail  4 5 6
 ⠹	brail  1 4 5 6
 ⠺	brail  2 4 5 6
 ⠻	brail  1 2 4 5 6

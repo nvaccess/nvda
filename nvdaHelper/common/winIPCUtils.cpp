@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 #include <cwchar>
 #include <string>
 #include <sstream>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include "winIPCUtils.h"
 

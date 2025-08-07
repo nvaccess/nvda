@@ -1,54 +1,60 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright (C) 2014-2017 NV Access Limited.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright (C) 2014-2017 NV Access Limited.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import('env')
+Import("env")
 
-env['MIDLCOM']=env['MIDLCOM'][:-6]
+env["MIDLCOM"] = env["MIDLCOM"][:-6]
 
 # Copy some secondary IDL files included by ISimpleDOMNode.idl
 idlDeps = [
-	env.Command("ISimpleDOMText.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMText.idl",Copy("$TARGET","$SOURCE")),
-	env.Command("ISimpleDOMDocument.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMDocument.idl",Copy("$TARGET","$SOURCE")),
+	env.Command(
+		"ISimpleDOMText.idl", "#/miscDeps/include/ISimpleDOM/ISimpleDOMText.idl", Copy("$TARGET", "$SOURCE")
+	),
+	env.Command(
+		"ISimpleDOMDocument.idl",
+		"#/miscDeps/include/ISimpleDOM/ISimpleDOMDocument.idl",
+		Copy("$TARGET", "$SOURCE"),
+	),
 ]
 # copy ISimpleDOMNode.idl but changing imports of the secondary files to #includes
 # This is necessary as midl will not build secondary header files. this way the primary header file will contain all secondary header file content
-idlFile=env.Substfile(
+idlFile = env.Substfile(
 	target="iSimpleDOMNode.idl",
 	source="#/miscDeps/include/ISimpleDOM/ISimpleDOMNode.idl",
 	SUBST_DICT={
-		'import "ISimpleDOM':'#include "ISimpleDOM',
-	}
+		'import "ISimpleDOM': '#include "ISimpleDOM',
+	},
 )
 # SCons doesn't scan the file we just created,
 # so we must explicitly declare its dependencies.
 env.Depends(idlFile, idlDeps)
 
-tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(
+tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile = env.TypeLibrary(
 	source=idlFile,
-	MIDLFLAGS=[env['MIDLFLAGS'],'/c_ext','/I',Dir('.')],
+	MIDLFLAGS=[env["MIDLFLAGS"], "/c_ext", "/I", Dir(".")],
 )
 # #7036: hack: Ignore midl.exe when deciding to rebuild, as its position in the dependencies
 # is different in the run before the idl files are copied versus subsequent runs.
-midl=env.WhereIs(env["MIDL"])
-for target in (tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile):
-	env.Ignore(target,midl)
+midl = env.WhereIs(env["MIDL"])
+for target in (tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile):
+	env.Ignore(target, midl)
 
-proxyDll=env.COMProxyDll(
-	target='ISimpleDOM',
-	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
+proxyDll = env.COMProxyDll(
+	target="ISimpleDOM",
+	source=[iidSourceFile, proxySourceFile, dlldataSourceFile],
 	# This CLSID must be unique to this dll. A new one can be generated with import comtypes; comtypes.GUID.create_new()
 	proxyClsid="{435E0FC9-344B-41D4-88DD-4CAAD499ACE5}",
 )
 
-Return(['proxyDll','tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])
+Return(["proxyDll", "tlbFile", "headerFile", "iidSourceFile", "proxySourceFile", "dlldataSourceFile"])

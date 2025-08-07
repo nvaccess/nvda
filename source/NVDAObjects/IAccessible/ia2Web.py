@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited
 
-"""Base classes with common support for browsers exposing IAccessible2.
-"""
+"""Base classes with common support for browsers exposing IAccessible2."""
 
 from typing import (
 	Generator,
@@ -13,6 +12,7 @@ from typing import (
 )
 from ctypes import c_short
 from comtypes import COMError, BSTR
+from comtypes.hresult import E_NOTIMPL
 
 import oleacc
 from annotation import (
@@ -24,7 +24,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
-from NVDAObjects.behaviors import Dialog, WebDialog 
+from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
@@ -56,7 +56,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 	def __bool__(self) -> bool:
 		return bool(
-			self._originObj.IA2Attributes.get("details-roles")
+			self._originObj.IA2Attributes.get("details-roles"),
 		)
 
 	@property
@@ -67,10 +67,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 				log.debug("no annotations available")
 			return
 
-		return tuple(
-			IA2WebAnnotationTarget(rel)
-			for rel in self._originObj.detailsRelations
-		)
+		return tuple(IA2WebAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
 
 	@property
 	def roles(self) -> _AnnotationRolesT:
@@ -85,6 +82,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 		objects.
 		"""
 		from .chromium import supportedAriaDetailsRoles
+
 		# Currently only defined in Chrome as of May 2022
 		# Refer to ComputeDetailsRoles
 		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
@@ -103,8 +101,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 
 class Ia2Web(IAccessible):
-	IAccessibleTableUsesTableCellIndexAttrib=True
-	caretMovementDetectionUsesEvents = False
+	IAccessibleTableUsesTableCellIndexAttrib = True
 
 	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:
@@ -121,12 +118,12 @@ class Ia2Web(IAccessible):
 		return bool(res)
 
 	def _get_positionInfo(self):
-		info=super(Ia2Web,self).positionInfo
-		level=info.get('level',None)
+		info = super(Ia2Web, self).positionInfo
+		level = info.get("level", None)
 		if not level:
-			level=self.IA2Attributes.get('level',None)
+			level = self.IA2Attributes.get("level", None)
 			if level:
-				info['level']=level
+				info["level"] = level
 		return info
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
@@ -141,6 +138,7 @@ class Ia2Web(IAccessible):
 	annotations: "IA2WebAnnotation"
 	"""Typing information for auto property _get_annotations
 	"""
+
 	def _get_annotations(self) -> "AnnotationOrigin":
 		annotationOrigin = IA2WebAnnotation(self)
 		return annotationOrigin
@@ -178,54 +176,52 @@ class Ia2Web(IAccessible):
 			return controlTypes.IsCurrent.NO
 
 	def _get_placeholder(self):
-		placeholder = self.IA2Attributes.get('placeholder', None)
+		placeholder = self.IA2Attributes.get("placeholder", None)
 		return placeholder
 
 	def _get_isPresentableFocusAncestor(self):
-		if self.role==controlTypes.Role.TABLEROW:
+		if self.role == controlTypes.Role.TABLEROW:
 			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
 			# Also presenting the rows would cause duplication of information
 			return False
-		return super(Ia2Web,self).isPresentableFocusAncestor
+		return super(Ia2Web, self).isPresentableFocusAncestor
 
 	def _get_roleText(self):
-		roleText = self.IA2Attributes.get('roledescription')
+		roleText = self.IA2Attributes.get("roledescription")
 		if roleText:
 			return roleText
 		return super().roleText
 
 	def _get_roleTextBraille(self) -> str:
-		roleTextBraille = self.IA2Attributes.get('brailleroledescription')
+		roleTextBraille = self.IA2Attributes.get("brailleroledescription")
 		if roleTextBraille:
 			return roleTextBraille
 		return super().roleTextBraille
 
 	def _get_states(self):
-		states=super(Ia2Web,self).states
+		states = super(Ia2Web, self).states
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
 		# This is necessary for other code that calculates how selection of cells should be spoken.
-		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
+		if "gridcell" in self.IA2Attributes.get("xml-roles", "").split(" "):
 			states.add(controlTypes.State.FOCUSABLE)
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
-		if self.IA2Attributes.get('goog-editable')=="false":
+		if self.IA2Attributes.get("goog-editable") == "false":
 			states.discard(controlTypes.State.EDITABLE)
 		if controlTypes.State.HASPOPUP in states:
 			popupState = aria.ariaHaspopupValuesToNVDAStates.get(
-				self.IA2Attributes.get("haspopup")
+				self.IA2Attributes.get("haspopup"),
 			)
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
+		if self.role == controlTypes.Role.LINK and controlTypes.State.LINKED in states and self.linkType:
+			states.add(self.linkType)
 		return states
 
 	def _get_landmark(self):
-		xmlRoles = self.IA2Attributes.get('xml-roles', '').split(' ')
+		xmlRoles = self.IA2Attributes.get("xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
-		if (
-			landmark
-			and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK
-			and landmark != xmlRoles[0]
-		):
+		if landmark and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
 			landmark = None
 		if landmark:
@@ -239,13 +235,13 @@ class Ia2Web(IAccessible):
 			speech.speakObjectProperties(
 				self,
 				current=True,
-				reason=controlTypes.OutputReason.CHANGE
+				reason=controlTypes.OutputReason.CHANGE,
 			)
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
-		politeness = self.IA2Attributes.get('live', "off")
+		politeness = self.IA2Attributes.get("live", "off")
 		try:
 			return aria.AriaLivePoliteness(politeness.lower())
 		except ValueError:
@@ -259,8 +255,10 @@ class Document(Ia2Web):
 	def _get_shouldCreateTreeInterceptor(self):
 		return controlTypes.State.READONLY in self.states
 
+
 class Application(Document):
 	shouldCreateTreeInterceptor = False
+
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.Role.BLOCKQUOTE
@@ -285,29 +283,32 @@ class Figure(Ia2Web):
 class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
 
-	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
-		# Locate the table in the object ancestry of the given document position. 
-		obj=startPos.NVDAObjectAtStart
-		while not obj.table and obj!=self:
-			obj=obj.parent
+	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
+		# Locate the table in the object ancestry of the given document position.
+		obj = startPos.NVDAObjectAtStart
+		while not obj.table and obj != self:
+			obj = obj.parent
 		if not obj.table:
 			# No table could be found
 			raise LookupError
 		table = obj.table
 		try:
-			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
-			# We will be able to get at least one of these.  
+			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells.
+			# We will be able to get at least one of these.
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IA2.IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(
+					IA2.IAccessible2,
+				)
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
 				cell = table.IAccessibleTableObject.accessibleAt(
-					destRow - 1, destCol - 1
+					destRow - 1,
+					destCol - 1,
 				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
-			if cell.IA2Attributes.get('hidden'):
-				raise LookupError("Found hidden cell") 
+			if cell.IA2Attributes.get("hidden"):
+				raise LookupError("Found hidden cell")
 			# Return the position of the found cell
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
@@ -326,23 +327,38 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
 
-class Math(Ia2Web):
 
+class Math(Ia2Web):
 	def _get_mathMl(self):
-		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
+
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
 			# Try the data-mathml attribute.
 			attrNames = (BSTR * 1)("data-mathml")
 			namespaceIds = (c_short * 1)(0)
-			attr = node.attributesForNames(1, attrNames, namespaceIds)
+			try:
+				attr = node.attributesForNames(1, attrNames, namespaceIds)
+			except COMError as e:
+				if e.hresult != E_NOTIMPL:
+					log.debugWarning(f"MathML getting attr error: {e}")
+					raise
+				attr = None
 			if attr:
 				import mathPres
+
 				if not mathPres.getLanguageFromMath(attr) and self.language:
 					attr = mathPres.insertLanguageIntoMath(attr, self.language)
 				return attr
 			if self.IA2Attributes.get("tag") != "math":
-				# This isn't MathML.
+				# Could be a <span> (etc) that has role = math -- check the child
+				# If there is a single <math> child, recurse on the assumption that is what was the intended math
+				mathObjs: list["NVDAObjects.NVDAObject"] = [
+					child for child in self.children if child.IA2Attributes.get("tag") == "math"
+				]
+				if len(mathObjs) == 1:
+					return mathObjs[0].mathMl
+				# This isn't MathML
 				raise LookupError
 			if self.language:
 				attrs = ' xml:lang="%s"' % self.language
@@ -350,9 +366,24 @@ class Math(Ia2Web):
 				attrs = ""
 			return "<math%s>%s</math>" % (attrs, node.innerHTML)
 		except COMError:
-			log.debugWarning("Error retrieving math. "
-				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
+			log.debugWarning(
+				"Error retrieving math. "
+				"Not supported in this browser or ISimpleDOM COM proxy not registered.",
+				exc_info=True,
+			)
 			raise LookupError
+
+	def _get_role(self):
+		if self.IA2Attributes.get("tag") == "img":
+			try:
+				mathMl = self.mathMl
+			except LookupError:
+				mathMl = None
+			if mathMl is None:
+				# #16007: Many publishers were setting role=math on plain images with alt text.
+				# We want to just treat these as normal images.
+				return controlTypes.Role.GRAPHIC
+		return super().role
 
 
 class Switch(Ia2Web):
@@ -408,13 +439,12 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		except ValueError:
 			pass
 
-	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
+	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
 	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
 		clsList.append(WebDialog)
-	if (
-		iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
-		or (iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and Article not in clsList)
+	if iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG) or (
+		iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and Article not in clsList
 	):
 		clsList.append(documentClass)
 
@@ -424,7 +454,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		else:
 			clsList.append(EditorChunk)
 
-	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_PROPERTYPAGE):
+	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG, oleacc.ROLE_SYSTEM_PROPERTYPAGE):
 		if "dialog" in xmlRoles or "tabpanel" in xmlRoles:
 			# #2390: Don't try to calculate text for ARIA dialogs.
 			# #4638: Don't try to calculate text for ARIA tab panels.

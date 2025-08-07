@@ -1,16 +1,16 @@
-#tests/unit/test_baseObject.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# tests/unit/test_baseObject.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
 import unittest
-from baseObject import AutoPropertyObject, ScriptableObject
+from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
-from abc import abstractmethod
+
 
 class NVDAObjectWithDecoratedScript(PlaceholderNVDAObject):
 	"""An object with a decorated script."""
@@ -19,6 +19,7 @@ class NVDAObjectWithDecoratedScript(PlaceholderNVDAObject):
 	def script_alpha(self, gesture):
 		return
 
+
 class NVDAObjectWithGesturesDictionary(PlaceholderNVDAObject):
 	"""An object with a script that is bound to a gesture in a L{__gestures} dictionary."""
 
@@ -26,8 +27,9 @@ class NVDAObjectWithGesturesDictionary(PlaceholderNVDAObject):
 		return
 
 	__gestures = {
-		"kb:b": "bravo"
+		"kb:b": "bravo",
 	}
+
 
 class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 	"""An object with a decorated script
@@ -45,10 +47,11 @@ class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 		"kb:d": "delta",
 	}
 
+
 class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
 	NVDAObjectWithDecoratedScript,
 	NVDAObjectWithGesturesDictionary,
-	NVDAObjectWithDecoratedScriptAndGesturesDictionary
+	NVDAObjectWithDecoratedScriptAndGesturesDictionary,
 ):
 	"""An object with decorated scripts and L{__gestures} dictionaries, based on subclassing."""
 
@@ -63,16 +66,19 @@ class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
 		"kb:f": "foxtrot",
 	}
 
+
 class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 	"""An object with decorated scripts and L{__gestures} dictionaries,
 	using the chooseOverlayClasses logic to construct a dynamic object."""
 
 	def findOverlayClasses(self, clsList):
-		clsList.extend([
-			NVDAObjectWithDecoratedScript,
-			NVDAObjectWithGesturesDictionary,
-			NVDAObjectWithDecoratedScriptAndGesturesDictionary
-		])
+		clsList.extend(
+			[
+				NVDAObjectWithDecoratedScript,
+				NVDAObjectWithGesturesDictionary,
+				NVDAObjectWithDecoratedScriptAndGesturesDictionary,
+			],
+		)
 
 	@script(gestures=["kb:g"])
 	def script_golf(self, gesture):
@@ -84,6 +90,7 @@ class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAO
 	__gestures = {
 		"kb:h": "hotel",
 	}
+
 
 class TestScriptableObject(unittest.TestCase):
 	"""A test that verifies whether scripts are properly bound to associated gestures."""
@@ -111,25 +118,29 @@ class TestScriptableObject(unittest.TestCase):
 		for key in ("a", "b", "c", "d", "g", "h"):
 			self.assertIn("kb:%s" % key, obj._gestureMap)
 
-class AutoPropertyObjectWithAbstractProperty(AutoPropertyObject):
 
+class AutoPropertyObjectWithAbstractProperty(AutoPropertyObject):
 	_abstract_x = True
+
 	def _get_x(self):
 		return True
 
 	def _set_x(self, value):
 		self._attribute = value
 
+
 class SubclassedAutoPropertyObjectWithAbstractProperty(AutoPropertyObjectWithAbstractProperty):
 	pass
 
-class SubclassedAutoPropertyObjectWithImplementedProperty(AutoPropertyObjectWithAbstractProperty):
 
+class SubclassedAutoPropertyObjectWithImplementedProperty(AutoPropertyObjectWithAbstractProperty):
 	def _get_x(self):
 		return True
 
+
 class SubclassedAutoPropertyObjectWithOverriddenClassProperty(AutoPropertyObjectWithAbstractProperty):
 	x = True
+
 
 class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""A test that verifies whether abstract properties are properly identified as such.
@@ -137,17 +148,18 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""
 
 	def test_abstractProperty(self):
-		self.assertRaisesRegex(TypeError,
-			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
-			"with abstract methods x",
-			AutoPropertyObjectWithAbstractProperty
+		self.assertRaisesRegex(
+			TypeError,
+			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty with abstract method x",
+			AutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_subclassedAbstractProperty(self):
-		self.assertRaisesRegex(TypeError,
+		self.assertRaisesRegex(
+			TypeError,
 			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
-			"with abstract methods x",
-			SubclassedAutoPropertyObjectWithAbstractProperty
+			"with abstract method x",
+			SubclassedAutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_implementedProperty(self):
@@ -156,15 +168,15 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	def test_overriddenClassProperty(self):
 		self.assertTrue(SubclassedAutoPropertyObjectWithOverriddenClassProperty().x)
 
-class AutoPropertyObjectWithClassProperty(AutoPropertyObject):
 
+class AutoPropertyObjectWithClassProperty(AutoPropertyObject):
 	@classmethod
-	def _get_x(self):
+	def _get_x(cls):
 		return True
 
+
 class TestAutoClassProperties(unittest.TestCase):
-	"""A test that verifies whether automatic class properties work as expected.
-	"""
+	"""A test that verifies whether automatic class properties work as expected."""
 
 	def test_classProperty(self):
 		cls = AutoPropertyObjectWithClassProperty

@@ -10,7 +10,6 @@ from NVDAObjects.UIA import UIA, ProgressBar
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
 			# #10411: In build 17035, Settings/System/Sound has been added, but has an anoying volume meter.
@@ -18,13 +17,10 @@ class AppModule(appModuleHandler.AppModule):
 				# Due to Storage Sense UI redesign in build 18277,
 				# the progress bar's sibling might not be a UIA object at all.
 				try:
-					if (
-						obj.next.UIAAutomationId.startswith(
-							"SystemSettings_Audio_Output_VolumeValue_"
-						)
-						or obj.simplePrevious.UIAAutomationId.startswith(
-							"SystemSettings_Audio_Input_VolumeValue_"
-						)
+					if obj.next.UIAAutomationId.startswith(
+						"SystemSettings_Audio_Output_VolumeValue_",
+					) or obj.simplePrevious.UIAAutomationId.startswith(
+						"SystemSettings_Audio_Input_VolumeValue_",
 					):
 						try:
 							clsList.remove(ProgressBar)

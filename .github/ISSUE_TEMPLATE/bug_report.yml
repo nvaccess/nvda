@@ -1,5 +1,6 @@
 name: Bug report
 description: Create a bug report to help us improve
+type: Bug
 labels: [bug]
 
 body:
@@ -192,7 +193,7 @@ body:
     attributes:
       label: Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
       description: |
-        COM DLL files, which i.e. the IAccessible COM interface depends on, can get unregistered after installing and uninstalling different programs on a computer.
+        COM DLL files, which the IAccessible COM interface depends on, can get unregistered after installing and uninstalling different programs on a computer.
         The consequence is that NVDA in certain cases does not work properly.
         Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
         The COM registry fixing tool has been introduced in order to re-register those DLL files.

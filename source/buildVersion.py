@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited
+# Copyright (C) 2006-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,9 +11,9 @@ Any localizable version information should be placed in the versionInfo module, 
 This module exists separately so that it can be imported for version checks before localization is initialized.
 """
 
+
 def _updateVersionFromVCS():
-	"""Update the version from version control system metadata if possible.
-	"""
+	"""Update the version from version control system metadata if possible."""
 	global version
 	# The root of the Git working tree will be the parent of this module's directory.
 	gitDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".git")
@@ -28,10 +28,8 @@ def _updateVersionFromVCS():
 		ref = head[5:]
 		with open(os.path.join(gitDir, ref), "r") as f:
 			commit = f.read().rstrip()
-		version = "source-%s-%s" % (
-			os.path.basename(ref),
-			commit[:7])
-	except:
+		version = f"source-{os.path.basename(ref)}-{commit[:7]}"
+	except:  # noqa: E722
 		pass
 
 
@@ -56,7 +54,7 @@ def formatVersionForGUI(year, major, minor):
 	"""
 	if None in (year, major, minor):
 		raise ValueError(
-			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor)
+			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor),
 		)
 	if minor == 0:
 		return "{y}.{M}".format(y=year, M=major)
@@ -65,15 +63,15 @@ def formatVersionForGUI(year, major, minor):
 
 # Version information for NVDA
 name = "NVDA"
-version_year = 2023
+version_year = 2025
 version_major = 3
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
-version=_formatDevVersionString()
-publisher="unknown"
-updateVersionType=None
+version = _formatDevVersionString()
+publisher = "unknown"
+updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build
+	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
 except ImportError:
 	_updateVersionFromVCS()
 

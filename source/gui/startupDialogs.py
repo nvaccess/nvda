@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,18 +11,19 @@ import wx
 import config
 from config.configFlags import NVDAKey
 import core
-from documentationUtils import getDocFilePath
+from documentationUtils import displayLicense
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import gui.guiHelper
 import keyboardHandler
 from logHandler import log
 import versionInfo
 
 
 class WelcomeDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA welcome dialog.
 	This provides essential information for new users,
@@ -30,15 +31,16 @@ class WelcomeDialog(
 	It also provides quick access to some important configuration options.
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
+
 	helpId = "WelcomeDialog"
 	WELCOME_MESSAGE_DETAIL = _(
 		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 		"Most commands for controlling NVDA require you to hold down"
 		" the NVDA key while pressing other keys.\n"
-		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
+		"By default, the Insert and numpad Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions.",
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
@@ -76,8 +78,12 @@ class WelcomeDialog(
 			log.error("Could not set Keyboard layout list to current layout", exc_info=True)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(
+			wx.CheckBox(optionsBox, label=capsAsNVDAModifierText),
+		)
+		self.capsAsNVDAModifierCheckBox.SetValue(
+			config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK,
+		)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
@@ -93,7 +99,7 @@ class WelcomeDialog(
 		mainSizer.Add(
 			self.CreateButtonSizer(wx.OK),
 			border=gui.guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.ALIGN_RIGHT
+			flag=wx.ALL | wx.ALIGN_RIGHT,
 		)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
@@ -116,7 +122,7 @@ class WelcomeDialog(
 				_(
 					# Translators: The title of an error message box displayed when validating the startup dialog
 					"At least one NVDA modifier key must be set. "
-					"Caps lock will remain as an NVDA modifier key. "
+					"Caps lock will remain as an NVDA modifier key. ",
 				),
 				# Translators: The title of an error message box displayed when validating the startup dialog
 				_("Error"),
@@ -127,7 +133,9 @@ class WelcomeDialog(
 			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
-		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
+		config.conf["general"]["showWelcomeDialogAtStartup"] = (
+			self.showWelcomeDialogAtStartupCheckBox.IsChecked()
+		)
 		try:
 			config.conf.save()
 		except Exception:
@@ -156,16 +164,17 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
-		DpiScalingHelperMixinWithoutInit,
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+	DpiScalingHelperMixinWithoutInit,
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.
 	"""
+
 	helpId = "InstallingNVDA"
 
-	def __init__(self, parent):
+	def __init__(self, parent: wx.Window | None):
 		super().__init__(
 			parent,
 			title=f"{versionInfo.name} {_('Launcher')}",
@@ -175,12 +184,6 @@ class LauncherDialog(
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		sHelper.addItem(self._createLicenseAgreementGroup())
-
-		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-		agreeText = _("I &agree")
-		self.licenseAgreeCheckbox = sHelper.addItem(wx.CheckBox(self, label=agreeText))
-		self.licenseAgreeCheckbox.Value = False
-		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
 
 		sizer = sHelper.addItem(wx.GridSizer(2, 2, 0, 0))
 		self.actionButtons = []
@@ -200,6 +203,7 @@ class LauncherDialog(
 		sizer.Add(ctrl)
 		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
 		self.actionButtons.append(ctrl)
+		# Translators: The label for a button to exit the NVDA launcher.
 		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
 		# If we bind this on the button, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)
@@ -216,24 +220,19 @@ class LauncherDialog(
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
 		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
-		# Create a fake text control to determine appropriate width of license text box
-		_fakeTextCtrl = wx.StaticText(
-			self,
-			label="a" * 80,  # The GPL2 text of copying.txt wraps sentences at 80 characters
-		)
-		widthOfLicenseText = _fakeTextCtrl.Size[0]
-		_fakeTextCtrl.Destroy()
-		licenseTextCtrl = wx.TextCtrl(
-			self,
-			size=(widthOfLicenseText, self.scaleSize(300)),
-			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
-		)
-		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(
-			licenseTextCtrl,
-			flag=wx.EXPAND,
-			proportion=1,
-		)
+
+		# Translators: The label of a button in NVDA installation process to view the license agreement.
+		viewLicenseButton = wx.Button(self, label=_("&View License"))
+		viewLicenseButton.Bind(wx.EVT_BUTTON, lambda evt: displayLicense())
+		sizer.Add(viewLicenseButton, border=gui.guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
+
+		# Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
+		agreeText = _("I have read and &agree to the license agreement")
+		self.licenseAgreeCheckbox = wx.CheckBox(self, label=agreeText)
+		self.licenseAgreeCheckbox.SetValue(False)
+		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
+		sizer.Add(self.licenseAgreeCheckbox, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+
 		return sizer
 
 	def onLicenseAgree(self, evt):
@@ -265,11 +264,11 @@ class LauncherDialog(
 
 
 class AskAllowUsageStatsDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
-	
+
 	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
@@ -286,15 +285,16 @@ class AskAllowUsageStatsDialog(
 			"certain NVDA configuration such as current synthesizer, braille display and braille table. "
 			"No spoken or braille content will be ever sent to NV Access. "
 			"Please refer to the User Guide for a current list of all data collected.\n\n"
-			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
+			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?",
 		)
 		sText = sHelper.addItem(wx.StaticText(self, label=message))
 		# the wx.Window must be constructed before we can get the handle.
 		import windowUtils
+
 		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
 		sText.Wrap(
 			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-			self.scaleFactor * 600
+			self.scaleFactor * 600,
 		)
 
 		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
@@ -319,14 +319,14 @@ class AskAllowUsageStatsDialog(
 
 	def onYesButton(self, evt):
 		log.debug("Usage stats gathering has been allowed")
-		config.conf['update']['askedAllowUsageStats'] = True
-		config.conf['update']['allowUsageStats'] = True
+		config.conf["update"]["askedAllowUsageStats"] = True
+		config.conf["update"]["allowUsageStats"] = True
 		self.EndModal(wx.ID_YES)
 
 	def onNoButton(self, evt):
 		log.debug("Usage stats gathering has been disallowed")
-		config.conf['update']['askedAllowUsageStats'] = True
-		config.conf['update']['allowUsageStats'] = False
+		config.conf["update"]["askedAllowUsageStats"] = True
+		config.conf["update"]["allowUsageStats"] = False
 		self.EndModal(wx.ID_NO)
 
 	def onLaterButton(self, evt):

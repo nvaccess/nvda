@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Leonard de Ruijter
 
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -47,6 +47,7 @@ from .speech import (
 	setSpeechMode,
 	speak,
 	speakMessage,
+	speakSsml,
 	speakObject,
 	speakObjectProperties,
 	speakPreselectedText,
@@ -62,7 +63,8 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
-
+from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence
+from .languageHandling import getSpeechSequenceWithLangs
 from .priorities import Spri
 
 from .types import (
@@ -70,7 +72,7 @@ from .types import (
 	SequenceItemT,
 	logBadSequenceTypes,
 	GeneratorWithReturn,
-	_flattenNestedSequences
+	_flattenNestedSequences,
 )
 
 __all__ = [
@@ -124,6 +126,7 @@ __all__ = [
 	"RE_INDENTATION_SPLIT",
 	"setSpeechMode",
 	"speak",
+	"speakSsml",
 	"speakMessage",
 	"speakObject",
 	"speakObjectProperties",
@@ -139,6 +142,9 @@ __all__ = [
 	"SpeechMode",
 	"spellTextInfo",
 	"splitTextIndentation",
+	"speechCanceled",
+	"post_speechPaused",
+	"pre_speechQueued",
 ]
 
 import synthDriverHandler
@@ -148,7 +154,7 @@ from .sayAll import initialize as sayAllInitialize
 
 
 def initialize():
-	""" Loads and sets the synth driver configured in nvda.ini.
+	"""Loads and sets the synth driver configured in nvda.ini.
 	Initializes the state of speech and initializes the sayAllHandler
 	"""
 	synthDriverHandler.initialize()
@@ -160,7 +166,9 @@ def initialize():
 		getTextInfoSpeech,
 		SpeakTextInfoState,
 	)
+	filter_speechSequence.register(getSpeechSequenceWithLangs)
 
 
 def terminate():
 	synthDriverHandler.setSynth(None)
+	filter_speechSequence.unregister(getSpeechSequenceWithLangs)

@@ -1,6 +1,6 @@
 ﻿#locale/da/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -26,6 +28,7 @@ symbols:
 ? sentence ending	spørgsmålstegn	all	always
 ; phrase ending	semikolon	most	always
 : phrase ending	kolon	most	always
+multiple .	flere prikker	all	always
 decimal point		none	always
 in-word '	apostrof	all	norep
 negative number	minus	none	norep
@@ -420,7 +423,7 @@ _	understregning	most
 ⠵	braille 1 3 5 6
 ⠶	braille 2 3 5 6
 ⠷	braille 1 2 3 5 6
-⠸	braille 1 2 3
+⠸	braille 4 5 6
 ⠹	braille 1 4 5 6
 ⠺	braille 2 4 5 6
 ⠻	braille 1 2 4 5 6

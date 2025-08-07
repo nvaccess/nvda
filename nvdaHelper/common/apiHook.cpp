@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <iostream>
 #include <set>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <delayimp.h>
 #include <detours/src/detours.h>
@@ -66,7 +66,7 @@ bool apiHook_commitTransaction() {
 	if (res != NO_ERROR) {
 		LOG_ERROR("DetourTransactionCommit failed with " << res << " due to variable at address 0X" << std::hex << failedPointerRef << " that should hold a function pointer");
 		return false;
-	} 
+	}
 	LOG_DEBUG("DetourTransactionCommit succeeded");
 	return TRUE;
 }

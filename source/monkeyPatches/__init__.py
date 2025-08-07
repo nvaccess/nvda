@@ -12,8 +12,5 @@ applyWxMonkeyPatches = wxMonkeyPatches.apply
 def applyMonkeyPatches():
 	# Apply several monkey patches to comtypes
 	from . import comtypesMonkeyPatches
-	comtypesMonkeyPatches.applyMonkeyPatches()
 
-	# Apply patches to Enum, prevent cyclic references on ValueError during construction
-	from . import enumPatches
-	enumPatches.replace__new__()
+	comtypesMonkeyPatches.applyMonkeyPatches()

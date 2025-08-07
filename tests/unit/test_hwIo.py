@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the hwIo module.
-"""
+"""Unit tests for the hwIo module."""
 
 import unittest
 import hwIo
@@ -12,12 +11,10 @@ import threading
 
 
 class TestBgThreadApc(unittest.TestCase):
-	"""Tests whether an APC on the hwIo background thread executes correctly.
-	"""
+	"""Tests whether an APC on the hwIo background thread executes correctly."""
 
 	def setUp(self):
-		"""Set up an event to be used in subsequent tests.
-		"""
+		"""Set up an event to be used in subsequent tests."""
 		hwIo.initialize()
 		self.event = threading.Event()
 
@@ -41,6 +38,7 @@ class TestBgThreadApc(unittest.TestCase):
 		def apc(param: int) -> None:
 			paramContainer.param = param
 			self.event.set()
+
 		hwIo.bgThread.queueAsApc(apc, 42)
 		# Wait for atmost 2 seconds for the event to be set
 		self.assertTrue(self.event.wait(2))

@@ -50,8 +50,7 @@ ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
-	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
-	[Tags]	excluded_from_build
+	[Documentation]	Tests ARIA invalid values of "spelling" and "grammar".
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
@@ -148,7 +147,6 @@ multiple ARIA details targets
 	test_annotations_multi_target
 i10890
 	[Documentation]	Test sort state is announced on column header when changed with inner button
-	[Tags]	excluded_from_build
 	test_i10890
 ARIA switch role
 	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
@@ -156,3 +154,27 @@ ARIA switch role
 i13307
 	[Documentation]	ensure aria-labelledby on a landmark or region is automatically spoken when jumping inside from outside using focus in browse mode
 	test_i13307
+textParagraphNavigation
+	[Documentation]	Text paragraph navigation
+	test_textParagraphNavigation
+styleNav
+	[Documentation]	Same style navigation
+	test_styleNav
+aria-errormessage
+	[Documentation]	Test that aria-errormessage is reported correctly in focus and browse mode
+	test_ariaErrorMessage
+Report language disabled
+	[Documentation]	Read a sentence with different languages without reporting none of them.
+	test_reportLanguageDisabled
+Report language enabled
+	[Documentation]	Read a sentence with different languages reporting them.
+	test_reportLanguageEnabled
+Report language without dialects
+	[Documentation]	Read a sentence with different languages without reporting dialects.
+	test_reportLanguageWithoutDialects
+Report not supported language without other languages
+	[Documentation]	Read a sentence with different languages without reporting supported ones.
+	test_reportNotSupportedLanguageWithoutOtherLanguages
+Report not supported language and other languages
+	[Documentation]	Read a sentence with different languages reporting them, included the not supported language.
+	test_reportNotSupportedLanguageAndOtherLanguages

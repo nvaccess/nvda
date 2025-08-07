@@ -1,8 +1,9 @@
 !include "fileFunc.nsh"
 !include "LogicLib.nsh"
-!include "mui2.nsh"
+!include "MUI2.nsh"
 
 !define launcher_appExe "nvdaLauncher.exe"
+!define MUI_ICON ..\source\images\nvda.ico
 
 SetCompressor /SOLID LZMA
 SilentInstall silent
@@ -11,7 +12,6 @@ CRCCheck on
 
 ReserveFile "${NSISDIR}\Plugins\x86-unicode\system.dll"
 ReserveFile "${NSISDIR}\Plugins\x86-unicode\banner.dll"
-ReserveFile "..\miscDeps\launcher\nvda_logo.wav"
 
 Name "NVDA"
 VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up
@@ -85,9 +85,6 @@ ${GetParameters} $0
 ; Sets the error flag if the option is missing.
 ; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getoptions
 ${GetOptions} $0 "--minimal" $1
-${If} ${Errors}
-	Call PlayLogoSound
-${EndIf}
 CreateDirectory "$PLUGINSDIR\app"
 setOutPath "$PLUGINSDIR\app"
 file /R "${NVDADistDir}\"
@@ -98,17 +95,3 @@ execWait "$PLUGINSDIR\app\nvda_noUIAccess.exe $0 --launcher" $1
 ;If exit code is 3 then execute again (restart)
 intcmp $1 3 exec +1
 SectionEnd
-
-Function PlayLogoSound
-File "..\miscDeps\launcher\nvda_logo.wav"
-Push "$PLUGINSDIR\nvda_logo.wav"
-Call PlaySound	
-FunctionEnd
-
-Function PlaySound
-; Retrieve the file to play
-pop $9
-; The code below is derived from the code example at http://nsis.sourceforge.io/WinAPI:winmm:PlaySound
-IntOp $0 "SND_ASYNC" || 1
-System::Call 'winmm::PlaySound(t r9, i 0, i r0) b'
-FunctionEnd

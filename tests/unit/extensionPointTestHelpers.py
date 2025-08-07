@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2023-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Helper functions to test extension points."""
 
@@ -20,10 +20,10 @@ from typing import Iterable
 
 @contextmanager
 def actionTester(
-		testCase: unittest.TestCase,
-		action: Action,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	action: Action,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
@@ -45,18 +45,21 @@ def actionTester(
 	try:
 		yield
 	finally:
-		action.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		unregistered = action.unregister(handler)
+		testCase.assertTrue(unregistered)
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def deciderTester(
-		testCase: unittest.TestCase,
-		decider: Decider,
-		expectedDecision: bool,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	decider: Decider,
+	expectedDecision: bool,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Decider.
 	@param testCase: The test case to apply the assertion on.
@@ -81,19 +84,22 @@ def deciderTester(
 	try:
 		yield expectedDecision
 	finally:
-		decider.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		unregistered = decider.unregister(handler)
+		testCase.assertTrue(unregistered)
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def filterTester(
-		testCase: unittest.TestCase,
-		filter: Filter,
-		expectedInput: FilterValueT,
-		expectedOutput: FilterValueT,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	filter: Filter,
+	expectedInput: FilterValueT,
+	expectedOutput: FilterValueT,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
@@ -121,18 +127,21 @@ def filterTester(
 	try:
 		yield expectedOutput
 	finally:
-		filter.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		unregistered = filter.unregister(handler)
+		testCase.assertTrue(unregistered)
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def chainTester(
-		testCase: unittest.TestCase,
-		chain: Chain,
-		expectedOutput: Iterable[ChainValueTypeT],
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	chain: Chain,
+	expectedOutput: Iterable[ChainValueTypeT],
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
@@ -157,6 +166,9 @@ def chainTester(
 	try:
 		yield expectedOutput
 	finally:
-		chain.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		unregistered = chain.unregister(handler)
+		testCase.assertTrue(unregistered)
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)

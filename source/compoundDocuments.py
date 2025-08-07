@@ -1,10 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
+
 from typing import (
 	Optional,
 	Dict,
+	Self,
 )
 
 import textUtils
@@ -18,21 +20,25 @@ from treeInterceptorHandler import DocumentTreeInterceptor
 import speech
 import braille
 from NVDAObjects import behaviors
-import api
-import config
 import review
 import vision
 from logHandler import log
-from locationHelper import RectLTWH
+
 
 class CompoundTextInfo(textInfos.TextInfo):
-
 	def _makeRawTextInfo(self, obj, position):
 		return obj.makeTextInfo(position)
 
 	def _normalizeStartAndEnd(self):
-		if (self._start.isCollapsed and self._startObj != self._endObj
-				and self._start.compareEndPoints(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd") == 0):
+		if (
+			self._start.isCollapsed
+			and self._startObj != self._endObj
+			and self._start.compareEndPoints(
+				self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL),
+				"endToEnd",
+			)
+			== 0
+		):
 			# Start it is at the end of its object.
 			# This is equivalent to the start of the next content.
 			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
@@ -41,8 +47,15 @@ class CompoundTextInfo(textInfos.TextInfo):
 			except LookupError:
 				pass
 
-		if (self._end.isCollapsed and self._endObj != self._startObj
-				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart") == 0):
+		if (
+			self._end.isCollapsed
+			and self._endObj != self._startObj
+			and self._end.compareEndPoints(
+				self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST),
+				"startToStart",
+			)
+			== 0
+		):
 			# End is at the start of its object.
 			# This is equivalent to the end of the previous content.
 			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
@@ -63,7 +76,10 @@ class CompoundTextInfo(textInfos.TextInfo):
 			# start needs to cover the rest of the text to the end of its object.
 			self._start.setEndPoint(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd")
 			# end needs to cover the rest of the text to the start of its object.
-			self._end.setEndPoint(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart")
+			self._end.setEndPoint(
+				self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST),
+				"startToStart",
+			)
 
 	def setEndPoint(self, other, which):
 		if which == "startToStart":
@@ -86,7 +102,13 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def collapse(self, end=False):
 		if end:
-			if self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+			if (
+				self._end.compareEndPoints(
+					self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL),
+					"endToEnd",
+				)
+				== 0
+			):
 				# The end TextInfo is at the end of its object.
 				# The end of this object is equivalent to the start of the next content.
 				# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
@@ -137,8 +159,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def _isNamedlinkDestination(self, obj: NVDAObject) -> bool:
 		return (  # Named link destination, not a link that can be activated.
-			obj.role == controlTypes.Role.LINK
-			and controlTypes.State.LINKED not in obj.states
+			obj.role == controlTypes.Role.LINK and controlTypes.State.LINKED not in obj.states
 		)
 
 	def _getControlFieldForObject(self, obj: NVDAObject, ignoreEditableText=True):
@@ -152,10 +173,10 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		field = textInfos.ControlField()
 		field["role"] = role
-		field['roleText'] = obj.roleText
-		field['description'] = obj.description
-		field['_description-from'] = obj.descriptionFrom
-		field['hasDetails'] = bool(obj.annotations)
+		field["roleText"] = obj.roleText
+		field["description"] = obj.description
+		field["_description-from"] = obj.descriptionFrom
+		field["hasDetails"] = bool(obj.annotations)
 		field["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)
@@ -165,21 +186,27 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.Role.TABLE:
-			field["table-id"] = 1 # FIXME
+			field["table-id"] = 1  # FIXME
 			field["table-rowcount"] = obj.rowCount
 			field["table-columncount"] = obj.columnCount
-		if role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER):
-			field["table-id"] = 1 # FIXME
+		if role in (
+			controlTypes.Role.TABLECELL,
+			controlTypes.Role.TABLECOLUMNHEADER,
+			controlTypes.Role.TABLEROWHEADER,
+		):
+			field["table-id"] = 1  # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field["table-rowheadertext"] = obj.rowHeaderText
+			field["table-columnheadertext"] = obj.columnHeaderText
 			# Row/column span is not supported by all implementations (e.g. LibreOffice)
 			try:
-				field['table-rowsspanned']=obj.rowSpan
+				field["table-rowsspanned"] = obj.rowSpan
 			except NotImplementedError:
 				log.debug("Row span not supported")
 				pass
 			try:
-				field['table-columnsspanned']=obj.columnSpan
+				field["table-columnsspanned"] = obj.columnSpan
 			except NotImplementedError:
 				log.debug("Column span not supported")
 				pass
@@ -190,7 +217,12 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return True
 		if type(self) is not type(other):
 			return False
-		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
+		return (
+			self._start == other._start
+			and self._startObj == other._startObj
+			and self._end == other._end
+			and self._endObj == other._endObj
+		)
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
 	# The default hash implementation is fine for  our purposes.
@@ -200,9 +232,30 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def __ne__(self, other):
 		return not self == other
 
+	def moveToCodepointOffset(
+		self,
+		codepointOffset: int,
+	) -> Self:
+		if self._start == self._end:
+			# This is an optimization: if nested TextInfo is an OffsetsTextInfo,
+			# it will do the job faster.
+			nested = self._start.moveToCodepointOffset(codepointOffset)
+			result = self.copy()
+			result._start = result._end = nested
+			return result
+		else:
+			return super().moveToCodepointOffset(codepointOffset)
+
+
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
-	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)
+	SINGLE_TEXTINFO_UNITS = (
+		textInfos.UNIT_CHARACTER,
+		textInfos.UNIT_WORD,
+		textInfos.UNIT_LINE,
+		textInfos.UNIT_SENTENCE,
+		textInfos.UNIT_PARAGRAPH,
+	)
 
 	def __init__(self, obj, position):
 		super(TreeCompoundTextInfo, self).__init__(obj, position)
@@ -291,7 +344,10 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		embedIndex = None
 		for ti in self._getTextInfos():
-			for textWithEmbeddedObjectsItem in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
+			for textWithEmbeddedObjectsItem in ti._iterTextWithEmbeddedObjects(
+				True,
+				formatConfig=formatConfig,
+			):
 				if isinstance(textWithEmbeddedObjectsItem, int):  # Embedded object
 					if embedIndex is None:
 						embedIndex = self._getFirstEmbedIndex(ti)
@@ -300,11 +356,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					childObject: NVDAObject = ti.obj.getChild(embedIndex)
 					controlField = self._getControlFieldForObject(childObject, ignoreEditableText=False)
 					controlField["content"] = childObject.name
-					fields.extend((
-						textInfos.FieldCommand("controlStart", controlField),
-						textUtils.OBJ_REPLACEMENT_CHAR,
-						textInfos.FieldCommand("controlEnd", None)
-					))
+					fields.extend(
+						(
+							textInfos.FieldCommand("controlStart", controlField),
+							textUtils.OBJ_REPLACEMENT_CHAR,
+							textInfos.FieldCommand("controlEnd", None),
+						),
+					)
 				else:  # str or fieldCommand
 					if not isinstance(textWithEmbeddedObjectsItem, (str, textInfos.FieldCommand)):
 						log.error(f"Unexpected type: {textWithEmbeddedObjectsItem!r}")
@@ -346,12 +404,12 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		# Different objects, so we have to compare the hierarchical positions of the objects.
 		# cmp no longer exists in Python3.
-	# Per the Python3 What's New docs:
-	# cmp can be replaced with (a>b)-(a<b).
-	# In other words, False and True coerce to 0 and 1 respectively.
-		selfPosition=self._getObjectPosition(selfObj)
-		otherPosition=other._getObjectPosition(otherObj)
-		return (selfPosition>otherPosition)-(selfPosition<otherPosition)
+		# Per the Python3 What's New docs:
+		# cmp can be replaced with (a>b)-(a<b).
+		# In other words, False and True coerce to 0 and 1 respectively.
+		selfPosition = self._getObjectPosition(selfObj)
+		otherPosition = other._getObjectPosition(otherObj)
+		return (selfPosition > otherPosition) - (selfPosition < otherPosition)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
@@ -444,6 +502,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				continue
 		return rects
 
+
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
@@ -486,8 +545,11 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
 		vision.handler.handleCaretMove(self)
-		caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		review.handleCaretMove(caret)
+		try:
+			caret = self.makeTextInfo(textInfos.POSITION_CARET)
+			review.handleCaretMove(caret)
+		except NotImplementedError:
+			pass
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):

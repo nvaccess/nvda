@@ -1,33 +1,37 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2014-2017 NV Access Limited.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2014-2017 NV Access Limited.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import('env')
+Import("env")
 
-idlDep = env.Command("MathSpeechEnums.idl","#/miscDeps/include/mathPlayer/MathSpeechEnums.idl",Copy("$TARGET","$SOURCE"))
-idlFile=env.Command("mathPlayerDLL.idl","#/miscDeps/include/mathPlayer/mathPlayerDLL.idl",Copy("$TARGET","$SOURCE"))
+idlDep = env.Command(
+	"MathSpeechEnums.idl", "#/miscDeps/include/mathPlayer/MathSpeechEnums.idl", Copy("$TARGET", "$SOURCE")
+)
+idlFile = env.Command(
+	"mathPlayerDLL.idl", "#/miscDeps/include/mathPlayer/mathPlayerDLL.idl", Copy("$TARGET", "$SOURCE")
+)
 # SCons doesn't scan the file we just created,
 # so we must explicitly declare its dependencies.
 env.Depends(idlFile, idlDep)
 
-tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(
+tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile = env.TypeLibrary(
 	source=idlFile,
-	MIDLFLAGS=['/I',Dir('.')],
+	MIDLFLAGS=["/I", Dir(".")],
 )
 # #7036: hack: Ignore midl.exe when deciding to rebuild, as its position in the dependencies
 # is different in the run before the idl files are copied versus subsequent runs.
-midl=env.WhereIs(env["MIDL"])
-for target in (tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile):
-	env.Ignore(target,midl)
+midl = env.WhereIs(env["MIDL"])
+for target in (tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile):
+	env.Ignore(target, midl)
 
-Return(['tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])
+Return(["tlbFile", "headerFile", "iidSourceFile", "proxySourceFile", "dlldataSourceFile"])

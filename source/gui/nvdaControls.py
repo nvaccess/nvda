@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited, Derek Riemer, Cyrille Bougot
+# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import collections
 import enum
 import typing
@@ -11,6 +11,7 @@ from typing import (
 	OrderedDict,
 	Type,
 )
+import warnings
 
 import wx
 from wx.lib import scrolledpanel
@@ -21,12 +22,29 @@ from config.featureFlag import (
 	FeatureFlag,
 	FlagValueEnum as FeatureFlagEnumT,
 )
+import gui.message
 from .dpiScalingHelper import DpiScalingHelperMixin
-from . import guiHelper
+from . import (
+	guiHelper,
+)
 import winUser
-import winsound
 
 from collections.abc import Callable
+
+
+__all__ = [
+	"AutoWidthColumnListCtrl",
+	"SelectOnFocusSpinCtrl",
+	"ListCtrlAccessible",
+	"CustomCheckListBox",
+	"AutoWidthColumnCheckListCtrl",
+	"DPIScaledDialog",
+	"MessageDialog",
+	"_ContinueCancelDialog",
+	"EnhancedInputSlider",
+	"TabbableScrolledPanel",
+	"FeatureFlagCombo",
+]
 
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
@@ -44,16 +62,16 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		itemTextCallable=None,
 		pos=wx.DefaultPosition,
 		size=wx.DefaultSize,
-		style=0
+		style=0,
 	):
-		""" initialiser
-			Takes the same parameter as a wx.ListCtrl with the following additions:
-			@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
-				Pass the column number to be resized, valid values: 1 to N
-			@type autoSizeColumn: int
-			@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
-				It should accept the same parameters as L{OnGetItemText},
-			@type itemTextCallable: L{callable}
+		"""initialiser
+		Takes the same parameter as a wx.ListCtrl with the following additions:
+		@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
+			Pass the column number to be resized, valid values: 1 to N
+		@type autoSizeColumn: int
+		@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
+			It should accept the same parameters as L{OnGetItemText},
+		@type itemTextCallable: L{callable}
 		"""
 		if itemTextCallable is not None:
 			if not isinstance(itemTextCallable, Callable):
@@ -82,14 +100,27 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		evt.Index = index
 		self.ProcessEvent(evt)
 
+
 class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 	"""
 	A spin control that automatically selects the value when the control gains focus.
 	This makes editing the values quicker.
 	"""
-	def __init__(self, parent, id=wx.ID_ANY, value=wx.EmptyString, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.SP_ARROW_KEYS|wx.ALIGN_RIGHT, min=0, max=100, initial=0, name="labelStr"):
-		""" initialiser - Takes the same parameters as a wx.SpinCtrl.
-		"""
+
+	def __init__(
+		self,
+		parent,
+		id=wx.ID_ANY,
+		value=wx.EmptyString,
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=wx.SP_ARROW_KEYS | wx.ALIGN_RIGHT,
+		min=0,
+		max=100,
+		initial=0,
+		name="labelStr",
+	):
+		"""initialiser - Takes the same parameters as a wx.SpinCtrl."""
 		wx.SpinCtrl.__init__(self, parent, id, value, pos, size, style, min, max, initial, name)
 		self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
 
@@ -114,9 +145,12 @@ class ListCtrlAccessible(wx.Accessible):
 		if self.Window.IsChecked(childId - 1):
 			states |= wx.ACC_STATE_SYSTEM_CHECKED
 		if self.Window.IsSelected(childId - 1):
+			states |= wx.ACC_STATE_SYSTEM_SELECTED
 			# wx doesn't seem to  have a method to check whether a list item is focused.
-			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
+			# Therefore, assume that a selected item is focused when the list itself has focus,
+			# which is the case in single select list boxes.
+			if self.Window.HasFocus():
+				states |= wx.ACC_STATE_SYSTEM_FOCUSED
 		return (wx.ACC_OK, states)
 
 
@@ -134,7 +168,13 @@ class CustomCheckListBox(wx.CheckListBox):
 		# Notify winEvent that something changed.
 		# We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
-		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
+		winUser.NotifyWinEvent(
+			winUser.EVENT_OBJECT_STATECHANGE,
+			self.Handle,
+			winUser.OBJID_CLIENT,
+			evt.Selection + 1,
+		)
+
 
 class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
 	"""
@@ -146,10 +186,27 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	This event is only fired when an item is toggled with the mouse or keyboard.
 	"""
 
-	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumn="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
-		check_image=None, uncheck_image=None, imgsz=(16, 16)
+	def __init__(
+		self,
+		parent,
+		id=wx.ID_ANY,
+		autoSizeColumn="LAST",
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=0,
+		check_image=None,
+		uncheck_image=None,
+		imgsz=(16, 16),
 	):
-		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style, autoSizeColumn=autoSizeColumn)
+		AutoWidthColumnListCtrl.__init__(
+			self,
+			parent,
+			id=id,
+			pos=pos,
+			size=size,
+			style=style,
+			autoSizeColumn=autoSizeColumn,
+		)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
 		# Register a custom wx.Accessible implementation to fix accessibility incompleties
 		self.SetAccessible(ListCtrlAccessible(self))
@@ -170,9 +227,9 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 
 	CheckedItems = property(fget=GetCheckedItems, fset=SetCheckedItems)
 
-	def onCharHook(self,evt):
+	def onCharHook(self, evt):
 		key = evt.GetKeyCode()
-		if key!=wx.WXK_SPACE:
+		if key != wx.WXK_SPACE:
 			evt.Skip()
 			return
 		index = self.FocusedItem
@@ -182,7 +239,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.ToggleItem(index)
 		self.sendCheckListBoxEvent(index)
 
-	def onLeftDown(self,evt):
+	def onLeftDown(self, evt):
 		"""Additional event handler for mouse clicks to call L{sendCheckListBoxEvent}."""
 		(index, flags) = self.HitTest(evt.GetPosition())
 		evt.Skip()
@@ -203,18 +260,20 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	def notifyIAccessible(self, index):
 		# Notify winEvent that something changed.
 		# We must do this, so that NVDA receives a stateChange.
-		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
+		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index + 1)
 
 	def sendCheckListBoxEvent(self, index):
-		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX,self.Id)
+		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX, self.Id)
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
+
 
 class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
 	Until wxWidgets/wxWidgets#334 is resolved, and we have updated to that build of wx.
 	"""
+
 	def __init__(self, *args, **kwargs):
 		"""Called in place of wx.Dialog __init__ arguments are forwarded on.
 		Expected args (from wx docs):
@@ -226,131 +285,133 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 
-class MessageDialog(DPIScaledDialog):
-	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
-	buttons and behaviour.
+class MessageDialog(gui.message.MessageDialog):
+	"""Provides a more flexible message dialog.
+
+	.. warning:: This class is deprecated.
+		Use :class:`gui.messageDialog.MessageDialog` instead.
+		This class is an adapter around that class, and will be removed in 2026.1.
+
+	Consider overriding _addButtons, to set your own buttons and behaviour.
 	"""
+
+	# We don't want the new message dialog's guard rails, as they may be incompatible with old code
+	_FAIL_ON_NO_BUTTONS = False
+	_FAIL_ON_NONMAIN_THREAD = False
 
 	# Dialog types currently supported
 	DIALOG_TYPE_STANDARD = 1
 	DIALOG_TYPE_WARNING = 2
 	DIALOG_TYPE_ERROR = 3
 
-	_DIALOG_TYPE_ICON_ID_MAP = {
-		# DIALOG_TYPE_STANDARD is not in the map, since we wish to use the default icon provided by wx
-		DIALOG_TYPE_ERROR: wx.ART_ERROR,
-		DIALOG_TYPE_WARNING: wx.ART_WARNING,
-	}
+	@staticmethod
+	def _legacyDialogTypeToDialogType(dialogType: int) -> gui.message.DialogType:
+		match dialogType:
+			case MessageDialog.DIALOG_TYPE_ERROR:
+				return gui.message.DialogType.ERROR
+			case MessageDialog.DIALOG_TYPE_WARNING:
+				return gui.message.DialogType.WARNING
+			case _:
+				return gui.message.DialogType.STANDARD
 
-	_DIALOG_TYPE_SOUND_ID_MAP = {
-		# DIALOG_TYPE_STANDARD is not in the map, since there should be no sound for a standard dialog.
-		DIALOG_TYPE_ERROR: winsound.MB_ICONHAND,
-		DIALOG_TYPE_WARNING: winsound.MB_ICONASTERISK,
-	}
-
-	def _addButtons(self, buttonHelper):
-		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality.
-		"""
-		ok = buttonHelper.addButton(
-			self,
-			id=wx.ID_OK,
-			# Translators: An ok button on a message dialog.
-			label=_("OK")
+	def __new__(cls, *args, **kwargs):
+		warnings.warn(
+			"gui.nvdaControls.MessageDialog is deprecated. Use gui.messageDialog.MessageDialog instead.",
+			DeprecationWarning,
 		)
-		ok.SetDefault()
-		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+		return super().__new__(cls, *args, **kwargs)
 
-		cancel = buttonHelper.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A cancel button on a message dialog.
-			label=_("Cancel")
+	def __init__(
+		self,
+		parent: wx.Window | None,
+		title: str,
+		message: str,
+		dialogType: int = DIALOG_TYPE_STANDARD,
+	):
+		super().__init__(
+			parent,
+			message=message,
+			title=title,
+			dialogType=self._legacyDialogTypeToDialogType(dialogType),
+			buttons=None,
 		)
-		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
-	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
-		"""Adds additional contents  to the dialog, before the buttons.
-		Subclasses may implement this method.
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
+		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
+		self.addOkButton(returnCode=wx.OK)
+		self.addCancelButton(returnCode=wx.CANCEL)
+
+
+class _ContinueCancelDialog(MessageDialog):
+	"""
+	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
+	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
+	It also supports NVDA's context sensitive help.
+	"""
+
+	def __init__(
+		self,
+		parent: wx.Frame,
+		title: str,
+		message: str,
+		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+		continueButtonFirst: bool = True,
+		helpId: str | None = None,
+	) -> None:
+		"""Creates a ContinueCancelDialog MessageDialog.
+
+		:param parent: The parent window for the dialog, usually `gui.mainFrame`.
+		:param title: The title or caption of the dialog.
+		:param message: The message to be shown in the dialog.
+		:param dialogType: One of the dialog type constants from `MessageDialog`, defaults to standard.
+		:param continueButtonFirst: If True, the Continue button will appear first, and be selected when the dialog
+			opens; if False, the Cancel button will. Defaults to True.
+		:param helpId: a helpId, as used with the `gui.contextHelp` module, enabling the help key (`F1`)
+			to open a browser to a specific heading in the NVDA user guide.
 		"""
+		self.continueButtonFirst: bool = continueButtonFirst
+		if helpId is not None:
+			self.helpId = helpId
+		super().__init__(parent, title, message, dialogType)
+		if helpId is not None:
+			# Help event has already been bound (in supersuperclass), so we need to re-bind it.
+			self.bindHelpEvent(helpId, self)
 
-	def _setIcon(self, type):
-		try:
-			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
-		except KeyError:
-			# type not found, use default icon.
-			return
-		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
-		self.SetIcon(icon)
-
-	def _setSound(self, type):
-		try:
-			self._soundID = self._DIALOG_TYPE_SOUND_ID_MAP[type]
-		except KeyError:
-			# type not found, no sound.
-			self._soundID = None
-			return
-
-	def _playSound(self):
-		winsound.MessageBeep(self._soundID)
-
-	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
-		DPIScaledDialog.__init__(self, parent, title=title)
-
-		self._setIcon(dialogType)
-		self._setSound(dialogType)
-		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
-		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
-
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-
-		# Double ampersand in the dialog's label to avoid this character to be interpreted as an accelerator.
-		label = message.replace('&', '&&')
-		text = wx.StaticText(self, label=label)
-		text.Wrap(self.scaleSize(self.GetSize().Width))
-		contentsSizer.addItem(text)
-		self._addContents(contentsSizer)
-
-		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		self._addButtons(buttonHelper)
-		contentsSizer.addDialogDismissButtons(buttonHelper)
-
-		mainSizer.Add(
-			contentsSizer.sizer,
-			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
+		"""Override to add Continue and Cancel buttons."""
+		self.addOkButton(
+			# Translators: The label for the Continue button in an NVDA dialog.
+			label=_("&Continue"),
+			returnCode=wx.OK,
+			defaultFocus=self.continueButtonFirst,
 		)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.CentreOnScreen()
-
-	def _onDialogActivated(self, evt):
-		evt.Skip()
-
-	def _onShowEvt(self, evt):
-		"""
-		:type evt: wx.ShowEvent
-		"""
-		if evt.IsShown():
-			self._playSound()
-		evt.Skip()
+		self.addCancelButton(
+			# Translators: The label for the Cancel button in an NVDA dialog.
+			label=_("Cancel"),
+			returnCode=wx.CANCEL,
+			defaultFocus=not self.continueButtonFirst,
+		)
 
 
 class EnhancedInputSlider(wx.Slider):
-
-	def __init__(self,*args, **kwargs):
-		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
+	def __init__(self, *args, **kwargs):
+		super(EnhancedInputSlider, self).__init__(*args, **kwargs)
 		self.Bind(wx.EVT_CHAR, self.onSliderChar)
 
-	def SetValue(self,i):
+	def SetValue(self, i):
 		super(EnhancedInputSlider, self).SetValue(i)
-		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
+		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED, self.GetId())
 		evt.SetInt(i)
 		self.ProcessEvent(evt)
 		# HACK: Win events don't seem to be sent for certain explicitly set values,
 		# so send our own win event.
 		# This will cause duplicates in some cases, but NVDA will filter them out.
-		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
+		winUser.user32.NotifyWinEvent(
+			winUser.EVENT_OBJECT_VALUECHANGE,
+			self.Handle,
+			winUser.OBJID_CLIENT,
+			winUser.CHILDID_SELF,
+		)
 
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
@@ -378,6 +439,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
 	https://github.com/wxWidgets/Phoenix/pull/1950
 	"""
+
 	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
 		"""
 		window.GetRect returns the size of a window, and its position relative to its parent.
@@ -390,7 +452,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
 			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
 			childRectRelativeToScreen.width,
-			childRectRelativeToScreen.height
+			childRectRelativeToScreen.height,
 		)
 
 	def ScrollChildIntoView(self, child: wx.Window) -> None:
@@ -410,42 +472,46 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 
 
 class FeatureFlagCombo(wx.Choice):
-	"""Creates a combobox (wx.Choice) with a list of feature flags.
-	"""
+	"""Creates a combobox (wx.Choice) with a list of feature flags."""
+
 	def __init__(
-			self,
-			parent: wx.Window,
-			keyPath: List[str],
-			conf: config.ConfigManager,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			validator=wx.DefaultValidator,
-			name=wx.ChoiceNameStr,
+		self,
+		parent: wx.Window,
+		keyPath: List[str],
+		conf: config.ConfigManager,
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=0,
+		validator=wx.DefaultValidator,
+		name=wx.ChoiceNameStr,
+		onChoiceEventHandler: typing.Callable[[wx.CommandEvent], None] | None = None,
 	):
 		"""
-		@param parent: The parent window.
-		@param keyPath: The list of keys required to get to the config value.
-		@param conf: The config.conf object.
-		@param pos: The position of the control. Forwarded to wx.Choice
-		@param size: The size of the control. Forwarded to wx.Choice
-		@param style: The style of the control. Forwarded to wx.Choice
-		@param validator: The validator for the control. Forwarded to wx.Choice
-		@param name: The name of the control. Forwarded to wx.Choice
+		:param parent: The parent window.
+		:param keyPath: The list of keys required to get to the config value.
+		:param conf: The config.conf object.
+		:param pos: The position of the control. Forwarded to wx.Choice
+		:param size: The size of the control. Forwarded to wx.Choice
+		:param style: The style of the control. Forwarded to wx.Choice
+		:param validator: The validator for the control. Forwarded to wx.Choice
+		:param name: The name of the control. Forwarded to wx.Choice
+		:param onChoiceEventHandler: Event handler bound for EVT_CHOICE
 		"""
 		self._confPath = keyPath
 		self._conf = conf
 		configValue = self._getConfigValue()
 		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
-		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict({
-			value: value.displayString
-			for value in self._optionsEnumClass
-			if value != self._optionsEnumClass.DEFAULT
-		})
+		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict(
+			{
+				value: value.displayString
+				for value in self._optionsEnumClass
+				if value != self._optionsEnumClass.DEFAULT
+			},
+		)
 		if self._optionsEnumClass.DEFAULT in translatedOptions:
 			raise ValueError(
 				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
-				" It will be added automatically. See _setDefaultOptionLabel"
+				" It will be added automatically. See _setDefaultOptionLabel",
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
 		choices = list(self._translatedOptions.values())
@@ -458,7 +524,11 @@ class FeatureFlagCombo(wx.Choice):
 			validator=validator,
 			name=name,
 		)
-
+		if onChoiceEventHandler is not None:
+			self.Bind(
+				wx.EVT_CHOICE,
+				onChoiceEventHandler,
+			)
 		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
 		"""The default value of the config spec. Not the "behavior of default".
@@ -495,8 +565,7 @@ class FeatureFlagCombo(wx.Choice):
 		return self.GetSelection() == self.defaultValue
 
 	def resetToConfigSpecDefault(self) -> None:
-		"""Set the value of the control to the default value from the config spec.
-		"""
+		"""Set the value of the control to the default value from the config spec."""
 		self.SetSelection(self._getChoiceIndex(self.defaultValue))
 
 	def _getControlCurrentValue(self) -> enum.Enum:
@@ -508,8 +577,7 @@ class FeatureFlagCombo(wx.Choice):
 		return FeatureFlag(flagValue, currentFlag.behaviorOfDefault)
 
 	def saveCurrentValueToConf(self) -> None:
-		""" Set the config value to the current value of the control.
-		"""
+		"""Set the config value to the current value of the control."""
 		flagValue = self._getControlCurrentValue()
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
@@ -525,19 +593,22 @@ class FeatureFlagCombo(wx.Choice):
 				conf = conf[nextKey]
 
 	def _createOptionsDict(
-			self,
-			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
+		self,
+		translatedOptions: OrderedDict[FeatureFlagEnumT, str],
 	) -> OrderedDict[enum.Enum, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
-		# Translators: Label for the default option for some feature-flag combo boxes
-		# Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
-		# The placeholder {} is replaced with the label of the option which describes current default behavior
-		# in NVDA. EG "Default (Yes)".
-		defaultOptionLabel: str = _("Default ({})").format(
-			translatedStringForBehaviorOfDefault
+		# Translators: Label for the default option for some feature-flag combo boxes.
+		# Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'.
+		# e.g. "Default (Yes)".
+		# The placeholder {default} is replaced with the label of the option which describes current default behavior
+		# in NVDA.
+		defaultOptionLabel: str = _("Default ({default})").format(
+			default=translatedStringForBehaviorOfDefault,
 		)
-		return collections.OrderedDict({
-			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
-			**translatedOptions
-		})
+		return collections.OrderedDict(
+			{
+				self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+				**translatedOptions,
+			},
+		)

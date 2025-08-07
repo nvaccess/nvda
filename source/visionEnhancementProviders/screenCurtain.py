@@ -1,17 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
-This module has been tested on Windows versions specified by winVersion.isFullScreenMagnificationAvailable.
 """
 
 import os
-import vision
 from vision import providerBase
-import winVersion
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
@@ -27,6 +24,12 @@ from logHandler import log
 from typing import Optional, Type
 import nvwave
 import globalVars
+import NVDAHelper
+
+
+isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
+isScreenFullyBlack.argtypes = ()
+isScreenFullyBlack.restype = BOOL
 
 
 class MAGCOLOREFFECT(Structure):
@@ -54,14 +57,29 @@ class Magnification:
 	# Set full screen color effect
 	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
+	MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
+		("MagSetFullscreenColorEffect", _magnification),
+		_MagSetFullscreenColorEffectArgTypes,
+	)
+	MagSetFullscreenColorEffect.errcheck = _errCheck
 
 	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
+	MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
+		("MagGetFullscreenColorEffect", _magnification),
+		_MagGetFullscreenColorEffectArgTypes,
+	)
+	MagGetFullscreenColorEffect.errcheck = _errCheck
 
 	# show system cursor
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
 	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
+	MagShowSystemCursor = _MagShowSystemCursorFuncType(
+		("MagShowSystemCursor", _magnification),
+		_MagShowSystemCursorArgTypes,
+	)
+	MagShowSystemCursor.errcheck = _errCheck
 
 	# initialize
 	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
@@ -72,29 +90,6 @@ class Magnification:
 	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
-
-	# These magnification functions are not available on versions of Windows prior to Windows 8,
-	# and therefore looking them up from the magnification library will raise an AttributeError.
-	try:
-		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-			("MagSetFullscreenColorEffect", _magnification),
-			_MagSetFullscreenColorEffectArgTypes
-		)
-		MagSetFullscreenColorEffect.errcheck = _errCheck
-		MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-			("MagGetFullscreenColorEffect", _magnification),
-			_MagGetFullscreenColorEffectArgTypes
-		)
-		MagGetFullscreenColorEffect.errcheck = _errCheck
-		MagShowSystemCursor = _MagShowSystemCursorFuncType(
-			("MagShowSystemCursor", _magnification),
-			_MagShowSystemCursorArgTypes
-		)
-		MagShowSystemCursor.errcheck = _errCheck
-	except AttributeError:
-		MagSetFullscreenColorEffect = None
-		MagGetFullscreenColorEffect = None
-		MagShowSystemCursor = None
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
@@ -110,7 +105,6 @@ playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
 
 
 class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
-
 	warnOnLoad: bool
 	playToggleSounds: bool
 
@@ -127,14 +121,15 @@ class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
 			BooleanDriverSetting(
 				"warnOnLoad",
 				warnOnLoadCheckBoxText,
-				defaultVal=True
+				defaultVal=True,
 			),
 			BooleanDriverSetting(
 				"playToggleSounds",
 				playToggleSoundsCheckBoxText,
-				defaultVal=True
+				defaultVal=True,
 			),
 		]
+
 
 warnOnLoadText = _(
 	# Translators: A warning shown when activating the screen curtain.
@@ -142,22 +137,21 @@ warnOnLoadText = _(
 	"Enabling Screen Curtain will make the screen of your computer completely black. "
 	"Ensure you will be able to navigate without any use of your screen before continuing. "
 	"\n\n"
-	"Do you wish to continue?"
+	"Do you wish to continue?",
 )
 
 
 class WarnOnLoadDialog(MessageDialog):
-
 	showWarningOnLoadCheckBox: wx.CheckBox
 	noButton: wx.Button
 
 	def __init__(
-			self,
-			screenCurtainSettingsStorage: ScreenCurtainSettings,
-			parent,
-			title=_("Warning"),
-			message=warnOnLoadText,
-			dialogType=MessageDialog.DIALOG_TYPE_WARNING
+		self,
+		screenCurtainSettingsStorage: ScreenCurtainSettings,
+		parent,
+		title=_("Warning"),
+		message=warnOnLoadText,
+		dialogType=MessageDialog.DIALOG_TYPE_WARNING,
 	):
 		self._settingsStorage = screenCurtainSettingsStorage
 		super().__init__(parent, title, message, dialogType)
@@ -166,11 +160,11 @@ class WarnOnLoadDialog(MessageDialog):
 	def _addContents(self, contentsSizer):
 		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
 			self,
-			label=warnOnLoadCheckBoxText
+			label=warnOnLoadCheckBoxText,
 		)
 		contentsSizer.addItem(self.showWarningOnLoadCheckBox)
 		self.showWarningOnLoadCheckBox.SetValue(
-			self._settingsStorage.warnOnLoad
+			self._settingsStorage.warnOnLoad,
 		)
 
 	def _addButtons(self, buttonHelper):
@@ -179,7 +173,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_YES,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# agree to enabling the curtain.
-			label=_("&Yes")
+			label=_("&Yes"),
 		)
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
 
@@ -188,7 +182,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_NO,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# disagree to enabling the curtain.
-			label=_("&No")
+			label=_("&No"),
 		)
 		noButton.SetDefault()
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
@@ -204,35 +198,34 @@ class WarnOnLoadDialog(MessageDialog):
 			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.supportedSettings)
 		self.EndModal(result)
 
-	def _onDialogActivated(self, evt):
+	def _onActivateEvent(self, evt: wx.ActivateEvent):
 		# focus is normally set to the first child, however, we want people to easily be able to cancel this
 		# dialog
-		super()._onDialogActivated(evt)
+		super()._onActivateEvent(evt)
 		self.noButton.SetFocus()
 
-	def _onShowEvt(self, evt):
+	def _onShowEvent(self, evt: wx.ShowEvent):
 		"""When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
 		so we correct it after the dialog is opened.
 		"""
 		if evt.IsShown():
 			self.noButton.SetFocus()
-		super()._onShowEvt(evt)
+		super()._onShowEvent(evt)
 
 
 class ScreenCurtainGuiPanel(
-		AutoSettingsMixin,
-		SettingsPanel,
+	AutoSettingsMixin,
+	SettingsPanel,
 ):
-
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
-	
+
 	helpId = "VisionSettingsScreenCurtain"
 
 	def __init__(
-			self,
-			parent,
-			providerControl: VisionProviderStateControl
+		self,
+		parent,
+		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
 		super().__init__(parent)
@@ -243,7 +236,7 @@ class ScreenCurtainGuiPanel(
 		self._enabledCheckbox = wx.CheckBox(
 			self,
 			#  Translators: option to enable screen curtain in the vision settings panel
-			label=_("Make screen black (immediate effect)")
+			label=_("Make screen black (immediate effect)"),
 		)
 		isProviderActive = bool(self._providerControl.getProviderInstance())
 		self._enabledCheckbox.SetValue(isProviderActive)
@@ -255,7 +248,7 @@ class ScreenCurtainGuiPanel(
 		self.optionsText = wx.StaticText(
 			self,
 			# Translators: The label for a group box containing the NVDA highlighter options.
-			label=_("Options:")
+			label=_("Options:"),
 		)
 		self.mainSizer.Add(self.optionsText)
 		self.lastControl = self.optionsText
@@ -287,6 +280,7 @@ class ScreenCurtainGuiPanel(
 		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 		import speech
 		import ui
+
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
 			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
@@ -311,7 +305,7 @@ class ScreenCurtainGuiPanel(
 		parent = self
 		with WarnOnLoadDialog(
 			screenCurtainSettingsStorage=settingsStorage,
-			parent=parent
+			parent=parent,
 		) as dlg:
 			res = dlg.ShowModal()
 			# WarnOnLoadDialog can change settings, reload them
@@ -330,7 +324,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		versions of Windows, this may not continue to be true in the future. The Magnification API was
 		introduced by Microsoft with Windows 8.
 		"""
-		return winVersion.isFullScreenMagnificationAvailable()
+		return True
 
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Type]:
@@ -346,11 +340,13 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super().__init__()
-		log.debug(f"Starting ScreenCurtain")
+		log.debug("Starting ScreenCurtain")
 		Magnification.MagInitialize()
 		try:
 			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 			Magnification.MagShowSystemCursor(False)
+			if not isScreenFullyBlack():
+				raise RuntimeError("Screen is not black.")
 		except Exception as e:
 			Magnification.MagUninitialize()
 			raise e
@@ -361,7 +357,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 				log.exception()
 
 	def terminate(self):
-		log.debug(f"Terminating ScreenCurtain")
+		log.debug("Terminating ScreenCurtain")
 		try:
 			super().terminate()
 		finally:

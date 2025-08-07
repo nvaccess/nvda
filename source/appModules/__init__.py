@@ -1,12 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2022 NV Access Limited, Łukasz Golonka
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
-
-from typing import Dict
+# Copyright (C) 2009-2025 NV Access Limited, Łukasz Golonka, Joseph Lee, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 
-EXECUTABLE_NAMES_TO_APP_MODS: Dict[str, str] = {
+EXECUTABLE_NAMES_TO_APP_MODS: dict[str, str] = {
+	# Azardi's 2.0 executable contains both hyphen (-) and dot (.) in its name.
+	# Both these characters are invalid in a name of a Python module.
+	"azardi-2.0": "azardi20",
 	# Azure Data Studio (both stable and Insiders versions) should use module for Visual Studio Code
 	"azuredatastudio": "code",
 	"azuredatastudio-insiders": "code",
@@ -37,9 +38,13 @@ EXECUTABLE_NAMES_TO_APP_MODS: Dict[str, str] = {
 	"searchapp": "searchui",
 	# Windows search in Windows 11.
 	"searchhost": "searchui",
+	# Quick settings in Windows 11 24H2 (2024 Update and Server 2025).
+	"shellhost": "shellexperiencehost",
 	# Spring Tool Suite is based on Eclipse and should use its appModule.
 	"springtoolsuite4": "eclipse",
 	"sts": "eclipse",
+	# Microsoft SQL Server Management Studio is based on Visual Studio
+	"ssms": "devenv",
 	# Various versions of Teamtalk.
 	"teamtalk3": "teamtalk4classic",
 	# App module for Windows 10/11 Modern Keyboard aka new touch keyboard panel
@@ -63,6 +68,6 @@ Note that this map is used only for appModules included in NVDA
 and appModules registered by add-ons are placed in a different one.
 This mapping is needed since:
 - Names of some programs are incompatible with the Python's import system (they contain a dot or a plus)
-- Sometimes it is necessary to map one module to multiple executables - this map saves us from adding multiple
- appModules in such cases.
+- Sometimes it is necessary to map one module to multiple executables,
+this map saves us from adding multiple appModules in such cases.
 """

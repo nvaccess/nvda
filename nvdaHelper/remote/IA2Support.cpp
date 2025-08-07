@@ -41,9 +41,13 @@ LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 UINT wm_uninstallIA2Support = 0;
 bool isIA2SupportDisabled=false;
 
+bool installIA2Support() {
+	return installIA2SupportForThread(GetCurrentThreadId()).second;
+}
+
 map<DWORD, IA2InstallData> IA2InstallMap;
 
-pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadID) {
+pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2SupportForThread(DWORD threadID) {
 	if (wm_uninstallIA2Support == 0) {
 		// Register our window message the first time we initialize IA2 support in a process
 		wm_uninstallIA2Support = RegisterWindowMessage(L"wm_uninstallIA2Support");
@@ -73,7 +77,11 @@ pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadI
 	return IA2InstallMap.insert(make_pair(threadID, data));
 }
 
-bool uninstallIA2Support(DWORD threadID) {
+bool uninstallIA2Support() {
+	return uninstallIA2SupportForThread(GetCurrentThreadId());
+}
+
+bool uninstallIA2SupportForThread(DWORD threadID) {
 	if (wm_uninstallIA2Support == 0) {
 		// IA2 support was never installed
 		return false;
@@ -100,7 +108,7 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS) {
 		return;
 	}
-	auto installRes = installIA2Support(threadID);
+	auto installRes = installIA2SupportForThread(threadID);
 	if (installRes.second) {
 		auto& data = installRes.first->second;
 		data.uiThreadHandle = OpenThread(SYNCHRONIZE, false, threadID);
@@ -111,7 +119,7 @@ LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lPar
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==wm_uninstallIA2Support) {
 		auto threadId = GetCurrentThreadId();
-		uninstallIA2Support(threadId);
+		uninstallIA2SupportForThread(threadId);
 		auto it = IA2InstallMap.find(threadId);
 		if (it != IA2InstallMap.end()) {
 			auto& data = it->second;

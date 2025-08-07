@@ -1,12 +1,20 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 import pkgutil
 import importlib
-from typing import Optional, OrderedDict, Set
+from typing import (
+	List,
+	Optional,
+	OrderedDict,
+	Set,
+	Tuple,
+	TYPE_CHECKING,
+	Type,
+)
 from locale import strxfrm
 
 import config
@@ -24,6 +32,9 @@ from autoSettingsUtils.utils import StringParameterInfo
 
 from abc import abstractmethod
 
+if TYPE_CHECKING:
+	from speech.commands import SynthCommand
+
 
 class LanguageInfo(StringParameterInfo):
 	"""Holds information for a particular language"""
@@ -35,8 +46,7 @@ class LanguageInfo(StringParameterInfo):
 
 
 class VoiceInfo(StringParameterInfo):
-	"""Provides information about a single synthesizer voice.
-	"""
+	"""Provides information about a single synthesizer voice."""
 
 	def __init__(self, id, displayName, language: Optional[str] = None):
 		"""
@@ -91,8 +101,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{SynthCommand} subclasses.
-	supportedCommands = frozenset()
+	supportedCommands: set[Type["SynthCommand"]] = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()
@@ -119,7 +128,7 @@ class SynthDriver(driverHandler.Driver):
 			_("&Language"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Language'),
+			displayName=pgettext("synth setting", "Language"),
 		)
 
 	@classmethod
@@ -131,7 +140,7 @@ class SynthDriver(driverHandler.Driver):
 			_("&Voice"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Voice'),
+			displayName=pgettext("synth setting", "Voice"),
 		)
 
 	@classmethod
@@ -143,7 +152,7 @@ class SynthDriver(driverHandler.Driver):
 			_("V&ariant"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Variant'),
+			displayName=pgettext("synth setting", "Variant"),
 		)
 
 	@classmethod
@@ -156,7 +165,7 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Rate'),
+			displayName=pgettext("synth setting", "Rate"),
 		)
 
 	@classmethod
@@ -168,8 +177,8 @@ class SynthDriver(driverHandler.Driver):
 			# which further increases the speaking rate when enabled.
 			_("Rate boos&t"),
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Rate boost'),
-			availableInSettingsRing=True
+			displayName=pgettext("synth setting", "Rate boost"),
+			availableInSettingsRing=True,
 		)
 
 	@classmethod
@@ -183,7 +192,7 @@ class SynthDriver(driverHandler.Driver):
 			normalStep=5,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Volume'),
+			displayName=pgettext("synth setting", "Volume"),
 		)
 
 	@classmethod
@@ -196,7 +205,7 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Pitch'),
+			displayName=pgettext("synth setting", "Pitch"),
 		)
 
 	@classmethod
@@ -209,7 +218,19 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Inflection'),
+			displayName=pgettext("synth setting", "Inflection"),
+		)
+
+	@classmethod
+	def UseWasapiSetting(cls) -> BooleanDriverSetting:
+		"""Factory function for creating 'Use WASAPI' setting."""
+		return BooleanDriverSetting(
+			"useWasapi",
+			# Translators: Label for a setting in voice settings dialog.
+			# "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
+			_("Use modern audio output system (WASAPI)"),
+			availableInSettingsRing=False,
+			defaultVal=True,
 		)
 
 	@abstractmethod
@@ -222,8 +243,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def cancel(self):
-		"""Silence speech immediately.
-		"""
+		"""Silence speech immediately."""
 
 	def _get_language(self) -> Optional[str]:
 		return self.availableVoices[self.voice].language
@@ -247,7 +267,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def _get_availableVoices(self) -> OrderedDict[str, VoiceInfo]:
-		if not hasattr(self, '_availableVoices'):
+		if not hasattr(self, "_availableVoices"):
 			self._availableVoices = self._getAvailableVoices()
 		return self._availableVoices
 
@@ -255,22 +275,30 @@ class SynthDriver(driverHandler.Driver):
 	rate: int
 	"""Between 0-100"""
 
-	def _get_rate(self):
+	def _get_rate(self) -> int:
 		return 0
 
-	def _set_rate(self, value):
+	def _set_rate(self, value: int):
 		pass
 
-	def _get_pitch(self):
+	#: Typing information for auto-property: _get_pitch
+	pitch: int
+	"""Between 0-100"""
+
+	def _get_pitch(self) -> int:
 		return 0
 
-	def _set_pitch(self, value):
+	def _set_pitch(self, value: int):
 		pass
 
-	def _get_volume(self):
+	#: Typing information for auto-property: _get_volume
+	volume: int
+	"""Between 0-100"""
+
+	def _get_volume(self) -> int:
 		return 0
 
-	def _set_volume(self, value):
+	def _set_volume(self, value: int):
 		pass
 
 	def _get_variant(self):
@@ -287,7 +315,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def _get_availableVariants(self):
-		if not hasattr(self, '_availableVariants'):
+		if not hasattr(self, "_availableVariants"):
 			self._availableVariants = self._getAvailableVariants()
 		return self._availableVariants
 
@@ -303,6 +331,21 @@ class SynthDriver(driverHandler.Driver):
 		@type switch: bool
 		"""
 		pass
+
+	def languageIsSupported(self, lang: str | None) -> bool:
+		"""Determines if the specified language is supported.
+		:param lang: A language code or None.
+		:return: ``True`` if the language is supported, ``False`` otherwise.
+		"""
+		if lang is None:
+			return True
+		for availableLang in self.availableLanguages:
+			if (
+				lang == languageHandler.normalizeLanguage(availableLang)
+				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
+			):
+				return True
+		return False
 
 	def initSettings(self):
 		firstLoad = not config.conf[self._configSection].isSet(self.name)
@@ -334,7 +377,7 @@ class SynthDriver(driverHandler.Driver):
 			if not onlyChanged or self.voice != voice:
 				try:
 					changeVoice(self, voice)
-				except:
+				except:  # noqa: E722
 					log.warning("Invalid voice: %s" % voice)
 					# Update the configuration with the correct voice.
 					c["voice"] = self.voice
@@ -352,9 +395,10 @@ class SynthDriver(driverHandler.Driver):
 		log.debug(
 			(
 				"Loaded changed settings for SynthDriver {}"
-				if onlyChanged else
-				"Loaded settings for SynthDriver {}"
-			).format(self.name))
+				if onlyChanged
+				else "Loaded settings for SynthDriver {}"
+			).format(self.name),
+		)
 
 	def _get_initialSettingsRingSetting(self):
 		supportedSettings = list(self.supportedSettings)
@@ -395,14 +439,14 @@ def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList():
+def getSynthList() -> List[Tuple[str, str]]:
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	synthList = []
+	synthList: List[Tuple[str, str]] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
-		if name.startswith('_'):
+		if name.startswith("_"):
 			continue
 		try:
 			synth = _getSynthDriver(name)
@@ -431,7 +475,7 @@ def getSynth() -> Optional[SynthDriver]:
 
 def getSynthInstance(name, asDefault=False):
 	newSynth: SynthDriver = _getSynthDriver(name)()
-	if asDefault and newSynth.name == 'oneCore':
+	if asDefault and newSynth.name == "oneCore":
 		# Will raise an exception if oneCore does not support the system language
 		newSynth._getDefaultVoice(pickAny=False)
 	newSynth.initSettings()
@@ -440,10 +484,10 @@ def getSynthInstance(name, asDefault=False):
 
 # The synthDrivers that should be used by default.
 # The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
-defaultSynthPriorityList = ['espeak', 'silence']
+defaultSynthPriorityList = ["espeak", "silence"]
 if winVersion.getWinVer() >= winVersion.WIN10:
 	# Default to OneCore on Windows 10 and above
-	defaultSynthPriorityList.insert(0, 'oneCore')
+	defaultSynthPriorityList.insert(0, "oneCore")
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):
@@ -456,7 +500,7 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		_curSynth.terminate()
 		_curSynth = None
 		return True
-	if name == 'auto':
+	if name == "auto":
 		asDefault = True
 		name = defaultSynthPriorityList[0]
 	if _curSynth:
@@ -472,7 +516,7 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		log.error(f"setSynth failed for {name}", exc_info=True)
 
 	if _curSynth is not None:
-		_audioOutputDevice = config.conf["speech"]["outputDevice"]
+		_audioOutputDevice = config.conf["audio"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
@@ -517,10 +561,11 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 	@type resetSpeechIfNeeded: bool
 	"""
 	conf = config.conf["speech"]
-	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+	if conf["synth"] != _curSynth.name or config.conf["audio"]["outputDevice"] != _audioOutputDevice:
 		if resetSpeechIfNeeded:
 			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
 			import speech
+
 			speech.cancelSpeech()
 		setSynth(conf["synth"])
 		return
@@ -552,4 +597,12 @@ The local system should be notified about synth parameters at the remote system.
 @type audioOutputDevice: str
 @param isFallback: Whether the synth is set as fallback synth due to another synth's failure
 @type isFallback: bool
+"""
+
+pre_synthSpeak = extensionPoints.Action()
+"""
+Notifies when speak() of the current synthesizer is about to be called.
+
+:param speechSequence: the speech sequence to pass to speak()
+:type speechSequence: speech.SpeechSequence
 """

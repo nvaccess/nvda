@@ -1,17 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2025 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Utilities to generate and play tones"""
 
 import atexit
-import nvwave
+from ctypes import create_string_buffer
+
 import config
-import globalVars
-from logHandler import log
-from ctypes import create_string_buffer, byref
 import extensionPoints
+import nvwave
+from logHandler import log
 
 SAMPLE_RATE = 44100
 
@@ -25,13 +25,14 @@ def initialize():
 			channels=2,
 			samplesPerSec=int(SAMPLE_RATE),
 			bitsPerSample=16,
-			outputDevice=config.conf["speech"]["outputDevice"],
+			outputDevice=config.conf["audio"]["outputDevice"],
 			wantDucking=False,
-			purpose=nvwave.AudioPurpose.SOUNDS
+			purpose=nvwave.AudioPurpose.SOUNDS,
 		)
 	except Exception:
 		log.warning("Failed to initialize audio for tones", exc_info=True)
 		player = None
+
 
 # When exiting, ensure player is deleted before modules get cleaned up.
 # Otherwise, WavePlayer.__del__ will fail with an exception.
@@ -53,11 +54,11 @@ Handlers are called with the same arguments as L{beep} as keyword arguments.
 
 
 def beep(
-		hz: float,
-		length: int,
-		left: int = 50,
-		right: int = 50,
-		isSpeechBeepCommand: bool = False
+	hz: float,
+	length: int,
+	left: int = 50,
+	right: int = 50,
+	isSpeechBeepCommand: bool = False,
 ):
 	"""Plays a tone at the given hz, length, and stereo balance.
 	@param hz: pitch in hz of the tone
@@ -66,23 +67,24 @@ def beep(
 	@param right: volume of the right channel (0 to 100)
 	@param isSpeechBeepCommand: whether this beep is created as part of a speech sequence
 	"""
-	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
+	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s" % (hz, length, left, right))
 	if not decide_beep.decide(
 		hz=hz,
 		length=length,
 		left=left,
 		right=right,
-		isSpeechBeepCommand=isSpeechBeepCommand
+		isSpeechBeepCommand=isSpeechBeepCommand,
 	):
 		log.debug(
-			"Beep canceled by handler registered to decide_beep extension point"
+			"Beep canceled by handler registered to decide_beep extension point",
 		)
 		return
 	if not player:
 		return
 	from NVDAHelper import generateBeep
-	bufSize=generateBeep(None,hz,length,left,right)
-	buf=create_string_buffer(bufSize)
-	generateBeep(buf,hz,length,left,right)
+
+	bufSize = generateBeep(None, hz, length, left, right)
+	buf = create_string_buffer(bufSize)
+	generateBeep(buf, hz, length, left, right)
 	player.stop()
 	player.feed(buf.raw)

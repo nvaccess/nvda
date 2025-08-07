@@ -7,6 +7,7 @@
 (importing it if necessary first). Using RobotFramework can manage the lifetimes of libraries so the libraries
 can configure themselves to be created per test / per suite etc.
 """
+
 from typing import Any
 
 
@@ -16,9 +17,11 @@ def _getLib(libraryName: str, *args) -> Any:
 	stateful libraries.
 	"""
 	from . import _nvdaSpyAlias
+
 	if libraryName == _nvdaSpyAlias:
 		raise AssertionError(f"Don't use _getLib for {_nvdaSpyAlias}, instead use 'NvdaLib.getSpyLib()'")
 	from robot.libraries.BuiltIn import BuiltIn
+
 	builtIn: BuiltIn = BuiltIn()
 	lib = None
 	try:

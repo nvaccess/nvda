@@ -23,7 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 std::deque<std::tuple<int, std::wstring>> logQueue;
 std::mutex logQueueLock;
 
-// Forward declare an APC function for flushing the log queue. 
+// Forward declare an APC function for flushing the log queue.
 void __stdcall log_flushQueue_apcFunc(ULONG_PTR data);
 
 // Fetch all available messages from the queue
@@ -54,7 +54,7 @@ void __stdcall log_flushQueue_apcFunc(ULONG_PTR data) {
 }
 
 void logMessage(int level, const wchar_t* msg) {
-	// Always log to any connected debugger 
+	// Always log to any connected debugger
 	OutputDebugString(msg);
 	if(
 		!inprocMgrThreadHandle

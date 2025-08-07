@@ -7,5 +7,4 @@
 
 
 class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
+	"""Raised when a call is cancelled."""

@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited.
 
-"""Unit tests for the localisation submodule.
-"""
+"""Unit tests for the localisation submodule."""
 
 from datetime import timedelta
 import unittest
@@ -16,10 +15,10 @@ from utils.localisation import (
 
 class Test_TimeOutputFormat(unittest.TestCase):
 	def _test_time_format(
-			self,
-			exampleTimeDelta: timedelta,
-			expectedTimeOutputFormat: TimeOutputFormat,
-			expectedOutputStr: str,
+		self,
+		exampleTimeDelta: timedelta,
+		expectedTimeOutputFormat: TimeOutputFormat,
+		expectedOutputStr: str,
 	):
 		"""Covers testing convertTimeDeltaToTimeOutputFormat, parseTimeDeltaToFormatted"""
 		actualTimeOutputFormat = TimeOutputFormat.convertTimeDeltaToTimeOutputFormat(exampleTimeDelta)

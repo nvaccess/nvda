@@ -8,6 +8,7 @@ import globalVars
 from logHandler import log
 import os
 from ctypes import WinDLL
+
 gdi32 = WinDLL("gdi32.dll")
 """
 Loads custom fonts for use in NVDA.
@@ -17,21 +18,12 @@ fontsDir = os.path.join(globalVars.appDir, "fonts")
 
 
 def _isSupportedFontPath(f: str) -> bool:
-	return os.path.isfile(f) and (
-		f.endswith(".otf")
-		or f.endswith(".ttf")
-	)
+	return os.path.isfile(f) and (f.endswith(".otf") or f.endswith(".ttf"))
 
 
 def addFonts(_fontSearchPath) -> List[str]:
-	searchPathFiles = [
-		os.path.join(_fontSearchPath, f)
-		for f in os.listdir(_fontSearchPath)
-	]
-	fonts = [
-		f for f in searchPathFiles
-		if _isSupportedFontPath(f)
-	]
+	searchPathFiles = [os.path.join(_fontSearchPath, f) for f in os.listdir(_fontSearchPath)]
+	fonts = [f for f in searchPathFiles if _isSupportedFontPath(f)]
 	log.debug(f"Fonts to load: {fonts}")
 	imported = []
 	for fontPath in fonts:
@@ -53,7 +45,7 @@ def _addFontResource(fontPath: str) -> int:
 		# The system will take care of unloading the font when the process ends.
 		FR_PRIVATE,
 		# Reserved. Must be zero.
-		0
+		0,
 	)
 	return res
 

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
-# Davy Kager
+# Davy Kager, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ import typing
 from typing import (
 	Dict,
 	Optional,
+	TYPE_CHECKING,
 )
 import weakref
 import textUtils
@@ -45,13 +46,16 @@ import locationHelper
 import aria
 from winAPI.sessionTracking import isLockScreenModeActive
 
+if TYPE_CHECKING:
+	from utils.urlUtils import _LinkData
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
 
-	locationText=None
+	locationText = None
 	# Do not use encoded text.
 	encoding = None
 
@@ -67,7 +71,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
-		return [self.obj.location,]
+		return [self.obj.location]
+
 
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
@@ -75,21 +80,23 @@ class InvalidNVDAObject(RuntimeError):
 	Therefore, L{DynamicNVDAObjectType} will return C{None} if this exception is raised.
 	"""
 
-class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
-	_dynamicClassCache={}
 
-	def __call__(self,chooseBestAPI=True,**kwargs):
+class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
+	_dynamicClassCache = {}
+
+	def __call__(self, chooseBestAPI=True, **kwargs):
 		if chooseBestAPI:
-			APIClass=self.findBestAPIClass(kwargs)
-			if not APIClass: return None
+			APIClass = self.findBestAPIClass(kwargs)
+			if not APIClass:
+				return None
 		else:
-			APIClass=self
+			APIClass = self
 
 		# Instantiate the requested class.
 		try:
-			obj=APIClass.__new__(APIClass,**kwargs)
-			obj.APIClass=APIClass
-			if isinstance(obj,self):
+			obj = APIClass.__new__(APIClass, **kwargs)
+			obj.APIClass = APIClass
+			if isinstance(obj, self):
 				obj.__init__(**kwargs)
 		except InvalidNVDAObject as e:
 			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)
@@ -101,7 +108,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		else:
 			clsList.append(APIClass)
 		# Allow app modules to choose overlay classes.
-		appModule=obj.appModule
+		appModule = obj.appModule
 		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
 		# so only call this method if it's been overridden.
 		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
@@ -127,27 +134,27 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		self._insertLockScreenObject(clsList)
 
 		# Determine the bases for the new class.
-		bases=[]
+		bases = []
 		for index in range(len(clsList)):
 			# A class doesn't need to be a base if it is already implicitly included by being a superclass of a previous base.
-			if index==0 or not issubclass(clsList[index-1],clsList[index]):
+			if index == 0 or not issubclass(clsList[index - 1], clsList[index]):
 				bases.append(clsList[index])
 
 		# Construct the new class.
 		if len(bases) == 1:
 			# We only have one base, so there's no point in creating a dynamic type.
-			newCls=bases[0]
+			newCls = bases[0]
 		else:
-			bases=tuple(bases)
-			newCls=self._dynamicClassCache.get(bases,None)
+			bases = tuple(bases)
+			newCls = self._dynamicClassCache.get(bases, None)
 			if not newCls:
-				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
-				newCls=type(name,bases,{"__module__": __name__})
-				self._dynamicClassCache[bases]=newCls
+				name = "Dynamic_%s" % "".join([x.__name__ for x in clsList])
+				newCls = type(name, bases, {"__module__": __name__})
+				self._dynamicClassCache[bases] = newCls
 
-		oldMro=frozenset(obj.__class__.__mro__)
+		oldMro = frozenset(obj.__class__.__mro__)
 		# Mutate obj into the new class.
-		obj.__class__=newCls
+		obj.__class__ = newCls
 
 		# Initialise the overlay classes.
 		for cls in reversed(newCls.__mro__):
@@ -168,7 +175,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				pass
 
 		# Allow app modules to make minor tweaks to the instance.
-		if appModule and hasattr(appModule,"event_NVDAObject_init"):
+		if appModule and hasattr(appModule, "event_NVDAObject_init"):
 			try:
 				appModule.event_NVDAObject_init(obj)
 			except Exception:
@@ -189,12 +196,17 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
 		from .lockscreen import LockScreenObject
+
 		if isLockScreenModeActive():
 			# This must be resolved first to prevent object navigation outside of the lockscreen.
 			clsList.insert(0, LockScreenObject)
 
 
-class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
+class NVDAObject(
+	documentBase.TextContainerObject,
+	baseObject.ScriptableObject,
+	metaclass=DynamicNVDAObjectType,
+):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -222,7 +234,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	#: The TextInfo class this object should use to provide access to text.
 	#: @type: type; L{textInfos.TextInfo}
-	TextInfo=NVDAObjectTextInfo
+	TextInfo = NVDAObjectTextInfo
 
 	#: Indicates if the text selection is anchored at the start.
 	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
@@ -232,10 +244,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
 	#: @type: bool
-	isTextSelectionAnchoredAtStart=True
+	isTextSelectionAnchoredAtStart = True
 
 	@classmethod
-	def findBestAPIClass(cls,kwargs,relation=None):
+	def findBestAPIClass(cls, kwargs, relation=None):
 		"""
 		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
 		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
@@ -245,19 +257,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@returns: the new APIClass
 		@rtype: DynamicNVDAObjectType
 		"""
-		newAPIClass=cls
-		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
-			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
-				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:
-					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
+		newAPIClass = cls
+		if "getPossibleAPIClasses" in newAPIClass.__dict__:
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs, relation=relation):
+				if "kwargsFromSuper" not in possibleAPIClass.__dict__:
+					log.error("possible API class %s does not implement kwargsFromSuper" % possibleAPIClass)
 					continue
-				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
-					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
+				if possibleAPIClass.kwargsFromSuper(kwargs, relation=relation):
+					return possibleAPIClass.findBestAPIClass(kwargs, relation=relation)
 		return newAPIClass if newAPIClass is not NVDAObject else None
 
-
 	@classmethod
-	def getPossibleAPIClasses(cls,kwargs,relation=None):
+	def getPossibleAPIClasses(cls, kwargs, relation=None):
 		"""
 		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
 		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
@@ -268,10 +279,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: generator
 		"""
 		import NVDAObjects.window
+
 		yield NVDAObjects.window.Window
 
 	@classmethod
-	def kwargsFromSuper(cls,kwargs,relation=None):
+	def kwargsFromSuper(cls, kwargs, relation=None):
 		"""
 		Finds out if this class can be instanciated from the given super kwargs.
 		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
@@ -306,21 +318,32 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		clsList.append(NVDAObject)
 
-	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
+	beTransparentToMouse = False  #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
+
+	def objectFromPointRedirect(self, x: int, y: int) -> "NVDAObject | None":
+		"""Redirects NVDA to another object if this object is retrieved from on-screen coordinates.
+		:param x: the x coordinate.
+		:param y: the y coordinate.
+		:return: The object that NVDA should be redirected to.
+		"""
+		return
 
 	@staticmethod
-	def objectFromPoint(x,y):
+	def objectFromPoint(x: int, y: int) -> "NVDAObject":
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
-		@param x: the x coordinate.
-		@type x: int
-		@param y: the y coordinate.
-		@param y: int
-		@return: The object at the given x and y coordinates.
-		@rtype: L{NVDAObject}
+		:param x: the x coordinate.
+		:param y: the y coordinate.
+		:return: The object at the given x and y coordinates.
 		"""
-		kwargs={}
-		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
-		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+		kwargs = {}
+		APIClass = NVDAObject.findBestAPIClass(kwargs, relation=(x, y))
+		obj = APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
+		if not obj:
+			return
+		redirect = obj.objectFromPointRedirect(x, y)
+		if redirect:
+			obj = redirect
+		return obj
 
 	@staticmethod
 	def objectWithFocus():
@@ -328,16 +351,16 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
-		kwargs={}
-		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
+		kwargs = {}
+		APIClass = NVDAObject.findBestAPIClass(kwargs, relation="focus")
 		if not APIClass:
 			return None
-		obj=APIClass(chooseBestAPI=False,**kwargs)
+		obj = APIClass(chooseBestAPI=False, **kwargs)
 		if not obj:
 			return None
-		focusRedirect=obj.focusRedirect
+		focusRedirect = obj.focusRedirect
 		if focusRedirect:
-			obj=focusRedirect
+			obj = focusRedirect
 		return obj
 
 	@staticmethod
@@ -347,17 +370,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
-		kwargs={}
-		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
-		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
-
+		kwargs = {}
+		APIClass = NVDAObject.findBestAPIClass(kwargs, relation="foreground")
+		return APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
 
 	def __init__(self):
-		super(NVDAObject,self).__init__()
-		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
-		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
+		super(NVDAObject, self).__init__()
+		self._mouseEntered = (
+			False  #:True if the mouse has entered this object (for use in L{event_mouseMoved})
+		)
+		self.textRepresentationLineLength = (
+			None  #:If an integer greater than 0 then lines of text in this object are always this long.
+		)
 
-	def _isEqual(self,other):
+	def _isEqual(self, other):
 		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
 		@param other: the other object to compare with.
 		@type other: L{NVDAObject}
@@ -366,9 +392,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return True
 
-	def __eq__(self,other):
-		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal.
-		"""
+	def __eq__(self, other):
+		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal."""
 		if self is other:
 			return True
 		if type(self) is not type(other):
@@ -380,12 +405,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def __hash__(self):
 		return super().__hash__()
 
-	def __ne__(self,other):
-		"""The opposite to L{NVDAObject.__eq__}
-		"""
+	def __ne__(self, other):
+		"""The opposite to L{NVDAObject.__eq__}"""
 		return not self.__eq__(other)
 
-	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
+	focusRedirect = (
+		None  #: Another object which should be treeted as the focus if focus is ever given to this object.
+	)
 
 	treeInterceptorClass: typing.Type[TreeInterceptor]
 	"""Type definition for auto prop '_get_treeInterceptorClass'"""
@@ -417,28 +443,27 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
 		"""
-		if hasattr(self,'_treeInterceptor'):
-			ti=self._treeInterceptor
-			if isinstance(ti,weakref.ref):
-				ti=ti()
+		if hasattr(self, "_treeInterceptor"):
+			ti = self._treeInterceptor
+			if isinstance(ti, weakref.ref):
+				ti = ti()
 			if ti and ti in treeInterceptorHandler.runningTable:
 				return ti
 			else:
-				self._treeInterceptor=None
+				self._treeInterceptor = None
 				return None
 		else:
-			ti=treeInterceptorHandler.getTreeInterceptor(self)
+			ti = treeInterceptorHandler.getTreeInterceptor(self)
 			if ti:
-				self._treeInterceptor=weakref.ref(ti)
+				self._treeInterceptor = weakref.ref(ti)
 			return ti
 
 	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
-		"""Specifically sets a treeInterceptor to be associated with this object.
-		"""
+		"""Specifically sets a treeInterceptor to be associated with this object."""
 		if obj:
-			self._treeInterceptor=weakref.ref(obj)
-		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
-			self._treeInterceptor=None
+			self._treeInterceptor = weakref.ref(obj)
+		else:  # We can't point a weakref to None, so just set the private variable to None, it can handle that
+			self._treeInterceptor = None
 
 	#: Type definition for auto prop '_get_appModule'
 	appModule: "appModuleHandler.AppModule"
@@ -448,10 +473,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		asking L{appModuleHandler}.
 		@return: the appModule
 		"""
-		if not hasattr(self,'_appModuleRef'):
-			a=appModuleHandler.getAppModuleForNVDAObject(self)
+		if not hasattr(self, "_appModuleRef"):
+			a = appModuleHandler.getAppModuleForNVDAObject(self)
 			if a:
-				self._appModuleRef=weakref.ref(a)
+				self._appModuleRef = weakref.ref(a)
 				return a
 		else:
 			return self._appModuleRef()
@@ -460,16 +485,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	name: str
 
 	def _get_name(self) -> str:
-		"""The name or label of this object (example: the text of a button).
-		"""
+		"""The name or label of this object (example: the text of a button)."""
 		return ""
 
 	#: Type definition for auto prop '_get_role'
 	role: controlTypes.Role
 
 	def _get_role(self) -> controlTypes.Role:
-		"""The role or type of control this object represents (example: button, list, dialog).
-		"""
+		"""The role or type of control this object represents (example: button, list, dialog)."""
 		return controlTypes.Role.UNKNOWN
 
 	#: Type definition for auto prop '_get_roleText'
@@ -508,8 +531,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	description: str
 
 	def _get_description(self) -> str:
-		"""The description or help text of this object.
-		"""
+		"""The description or help text of this object."""
 		return ""
 
 	#: Typing information for auto property _get_descriptionFrom
@@ -525,7 +547,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(
-				f"Fetching annotations not supported on: {self.__class__.__qualname__}"
+				f"Fetching annotations not supported on: {self.__class__.__qualname__}",
 			)
 		return None
 
@@ -538,7 +560,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return None
 
@@ -549,7 +571,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		log.warning(
 			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return bool(self.annotations)
 
@@ -561,7 +583,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
@@ -575,7 +597,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Retrieves the number of actions supported by this object."""
 		return 0
 
-	def getActionName(self,index=None):
+	def getActionName(self, index=None):
 		"""Retrieves the name of an action supported by this object.
 		If index is not given then the default action will be used if it exists.
 		@param index: the optional 0-based index of the wanted action.
@@ -585,7 +607,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def doAction(self,index=None):
+	def doAction(self, index=None):
 		"""Performs an action supported by this object.
 		If index is not given then the default action will be used if it exists.
 		"""
@@ -625,24 +647,33 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_locationText(self):
 		"""A message that explains the location of the object in friendly terms."""
-		location=self.location
+		location = self.location
 		if not location:
 			return None
-		(left,top,width,height)=location
-		deskLocation=api.getDesktopObject().location
-		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
-		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
-		percentFromTop=(float(top-deskTop)/deskHeight)*100
-		percentWidth=(float(width)/deskWidth)*100
-		percentHeight=(float(height)/deskHeight)*100
-		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
+		(left, top, width, height) = location
+		deskLocation = api.getDesktopObject().location
+		(deskLeft, deskTop, deskWidth, deskHeight) = deskLocation
+		percentFromLeft = (float(left - deskLeft) / deskWidth) * 100
+		percentFromTop = (float(top - deskTop) / deskHeight) * 100
+		percentWidth = (float(width) / deskWidth) * 100
+		percentHeight = (float(height) / deskHeight) * 100
+		return _(
+			# Translators: Reports navigator object's dimensions.
+			# Example output: Object edges positioned 20 per cent from left edge of screen,
+			# 10 per cent from top edge of screen,
+			# width is 40 per cent of screen,
+			# height is 50 per cent of screen.
+			"Object edges positioned {left:.1f} percent from left edge of screen, "
+			"{top:.1f} percent from top edge of screen, "
+			"width is {width:.1f} percent of screen, "
+			"height is {height:.1f} percent of screen",
+		).format(left=percentFromLeft, top=percentFromTop, width=percentWidth, height=percentHeight)
 
 	#: Typing information for auto-property: _get_parent
-	parent: typing.Optional['NVDAObject']
+	parent: typing.Optional["NVDAObject"]
 	"This object's parent (the object that contains this object)."
 
-	def _get_parent(self) -> typing.Optional['NVDAObject']:
+	def _get_parent(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
 		"""
@@ -658,20 +689,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		return parent
 
 	#: Typing information for auto-property: _get_next
-	next: typing.Optional['NVDAObject']
+	next: typing.Optional["NVDAObject"]
 	"The object directly after this object with the same parent."
 
-	def _get_next(self) -> typing.Optional['NVDAObject']:
+	def _get_next(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
 		"""
 		return None
 
 	#: Typing information for auto-property: _get_previous
-	previous: typing.Optional['NVDAObject']
+	previous: typing.Optional["NVDAObject"]
 	"The object directly before this object with the same parent."
 
-	def _get_previous(self) -> typing.Optional['NVDAObject']:
+	def _get_previous(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
 		"""
@@ -704,13 +735,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		log.debugWarning(
 			"Base implementation used."
-			" Relies on child.next which is error prone in many IA2 implementations."
+			" Relies on child.next which is error prone in many IA2 implementations.",
 		)
-		children=[]
-		child=self.firstChild
+		children = []
+		child = self.firstChild
 		while child:
 			children.append(child)
-			child=child.next
+			child = child.next
 		return children
 
 	def getChild(self, index: int) -> "NVDAObject":
@@ -870,19 +901,19 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			for recursiveChild in child.recursiveDescendants:
 				yield recursiveChild
 
-	presType_unavailable="unavailable"
-	presType_layout="layout"
-	presType_content="content"
+	presType_unavailable = "unavailable"
+	presType_layout = "layout"
+	presType_content = "content"
 
 	def _get_presentationType(self):
-		states=self.states
-		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
+		states = self.states
+		if controlTypes.State.INVISIBLE in states:
 			return self.presType_unavailable
 		role = self.role
 		landmark = self.landmark
-		if (
-			role in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION) or landmark
-		) and not config.conf["documentFormatting"]["reportLandmarks"]:
+		if (role in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION) or landmark) and not config.conf[
+			"documentFormatting"
+		]["reportLandmarks"]:
 			return self.presType_layout
 
 		roleText = self.roleText
@@ -890,9 +921,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			# If roleText is set, the object is very likely to communicate something relevant to the user.
 			return self.presType_content
 
-		#Static text should be content only if it really use usable text
-		if role==controlTypes.Role.STATICTEXT:
-			text=self.makeTextInfo(textInfos.POSITION_ALL).text
+		# Static text should be content only if it really use usable text
+		if role == controlTypes.Role.STATICTEXT:
+			text = self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
 		if role in (
@@ -908,17 +939,24 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			controlTypes.Role.TITLEBAR,
 			controlTypes.Role.LABEL,
 			controlTypes.Role.WHITESPACE,
-			controlTypes.Role.BORDER
+			controlTypes.Role.BORDER,
 		):
 			return self.presType_layout
 		name = self.name
 		description = self.description
+		# #15324: Some builds of Microsoft Office expose a space character as the name of unlabeled groupings.
+		# trying to force NVDA to announce them.
+		if name and name.isspace():
+			name = None
+		if description and description.isspace():
+			description = None
 		if not name and not description:
 			if role in (
 				controlTypes.Role.WINDOW,
 				controlTypes.Role.PANEL,
 				controlTypes.Role.PROPERTYPAGE,
 				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.GROUPING,
 				controlTypes.Role.OPTIONPANE,
 				controlTypes.Role.INTERNALFRAME,
 				controlTypes.Role.FORM,
@@ -926,53 +964,56 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 				controlTypes.Role.REGION,
 			):
 				return self.presType_layout
-			# Groupings should only be considered layout (I.e. filtered out)
-			# if they also don't have any position information as well as no name or description.
-			if role == controlTypes.Role.GROUPING and not self.name and not self.description and not self.positionInfo:
-				return self.presType_layout
 			if role == controlTypes.Role.TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
-			if role in (controlTypes.Role.TABLEROW,controlTypes.Role.TABLECOLUMN,controlTypes.Role.TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
+			if role in (
+				controlTypes.Role.TABLEROW,
+				controlTypes.Role.TABLECOLUMN,
+				controlTypes.Role.TABLECELL,
+			) and (
+				not config.conf["documentFormatting"]["reportTables"]
+				or not config.conf["documentFormatting"]["reportTableCellCoords"]
+			):
 				return self.presType_layout
 		return self.presType_content
 
 	def _get_simpleParent(self):
-		obj=self.parent
-		while obj and obj.presentationType!=self.presType_content:
-			obj=obj.parent
+		obj = self.parent
+		while obj and obj.presentationType != self.presType_content:
+			obj = obj.parent
 		return obj
 
-	def _findSimpleNext(self,useChild=False,useParent=True,goPrevious=False):
-		nextPrevAttrib="next" if not goPrevious else "previous"
-		firstLastChildAttrib="firstChild" if not goPrevious else "lastChild"
-		found=None
+	def _findSimpleNext(self, useChild=False, useParent=True, goPrevious=False):
+		nextPrevAttrib = "next" if not goPrevious else "previous"
+		firstLastChildAttrib = "firstChild" if not goPrevious else "lastChild"
+		found = None
 		if useChild:
-			child=getattr(self,firstLastChildAttrib)
-			childPresType=child.presentationType if child else None
-			if childPresType==self.presType_content:
-				found=child
-			elif childPresType==self.presType_layout:
-				found=child._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+			child = getattr(self, firstLastChildAttrib)
+			childPresType = child.presentationType if child else None
+			if childPresType == self.presType_content:
+				found = child
+			elif childPresType == self.presType_layout:
+				found = child._findSimpleNext(useChild=True, useParent=False, goPrevious=goPrevious)
 			elif child:
-				found=child._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+				found = child._findSimpleNext(useChild=False, useParent=False, goPrevious=goPrevious)
 			if found:
 				return found
-		next=getattr(self,nextPrevAttrib)
-		nextPresType=next.presentationType if next else None
-		if nextPresType==self.presType_content:
-			found=next
-		elif nextPresType==self.presType_layout:
-			found=next._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+		next = getattr(self, nextPrevAttrib)
+		nextPresType = next.presentationType if next else None
+		if nextPresType == self.presType_content:
+			found = next
+		elif nextPresType == self.presType_layout:
+			found = next._findSimpleNext(useChild=True, useParent=False, goPrevious=goPrevious)
 		elif next:
-			found=next._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+			found = next._findSimpleNext(useChild=False, useParent=False, goPrevious=goPrevious)
 		if found:
 			return found
-		parent=self.parent if useParent else None
-		while parent and parent.presentationType!=self.presType_content:
-			next=parent._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+		parent = self.parent if useParent else None
+		while parent and parent.presentationType != self.presType_content:
+			next = parent._findSimpleNext(useChild=False, useParent=False, goPrevious=goPrevious)
 			if next:
 				return next
-			parent=parent.parent
+			parent = parent.parent
 
 	def _get_simpleNext(self):
 		return self._findSimpleNext()
@@ -981,19 +1022,25 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		return self._findSimpleNext(goPrevious=True)
 
 	def _get_simpleFirstChild(self):
-		child=self.firstChild
+		child = self.firstChild
 		if not child:
 			return None
-		presType=child.presentationType
-		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False)
+		presType = child.presentationType
+		if presType != self.presType_content:
+			return child._findSimpleNext(useChild=(presType != self.presType_unavailable), useParent=False)
 		return child
 
 	def _get_simpleLastChild(self):
-		child=self.lastChild
+		child = self.lastChild
 		if not child:
 			return None
-		presType=child.presentationType
-		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False,goPrevious=True)
+		presType = child.presentationType
+		if presType != self.presType_content:
+			return child._findSimpleNext(
+				useChild=(presType != self.presType_unavailable),
+				useParent=False,
+				goPrevious=True,
+			)
 		return child
 
 	def _get_childCount(self):
@@ -1029,19 +1076,28 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def setFocus(self):
 		"""
-Tries to force this object to take the focus.
-"""
+		Tries to force this object to take the focus.
+		"""
 		pass
 
 	def scrollIntoView(self):
-		"""Scroll this object into view on the screen if possible.
-		"""
+		"""Scroll this object into view on the screen if possible."""
 		raise NotImplementedError
 
 	def _get_labeledBy(self):
 		"""Retrieves the object that this object is labeled by (example: the static text label beside an edit field).
 		@return: the label object if it has one else None.
 		@rtype: L{NVDAObject} or None
+		"""
+		return None
+
+	#: Type definition for auto prop "_get_errorMessage"
+	errorMessage: str | None
+
+	def _get_errorMessage(self) -> str | None:
+		"""Retrieves the string that describes the error for this control, if one exists.
+
+		:return: A string describing the error, else None.
 		"""
 		return None
 
@@ -1058,8 +1114,7 @@ Tries to force this object to take the focus.
 	processID: int
 
 	def _get_processID(self) -> int:
-		"""Retrieves an identifier of the process this object is a part of.
-		"""
+		"""Retrieves an identifier of the process this object is a part of."""
 		raise NotImplementedError
 
 	def _get_isProtected(self):
@@ -1068,13 +1123,15 @@ Tries to force this object to take the focus.
 		@rtype: boolean
 		"""
 		# Objects with the protected state, or with a role of passWordEdit should always be protected.
-		isProtected=(controlTypes.State.PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
+		isProtected = (
+			controlTypes.State.PROTECTED in self.states or self.role == controlTypes.Role.PASSWORDEDIT
+		)
 		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
 		# The most likely reason it would lose its protected state is because the object is dying.
 		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes
 		# will not be accidentally reported.
 		if isProtected:
-			self.isProtected=isProtected
+			self.isProtected = isProtected
 		return isProtected
 
 	#: Type definition for auto prop '_get_indexInParent'
@@ -1110,7 +1167,12 @@ Tries to force this object to take the focus.
 		"""
 		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
-		if self.role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.LISTITEM, controlTypes.Role.PROGRESSBAR, controlTypes.Role.EDITABLETEXT):
+		if self.role in (
+			controlTypes.Role.TREEVIEWITEM,
+			controlTypes.Role.LISTITEM,
+			controlTypes.Role.PROGRESSBAR,
+			controlTypes.Role.EDITABLETEXT,
+		):
 			return False
 		return True
 
@@ -1139,12 +1201,11 @@ Tries to force this object to take the focus.
 		return True
 
 	def reportFocus(self):
-		"""Announces this object in a way suitable such that it gained focus.
-		"""
+		"""Announces this object in a way suitable such that it gained focus."""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
 	def isDescendantOf(self, obj: "NVDAObject") -> bool:
-		"""  is this object a descendant of obj? """
+		"""is this object a descendant of obj?"""
 		raise NotImplementedError
 
 	def _get_placeholder(self):
@@ -1153,7 +1214,7 @@ Tries to force this object to take the focus.
 		@return: the placeholder text else None
 		@rtype: String or None
 		"""
-		log.debug("Potential unimplemented child class: %r" %self)
+		log.debug("Potential unimplemented child class: %r" % self)
 		return None
 
 	landmark: typing.Optional[str]
@@ -1167,7 +1228,7 @@ Tries to force this object to take the focus.
 		return None
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
-		""" Retrieves the priority with which  updates to live regions should be treated.
+		"""Retrieves the priority with which  updates to live regions should be treated.
 		The base implementation returns C{aria.AriaLivePoliteness.OFF},
 		indicating that the object isn't a live region.
 		Subclasses supporting live region events must implement this.
@@ -1189,31 +1250,37 @@ Tries to force this object to take the focus.
 					speech.priorities.Spri.NEXT
 					if politeness == aria.AriaLivePoliteness.ASSERTIVE
 					else speech.priorities.Spri.NORMAL
-				)
+				),
 			)
 
-	def event_typedCharacter(self,ch):
+	def event_typedCharacter(self, ch):
 		speech.speakTypedCharacters(ch)
 		import winUser
-		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
+
+		if (
+			config.conf["keyboard"]["beepForLowercaseWithCapslock"]
+			and ch.islower()
+			and winUser.getKeyState(winUser.VK_CAPITAL) & 1
+		):
 			import tones
-			tones.beep(3000,40)
+
+			tones.beep(3000, 40)
 
 	def event_mouseMove(self, x: int, y: int) -> None:
 		from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
-		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
+		if not self._mouseEntered and config.conf["mouse"]["reportObjectRoleOnMouseEnter"]:
 			speech.cancelSpeech()
-			speech.speakObjectProperties(self,role=True)
-			speechWasCanceled=True
+			speech.speakObject(self, reason=controlTypes.OutputReason.MOUSE)
+			speechWasCanceled = True
 		else:
-			speechWasCanceled=False
-		self._mouseEntered=True
+			speechWasCanceled = False
+		self._mouseEntered = True
 		vision.handler.handleMouseMove(self, x, y)
 		try:
-			info=self.makeTextInfo(locationHelper.Point(x,y))
+			info = self.makeTextInfo(locationHelper.Point(x, y))
 		except NotImplementedError:
-			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
+			info = NVDAObjectTextInfo(self, textInfos.POSITION_FIRST)
 		except LookupError:
 			return
 
@@ -1225,15 +1292,20 @@ Tries to force this object to take the focus.
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
-		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
-		self._lastMouseTextInfoObject=info
-		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
-			text=info.text
-			notBlank=False
+		oldInfo = getattr(self, "_lastMouseTextInfoObject", None)
+		self._lastMouseTextInfoObject = info
+		if (
+			not oldInfo
+			or info.__class__ != oldInfo.__class__
+			or info.compareEndPoints(oldInfo, "startToStart") != 0
+			or info.compareEndPoints(oldInfo, "endToEnd") != 0
+		):
+			text = info.text
+			notBlank = False
 			if text:
 				for ch in text:
 					if not ch.isspace() and ch != textUtils.OBJ_REPLACEMENT_CHAR:
-						notBlank=True
+						notBlank = True
 			if notBlank:
 				if not speechWasCanceled:
 					speech.cancelSpeech()
@@ -1257,9 +1329,13 @@ Tries to force this object to take the focus.
 				if api.setNavigatorObject(self, isFocus=True):
 					self.reportFocus()
 					# Display results as flash messages.
-					braille.handler.message(braille.getPropertiesBraille(
-						name=self.name, role=self.role, positionInfo=self.positionInfo
-					))
+					braille.handler.message(
+						braille.getPropertiesBraille(
+							name=self.name,
+							role=self.role,
+							positionInfo=self.positionInfo,
+						),
+					)
 		self.event_stateChange()
 
 	def event_stateChange(self):
@@ -1280,7 +1356,7 @@ Tries to force this object to take the focus.
 		vision.handler.handleUpdate(self, property="states")
 
 	def event_focusEntered(self):
-		if self.role in (controlTypes.Role.MENUBAR,controlTypes.Role.POPUPMENU,controlTypes.Role.MENUITEM):
+		if self.role in (controlTypes.Role.MENUBAR, controlTypes.Role.POPUPMENU, controlTypes.Role.MENUITEM):
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
@@ -1288,8 +1364,8 @@ Tries to force this object to take the focus.
 
 	def event_gainFocus(self):
 		"""
-This code is executed if a gain focus event is received by this object.
-"""
+		This code is executed if a gain focus event is received by this object.
+		"""
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
@@ -1321,7 +1397,7 @@ This code is executed if a gain focus event is received by this object.
 		if not (braille.handler.shouldAutoTether and isFocus):
 			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
 		vision.handler.handleReviewMove(
-			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR
+			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR,
 		)
 
 	def event_valueChange(self):
@@ -1354,32 +1430,36 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get_flatReviewPosition(self):
 		"""Locates a TextInfo positioned at this object, in the closest flat review."""
-		parent=self.simpleParent
+		parent = self.simpleParent
 		while parent:
-			ti=parent.treeInterceptor
-			if ti and self in ti and ti.rootNVDAObject==parent:
+			ti = parent.treeInterceptor
+			if ti and self in ti and ti.rootNVDAObject == parent:
 				return ti.makeTextInfo(self)
-			if issubclass(parent.TextInfo,DisplayModelTextInfo):
+			if issubclass(parent.TextInfo, DisplayModelTextInfo):
 				try:
 					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
-				except (NotImplementedError,LookupError):
+				except (NotImplementedError, LookupError):
 					pass
 				try:
 					return parent.makeTextInfo(self)
-				except (NotImplementedError,RuntimeError):
+				except (NotImplementedError, RuntimeError):
 					pass
 				return parent.makeTextInfo(textInfos.POSITION_FIRST)
-			parent=parent.simpleParent
+			parent = parent.simpleParent
 
 	def _get_basicText(self):
-		newTime=time.time()
-		oldTime=getattr(self,'_basicTextTime',0)
-		if newTime-oldTime>0.5:
-			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
-			if len(self._basicText)==0:
-				self._basicText=u""
+		newTime = time.time()
+		oldTime = getattr(self, "_basicTextTime", 0)
+		if newTime - oldTime > 0.5:
+			self._basicText = " ".join(
+				x
+				for x in (self.name, self.value, self.description)
+				if isinstance(x, str) and len(x) > 0 and not x.isspace()
+			)
+			if len(self._basicText) == 0:
+				self._basicText = ""
 		else:
-			self._basicTextTime=newTime
+			self._basicTextTime = newTime
 		return self._basicText
 
 	def _get__isTextEmpty(self):
@@ -1424,8 +1504,7 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("name: %s" % ret)
-		ret = self.role
-		info.append("role: %s" % ret)
+		info.append(f"role: {self.role.name}")
 		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
@@ -1433,7 +1512,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			ret = ", ".join(str(state) for state in self.states)
+			ret = ", ".join(state.name for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
@@ -1481,17 +1560,20 @@ This code is executed if a gain focus event is received by this object.
 		info.extend(self.appModule.devInfo)
 		return info
 
-	def _get_sleepMode(self):
+	# Typing information for auto property _get_sleepMode
+	sleepMode: bool
+
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
+	_cache_sleepMode = False
+
+	def _get_sleepMode(self) -> bool:
 		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
 		If C{True}, all  events and script requests for this object are silently dropped.
-		@rtype: bool
 		"""
 		if self.appModule:
 			return self.appModule.sleepMode
 		return False
-	# Don't cache sleepMode, as it is derived from a property which might change
-	# and we want the changed value immediately.
-	_cache_sleepMode = False
 
 	def _get_mathMl(self):
 		"""Obtain the MathML markup for an object containing math content.
@@ -1511,7 +1593,7 @@ This code is executed if a gain focus event is received by this object.
 			return False
 		role = self.role
 		states = self.states
-		if role in (controlTypes.Role.EDITABLETEXT,controlTypes.Role.TERMINAL,controlTypes.Role.DOCUMENT):
+		if role in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.TERMINAL, controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
 		elif controlTypes.State.EDITABLE in states:
@@ -1524,13 +1606,18 @@ This code is executed if a gain focus event is received by this object.
 		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
 		either because it is programatically hidden (State.INVISIBLE), off screen or the object has no location."""
 		states = self.states
-		return controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states or not self.location or not any(self.location)
+		return (
+			controlTypes.State.INVISIBLE in states
+			or controlTypes.State.OFFSCREEN in states
+			or not self.location
+			or not any(self.location)
+		)
 
 	def _get_selectionContainer(self):
-		""" An ancestor NVDAObject which manages the selection for this object and other descendants."""
+		"""An ancestor NVDAObject which manages the selection for this object and other descendants."""
 		return None
 
-	def getSelectedItemsCount(self,maxCount=2):
+	def getSelectedItemsCount(self, maxCount=2):
 		"""
 		Fetches the number of descendants currently selected.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
@@ -1544,3 +1631,24 @@ This code is executed if a gain focus event is received by this object.
 		if not isLockScreenModeActive():
 			return False
 		return _isObjectBelowLockScreen(self)
+
+	linkType: controlTypes.State | None
+	"""Typing information for auto property _get_linkType
+	Determines the link type based on the link and document URLs.
+	"""
+
+	def _get_linkType(self) -> controlTypes.State | None:
+		if self.role != controlTypes.Role.LINK:
+			return None
+		from browseMode import BrowseModeDocumentTreeInterceptor
+
+		ti = getattr(self, "treeInterceptor", None)
+		if not isinstance(ti, BrowseModeDocumentTreeInterceptor):
+			return None
+		return ti.getLinkTypeInDocument(self.value)
+
+	linkData: "_LinkData | None"
+
+	def _get_linkData(self) -> "_LinkData | None":
+		"""If the object has an associated link, returns the link's data (target and text)."""
+		raise NotImplementedError

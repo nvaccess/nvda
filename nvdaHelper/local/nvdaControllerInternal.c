@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
+Copyright 2006-2025 NV Access Limited, rui Batista, Google LLC, Christopher Toth.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -24,7 +24,7 @@ error_status_t __stdcall nvdaControllerInternal_inputLangChangeNotify(const long
 	return _nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const wchar_t); 
+error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const wchar_t);
 error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const wchar_t ch) {
 	return _nvdaControllerInternal_typedCharacterNotify(ch);
 }
@@ -36,7 +36,7 @@ error_status_t __stdcall nvdaControllerInternal_logMessage(const long level, con
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_displayModelTextChangeNotify)(const long, const long, const long, const long, const long);
-error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
+error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(const long hwnd, const long left, const long top, const long right, const long bottom) {
 	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
 }
 
@@ -70,8 +70,13 @@ error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(cons
 	return _nvdaControllerInternal_installAddonPackageFromPath(addonPath);
 }
 
+error_status_t(__stdcall *_nvdaControllerInternal_handleRemoteURL)(const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_handleRemoteURL(const wchar_t* url) {
+	return _nvdaControllerInternal_handleRemoteURL(url);
+}
+
 error_status_t(__stdcall *_nvdaControllerInternal_drawFocusRectNotify)(const long, const long, const long, const long, const long);
-error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
+error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) {
 	return _nvdaControllerInternal_drawFocusRectNotify(hwnd,left,top,right,bottom);
 }
 

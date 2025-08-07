@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited
+# Copyright (C) 2018-2024 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Basic start and exit tests
-Force Tags	NVDA	smoke test
+Force Tags	NVDA	smoke test	startupShutdown
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
@@ -27,8 +27,6 @@ Starts
 	NVDA_Starts	# run test
 
 Starts from desktop shortcut
-	# Excluded until test can be fixed. Tracked in issue: (#14293)
-	[Tags]	excluded_from_build
 	[Documentation]	Ensure that NVDA can start from desktop shortcut
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
 	Pass Execution If	"${whichNVDA}"!="installed"	Desktop shortcut only exists on installed copies
@@ -47,8 +45,6 @@ Quits from keyboard with welcome dialog open
 Quits from keyboard with about dialog open
 	[Documentation]	Starts NVDA and ensures that it can be quit with the about dialog open
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
-	# Excluded to be fixed still (#12976)
-	[Tags]	excluded_from_build
 	open about dialog from menu
 	quits from keyboard	# run test
 

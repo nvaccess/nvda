@@ -26,7 +26,7 @@ _COM_SMARTPTR_TYPEDEF(IAudioMeterInformation, __uuidof(IAudioMeterInformation));
 
 /*
 	* Should NVDA delay speech slightly when beginning to duck other audio?
-	* @return true if other audio is playing or there is an error for any device. Or in other words, false only if all devices can be checked, and they  all have a peak of 0. 
+	* @return true if other audio is playing or there is an error for any device. Or in other words, false only if all devices can be checked, and they  all have a peak of 0.
 	*/
 bool audioDucking_shouldDelay() {
 	HRESULT res;

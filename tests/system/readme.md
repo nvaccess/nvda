@@ -4,7 +4,7 @@
 
 This build system uses the Robot test framework to execute the system tests.
 Dependencies such as Robot are automatically installed for you when NVDA's build system Python virtual environment is set up, when running any of the high-level commands such as runsystemtests.bat, thus a developer should usually not have to worry about dependencies.
- 
+
 ### Running the tests
 
 You can run the tests with `runsystemtests.bat --include <TAG>`.
@@ -123,15 +123,15 @@ NVDA is started with the `-c` option to specify this profile directory to be use
 
 ### Logs
 Both Robot Framework and NVDA logs are captured in the `testOutput` directory in the repo root.
-NVDA logs (NVDA log, stdOut, and stdErr for each test) are under the `nvdaTestRunLogs` directory. 
+NVDA logs (NVDA log, stdOut, and stdErr for each test) are under the `nvdaTestRunLogs` directory.
 The log files are named by suite and test name.
 
 ### Comparing changes to NVDA Settings
-`.\runsettingsdiff.bat` is a tool used to compare the settings dialog by reading text and generating screenshots for comparison.  The default behaviour is to run using the source code and output to `.\tests\system\settingsCache\source`. 
+`.\runsettingsdiff.bat` is a tool used to compare the settings dialog by reading text and generating screenshots for comparison.  The default behaviour is to run using the source code and output to `.\tests\system\settingsCache\source`.
 
 
 #### Usage
-To check for unreleased changes to the settings dialogs, one can use this tool to compare against two copies of NVDA. 
+To check for unreleased changes to the settings dialogs, one can use this tool to compare against two copies of NVDA.
 
 The following arguments should be used with the script.
 
@@ -140,7 +140,7 @@ Default arguments used are stored  in `.\tests\system\guiDiff.robot`
 - `--variable whichNVDA:[installed|source]` to decide where to run NVDA from
 - `--variable cacheFolder:[filePath]` screenshots and text files of each settings panel are generated in `$cacheFolder\$currentVersion`
 - `--variable currentVersion:[nvdaVersion]` where `[nvdaVersion]` is used to name the generated screenshot and cache folder
-- `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff. 
+- `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff.
 
 #### Example usage to compare settings between NVDA 2020.4 and the current source
 

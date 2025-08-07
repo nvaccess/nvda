@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Burman's Computer and Education Ltd.
+# Copyright (C) 2023-25 NV Access Limited, Burman's Computer and Education Ltd., Leonard de Ruijter
 
 """Main code for Tivomatic Caiku Albatross braille display driver.
 Communication with display is done here. See class L{BrailleDisplayDriver}
@@ -12,7 +12,7 @@ import serial
 import time
 
 from collections import deque
-from bdDetect import KEY_SERIAL, DriverRegistrar
+from bdDetect import DriverRegistrar, ProtocolType
 from logHandler import log
 from serial.win32 import (
 	PURGE_RXABORT,
@@ -26,10 +26,8 @@ from threading import (
 	Lock,
 )
 from typing import (
-	Iterator,
 	List,
 	Optional,
-	Tuple,
 )
 
 import braille
@@ -61,6 +59,8 @@ from .constants import (
 	END_BYTE,
 	BOTH_BYTES,
 	KC_INTERVAL,
+	BUS_DEVICE_DESC,
+	VID_AND_PID,
 )
 from .gestures import _gestureMap
 
@@ -84,15 +84,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(KEY_SERIAL, {
-			"VID_0403&PID_6001",  # Caiku Albatross 46/80
-		})
+		driverRegistrar.addUsbDevice(
+			ProtocolType.SERIAL,
+			VID_AND_PID,  # Caiku Albatross 46/80
+			# Filter for bus reported device description, which should be "Albatross Braille Display".
+			matchFunc=lambda match: match.deviceInfo.get("busReportedDeviceDescription") == BUS_DEVICE_DESC,
+		)
 
 	@classmethod
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	def __init__(self, port="Auto"):
+	def __init__(self, port: str = "auto"):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
@@ -158,13 +161,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except Exception:
 			log.exception("Error terminating albatross driver")
 
-	def _searchPorts(self, port: str):
+	def _searchPorts(self, originalPort: str):
 		"""Search ports where display can be connected.
-		@param port: port name as string
+		@param originalPort: original port name as string
 		@raises: RuntimeError if no display found
 		"""
 		for self._baudRate in BAUD_RATE:
-			for portType, portId, port, portInfo in self._getTryPorts(port):
+			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
 				# For reconnection
 				self._currentPort = port
 				self._tryToConnect = True
@@ -175,7 +178,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						self._oldCells.append(0)
 					self._kc = _threading.RepeatedTimer(
 						KC_INTERVAL,
-						self._keepConnected
+						self._keepConnected,
 					)
 					self._handleRead = _threading.ReadThread(
 						self._readHandling,
@@ -183,12 +186,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						self._exitEvent,
 						self._dev,
 						name="albatross_read",
-						daemon=True
+						daemon=True,
 					)
 					self._handleRead.start()
 					log.info(
 						f"Connected to Caiku Albatross {self.numCells} on {portType} port {port} "
-						f"at {self._baudRate} bps."
+						f"at {self._baudRate} bps.",
 					)
 					break
 				# This device initialization failed.
@@ -198,7 +201,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._dev = None
 				log.info(
 					f"Connection to {self.description} display on {portType} port {port} "
-					f"at {self._baudRate} bps failed."
+					f"at {self._baudRate} bps failed.",
 				)
 			if self.numCells:
 				break
@@ -233,7 +236,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._tryToConnect = False
 			else:
 				log.debug(
-					f"Sleeping {SLEEP_TIMEOUT} seconds before try {i + 1} / {MAX_INIT_RETRIES}"
+					f"Sleeping {SLEEP_TIMEOUT} seconds before try {i + 1} / {MAX_INIT_RETRIES}",
 				)
 				time.sleep(SLEEP_TIMEOUT)
 			if not self._readInitByte():
@@ -254,14 +257,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			stopbits=serial.STOPBITS_ONE,
 			parity=serial.PARITY_NONE,
 			timeout=READ_TIMEOUT,
-			writeTimeout=WRITE_TIMEOUT
+			writeTimeout=WRITE_TIMEOUT,
 		)
 		log.debug(f"Port {self._currentPort} initialized")
 		if not self._resetBuffers():
 			if i == MAX_INIT_RETRIES - 1:
 				return False
 			log(
-				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
+				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}",
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
@@ -279,7 +282,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if i == MAX_INIT_RETRIES - 1:
 					return False
 				log(
-					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
+					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}",
 				)
 				time.sleep(SLEEP_TIMEOUT)
 				return False
@@ -291,7 +294,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(
 				f"Port {self._currentPort} not opened, sleeping {SLEEP_TIMEOUT} seconds "
 				f"before try {i + 2} / {MAX_INIT_RETRIES}",
-				exc_info=True
+				exc_info=True,
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
@@ -326,9 +329,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug(
-				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
-				"trying to reconnect",
-				exc_info=True
+				f"INIT_START_BYTE {INIT_START_BYTE} read failed, trying to reconnect",
+				exc_info=True,
 			)
 			return False
 
@@ -369,7 +371,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for j in range(RESET_COUNT):
 				PurgeComm(
 					self._dev._port_handle,
-					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT
+					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT,
 				)
 				time.sleep(RESET_SLEEP)
 			log.debug("I/O buffers reset done")
@@ -379,7 +381,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# might raise.
 		except (IOError, AttributeError):
 			log.debug(
-				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True
+				f"I/O buffer reset failed on port {self._currentPort}",
+				exc_info=True,
 			)
 			if self._dev.is_open:
 				self._dev.close()
@@ -437,7 +440,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return None
 			data = self._dev.read(self._dev.in_waiting)
 			log.debug(
-				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}"
+				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}",
 			)
 			return data
 		# Considering situation where "albatross_read" thread is about to read
@@ -455,7 +458,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		settingsByte = None
 		for i in data:
-			iAsByte = i.to_bytes(1, 'big')
+			iAsByte = i.to_bytes(1, "big")
 			if not self._initByteReceived:
 				if iAsByte == INIT_START_BYTE:
 					self._initByteReceived = True
@@ -474,11 +477,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						_(
 							# Translators: A message when number of status cells must be changed
 							# for a braille display driver
-							"To use Albatross with NVDA: "
-							"change number of status cells in Albatross internal menu at most "
-							f"to {MAX_STATUS_CELLS_ALLOWED}, and if needed, restart Albatross "
-							"and NVDA."
-						)
+							"To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu "
+							"to at most {maxCells}, and restart the Albatross and NVDA if needed.",
+						).format(maxCells=MAX_STATUS_CELLS_ALLOWED),
 					)
 					self._disableConnection()
 					return False
@@ -521,7 +522,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _handleReadQueue(self):
 		"""Handles data read in L{_readHandling}."""
 		log.debug(
-			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}"
+			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}",
 		)
 		while len(self._readQueue):
 			try:
@@ -560,7 +561,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._waitingSettingsByte = True
 				log.debug(
 					"Read: _readQueue is empty, waiting for settings byte",
-					exc_info=True
+					exc_info=True,
 				)
 				return
 			self._writeQueue.appendleft(ESTABLISHED)
@@ -575,7 +576,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._clearOldCells()
 			braille.handler._displayWithCursor()
 			log.debug(
-				"Updated display content after reconnection or display menu exit"
+				"Updated display content after reconnection or display menu exit",
 			)
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
@@ -627,7 +628,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._keyLayout = ord(data) >> 4 & KEY_LAYOUT_MASK
 		log.debug(
 			f"Current settings: number of cells {self.numCells}, "
-			f"key layout {KeyLayout(self._keyLayout).name}"
+			f"key layout {KeyLayout(self._keyLayout).name}",
 		)
 		self._disabledConnection = False
 
@@ -660,9 +661,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._waitingCtrlPacket = True
 					self._partialCtrlPacket = data
 					log.debug(
-						f"Read: Ctrl key packet {data} dequeued partially, "
-						"_readQueue is empty",
-						exc_info=True
+						f"Read: Ctrl key packet {data} dequeued partially, _readQueue is empty",
+						exc_info=True,
 					)
 					return
 				if len(data) > MAX_COMBINATION_KEYS and data[len(data) - 1] != data[0]:
@@ -673,14 +673,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self._keyLayout != KeyLayout.normal:
 			# Using custom key layout
 			data = self._changeKeyValues(
-				bytearray(data)
+				bytearray(data),
 			)
 		log.debug(f"Keys for key press: {data}")
 		pressedKeys = set(data)
 		log.debug(f"Forwarding keys {pressedKeys}")
 		try:
 			inputCore.manager.executeGesture(
-				gestures.InputGestureKeys(pressedKeys, self.name)
+				gestures.InputGestureKeys(pressedKeys, self.name),
 			)
 		# Attribute error which rarely occurs here is something strange.
 		except (inputCore.NoInputGestureAction, AttributeError):
@@ -700,10 +700,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				elif key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
-						LEFT_RIGHT_KEY_CODES.values()
+						LEFT_RIGHT_KEY_CODES.values(),
 					).index(key)
 					data[i] = list(
-						LEFT_RIGHT_KEY_CODES.keys()
+						LEFT_RIGHT_KEY_CODES.keys(),
 					)[j]
 				continue
 			if self._keyLayout == KeyLayout.bothSidesAsRight:
@@ -713,10 +713,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self._keyLayout == KeyLayout.bothSidesAsLeft:
 				if key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
-						LEFT_RIGHT_KEY_CODES.values()
+						LEFT_RIGHT_KEY_CODES.values(),
 					).index(key)
 					data[i] = list(
-						LEFT_RIGHT_KEY_CODES.keys()
+						LEFT_RIGHT_KEY_CODES.keys(),
 					)[j]
 		return bytes(data)
 
@@ -743,21 +743,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Using lock because called also indirectly manually when display is
 		# switched back on or exited from internal menu.
 		with self._displayLock:
-			writeBytes: List[bytes] = [START_BYTE, ]
+			writeBytes: List[bytes] = [START_BYTE]
 			# Only changed content is sent (cell index and data).
 			for i, cell in enumerate(cells):
 				if cell != self._oldCells[i]:
 					self._oldCells[i] = cell
 					# display indexing starts from 1
-					writeBytes.append((i + 1).to_bytes(1, 'big'))
+					writeBytes.append((i + 1).to_bytes(1, "big"))
 					# Bits have to be reversed.
 					writeBytes.append(
 						int(
-							'{:08b}'.format(cell)[::-1], 2
-						)
-						.to_bytes(
-							1, 'big'
-						)
+							"{:08b}".format(cell)[::-1],
+							2,
+						).to_bytes(
+							1,
+							"big",
+						),
 					)
 			writeBytes.append(END_BYTE)
 			if writeBytes == [START_BYTE, END_BYTE]:  # No updated cell content

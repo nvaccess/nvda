@@ -11,57 +11,61 @@ from ctypes import windll, Structure, c_ubyte, c_uint32, c_void_p, c_int, c_floa
 from ctypes.wintypes import LONG, DWORD, WORD, BOOL
 from contextlib import contextmanager
 
-user32=windll.user32
-gdi32=windll.gdi32
+user32 = windll.user32
+gdi32 = windll.gdi32
 gdiplus = windll.gdiplus
 
+
 class RGBQUAD(Structure):
-	_fields_=[
-		('rgbBlue',c_ubyte),
-		('rgbGreen',c_ubyte),
-		('rgbRed',c_ubyte),
-		('rgbReserved',c_ubyte),
+	_fields_ = [
+		("rgbBlue", c_ubyte),
+		("rgbGreen", c_ubyte),
+		("rgbRed", c_ubyte),
+		("rgbReserved", c_ubyte),
 	]
+
 
 class BITMAPINFOHEADER(Structure):
-	_fields_=[
-		('biSize',DWORD),
-		('biWidth',LONG),
-		('biHeight',LONG),
-		('biPlanes',WORD),
-		('biBitCount',WORD),
-		('biCompression',WORD),
-		('biSizeImage',DWORD),
-		('biXPelsPerMeter',LONG),
-		('biYPelsPerMeter',LONG),
-		('biClrUsed',DWORD),
-		('biClrImportant',DWORD),
+	_fields_ = [
+		("biSize", DWORD),
+		("biWidth", LONG),
+		("biHeight", LONG),
+		("biPlanes", WORD),
+		("biBitCount", WORD),
+		("biCompression", WORD),
+		("biSizeImage", DWORD),
+		("biXPelsPerMeter", LONG),
+		("biYPelsPerMeter", LONG),
+		("biClrUsed", DWORD),
+		("biClrImportant", DWORD),
 	]
+
 
 class BITMAPINFO(Structure):
-	_fields_=[
-		('bmiHeader',BITMAPINFOHEADER),
-		('bmiColors',(RGBQUAD*1)),
+	_fields_ = [
+		("bmiHeader", BITMAPINFOHEADER),
+		("bmiColors", (RGBQUAD * 1)),
 	]
 
-BI_RGB=0
-SRCCOPY=0x00CC0020 
-DIB_RGB_COLORS=0
+
+BI_RGB = 0
+SRCCOPY = 0x00CC0020
+DIB_RGB_COLORS = 0
 
 
 class GdiplusStartupInput(Structure):
 	_fields_ = [
-		('GdiplusVersion', c_uint32),
-		('DebugEventCallback', c_void_p),
-		('SuppressBackgroundThread', BOOL),
-		('SuppressExternalCodecs', BOOL)
+		("GdiplusVersion", c_uint32),
+		("DebugEventCallback", c_void_p),
+		("SuppressBackgroundThread", BOOL),
+		("SuppressExternalCodecs", BOOL),
 	]
 
 
 class GdiplusStartupOutput(Structure):
 	_fields = [
-		('NotificationHookProc', c_void_p),
-		('NotificationUnhookProc', c_void_p)
+		("NotificationHookProc", c_void_p),
+		("NotificationUnhookProc", c_void_p),
 	]
 
 
@@ -160,6 +164,13 @@ def GDIPlusPen(color, width, dashStyle=DashStyleSolid):
 
 
 def gdiPlusDrawRectangle(gpGraphics, gpPen, left, top, width, height):
-	gpStatus = gdiplus.GdipDrawRectangle(gpGraphics, gpPen, float(left), float(top), float(width), float(height))
+	gpStatus = gdiplus.GdipDrawRectangle(
+		gpGraphics,
+		gpPen,
+		float(left),
+		float(top),
+		float(width),
+		float(height),
+	)
 	if gpStatus:
 		raise RuntimeError("GdipDrawRectangle failed with status code %d" % gpStatus)

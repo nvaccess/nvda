@@ -66,7 +66,7 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	wstring::iterator t=text.begin();
 	if(truncateBefore&&rect.left<truncatePointX) {
 		for(;t!=text.end()&&(*c)<truncatePointX;++c,++t);
-		if(c!=characterXArray.end()) rect.left=*c; else rect.left=rect.right; 
+		if(c!=characterXArray.end()) rect.left=*c; else rect.left=rect.right;
 		characterXArray.erase(characterXArray.begin(),c);
 		text.erase(text.begin(),t);
 	} else if(!truncateBefore&&truncatePointX<rect.right) {
@@ -108,7 +108,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& 
 	chunk->formatInfo=formatInfo;
 	chunk->direction=direction;
 	chunk->characterXArray.push_back(rect.left);
-	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterExtents[i].x+rect.left); 
+	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterExtents[i].x+rect.left);
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.
@@ -127,7 +127,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& 
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
 	chunksByYX[make_pair(chunk->baseline,chunk->rect.left)]=chunk;
-	if(hwnd) chunk->hwnd=hwnd; 
+	if(hwnd) chunk->hwnd=hwnd;
 }
 
 void displayModel_t::setFocusRect(const RECT* rect) {
@@ -165,7 +165,7 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	}
 	while(i!=chunksByYX.end()) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
-		++nextI; 
+		++nextI;
 		displayModelChunk_t* chunk=i->second;
 		int baseline=i->first.first;
 		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
@@ -230,7 +230,7 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 }
 
 void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel) {
-	//Make sure neither source or destination rectangle is collapsed. Pointless and can cause zero division errors. #2885 
+	//Make sure neither source or destination rectangle is collapsed. Pointless and can cause zero division errors. #2885
 	if(srcRect.left==srcRect.right||srcRect.top==srcRect.bottom||destRect.left==destRect.right||destRect.top==destRect.bottom) return;
 	if(!destModel) destModel=this;
 	RECT tempRect;
@@ -244,8 +244,8 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	//Make copies of all the needed chunks, tweek their rectangle coordinates, truncate if needed, and store them in a temporary list
 	list<displayModelChunk_t*> copiedChunks;
 	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();++i) {
-		//We only care about chunks that are overlapped by the source rectangle 
-		if(!IntersectRect(&tempRect,&srcRect,&(i->second->rect))) continue; 
+		//We only care about chunks that are overlapped by the source rectangle
+		if(!IntersectRect(&tempRect,&srcRect,&(i->second->rect))) continue;
 		//Copy the chunk
 		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
 		if(srcInvert) {
@@ -267,7 +267,7 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		if(chunk->rect.right>clippedDestRect.right) {
 			chunk->truncate(clippedDestRect.right,FALSE);
 		}
-		//if the chunk is now empty due to truncation then just delete it and move on to the next 
+		//if the chunk is now empty due to truncation then just delete it and move on to the next
 		if(chunk->text.length()==0) {
 			delete chunk;
 			continue;

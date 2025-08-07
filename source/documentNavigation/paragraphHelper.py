@@ -30,6 +30,7 @@ class _Offset(IntEnum):
 
 def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
 	from config.featureFlagEnums import ParagraphNavigationFlag
+
 	flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 	numStyles = len(ParagraphNavigationFlag.__members__)
 	newEnumVal = flag.calculated().value + 1
@@ -63,8 +64,8 @@ def _isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 
 
 def _isLastLineOfParagraph(line: str) -> bool:
-	stripped = line.strip(' \t')
-	return stripped.endswith('\r') or stripped.endswith('\n')
+	stripped = line.strip(" \t")
+	return stripped.endswith("\r") or stripped.endswith("\n")
 
 
 def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
@@ -75,6 +76,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	though responsiveness may not be optimal.
 	"""
 	from documentNavigation.sentenceHelper import _findNextEndOfSentence
+
 	paragraphLen = len(paragraph)
 	if paragraphLen <= PREFERRED_CHUNK_SIZE:
 		yield paragraph
@@ -93,7 +95,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 			else:
 				chunkEnd = sentenceEndPoints[endIndex]
 				endIndex += 1
-			yield paragraph[chunkStart: chunkEnd]
+			yield paragraph[chunkStart:chunkEnd]
 			chunkStart = chunkEnd
 			startIndex = endIndex
 		else:
@@ -177,9 +179,9 @@ def _moveTextInfoToSingleLineBreakParagraph(nextParagraph: bool, ti: textInfos.T
 
 
 def moveToSingleLineBreakParagraph(
-		nextParagraph: bool,
-		speakNew: bool,
-		ti: textInfos.TextInfo = None
+	nextParagraph: bool,
+	speakNew: bool,
+	ti: textInfos.TextInfo = None,
 ) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph which is delimited by a single line break.
@@ -200,6 +202,7 @@ def moveToSingleLineBreakParagraph(
 	if moved:
 		ti.updateCaret()
 		from NVDAObjects.UIA import UIATextInfo
+
 		if isinstance(ti, UIATextInfo):
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
@@ -266,9 +269,9 @@ def _moveTextInfoToMultiLineBreakParagraph(nextParagraph: bool, ti: textInfos.Te
 
 
 def moveToMultiLineBreakParagraph(
-		nextParagraph: bool,
-		speakNew: bool,
-		ti: textInfos.TextInfo = None
+	nextParagraph: bool,
+	speakNew: bool,
+	ti: textInfos.TextInfo = None,
 ) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph delineated by one or more blank lines.
@@ -290,6 +293,7 @@ def moveToMultiLineBreakParagraph(
 	if moved:
 		ti.updateCaret()
 		from NVDAObjects.UIA import UIATextInfo
+
 		if isinstance(ti, UIATextInfo):
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)

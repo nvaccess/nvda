@@ -1,59 +1,90 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited
+# Copyright (C) 2016-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Utilities for converting NVDA speech sequences to XML.
+"""Utilities for converting NVDA speech sequences to XML and vice versa.
 Several synthesizers accept XML, either SSML or their own schemas.
 L{SpeechXmlConverter} is the base class for conversion to XML.
 You can subclass this to support specific XML schemas.
 L{SsmlConverter} is an implementation for conversion to SSML.
 """
 
-from collections import namedtuple, OrderedDict
 import re
-import speech
+from collections import OrderedDict, namedtuple
+from collections.abc import Callable, Generator
+from xml.parsers import expat
+
 import textUtils
-from speech.commands import LangChangeCommand, SpeechCommand
 from logHandler import log
+from speech.commands import (
+	BreakCommand,
+	CallbackCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	PitchCommand,
+	RateCommand,
+	SpeechCommand,
+	VolumeCommand,
+)
+from speech.types import SpeechSequence
 
 XML_ESCAPES = {
-	0x3C: u"&lt;", # <
-	0x3E: u"&gt;", # >
-	0x26: u"&amp;", # &
-	0x22: u"&quot;", # "
+	0x3C: "&lt;",  # <
+	0x3E: "&gt;",  # >
+	0x26: "&amp;",  # &
+	0x22: "&quot;",  # "
 }
+
 
 # Regular expression to replace invalid XML characters.
 # Based on http://stackoverflow.com/a/22273639
 def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
-	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
-		for start, end in ranges]
-	leadingSurrogate = u"[\uD800-\uDBFF]"
-	trailingSurrogate = u"[\uDC00-\uDFFF]"
-	return re.compile((
+	ranges = (
+		(0x00, 0x08),
+		(0x0B, 0x0C),
+		(0x0E, 0x1F),
+		(0x7F, 0x84),
+		(0x86, 0x9F),
+		(0xFDD0, 0xFDDF),
+		(0xFFFE, 0xFFFF),
+	)
+	rangeExprs = ["%s-%s" % (chr(start), chr(end)) for start, end in ranges]
+	leadingSurrogate = "[\ud800-\udbff]"
+	trailingSurrogate = "[\udc00-\udfff]"
+	return re.compile(
+		(
 			# These ranges of characters are invalid.
-			u"[{ranges}]"
+			"[{ranges}]"
 			# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
-			u"|{leading}(?!{trailing})"
+			"|{leading}(?!{trailing})"
 			# Trailing surrogate is invalid if not preceded by a leading surrogate.
-			u"|(?<!{leading}){trailing}"
+			"|(?<!{leading}){trailing}"
 		).format(
 			ranges="".join(rangeExprs),
 			leading=leadingSurrogate,
-			trailing=trailingSurrogate))
+			trailing=trailingSurrogate,
+		),
+	)
+
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
+RE_TIME_MS = re.compile(r"^(?P<time>\d+)ms$", re.IGNORECASE)
+RE_PERCENTAGE = re.compile(r"^(?P<percentage>\d+(\.\d+)?)%$")
 REPLACEMENT_CHAR = textUtils.REPLACEMENT_CHAR
 
 
 def toXmlLang(nvdaLang: str) -> str:
-	"""Convert an NVDA language to an XML language.
-	"""
+	"""Convert an NVDA language to an XML language."""
 	return nvdaLang.replace("_", "-")
+
+
+def toNvdaLang(xmlLang: str) -> str:
+	"""Convert an XML language to an NVDA language."""
+	return xmlLang.replace("-", "_")
+
 
 #: An XMLBalancer command to enclose the entire output in a tag.
 #: This must be the first command.
@@ -74,12 +105,14 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 #: That is, it will not enclose subsequent output.
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
+
 def _escapeXml(text):
 	text = text.translate(XML_ESCAPES)
 	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
 	return text
 
-class XmlBalancer(object):
+
+class XmlBalancer:
 	"""Generates balanced XML given a set of commands.
 	NVDA speech sequences are linear, but XML is hierarchical, which makes conversion challenging.
 	For example, a speech sequence might change the pitch, then change the volume, then reset the pitch to default.
@@ -115,7 +148,7 @@ class XmlBalancer(object):
 		for attr, val in attrs.items():
 			self._out.append(' %s="' % attr)
 			# Attribute values could be ints, floats etc, not just strings.
-			# Therefore coerce the value to a string, as well as escaping xml characters. 
+			# Therefore coerce the value to a string, as well as escaping xml characters.
 			self._out.append(_escapeXml(str(val)))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
@@ -155,8 +188,7 @@ class XmlBalancer(object):
 		self._tagsChanged = False
 
 	def generateXml(self, commands) -> str:
-		"""Generate XML from a sequence of balancer commands and text.
-		"""
+		"""Generate XML from a sequence of balancer commands and text."""
 		for command in commands:
 			if isinstance(command, str):
 				self._outputTags()
@@ -183,9 +215,10 @@ class XmlBalancer(object):
 			self._closeTag(tag)
 		for tag in self._enclosingAllTags:
 			self._closeTag(tag)
-		return u"".join(self._out)
+		return "".join(self._out)
 
-class SpeechXmlConverter(object):
+
+class SpeechXmlConverter:
 	"""Base class for conversion of NVDA speech sequences to XML.
 	This class converts an NVDA speech sequence into XmlBalancer commands
 	which can then be passed to L{XmlBalancer} to produce correct XML.
@@ -226,22 +259,26 @@ class SpeechXmlConverter(object):
 				log.error("Unknown speech: %r" % item)
 
 	def convertToXml(self, speechSequence):
-		"""Convenience method to convert a speech sequence to XML using L{XmlBalancer}.
-		"""
+		"""Convenience method to convert a speech sequence to XML using L{XmlBalancer}."""
 		bal = XmlBalancer()
 		balCommands = self.generateBalancerCommands(speechSequence)
 		return bal.generateXml(balCommands)
 
+
 class SsmlConverter(SpeechXmlConverter):
-	"""Converts an NVDA speech sequence to SSML.
-	"""
+	"""Converts an NVDA speech sequence to SSML."""
 
 	def __init__(self, defaultLanguage: str):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
 	def generateBalancerCommands(self, speechSequence):
-		attrs = OrderedDict((("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
-			("xml:lang", self.defaultLanguage)))
+		attrs = OrderedDict(
+			(
+				("version", "1.0"),
+				("xmlns", "http://www.w3.org/2001/10/synthesis"),
+				("xml:lang", self.defaultLanguage),
+			),
+		)
 		yield EncloseAllCommand("speak", attrs)
 		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
 			yield command
@@ -268,15 +305,140 @@ class SsmlConverter(SpeechXmlConverter):
 			# Returning to normal.
 			return DelAttrCommand("prosody", attr)
 		else:
-			return SetAttrCommand("prosody", attr,
-				"%d%%" % int(command.multiplier* 100))
+			return SetAttrCommand(
+				"prosody",
+				attr,
+				"%d%%" % int(command.multiplier * 100),
+			)
 
 	def convertPitchCommand(self, command):
 		return self._convertProsody(command, "pitch")
+
 	def convertRateCommand(self, command):
 		return self._convertProsody(command, "rate")
+
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume")
 
 	def convertPhonemeCommand(self, command):
 		return StandAloneTagCommand("phoneme", {"alphabet": "ipa", "ph": command.ipa}, command.text)
+
+
+class SpeechXmlParser:
+	"""Base class for parsing of NVDA speech sequences from XML.
+	This class converts XML to an NVDA speech sequence.
+
+	Callers can call L{convertFromXml} with XML to generate a speech sequence.
+
+	Subclasses implement specific XML schemas by implementing generators which convert each XML tag supported.
+	The method for a tag should be named with the prefix "parse" followed by the tag.
+	For example, the handler for <volume /> should be named C{parseVolume}.
+	These generators receive an optional dictionary containing the attributes and values.
+	When the attributes value is None, it is a closing tag.
+	They should yield one or more appropriate SPeechCommand instances.
+	"""
+
+	_speechSequence: SpeechSequence
+
+	def _elementHandler(self, tagName: str, attrs: dict | None = None):
+		processedTagName = "".join(tagName.title().split("-"))
+		funcName = f"parse{processedTagName}"
+		if (func := getattr(self, funcName, None)) is None:
+			log.debugWarning(f"Unsupported tag: {tagName}")
+			return
+		for command in func(attrs):
+			# If the last command in the sequence is of the same type, we can remove it.
+			if self._speechSequence and type(self._speechSequence[-1]) is type(command):
+				self._speechSequence.pop()
+			# Look up the previous command of the same class, if any.
+			# If the last instance of this command in the sequence is equal to this command, we don't have to add it.
+			prevCommand = next((c for c in reversed(self._speechSequence) if type(c) is type(command)), None)
+			if prevCommand != command:
+				self._speechSequence.append(command)
+
+	def convertFromXml(self, xml: str) -> SpeechSequence:
+		"""Convert XML to a speech sequence."""
+		self._speechSequence = SpeechSequence()
+		parser = expat.ParserCreate("utf-8")
+		parser.StartElementHandler = parser.EndElementHandler = self._elementHandler
+		parser.CharacterDataHandler = self._speechSequence.append
+		try:
+			parser.Parse(xml)
+		except Exception as e:
+			raise ValueError(f"XML: {xml}") from e
+		return self._speechSequence
+
+
+ParseGeneratorT = Generator[SpeechCommand, None, None]
+ParseFuncT = Callable[[dict[str, str] | None], ParseGeneratorT]
+MarkCallbackT = Callable[[str], None]
+
+
+class SsmlParser(SpeechXmlParser):
+	"""Parses SSML into an NVDA speech sequence."""
+
+	def __init__(self, markCallback: MarkCallbackT | None = None):
+		"""Constructor.
+
+		:param markCallback: An optional callback called for every mark command in the SSML.
+			The mark command in the SSML will be translated to a CallbackCommand instance.
+		"""
+		self._markCallback = markCallback
+
+	def parseSayAs(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		state = attrs is not None and attrs.get("interpret-as") == "characters"
+		yield CharacterModeCommand(state)
+
+	def parseVoice(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		if attrs is None:
+			return
+		if (xmlLang := attrs.get("xml:lang")) is None:
+			return
+		yield LangChangeCommand(toNvdaLang(xmlLang))
+
+	def parseBreak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		if attrs is None or "time" not in attrs:
+			return
+		if (time := RE_TIME_MS.match(attrs["time"])) is None:
+			log.debugWarning(f"Unknown attributes for break tag: {attrs}")
+			return
+		yield BreakCommand(int(time.group("time")))
+
+	_cachedProsodyAttrs: list[dict]
+
+	def parseProsody(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		if isOpenTag := attrs is not None:
+			self._cachedProsodyAttrs.append(attrs)
+		else:  # attrs is None
+			# Pop the attrs from the cache so we can add commands to reset them.
+			attrs = self._cachedProsodyAttrs.pop()
+		for attr, val in attrs.items():
+			if (percentage := RE_PERCENTAGE.match(val)) is None:
+				log.debugWarning(f"Attribute {attr!r} for prosody tag has unparseable value: {val!r}")
+				continue
+			multiplier = float(percentage.group("percentage")) / 100 if isOpenTag else 1
+			match attr:
+				case "pitch":
+					yield PitchCommand(multiplier=multiplier)
+				case "volume":
+					yield VolumeCommand(multiplier=multiplier)
+				case "rate":
+					yield RateCommand(multiplier=multiplier)
+				case _:
+					log.debugWarning(f"Unknown prosody attribute: {attr!r}")
+					continue
+
+	def parseSpeak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		return
+		yield
+
+	def parseMark(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		if attrs is None or "name" not in attrs:
+			return
+		if self._markCallback is not None:
+			name = attrs["name"]
+			yield CallbackCommand(lambda: self._markCallback(name), name=f"SsmlMark_{name}")
+
+	def convertFromXml(self, xml: str) -> SpeechSequence:
+		self._cachedProsodyAttrs = []
+		return super().convertFromXml(xml)

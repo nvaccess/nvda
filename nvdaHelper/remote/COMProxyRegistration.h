@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <locale>
 #include <codecvt>
 #include <vector>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h>
 
@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 typedef struct {
 	// The name of the interface (for debugging)
 	std::wstring name;
-	// The unique identifier of the interface 
+	// The unique identifier of the interface
 	IID iid;
 	// The CLSID of the original class object that handled creating / proxying of this interface.
 	// Used when unregistering, so we can put things back the way they were
@@ -58,4 +58,3 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 bool unregisterCOMProxy(COMProxyRegistration_t* reg);
 
 #endif
-

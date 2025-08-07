@@ -565,7 +565,7 @@ STDMETHODIMP TsfSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID r
 	return S_OK;
 }
 
-static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
+static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch (eventID)
 	{
 		case EVENT_SYSTEM_FOREGROUND:
@@ -636,8 +636,8 @@ void TSF_thread_detached() {
 	sink->Release();
 }
 
-bool isTSFThread(bool checkActiveProfile) {
+bool isTSFThread() {
 	TsfSink* tsf=fetchCurrentTsfSink();
-	if(!tsf) return false; 
-	return checkActiveProfile?tsf->hasActiveProfile:true;
+	if(!tsf) return false;
+	return tsf->hasActiveProfile;
 }

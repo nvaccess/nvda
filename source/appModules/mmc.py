@@ -23,8 +23,9 @@ class MMCTable(IAccessible):
 
 
 class MMCTableCell(IAccessible):
-	""" Cell and rowheader makes no sense for these controls. Mapping them to list items has added benefit
-	of suppressing selected. """
+	"""Cell and rowheader makes no sense for these controls. Mapping them to list items has added benefit
+	of suppressing selected."""
+
 	role = controlTypes.Role.LISTITEM
 
 	def event_selection(self):
@@ -32,18 +33,18 @@ class MMCTableCell(IAccessible):
 			eventHandler.executeEvent("gainFocus", self)
 
 	def _get_positionInfo(self):
-		""" When 'Guess object position info when unavailable' is enabled
+		"""When 'Guess object position info when unavailable' is enabled
 		these controls report very strange information such as 65537 of 12, especially in braille.
-		Disable reporting of position info all together. """
+		Disable reporting of position info all together."""
 		return None
 
 
 class toolTipWithEmptyName(ToolTip):
-	previousToolTipText = ''
+	previousToolTipText = ""
 
 	def _get_name(self):
-		""" ToolTips appearing when hovering mouse over graphical view have empty name,
-		but it can be retrieved via display model. """
+		"""ToolTips appearing when hovering mouse over graphical view have empty name,
+		but it can be retrieved via display model."""
 		return self.displayText
 
 	def event_show(self):
@@ -61,7 +62,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MMCTable)
 			elif obj.role in (
 				controlTypes.Role.TABLECELL,
-				controlTypes.Role.TABLEROWHEADER
+				controlTypes.Role.TABLEROWHEADER,
 			):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:
@@ -73,7 +74,7 @@ class AppModule(appModuleHandler.AppModule):
 		if normalizedClassName in (
 			# #15333: SysListView32 controls in mmc are known to have an incomplete UIA implementation.
 			# Revert back to the MSAA implementation instead.
-			'SysListView32'
+			"SysListView32"
 		):
 			return True
 		return False

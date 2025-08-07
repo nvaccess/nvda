@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018 NV Access Limited
 
 """Unit tests for the addonVersionCheck module."""
 
@@ -28,11 +28,11 @@ class mockAddon(AddonBase):
 		raise NotImplementedError("Not expected to be required for unit tests")
 
 	def __init__(
-			self,
-			minAPIVersion,
-			lastTestedAPIVersion,
-			name="mockAddon",
-			version="1.0"
+		self,
+		minAPIVersion,
+		lastTestedAPIVersion,
+		name="mockAddon",
+		version="1.0",
 	):
 		super(mockAddon, self).__init__()
 		self._name = name
@@ -97,7 +97,6 @@ class TestAddonVersionCheck(unittest.TestCase):
 
 
 class TestGetAPIVersionTupleFromString(unittest.TestCase):
-
 	def test_getAPIVersionTupleFromString_3_succeeds(self):
 		"""Tests trying to get the API version tuple from an API version string with a standard version
 		layout will succeed.
@@ -154,7 +153,6 @@ class TestGetAPIVersionTupleFromString(unittest.TestCase):
 
 
 class TestFormatAsString(unittest.TestCase):
-
 	def test_formatAsString_full(self):
 		res = addonAPIVersion.formatForGUI((2019, 1, 1))
 		self.assertEqual("2019.1.1", res)

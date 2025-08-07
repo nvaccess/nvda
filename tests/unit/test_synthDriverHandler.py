@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2023 NV Access Limited, Leonard de RUijter
+# Copyright (C) 2021-2024 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 
-"""Unit tests for the synthDriverHandler
-"""
+"""Unit tests for the synthDriverHandler"""
+
 import config
-import globalVars
 import languageHandler
 import synthDriverHandler
 from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
@@ -21,7 +20,9 @@ FAKE_DEFAULT_SYNTH_NAME = "defaultSynth"
 class MockSynth:
 	def __init__(self, name: str):
 		self.name = name
-		self.availableVoices = {"fooId": synthDriverHandler.VoiceInfo("fooId", "foo language", FAKE_DEFAULT_LANG)}
+		self.availableVoices = {
+			"fooId": synthDriverHandler.VoiceInfo("fooId", "foo language", FAKE_DEFAULT_LANG),
+		}
 
 	def cancel(self):
 		pass
@@ -38,7 +39,6 @@ class MockSynth:
 
 
 class test_synthDriverHandler(unittest.TestCase):
-
 	def setUp(self) -> None:
 		self._oldLang = languageHandler.getLanguage()
 		self._oldSynthConfig = config.conf["speech"]["synth"]
@@ -47,7 +47,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		config.conf["speech"]["synth"] = FAKE_DEFAULT_LANG
 		synthDriverHandler._curSynth = MockSynth(FAKE_DEFAULT_SYNTH_NAME)
 		synthDriverHandler._getSynthDriver = self._mock_getSynthDriver
-		globalVars.appArgs.language = FAKE_DEFAULT_LANG
+		languageHandler._language = FAKE_DEFAULT_LANG
 
 	@staticmethod
 	def _mock_getSynthDriver(synthName: str) -> Callable[[], MockSynth]:
@@ -57,7 +57,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		config.conf["speech"]["synth"] = self._oldSynthConfig
 		synthDriverHandler._curSynth = self._originalSynth
 		synthDriverHandler._getSynthDriver = self._originalGetSynthDriver
-		globalVars.appArgs.language = self._oldLang
+		languageHandler._language = self._oldLang
 
 	def test_setSynth_auto(self):
 		"""
@@ -112,7 +112,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		Ensures that if oneCore doesn't support the current language, setSynth("auto") falls back to the
 		current synth, or espeak if there is no current synth.
 		"""
-		globalVars.appArgs.language = "bar"  # set the lang so it is not supported
+		languageHandler._language = "bar"  # set the lang so it is not supported
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, FAKE_DEFAULT_SYNTH_NAME)
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
@@ -122,13 +122,13 @@ class test_synthDriverHandler(unittest.TestCase):
 	def test_synthChangedExtensionPoint(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			audioOutputDevice="default"
+			audioOutputDevice="default",
 		)
 
 		with actionTester(
 			self,
 			synthDriverHandler.synthChanged,
 			useAssertDictContainsSubset=True,
-			**expectedKwargs
+			**expectedKwargs,
 		):
 			synthDriverHandler.setSynth("auto")

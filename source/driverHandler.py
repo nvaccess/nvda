@@ -5,6 +5,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
+
 from autoSettingsUtils.autoSettings import AutoSettings
 
 

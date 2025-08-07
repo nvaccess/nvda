@@ -90,7 +90,7 @@ struct displayModelChunk_t{
 	int direction;
 	HWND hwnd;
 	/**
- * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.  
+ * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.
  * @param truncatePointX the x position at which to truncate
  * @param truncateBefore if true then the chunk is truncated from the left all the way up to  truncation point, if false then its truncated from the point to the end.
  */
@@ -144,7 +144,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param rect the rectangle bounding the text.
  * @param text the string of unicode text in the chunk.
  * @param characterExtents an array of screen points denoting the end of each character  relative to the start of the string
- * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
+ * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle.
  */
 	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, POINT* characterExtents, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect);
 
@@ -161,7 +161,7 @@ class displayModel_t: public LockableAutoFreeObject  {
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
  * @param rect the rectangle to clear.
- * @param clearForText if true then  the part of any chunk  covered by the rectangle will definitly be removed to make way for text. If False  chunks will only be removed/mutated if the rectangle starts at or outside of, the chunk and overlaps it, or covers the chunk's baseline. 
+ * @param clearForText if true then  the part of any chunk  covered by the rectangle will definitly be removed to make way for text. If False  chunks will only be removed/mutated if the rectangle starts at or outside of, the chunk and overlaps it, or covers the chunk's baseline.
  */
 	void clearRectangle(const RECT& rect, BOOL clearForText=FALSE);
 
@@ -170,7 +170,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  */
 	void clearAll();
 
-	inline void transposAndScaleCoordinate(long srcOffset, long destOffset, float scale, long& val) { val=(long)(((val-srcOffset)*scale)+destOffset); } 
+	inline void transposAndScaleCoordinate(long srcOffset, long destOffset, float scale, long& val) { val=(long)(((val-srcOffset)*scale)+destOffset); }
 
 
 /**
@@ -178,14 +178,14 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param srcRect the rectangle intersecting all the chunks in this model that will be copied.
  * @param removeFromSource if true then the content will be moved, rather than copied
  * @param opaqueCopy if true then the entire destination rectangle will be cleared before inserting any chunks, but if false then only space for each chunk will be cleared.
- * @param destRect the destination rectangle where the chunks should be placed 
+ * @param destRect the destination rectangle where the chunks should be placed
  * @param destClippingRect an optional rectangle which will be used to clip all content being copied in to the destination model
- * @param destModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
+ * @param destModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used)
  */
 	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel);
 
 /**
- * Generates xml representing whitespace between chunks 
+ * Generates xml representing whitespace between chunks
  */
 	void generateWhitespaceXML(HWND hwnd, long baseline, std::wstring& text);
 

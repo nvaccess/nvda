@@ -19,13 +19,20 @@ from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
 import weakref
 import serial
-from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
+from serial.win32 import (
+	OVERLAPPED,
+	FILE_FLAG_OVERLAPPED,
+	INVALID_HANDLE_VALUE,
+	ERROR_IO_PENDING,
+	COMMTIMEOUTS,
+	CreateFile,
+	SetCommTimeouts,
+)
 import winKernel
-import braille
 from logHandler import log
 import config
 import time
-from .ioThread import IoThread, _apcsWillBeStronglyReferenced
+from .ioThread import IoThread
 import NVDAState
 
 
@@ -34,9 +41,10 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.base is deprecated. "
-			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead."
+			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead.",
 		)
 		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
+
 		return LPOVERLAPPED_COMPLETION_ROUTINE
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
@@ -49,16 +57,17 @@ class IoBase(object):
 	"""Base class for raw I/O.
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
+
 	_ioThreadRef: weakref.ReferenceType[IoThread]
 
 	def __init__(
-			self,
-			fileHandle: Union[ctypes.wintypes.HANDLE],
-			onReceive: Callable[[bytes], None],
-			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
-			onReceiveSize: int = 1,
-			onReadError: Optional[Callable[[int], bool]] = None,
-			ioThread: Optional[IoThread] = None,
+		self,
+		fileHandle: Union[ctypes.wintypes.HANDLE],
+		onReceive: Callable[[bytes], None],
+		writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
+		onReceiveSize: int = 1,
+		onReadError: Optional[Callable[[int], bool]] = None,
+		ioThread: Optional[IoThread] = None,
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -95,39 +104,36 @@ class IoBase(object):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
-		if _apcsWillBeStronglyReferenced:
-			ioThread.queueAsApc(self._asyncReadBackwardsCompat)
-		else:
-			ioThread.queueAsApc(self._asyncRead)
+		ioThread.queueAsApc(self._asyncRead)
 
-	def waitForRead(self, timeout:Union[int, float]) -> bool:
+	def waitForRead(self, timeout: Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
 		This will return after L{onReceive} has been called or when the timeout elapses.
 		@param timeout: The maximum time to wait in seconds.
 		@return: C{True} if received data was processed before the timeout,
 			C{False} if not.
 		"""
-		timeout= int(timeout*1000)
+		timeout = int(timeout * 1000)
 		while True:
 			curTime = time.time()
 			res = winKernel.waitForSingleObjectEx(self._recvEvt, timeout, True)
-			if res==winKernel.WAIT_OBJECT_0:
+			if res == winKernel.WAIT_OBJECT_0:
 				return True
-			elif res==winKernel.WAIT_TIMEOUT:
+			elif res == winKernel.WAIT_TIMEOUT:
 				if _isDebug():
 					log.debug("Wait timed out")
 				return False
-			elif res==winKernel.WAIT_IO_COMPLETION:
+			elif res == winKernel.WAIT_IO_COMPLETION:
 				if _isDebug():
 					log.debug("Waiting interrupted by completed i/o")
-				timeout -= int((time.time()-curTime)*1000)
+				timeout -= int((time.time() - curTime) * 1000)
 
 	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
-		""" Private helper method to allow derived classes to prepare buffers in different ways"""
+		"""Private helper method to allow derived classes to prepare buffers in different ways"""
 		size = len(data)
 		return (
 			size,
-			ctypes.create_string_buffer(data) # this will append a null char, which is intentional
+			ctypes.create_string_buffer(data),  # this will append a null char, which is intentional
 		)
 
 	def write(self, data: bytes):
@@ -143,7 +149,12 @@ class IoBase(object):
 					log.debug("Write failed: %s" % ctypes.WinError())
 				raise ctypes.WinError()
 			byteData = DWORD()
-			ctypes.windll.kernel32.GetOverlappedResult(self._writeFile, byref(self._writeOl), byref(byteData), True)
+			ctypes.windll.kernel32.GetOverlappedResult(
+				self._writeFile,
+				byref(self._writeOl),
+				byref(byteData),
+				True,
+			)
 
 	def close(self):
 		if _isDebug():
@@ -175,14 +186,8 @@ class IoBase(object):
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
-			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl)
+			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl),
 		)
-
-	if _apcsWillBeStronglyReferenced:
-		def _asyncReadBackwardsCompat(self, param: Optional[int] = None):
-			"""Backwards compatible wrapper around L{_asyncRead} that calls it without param.
-			"""
-			self._asyncRead()
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
 		if not self._onReceive:
@@ -211,7 +216,7 @@ class IoBase(object):
 			log.debug("Read: %r" % data)
 		try:
 			self._onReceive(data)
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 
 
@@ -221,12 +226,12 @@ class Serial(IoBase):
 	"""
 
 	def __init__(
-			self,
-			*args,
-			onReceive: Callable[[bytes], None],
-			onReadError: Optional[Callable[[int], bool]] = None,
-			ioThread: Optional[IoThread] = None,
-			**kwargs
+		self,
+		*args,
+		onReceive: Callable[[bytes], None],
+		onReadError: Optional[Callable[[int], bool]] = None,
+		ioThread: Optional[IoThread] = None,
+		**kwargs,
 	):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
@@ -257,7 +262,7 @@ class Serial(IoBase):
 			self._ser._port_handle,
 			onReceive,
 			onReadError=onReadError,
-			ioThread=ioThread
+			ioThread=ioThread,
 		)
 
 	def read(self, size=1) -> bytes:
@@ -310,11 +315,14 @@ class Bulk(IoBase):
 	"""
 
 	def __init__(
-			self, path: str, epIn: int, epOut: int,
-			onReceive: Callable[[bytes], None],
-			onReceiveSize: int = 1,
-			onReadError: Optional[Callable[[int], bool]] = None,
-			ioThread: Optional[IoThread] = None,
+		self,
+		path: str,
+		epIn: int,
+		epOut: int,
+		onReceive: Callable[[bytes], None],
+		onReceiveSize: int = 1,
+		onReadError: Optional[Callable[[int], bool]] = None,
+		ioThread: Optional[IoThread] = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -329,16 +337,30 @@ class Bulk(IoBase):
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
-		readPath="{path}\\{endpoint}".format(path=path,endpoint=epIn)
-		writePath="{path}\\{endpoint}".format(path=path,endpoint=epOut)
-		readHandle = CreateFile(readPath, winKernel.GENERIC_READ,
-			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		readPath = "{path}\\{endpoint}".format(path=path, endpoint=epIn)
+		writePath = "{path}\\{endpoint}".format(path=path, endpoint=epOut)
+		readHandle = CreateFile(
+			readPath,
+			winKernel.GENERIC_READ,
+			0,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
 		if readHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open read handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
-		writeHandle = CreateFile(writePath, winKernel.GENERIC_WRITE,
-			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		writeHandle = CreateFile(
+			writePath,
+			winKernel.GENERIC_WRITE,
+			0,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
@@ -349,7 +371,7 @@ class Bulk(IoBase):
 			writeFileHandle=writeHandle,
 			onReceiveSize=onReceiveSize,
 			onReadError=onReadError,
-			ioThread=ioThread
+			ioThread=ioThread,
 		)
 
 	def close(self):
@@ -364,19 +386,19 @@ def boolToByte(arg: bool) -> bytes:
 	return arg.to_bytes(
 		length=1,
 		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
-		signed=False  # Since this represents length, it makes no sense to send a negative value.
+		signed=False,  # Since this represents length, it makes no sense to send a negative value.
 	)
 
 
 def intToByte(arg: int) -> bytes:
-	""" Convert an int (value < 256) to a single byte bytes object
-	"""
+	"""Convert an int (value < 256) to a single byte bytes object"""
 	return arg.to_bytes(
 		length=1,  # Will raise if value overflows, eg arg > 255
 		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
-		signed=False  # Since this represents length, it makes no sense to send a negative value.
+		signed=False,  # Since this represents length, it makes no sense to send a negative value.
 	)
 
+
 def getByte(arg: bytes, index: int) -> bytes:
-	""" Return the single byte at index"""
-	return arg[index:index+1]
+	"""Return the single byte at index"""
+	return arg[index : index + 1]

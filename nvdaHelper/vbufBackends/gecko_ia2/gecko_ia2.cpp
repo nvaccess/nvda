@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/storage.h>
 #include <common/log.h>
 #include <vbufBase/utils.h>
+#include <remote/textFromIAccessible.h>
 #include "gecko_ia2.h"
 
 using namespace std;
@@ -139,7 +140,7 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	if(pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv)!=S_OK) {
 		pacc->Release();
 		return NULL;
-	}  
+	}
 	pacc->Release();
 	pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
 	pserv->Release();
@@ -499,6 +500,29 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 }
 
 
+void GeckoVBufBackend_t::fillVBufAriaError(
+	CComPtr<IAccessible2> pacc,
+	VBufStorage_controlFieldNode_t& nodeBeingFilled
+){
+	// Since we get error targets as IAccessible objects, not as vbuf nodes, we don't need to perform checks in both directions.
+	CComQIPtr<IAccessible2_2> pacc2_2 = pacc.p;
+	if (pacc2_2 == nullptr) {
+		return;
+	}
+	auto errorTargets = getRelationElementsOfType(IA2_RELATION_ERROR, pacc2_2, 1);
+	if(errorTargets.size() > 0) {
+		wstring textBuf;
+		// Since `aria-errormessage` is an ID reference, it can only have one value. Thus, take the first target.
+		IAccessible2 *target = errorTargets[0];
+		if (target != nullptr) {
+			if (getTextFromIAccessible(textBuf, target)) {
+				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+			}
+		}
+	}
+}
+
+
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer,
@@ -585,6 +609,19 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
+	// Force equation role back to graphic role if the underlying tag is img.
+	// #16007: Many publishers were setting role=math on images with alt text.
+	// We want to just treat these as normal images.
+	// We do this very early in the rendering so that all our graphic rules apply.
+	if(role == ROLE_SYSTEM_EQUATION) {
+		if(auto it = IA2AttribsMap.find(L"tag");
+			it != IA2AttribsMap.end()
+			&&it->second==L"img"
+		) {
+			role = ROLE_SYSTEM_GRAPHIC;
+		}
+	}
+
 	if (roleString) {
 		roleAttr = roleString;
 	} else {
@@ -618,7 +655,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
 	}
-	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec.
 	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
 			IA2States-=IA2_STATE_EDITABLE;
 	}
@@ -743,14 +780,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		return id;
 	};
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK 
-		|| role == ROLE_SYSTEM_PUSHBUTTON 
-		|| role == IA2_ROLE_TOGGLE_BUTTON 
-		|| role == ROLE_SYSTEM_MENUITEM 
-		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
-		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
-		|| role == IA2_ROLE_HEADING 
-		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_LINK
+		|| role == ROLE_SYSTEM_PUSHBUTTON
+		|| role == IA2_ROLE_TOGGLE_BUTTON
+		|| role == ROLE_SYSTEM_MENUITEM
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap)
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable)
+		|| role == IA2_ROLE_HEADING
+		|| role == ROLE_SYSTEM_PAGETAB
 		|| role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisibleCached());
 	// Whether this node has a visible label somewhere else in the tree
@@ -858,10 +895,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if(!paccTableCell) { // just rows and row groups
 			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
 			// its parent will also be invalidated.
-			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
+			// For example, if this is a table row group, its rerendering may change the number of rows inside.
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected.
 			if(role!=ROLE_SYSTEM_ROW) {
 				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
 				parentNode->requiresParentUpdate=true;
@@ -927,10 +964,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				paccTable2 = curNodePaccTable2;
 			}
 
-			
+
 			{ // Add the table summary if one is present and the table is visible.
 				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
-				if (isVisible && description.has_value()) {
+				if (isVisible && description.has_value() && !description.value().empty()) {
 					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, description.value());
 				}
 				else if (
@@ -976,15 +1013,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	BSTR value=NULL;
-	if(pacc->get_accValue(varChild,&value)==S_OK) {
-		if(value&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
+	if (pacc->get_accValue(varChild, &value) == S_OK) {
+		if (value) {
+			if (role == ROLE_SYSTEM_LINK) {
+				// For links, store the IAccessible value to handle same page link detection.
+				parentNode->addAttribute(L"IAccessible::value", value);
+			}
+			if (SysStringLen(value) == 0) {
+				SysFreeString(value);
+				value = NULL;
+			}
 		}
 	}
 
 	if(nameIsContent) {
-		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
+		// We may render an accessible name for this node if it has been explicitly set or it has no useful content.
 		parentNode->alwaysRerenderDescendants=true;
 	}
 
@@ -1016,9 +1059,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					// Add the chunk to the buffer.
 					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
-						// Add the IA2Text start offset as an attribute on the node.
+						// Add IA2Text start offset as an attribute on the node.
 						s << chunkStart;
 						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
+						// Also add IA2 windowHandle and ID on the text node
+						// To make fetching IA2Ranges for selecting much easier.
+						s << docHandle;
+						previousNode->addAttribute(L"ia2TextWindowHandle", s.str());
+						s.str(L"");
+						s << ID;
+						previousNode->addAttribute(L"ia2TextUniqueID", s.str());
 						s.str(L"");
 						// Add text attributes.
 						for (map<wstring, wstring>::const_iterator it = textAttribs.begin(); it != textAttribs.end(); ++it) {
@@ -1071,6 +1122,18 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					);
 					if (tempNode) {
 						previousNode=tempNode;
+						// Add IA2Text start offset as an attribute on the node.
+						s << i;
+						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
+						// Also add IA2 windowHandle and ID on the text node
+						// To make fetching IA2Ranges for selecting much easier.
+						s << docHandle;
+						previousNode->addAttribute(L"ia2TextWindowHandle", s.str());
+						s.str(L"");
+						s << ID;
+						previousNode->addAttribute(L"ia2TextUniqueID", s.str());
+						s.str(L"");
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
 					}
@@ -1242,11 +1305,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			parentNode->isBlock=false;
 		}
 
-		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
+		if (
+			(
+				isInteractive
+				|| role == ROLE_SYSTEM_SEPARATOR
+				|| SysStringLen(name) > 0
+				|| (
+					description.has_value()
+					&& !description.value().empty()
+				)
+			)
+			&& parentNode->getLength() == 0
+		) {
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
-			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
+			}
 		}
 	}
 
@@ -1285,6 +1361,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		*buffer,
 		*parentNode,
 		roleAttr
+	);
+
+	fillVBufAriaError(
+		smartPacc,
+		*parentNode
 	);
 
 	// Clean up.
@@ -1414,6 +1495,12 @@ void GeckoVBufBackend_t::renderThread_initialize() {
 void GeckoVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_terminate();
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released here, in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Release();
+	}
 }
 
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
@@ -1440,6 +1527,18 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 }
 
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	// In most cases this will be released in renderThread_terminate.
+	// However in the unlikely case terminate can't run,
+	// we must detach and leak the COM pointer here.
+	// Otherwise it would be automatically deleted along with the backend which would cause a crash,
+	// as the COM object would be released from within an RPC worker thread.
+	nhAssert(!rootDocAcc);
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Detach();
+	}
 }
 
 VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {

@@ -140,7 +140,7 @@ int id=accChildID;
 		content=value;
 	} else if(role!=ROLE_SYSTEM_TEXT&&!name.empty()) {
 		content=name;
-	} else { 
+	} else {
 		content = L" ";
 	}
 	if (!content.empty()) {

@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2010-2022 NV Access Limited
 
-"""NVDAObjects for the Chromium browser project
-"""
+"""NVDAObjects for the Chromium browser project"""
+
 import typing
 from typing import Dict, Optional
 from comtypes import COMError
@@ -42,7 +42,6 @@ https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):
-
 	def _calculateDescriptionFrom(self, attrs) -> controlTypes.DescriptionFrom:
 		"""Overridable calculation of DescriptionFrom
 		@param attrs: source attributes for the TextInfo
@@ -62,9 +61,19 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 
 	def _normalizeControlField(self, attrs):
 		attrs = super()._normalizeControlField(attrs)
-		if attrs['role'] == controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKABLE in attrs['states']:
+		if (
+			attrs["role"] == controlTypes.Role.TOGGLEBUTTON
+			and controlTypes.State.CHECKABLE in attrs["states"]
+		):
 			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
-			attrs['states'].discard(controlTypes.State.CHECKABLE)
+			attrs["states"].discard(controlTypes.State.CHECKABLE)
+
+		if (
+			attrs["role"] == controlTypes.Role.GROUPING
+			and attrs.get("IAccessible2::attribute_tag", "").lower() == "figure"
+		):
+			# Chromium doesn't expose the `<figure>` element as a figure.
+			attrs["role"] = controlTypes.Role.FIGURE
 		return attrs
 
 
@@ -74,7 +83,7 @@ class ChromeVBuf(GeckoVBuf):
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
 			return False
-		if not isinstance(obj,ia2Web.Ia2Web):
+		if not isinstance(obj, ia2Web.Ia2Web):
 			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
 			return False
 		accId = obj.IA2UniqueID
@@ -88,10 +97,9 @@ class ChromeVBuf(GeckoVBuf):
 
 
 class Document(ia2Web.Document):
-
 	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
 		shouldLoadVBufOnBusyFeatureFlag = bool(
-			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"],
 		)
 		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
 			controlTypes.State.EDITABLE,
@@ -99,13 +107,13 @@ class Document(ia2Web.Document):
 		if not shouldLoadVBufOnBusyFeatureFlag:
 			log.debug(
 				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
-				" vBuf WILL NOT be loaded when state of the document is busy."
+				" vBuf WILL NOT be loaded when state of the document is busy.",
 			)
 			vBufUnavailableStates.add(controlTypes.State.BUSY)
 		else:
 			log.debug(
 				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
-				" vBuf WILL be loaded when state of the document is busy."
+				" vBuf WILL be loaded when state of the document is busy.",
 			)
 		if self.states.intersection(vBufUnavailableStates):
 			return super().treeInterceptorClass
@@ -125,7 +133,6 @@ class ComboboxListItem(IAccessible):
 
 
 class ToggleButton(ia2Web.Ia2Web):
-
 	def _get_states(self):
 		# In Chromium, the checkable state is exposed erroneously on toggle buttons.
 		states = super().states
@@ -149,15 +156,51 @@ class PresentationalList(ia2Web.Ia2Web):
 		return states
 
 
+class Figure(ia2Web.Ia2Web):
+	def _get_role(self) -> controlTypes.Role:
+		return controlTypes.Role.FIGURE
+
+
+class EditorTextInfo(ia2Web.MozillaCompoundTextInfo):
+	"""The TextInfo for edit areas such as edit fields and documents in Chromium."""
+
+	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
+		# Detecting if the caret is at the end of the line in Chromium is not currently possible
+		# as Chromium's IAccessibleText::textAtOffset with IA2_OFFSET_CARET returns the first character of the next line,
+		# which is what we are trying to avoid in the first place.
+		# #17039: In some scenarios such as in large files in VS Code,
+		# this call is extreamly costly for no actual bennifit right now,
+		# so we are disabling it for Chromium.
+		return False
+
+
+class Editor(ia2Web.Editor):
+	"""The NVDAObject for edit areas such as edit fields and documents in Chromium."""
+
+	TextInfo = EditorTextInfo
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	if obj.role==controlTypes.Role.LISTITEM and obj.parent and obj.parent.parent and obj.parent.parent.role==controlTypes.Role.COMBOBOX:
+	if (
+		obj.role == controlTypes.Role.LISTITEM
+		and obj.parent
+		and obj.parent.parent
+		and obj.parent.parent.role == controlTypes.Role.COMBOBOX
+	):
 		clsList.append(ComboboxListItem)
 	elif obj.role == controlTypes.Role.TOGGLEBUTTON:
 		clsList.append(ToggleButton)
-	elif obj.role == controlTypes.Role.LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
+	elif obj.role == controlTypes.Role.LIST and obj.IA2Attributes.get("tag") in ("ul", "dl", "ol"):
 		clsList.append(PresentationalList)
-	ia2Web.findExtraOverlayClasses(obj, clsList,
-		documentClass=Document)
+	elif obj.role == controlTypes.Role.GROUPING and obj.IA2Attributes.get("tag", "").casefold() == "figure":
+		clsList.append(Figure)
+	ia2Web.findExtraOverlayClasses(
+		obj,
+		clsList,
+		documentClass=Document,
+	)
+	if ia2Web.Editor in clsList:
+		clsList.insert(0, Editor)

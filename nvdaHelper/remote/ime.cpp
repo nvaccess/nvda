@@ -58,27 +58,27 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 // Definition from Win98DDK version of IMM.H
 typedef struct tagINPUTCONTEXT2 {
-    HWND            hWnd;                           
-    BOOL            fOpen;                          
-    POINT           ptStatusWndPos;                 
-    POINT           ptSoftKbdPos;                   
-    DWORD           fdwConversion;                  
-    DWORD           fdwSentence;                    
-    union {                                           
-        LOGFONTA    A;                              
-        LOGFONTW    W;                              
-    } lfFont;                                           
-    COMPOSITIONFORM cfCompForm;                     
-    CANDIDATEFORM   cfCandForm[4];                  
-    HIMCC           hCompStr;                       
-    HIMCC           hCandInfo;                      
-    HIMCC           hGuideLine;                     
-    HIMCC           hPrivate;                       
-    DWORD           dwNumMsgBuf;                    
-    HIMCC           hMsgBuf;                        
-    DWORD           fdwInit;                        
-    DWORD           dwReserve[3];                   
-} INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
+    HWND            hWnd;
+    BOOL            fOpen;
+    POINT           ptStatusWndPos;
+    POINT           ptSoftKbdPos;
+    DWORD           fdwConversion;
+    DWORD           fdwSentence;
+    union {
+        LOGFONTA    A;
+        LOGFONTW    W;
+    } lfFont;
+    COMPOSITIONFORM cfCompForm;
+    CANDIDATEFORM   cfCandForm[4];
+    HIMCC           hCompStr;
+    HIMCC           hCandInfo;
+    HIMCC           hGuideLine;
+    HIMCC           hPrivate;
+    DWORD           dwNumMsgBuf;
+    HIMCC           hMsgBuf;
+    DWORD           fdwInit;
+    DWORD           dwReserve[3];
+} INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;
 
 HWND curIMEWindow=NULL;
 static HWND candidateIMEWindow=0;
@@ -192,7 +192,7 @@ void handleReadingStringUpdate(HWND hwnd) {
 	DWORD version=0;
 	HMODULE IMEFile=NULL;
 	GetReadingString_funcType GetReadingString=NULL;
-	if (isTSFThread(true)) {
+	if (isTSFThread()) {
 		// Look up filename of active TIP
 		if(getTIPFilename(curTSFClsID, filename, MAX_PATH)) {
 			IMEFile=LoadLibrary(filename);
@@ -475,7 +475,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 
 				case IMN_PRIVATE:
 					// Needed to support EasyDots IME when TSF is not available
-					if (!isTSFThread(true))
+					if (!isTSFThread())
 						handleReadingStringUpdate(hwnd);
 					break;
 			}
@@ -484,7 +484,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 		case WM_IME_COMPOSITION:
 			if(!hasValidIMEContext(hwnd)) return 0;
 			curIMEWindow=hwnd;
-			if(!isTSFThread(true)) {\
+			if (!isTSFThread()) {
 				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
 					handleComposition(hwnd, wParam, lParam);
 				}
@@ -506,7 +506,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 		case WM_SETFOCUS:
 			if(!hasValidIMEContext(hwnd)) return 0;
 			handleIMEConversionModeUpdate(hwnd,false);
-			if(!isTSFThread(true)) {
+			if (!isTSFThread()) {
 				if (hwnd != GetFocus())  break;
 				handleComposition(hwnd, wParam, lParam);
 				handleCandidates(hwnd);

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Rui Batista
+# Copyright (C) 2022 NV Access Limited, Rui Batista, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -29,7 +29,7 @@ import ui
 import winKernel
 
 
-BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
+BATTERY_LIFE_TIME_UNKNOWN = 0xFFFFFFFF
 
 
 class PowerBroadcast(IntEnum):
@@ -92,7 +92,7 @@ class SystemPowerStatus(ctypes.Structure):
 		("BatteryLifePercent", ctypes.c_byte),
 		("Reserved1", ctypes.c_byte),
 		("BatteryLifeTime", ctypes.wintypes.DWORD),
-		("BatteryFullLiveTime", ctypes.wintypes.DWORD)
+		("BatteryFullLiveTime", ctypes.wintypes.DWORD),
 	]
 
 	BatteryFlag: BatteryFlag
@@ -173,9 +173,9 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 
 def _getSpeechForBatteryStatus(
-		systemPowerStatus: Optional[SystemPowerStatus],
-		context: _ReportContext,
-		oldPowerState: PowerState,
+	systemPowerStatus: Optional[SystemPowerStatus],
+	context: _ReportContext,
+	oldPowerState: PowerState,
 ) -> List[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
@@ -186,10 +186,7 @@ def _getSpeechForBatteryStatus(
 		# and laptops with battery pack removed.
 		return [_("No system battery")]
 
-	if (
-		context == _ReportContext.AC_STATUS_CHANGE
-		and systemPowerStatus.ACLineStatus == oldPowerState
-	):
+	if context == _ReportContext.AC_STATUS_CHANGE and systemPowerStatus.ACLineStatus == oldPowerState:
 		# Sometimes, the power change event double fires.
 		# The power change event also fires when the battery level decreases by 3%.
 		return []
@@ -229,9 +226,25 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
 	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
-		# Translators: This is the estimated remaining runtime of the laptop battery.
-		text.append(_("{hours:d} hours and {minutes:d} minutes remaining").format(
-			hours=systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR,
-			minutes=(systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
-		))
+		nHours = systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR
+		hourText = ngettext(
+			# Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
+			# E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".
+			"{hours:d} hour",
+			"{hours:d} hours",
+			nHours,
+		).format(hours=nHours)
+		nMinutes = (systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
+		minuteText = ngettext(
+			# Translators: This is the minute string part of the estimated remaining runtime of the laptop battery.
+			# E.g. if the full string is "1 hour and 34 minutes remaining", this string is "34 minutes".
+			"{minutes:d} minute",
+			"{minutes:d} minutes",
+			nMinutes,
+		).format(minutes=nMinutes)
+		text.append(
+			# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
+			# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
+			_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText),
+		)
 	return text

@@ -24,7 +24,7 @@ $tagsForTestArray = -split $tagsForTest # turn this string into an array
 $includeTags = $tagsForTestArray | ForEach-Object {
 	# Before every item output '--include'
 	# No spaces required.
-	# Including spaces will result in automatic quote characters around the string. I.E. "--include "
+	# Including spaces will result in automatic quote characters around the string. i.e. "--include "
 	"--include", $_
 }
 
@@ -33,7 +33,7 @@ $includeTags = $tagsForTestArray | ForEach-Object {
 --variable installDir:"${env:nvdaLauncherFile}" `
 --variable verboseDebugLogging:"${verboseDebugLogging}" `
 @includeTags `
-# last line inentionally blank, allowing all lines to have line continuations.
+# last line intentionally blank, allowing all lines to have line continuations.
 
 if($LastExitCode -ne 0) {
 	Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode

@@ -7,11 +7,14 @@
 """Types used by speech package.
 Kept here so they can be re-used without having to worry about circular imports.
 """
+
 from collections.abc import Sequence
 from typing import (
 	Union,
-	List,
-	Iterable, Any, Optional, Generator,
+	Iterable,
+	Any,
+	Optional,
+	Generator,
 )
 
 import config
@@ -19,10 +22,11 @@ from logHandler import log
 from .commands import SpeechCommand
 
 SequenceItemT = Union[SpeechCommand, str]
-SpeechSequence = List[SequenceItemT]
+SpeechSequence = list[SequenceItemT]
 SpeechIterable = Iterable[SequenceItemT]
 
 _IndexT = int  # Type for indexes.
+
 
 def _isDebugForSpeech() -> bool:
 	"""Check if debug logging for speech is enabled."""
@@ -33,6 +37,7 @@ class GeneratorWithReturn(Iterable):
 	"""Helper class, used with generator functions to access the 'return' value after there are no more values
 	to iterate over.
 	"""
+
 	def __init__(self, gen: Iterable, defaultReturnValue=None):
 		self.gen = gen
 		self.returnValue = defaultReturnValue
@@ -44,7 +49,7 @@ class GeneratorWithReturn(Iterable):
 
 
 def _flattenNestedSequences(
-		nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn]
+	nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn],
 ) -> Generator[SequenceItemT, Any, Optional[bool]]:
 	"""Turns [[a,b,c],[d,e]] into [a,b,c,d,e]"""
 	yield from (i for seq in nestedSequences for i in seq)
@@ -55,12 +60,12 @@ def _flattenNestedSequences(
 
 def logBadSequenceTypes(sequence: SpeechIterable, raiseExceptionOnError=False) -> bool:
 	"""
-		Check if the provided sequence is valid, otherwise log an error (only if speech is
-		checked in the "log categories" setting of the advanced settings panel.
-		@param sequence: the sequence to check
-		@param raiseExceptionOnError: if True, and exception is raised. Useful to help track down the introduction
-			of erroneous speechSequence data.
-		@return: True if the sequence is valid.
+	Check if the provided sequence is valid, otherwise log an error (only if speech is
+	checked in the "log categories" setting of the advanced settings panel.
+	@param sequence: the sequence to check
+	@param raiseExceptionOnError: if True, and exception is raised. Useful to help track down the introduction
+		of erroneous speechSequence data.
+	@return: True if the sequence is valid.
 	"""
 	if not _isDebugForSpeech():
 		return True
@@ -68,9 +73,8 @@ def logBadSequenceTypes(sequence: SpeechIterable, raiseExceptionOnError=False) -
 	# Check the type of the container
 	if not isinstance(sequence, Sequence):
 		log.error(
-			f"Unexpected Sequence Type: {type(sequence)!r} supplied,"
-			f" a {SpeechSequence!r} is required.",
-			stack_info=True
+			f"Unexpected Sequence Type: {type(sequence)!r} supplied, a {SpeechSequence!r} is required.",
+			stack_info=True,
 		)
 		if raiseExceptionOnError:
 			raise ValueError("Unexpected type in speech sequence")

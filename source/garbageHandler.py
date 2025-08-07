@@ -1,13 +1,15 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 
-import sys
 import gc
+import sys
 import threading
+
+import config
 from logHandler import log
 
 """ Watches Python's cyclic garbage collector and reports questionable collections. """
@@ -23,7 +25,7 @@ class TrackedObject:
 	def __del__(self):
 		# __del__ may still be called while Python is exiting.
 		# And therefore some symbols may be set to None.
-		isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
+		isFinalizing = getattr(sys, "is_finalizing", lambda: True)()
 		if not isFinalizing:
 			notifyObjectDeletion(self)
 
@@ -33,7 +35,7 @@ _reportCountDuringCollection = 0
 
 
 def initialize():
-	""" Initializes NVDA's garbage handler. """
+	"""Initializes NVDA's garbage handler."""
 	# Instruct Python to keep all unreachable objects for later inspection
 	# gc.set_debug(gc.DEBUG_SAVEALL)
 	# Register a callback with Python's garbage collector
@@ -44,12 +46,12 @@ def initialize():
 def _collectionCallback(action, info):
 	global _collectionThreadID, _reportCountDuringCollection
 	if action == "start":
-		_collectionThreadID = threading.currentThread().ident
+		_collectionThreadID = threading.current_thread().ident
 		_reportCountDuringCollection = 0
 	elif action == "stop":
 		_collectionThreadID = 0
 		if _reportCountDuringCollection > 0:
-			log.error(f"Found at least {_reportCountDuringCollection} unreachable objects in run")
+			log.debugWarning(f"Found at least {_reportCountDuringCollection} unreachable objects in run")
 	else:
 		log.error(f"Unknown action: {action}")
 
@@ -60,18 +62,18 @@ def notifyObjectDeletion(obj):
 	if it is due to Python's cyclic garbage collector.
 	"""
 	global _reportCountDuringCollection
-	if _collectionThreadID != threading.currentThread().ident:
+	if _collectionThreadID != threading.current_thread().ident:
 		return
 	_reportCountDuringCollection += 1
-	if _reportCountDuringCollection == 1:
-		log.warning(
-			"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
-			stack_info=True
-		)
-	log.warning(f"Deleting unreachable object {obj}")
-
+	if config.conf["debugLog"]["garbageHandler"]:
+		if _reportCountDuringCollection == 1:
+			log.debugWarning(
+				"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
+				stack_info=True,
+			)
+		log.debugWarning(f"Deleting unreachable object {obj}")
 
 
 def terminate():
-	""" Terminates NVDA's garbage handler. """
+	"""Terminates NVDA's garbage handler."""
 	gc.callbacks.remove(_collectionCallback)

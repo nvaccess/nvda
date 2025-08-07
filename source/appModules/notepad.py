@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Joseph Lee
+# Copyright (C) 2022-2025 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -21,7 +21,6 @@ from typing import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
 		# Announce currently selected tab when it changes.
 		if (
@@ -37,8 +36,8 @@ class AppModule(appModuleHandler.AppModule):
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,
-					positionInfo=obj.positionInfo
-				)
+					positionInfo=obj.positionInfo,
+				),
 			)
 		nextHandler()
 
@@ -63,7 +62,10 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError()
 		# Obtain status bar text across Notepad 11 releases.
 		clientObject = UIAHandler.handler.clientObject
-		condition = clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
+		condition = clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"ContentTextBlock",
+		)
 		walker = clientObject.createTreeWalker(condition)
 		notepadWindow = clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
 		try:
@@ -74,3 +76,8 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError
 		statusBar = UIA(UIAElement=element).parent
 		return statusBar
+
+	def event_NVDAObject_init(self, obj: NVDAObject):
+		# #18208: "go to line" edit field is classified as a dialog.
+		if isinstance(obj, UIA) and obj.UIAAutomationId == "LineNumberBox":
+			obj.role = controlTypes.Role.EDITABLETEXT

@@ -17,4 +17,3 @@ The dot positions are based on the final 8 dot braille character, ⣿ (all pins 
 
 The free outline font editor, George Williams's FontForge
 https://github.com/fontforge/fontforge/releases is used for editing the fonts via the `*.sfd` file.
-

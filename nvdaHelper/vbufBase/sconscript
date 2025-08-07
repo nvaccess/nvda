@@ -1,11 +1,16 @@
-Import([
-	'env',
-])
+Import(
+	[
+		"env",
+	]
+)
 
-vbufBaseObjs=[env.Object(x) for x in (
+vbufBaseObjs = [
+	env.Object(x)
+	for x in (
 		"storage.cpp",
 		"utils.cpp",
 		"backend.cpp",
-)]
+	)
+]
 
-Return('vbufBaseObjs')
+Return("vbufBaseObjs")

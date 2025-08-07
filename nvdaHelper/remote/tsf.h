@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 void TSF_inProcess_initialize();
 void TSF_inProcess_terminate();
 void TSF_thread_detached();
-bool isTSFThread(bool checkProfile);
+bool isTSFThread();
 extern CLSID curTSFClsID;
 
 #endif

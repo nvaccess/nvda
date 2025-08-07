@@ -1,7 +1,7 @@
 ﻿#locale/uk/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
-#This file is covered by the GNU General Public License.
+#Це частина NonVisual Desktop Access (NVDA)
+#Авторське право (c) 2011-2024 учасники NVDA
+#Цей файл захищений GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -21,12 +23,12 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-
 . sentence ending	крапка	all	always
 ! sentence ending	знак оклику	all	always
 ? sentence ending	знак питання	all	always
 ; phrase ending	крапка з комою	most	always
 : phrase ending	двокрапка	most	always
+multiple .	крапки́	all	always
 decimal point		none	always
 in-word '	апостроф	all	norep
 negative number	мінус	none	norep
@@ -42,6 +44,7 @@ negative number	мінус	none	norep
 
 # Standard punctuation/symbols
 !	знак оклику	all
+！	знак оклику на всю ширину	all
 "	лапки	most
 \#	решітка	most
 №	номер	most
@@ -69,13 +72,17 @@ $	долар	all	norep
 ،	арабська кома	all	always
 -	дефіс	most	always
 .	крапка	some
+．	крапка на всю ширину	some
 /	слеш	some
 :	двокрапка	most	norep
+：	двокрапка на всю ширину	most	norep
 ;	крапка з комою	most
 ؛	арабська крапка з комою	most
+；	крапка з комою на всю ширину	most
 ?	знак питання	all	always
 ؟	арабський знак питання	all
-@	песик	some
+？	знак питання на всю ширину	all
+@	равлик	some
 [	ліва квадратна дужка	most
 ]	права квадратна дужка	most
 \\	бекслеш	most
@@ -134,8 +141,8 @@ _	підкреслення	most
 ❖	чорний ромб з білим хрестиком	some
 §	секція	all
 °	градус	some
-«	відкрита лапка	most
-»	закрита лапка	most
+«	відкрита лапка	most	never
+»	закрита лапка	most	never
 🡺	стрілка вправо	some
 µ	мікро	some
 ⁰	надрядковий 0	some
@@ -428,7 +435,7 @@ _	підкреслення	most
 ⠵	брайлівські 1 3 5 6
 ⠶	брайлівські 2 3 5 6
 ⠷	брайлівські 1 2 3 5 6
-⠸	брайлівські 1 2 3
+⠸	брайлівські 4 5 6
 ⠹	брайлівські 1 4 5 6
 ⠺	брайлівські 2 4 5 6
 ⠻	брайлівські 1 2 4 5 6

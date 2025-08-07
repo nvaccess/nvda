@@ -1,14 +1,14 @@
-#tests/unit/objectProvider.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Babbage B.V.
+# tests/unit/objectProvider.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017 NV Access Limited, Babbage B.V.
 
-"""Fake object provider implementation for testing of code which uses NVDAObjects.
-"""
+"""Fake object provider implementation for testing of code which uses NVDAObjects."""
 
 from NVDAObjects import NVDAObject
 import controlTypes
+
 
 class PlaceholderNVDAObject(NVDAObject):
 	processID = None  # Must be implemented to instantiate.
@@ -20,9 +20,9 @@ class NVDAObjectWithRole(PlaceholderNVDAObject):
 	The name of the object will be set with the associated role label.
 	This class can be used to quickly create objects for a fake focus ancestry."""
 
-	def __init__(self, role=controlTypes.Role.UNKNOWN,**kwargs):
-		super(NVDAObjectWithRole,self).__init__(**kwargs)
-		self.role=role
+	def __init__(self, role=controlTypes.Role.UNKNOWN, **kwargs):
+		super(NVDAObjectWithRole, self).__init__(**kwargs)
+		self.role = role
 
 	# Type information for autoproperty _get_name
 	# the translated display string for the role, or unknown

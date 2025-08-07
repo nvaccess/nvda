@@ -98,7 +98,7 @@ wstring getNameForURL(const wstring &url) {
 		name += L' ' + url.substr(queryStart + 1, queryLen);
 	if (anchorStart != wstring::npos)
 		name += L' ' + url.substr(anchorStart + 1);
-	//Finally truncate to 30 chars 
+	//Finally truncate to 30 chars
 	if(name.length()>30) {
 		name=name.substr(0,30)+L'\x2026';
 	}

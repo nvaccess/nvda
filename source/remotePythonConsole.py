@@ -1,8 +1,8 @@
-#remotePythonConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011 NV Access Inc
+# remotePythonConsole.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011 NV Access Inc
 
 """Provides an interactive Python console run inside NVDA which can be accessed via TCP.
 To use, call L{initialize} to start the server.
@@ -22,8 +22,8 @@ PORT = 6832
 
 server = None
 
-class RequestHandler(socketserver.StreamRequestHandler):
 
+class RequestHandler(socketserver.StreamRequestHandler):
 	def setPrompt(self, prompt):
 		if not self._keepRunning:
 			# We're about to exit, so don't output the prompt.
@@ -46,11 +46,17 @@ class RequestHandler(socketserver.StreamRequestHandler):
 
 		try:
 			self.wfile.write("NVDA Remote Python Console\n")
-			self.console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, setPromptFunc=self.setPrompt, exitFunc=self.exit)
-			self.console.namespace.update({
-				"snap": self.console.updateNamespaceSnapshotVars,
-				"rmSnap": self.console.removeNamespaceSnapshotVars,
-			})
+			self.console = pythonConsole.PythonConsole(
+				outputFunc=self.wfile.write,
+				setPromptFunc=self.setPrompt,
+				exitFunc=self.exit,
+			)
+			self.console.namespace.update(
+				{
+					"snap": self.console.updateNamespaceSnapshotVars,
+					"rmSnap": self.console.removeNamespaceSnapshotVars,
+				},
+			)
 
 			self._execDoneEvt = threading.Event()
 			while self._keepRunning:
@@ -64,11 +70,12 @@ class RequestHandler(socketserver.StreamRequestHandler):
 				self._execDoneEvt.wait()
 				self._execDoneEvt.clear()
 
-		except:
+		except:  # noqa: E722
 			log.exception("Error handling remote Python console request")
 		finally:
 			# Clean up the console.
 			self.console = None
+
 
 def initialize():
 	global server
@@ -76,10 +83,11 @@ def initialize():
 	server.daemon_threads = True
 	thread = threading.Thread(
 		name=__name__,  # remotePythonConsole
-		target=server.serve_forever
+		target=server.serve_forever,
+		daemon=True,
 	)
-	thread.daemon = True
 	thread.start()
+
 
 def terminate():
 	global server

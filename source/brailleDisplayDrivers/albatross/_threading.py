@@ -39,13 +39,13 @@ class ReadThread(Thread):
 	"""Controls most of read operations and tries to reconnect when needed."""
 
 	def __init__(
-			self,
-			readFunction: Callable[[], None],
-			disableFunction: Callable[[], None],
-			event: Event,
-			dev: serial.Serial,
-			*args,
-			**kwargs
+		self,
+		readFunction: Callable[[], None],
+		disableFunction: Callable[[], None],
+		event: Event,
+		dev: serial.Serial,
+		*args,
+		**kwargs,
 	):
 		"""Constructor.
 		@param readFunction: Handles read operations and reconnection.
@@ -62,24 +62,23 @@ class ReadThread(Thread):
 	def run(self):
 		data = dwEvtMask = DWORD()
 		log.debug(f"{self.name} started")
-		while not self._event.isSet():
+		while not self._event.is_set():
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
 				# But if port is not present, just wait and continue
 				if not self._portPresent():
 					log.debug(
-						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not present"
+						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not present",
 					)
 					self._event.wait(KC_INTERVAL)
 					continue
 				log.debug(
-					f"Port {self._dev.name} present, calling {self._readFunction.__name__} "
-					"to open it"
+					f"Port {self._dev.name} present, calling {self._readFunction.__name__} to open it",
 				)
 				self._readFunction()
 				if not self._dev.is_open:
 					log.debug(
-						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open"
+						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open",
 					)
 					self._event.wait(KC_INTERVAL)
 					continue
@@ -87,7 +86,7 @@ class ReadThread(Thread):
 			try:
 				if not SetCommMask(self._dev._port_handle, EV_RXCHAR):
 					# Exiting
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					self._disableFunction()
 					log.debug("SetCommMask failed")
@@ -95,10 +94,10 @@ class ReadThread(Thread):
 				result = ctypes.windll.kernel32.WaitCommEvent(
 					self._dev._port_handle,
 					byref(dwEvtMask),
-					byref(self._dev._overlapped_read)
+					byref(self._dev._overlapped_read),
 				)
 				if not result and GetLastError() != ERROR_IO_PENDING:
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					self._disableFunction()
 					log.debug("WaitCommEvent failed")
@@ -107,13 +106,13 @@ class ReadThread(Thread):
 					self._dev._port_handle,
 					byref(self._dev._overlapped_read),
 					byref(data),
-					True
+					True,
 				)
 				if result:
 					log.debug(f"Calling function {self._readFunction.__name__} for read")
 					self._readFunction()
 				else:
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					log.debug(f"GetOverLappedResult failed {ctypes.WinError()}")
 					self._disableFunction()
@@ -121,7 +120,7 @@ class ReadThread(Thread):
 			# but writing to display fails during it - or vice versa - AttributeError
 			# or TypeError might raise.
 			except (OSError, AttributeError, TypeError):
-				if self._event.isSet():
+				if self._event.is_set():
 					break
 				else:
 					self._disableFunction()
@@ -145,9 +144,9 @@ class RepeatedTimer:
 	"""
 
 	def __init__(
-			self,
-			interval: float,
-			feedFunction: Callable[[], None]
+		self,
+		interval: float,
+		feedFunction: Callable[[], None],
 	):
 		"""Constructor.
 		@param interval: Checking frequency

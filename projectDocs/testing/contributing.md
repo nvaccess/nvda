@@ -1,9 +1,19 @@
+# Testing
+
+## Builds
+
+Testing alpha / beta / and release candidates (RC) help to ensure the quality of the NVDA project.
+Download the [latest alpha builds](https://download.nvaccess.org/snapshots/alpha) or [beta/RC builds](https://download.nvaccess.org/snapshots/beta/).
+
+* The alpha builds are bleeding edge.
+It includes code that is being tested for possible inclusion in upcoming releases, but it may not yet be tested much (if at all) and there may be major bugs.
+Alpha snapshots are created directly from the `master` branch each time it changes (i.e. when a pull request is merged).
+Although the automated tests pass, these builds have likely had no user testing.
+* 'beta releases' are 'beta' quality. They include all features for the upcoming release that have proved stable in the alpha builds.
+* 'RC releases' in most cases will be identical to the final release.
+The latest final release will be identical to the final RC release of the release cycle.
 
 ## Manual testing
-
-Testing alpha / beta / and release candidates help to ensure the quality of the NVDA project.
-You can find the latest alpha snapshots [here](https://www.nvaccess.org/files/nvda/snapshots/).
-
 User / community testing is particularly important for languages other than English.
 
 NVDA includes [manual test plans](../../tests/manual/README.md) to guide testers in smoke testing features of NVDA.
