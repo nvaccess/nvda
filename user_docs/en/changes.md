@@ -14,14 +14,16 @@
 ### Changes
 
 * Component updates:
-  * Updated eSpeak NG to [commit `a4ca101`](https://github.com/espeak-ng/espeak-ng/commit/a4ca101c99de35345f89df58195b2159748b7092).
-  There have been improvements to Farsi/Persian. (#18342)
+  * Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).
+  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)
   * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
   Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
 * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+* The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
+Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 
 ### Bug Fixes
 
@@ -30,6 +32,8 @@
 * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
 * Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
+* Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
+* Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
 
 ### Changes for Developers
 
@@ -51,6 +55,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP_c_ulong`
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
+* `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 
 ## 2025.2
 

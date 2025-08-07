@@ -6158,9 +6158,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 87</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.</source>
-        <target>Running `scons` from the source repository will automatically suggest a strategy to install uv when it is not yet available.</target>
+        <target>从源代码仓库运行 `scons` 时，如果 uv 尚未安装，现在将自动提示安装的策略。</target>
       </segment>
     </unit>
     <unit id="5197e604-3980-4e5c-a393-9631443d3a30">
@@ -6168,9 +6168,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 88</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)</source>
-        <target>Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)</target>
+        <target>添加了“externalPythonDependencies”（外部 Python 依赖）类别作为额外的调试日志记录分类。启用后，来自外部依赖（如 comtypes）的调试日志消息将发送到 NVDA 的日志中。(#18067, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="10054134-1c80-4aec-a21e-ff9747d683e0">
@@ -6178,9 +6178,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 89</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Several additions to report the language of the text being read. (#17685, @nvdaes)</source>
-        <target>Several additions to report the language of the text being read. (#17685, @nvdaes)</target>
+        <target>添加了多项功能，用于读出正在阅读文本的语言。 (#17685, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="38759c3f-d4ef-41f6-92bd-fdec7eedc257">
@@ -6188,9 +6188,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.</source>
-        <target>The `synthDriver` class of `synthDriverHandler` includes a `languageIsSupported` function to check if the language indicated by the `lang` parameter is supported by the synthesizer.</target>
+        <target>`synthDriverHandler` 的 `synthDriver` 类现在包含一个 `languageIsSupported` 函数，用于检查由 `lang` 参数指示的语言是否被合成器支持。</target>
       </segment>
     </unit>
     <unit id="75232ac6-5b16-4dce-8e0f-683bc4220e79">
@@ -6198,9 +6198,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 91</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A `languageHandling` module has been added to report the language within speech sequences.</source>
-        <target>A `languageHandling` module has been added to report the language within speech sequences.</target>
+        <target>添加了 `languageHandling` 模块，用于在语音序列中读出语言。</target>
       </segment>
     </unit>
     <unit id="a6cafd3d-feb4-4141-b68f-6696377c5f79">
@@ -6208,9 +6208,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text being read, and switch synthesizer voice.</source>
-        <target>`LangChangeCommand` of `speech.commands` includes static methods to determine if NVDA should get the language of the text being read, and switch synthesizer voice.</target>
+        <target>`speech.commands` 的 `LangChangeCommand` 现在包含一个静态方法，用于确定 NVDA 是否应该获取正在朗读文本的语言，并切换合成器语音。</target>
       </segment>
     </unit>
     <unit id="2f42ed66-ae4b-4c70-9433-d12ebe2d5170">
@@ -6218,18 +6218,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 93</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `brailleTables` module is now a package.</source>
-        <target>The `brailleTables` module is now a package.</target>
+        <target>`brailleTables` 模块现已成为一个包。</target>
       </segment>
     </unit>
     <unit id="c6c8918e-271b-46f3-b86b-e01efda39efa">
       <notes>
         <note appliesTo="source">line: 94</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)</source>
-        <target>The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)</target>
+        <target>几个内置的盲文表已移至该包中的 `__tables 模块。(#18194, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="1e687c9a-8351-44fa-97c0-3462cb688e0a">
@@ -6237,9 +6237,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 95</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)</source>
-        <target>Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)</target>
+        <target>Microsoft SQL Server Management Studio 现在使用 Visual Studio 应用模块，因为 SSMS 基于 Visual Studio。 (#18176, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="6689a4b4-3f39-4e43-b6a9-510a2bd3341a">
@@ -6247,9 +6247,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 96</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)</source>
-        <target>NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)</target>
+        <target>当调用 `winVersion.getWinVer` 时，NVDA 现在将读出 Windows 版本号（例如：10.0.26100.0），并在启动时记录此信息。(#18266, @josephsl)</target>
       </segment>
     </unit>
     <unit id="26116f3e-00d8-4ae2-bf04-4dcb8bad419f">

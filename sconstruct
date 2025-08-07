@@ -401,8 +401,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 		with winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
 			r"SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0",
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
 		) as SDKKey:
 			sdk_installationFolder = winreg.QueryValueEx(SDKKey, "InstallationFolder")[0]
 			sdk_productVersion = winreg.QueryValueEx(SDKKey, "ProductVersion")[0]
