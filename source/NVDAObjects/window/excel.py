@@ -10,7 +10,6 @@ import ctypes
 import enum
 from typing import (
 	Any,
-	Dict,
 	Optional,
 	Callable,
 )
@@ -1446,7 +1445,7 @@ class NvCellState(enum.IntEnum):
 	UNLOCKED = (1 << 10,)
 
 
-_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+_nvCellStatesToStates: dict[NvCellState, controlTypes.State] = {
 	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
 	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
 	NvCellState.LINKED: controlTypes.State.LINKED,
