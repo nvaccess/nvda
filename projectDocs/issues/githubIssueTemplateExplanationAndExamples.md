@@ -7,13 +7,13 @@ Your issue will likely be closed if a template has not been followed.
 
 We currently have the following templates:
 
-* For [bug reports](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=bug_report.yml)
-* For [feature requests](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=feature_request.yml)
-* For [special case issues](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=special_case_issue.yml)
+* For [bug reports](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=1-bug_report.yaml)
+* For [feature requests](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=2-feature_request.yaml)
+* For [special case issues](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=3-special_case_issue.yaml)
   * Issues that cannot easily be categorised as either a bug report or a feature request
 * For [security vulnerabilities](https://github.com/nvaccess/nvda/security/advisories/new)
   * Please note that these are reported differently, for more information refer to our [disclosure policy/procedure](https://github.com/nvaccess/nvda/blob/master/security.md)
-* For [developer facing changes](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=developer_facing_changes.yml):
+* For [developer facing changes](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=4-developer_facing_changes.yaml):
   * This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
   * This may include API changes, technical debt removal, refactoring and maintenance tasks.
   * Note there is no further guide for this - it is expected that developers can use the template appropriately.
