@@ -110,7 +110,7 @@ def getCodePath(f):
 	className = ""
 	# Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
-		f_locals: dict = f.f_locals
+		f_locals = f.f_locals
 		arg0 = f_locals[f.f_code.co_varnames[0]]
 		if f.f_code.co_flags & inspect.CO_NEWLOCALS:
 			# Fetching of Frame.f_locals causes a function frames's locals to be cached on the frame for ever.
@@ -119,7 +119,7 @@ def getCodePath(f):
 			# Therefore clear f_locals manually.
 			for key in list(f_locals.keys()):
 				try:
-					# Note: Python changed how to clear frame locals
+					# Note: Python 3.13 changed how to clear frame locals
 					# https://github.com/python/cpython/issues/125590
 					f_locals.pop(key)
 				except ValueError:
