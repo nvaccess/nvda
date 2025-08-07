@@ -26,7 +26,7 @@ def _extensionPointTester(
 	handler: Callable[..., None],
 	useAssertDictContainsSubset: bool,
 	expectedKwargs: dict,
-	actualKwargs: dict
+	actualKwargs: dict,
 ):
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
@@ -48,13 +48,15 @@ def _extensionPointTester(
 		testCase.assertTrue(unregistered)
 		if useAssertDictContainsSubset:
 			testCase.assertDictEqual(
-				actualKwargs, actualKwargs | expectedKwargs,
-				f"Actual dictionary {actualKwargs} does not contain all expected key-value pairs {expectedKwargs}."
+				actualKwargs,
+				actualKwargs | expectedKwargs,
+				f"Actual dictionary {actualKwargs} does not contain all expected key-value pairs {expectedKwargs}.",
 			)
 		else:
 			testCase.assertDictEqual(
-				actualKwargs, expectedKwargs,
-				f"Actual dictionary {actualKwargs} does not match expected dictionary {expectedKwargs}."
+				actualKwargs,
+				expectedKwargs,
+				f"Actual dictionary {actualKwargs} does not match expected dictionary {expectedKwargs}.",
 			)
 
 
@@ -85,11 +87,11 @@ def actionTester(
 	_extensionPointTester(
 		testCase,
 		action,
-		None, # No expected output for action
+		None,  # No expected output for action
 		handler,
 		useAssertDictContainsSubset,
 		expectedKwargs,
-		actualKwargs
+		actualKwargs,
 	)
 
 
@@ -127,9 +129,8 @@ def deciderTester(
 		handler,
 		useAssertDictContainsSubset,
 		expectedKwargs,
-		actualKwargs
+		actualKwargs,
 	)
-
 
 
 @contextmanager
@@ -170,7 +171,7 @@ def filterTester(
 		handler,
 		useAssertDictContainsSubset,
 		expectedKwargs,
-		actualKwargs
+		actualKwargs,
 	)
 
 
@@ -208,5 +209,5 @@ def chainTester(
 		handler,
 		useAssertDictContainsSubset,
 		expectedKwargs,
-		actualKwargs
+		actualKwargs,
 	)

@@ -184,7 +184,7 @@ class TestBRLTTY(unittest.TestCase):
 
 	@unittest.skipUnless(
 		sys.version_info.major == 3 and sys.version_info.minor == 11,
-		"Skipping brlapi tests unless Python 3.11"
+		"Skipping brlapi tests unless Python 3.11",
 	)
 	def test_brlapi(self):
 		try:
