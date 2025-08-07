@@ -41,6 +41,7 @@ import winUser
 import winVersion
 import eventHandler
 from logHandler import log
+import winBindings.uiAutomationCore
 from . import utils
 from comInterfaces import UIAutomationClient as UIA
 
@@ -1216,7 +1217,7 @@ class UIAHandler(COMObject):
 						return False
 					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
 		# Ask the window if it supports UIA natively
-		res = windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		res = winBindings.uiAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			if isDebug:
 				log.debug("window has UIA server side provider")
