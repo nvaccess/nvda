@@ -438,6 +438,14 @@ fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
 		# This is the English letter "s" plus dot 7 in braille.
 		end=pgettext("braille formatting symbol", "⡎"),
 	),
+	"invalid-spelling": FormattingMarker(
+		# Translators: Brailled at the start of invalid spelling text.
+		# This is the English letter "m" in braille.
+		start=pgettext("braille formatting symbol", "⠍"),
+		# Translators: Brailled at the end of invalid spelling text.
+		# This is the English letter "m" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡍"),
+	),
 }
 
 
