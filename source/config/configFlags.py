@@ -193,12 +193,12 @@ class ReportSpellingErrors(DisplayStringIntEnum):
 	SOUND = 2
 
 	@property
-	def _displayStringLabels(self):
+	def _displayStringLabels(self) -> dict[ReportSpellingErrors, str]:
 		return {
 			# Translators: A choice in a combo box in the document formatting dialog to not report spelling errors.
 			ReportSpellingErrors.OFF: pgettext("reportSpellingErrorsSetting", "Off"),
 			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
-			# with Speech.
+			# with speech.
 			ReportSpellingErrors.SPEECH: pgettext("reportSpellingErrorsSetting", "Speech"),
 			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
 			# with a sound.

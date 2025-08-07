@@ -2125,7 +2125,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("KeyboardSettingsAlertForSpellingErrors", self.alertForSpellingErrorsCheckBox)
 		self.alertForSpellingErrorsCheckBox.SetValue(config.conf["keyboard"]["alertForSpellingErrors"])
-		if config.conf["documentFormatting"]["reportSpellingErrors2"] == ReportSpellingErrors.DISABLE.value:
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] == ReportSpellingErrors.OFF.value:
 			self.alertForSpellingErrorsCheckBox.Disable()
 
 		# Translators: This is the label for a checkbox in the
