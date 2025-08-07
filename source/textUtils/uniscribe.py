@@ -31,7 +31,7 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	if not NVDAHelper.localLib.calculateCharacterBoundaries(
 		buffer,
 		textLength,
-		offsets,
+		ctypes.byref(offsets),
 		ctypes.byref(offsetsCount),
 	):
 		raise RuntimeError("NVDAHelper calculateCharacterBoundaries failed")
