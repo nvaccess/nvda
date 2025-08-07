@@ -1,11 +1,11 @@
-# tests/unit/test_baseObject.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2015 NV Access Limited, Babbage B.V.
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
+import sys
 import unittest
 from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
@@ -148,17 +148,32 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""
 
 	def test_abstractProperty(self):
+		if sys.version_info.major == 3 and sys.version_info.minor == 13:
+			regex = r"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty without an implementation for abstract method x"
+		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+			regex = r"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty with abstract method x"
+		else:
+			raise RuntimeError(
+				f"Unsupported Python version for abstract property tests: {sys.version_info.major}.{sys.version_info.minor}",
+			)
 		self.assertRaisesRegex(
 			TypeError,
-			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty with abstract method x",
+			regex,
 			AutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_subclassedAbstractProperty(self):
+		if sys.version_info.major == 3 and sys.version_info.minor == 13:
+			regex = r"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty without an implementation for abstract method x"
+		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+			regex = r"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty with abstract method x"
+		else:
+			raise RuntimeError(
+				f"Unsupported Python version for abstract property tests: {sys.version_info.major}.{sys.version_info.minor}",
+			)
 		self.assertRaisesRegex(
 			TypeError,
-			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
-			"with abstract method x",
+			regex,
 			SubclassedAutoPropertyObjectWithAbstractProperty,
 		)
 

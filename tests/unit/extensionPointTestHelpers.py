@@ -5,6 +5,8 @@
 
 """Helper functions to test extension points."""
 
+from collections.abc import Callable, Iterable
+from typing import Any
 from extensionPoints import (
 	Action,
 	Chain,
@@ -15,7 +17,45 @@ from extensionPoints import (
 )
 import unittest
 from contextlib import contextmanager
-from typing import Iterable
+
+
+def _extensionPointTester(
+	testCase: unittest.TestCase,
+	extensionPoint: Action | Chain | Decider | Filter,
+	expectedOutput: Any,
+	handler: Callable[..., None],
+	useAssertDictContainsSubset: bool,
+	expectedKwargs: dict,
+	actualKwargs: dict
+):
+	"""A context manager that allows testing an Action.
+	@param testCase: The test case to apply assertions on.
+	@param extensionPoint: The extensionPoint that will be triggered by the test case.
+	@param expectedOutput: The expected output as returned by the extension point handler.
+	@param handler: The handler that will be registered to the extension point.
+	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+		instead of checking for equality.
+		This can be used if an action is notified with dictionary values that can't be predicted at test time,
+		such as a driver instance.
+	@param expectedKwargs: The kwargs that are expected to be passed to the action
+	@param actualKwargs: The actual kwargs that were passed to the action
+	"""
+	extensionPoint.register(handler)
+	try:
+		yield expectedOutput
+	finally:
+		unregistered = extensionPoint.unregister(handler)
+		testCase.assertTrue(unregistered)
+		if useAssertDictContainsSubset:
+			testCase.assertDictEqual(
+				actualKwargs, actualKwargs | expectedKwargs,
+				f"Actual dictionary {actualKwargs} does not contain all expected key-value pairs {expectedKwargs}."
+			)
+		else:
+			testCase.assertDictEqual(
+				actualKwargs, expectedKwargs,
+				f"Actual dictionary {actualKwargs} does not match expected dictionary {expectedKwargs}."
+			)
 
 
 @contextmanager
@@ -28,8 +68,8 @@ def actionTester(
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
 	@param action: The action that will be triggered by the test case.
-	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
-		L{unittest.TestCase.assertDictEqual}
+	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+		instead of checking for equality.
 		This can be used if an action is notified with dictionary values that can't be predicted at test time,
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the action
@@ -42,15 +82,15 @@ def actionTester(
 		actualKwargs["_called"] = True
 
 	action.register(handler)
-	try:
-		yield
-	finally:
-		unregistered = action.unregister(handler)
-		testCase.assertTrue(unregistered)
-		testFunc = (
-			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
-		)
-		testFunc(expectedKwargs, actualKwargs)
+	_extensionPointTester(
+		testCase,
+		action,
+		None, # No expected output for action
+		handler,
+		useAssertDictContainsSubset,
+		expectedKwargs,
+		actualKwargs
+	)
 
 
 @contextmanager
@@ -66,8 +106,8 @@ def deciderTester(
 	@param decider: The Decider that will be consulted by the test case.
 	@param expectedDecision: The expected decision as returned by L{Decider.decide}
 		it will also be yielded by the context manager.
-	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
-		L{unittest.TestCase.assertDictEqual}
+	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+		instead of checking for equality.
 		This can be used if a decider is consulted with dictionary values that can't be predicted at test time,
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the decider handler
@@ -80,16 +120,16 @@ def deciderTester(
 		actualKwargs["_called"] = True
 		return expectedDecision
 
-	decider.register(handler)
-	try:
-		yield expectedDecision
-	finally:
-		unregistered = decider.unregister(handler)
-		testCase.assertTrue(unregistered)
-		testFunc = (
-			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
-		)
-		testFunc(expectedKwargs, actualKwargs)
+	_extensionPointTester(
+		testCase,
+		decider,
+		expectedDecision,
+		handler,
+		useAssertDictContainsSubset,
+		expectedKwargs,
+		actualKwargs
+	)
+
 
 
 @contextmanager
@@ -107,8 +147,8 @@ def filterTester(
 	@param expectedInput: The expected input as entering the filter handler.
 	@param expectedOutput: The expected output as returned by L{Filter.apply}
 		it will also be yielded by the context manager
-	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
-		L{unittest.TestCase.assertDictEqual}
+	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+		instead of checking for equality.
 		This can be used if a filter is applied with dictionary values that can't be predicted at test time,
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the filter handler.
@@ -123,16 +163,15 @@ def filterTester(
 		actualKwargs["_value"] = value
 		return expectedOutput
 
-	filter.register(handler)
-	try:
-		yield expectedOutput
-	finally:
-		unregistered = filter.unregister(handler)
-		testCase.assertTrue(unregistered)
-		testFunc = (
-			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
-		)
-		testFunc(expectedKwargs, actualKwargs)
+	_extensionPointTester(
+		testCase,
+		filter,
+		expectedOutput,
+		handler,
+		useAssertDictContainsSubset,
+		expectedKwargs,
+		actualKwargs
+	)
 
 
 @contextmanager
@@ -148,8 +187,8 @@ def chainTester(
 	@param chain: The Chain that will be iterated by the test case.
 	@param expectedOutput: The expected output as returned by L{Chain.iter}
 		it will also be yielded by the context manager
-	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
-		L{unittest.TestCase.assertDictEqual}
+	@param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
+		instead of checking for equality.
 		This can be used if a Chain is iterated with dictionary values that can't be predicted at test time,
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the Chain handler.
@@ -162,13 +201,12 @@ def chainTester(
 		actualKwargs["_called"] = True
 		return expectedOutput
 
-	chain.register(handler)
-	try:
-		yield expectedOutput
-	finally:
-		unregistered = chain.unregister(handler)
-		testCase.assertTrue(unregistered)
-		testFunc = (
-			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
-		)
-		testFunc(expectedKwargs, actualKwargs)
+	_extensionPointTester(
+		testCase,
+		chain,
+		expectedOutput,
+		handler,
+		useAssertDictContainsSubset,
+		expectedKwargs,
+		actualKwargs
+	)
