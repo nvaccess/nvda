@@ -3664,7 +3664,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
-			wx.CheckBox(self, label=_("enable image captioning")),
+			wx.CheckBox(self, label=_("enable image captioning when start")),
 		)
 		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)

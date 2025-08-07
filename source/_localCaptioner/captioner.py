@@ -2,8 +2,6 @@
 # Copyright (C) 2025 NV Access Limited, tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-from __future__ import unicode_literals
-
 import os
 import json
 import re
@@ -53,7 +51,7 @@ class ImageCaptioner:
 				"please download models and config file first!",
 			)
 		except Exception as e:
-			log.error(e)
+			log.exception(e)
 			raise
 
 		# Load vocabulary from vocab.json in the same directory as config
@@ -137,10 +135,10 @@ class ImageCaptioner:
 			return vocab
 
 		except FileNotFoundError:
-			log.error(f"vocab.json not found at {vocabPath}")
+			log.exception(f"vocab.json not found at {vocabPath}")
 			raise
 		except Exception as e:
-			log.error(f"Warning: Could not load vocabulary from {vocabPath}: {e}")
+			log.exception(f"Warning: Could not load vocabulary from {vocabPath}: {e}")
 			raise
 
 	def preprocessImage(self, image: str | bytes) -> np.ndarray:

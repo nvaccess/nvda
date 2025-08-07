@@ -133,7 +133,7 @@ def teardownProfile(stagingDir: str):
 	)
 
 
-def _configModels():
+def _configModels() -> None:
 	import tempfile
 	import os
 	from .mockModels import MockVisionEncoderDecoderGenerator
@@ -148,7 +148,7 @@ def _configModels():
 	_updateIniForModels(ini_path, models_directory)
 
 
-def _updateIniForModels(ini_path, output_dir):
+def _updateIniForModels(ini_path: str, output_dir: str) -> None:
 	"""
 	Update only the value of 'defaultModelPath' under [automatedImageDescriptions] section
 	in the INI file, preserving original formatting, indentation, and casing.

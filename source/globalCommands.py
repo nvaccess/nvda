@@ -125,6 +125,8 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
+#: Script category for image description commands.
+# Translators: The name of a category of NVDA commands.
 SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring

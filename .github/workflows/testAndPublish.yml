@@ -335,7 +335,7 @@ jobs:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols]
+        testSuite: [chrome, installer, startupShutdown, symbols, imageDescriptions]
     name: Run system tests
     runs-on: windows-2025
     needs: createLauncher

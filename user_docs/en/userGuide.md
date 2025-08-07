@@ -3873,53 +3873,21 @@ NVDA supports generating image descriptions using a local model. This feature al
 
 Note:
 To reduce the NVDA installer size, the image captioning model is not bundled with NVDA by default.
-You must first download the model via the NVDA menu → Tools → Model Manager before using this feature.
+
 
 ### Getting Started {#LocalCaptionerGettingStarted}
 
-Before using this feature:
+Once the model is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
 
-1. Open the Model Manager from the NVDA menu → Tools → Model Manager.
-2. In the dialog, locate the Download button using the Tab key and press it.
-3. Wait for the model to download. You can monitor progress in the Download Log area.
-4. Once the model is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
-
-### Model Download {#LocalCaptionerModelDownload}
-
-The Model Manager allows you to manage the download and configuration of local image description models.
-
-#### Download Path
-
-Use this edit box to set the path where model files should be stored. By default, this is the main NVDA directory.
-
-#### Start Download
-
-Press this button to begin downloading the default image description model.
-
-#### Advanced Options
-
-Advanced settings are available in the Model Config tab for users who require more control:
-
-* Resolve Path: Edit box for the resolved download path.
-* Model Name: Edit box for specifying the model name. The default values are sufficient for most users and will download a model suitable for English image descriptions.
-* Use HuggingFace Mirror: A checkbox to enable use of a mirror server. This is useful if access to [huggingface.co](https://huggingface.co) is slow or restricted. When enabled, downloads will use an alternate domain.
-
-In the File List tab (next to Model Config), you can select specific files to download. This feature allows future expansion to support models for different languages and tasks. For now, keeping the default selection is recommended.
-
-#### Download Log
-
-This area displays real-time download progress and error messages. It will play a sound when the model download succeeds or fails.
-
-### Local Captioner Key Commands Summary {#LocalCaptionerGestures}
+### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
 
 <!-- KC:beginInclude -->
 
 | Name                                  | Key                    | Description                                                                                |
 | ------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------ |
-| get an AI generated Image description | `NVDA+Windows+,`       | Use a local model to generate a description of the image object currently navigated by NVDA. |
+| get an AI generated image description | `NVDA+Windows+,`       | Use a local model to generate a description of the image object currently navigated by NVDA. |
 | toggle image captioning | Unassigned | load/unload the model from memory.                                       |
-| Open Model Manager                    | Unassigned           | Opens the Model Manager to download and manage models.                                     |
-| Shows the local captioner settings  | Unassigned           | Opens the Local Image Description settings panel.                                          |
+| Shows the AI image descriptions settings  | Unassigned           | Opens the Local Image Description settings panel.                                          |
 
 <!-- KC:endInclude -->
 
