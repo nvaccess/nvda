@@ -35,9 +35,9 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "DEFAULT_EXTENSIONS":
 		# Note: this should only log in situations where it will not be excessively noisy.
 		from logHandler import log
+
 		log.warning(
-			"Importing DEFAULT_EXTENSIONS from here is deprecated. "
-			"Importing from md2html is discouraged. ",
+			"Importing DEFAULT_EXTENSIONS from here is deprecated. Importing from md2html is discouraged. ",
 			# Include stack info so testers can report warning to add-on author.
 			stack_info=True,
 		)
