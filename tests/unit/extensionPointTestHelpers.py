@@ -28,14 +28,14 @@ def _extensionPointTester(
 	expectedKwargs: dict,
 	actualKwargs: dict,
 ):
-	"""A context manager that allows testing an Action.
+	"""A helper function to test extension points.
 	:param testCase: The test case to apply assertions on.
 	:param extensionPoint: The extensionPoint that will be triggered by the test case.
 	:param expectedOutput: The expected output as returned by the extension point handler.
 	:param handler: The handler that will be registered to the extension point.
 	:param useAssertDictContainsSubset: Whether to check if the actual dictionary contains all expected key-value pairs
 		instead of checking for equality.
-		This can be used if an action is notified with dictionary values that can't be predicted at test time,
+		This can be used if an extension point is notified with dictionary values that can't be predicted at test time,
 		such as a driver instance.
 	:param expectedKwargs: The kwargs that are expected to be passed to the extension point handler
 	:param actualKwargs: The actual kwargs that were passed to the extension point handler
