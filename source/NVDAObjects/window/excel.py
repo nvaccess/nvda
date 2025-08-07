@@ -8,9 +8,11 @@ from __future__ import annotations
 import abc
 import ctypes
 import enum
+
 from typing import Any
 from collections.abc import Callable
 import warnings
+
 from comtypes import COMError, BSTR
 import comtypes.automation
 import inputCore
