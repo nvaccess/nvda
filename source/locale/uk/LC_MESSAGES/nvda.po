@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -2139,7 +2139,8 @@ msgstr[3] "Не вдалося встановити такі додатки: {}.
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Some operations on add-ons failed. See the log file for more details.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3583,14 +3584,15 @@ msgstr "Немає заміни символу"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Символ: {character}\n"
+"Заміна: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Розширений символ ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -12068,7 +12070,7 @@ msgstr "Несумісні додатки"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Ці додатки несумісні з версією NVDA {version}. Їх неможливо увімкнути. Будь ласка, зв’яжіться з автором додатка для подальшої допомоги."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12195,7 +12197,7 @@ msgstr "Помилка при активації профілю."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Профіль {name} буде видалено назавжди. Цю дію неможливо скасувати."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12787,7 +12789,7 @@ msgstr "&Не зберігати"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Стандартно ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -15396,10 +15398,10 @@ msgstr "Встановлення додатка"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Встановлюємо {num} додаток, будь ласка, зачекайте."
+msgstr[1] "Встановлюємо {num} додатки, будь ласка, зачекайте."
+msgstr[2] "Встановлюємо {num} додатків, будь ласка, зачекайте."
+msgstr[3] "Встановлюємо {num} додатка, будь ласка, зачекайте."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15408,10 +15410,10 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Триває завантаження {num} додатка, скасувати завантаження?"
+msgstr[1] "Триває завантаження {num} додатків, скасувати завантаження?"
+msgstr[2] "Триває завантаження {num} додатків, скасувати завантаження?"
+msgstr[3] "Триває завантаження {num} додатка, скасувати завантаження?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15791,10 +15793,10 @@ msgstr "активувати"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{num} пропозиція"
+msgstr[1] "{num} пропозиції"
+msgstr[2] "{num} пропозицій"
+msgstr[3] "{num} пропозиції"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

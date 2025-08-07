@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:13\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2145,7 +2145,8 @@ msgstr[5] "فشل تثبيت هذه الإضافات: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "أخفقت بعض العمليات المتعلقة بالإضافات، اطّلِعْ على سجل التقارير لمعرفة المزيد.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3590,14 +3591,15 @@ msgstr "لا يوجد نص بديل للرمز"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "الرمز: {character}\n"
+"الكلمة البديلة: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "الرمز ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -3989,7 +3991,7 @@ msgstr "عرض إعدادات صوت NVDA"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "يفتح إعدادات NVDA المتعلقة بالرؤية"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3376
@@ -4040,7 +4042,7 @@ msgstr "يفتح إعدادات مستودع إضافات NVDA"
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "يفتح إعدادات NVDA المتعلقة بالتعرف الضوئي على الأحرف الخاص ب Windows"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3471
@@ -4753,7 +4755,7 @@ msgstr "التنقُّل بين أوضااع تقسيم الصوت"
 #: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "يُعلن عن لغة النص الذي يوجد عنده مؤشّر التحرير. إذا نُفِّذَ مرتين؛ تُعرَضُ المعلومة كرسالة قابلة للتصفُّح."
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4949
@@ -4766,13 +4768,13 @@ msgstr "لغة غير معروفة"
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (غير مدعومة)."
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "اللغة في موضع مؤشر التحرير"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4974
@@ -6796,7 +6798,7 @@ msgstr "التنغيم"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "استخدام نظام إخراج الصوت الحديث (Wasapi)"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7025,7 +7027,7 @@ msgstr "تأكَّدْ من اتصالك بشبكة الإنترنت، ومن ص
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "يتعذّر إجراء الاتصال بخادم NV Access."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7178,14 +7180,15 @@ msgstr "&تم"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "لا يُنصَحُ بتحديث NVDA أثناء اتصال الحاسوب بجلسة تحكُّم عن بُعد كحاسوب متحكَّم به. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "قد لا يستمر الاتصال النشط حاليًا أثناء التحديث أو بعده. وإن استمر، فلن تتمكن من التفاعُل مع شاشة التحكم في حساب المستخدم (UAC) عبر الحاسوب البعيد. يجب المتابعة فقط إذا كان لديك وصول فعلي للحاسوب المتحكَّم به.\n"
+"هل ترغب فعلا في المتابعة؟"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7267,7 +7270,7 @@ msgstr "تأكَّدْ من اتصالك بشبكة الإنترنت، ومن ص
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "يتعذّر إجراء اتصال بخادم مستودع الإضافات."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -8780,7 +8783,7 @@ msgstr "أسطر برايل الإلكترونية من الناطق للتكن�
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -9302,19 +9305,19 @@ msgstr "إسباني لقراءة النص اليوناني"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "عبري (الكتاب المقدس) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "عبري (الكتاب المقدس) الكامل"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "عبري (الكتاب المقدس) ضئيل"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -12120,7 +12123,7 @@ msgstr "إضافات برمجية غير متوافقة"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "الإضافات الآتية غير متوافقة مع إصدار NVDA {version}.  ولا يمكن تفعيلُها. يُرجى مراسلة مطورها لمزيد من المساعدة."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12247,7 +12250,7 @@ msgstr "خلل في تنشيط الوضع."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "أنتَ توشك على حذف الوضع {name} نهائيا. لا يمكن التراجع عن هذا الإجراء."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12675,14 +12678,14 @@ msgstr "الدليل موجود"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "لا يُنصَح بتثبيت NVDA عندما يكون الحاسوب متصلا كحاسوب متحكَّم به في جلسة تحكُّم عن بُعد. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "لن يمكنك التفاعُل مع شاشة التحكم بحساب المستخدم (UAC) عبر الحاسوب البعيد. يمكنك المتابعة فقط إن كان هناك وصول فعلي للحاسوب المتحكَّم به."
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12842,7 +12845,7 @@ msgstr "&عدم الحفظ"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "الافتراضي ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13111,14 +13114,14 @@ msgstr "الانتقال الآلي بين اللهجات (عند دعم ذلك)
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "الإعلان عن &لغة النص عند تغيرها أثناء القراءة"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "الإعلان عند تغيّر ل&غة النص للغة لا تدعمها آلة النُطق المستخدمة"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -15453,12 +15456,12 @@ msgstr "تثبيت الإضافة"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تثبيت {num} من الإضافات، يُرجى الانتظار."
+msgstr[1] "تثبيت {num} من الإضافات، يُرجى الانتظار."
+msgstr[2] "تثبيت {num} من الإضافات، يُرجى الانتظار."
+msgstr[3] "تثبيت {num} من الإضافات، يُرجى الانتظار."
+msgstr[4] "تثبيت {num} من الإضافات، يُرجى الانتظار."
+msgstr[5] "تثبيت {num} من الإضافات، يُرجى الانتظار."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15467,12 +15470,12 @@ msgstr[5] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
+msgstr[1] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
+msgstr[2] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
+msgstr[3] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
+msgstr[4] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
+msgstr[5] "يجري تنزيل {num} من الإضافات، هل ترغب في إلغاء التنزيل؟"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15854,12 +15857,12 @@ msgstr "رابط"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "{num} من الاقتراحات"
+msgstr[1] "{num} من الاقتراحات"
+msgstr[2] "{num} من الاقتراحات"
+msgstr[3] "{num} من الاقتراحات"
+msgstr[4] "{num} من الاقتراحات"
+msgstr[5] "{num} من الاقتراحات"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

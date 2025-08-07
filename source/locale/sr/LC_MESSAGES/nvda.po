@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Latin)\n"
 "Language: sr_CS\n"
@@ -2136,7 +2136,8 @@ msgstr[2] "Instalacija sledećih dodataka nije uspela: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Neke radnje sa dodacima su neuspešne. Pogledajte datoteku dnevnika za više detalja.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3580,14 +3581,15 @@ msgstr "Nema zamene za simbol"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Znak: {character}\n"
+"Zamena: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Proširen simbol ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -7159,14 +7161,15 @@ msgstr "&Gotovo"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Ažuriranje programa NVDA kada ste povezani na NVDA daljinski pristup kao kontrolisani računar nije preporučeno. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Trenutno aktivna veza možda neće biti nastavljena tokom ili nakon ažuriranja. Čak i ako se veza nastavi, nećete moći da odgovorite na upite kontrole korisničkog naloga sa računara koji kontroliše. Nastavite samo ako imate fizički pristup računaru.\n\n"
+"Da li ste sigurni da želite da nastavite?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -12043,7 +12046,7 @@ msgstr "Nekompatibilni dodaci"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Sledeći dodaci su nekompatibilni uz NVDA verziju {version}. Ovi dodaci se ne mogu omogućiti. Molimo kontaktirajte autora dodatka za dodatnu pomoć."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12170,7 +12173,7 @@ msgstr "Greška pri aktivaciji profila."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Profil {name} će trajno biti obrisan. Ova radnja se ne može poništiti."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12594,14 +12597,15 @@ msgstr "Folder postoji"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Instaliranje programa NVDA kada ste povezani na NVDA daljinski pristup kao kontrolisani računar nije preporučeno. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Nećete moći da odgovorite na upite kontrole korisničkog naloga sa računara koji kontroliše. Nastavite samo ako imate fizički pristup računaru.\n\n"
+"Da li ste sigurni da želite da nastavite?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12761,7 +12765,7 @@ msgstr "&Nemoj da sačuvaš"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Podrazumevano ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -15368,9 +15372,9 @@ msgstr "Instalacija dodatka"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Instaliranje {num} dodatka, molimo sačekajte."
+msgstr[1] "Instaliranje {num} dodatka, molimo sačekajte."
+msgstr[2] "Instaliranje {num} dodataka, molimo sačekajte."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15379,9 +15383,9 @@ msgstr[2] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Preuzimanje {num} dodatka u toku, otkazati preuzimanje?"
+msgstr[1] "Preuzimanje {num} dodatka u toku, otkazati preuzimanje?"
+msgstr[2] "Preuzimanje {num} dodataka u toku, otkazati preuzimanje?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15760,9 +15764,9 @@ msgstr "zahtevaj"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{num} predlog"
+msgstr[1] "{num} predloga{num} predlog"
+msgstr[2] "{num} predloga"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

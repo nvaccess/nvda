@@ -93,8 +93,13 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 ## NVDA Quick Start Guide {#NVDAQuickStartGuide}
 
-This quick start guide contains three main sections: downloading, initial setup, and running NVDA.
-These are followed by information on adjusting preferences, using add-ons, participating in the community and getting help.
+This quick start guide contains three main sections:
+
+* [Downloading](#GettingAndSettingUpNVDA): Where to get NVDA and steps for downloading it
+* [Initial setup](#SettingUpNVDA): Steps to install and setup NVDA
+* [Running NVDA](#RunningNVDA): Commonly used keystrokes and NVDA features
+
+These are followed by information on [adjusting preferences](#Preferences), [using add-ons](#Addons), [participating in the community](#Community) and [getting help](#GettingHelp).
 The information in this guide is condensed from other parts of the NVDA User Guide.
 Please refer to the full User Guide for more detailed information on each topic.
 
@@ -1924,20 +1929,18 @@ This option is a slider that lets you choose how much inflection (rise and fall 
 ##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
-This may improve the responsiveness of some voices.
+This option only exists for Microsoft Speech API version 5 (SAPI 5) voices.
+This may improve the responsiveness of some SAPI 5 voices.
 However, some voices might not work with the current WASAPI implementation.
 If you find that the voice you are using stops working, you may disable this option.
 
-Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off.
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off:
 
-* For Microsoft Speech API version 4 voices:
-  * Audio ducking
-  * Leading silence trimming
-  * Keep audio device awake
-* For Microsoft Speech API version 5 voices:
-  * Rate boost
-  * Leading silence trimming
-  * Keep audio device awake
+* Rate boost
+* Leading silence trimming
+* Keep audio device awake
+
+Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
@@ -3471,6 +3474,8 @@ This option enables Microsoft Speech API version 4 (SAPI 4) voices to output aud
 This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -5462,8 +5467,11 @@ You can configure whether NVDA displays braille on the dedicated braille display
 
 Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
 
-When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
-This driver does not support auto detection.
+The Dot Pad driver supports automatic detection of USB-connected devices.
+However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
+To enable automatic detection, go to NVDA's Braille settings and check "Dot Pad" in the automatic detection list.
+When automatic detection is enabled and a compatible device is detected, NVDA will automatically connect to it.
+You can also manually select a specific USB or Bluetooth virtual serial port if needed.
 
 Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
 Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.

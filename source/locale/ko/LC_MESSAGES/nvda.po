@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -2130,7 +2130,8 @@ msgstr[0] "다음 추가 기능을 설치하지 못했습니다: {}"
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "추가 기능에 관한 일부 작업에 실패했습니다. 더 자세한 내용은 로그 파일을 참고하십시오\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3574,14 +3575,15 @@ msgstr "기호 정보 없음"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "문자: {character}\n"
+"대치 {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "기호 상세정보 ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -11994,7 +11996,7 @@ msgstr "호환되지 않는 추가 기능"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "다음 추가기능은 NVDA {version} 버전과 호환되지 않습니다. 이 추가 기능을 활성화 할 수 없습니다. 추가기능 제작자에게 연락하여 도움을 받으시기 바랍니다."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12121,7 +12123,7 @@ msgstr "프로필 적용에 실패했습니다."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "{name} 프로필은 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12709,7 +12711,7 @@ msgstr "저장 안 함 (&N)"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "기본값 ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -15311,7 +15313,7 @@ msgstr "추가 기능 설치"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "추가기능 {num}개를 설치하는 중입니다. 잠시만 기다려주십시오."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15320,7 +15322,7 @@ msgstr[0] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "추가기능 {num}개를 다운로드하는 중입니다. 다운로드를 취소하시겠습니까?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15697,7 +15699,7 @@ msgstr "적용"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
+msgstr[0] "제안 {num}개"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

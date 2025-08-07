@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
@@ -581,8 +580,17 @@ class AppModule(baseObject.ScriptableObject):
 
 	isAlive: bool
 
-	def _get_isAlive(self):
-		return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+	def _get_isAlive(self) -> bool:
+		try:
+			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+		except OSError as e:
+			if e.winerror == winKernel.ERROR_INVALID_HANDLE:
+				# The process handle is invalid, so the process is dead.
+				log.debugWarning(
+					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.",
+				)
+				return False
+			raise
 
 	def terminate(self):
 		"""Terminate this app module.

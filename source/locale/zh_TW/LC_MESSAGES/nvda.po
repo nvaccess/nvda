@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:13\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2130,7 +2130,8 @@ msgstr[0] "以下附加元件無法安裝: {}。"
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "對附加元件的某些操作失敗，有關詳細資料請見事件記錄檔。\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3574,14 +3575,15 @@ msgstr "沒有符號替代文字"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "字元: {character}\n"
+"替代文字: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "展開的符號 ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -4745,7 +4747,7 @@ msgstr "未知的語言"
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr "{languageDescription}(不支援)"
+msgstr "{languageDescription} (不支援)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
@@ -7146,14 +7148,15 @@ msgstr "完成(&D)"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時更新 NVDA。 "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "目前的遠端連線在更新期間或更新後可能無法繼續，即使連線得以維持，您仍將無法從主控端電腦回應使用者帳戶控制 (UAC) 提示。只有當您能實際操作被控端電腦時才繼續進行此操作。\n\n"
+"您確定要繼續嗎?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7315,7 +7318,7 @@ msgstr "穩定"
 #: addonStore\models\channel.py:31
 msgctxt "addonStore"
 msgid "Beta"
-msgstr "Beta"
+msgstr "Beta (測試)"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #: addonStore\models\channel.py:33
@@ -7362,17 +7365,17 @@ msgstr "穩定"
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:116
 msgid "Beta or dev"
-msgstr "Beta 或 dev"
+msgstr "Beta (測試) 或 dev (開發)"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:118
 msgid "Beta"
-msgstr "Beta"
+msgstr "Beta (測試)"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:120
 msgid "Dev"
-msgstr "Dev"
+msgstr "Dev (開發)"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -11992,7 +11995,7 @@ msgstr "不相容附加元件"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "以下附加元件與 NVDA 版本 {version} 不相容，因此無法啟用這些附加元件，請聯繫該附加元件的作者尋求協助。"
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12119,7 +12122,7 @@ msgstr "啟用設定檔時發生錯誤。"
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "{name} 設定檔將被永久刪除，此動作無法復原。"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12541,14 +12544,15 @@ msgstr "目錄已存在"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時安裝 NVDA。 "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "您將無法從主控端電腦回應使用者帳戶控制 (UAC) 提示。只有當您能實際操作被控端電腦時才繼續進行此操作。\n\n"
+"您確定要繼續嗎?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12709,7 +12713,7 @@ msgstr "不要儲存(&N)"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "預設 ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13849,13 +13853,13 @@ msgstr "刪除所有信任的指紋"
 #: gui\settingsDialogs.py:3586
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr ""
+msgstr "必須在「遠端存取」類別中設定主機及金鑰，才能在 NVDA 啟動後自動連線到現有的遠端存取伺服器。"
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3592
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr "若要在 NVDA 啟動後自動透過本機伺服器連線，則必須在「遠端存取」類別中同時設定連接埠與金鑰。"
+msgstr "必須在「遠端存取」類別中設定連接埠及金鑰，才能在 NVDA 啟動後自動連線到本機的遠端存取伺服器。"
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3598
@@ -15309,7 +15313,7 @@ msgstr "附加元件安裝"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "正在安裝 {num} 個附加元件，請稍候。"
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15318,7 +15322,7 @@ msgstr[0] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "正在下載 {num} 個附加元件，要取消下載嗎?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15695,7 +15699,7 @@ msgstr "啟用"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
+msgstr[0] "{num} 個建議"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

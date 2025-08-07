@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:01+0000\n"
+"PO-Revision-Date: 2025-08-07 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -946,28 +946,28 @@ msgstr "לא נתמך במסמך זה"
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr ""
+msgstr "מעבר לכותרת הבאה ברמה {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr ""
+msgstr "אין כותרת הבאה ברמה {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr ""
+msgstr "מעבר לכותרת הקודמת ברמה {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr ""
+msgstr "אין כותרת קודמת ברמה {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -2139,7 +2139,8 @@ msgstr[3] "התקנת התוספים הבאים נכשלה:{}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "פעולות מסוימות בהרחבות נכשלו. עיין בקובץ יומן הרישום לקבלת פרטים נוספים.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3584,14 +3585,15 @@ msgstr "ללא החלפת סימון"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "תו: {character}\n"
+"החלפה: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "סימן מורחב ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -3983,7 +3985,7 @@ msgstr "מציג את הגדרות הקול של NVDA"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "מציג את הגדרות התצוגה של nvda"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3376
@@ -4029,17 +4031,17 @@ msgstr "הצגת הגדרות הגישה מרחוק"
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3453
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "הצגת ההגדרות של חנות התוספים של NVDA"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "מציג את הגדרות זיהוי התווים האופטי של Windows של NVDA"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3471
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "הצגת ההגדרות המתקדמות של NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3480
@@ -4233,7 +4235,7 @@ msgstr "הפעלה וכיבוי של דיבור בעת ניווט לפי שור�
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3804
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "דיבור בעת ניווט לפי שורה או פיסקה עם ברייל מופעל"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3806
@@ -4746,26 +4748,26 @@ msgstr "מיתוג בין מצבי פיצול הצליל"
 #: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "מדווח על השפה של הטקסט מתחת לסמן. אם לוחצים עליו פעמיים, מציג את המידע במצב עיון"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "שפה לא ידועה"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4960
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (לא נתמך)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "שפה במיקום הסמן "
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4974
@@ -6789,7 +6791,7 @@ msgstr "אינטונציה"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "השתמש במערכת פלט שמע מודרנית (WASAPI)"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7014,7 +7016,7 @@ msgstr "ודאו שאתם מחוברים לאינטרנט, ושכתובת ה-URL
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "אין אפשרות ליצור חיבור לשרת NV Access."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7163,14 +7165,15 @@ msgstr "&בוצע"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "לא מומלץ לעדכן את NVDA בעת חיבור ל-NVDA Remote Access כמחשב הנשלט. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "ייתכן שהחיבור הפעיל כעת לא יימשך במהלך העדכון או לאחריו. גם אם החיבור נמשך, לא תוכל להגיב לבקשות בקרת חשבון משתמש (UAC) מהמחשב השולט. עליך להמשיך רק אם יש לך גישה פיזית למחשב הנשלט.\n\n"
+"האם אתה בטוח שאתה רוצה להמשיך?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7245,7 +7248,7 @@ msgstr "ודא שאתה מחובר לאינטרנט, ושכתובת ה- URL של
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "אין אפשרות ליצור חיבור לשרת מאגר ההרחבות."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -8720,7 +8723,7 @@ msgstr "ברייל של NattiQ"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "קורא אלקטרוני NLS Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -9242,19 +9245,19 @@ msgstr "ספרדית עבור טקסט יווני"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "עברית (תנ\"כית) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "עברית מזמורית (תנ\"כית) מלאה"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "עברית (תנ\"כית) מצומצמת"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9602,13 +9605,13 @@ msgstr "רומנית"
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "ברייל מחשב רוסי 6 נקודות"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:465
 msgid "Russian 8 dot computer braille"
-msgstr ""
+msgstr "ברייל מחשב רוסי 8 נקודות"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9794,7 +9797,7 @@ msgstr "כיתה תאילנדית 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Thai grade 2"
-msgstr ""
+msgstr "תאילנדית דרגה 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10156,19 +10159,19 @@ msgstr "פילקרו (¶)"
 #: config\configFlags.py:313
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "דיבור"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:315
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "צפצוף"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "כבוי"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
@@ -12061,7 +12064,7 @@ msgstr "תוספים שאינם תואמיםהתקנת תוספים"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "התוספות הבאות אינן תואמות לגרסה {version} של NVDA. לא ניתן להפוך הרחבות אלה לזמינות. אנא צרו קשר עם מחבר התוסף לקבלת סיוע נוסף."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12188,7 +12191,7 @@ msgstr "שגיאה בעת הפעלת פרופיל."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "{name} הפרופיל ימחק לצמיתות. לא ניתן לבטל פעולה זו."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12613,14 +12616,15 @@ msgstr "התקיה קיימת"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "לא מומלץ להתקין NVDA כאשר הוא מחובר ל-NVDA Remote Access כמחשב מבוקר. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "לא תוכל להגיב להנחיות בקרת חשבון משתמש (UAC) מהמחשב השולט. עליך להמשיך רק אם יש לך גישה פיזית למחשב הנשלט.\n\n"
+"האם אתה בטוח שאתה רוצה להמשיך?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12780,7 +12784,7 @@ msgstr "אל תשמור"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "ברירת מחדל ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13051,14 +13055,14 @@ msgstr "החלפה אוטומטית של ניב השפה, (אם מנוע הדי�
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "דווח על שינויי שפה בזמן קריאה"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "דיווח בעת מעבר לשפה אינו אפשרי על ידי סינתיסייזר"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13850,7 +13854,7 @@ msgstr "אפשר גישה מרחוק"
 #: gui\settingsDialogs.py:3401
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr ""
+msgstr "אשר לפני הניתוק בעת שליטה"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3411
@@ -13913,7 +13917,8 @@ msgstr "מחיקת כל טביעות האצבע המהימנות"
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "זה יגרום ל-NVDA לשכוח את כל שרתי הגישה מרחוק שהיו מהימנים בעבר. בעת התחברות לשרת שלא זוהה בעבר, תישאל שוב אם לתת אמון באישור שלו.\n\n"
+"האם אתה בטוח שאתה רוצה להמשיך? לא ניתן לבטל פעולה זו."
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3569
@@ -15391,7 +15396,7 @@ msgstr "התקנת התוסף"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "מתקין תוסף {num}, נא להמתין."
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
@@ -15403,7 +15408,7 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "הורדה של תוסף {num} מתבצעת, לבטל את ההורדה?"
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
@@ -15786,7 +15791,7 @@ msgstr "שימוש מיוחד"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
+msgstr[0] "{num} הצעה"
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
@@ -17855,7 +17860,7 @@ msgstr "{val:g} נק רווחים לפני פסקה"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (לא נתמכת)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98
@@ -18706,13 +18711,13 @@ msgstr "קישור הועתק"
 #: _remoteClient\client.py:226
 msgctxt "remote"
 msgid "Confirm Disconnection"
-msgstr ""
+msgstr "אשר ניתוק"
 
 #. Translators: Message shown when disconnecting from the remote computer.
 #: _remoteClient\client.py:230
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
-msgstr ""
+msgstr "האם אתה בטוח שברצונך להתנתק מהפעלת הגישה מרחוק?"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:282
@@ -18934,7 +18939,7 @@ msgstr "התחבר"
 #: _remoteClient\localMachine.py:289
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr ""
+msgstr "לא ניתן להפעיל control+alt+delete"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
@@ -18974,7 +18979,7 @@ msgstr "העתק קישור להפעלה הנוכחית של הגישה מרחו
 #: _remoteClient\menu.py:68
 msgctxt "remote"
 msgid "S&end control+alt+delete"
-msgstr ""
+msgstr "S&end control+alt+delete"
 
 #. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
