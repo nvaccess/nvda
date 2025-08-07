@@ -459,7 +459,6 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 						"&lt;target&gt;&lt;/target&gt;",
 					):
 						res.numBadTranslationStrings += 1
-						print(f"Warning: line {lineNum} contained a corrupt empty translation. Using source")
 						translation = ""
 					else:
 						res.numTranslatedStrings += 1

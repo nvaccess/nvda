@@ -154,6 +154,22 @@ class AcrobatNode(IAccessible):
 				answer += AcrobatNode.getMathMLAttributes(node, ["encoding"])
 			case "ms":
 				answer += AcrobatNode.getMathMLAttributes(node, ["open", "close"])
+			case "mspace":
+				answer += AcrobatNode.getMathMLAttributes(node, ["width"])
+			case "msgroup":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "shift"])
+			case "msrow":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position"])
+			case "msline":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "length"])
+			case "mscarries":
+				answer += AcrobatNode.getMathMLAttributes(node, ["position", "crossout"])
+			case "mscarry":
+				answer += AcrobatNode.getMathMLAttributes(node, ["crossout"])
+			case "mstack":
+				answer += AcrobatNode.getMathMLAttributes(node, ["align", "stackalign"])
+			case "mlongdiv":
+				answer += AcrobatNode.getMathMLAttributes(node, ["longdivstyle"])
 			case _:
 				pass
 		answer += ">"
