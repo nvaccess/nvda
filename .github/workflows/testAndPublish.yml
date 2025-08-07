@@ -37,6 +37,8 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
+  defaultRunner: 'windows-2025'
+  supportedRunners: '["windows-2025", "windows-11-arm"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
   defaultPythonVersion: '3.11.9'
@@ -47,18 +49,22 @@ jobs:
     name: Set up matrix
     runs-on: ubuntu-latest
     outputs:
+      defaultRunner: ${{ steps.setMatrix.outputs.defaultRunner }}
+      supportedRunners: ${{ steps.setMatrix.outputs.supportedRunners }}
       supportedArchitectures: ${{ steps.setMatrix.outputs.supportedArchitectures }}
       supportedPythonVersions: ${{ steps.setMatrix.outputs.supportedPythonVersions }}
     steps:
     - name: Set architecture and python version
       id: setMatrix
       run: |
+        echo "defaultRunner=${{ env.defaultRunner }}" >> "$GITHUB_OUTPUT"
+        echo "supportedRunners=$(jq -c <<< '${{ env.supportedRunners }}')" >> "$GITHUB_OUTPUT"
         echo "supportedArchitectures=$(jq -c <<< '${{ env.supportedArchitectures }}')" >> "$GITHUB_OUTPUT"
         echo "supportedPythonVersions=$(jq -c <<< '${{ env.supportedPythonVersions }}')" >> "$GITHUB_OUTPUT"
   buildNVDA:
     name: Build NVDA
     needs: matrix
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     strategy:
       fail-fast: false
       matrix:
@@ -112,6 +118,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
     - name: Store release metadata information
       id: releaseInfo
       run: |
@@ -122,7 +129,7 @@ jobs:
 
   typeCheck:
     name: Check types with Pyright
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -130,6 +137,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -143,7 +151,7 @@ jobs:
 
   checkPo:
     name: Check po files for errors
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -177,7 +185,7 @@ jobs:
 
   checkPot:
     name: Check translator comments
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -185,6 +193,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -206,7 +215,7 @@ jobs:
 
   licenseCheck:
     name: Check license compatibility of dependencies
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: buildNVDA
     steps:
     - name: Checkout cached build
@@ -214,6 +223,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -227,7 +237,7 @@ jobs:
 
   unitTests:
     name: Run unit tests
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -242,6 +252,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -276,7 +287,7 @@ jobs:
 
   crowdinUpload:
     name: Upload translations to Crowdin
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
     steps:
@@ -285,6 +296,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Get makePot results
       uses: actions/download-artifact@v4
@@ -306,7 +318,7 @@ jobs:
 
   createLauncher:
     name: Create launcher
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -326,6 +338,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -386,23 +399,28 @@ jobs:
 
   systemTests:
     name: Run system tests
-    runs-on: windows-2025
+    runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
     strategy:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
+        runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
+    - name: 'Workaround for missing zstd in windows-11-arm'
+      if: matrix.runner == 'windows-11-arm'
+      run: choco install -y zstandard
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -432,7 +450,7 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
+        name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         path: |
           testOutput/system
           testOutput/install
@@ -441,14 +459,14 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ failure() }}
       with:
-        check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
+        check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         detailed_summary: true
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
   createSymbols:
     name: Create symbols
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -465,6 +483,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Windows SDK
       # Installs symstore.exe to expected location.
@@ -498,7 +517,7 @@ jobs:
 
   uploadSymbols:
     name: Upload symbols
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: createSymbols
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
@@ -507,6 +526,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
