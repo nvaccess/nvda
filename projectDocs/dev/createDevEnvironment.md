@@ -58,7 +58,7 @@ Install the python version listed in [.python-versions](../../.python-versions)
 #### Microsoft Visual Studio
 
 * Microsoft Visual Studio 2022
-	* To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions `windows-latest` is using](https://github.com/actions/runner-images/tree/main/images/windows).
+	* To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions is using](https://github.com/actions/runner-images/tree/main/images/windows).
 	* If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
 	* If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://visualstudio.microsoft.com/vs/community/).
 		* The Professional and Enterprise versions are also supported.

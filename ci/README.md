@@ -43,8 +43,8 @@ PowerShell scripts continue on non-terminating errors unless the file is prefixe
 
 ## Setup requirements
 
-Builds from PRs and pushes to master/beta/rc should work out the box for forks.
-Simply enable GitHub Actions on your fork.
+Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
+You just need to enable GitHub Actions on your fork.
 
 The following configuration is required only for more advanced development such as:
 
