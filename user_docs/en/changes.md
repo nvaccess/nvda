@@ -34,6 +34,7 @@ Note that this is disabled by default due to the device using generic USB identi
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
 * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
+* A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -42,6 +43,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Component updates:
   * Updated Pyright to 1.1.403. (#18424)
   * Updated Ruff to 0.12.5. (#18424)
+  * Updated markdown to 3.8.2. (#18638)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
@@ -56,6 +58,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
+* Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
+Importing from `md2html` is discouraged. (#18638)
 
 ## 2025.2
 
