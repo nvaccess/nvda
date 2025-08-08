@@ -1,8 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-"""MathCAT add-on: generates speech, braille, and allows exploration of expressions written in MathML.
-The goal of this add-on is to replicate/improve upon the functionality of MathPlayer which has been discontinued."""
-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
@@ -59,8 +54,6 @@ from textUtils import WCHAR_ENCODING
 
 import mathPres  # math plugin stuff
 
-_ = gettext.gettext
-
 RE_MATHML_SPEECH: re.Pattern = re.compile(
 	# Break.
 	r"<break time='(?P<break>\d+)ms'/> ?"
@@ -84,11 +77,6 @@ PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
 	"rate": RateCommand,
 }
 RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
-
-# try to get around espeak bug where voice slows down (for other voices, just a waste of time)
-# we use a global that gets set at a time when the rate is probably good (SetMathML)
-_synthesizerRate: int | None = None
-
 
 def getLanguageToUse(mathMl: str = "") -> str:
 	"""Get the language specified in a math tag if the language pref is Auto, else the language preference.
