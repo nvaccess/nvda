@@ -1136,7 +1136,9 @@ def enableBridge():
 def initialize():
 	global bridgeDll, isRunning
 	try:
-		bridgeDll = cdll.LoadLibrary(NVDAState.ReadPaths.javaAccessBridgeDLL)
+		bridgeDll = cdll.LoadLibrary(
+			os.path.join("windowsaccessbridge.dll"),
+		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()

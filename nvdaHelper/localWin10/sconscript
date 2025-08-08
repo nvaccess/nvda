@@ -12,11 +12,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-import os
-import glob
-
-from SCons.Tool.MSCommon.vc import find_vc_pdir
-
 Import(
 	"env",
 	"sourceDir",
@@ -40,33 +35,5 @@ localWin10Lib = env.SharedLibrary(
 		localLib[2],
 	],  # noqa: F821
 )
-
-# UWP dlls can only be dynamically linked with the CRT,
-# but some systems might not have this version of the CRT.
-# Therefore, we must include it.
-# VS keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
-# Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
-msvc = env.get("MSVC_VERSION")
-vcRedistDirs = glob.glob(
-	os.path.join(
-		find_vc_pdir(msvc, env), rf"Redist\MSVC\{msvc[:2]}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
-	)
-)
-if len(vcRedistDirs) == 0:
-	raise RuntimeError(
-		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
-	)
-vcRedistDirs.sort(reverse=True)
-for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
-	for vcRedistDir in vcRedistDirs:
-		path = os.path.join(vcRedistDir, fn)
-		if os.path.isfile(path):
-			env.Install(sourceDir, path)
-			break
-		else:
-			raise RuntimeError(
-				"Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"
-				% fn
-			)
 
 Return(["localWin10Lib"])
