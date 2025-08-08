@@ -3048,18 +3048,18 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling errors reporting {#reportSpellingErrors}
+##### Spelling error reporting {#reportSpellingErrors}
 
 This option allows you to configure how spelling errors are reported while reading text.
-The "Report spelling errors" combo box has three options.
+The "Report spelling errors" combo box has three options:
 
-* Off: NVDA will not report any spelling error
+* Off: NVDA will not report spelling errors
 * Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
 * Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
 
-When navigating word by word or character by character, "out of spelling error" is also reported if Speech or Sound option is selected.
+When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
 
-Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in the combo-box.
+Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in the combo box.
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
