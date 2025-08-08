@@ -2,6 +2,7 @@
 # Copyright (C) 2025 NV Access Limited, tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import os
 import json
 import re
@@ -138,7 +139,7 @@ class ImageCaptioner:
 			log.exception(f"vocab.json not found at {vocabPath}")
 			raise
 		except Exception as e:
-			log.exception(f"Warning: Could not load vocabulary from {vocabPath}: {e}")
+			log.exception(f"Could not load vocabulary from {vocabPath}")
 			raise
 
 	def preprocessImage(self, image: str | bytes) -> np.ndarray:
@@ -208,6 +209,7 @@ class ImageCaptioner:
 					tokens.append(token)
 
 		# Simple text post-processing
+		# Ġ (Unicode U+0120) is used by GPT-2 and RoBERTa to indicate space at the beginning of a word in their vocabulary
 		text = " ".join(tokens).replace("Ġ", " ")
 
 		# Basic text cleaning
