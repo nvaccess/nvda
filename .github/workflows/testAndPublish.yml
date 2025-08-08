@@ -7,8 +7,6 @@ on:
     - beta
     - rc
     - 'try-**'
-    # Temporarily enabled during the 64bit migration
-    - wip-buildX64
     # Currently disabled while the 2025.2 release is in progress.
     # Blocked by #17878
     # tags:
@@ -38,7 +36,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultArch: x86
-  supportedArchitectures: '["x86"]'
+  supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.11.9'
   supportedPythonVersions: '["3.11.9", "3.13.5"]'
 

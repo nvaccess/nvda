@@ -11,6 +11,9 @@ import comtypes.client
 import winUser
 import typing
 
+import winBindings.oleacc
+
+
 # Include functions from oleacc.dll in the module namespace.
 m = comtypes.client.GetModule("oleacc.dll")
 globals().update((key, val) for key, val in m.__dict__.items() if not key.startswith("_"))
@@ -348,7 +351,7 @@ def GetProcessHandleFromHwnd(windowHandle):
 	@returns: a process handle with read, write and operation access
 	@rtype: integer
 	"""
-	return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)  # noqa: F405
+	return winBindings.oleacc.GetProcessHandleFromHwnd(windowHandle)  # noqa: F405
 
 
 def GetRoleText(role):

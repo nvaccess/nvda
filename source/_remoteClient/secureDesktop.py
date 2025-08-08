@@ -25,13 +25,13 @@ import threading
 import uuid
 from pathlib import Path
 from typing import Any, Optional
-from ctypes import c_bool, windll, c_wchar_p, c_ushort, create_unicode_buffer
-from ctypes.wintypes import DWORD, HANDLE
+from ctypes import create_unicode_buffer
 
 import shlobj
 from logHandler import log
 from winAPI.secureDesktop import post_secureDesktopStateChange
 from NVDAHelper import localLib
+from winBindings import kernel32
 
 from . import bridge, server
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -206,12 +206,6 @@ class SecureDesktopHandler:
 
 		:return: Connection information if successful, None on failure
 		"""
-		getModuleFileName = windll.kernel32.GetModuleFileNameW
-		getModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
-		getModuleFileName.restype = DWORD
-		localListeningSocketExists = localLib.localListeningSocketExists
-		localListeningSocketExists.argtypes = (c_ushort, c_wchar_p)
-		localListeningSocketExists.restype = c_bool
 		log.info("Initializing secure desktop connection")
 		try:
 			log.debug(f"Reading connection data from IPC file: {self.IPCFile}")
@@ -225,8 +219,8 @@ class SecureDesktopHandler:
 
 			# Check that a socket is open on the right IP and port and with the same owning process image
 			processImageName = create_unicode_buffer(1024)
-			getModuleFileName(0, processImageName, 1024)
-			if not localListeningSocketExists(port, processImageName):
+			kernel32.GetModuleFileName(0, processImageName, 1024)
+			if not localLib.localListeningSocketExists(port, processImageName):
 				raise RuntimeError("Matching socket not open.")
 
 			log.info(f"Successfully established secure desktop connection on port {port}")
