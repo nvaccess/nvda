@@ -16,8 +16,10 @@ from . import rulesUtils
 
 def pathToLanguagesFolder() -> str:
 	r"""Returns the full path to the Languages rules folder.
-		The language rules are stored in:
-	MathCAT\Rules\Languages, relative to the location of this file.
+
+	The language rules are stored in:
+	..\..\..\include\nvda-mathcat\assets\Rules\Languages,
+	relative to the location of this file.
 
 	:return: Absolute path to the Languages folder as a string.
 	"""
@@ -39,7 +41,11 @@ def getLanguages() -> tuple[list[str], list[str]]:
 	This method scans the language folders and adds entries for each language and its
 	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
 
-	It also adds a special "Use Voice's Language (Auto)" option at the top.
+	It also adds a special "Use Voice's Language (Auto)" option at the beginning.
+
+	:return: A pair of lists with the first list containing the contents of the
+	language selection combo box, and the second list containing the corresponding
+	language code for each menu item.
 	"""
 
 	languageOptions: list[str] = []
@@ -86,9 +92,13 @@ def getLanguages() -> tuple[list[str], list[str]]:
 
 def getLanguageCode(langChoice: wx.Choice) -> str:
 	"""Extract the language code from the selected language string in the UI.
-		The selected language string is expected to contain the language code in parentheses,
+
+	The selected language string is expected to contain the language code in parentheses,
 	for example: "English (en)".
-		:return: The language code extracted from the selection.
+
+	:param langChoice: The language selection combo box.
+
+	:return: The language code extracted from the selection.
 	"""
 	langSelection: str = langChoice.GetStringSelection()
 	langCode: str = langSelection[langSelection.find("(") + 1 : langSelection.find(")")]
@@ -99,7 +109,9 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	"""Get all the speech styles for the current language.
 	This sets the SpeechStyles dialog entry.
 
-	:param thisSpeechStyle: The speech style to set or highlight in the dialog.
+	:param languageCode: The code of the current language.
+
+	:return: A list of speech styles for the given language.
 	"""
 	from speech import getCurrentLanguage
 
