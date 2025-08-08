@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 18
+latestSchemaVersion = 19
 
 #: The configuration specification string
 #: @type: String
@@ -226,7 +226,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
+	# Deprecated, and aliased to reportSpellingErrors2, to be removed in 2026.1
 	reportSpellingErrors = boolean(default=true)
+	# 0: Off, 1: Speech, 2: Sound
+	reportSpellingErrors2 = integer(min=0, max=2, default=1)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
