@@ -327,8 +327,6 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			# For persistence
 			name="remote.connect.mode",
 		)
-		# if not persist.PersistenceManager.Get().RegisterAndRestore(self._connectionModeControl):
-		# self._connectionModeControl.SetSelection(0)
 		self._connectionModeControl.SetSelection(0)
 		self._persistentControls.append(self._connectionModeControl)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
