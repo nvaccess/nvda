@@ -9,7 +9,7 @@ description = "NonVisual Desktop Access (NVDA)"
 maintainers = [
 	{name = "NV Access", email = "info@nvaccess.org"},
 ]
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.11,<3.14"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: End Users/Desktop",
@@ -22,7 +22,7 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
-	"comtypes==1.4.6",
+	"comtypes==1.4.11",
 	"cryptography==44.0.1",
 	"pyserial==3.5",
 	"wxPython==4.2.2",
@@ -312,7 +312,7 @@ dev = [
 	# NVDA's build system is SCons
 	"SCons==4.9.1",
 	# Packaging NVDA
-	"py2exe==0.13.0.2",
+	"py2exe==0.14.0.0",
 	"setuptools~=72.0",
 ]
 lint = [

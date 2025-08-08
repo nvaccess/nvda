@@ -44,6 +44,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Component updates:
   * Updated Pyright to 1.1.403. (#18424)
   * Updated Ruff to 0.12.5. (#18424)
+  * Updated comtypes to 1.4.11. (#18611)
+  * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * Updated `include` dependencies:
