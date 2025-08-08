@@ -5,9 +5,36 @@ import config
 import yaml
 from logHandler import log
 
-from .MathCATPreferences import UserInterface
 from .rulesUtils import getRulesFiles
 
+def pathToUserPreferencesFolder() -> str:
+	"""Returns the path to the folder where user preferences are stored."""
+	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
+	return os.path.join(os.path.expandvars("%APPDATA%"), "MathCAT")
+
+def pathToUserPreferences() -> str:
+	"""Returns the full path to the user preferences file."""
+	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
+	return os.path.join(pathToUserPreferencesFolder(), "prefs.yaml")
+
+def pathToBrailleFolder() -> str:
+	r"""Returns the full path to the Braille rules folder.
+		The Braille rules are stored in:
+	MathCAT\Rules\Braille, relative to the location of this file.
+
+	:return: Absolute path to the Braille folder as a string.
+	"""
+	return os.path.join(
+		os.path.dirname(os.path.abspath(__file__)),
+		"..",
+		"..",
+		"..",
+		"include",
+		"nvda-mathcat",
+		"assets",
+		"Rules",
+		"Braille",
+	)
 
 def getBrailleCodes() -> list[str]:
 	"""Initializes and populates the braille code choice control with available braille codes.
@@ -15,9 +42,9 @@ def getBrailleCodes() -> list[str]:
 	Scans the braille codes folder for valid directories containing rules files, and adds them
 	to the braille code dropdown in the dialog.
 	"""
-	pathToBrailleFolder: str = UserInterface.pathToBrailleFolder()
+	brailleFolderPath: str = pathToBrailleFolder()
 	resultBrailleCodes = []
-	for brailleCode in os.listdir(pathToBrailleFolder):
+	for brailleCode in os.listdir(brailleFolderPath):
 		pathToBrailleCode: str = os.path.join(pathToBrailleFolder, brailleCode)
 		if os.path.isdir(pathToBrailleCode):
 			if len(getRulesFiles(pathToBrailleCode, None)) > 0:
@@ -110,10 +137,10 @@ class MathCATUserPreferences:
 			log.exception(
 				f'Error in trying to set MathCAT "Language" preference to "{self._prefs["Speech"]["Language"]}": {e}',
 			)
-		if not os.path.exists(UserInterface.pathToUserPreferencesFolder()):
+		if not os.path.exists(pathToUserPreferencesFolder()):
 			# create a folder for the user preferences
-			os.mkdir(UserInterface.pathToUserPreferencesFolder())
-		with open(UserInterface.pathToUserPreferences(), "w", encoding="utf-8") as f:
+			os.mkdir(pathToUserPreferencesFolder())
+		with open(pathToUserPreferences(), "w", encoding="utf-8") as f:
 			# write values to the user preferences file, NOT the default
 			yaml.dump(self._prefs, stream=f, allow_unicode=True)
 

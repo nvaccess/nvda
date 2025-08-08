@@ -7,8 +7,26 @@ from languageHandler import getLanguageDescription
 from logHandler import log
 
 from . import rulesUtils
-from .MathCATPreferences import UserInterface
 
+
+def pathToLanguagesFolder() -> str:
+	r"""Returns the full path to the Languages rules folder.
+		The language rules are stored in:
+	MathCAT\Rules\Languages, relative to the location of this file.
+
+	:return: Absolute path to the Languages folder as a string.
+	"""
+	return os.path.join(
+		os.path.dirname(os.path.abspath(__file__)),
+		"..",
+		"..",
+		"..",
+		"include",
+		"nvda-mathcat",
+		"assets",
+		"Rules",
+		"Languages",
+	)
 
 def getLanguages() -> tuple[list[str], list[str]]:
 	"""Populate the language choice dropdown with available languages and their regional variants.
@@ -46,9 +64,9 @@ def getLanguages() -> tuple[list[str], list[str]]:
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1
 	#   code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-	languageDir: str = UserInterface.pathToLanguagesFolder()
+	languageDir: str = pathToLanguagesFolder()
 	for language in os.listdir(languageDir):
-		pathToLanguageDir: str = os.path.join(UserInterface.pathToLanguagesFolder(), language)
+		pathToLanguageDir: str = os.path.join(pathToLanguagesFolder(), language)
 		if os.path.isdir(pathToLanguageDir):
 			# only add this language if there is a xxx_Rules.yaml file
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
@@ -119,7 +137,7 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 		languageCode = getCurrentLanguage().lower().replace("_", "-")
 	languageCode = languageCode.replace("-", "\\")
 
-	languagePath = UserInterface.pathToLanguagesFolder() + "\\"
+	languagePath = pathToLanguagesFolder() + "\\"
 	# log.info(f"languagePath={languagePath}")
 	# populate the m_choiceSpeechStyle choices
 	allStyleFiles = [
