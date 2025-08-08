@@ -4633,7 +4633,10 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				n for i, n in enumerate(self.autoDetectValues) if i not in self.autoDetectList.CheckedItems
 			] + unknownDriversExcluded
 
-		config.conf["braille"]["auto"]["excludeGenericDisplays"] = self.excludeGenericDisplaysCheckBox.Value
+		if self.excludeGenericDisplaysCheckBox.IsEnabled():
+			config.conf["braille"]["auto"]["excludeGenericDisplays"] = (
+				self.excludeGenericDisplaysCheckBox.Value
+			)
 
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(
