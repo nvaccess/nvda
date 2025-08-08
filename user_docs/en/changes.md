@@ -24,6 +24,7 @@
 * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
 * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
 Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
+* The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512)
 
 ### Bug Fixes
 
@@ -49,6 +50,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
+* NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
 
 #### Deprecations
 
