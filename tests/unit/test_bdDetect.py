@@ -99,3 +99,99 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar.addBluetoothDevices(matchFunc)
 		self.assertEqual(registrar._getDriverDict().get(bdDetect.CommunicationType.BLUETOOTH), matchFunc)
+
+
+class TestGenericDeviceDetection(unittest.TestCase):
+	"""Tests for generic USB-to-serial device detection."""
+
+	def test_isGenericUsbDevice_withGenericVidPidAndGenericDescription(self):
+		"""Test that devices with generic VID/PID and generic descriptions are detected as generic."""
+		test_cases = [
+			("VID_0403&PID_6001", {"busDescription": "USB Serial Port"}),
+			("VID_0403&PID_6001", {"busDescription": "FTDI USB Serial Device"}),
+			("VID_1A86&PID_7523", {"busDescription": "CH340 USB to Serial"}),
+			("VID_067B&PID_2303", {"busDescription": "Prolific USB-to-Serial Comm Port"}),
+			("VID_10C4&PID_EA60", {"busDescription": "Silicon Labs CP210x USB to UART Bridge"}),
+		]
+		for usbId, deviceInfo in test_cases:
+			with self.subTest(usbId=usbId, deviceInfo=deviceInfo):
+				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
+				self.assertTrue(result)
+
+	def test_isGenericUsbDevice_withGenericVidPidAndNoBusDescription(self):
+		"""Test that devices with generic VID/PID but no busDescription are detected as generic."""
+		test_cases = [
+			("VID_0403&PID_6001", {}),
+			("VID_0403&PID_6001", {"busDescription": ""}),
+			("VID_1A86&PID_7523", {"someOtherField": "value"}),
+		]
+		for usbId, deviceInfo in test_cases:
+			with self.subTest(usbId=usbId, deviceInfo=deviceInfo):
+				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
+				self.assertTrue(result)
+
+	def test_isGenericUsbDevice_withGenericVidPidButSpecificDescription(self):
+		"""Test that devices with generic VID/PID but specific descriptions are NOT detected as generic."""
+		test_cases = [
+			("VID_0403&PID_6001", {"busDescription": "DotPad Braille Display"}),
+			("VID_0403&PID_6001", {"busDescription": "HumanWare Brailliant"}),
+			("VID_1A86&PID_7523", {"busDescription": "NLS eReader Zoomax Braille Device"}),
+			("VID_067B&PID_2303", {"busDescription": "Papenmeier Braille Terminal"}),
+		]
+		for usbId, deviceInfo in test_cases:
+			with self.subTest(usbId=usbId, deviceInfo=deviceInfo):
+				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
+				self.assertFalse(result)
+
+	def test_isGenericUsbDevice_withNonGenericVidPid(self):
+		"""Test that devices with non-generic VID/PID are never detected as generic."""
+		test_cases = [
+			("VID_1234&PID_5678", {"busDescription": "USB Serial Port"}),
+			("VID_ABCD&PID_EFGH", {}),
+			("VID_0F4E&PID_0100", {"busDescription": "FTDI Serial Converter"}),
+		]
+		for usbId, deviceInfo in test_cases:
+			with self.subTest(usbId=usbId, deviceInfo=deviceInfo):
+				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
+				self.assertFalse(result)
+
+	def test_isGenericUsbDevice_caseInsensitive(self):
+		"""Test that bus description matching is case-insensitive."""
+		test_cases = [
+			("VID_0403&PID_6001", {"busDescription": "USB SERIAL PORT"}),
+			("VID_0403&PID_6001", {"busDescription": "Ftdi USB Serial Device"}),
+			("VID_1A86&PID_7523", {"busDescription": "CH340 usb-serial controller"}),
+		]
+		for usbId, deviceInfo in test_cases:
+			with self.subTest(usbId=usbId, deviceInfo=deviceInfo):
+				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
+				self.assertTrue(result)
+
+	def test_isGenericDeviceMatch_function(self):
+		"""Test that _isGenericDeviceMatch function works properly."""
+		# Generic serial device
+		genericMatch = bdDetect.DeviceMatch(
+			bdDetect.ProtocolType.SERIAL,
+			"VID_0403&PID_6001",
+			"COM1",
+			{"busDescription": "USB Serial Port"},
+		)
+		self.assertTrue(bdDetect._isGenericDeviceMatch(genericMatch))
+
+		# Non-generic serial device
+		specificMatch = bdDetect.DeviceMatch(
+			bdDetect.ProtocolType.SERIAL,
+			"VID_0403&PID_6001",
+			"COM2",
+			{"busDescription": "DotPad Braille Display"},
+		)
+		self.assertFalse(bdDetect._isGenericDeviceMatch(specificMatch))
+
+		# Non-serial device (should always be False)
+		hidMatch = bdDetect.DeviceMatch(
+			bdDetect.ProtocolType.HID,
+			"VID_1234&PID_5678",
+			r"\\?\hid#vid_1234&pid_5678#1&2345678&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}",
+			{},
+		)
+		self.assertFalse(bdDetect._isGenericDeviceMatch(hidMatch))

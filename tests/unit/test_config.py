@@ -37,6 +37,7 @@ from config.profileUpgradeSteps import (
 	upgradeConfigFrom_11_to_12,
 	upgradeConfigFrom_16_to_17,
 	upgradeConfigFrom_17_to_18,
+	upgradeConfigFrom_18_to_19,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -1160,4 +1161,89 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18(unittest.TestCase):
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_17_to_18(profile)
 		expected = ["dotPad", "hidBrailleStandard"]
+		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], expected)
+
+
+class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
+	def test_noBrailleSection(self):
+		"""Test upgrading when there is no braille section - should do nothing."""
+		configString = ""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		# Should not have created any braille section
+		self.assertNotIn("braille", profile)
+
+	def test_noAutoSection(self):
+		"""Test upgrading when braille section exists but no auto section - should do nothing."""
+		configString = """
+[braille]
+	display = auto
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		# Should not have created auto section
+		self.assertNotIn("auto", profile["braille"])
+
+	def test_noExcludedDisplaysKey(self):
+		"""Test upgrading when auto section exists but no excludedDisplays key - should do nothing."""
+		configString = """
+[braille]
+	display = auto
+	[[auto]]
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		# Should not have created excludedDisplays key
+		self.assertNotIn("excludedDisplays", profile["braille"]["auto"])
+
+	def test_emptyExcludedDisplays(self):
+		"""Test upgrading when excludedDisplays exists but is empty - should remain empty."""
+		configString = """
+[braille]
+	display = auto
+	[[auto]]
+		excludedDisplays =
+"""
+		profile = _loadProfile(configString)
+		# Manually set to empty list to simulate the state after config parsing
+		profile["braille"]["auto"]["excludedDisplays"] = []
+		upgradeConfigFrom_18_to_19(profile)
+		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], [])
+
+	def test_dotPadInExcludedDisplays(self):
+		"""Test upgrading when dotPad is in excludedDisplays - should remove it."""
+		configString = """
+[braille]
+	display = auto
+	[[auto]]
+		excludedDisplays = dotPad,
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], [])
+
+	def test_dotPadWithOthersInExcludedDisplays(self):
+		"""Test upgrading when dotPad is in excludedDisplays with others - should remove only dotPad."""
+		configString = """
+[braille]
+	display = auto
+	[[auto]]
+		excludedDisplays = dotPad, hidBrailleStandard
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		expected = ["hidBrailleStandard"]
+		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], expected)
+
+	def test_noDotPadInExcludedDisplays(self):
+		"""Test upgrading when dotPad is not in excludedDisplays - should leave list unchanged."""
+		configString = """
+[braille]
+	display = auto
+	[[auto]]
+		excludedDisplays = hidBrailleStandard, someOtherDriver,
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		expected = ["hidBrailleStandard", "someOtherDriver"]
 		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], expected)
