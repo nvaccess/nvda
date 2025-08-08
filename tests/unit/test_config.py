@@ -1185,7 +1185,9 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_18_to_19(profile)
 		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "False")
-		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors2"], ReportSpellingErrors.OFF.value)
+		self.assertEqual(
+			profile["documentFormatting"]["reportSpellingErrors2"], ReportSpellingErrors.OFF.value
+		)
 
 	def test_defaultProfile_reportSpellingErrors_true(self):
 		"""reportSpellingErrors set to True."""
@@ -1212,6 +1214,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
 		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "notABool")
 		with self.assertRaises(KeyError):
 			profile["documentFormatting"]["reportSpellingErrors2"]
+
 
 class Config_getitem_alias(unittest.TestCase):
 	def setUp(self):
