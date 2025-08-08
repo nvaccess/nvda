@@ -5,10 +5,6 @@ This page is meant to serve as an explanation for how to fill out our [GitHub is
 **Warning**: In all but exceptional circumstances we require one of these templates to be completed.
 Your issue will likely be closed if a template has not been followed.
 
-We encourage new contributors to use the first grouping of templates.
-These are a fillable form that guides you through the process of providing the necessary information for your issue.
-The "Advanced" version of these templates ask for the same information, but in a more free-form manner, with less supporting information.
-
 We currently have the following templates:
 
 * For [bug reports](https://github.com/nvaccess/nvda-issue-form-test/issues/new?template=1-bug_report.yaml)
@@ -21,6 +17,9 @@ We currently have the following templates:
   * Note there is no further guide for this - it is expected that developers can use the template appropriately.
 * For [security vulnerabilities](https://github.com/nvaccess/nvda/security/advisories/new)
   * Please note that these are reported differently, for more information refer to our [disclosure policy/procedure](https://github.com/nvaccess/nvda/blob/master/security.md)
+
+These are a fillable form that guides you through the process of providing the necessary information for your issue.
+The "Advanced" version of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) ask for the same information, but in a more free-form manner, with less supporting information.
 
 ## Help
 
