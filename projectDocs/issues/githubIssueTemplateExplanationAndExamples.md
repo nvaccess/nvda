@@ -28,9 +28,9 @@ If you have trouble following this template, or with the initial investigation t
 
 ## Tips
 
+* Read through the template first in Browse mode before filling it out, to ensure you don't skip over contextual text between form fields.
 * The template uses GitHub markdown in multi-line edit controls, to provide formatting for headings, lists, quotes etc.
 If you are not familiar, please take some time to learn about [Github markdown](https://guides.github.com/features/mastering-markdown/).
-* Read through the template first in Browse mode before filling it out, to ensure you don't skip over contextual text between form fields.
 * In multi-line edit boxes, consider swapping to the preview tab in order to read through the details and confirm the formatting reads as expected.
 
 ## Attachments / Images
