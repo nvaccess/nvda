@@ -4526,6 +4526,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			wx.CheckBox(self, label=excludeGenericDisplaysText),
 		)
 		self.excludeGenericDisplaysCheckBox.Value = config.conf["braille"]["auto"]["excludeGenericDisplays"]
+		self.bindHelpEvent("SelectBrailleDisplayExcludeGenericDisplays", self.excludeGenericDisplaysCheckBox)
 
 		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 		portsLabelText = _("&Port:")
