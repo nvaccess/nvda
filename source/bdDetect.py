@@ -292,7 +292,7 @@ def getDriversForConnectedUsbDevices(
 
 	for driver, match in fallbackDriversAndMatches:
 		# Skip generic devices in fallback matches if configured to exclude them
-		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+		if _isGenericDeviceMatch(match) and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
 			continue
 		yield (driver, match)
 
@@ -679,7 +679,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 
 	for match in fallbackMatches:
 		# Skip generic devices in fallback matches if configured to exclude them
-		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+		if _isGenericDeviceMatch(match) and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
 			continue
 		yield match
 
