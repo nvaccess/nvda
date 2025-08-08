@@ -182,7 +182,7 @@ class TestGestureMap(unittest.TestCase):
 
 @unittest.skipUnless(
 	sysconfig.get_platform() == "win32",
-	"BRLTTY is only supported on 32-bit Windows"
+	"BRLTTY is only supported on 32-bit Windows",
 )
 @unittest.skipUnless(
 	sys.version_info.major == 3 and sys.version_info.minor == 11,
