@@ -3,7 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import gettext
 import re  # regexp patter match
 from collections.abc import Callable, Generator
 from ctypes import (
@@ -35,7 +34,6 @@ from speech.commands import (
 	BeepCommand,
 	BreakCommand,
 	CharacterModeCommand,
-	IndexCommand,
 	LangChangeCommand,
 	PhonemeCommand,
 	PitchCommand,
@@ -44,12 +42,10 @@ from speech.commands import (
 	SynthCommand,
 	VolumeCommand,
 )
-from speech.types import SpeechSequence
 from synthDriverHandler import (
 	SynthDriver,
 	getSynth,
 )
-from synthDrivers import _espeak
 from textUtils import WCHAR_ENCODING
 
 import mathPres  # math plugin stuff
@@ -129,8 +125,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	language: str = getLanguageToUse()
 	nvdaLanguage: str = getCurrentLanguage().replace("_", "-")
 	# log.info(f"mathCATLanguageSetting={mathCATLanguageSetting}, lang={language}, NVDA={nvdaLanguage}")
-
-	_monkeyPatchESpeak()
 
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines
@@ -240,9 +234,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def reportFocus(self) -> None:
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
 		super(MathCATInteraction, self).reportFocus()
-		# try to get around espeak bug where voice slows down
-		if _synthesizerRate and getSynth().name == "espeak":
-			getSynth()._set_rate(_synthesizerRate)
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
@@ -250,11 +241,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception(e)
 			# Translators: this message directs users to look in the log file
 			speech.speakMessage(_("Error in starting navigation of math: see NVDA error log for details"))
-		finally:
-			# try to get around espeak bug where voice slows down
-			if _synthesizerRate and getSynth().name == "espeak":
-				# log.info(f'reportFocus: reset to {_synthesizer_rate}')
-				getSynth()._set_rate(_synthesizerRate)
+
 
 	def getBrailleRegions(
 		self,
@@ -321,12 +308,9 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def script_navigate(self, gesture: KeyboardInputGesture) -> None:
 		"""Performs the specified navigation command.
 
-		:param gesture: They keyboard command which specified the navigation command to perform.
+		:param gesture: The keyboard command which specified the navigation command to perform.
 		"""
 		try:
-			# try to get around espeak bug where voice slows down
-			if _synthesizerRate and getSynth().name == "espeak":
-				getSynth()._set_rate(_synthesizerRate)
 			if gesture is not None:  # == None when initial focus -- handled in reportFocus()
 				modNames: list[str] = gesture.modifierNames
 				text = libmathcat.DoNavigateKeyPress(
@@ -342,11 +326,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception(e)
 			# Translators: this message directs users to look in the log file
 			speech.speakMessage(_("Error in navigating math: see NVDA error log for details"))
-		finally:
-			# try to get around espeak bug where voice slows down
-			if _synthesizerRate and getSynth().name == "espeak":
-				# log.info(f'script_navigate: reset to {_synthesizer_rate}')
-				getSynth()._set_rate(_synthesizerRate)
 
 		if not braille.handler.enabled:
 			return
@@ -427,7 +406,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			# Translators: this message directs users to look in the log file
 			speech.speakMessage(_("unable to copy math: see NVDA error log for details"))
 
-	# not a perfect match sequence, but should capture normal MathML
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")
 	_hasAddedId: re.Pattern = re.compile(" id='[^'].+' data-id-added='true'")
@@ -542,14 +520,8 @@ class MathCAT(mathPres.MathPresentationProvider):
 		:param mathml: A MathML string.
 		:returns: A list of speech commands and strings representing the given MathML.
 		"""
-		global _synthesizerRate
 		synth: SynthDriver = getSynth()
 		synthConfig = config.conf["speech"][synth.name]
-		if synth.name == "espeak":
-			_synthesizerRate = synthConfig["rate"]
-			# log.info(f'_synthesizer_rate={_synthesizer_rate}, get_rate()={getSynth()._get_rate()}')
-			getSynth()._set_rate(_synthesizerRate)
-		# log.info(f'..............get_rate()={getSynth()._get_rate()}, name={synth.name}')
 		try:
 			# need to set Language before the MathML for DecimalSeparator canonicalization
 			language: str = getLanguageToUse(mathml)
@@ -590,11 +562,6 @@ class MathCAT(mathPres.MathPresentationProvider):
 			# Translators: this message directs users to look in the log file
 			speech.speakMessage(_("Error in speaking math: see NVDA error log for details"))
 			return [""]
-		finally:
-			# try to get around espeak bug where voice slows down
-			if _synthesizerRate and getSynth().name == "espeak":
-				# log.info(f'getSpeechForMathMl: reset to {_synthesizer_rate}')
-				getSynth()._set_rate(_synthesizerRate)
 
 	def _addSounds(self) -> bool:
 		"""Queries the user preferences to determine whether or not sounds should be added.
@@ -637,89 +604,3 @@ class MathCAT(mathPres.MathPresentationProvider):
 		"""
 		MathCATInteraction(provider=self, mathMl=mathml).setFocus()
 		MathCATInteraction(provider=self, mathMl=mathml).script_navigate(None)
-
-
-CACHED_SYNTH: SynthDriver | None = None
-
-
-def _monkeyPatchESpeak() -> None:
-	"""Patches an eSpeak bug where the voice slows down."""
-	global CACHED_SYNTH
-	currentSynth: SynthDriver = getSynth()
-	if currentSynth.name != "espeak" or CACHED_SYNTH == currentSynth:
-		return  # already patched
-
-	CACHED_SYNTH = currentSynth
-	currentSynth.speak = patchedSpeak.__get__(currentSynth, type(currentSynth))
-
-
-def patchedSpeak(self, speechSequence: SpeechSequence) -> None:  # noqa: C901
-	# log.info(f"\npatched_speak input: {speechSequence}")
-	textList: list[str] = []
-	langChanged = False
-	prosody: dict[str, int] = {}
-	# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
-	# <voice><prosody></voice></prosody>.
-	# However, eSpeak doesn't seem to mind.
-	for item in speechSequence:
-		if isinstance(item, str):
-			textList.append(self._processText(item))
-		elif isinstance(item, IndexCommand):
-			textList.append('<mark name="%d" />' % item.index)
-		elif isinstance(item, CharacterModeCommand):
-			textList.append('<say-as interpret-as="characters">' if item.state else "</say-as>")
-		elif isinstance(item, LangChangeCommand):
-			langChangeXML = self._handleLangChangeCommand(item, langChanged)
-			textList.append(langChangeXML)
-			langChanged = True
-		elif isinstance(item, BreakCommand):
-			textList.append(f'<break time="{item.time}ms" />')
-		elif isinstance(item, RateCommand):
-			if item.multiplier == 1:
-				textList.append("<prosody/>")
-			else:
-				textList.append(f"<prosody rate={int(item.multiplier * 100)}%>")
-		elif type(item) in self.PROSODY_ATTRS:
-			if prosody:
-				# Close previous prosody tag.
-				textList.append('<break time="1ms" />')  # hack added for cutoff speech (issue #55)
-				textList.append("</prosody>")
-			attr = self.PROSODY_ATTRS[type(item)]
-			if item.multiplier == 1:
-				# Returning to normal.
-				try:
-					del prosody[attr]
-				except KeyError:
-					pass
-			else:
-				prosody[attr] = int(item.multiplier * 100)
-			if not prosody:
-				continue
-			textList.append("<prosody")
-			for attr, val in prosody.items():
-				textList.append(' %s="%d%%"' % (attr, val))
-			textList.append(">")
-		elif isinstance(item, PhonemeCommand):
-			# We can't use str.translate because we want to reject unknown characters.
-			try:
-				phonemes: str = "".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
-				# There needs to be a space after the phoneme command.
-				# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
-				textList.append("[[%s]] " % phonemes)
-			except KeyError:
-				log.debugWarning("Unknown character in IPA string: %s" % item.ipa)
-				if item.text:
-					textList.append(self._processText(item.text))
-		else:
-			log.exception("Unknown speech: %s" % item)
-	# Close any open tags.
-	if langChanged:
-		textList.append("</voice>")
-	if prosody:
-		textList.append("</prosody>")
-	text = "".join(textList)
-	# log.info(f"monkey-patched text={text}")
-	oldRate: int = getSynth()._get_rate()
-	_espeak.speak(text)
-	# try to get around espeak bug where voice slows down
-	getSynth()._set_rate(oldRate)
