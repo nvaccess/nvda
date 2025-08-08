@@ -1255,7 +1255,7 @@ def _getFormattingTags(
 	"""
 	textList: list[str] = []
 	for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
-		if formattingMarker.shouldBeUsed():
+		if formattingMarker.shouldBeUsed(fontAttribute):
 			_appendFormattingMarker(fontAttribute, formattingMarker, textList, field, fieldCache)
 	if len(textList) > 0:
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
