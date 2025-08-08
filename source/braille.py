@@ -404,8 +404,14 @@ class FormattingMarker(NamedTuple):
 	start: str
 	end: str
 
-	def shouldBeUsed(self) -> bool:
+	def shouldBeUsed(self, key) -> bool:
+		"""Determines if the formatting marker should be reported in braille.
+		:param key: A key which represents an element that may be reported in braille.
+		:return: `True` if the element should be reported, `False` otherwise.
+		"""
 		formatConfig = config.conf["documentFormatting"]
+		if key == "invalid-spelling":
+			return False
 		return formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE
 
 
