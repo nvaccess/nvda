@@ -123,6 +123,7 @@ only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
+	"Markdown",  # BSD-3-Clause, but not in PyPI correctly
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
 	"urllib3",  # MIT license, but not in PyPI
