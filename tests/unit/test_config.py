@@ -32,11 +32,12 @@ from config.profileUpgradeSteps import (
 	_upgradeConfigFrom_8_to_9_cellBorders,
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
-	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
+	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_16_to_17,
 	upgradeConfigFrom_17_to_18,
+	upgradeConfigFrom_18_to_19,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -45,6 +46,7 @@ from config.configFlags import (
 	ReportCellBorders,
 	TetherTo,
 	OutputMode,
+	ReportSpellingErrors,
 )
 from utils.displayString import (
 	DisplayStringEnum,
@@ -895,7 +897,7 @@ class Config_AggregatedSection_setitem(unittest.TestCase):
 
 
 class Config_AggregatedSection_pollution(unittest.TestCase):
-	"""Ënsure that config profiles don't get polluted with overridden values equal to the base config"""
+	"""Ãƒâ€¹nsure that config profiles don't get polluted with overridden values equal to the base config"""
 
 	def setUp(self):
 		manager = ConfigManager()
@@ -1161,3 +1163,86 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18(unittest.TestCase):
 		upgradeConfigFrom_17_to_18(profile)
 		expected = ["dotPad", "hidBrailleStandard"]
 		self.assertEqual(profile["braille"]["auto"]["excludedDisplays"], expected)
+
+
+class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
+	def test_DefaultProfile_Unmodified(self):
+		"""reportSpellingErrors unmodified."""
+		configString = "[documentFormatting]"
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportSpellingErrors"]
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportSpellingErrors2"]
+
+	def test_defaultProfile_reportSpellingErrors_false(self):
+		"""reportSpellingErrors set to False."""
+		configString = """
+		[documentFormatting]
+		reportSpellingErrors = False
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "False")
+		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors2"], ReportSpellingErrors.OFF.value)
+
+	def test_defaultProfile_reportSpellingErrors_true(self):
+		"""reportSpellingErrors set to True."""
+		configString = """
+		[documentFormatting]
+		reportSpellingErrors = True
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "True")
+		self.assertEqual(
+			profile["documentFormatting"]["reportSpellingErrors2"],
+			ReportSpellingErrors.SPEECH.value,
+		)
+
+	def test_defaultProfile_reportSpellingErrors_invalid(self):
+		"""reportSpellingErrors set to a non-boolean value."""
+		configString = """
+		[documentFormatting]
+		reportSpellingErrors = notABool
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_18_to_19(profile)
+		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "notABool")
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportSpellingErrors2"]
+
+class Config_getitem_alias(unittest.TestCase):
+	def setUp(self):
+		self.config = ConfigManager()["documentFormatting"]
+
+	def test_set_reportSpellingErrors_false(self):
+		config = self.config
+		config["reportSpellingErrors"] = False
+		self.assertEqual(config["reportSpellingErrors"], False)
+		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.OFF)
+
+	def test_set_reportSpellingErrors_true(self):
+		config = self.config
+		config["reportSpellingErrors"] = True
+		self.assertEqual(config["reportSpellingErrors"], True)
+		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SPEECH)
+
+	def test_set_reportSpellingErrors2_off(self):
+		config = self.config
+		config["reportSpellingErrors2"] = ReportSpellingErrors.OFF
+		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.OFF)
+		self.assertEqual(config["reportSpellingErrors"], False)
+
+	def test_set_reportSpellingErrors2_speech(self):
+		config = self.config
+		config["reportSpellingErrors2"] = ReportSpellingErrors.SPEECH
+		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SPEECH)
+		self.assertEqual(config["reportSpellingErrors"], True)
+
+	def test_set_reportSpellingErrors2_sound(self):
+		config = self.config
+		config["reportSpellingErrors2"] = ReportSpellingErrors.SOUND
+		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SOUND)
+		self.assertEqual(config["reportSpellingErrors"], True)
