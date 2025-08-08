@@ -163,6 +163,10 @@ jobs:
       uses: astral-sh/setup-uv@v6
     - name: Run pre-commit
       run: |
+        # Ensure uv environment is up to date.
+        # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
+        # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
+        pre-commit run uv-lock --all-files
         # Run pre-commit on the translations
         pre-commit run checkPo --all-files
     - name: Add job summary
