@@ -12,17 +12,18 @@ from ctypes.wintypes import (
 	HANDLE,
 	HWND,
 )
-
+from typing import Annotated
+from utils.ctypesUtils import (
+	dllFunc,
+)
 
 dll = windll.oleacc
 
-GetProcessHandleFromHwnd = dll.GetProcessHandleFromHwnd
-"""
-Retrieves a process handle from a window handle.
-.. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/winauto/getprocesshandlefromhwnd
-"""
-GetProcessHandleFromHwnd.argtypes = (
-	HWND,  # windowHandle
-)
-GetProcessHandleFromHwnd.restype = HANDLE
+
+@dllFunc(dll, annotateOriginalCFunc=True)
+def GetProcessHandleFromHwnd(windowHandle: int | HWND) -> Annotated[int, HANDLE]:
+	"""
+	Retrieves a process handle from a window handle.
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/winauto/getprocesshandlefromhwnd
+	"""
