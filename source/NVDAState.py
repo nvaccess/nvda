@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,10 @@ class _WritePaths:
 	def updateCheckStateFile(self) -> str:
 		return os.path.join(self.configDir, "updateCheckState.pickle")
 
+	@property
+	def guiStateFile(self) -> str:
+		return os.path.join(self.configDir, "guiState.ini")
+
 	def getSymbolsConfigFile(self, locale: str) -> str:
 		return os.path.join(self.configDir, f"symbols-{locale}.dic")
 
@@ -165,7 +169,8 @@ class _TrackNVDAInitialization:
 
 
 def _forceSecureModeEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular import
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -176,7 +181,8 @@ def _forceSecureModeEnabled() -> bool:
 
 
 def _serviceDebugEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular import
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -187,7 +193,8 @@ def _serviceDebugEnabled() -> bool:
 
 
 def _configInLocalAppDataEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular imports
+	from config.registry import RegistryKey
 	from logHandler import log
 
 	try:
