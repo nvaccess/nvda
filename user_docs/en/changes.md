@@ -34,6 +34,7 @@ Note that this is disabled by default due to the device using generic USB identi
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
 * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
+* A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
 
 ### Changes for Developers
 
