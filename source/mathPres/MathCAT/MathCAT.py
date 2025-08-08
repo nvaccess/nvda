@@ -2,14 +2,12 @@
 
 """MathCAT add-on: generates speech, braille, and allows exploration of expressions written in MathML.
 The goal of this add-on is to replicate/improve upon the functionality of MathPlayer which has been discontinued."""
-# Author: Neil Soiffer
-# Copyright: this file is copyright GPL2
-#   The code additionally makes use of the MathCAT library (written in Rust) which is covered by the MIT license
-#   and also (obviously) requires external speech engines and braille drivers.
-#   The plugin also requires the use of a small python dll: python3.dll
-#   python3.dll has "Copyright © 2001-2022 Python Software Foundation; All Rights Reserved"
 
-# Note: this code is a lot of cut/paste from other code and very likely could be substantially improved/cleaned.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import gettext
 import re  # regexp patter match
 from collections.abc import Callable, Generator

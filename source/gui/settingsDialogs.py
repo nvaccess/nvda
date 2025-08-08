@@ -6,6 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
+# Neil Soiffer, Ryan McCleary
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 

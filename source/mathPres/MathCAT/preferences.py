@@ -45,7 +45,7 @@ def getBrailleCodes() -> list[str]:
 	brailleFolderPath: str = pathToBrailleFolder()
 	resultBrailleCodes = []
 	for brailleCode in os.listdir(brailleFolderPath):
-		pathToBrailleCode: str = os.path.join(pathToBrailleFolder, brailleCode)
+		pathToBrailleCode: str = os.path.join(brailleFolderPath, brailleCode)
 		if os.path.isdir(pathToBrailleCode):
 			if len(getRulesFiles(pathToBrailleCode, None)) > 0:
 				resultBrailleCodes.append(brailleCode)
