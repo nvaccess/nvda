@@ -464,7 +464,7 @@ jobs:
         fail-on-cache-miss: true
     - name: Install Windows SDK
       # Installs symstore.exe to expected location.
-      run: choco install -y windows-sdk-10.0
+      run: choco install -y windows-sdk-10.1
     - name: Create build symbols
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
