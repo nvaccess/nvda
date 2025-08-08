@@ -167,33 +167,31 @@ class TestGenericDeviceDetection(unittest.TestCase):
 				result = bdDetect._isGenericUsbDevice(usbId, deviceInfo)
 				self.assertTrue(result)
 
-	def test_deviceMatch_isGenericProperty(self):
-		"""Test that DeviceMatch properly includes the isGeneric property."""
-		# Generic device
+	def test_isGenericDeviceMatch_function(self):
+		"""Test that _isGenericDeviceMatch function works properly."""
+		# Generic serial device
 		genericMatch = bdDetect.DeviceMatch(
 			bdDetect.ProtocolType.SERIAL,
 			"VID_0403&PID_6001",
 			"COM1",
 			{"busDescription": "USB Serial Port"},
-			True,
 		)
-		self.assertTrue(genericMatch.isGeneric)
+		self.assertTrue(bdDetect._isGenericDeviceMatch(genericMatch))
 
-		# Non-generic device
+		# Non-generic serial device
 		specificMatch = bdDetect.DeviceMatch(
 			bdDetect.ProtocolType.SERIAL,
 			"VID_0403&PID_6001",
 			"COM2",
 			{"busDescription": "DotPad Braille Display"},
-			False,
 		)
-		self.assertFalse(specificMatch.isGeneric)
+		self.assertFalse(bdDetect._isGenericDeviceMatch(specificMatch))
 
-		# Default value should be False
-		defaultMatch = bdDetect.DeviceMatch(
+		# Non-serial device (should always be False)
+		hidMatch = bdDetect.DeviceMatch(
 			bdDetect.ProtocolType.HID,
 			"VID_1234&PID_5678",
 			r"\\?\hid#vid_1234&pid_5678#1&2345678&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}",
 			{},
 		)
-		self.assertFalse(defaultMatch.isGeneric)
+		self.assertFalse(bdDetect._isGenericDeviceMatch(hidMatch))

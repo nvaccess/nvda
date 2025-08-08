@@ -170,8 +170,6 @@ class DeviceMatch(NamedTuple):
 	"""The port that can be used by a driver to communicate with a device."""
 	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
-	isGeneric: bool = False
-	"""Whether this device uses a generic USB PID/VID (e.g., USB-to-serial converters) with no specific busDescription."""
 
 
 MatchFuncT = Callable[[DeviceMatch], bool]
@@ -241,7 +239,7 @@ def getDriversForConnectedUsbDevices(
 	@return: Generator of pairs of drivers and device information.
 	"""
 	usbCustomDeviceMatches = (
-		DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port, False)
+		DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port)
 		for port in deviceInfoFetcher.usbDevices
 	)
 	usbComDeviceMatches = (
@@ -250,7 +248,6 @@ def getDriversForConnectedUsbDevices(
 			port["usbID"],
 			port["port"],
 			port,
-			_isGenericUsbDevice(port["usbID"], port),
 		)
 		for port in deviceInfoFetcher.usbComPorts
 	)
@@ -261,7 +258,7 @@ def getDriversForConnectedUsbDevices(
 	# device matches), if one is found early the iteration can stop.
 	usbHidDeviceMatches, usbHidDeviceMatchesForCustom = itertools.tee(
 		(
-			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port, False)
+			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.USB
 		)
@@ -270,7 +267,7 @@ def getDriversForConnectedUsbDevices(
 	fallbackDriversAndMatches: list[tuple[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		# Skip generic devices if configured to exclude them
-		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+		if _isGenericDeviceMatch(match) and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
 			continue
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -313,6 +310,18 @@ def _isHIDUsagePageMatch(match: DeviceMatch, usagePage: int) -> bool:
 
 def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 	return _isHIDUsagePageMatch(match, HID_USAGE_PAGE_BRAILLE)
+
+
+def _isGenericDeviceMatch(match: DeviceMatch) -> bool:
+	"""
+	Determine if a DeviceMatch represents a generic USB-to-serial device.
+
+	:param match: The DeviceMatch to check
+	:return: True if the device is a generic USB-to-serial converter, False otherwise
+	"""
+	if match.type != ProtocolType.SERIAL:
+		return False
+	return _isGenericUsbDevice(match.id, match.deviceInfo)
 
 
 def _isGenericUsbDevice(usbId: str, deviceInfo: Dict[str, str]) -> bool:
@@ -361,7 +370,7 @@ def getDriversForPossibleBluetoothDevices(
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
-		DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port, False)
+		DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port)
 		for port in deviceInfoFetcher.comPorts
 		if "bluetoothName" in port
 	)
@@ -372,7 +381,7 @@ def getDriversForPossibleBluetoothDevices(
 	# device matches), if one is found early the iteration can stop.
 	btHidDevMatchesForHid, btHidDevMatchesForCustom = itertools.tee(
 		(
-			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port, False)
+			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.BLUETOOTH
 		)
@@ -631,11 +640,11 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""
 	usbDevs = itertools.chain(
 		(
-			DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port, False)
+			DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.usbDevices
 		),
 		(
-			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port, False)
+			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.USB
 		),
@@ -645,7 +654,6 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 				port["usbID"],
 				port["port"],
 				port,
-				_isGenericUsbDevice(port["usbID"], port),
 			)
 			for port in deviceInfoFetcher.usbComPorts
 		),
@@ -655,7 +663,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 
 	for match in usbDevs:
 		# Skip generic devices if configured to exclude them
-		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+		if _isGenericDeviceMatch(match) and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
 			continue
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
@@ -690,12 +698,12 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			return
 	btDevs = itertools.chain(
 		(
-			DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port, False)
+			DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts
 			if "bluetoothName" in port
 		),
 		(
-			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port, False)
+			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.BLUETOOTH
 		),
