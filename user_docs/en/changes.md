@@ -15,8 +15,8 @@
 ### Changes
 
 * Component updates:
-  * Updated eSpeak NG to [commit `a4ca101`](https://github.com/espeak-ng/espeak-ng/commit/a4ca101c99de35345f89df58195b2159748b7092).
-  There have been improvements to Farsi/Persian. (#18342)
+  * Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).
+  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)
   * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
   Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
@@ -25,6 +25,7 @@
 * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
 * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
 Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
+* The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512)
 
 ### Bug Fixes
 
@@ -35,6 +36,7 @@ Note that this is disabled by default due to the device using generic USB identi
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
 * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
+* A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -43,11 +45,13 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Component updates:
   * Updated Pyright to 1.1.403. (#18424)
   * Updated Ruff to 0.12.5. (#18424)
+  * Updated markdown to 3.8.2. (#18638)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
+* NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
 
 #### Deprecations
 
@@ -57,6 +61,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `LP__ULARGE_INTEGER`
   * `SynthDriver.isSpeaking`
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
+* Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
+Importing from `md2html` is discouraged. (#18638)
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` is deprecated for removal in 2026.1, instead use `[reportSpellingErrors2]`. (#17997, @CyrilleB79)
   * The new key has an `int` value matching an `ReportSpellingErrors` `enum` with options for off, speech and sound.
   * API consumers can use the `bool` value as previously, or check the `ReportSpellingErrors` if handling speech or sound specifically.
