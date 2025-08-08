@@ -404,6 +404,10 @@ class FormattingMarker(NamedTuple):
 	start: str
 	end: str
 
+	def shouldBeUsed(self) -> bool:
+		formatConfig = config.conf["documentFormatting"]
+		return formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE
+
 
 fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
 	"bold": FormattingMarker(
@@ -1202,7 +1206,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 
 	if (
 		config.conf["braille"]["fontFormattingDisplay"].calculated() == FontFormattingBrailleModeFlag.TAGS
-		and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None
+		and (formattingTags := _getFormattingTags(field, fieldCache)) is not None
 	):
 		textList.append(formattingTags)
 
@@ -1233,7 +1237,6 @@ def getParagraphStartMarker() -> str | None:
 def _getFormattingTags(
 	field: dict[str, str],
 	fieldCache: dict[str, str],
-	formatConfig: dict[str, bool],
 ) -> str | None:
 	"""Get the formatting tags for the given field and cache.
 
@@ -1245,9 +1248,8 @@ def _getFormattingTags(
 	:return: The braille formatting tag as a string, or None if no pertinant formatting is applied.
 	"""
 	textList: list[str] = []
-	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
-		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
-		for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
+	for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
+		if formattingMarker.shouldBeUsed():
 			_appendFormattingMarker(fontAttribute, formattingMarker, textList, field, fieldCache)
 	if len(textList) > 0:
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
