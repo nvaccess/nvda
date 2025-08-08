@@ -12,14 +12,14 @@ Your issue will likely be closed if a template has not been followed.
 
 We currently have the following templates:
 
-- For [feature requests](#feature-request-template)
-- For [bug reports](#bug-report-template)
-- For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
-- For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
-- For developer facing changes:
-  - This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
-  - This may include API changes, technical debt removal, refactoring and maintenance tasks.
-  - Note there is no further guide for this - it is expected that developers can use the template appropriately.
+* For [feature requests](#feature-request-template)
+* For [bug reports](#bug-report-template)
+* For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
+* For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
+* For developer facing changes:
+  * This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
+  * This may include API changes, technical debt removal, refactoring and maintenance tasks.
+  * Note there is no further guide for this - it is expected that developers can use the template appropriately.
 
 ## General information
 The following information applies to all issues and pull requests.
@@ -48,12 +48,9 @@ developers of NVDA are blind and will greatly appreciate this image being descri
 Most tools allow you to copy text out of them.
 
 ### Tips
-* Consider swapping to the preview tab in order to read through your issue at any stage to confirm
-  the issue reads as expected.
-* If you have trouble following this template, or with the initial investigation that is required,
-  please politely ask for assistance from the fantastic community of people on the
-  [NVDA users mailing list](https://github.com/nvaccess/nvda/wiki/Connect#international-users-mailing-list-english)
 
+* Consider swapping to the preview tab in order to read through your issue at any stage to confirm the issue reads as expected.
+* If you have trouble following this template, or with the initial investigation that is required, please politely ask for assistance from the fantastic community of people on the [NVDA users mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-users)
 
 ## Feature Request template
 
@@ -221,10 +218,12 @@ Include specific details to help us understand the context.
 Explain why this issue cannot be addressed using the standard bug report or feature request templates.
 
 ### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
+
 Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket.
 Include links to discussion threads if applicable, for example:
-- https://github.com/nvaccess/nvda/discussions
-- https://nvda.groups.io/g/nvda
+
+* <https://github.com/nvaccess/nvda/discussions>
+* <https://groups.google.com/a/nvaccess.org/g/nvda-users>
 
 ### Steps to reproduce or illustrate the issue (if applicable)
 If possible, provide steps to demonstrate or reproduce the issue.

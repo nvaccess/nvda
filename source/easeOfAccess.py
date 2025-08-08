@@ -1,43 +1,45 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2023 NV Access Limited
+# Copyright (C) 2014-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Utilities for working with the Windows Ease of Access Center."""
 
 from enum import Enum, IntEnum
-from typing import Any, List
+from typing import Any
 
+from config.registry import RegistryKey as _RegistryKey, EASE_OF_ACCESS_APP_KEY_NAME
 from logHandler import log
 import NVDAState
 import winreg
 import winUser
 
 
-_APP_KEY_NAME = "nvda_nvda_v1"
-
-
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "RegistryKey" and NVDAState._allowDeprecatedAPI():
+		log.warning("easeOfAccess.RegistryKey is deprecated, use config.registry.RegistryKey instead.")
+
+		class RegistryKey(str, Enum):
+			ROOT = _RegistryKey.EASE_OF_ACCESS.value
+			TEMP = _RegistryKey.EASE_OF_ACCESS_TEMP.value
+			APP = _RegistryKey.EASE_OF_ACCESS_APP.value
+
+		return RegistryKey
+
 	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
-		log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
-		return RegistryKey.ROOT.value
+		log.warning("ROOT_KEY is deprecated, use config.registry.RegistryKey.EASE_OF_ACCESS instead.")
+		return _RegistryKey.EASE_OF_ACCESS.value
 	if attrName == "APP_KEY_PATH" and NVDAState._allowDeprecatedAPI():
-		log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
-		return RegistryKey.APP.value
+		log.warning("APP_KEY_PATH is deprecated, use config.registry.RegistryKey.EASE_OF_ACCESS_APP instead.")
+		return _RegistryKey.EASE_OF_ACCESS_APP.value
 	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
-		log.warning("APP_KEY_NAME is deprecated.")
-		return _APP_KEY_NAME
+		log.warning("APP_KEY_NAME is deprecated, use config.registry.EASE_OF_ACCESS_APP_KEY_NAME instead.")
+		return EASE_OF_ACCESS_APP_KEY_NAME
 	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
 		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
 		return True
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-
-class RegistryKey(str, Enum):
-	ROOT = r"Software\Microsoft\Windows NT\CurrentVersion\Accessibility"
-	TEMP = r"Software\Microsoft\Windows NT\CurrentVersion\AccessibilityTemp"
-	APP = r"%s\ATs\%s" % (ROOT, _APP_KEY_NAME)
 
 
 class AutoStartContext(IntEnum):
@@ -51,9 +53,8 @@ def isRegistered() -> bool:
 	try:
 		winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.APP.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS_APP.value,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 		return True
 	except FileNotFoundError:
@@ -66,8 +67,8 @@ def isRegistered() -> bool:
 def notify(signal):
 	if not isRegistered():
 		return
-	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, RegistryKey.TEMP.value) as rkey:
-		winreg.SetValueEx(rkey, _APP_KEY_NAME, None, winreg.REG_DWORD, signal)
+	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, _RegistryKey.EASE_OF_ACCESS_TEMP.value) as rkey:
+		winreg.SetValueEx(rkey, EASE_OF_ACCESS_APP_KEY_NAME, None, winreg.REG_DWORD, signal)
 	keys = []
 	# The user might be holding unwanted modifiers.
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
@@ -100,10 +101,10 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	return _APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
+	return EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
-def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:
+def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	"""Based on autoStartContext, returns a list of app names which start automatically:
 	 - AutoStartContext.ON_LOGON_SCREEN : on the logon screen
 	 - AutoStartContext.AFTER_LOGON : after logging on
@@ -113,23 +114,28 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:
 	try:
 		k = winreg.OpenKey(
 			autoStartContext.value,
-			RegistryKey.ROOT.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS.value,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 	except FileNotFoundError:
-		log.debug(f"Unable to find existing {autoStartContext} {RegistryKey.ROOT}")
+		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
 	except WindowsError:
-		log.error(f"Unable to open {autoStartContext} {RegistryKey.ROOT} for reading", exc_info=True)
+		log.error(
+			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
+			exc_info=True,
+		)
 		return []
 
 	try:
-		conf: List[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
+		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
 	except FileNotFoundError:
-		log.debug(f"Unable to find {autoStartContext} {RegistryKey.ROOT} configuration")
+		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
 	except WindowsError:
-		log.error(f"Unable to query {autoStartContext} {RegistryKey.ROOT} configuration", exc_info=True)
+		log.error(
+			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
+			exc_info=True,
+		)
 	else:
 		if not conf[0]:
 			# "".split(",") returns [""], so remove the empty string.
@@ -149,22 +155,21 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 	Raises `Union[WindowsError, FileNotFoundError]`
 	"""
 	conf = _getAutoStartConfiguration(autoStartContext)
-	currentlyEnabled = _APP_KEY_NAME in conf
+	currentlyEnabled = EASE_OF_ACCESS_APP_KEY_NAME in conf
 	changed = False
 
 	if enable and not currentlyEnabled:
-		conf.append(_APP_KEY_NAME)
+		conf.append(EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 	elif not enable and currentlyEnabled:
-		conf.remove(_APP_KEY_NAME)
+		conf.remove(EASE_OF_ACCESS_APP_KEY_NAME)
 		changed = True
 
 	if changed:
 		k = winreg.OpenKey(
 			autoStartContext.value,
-			RegistryKey.ROOT.value,
-			0,
-			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
+			_RegistryKey.EASE_OF_ACCESS.value,
+			access=winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
 		)
 		winreg.SetValueEx(
 			k,

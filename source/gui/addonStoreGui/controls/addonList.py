@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -148,9 +148,17 @@ class AddonVirtualList(
 		return str(dataItem)
 
 	def OnColClick(self, evt: wx.ListEvent):
-		colIndex = evt.GetColumn()
-		log.debug(f"col clicked: {colIndex}")
-		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[colIndex])
+		newColIndex = evt.GetColumn()
+		log.debug(f"col clicked: {newColIndex}")
+		sel = self.Parent.columnFilterCtrl.GetSelection()
+		curColIndex = sel // 2
+		curReverse = sel % 2
+		if newColIndex == curColIndex:
+			newReverse = 0 if curReverse else 1
+		else:
+			newReverse = 0
+		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[newColIndex], newReverse)
+		self.Parent.columnFilterCtrl.SetSelection(newColIndex * 2 + newReverse)
 
 	def _doRefresh(self):
 		with guiHelper.autoThaw(self):

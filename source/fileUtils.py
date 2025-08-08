@@ -1,11 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited, Bram Duvigneau, Łukasz Golonka
+# Copyright (C) 2017-2025 NV Access Limited, Bram Duvigneau, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import os
 import ctypes
-import ctypes.wintypes
 import array
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
@@ -86,7 +85,7 @@ def getFileVersionInfo(name, *attributes):
 	res = ctypes.create_string_buffer(size)
 	# Load file informations into buffer res
 	ctypes.windll.version.GetFileVersionInfoW(name, None, size, res)
-	r = ctypes.c_uint()
+	r = ctypes.c_void_p()
 	l = ctypes.c_uint()  # noqa: E741
 	# Look for codepages
 	ctypes.windll.version.VerQueryValueW(

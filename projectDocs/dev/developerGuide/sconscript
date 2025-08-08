@@ -5,7 +5,7 @@
 
 import sys
 
-Import("env", "outputDir", "sourceDir")
+Import("env", "outputDir", "sourceDir", "userDocsDir")
 
 env = env.Clone()
 
@@ -27,9 +27,11 @@ htmlFile = env.Command(
 	action=[f'@"{sys.executable}" source/md2html.py -t developerGuide "$SOURCE" "$TARGET"'],
 )
 devGuide = env.Command(
-	target=devDocsOutputDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
+	target=userDocsDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
 )
 env.Alias("developerGuide", devGuide)
+# Return the developer docs targets so they can be used as dependencies
+Return(["devGuide"])
 
 devDocs_nvdaHelper_temp = env.Doxygen(source="../../../nvdaHelper/doxyfile")
 devDocs_nvdaHelper = env.Command(

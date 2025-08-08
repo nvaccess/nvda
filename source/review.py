@@ -20,28 +20,26 @@ import textInfos
 import config
 
 
-def getObjectPosition(obj: NVDAObject) -> tuple[textInfos.TextInfo, ScriptableObject] | None:
+def getObjectPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object.
-	:param obj: the NVDAObject to review
-	:return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
+	@param obj: the NVDAObject to review
+	@type obj: L{NVDAObject}
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
+	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
-	isNavigable: bool = obj._hasNavigableText
-	if isNavigable:
+	try:
+		pos = obj.makeTextInfo(textInfos.POSITION_CARET)
+	except (NotImplementedError, RuntimeError):
+		# No caret supported, try first position instead
 		try:
-			pos = obj.makeTextInfo(textInfos.POSITION_CARET)
+			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
-			# No caret supported, try first position instead
-			try:
-				pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
-			except (NotImplementedError, RuntimeError):
-				log.debugWarning(
-					f"{obj.TextInfo} does not support POSITION_FIRST, falling back to NVDAObjectTextInfo",
-				)
-				# First position not supported either, return first position from a generic NVDAObjectTextInfo
-				isNavigable = False
-	if not isNavigable:
-		return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
+			log.debugWarning(
+				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+			)
+			# First position not supported either, return first position from a generic NVDAObjectTextInfo
+			return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
 	return pos, pos.obj
 
 

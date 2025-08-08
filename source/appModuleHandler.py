@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
@@ -65,11 +64,13 @@ since appModules in add-ons should take precedence over the one bundled in NVDA.
 
 
 class processEntry32W(ctypes.Structure):
+	"""See https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w"""
+
 	_fields_ = [
 		("dwSize", ctypes.wintypes.DWORD),
 		("cntUsage", ctypes.wintypes.DWORD),
 		("th32ProcessID", ctypes.wintypes.DWORD),
-		("th32DefaultHeapID", ctypes.wintypes.DWORD),
+		("th32DefaultHeapID", ctypes.wintypes.PULONG),
 		("th32ModuleID", ctypes.wintypes.DWORD),
 		("cntThreads", ctypes.wintypes.DWORD),
 		("th32ParentProcessID", ctypes.wintypes.DWORD),
@@ -579,8 +580,17 @@ class AppModule(baseObject.ScriptableObject):
 
 	isAlive: bool
 
-	def _get_isAlive(self):
-		return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+	def _get_isAlive(self) -> bool:
+		try:
+			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+		except OSError as e:
+			if e.winerror == winKernel.ERROR_INVALID_HANDLE:
+				# The process handle is invalid, so the process is dead.
+				log.debugWarning(
+					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.",
+				)
+				return False
+			raise
 
 	def terminate(self):
 		"""Terminate this app module.

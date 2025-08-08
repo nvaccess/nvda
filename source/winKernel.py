@@ -199,6 +199,7 @@ def getThreadLocale():
 
 
 ERROR_INVALID_FUNCTION = 0x1
+ERROR_INVALID_HANDLE = 0x6
 
 
 @contextlib.contextmanager

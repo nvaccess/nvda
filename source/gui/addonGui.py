@@ -345,11 +345,12 @@ class IncompatibleAddonsDialog(
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		maxControlWidth = 550
 		introText = _(
-			# Translators: The title of the Incompatible Addons Dialog
-			"The following add-ons are incompatible with NVDA version {}."
+			# Translators: The title of the Incompatible Addons Dialog.
+			# {version} will be replaced with the API version number.
+			"The following add-ons are incompatible with NVDA version {version}."
 			" These add-ons can not be enabled."
 			" Please contact the add-on author for further assistance.",
-		).format(addonAPIVersion.formatForGUI(self._APIVersion))
+		).format(version=addonAPIVersion.formatForGUI(self._APIVersion))
 		AddonSelectionIntroLabel = wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(AddonSelectionIntroLabel)

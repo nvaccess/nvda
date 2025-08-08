@@ -68,7 +68,7 @@ def _deleteRegistryKeyRecursive(baseKey: int, subkeyPath: str):
 	except WindowsError:
 		# If that fails, need to do recursive deletion
 		try:
-			with winreg.OpenKey(baseKey, subkeyPath, 0, winreg.KEY_READ | winreg.KEY_WRITE) as key:
+			with winreg.OpenKey(baseKey, subkeyPath, access=winreg.KEY_READ | winreg.KEY_WRITE) as key:
 				# Enumerate and delete all subkeys
 				while True:
 					try:
