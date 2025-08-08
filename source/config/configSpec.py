@@ -362,6 +362,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+		muteOnLocalControl = boolean(default=False)
 """
 
 #: The configuration specification
