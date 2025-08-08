@@ -63,6 +63,7 @@ GENERIC_USB_TO_SERIAL_IDS = {
 	"VID_10C4&PID_EA80",  # Silicon Labs CP210x UART Bridge
 	"VID_1A86&PID_7523",  # QinHeng Electronics CH340 serial converter
 	"VID_1A86&PID_5523",  # QinHeng Electronics CH341 serial converter
+	"VID_1A86&PID_55D3",  # QinHeng Electronics CH34x serial converter
 	"VID_067B&PID_2303",  # Prolific PL2303 Serial Port
 	"VID_04D8&PID_000A",  # Microchip CDC RS-232 Emulation Demo
 }
