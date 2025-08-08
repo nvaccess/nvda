@@ -52,6 +52,45 @@ DBT_DEVNODES_CHANGED = 7
 
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
+GENERIC_USB_TO_SERIAL_IDS = {
+	"VID_0403&PID_6001",  # FTDI FT232 USB-UART
+	"VID_0403&PID_6010",  # FTDI FT2232C/D/H Dual UART/FIFO IC
+	"VID_0403&PID_6011",  # FTDI FT4232H Quad HS USB-UART/FIFO IC
+	"VID_0403&PID_6014",  # FTDI FT232H Single HS USB-UART/FIFO IC
+	"VID_0403&PID_6015",  # FTDI FT-X Series
+	"VID_10C4&PID_EA60",  # Silicon Labs CP210x UART Bridge
+	"VID_10C4&PID_EA70",  # Silicon Labs CP210x UART Bridge
+	"VID_10C4&PID_EA80",  # Silicon Labs CP210x UART Bridge
+	"VID_1A86&PID_7523",  # QinHeng Electronics CH340 serial converter
+	"VID_1A86&PID_5523",  # QinHeng Electronics CH341 serial converter
+	"VID_067B&PID_2303",  # Prolific PL2303 Serial Port
+	"VID_04D8&PID_000A",  # Microchip CDC RS-232 Emulation Demo
+}
+"""Set of USB VID&PID combinations that represent generic USB-to-serial converters."""
+
+GENERIC_USB_SERIAL_DESCRIPTIONS = {
+	"usb serial port",
+	"usb-serial controller",
+	"usb serial converter",
+	"ch340",
+	"ch341",
+	"ft232",
+	"ft2232",
+	"ft4232",
+	"ftdi",
+	"cp210",
+	"cp2102",
+	"cp2103",
+	"cp2104",
+	"cp2105",
+	"cp2108",
+	"pl2303",
+	"prolific",
+	"silicon labs",
+	"qinheng",
+}
+"""Set of lowercase bus descriptions that indicate generic USB-to-serial converter devices."""
+
 
 class ProtocolType(StrEnum):
 	HID = "hid"
@@ -130,6 +169,8 @@ class DeviceMatch(NamedTuple):
 	"""The port that can be used by a driver to communicate with a device."""
 	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
+	isGeneric: bool = False
+	"""Whether this device uses a generic USB PID/VID (e.g., USB-to-serial converters) with no specific busDescription."""
 
 
 MatchFuncT = Callable[[DeviceMatch], bool]
@@ -199,11 +240,17 @@ def getDriversForConnectedUsbDevices(
 	@return: Generator of pairs of drivers and device information.
 	"""
 	usbCustomDeviceMatches = (
-		DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port)
+		DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port, False)
 		for port in deviceInfoFetcher.usbDevices
 	)
 	usbComDeviceMatches = (
-		DeviceMatch(ProtocolType.SERIAL, port["usbID"], port["port"], port)
+		DeviceMatch(
+			ProtocolType.SERIAL,
+			port["usbID"],
+			port["port"],
+			port,
+			_isGenericUsbDevice(port["usbID"], port),
+		)
 		for port in deviceInfoFetcher.usbComPorts
 	)
 	# Tee is used to ensure that the DeviceMatches aren't created multiple times.
@@ -213,7 +260,7 @@ def getDriversForConnectedUsbDevices(
 	# device matches), if one is found early the iteration can stop.
 	usbHidDeviceMatches, usbHidDeviceMatchesForCustom = itertools.tee(
 		(
-			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
+			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port, False)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.USB
 		)
@@ -261,6 +308,32 @@ def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 	return _isHIDUsagePageMatch(match, HID_USAGE_PAGE_BRAILLE)
 
 
+def _isGenericUsbDevice(usbId: str, deviceInfo: Dict[str, str]) -> bool:
+	"""
+	Determine if a USB device is generic based on its VID/PID and device information.
+
+	A device is considered generic if:
+	1. Its USB VID/PID is in the list of known generic USB-to-serial converters
+	2. There is no specific busDescription to differentiate it from other generic devices
+
+	:param usbId: USB identifier in format "VID_xxxx&PID_xxxx"
+	:param deviceInfo: Device information dictionary containing busDescription and other details
+	:return: True if the device is considered generic, False otherwise
+	"""
+	if usbId not in GENERIC_USB_TO_SERIAL_IDS:
+		return False
+
+	# Check if there's a specific busDescription that would make this device non-generic
+	busDescription = deviceInfo.get("busDescription", "").lower()
+
+	# If there's no busDescription, it's definitely generic
+	if not busDescription:
+		return True
+
+	# If busDescription contains only generic terms, consider it generic
+	return any(generic in busDescription for generic in GENERIC_USB_SERIAL_DESCRIPTIONS)
+
+
 def HIDUsagePageMatchFuncFactory(usagePage: int) -> MatchFuncT:
 	"""
 	Creates a match function that checks if a given HID usage page matches the specified usage page.
@@ -281,7 +354,7 @@ def getDriversForPossibleBluetoothDevices(
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
-		DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port)
+		DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port, False)
 		for port in deviceInfoFetcher.comPorts
 		if "bluetoothName" in port
 	)
@@ -292,7 +365,7 @@ def getDriversForPossibleBluetoothDevices(
 	# device matches), if one is found early the iteration can stop.
 	btHidDevMatchesForHid, btHidDevMatchesForCustom = itertools.tee(
 		(
-			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
+			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port, False)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.BLUETOOTH
 		)
@@ -551,16 +624,22 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""
 	usbDevs = itertools.chain(
 		(
-			DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port)
+			DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port, False)
 			for port in deviceInfoFetcher.usbDevices
 		),
 		(
-			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
+			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port, False)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.USB
 		),
 		(
-			DeviceMatch(ProtocolType.SERIAL, port["usbID"], port["port"], port)
+			DeviceMatch(
+				ProtocolType.SERIAL,
+				port["usbID"],
+				port["port"],
+				port,
+				_isGenericUsbDevice(port["usbID"], port),
+			)
 			for port in deviceInfoFetcher.usbComPorts
 		),
 	)
@@ -598,12 +677,12 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			return
 	btDevs = itertools.chain(
 		(
-			DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port)
+			DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port, False)
 			for port in deviceInfoFetcher.comPorts
 			if "bluetoothName" in port
 		),
 		(
-			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
+			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port, False)
 			for port in deviceInfoFetcher.hidDevices
 			if port["provider"] == CommunicationType.BLUETOOTH
 		),
