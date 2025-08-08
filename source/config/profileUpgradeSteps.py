@@ -597,3 +597,21 @@ def upgradeConfigFrom_17_to_18(profile: ConfigObj) -> None:
 			"dotPad added to braille display auto detection excluded displays due to generic USB PID/VID. "
 			f"List is now: {excludedDisplays}",
 		)
+
+
+def upgradeConfigFrom_18_to_19(profile: ConfigObj) -> None:
+	"""Remove dotPad from excluded braille displays as it now has proper generic device detection."""
+	if "braille" not in profile:
+		return
+	if "auto" not in profile["braille"]:
+		return
+	if "excludedDisplays" not in profile["braille"]["auto"]:
+		return
+
+	excludedDisplays = profile["braille"]["auto"]["excludedDisplays"]
+	if "dotPad" in excludedDisplays:
+		excludedDisplays.remove("dotPad")
+		log.debug(
+			"dotPad removed from braille display auto detection excluded displays due to improved generic device detection. "
+			f"List is now: {excludedDisplays}",
+		)
