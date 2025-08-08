@@ -2421,6 +2421,18 @@ Any driver added, for example in a future version of NVDA or in an add-on, will 
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays](#SupportedBrailleDisplays) to check whether the driver supports automatic detection of displays.
 
+##### Exclude generic USB-to-serial devices from automatic detection {#SelectBrailleDisplayExcludeGenericDisplays}
+
+When braille display is set to "Automatic", this checkbox allows you to exclude generic USB-to-serial devices from the automatic detection process.
+Generic USB-to-serial converters use common vendor and product IDs that are shared by many non-braille devices.
+When this option is enabled (which it is by default), NVDA will not attempt to connect to braille displays through these generic converters during automatic detection.
+This helps prevent potential damage to other serial devices that are not braille displays and improves the reliability of automatic detection.
+
+If you have a braille display that requires a generic USB-to-serial converter and cannot be detected through other means (such as Bluetooth or device-specific USB connections), you can uncheck this option to allow detection through generic converters.
+Consult the documentation for your specific braille display in the [Supported Braille Displays](#SupportedBrailleDisplays) section to check if generic USB-to-serial converters might be used by your display.
+
+Note that most braille displays can still be detected through Bluetooth, HID, or device-specific USB connections even when this option is enabled.
+
 ##### Port {#SelectBrailleDisplayPort}
 
 This option, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
@@ -4364,6 +4376,9 @@ Please see the display's documentation for descriptions of where these keys can 
 NVDA supports most displays from [Handy Tech](https://www.handytech.de/) when connected via USB, serial port or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
+Some Handy Tech displays may use generic USB-to-serial converters.
+If you have trouble with automatic detection, you may need to disable the "Exclude generic USB-to-serial devices from automatic detection" option in the braille display selection dialog.
+
 The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) and NVDA add-on:
 
 * Braillino
@@ -4597,6 +4612,9 @@ Please see the display's documentation for descriptions of where these keys can 
 
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims](https://www.hims-inc.com/) when connected via USB or bluetooth.
 If connecting via USB, you will need to install the [USB drivers from HIMS](http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip) on your system.
+
+Some HIMS displays may use generic USB-to-serial converters.
+If you have trouble with automatic detection, you may need to disable the "Exclude generic USB-to-serial devices from automatic detection" option in the braille display selection dialog.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5405,6 +5423,9 @@ For computers where the Internet connection is disabled or not available, you ca
 By default, NVDA can automatically detect and connect to this display via USB or bluetooth.
 However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
 
+The NLS eReader Zoomax uses a generic USB-to-serial converter for USB connections.
+If you have trouble with automatic detection, you may need to disable the "Exclude generic USB-to-serial devices from automatic detection" option in the braille display selection dialog.
+
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
@@ -5468,9 +5489,8 @@ You can configure whether NVDA displays braille on the dedicated braille display
 Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
-However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
-To enable automatic detection, go to NVDA's Braille settings and check "Dot Pad" in the automatic detection list.
-When automatic detection is enabled and a compatible device is detected, NVDA will automatically connect to it.
+The Dot Pad uses generic USB-to-serial converters for USB connections.
+If you have trouble with automatic detection, you may need to disable the "Exclude generic USB-to-serial devices from automatic detection" option in the braille display selection dialog.
 You can also manually select a specific USB or Bluetooth virtual serial port if needed.
 
 Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
