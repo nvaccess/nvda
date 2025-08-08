@@ -268,6 +268,9 @@ def getDriversForConnectedUsbDevices(
 
 	fallbackDriversAndMatches: list[tuple[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
+		# Skip generic devices if configured to exclude them
+		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+			continue
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
 				continue
@@ -290,6 +293,9 @@ def getDriversForConnectedUsbDevices(
 			yield (hidName, match)
 
 	for driver, match in fallbackDriversAndMatches:
+		# Skip generic devices in fallback matches if configured to exclude them
+		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+			continue
 		yield (driver, match)
 
 
@@ -647,6 +653,9 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	fallbackMatches: list[DeviceMatch] = []
 
 	for match in usbDevs:
+		# Skip generic devices if configured to exclude them
+		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+			continue
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
 				yield match
@@ -660,6 +669,9 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 						yield match
 
 	for match in fallbackMatches:
+		# Skip generic devices in fallback matches if configured to exclude them
+		if match.isGeneric and config.conf["braille"]["auto"]["excludeGenericDisplays"]:
+			continue
 		yield match
 
 

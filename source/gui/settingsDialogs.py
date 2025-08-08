@@ -4520,6 +4520,13 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		)
 		self.bindHelpEvent("SelectBrailleDisplayAutoDetect", self.autoDetectList)
 
+		# Translators: The label for a setting in braille settings to exclude generic USB-to-serial devices from automatic detection.
+		excludeGenericDisplaysText = _("&Exclude generic USB-to-serial devices from automatic detection")
+		self.excludeGenericDisplaysCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=excludeGenericDisplaysText),
+		)
+		self.excludeGenericDisplaysCheckBox.Value = config.conf["braille"]["auto"]["excludeGenericDisplays"]
+
 		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 		portsLabelText = _("&Port:")
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
@@ -4599,6 +4606,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.portsList.Enable(enable)
 
 		self.autoDetectList.Enable(isAutoDisplaySelected)
+		self.excludeGenericDisplaysCheckBox.Enable(isAutoDisplaySelected)
 
 	def onDisplayNameChanged(self, evt):
 		self.updateStateDependentControls()
@@ -4623,6 +4631,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			config.conf["braille"]["auto"]["excludedDisplays"] = [
 				n for i, n in enumerate(self.autoDetectValues) if i not in self.autoDetectList.CheckedItems
 			] + unknownDriversExcluded
+
+		config.conf["braille"]["auto"]["excludeGenericDisplays"] = self.excludeGenericDisplaysCheckBox.Value
 
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(

@@ -99,6 +99,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
     	excludedDisplays = string_list(default=list("dotPad"))
+    	excludeGenericDisplays = boolean(default=true)
 
 	# Braille display driver settings
 	[[__many__]]
