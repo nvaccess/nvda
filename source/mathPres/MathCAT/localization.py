@@ -144,7 +144,7 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
 				]
 			except Exception as e:
-				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zipFile}. Error: {e}")
+				log.debugWarning(f"MathCAT: didn't find zip file {zipFile}. Error: {e}")
 		allStyleFiles.sort()
 		return allStyleFiles
 
@@ -155,7 +155,6 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	languageCode = languageCode.replace("-", "\\")
 
 	languagePath = pathToLanguagesFolder() + "\\"
-	# log.info(f"languagePath={languagePath}")
 	# populate the m_choiceSpeechStyle choices
 	allStyleFiles = [
 		# remove "_Rules.yaml" from the list
