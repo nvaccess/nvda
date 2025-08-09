@@ -87,7 +87,6 @@ def getLanguageToUse(mathMl: str = "") -> str:
 	except Exception as e:
 		log.exception(e)
 
-	# log.info(f"getLanguageToUse: {mathCATLanguageSetting}")
 	if mathCATLanguageSetting != "Auto":
 		return mathCATLanguageSetting
 
@@ -113,7 +112,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	"""
 	# MathCAT's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
-	# log.info(f"\nSpeech str: '{text}'")
 
 	# find MathCAT's language setting and store it away (could be "Auto")
 	# if MathCAT's setting doesn't match NVDA's language setting, change the language that is used
@@ -124,7 +122,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 		log.exception(e)
 	language: str = getLanguageToUse()
 	nvdaLanguage: str = getCurrentLanguage().replace("_", "-")
-	# log.info(f"mathCATLanguageSetting={mathCATLanguageSetting}, lang={language}, NVDA={nvdaLanguage}")
 
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines
@@ -141,7 +138,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	useCharacter: bool = CharacterModeCommand in supportedCommands and synth.name != "oneCore"
 	out: list[str | SpeechCommand] = []
 	if mathCATLanguageSetting != language:
-		# log.info(f"Setting language to {language}")
 		try:
 			libmathcat.SetPreference("Language", language)
 		except Exception as e:
@@ -151,7 +147,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 		out.append(LangChangeCommand(language))
 
 	resetProsody: list[Type["BaseProsodyCommand"]] = []
-	# log.info(f"\ntext: {text}")
 	for m in RE_MATHML_SPEECH.finditer(text):
 		if m.lastgroup == "break":
 			if useBreak:
@@ -197,7 +192,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 			log.exception(e)
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(None))
-	# log.info(f"Speech commands: '{out}'")
 	return out
 
 
@@ -212,8 +206,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	CF_MathML_Presentation: int = windll.user32.RegisterClipboardFormatW(
 		"MathML Presentation",
 	)
-	# log.info("2**** MathCAT registering data formats:
-	#   CF_MathML %x, CF_MathML_Presentation %x" % (CF_MathML, CF_MathML_Presentation))
 
 	def __init__(
 		self,
@@ -248,7 +240,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		review: bool = False,
 	) -> Generator[braille.Region, None, None]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
-		# log.info("***MathCAT start getBrailleRegions")
 		yield braille.NVDAObjectRegion(self, appendText=" ")
 		region: braille.Region = braille.Region()
 		region.focusToHardLeft = True
@@ -261,7 +252,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			speech.speakMessage(_("Error in brailling math: see NVDA error log for details"))
 			region.rawText = ""
 
-		# log.info("***MathCAT end getBrailleRegions ***")
 		yield region
 
 	def getScript(
@@ -320,7 +310,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					"alt" in modNames,
 					False,
 				)
-				# log.info(f"Navigate speech for {gesture.vkCode}/(s={'shift' in modNames}, c={'control' in modNames}): '{text}'")
 				speech.speak(convertSSMLTextForNVDA(text))
 		except Exception as e:
 			log.exception(e)
@@ -334,7 +323,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			# update the braille to reflect the nav position (might be excess code, but it works)
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
 			brailleChars = libmathcat.GetBraille(navNode[0])
-			# log.info(f'braille display = {config.conf["braille"]["display"]}, braille_chars: {braille_chars}')
 			region: braille.Region = braille.Region()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
@@ -545,7 +533,6 @@ class MathCAT(mathPres.MathPresentationProvider):
 				"CapitalLetters_UseWord",
 				"true" if synthConfig["sayCapForCapitals"] else "false",
 			)
-			# log.info(f"Speech text: {libmathcat.GetSpokenText()}")
 			if PitchCommand in supportedCommands:
 				libmathcat.SetPreference("CapitalLetters_Pitch", str(synthConfig["capPitchChange"]))
 			if self._addSounds():
@@ -580,7 +567,6 @@ class MathCAT(mathPres.MathPresentationProvider):
 		:param mathml: A MathML string.
 		:returns: A braille string representing the input MathML.
 		"""
-		# log.info("***MathCAT getBrailleForMathMl")
 		try:
 			libmathcat.SetMathML(mathml)
 		except Exception as e:
