@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2008-2025 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
@@ -204,10 +204,10 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self.prompt = "..." if more else ">>>"
 		return more
 
-	def showsyntaxerror(self, filename=None):
+	def showsyntaxerror(self, filename=None, **kwargs):
 		excepthook = sys.excepthook
 		sys.excepthook = sys.__excepthook__
-		super().showsyntaxerror(filename=filename)
+		super().showsyntaxerror(filename=filename, **kwargs)
 		sys.excepthook = excepthook
 
 	def showtraceback(self):
