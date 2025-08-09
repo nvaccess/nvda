@@ -268,7 +268,10 @@ class SynthDriverAudioStream(COMObject):
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
 		# For the first audio chunk, wait for at least 50ms of audio
 		# in order to avoid audio gaps if further processing takes longer time
-		if synth._isFirstAudioChunk and synth.sonicStream.samplesAvailable < synth.sonicStream.sampleRate // 20:
+		if (
+			synth._isFirstAudioChunk
+			and synth.sonicStream.samplesAvailable < synth.sonicStream.sampleRate // 20
+		):
 			return
 		synth._isFirstAudioChunk = False
 		audioData = synth.sonicStream.readShort()
