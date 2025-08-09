@@ -52,7 +52,7 @@ Fetch latest from master.
 
 ### cppjieba
 
-[cppjieba](https://github.com/yanyiwu/cppjieba)
+[cppjieba](https://github.com/yanyiwu/cppjieba).
 
 Fetch latest from master.
 Used for Chinese text segmentation.
