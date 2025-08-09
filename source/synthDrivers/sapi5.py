@@ -266,6 +266,11 @@ class SynthDriverAudioStream(COMObject):
 		if synth._isCancelling:
 			return hresult.E_FAIL
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
+		# For the first audio chunk, wait for at least 50ms of audio
+		# in order to avoid audio gaps if further processing takes longer time
+		if synth._isFirstAudioChunk and synth.sonicStream.samplesAvailable < synth.sonicStream.sampleRate // 20:
+			return
+		synth._isFirstAudioChunk = False
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
 		if pcbWritten:
@@ -467,6 +472,7 @@ class SapiSink(COMObject):
 			if audioDucking._isDebug():
 				log.debug("Enabling audio ducking due to starting speech stream")
 			synth._audioDucker.enable()
+		synth._isFirstAudioChunk = True
 		synth._isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
@@ -579,6 +585,7 @@ class SynthDriver(SynthDriver):
 		when the property "isSpeaking" is removed."""
 		self._isCancelling = False
 		self._isTerminating = False
+		self._isFirstAudioChunk = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 		self._bookmarkLists: deque[deque[int]] = deque()
