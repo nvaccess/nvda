@@ -30,7 +30,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  START_BUILD_NUMBER: ${{ vars.BUILD_NUMBER_OFFSET || 0 }}
+  START_BUILD_NUMBER: ${{ vars.BUILD_NUMBER_OFFSET || 50000 }}
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: ${{ vars.PUBLISHER_NAME || github.repository_owner }}
   # Don't send telemetry to Microsoft when using MSVC tooling, avoiding an unnecessary PowerShell script invocation.
