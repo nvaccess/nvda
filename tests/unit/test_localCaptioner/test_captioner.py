@@ -3,9 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 """
-Unit tests for the ImageCaptioner class.
+Unit tests for the VitGpt2ImageCaptioner class.
 
-This test suite includes comprehensive tests for the ImageCaptioner class, including:
+This test suite includes comprehensive tests for the VitGpt2ImageCaptioner class, including:
 - Initialization
 - Configuration loading
 - Vocabulary loading
@@ -24,11 +24,11 @@ from unittest.mock import Mock, patch
 from PIL import Image
 import io
 
-from _localCaptioner.captioner import ImageCaptioner
+from _localCaptioner.captioner import VitGpt2ImageCaptioner
 
 
-class TestImageCaptioner(unittest.TestCase):
-	"""Unit tests for the ImageCaptioner class."""
+class TestVitGpt2ImageCaptioner(unittest.TestCase):
+	"""Unit tests for the VitGpt2ImageCaptioner class."""
 
 	def setUp(self):
 		"""Set up test environment."""
@@ -105,7 +105,7 @@ class TestImageCaptioner(unittest.TestCase):
 		mock_decoder = Mock()
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -120,7 +120,7 @@ class TestImageCaptioner(unittest.TestCase):
 	def test_initConfigNotFound(self):
 		"""Test missing config file raises error."""
 		with self.assertRaises(FileNotFoundError) as context:
-			ImageCaptioner(
+			VitGpt2ImageCaptioner(
 				encoder_path=self.encoder_path,
 				decoder_path=self.decoder_path,
 				config_path="nonexistent_config.json",
@@ -130,7 +130,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_loadVocabSuccess(self, mock_session):
 		"""Test vocabulary loads successfully."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -141,7 +141,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_preprocessImageFromPath(self, mock_session):
 		"""Test preprocessing image from file path."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -158,7 +158,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_preprocessImageFromBytes(self, mock_session):
 		"""Test preprocessing image from byte input."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -184,7 +184,7 @@ class TestImageCaptioner(unittest.TestCase):
 
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -199,7 +199,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_decodeTokens(self, mock_session):
 		"""Test decoding tokens to text."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -212,7 +212,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_decodeTokensWithSpecialTokens(self, mock_session):
 		"""Test decoding tokens with special tokens removed."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -225,7 +225,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_initializePastKeyValues(self, mock_session):
 		"""Test initialization of past key values."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -264,7 +264,7 @@ class TestImageCaptioner(unittest.TestCase):
 		mock_decoder.run.side_effect = [[logits_1], [logits_2]]
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -287,7 +287,7 @@ class TestImageCaptioner(unittest.TestCase):
 		mock_decoder.get_outputs.return_value = [mock_output]
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -300,16 +300,16 @@ class TestImageCaptioner(unittest.TestCase):
 		self.assertEqual(output_names, ["logits"])
 
 	@patch("onnxruntime.InferenceSession")
-	@patch.object(ImageCaptioner, "preprocessImage")
-	@patch.object(ImageCaptioner, "encodeImage")
-	@patch.object(ImageCaptioner, "generateWithGreedy")
+	@patch.object(VitGpt2ImageCaptioner, "preprocessImage")
+	@patch.object(VitGpt2ImageCaptioner, "encodeImage")
+	@patch.object(VitGpt2ImageCaptioner, "generateWithGreedy")
 	def test_generateCaptionIntegration(self, mock_greedy, mock_encode, mock_preprocess, mock_session):
 		"""Test full caption generation pipeline integration."""
 		mock_preprocess.return_value = np.random.randn(1, 3, 224, 224)
 		mock_encode.return_value = np.random.randn(1, 196, 768)
 		mock_greedy.return_value = "a cat sitting on a table"
 
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,
@@ -325,7 +325,7 @@ class TestImageCaptioner(unittest.TestCase):
 	@patch("onnxruntime.InferenceSession")
 	def test_configParameterLoading(self, mock_session):
 		"""Test full config parameter parsing."""
-		captioner = ImageCaptioner(
+		captioner = VitGpt2ImageCaptioner(
 			encoder_path=self.encoder_path,
 			decoder_path=self.decoder_path,
 			config_path=self.config_path,

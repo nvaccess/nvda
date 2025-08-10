@@ -3454,7 +3454,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for go to local captioner settings command.
-		description=_("Shows the local captioner settings"),
+		description=pgettext("imageDesc", "Shows the local captioner settings"),
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
@@ -5067,7 +5067,7 @@ class GlobalCommands(ScriptableObject):
 
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
-		description=_("get an AI generated Image description"),
+		description=pgettext("imageDesc", "get an AI generated Image description"),
 		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+windows+,",
 	)
@@ -5076,7 +5076,7 @@ class GlobalCommands(ScriptableObject):
 
 	@scriptHandler.script(
 		# Translators: Description for the toggle image captioning script
-		description=_("toggle image captioning"),
+		description=pgettext("imageDesc", "toggle image captioning"),
 		category=SCRCAT_IMAGE_DESC,
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):

@@ -7,6 +7,8 @@ import os
 import json
 import re
 import io
+from abc import ABC, abstractmethod
+
 
 import numpy as np
 from PIL import Image
@@ -14,8 +16,29 @@ import onnxruntime as ort
 
 from logHandler import log
 
+class ImageCaptioner(ABC):
+	"""Abstract interface for image caption generation.
 
-class ImageCaptioner:
+	Supports generate caption for image
+	"""
+
+	@abstractmethod
+	def generateCaption(
+		self, 
+		image: str | bytes,
+		max_length: int | None = None
+	) -> str:
+		"""
+		Generate a caption for the given image.
+
+		:param image: Image file path or binary data.
+		:param max_length: Optional maximum length for the generated caption.
+		:return: The generated image caption as a string.
+		"""
+		pass
+
+
+class VitGpt2ImageCaptioner(ImageCaptioner):
 	"""Lightweight ONNX Runtime image captioning model.
 
 	This class provides image captioning functionality using ONNX models
@@ -25,22 +48,19 @@ class ImageCaptioner:
 
 	def __init__(
 		self,
-		encoder_path: str,
+		encoder_path: str ,
 		decoder_path: str,
 		config_path: str,
 		enableProfiling: bool = False,
 	) -> None:
 		"""Initialize the lightweight ONNX image captioning model.
 
-		Args:
-			encoder_path: Path to the ViT encoder ONNX model.
-			decoder_path: Path to the GPT-2 decoder ONNX model.
-			config_path: Path to the configuration file (required).
-			enableProfiling: Whether to enable ONNX Runtime profiling.
-
-		Raises:
-			FileNotFoundError: If config file is not found.
-			Exception: If model initialization fails.
+		:param encoder_path: Path to the ViT encoder ONNX model.
+		:param decoder_path: Path to the GPT-2 decoder ONNX model.
+		:param config_path: Path to the configuration file (required).
+		:param enableProfiling: Whether to enable ONNX Runtime profiling.
+		:raisesFileNotFoundError: If config file is not found.
+		:raises Exception: If model initialization fails.
 		"""
 		# Load configuration file
 		try:
@@ -120,11 +140,8 @@ class ImageCaptioner:
 	def _loadVocab(self, vocabPath: str) -> dict[int, str]:
 		"""Load vocabulary file.
 
-		Args:
-			vocabPath: Path to vocab.json file.
-
-		Returns:
-			Dictionary mapping token IDs to tokens.
+		:param vocabPath: Path to vocab.json file.
+		:return: Dictionary mapping token IDs to tokens.
 		"""
 		try:
 			with open(vocabPath, "r", encoding="utf-8") as f:
@@ -145,11 +162,8 @@ class ImageCaptioner:
 	def preprocessImage(self, image: str | bytes) -> np.ndarray:
 		"""Preprocess image for model input.
 
-		Args:
-			image: Image file path or binary data.
-
-		Returns:
-			Preprocessed image array ready for model input.
+		:param image: Image file path or binary data.
+		:return: Preprocessed image array ready for model input.
 		"""
 		if isinstance(image, str):
 			img = Image.open(image).convert("RGB")
@@ -176,11 +190,8 @@ class ImageCaptioner:
 	def encodeImage(self, imageArray: np.ndarray) -> np.ndarray:
 		"""Encode image using ViT encoder.
 
-		Args:
-			imageArray: Preprocessed image array.
-
-		Returns:
-			Encoder hidden states.
+		:param imageArray: Preprocessed image array.
+		:return: Encoder hidden states.
 		"""
 		# Get encoder input name
 		inputName = self.encoderSession.get_inputs()[0].name
@@ -195,11 +206,8 @@ class ImageCaptioner:
 	def decodeTokens(self, tokenIds: list[int]) -> str:
 		"""Decode token IDs to text.
 
-		Args:
-			tokenIds: List of token IDs.
-
-		Returns:
-			Decoded text string.
+		:param tokenIds: List of token IDs.
+		:return: Decoded text string.
 		"""
 		tokens = []
 		for tokenId in tokenIds:
@@ -221,27 +229,22 @@ class ImageCaptioner:
 	def getDecoderInputNames(self) -> list[str]:
 		"""Get decoder input names for debugging.
 
-		Returns:
-			List of decoder input names.
+		:returns: List of decoder input names.
 		"""
 		return [inp.name for inp in self.decoderSession.get_inputs()]
 
 	def getDecoderOutputNames(self) -> list[str]:
 		"""Get decoder output names for debugging.
 
-		Returns:
-			List of decoder output names.
-		"""
+		:return: List of decoder output names.
+	"""
 		return [out.name for out in self.decoderSession.get_outputs()]
 
 	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, np.ndarray]:
 		"""Initialize past_key_values for decoder.
 
-		Args:
-			batchSize: Batch size for inference.
-
-		Returns:
-			Dictionary of initialized past key values.
+		:param batchSize: Batch size for inference.
+		:return: Dictionary of initialized past key values.
 		"""
 		pastKeyValues = {}
 
@@ -266,12 +269,10 @@ class ImageCaptioner:
 	) -> str:
 		"""Generate text using greedy search.
 
-		Args:
-			encoderHiddenStates: Encoder hidden states.
-			maxLength: Maximum generation length.
 
-		Returns:
-			Generated text string.
+		:param encoderHiddenStates: Encoder hidden states.
+		:param maxLength: Maximum generation length.
+		:return: Generated text string.
 		"""
 		if maxLength is None:
 			maxLength = self.maxLength
@@ -331,12 +332,9 @@ class ImageCaptioner:
 	) -> str:
 		"""Generate image caption.
 
-		Args:
-			image: Image file path or binary data.
-			maxLength: Maximum generation length.
-
-		Returns:
-			Generated image caption.
+		:param image: Image file path or binary data.
+		:param maxLength: Maximum generation length.
+		"return: Generated image caption.
 		"""
 		# Preprocess image
 		imageArray = self.preprocessImage(image)
@@ -348,3 +346,32 @@ class ImageCaptioner:
 		caption = self.generateWithGreedy(encoderHiddenStates, maxLength)
 
 		return caption
+
+
+def imageCaptionerFactory(
+	model_type: str,
+	config_path: str,
+	encoder_path: str | None = None,
+	decoder_path: str | None = None,
+	monomeric_model_path: str | None = None,
+) -> ImageCaptioner:
+	"""	Initialize the image caption generator.
+
+	:param model_type: TYE OF THE MODEL.
+	:param monomeric_model_path: Path to a single merged model file.
+	:param encoder_path: Path to the encoder model file.
+	:param decoder_path: Path to the decoder model file.
+	:param config_path: Path to the configuration file.
+	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
+	:return: instance of ImageCaptioner
+	"""
+	if not monomeric_model_path and not (encoder_path and decoder_path):
+		raise ValueError(
+			"You must provide either 'monomeric_model_path' or both "
+			"'encoder_path' and 'decoder_path'."
+		)
+
+	if model_type == "vit-gpt2":
+		return VitGpt2ImageCaptioner(encoder_path, decoder_path,config_path)
+
+

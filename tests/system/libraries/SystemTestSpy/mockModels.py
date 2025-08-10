@@ -35,9 +35,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Initialize the mock model generator.
 
-		Args:
-			random_seed (int): Random seed for reproducible weight generation.
-							  Defaults to 8.
+		:param random_seed (int): Random seed for reproducible weight generation.Defaults to 8.
 		"""
 		self.random_seed = random_seed
 		self._setRandomSeed()
@@ -61,9 +59,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Generate all mock model files in the specified directory.
 
-		Args:
-			output_dir (str): Target directory to create the model files.
-							 Will create the directory if it doesn't exist.
+		:param output_dir (str): Target directory to create the model files. Will create the directory if it doesn't exist.
 		"""
 		output_path = Path(output_dir)
 		output_path.mkdir(parents=True, exist_ok=True)
@@ -85,8 +81,7 @@ class MockVisionEncoderDecoderGenerator:
 		This creates a simplified ViT encoder that performs patch embedding
 		using convolution followed by reshaping operations.
 
-		Args:
-			output_path (Path): Output path for the encoder ONNX file.
+		:param output_path (Path): Output path for the encoder ONNX file.
 		"""
 		# Define input and output specifications
 		pixel_values = helper.make_tensor_value_info(
@@ -168,8 +163,7 @@ class MockVisionEncoderDecoderGenerator:
 		This creates a simplified decoder that accepts multiple inputs including
 		token IDs, encoder hidden states, cache flags, and past key-value pairs.
 
-		Args:
-			output_path (Path): Output path for the decoder ONNX file.
+		:param output_path (Path): Output path for the decoder ONNX file.
 		"""
 		# Generate fixed random weights for reproducibility
 		embedding_weights = np.random.randn(
@@ -226,8 +220,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Create input specifications for the decoder model.
 
-		Returns:
-			list: List of tensor value info objects for all decoder inputs.
+		:return: list: List of tensor value info objects for all decoder inputs.
 		"""
 		inputs = []
 
@@ -275,8 +268,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Create computation nodes for the decoder model.
 
-		Returns:
-			list: List of ONNX nodes defining the decoder computation.
+		:return: list: List of ONNX nodes defining the decoder computation.
 		"""
 		nodes = []
 
@@ -347,11 +339,8 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Create nodes to process past key-value cache inputs.
 
-		Args:
-			nodes (list): List to append new nodes to.
-
-		Returns:
-			list: Names of cache feature tensors.
+		:param nodes (list): List to append new nodes to.
+		:return: list: Names of cache feature tensors.
 		"""
 		cache_features = []
 
@@ -403,11 +392,8 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Create nodes to combine all auxiliary features.
 
-		Args:
-			cache_features (list): List of cache feature tensor names.
-
-		Returns:
-			list: Nodes for feature combination.
+		:param cache_features (list): List of cache feature tensor names.
+		:return: list: Nodes for feature combination.
 		"""
 		nodes = []
 		all_features = ["encoder_feature", "cache_flag_feature"] + cache_features
@@ -467,8 +453,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Create constant tensors needed for decoder computation.
 
-		Returns:
-			list: List of constant tensor initializers.
+		:returns: list: List of constant tensor initializers.
 		"""
 		constants = []
 
@@ -502,8 +487,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Generate the model configuration JSON file.
 
-		Args:
-			output_path (Path): Output path for the config.json file.
+		:param output_path (Path): Output path for the config.json file.
 		"""
 		config = self._getModelConfig()
 
@@ -514,8 +498,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Get the complete model configuration dictionary.
 
-		Returns:
-			dict[str, Any]: Complete model configuration.
+		:return: dict[str, Any]: Complete model configuration.
 		"""
 		return {
 			"_name_or_path": "nlpconnect/vit-gpt2-image-captioning",
@@ -697,8 +680,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Generate the vocabulary JSON file.
 
-		Args:
-			output_path (Path): Output path for the vocab.json file.
+		:param output_path (Path): Output path for the vocab.json file.
 		"""
 		vocab = self._getVocabulary()
 
@@ -709,8 +691,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Get the vocabulary mapping dictionary.
 
-		Returns:
-			dict[str, int]: Token to ID mapping.
+		:returns: dict[str, int]: Token to ID mapping.
 		"""
 		return {
 			"<|endoftext|>": 50256,

@@ -3242,7 +3242,7 @@ You can configure how and when the model used for describing images is loaded.
 Use this edit box to specify the path from which the model should be loaded.
 This allows you to use a custom model located on your local system.
 
-##### enable image captioning   {#LocalCaptionerSettingsLoadWhenInit}
+##### enable image captioning {#LocalCaptionerSettingsLoadWhenInit}
 
 When this checkbox is enabled, NVDA will automatically load the model during startup.
 This can reduce the wait time when performing the first image recognition.
@@ -3883,11 +3883,11 @@ Once the model is ready, press the default shortcut `NVDA+Windows+,` to recogniz
 
 <!-- KC:beginInclude -->
 
-| Name                                  | Key                    | Description                                                                                |
+| Name | Key | Description |
 | ------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------ |
-| get an AI generated image description | `NVDA+Windows+,`       | Use a local model to generate a description of the image object currently navigated by NVDA. |
-| toggle image captioning | Unassigned | load/unload the model from memory.                                       |
-| Shows the AI image descriptions settings  | Unassigned           | Opens the Local Image Description settings panel.                                          |
+| get an AI generated image description | `NVDA+Windows+,` | Use a local model to generate a description of the image object currently navigated by NVDA. |
+| toggle image captioning | Unassigned | load/unload the model from memory. |
+| Shows the AI image descriptions settings | Unassigned | Opens the Local Image Description settings panel. |
 
 <!-- KC:endInclude -->
 

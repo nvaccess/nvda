@@ -3632,7 +3632,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	"""
 
 	# Translators: This is the label for the local captioner settings panel.
-	title = _("AI Image Descriptions")
+	title = pgettext("imageDesc", "AI Image Descriptions")
 	helpId = "LocalCaptionerSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
@@ -3645,16 +3645,16 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is a label for an edit field in the local captioner  Settings panel.
-		modelPathLabel = _("Model Path")
+		modelPathLabel = pgettext("imageDesc", "Model Path")
 
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=modelPathLabel)
 		groupBox = groupSizer.GetStaticBox()
 		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 
 		# Translators: The label of a button to browse for a directory or a file.
-		browseText = _("Browse...")
+		browseText = pgettext("imageDesc", "Browse...")
 		# Translators: The title of the dialog presented when browsing for the directory.
-		dirDialogTitle = _("Select a directory")
+		dirDialogTitle = pgettext("imageDesc", "Select a directory")
 
 		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
@@ -3664,7 +3664,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
-			wx.CheckBox(self, label=_("enable image captioning when start")),
+			wx.CheckBox(self, label=pgettext("imageDesc", "enable image captioning")),
 		)
 		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
@@ -3692,6 +3692,18 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		Only saves if operating in the default profile to prevent
 		configuration issues with custom profiles.
 		"""
+		modelPath  = self.modelPathEdit.GetValue()
+		oldModelPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
+		enabled = self.enable.GetValue()
+		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
+
+		if enabled != oldEnabled:
+			import _localCaptioner
+			
+			if enabled != _localCaptioner.isModelLoaded():
+				_localCaptioner.toggleImageCaptioning()
+
+
 		# Make sure we're operating in the "normal" profile
 		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
 			config.conf["automatedImageDescriptions"]["defaultModelPath"] = self.modelPathEdit.GetValue()
@@ -3700,8 +3712,17 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			log.debugWarning(
 				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
 			)
+			
+		if modelPath != oldModelPath and enabled:
+			import _localCaptioner
+
+			# reload models from new path
+			_localCaptioner.toggleImageCaptioning()
+			_localCaptioner.toggleImageCaptioning()
 
 
+
+			
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
