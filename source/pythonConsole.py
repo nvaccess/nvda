@@ -204,7 +204,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self.prompt = "..." if more else ">>>"
 		return more
 
-	def showsyntaxerror(self, filename=None, **kwargs):
+	def showsyntaxerror(self, filename: str | None = None, **kwargs):
 		excepthook = sys.excepthook
 		sys.excepthook = sys.__excepthook__
 		super().showsyntaxerror(filename=filename, **kwargs)
