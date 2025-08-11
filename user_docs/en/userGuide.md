@@ -1160,14 +1160,11 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
-Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
-NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
+NVDA uses MathCAT by default for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
-With an appropriate math component installed, NVDA supports the following types of mathematical content:
+NVDA supports the following types of mathematical content:
 
 * MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 * Microsoft Word 365 Modern Math Equations via UI automation:
@@ -1215,24 +1212,150 @@ For example, you can move through the expression with the left and right arrow k
 
 When you wish to return to the document, simply press the escape key.
 
-For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
-
-* [MathCAT documentation](https://nsoiffer.github.io/MathCAT/users.html)
-* [Access8Math documentation](https://github.com/tsengwoody/Access8Math)
-* [MathPlayer documentation](https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html)
-
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-### Installing MathPlayer {#InstallingMathPlayer}
+### MathCAT Documentation
 
-Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
-E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
-MathPlayer is available for free from the Wiris website.
-[Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA.
-Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
-This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
+#### Advice on Choosing a Voice
+
+In NVDA, you have a choice of using different synthesizers. This is found in NVDA `Preferences:Settings...` followed by choosing `Speech`. There are usually at least three choices: eSpeak NG, Microsoft Speech API, Windows OneCore voices. All synthesizers work, but the Windows OneCore voices don’t support speaking “a” properly and the other options should be used. In particular, the Microsoft Speech API are a good substitute for the OneCore voices.
+
+#### Information for MathCAT users
+
+MathCAT supports a number of options to control speech, braille, and navigation. These are described below.
+Not all options are currently supported. The current state of support for an option is listed with the option and a ✓ is used before the option as a quick reference to indicate at least partial support for that option.
+
+Note: in NVDA, the options can be set by using the Math Settings dialog. The settings are divided into three categories: Speech, Navigation, and Braille. This division is reflected in the documentation below.
+
+The documentation describes many useful ways to navigate math. For those who just want to get started:
+
+- Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
+- If inside of a table, Ctrl+Arrow will move by cell
+- Home / End moves to the start/end of the expression
+- Space reads your current position
+- Shift+Up/Down will change the mode of navigation (see the [MathCAT navigation documentation](https://nsoiffer.github.io/MathCAT/nav-commands.html) for more details)
+
+To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
+
+MathCAT’s navigation is the same in Word and in a browser.
+
+While navigating an expression, “control+c” copies the math content of the current node in NVDA. The following formats are supported:
+
+- MathML (Default)
+- LaTeX
+- ASCIIMath
+- Speech
+
+#### Option List
+
+The options are listed below. Most options allow only a limited set of values and those are indicated in the options.
+The default value is given in brackets.
+
+##### Speech Options
+
+
+- ✓Impairment: [Blindness]
+  - Options: Blindness, LowVision, LearningDisability
+  - Description: this controls whether certain notations are disambiguated or not in speech.
+  - Status: the focus has been on Blindness, but there is some support if a different value is used. That support needs to be improved.
+- ✓Language: [en]
+  - Options: any known language code and sub-code. E.g., “en-uk”. [This site gives a list of options](https://www.venea.net/web/culture_code).
+  - Description: this value determines the language to be used.
+If the regional variant is not found among the speech rules, the speech will fall back to using the main language. If speech rules for the main language can not be found, English (“en”) is used.
+  - Status: currently only English, Spanish, Finnish, Indonesian, Swedish, Vietnamese, and Chinese are supported.
+Support for other languages will be added with help from volunteers.
+- ✓SpeechStyle: [ClearSpeak]
+  - Options:  Any implemented speech style (currently only ClearSpeak and SimpleSpeak)
+  - Description: a style of speech or coordinated philosophy about how to speak an expression.
+    - ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT. The [ClearSpeak spec details are in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+    - SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words (“a over b”); these are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words (“fraction a over b plus 1 end fraction”).
+  - Status: currently only ClearSpeak and SimpleSpeak are implemented, but MathSpeak will likely be implemented at some point.
+- ✓Verbosity: [Medium]  
+  - Options: Terse, Medium, Verbose  
+  - Description: controls how much “extra” speech is used. E.g, square roots are verbosely spoken as “the square root of x” and tersely spoken as “square root x”.  
+  - Status: supported, but there will likely be improvements made over time  
+- ✓MathRate: [100]  
+  - Options: Number between 1 and 100  
+  - Description: Changes the relative speech rate. The change is a percentage speed change from the standard speech engine’s rate. ‘100’ means the math reading rate is the same as that of the text rate.  
+  - Status: This works in NVDA.  
+- ✓PauseFactor: [50]  
+  - Options: Number between 0 and 100  
+  - Description: Changes the relative amount of pausing that MathCAT adds. 0 turns off all pausing and 100 makes the pauses 10 times longer than normal.  
+  - Status: This works in NVDA.  
+- ✓SpeechSound: [None]  
+  - Options: None, Beep  
+  - Description: a start and end beep occur before and after reading an expression.  
+  - Status: This should work in NVDA.  
+- SubjectArea: [General]  
+  - Status: this was used in MathPlayer but not yet currently implemented. I am waiting on further discussion in the MathML which might add this as a means of providing different default `intent` values.  
+- Chemistry: [SpellOut]  
+  - Options:  SpellOut, AsCompound, Off  
+  - Description:  controls how Chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:  
+    - ✓SpellOut: “H 2 0” (verbosity controls whether “sub”/”super” is spoken)  
+    - AsCompound: “Water”  
+    - ✓Off “H sub 2 O”  
+  - Status: Many heuristics have been implemented to infer when some notation is chemistry or not. Inferring chemical notations is a bit tricky so MathCAT will sometimes not recognize them and may sometimes inadvertently classify something as chemistry. The work of the MathML WG may make it substantially easier for authors to indicate that something is chemistry.  
+
+##### Navigation Options
+
+- ✓BrailleCode: [Nemeth]  
+  - Options: Any implemented braille code  
+  - Description: the braille math code to use  
+  - Status: currently ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, and Vietnam are supported. Other braille code support will depend upon help from others.  
+
+- ✓BrailleNavHighlight: [EndPoints]  
+  - Options: Off, FirstChar, EndPoints, All  
+  - Description: highlight with dots 7 & 8 the currently selected navigation node  
+
+- UEB:  
+  - ✓START_MODE: [Grade2]  
+    - Options: Grade1, Grade2  
+    - Description: assumed starting mode UEB braille (Grade1 assumes we are in G1 passage mode)  
+
+  - ✓UseSpacesAroundAllOperators: [false]  
+    - Options: true/false  
+    - Description: The UEB guidelines suggest that for lower grades, adding space around operators such as `+` and `-` can be a good idea. Normally, space is only added around relational operators such as `=` and `<`.  
+
+Braille codes often have author-definable characters. MathCAT provides some options:
+
+Nemeth defines the typeforms: Bold, Italic, SansSerif, and Script. That leaves out DoubleStruck (Blackboard Bold).  
+Here we provide an option to specify a transcriber-defined typeform changes, with the default mapping DoubleStruck to Italic
+
+- Nemeth:  
+  - ✓SansSerif:    “⠠⠨”  
+  - ✓Bold:         “⠸”  
+  - ✓DoubleStruck: “⠨”  
+  - ✓Script:       “⠈”  
+  - ✓Italic:       “⠨”  
+
+The [UEB Guide to Technical Material](https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf) says to normally treat Fraktur and DoubleStruck as Script.  
+Here we provide an option to specify a transcriber-defined typeform prefix indicator instead.  
+Note: here are prefixes for 1st - 5th: “⠈⠼”, “⠘⠼”, “⠸⠼”, “⠐⠼”, “⠨⠼”
+
+- UEB:  
+  - ✓DoubleStruck: “⠈”     [script]  
+  - ✓Fraktur:      “⠈”     [script]  
+  - ✓SansSerif:    “⠈⠼”    [first transcriber-defined typeform prefix indicator]
+  - ✓GreekVariant: “⠨”     [default to Greek]
+
+The characters for Vietnam that are definable is still being discussed. Likely, they will change some.
+
+- Vietnam:  
+  - ✓UseDropNumbers: [false]  
+  - Options: true, false  
+  - Description: drop digits down a row in simple numeric fractions  
+  - ✓DoubleStruck: “⠈”     [script]  
+  - ✓Fraktur:      “⠈”     [script]  
+  - ✓SansSerif:    “⠈⠼”    [first transcriber-defined typeform prefix indicator]  
+  - ✓GreekVariant: “⠨”     [default to Greek]  
+
+#### Other Options
+
+MathCAT cleans up bad MathML. Numbers are frequently improperly marked up in MathML. In order to clean them up correctly, MathCAT needs to know locale information about what characters might be used to separate digit blocks and what characters are used a decimal separator. Typically this is set by AT based on the country code in the document. However, that may not be given and only the language code is given and so AT needs to guess based on that.
+
+- DecimalSeparators: “.” # [default]  
+- BlockSeparators: “, \u00A0\u202F” # [default – includes two forms of non-breaking spaces]  
 
 ## Braille {#Braille}
 
