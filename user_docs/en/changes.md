@@ -10,6 +10,7 @@
   * Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
   * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
 
 ### Changes
 
@@ -66,6 +67,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 * Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
 Importing from `md2html` is discouraged. (#18638)
+* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` is deprecated for removal in 2026.1, instead use `[reportSpellingErrors2]`. (#17997, @CyrilleB79)
+  * The new key has an `int` value matching an `ReportSpellingErrors` `enum` with options for off, speech and sound.
+  * API consumers can use the `bool` value as previously, or check the `ReportSpellingErrors` if handling speech or sound specifically.
+  * These keys are currently synchronized until 2026.1.
 
 ## 2025.2
 
