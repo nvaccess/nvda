@@ -121,5 +121,5 @@ SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
 SetupDiEnumDeviceInfo.restype = BOOL
 
 SetupDiOpenDevRegKey = dll.SetupDiOpenDevRegKey
-SetupDiOpenDevRegKey.argTypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, DWORD, DWORD, DWORD)
+SetupDiOpenDevRegKey.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, DWORD, DWORD, DWORD)
 SetupDiOpenDevRegKey.restype = HKEY
