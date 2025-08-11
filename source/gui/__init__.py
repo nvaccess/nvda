@@ -403,6 +403,7 @@ class MainFrame(wx.Frame):
 	def onAboutCommand(self, evt):
 		copyButton = Button(
 			id=wx.ID_COPY,
+			# Translators: The label for a button to copy the NVDA version number from the about dialog.
 			label=_("&Copy version number"),
 			callback=self._copyVersionToClipboard,
 			closesDialog=False,
