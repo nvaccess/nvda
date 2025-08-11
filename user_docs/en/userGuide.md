@@ -2332,6 +2332,8 @@ The following symbols are defined:
 | ⡥ ("u" with dot 7) | End underline |
 | ⠎ ("s")| Start strikethrough |
 | ⡎ ("s" with dot 7) | End strikethrough |
+| ⠍ ("m")| Start spelling error |
+| ⡍ ("m" with dot 7) | End spelling error |
 
 ##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
