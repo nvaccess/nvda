@@ -30,11 +30,13 @@ body:
         It's important to include any files that are required to reproduce an issue.
         This might be an example file, or a link to a minimal code example using CodePen or JSFiddle.
 
+      placeholder: |
         *Example:*
-        >1. Open Chrome
-        >1. Browse to www.google.com
-        >1. Type "Hello"
-        >1. Press Enter
+
+        1. Open Chrome
+        1. Browse to www.google.com
+        1. Type "Hello"
+        1. Press Enter
     validations:
       required: true
 
@@ -48,11 +50,13 @@ body:
         This helps developers to be sure they are reproducing the same issue as you.
         Enabling "Speak command keys" (`NVDA+4`) may be helpful.
 
+      placeholder: |
         *Example:*
-        >An NVDA error sound is heard.
 
-        >NVDA Speech:
-        >"button enable sound"
+        An NVDA error sound is heard.
+
+        NVDA Speech:
+        "button enable sound"
     validations:
       required: true
 
@@ -63,11 +67,13 @@ body:
       description: |
         This section should tell us what you expect to happen when these steps are taken.
 
+      placeholder: |
         *Example:*
-        >There should be no error sound, and the page should change to show the search results.
 
-        >NVDA Speech:
-        >"checkbox enable sound"
+        There should be no error sound, and the page should change to show the search results.
+
+        NVDA Speech:
+        "checkbox enable sound"
     validations:
       required: true
 
@@ -118,9 +124,11 @@ body:
         Knowing whether this issue occurs in previous releases helps us to understand if this is a newly introduced issue.
         It can help us determine if changes in NVDA or other software introduced the problem.
 
+      placeholder: |
         *Example:*
-        > * NVDA 2018.1 - no error sound
-        > * NVDA 2018.2 - has error sound
+
+        * NVDA 2018.1 - no error sound
+        * NVDA 2018.2 - has error sound
 
   - type: input
     id: winVersion
@@ -135,8 +143,11 @@ body:
         1. Press down arrow twice to get to "Version"
         1. Press `Control+C` to copy the version information.
 
+      placeholder: |
         *Example:*
-        > Windows 10 Version 1607 Build 14393.1066
+
+        Windows 10 Version 1607 Build 14393.1066
+
     validations:
       required: true
 
@@ -147,8 +158,10 @@ body:
       description: |
         Typically, you can get this information from the "About" dialog of the software.
 
+      placeholder: |
         *Example:*
-        > Chrome version: 67.0.3396.87
+
+        Chrome version: 67.0.3396.87
 
   - type: textarea
     id: otherSysInfo
@@ -157,8 +170,10 @@ body:
       description: |
         This is other information about your setup that you think might be relevant to us.
 
+      placeholder: |
         *Example:*
-        > Running Windows 10 in a VM
+
+        Running Windows 10 in a VM
 
   - type: markdown
     attributes:
@@ -168,7 +183,7 @@ body:
         The following questions ask about the basic investigation steps you may have completed.
         Please feel free to add more information here to tell us about what you have tried.
 
-  - type: input
+  - type: dropdown
     id: restart
     validations:
       required: true
@@ -176,8 +191,14 @@ body:
       label: Does the issue still occur after restarting your computer?
       description: |
         Restarting your computer will help to ensure that software is in a fresh state.
+      options: [
+        "I have restarted my computer and the issue still occurs",
+        "Restarting my computer fixes the issue temporarily, but it comes back later",
+        "Restarting my computer fixed the issue",
+        "I have not restarted my computer",
+      ]
 
-  - type: input
+  - type: dropdown
     id: addons
     validations:
       required: true
@@ -188,8 +209,13 @@ body:
         Therefore, it is recommended to reproduce issues with all add-ons disabled.
         You can restart NVDA with add-ons disabled through the exit dialog.
         In case the issue is caused by an add-on, it is recommended to contact the author of the add-on first.
+      options: [
+        "I have restarted NVDA with add-ons disabled and the issue still occurs",
+        "I have restarted NVDA with add-ons disabled and the issue no longer occurs",
+        "I have not restarted NVDA with add-ons disabled",
+      ]
 
-  - type: input
+  - type: dropdown
     id: comRegFix
     validations:
       required: true
@@ -201,4 +227,10 @@ body:
         Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
         The COM registry fixing tool has been introduced in order to re-register those DLL files.
         In any case, re-registering those DLL files does not have any negative impact on a computer's functionality.
+        Note that when installing NVDA, this tool is ran automatically.
         Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
+      options: [
+        "I have run the COM Registration Fixing Tool and the issue still occurs",
+        "I have run the COM Registration Fixing Tool and the issue no longer occurs",
+        "I have not run the COM Registration Fixing Tool",
+      ]
