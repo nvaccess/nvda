@@ -6,16 +6,23 @@
 """Functions exported by setupapi.dll, and supporting data structures and enumerations."""
 
 from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, windll
-from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, ULONG
+from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PBYTE, PDWORD, PULONG, ULONG
+
 from comtypes import GUID
 
 dll = windll.setupapi
-
 
 HDEVINFO = c_void_p
 
 
 class DEVPROPKEY(Structure):
+	"""
+	Represents a device property key for a device property in the unified device property model.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows-hardware/drivers/install/devpropkey
+	"""
+
 	_fields_ = (
 		("DEVPROPGUID", GUID),
 		("DEVPROPID", ULONG),
@@ -23,11 +30,18 @@ class DEVPROPKEY(Structure):
 
 
 class SP_DEVINFO_DATA(Structure):
+	"""
+	An SP_DEVINFO_DATA structure defines a device instance that is a member of a device information set.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_data
+	"""
+
 	_fields_ = (
 		("cbSize", DWORD),
 		("ClassGuid", GUID),
 		("DevInst", DWORD),
-		("Reserved", POINTER(ULONG)),
+		("Reserved", PULONG),
 	)
 
 	def __str__(self):
@@ -38,11 +52,18 @@ PSP_DEVINFO_DATA = POINTER(SP_DEVINFO_DATA)
 
 
 class SP_DEVICE_INTERFACE_DATA(Structure):
+	"""
+	Defines a device interface in a device information set.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_data
+	"""
+
 	_fields_ = (
 		("cbSize", DWORD),
 		("InterfaceClassGuid", GUID),
 		("Flags", DWORD),
-		("Reserved", POINTER(ULONG)),
+		("Reserved", PULONG),
 	)
 
 	def __str__(self):
@@ -55,7 +76,15 @@ PSP_DEVICE_INTERFACE_DETAIL_DATA = c_void_p
 
 
 SetupDiDestroyDeviceInfoList = dll.SetupDiDestroyDeviceInfoList
-SetupDiDestroyDeviceInfoList.argtypes = (HDEVINFO,)
+"""
+Deletes a device information set and frees all associated memory.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist
+"""
+SetupDiDestroyDeviceInfoList.argtypes = (
+	HDEVINFO,  # DeviceInfoSet
+)
 SetupDiDestroyDeviceInfoList.restype = BOOL
 
 
@@ -66,60 +95,118 @@ def _validHandle_errcheck(res, func, args):
 
 
 SetupDiGetClassDevs = dll.SetupDiGetClassDevsW
-SetupDiGetClassDevs.argtypes = (POINTER(GUID), c_wchar_p, HWND, DWORD)
+"""
+Returns a handle to a device information set that contains requested device information elements for a local computer.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetclassdevsw
+"""
+SetupDiGetClassDevs.argtypes = (
+	POINTER(GUID),  # ClassGuid
+	c_wchar_p,  # Enumerator
+	HWND,  # hwndParent
+	DWORD,  # Flags
+)
 SetupDiGetClassDevs.restype = HDEVINFO
 SetupDiGetClassDevs.errcheck = _validHandle_errcheck  # HDEVINFO
 
 SetupDiGetDeviceProperty = dll.SetupDiGetDevicePropertyW
+"""
+The SetupDiGetDeviceProperty function retrieves a device instance property.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetdevicepropertyw
+"""
 SetupDiGetDeviceProperty.argtypes = (
-	HDEVINFO,  # [in]            HDEVINFO         DeviceInfoSet
-	PSP_DEVINFO_DATA,  # [in]            PSP_DEVINFO_DATA DeviceInfoData
-	POINTER(DEVPROPKEY),  # [in]            const DEVPROPKEY *PropertyKey
-	PDWORD,  # [out]           DEVPROPTYPE      *PropertyType
-	c_void_p,  # [out, optional] PBYTE            PropertyBuffer
-	DWORD,  # [in]            DWORD            PropertyBufferSize
-	PDWORD,  # [out, optional] PDWORD           RequiredSize
-	DWORD,  # [in]            DWORD            Flags
+	HDEVINFO,  # DeviceInfoSet
+	PSP_DEVINFO_DATA,  # DeviceInfoData
+	POINTER(DEVPROPKEY),  # PropertyKey
+	PDWORD,  # PropertyType
+	PBYTE,  # PropertyBuffer
+	DWORD,  # PropertyBufferSize
+	PDWORD,  # RequiredSize
+	DWORD,  # Flags
 )
 SetupDiGetDeviceProperty.restype = BOOL
 
 SetupDiEnumDeviceInterfaces = dll.SetupDiEnumDeviceInterfaces
+"""
+Enumerates the device interfaces that are contained in a device information set.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdienumdeviceinterfaces
+"""
 SetupDiEnumDeviceInterfaces.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	POINTER(GUID),
-	DWORD,
-	PSP_DEVICE_INTERFACE_DATA,
+	HDEVINFO,  # DeviceInfoSet
+	PSP_DEVINFO_DATA,  # DeviceInfoData
+	POINTER(GUID),  # InterfaceClassGuid
+	DWORD,  # MemberIndex
+	PSP_DEVICE_INTERFACE_DATA,  # DeviceInterfaceData
 )
 SetupDiEnumDeviceInterfaces.restype = BOOL
 
 SetupDiGetDeviceInterfaceDetail = dll.SetupDiGetDeviceInterfaceDetailW
+"""
+Returns details about a device interface.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw
+"""
 SetupDiGetDeviceInterfaceDetail.argtypes = (
-	HDEVINFO,
-	PSP_DEVICE_INTERFACE_DATA,
-	PSP_DEVICE_INTERFACE_DETAIL_DATA,
-	DWORD,
-	PDWORD,
-	PSP_DEVINFO_DATA,
+	HDEVINFO,  # DeviceInfoSet
+	PSP_DEVICE_INTERFACE_DATA,  # DeviceInterfaceData
+	PSP_DEVICE_INTERFACE_DETAIL_DATA,  # DeviceInterfaceDetailData
+	DWORD,  # DeviceInterfaceDetailDataSize
+	PDWORD,  # RequiredSize
+	PSP_DEVINFO_DATA,  # DeviceInfoData
 )
 SetupDiGetDeviceInterfaceDetail.restype = BOOL
 
 SetupDiGetDeviceRegistryProperty = dll.SetupDiGetDeviceRegistryPropertyW
+"""
+Retrieves a specified Plug and Play device property.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
+"""
 SetupDiGetDeviceRegistryProperty.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	DWORD,
-	PDWORD,
-	c_void_p,
-	DWORD,
-	PDWORD,
+	HDEVINFO,  # DeviceInfoSet
+	PSP_DEVINFO_DATA,  # DeviceInfoData
+	DWORD,  # Property
+	PDWORD,  # PropertyRegDataType
+	PBYTE,  # PropertyBuffer
+	DWORD,  # PropertyBufferSize
+	PDWORD,  # RequiredSize
 )
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
 SetupDiEnumDeviceInfo = dll.SetupDiEnumDeviceInfo
-SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
+"""
+Returns a SP_DEVINFO_DATA structure that specifies a device information element in a device information set.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdienumdeviceinfo
+"""
+SetupDiEnumDeviceInfo.argtypes = (
+	HDEVINFO,  # DeviceInfoSet
+	DWORD,  # MemberIndex
+	PSP_DEVINFO_DATA,  # DeviceInfoData
+)
 SetupDiEnumDeviceInfo.restype = BOOL
 
 SetupDiOpenDevRegKey = dll.SetupDiOpenDevRegKey
-SetupDiOpenDevRegKey.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, DWORD, DWORD, DWORD)
+"""
+Opens a registry key for device-specific configuration information.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdiopendevregkey
+"""
+SetupDiOpenDevRegKey.argtypes = (
+	HDEVINFO,  # DeviceInfoSet
+	PSP_DEVINFO_DATA,  # DeviceInfoData
+	DWORD,  # Scope
+	DWORD,  # HwProfile
+	DWORD,  # KeyType
+	DWORD,  # samDesired
+)
 SetupDiOpenDevRegKey.restype = HKEY
