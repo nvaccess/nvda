@@ -34,7 +34,7 @@ def NVDA_Caption():
 	_chrome.prepareChrome(
 		f"""
 		<div>
-			<img src={url}/>
+			<img src={url}>
 		</div>
 		""",
 	)
