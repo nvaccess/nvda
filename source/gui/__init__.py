@@ -399,6 +399,7 @@ class MainFrame(wx.Frame):
 	def _copyVersionToClipboard(p: Payload):
 		versionStr = f"{versionInfo.version} ({versionInfo.version_detailed})"
 		api.copyToClip(versionStr)
+		ui.message(_("Copied to clip board"))
 
 	def onAboutCommand(self, evt: wx.CommandEvent):
 		copyButton = Button(
