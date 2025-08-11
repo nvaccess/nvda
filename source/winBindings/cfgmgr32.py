@@ -11,5 +11,16 @@ from ctypes.wintypes import DWORD, ULONG
 dll = windll.cfgmgr32
 
 CM_Get_Device_ID = dll.CM_Get_Device_IDW
-CM_Get_Device_ID.argtypes = (DWORD, c_wchar_p, ULONG, ULONG)
+"""
+Retrieves the device instance ID for a specified device instance on the local machine.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_get_device_idw
+"""
+CM_Get_Device_ID.argtypes = (
+	DWORD,  # dnDevInst
+	c_wchar_p,  # Buffer
+	ULONG,  # BufferLen
+	ULONG,  # ulFlags
+)
 CM_Get_Device_ID.restype = DWORD
