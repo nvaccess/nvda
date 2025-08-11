@@ -567,7 +567,7 @@ jobs:
     needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
     concurrency:
-      group: snapshot
+      group: snapshot-${{ github.ref_name }}
       cancel-in-progress: true
     environment:
       name: snapshot
