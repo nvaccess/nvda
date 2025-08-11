@@ -154,6 +154,16 @@ _ISpEventSource_GetEvents = WINFUNCTYPE(HRESULT, c_ulong, POINTER(SPEVENT), POIN
 
 _SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
 
+_FIRST_AUDIO_CHUNK_MIN_DURATION_MS = 50
+"""
+The minimum duration of the first audio chunk in each utterance.
+Audio will not be played until there's at least this amount of audio data
+ready to be read in the SonicStream.
+This is to avoid audio gaps if further processing takes longer time,
+especially when SonicStream is changing the speed to be faster.
+This will also increase the speech latency, so it should not be too big.
+"""
+
 
 class _SapiEvent(SPEVENT):
 	"""Enhanced version of the SPEVENT structure that supports freeing lParam data automatically."""
@@ -266,11 +276,12 @@ class SynthDriverAudioStream(COMObject):
 		if synth._isCancelling:
 			return hresult.S_OK
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
-		# For the first audio chunk, wait for at least 50ms of audio
+		# For the first audio chunk, wait for some amount of audio data
 		# in order to avoid audio gaps if further processing takes longer time
 		if (
 			synth._isFirstAudioChunk
-			and synth.sonicStream.samplesAvailable < synth.sonicStream.sampleRate // 20
+			and synth.sonicStream.samplesAvailable
+			< synth.sonicStream.sampleRate * 1000 // _FIRST_AUDIO_CHUNK_MIN_DURATION_MS
 		):
 			return
 		synth._isFirstAudioChunk = False
