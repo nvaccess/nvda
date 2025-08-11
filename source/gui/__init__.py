@@ -400,7 +400,7 @@ class MainFrame(wx.Frame):
 		versionStr = f"{versionInfo.version} ({versionInfo.version_detailed})"
 		api.copyToClip(versionStr)
 
-	def onAboutCommand(self, evt):
+	def onAboutCommand(self, evt: wx.CommandEvent):
 		copyButton = Button(
 			id=wx.ID_COPY,
 			# Translators: The label for a button to copy the NVDA version number from the about dialog.
