@@ -23,13 +23,11 @@ import versionInfo
 import speech
 import queueHandler
 import core
-from typing import (
-	Any,
-	Optional,
-	Type,
-)
+from typing import Any
 import systemUtils
 from .message import (
+	Button,
+	Payload,
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
@@ -102,7 +100,7 @@ ICON_PATH = os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = f"{versionInfo.url}/donate/"
 
 ### Globals
-mainFrame: Optional["MainFrame"] = None
+mainFrame: "MainFrame | None" = None
 """Set by initialize. Should be used as the parent for "top level" dialogs.
 """
 
@@ -249,7 +247,7 @@ class MainFrame(wx.Frame):
 			)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
-	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+	def popupSettingsDialog(self, dialog: type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
@@ -269,7 +267,7 @@ class MainFrame(wx.Frame):
 
 	if NVDAState._allowDeprecatedAPI():
 
-		def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+		def _popupSettingsDialog(self, dialog: type[SettingsDialog], *args, **kwargs):
 			log.warning(
 				"_popupSettingsDialog is deprecated, use popupSettingsDialog instead.",
 				stack_info=True,
@@ -397,9 +395,22 @@ class MainFrame(wx.Frame):
 	def onInputGesturesCommand(self, evt):
 		self.popupSettingsDialog(InputGesturesDialog)
 
+	@staticmethod
+	def _copyVersionToClipboard(p: Payload):
+		versionStr = f"{versionInfo.version} ({versionInfo.version_detailed})"
+		api.copyToClip(versionStr)
+
 	def onAboutCommand(self, evt):
+		copyButton = Button(
+			id=wx.ID_COPY,
+			label=_("&Copy version number"),
+			callback=self._copyVersionToClipboard,
+			closesDialog=False,
+		)
 		# Translators: The title of the dialog to show about info for NVDA.
-		MessageDialog(None, versionInfo.aboutMessage, _("About NVDA")).Show()
+		aboutDialog = MessageDialog(None, versionInfo.aboutMessage, _("About NVDA"))
+		aboutDialog.addButton(copyButton)
+		aboutDialog.Show()
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
