@@ -38,7 +38,7 @@ env:
   defaultArch: x86
   supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.11.9'
-  supportedPythonVersions: '["3.11.9", "3.13.5"]'
+  supportedPythonVersions: '["3.11.9", "3.13.6"]'
 
 jobs:
   matrix:
@@ -161,6 +161,10 @@ jobs:
       uses: astral-sh/setup-uv@v6
     - name: Run pre-commit
       run: |
+        # Ensure uv environment is up to date.
+        # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
+        # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
+        pre-commit run uv-lock --all-files
         # Run pre-commit on the translations
         pre-commit run checkPo --all-files
     - name: Add job summary
@@ -462,7 +466,7 @@ jobs:
         fail-on-cache-miss: true
     - name: Install Windows SDK
       # Installs symstore.exe to expected location.
-      run: choco install -y windows-sdk-10.0
+      run: choco install -y windows-sdk-10.1
     - name: Create build symbols
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
@@ -561,7 +565,7 @@ jobs:
     needs: [buildNVDA, createLauncher, createSymbols, allTestsPass]
     if: ${{ github.event_name == 'push' && !startsWith(github.ref_name, 'release-') }}
     concurrency:
-      group: snapshot
+      group: snapshot-${{ github.ref_name }}
       cancel-in-progress: true
     environment:
       name: snapshot

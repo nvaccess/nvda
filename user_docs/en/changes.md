@@ -36,6 +36,8 @@ Note that this is disabled by default due to the device using generic USB identi
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
 * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
 * A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
+* Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)
+* Fixed audio gaps in speech when using some SAPI 5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
 
 ### Changes for Developers
 
@@ -43,7 +45,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Component updates:
   * Updated Pyright to 1.1.403. (#18424)
-  * Updated Ruff to 0.12.5. (#18424)
+  * Updated Ruff to 0.12.7. (#18424, #18609)
   * Updated comtypes to 1.4.11. (#18611)
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
