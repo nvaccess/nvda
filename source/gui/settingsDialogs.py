@@ -3410,7 +3410,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				label=pgettext("remote", "&Mute when controlling the local computer"),
 			),
 		)
-		self.bindHelpEvent("RemoteConfirmDisconnect", self.muteOnLocalControl)
+		self.bindHelpEvent("RemoteMuteOnLocalControl", self.muteOnLocalControl)
 		enabledInSecureMode.add(self.muteOnLocalControl)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
