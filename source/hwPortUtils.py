@@ -523,6 +523,7 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 	"PSP_DEVICE_INTERFACE_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVICE_INTERFACE_DETAIL_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVINFO_DATA": _MovedSymbol("winBindings.setupapi"),
+	"SetupDiEnumDeviceInfo": _MovedSymbol("winBindings.setupapi"),
 }
 """Mapping from symbol name to new (absolute) module."""
 
