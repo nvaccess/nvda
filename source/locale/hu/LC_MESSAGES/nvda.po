@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-29 04:35+0000\n"
-"PO-Revision-Date: 2025-08-04 00:19\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -3586,7 +3586,7 @@ msgstr "Karakter: {character}\n"
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Kiterjesztett írásjel ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -7002,7 +7002,7 @@ msgstr "Ellenőrizze az internetkapcsolatot, és az NVDA frissítési tükörsze
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "Nem sikerült csatlakozni az NV Access szerveréhez."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7155,14 +7155,15 @@ msgstr "&kész"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Az NVDA frissítését nem javasoljuk, amíg vezérelt számítógépként csatlakozik egy NVDA távelérési folyamathoz."
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Az aktív kapcsolat megszakadhat a frissítés közben vagy után. De ha a kapcsolat nem is szakad meg, távolról akkor sem lehet reagálni a vezérlő számítógépen felbukkanó Felhasználói fiókok felügyelete (UAC) képernyő utasításaira. Csak abban az esetben folytassa a műveletet , ha fizikailag is hozzáfér a vezérlő számítógéphez.\n\n"
+"Biztosan folytatja?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -12571,14 +12572,15 @@ msgstr "A mappa már létezik"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Az NVDA telepítését nem javasoljuk, amíg vezérelt számítógépként csatlakozik egy NVDA távelérési folyamathoz."
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Távolról nem lehet reagálni a vezérlő számítógépen felbukkanó Felhasználói fiókok felügyelete (UAC) képernyő utasításaira. Csak abban az esetben folytassa a műveletet , ha fizikailag is hozzáfér a vezérlő számítógéphez.\n\n"
+"Biztosan folytatja?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506

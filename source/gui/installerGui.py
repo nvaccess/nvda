@@ -673,7 +673,7 @@ def doCreatePortable(
 		if startAfterCreate:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(portableDirectory, "nvda.exe"),
-				parameters=_generate_executionParameters(),
+				parameters=None,
 			)
 		if not core.triggerNVDAExit(newNVDA):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
