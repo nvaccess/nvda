@@ -6,7 +6,7 @@
 """Functions exported by setupapi.dll, and supporting data structures and enumerations."""
 
 from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, windll
-from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PBYTE, PDWORD, PULONG, ULONG
+from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, PULONG, ULONG
 
 from comtypes import GUID
 
@@ -122,7 +122,7 @@ SetupDiGetDeviceProperty.argtypes = (
 	PSP_DEVINFO_DATA,  # DeviceInfoData
 	POINTER(DEVPROPKEY),  # PropertyKey
 	PDWORD,  # PropertyType
-	PBYTE,  # PropertyBuffer
+	c_void_p,  # PropertyBuffer
 	DWORD,  # PropertyBufferSize
 	PDWORD,  # RequiredSize
 	DWORD,  # Flags
@@ -174,7 +174,7 @@ SetupDiGetDeviceRegistryProperty.argtypes = (
 	PSP_DEVINFO_DATA,  # DeviceInfoData
 	DWORD,  # Property
 	PDWORD,  # PropertyRegDataType
-	PBYTE,  # PropertyBuffer
+	c_void_p,  # PropertyBuffer
 	DWORD,  # PropertyBufferSize
 	PDWORD,  # RequiredSize
 )
