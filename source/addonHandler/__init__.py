@@ -1084,7 +1084,7 @@ docFileName = string(default=None)
 		self._translatedConfig = None
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, encoding="utf-8", default_encoding="utf-8")
-			for k in ("summary", "description"):
+			for k in ("summary", "description", "changelog"):
 				val = self._translatedConfig.get(k)
 				if val:
 					self[k] = val
