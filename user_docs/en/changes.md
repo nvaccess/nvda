@@ -56,10 +56,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
 
-#### API Breaking Changes
-
-* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPROPKEY`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`,`PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`. (#18207)
-
 #### Deprecations
 
 * The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
@@ -78,6 +74,8 @@ Importing from `md2html` is discouraged. (#18638)
   Access to this symbol via `hwPortUtils` is deprecated. (#18207)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18207)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPROPKEY`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`.
+  Access to these symbols via `hwPortUtils` is deprecated. (#18207)
 
 ## 2025.2
 
