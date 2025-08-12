@@ -519,6 +519,7 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 	"BLUETOOTH_ADDRESS": _MovedSymbol("winBindings.bthprops"),
 	"BLUETOOTH_MAX_NAME_SIZE": _MovedSymbol("winBindings.bthprops"),
 	"BTH_ADDR": _MovedSymbol("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+	"CM_Get_Device_ID": _MovedSymbol("winBindings.cfgmgr32"),
 }
 """Mapping from symbol name to new (absolute) module."""
 
