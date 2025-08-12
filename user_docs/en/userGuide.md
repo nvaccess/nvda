@@ -3178,7 +3178,7 @@ When unchecked, NVDA will disconnect immediately without confirmation.
 
 This option controls whether you can hear speech and sounds from the remote computer when controlling the local computer.
 
-When checked, Remote Access  will be muted when first connecting as the controlling computer, and when switching to controlling the local computer.
+When checked, Remote Access will be muted when first connecting as the controlling computer, and when switching to controlling the local computer.
 When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.
 
 You can always manually mute or unmute Remote Access when controlling the local computer.
