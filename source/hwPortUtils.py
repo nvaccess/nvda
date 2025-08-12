@@ -44,10 +44,12 @@ import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
 
+
 def ValidHandle(value):
 	if value == 0:
 		raise ctypes.WinError()
 	return value
+
 
 class dummy(ctypes.Structure):
 	_fields_ = (("d1", DWORD), ("d2", WCHAR))
