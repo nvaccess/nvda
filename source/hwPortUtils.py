@@ -44,10 +44,12 @@ import winKernel
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
 
+
 def ValidHandle(value):
 	if value == 0:
 		raise ctypes.WinError()
 	return value
+
 
 class dummy(ctypes.Structure):
 	_fields_ = (("d1", DWORD), ("d2", WCHAR))
@@ -506,3 +508,28 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 	if _isDebug():
 		log.debug("Finished listing HID devices")
+
+
+_MOVED_SYMBOLS: dict[str, str] = {
+	"BLUETOOTH_ADDRESS": "winBindings.bthprops",
+	"BLUETOOTH_MAX_NAME_SIZE": "winBindings.bthprops",
+	"BTH_ADDR": "winBindings.bthprops",
+}
+"""Mapping from symbol name to new (absolute) module.
+
+Assumes symbols have not been renamed.
+"""
+
+
+def __getattr__(attrName: str) -> typing.Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	import NVDAState
+
+	if NVDAState._allowDeprecatedAPI():
+		if attrName in _MOVED_SYMBOLS:
+			from importlib import import_module
+
+			modName = _MOVED_SYMBOLS[attrName]
+			log.warning(f"hwPortUtils.{attrName} is deprecated. Use {modName}.{attrName} instead.")
+			return getattr(import_module(modName), attrName)
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")

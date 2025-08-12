@@ -58,7 +58,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### API Breaking Changes
 
-* The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BTH_ADDR`. (#18207)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`, `BTH_ADDR`. (#18207)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`. (#18207). (#18207)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`. (#18207)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPROPKEY`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`,`PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`. (#18207)
