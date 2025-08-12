@@ -3206,6 +3206,212 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
+#### MathCAT Settings {#MathCATSettings}
+
+This category allows you to adjust the behaviour of MathCAT.
+
+##### Speech Options {#MathCATSpeechOptions}
+
+###### Impairment {#MathCATImpairment}
+
+This controls whether certain notations are disambiguated or not in speech.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Blindness, LowVision, LearningDisability |
+| Default | Blindness |
+
+**Status:** The focus has been on Blindness, but there is some support if a different value is used. That support needs to be improved.
+
+###### Language {#MathCATLanguage}
+
+This value determines the language to be used.
+If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
+If speech rules for the main language can not be found, English ("en") is used.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Any known language code and sub-code, e.g. "en-uk". See [this site for a list of options](https://www.venea.net/web/culture_code). |
+| Default | en |
+
+**Status:** Currently only English, Spanish, Finnish, Indonesian, Swedish, Vietnamese, and Chinese are supported. Support for other languages will be added with help from volunteers.
+
+###### Speech Style {#MathCATSpeechStyle}
+
+A style of speech or coordinated philosophy about how to speak an expression.
+
+- ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT. See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+- SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b"); these are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ClearSpeak, SimpleSpeak |
+| Default | ClearSpeak |
+
+**Status:** Currently only ClearSpeak and SimpleSpeak are implemented, but MathSpeak will likely be implemented at some point.
+
+###### Verbosity {#MathCATVerbosity}
+
+Controls how much "extra" speech is used.
+For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+**Status:** Supported, but there will likely be improvements made over time.
+
+###### Math Rate {#MathCATMathRate}
+
+Changes the relative speech rate.
+The change is a percentage speed change from the standard speech engine's rate.
+`100` means the math reading rate is the same as that of the text rate.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 1 and 100 |
+| Default | 100 |
+
+**Status:** This works in NVDA.
+
+###### Pause Factor {#MathCATPauseFactor}
+
+Changes the relative amount of pausing that MathCAT adds.
+`0` turns off all pausing and `100` makes the pauses 10 times longer than normal.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 0 and 100 |
+| Default | 50 |
+
+**Status:** This works in NVDA.
+
+###### Speech Sound {#MathCATSpeechSound}
+
+A start and end beep occur before and after reading an expression.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | None, Beep |
+| Default | None |
+
+**Status:** This should work in NVDA.
+
+###### Subject Area {#MathCATSubjectArea}
+
+**Status:** This was used in MathPlayer but not yet currently implemented. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
+
+###### Chemistry {#MathCATChemistry}
+
+Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
+
+- SpellOut: "H 2 0" (verbosity controls whether "sub"/"super" is spoken)
+- AsCompound: "Water"
+- Off: "H sub 2 O"
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | SpellOut, AsCompound, Off |
+| Default | SpellOut |
+
+**Status:** Many heuristics have been implemented to infer when some notation is chemistry or not. Inferring chemical notations is a bit tricky so MathCAT will sometimes not recognize them and may sometimes inadvertently classify something as chemistry.
+
+##### Navigation Options {#MathCATNavigationOptions}
+
+###### Braille Code {#MathCATBrailleCode}
+
+The braille math code to use.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
+| Default | Nemeth |
+
+**Status:** Other braille code support will depend upon help from others.
+
+###### Braille Navigation Highlight {#MathCATBrailleNavHighlight}
+
+Highlight with dots 7 & 8 the currently selected navigation node.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Off, FirstChar, EndPoints, All |
+| Default | EndPoints |
+
+###### UEB: Start Mode {#MathCATUEBStartMode}
+
+Assumed starting mode UEB braille.
+Grade1 assumes we are in G1 passage mode.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Grade1, Grade2 |
+| Default | Grade2 |
+
+###### UEB: Use Spaces Around All Operators {#MathCATUEBSpacesAroundAllOperators}
+
+The UEB guidelines suggest that for lower grades, adding space around operators such as `+` and `-` can be a good idea.
+Normally, space is only added around relational operators such as `=` and `<`.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | true, false |
+| Default | false |
+
+###### Nemeth: Typeform Indicators {#MathCATNemethTypeforms}
+
+Nemeth defines the typeforms: Bold, Italic, SansSerif, and Script.
+That leaves out DoubleStruck (Blackboard Bold).
+Here is the default mapping:
+
+| Typeform | Indicator |
+|---|---|
+| SansSerif | ⠠⠨ |
+| Bold | ⠸ |
+| DoubleStruck | ⠨ |
+| Script | ⠈ |
+| Italic | ⠨ |
+
+###### UEB: Typeform Indicators {#MathCATUEBTypeforms}
+
+The [UEB Guide to Technical Material](https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf) says to normally treat Fraktur and DoubleStruck as Script.
+
+| Typeform | Indicator | Notes |
+|---|---|---|
+| DoubleStruck | ⠈ | script |
+| Fraktur | ⠈ | script |
+| SansSerif | ⠈⠼ | first transcriber-defined typeform prefix indicator |
+| GreekVariant | ⠨ | default to Greek |
+
+###### Vietnam: Typeform Indicators {#MathCATVietnamTypeforms}
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| UseDropNumbers | true, false (Default: false) |
+
+Other typeform mappings:
+
+| Typeform | Indicator | Notes |
+|---|---|---|
+| DoubleStruck | ⠈ | script |
+| Fraktur | ⠈ | script |
+| SansSerif | ⠈⠼ | first transcriber-defined typeform prefix indicator |
+| GreekVariant | ⠨ | default to Greek |
+
+##### Other Options {#MathCATOtherOptions}
+
+MathCAT cleans up bad MathML.
+Numbers are frequently improperly marked up in MathML.
+In order to clean them up correctly, MathCAT needs to know locale information about what characters might be used to separate digit blocks and what characters are used as a decimal separator.
+Typically this is set by assistive technology based on the country code in the document.
+However, that may not be given and only the language code is given, so the assistive technology needs to guess based on that.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| DecimalSeparators | "." (Default) |
+| BlockSeparators | ", \u00A0\u202F" (Default - includes two forms of non-breaking spaces) |
+
 #### Add-on Store Settings {#AddonStoreSettings}
 
 This category allows you to adjust the behaviour of the Add-on Store.
