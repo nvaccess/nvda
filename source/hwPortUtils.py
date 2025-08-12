@@ -510,15 +510,17 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing HID devices")
 
 
-_MOVED_SYMBOLS: dict[str, str] = {
-	"BLUETOOTH_ADDRESS": "winBindings.bthprops",
-	"BLUETOOTH_MAX_NAME_SIZE": "winBindings.bthprops",
-	"BTH_ADDR": "winBindings.bthprops",
-}
-"""Mapping from symbol name to new (absolute) module.
+class _MovedSymbol(typing.NamedTuple):
+	module: str
+	attribute: str | None = None
 
-Assumes symbols have not been renamed.
-"""
+
+_MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
+	"BLUETOOTH_ADDRESS": _MovedSymbol("winBindings.bthprops"),
+	"BLUETOOTH_MAX_NAME_SIZE": _MovedSymbol("winBindings.bthprops"),
+	"BTH_ADDR": _MovedSymbol("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+}
+"""Mapping from symbol name to new (absolute) module."""
 
 
 def __getattr__(attrName: str) -> typing.Any:
@@ -529,7 +531,8 @@ def __getattr__(attrName: str) -> typing.Any:
 		if attrName in _MOVED_SYMBOLS:
 			from importlib import import_module
 
-			modName = _MOVED_SYMBOLS[attrName]
-			log.warning(f"hwPortUtils.{attrName} is deprecated. Use {modName}.{attrName} instead.")
-			return getattr(import_module(modName), attrName)
+			modName, newAttrName = _MOVED_SYMBOLS[attrName]
+			newAttrName = newAttrName or attrName
+			print(f"hwPortUtils.{attrName} is deprecated. Use {modName}.{newAttrName} instead.")
+			return getattr(import_module(modName), newAttrName)
 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
