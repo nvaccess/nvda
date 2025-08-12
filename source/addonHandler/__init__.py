@@ -1019,6 +1019,10 @@ author = string()
 # Suggested convention is <major>.<minor>.<patch> format.
 version = string()
 
+# Changelog for the add-on version.
+# Document changes between the previous and the current versions.
+changelog = string(default=None)
+
 # The minimum required NVDA version for this add-on to work correctly.
 # Should be less than or equal to lastTestedNVDAVersion
 minimumNVDAVersion = apiVersion(default="0.0.0")
