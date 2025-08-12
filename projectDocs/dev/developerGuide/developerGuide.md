@@ -998,6 +998,11 @@ When uploading to the Add-on Store certain requirements apply:
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
 * author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <<mick@example.com>>.
 * description (string): A sentence or two describing what the add-on does.
+* changelog (string): A list of changes between previous and latest add-on releases.
+  * This is used to inform users about changes included in the add-on release.
+  * Changes can include new features, changes, bug fixes, and localization updates if any.
+  * When releasing add-on updates, changes should be edited if possible.
+  This means not all add-on releases will include notable changes.
 * url (string): A URL where this add-on, further info and upgrades can be found.
   * Starting the URL with `https://` is required for submitting to the Add-on Store.
 * docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation](#AddonDoc) section for more details.
