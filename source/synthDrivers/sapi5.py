@@ -506,26 +506,16 @@ class SapiSink(COMObject):
 		if synth._isCancelling:
 			return
 		if synth.player:
-			# Flush the stream and get the remaining data.
-			synth.sonicStream.flush()
-			audioData = synth.sonicStream.readShort()
-			synth.player.feed(audioData, len(audioData) * 2)
-		# trigger all untriggered bookmarks
-		if synth._bookmarkLists:
-			for bookmark in synth._bookmarkLists[0]:
-				synthIndexReached.notify(synth=synth, index=bookmark)
-			synth._bookmarkLists.pop()
-		synth._isSpeaking = False
-		synthDoneSpeaking.notify(synth=synth)
-		if synth.player:
-			# notify the thread
+			# WASAPI is on
+			# Notify the thread
+			# Handle EndStream in that thread
 			with synth._threadCond:
 				synth._isCompleted = True
 				synth._threadCond.notify()
-		if synth._audioDucker:
-			if audioDucking._isDebug():
-				log.debug("Disabling audio ducking due to speech stream end")
-			synth._audioDucker.disable()
+		else:
+			# WASAPI is off
+			# Handle EndStream immediately
+			synth._onEndStream()
 
 	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
@@ -819,6 +809,20 @@ class SynthDriver(SynthDriver):
 	def _requestCompleted(self) -> bool:
 		return self._isCompleted or self._isCancelling or self._isTerminating
 
+	def _onEndStream(self) -> None:
+		"""Common handling when a speech stream ends."""
+		# trigger all untriggered bookmarks
+		if self._bookmarkLists:
+			for bookmark in self._bookmarkLists[0]:
+				synthIndexReached.notify(synth=self, index=bookmark)
+			self._bookmarkLists.pop()
+		self._isSpeaking = False
+		synthDoneSpeaking.notify(synth=self)
+		if self._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to speech stream end")
+			self._audioDucker.disable()
+
 	def _speakThread(self):
 		# Handles speak requests in the queue one by one.
 		# Only one request will be processed (spoken) at a time.
@@ -847,6 +851,12 @@ class SynthDriver(SynthDriver):
 					self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
 					with self._threadCond:
 						self._threadCond.wait_for(self._requestCompleted)
+					if not self._isCancelling:
+						# Flush the stream and play the remaining data.
+						self.sonicStream.flush()
+						audioData = self.sonicStream.readShort()
+						self.player.feed(audioData, len(audioData) * 2)
+						self._onEndStream()
 				except Exception:
 					self._bookmarkLists.pop()
 					log.error("Error speaking", exc_info=True)
