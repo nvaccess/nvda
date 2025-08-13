@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Logic for automatedImageDescriptions tests."""
+
 import NvdaLib as _nvdaLib
 from ChromeLib import ChromeLib as _ChromeLib
 from SystemTestSpy import (
@@ -13,11 +14,8 @@ from SystemTestSpy import (
 
 import os
 import pathlib
-import urllib.parse
 
 _chrome: _ChromeLib = _getLib("ChromeLib")
-
-
 
 
 def NVDA_Caption():
@@ -29,7 +27,6 @@ def NVDA_Caption():
 		"nvda.ico",
 	)
 	url = pathlib.Path(iconPath).as_uri()
-
 
 	_chrome.prepareChrome(
 		f"""

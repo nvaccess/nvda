@@ -3692,17 +3692,16 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		Only saves if operating in the default profile to prevent
 		configuration issues with custom profiles.
 		"""
-		modelPath  = self.modelPathEdit.GetValue()
+		modelPath = self.modelPathEdit.GetValue()
 		oldModelPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
 		enabled = self.enable.GetValue()
 		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
 
 		if enabled != oldEnabled:
 			import _localCaptioner
-			
+
 			if enabled != _localCaptioner.isModelLoaded():
 				_localCaptioner.toggleImageCaptioning()
-
 
 		# Make sure we're operating in the "normal" profile
 		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
@@ -3712,7 +3711,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			log.debugWarning(
 				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
 			)
-			
+
 		if modelPath != oldModelPath and enabled:
 			import _localCaptioner
 
@@ -3721,8 +3720,6 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			_localCaptioner.toggleImageCaptioning()
 
 
-
-			
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")

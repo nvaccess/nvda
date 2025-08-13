@@ -27,16 +27,16 @@ def terminate():
 	_localCaptioner.terminate()
 	_localCaptioner = None
 
+
 def isModelLoaded() -> bool:
-	"""return if model is loaded
-	"""
+	"""return if model is loaded"""
 	if _localCaptioner is not None:
 		return _localCaptioner.isModelLoaded
 	else:
 		return False
 
+
 def toggleImageCaptioning() -> None:
-	""" do load/unload the model from memory.
-	"""
+	"""do load/unload the model from memory."""
 	if _localCaptioner is not None:
 		_localCaptioner.toggleSwitch()

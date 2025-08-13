@@ -27,6 +27,7 @@ from .captioner import imageCaptionerFactory
 # Module-level configuration
 _localCaptioner = None
 
+
 def _screenshotNavigator() -> bytes:
 	"""Capture a screenshot of the current navigator object.
 
@@ -88,16 +89,19 @@ class ImageDescriber:
 	def __init__(self) -> None:
 		self.isModelLoaded = False
 		self.captioner: ImageCaptioner | None = None
-		self.captionThread : Thread | None = None
-		self.loadModelThread : Thread | None = None
+		self.captionThread: Thread | None = None
+		self.loadModelThread: Thread | None = None
 
 		enable = config.conf["automatedImageDescriptions"]["enable"]
 		# Load model when initializing (may cause high memory usage)
 		if enable:
 			core.postNvdaStartup.register(self._loadModel)
 
-
 	def terminate(self):
+		for t in [self.captionThread, self.loadModelThread]:
+			if t is not None and t.is_alive():
+				t.join()
+
 		self.captioner = None
 
 	def runCaption(self, gesture: KeyboardInputGesture) -> None:
@@ -112,14 +116,12 @@ class ImageDescriber:
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
 
-
-
 		self.captionThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData))
 		# Translators: Message when starting image recognition
 		ui.message(pgettext("imageDesc", "getting Image description..."))
 		self.captionThread.start()
 
-	def _loadModel(self, localModelDirPath: str|None = None) -> None:
+	def _loadModel(self, localModelDirPath: str | None = None) -> None:
 		"""Load the ONNX model for image captioning.
 
 		:param localModelDirPath: path of model directory
@@ -135,7 +137,7 @@ class ImageDescriber:
 
 		try:
 			self.captioner = imageCaptionerFactory(
-				model_type = "vit-gpt2",
+				model_type="vit-gpt2",
 				encoder_path=encoderPath,
 				decoder_path=decoderPath,
 				config_path=configPath,
@@ -150,6 +152,9 @@ class ImageDescriber:
 				),
 			)
 			log.exception(e)
+			from .modelDownloader import openDownloadDialog
+
+			wx.CallAfter(openDownloadDialog)
 		except Exception as e:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
@@ -160,9 +165,9 @@ class ImageDescriber:
 			# Translators: Message when successfully load the model
 			ui.message(pgettext("imageDesc", "image captioning on"))
 
-	def loadModelInBackground(self, localModelDirPath: str|None = None) -> None:
-		""" load model in child thread 
-		
+	def loadModelInBackground(self, localModelDirPath: str | None = None) -> None:
+		"""load model in child thread
+
 		:param localModelDirPath: path of model directory
 		"""
 		self.loadModelThread = threading.Thread(target=self._loadModel, args=(localModelDirPath,))
@@ -184,8 +189,7 @@ class ImageDescriber:
 			log.exception(e)
 
 	def toggleSwitch(self) -> None:
-		""" do load/unload the model from memory.
-		"""
+		"""do load/unload the model from memory."""
 		if self.isModelLoaded:
 			self._doReleaseModel()
 		else:
@@ -193,9 +197,8 @@ class ImageDescriber:
 			# self._loadModel()
 
 	def toggleImageCaptioning(self, gesture: KeyboardInputGesture) -> None:
-		""" do load/unload the model from memory.
-		
+		"""do load/unload the model from memory.
+
 		:param gesture: gesture to toggle this function
 		"""
 		self.toggleSwitch()
-

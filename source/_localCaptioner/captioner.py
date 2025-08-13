@@ -16,6 +16,7 @@ import onnxruntime as ort
 
 from logHandler import log
 
+
 class ImageCaptioner(ABC):
 	"""Abstract interface for image caption generation.
 
@@ -23,11 +24,7 @@ class ImageCaptioner(ABC):
 	"""
 
 	@abstractmethod
-	def generateCaption(
-		self, 
-		image: str | bytes,
-		max_length: int | None = None
-	) -> str:
+	def generateCaption(self, image: str | bytes, max_length: int | None = None) -> str:
 		"""
 		Generate a caption for the given image.
 
@@ -48,7 +45,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 	def __init__(
 		self,
-		encoder_path: str ,
+		encoder_path: str,
 		decoder_path: str,
 		config_path: str,
 		enableProfiling: bool = False,
@@ -90,8 +87,14 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			sessionOptions.enable_profiling = True
 
 		# Load ONNX models
-		self.encoderSession = ort.InferenceSession(encoder_path, sess_options=sessionOptions)
-		self.decoderSession = ort.InferenceSession(decoder_path, sess_options=sessionOptions)
+		try:
+			self.encoderSession = ort.InferenceSession(encoder_path, sess_options=sessionOptions)
+			self.decoderSession = ort.InferenceSession(decoder_path, sess_options=sessionOptions)
+		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
+			raise FileNotFoundError(
+				"model file incomplete"
+				f" Please check whether the file is complete or re-download. Original error: {e}"
+			) from e
 
 		log.info(
 			f"Loaded ONNX models - Encoder: {os.path.basename(encoder_path)}, Decoder: {os.path.basename(decoder_path)}",
@@ -155,7 +158,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		except FileNotFoundError:
 			log.exception(f"vocab.json not found at {vocabPath}")
 			raise
-		except Exception as e:
+		except Exception:
 			log.exception(f"Could not load vocabulary from {vocabPath}")
 			raise
 
@@ -237,7 +240,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""Get decoder output names for debugging.
 
 		:return: List of decoder output names.
-	"""
+		"""
 		return [out.name for out in self.decoderSession.get_outputs()]
 
 	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, np.ndarray]:
@@ -355,7 +358,7 @@ def imageCaptionerFactory(
 	decoder_path: str | None = None,
 	monomeric_model_path: str | None = None,
 ) -> ImageCaptioner:
-	"""	Initialize the image caption generator.
+	"""Initialize the image caption generator.
 
 	:param model_type: TYE OF THE MODEL.
 	:param monomeric_model_path: Path to a single merged model file.
@@ -367,11 +370,8 @@ def imageCaptionerFactory(
 	"""
 	if not monomeric_model_path and not (encoder_path and decoder_path):
 		raise ValueError(
-			"You must provide either 'monomeric_model_path' or both "
-			"'encoder_path' and 'decoder_path'."
+			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'."
 		)
 
 	if model_type == "vit-gpt2":
-		return VitGpt2ImageCaptioner(encoder_path, decoder_path,config_path)
-
-
+		return VitGpt2ImageCaptioner(encoder_path, decoder_path, config_path)
