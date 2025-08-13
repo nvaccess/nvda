@@ -68,7 +68,7 @@ TokenUIAccess = 26
 def hasUiAccess():
 	token = ctypes.wintypes.HANDLE()
 	advapi32.OpenProcessToken(
-		ctypes.windll.kernel32.GetCurrentProcess(),
+		winBindings.kernel32.GetCurrentProcess(),
 		winKernel.MAXIMUM_ALLOWED,
 		ctypes.byref(token),
 	)
