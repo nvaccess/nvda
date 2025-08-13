@@ -29,6 +29,7 @@ from ctypes import (
 	wstring_at,
 )
 
+import winBindings.kernel32
 import globalVars
 from NVDAState import ReadPaths
 
@@ -84,10 +85,6 @@ if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
 	from characterProcessing import SymbolLevel
 
-
-# Ensure ctypes knows that LoadLibraryX returns a handle
-# this is necessary on 64-bit.
-windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 _remoteLib = None
 _remoteLoaderX86: "_RemoteLoader | None" = None
@@ -848,7 +845,7 @@ def initialize() -> None:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
 	# Load nvdaHelperRemote.dll
-	h = windll.kernel32.LoadLibraryExW(
+	h = winBindings.kernel32.LoadLibraryEx(
 		ReadPaths.nvdaHelperRemoteDll,
 		0,
 		# Using an altered search path is necessary here
