@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 23:59+0000\n"
-"PO-Revision-Date: 2025-07-28 00:17\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -3575,8 +3575,8 @@ msgstr "沒有符號替代文字"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr "原來字元: {character}\n"
-"替代字元: {replacement}"
+msgstr "字元: {character}\n"
+"替代文字: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
@@ -7148,16 +7148,14 @@ msgstr "完成(&D)"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "不建議在作為被控端電腦透過 NVDA 遠端連線時更新 NVDA。 "
+msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時更新 NVDA。 "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "目前的遠端連線在更新期間或更新後可能無法繼續。\n"
-"即使連線得以維持，您仍將無法從主控端回應使用者帳戶控制 (UAC) 提示。\n"
-"僅當您能實際操作被控端電腦時，才建議繼續進行此操作。\n\n"
+msgstr "目前的遠端連線在更新期間或更新後可能無法繼續，即使連線得以維持，您仍將無法從主控端電腦回應使用者帳戶控制 (UAC) 提示。只有當您能實際操作被控端電腦時才繼續進行此操作。\n\n"
 "您確定要繼續嗎?"
 
 #. Translators: The title of a dialog.
@@ -7320,7 +7318,7 @@ msgstr "穩定"
 #: addonStore\models\channel.py:31
 msgctxt "addonStore"
 msgid "Beta"
-msgstr "Beta"
+msgstr "Beta (測試)"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #: addonStore\models\channel.py:33
@@ -7367,17 +7365,17 @@ msgstr "穩定"
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:116
 msgid "Beta or dev"
-msgstr "Beta 或 dev"
+msgstr "Beta (測試) 或 dev (開發)"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:118
 msgid "Beta"
-msgstr "Beta"
+msgstr "Beta (測試)"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:120
 msgid "Dev"
-msgstr "Dev"
+msgstr "Dev (開發)"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -12546,14 +12544,14 @@ msgstr "目錄已存在"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "不建議在作為被控端透過 NVDA 遠端連線時安裝 NVDA。 "
+msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時安裝 NVDA。 "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "您將無法從主控端回應使用者帳戶控制 (UAC) 提示。僅當您能實際操作被控端電腦時，才應繼續此操作。\n\n"
+msgstr "您將無法從主控端電腦回應使用者帳戶控制 (UAC) 提示。只有當您能實際操作被控端電腦時才繼續進行此操作。\n\n"
 "您確定要繼續嗎?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
@@ -15324,7 +15322,7 @@ msgstr[0] "正在安裝 {num} 個附加元件，請稍候。"
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] "{num} 個附加元件正在下載，要取消下載嗎？"
+msgstr[0] "正在下載 {num} 個附加元件，要取消下載嗎?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 23:59+0000\n"
-"PO-Revision-Date: 2025-07-28 00:17\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -2133,7 +2133,8 @@ msgstr[1] "Følgende tilføjelser kunne ikke installeres: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Nogle handlinger for tilføjelser kunne ikke udføres. Se logfilen for flere detaljer.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3577,14 +3578,15 @@ msgstr "Ingen symbolerstatning"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Tegn: {character}\n"
+"Replacement: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Udvidet symbol ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -7154,14 +7156,15 @@ msgstr "&Færdig"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Det anbefales ikke at opdatere NVDA, når du er tilsluttet en fjernstyringssession som den computer, der fjernstyres. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Den aktuelle forbindelse vil muligvis ikke kunne opretholdes under eller efter opdateringen. Selv hvis forbindelsen fortsætter, vil du ikke kunne reagere på kontrol af brugerkonti (UAC) fra den fjernstyrede computer. Du bør kun fortsætte, hvis du har fysisk adgang til den computer, der fjernstyres.\n\n"
+"Er du sikker på, at du vil fortsætte?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -9206,13 +9209,13 @@ msgstr "Hebraisk (Bibelsk) IHBC"
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "Hebraisk (bibelsk) fuld kantillation"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "Hebraisk (bibelsk) slank"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10126,7 +10129,7 @@ msgstr "Bip"
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
@@ -12019,7 +12022,7 @@ msgstr "Inkompatible tilføjelsesprogrammer"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Følgende tilføjelsesprogrammer er inkompatible med NVDA-version {version}. Disse tilføjelser kan ikke aktiveres. Kontakt venligst tilføjelsesudvikleren for yderligere hjælp."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12146,7 +12149,7 @@ msgstr "Fejl under aktivering af profil."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Profilen {name} slettes permanent. Denne handling kan ikke fortrydes."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12569,14 +12572,15 @@ msgstr "Mappe eksisterer"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Det anbefales ikke at installere NVDA, når du er tilsluttet en fjernstyringssession som den computer, der fjernstyres. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Du vil ikke kunne reagere på kontrol af brugerkonti (UAC) fra den styrende computer. Du bør kun fortsætte, hvis du har fysisk adgang til den computer, der fjernstyres.\n\n"
+"Er du sikker på, at du vil fortsætte?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12736,7 +12740,7 @@ msgstr "Gem &ikke"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Standard ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -12882,7 +12886,7 @@ msgstr "Skift..."
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:993
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr "&Undgå, at punktdisplayet slukker under sig alt eller læsning med punkt"
+msgstr "Undgå, at &skærmen slukker under sig alt eller læsning med punkt"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1007
@@ -13005,14 +13009,14 @@ msgstr "Automatisk skift af dialekt (når det understøttes)"
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Meddel ændring af &sprog under oplæsning"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Meddel, hvis automatisk sprogskift ikke er &understøttet af talesyntesen"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13137,7 +13141,7 @@ msgstr "Afbryd talen ved tryk på enter"
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:2097
 msgid "Allow skim &reading in Say All"
-msgstr "Tillad skimlæsning under sig alt"
+msgstr "Tillad skim&læsning under sig alt"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -15343,8 +15347,8 @@ msgstr "Installation af tilføjelsesprogram"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Installerer {num} tilføjelse. Vent venligst."
+msgstr[1] "Installerer {num} tilføjelser. Vent venligst."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15353,8 +15357,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hentning af {num} tilføjelse i gang. Annullér overførsel?"
+msgstr[1] "Hentning af {num} tilføjelser i gang. Annullér overførsel?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15732,8 +15736,8 @@ msgstr "Kald"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} forslag"
+msgstr[1] "{num} forslag"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -17781,7 +17785,7 @@ msgstr "{val:g} pt afstand før afsnit"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (ikke understøttet)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98

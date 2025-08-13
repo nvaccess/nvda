@@ -11,6 +11,7 @@ import ctypes
 import warnings
 import wx
 import wx.adv
+import wx.lib.agw.persist
 
 import globalVars
 import tones
@@ -891,9 +892,16 @@ def initialize():
 
 	monkeyPatches.applyWxMonkeyPatches(mainFrame, winUser, wx)
 
+	# Set up GUI persistence
+	persistenceManager = wx.lib.agw.persist.PersistenceManager.Get()
+	persistenceManager.SetPersistenceFile(NVDAState.WritePaths.guiStateFile)
+	if not NVDAState.shouldWriteToDisk():
+		persistenceManager.DisableSaving()
+
 
 def terminate():
 	global mainFrame
+	wx.lib.agw.persist.PersistenceManager.Free()
 	mainFrame = None
 
 

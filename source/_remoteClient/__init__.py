@@ -21,6 +21,7 @@ def initialize():
 	log.debug("Initializing Remote Access")
 	_remoteClient = RemoteClient()
 	_remoteClient.registerLocalScript(globalCommands.commands.script_sendKeys)
+	_remoteClient.registerLocalScript(globalCommands.commands.script_sendSAS)
 
 
 def terminate():

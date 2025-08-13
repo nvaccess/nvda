@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 23:59+0000\n"
-"PO-Revision-Date: 2025-07-28 00:17\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -946,28 +946,28 @@ msgstr "Niet ondersteund in dit document"
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr ""
+msgstr "Gaat naar de volgende kop op niveau {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr ""
+msgstr "Geen volgende kop op niveau {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr ""
+msgstr "Gaat naar de vorige kop op niveau {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr ""
+msgstr "Geen vorige kop op niveau {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -2133,7 +2133,8 @@ msgstr[1] "De volgende add-ons konden niet worden geïnstalleerd: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Sommige bewerkingen op add-ons zijn mislukt. Zie het logbestand voor meer informatie.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3577,7 +3578,8 @@ msgstr "Geen symboolvervanging"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Teken: {character}\n"
+"Vervanging: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
@@ -3976,7 +3978,7 @@ msgstr "Toont de audio-instellingen van NVDA"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "Toont de zicht-instellingen van NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3376
@@ -4022,17 +4024,17 @@ msgstr "Geeft de instellingen voor externe toegang weer"
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3453
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "Toont de Add-on Store-instellingen van NVDA"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "Toont de Windows OCR instellingen van NVDA"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3471
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "Toont de geavanceerde instellingen van NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3480
@@ -4226,7 +4228,7 @@ msgstr "Schakelt de spraakfunctie in en uit bij het navigeren per regel of aline
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3804
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "Spreek tijdens het navigeren per regel of alinea met braille ingeschakeld"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3806
@@ -4736,26 +4738,26 @@ msgstr "Schakelt tussen splits geluid-modi"
 #: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Geeft de taal weer voor de tekst onder de cursor. Bij tweemaal indrukken wordt de informatie in bladermodus weergegeven"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Onbekende taal"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4960
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (niet ondersteund)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "Taal op de positie van de cursor"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4974
@@ -6779,7 +6781,7 @@ msgstr "Intonatie"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "Gebruik modern audio-uitvoersysteem (WASAPI)"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7000,7 +7002,7 @@ msgstr "Zorg ervoor dat je verbinding hebt met internet en dat de NVDA-update mi
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "Er kan geen verbinding worden gemaakt met de NV Access-server."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7153,14 +7155,15 @@ msgstr "&Gereed"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Het wordt afgeraden om NVDA bij te werken wanneer je verbinding hebt met NVDA Externe Toegang als de beheerde computer. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "De momenteel actieve verbinding kan mogelijk niet worden voortgezet tijdens of na de update. Zelfs als de verbinding wordt voortgezet, kun je niet reageren op de prompts van Gebruikersaccountbeheer vanaf de beherende computer. Ga alleen verder als je fysieke toegang hebt tot de beheerde computer.\n\n"
+"Weet je zeker dat je wilt doorgaan?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7240,7 +7243,7 @@ msgstr "Zorg ervoor dat je verbinding hebt met internet en dat de mirror-URL van
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "Er kan geen verbinding worden gemaakt met de Add-on Store-server."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -8485,7 +8488,7 @@ msgstr ""
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:47
 msgid "Print layout"
-msgstr ""
+msgstr "Afdrukweergave"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:49
@@ -8677,7 +8680,7 @@ msgstr "Nattiq nBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -10113,19 +10116,19 @@ msgstr "Pilcrow (¶)"
 #: config\configFlags.py:313
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "Spraak"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:315
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "Pieptonen"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "Uit"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
@@ -12017,7 +12020,7 @@ msgstr "Incompatibele add-ons"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "De volgende add-ons zijn niet compatibel met NVDA-versie {version}. Deze add-ons kunnen niet worden ingeschakeld. Neem contact op met de auteur van de add-on voor verdere ondersteuning."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12144,7 +12147,7 @@ msgstr "Fout bij activeren profiel."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Het profiel {name} wordt permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12567,14 +12570,15 @@ msgstr "Map bestaat al"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Het wordt afgeraden om NVDA te installeren wanneer je verbinding hebt met NVDA Externe toegang als de beheerde computer. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Je kunt niet reageren op de prompts van Gebruikersaccountbeheer vanaf de computer die het beheer voert. Ga alleen verder als u fysieke toegang hebt tot de computer die wordt beheerd.\n\n"
+"Weet je zeker dat je wilt doorgaan?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12734,7 +12738,7 @@ msgstr "Nie&t opslaan"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Standaard ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -12880,7 +12884,7 @@ msgstr "Wijzigen..."
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:993
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr "Voorkom dat de &leesregel uitgaat tijdens alles lezen of braillelezen"
+msgstr "Voorkom dat het &scherm uitgaat tijdens alles lezen of braillelezen"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1007
@@ -13003,14 +13007,14 @@ msgstr "Automatisch van dialect wisselen (indien ondersteund)"
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "T&aalwijzigingen melden tijdens het lezen"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Meld wanneer Automatisch van taal wisselen niet wordt o&ndersteund door synthesizer"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -15341,8 +15345,8 @@ msgstr "Add-on-installatie"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er wordt {num} add-on geïnstalleerd. Even geduld."
+msgstr[1] "Er worden {num} add-ons geïnstalleerd. Even geduld."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15351,8 +15355,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Download van {num} add-on is bezig, download annuleren?"
+msgstr[1] "Download van {num} add-ons is bezig, download annuleren?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15730,8 +15734,8 @@ msgstr "activeren"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} suggestie"
+msgstr[1] "{num} suggesties"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -17610,22 +17614,22 @@ msgstr "automatische kleur"
 #: NVDAObjects\window\winword.py:1738
 #, python-brace-format
 msgid "Underline {style}on"
-msgstr ""
+msgstr "Onderstrepen {style}aan"
 
 #. Translators: a message when toggling formatting to 'all capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1764
 msgid "All caps on"
-msgstr ""
+msgstr "Alleen hoofdletters aan"
 
 #. Translators: a message when toggling formatting to 'small capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1767
 msgid "Small caps on"
-msgstr ""
+msgstr "Kleine hoofdletters aan"
 
 #. Translators: a message when toggling formatting to 'No capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1770
 msgid "Caps off"
-msgstr ""
+msgstr "Hoofdletters uit"
 
 #. Translators: a an alignment in Microsoft Word
 #: NVDAObjects\window\winword.py:1813
@@ -17779,7 +17783,7 @@ msgstr "{val:g} pt ruimte voor alinea"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (niet ondersteund)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98
