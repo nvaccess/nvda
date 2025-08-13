@@ -13,7 +13,6 @@ import UIAHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.UIA import UIA
 import winUser
-import winVersion
 import controlTypes
 import appModuleHandler
 from scriptHandler import script
@@ -111,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		windowClass = winUser.getClassName(hwnd)
 		versionMajor = int(self.productVersion.split(".")[0])
-		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
+		if versionMajor >= 16 and windowClass == "RICHEDIT60W":
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
 			# has a very good UI Automation implementation,
 			# Though oddly IsServerSideProvider returns false for these windows.
