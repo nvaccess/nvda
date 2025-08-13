@@ -45,7 +45,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
 * Speech:
   * Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)
   * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
-  * Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+  * Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
   * Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
 * Remote Access:
   * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
