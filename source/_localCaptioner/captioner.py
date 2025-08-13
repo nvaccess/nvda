@@ -93,7 +93,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
 			raise FileNotFoundError(
 				"model file incomplete"
-				f" Please check whether the file is complete or re-download. Original error: {e}"
+				f" Please check whether the file is complete or re-download. Original error: {e}",
 			) from e
 
 		log.info(
@@ -370,7 +370,7 @@ def imageCaptionerFactory(
 	"""
 	if not monomeric_model_path and not (encoder_path and decoder_path):
 		raise ValueError(
-			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'."
+			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'.",
 		)
 
 	if model_type == "vit-gpt2":

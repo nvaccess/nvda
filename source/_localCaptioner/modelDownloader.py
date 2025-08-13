@@ -76,7 +76,7 @@ class ModelDownloader:
 
 		# Set default headers
 		self.session.headers.update(
-			{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+			{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
 		)
 
 	def requestCancel(self) -> None:
@@ -284,7 +284,11 @@ class ModelDownloader:
 
 				# Make request with automatic redirect handling
 				response = self.session.get(
-					url, headers=headers, stream=True, timeout=30, allow_redirects=True
+					url,
+					headers=headers,
+					stream=True,
+					timeout=30,
+					allow_redirects=True,
 				)
 
 				if self.cancelRequested:
@@ -339,7 +343,11 @@ class ModelDownloader:
 
 								if total > 0:
 									lastReported = self._reportProgress(
-										progressCallback, fileName, downloaded, total, lastReported
+										progressCallback,
+										fileName,
+										downloaded,
+										total,
+										lastReported,
 									)
 				finally:
 					response.close()
@@ -528,7 +536,9 @@ def downloadDefaultModel() -> tuple[list[str], list[str]]:
 	:return: (successful_paths, failed_paths) tuple.
 	"""
 	chooseResult = wx.MessageBox(
-		"Download default model?", "AI Image Description", wx.OK | wx.CANCEL | wx.ICON_QUESTION
+		"Download default model?",
+		"AI Image Description",
+		wx.OK | wx.CANCEL | wx.ICON_QUESTION,
 	)
 
 	if chooseResult == wx.OK:

@@ -5065,7 +5065,6 @@ class GlobalCommands(ScriptableObject):
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
-
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
 		description=pgettext("imageDesc", "get an AI generated Image description"),
@@ -5094,7 +5093,6 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
-
 
 
 #: The single global commands instance.

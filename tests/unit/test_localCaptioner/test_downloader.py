@@ -96,7 +96,7 @@ class TestModelDownloader(unittest.TestCase):
 		for key in ("encoderPath", "decoderPath", "configPath", "vocabPath", "modelDir"):
 			self.assertIn(key, paths)
 			self.assertTrue(
-				paths[key].startswith(os.path.abspath(os.path.join(self.temp_dir, "..", "..", "models")))
+				paths[key].startswith(os.path.abspath(os.path.join(self.temp_dir, "..", "..", "models"))),
 			)
 
 
