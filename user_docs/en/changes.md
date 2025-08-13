@@ -6,7 +6,7 @@
 
 * This release breaks compatibility with existing add-ons.
 * Windows 8.1 is no longer supported.
-Windows 10 is the minimum Windows version supported.
+Windows 10 (Version 1507) is the minimum Windows version supported.
 * 32-bit Windows is no longer supported.
 
 ### New Features
