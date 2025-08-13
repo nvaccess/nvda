@@ -245,7 +245,7 @@ class TouchHandler(threading.Thread):
 				hInstance=self._appInstance,
 				lpszClassName="inputTouchWindowClass",
 			)  # noqa: F405
-			self._wca = windll.user32.RegisterClassExW(byref(self._wc))  # noqa: F405
+			self._wca = winBindings.user32.RegisterClassEx(byref(self._wc))  # noqa: F405
 			self._touchWindow = winBindings.user32.CreateWindowEx(
 				0,
 				self._wca,
@@ -280,7 +280,7 @@ class TouchHandler(threading.Thread):
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
-		windll.user32.UnregisterClassW(self._wca, self._appInstance)
+		winBindings.user32.UnregisterClass(self._wca, self._appInstance)
 
 	def inputTouchWndProc(self, hwnd, msg, wParam, lParam):
 		if msg >= _WM_POINTER_FIRST and msg <= _WM_POINTER_LAST:
@@ -296,7 +296,7 @@ class TouchHandler(threading.Thread):
 				self.trackerManager.update(ID, x, y, True)
 				core.requestPump()
 			return 0
-		return windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+		return winBindings.user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
 	def setMode(self, mode):
 		if mode not in availableTouchModes:
