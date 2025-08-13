@@ -25,6 +25,7 @@ import locale
 from collections import OrderedDict, deque
 import threading
 from typing import TYPE_CHECKING, Any, NamedTuple, Generator
+import winBindings.ole32
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
 from comInterfaces.SpeechLib import (
@@ -173,7 +174,7 @@ class _SapiEvent(SPEVENT):
 		if self.elParamType in (_SPEventLParamType.TOKEN, _SPEventLParamType.OBJECT):
 			_Com_Release(cast(self.lParam, c_void_p))
 		elif self.elParamType in (_SPEventLParamType.POINTER, _SPEventLParamType.STRING):
-			windll.ole32.CoTaskMemFree(cast(self.lParam, c_void_p))
+			winBindings.ole32.CoTaskMemFree(cast(self.lParam, c_void_p))
 		memset(byref(self), 0, sizeof(self))
 
 	def __del__(self):
