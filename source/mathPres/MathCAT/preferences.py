@@ -7,15 +7,18 @@ from logHandler import log
 
 from .rulesUtils import getRulesFiles
 
+
 def pathToUserPreferencesFolder() -> str:
 	"""Returns the path to the folder where user preferences are stored."""
 	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
 	return os.path.join(os.path.expandvars("%APPDATA%"), "MathCAT")
 
+
 def pathToUserPreferences() -> str:
 	"""Returns the full path to the user preferences file."""
 	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
 	return os.path.join(pathToUserPreferencesFolder(), "prefs.yaml")
+
 
 def pathToBrailleFolder() -> str:
 	r"""Returns the full path to the Braille rules folder.
@@ -35,6 +38,7 @@ def pathToBrailleFolder() -> str:
 		"Rules",
 		"Braille",
 	)
+
 
 def getBrailleCodes() -> list[str]:
 	"""Initializes and populates the braille code choice control with available braille codes.

@@ -74,6 +74,7 @@ PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
 }
 RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
 
+
 def getLanguageToUse(mathMl: str = "") -> str:
 	"""Get the language specified in a math tag if the language pref is Auto, else the language preference.
 
@@ -233,7 +234,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception(e)
 			# Translators: this message directs users to look in the log file
 			speech.speakMessage(_("Error in starting navigation of math: see NVDA error log for details"))
-
 
 	def getBrailleRegions(
 		self,

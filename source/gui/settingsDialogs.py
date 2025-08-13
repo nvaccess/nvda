@@ -2762,7 +2762,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.impairmentOptions,
 		)
-		self.bindHelpEvent("Have MathCAT generate speech for specific impairments", self.impairmentList)
+		self.bindHelpEvent("MathSpeechImpairment", self.impairmentList)
 		self.impairmentList.SetSelection(
 			SpeechOptions.Impairment.value.index(config.conf["math"]["speech"]["impairment"]),
 		)
@@ -2775,7 +2775,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.languageOptions,
 		)
-		self.bindHelpEvent("MathCAT language setting", self.languageList)
+		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
 		languageIndex = self.languageCodes.index(config.conf["math"]["speech"]["language"])
 		self.languageList.SetSelection(languageIndex)
 
@@ -2797,7 +2797,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.decimalSeparatorOptions,
 		)
-		self.bindHelpEvent("Decimal separators", self.decimalSeparatorList)
+		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
 			SpeechOptions.DecimalSeparator.value.index(config.conf["math"]["other"]["decimalSeparator"]),
 		)
@@ -2810,7 +2810,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.speechStyleOptions,
 		)
-		self.bindHelpEvent("MathCAT speech style setting", self.speechStyleList)
+		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
 		self.speechStyleList.SetStringSelection(config.conf["math"]["speech"]["speechStyle"])
 
 		# Translators: MathCAT's verbosity setting
@@ -2828,7 +2828,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.speechAmountOptions,
 		)
-		self.bindHelpEvent("Control how verbose MathCAT’s speech output should be", self.speechAmountList)
+		self.bindHelpEvent("MathSpeechAmount", self.speechAmountList)
 		self.speechAmountList.SetSelection(
 			SpeechOptions.Verbosity.value.index(config.conf["math"]["speech"]["verbosity"]),
 		)
@@ -2841,7 +2841,7 @@ class MathSettingsPanel(SettingsPanel):
 			minValue=10,
 			maxValue=100,
 		)
-		self.bindHelpEvent("Set the relative speed for math speech output", self.relativeSpeedSlider)
+		self.bindHelpEvent("MathRelativeSpeed", self.relativeSpeedSlider)
 		self.relativeSpeedSlider.SetValue(config.conf["math"]["speech"]["mathRate"])
 
 		# Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
@@ -2852,12 +2852,13 @@ class MathSettingsPanel(SettingsPanel):
 			minValue=0,
 			maxValue=14,
 		)
-		self.bindHelpEvent("Controls how long the pauses are in math speech", self.pauseFactorSlider)
+		self.bindHelpEvent("MathSpeechPauseFactor", self.pauseFactorSlider)
 		self.pauseFactorSlider.SetValue(config.conf["math"]["speech"]["pauseFactor"])
 
 		# Translators: label for check box controlling a beep sound when math speech starts/ends
 		speechSoundText = pgettext("math", "Make a sound when starting/ending math speech")
 		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
+		self.bindHelpEvent("MathSpeechSound", self.speechSoundCheckBox)
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"] != "None")
 
 		subjectAreaText = pgettext(
@@ -2872,7 +2873,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=subjectAreaOptions,
 		)
-		self.bindHelpEvent("Select subject area", self.subjectAreaList)
+		self.bindHelpEvent("MathSpeechSubjectArea", self.subjectAreaList)
 		self.subjectAreaList.SetSelection(
 			SpeechOptions.SubjectArea.value.index(config.conf["math"]["speech"]["subjectArea"]),
 		)
@@ -2890,7 +2891,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=speechForChemicalOptions,
 		)
-		self.bindHelpEvent("Control how MathCAT speaks chemistry", self.speechForChemicalList)
+		self.bindHelpEvent("MathSpeechForChemical", self.speechForChemicalList)
 		if config.conf["math"]["speech"]["chemistry"] == "Off":
 			self.speechForChemicalList.SetSelection(1)
 		else:
@@ -2918,7 +2919,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.navModeOptions,
 		)
-		self.bindHelpEvent("Select MathCAT's navigation mode", self.navModeList)
+		self.bindHelpEvent("MathNavMode", self.navModeList)
 		self.navModeList.SetSelection(
 			NavigationOptions.NavMode.value.index(config.conf["math"]["navigation"]["navMode"]),
 		)
@@ -2936,7 +2937,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=navSpeechOptions,
 		)
-		self.bindHelpEvent("Select whether the expression is spoken or described", self.navSpeechList)
+		self.bindHelpEvent("MathNavSpeech", self.navSpeechList)
 		if config.conf["math"]["navigation"]["overview"]:
 			self.navSpeechList.SetSelection(1)
 		else:
@@ -2945,12 +2946,14 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: label for check box controlling a beep sound when math speech starts/ends
 		resetNavSpeechText = pgettext("math", "Make a sound when starting/ending math speech")
 		self.resetNavSpeechCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=resetNavSpeechText))
+		self.bindHelpEvent("MathNavReset", self.resetNavSpeechCheckBox)
 		self.resetNavSpeechCheckBox.SetValue(config.conf["math"]["navigation"]["resetOverview"])
 
 		# Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 		# or whether you have to manually back out of the fraction, etc.
 		navAutoZoomText = pgettext("math", "Automatic zoom out of 2D notations")
 		self.navAutoZoomCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=navAutoZoomText))
+		self.bindHelpEvent("MathNavAutoZoom", self.navAutoZoomCheckBox)
 		self.navAutoZoomCheckBox.SetValue(config.conf["math"]["navigation"]["autoZoomOut"])
 
 		# Translators: label for pull down to specify whether you want a terse or verbose reading of navigation commands
@@ -2970,7 +2973,7 @@ class MathSettingsPanel(SettingsPanel):
 			choices=navSpeechAmountOptions,
 		)
 		self.bindHelpEvent(
-			"Select whether you want a terse or verbose reading of navigation commands",
+			"MathNavSpeechAmount",
 			self.navSpeechAmountList,
 		)
 		self.navSpeechAmountList.SetSelection(
@@ -2994,7 +2997,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=navCopyAsOptions,
 		)
-		self.bindHelpEvent("Select format for copying", self.navCopyAsList)
+		self.bindHelpEvent("MathNavCopyAs", self.navCopyAsList)
 		self.navCopyAsList.SetSelection(
 			NavigationOptions.CopyAs.value.index(config.conf["math"]["navigation"]["copyAs"]),
 		)
@@ -3014,7 +3017,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=brailleMathCodeOptions,
 		)
-		self.bindHelpEvent("Select braille math code", self.brailleMathCodeList)
+		self.bindHelpEvent("MathBrailleCode", self.brailleMathCodeList)
 		self.brailleMathCodeList.SetStringSelection(config.conf["math"]["braille"]["brailleCode"])
 
 		# Translators: label for pull down to specify how braille dots should be modified when navigating/selecting subexprs
@@ -3035,7 +3038,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=brailleHighlightsOptions,
 		)
-		self.bindHelpEvent("Select braille highlights option", self.navCopyAsList)
+		self.bindHelpEvent("MathBrailleHighlights", self.brailleHighlightsList)
 		self.brailleHighlightsList.SetSelection(
 			BrailleOptions.BrailleNavHighlight.value.index(
 				config.conf["math"]["braille"]["brailleNavHighlight"],
