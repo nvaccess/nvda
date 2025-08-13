@@ -5,8 +5,8 @@
 
 """Functions exported by setupapi.dll, and supporting data structures and enumerations."""
 
-from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, windll
-from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, PULONG, ULONG
+from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, sizeof, windll
+from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, PULONG, ULONG, WCHAR
 from enum import IntEnum
 
 from comtypes import GUID
@@ -144,6 +144,15 @@ class SP_DEVICE_INTERFACE_DATA(Structure):
 
 
 PSP_DEVICE_INTERFACE_DATA = POINTER(SP_DEVICE_INTERFACE_DATA)
+
+
+class _Dummy(Structure):
+	_fields_ = (("d1", DWORD), ("d2", WCHAR))
+	# SetupAPI.h in the Windows headers includes pshpack8.h when 64 bit, pshpack1.h otherwise
+	_pack_ = 8 if sizeof(c_void_p) == 8 else 1
+
+
+SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = sizeof(_Dummy)
 
 PSP_DEVICE_INTERFACE_DETAIL_DATA = c_void_p
 

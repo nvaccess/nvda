@@ -13,6 +13,8 @@ from ctypes.wintypes import DWORD, WCHAR
 
 import config
 import hidpi
+from winBindings.setupapi import SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+from winBindings.setupapi import _Dummy
 import winKernel
 from comtypes import GUID
 from logHandler import log
@@ -55,14 +57,6 @@ def ValidHandle(value):
 		raise ctypes.WinError()
 	return value
 
-
-class dummy(ctypes.Structure):
-	_fields_ = (("d1", DWORD), ("d2", WCHAR))
-	# SetupAPI.h in the Windows headers includes pshpack8.h when 64 bit, pshpack1.h otherwise
-	_pack_ = 8 if ctypes.sizeof(ctypes.c_void_p) == 8 else 1
-
-
-SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
 INVALID_HANDLE_VALUE = 0
 
@@ -302,7 +296,7 @@ def _listDevices(
 						WCHAR * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR)),
 					),
 				)
-				_pack_ = dummy._pack_
+				_pack_ = _Dummy._pack_
 
 				def __str__(self):
 					return f"DevicePath:{self.DevicePath!r}"
@@ -512,6 +506,7 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 	"CR_SUCCESS": _MovedSymbol("winBindings.cfgmgr32"),
 	"MAX_DEVICE_ID_LEN": _MovedSymbol("winBindings.cfgmgr32"),
 	"DEVPROPKEY": _MovedSymbol("winBindings.setupapi"),
+	"dummy": _MovedSymbol("winBindings.setupapi", "_Dummy"),
 	"PSP_DEVICE_INTERFACE_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVICE_INTERFACE_DETAIL_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVINFO_DATA": _MovedSymbol("winBindings.setupapi"),
