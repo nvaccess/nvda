@@ -24,6 +24,7 @@ from typing import (
 	TypeVar,
 )
 
+import winBindings.kernel32
 import winKernel
 import winreg
 import shellapi
@@ -82,7 +83,7 @@ def hasUiAccess():
 		)
 		return bool(val.value)
 	finally:
-		ctypes.windll.kernel32.CloseHandle(token)
+		winBindings.kernel32.CloseHandle(token)
 
 
 #: Value from the TOKEN_INFORMATION_CLASS enumeration:
@@ -135,7 +136,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 			raise ctypes.WinError()
 		return val.originatingLogonSession
 	finally:
-		ctypes.windll.kernel32.CloseHandle(token)
+		winBindings.kernel32.CloseHandle(token)
 
 
 @functools.lru_cache(maxsize=1)
