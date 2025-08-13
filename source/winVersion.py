@@ -146,7 +146,6 @@ class WinVersion(object):
 
 
 # Windows releases to WinVersion instances for easing comparisons.
-WIN81 = WinVersion(major=6, minor=3, build=9600)
 WIN10 = WIN10_1507 = WinVersion(major=10, minor=0, build=10240)
 WIN10_1511 = WinVersion(major=10, minor=0, build=10586)
 WIN10_1607 = WinVersion(major=10, minor=0, build=14393)
@@ -252,4 +251,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "WIN8" and NVDAState._allowDeprecatedAPI():
 		log.warning("WIN8 is deprecated.")
 		return WinVersion(major=6, minor=2, build=9200, releaseName="Windows 8")
+	if attrName == "WIN81" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN81 is deprecated.")
+		return WinVersion(major=6, minor=3, build=9600, releaseName="Windows 8.1")
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
