@@ -250,19 +250,17 @@ UIAEventIdsToNVDAEventNames: Dict[int, str] = {
 
 localEventHandlerGroupUIAEventIds = set()
 
-autoSelectDetectionAvailable = False
-if winVersion.getWinVer() >= winVersion.WIN10:
-	UIAEventIdsToNVDAEventNames.update(
-		{
-			UIA.UIA_Text_TextSelectionChangedEventId: "caret",
-		},
-	)
-	localEventHandlerGroupUIAEventIds.update(
-		{
-			UIA.UIA_Text_TextSelectionChangedEventId,
-		},
-	)
-	autoSelectDetectionAvailable = True
+UIAEventIdsToNVDAEventNames.update(
+	{
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
+	},
+)
+localEventHandlerGroupUIAEventIds.update(
+	{
+		UIA.UIA_Text_TextSelectionChangedEventId,
+	},
+)
+autoSelectDetectionAvailable = True
 
 globalEventHandlerGroupUIAEventIds = set(UIAEventIdsToNVDAEventNames) - localEventHandlerGroupUIAEventIds
 
