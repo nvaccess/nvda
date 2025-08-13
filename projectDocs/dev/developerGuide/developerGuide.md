@@ -550,20 +550,20 @@ From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken an
 import globalPluginHandler
 from scriptHandler import script
 import ui
-import versionInfo
+import buildVersion
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
-		ui.message(versionInfo.version)
+		ui.message(buildVersion.version)
 ```
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
 
-It also imports a few other modules, namely ui, versionInfo and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
+It also imports a few other modules, namely ui, buildVersion and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
 
 Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
 
