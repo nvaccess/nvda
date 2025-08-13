@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 	from winAPI._powerTracking import SystemPowerStatus
 
 
+import winBindings.advapi32
 import winBindings.kernel32
 
 
@@ -503,7 +504,7 @@ def GetCurrentProcess():
 
 def OpenProcessToken(ProcessHandle, DesiredAccess):
 	token = HANDLE()
-	if advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
+	if winBindings.advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
 		raise WinError()
 	return token.value
 
