@@ -18,7 +18,6 @@ from typing import (
 from locale import strxfrm
 
 import config
-import winVersion
 import globalVars
 from logHandler import log
 from synthSettingsRing import SynthSettingsRing

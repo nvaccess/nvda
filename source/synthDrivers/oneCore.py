@@ -36,7 +36,6 @@ import queueHandler
 from speech.types import SpeechSequence
 import speechXml
 import languageHandler
-import winVersion
 import NVDAHelper
 
 from speech.commands import (
