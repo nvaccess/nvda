@@ -13,6 +13,9 @@ Windows 10 is the minimum Windows version supported.
 
 ### Changes
 
+* NVDA no longer supports Windows 8.1.
+Windows 10 (Version 1507) is the minimum Windows version supported. (#18684, @josephsl)
+
 ### Bug Fixes
 
 ### Changes for Developers
@@ -28,6 +31,8 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 #### Deprecations
+
+* `winVersion.WIN81` constant has been deprecated from winVersion module. (#18684, @josephsl):
 
 ## 2025.3
 
