@@ -27,6 +27,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* NVDA is now built with Python 3.13. (#18591)
+
 #### Deprecations
 
 ## 2025.3

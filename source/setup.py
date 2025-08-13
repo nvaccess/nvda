@@ -217,8 +217,6 @@ freeze(
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
-			# Tomli is part of Python 3.11 as Tomlib, but is imported as tomli by cryptography, which causes an infinite loop in py2exe
-			"tomli",
 		],
 		"packages": [
 			"NVDAObjects",
