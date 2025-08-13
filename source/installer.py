@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -186,7 +185,9 @@ def removeOldLibFiles(destPath, rebootOK=False):
 	for topDir in ("lib", "lib64", "libArm64"):
 		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
 		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
-			if parent.startswith(currentLibPath):
+			if os.path.commonpath(
+				[os.path.abspath(parent), os.path.abspath(currentLibPath)],
+			) == os.path.abspath(currentLibPath):
 				# We are in the lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r" % parent)
 				continue

@@ -165,17 +165,23 @@ class NotepadLib:
 
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path, expectedTitlePattern=uniqueTitleRegex)
+		try:
+			self._waitForNotepadFocus(uniqueTitleRegex)
+		except AssertionError:
+			# NVDA has waited but something prevented notepad from focusing.
+			# A window may have stolen focus or windows may have failed to focus notepad.
+			# Attempt to switch windows directly.
+			windowsLib.logForegroundWindowTitle()
+			testCaseNotepadTitleSpeech = re.compile(
+				# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
+				f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)",
+			)
+			builtIn.log("Trying to switch to notepad Window")
+			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=testCaseNotepadTitleSpeech)
+			windowsLib.logForegroundWindowTitle()
 
-		windowsLib.logForegroundWindowTitle()
-		testCaseNotepadTitleSpeech = re.compile(
-			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
-			f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)",
-		)
-		builtIn.log("Trying to switch to notepad Window")
-		windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=testCaseNotepadTitleSpeech)
-		windowsLib.logForegroundWindowTitle()
-
-		self._waitForNotepadFocus(uniqueTitleRegex)
-		windowsLib.logForegroundWindowTitle()
+			self._waitForNotepadFocus(uniqueTitleRegex)
+		finally:
+			windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
 		_NvdaLib.getSpeechAfterKey("control+home")

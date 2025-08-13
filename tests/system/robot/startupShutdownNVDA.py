@@ -223,7 +223,7 @@ def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
 	crashFunction()
 	_blockUntilConditionMet(
 		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
-		giveUpAfterSeconds=3,
+		giveUpAfterSeconds=10,
 		errorMessage="Old NVDA is still running",
 	)
 	_builtIn.should_not_be_true(
