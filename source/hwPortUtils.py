@@ -58,9 +58,6 @@ def ValidHandle(value):
 	return value
 
 
-INVALID_HANDLE_VALUE = 0
-
-
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
@@ -520,10 +517,6 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 """Mapping from symbol name to new (absolute) module and symbol path."""
 
 
-def _issueDeprecationWarning(oldSymbol: str, newModule: str, newSymbolPath: list[str]) -> None:
-	print(f"hwPortUtils.{oldSymbol} is deprecated. Use {newModule}.{'.'.join(newSymbolPath)} instead.")
-
-
 def __getattr__(attrName: str) -> typing.Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	import NVDAState
@@ -533,16 +526,22 @@ def __getattr__(attrName: str) -> typing.Any:
 		if attrName in _MOVED_SYMBOLS:
 			from importlib import import_module
 
-			modName, *symPath = _MOVED_SYMBOLS[attrName]
-			symPath = symPath or [attrName]
-			_issueDeprecationWarning(attrName, modName, symPath)
-			sym = import_module(modName)
-			for seg in symPath:
-				sym = getattr(sym, seg)
-			return sym
+			newModule, *newPath = _MOVED_SYMBOLS[attrName]
+			newPath = newPath or [attrName]
+			log.warning(
+				f"hwPortUtils.{attrName} is deprecated. Use {newModule}.{'.'.join(newPath)} instead.",
+				stack_info=True,
+			)
+			value = import_module(newModule)
+			for segment in newPath:
+				value = getattr(value, segment)
+			return value
 
 		# Other symbols
 		match attrName:
+			case "INVALID_HANDLE_VALUE":
+				log.warning(f"hwPortUtils.{attrName} is deprecated.", stack_info=True)
+				return 0
 			case _:
 				pass
 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
