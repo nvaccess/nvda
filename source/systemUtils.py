@@ -20,12 +20,7 @@ from ctypes import (
 from typing import (
 	Generic,
 	Optional,
-)
-from typing_extensions import (
-	# Uses `TypeVar` from `typing_extensions`, to be able to specify default type.
-	# This should be changed to use version from `typing`
-	# when updating to version of Python supporting PEP 696.
-	TypeVar,
+	TypeVar
 )
 
 import winKernel
