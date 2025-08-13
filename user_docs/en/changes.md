@@ -8,7 +8,7 @@ Add-ons in the Add-on Store can now be sorted by minimum/last tested NVDA versio
 
 Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings. There are also fixes for connection and audio issues.
 
-Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto‑detection for Dot Pad.
+Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto-detection for Dot Pad.
 
 There are several bug fixes for SAPI5 voices, including fixes for excessive leading silence trimming, freezing issues, and audio gaps.
 
@@ -64,9 +64,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated comtypes to 1.4.11. (#18611)
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
-* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
-* Updated `include` dependencies:
   * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
