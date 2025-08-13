@@ -246,7 +246,7 @@ class TouchHandler(threading.Thread):
 				lpszClassName="inputTouchWindowClass",
 			)  # noqa: F405
 			self._wca = windll.user32.RegisterClassExW(byref(self._wc))  # noqa: F405
-			self._touchWindow = windll.user32.CreateWindowExW(
+			self._touchWindow = winBindings.user32.CreateWindowEx(
 				0,
 				self._wca,
 				"NVDA touch input",
