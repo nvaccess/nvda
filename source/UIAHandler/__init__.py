@@ -37,6 +37,7 @@ import api
 import appModuleHandler
 import controlTypes
 import globalVars
+import winBindings.kernel32
 import winKernel
 import winUser
 import winVersion
@@ -468,7 +469,7 @@ class UIAHandler(COMObject):
 		# Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1, byref(MTAThreadHandle), False, 200, 0) != 0:
 			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
-		windll.kernel32.CloseHandle(MTAThreadHandle)
+		winBindings.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
 	def MTAThreadFunc(self):

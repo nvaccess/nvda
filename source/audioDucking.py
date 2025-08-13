@@ -9,6 +9,7 @@ import threading
 from typing import Dict
 from ctypes import oledll, wintypes, windll
 import time
+import winBindings.kernel32
 import config
 from logHandler import log
 import systemUtils
@@ -25,7 +26,7 @@ class AutoEvent(wintypes.HANDLE):
 
 	def __del__(self):
 		if self:
-			windll.kernel32.CloseHandle(self)
+			winBindings.kernel32.CloseHandle(self)
 
 
 WAIT_TIMEOUT = 0x102

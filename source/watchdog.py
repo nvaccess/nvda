@@ -18,6 +18,7 @@ import msvcrt
 import comtypes
 import winBindings.dbgHelp
 from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
+import winBindings.kernel32
 from winBindings.kernel32 import UnhandledExceptionFilter
 import winUser
 import winKernel
@@ -427,7 +428,7 @@ class CancellableCallThread(threading.Thread):
 			except Exception as e:
 				self._exc_info = e
 			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
-		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
+		winBindings.kernel32.CloseHandle(self._executionDoneEvent)
 
 
 cancellableCallThread = None
