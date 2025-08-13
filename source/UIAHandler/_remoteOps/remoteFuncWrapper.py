@@ -16,6 +16,7 @@ from . import builder
 
 _remoteFunc_self = builder._RemoteBase
 
+
 class _BaseRemoteFuncWrapper:
 	def generateArgsKwargsString(self, *args, **kwargs) -> str:
 		argsString = ", ".join(map(repr, args))

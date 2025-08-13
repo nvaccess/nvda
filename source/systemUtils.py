@@ -20,7 +20,7 @@ from ctypes import (
 from typing import (
 	Generic,
 	Optional,
-	TypeVar
+	TypeVar,
 )
 
 import winKernel

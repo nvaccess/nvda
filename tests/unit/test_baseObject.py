@@ -5,7 +5,6 @@
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
-import sys
 import unittest
 from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
