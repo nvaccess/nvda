@@ -13,6 +13,7 @@ from ctypes import *  # noqa: F403
 from ctypes import windll
 from ctypes.wintypes import *  # noqa: F403
 import re
+import winBindings.kernel32
 import winBindings.user32
 import gui
 import config
@@ -236,7 +237,7 @@ class TouchHandler(threading.Thread):
 
 	def run(self):
 		try:
-			self._appInstance = windll.kernel32.GetModuleHandleW(None)
+			self._appInstance = winBindings.kernel32.GetModuleHandle(None)
 			self._cInputTouchWindowProc = winUser.WNDPROC(self.inputTouchWndProc)
 			self._wc = winUser.WNDCLASSEXW(
 				cbSize=sizeof(winUser.WNDCLASSEXW),  # noqa: F405
