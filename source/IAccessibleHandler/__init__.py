@@ -33,6 +33,7 @@ from ctypes import (
 from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
+import winBindings.kernel32
 import oleacc
 import JABHandler
 import UIAHandler
@@ -1304,5 +1305,5 @@ def isMarshalledIAccessible(IAccessibleObject):
 	)
 	handle = HANDLE()
 	windll.kernel32.GetModuleHandleExW(6, addr, byref(handle))
-	windll.kernel32.GetModuleFileNameW(handle, buf, 1024)
+	winBindings.kernel32.GetModuleFileName(handle, buf, 1024)
 	return not buf.value.lower().endswith("oleacc.dll")
