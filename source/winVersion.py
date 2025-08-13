@@ -165,7 +165,7 @@ WIN11_24H2 = WinVersion(major=10, minor=0, build=26100)
 
 
 @functools.lru_cache(maxsize=1)
-def getWinVer():
+def getWinVer() -> WinVersion:
 	"""Returns a record of current Windows version NVDA is running on."""
 	winVer = sys.getwindowsversion()
 	# #12509: on Windows 10, fetch whatever Windows Registry says for the current build.
@@ -209,7 +209,7 @@ def getWinVer():
 	)
 
 
-def isSupportedOS():
+def isSupportedOS() -> bool:
 	# NVDA can only run on Windows 10 and above
 	return getWinVer() >= WIN10
 
@@ -217,7 +217,7 @@ def isSupportedOS():
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
 
 
-def isUwpOcrAvailable():
+def isUwpOcrAvailable() -> bool:
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
