@@ -34,6 +34,7 @@ from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import winBindings.kernel32
+import winBindings.ole32
 import oleacc
 import JABHandler
 import UIAHandler
@@ -1122,7 +1123,7 @@ def getIAccIdentity(pacc, childID):
 			d["windowHandle"] = fields[1]
 		return d
 	finally:
-		windll.ole32.CoTaskMemFree(stringPtr)
+		winBindings.ole32.CoTaskMemFree(stringPtr)
 
 
 def findGroupboxObject(obj):
