@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
@@ -19,6 +18,7 @@ import ui
 from documentationUtils import getDocFilePath, displayLicense, reportNoDocumentation
 from logHandler import log
 import config
+import buildVersion
 import versionInfo
 import speech
 import queueHandler
@@ -144,7 +144,7 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1, 1), style=style)
+		super(MainFrame, self).__init__(None, wx.ID_ANY, buildVersion.name, size=(1, 1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
@@ -612,7 +612,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
 		super(SysTrayIcon, self).__init__()
 		icon = wx.Icon(ICON_PATH, wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon, versionInfo.name)
+		self.SetIcon(icon, buildVersion.name)
 
 		self.menu = wx.Menu()
 		menu_preferences = self.preferencesMenu = wx.Menu()

@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
@@ -8,6 +7,12 @@ import argparse
 import os
 import sys
 import gettext
+from buildVersion import (
+	formatBuildVersionString,
+	name,
+	publisher,
+	version,
+)
 
 gettext.install("nvda")
 from glob import glob  # noqa: E402
@@ -18,11 +23,7 @@ import fnmatch  # noqa: E402
 from versionInfo import (  # noqa: E402
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
-	formatBuildVersionString,
-	name,
-	publisher,
-	version,
-)  # noqa: E402
+)
 from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
 import wx  # noqa: E402
