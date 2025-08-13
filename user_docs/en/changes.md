@@ -2,7 +2,18 @@
 
 ## 2025.3
 
-### Important notes
+This release includes improvements to Remote Access, SAPI5 voices, braille and the Add-on Store.
+
+Add-ons in the Add-on Store can now be sorted by minimum/last tested NVDA version and install date.
+
+Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings. There are also fixes for connection and audio issues.
+
+Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto‑detection for Dot Pad.
+
+There are several bug fixes for SAPI5 voices, including fixes for excessive leading silence trimming, freezing issues, and audio gaps.
+
+eSpeak NG and Unicode CLDR have been updated.
+Localisation data for emojis has been added for Belarusian and Bosnian.
 
 ### New Features
 
@@ -19,26 +30,29 @@
   There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)
   * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
   Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
-* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* Braille:
+  * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+  * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+  * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
+  Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
-* NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
-* The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
-Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 * The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512)
 
 ### Bug Fixes
 
+* Speech:
+  * Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)
+  * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
+  * Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+  * Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
+* Remote Access:
+  * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
+  * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
 * Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
-* Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
-* Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
-* Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
-* Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
 * A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
-* Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)
-* Fixed audio gaps in speech when using some SAPI 5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
 
 ### Changes for Developers
 
