@@ -33,8 +33,6 @@ dependencies = [
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
 	"fast-diff-match-patch==2.1.0",
-	# typing_extensions are required for specifying default value for `TypeVar` prior to Python 3.13 (see PEP 696)
-	"typing-extensions==4.12.2",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20240210",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
