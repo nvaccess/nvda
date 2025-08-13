@@ -7,10 +7,58 @@
 
 from ctypes import POINTER, Structure, WinError, c_void_p, c_wchar_p, windll
 from ctypes.wintypes import BOOL, DWORD, HKEY, HWND, PDWORD, PULONG, ULONG
+from enum import IntEnum
 
 from comtypes import GUID
 
 dll = windll.setupapi
+
+
+class DIGCF(IntEnum):
+	"""Possible flags for the ``Flags`` parameter of ``SetupDiGetClassDevs``."""
+
+	PRESENT = 0x02
+	"""Return only devices that are currently present in a system."""
+
+	DEVICEINTERFACE = 0x10
+	"""Return devices that support device interfaces for the specified device interface classes."""
+
+
+class SPDRP(IntEnum):
+	"""Possible values for the ``Property`` parameter to ``SetupDiGetDeviceRegistryProperty``."""
+
+	DEVICEDESC = 0x00
+	"""The function retrieves a ``REG_SZ`` string that contains the description of a device."""
+
+	HARDWAREID = 0x01
+	"""The function retrieves a ``REG_MULTI_SZ`` string that contains the list of hardware IDs for a device."""
+
+	FRIENDLYNAME = 0x0C
+	"""The function retrieves a ``REG_SZ`` string that contains the friendly name of a device."""
+
+	LOCATION_INFORMATION = 0x0D
+	"""The function retrieves a ``REG_SZ`` string that contains the hardware location of a device."""
+
+
+class DICS_FLAG(IntEnum):
+	"""Possible values of the ``Scope`` parameter of ``SetupDiOpenDevRegKey``."""
+
+	GLOBAL = 0x01
+	"""Open a key to store global configuration information, rooted at HKEY_LOCAL_MACHINE."""
+
+	CONFIGSPECIFIC = 0x02
+	"""Open a key to store hardware profile-specific configuration information, rooted at one of the hardware-profile specific branches, instead of HKEY_LOCAL_MACHINE."""
+
+
+class DIREG(IntEnum):
+	"""Possible values of the ``KeyType`` parameter to ``SetupDiOpenDevRegKey``."""
+
+	DEV = 0x01
+	"""Open a hardware key for the device."""
+
+	DRV = 0x02
+	"""Open a software key for the device."""
+
 
 HDEVINFO = c_void_p
 
@@ -27,6 +75,31 @@ class DEVPROPKEY(Structure):
 		("DEVPROPGUID", GUID),
 		("DEVPROPID", ULONG),
 	)
+
+
+GUID_CLASS_COMPORT = GUID("{86e0d1e0-8089-11d0-9ce4-08003e301f73}")
+"""
+Identifier for the device interface class for devices that support a 16550 UART-compatible hardware interface.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/install/guid-class-comport
+"""
+
+GUID_DEVINTERFACE_USB_DEVICE = GUID("{a5dcbf10-6530-11d2-901f-00c04fb951ed}")
+"""
+The GUID_DEVINTERFACE_USB_DEVICE device interface class is defined for USB devices that are attached to a USB hub.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/install/guid-devinterface-usb-device
+"""
+
+DEVPKEY_Device_BusReportedDeviceDesc = DEVPROPKEY(GUID("{540b947e-8b40-45bc-a8a2-6a0b894cbda2}"), 4)
+"""
+Represents a string value that was reported by the bus driver for the device instance.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/install/devpkey-device-busreporteddevicedesc
+"""
 
 
 class SP_DEVINFO_DATA(Structure):

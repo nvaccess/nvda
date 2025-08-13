@@ -11,10 +11,13 @@ import typing
 import winreg
 from ctypes.wintypes import DWORD, WCHAR
 
-from comtypes import GUID
-
 import config
 import hidpi
+import winKernel
+from comtypes import GUID
+from logHandler import log
+from winAPI.constants import SystemErrorCodes
+from winBindings.advapi32 import RegCloseKey
 from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
 from winBindings.hid import (
 	HIDD_ATTRIBUTES,
@@ -27,22 +30,24 @@ from winBindings.hid import (
 	HidP_GetCaps,
 )
 from winBindings.setupapi import (
-	SetupDiDestroyDeviceInfoList,
+	DIGCF,
+	GUID_CLASS_COMPORT,
+	GUID_DEVINTERFACE_USB_DEVICE,
 	HDEVINFO,
-	SetupDiGetClassDevs,
-	SetupDiGetDeviceProperty,
-	DEVPROPKEY,
-	SP_DEVINFO_DATA,
-	SetupDiEnumDeviceInterfaces,
 	SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA,
+	DEVPKEY_Device_BusReportedDeviceDesc,
+	SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs,
 	SetupDiGetDeviceInterfaceDetail,
+	SetupDiGetDeviceProperty,
 	SetupDiGetDeviceRegistryProperty,
 	SetupDiOpenDevRegKey,
+	SPDRP,
+	DIREG,
+	DICS_FLAG,
 )
-from winBindings.advapi32 import RegCloseKey
-import winKernel
-from logHandler import log
-from winAPI.constants import SystemErrorCodes
 
 
 def ValidHandle(value):
@@ -59,20 +64,9 @@ class dummy(ctypes.Structure):
 
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
-GUID_CLASS_COMPORT = GUID("{86e0d1e0-8089-11d0-9ce4-08003e301f73}")
-GUID_DEVINTERFACE_USB_DEVICE = GUID("{a5dcbf10-6530-11d2-901f-00c04fb951ed}")
-DEVPKEY_Device_BusReportedDeviceDesc = DEVPROPKEY(GUID("{540b947e-8b40-45bc-a8a2-6a0b894cbda2}"), 4)
-DIGCF_PRESENT = 2
-DIGCF_DEVICEINTERFACE = 16
 INVALID_HANDLE_VALUE = 0
 ERROR_INSUFFICIENT_BUFFER = 122
-SPDRP_DEVICEDESC = 0
-SPDRP_HARDWAREID = 1
-SPDRP_FRIENDLYNAME = 12
-SPDRP_LOCATION_INFORMATION = 13
 ERROR_NO_MORE_ITEMS = 259
-DICS_FLAG_GLOBAL = 0x00000001
-DIREG_DEV = 0x00000001
 
 
 def _isDebug():
@@ -143,7 +137,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -159,9 +153,9 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		regKey = SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
-			DICS_FLAG_GLOBAL,
+			DICS_FLAG.GLOBAL,
 			0,
-			DIREG_DEV,
+			DIREG.DEV,
 			winreg.KEY_READ,
 		)
 		try:
@@ -178,7 +172,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_FRIENDLYNAME,
+			SPDRP.FRIENDLYNAME,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -264,9 +258,9 @@ def _listDevices(
 	@param deviceClass: The device class GUID.
 	:param onlyAvailable: Only return devices that are currently available.
 	"""
-	flags = DIGCF_DEVICEINTERFACE
+	flags = DIGCF.DEVICEINTERFACE
 	if onlyAvailable:
-		flags |= DIGCF_PRESENT
+		flags |= DIGCF.PRESENT
 
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, None, flags)
@@ -346,7 +340,7 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -487,7 +481,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -519,6 +513,7 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 	"CM_Get_Device_ID": _MovedSymbol("winBindings.cfgmgr32"),
 	"CR_SUCCESS": _MovedSymbol("winBindings.cfgmgr32"),
 	"MAX_DEVICE_ID_LEN": _MovedSymbol("winBindings.cfgmgr32"),
+	"DEVPROPKEY": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVICE_INTERFACE_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVICE_INTERFACE_DETAIL_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVINFO_DATA": _MovedSymbol("winBindings.setupapi"),
@@ -527,16 +522,50 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 """Mapping from symbol name to new (absolute) module."""
 
 
+def _issueDeprecationWarning(oldSymbol: str, newModule: str, newSymbol: str) -> None:
+	print(f"hwPortUtils.{oldSymbol} is deprecated. Use {newModule}.{newSymbol} instead.")
+
+
 def __getattr__(attrName: str) -> typing.Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	import NVDAState
 
 	if NVDAState._allowDeprecatedAPI():
+		# Symbols that have simply been moved elsewhere
 		if attrName in _MOVED_SYMBOLS:
 			from importlib import import_module
 
 			modName, newAttrName = _MOVED_SYMBOLS[attrName]
 			newAttrName = newAttrName or attrName
-			print(f"hwPortUtils.{attrName} is deprecated. Use {modName}.{newAttrName} instead.")
+			_issueDeprecationWarning(attrName, modName, newAttrName)
 			return getattr(import_module(modName), newAttrName)
+
+		# Other symbols
+		match attrName:
+			case "DIGCF_PRESENT":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIGCF.PRESENT")
+				return DIGCF.PRESENT
+			case "DIGCF_DEVICEINTERFACE":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIGCF.DEVICEINTERFACE")
+				return DIGCF.DEVICEINTERFACE
+			case "SPDRP_DEVICEDESC":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.DEVICEDESC")
+				return SPDRP.DEVICEDESC
+			case "SPDRP_HARDWAREID":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.HARDWAREID")
+				return SPDRP.HARDWAREID
+			case "SPDRP_FRIENDLYNAME":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.FRIENDLYNAME")
+				return SPDRP.FRIENDLYNAME
+			case "SPDRP_LOCATION_INFORMATION":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.LOCATION_INFORMATION")
+				return SPDRP.LOCATION_INFORMATION
+			case "DICS_FLAG_GLOBAL":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DICS_FLAG.GLOBAL")
+				return DICS_FLAG.GLOBAL
+			case "DIREG_DEV":
+				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIREG.DEV")
+				return DIREG.DEV
+			case _:
+				pass
 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
