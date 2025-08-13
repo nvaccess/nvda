@@ -70,7 +70,7 @@ Importing from `md2html` is discouraged. (#18638)
   Access to these symbols via `hwPortUtils` is deprecated. (#18207)
 * `hwPortUtils.`BTH_ADDR`` is deprecated.
   Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18207)
-* The following symbol has been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`.
+* The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18207)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18207)

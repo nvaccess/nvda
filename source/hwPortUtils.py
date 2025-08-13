@@ -59,9 +59,6 @@ class dummy(ctypes.Structure):
 
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
-CR_SUCCESS = 0
-MAX_DEVICE_ID_LEN = 200
-
 GUID_CLASS_COMPORT = GUID("{86e0d1e0-8089-11d0-9ce4-08003e301f73}")
 GUID_DEVINTERFACE_USB_DEVICE = GUID("{a5dcbf10-6530-11d2-901f-00c04fb951ed}")
 DEVPKEY_Device_BusReportedDeviceDesc = DEVPROPKEY(GUID("{540b947e-8b40-45bc-a8a2-6a0b894cbda2}"), 4)
@@ -520,6 +517,8 @@ _MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
 	"BLUETOOTH_MAX_NAME_SIZE": _MovedSymbol("winBindings.bthprops"),
 	"BTH_ADDR": _MovedSymbol("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
 	"CM_Get_Device_ID": _MovedSymbol("winBindings.cfgmgr32"),
+	"CR_SUCCESS": _MovedSymbol("winBindings.cfgmgr32"),
+	"MAX_DEVICE_ID_LEN": _MovedSymbol("winBindings.cfgmgr32"),
 	"PSP_DEVICE_INTERFACE_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVICE_INTERFACE_DETAIL_DATA": _MovedSymbol("winBindings.setupapi"),
 	"PSP_DEVINFO_DATA": _MovedSymbol("winBindings.setupapi"),
