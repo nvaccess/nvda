@@ -194,7 +194,7 @@ class OneCoreSynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		# Only present this as an available synth if this is Windows 10.
-		return winVersion.getWinVer() >= winVersion.WIN10
+		return True
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
