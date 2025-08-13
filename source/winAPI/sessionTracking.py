@@ -164,14 +164,6 @@ def isLockScreenModeActive() -> bool:
 		# Use secure mode instead if on the secure desktop
 		return False
 
-	import winVersion
-
-	if winVersion.getWinVer() < winVersion.WIN10:
-		# On Windows 8 and Earlier, the lock screen runs on
-		# the secure desktop.
-		# Lock screen mode is not supported on these Windows versions.
-		return False
-
 	return _isWindowsLocked()
 
 
