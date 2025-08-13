@@ -6,7 +6,8 @@ This release includes improvements to Remote Access, SAPI5 voices, braille and t
 
 Add-ons in the Add-on Store can now be sorted by minimum/last tested NVDA version and install date.
 
-Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings. There are also fixes for connection and audio issues.
+Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings.
+There are also fixes for connection and audio issues.
 
 Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto-detection for Dot Pad.
 
