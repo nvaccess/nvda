@@ -78,6 +78,8 @@ Importing from `md2html` is discouraged. (#18638)
   Access to these symbols via `hwPortUtils` is deprecated. (#18207)
 * The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_` constants in `hwPortUtils` are deprecated.
   Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18207)
+* `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
+  Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18207)
 
 ## 2025.2
 

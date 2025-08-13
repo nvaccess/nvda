@@ -65,8 +65,6 @@ class dummy(ctypes.Structure):
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
 INVALID_HANDLE_VALUE = 0
-ERROR_INSUFFICIENT_BUFFER = 122
-ERROR_NO_MORE_ITEMS = 259
 
 
 def _isDebug():
@@ -144,7 +142,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			hwID = entry["hardwareID"] = buf.value
@@ -276,7 +274,7 @@ def _listDevices(
 				dwIndex,
 				ctypes.byref(did),
 			):
-				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
+				if ctypes.GetLastError() != SystemErrorCodes.NO_MORE_ITEMS:
 					raise ctypes.WinError()
 				break
 
@@ -291,7 +289,7 @@ def _listDevices(
 				None,
 			):
 				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+				if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 
 			# allocate buffer
@@ -347,7 +345,7 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
@@ -488,7 +486,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			hwId = buf.value
@@ -566,6 +564,12 @@ def __getattr__(attrName: str) -> typing.Any:
 			case "DIREG_DEV":
 				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIREG.DEV")
 				return DIREG.DEV
+			case "ERROR_NO_MORE_ITEMS":
+				_issueDeprecationWarning(attrName, "winAPI.constants", "SystemErrorCodes.NO_MORE_ITEMS")
+				return SystemErrorCodes.NO_MORE_ITEMS
+			case "ERROR_INSUFFICIENT_BUFFER":
+				_issueDeprecationWarning(attrName, "winAPI.constants", "SystemErrorCodes.INSUFFICIENT_BUFFER")
+				return SystemErrorCodes.INSUFFICIENT_BUFFER
 			case _:
 				pass
 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
