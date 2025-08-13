@@ -32,7 +32,7 @@ Note that this is disabled by default due to the device using generic USB identi
 * Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
 * Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
 * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
-* Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+* Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
 * Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
 * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
 * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
