@@ -493,30 +493,35 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing HID devices")
 
 
-class _MovedSymbol(typing.NamedTuple):
-	module: str
-	attribute: str | None = None
-
-
-_MOVED_SYMBOLS: dict[str, _MovedSymbol] = {
-	"BLUETOOTH_ADDRESS": _MovedSymbol("winBindings.bthprops"),
-	"BLUETOOTH_MAX_NAME_SIZE": _MovedSymbol("winBindings.bthprops"),
-	"BTH_ADDR": _MovedSymbol("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
-	"CM_Get_Device_ID": _MovedSymbol("winBindings.cfgmgr32"),
-	"CR_SUCCESS": _MovedSymbol("winBindings.cfgmgr32"),
-	"MAX_DEVICE_ID_LEN": _MovedSymbol("winBindings.cfgmgr32"),
-	"DEVPROPKEY": _MovedSymbol("winBindings.setupapi"),
-	"dummy": _MovedSymbol("winBindings.setupapi", "_Dummy"),
-	"PSP_DEVICE_INTERFACE_DATA": _MovedSymbol("winBindings.setupapi"),
-	"PSP_DEVICE_INTERFACE_DETAIL_DATA": _MovedSymbol("winBindings.setupapi"),
-	"PSP_DEVINFO_DATA": _MovedSymbol("winBindings.setupapi"),
-	"SetupDiEnumDeviceInfo": _MovedSymbol("winBindings.setupapi"),
+_MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
+	"BLUETOOTH_ADDRESS": ("winBindings.bthprops",),
+	"BLUETOOTH_MAX_NAME_SIZE": ("winBindings.bthprops",),
+	"BTH_ADDR": ("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+	"CM_Get_Device_ID": ("winBindings.cfgmgr32",),
+	"CR_SUCCESS": ("winBindings.cfgmgr32",),
+	"MAX_DEVICE_ID_LEN": ("winBindings.cfgmgr32",),
+	"DEVPROPKEY": ("winBindings.setupapi",),
+	"dummy": ("winBindings.setupapi", "_Dummy"),
+	"PSP_DEVICE_INTERFACE_DATA": ("winBindings.setupapi",),
+	"PSP_DEVICE_INTERFACE_DETAIL_DATA": ("winBindings.setupapi",),
+	"PSP_DEVINFO_DATA": ("winBindings.setupapi",),
+	"SetupDiEnumDeviceInfo": ("winBindings.setupapi",),
+	"DIGCF_PRESENT": ("winBindings.setupapi", "DIGCF", "PRESENT"),
+	"DIGCF_DEVICEINTERFACE": ("winBindings.setupapi", "DIGCF", "DEVICEINTERFACE"),
+	"SPDRP_DEVICEDESC": ("winBindings.setupapi", "SPDRP", "DEVICEDESC"),
+	"SPDRP_HARDWAREID": ("winBindings.setupapi", "SPDRP", "HARDWAREID"),
+	"SPDRP_FRIENDLYNAME": ("winBindings.setupapi", "SPDRP", "FRIENDLYNAME"),
+	"SPDRP_LOCATION_INFORMATION": ("winBindings.setupapi", "SPDRP", "LOCATION_INFORMATION"),
+	"DICS_FLAG_GLOBAL": ("winBindings.setupapi", "DICS_FLAG", "GLOBAL"),
+	"DIREG_DEV": ("winBindings.setupapi", "DIREG", "DEV"),
+	"ERROR_NO_MORE_ITEMS": ("winAPI.constants", "SystemErrorCodes", "NO_MORE_ITEMS"),
+	"ERROR_INSUFFICIENT_BUFFER": ("winAPI.constants", "SystemErrorCodes", "INSUFFICIENT_BUFFER"),
 }
-"""Mapping from symbol name to new (absolute) module."""
+"""Mapping from symbol name to new (absolute) module and symbol path."""
 
 
-def _issueDeprecationWarning(oldSymbol: str, newModule: str, newSymbol: str) -> None:
-	print(f"hwPortUtils.{oldSymbol} is deprecated. Use {newModule}.{newSymbol} instead.")
+def _issueDeprecationWarning(oldSymbol: str, newModule: str, newSymbolPath: list[str]) -> None:
+	print(f"hwPortUtils.{oldSymbol} is deprecated. Use {newModule}.{'.'.join(newSymbolPath)} instead.")
 
 
 def __getattr__(attrName: str) -> typing.Any:
@@ -528,43 +533,16 @@ def __getattr__(attrName: str) -> typing.Any:
 		if attrName in _MOVED_SYMBOLS:
 			from importlib import import_module
 
-			modName, newAttrName = _MOVED_SYMBOLS[attrName]
-			newAttrName = newAttrName or attrName
-			_issueDeprecationWarning(attrName, modName, newAttrName)
-			return getattr(import_module(modName), newAttrName)
+			modName, *symPath = _MOVED_SYMBOLS[attrName]
+			symPath = symPath or [attrName]
+			_issueDeprecationWarning(attrName, modName, symPath)
+			sym = import_module(modName)
+			for seg in symPath:
+				sym = getattr(sym, seg)
+			return sym
 
 		# Other symbols
 		match attrName:
-			case "DIGCF_PRESENT":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIGCF.PRESENT")
-				return DIGCF.PRESENT
-			case "DIGCF_DEVICEINTERFACE":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIGCF.DEVICEINTERFACE")
-				return DIGCF.DEVICEINTERFACE
-			case "SPDRP_DEVICEDESC":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.DEVICEDESC")
-				return SPDRP.DEVICEDESC
-			case "SPDRP_HARDWAREID":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.HARDWAREID")
-				return SPDRP.HARDWAREID
-			case "SPDRP_FRIENDLYNAME":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.FRIENDLYNAME")
-				return SPDRP.FRIENDLYNAME
-			case "SPDRP_LOCATION_INFORMATION":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "SPDRP.LOCATION_INFORMATION")
-				return SPDRP.LOCATION_INFORMATION
-			case "DICS_FLAG_GLOBAL":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DICS_FLAG.GLOBAL")
-				return DICS_FLAG.GLOBAL
-			case "DIREG_DEV":
-				_issueDeprecationWarning(attrName, "winBindings.setupapi", "DIREG.DEV")
-				return DIREG.DEV
-			case "ERROR_NO_MORE_ITEMS":
-				_issueDeprecationWarning(attrName, "winAPI.constants", "SystemErrorCodes.NO_MORE_ITEMS")
-				return SystemErrorCodes.NO_MORE_ITEMS
-			case "ERROR_INSUFFICIENT_BUFFER":
-				_issueDeprecationWarning(attrName, "winAPI.constants", "SystemErrorCodes.INSUFFICIENT_BUFFER")
-				return SystemErrorCodes.INSUFFICIENT_BUFFER
 			case _:
 				pass
 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
