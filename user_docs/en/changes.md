@@ -21,8 +21,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-* Component updates:
-  * cryptography has been updated to 45.0.6. (#18689)
 
 #### API Breaking Changes
 
