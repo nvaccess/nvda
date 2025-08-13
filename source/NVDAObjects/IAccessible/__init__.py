@@ -176,16 +176,18 @@ def normalizeIA2TextFormatField(formatField):
 	else:
 		formatField["italic"] = False
 	try:
-		invalid = formatField.pop("invalid")
+		invalid: str | None = formatField.pop("invalid")
 	except KeyError:
 		invalid = None
-	if invalid:
-		# aria-invalid can contain multiple values separated by a comma.
-		invalidList = [x.lower().strip() for x in invalid.split(",")]
-		if "spelling" in invalidList:
+	else:
+		invalid = invalid.lower().strip()
+	match invalid:
+		case "spelling":
 			formatField["invalid-spelling"] = True
-		if "grammar" in invalidList:
+		case "grammar":
 			formatField["invalid-grammar"] = True
+		case _:
+			pass
 	color = formatField.get("color")
 	if color:
 		try:
@@ -1200,9 +1202,10 @@ class IAccessible(Window):
 		return True
 
 	def _get_labeledBy(self) -> "IAccessible | None":
-		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
-		if label:
-			return label
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
+			if label:
+				return label
 
 		try:
 			ret = IAccessibleHandler.accNavigate(
@@ -1981,27 +1984,34 @@ class IAccessible(Window):
 		return tuple(detailsRelsGen)
 
 	def _get_controllerFor(self) -> list[NVDAObject]:
-		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
-		if control:
-			return [control]
-		return []
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
+			if control:
+				return [control]
+		return super().controllerFor
 
 	#: Type definition for auto prop '_get_flowsTo'
-	flowsTo: typing.Optional["IAccessible"]
+	flowsTo: "IAccessible | None"
 
-	def _get_flowsTo(self) -> typing.Optional["IAccessible"]:
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+	def _get_flowsTo(self) -> "IAccessible | None":
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+		return super().flowsTo
 
 	#: Type definition for auto prop '_get_flowsFrom'
-	flowsFrom: typing.Optional["IAccessible"]
+	flowsFrom: "IAccessible | None"
 
-	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
+	def _get_flowsFrom(self) -> "IAccessible | None":
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
+		return super().flowsFrom
 
 	def _get_errorMessage(self) -> str | None:
-		errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
-		if errorNode is not None:
-			return errorNode.summarizeInProcess()
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+			if errorNode is not None:
+				return errorNode.summarizeInProcess()
+		return super().errorMessage
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):

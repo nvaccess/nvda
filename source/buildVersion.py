@@ -64,9 +64,9 @@ def formatVersionForGUI(year, major, minor):
 # Version information for NVDA
 name = "NVDA"
 version_year = 2025
-version_major = 2
+version_major = 3
 version_minor = 0
-version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
+version_build = 0  # Should not be set manually. Set in 'sconscript'.
 version = _formatDevVersionString()
 publisher = "unknown"
 updateVersionType = None

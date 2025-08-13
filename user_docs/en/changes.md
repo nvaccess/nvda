@@ -1,5 +1,73 @@
 # What's New in NVDA
 
+## 2025.3
+
+### Important notes
+
+### New Features
+
+* Add-on Store:
+  * Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
+  * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
+  * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
+* A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
+
+### Changes
+
+* Component updates:
+  * Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).
+  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)
+  * Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).
+  Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)
+* When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
+* When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
+* In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
+* NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+* The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
+Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
+* The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512)
+
+### Bug Fixes
+
+* Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)
+* Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)
+* Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
+* Fixed a problem where NVDA fails to start with an SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
+* Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)
+* Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
+* Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)
+* A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)
+* Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)
+* Fixed audio gaps in speech when using some SAPI 5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Component updates:
+  * Updated Pyright to 1.1.403. (#18424)
+  * Updated Ruff to 0.12.7. (#18424, #18609)
+  * Updated comtypes to 1.4.11. (#18611)
+  * Updated py2exe to 0.14.0.0. (#18611)
+  * Updated markdown to 3.8.2. (#18638)
+* For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
+* Updated `include` dependencies:
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+* The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
+* `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
+* NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
+
+#### Deprecations
+
+* The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
+  * `LP_c_ubyte`
+  * `LP_c_ulong`
+  * `LP__ULARGE_INTEGER`
+  * `SynthDriver.isSpeaking`
+* `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
+* Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
+Importing from `md2html` is discouraged. (#18638)
+
 ## 2025.2
 
 This release includes improvements in Windows 11, browse mode, and Microsoft Word.
