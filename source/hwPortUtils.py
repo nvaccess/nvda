@@ -13,8 +13,6 @@ from ctypes.wintypes import DWORD, WCHAR
 
 import config
 import hidpi
-from winBindings.setupapi import SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
-from winBindings.setupapi import _Dummy
 import winKernel
 from comtypes import GUID
 from logHandler import log
@@ -32,12 +30,16 @@ from winBindings.hid import (
 	HidP_GetCaps,
 )
 from winBindings.setupapi import (
+	DICS_FLAG,
 	DIGCF,
+	DIREG,
 	GUID_CLASS_COMPORT,
 	GUID_DEVINTERFACE_USB_DEVICE,
 	HDEVINFO,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
 	SP_DEVICE_INTERFACE_DATA,
 	SP_DEVINFO_DATA,
+	SPDRP,
 	DEVPKEY_Device_BusReportedDeviceDesc,
 	SetupDiDestroyDeviceInfoList,
 	SetupDiEnumDeviceInterfaces,
@@ -46,9 +48,7 @@ from winBindings.setupapi import (
 	SetupDiGetDeviceProperty,
 	SetupDiGetDeviceRegistryProperty,
 	SetupDiOpenDevRegKey,
-	SPDRP,
-	DIREG,
-	DICS_FLAG,
+	_Dummy,
 )
 
 
