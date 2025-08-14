@@ -1080,15 +1080,15 @@ class IAccessible(Window):
 			return 0
 		return res if isinstance(res, int) else 0
 
-	states: typing.Set[controlTypes.State]
+	states: set[controlTypes.State]
 	"""Type info for auto property: _get_states
 	"""
 
 	# C901 '_get_states' is too complex. Look for opportunities to break this method down.
-	def _get_states(self) -> typing.Set[controlTypes.State]:  # noqa: C901
+	def _get_states(self) -> set[controlTypes.State]:  # noqa: C901
 		states = set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
-			states.update(super(IAccessible, self).states)
+			states.update(super().states)
 		try:
 			IAccessibleStates = self.IAccessibleStates
 		except COMError:
@@ -2434,7 +2434,7 @@ class List(IAccessible):
 	def _get_role(self):
 		return controlTypes.Role.LIST
 
-	def _get_states(self):
+	def _get_states(self) -> set[controlTypes.State]:
 		states = super().states
 		if self.windowStyle & winUser.LBS_EXTENDEDSEL:
 			states.add(controlTypes.State.MULTISELECTABLE)
