@@ -52,6 +52,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 * A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
+* A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
 
 ### Changes
 
