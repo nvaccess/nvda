@@ -116,7 +116,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        enableCrossOsArchive: true
     - name: Store release metadata information
       id: releaseInfo
       run: |
@@ -135,7 +134,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -188,7 +186,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -218,7 +215,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -247,7 +243,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -291,7 +286,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Get makePot results
       uses: actions/download-artifact@v4
@@ -333,7 +327,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -415,7 +408,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
@@ -478,7 +470,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Windows SDK
       # Installs symstore.exe to expected location.
@@ -521,7 +512,6 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v5
