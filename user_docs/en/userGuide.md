@@ -3174,6 +3174,15 @@ This option controls whether confirmation is required before disconnecting from 
 When checked, NVDA will ask for confirmation before disconnecting.
 When unchecked, NVDA will disconnect immediately without confirmation.
 
+##### Mute when controlling the local computer {#RemoteMuteOnLocalControl}
+
+This option controls whether you can hear speech and sounds from the remote computer when controlling the local computer.
+
+When checked, Remote Access will be muted automatically when first connecting as the controlling computer, and when switching to controlling the local computer.
+When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.
+
+You can still manually mute or unmute Remote Access when controlling the local computer [via the Remote Access menu](#RemoteAccessUsage), or by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
 This option allows you to automatically establish a Remote Access session when NVDA starts.
