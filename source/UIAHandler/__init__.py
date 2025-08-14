@@ -3,7 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
 import ctypes
 import ctypes.wintypes
 from ctypes import (
@@ -1509,7 +1508,7 @@ class UIAHandler(COMObject):
 		return False
 
 
-handler: Optional[UIAHandler] = None
+handler: UIAHandler | None = None
 
 
 def initialize():
