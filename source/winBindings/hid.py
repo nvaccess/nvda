@@ -1,3 +1,10 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+"""Functions exported by hid.dll, and supporting data structures and enumerations."""
+
 from ctypes import POINTER, Structure, c_void_p, sizeof, windll
 from ctypes.wintypes import BOOLEAN, HANDLE, ULONG, USHORT
 
