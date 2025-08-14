@@ -21,6 +21,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Add-on authors are now able to provide changelog for an add-on version via "changelog" manifest key. (#14041, @josephsl)
+  * The changelog should document changes between previous and latest add-on versions.
 
 #### API Breaking Changes
 
@@ -85,8 +87,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
-* Add-on authors are now able to provide changelog for an add-on version via "changelog" manifest key. (#14041, @josephsl)
-  * The changelog should document changes between previous and latest add-on versions.
 
 #### Deprecations
 
