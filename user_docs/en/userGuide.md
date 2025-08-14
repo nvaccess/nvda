@@ -3237,11 +3237,6 @@ This option is only available if there are trusted fingerprints stored in your c
 This panel provides options to customize the behavior and default settings for the local image description feature.
 You can configure how and when the model used for describing images is loaded.
 
-##### Model Path {#LocalCaptionerSettingsModelPath}
-
-Use this edit box to specify the path from which the model should be loaded.
-This allows you to use a custom model located on your local system.
-
 ##### enable image captioning {#LocalCaptionerSettingsLoadWhenInit}
 
 When this checkbox is enabled, NVDA will automatically load the model during startup.
