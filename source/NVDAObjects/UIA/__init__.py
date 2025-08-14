@@ -56,7 +56,6 @@ from NVDAObjects import (
 from NVDAObjects.behaviors import (
 	ProgressBar,
 	EditableTextBase,
-	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
 	Notification,
