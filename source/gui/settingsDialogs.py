@@ -3656,7 +3656,6 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
 			wx.CheckBox(self, label=pgettext("imageDesc", "enable image captioning")),
@@ -3686,7 +3685,6 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			log.debugWarning(
 				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
 			)
-
 
 
 class TouchInteractionPanel(SettingsPanel):

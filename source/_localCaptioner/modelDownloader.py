@@ -35,7 +35,7 @@ ProgressCallback = Callable[[str, int, int, float], None]
 # Constants
 CHUNK_SIZE: int = 8_192
 MAX_RETRIES: int = 3
-BACKOFF_BASE: int = 2 # Base delay (in seconds) for exponential backoff strategy
+BACKOFF_BASE: int = 2  # Base delay (in seconds) for exponential backoff strategy
 
 
 class ModelDownloader:
@@ -538,10 +538,9 @@ class ModelDownloader:
 
 
 class DownloadDialog(wx.Dialog):
-
 	def __init__(self, parent: Frame, downloader: ModelDownloader):
 		"""create default model download dialog
-		
+
 		:param parent: parent wx frame
 		:param downloader: default model downloader
 		"""
@@ -567,7 +566,7 @@ class DownloadDialog(wx.Dialog):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 
 	def onOk(self, event: Event):
-		""" on ok event
+		"""on ok event
 
 		:param event:		 wx event when choose ok
 		"""
@@ -589,7 +588,7 @@ class DownloadDialog(wx.Dialog):
 		self.downloadThread.start()
 
 	def onCancel(self, event: Event):
-		""" on cancel event
+		"""on cancel event
 
 		:param event:		 wx event when choose cancel
 		"""
@@ -606,7 +605,7 @@ class DownloadDialog(wx.Dialog):
 			self.EndModal(wx.ID_CANCEL)
 
 	def onClose(self, event: Event):
-		""" Handle window close event (X button)
+		"""Handle window close event (X button)
 
 		:param event:		 wx event when choose close
 		"""
@@ -629,16 +628,16 @@ class DownloadDialog(wx.Dialog):
 		try:
 			successful, failed = self.downloader.downloadModelsMultithreaded(modelsDir="models")
 			wx.CallAfter(self.onDownloadComplete, successful, failed)
-		except Exception as e:
+		except Exception:
 			log.exception("Download error")
-			# Translators: message when fail to download 
+			# Translators: message when fail to download
 			wx.CallAfter(self.onDownloadError, pgettext("imageDesc", "download fail"))
 
 	def onDownloadComplete(self, successful: list[str], failed: list[str]):
-		""" on download complete
-		
+		"""on download complete
+
 		:param success: successful downloaded files
-		:param failed: files fail to downloaded  
+		:param failed: files fail to downloaded
 		"""
 		if self.downloader.cancelRequested:
 			self.EndModal(wx.ID_CANCEL)

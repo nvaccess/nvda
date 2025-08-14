@@ -17,9 +17,7 @@ Covers:
 - downloadDefaultModel user prompt flow
 """
 
-import os
 import tempfile
-import wx
 import unittest
 from unittest.mock import patch
 
@@ -95,7 +93,11 @@ class TestModelDownloader(unittest.TestCase):
 		for key in ("encoderPath", "decoderPath", "configPath", "vocabPath", "modelDir"):
 			self.assertIn(key, paths)
 
-			self.assertTrue(paths[key].endswith(".onnx") or paths[key].endswith(".json") or paths[key].endswith("testmodel"))
+			self.assertTrue(
+				paths[key].endswith(".onnx")
+				or paths[key].endswith(".json")
+				or paths[key].endswith("testmodel")
+			)
 
 
 if __name__ == "__main__":

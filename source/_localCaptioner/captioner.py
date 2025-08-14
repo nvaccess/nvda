@@ -372,7 +372,7 @@ def imageCaptionerFactory(
 		raise ValueError(
 			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'.",
 		)
-		
+
 	try:
 		with open(config_path, "r", encoding="utf-8") as f:
 			config = json.load(f)
