@@ -96,7 +96,7 @@ class TestModelDownloader(unittest.TestCase):
 			self.assertTrue(
 				paths[key].endswith(".onnx")
 				or paths[key].endswith(".json")
-				or paths[key].endswith("testmodel")
+				or paths[key].endswith("testmodel"),
 			)
 
 
