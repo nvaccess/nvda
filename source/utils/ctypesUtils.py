@@ -262,7 +262,7 @@ def getFuncSpec(
 				# OutParam position has already been processed.
 				raise IndexError(
 					f"Output parameter at position {outParam.position} has already been processed. "
-					f"{outParam.name!r} introduces a duplicate position"
+					f"{outParam.name!r} introduces a duplicate position",
 				)
 			if outParam.cType is inspect.Parameter.empty:
 				# If no cType is provided, we assume the pointer type, unless it is an array.
