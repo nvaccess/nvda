@@ -3849,6 +3849,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send control+alt+delete | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
