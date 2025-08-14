@@ -170,7 +170,7 @@ When using parts of the Windows API, or parts of NVDA implemented in C++, it is 
   * E.g. `winBindings.kernel32`.
 * Ctypes code for nvdaHelper should be defined in the `NVDAHelper.localLib` module.
 
-#### using the `ctypesUtils` module
+#### Using the `ctypesUtils` module
 
 The goal of the `utils.ctypesUtils` module is to make calling external C functions easier.
 It does so by aiding in two areas:
@@ -192,7 +192,10 @@ def CloseHandle(hObject: int | HANDLE) -> Annotated[int, BOOL]:
 ```
 
 A properly annotated function is a function of the form:
-`def FunctionNameINDll(param1: hint1, param2: hint2) -> ReturnHint:`
+
+```python
+def FunctionNameINDll(param1: hint1, param2: hint2) -> ReturnHint:
+```
 
 * By default, the `dllFunc` decorator infers the function name from the name of the Python function.
 It can be overridden by passing an additional parameter to the decorator.
@@ -201,7 +204,8 @@ It can be overridden by passing an additional parameter to the decorator.
   * Form 2: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
   The first ctypes type found (`HWND`) is used in `restypes`.
   This is the preferred approach.
-  * Form 3: `typing.Annotated[int, HWND]`. Only `int` is reported as valid by type checkers.
+  * Form 3: `typing.Annotated[int, HWND]`.
+  Only `int` is reported as valid by type checkers.
   The annotation (i.e. `HWND`) is used in `restypes`.
   This can be used when the desired ctypes type might be incompatible with type checkers.
 * Return type hints can also be of several forms.
@@ -232,7 +236,7 @@ Not doing so results in a `TypeError`.
 * ctypes automatically returns the contained value of a pointer object.
 So the return annotation here means:
   * Treat `RECT` as the return type. Type checkers will communicate as such.
-  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1)`.
+  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1`).
   To override the pointer type, use the `type` parameter of the `OutParam` class.
   * The out param is the second entry in the `argtypes` array, index=1.
 
