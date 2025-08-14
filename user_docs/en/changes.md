@@ -68,7 +68,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Importing from `md2html` is discouraged. (#18638)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
-* `hwPortUtils.`BTH_ADDR`` is deprecated.
+* `hwPortUtils.BTH_ADDR` is deprecated.
   Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18571)

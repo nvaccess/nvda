@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions exported by cfgmgr32.dll, and supporting data structurs and enumerations."""
+"""Functions exported by cfgmgr32.dll, and supporting data structures and enumerations."""
 
 from ctypes import c_wchar_p, windll
 from ctypes.wintypes import DWORD, ULONG
