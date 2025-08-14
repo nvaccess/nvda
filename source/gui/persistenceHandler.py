@@ -37,7 +37,7 @@ class EnumeratedChoiceHandler(AbstractHandler):
 	def __init__(self, pObject: PersistentObject):
 		"""Initialiser.
 
-		:param pObject: Persistent object for which we're handling saving and restoring.
+		:param pObject: :class:`PersistentObject` for which we're handling saving and restoring.
 		:raises TypeError: If ``pObject``'s ``Window`` isn't a :class:`wx.Choice`.
 		"""
 		if not isinstance(pObject.GetWindow(), wx.Choice):
@@ -47,7 +47,7 @@ class EnumeratedChoiceHandler(AbstractHandler):
 	def Save(self) -> bool:
 		"""Save the control's value to storage.
 
-		:return: ``True`` if successful; ``false`` otherwise.
+		:return: ``True`` if successful; ``False`` otherwise.
 		"""
 		self._pObject.SaveCtrlValue(self._NAME, self._window.GetSelection())
 		return True
@@ -63,7 +63,7 @@ class EnumeratedChoiceHandler(AbstractHandler):
 				value = int(value)
 			except ValueError:
 				return False
-			if value in range(self._window.GetCount()) or value == wx.NOT_FOUND:
+			if (0 <= value < self._window.GetCount()) or value == wx.NOT_FOUND:
 				self._window.SetSelection(value)
 				return True
 		return False
