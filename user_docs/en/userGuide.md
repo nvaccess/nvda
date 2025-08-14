@@ -45,7 +45,6 @@ Major highlights include:
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
-  * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 10 and Windows Server versions older than 2025 are no longer under active support.
 * at least 500 MB of storage space.
 
