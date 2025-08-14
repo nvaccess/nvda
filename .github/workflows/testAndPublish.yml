@@ -36,7 +36,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2025", "windows-11-arm"]'
+  supportedSystemTestRunners: '["windows-2025"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
   defaultPythonVersion: '3.11.9'
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       defaultRunner: ${{ steps.setMatrix.outputs.defaultRunner }}
-      supportedRunners: ${{ steps.setMatrix.outputs.supportedRunners }}
+      supportedSystemTestRunners: ${{ steps.setMatrix.outputs.supportedSystemTestRunners }}
       supportedArchitectures: ${{ steps.setMatrix.outputs.supportedArchitectures }}
       supportedPythonVersions: ${{ steps.setMatrix.outputs.supportedPythonVersions }}
     steps:
@@ -56,7 +56,7 @@ jobs:
       id: setMatrix
       run: |
         echo "defaultRunner=${{ env.defaultRunner }}" >> "$GITHUB_OUTPUT"
-        echo "supportedRunners=$(jq -c <<< '${{ env.supportedRunners }}')" >> "$GITHUB_OUTPUT"
+        echo "supportedSystemTestRunners=$(jq -c <<< '${{ env.supportedSystemTestRunners }}')" >> "$GITHUB_OUTPUT"
         echo "supportedArchitectures=$(jq -c <<< '${{ env.supportedArchitectures }}')" >> "$GITHUB_OUTPUT"
         echo "supportedPythonVersions=$(jq -c <<< '${{ env.supportedPythonVersions }}')" >> "$GITHUB_OUTPUT"
   buildNVDA:
@@ -128,7 +128,7 @@ jobs:
   typeCheck:
     name: Check types with Pyright
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -150,6 +150,7 @@ jobs:
   checkPo:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: matrix
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -161,10 +162,6 @@ jobs:
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
-    - name: Install pre-commit
-      run: |
-        python -m pip install --upgrade pip
-        pip install pre-commit
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Run pre-commit
@@ -172,9 +169,9 @@ jobs:
         # Ensure uv environment is up to date.
         # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
         # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
-        pre-commit run uv-lock --all-files
+        uvx pre-commit run uv-lock --all-files
         # Run pre-commit on the translations
-        pre-commit run checkPo --all-files
+        uvx pre-commit run checkPo --all-files
     - name: Add job summary
       if: ${{ failure() }}
       shell: bash
@@ -184,7 +181,7 @@ jobs:
   checkPot:
     name: Check translator comments
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -214,7 +211,7 @@ jobs:
   licenseCheck:
     name: Check license compatibility of dependencies
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: buildNVDA
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -286,7 +283,7 @@ jobs:
   crowdinUpload:
     name: Upload translations to Crowdin
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: [buildNVDA, checkPot]
+    needs: [matrix, buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
     steps:
     - name: Checkout cached build
@@ -404,7 +401,7 @@ jobs:
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
-        runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
+        runner: ${{ fromJson(needs.matrix.outputs.supportedSystemTestRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
@@ -519,7 +516,7 @@ jobs:
   uploadSymbols:
     name: Upload symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: createSymbols
+    needs: [matrix, createSymbols]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
     - name: Checkout cached build
