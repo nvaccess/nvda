@@ -3638,8 +3638,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		"""Create the settings controls for the panel.
 
-		Args:
-			settingsSizer: The sizer to add settings controls to.
+			:param settingsSizer: The sizer to add settings controls to.
 		"""
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
