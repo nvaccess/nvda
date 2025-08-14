@@ -31,6 +31,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+
 #### Deprecations
 
 * `winVersion.WIN81` constant has been deprecated from winVersion module. (#18684, @josephsl):
