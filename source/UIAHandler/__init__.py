@@ -260,7 +260,6 @@ localEventHandlerGroupUIAEventIds.update(
 		UIA.UIA_Text_TextSelectionChangedEventId,
 	},
 )
-autoSelectDetectionAvailable = True
 
 globalEventHandlerGroupUIAEventIds = set(UIAEventIdsToNVDAEventNames) - localEventHandlerGroupUIAEventIds
 
