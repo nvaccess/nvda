@@ -3638,7 +3638,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		"""Create the settings controls for the panel.
 
-			:param settingsSizer: The sizer to add settings controls to.
+		:param settingsSizer: The sizer to add settings controls to.
 		"""
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3651,31 +3651,12 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
 
-	@staticmethod
-	def getParameterBound(name: str, boundType: str) -> int | None:
-		"""Get the bound of a parameter in the "ndtt" section of the config.
-
-		Args:
-			name: The name of the parameter.
-			boundType: Either "min" or "max".
-
-		Returns:
-			The bound value if found, None otherwise.
-		"""
-		try:
-			return config.conf.getConfigValidation(("ndtt", name)).kwargs[boundType]
-		except TypeError:
-			# For older version of configObj (e.g. used in NVDA 2019.2.1)
-			return config.conf.getConfigValidationParameter(["ndtt", name], boundType)
-
 	def onSave(self) -> None:
 		"""Save the configuration settings.
 
 		Only saves if operating in the default profile to prevent
 		configuration issues with custom profiles.
 		"""
-		modelPath = self.modelPathEdit.GetValue()
-		oldModelPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
 		enabled = self.enable.GetValue()
 		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
 
@@ -3687,19 +3668,12 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		# Make sure we're operating in the "normal" profile
 		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
-			config.conf["automatedImageDescriptions"]["defaultModelPath"] = self.modelPathEdit.GetValue()
 			config.conf["automatedImageDescriptions"]["enable"] = self.enable.GetValue()
 		else:
 			log.debugWarning(
 				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
 			)
 
-		if modelPath != oldModelPath and enabled:
-			import _localCaptioner
-
-			# reload models from new path
-			_localCaptioner.toggleImageCaptioning()
-			_localCaptioner.toggleImageCaptioning()
 
 
 class TouchInteractionPanel(SettingsPanel):

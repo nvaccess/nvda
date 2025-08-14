@@ -137,7 +137,6 @@ class ImageDescriber:
 
 		try:
 			self.captioner = imageCaptionerFactory(
-				model_type="vit-gpt2",
 				encoder_path=encoderPath,
 				decoder_path=decoderPath,
 				config_path=configPath,
@@ -194,7 +193,6 @@ class ImageDescriber:
 			self._doReleaseModel()
 		else:
 			self.loadModelInBackground()
-			# self._loadModel()
 
 	def toggleImageCaptioning(self, gesture: KeyboardInputGesture) -> None:
 		"""do load/unload the model from memory.

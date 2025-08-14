@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 """
-Unit tests for the ModelDownloader class and downloadDefaultModel function.
+Unit tests for the ModelDownloader class.
 
 Covers:
 - Directory creation
@@ -23,25 +23,24 @@ import wx
 import unittest
 from unittest.mock import patch
 
-
 # Import the class and function under test
-from _localCaptioner.modelDownloader import ModelDownloader, downloadDefaultModel
+from _localCaptioner.modelDownloader import ModelDownloader
 
 
 class TestModelDownloader(unittest.TestCase):
 	"""Unit tests for ModelDownloader."""
 
 	def setUp(self):
-		# Create a temporary directory as the base path for downloads
+		# 初始化时不再传 basePath
 		self.temp_dir = tempfile.mkdtemp()
-		self.downloader = ModelDownloader(basePath=self.temp_dir)
+		self.downloader = ModelDownloader()
 
 	@patch("pathlib.Path.mkdir")
 	def test_ensureModelsDirectory_success(self, mock_mkdir):
 		"""Ensure directory is created and correct path returned."""
 		mock_mkdir.return_value = None
 		models_dir = self.downloader.ensureModelsDirectory()
-		self.assertTrue(models_dir.endswith("models"))
+		self.assertTrue(models_dir.endswith("vit-gpt2-image-captioning"))
 		mock_mkdir.assert_called_once()
 
 	@patch("pathlib.Path.mkdir", side_effect=OSError("Permission denied"))
@@ -95,31 +94,8 @@ class TestModelDownloader(unittest.TestCase):
 		paths = self.downloader.getModelFilePaths("testmodel")
 		for key in ("encoderPath", "decoderPath", "configPath", "vocabPath", "modelDir"):
 			self.assertIn(key, paths)
-			self.assertTrue(
-				paths[key].startswith(os.path.abspath(os.path.join(self.temp_dir, "..", "..", "models"))),
-			)
 
-
-class TestDownloadDefaultModel(unittest.TestCase):
-	"""Unit tests for the downloadDefaultModel function."""
-
-	@patch("wx.MessageBox", return_value=wx.OK)
-	@patch(
-		"_localCaptioner.modelDownloader.ModelDownloader.downloadModelsMultithreaded",
-		return_value=(["ok"], []),
-	)
-	def test_downloadDefaultModel_user_accepts(self, mock_dl, mock_msgbox):
-		"""If user clicks OK, downloadModelsMultithreaded is called."""
-		success, failed = downloadDefaultModel()
-		self.assertEqual(success, ["ok"])
-		self.assertEqual(failed, [])
-
-	@patch("wx.MessageBox", return_value=wx.CANCEL)
-	def test_downloadDefaultModel_user_cancels(self, mock_msgbox):
-		"""If user cancels, no downloads are performed."""
-		success, failed = downloadDefaultModel()
-		self.assertEqual(success, [])
-		self.assertEqual(failed, [])
+			self.assertTrue(paths[key].endswith(".onnx") or paths[key].endswith(".json") or paths[key].endswith("testmodel"))
 
 
 if __name__ == "__main__":

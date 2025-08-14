@@ -99,7 +99,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		log.info(
 			f"Loaded ONNX models - Encoder: {os.path.basename(encoder_path)}, Decoder: {os.path.basename(decoder_path)}",
 		)
-		log.info(f"Loaded config from: {os.path.basename(config_path)}")
+		log.info(f"Loaded config from: {os.path.realpath(config_path)}")
 		log.info(f"Loaded vocabulary from: {os.path.basename(vocabPath)}")
 		log.info(f"Model config - Image size: {self.imageSize}, Max length: {self.maxLength}")
 
@@ -352,7 +352,6 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 
 def imageCaptionerFactory(
-	model_type: str,
 	config_path: str,
 	encoder_path: str | None = None,
 	decoder_path: str | None = None,
@@ -360,18 +359,32 @@ def imageCaptionerFactory(
 ) -> ImageCaptioner:
 	"""Initialize the image caption generator.
 
-	:param model_type: TYE OF THE MODEL.
 	:param monomeric_model_path: Path to a single merged model file.
 	:param encoder_path: Path to the encoder model file.
 	:param decoder_path: Path to the decoder model file.
 	:param config_path: Path to the configuration file.
 	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
+	:raises FileNotFoundError: If config file not found.
+	:raises Exception: If config.json fail to load.
 	:return: instance of ImageCaptioner
 	"""
 	if not monomeric_model_path and not (encoder_path and decoder_path):
 		raise ValueError(
 			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'.",
 		)
+		
+	try:
+		with open(config_path, "r", encoding="utf-8") as f:
+			config = json.load(f)
+	except FileNotFoundError:
+		raise FileNotFoundError(
+			f"Caption model config file {config_path} not found, "
+			"please download models and config file first!",
+		)
+	except Exception as e:
+		log.exception(e)
+		raise
 
-	if model_type == "vit-gpt2":
+	model_architecture = config["architectures"][0]
+	if model_architecture == "VisionEncoderDecoderModel":
 		return VitGpt2ImageCaptioner(encoder_path, decoder_path, config_path)

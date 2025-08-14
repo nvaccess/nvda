@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, tianze
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 """
 Multi‑threaded model downloader
 
@@ -19,8 +24,10 @@ from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
 from urllib3.util.retry import Retry
 import wx
+from wx import Frame, Event
 
 from logHandler import log
+import config
 
 # Type definitions
 ProgressCallback = Callable[[str, int, int, float], None]
@@ -28,7 +35,7 @@ ProgressCallback = Callable[[str, int, int, float], None]
 # Constants
 CHUNK_SIZE: int = 8_192
 MAX_RETRIES: int = 3
-BACKOFF_BASE: int = 2
+BACKOFF_BASE: int = 2 # Base delay (in seconds) for exponential backoff strategy
 
 
 class ModelDownloader:
@@ -39,7 +46,6 @@ class ModelDownloader:
 		remoteHost: str = "huggingface.co",
 		maxWorkers: int = 4,
 		maxRetries: int = MAX_RETRIES,
-		basePath: str | None = None,
 	):
 		"""
 		Initialize the ModelDownloader.
@@ -47,12 +53,10 @@ class ModelDownloader:
 		:param remoteHost: Remote host URL (default: huggingface.co).
 		:param maxWorkers: Maximum number of worker threads.
 		:param maxRetries: Maximum retry attempts per file.
-		:param basePath: Base folder; defaults to the directory containing this file.
 		"""
 		self.remoteHost = remoteHost
 		self.maxWorkers = maxWorkers
 		self.maxRetries = maxRetries
-		self.basePath = basePath or os.path.dirname(__file__)
 
 		# Thread control
 		self.cancelRequested = False
@@ -64,9 +68,13 @@ class ModelDownloader:
 
 		# Configure retry strategy
 		retryStrategy = Retry(
+			# Maximum number of retries before giving up
 			total=maxRetries,
+			# Base factor for calculating delay between retries
 			backoff_factor=BACKOFF_BASE,
+			# HTTP status codes that trigger a retry
 			status_forcelist=[429, 500, 502, 503, 504],
+			# HTTP methods allowed to retry
 			allowed_methods=["HEAD", "GET", "OPTIONS"],
 		)
 
@@ -104,7 +112,7 @@ class ModelDownloader:
 		:return: Absolute path of the *models* directory.
 		:raises OSError: When the directory cannot be created.
 		"""
-		modelsDir = os.path.abspath(os.path.join(self.basePath, "..", "..", "models"))
+		modelsDir = os.path.abspath(config.conf["automatedImageDescriptions"]["defaultModelPath"])
 
 		try:
 			Path(modelsDir).mkdir(parents=True, exist_ok=True)
@@ -529,27 +537,14 @@ class ModelDownloader:
 			self.session.close()
 
 
-def downloadDefaultModel() -> tuple[list[str], list[str]]:
-	"""
-	Download default model assets concurrently.
-
-	:return: (successful_paths, failed_paths) tuple.
-	"""
-	chooseResult = wx.MessageBox(
-		"Download default model?",
-		"AI Image Description",
-		wx.OK | wx.CANCEL | wx.ICON_QUESTION,
-	)
-
-	if chooseResult == wx.OK:
-		md = ModelDownloader()
-		return md.downloadModelsMultithreaded(modelsDir="models")
-
-	return [], []
-
-
 class DownloadDialog(wx.Dialog):
-	def __init__(self, parent, downloader):
+
+	def __init__(self, parent: Frame, downloader: ModelDownloader):
+		"""create default model download dialog
+		
+		:param parent: parent wx frame
+		:param downloader: default model downloader
+		"""
 		# Translators: title of dialog when downloading default model
 		super().__init__(parent, title=pgettext("imageDesc", "AI Image Description"), size=(350, 180))
 		self.downloader = downloader
@@ -571,7 +566,11 @@ class DownloadDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 
-	def onOk(self, event):
+	def onOk(self, event: Event):
+		""" on ok event
+
+		:param event:		 wx event when choose ok
+		"""
 		# Translators: label when downloading model
 		self.statusText.SetLabel(pgettext("imageDesc", "Downloading, please wait..."))
 		okButton = self.FindWindowById(wx.ID_OK)
@@ -589,7 +588,12 @@ class DownloadDialog(wx.Dialog):
 		self.downloadThread = threading.Thread(target=self.performDownload, daemon=True)
 		self.downloadThread.start()
 
-	def onCancel(self, event):
+	def onCancel(self, event: Event):
+		""" on cancel event
+
+		:param event:		 wx event when choose cancel
+		"""
+
 		if self.downloadThread and self.downloadThread.is_alive():
 			# Request cancellation
 			self.downloader.requestCancel()
@@ -601,8 +605,11 @@ class DownloadDialog(wx.Dialog):
 		else:
 			self.EndModal(wx.ID_CANCEL)
 
-	def onClose(self, event):
-		# Handle window close event (X button)
+	def onClose(self, event: Event):
+		""" Handle window close event (X button)
+
+		:param event:		 wx event when choose close
+		"""
 		if self.downloadThread and self.downloadThread.is_alive():
 			self.downloader.requestCancel()
 			# Wait briefly for cancellation
@@ -624,15 +631,22 @@ class DownloadDialog(wx.Dialog):
 			wx.CallAfter(self.onDownloadComplete, successful, failed)
 		except Exception as e:
 			log.exception("Download error")
-			wx.CallAfter(self.onDownloadError, str(e))
+			# Translators: message when fail to download 
+			wx.CallAfter(self.onDownloadError, pgettext("imageDesc", "download fail"))
 
-	def onDownloadComplete(self, successful, failed):
+	def onDownloadComplete(self, successful: list[str], failed: list[str]):
+		""" on download complete
+		
+		:param success: successful downloaded files
+		:param failed: files fail to downloaded  
+		"""
 		if self.downloader.cancelRequested:
 			self.EndModal(wx.ID_CANCEL)
 			return
 
 		if failed:
-			msg = f"Some downloads failed: {failed}\nRetry?"
+			# Translators: message when fail to download
+			msg = pgettext("imageDesc", "Some downloads failed, \nRetry?")
 			dlg = wx.MessageDialog(self, msg, "Download Failed", style=wx.YES_NO | wx.ICON_WARNING)
 			result = dlg.ShowModal()
 			dlg.Destroy()
@@ -661,7 +675,7 @@ class DownloadDialog(wx.Dialog):
 			)
 			self.EndModal(wx.ID_OK)
 
-	def onDownloadError(self, errorMessage):
+	def onDownloadError(self, errorMessage: str):
 		wx.MessageBox(f"Download error: {errorMessage}", "Error", wx.OK | wx.ICON_ERROR)
 		self.EndModal(wx.ID_CANCEL)
 
