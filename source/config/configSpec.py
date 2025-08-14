@@ -362,9 +362,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+		muteOnLocalControl = boolean(default=False)
+
 [automatedImageDescriptions]
 	enable = boolean(default=false)
 	defaultModelPath = string(default="models/Xenova/vit-gpt2-image-captioning")
+
 """
 
 #: The configuration specification
