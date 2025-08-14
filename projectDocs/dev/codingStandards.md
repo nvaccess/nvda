@@ -199,25 +199,25 @@ def FunctionNameINDll(param1: hint1, param2: hint2) -> ReturnHint:
 
 * By default, the `dllFunc` decorator infers the function name from the name of the Python function.
 It can be overridden by passing an additional parameter to the decorator.
-* Parameter type hints can be of several forms, but should at least reference a ctypes compatible type.
-  * Form 1: Just a ctypes type, e.g. `HWND`
-  * Form 2: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
-  The first ctypes type found (`HWND`) is used in `restypes`.
-  This is the preferred approach.
-  * Form 3: `typing.Annotated[int, HWND]`.
-  Only `int` is reported as valid by type checkers.
-  The annotation (i.e. `HWND`) is used in `restypes`.
-  This can be used when the desired ctypes type might be incompatible with type checkers.
-* Return type hints can also be of several forms.
-  * Form 1: Just a ctypes type, e.g. `BOOL`.
-  It will be used as `restype`.
-  * Form 2: `typing.Annotated[int, BOOL]`. Preferred, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
-    * Note that the `int | BOOL` form (e.g. input parameter form 2) is not supported here, since a ctypes function will never return a `BOOL`, it will always create a more pythonic value whenever possible.
 
-Output parameters are more complex.
+##### Function parameters (ctypes input parameters)
+
+Parameter type hints can be of several flavors, but should at least reference a ctypes compatible type.
+* Flavor P1: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
+The first ctypes type found (`HWND`) is used in `restypes`.
+This is the preferred approach.
+* Flavor P2: Just a ctypes type, e.g. `HWND`
+
+##### Function return type
+
+Return type hints can also be of several flavors.
+* Flavor R1a: Just a ctypes type, e.g. `BOOL`.
+It will be used as `restype`.
+* Flavor R1b: `typing.Annotated[int, BOOL]`. Preferred, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
+  * Note that the `int | BOOL` form (e.g. input parameter form 2) is not supported here, since a ctypes function will never return a `BOOL`, it will always create a more pythonic value whenever possible.
+* Flavor 2, output parameters are more complex.
 When ctypes knows that a certain parameter is an output parameter, it will automatically create an object and passes a pointer to that object to the C function.
 Therefore, output parameters are defined in a `typing.Annotated` hint as a `OutParam` object. e.g.
-
 ```python
 from ctypes import windll
 from ctypes.wintypes import BOOL, HWND, RECT
@@ -228,9 +228,7 @@ from utils.ctypesUtils import dllFunc, OutParam, Pointer
 def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
 	...
 ```
-
 Note that:
-
 * Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly.
 Not doing so results in a `TypeError`.
 * ctypes automatically returns the contained value of a pointer object.
