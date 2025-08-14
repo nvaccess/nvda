@@ -1,5 +1,34 @@
 # What's New in NVDA
 
+## 2026.1
+
+### Important notes
+
+* This release breaks compatibility with existing add-ons.
+* Windows 8.1 is no longer supported.
+Windows 10 is the minimum Windows version supported.
+* 32-bit Windows is no longer supported.
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+#### Deprecations
+
 ## 2025.3
 
 ### Important notes
@@ -10,6 +39,7 @@
   * Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)
   * Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
+* A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
 
 ### Changes
 
