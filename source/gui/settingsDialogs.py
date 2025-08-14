@@ -3643,23 +3643,6 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label for an edit field in the local captioner  Settings panel.
-		modelPathLabel = pgettext("imageDesc", "Model Path")
-
-		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=modelPathLabel)
-		groupBox = groupSizer.GetStaticBox()
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
-
-		# Translators: The label of a button to browse for a directory or a file.
-		browseText = pgettext("imageDesc", "Browse...")
-		# Translators: The title of the dialog presented when browsing for the directory.
-		dirDialogTitle = pgettext("imageDesc", "Select a directory")
-
-		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
-		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
-		self.modelPathEdit = directoryEntryControl.pathControl
-		self.modelPathEdit.Value = config.conf["automatedImageDescriptions"]["defaultModelPath"]
-		self.bindHelpEvent("LocalCaptionerSettingsModelPath", self.modelPathEdit)
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
