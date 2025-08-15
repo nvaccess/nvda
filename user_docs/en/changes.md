@@ -13,6 +13,8 @@ Windows 10 is the minimum Windows version supported.
 
 ### Changes
 
+* Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
+
 ### Bug Fixes
 
 ### Changes for Developers
