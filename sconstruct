@@ -318,8 +318,8 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 		source=mdFile,
 		SUBST_DICT={
 			"NVDA_VERSION": env["version"],
-			"NVDA_URL": versionInfo.url,
-			"NVDA_COPYRIGHT_YEARS": versionInfo.copyrightYears,
+			"NVDA_URL": buildVersion.url,
+			"NVDA_COPYRIGHT_YEARS": buildVersion.copyrightYears,
 		},
 	)
 	lang = os.path.split(os.path.dirname(mdFile.path))[-1]

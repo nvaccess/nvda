@@ -281,7 +281,7 @@ def getUninstallerRegInfo(installDir: str) -> Dict[str, Union[str, int]]:
 		Publisher=buildVersion.publisher,
 		UninstallDirectory=installDir,
 		UninstallString=os.path.join(installDir, "uninstall.exe"),
-		URLInfoAbout=versionInfo.url,
+		URLInfoAbout=buildVersion.url,
 	)
 
 
@@ -461,7 +461,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 	_createShortcutWithFallback(
 		path=os.path.join(startMenuFolder, webSiteTranslated + ".lnk"),
 		fallbackPath=os.path.join(startMenuFolder, "NVDA web site.lnk"),
-		targetPath=versionInfo.url,
+		targetPath=buildVersion.url,
 		prependSpecialFolder="AllUsersPrograms",
 	)
 

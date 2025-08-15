@@ -31,7 +31,8 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 * NVDA is now built with Python 3.13. (#18591)
 * typing_extensions have been removed.
-  These should be supported natively in Python 3.13. (#18689)
+These should be supported natively in Python 3.13. (#18689)
+* `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
 
 #### Deprecations
 
