@@ -3245,7 +3245,7 @@ This option is only available if there are trusted fingerprints stored in your c
 
 This panel provides options to customize the behavior and default settings for the ["Image Captioner"](#LocalCaptioner).
 
-##### enable image captioning {#LocalCaptionerSettingsLoadWhenInit}
+##### Enable image captioner {#LocalCaptionToggle}
 
 When this checkbox is enabled, NVDA will automatically load the model during startup.
 This can reduce the wait time when performing the first image recognition.
@@ -3871,17 +3871,18 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
-## Local Image Description {#LocalCaptioner}
+## Image Captioner {#LocalCaptioner}
 
-NVDA supports generating image descriptions using a local model. This feature allows NVDA to describe image objects encountered during navigation. It supports shortcut key activation, and the result is automatically copied to the clipboard.
+NVDA supports generating image descriptions on your device without connecting to the internet.
+This feature allows NVDA to describe images encountered during navigation.
 
-Note:
-To reduce the NVDA installer size, the image captioning model is not bundled with NVDA by default.
-
+Note: An internet connection is required to enable and install the Image Captioner for the first time.
+It is not included with the NVDA installer to reduce the installer size.
 
 ### Getting Started {#LocalCaptionerGettingStarted}
 
-Once the model is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#).
+Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently focused.
 
 ### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
 
