@@ -22,7 +22,7 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
-	# leaving the chrome tabs open may slow down / cause chrome to crash on appveyor
+	# leaving the chrome tabs open may slow down / cause chrome to crash
 	close_chrome_tab
 	quit NVDA
 

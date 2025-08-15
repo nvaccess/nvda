@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited
+# Copyright (C) 2006-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,7 +14,7 @@ from buildVersion import *  # noqa: F403
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
 url = "https://www.nvaccess.org"
-copyrightYears = "2006-2025"
+copyrightYears = "2006-2026"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears,
 )

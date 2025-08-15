@@ -1541,9 +1541,9 @@ The various types of information available in the Elements List are:
 
 * Charts: This lists all charts in the active worksheet.
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-* Comments: This lists all cells in the active worksheet containing comments.
-The cell address along with its comments are shown for each cell.
-Pressing enter or the Move To button when on a listed comment will move directly to that cell.
+* Notes: This lists all cells in the active worksheet containing notes.
+The cell address along with its note are shown for each cell.
+Pressing enter or the Move To button when on a listed note will move directly to that cell.
 * Formulas: This lists all cells in the worksheet containing a formula.
 The cell address along with its formula are shown for each cell.
 Pressing enter or the Move To button on a listed formula will move directly to that cell.
@@ -3174,6 +3174,15 @@ This option controls whether confirmation is required before disconnecting from 
 When checked, NVDA will ask for confirmation before disconnecting.
 When unchecked, NVDA will disconnect immediately without confirmation.
 
+##### Mute when controlling the local computer {#RemoteMuteOnLocalControl}
+
+This option controls whether you can hear speech and sounds from the remote computer when controlling the local computer.
+
+When checked, Remote Access will be muted automatically when first connecting as the controlling computer, and when switching to controlling the local computer.
+When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.
+
+You can still manually mute or unmute Remote Access when controlling the local computer [via the Remote Access menu](#RemoteAccessUsage), or by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
 This option allows you to automatically establish a Remote Access session when NVDA starts.
@@ -3550,7 +3559,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.11/howto/regex.html).
+For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
@@ -3849,6 +3858,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
