@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2024 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
+# Copyright (C) 2016-2025 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -36,7 +36,6 @@ import queueHandler
 from speech.types import SpeechSequence
 import speechXml
 import languageHandler
-import winVersion
 import NVDAHelper
 
 from speech.commands import (
@@ -194,7 +193,7 @@ class OneCoreSynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		# Only present this as an available synth if this is Windows 10.
-		return winVersion.getWinVer() >= winVersion.WIN10
+		return True
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()

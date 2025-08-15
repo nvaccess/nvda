@@ -56,7 +56,6 @@ from NVDAObjects import (
 from NVDAObjects.behaviors import (
 	ProgressBar,
 	EditableTextBase,
-	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
 	Notification,
@@ -1448,10 +1447,7 @@ class UIA(Window):
 				clsList.append(XamlEditableText)
 			elif UIAClassName == "WpfTextView":
 				clsList.append(WpfTextView)
-			if UIAHandler.autoSelectDetectionAvailable:
-				clsList.append(EditableTextWithAutoSelectDetection)
-			else:
-				clsList.append(EditableTextWithoutAutoSelectDetection)
+			clsList.append(EditableTextWithAutoSelectDetection)
 
 		clsList.append(UIA)
 

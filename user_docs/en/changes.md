@@ -6,12 +6,16 @@
 
 * This release breaks compatibility with existing add-ons.
 * Windows 8.1 is no longer supported.
-Windows 10 is the minimum Windows version supported.
+Windows 10 (Version 1507) is the minimum Windows version supported.
+We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
 
 ### New Features
 
 ### Changes
+
+* NVDA no longer supports Windows 8.1.
+Windows 10 (Version 1507) is the minimum Windows version supported. (#18684, @josephsl)
 
 ### Bug Fixes
 
@@ -27,7 +31,11 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+
 #### Deprecations
+
+* `winVersion.WIN81` constant has been deprecated from winVersion module. (#18684, @josephsl):
 
 ## 2025.3
 

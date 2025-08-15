@@ -3,7 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
 import ctypes
 import ctypes.wintypes
 from ctypes import (
@@ -250,19 +249,16 @@ UIAEventIdsToNVDAEventNames: Dict[int, str] = {
 
 localEventHandlerGroupUIAEventIds = set()
 
-autoSelectDetectionAvailable = False
-if winVersion.getWinVer() >= winVersion.WIN10:
-	UIAEventIdsToNVDAEventNames.update(
-		{
-			UIA.UIA_Text_TextSelectionChangedEventId: "caret",
-		},
-	)
-	localEventHandlerGroupUIAEventIds.update(
-		{
-			UIA.UIA_Text_TextSelectionChangedEventId,
-		},
-	)
-	autoSelectDetectionAvailable = True
+UIAEventIdsToNVDAEventNames.update(
+	{
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
+	},
+)
+localEventHandlerGroupUIAEventIds.update(
+	{
+		UIA.UIA_Text_TextSelectionChangedEventId,
+	},
+)
 
 globalEventHandlerGroupUIAEventIds = set(UIAEventIdsToNVDAEventNames) - localEventHandlerGroupUIAEventIds
 
@@ -594,7 +590,7 @@ class UIAHandler(COMObject):
 				self.baseCacheRequest,
 				handler,
 			)
-		if not utils._shouldSelectivelyRegister() and winVersion.getWinVer() >= winVersion.WIN10:
+		if not utils._shouldSelectivelyRegister():
 			# #14067: Due to poor performance, textChange requires special handling
 			self.globalEventHandlerGroup.AddAutomationEventHandler(
 				UIA.UIA_Text_TextChangedEventId,
@@ -1512,7 +1508,7 @@ class UIAHandler(COMObject):
 		return False
 
 
-handler: Optional[UIAHandler] = None
+handler: UIAHandler | None = None
 
 
 def initialize():
