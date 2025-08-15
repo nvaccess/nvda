@@ -5,7 +5,7 @@
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß., tianze
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -3637,6 +3637,56 @@ class RemoteSettingsPanel(SettingsPanel):
 				_remoteClient.terminate()
 
 
+class LocalCaptionerSettingsPanel(SettingsPanel):
+	"""Settings panel for Local captioner configuration.
+
+	This panel allows users to configure the local model path and
+	initialization settings for the local captioner.
+	"""
+
+	# Translators: This is the label for the local captioner settings panel.
+	title = pgettext("imageDesc", "AI Image Descriptions")
+	helpId = "LocalCaptionerSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		"""Create the settings controls for the panel.
+
+		:param settingsSizer: The sizer to add settings controls to.
+		"""
+
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.enable = sHelper.addItem(
+			# Translators: A configuration in settings dialog.
+			wx.CheckBox(self, label=pgettext("imageDesc", "enable image captioning")),
+		)
+		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
+		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
+
+	def onSave(self) -> None:
+		"""Save the configuration settings.
+
+		Only saves if operating in the default profile to prevent
+		configuration issues with custom profiles.
+		"""
+		enabled = self.enable.GetValue()
+		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
+
+		if enabled != oldEnabled:
+			import _localCaptioner
+
+			if enabled != _localCaptioner.isModelLoaded():
+				_localCaptioner.toggleImageCaptioning()
+
+		# Make sure we're operating in the "normal" profile
+		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
+			config.conf["automatedImageDescriptions"]["enable"] = self.enable.GetValue()
+		else:
+			log.debugWarning(
+				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
+			)
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -5538,6 +5588,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
+		LocalCaptionerSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.

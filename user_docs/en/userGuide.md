@@ -3241,6 +3241,17 @@ You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
+#### Local Image Description Settings Panel {#LocalCaptionerSettings}
+
+This panel provides options to customize the behavior and default settings for the local image description feature.
+You can configure how and when the model used for describing images is loaded.
+
+##### enable image captioning {#LocalCaptionerSettingsLoadWhenInit}
+
+When this checkbox is enabled, NVDA will automatically load the model during startup.
+This can reduce the wait time when performing the first image recognition.
+However, loading the model at initialization may increase memory usage, especially if you do not use the image description feature frequently.
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3859,6 +3870,30 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
+<!-- KC:endInclude -->
+
+## Local Image Description {#LocalCaptioner}
+
+NVDA supports generating image descriptions using a local model. This feature allows NVDA to describe image objects encountered during navigation. It supports shortcut key activation, and the result is automatically copied to the clipboard.
+
+Note:
+To reduce the NVDA installer size, the image captioning model is not bundled with NVDA by default.
+
+
+### Getting Started {#LocalCaptionerGettingStarted}
+
+Once the model is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+
+### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
+
+<!-- KC:beginInclude -->
+
+| Name | Key | Description |
+| ------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------ |
+| get an AI generated image description | `NVDA+Windows+,` | Use a local model to generate a description of the image object currently navigated by NVDA. |
+| toggle image captioning | Unassigned | load/unload the model from memory. |
+| Shows the AI image descriptions settings | Unassigned | Opens the Local Image Description settings panel. |
+
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
