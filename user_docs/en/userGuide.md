@@ -1328,7 +1328,7 @@ The following state indicators are also defined:
 |invalid |displayed when an invalid entry has been made|
 |ldesc |displayed when an object (usually a graphic) has a long description|
 |mln |displayed when an edit field allows typing multiple lines of text such as comment fields on websites|
-|msel |displayed when an object allows selecting multiple itemss|
+|msel |displayed when an object allows selecting multiple items|
 |req |displayed when a required form field is encountered|
 |ro |displayed when an object (e.g. an editable text field) is read-only|
 |sel |displayed when an object is selected|
