@@ -365,6 +365,7 @@ def imageCaptionerFactory(
 	:param config_path: Path to the configuration file.
 	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
 	:raises FileNotFoundError: If config file not found.
+	:raise NotImplementedError: if nodel architecture is unsupported
 	:raises Exception: If config.json fail to load.
 	:return: instance of ImageCaptioner
 	"""
@@ -388,3 +389,5 @@ def imageCaptionerFactory(
 	model_architecture = config["architectures"][0]
 	if model_architecture == "VisionEncoderDecoderModel":
 		return VitGpt2ImageCaptioner(encoder_path, decoder_path, config_path)
+	else:
+		raise NotImplementedError("Unsupported model architectures")
