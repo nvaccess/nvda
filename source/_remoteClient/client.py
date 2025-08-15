@@ -392,8 +392,6 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
-		# Translators: Presented when connection to a remote computer was interupted.
-		ui.message(_("Disconnected"))
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(

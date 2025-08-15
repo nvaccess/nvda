@@ -73,6 +73,9 @@ def _processPositiveStates(
 			and State.SELECTABLE in states
 		):
 			positiveStates.discard(State.SELECTED)
+			positiveStates.discard(State.MULTISELECTABLE)
+		elif not config.conf["presentation"]["reportMultiSelect"]:
+			positiveStates.discard(State.MULTISELECTABLE)
 	if role not in (Role.EDITABLETEXT, Role.CHECKBOX):
 		positiveStates.discard(State.READONLY)
 	if role == Role.CHECKBOX:
