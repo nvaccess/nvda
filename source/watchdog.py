@@ -311,12 +311,12 @@ def initialize():
 	oledll.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"cancelCallEvent",
 	)
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"_notifySendMessageCancelled",
 		_notifySendMessageCancelled,
 	)
@@ -467,12 +467,12 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
 	@raise CallCancelled: If the call was cancelled.
 	"""
-	result = ctypes.wintypes.DWORD()
+	result = NVDAHelper.localLib.DWORD_PTR()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(
 		hwnd,
 		msg,
-		wParam,
-		lParam,
+		wParam or 0,
+		lParam or 0,
 		flags,
 		timeout,
 		ctypes.byref(result),

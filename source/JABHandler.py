@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# Copyright (C) 2007-2025 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -30,6 +29,7 @@ from ctypes import (
 )
 from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
+from winBindings.kernel32 import FreeLibrary
 import queueHandler
 from logHandler import log
 import winUser
@@ -1137,7 +1137,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"),
+			os.path.join(NVDAHelper.coreArchLibPath, "windowsaccessbridge.dll"),
 		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
@@ -1180,7 +1180,7 @@ def terminate():
 	bridgeDll.setPropertyCaretChangeFP(None)
 	h = bridgeDll._handle
 	bridgeDll = None
-	windll.kernel32.FreeLibrary(h)
+	FreeLibrary(h)
 	isRunning = False
 
 

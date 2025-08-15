@@ -7,8 +7,6 @@ on:
       - beta
       - rc
       - 'try-**'
-      # Temporarily enabled during the 64bit migration
-      - wip-buildX64
     tags:
       - 'release-**'
 
@@ -36,7 +34,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultArch: x86
-  supportedArchitectures: '["x86"]'
+  supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.13.6'
   supportedPythonVersions: '["3.13.6"]'
 
