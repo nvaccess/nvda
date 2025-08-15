@@ -3241,10 +3241,9 @@ You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
-#### Local Image Description Settings Panel {#LocalCaptionerSettings}
+#### AI Image Descriptions Settings {#LocalCaptionerSettings}
 
-This panel provides options to customize the behavior and default settings for the local image description feature.
-You can configure how and when the model used for describing images is loaded.
+This panel provides options to customize the behavior and default settings for the ["Image Captioner"](#LocalCaptioner).
 
 ##### enable image captioning {#LocalCaptionerSettingsLoadWhenInit}
 

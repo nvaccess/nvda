@@ -3639,9 +3639,6 @@ class RemoteSettingsPanel(SettingsPanel):
 
 class LocalCaptionerSettingsPanel(SettingsPanel):
 	"""Settings panel for Local captioner configuration.
-
-	This panel allows users to configure the local model path and
-	initialization settings for the local captioner.
 	"""
 
 	# Translators: This is the label for the local captioner settings panel.
@@ -3658,7 +3655,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
-			wx.CheckBox(self, label=pgettext("imageDesc", "enable image captioning")),
+			wx.CheckBox(self, label=pgettext("imageDesc", "Enable image captioner")),
 		)
 		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)

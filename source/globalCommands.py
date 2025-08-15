@@ -5067,7 +5067,7 @@ class GlobalCommands(ScriptableObject):
 
 	@scriptHandler.script(
 		# Translators: Description for the image caption script
-		description=pgettext("imageDesc", "get an AI generated Image description"),
+		description=pgettext("imageDesc", "Get an AI generated image description"),
 		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+windows+,",
 	)
@@ -5076,7 +5076,7 @@ class GlobalCommands(ScriptableObject):
 
 	@scriptHandler.script(
 		# Translators: Description for the toggle image captioning script
-		description=pgettext("imageDesc", "toggle image captioning"),
+		description=pgettext("imageDesc", "Toggle image captioning"),
 		category=SCRCAT_IMAGE_DESC,
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):

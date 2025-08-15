@@ -29,7 +29,7 @@ class TestModelDownloader(unittest.TestCase):
 	"""Unit tests for ModelDownloader."""
 
 	def setUp(self):
-		# 初始化时不再传 basePath
+		# No longer passing basePath during initialization
 		self.temp_dir = tempfile.mkdtemp()
 		self.downloader = ModelDownloader()
 

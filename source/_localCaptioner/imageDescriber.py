@@ -2,7 +2,8 @@
 # Copyright (C) 2025 NV Access Limited, tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-"""ImageDescriber  module  for NVDA.
+
+"""ImageDescriber module for NVDA.
 
 This module provides local image captioning functionality using ONNX models.
 It allows users to capture screen regions and generate captions using local AI models.
@@ -75,8 +76,6 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		# Translators: error message when an image description cannot be generated
 		ui.message(pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
-	else:
-		api.copyToClip(text=description, notify=False)
 
 
 class ImageDescriber:
@@ -118,7 +117,7 @@ class ImageDescriber:
 
 		self.captionThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData))
 		# Translators: Message when starting image recognition
-		ui.message(pgettext("imageDesc", "getting Image description..."))
+		ui.message(pgettext("imageDesc", "getting image description..."))
 		self.captionThread.start()
 
 	def _loadModel(self, localModelDirPath: str | None = None) -> None:
@@ -126,8 +125,6 @@ class ImageDescriber:
 
 		:param localModelDirPath: path of model directory
 		"""
-		# Translators: Message when loading the model
-		ui.message(pgettext("imageDesc", "loading model..."))
 
 		if not localModelDirPath:
 			localModelDirPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
@@ -143,21 +140,13 @@ class ImageDescriber:
 			)
 		except FileNotFoundError as e:
 			self.isModelLoaded = False
-			ui.message(
-				pgettext(
-					"imageDesc",
-					# Translators: error Message when fail to load the model
-					"models And config file not found or incomplete, please download models and config file first!",
-				),
-			)
-			log.exception(e)
 			from .modelDownloader import openDownloadDialog
 
 			wx.CallAfter(openDownloadDialog)
 		except Exception as e:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
-			ui.message(pgettext("imageDesc", "fail to load model."))
+			ui.message(pgettext("imageDesc", "failed to load image captioner"))
 			log.exception(e)
 		else:
 			self.isModelLoaded = True
@@ -173,18 +162,16 @@ class ImageDescriber:
 		self.loadModelThread.start()
 
 	def _doReleaseModel(self) -> None:
-		# Translators: Message when releasing the model
-		ui.message(pgettext("imageDesc", "releasing model..."))
 		try:
 			if hasattr(self, "captioner") and self.captioner:
 				del self.captioner
 				self.captioner = None
-				# Translators: Message when model is successfully released
+				# Translators: Message when image captioning terminates
 				ui.message(pgettext("imageDesc", "image captioning off"))
 				self.isModelLoaded = False
 		except Exception as e:
-			# Translators: Message when model fail to released
-			ui.message(pgettext("imageDesc", "fail to releas model."))
+			# Translators: Message when image captioning failed to terminate
+			ui.message(pgettext("imageDesc", "failed to turn off image captioning"))
 			log.exception(e)
 
 	def toggleSwitch(self) -> None:

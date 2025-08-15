@@ -265,7 +265,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		return pastKeyValues
 
-	def generateWithGreedy(
+	def _generateWithGreedy(
 		self,
 		encoderHiddenStates: np.ndarray,
 		maxLength: int | None = None,
@@ -337,7 +337,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		:param image: Image file path or binary data.
 		:param maxLength: Maximum generation length.
-		"return: Generated image caption.
+		:return: Generated image caption.
 		"""
 		# Preprocess image
 		imageArray = self.preprocessImage(image)
@@ -365,7 +365,7 @@ def imageCaptionerFactory(
 	:param config_path: Path to the configuration file.
 	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
 	:raises FileNotFoundError: If config file not found.
-	:raise NotImplementedError: if nodel architecture is unsupported
+	:raises NotImplementedError: if model architecture is unsupported
 	:raises Exception: If config.json fail to load.
 	:return: instance of ImageCaptioner
 	"""
