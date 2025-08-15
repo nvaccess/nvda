@@ -17,7 +17,7 @@ ci:
   submodules: true
 
 default_language_version:
-  python: python3.11
+  python: python3.13
 
 repos:
 - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
@@ -121,7 +121,7 @@ repos:
     - id: uv-lock
       name: Verify uv lock file
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
-      args: ["-p3.11"]
+      args: ["-p3.13"]
 
 - repo: local
   hooks:
