@@ -236,6 +236,11 @@ class NVDAObject(
 	#: @type: type; L{textInfos.TextInfo}
 	TextInfo = NVDAObjectTextInfo
 
+	# The TextInfo class that should be used in text review, if its name, value, and description are more useful to review than the text content.
+	#: @type: type; L{textInfos.TextInfo} or None if not implemented
+
+	TextReviewTextInfo = None
+
 	#: Indicates if the text selection is anchored at the start.
 	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
 	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
