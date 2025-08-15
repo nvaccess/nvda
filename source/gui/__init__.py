@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
@@ -19,6 +18,7 @@ import ui
 from documentationUtils import getDocFilePath, displayLicense, reportNoDocumentation
 from logHandler import log
 import config
+import buildVersion
 import versionInfo
 import speech
 import queueHandler
@@ -97,7 +97,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = globalVars.appDir
 ICON_PATH = os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = f"{versionInfo.url}/donate/"
+DONATE_URL = f"{buildVersion.url}/donate/"
 
 ### Globals
 mainFrame: "MainFrame | None" = None
@@ -142,7 +142,7 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1, 1), style=style)
+		super().__init__(None, wx.ID_ANY, buildVersion.name, size=(1, 1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
@@ -627,7 +627,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
 		super(SysTrayIcon, self).__init__()
 		icon = wx.Icon(ICON_PATH, wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon, versionInfo.name)
+		self.SetIcon(icon, buildVersion.name)
 
 		self.menu = wx.Menu()
 		menu_preferences = self.preferencesMenu = wx.Menu()
@@ -837,13 +837,13 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			# Translators: The label for the menu item to view the NVDA website
 			item = self.helpMenu.Append(wx.ID_ANY, _("NV Access &web site"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(versionInfo.url), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(buildVersion.url), item)
 			# Translators: The label for the menu item to view the NVDA website's get help section
 			item = self.helpMenu.Append(wx.ID_ANY, _("&Help, training and support"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/get-help/"), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{buildVersion.url}/get-help/"), item)
 			# Translators: The label for the menu item to view the NVDA website's get help section
 			item = self.helpMenu.Append(wx.ID_ANY, _("NV Access &shop"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/shop/"), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{buildVersion.url}/shop/"), item)
 
 			self.helpMenu.AppendSeparator()
 
