@@ -135,6 +135,11 @@ class ExitDialog(wx.Dialog):
 		self.CentreOnScreen()
 
 	def onOk(self, evt):
+		from _remoteClient import _confirmBeforeNVDAExit
+
+		if not _confirmBeforeNVDAExit():
+			wx.CallAfter(self.Destroy)
+			return
 		action = [a for a in _ExitAction if a.displayString == self.actionsList.GetStringSelection()][0]
 		if action == _ExitAction.EXIT:
 			WelcomeDialog.closeInstances()

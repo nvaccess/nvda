@@ -323,6 +323,10 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
+			from _remoteClient import _confirmBeforeNVDAExit
+
+			if not _confirmBeforeNVDAExit():
+				return
 			if not core.triggerNVDAExit():
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
