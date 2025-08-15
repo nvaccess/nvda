@@ -36,7 +36,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
-  supportedSystemTestRunners: '["windows-2025", "windows-2022"]'
+  supportedRunners: '["windows-2025", "windows-2022"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
   defaultPythonVersion: '3.13.6'
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       defaultRunner: ${{ steps.setMatrix.outputs.defaultRunner }}
-      supportedSystemTestRunners: ${{ steps.setMatrix.outputs.supportedSystemTestRunners }}
+      supportedRunners: ${{ steps.setMatrix.outputs.supportedRunners }}
       supportedArchitectures: ${{ steps.setMatrix.outputs.supportedArchitectures }}
       supportedPythonVersions: ${{ steps.setMatrix.outputs.supportedPythonVersions }}
     steps:
@@ -56,7 +56,7 @@ jobs:
       id: setMatrix
       run: |
         echo "defaultRunner=${{ env.defaultRunner }}" >> "$GITHUB_OUTPUT"
-        echo "supportedSystemTestRunners=$(jq -c <<< '${{ env.supportedSystemTestRunners }}')" >> "$GITHUB_OUTPUT"
+        echo "supportedRunners=$(jq -c <<< '${{ env.supportedRunners }}')" >> "$GITHUB_OUTPUT"
         echo "supportedArchitectures=$(jq -c <<< '${{ env.supportedArchitectures }}')" >> "$GITHUB_OUTPUT"
         echo "supportedPythonVersions=$(jq -c <<< '${{ env.supportedPythonVersions }}')" >> "$GITHUB_OUTPUT"
   buildNVDA:
@@ -401,15 +401,12 @@ jobs:
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
         testSuite: [chrome, installer, startupShutdown, symbols]
-        runner: ${{ fromJson(needs.matrix.outputs.supportedSystemTestRunners) }}
+        runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
-    - name: 'Workaround for missing zstd in windows-11-arm'
-      if: matrix.runner == 'windows-11-arm'
-      run: choco install -y zstandard
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
