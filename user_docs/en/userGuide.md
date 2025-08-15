@@ -3559,7 +3559,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.11/howto/regex.html).
+For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
