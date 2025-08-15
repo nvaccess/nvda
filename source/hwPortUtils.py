@@ -9,152 +9,53 @@ import itertools
 import math
 import typing
 import winreg
-from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG, USHORT, WCHAR
-
-from comtypes import GUID
+from ctypes.wintypes import DWORD, WCHAR
 
 import config
 import hidpi
 import winKernel
+from comtypes import GUID
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
-from winKernel import SYSTEMTIME
+from winBindings.advapi32 import RegCloseKey
+from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
+from winBindings.hid import (
+	HIDD_ATTRIBUTES,
+	HidD_FreePreparsedData,
+	HidD_GetAttributes,
+	HidD_GetHidGuid,
+	HidD_GetManufacturerString,
+	HidD_GetPreparsedData,
+	HidD_GetProductString,
+	HidP_GetCaps,
+)
+from winBindings.setupapi import (
+	DICS_FLAG,
+	DIGCF,
+	DIREG,
+	GUID_CLASS_COMPORT,
+	GUID_DEVINTERFACE_USB_DEVICE,
+	HDEVINFO,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+	SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA,
+	SPDRP,
+	DEVPKEY_Device_BusReportedDeviceDesc,
+	SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceInterfaceDetail,
+	SetupDiGetDeviceProperty,
+	SetupDiGetDeviceRegistryProperty,
+	SetupDiOpenDevRegKey,
+	_Dummy,
+)
 
 
 def ValidHandle(value):
 	if value == 0:
 		raise ctypes.WinError()
 	return value
-
-
-HDEVINFO = ctypes.c_void_p
-
-
-class SP_DEVINFO_DATA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", DWORD),
-		("ClassGuid", GUID),
-		("DevInst", DWORD),
-		("Reserved", ctypes.POINTER(ULONG)),
-	)
-
-	def __str__(self):
-		return f"ClassGuid:{self.ClassGuid} DevInst:{self.DevInst}"
-
-
-PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
-
-
-class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", DWORD),
-		("InterfaceClassGuid", GUID),
-		("Flags", DWORD),
-		("Reserved", ctypes.POINTER(ULONG)),
-	)
-
-	def __str__(self):
-		return f"InterfaceClassGuid:{self.InterfaceClassGuid} Flags:{self.Flags}"
-
-
-PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
-
-PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
-
-
-class DEVPROPKEY(ctypes.Structure):
-	_fields_ = (
-		("DEVPROPGUID", GUID),
-		("DEVPROPID", ULONG),
-	)
-
-
-class dummy(ctypes.Structure):
-	_fields_ = (("d1", DWORD), ("d2", WCHAR))
-	# SetupAPI.h in the Windows headers includes pshpack8.h when 64 bit, pshpack1.h otherwise
-	_pack_ = 8 if ctypes.sizeof(ctypes.c_void_p) == 8 else 1
-
-
-SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
-
-SetupDiDestroyDeviceInfoList = ctypes.windll.setupapi.SetupDiDestroyDeviceInfoList
-SetupDiDestroyDeviceInfoList.argtypes = (HDEVINFO,)
-SetupDiDestroyDeviceInfoList.restype = BOOL
-
-SetupDiGetClassDevs = ctypes.windll.setupapi.SetupDiGetClassDevsW
-SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), ctypes.c_wchar_p, HWND, DWORD)
-SetupDiGetClassDevs.restype = ValidHandle  # HDEVINFO
-
-SetupDiGetDeviceProperty = ctypes.windll.setupapi.SetupDiGetDevicePropertyW
-SetupDiGetDeviceProperty.argtypes = (
-	HDEVINFO,  # [in]            HDEVINFO         DeviceInfoSet
-	PSP_DEVINFO_DATA,  # [in]            PSP_DEVINFO_DATA DeviceInfoData
-	ctypes.POINTER(DEVPROPKEY),  # [in]            const DEVPROPKEY *PropertyKey
-	PDWORD,  # [out]           DEVPROPTYPE      *PropertyType
-	ctypes.c_void_p,  # [out, optional] PBYTE            PropertyBuffer
-	DWORD,  # [in]            DWORD            PropertyBufferSize
-	PDWORD,  # [out, optional] PDWORD           RequiredSize
-	DWORD,  # [in]            DWORD            Flags
-)
-SetupDiGetDeviceProperty.restype = BOOL
-
-SetupDiEnumDeviceInterfaces = ctypes.windll.setupapi.SetupDiEnumDeviceInterfaces
-SetupDiEnumDeviceInterfaces.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	ctypes.POINTER(GUID),
-	DWORD,
-	PSP_DEVICE_INTERFACE_DATA,
-)
-SetupDiEnumDeviceInterfaces.restype = BOOL
-
-SetupDiGetDeviceInterfaceDetail = ctypes.windll.setupapi.SetupDiGetDeviceInterfaceDetailW
-SetupDiGetDeviceInterfaceDetail.argtypes = (
-	HDEVINFO,
-	PSP_DEVICE_INTERFACE_DATA,
-	PSP_DEVICE_INTERFACE_DETAIL_DATA,
-	DWORD,
-	PDWORD,
-	PSP_DEVINFO_DATA,
-)
-SetupDiGetDeviceInterfaceDetail.restype = BOOL
-
-SetupDiGetDeviceRegistryProperty = ctypes.windll.setupapi.SetupDiGetDeviceRegistryPropertyW
-SetupDiGetDeviceRegistryProperty.argtypes = (
-	HDEVINFO,
-	PSP_DEVINFO_DATA,
-	DWORD,
-	PDWORD,
-	ctypes.c_void_p,
-	DWORD,
-	PDWORD,
-)
-SetupDiGetDeviceRegistryProperty.restype = BOOL
-
-SetupDiEnumDeviceInfo = ctypes.windll.setupapi.SetupDiEnumDeviceInfo
-SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
-SetupDiEnumDeviceInfo.restype = BOOL
-
-CM_Get_Device_ID = ctypes.windll.cfgmgr32.CM_Get_Device_IDW
-CM_Get_Device_ID.argtypes = (DWORD, ctypes.c_wchar_p, ULONG, ULONG)
-CM_Get_Device_ID.restype = DWORD
-CR_SUCCESS = 0
-MAX_DEVICE_ID_LEN = 200
-
-GUID_CLASS_COMPORT = GUID("{86e0d1e0-8089-11d0-9ce4-08003e301f73}")
-GUID_DEVINTERFACE_USB_DEVICE = GUID("{a5dcbf10-6530-11d2-901f-00c04fb951ed}")
-DEVPKEY_Device_BusReportedDeviceDesc = DEVPROPKEY(GUID("{540b947e-8b40-45bc-a8a2-6a0b894cbda2}"), 4)
-DIGCF_PRESENT = 2
-DIGCF_DEVICEINTERFACE = 16
-INVALID_HANDLE_VALUE = 0
-ERROR_INSUFFICIENT_BUFFER = 122
-SPDRP_DEVICEDESC = 0
-SPDRP_HARDWAREID = 1
-SPDRP_FRIENDLYNAME = 12
-SPDRP_LOCATION_INFORMATION = 13
-ERROR_NO_MORE_ITEMS = 259
-DICS_FLAG_GLOBAL = 0x00000001
-DIREG_DEV = 0x00000001
 
 
 def _isDebug():
@@ -225,25 +126,25 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			hwID = entry["hardwareID"] = buf.value
 
 		# Port info
-		regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(
+		regKey = SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
-			DICS_FLAG_GLOBAL,
+			DICS_FLAG.GLOBAL,
 			0,
-			DIREG_DEV,
+			DIREG.DEV,
 			winreg.KEY_READ,
 		)
 		try:
@@ -254,13 +155,13 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 				port = portInfo["port"]
 				entry.update(portInfo)
 		finally:
-			ctypes.windll.advapi32.RegCloseKey(regKey)
+			RegCloseKey(regKey)
 
 		# friendly name
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_FRIENDLYNAME,
+			SPDRP.FRIENDLYNAME,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -280,30 +181,9 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		log.debug("Finished listing com ports")
 
 
-BLUETOOTH_MAX_NAME_SIZE = 248
-BTH_ADDR = BLUETOOTH_ADDRESS = ctypes.c_ulonglong
-
-
-class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
-	_fields_ = (
-		("dwSize", DWORD),
-		("address", BLUETOOTH_ADDRESS),
-		("ulClassofDevice", ULONG),
-		("fConnected", BOOL),
-		("fRemembered", BOOL),
-		("fAuthenticated", BOOL),
-		("stLastSeen", SYSTEMTIME),
-		("stLastUsed", SYSTEMTIME),
-		("szName", WCHAR * BLUETOOTH_MAX_NAME_SIZE),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(dwSize=ctypes.sizeof(self), **kwargs)
-
-
 def getBluetoothDeviceInfo(address):
 	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
-	res = ctypes.windll["bthprops.cpl"].BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
+	res = BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
 	if res != 0:
 		raise ctypes.WinError(res)
 	return devInfo
@@ -367,9 +247,9 @@ def _listDevices(
 	@param deviceClass: The device class GUID.
 	:param onlyAvailable: Only return devices that are currently available.
 	"""
-	flags = DIGCF_DEVICEINTERFACE
+	flags = DIGCF.DEVICEINTERFACE
 	if onlyAvailable:
-		flags |= DIGCF_PRESENT
+		flags |= DIGCF.PRESENT
 
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, None, flags)
@@ -385,7 +265,7 @@ def _listDevices(
 				dwIndex,
 				ctypes.byref(did),
 			):
-				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
+				if ctypes.GetLastError() != SystemErrorCodes.NO_MORE_ITEMS:
 					raise ctypes.WinError()
 				break
 
@@ -400,7 +280,7 @@ def _listDevices(
 				None,
 			):
 				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+				if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 
 			# allocate buffer
@@ -413,7 +293,7 @@ def _listDevices(
 						WCHAR * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(WCHAR)),
 					),
 				)
-				_pack_ = dummy._pack_
+				_pack_ = _Dummy._pack_
 
 				def __str__(self):
 					return f"DevicePath:{self.DevicePath!r}"
@@ -449,14 +329,14 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
@@ -492,18 +372,6 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		yield entry
 	if _isDebug():
 		log.debug("Finished listing USB devices")
-
-
-class HIDD_ATTRIBUTES(ctypes.Structure):
-	_fields_ = (
-		("Size", ULONG),
-		("VendorID", USHORT),
-		("ProductID", USHORT),
-		("VersionNumber", USHORT),
-	)
-
-	def __init__(self, **kwargs):
-		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
 
 
 _getHidInfoCache: dict[str, dict] = {}
@@ -555,7 +423,7 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 		return info
 	try:
 		attribs = HIDD_ATTRIBUTES()
-		if ctypes.windll.hid.HidD_GetAttributes(handle, ctypes.byref(attribs)):
+		if HidD_GetAttributes(handle, ctypes.byref(attribs)):
 			info["vendorID"] = attribs.VendorID
 			info["productID"] = attribs.ProductID
 			info["versionNumber"] = attribs.VersionNumber
@@ -564,18 +432,18 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
 		nrOfBytes = ctypes.sizeof(buf)
-		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, nrOfBytes):
+		if HidD_GetManufacturerString(handle, buf, nrOfBytes):
 			info["manufacturer"] = buf.value
-		if ctypes.windll.hid.HidD_GetProductString(handle, buf, nrOfBytes):
+		if HidD_GetProductString(handle, buf, nrOfBytes):
 			info["product"] = buf.value
 		pd = ctypes.c_void_p()
-		if ctypes.windll.hid.HidD_GetPreparsedData(handle, ctypes.byref(pd)):
+		if HidD_GetPreparsedData(handle, ctypes.byref(pd)):
 			try:
 				caps = hidpi.HIDP_CAPS()
-				ctypes.windll.hid.HidP_GetCaps(pd, ctypes.byref(caps))
+				HidP_GetCaps(pd, ctypes.byref(caps))
 				info["HIDUsagePage"] = caps.UsagePage
 			finally:
-				ctypes.windll.hid.HidD_FreePreparsedData(pd)
+				HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
 	_getHidInfoCache[path] = info
@@ -595,21 +463,21 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	global _hidGuid
 	if not _hidGuid:
 		_hidGuid = GUID()
-		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
+		HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
 	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_HARDWAREID,
+			SPDRP.HARDWAREID,
 			None,
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+			if ctypes.GetLastError() != SystemErrorCodes.INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
 		else:
 			hwId = buf.value
@@ -620,3 +488,60 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 	if _isDebug():
 		log.debug("Finished listing HID devices")
+
+
+_MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
+	"BLUETOOTH_ADDRESS": ("winBindings.bthprops",),
+	"BLUETOOTH_MAX_NAME_SIZE": ("winBindings.bthprops",),
+	"BTH_ADDR": ("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+	"CM_Get_Device_ID": ("winBindings.cfgmgr32",),
+	"CR_SUCCESS": ("winBindings.cfgmgr32",),
+	"MAX_DEVICE_ID_LEN": ("winBindings.cfgmgr32",),
+	"DEVPROPKEY": ("winBindings.setupapi",),
+	"dummy": ("winBindings.setupapi", "_Dummy"),
+	"PSP_DEVICE_INTERFACE_DATA": ("winBindings.setupapi",),
+	"PSP_DEVICE_INTERFACE_DETAIL_DATA": ("winBindings.setupapi",),
+	"PSP_DEVINFO_DATA": ("winBindings.setupapi",),
+	"SetupDiEnumDeviceInfo": ("winBindings.setupapi",),
+	"DIGCF_PRESENT": ("winBindings.setupapi", "DIGCF", "PRESENT"),
+	"DIGCF_DEVICEINTERFACE": ("winBindings.setupapi", "DIGCF", "DEVICEINTERFACE"),
+	"SPDRP_DEVICEDESC": ("winBindings.setupapi", "SPDRP", "DEVICEDESC"),
+	"SPDRP_HARDWAREID": ("winBindings.setupapi", "SPDRP", "HARDWAREID"),
+	"SPDRP_FRIENDLYNAME": ("winBindings.setupapi", "SPDRP", "FRIENDLYNAME"),
+	"SPDRP_LOCATION_INFORMATION": ("winBindings.setupapi", "SPDRP", "LOCATION_INFORMATION"),
+	"DICS_FLAG_GLOBAL": ("winBindings.setupapi", "DICS_FLAG", "GLOBAL"),
+	"DIREG_DEV": ("winBindings.setupapi", "DIREG", "DEV"),
+	"ERROR_NO_MORE_ITEMS": ("winAPI.constants", "SystemErrorCodes", "NO_MORE_ITEMS"),
+	"ERROR_INSUFFICIENT_BUFFER": ("winAPI.constants", "SystemErrorCodes", "INSUFFICIENT_BUFFER"),
+}
+"""Mapping from symbol name to new (absolute) module and symbol path."""
+
+
+def __getattr__(attrName: str) -> typing.Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	import NVDAState
+
+	if NVDAState._allowDeprecatedAPI():
+		# Symbols that have simply been moved elsewhere
+		if attrName in _MOVED_SYMBOLS:
+			from importlib import import_module
+
+			newModule, *newPath = _MOVED_SYMBOLS[attrName]
+			newPath = newPath or [attrName]
+			log.warning(
+				f"hwPortUtils.{attrName} is deprecated. Use {newModule}.{'.'.join(newPath)} instead.",
+				stack_info=True,
+			)
+			value = import_module(newModule)
+			for segment in newPath:
+				value = getattr(value, segment)
+			return value
+
+		# Other symbols
+		match attrName:
+			case "INVALID_HANDLE_VALUE":
+				log.warning(f"hwPortUtils.{attrName} is deprecated.", stack_info=True)
+				return 0
+			case _:
+				pass
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")

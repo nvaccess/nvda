@@ -13,9 +13,14 @@ from ctypes.wintypes import (
 	BOOL,
 	DWORD,
 	HANDLE,
+	HKEY,
+	LONG,
 )
 
-__all__ = ("OpenProcessToken",)
+__all__ = (
+	"OpenProcessToken",
+	"RegCloseKey",
+)
 
 
 dll = windll.advapi32
@@ -31,3 +36,15 @@ OpenProcessToken.argtypes = (
 	POINTER(HANDLE),  # TokenHandle
 )
 OpenProcessToken.restype = BOOL
+
+RegCloseKey = dll.RegCloseKey
+"""
+Closes a handle to the specified registry key.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey
+"""
+RegCloseKey.argtypes = (
+	HKEY,  # hKey
+)
+RegCloseKey.restype = LONG
