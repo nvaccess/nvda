@@ -10,6 +10,7 @@
 
 * Native selection mode is now enabled by default in Chrome, Edge, Firefox and Thunderbird.
 This means formatting will be copied when selecting text in these documents. (#15908)
+  * You can disable Native Selection Mode on a case-by-case basis with `NVDA+shift+f10`.
 * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
 * In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)
