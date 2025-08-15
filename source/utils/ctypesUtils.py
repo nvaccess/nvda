@@ -14,9 +14,8 @@ import types
 import typing
 from collections.abc import Callable
 from enum import IntEnum
-from typing import Annotated, Any, ParamSpec, TypeVar, Union
+from typing import Annotated, Any, Self, Union
 from types import UnionType
-
 
 from logHandler import log
 
@@ -51,7 +50,7 @@ if typing.TYPE_CHECKING:
 		_CDataType as CType,
 	)
 
-	Pointer = _Pointer | _CFuncPtr | _CArgObject
+	type Pointer = _Pointer | _CFuncPtr | _CArgObject
 
 else:
 
@@ -105,7 +104,8 @@ class OutParam:
 	"""The default value for the output parameter."""
 
 
-ErrcheckType = Callable[[Any, ctypes._CFuncPtr, tuple[Any, ...]], Any]
+type ParamFlag = tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, Any]
+type ErrcheckType = Callable[[Any, ctypes._CFuncPtr, tuple[Any, ...]], Any]
 
 
 def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...]) -> Any:
@@ -127,178 +127,177 @@ def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...
 	return args
 
 
-_pyfuncParams = ParamSpec("_pyfuncParams")
-_pyfuncReturn = TypeVar("_pyfuncReturn")
-
-ParamFlag = tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str, Any]
-
-
 @dataclasses.dataclass
-class FuncSpec(typing.Generic[_pyfuncParams, _pyfuncReturn]):
+class FuncSpec[**P, R]:
 	"""Specification of a ctypes function."""
 
 	restype: type[CType | Pointer] | None
 	argtypes: tuple[type[CType | Pointer], ...]
 	paramFlags: tuple[ParamFlag, ...]
 
-
-def _processInputParameter(param: inspect.Parameter) -> tuple[type[CType], ParamFlag]:
-	"""
-	Process a function parameter to extract ctypes-compatible type and parameter flag information.
-	:param param: The function parameter to process.
-	:raises TypeError: If parameter kind is unsupported (VAR_POSITIONAL, VAR_KEYWORD),
-		if type annotation is missing, or if annotation is not ctypes-compatible.
-	:returns: A tuple containing the ctypes-compatible type and parameter flag.
-	"""
-	if param.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
-		# We don't support *args, **kwargs
-		raise TypeError(
-			f"Unsupported parameter kind: {param.kind} for parameter: {param.name} "
-			"*args and **kwargs are not supported.",
-		)
-	# Build a paramflag tuple based on param name, type hint, and default value if available.
-	# Inspect the annotation
-	t = param.annotation
-	if t is inspect.Parameter.empty:
-		# A missing type annotation defeats the purpose of this helper.
-		raise TypeError(f"Missing type annotation for parameter: {param.name}")
-	elif typing.get_origin(t) in (Union, UnionType):
-		# note, we must both support UNion and UnionType
-		# Union[a, b] is legacy syntax, a | b results into UnionType
-		# TODO: In python 3.14, they become aliases of eachoter.
-		# The type to be used in argtypes should be the first ctypes compatible type.
-		t = next((c for c in typing.get_args(t) if issubclass(c, CType)), t)
-	if not issubclass(t, CType):
-		raise TypeError(
-			f"Expected a ctypes compatible type for parameter: {param.name}, got {t!r}",
-		)
-	# A paramflag type has either two or three components.
-	# The optional third component is the default value.
-	if param.default is inspect.Parameter.empty:
-		# No default provided.
-		paramFlag: ParamFlag = (ParamDirectionFlag.IN, param.name)
-	else:
-		paramFlag = (ParamDirectionFlag.IN, param.name, param.default)
-	return (t, paramFlag)
-
-
-def getFuncSpec(
-	pyFunc: Callable[_pyfuncParams, _pyfuncReturn],
-	restype: type[CType] | type[Pointer] | None | type[inspect.Parameter.empty] = inspect.Parameter.empty,
-) -> FuncSpec[_pyfuncParams, _pyfuncReturn]:
-	"""
-	Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
-
-	This function inspects the signature and type annotations of the given Python function
-	to determine the argument types, parameter flags (input/output), and return type(s) for use with ctypes.
-	It enforces that all parameters and the return type are properly annotated with ctypes-compatible types,
-	and supports handling of output parameters via ``Annotated`` types.
-
-	:param pyFunc: The Python function to inspect.
-		Must have type annotations for all parameters and the return type.
-	:param restype: Optional explicit ctypes return type.
-		Required if the function has output parameters.
-
-	:raises TypeError: If parameter kinds are unsupported,
-		type annotations are missing or invalid, or output parameter annotations are incorrect.
-	:raises IndexError: If output parameter positions are invalid or duplicated.
-
-	:returns: A :class:`FuncSpec` object containing the ctypes-compatible function specification.
-	"""
-	# Get the function signature using inspect, since it will also get defaults.
-	sig = inspect.signature(pyFunc)
-	# Extract argument types from annotations
-	# Argument types come in 2 flavors.
-	argtypes: list[type[CType]] = []
-	paramFlags: list[ParamFlag] = []
-	for param in sig.parameters.values():
-		t, paramFlag = _processInputParameter(param)
-		argtypes.append(t)
-		paramFlags.append(paramFlag)
-
-	# Extract return type.
-	# Return types come in several flavors, depending on whether the ctypes restype is provided explicitly.
-	# 1. restype not provided, the return type is either:
-	# a. A single ctypes type.
-	# b. An Annotated containing the ctypes type in its metadata.
-	# requireOutParamAnnotations will be False.
-	# 2. restype provided: , the return type annotation contains one or more output parameters.
-	# requireOutParamAnnotations will be True.
-	pyFuncRestype = sig.return_annotation
-	if pyFuncRestype is inspect.Signature.empty:
-		# A missing type annotation defeats the purpose of this helper.
-		raise TypeError("Missing return type annotation")
-	elif isinstance(pyFuncRestype, tuple):
-		# A tuple is an indication for outparams (flavor 2), therefore restype is mandatory.
-		if restype is inspect.Parameter.empty:
-			raise TypeError("restype should be provided when using a tuple for return type")
-		requireOutParamAnnotations = True
-		# convert to a list.
-		pyFuncRestypes = list(pyFuncRestype)
-	else:
-		requireOutParamAnnotations = restype is not inspect.Parameter.empty
-		# Store the single restype in a list so we can iterate over it.
-		pyFuncRestypes = [pyFuncRestype]
-	# When OutParam annotations are used, they contain a position.
-	# Store them in handledOutParamPositions to ensure we don't have duplicates in positions.
-	handledOutParamPositions: list[int] = []
-	# Loop through the return type annotations to process them for potential OutParams or Annotated.
-	for t in pyFuncRestypes:
-		isAnnotated = typing.get_origin(t) is Annotated and len(t.__metadata__) == 1
-		if requireOutParamAnnotations:
-			# Flavor 2
-			if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
-				raise TypeError("Expected single annotation of type 'OutParam' for return annotation {t!r}")
-			outParam: OutParam = t.__metadata__[0]
-			# We already processed input parameters above and stored them in argtypes.
-			# The position of an OutParam may never exceed the number of processed input parameters,
-			# because it would be inserted into the wrong position in argtypes.
-			if len(argtypes) < outParam.position:
-				raise IndexError(
-					f"Output parameter {outParam.name} at position {outParam.position} "
-					f"exceeds the number of processed input parameters ({len(argtypes)})",
-				)
-			elif outParam.position in handledOutParamPositions:
-				# OutParam position has already been processed.
-				raise IndexError(
-					f"Output parameter at position {outParam.position} has already been processed. "
-					f"{outParam.name!r} introduces a duplicate position",
-				)
-			if outParam.cType is inspect.Parameter.empty:
-				# If no cType is provided, we assume the pointer type, unless it is an array.
-				outParam.cType = (
-					t.__origin__ if isinstance(t.__origin__, ctypes.Array) else ctypes.POINTER(t.__origin__)
-				)
-			handledOutParamPositions.append(outParam.position)
-			# Insert the OutParam cType into the argtypes at the correct position.
-			argtypes.insert(outParam.position, outParam.cType)
-			if outParam.default is inspect.Parameter.empty:
-				paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
-			else:
-				paramFlags.insert(
-					outParam.position,
-					(ParamDirectionFlag.OUT, outParam.name, outParam.default),
-				)
-		elif isAnnotated:
-			# Flavor 1B
-			annotation = t.__metadata__[0]
-			if not issubclass(annotation, CType):
-				raise TypeError(
-					f"Expected single annotation of a ctypes type for result type, got {annotation!r}",
-				)
-			restype = annotation
+	@staticmethod
+	def _processInputParameter(param: inspect.Parameter) -> tuple[type[CType], ParamFlag]:
+		"""
+		Process a function parameter to extract ctypes-compatible type and parameter flag information.
+		:param param: The function parameter to process.
+		:raises TypeError: If parameter kind is unsupported (VAR_POSITIONAL, VAR_KEYWORD),
+			if type annotation is missing, or if annotation is not ctypes-compatible.
+		:returns: A tuple containing the ctypes-compatible type and parameter flag.
+		"""
+		if param.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
+			# We don't support *args, **kwargs
+			raise TypeError(
+				f"Unsupported parameter kind: {param.kind} for parameter: {param.name} "
+				"*args and **kwargs are not supported.",
+			)
+		# Build a paramflag tuple based on param name, type hint, and default value if available.
+		# Inspect the annotation
+		t = param.annotation
+		if t is inspect.Parameter.empty:
+			# A missing type annotation defeats the purpose of this helper.
+			raise TypeError(f"Missing type annotation for parameter: {param.name}")
+		elif typing.get_origin(t) in (Union, UnionType):
+			# note, we must both support UNion and UnionType
+			# Union[a, b] is legacy syntax, a | b results into UnionType
+			# TODO: In python 3.14, they become aliases of eachoter.
+			# The type to be used in argtypes should be the first ctypes compatible type.
+			t = next((c for c in typing.get_args(t) if issubclass(c, CType)), t)
+		if not issubclass(t, CType):
+			raise TypeError(
+				f"Expected a ctypes compatible type for parameter: {param.name}, got {t!r}",
+			)
+		# A paramflag type has either two or three components.
+		# The optional third component is the default value.
+		if param.default is inspect.Parameter.empty:
+			# No default provided.
+			paramFlag: ParamFlag = (ParamDirectionFlag.IN, param.name)
 		else:
-			# Flavor 1A
-			restype = t
+			paramFlag = (ParamDirectionFlag.IN, param.name, param.default)
+		return (t, paramFlag)
 
-	return FuncSpec(
-		restype=restype,
-		argtypes=tuple(argtypes),
-		paramFlags=tuple(paramFlags),
-	)
+	@classmethod
+	def fromCallable(
+		cls,
+		pyFunc: Callable[P, R],
+		restype: type[CType] | type[Pointer] | None | type[inspect.Parameter.empty] = inspect.Parameter.empty,
+	) -> Self:
+		"""
+		Generates a function specification (`FuncSpec`) to generate a ctypes foreign function wrapper.
+
+		This function inspects the signature and type annotations of the given Python function
+		to determine the argument types, parameter flags (input/output), and return type(s) for use with ctypes.
+		It enforces that all parameters and the return type are properly annotated with ctypes-compatible types,
+		and supports handling of output parameters via ``Annotated`` types.
+
+		:param pyFunc: The Python function to inspect.
+			Must have type annotations for all parameters and the return type.
+		:param restype: Optional explicit ctypes return type.
+			Required if the function has output parameters.
+
+		:raises TypeError: If parameter kinds are unsupported,
+			type annotations are missing or invalid, or output parameter annotations are incorrect.
+		:raises IndexError: If output parameter positions are invalid or duplicated.
+
+		:returns: A :class:`FuncSpec` object containing the ctypes-compatible function specification.
+		"""
+		# Get the function signature using inspect, since it will also get defaults.
+		sig = inspect.signature(pyFunc)
+		# Extract argument types from annotations
+		# Argument types come in 2 flavors.
+		argtypes: list[type[CType]] = []
+		paramFlags: list[ParamFlag] = []
+		for param in sig.parameters.values():
+			t, paramFlag = cls._processInputParameter(param)
+			argtypes.append(t)
+			paramFlags.append(paramFlag)
+
+		# Extract return type.
+		# Return types come in several flavors, depending on whether the ctypes restype is provided explicitly.
+		# 1. restype not provided, the return type is either:
+		# a. A single ctypes type.
+		# b. An Annotated containing the ctypes type in its metadata.
+		# requireOutParamAnnotations will be False.
+		# 2. restype provided: , the return type annotation contains one or more output parameters.
+		# requireOutParamAnnotations will be True.
+		pyFuncRestype = sig.return_annotation
+		if pyFuncRestype is inspect.Signature.empty:
+			# A missing type annotation defeats the purpose of this helper.
+			raise TypeError("Missing return type annotation")
+		elif isinstance(pyFuncRestype, tuple):
+			# A tuple is an indication for outparams (flavor 2), therefore restype is mandatory.
+			if restype is inspect.Parameter.empty:
+				raise TypeError("restype should be provided when using a tuple for return type")
+			requireOutParamAnnotations = True
+			# convert to a list.
+			pyFuncRestypes = list(pyFuncRestype)
+		else:
+			requireOutParamAnnotations = restype is not inspect.Parameter.empty
+			# Store the single restype in a list so we can iterate over it.
+			pyFuncRestypes = [pyFuncRestype]
+		# When OutParam annotations are used, they contain a position.
+		# Store them in handledOutParamPositions to ensure we don't have duplicates in positions.
+		handledOutParamPositions: list[int] = []
+		# Loop through the return type annotations to process them for potential OutParams or Annotated.
+		for t in pyFuncRestypes:
+			isAnnotated = typing.get_origin(t) is Annotated and len(t.__metadata__) == 1
+			if requireOutParamAnnotations:
+				# Flavor 2
+				if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
+					raise TypeError(
+						"Expected single annotation of type 'OutParam' for return annotation {t!r}",
+					)
+				outParam: OutParam = t.__metadata__[0]
+				# We already processed input parameters above and stored them in argtypes.
+				# The position of an OutParam may never exceed the number of processed input parameters,
+				# because it would be inserted into the wrong position in argtypes.
+				if len(argtypes) < outParam.position:
+					raise IndexError(
+						f"Output parameter {outParam.name} at position {outParam.position} "
+						f"exceeds the number of processed input parameters ({len(argtypes)})",
+					)
+				elif outParam.position in handledOutParamPositions:
+					# OutParam position has already been processed.
+					raise IndexError(
+						f"Output parameter at position {outParam.position} has already been processed. "
+						f"{outParam.name!r} introduces a duplicate position",
+					)
+				if outParam.cType is inspect.Parameter.empty:
+					# If no cType is provided, we assume the pointer type, unless it is an array.
+					outParam.cType = (
+						t.__origin__
+						if isinstance(t.__origin__, ctypes.Array)
+						else ctypes.POINTER(t.__origin__)
+					)
+				handledOutParamPositions.append(outParam.position)
+				# Insert the OutParam cType into the argtypes at the correct position.
+				argtypes.insert(outParam.position, outParam.cType)
+				if outParam.default is inspect.Parameter.empty:
+					paramFlags.insert(outParam.position, (ParamDirectionFlag.OUT, outParam.name))
+				else:
+					paramFlags.insert(
+						outParam.position,
+						(ParamDirectionFlag.OUT, outParam.name, outParam.default),
+					)
+			elif isAnnotated:
+				# Flavor 1B
+				annotation = t.__metadata__[0]
+				if not issubclass(annotation, CType):
+					raise TypeError(
+						f"Expected single annotation of a ctypes type for result type, got {annotation!r}",
+					)
+				restype = annotation
+			else:
+				# Flavor 1A
+				restype = t
+
+		return FuncSpec(
+			restype=restype,
+			argtypes=tuple(argtypes),
+			paramFlags=tuple(paramFlags),
+		)
 
 
-def dllFunc(
+def dllFunc[**P, R](
 	library: ctypes.CDLL,
 	funcName: str | None = None,
 	restype: type[CType] | None | type[inspect.Parameter.empty] = inspect.Parameter.empty,
@@ -307,7 +306,7 @@ def dllFunc(
 	annotateOriginalCFunc: bool = False,
 	wrapNewCFunc: bool = True,
 	errcheck: ErrcheckType | None = None,
-) -> Callable[[Callable[_pyfuncParams, _pyfuncReturn]], Callable[_pyfuncParams, _pyfuncReturn]]:
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
 	"""
 	Decorator to bind a Python function to a C function from a DLL using ctypes,
 	automatically setting argument and return types based on the Python function's signature.
@@ -350,7 +349,7 @@ def dllFunc(
 
 	"""
 
-	def decorator(pyFunc: Callable[_pyfuncParams, _pyfuncReturn]) -> Callable[_pyfuncParams, _pyfuncReturn]:
+	def decorator(pyFunc: Callable[P, R]) -> Callable[P, R]:
 		if not isinstance(pyFunc, types.FunctionType):
 			raise TypeError(f"Expected a function, got {type(pyFunc)!r}")
 		if not annotateOriginalCFunc and not wrapNewCFunc:
@@ -363,7 +362,7 @@ def dllFunc(
 		nonlocal restype, funcName
 		funcName = funcName or pyFunc.__name__
 		cFunc = getattr(library, funcName)
-		spec = getFuncSpec(pyFunc, restype)
+		spec: FuncSpec[P, R] = FuncSpec.fromCallable(pyFunc, restype)
 		# Set ctypes metadata for the original function in case it is called from outside
 		if annotateOriginalCFunc:
 			if cFunc.argtypes != spec.argtypes:
