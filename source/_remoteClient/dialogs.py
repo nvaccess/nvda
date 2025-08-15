@@ -21,6 +21,7 @@ from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
 from gui import guiHelper
 from gui.nvdaControls import SelectOnFocusSpinCtrl
+from gui.persistenceHandler import EnumeratedChoiceHandler
 from config.configFlags import RemoteConnectionMode, RemoteServerType
 
 from . import configuration, serializer, server, protocol, transport
@@ -369,7 +370,13 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 	def _registerAndRestorePersistentControls(self):
 		persistenceManager = persist.PersistenceManager.Get()
 		for control in self._persistentControls:
-			persistenceManager.RegisterAndRestore(control)
+			persistenceManager.Register(
+				control,
+				# Use a custom persistence handler that persists selection index for wx.Choice controls,
+				# Otherwise, use the default persistence handler.
+				EnumeratedChoiceHandler if isinstance(control, wx.Choice) else None,
+			)
+			persistenceManager.Restore(control)
 
 	def _savePersistentControls(self):
 		persistenceManager = persist.PersistenceManager.Get()

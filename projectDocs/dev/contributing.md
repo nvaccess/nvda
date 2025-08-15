@@ -24,8 +24,9 @@ If you are new to the project, or looking for some way to help take a look at:
 
 
 ### Overview of contribution process:
+
 1. [Setup your development environment](./createDevEnvironment.md).
-    - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
+    - Alternatively, you can use GitHub Actions to build NVDA for you, without setting up a local development environment, by following [our CI/CD README](../../ci/README.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.
@@ -59,9 +60,9 @@ If you are new to the project, or looking for some way to help take a look at:
 		- [pre-commit.ci](https://pre-commit.ci/) will apply linting fixes.
 			- re-run pre-commit on a pull request by commenting `pre-commit.ci run`.
 			- prevent pre-commit from pushing by putting `[skip ci]`, `[ci skip]`, `[skip pre-commit.ci]`, or `[pre-commit.ci skip]` in the commit message.
-		- AppVeyor will build a copy of NVDA when changes are pushed to your PR.
+		- GitHub Actions will build a copy of NVDA when changes are pushed to your PR.
 		A build artifact will be created for a successful build to allow for testing the PR.
-		- AppVeyor will run system tests and other tests.
+		- GitHub Actions will run system tests and other tests.
 		If these fail, please review them.
 		Sometimes system tests fail unexpectedly.
 		If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.

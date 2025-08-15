@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -15,7 +14,6 @@ from typing import (
 	List,
 	Optional,
 	Any,
-	TypeAlias,
 )
 
 import winVersion
@@ -46,7 +44,7 @@ _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
-_ModifierT: TypeAlias = tuple[int, bool]
+type _ModifierT = tuple[int, bool]
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
