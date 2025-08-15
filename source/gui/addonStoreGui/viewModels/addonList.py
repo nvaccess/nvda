@@ -412,7 +412,7 @@ class AddonListVM:
 		return columnChoices
 
 	def _getFilteredSortedIds(self) -> list[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> _SupportsLessThan:
+		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
 					listItemVM.model = cast(_AddonStoreModel, listItemVM.model)
