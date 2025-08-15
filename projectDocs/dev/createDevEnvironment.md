@@ -47,9 +47,9 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 #### Python
-[Python](https://www.python.org/), version 3.11, 32 bit.
 
-To replicate the production build environment, use the 3.11.x minor version of Python that [AppVeyor uses for the Visual Studio 2022 environment](https://www.appveyor.com/docs/windows-images-software/#python).
+[Python](https://www.python.org/), version 3.13.6, 32 bit.
+Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
 
@@ -58,9 +58,9 @@ To replicate the production build environment, use the 3.11.x minor version of P
 #### Microsoft Visual Studio
 
 * Microsoft Visual Studio 2022
-	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022).
+	* To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions is using](https://github.com/actions/runner-images/tree/main/images/windows).
 	* If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
-	* If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor.
+	* If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://visualstudio.microsoft.com/vs/community/).
 		* The Professional and Enterprise versions are also supported.
 		* Preview versions are *not* supported.
 * When installing Visual Studio, additional components must be included:
@@ -84,19 +84,20 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `e93d3a97ee9237f7e170cc8870f44c14de9032a9`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
 * [liblouis](http://www.liblouis.io/), version 3.34.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 46.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 47.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
-* [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`
+* [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
+  * We are in the process of switching to: Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8Zulu (17.60.17)
 * [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 

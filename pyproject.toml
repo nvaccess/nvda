@@ -9,7 +9,7 @@ description = "NonVisual Desktop Access (NVDA)"
 maintainers = [
 	{name = "NV Access", email = "info@nvaccess.org"},
 ]
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.13,<3.14"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: End Users/Desktop",
@@ -22,7 +22,7 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
-	"comtypes==1.4.6",
+	"comtypes==1.4.11",
 	"cryptography==44.0.1",
 	"pyserial==3.5",
 	"wxPython==4.2.2",
@@ -33,8 +33,6 @@ dependencies = [
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
 	"fast-diff-match-patch==2.1.0",
-	# typing_extensions are required for specifying default value for `TypeVar` prior to Python 3.13 (see PEP 696)
-	"typing-extensions==4.12.2",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20240210",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
@@ -42,11 +40,12 @@ dependencies = [
 	# l10nUtil requires Crowdin
 	"crowdin-api-client==1.21.0",
 	# Building user documentation and the l10nUtil
-	"Markdown==3.7",
+	"Markdown==3.8.2",
 	"lxml==5.3.2",
 	"mdx_truly_sane_lists==1.3",
 	"markdown-link-attr-modifier==0.2.1",
 	"mdx-gh-links==0.4",
+	"pymdown-extensions==10.16.1",
 ]
 
 [project.urls]
@@ -122,6 +121,7 @@ only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
+	"Markdown",  # BSD-3-Clause, but not in PyPI correctly
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
 	"urllib3",  # MIT license, but not in PyPI
@@ -159,6 +159,13 @@ exclude = [
 	"./source/comInterfaces/*",
 	# Code from add-ons
 	"./source/userConfig/addons/*",
+]
+
+# While exclude tells pyright not to scan files in the first instance,
+# it will still analyse files included by other files.
+ignore = [
+	# We do not care about errors in our dependencies.
+	".venv",
 ]
 
 # Tell pyright where to load python code from
@@ -303,13 +310,13 @@ dev = [
 	# NVDA's build system is SCons
 	"SCons==4.9.1",
 	# Packaging NVDA
-	"py2exe==0.13.0.2",
+	"py2exe==0.14.0.0",
 	"setuptools~=72.0",
 ]
 lint = [
-	"ruff==0.11.12",
+	"ruff==0.12.7",
 	"pre-commit==4.2.0",
-	"pyright==1.1.401",
+	"pyright==1.1.403",
 ]
 license-check = [
 	"licensecheck==2024.3",

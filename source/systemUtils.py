@@ -20,11 +20,6 @@ from ctypes import (
 from typing import (
 	Generic,
 	Optional,
-)
-from typing_extensions import (
-	# Uses `TypeVar` from `typing_extensions`, to be able to specify default type.
-	# This should be changed to use version from `typing`
-	# when updating to version of Python supporting PEP 696.
 	TypeVar,
 )
 
@@ -194,10 +189,12 @@ def _isSystemClockSecondsVisible() -> bool:
 
 	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
 	"""
-	registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+	# Import here to prevent circular import
+	from config.registry import RegistryKey
+
 	value_name = "ShowSecondsInSystemClock"
 	try:
-		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.EXPLORER_ADVANCED.value) as key:
 			value, value_type = winreg.QueryValueEx(key, value_name)
 			return value == 1 and value_type == winreg.REG_DWORD
 	except FileNotFoundError:

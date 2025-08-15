@@ -46,7 +46,7 @@ class RemoteClient:
 	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
-	connecting: bool
+	_connecting: bool
 	leaderTransport: Optional[RelayTransport]
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
@@ -65,7 +65,7 @@ class RemoteClient:
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
-		self.connecting = False
+		self._connecting = False
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
@@ -128,14 +128,17 @@ class RemoteClient:
 			# Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		self.localMachine.isMuted = not self.localMachine.isMuted
-		self.menu.muteItem.Check(self.localMachine.isMuted)
+		self._doToggleMute()
 		# Translators: Displayed when muting speech and sounds from the remote computer
 		MUTE_MESSAGE = _("Muted remote")
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
 		ui.delayedMessage(status)
+
+	def _doToggleMute(self):
+		self.localMachine.isMuted = not self.localMachine.isMuted
+		self.menu.muteItem.Check(self.localMachine.isMuted)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -200,6 +203,7 @@ class RemoteClient:
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
+		self._connecting = True
 		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
@@ -247,6 +251,7 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
+		self._connecting = False
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
@@ -262,6 +267,9 @@ class RemoteClient:
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.LEADER, False)
+		self._connecting = False
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
@@ -269,6 +277,9 @@ class RemoteClient:
 		self.followerSession = None
 		self.followerTransport = None
 		self.sdHandler.followerSession = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
+		self._connecting = False
 
 	@alwaysCallAfter
 	def onConnectAsLeaderFailed(self):
@@ -299,6 +310,19 @@ class RemoteClient:
 				stack_info=True,
 			)
 			return
+		if self.isConnected() or self.isConnecting:
+			gui.messageBox(
+				pgettext(
+					"remote",
+					# Translators: Message shown when trying to connect while already connected.
+					"A Remote Access session is already in progress. Disconnect before starting a new session.",
+				),
+				# Translators: Title of the connection error dialog.
+				pgettext("remote", "Already Connected"),
+				wx.OK | wx.ICON_WARNING,
+			)
+			return
+
 		previousConnections = configuration.getRemoteConfig()["connections"]["lastConnected"]
 		hostnames = list(reversed(previousConnections))
 		dlg = dialogs.DirectConnectDialog(
@@ -339,10 +363,13 @@ class RemoteClient:
 		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self._doToggleMute()
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
 		log.info("Successfully connected as leader")
+		self._connecting = False
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
@@ -365,8 +392,6 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
-		# Translators: Presented when connection to a remote computer was interupted.
-		ui.message(_("Disconnected"))
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
@@ -391,6 +416,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
+		self._connecting = False
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
@@ -542,6 +568,8 @@ class RemoteClient:
 		self.releaseKeys()
 		# Translators: Presented when keyboard control is back to the controlling computer.
 		ui.message(pgettext("remote", "Controlling local computer"))
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self.toggleMute()
 
 	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
 		"""Switch to controlling the remote computer."""
@@ -609,7 +637,7 @@ class RemoteClient:
 		:note: Shows confirmation dialog before connecting
 		:raises: Displays error if already connected
 		"""
-		if self.isConnected() or self.connecting:
+		if self.isConnected() or self.isConnecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -622,7 +650,7 @@ class RemoteClient:
 			)
 			return
 
-		self.connecting = True
+		self._connecting = True
 		try:
 			serverAddr = conInfo.getAddress()
 			key = conInfo.key
@@ -657,17 +685,36 @@ class RemoteClient:
 			):
 				self.connect(conInfo)
 		finally:
-			self.connecting = False
+			self._connecting = False
+
+	@property
+	def _transport(self) -> RelayTransport | None:
+		return self.followerTransport or self.leaderTransport
 
 	def isConnected(self) -> bool:
 		"""Check if there is an active connection.
 
 		:return: True if either follower or leader transport is connected
 		"""
-		connector = self.followerTransport or self.leaderTransport
-		if connector is not None:
+		if (connector := self._transport) is not None:
 			return connector.connected
 		return False
+
+	@property
+	def isConnectedAsFollower(self) -> bool:
+		"""Check if we are connected as the controlled computer."""
+		if self.followerTransport is not None:
+			return self.followerTransport.connected
+		return False
+
+	@property
+	def isConnecting(self) -> bool:
+		"""Whether or not a session is being connected or reconnected to."""
+		return self._connecting or (
+			not self.isConnected()
+			and self._transport is not None
+			and self._transport.reconnectorThread.running
+		)
 
 	def registerLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Add a script to be handled locally instead of sent to remote.

@@ -93,8 +93,13 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 ## NVDA Quick Start Guide {#NVDAQuickStartGuide}
 
-This quick start guide contains three main sections: downloading, initial setup, and running NVDA.
-These are followed by information on adjusting preferences, using add-ons, participating in the community and getting help.
+This quick start guide contains three main sections:
+
+* [Downloading](#GettingAndSettingUpNVDA): Where to get NVDA and steps for downloading it
+* [Initial setup](#SettingUpNVDA): Steps to install and setup NVDA
+* [Running NVDA](#RunningNVDA): Commonly used keystrokes and NVDA features
+
+These are followed by information on [adjusting preferences](#Preferences), [using add-ons](#Addons), [participating in the community](#Community) and [getting help](#GettingHelp).
 The information in this guide is condensed from other parts of the NVDA User Guide.
 Please refer to the full User Guide for more detailed information on each topic.
 
@@ -371,9 +376,9 @@ To learn more about and configure this behaviour, refer to ["Update Notification
 ### Community {#Community}
 
 NVDA has a vibrant user community.
-There is a main [English language email list](https://nvda.groups.io/g/nvda) and a page full of [local language groups](https://github.com/nvaccess/nvda/wiki/Connect).
-NV Access, makers of NVDA, are active on [Twitter](https://twitter.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
+NV Access, makers of NVDA, are active on [Mastodon](https://fosstodon.org/@NVAccess), [Twitter/X](https://x.com/nvaccess) and [Facebook](https://www.facebook.com/NVAccess).
 NV Access also have a regular [In-Process blog](https://www.nvaccess.org/category/in-process/).
+There is a main [NV Access owned email list](https://groups.google.com/a/nvaccess.org/g/nvda-users) and a page full of [other community groups](https://github.com/nvaccess/nvda/wiki/Connect).
 
 There is also an [NVDA Certified Expert](https://certification.nvaccess.org/) program.
 This is an online exam you can complete to demonstrate your skills in NVDA.
@@ -1277,6 +1282,7 @@ In order to fit as much information as possible on a braille display, the follow
 |lnk |link|
 |vlnk |visited link|
 |lst |list|
+|mslst |multiselect list|
 |mnu |menu|
 |mnubar |menu bar|
 |mnubtn |menu button|
@@ -1322,6 +1328,7 @@ The following state indicators are also defined:
 |invalid |displayed when an invalid entry has been made|
 |ldesc |displayed when an object (usually a graphic) has a long description|
 |mln |displayed when an edit field allows typing multiple lines of text such as comment fields on websites|
+|msel |displayed when an object allows selecting multiple items|
 |req |displayed when a required form field is encountered|
 |ro |displayed when an object (e.g. an editable text field) is read-only|
 |sel |displayed when an object is selected|
@@ -1536,9 +1543,9 @@ The various types of information available in the Elements List are:
 
 * Charts: This lists all charts in the active worksheet.
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-* Comments: This lists all cells in the active worksheet containing comments.
-The cell address along with its comments are shown for each cell.
-Pressing enter or the Move To button when on a listed comment will move directly to that cell.
+* Notes: This lists all cells in the active worksheet containing notes.
+The cell address along with its note are shown for each cell.
+Pressing enter or the Move To button when on a listed note will move directly to that cell.
 * Formulas: This lists all cells in the worksheet containing a formula.
 The cell address along with its formula are shown for each cell.
 Pressing enter or the Move To button on a listed formula will move directly to that cell.
@@ -1921,6 +1928,22 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
+
+This option enables audio output via the Windows Audio Session API (WASAPI).
+This option only exists for Microsoft Speech API version 5 (SAPI 5) voices.
+This may improve the responsiveness of some SAPI 5 voices.
+However, some voices might not work with the current WASAPI implementation.
+If you find that the voice you are using stops working, you may disable this option.
+
+Note that the following features depend on WASAPI, and will be disabled if WASAPI is turned off:
+
+* Rate boost
+* Leading silence trimming
+* Keep audio device awake
+
+Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
+
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
@@ -1932,7 +1955,7 @@ This checkbox allows you to toggle whether or not dialect changes should be made
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
 
-##### Report language changes {#ReportLanguage}
+##### Report language changes while reading {#ReportLanguage}
 
 This checkbox allows you to toggle whether NVDA should report the detected language of the text being read, when the language changes from the default language.
 The language configured to be used by default won't be reported.
@@ -2794,6 +2817,11 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
+##### Report when lists support multiple selection {#ReportMultiSelect}
+
+When this option is enabled, NVDA will report when a list box supports selecting multiple items.
+As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.
+
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
 
 Uncheck this checkbox if you don't wish to have the description reported along with objects (i.e. search suggestions, reporting of whole dialog window right after the dialog opens, etc.).
@@ -3153,6 +3181,15 @@ This option controls whether confirmation is required before disconnecting from 
 When checked, NVDA will ask for confirmation before disconnecting.
 When unchecked, NVDA will disconnect immediately without confirmation.
 
+##### Mute when controlling the local computer {#RemoteMuteOnLocalControl}
+
+This option controls whether you can hear speech and sounds from the remote computer when controlling the local computer.
+
+When checked, Remote Access will be muted automatically when first connecting as the controlling computer, and when switching to controlling the local computer.
+When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.
+
+You can still manually mute or unmute Remote Access when controlling the local computer [via the Remote Access menu](#RemoteAccessUsage), or by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
 This option allows you to automatically establish a Remote Access session when NVDA starts.
@@ -3303,7 +3340,7 @@ This setting contains the following values:
 
 * Default (where suitable)
 * Only where necessary: where the Microsoft Word object model is not available at all
-* Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+* Where suitable: Microsoft Word version 16.0.15000 or higher on Windows 11, or where the Microsoft Word object model is unavailable
 * Always: where ever UI automation is available in Microsoft word (no matter how complete).
 
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
@@ -3454,6 +3491,8 @@ This can allow SAPI 4 voices to work with more features, such as audio ducking, 
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
 
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Disabled, Enabled|
@@ -3527,7 +3566,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.11/howto/regex.html).
+For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
@@ -3826,6 +3865,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
@@ -5444,8 +5484,11 @@ You can configure whether NVDA displays braille on the dedicated braille display
 
 Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
 
-When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
-This driver does not support auto detection.
+The Dot Pad driver supports automatic detection of USB-connected devices.
+However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
+To enable automatic detection, go to NVDA's Braille settings and check "Dot Pad" in the automatic detection list.
+When automatic detection is enabled and a compatible device is detected, NVDA will automatically connect to it.
+You can also manually select a specific USB or Bluetooth virtual serial port if needed.
 
 Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
 Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.
@@ -5564,9 +5607,18 @@ Following are the command line options for NVDA:
 |None |`--create-portable-silent` |Creates a portable copy of NVDA (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
 |None |`--portable-path=PORTABLEPATH` |The path where a portable copy will be created|
 
-Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+### Uninstalling NVDA {#UninstallingNVDA}
 
 NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+
+
+Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
+To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.
+
+Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+
+Installed copies of NVDA store their configuration including add-ons in `%APPDATA%\nvda`.
+These files are not removed by NVDA's uninstaller.
 
 The following are the command line options for NVDA's uninstaller:
 

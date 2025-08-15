@@ -1137,8 +1137,6 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
-			config.conf["braille"]["translationTable"] = "auto"
-			config.conf["braille"]["inputTable"] = "auto"
 			LanguageRestartDialog(self).ShowModal()
 
 
@@ -1669,8 +1667,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	def getSettings(self) -> AutoSettings:
 		return self.driver
 
-	def _getSettingControlHelpId(self, controlId):
-		standardSettings = ["voice", "variant", "rate", "rateBoost", "pitch", "inflection", "volume"]
+	def _getSettingControlHelpId(self, controlId: str) -> str:
+		standardSettings = [
+			"voice",
+			"variant",
+			"rate",
+			"rateBoost",
+			"pitch",
+			"inflection",
+			"volume",
+			"useWasapi",
+		]
 		if controlId in standardSettings:
 			capitalizedId = controlId[0].upper() + controlId[1:]
 			return f"{self.helpId}{capitalizedId}"
@@ -1709,7 +1716,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["autoDialectSwitching"],
 		)
 		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes")
+		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes while reading")
 		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(
 				self,
@@ -2473,6 +2480,15 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
+		reportMultiSelectText = _("Report when lists support &multiple selection")
+		self.reportMultiSelectCheckBox = sHelper.addItem(wx.CheckBox(self, label=reportMultiSelectText))
+		self.bindHelpEvent("ReportMultiSelect", self.reportMultiSelectCheckBox)
+		self.reportMultiSelectCheckBox.SetValue(
+			config.conf["presentation"]["reportMultiSelect"],
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings panel.
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox = sHelper.addItem(wx.CheckBox(self, label=descriptionText))
 		self.bindHelpEvent("ObjectPresentationReportDescriptions", self.descriptionCheckBox)
@@ -2535,6 +2551,7 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"] = (
 			self.guessPositionInfoCheckBox.IsChecked()
 		)
+		config.conf["presentation"]["reportMultiSelect"] = self.reportMultiSelectCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"] = self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"] = self.progressLabels[
 			self.progressList.GetSelection()
@@ -3395,6 +3412,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
 		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
+		self.muteOnLocalControl = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
+				# when controlling the local computer.
+				label=pgettext("remote", "&Mute when controlling the local computer"),
+			),
+		)
+		self.bindHelpEvent("RemoteMuteOnLocalControl", self.muteOnLocalControl)
+		enabledInSecureMode.add(self.muteOnLocalControl)
+
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3533,6 +3561,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
+		self.muteOnLocalControl.SetValue(self.config["ui"]["muteOnLocalControl"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3597,6 +3626,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
+		self.config["ui"]["muteOnLocalControl"] = self.muteOnLocalControl.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()

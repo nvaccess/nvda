@@ -279,6 +279,8 @@ positiveStateLabels = {
 	controlTypes.State.ON: "⣏⣿⣹",
 	# Translators: Displayed in braille when a link destination points to the same page
 	controlTypes.State.INTERNAL_LINK: _("smp"),
+	# Translators: Displayed in braille when an object supports multiple selected items.
+	controlTypes.State.MULTISELECTABLE: _("msel"),
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -706,6 +708,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			states.discard(controlTypes.State.VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
+		elif role == controlTypes.Role.LIST and states and controlTypes.State.MULTISELECTABLE in states:
+			states = states.copy()
+			states.discard(controlTypes.State.MULTISELECTABLE)
+			# Translators: Displayed in braille for a multi select list.
+			roleText = _("mslst")
 		elif (
 			name or cellCoordsText or rowNumber or columnNumber
 		) and role in controlTypes.silentRolesOnFocus:
@@ -1920,7 +1927,10 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				clippedEnd = True
 			elif doWordWrap:
 				try:
-					end = rindex(self.brailleCells, 0, start, end) + 1
+					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
+					if lastSpaceIndex < end:
+						# The next braille window doesn't start with space.
+						end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
 					pass  # No space on line
 			self._windowRowBufferOffsets.append((start, end))

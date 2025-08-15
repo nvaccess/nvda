@@ -196,8 +196,10 @@ class ProfilesDialog(
 		if (
 			gui.messageBox(
 				# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-				# The placeholder {} is replaced with the name of the configuration profile that will be deleted.
-				_("The profile {} will be permanently deleted. This action cannot be undone.").format(name),
+				# The placeholder {name} is replaced with the name of the configuration profile that will be deleted.
+				_("The profile {name} will be permanently deleted. This action cannot be undone.").format(
+					name=name,
+				),
 				# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 				_("Confirm Deletion"),
 				wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION,
