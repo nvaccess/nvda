@@ -167,9 +167,9 @@ jobs:
         # Ensure uv environment is up to date.
         # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
         # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
-        uvx pre-commit run uv-lock --all-files
+        uv run pre-commit run uv-lock --all-files
         # Run pre-commit on the translations
-        uvx pre-commit run checkPo --all-files
+        uv run pre-commit run checkPo --all-files
     - name: Add job summary
       if: ${{ failure() }}
       shell: bash
