@@ -7,15 +7,15 @@
 
 import abc
 import ctypes
+import dataclasses
 import functools
 import inspect
-import dataclasses
 import types
 import typing
 from collections.abc import Callable
 from enum import IntEnum
-from typing import Annotated, Any, Self, Union
 from types import UnionType
+from typing import Annotated, Any, Self, Union
 
 from logHandler import log
 
@@ -44,9 +44,11 @@ class ParamDirectionFlag(IntEnum):
 
 if typing.TYPE_CHECKING:
 	from ctypes import (
-		_Pointer,
-		_CFuncPtr,
 		_CArgObject,
+		_CFuncPtr,
+		_Pointer,
+	)
+	from ctypes import (
 		_CDataType as CType,
 	)
 

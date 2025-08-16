@@ -9,7 +9,8 @@ import unittest
 from ctypes import c_long, windll
 from ctypes.wintypes import BOOL, HWND, RECT
 from typing import Annotated, Union
-from utils.ctypesUtils import FuncSpec, Pointer, dllFunc, OutParam, ParamDirectionFlag
+
+from utils.ctypesUtils import FuncSpec, OutParam, ParamDirectionFlag, Pointer, dllFunc
 
 
 class Test_FuncSpec(unittest.TestCase):
