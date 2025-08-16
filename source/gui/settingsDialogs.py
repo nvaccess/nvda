@@ -1018,6 +1018,20 @@ class GeneralSettingsPanel(SettingsPanel):
 		item.Value = config.conf["general"]["preventDisplayTurningOff"]
 		settingsSizerHelper.addItem(item)
 
+		fe = wx.FontEnumerator()
+		self.systemFonts = fe.GetFacenames()
+		fontChoices = [x for x in self.systemFonts]
+		# Translators: The label for a setting in vision settings to select NVDA's interface font.
+		fontLabelText = _("Select &system font:")
+		self.fontList = settingsSizerHelper.addLabeledControl(
+			fontLabelText,
+			wx.Choice,
+			choices=fontChoices,
+		)
+		self.currentFont = self.GetFontFromConfig()
+		index = [x for x in self.systemFonts].index(self.currentFont.GetFaceName())
+		self.fontList.SetSelection(index)
+
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		# Import late to avoid circular dependency.
@@ -1141,6 +1155,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 		config.conf["general"]["preventDisplayTurningOff"] = self.preventDisplayTurningOffCheckBox.IsChecked()
+
+		newFont = [x for x in self.systemFonts][self.fontList.GetSelection()]
+		config.conf["vision"]["font"] = newFont
 
 	def onPanelActivated(self):
 		if updateCheck:
@@ -5281,20 +5298,6 @@ class VisionSettingsPanel(SettingsPanel):
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
-		fe = wx.FontEnumerator()
-		self.systemFonts = fe.GetFacenames()
-		fontChoices = [x for x in self.systemFonts]
-		# Translators: The label for a setting in vision settings to select NVDA's interface font.
-		fontLabelText = _("Select &system font:")
-		self.fontList = self.settingsSizerHelper.addLabeledControl(
-			fontLabelText,
-			wx.Choice,
-			choices=fontChoices,
-		)
-		self.currentFont = self.GetFontFromConfig()
-		index = [x for x in self.systemFonts].index(self.currentFont.GetFaceName())
-		self.fontList.SetSelection(index)
-
 	def safeInitProviders(
 		self,
 		providers: List[vision.providerInfo.ProviderInfo],
@@ -5368,8 +5371,6 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
-		newFont = [x for x in self.systemFonts][self.fontList.GetSelection()]
-		config.conf["vision"]["font"] = newFont
 
 
 class VisionProviderSubPanel_Settings(
