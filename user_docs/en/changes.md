@@ -13,6 +13,7 @@ Windows 10 is the minimum Windows version supported.
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
+* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 
 ### Changes
 
