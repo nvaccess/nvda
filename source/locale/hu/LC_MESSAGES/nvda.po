@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -946,28 +946,28 @@ msgstr "Ebben a dokumentumban nem támogatott."
 #: browseMode.py:647
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr ""
+msgstr "A következő, {i}. szintű címsorra lép"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:650
 #, python-brace-format
 msgid "No next heading at level {i}"
-msgstr ""
+msgstr "Nincs következő {i}. szintű címsor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
 #: browseMode.py:653
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr ""
+msgstr "Az előző, {i}. szintű címsorra lép"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
 #: browseMode.py:656
 #, python-brace-format
 msgid "No previous heading at level {i}"
-msgstr ""
+msgstr "Nincs előző {i}. szintű címsor"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:671
@@ -2133,7 +2133,8 @@ msgstr[1] "Az alábbi bővítményeket nem sikerült telepíteni: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Néhány műveletet nem sikerült végrehajtani a bővítményekkel. További részletekért nézze meg a naplófájlt.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3577,14 +3578,15 @@ msgstr "Nincs helyettesítőszöveg az írásjelhez"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Karakter: {character}\n"
+"Helyettesítő szöveg: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Kiterjesztett írásjel ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -3976,7 +3978,7 @@ msgstr "Megnyitja az NVDA hangbeállításait"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "Vizuális beállítások mutatása"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3376
@@ -4022,17 +4024,17 @@ msgstr "Mutassa a távelérés beállításait"
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3453
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "Bővítménykezelő beállításainak mutatása"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3462
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "Windows OCR beállítások mutatása"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3471
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "Haladó beállítások mutatása"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3480
@@ -4226,7 +4228,7 @@ msgstr "Beszéd be- és kikapcsolása SORONKÉNTI VAGY BEKEZDÉSENKÉNTI BRAILLE
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3804
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "Beszéd bekapcsolása SORONKÉNTI VAGY BEKEZDÉSENKÉNTI BRAILLE NAVIGÁCIÓ ESETÉN"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3806
@@ -4736,26 +4738,26 @@ msgstr "Osztott hang beállítási módjai közti váltás"
 #: globalCommands.py:4934
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Bemondja a kurzornál található szöveg nyelvét. Kétszeri lenyomásra az információt böngészőmódban jeleníti meg."
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Ismeretlen nyelv"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4960
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (nem támogatott)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:4969
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "Nyelv a kurzornál"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:4974
@@ -6779,7 +6781,7 @@ msgstr "Intonáció"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "Modern hangkimeneti rendszer használata (WASAPI)"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7000,7 +7002,7 @@ msgstr "Ellenőrizze az internetkapcsolatot, és az NVDA frissítési tükörsze
 #: updateCheck.py:416
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "Nem sikerült csatlakozni az NV Access szerveréhez."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7153,14 +7155,15 @@ msgstr "&kész"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Az NVDA frissítését nem javasoljuk, amíg vezérelt számítógépként csatlakozik egy NVDA távelérési folyamathoz."
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Az aktív kapcsolat megszakadhat a frissítés közben vagy után. De ha a kapcsolat nem is szakad meg, távolról akkor sem lehet reagálni a vezérlő számítógépen felbukkanó Felhasználói fiókok felügyelete (UAC) képernyő utasításaira. Csak abban az esetben folytassa a műveletet , ha fizikailag is hozzáfér a vezérlő számítógéphez.\n\n"
+"Biztosan folytatja?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7242,7 +7245,7 @@ msgstr "Ellenőrizze az internetkapcsolatot és a Bővítménykezelő tükörsze
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "Nem sikerült létrehozni a kapcsolatot a bővítménykezelő szerverével."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -8679,7 +8682,7 @@ msgstr "Nattiq nBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -9201,19 +9204,19 @@ msgstr "Spanyol görög szövegekhez"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "Héber (Bibliai) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "Héber (Bibliai) teljes"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "Héber (Bibliai) szűkített"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9561,13 +9564,13 @@ msgstr "Román"
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "Orosz 6 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:465
 msgid "Russian 8 dot computer braille"
-msgstr ""
+msgstr "orosz 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9753,7 +9756,7 @@ msgstr "Thai, rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Thai grade 2"
-msgstr ""
+msgstr "Thai, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10115,19 +10118,19 @@ msgstr "Bekezdésjel (¶)"
 #: config\configFlags.py:313
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "Beszéd"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:315
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "Hangjelzés"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:317
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "Ki"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:339
@@ -12019,7 +12022,7 @@ msgstr "Nem kompatibilis bővítmények"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Az alábbi bővítmények nem kompatibilisek az NVDA {version} verziójával. Ezeket a bővítményeket nem lehet engedélyezni. További információkért keresse fel a bővítmények készítőit."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12146,7 +12149,7 @@ msgstr "Hiba a profil aktiválásakor."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Az alábbi profilt töröljük: {name}. A művelet nem visszavonható."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12569,14 +12572,15 @@ msgstr "A mappa már létezik"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Az NVDA telepítését nem javasoljuk, amíg vezérelt számítógépként csatlakozik egy NVDA távelérési folyamathoz."
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Távolról nem lehet reagálni a vezérlő számítógépen felbukkanó Felhasználói fiókok felügyelete (UAC) képernyő utasításaira. Csak abban az esetben folytassa a műveletet , ha fizikailag is hozzáfér a vezérlő számítógéphez.\n\n"
+"Biztosan folytatja?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12736,7 +12740,7 @@ msgstr "&Ne mentse"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Alapértelmezett ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13005,14 +13009,14 @@ msgstr "A&utomatikus dialektusváltás (ha támogatott)"
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "&Nyelvváltások jelzése olvasáskor"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1737
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Jelezze, ha a beszédszintetizátor nem támogatja a nyelvváltást"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -15342,8 +15346,8 @@ msgstr "Bővítmény telepítése"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} bővítmény telepítése folyamatban van, kis türelmet..."
+msgstr[1] "{num} bővítmény telepítése folyamatban van, kis türelmet..."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15352,8 +15356,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} bővítmény letöltése folyamatban van, megszakítja a letöltést?"
+msgstr[1] "{num} bővítmény letöltése folyamatban van, megszakítja a letöltést?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15731,8 +15735,8 @@ msgstr "aktiválás"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} javaslat"
+msgstr[1] "{num} javaslat"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -17780,7 +17784,7 @@ msgstr "{val:g} pont térköz a bekezdés előtt"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (nem támogatott)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:98

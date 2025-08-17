@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 17
+latestSchemaVersion = 18
 
 #: The configuration specification string
 #: @type: String
@@ -98,7 +98,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
-    	excludedDisplays = string_list(default=list())
+    	excludedDisplays = string_list(default=list("dotPad"))
 
 	# Braille display driver settings
 	[[__many__]]
@@ -462,6 +462,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		decimalSeparators = string(default=".") # [default]
 		blockSeparators = string(default=", \u00a0\u202f") # [default -- includes two forms of non-breaking spaces]
 		decimalSeparator = string(default="Auto") # Auto, '.', ',', Custom
+		muteOnLocalControl = boolean(default=False)
 """
 
 #: The configuration specification

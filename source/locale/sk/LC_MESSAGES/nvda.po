@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -2139,7 +2139,8 @@ msgstr[3] "Nebolo možné nainštalovať nasledujúce doplnky: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Spracovanie niektorých doplnkov zlyhalo. Podrobnosti nájdete v zázname.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3583,14 +3584,15 @@ msgstr "Žiadne nahradenie"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Symbol: {character}\n"
+"Nahradené: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Rozšírený symbol ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -4750,7 +4752,7 @@ msgstr "Oznamuje informácie o formátovaní vzhľadom na aktuálnu pozíciu tex
 #: globalCommands.py:4949
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Neznámi jazyk"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4960
@@ -6787,7 +6789,7 @@ msgstr "Intonácia"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:231
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "Povoliť audio výstup cez WASAPI"
 
 #: touchHandler.py:30
 msgid "text mode"
@@ -7164,14 +7166,15 @@ msgstr "&Hotovo"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Neodporúčame vám teraz aktualizovať NVDA, keďže je počítač ovládaný na diaľku "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Počas a po aktualizácii môže dojsť k prerušeniu spojenia. Ak spojenie ostane zachované, nebudete môcť reagovať na požiadavky zo zabezpečenej obrazovky. Pokračujte len v prípade, že máte k ovládanému počítaču fyzický prístup.\n\n"
+"Želáte si pokračovať?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -8887,7 +8890,7 @@ msgstr "Bulharský počítačový 8 bodový brail"
 #. braille settings dialog.
 #: brailleTables\__tables.py:56
 msgid "Bulgarian grade 1"
-msgstr "Maďarčina plnopis"
+msgstr "Bulharčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9025,13 +9028,13 @@ msgstr "Nemecký počítačový 8 bodový brail"
 #. braille settings dialog.
 #: brailleTables\__tables.py:127
 msgid "German grade 0"
-msgstr "Nemecký počítačový kód"
+msgstr "Nemčina stupeň 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:131
 msgid "German grade 0 (detailed)"
-msgstr "Nemčina grade 0 (detailný)"
+msgstr "Nemčina stupeň 0 (detailný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9055,7 +9058,7 @@ msgstr "Nemčina skratkopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:144
 msgid "German grade 2 (detailed)"
-msgstr "Nemčina (detailný) skratkopis"
+msgstr "Nemčina skratkopis (detailný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9289,7 +9292,7 @@ msgstr "Chorvátsky počítačový 8 bodový brail"
 #. braille settings dialog.
 #: brailleTables\__tables.py:287
 msgid "Croatian grade 1"
-msgstr "Chorvátština plnopis"
+msgstr "Chorvátčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9595,13 +9598,13 @@ msgstr "Pandžábčina plnopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:456
 msgid "Romanian 6 dot"
-msgstr "Rumúnčina 6 bodový plnopis"
+msgstr "Rumunčina 6 bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:459
 msgid "Romanian"
-msgstr "Rumúnčina"
+msgstr "Rumunčina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9733,7 +9736,7 @@ msgstr "Svahilčina (Kenya) plnopis 1.2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:527
 msgid "Swahili (Kenya) grade 1.3"
-msgstr "Svahilčina (Kenya) plnopis 1.3wančina plnopis"
+msgstr "Svahilčina (Kenya) plnopis 1.3"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -12066,7 +12069,7 @@ msgstr "Nekompatibilné doplnky"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Nasledujúce doplnky nie sú kompatibilné s NVDA {version}. Tieto doplnky budú zakázané. Pre ďalšie informácie prosím kontaktujte vývojárov konkrétnych doplnkov."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12193,7 +12196,7 @@ msgstr "pri aktivácii profilu došlo k chybe."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Profil {name} bude natrvalo odstránený a nebude možné ho automaticky obnoviť."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12618,14 +12621,15 @@ msgstr "Existujúci priečinok"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Neodporúčame vám teraz inštalovať NVDA, keďže je počítač ovládaný na diaľku "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Nebudete môcť reagovať na požiadavky zo zabezpečenej obrazovky. Pokračujte len v prípade, že máte k ovládanému počítaču fyzický prístup.\n\n"
+"Želáte si pokračovať?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12785,7 +12789,7 @@ msgstr "&Neuložiť"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Predvolené ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13054,7 +13058,7 @@ msgstr "Automaticky prepínať dialekt (ak je podporované)"
 #: gui\settingsDialogs.py:1721
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Oznamovať zmenu &jazyka počas čítania"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
@@ -15391,10 +15395,10 @@ msgstr "Inštalácia doplnku"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Inštalujem {num} doplnok, počkajte prosím."
+msgstr[1] "Inštalujem {num} doplnky, počkajte prosím."
+msgstr[2] "Inštalujem {num} doplnkov, počkajte prosím."
+msgstr[3] "Inštalujem {num} doplnkov, počkajte prosím."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15403,10 +15407,10 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Prebieha sťahovanie {num} doplnku, želáte si ho prerušiť?"
+msgstr[1] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
+msgstr[2] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
+msgstr[3] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15786,10 +15790,10 @@ msgstr "aktivovať"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{num} návrh"
+msgstr[1] "{num} návrhy"
+msgstr[2] "{num} návrhov"
+msgstr[3] "{num} návrhov"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

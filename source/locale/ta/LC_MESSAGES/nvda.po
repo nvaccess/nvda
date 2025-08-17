@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -2133,7 +2133,8 @@ msgstr[1] "இந்நீட்சிநிரல்கள் நிறுவ�
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "நீட்சிநிரல்கள் மீதான சில செயல்பாடுகள் தோல்வியடைந்தன. கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுக் கோப்பினைக் காணவும்.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3577,14 +3578,15 @@ msgstr "குறியெழுத்திற்கான மாற்றம�
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "வரியுரு: {character}\n"
+"மாற்றமர்வு: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "விரிவாக்கப்பட்டக் குறியீடு ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -11233,7 +11235,7 @@ msgstr "கருத்துரை"
 #. Translators: Identifies a suggestion.
 #: controlTypes\role.py:530
 msgid "suggestion"
-msgstr "எடுத்துரை"
+msgstr "பரிந்துரை"
 
 #. Translators: The word role for a switch control
 #. I.e. a control that can be switched on or off.
@@ -12020,7 +12022,7 @@ msgstr "இணக்கமற்ற நீட்சிநிரல்கள்"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "என்விடிஏ {version} பதிப்புடன் பின்வரும் நீட்சிநிரல்கள் இணக்கமாக இல்லை. இந்நீட்சிநிரல்களை முடுக்க இயலாது. உதவிக்கு அந்தந்த நீட்சிநிரல்களின் படைப்பாளர்களை தொடர்புகொள்ளவும்."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12147,7 +12149,7 @@ msgstr "தனியமைப்பினை இயக்குவதில் �
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "{name} தனியமைப்பு நிரந்தரமாக அழிக்கப்படும். இச்செயலைத் திரும்பப் பெற இயலாது."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12738,7 +12740,7 @@ msgstr "சேமித்திடாதுக (&N)"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "இயல்பிருப்பு ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13376,7 +13378,7 @@ msgstr "ியங்குநிலை உள்ளடக்க மாற்ற�
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2529
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "தன்னியக்க எடுத்துரைகள் தோன்றும்பொழுது ஒலியை எழுப்புக (&A)"
+msgstr "தன்னியக்க பரிந்துரைகள் தோன்றும்பொழுது ஒலியை எழுப்புக (&A)"
 
 #. Translators: This is the label for the browse mode settings panel.
 #: gui\settingsDialogs.py:2562
@@ -15345,8 +15347,8 @@ msgstr "நீட்சிநிரல் நிறுவுதல்"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} நீட்சிநிரல் நிறுவப்படுகிறது. அருள்கூர்ந்து காத்திருக்கவும்."
+msgstr[1] "{num} நீட்சிநிரல்கள் நிறுவப்படுகின்றன. அருள்கூர்ந்து காத்திருக்கவும்."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15355,8 +15357,8 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} நீட்சிநிரல் தரவிறக்கப்படுகிறது. தரவிறக்கத்தை விலக்கிக்கொள்ள வேண்டுமா?"
+msgstr[1] "{num} நீட்சிநிரல்கள் தரவிறக்கப்படுகின்றன. தரவிறக்கத்தை விலக்கிக்கொள்ள வேண்டுமா?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15559,7 +15561,7 @@ msgstr "%d விழுக்காடு"
 #. in various search fields such as Start search box in Windows 10.
 #: NVDAObjects\behaviors.py:215
 msgid "Suggestions"
-msgstr "எடுத்துரைகள்"
+msgstr "பரிந்துரைகள்"
 
 #. Translators: a message announcing a candidate's character and description.
 #: NVDAObjects\behaviors.py:651
@@ -15734,8 +15736,8 @@ msgstr "அழை"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} பரிந்துரை"
+msgstr[1] "{num} பரிந்துரைகள்"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

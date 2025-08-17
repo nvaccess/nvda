@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 05:05+0000\n"
-"PO-Revision-Date: 2025-07-22 05:14\n"
+"POT-Creation-Date: 2025-08-07 00:30+0000\n"
+"PO-Revision-Date: 2025-08-11 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -628,14 +628,14 @@ msgstr "Wszystkie punkty"
 #. only shows as much as possible focus context information when the context has changed.
 #: braille.py:361
 msgid "Fill display for context changes"
-msgstr "Wypełnij wyświetlacz dla zmian kontekstu"
+msgstr "Wypełnij monitor brajlowski dla zmian kontekstu"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 #: braille.py:365
 msgid "Always fill display"
-msgstr "Zawsze wypełnij wyświetlacz"
+msgstr "Zawsze wypełnij monitor brajlowski"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
@@ -2139,7 +2139,8 @@ msgstr[3] "Nie można zainstalować następujących dodatków: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Niektóre działania na dodatkach nie powiodły się. Po więcej informacji, zobacz log.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3583,14 +3584,15 @@ msgstr "Nie ma zamiany symbolu"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Znak: {character}\n"
+"Zamiana: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Rozszerzone symbole ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -7165,14 +7167,15 @@ msgstr "&Zrobione"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Aktualizacja NVDA po podłączeniu do zdalnego dostępu NVDA jako kontrolowanego komputera nie jest zalecana. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Aktualnie aktywne połączenie może nie być kontynuowane w trakcie aktualizacji lub po jej zakończeniu. Nawet jeśli połączenie będzie kontynuowane, nie będzie można reagować na monity Kontroli konta użytkownika (UAC) z komputera sterującego. Powinieneś kontynuować tylko wtedy, gdy masz fizyczny dostęp do kontrolowanego komputera.\n\n"
+"Czy na pewno chcesz kontynuować?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -12068,7 +12071,7 @@ msgstr "Dodatki niezgodne"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Następujące dodatki są niezgodne z NVDA w wersji {version}. Tych dodatków nie można włączyć. Skontaktuj się z autorem dodatku, aby uzyskać dalszą pomoc."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12195,7 +12198,7 @@ msgstr "Błąd podczas aktywacji profilu."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Profil {name} zostanie trwale usunięty. Tej czynności nie można cofnąć."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12618,14 +12621,15 @@ msgstr "Katalog już istnieje"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Instalowanie NVDA po podłączeniu do zdalnego dostępu NVDA jako kontrolowanego komputera nie jest zalecane. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Nie będzie można reagować na monity Kontroli konta użytkownika (UAC) z komputera kontrolującego. Powinieneś kontynuować tylko wtedy, gdy masz fizyczny dostęp do kontrolowanego komputera.\n\n"
+"Czy na pewno chcesz kontynuować?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12785,7 +12789,7 @@ msgstr "&Nie zapisuj"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Domyślnie ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -14398,7 +14402,7 @@ msgstr "&Pokaż kursor"
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 #: gui\settingsDialogs.py:4754
 msgid "Blink cursor"
-msgstr "Migotanie kursora"
+msgstr "Miganie kursora"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 #: gui\settingsDialogs.py:4765
@@ -14469,7 +14473,7 @@ msgstr "&Wymawiaj znak podczas przemieszczania kursoru za pomocą klawisza routi
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:4980
 msgid "Speak when navigating by &line or paragraph"
-msgstr "Czytaj podczas nawigacji po &znakach lub akapitacj"
+msgstr "Czytaj podczas nawigacji po &znakach lub akapitach"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -15394,10 +15398,10 @@ msgstr "Instalacja dodatku"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Instaluję {num} dodatek, proszę czekać."
+msgstr[1] "Instaluję {num} dodatki, proszę czekać."
+msgstr[2] "Instaluję {num} dodatków, proszę czekać."
+msgstr[3] "Instaluję {num} dodatków, proszę czekać."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15406,10 +15410,10 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Trwa pobieranie{num} dodatku, Czy chcesz go przerwać?"
+msgstr[1] "Trwa pobieranie {num} dodatków, czy chcesz go przerwać?"
+msgstr[2] "Trwa pobieranie {num} dodatków, Czy chcesz go przerwać?"
+msgstr[3] "Trwa pobieranie {num}, Czy chcesz go przerwać?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15789,10 +15793,10 @@ msgstr "wywołaj"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{num} podpowiedź"
+msgstr[1] "{num} podpowiedzi"
+msgstr[2] "{num} podpowiedzi"
+msgstr[3] "{num} podpowiedzi"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

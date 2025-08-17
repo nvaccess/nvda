@@ -1,11 +1,11 @@
-# tests/unit/test_baseObject.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V.
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
+import sys
 import unittest
 from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
@@ -147,18 +147,28 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	It also makes sure that abstract properties can be overridden on subclasses.
 	"""
 
+	@staticmethod
+	def _get_regex(className: str) -> str:
+		if sys.version_info.major == 3 and sys.version_info.minor == 13:
+			return rf"^Can't instantiate abstract class {className} without an implementation for abstract method 'x'"
+		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+			return rf"^Can't instantiate abstract class {className} with abstract method x"
+		else:
+			raise RuntimeError(
+				f"Unsupported Python version for abstract property tests: {sys.version_info.major}.{sys.version_info.minor}",
+			)
+
 	def test_abstractProperty(self):
 		self.assertRaisesRegex(
 			TypeError,
-			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty with abstract method x",
+			self._get_regex("AutoPropertyObjectWithAbstractProperty"),
 			AutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_subclassedAbstractProperty(self):
 		self.assertRaisesRegex(
 			TypeError,
-			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
-			"with abstract method x",
+			self._get_regex("SubclassedAutoPropertyObjectWithAbstractProperty"),
 			SubclassedAutoPropertyObjectWithAbstractProperty,
 		)
 

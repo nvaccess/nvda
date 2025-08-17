@@ -74,6 +74,12 @@ New gestures will be announced there, and localisations can be added to `gesture
     - Tab to the "edit file" button to open the editor for the file.
     - If it's your first time doing this, GitHub will ask you to fork this repository.
     Click "Fork this repository".
+    - Ensure indentation formatting is using tabs not spaces.
+        - You may need to change the indent mode to tabs.
+        - From the code editor, press `NVDA+space` to switch to browse mode, then press `shift+c` until you get to the "Indent mode" combo-box.
+        - Press `enter` to activate it, then press `downArrow` to select "Tabs".
+        - You can then press `NVDA+space` to switch to browse mode, then `e` to get back to the code editor, and `enter` to focus it in focus mode.
+        - The tab key should then insert the tab character, rather than spaces.
     - English example: <https://github.com/nvaccess/nvda/edit/beta/source/locale/en/symbols.dic>
     - Format (replace `{lang}` and `{fileName}`): `https://github.com/nvaccess/nvda/edit/beta/source/locale/{lang}/{fileName}`
     - Refer to [background](#background) for more information on the format of the files

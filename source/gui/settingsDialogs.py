@@ -1142,8 +1142,6 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
-			config.conf["braille"]["translationTable"] = "auto"
-			config.conf["braille"]["inputTable"] = "auto"
 			LanguageRestartDialog(self).ShowModal()
 
 
@@ -3800,6 +3798,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
 		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
+		self.muteOnLocalControl = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
+				# when controlling the local computer.
+				label=pgettext("remote", "&Mute when controlling the local computer"),
+			),
+		)
+		self.bindHelpEvent("RemoteMuteOnLocalControl", self.muteOnLocalControl)
+		enabledInSecureMode.add(self.muteOnLocalControl)
+
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3938,6 +3947,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
+		self.muteOnLocalControl.SetValue(self.config["ui"]["muteOnLocalControl"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -4002,6 +4012,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
+		self.config["ui"]["muteOnLocalControl"] = self.muteOnLocalControl.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
