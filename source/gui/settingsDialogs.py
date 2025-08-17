@@ -2698,8 +2698,7 @@ class BrowseModePanel(SettingsPanel):
 class MathSettingsPanel(SettingsPanel):
 	# Translators: Title of the math settings panel.
 	title = pgettext("math", "Math")
-	# Translators: The Help ID of the math settings panel.
-	helpId = pgettext("math", "MathSettings")
+	helpId = "MathSettings"
 	panelDescription = pgettext(
 		"math",
 		# Translators: The description of the math settings panel.
