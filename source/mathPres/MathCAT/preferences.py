@@ -1,3 +1,4 @@
+from enum import Enum
 import os
 from typing import TypeAlias
 
@@ -6,6 +7,31 @@ import yaml
 from logHandler import log
 
 from .rulesUtils import getRulesFiles
+
+
+class SpeechOptions(Enum):
+	DecimalSeparator = ("Auto", ".", ",", "Custom")
+	Impairment = ("LearningDisability", "Blindness", "LowVision")
+	Verbosity = ("Terse", "Medium", "Verbose")
+	SubjectArea = ("General",)
+	Chemistry = ("SpellOut", "Off")
+
+
+class NavigationOptions(Enum):
+	NavMode = ("Enhanced", "Simple", "Character")
+	NavVerbosity = ("Terse", "Medium", "Verbose")
+	CopyAs = ("MathML", "LaTeX", "ASCIIMath", "Speech")
+
+
+class BrailleOptions(Enum):
+	BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
+
+
+# two constants to scale "PauseFactor"
+# these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
+class PauseFactor(Enum):
+	SCALE: float = 9.5
+	LOG_BASE: float = 1.4
 
 
 def pathToUserPreferencesFolder() -> str:

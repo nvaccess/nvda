@@ -17,7 +17,7 @@ import re
 import typing
 from abc import ABCMeta, abstractmethod
 from collections.abc import Container
-from enum import Enum, IntEnum
+from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
@@ -2695,31 +2695,6 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 
-
-class SpeechOptions(Enum):
-	DecimalSeparator = ("Auto", ".", ",", "Custom")
-	Impairment = ("LearningDisability", "Blindness", "LowVision")
-	Verbosity = ("Terse", "Medium", "Verbose")
-	SubjectArea = ("General",)
-	Chemistry = ("SpellOut", "Off")
-
-
-class NavigationOptions(Enum):
-	NavMode = ("Enhanced", "Simple", "Character")
-	NavVerbosity = ("Terse", "Medium", "Verbose")
-	CopyAs = ("MathML", "LaTeX", "ASCIIMath", "Speech")
-
-
-class BrailleOptions(Enum):
-	BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
-
-
-# two constants to scale "PauseFactor"
-# these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
-PAUSE_FACTOR_SCALE: float = 9.5
-PAUSE_FACTOR_LOG_BASE: float = 1.4
-
-
 class MathSettingsPanel(SettingsPanel):
 	# Translators: Title of the math settings panel.
 	title = pgettext("math", "Math")
@@ -2733,6 +2708,11 @@ class MathSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
+		from mathPres.MathCAT.preferences import (
+			SpeechOptions,
+			NavigationOptions,
+			BrailleOptions,
+		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
@@ -3047,6 +3027,12 @@ class MathSettingsPanel(SettingsPanel):
 		import math
 
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
+		from mathPres.MathCAT.preferences import (
+			SpeechOptions,
+			NavigationOptions,
+			BrailleOptions,
+			PauseFactor,
+		)
 
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = SpeechOptions.Impairment.value[self.impairmentList.GetSelection()]
@@ -3059,7 +3045,7 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
-			0 if pfSlider == 0 else round(PAUSE_FACTOR_SCALE * math.pow(PAUSE_FACTOR_LOG_BASE, pfSlider))
+			0 if pfSlider == 0 else round(PauseFactor.SCALE * math.pow(PauseFactor.LOG_BASE, pfSlider))
 		)  # avoid log(0)
 		mathConf["speech"]["pauseFactor"] = pauseFactor
 		if self.speechSoundCheckBox.GetValue():
