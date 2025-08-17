@@ -85,8 +85,8 @@ def getLanguageToUse(mathMl: str = "") -> str:
 	try:
 		# ignore regional differences if the MathCAT language setting doesn't have it.
 		mathCATLanguageSetting = libmathcat.GetPreference("Language")
-	except Exception as e:
-		log.exception(e)
+	except Exception:
+		log.exception()
 
 	if mathCATLanguageSetting != "Auto":
 		return mathCATLanguageSetting
