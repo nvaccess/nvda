@@ -2695,6 +2695,7 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 
+
 class MathSettingsPanel(SettingsPanel):
 	# Translators: Title of the math settings panel.
 	title = pgettext("math", "Math")
