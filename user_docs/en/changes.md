@@ -36,6 +36,8 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
+* Updated components
+  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
 #### Deprecations
 
