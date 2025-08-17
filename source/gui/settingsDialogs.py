@@ -2703,7 +2703,7 @@ class MathSettingsPanel(SettingsPanel):
 	panelDescription = pgettext(
 		"math",
 		# Translators: The description of the math settings panel.
-		"The following options control the presentation of mathematical content using MathCAT.",
+		"The following options control the presentation of mathematical content.",
 	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
