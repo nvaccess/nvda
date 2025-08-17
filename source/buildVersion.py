@@ -69,6 +69,8 @@ version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript'.
 version = _formatDevVersionString()
 publisher = "unknown"
+copyrightYears = "2006-2026"
+url = "https://www.nvaccess.org"
 updateVersionType = None
 try:
 	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401

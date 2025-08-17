@@ -1,4 +1,3 @@
-# pythonConsole.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -74,8 +73,6 @@ class Completer(rlcompleter.Completer):
 		This causes serious issues for baseObject.Getter descriptors
 		when a getter raises NotImplementedError, for example (#15872).
 		"""
-		import re
-
 		m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
 		if not m:
 			return []
