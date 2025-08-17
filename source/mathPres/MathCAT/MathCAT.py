@@ -454,10 +454,8 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			This is an integer format code returned by windll.user32.RegisterClipboardFormatW.
 		:param data: The data to set on the clipboard.
 		"""
-		# Need to support MathML Presentation, so this copied from winUser.py and the first two lines are commented out
+		# Need to support MathML Presentation, so this is copied from winUser.py and the first two lines are removed
 		# For now only unicode is a supported format
-		# if format!=CF_UNICODETEXT:
-		#     raise ValueError("Unsupported format")
 		text: str = data
 		bufLen: int = len(text.encode(WCHAR_ENCODING, errors="surrogatepass")) + 2
 		# Allocate global memory
@@ -477,7 +475,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 class MathCAT(mathPres.MathPresentationProvider):
 	def __init__(self):
 		"""Initializes MathCAT, loading the rules specified in the rules directory."""
-		# super(MathCAT, self).__init__(*args, **kwargs)
 
 		try:
 			# IMPORTANT -- SetRulesDir must be the first call to libmathcat besides GetVersion()
