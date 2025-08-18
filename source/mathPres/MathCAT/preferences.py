@@ -102,30 +102,34 @@ class MathCATUserPreferences:
 
 	@staticmethod
 	def defaults() -> PreferencesDict:
+
+		def defaultValue(path: tuple[str]) -> str | int | bool:
+			return config.conf.getConfigValidation(path).default
+
 		return {
 			"Speech": {
-				"Impairment": "Blindness",
-				"Language": "en",
-				"Verbosity": "Medium",
-				"MathRate": 100,
-				"PauseFactor": 100,
-				"SpeechSound": "None",
-				"SpeechStyle": "ClearSpeak",
-				"SubjectArea": "General",
-				"Chemistry": "SpellOut",
+				"Impairment": defaultValue(("speech", "impairment")),
+				"Language": defaultValue(("speech", "language")),
+				"Verbosity": defaultValue(("speech", "verbosity")),
+				"MathRate": defaultValue(("speech", "mathRate")),
+				"PauseFactor": defaultValue(("speech", "pauseFactor")),
+				"SpeechSound": defaultValue(("speech", "speechSound")),
+				"SpeechStyle": defaultValue(("speech", "speechStyle")),
+				"SubjectArea": defaultValue(("speech", "subjectArea")),
+				"Chemistry": defaultValue(("speech", "chemistry")),
 			},
 			"Navigation": {
-				"NavMode": "Enhanced",
-				"ResetNavMode": False,
-				"Overview": False,
-				"ResetOverview": True,
-				"NavVerbosity": "Medium",
-				"AutoZoomOut": True,
-				"CopyAs": "MathML",
+				"NavMode": defaultValue(("navigation", "navMode")),
+				"ResetNavMode": defaultValue(("navigation", "resetNavMode")),
+				"Overview": defaultValue(("navigation", "overview")),
+				"ResetOverview": defaultValue(("navigation", "resetOverview")),
+				"NavVerbosity": defaultValue(("navigation", "navVerbosity")),
+				"AutoZoomOut": defaultValue(("navigation", "autoZoomOut")),
+				"CopyAs": defaultValue(("navigation", "copyAs")),
 			},
 			"Braille": {
-				"BrailleNavHighlight": "EndPoints",
-				"BrailleCode": "Nemeth",
+				"BrailleNavHighlight": defaultValue(("braille", "brailleNavHighlight")),
+				"BrailleCode": defaultValue(("braille", "brailleCode")),
 			},
 		}
 
