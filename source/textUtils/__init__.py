@@ -1,16 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Łukasz Golonka, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
 import ctypes
+import re
 import encodings
 import locale
 import unicodedata
+
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
 from typing import Generator, Optional, Tuple, Type
@@ -18,6 +20,7 @@ from typing import Generator, Optional, Tuple, Type
 from logHandler import log
 
 from .uniscribe import splitAtCharacterBoundaries
+from . import wordSegment
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
@@ -540,3 +543,33 @@ def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
 		return ENCODINGS_TO_CONVERTERS[encoding]
 	except IndexError as e:
 		raise LookupError(f"Don't know how to deal with encoding '{encoding}'", e)
+
+class WordSegmenter:
+	"""Selects appropriate segmentation strategy and segments text."""
+
+	# Precompiled patterns
+	# Chinese characters and Japanese kanjis (CJK Unified Ideographs) U+4E00 - U+9FFF
+	_HANZI = re.compile(r"[\u4E00-\u9FFF]")
+	# Japanese kanas (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
+	_KANA = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
+
+	def __init__(self, text: str, encoding):
+		self.text = text
+		self.encoding = encoding
+		self.strategy = self._choose_strategy(self.text, self.encoding)
+
+	@staticmethod
+	def _choose_strategy(text: str, encoding) -> wordSegment.WordSegmentationStrategy:
+		"""Choose the appropriate segmentation strategy based on the text content."""
+		if WordSegmenter._HANZI.search(text) and not WordSegmenter._KANA.search(text):
+			return wordSegment.ChineseWordSegmentationStrategy(text, encoding)
+		else:
+			return wordSegment.UniscribeWordSegmentationStrategy(text, encoding)
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		"""Get the segment containing the given offset."""
+		try:
+			return self.strategy.getSegmentForOffset(self.text, offset)
+		except Exception as e:
+			 log.debugWarning("WordSegmenter.getSegmentForOffset failed: %s", e)
+			 return None
