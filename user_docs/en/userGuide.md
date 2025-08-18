@@ -1235,7 +1235,7 @@ The documentation describes many useful ways to navigate math. For those who jus
 - If inside of a table, Ctrl+Arrow will move by cell
 - Home / End moves to the start/end of the expression
 - Space reads your current position
-- Shift+Up/Down will change the mode of navigation (see the [MathCAT navigation documentation](https://nsoiffer.github.io/MathCAT/nav-commands.html) for more details)
+- Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
 
@@ -1243,6 +1243,42 @@ MathCAT’s navigation is the same in Word and in a browser.
 
 While navigating an expression, “control+c” copies the math content of the current node in NVDA.
 The format of the math copied to the clipboard can be adjusted through the NVDA math settings panel.
+
+## Navigation Modes
+
+MathCAT supports the following navigation modes:
+
+**Enhanced mode**:  navigation is by mathematically meaningful pieces (operators, delimiters, and operands)
+
+**Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, …), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
+
+**Character mode**:  this is actually two useful modes – word mode and character mode (zoom in to get "real" character mode).  Moves by words/characters.  This differs for numbers of more than one digit and function names such as "sin" that are multiple characters. Otherwise, word and character navigation is the same.
+
+## Table of Commands
+
+A table of navigation commands is provided in this section.
+
+| Key        | Unmodified                                           | + Ctrl                                                      | + Shift                                                   | + Ctrl+Shift                                |
+|------------|-----------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------|
+| Left       | Move to previous                                    | In table: move to previous cell<br>In columnar math: move to previous digit<br>Note: Ctrl+Alt+Left can also be used | Read previous                                            | Describe previous                           |
+| Right      | Move to next                                        | In table: move to next cell<br>In columnar math: move to next digit<br>Note: Ctrl+Alt+Right can also be used   | Read next                                                | Describe next                               |
+| Up         | Zoom out                                            | In table: move to cell above<br>In columnar math: move to digit above<br>Note: Ctrl+Alt+Up can also be used | Change Navigation Mode (Enhanced/Simple/Character) to larger | Zoom out all the way                        |
+| Down       | Zoom in                                             | In table: move to cell below<br>In columnar math: move to digit below<br>Note: Ctrl+Alt+Down can also be used | Change Navigation Mode (Enhanced/Simple/Character) to smaller | Zoom in all the way                          |
+| Enter      | Where am I                                         | Global Where am I                                           |                                                           |                                            |
+| Numbers 1-10 (0 is 10) | Jump to Place Marker                         | Set placemarker                                             | Read Placemarker                                         | Describe Placemarker                        |
+| Space      | Read current                                        | Read Current cell                                           | Toggle “speech mode” to read or describe                 | Describe current                            |
+| Home       | Move to start of expression                         | Move to start of line                                       | Move to start of column<br>Move to digit at top          | NYI: Read from start of expression         |
+| End        | Move to end of expression                           | Move to end of line                                         | Move to end of column<br>Move to digit at bottom         | NYI: Read to end of expression             |
+| Backspace  | Move back to last position                           |                                                             |                                                           |                                            |
+NYE = Not Yet Implemented
+
+## Typical Use
+
+Typically, you will start at the first term of an expression and move right as needed. You might move up and down levels if needed. This done with the arrow keys. alt+ctrl+arrow is used to move around tabular entries.
+
+Backspace will take you back to where you were, which is not always the same as moving to the left. For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+
+You will likely find one mode of navigation the most natural for you most of the time. This can be set in the MathCAT settings. However, at any time during navigation, you can switch the navigation modes using shift+up/down arrow. This is useful because each mode of navigation has its strengths and weaknesses.
 
 ## Braille {#Braille}
 
