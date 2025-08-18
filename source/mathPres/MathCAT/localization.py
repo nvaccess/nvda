@@ -64,7 +64,7 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			if langDesc is not None:
 				languageOptions.append(f"{langDesc} ({regionalCode})")
 			else:
-				languageOptions.Append(f"{language} ({regionalCode})")
+				languageOptions.append(f"{language} ({regionalCode})")
 			languageCodes.append(regionalCode)
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
