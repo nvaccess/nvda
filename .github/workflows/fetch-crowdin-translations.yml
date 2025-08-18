@@ -60,6 +60,7 @@ jobs:
         git config --local user.email ""
         git add -u source/locale
         git add -u user_docs
+        git status
 
         # Check if there are any changes to commit
         if git diff --staged --quiet; then
@@ -68,6 +69,7 @@ jobs:
         else
           git commit -m "Update tracked translations from Crowdin"
           echo "has_changes=true" >> $GITHUB_OUTPUT
+          git status
         fi
 
     - name: Create pull request
