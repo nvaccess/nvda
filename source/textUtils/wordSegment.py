@@ -11,6 +11,7 @@ from functools import lru_cache
 from logHandler import log
 import textUtils
 
+
 class WordSegmentationStrategy(ABC):
 	"""Abstract base class for word segmentation strategies."""
 
@@ -19,7 +20,7 @@ class WordSegmentationStrategy(ABC):
 		self.encoding = encoding
 
 	@abstractmethod
-	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None: # TODO: optimize
+	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:  # TODO: optimize
 		"""Return (start inclusive, end exclusive) or None. Offsets are str offsets relative to self.text."""
 		pass
 
@@ -32,11 +33,12 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		self._ensureLibLoaded()
 
 	@classmethod
-	def _ensureLibLoaded(cls): # TODO: make cppjieba alternative
+	def _ensureLibLoaded(cls):  # TODO: make cppjieba alternative
 		if cls._lib is not None:
 			return
 		try:
 			from NVDAHelper import versionedLibPath
+
 			lib_path = os.path.join(versionedLibPath, "cppjieba.dll")
 			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
 			# Setup function signatures (adjust if your C API differs)
@@ -86,7 +88,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	@lru_cache(maxsize=128)
 	def _callCPPJieba(self, text: str) -> list[tuple[int, int]] | None:
-		data = text.encode('utf-8')
+		data = text.encode("utf-8")
 		charPtr = POINTER(c_int)()
 		outLen = c_int()
 		result = self._lib.segmentOffsets(data, byref(charPtr), byref(outLen))
@@ -117,7 +119,7 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 	def _calculateUniscribeOffsets(
 		self,
 		lineText: str,
-		#unit: str,
+		# unit: str,
 		relOffset: int,
 	) -> tuple[int, int] | None:
 		"""
@@ -130,12 +132,13 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 		"""
 
 		import NVDAHelper
-		#if unit is textInfos.UNIT_WORD:
+
+		# if unit is textInfos.UNIT_WORD:
 		helperFunc = NVDAHelper.localLib.calculateWordOffsets
-		#elif unit is textInfos.UNIT_CHARACTER:
-			#helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
-		#else:
-			#raise NotImplementedError(f"Unit: {unit}")
+		# elif unit is textInfos.UNIT_CHARACTER:
+		# helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
+		# else:
+		# raise NotImplementedError(f"Unit: {unit}")
 		relStart = ctypes.c_int()
 		relEnd = ctypes.c_int()
 		# uniscribe does some strange things

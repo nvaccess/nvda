@@ -544,6 +544,7 @@ def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
 	except IndexError as e:
 		raise LookupError(f"Don't know how to deal with encoding '{encoding}'", e)
 
+
 class WordSegmenter:
 	"""Selects appropriate segmentation strategy and segments text."""
 
@@ -571,5 +572,5 @@ class WordSegmenter:
 		try:
 			return self.strategy.getSegmentForOffset(self.text, offset)
 		except Exception as e:
-			 log.debugWarning("WordSegmenter.getSegmentForOffset failed: %s", e)
-			 return None
+			log.debugWarning("WordSegmenter.getSegmentForOffset failed: %s", e)
+			return None
