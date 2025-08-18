@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from ctypes import *  # noqa: F403
@@ -545,7 +545,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return lineEndOffsets[-1]
 		return 0
 
-	useUniscribe = False
+	useUniscribeForCharOffset = False
+	useWordSegmenterForWordOffset = False
 
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))
