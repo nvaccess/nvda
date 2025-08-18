@@ -39,7 +39,6 @@ import controlTypes
 import NVDAObjects.JAB
 import core
 import textUtils
-import NVDAHelper
 import config
 from utils.security import isRunningOnSecureDesktop
 
@@ -1137,7 +1136,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.coreArchLibPath, "windowsaccessbridge.dll"),
+			os.path.join("windowsaccessbridge.dll"),
 		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
