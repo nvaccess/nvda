@@ -103,6 +103,7 @@ class State(DisplayStringIntEnum):
 	HASPOPUP_LIST = setBit(49)
 	HASPOPUP_TREE = setBit(50)
 	INTERNAL_LINK = setBit(51)
+	MULTISELECTABLE = setBit(52)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -210,6 +211,9 @@ _stateLabels: Dict[State, str] = {
 	# Translators: Presented when a link destination points to the page containing the link.
 	# For example, links of a table of contents of a document with different sections.
 	State.INTERNAL_LINK: _("same page"),
+	# Translators: Presented when the control allows multiple selected objects.
+	# For example, a list box that allows selecting multiple items.
+	State.MULTISELECTABLE: _("multi-select"),
 }
 
 
