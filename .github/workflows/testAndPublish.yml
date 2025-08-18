@@ -540,7 +540,7 @@ jobs:
     permissions:
       actions: write
     needs: [matrix, allTestsPass, crowdinUpload, uploadSymbols]
-    if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
