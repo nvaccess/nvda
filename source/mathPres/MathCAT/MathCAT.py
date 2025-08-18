@@ -494,7 +494,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception as e:
 			log.exception(e)
 			# Translators: this message directs users to look in the log file
-			speech.speakMessage(_("MathCAT initialization failed: see NVDA error log for details"))
+			ui.message(pgettext("math", "Error navigating math"))
 
 	def getSpeechForMathMl(
 		self,
