@@ -119,7 +119,6 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 	def _calculateUniscribeOffsets(
 		self,
 		lineText: str,
-		# unit: str,
 		relOffset: int,
 	) -> tuple[int, int] | None:
 		"""
@@ -127,18 +126,13 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 		using the Windows uniscribe  library, also used in Notepad, for example.
 		Units supported are character and word.
 		@param lineText: the text string to analyze
-		@param unit: the TextInfo unit (character or word)
 		@param relOffset: the character offset within the text string at which to calculate the bounds.
 		"""
 
 		import NVDAHelper
 
-		# if unit is textInfos.UNIT_WORD:
 		helperFunc = NVDAHelper.localLib.calculateWordOffsets
-		# elif unit is textInfos.UNIT_CHARACTER:
-		# helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
-		# else:
-		# raise NotImplementedError(f"Unit: {unit}")
+
 		relStart = ctypes.c_int()
 		relEnd = ctypes.c_int()
 		# uniscribe does some strange things
@@ -165,7 +159,7 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 				# We need to convert the uniscribe based offsets to str offsets.
 				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
 			return (relStart, relEnd)
-		log.debugWarning(f"Uniscribe failed to calculate {unit} offsets for text {lineText!r}")
+		log.debugWarning(f"Uniscribe failed to calculate word offsets for text {lineText!r}")
 		return None
 
 	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:

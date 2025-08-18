@@ -550,17 +550,17 @@ class WordSegmenter:
 
 	# Precompiled patterns
 	# Chinese characters and Japanese kanjis (CJK Unified Ideographs) U+4E00 - U+9FFF
-	_HANZI = re.compile(r"[\u4E00-\u9FFF]")
+	_HANZI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
 	# Japanese kanas (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
-	_KANA = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
+	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
 
-	def __init__(self, text: str, encoding):
+	def __init__(self, text: str, encoding: str | None):
 		self.text = text
 		self.encoding = encoding
 		self.strategy = self._choose_strategy(self.text, self.encoding)
 
 	@staticmethod
-	def _choose_strategy(text: str, encoding) -> wordSegment.WordSegmentationStrategy:
+	def _choose_strategy(text: str, encoding: str | None) -> wordSegment.WordSegmentationStrategy:
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if WordSegmenter._HANZI.search(text) and not WordSegmenter._KANA.search(text):
 			return wordSegment.ChineseWordSegmentationStrategy(text, encoding)
