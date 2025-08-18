@@ -89,6 +89,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)
   * Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)
   * Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)
+  * When unicode normalization is on, navigating by character will again correctly announce combining diacritic characters like acute (\u0301). (#18722, @LeonarddeR)
 * Remote Access:
   * Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)
   * Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)

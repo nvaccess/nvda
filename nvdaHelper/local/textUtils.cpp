@@ -41,15 +41,20 @@ vector<SCRIPT_LOGATTR> _getLogAttrArray(const wchar_t* text, int textLength) {
 	vector<SCRIPT_LOGATTR> logAttrArray(textLength);
 	// The function always adds a terminal item to the item analysis array.
 	// numItems contains the number of actually processed items excluding the terminating item.
-	int nextICharPos = items[numItems].iCharPos;
+	int nextICharPos = textLength;  // should be equal to items[numItems].iCharPos
 	for (int itemIndex = numItems - 1; itemIndex >= 0; --itemIndex) {
 		int iCharPos = items[itemIndex].iCharPos;
 		int iCharLength = nextICharPos - iCharPos;
 		if ((hr = ScriptBreak(text + iCharPos, iCharLength, &(items[itemIndex].a), logAttrArray.data() + iCharPos)) != S_OK) {
-			LOG_ERROR(L"ScriptBreak failed for text '" << text << L"'at run " << itemIndex << L"; hr=" << hr);
+			LOG_ERROR(L"ScriptBreak failed for text '" << text << L"' at run " << itemIndex << L"; hr=" << hr);
 			return {};
 		}
-		nextICharPos = iCharPos;
+		// Note, ideally we'd set nextICharPos  to iCharPos, so that the
+		// next iteration of the loop will only call ScriptBreak for the text that belongs to the current item.
+		// Now that we don't do this, every call of ScriptBreak refills logAttrArray
+		// for the characters after this item based on the SCRIPT_ANALYSIS for the current item,
+		// effectively treating all the characters as belonging to the script at itemIndex = 0.
+		// However, resetting nextICharPos causes word segmentation to differ from the one used in notepad.
 	}
 	return logAttrArray;
 }
@@ -64,7 +69,7 @@ bool calculateCharacterBoundaries(const wchar_t* text, int textLength, int* offs
 	}
 	int count = 0;
 	for (int i = 0; i <= textLength; ++i) {
-		if (logAttrArray[i].fCharStop || i == textLength) {
+		if (i == textLength || logAttrArray[i].fCharStop) {
 			offsets[count++] = i;
 		}
 	}
@@ -96,6 +101,7 @@ bool _calculateUniscribeOffsets(enum UNIT unit, wchar_t* text, int textLength, i
 				break;
 			}
 		}
+		*endOffset = textLength;
 		for(int i=offset+1;i<textLength;++i) {
 			if (logAttrArray[i].fCharStop) {
 				*endOffset=i;
