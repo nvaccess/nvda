@@ -3,17 +3,21 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
 from locale import strxfrm
 from typing import (
+	Any,
 	FrozenSet,
 	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
+	Protocol,
 	TypeVar,
+	cast,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -35,9 +39,11 @@ from logHandler import log
 
 
 if TYPE_CHECKING:
-	# Remove when https://github.com/python/typing/issues/760 is resolved
-	from _typeshed import SupportsLessThan  # noqa: F401
 	from .store import AddonStoreVM
+
+	class _SupportsLessThan(Protocol):
+		@abstractmethod
+		def __lt__(self, other: Any) -> bool: ...
 
 
 @dataclass
@@ -405,13 +411,15 @@ class AddonListVM:
 			)
 		return columnChoices
 
-	def _getFilteredSortedIds(self) -> List[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+	def _getFilteredSortedIds(self) -> list[str]:
+		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
+					listItemVM.model = cast(_AddonStoreModel, listItemVM.model)
 					return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
+				listItemVM.model = cast(_AddonManifestModel, listItemVM.model)
 				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 

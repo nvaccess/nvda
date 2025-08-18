@@ -3,24 +3,22 @@ name: CI/CD
 on:
   push:
     branches:
-    - master
-    - beta
-    - rc
-    - 'try-**'
-    # Temporarily enabled during the 64bit migration
-    - wip-buildX64
-    # Currently disabled while the 2025.2 release is in progress.
-    # Blocked by #17878
-    # tags:
-    #  - 'release-**'
+      - master
+      - beta
+      - rc
+      - 'try-**'
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
+    tags:
+      - 'release-**'
 
   pull_request:
     branches:
-    - master
-    - beta
-    - rc
-    # Temporarily enabled during the 64bit migration
-    - wip-buildX64
+      - master
+      - beta
+      - rc
+      # Temporarily enabled during the 64bit migration
+      - wip-buildX64
 
 
   workflow_dispatch:
@@ -39,8 +37,8 @@ env:
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultArch: x86
   supportedArchitectures: '["x86"]'
-  defaultPythonVersion: '3.11.9'
-  supportedPythonVersions: '["3.11.9", "3.13.6"]'
+  defaultPythonVersion: '3.13.6'
+  supportedPythonVersions: '["3.13.6"]'
 
 jobs:
   matrix:
@@ -302,7 +300,7 @@ jobs:
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-      run: uv run --with requests --directory ${{ github.workspace }} appveyor\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+      run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 
   createLauncher:
     name: Create launcher
@@ -522,8 +520,7 @@ jobs:
         path: output
     - name: Upload symbols to Mozilla
       continue-on-error: true
-      # TODO: this script should be moved to ci/scripts
-      run: uv run --with requests --directory ${{ github.workspace }} appveyor\mozillaSyms.py
+      run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\mozillaSyms.py
       env:
         mozillaSymsAuthToken: ${{ secrets.MOZILLA_SYMS_TOKEN }}
     - name: Warn on failure

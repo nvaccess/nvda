@@ -25,7 +25,7 @@ You can build locally or download pre-built, details:
 - **Built with the release:**
   - Download the `*controllerClient.zip` from the releases folder: e.g. [Latest stable](https://download.nvaccess.org/releases/stable/)
 - **Latest, in development version:**
-  - The libraries are built by Appveyor (our CI).
+  - The libraries are built by GitHub Actions (our CI).
   - Downloads are available from the artifacts tab.
 - **Build them yourself:**
   - Follow the project `readme.txt` for general build requirements/dependencies.

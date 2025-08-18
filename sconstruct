@@ -45,6 +45,7 @@ import gettext  # noqa: E402
 
 gettext.install("nvda")
 sys.path.append("source")
+import buildVersion  # noqa: E402
 import versionInfo  # noqa: E402
 
 del sys.path[-1]
@@ -56,14 +57,14 @@ XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
 
 
 vars = Variables()
-vars.Add("version", "The version of this build", versionInfo.version)
+vars.Add("version", "The version of this build", buildVersion.version)
 vars.Add("version_build", "A unique number for this build.", "0")
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
-vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
+vars.Add("publisher", "The publisher of this build", buildVersion.publisher)
 vars.Add(
 	"updateVersionType",
 	"The version type for which to check for updates",
-	versionInfo.updateVersionType or "",
+	buildVersion.updateVersionType or "",
 )
 vars.Add(
 	PathVariable(
@@ -156,9 +157,9 @@ if len(unknown) > 0:
 	Exit(1)
 
 env["copyright"] = versionInfo.copyright
-env["version_year"] = versionInfo.version_year
-env["version_major"] = versionInfo.version_major
-env["version_minor"] = versionInfo.version_minor
+env["version_year"] = buildVersion.version_year
+env["version_major"] = buildVersion.version_major
+env["version_minor"] = buildVersion.version_minor
 version = env["version"]
 version_build = env["version_build"]
 release = env["release"]
@@ -197,7 +198,7 @@ if apiSigningToken:
 		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
-				ps_cmd = rf"PowerShell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				ps_cmd = rf"PowerShell -File ci\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
@@ -246,7 +247,7 @@ projectRCSubstDict = {
 	"%copyright%": env["copyright"],
 	"%publisher%": env["publisher"],
 	"%version%": env["version"],
-	"%productName%": "%s (%s)" % (versionInfo.name, versionInfo.longName),
+	"%productName%": "%s (%s)" % (buildVersion.name, versionInfo.longName),
 }
 resFile = env.RES(
 	target="build/nvda.res",
@@ -317,8 +318,8 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 		source=mdFile,
 		SUBST_DICT={
 			"NVDA_VERSION": env["version"],
-			"NVDA_URL": versionInfo.url,
-			"NVDA_COPYRIGHT_YEARS": versionInfo.copyrightYears,
+			"NVDA_URL": buildVersion.url,
+			"NVDA_COPYRIGHT_YEARS": buildVersion.copyrightYears,
 		},
 	)
 	lang = os.path.split(os.path.dirname(mdFile.path))[-1]
@@ -605,7 +606,7 @@ def makePot(target, source, env):
 					"-o",
 					target[0].abspath,
 					"--package-name",
-					versionInfo.name,
+					buildVersion.name,
 					"--package-version",
 					version,
 					"--foreign-user",
@@ -698,6 +699,5 @@ env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
 env.Tool("listModules")
 source = env.Dir(os.path.join(os.getcwd(), "dist"))
-# Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))

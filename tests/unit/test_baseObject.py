@@ -5,7 +5,6 @@
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
-import sys
 import unittest
 from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
@@ -149,14 +148,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 
 	@staticmethod
 	def _get_regex(className: str) -> str:
-		if sys.version_info.major == 3 and sys.version_info.minor == 13:
-			return rf"^Can't instantiate abstract class {className} without an implementation for abstract method 'x'"
-		elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-			return rf"^Can't instantiate abstract class {className} with abstract method x"
-		else:
-			raise RuntimeError(
-				f"Unsupported Python version for abstract property tests: {sys.version_info.major}.{sys.version_info.minor}",
-			)
+		return rf"^Can't instantiate abstract class {className} without an implementation for abstract method 'x'"
 
 	def test_abstractProperty(self):
 		self.assertRaisesRegex(
