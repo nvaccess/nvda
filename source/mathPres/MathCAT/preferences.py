@@ -102,7 +102,6 @@ class MathCATUserPreferences:
 
 	@staticmethod
 	def defaults() -> PreferencesDict:
-
 		def defaultValue(path: tuple[str]) -> str | int | bool:
 			return config.conf.getConfigValidation(path).default
 
