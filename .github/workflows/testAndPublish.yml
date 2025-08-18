@@ -540,7 +540,7 @@ jobs:
     permissions:
       actions: write
     needs: [matrix, allTestsPass, crowdinUpload, uploadSymbols]
-    if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -685,7 +685,8 @@ jobs:
           --prerelease \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
           --notes-file /tmp/releaseNotes.md \
-          --verify-tag
+          --verify-tag \
+          --discussion-category Releases
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       shell: bash
@@ -698,7 +699,12 @@ jobs:
           --notes-file /tmp/releaseNotes.md \
           --verify-tag \
           --discussion-category Releases
-        gh release upload ${{github.ref_name }} \
+    - name: Upload exe to release assets
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release upload ${{ github.ref_name }} \
             --repo ${{ github.repository }} \
             --clobber \
             output/nvda*.exe#Installer
