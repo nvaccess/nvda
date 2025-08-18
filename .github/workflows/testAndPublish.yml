@@ -704,7 +704,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh release upload ${{github.ref_name }} \
+        gh release upload ${{ github.ref_name }} \
             --repo ${{ github.repository }} \
             --clobber \
             output/nvda*.exe#Installer
