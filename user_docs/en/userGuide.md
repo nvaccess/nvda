@@ -1165,7 +1165,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses MathCAT by default for reading mathematical content.
+NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
