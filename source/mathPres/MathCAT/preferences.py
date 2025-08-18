@@ -1,6 +1,5 @@
 from enum import Enum
 import os
-from typing import TypeAlias
 
 import config
 import yaml
@@ -94,7 +93,7 @@ def toNVDAConfigKey(key: str) -> str:
 		return key[0].lower() + key[1:]
 
 
-PreferencesDict: TypeAlias = dict[str, dict[str, int | str | bool]]
+type PreferencesDict = dict[str, dict[str, int | str | bool]]
 
 
 class MathCATUserPreferences:
