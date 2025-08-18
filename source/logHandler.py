@@ -387,7 +387,7 @@ class RemoteHandler(logging.Handler):
 			case "win-amd64":
 				coreArchLibPath = os.path.join(versionedLibPath, "x64")
 			case "win-arm64":
-				coreArchLibPath = os.path.join(versionedLibPath, "arch64")
+				coreArchLibPath = os.path.join(versionedLibPath, "arm64")
 			case "win32":
 				coreArchLibPath = os.path.join(versionedLibPath, "x86")
 			case _:
