@@ -16,6 +16,20 @@ import onnxruntime as ort
 
 from logHandler import log
 
+from .modelConfig import (
+	_EncoderConfig,
+	_DecoderConfig,
+	_GenerationConfig,
+	_ModelConfig,
+	_PreprocessorConfig,
+	_DEFAULT_ENCODER_CONFIG,
+	_DEFAULT_DECODER_CONFIG,
+	_DEFAULT_GENERATION_CONFIG,
+	_DEFAULT_MODEL_CONFIG,
+	_DEFAULT_PREPROCESSOR_CONFIG,
+	_createConfigFromDict,
+)
+
 
 class ImageCaptioner(ABC):
 	"""Abstract interface for image caption generation.
@@ -45,27 +59,27 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 	def __init__(
 		self,
-		encoder_path: str,
-		decoder_path: str,
-		config_path: str,
+		encoderPath: str,
+		decoderPath: str,
+		configPath: str,
 		enableProfiling: bool = False,
 	) -> None:
 		"""Initialize the lightweight ONNX image captioning model.
 
-		:param encoder_path: Path to the ViT encoder ONNX model.
-		:param decoder_path: Path to the GPT-2 decoder ONNX model.
-		:param config_path: Path to the configuration file (required).
+		:param encoderPath: Path to the ViT encoder ONNX model.
+		:param decoderPath: Path to the GPT-2 decoder ONNX model.
+		:param configPath: Path to the configuration file (required).
 		:param enableProfiling: Whether to enable ONNX Runtime profiling.
 		:raisesFileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
 		# Load configuration file
 		try:
-			with open(config_path, "r", encoding="utf-8") as f:
+			with open(configPath, "r", encoding="utf-8") as f:
 				self.config = json.load(f)
 		except FileNotFoundError:
 			raise FileNotFoundError(
-				f"Caption model config file {config_path} not found, "
+				f"Caption model config file {configPath} not found, "
 				"please download models and config file first!",
 			)
 		except Exception as e:
@@ -73,10 +87,13 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			raise
 
 		# Load vocabulary from vocab.json in the same directory as config
-		configDir = os.path.dirname(config_path)
+		configDir = os.path.dirname(configPath)
 		vocabPath = os.path.join(configDir, "vocab.json")
 		self.vocab = self._loadVocab(vocabPath)
 		self.vocabSize = len(self.vocab)
+
+		preprocessorPath = os.path.join(configDir, "preprocessor_config.json")
+		self.preprocessorConfig = self._loadPreprocessorConfig(preprocessorPath)
 
 		# Load all model parameters from configuration
 		self._loadModelParams()
@@ -88,8 +105,8 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		# Load ONNX models
 		try:
-			self.encoderSession = ort.InferenceSession(encoder_path, sess_options=sessionOptions)
-			self.decoderSession = ort.InferenceSession(decoder_path, sess_options=sessionOptions)
+			self.encoderSession = ort.InferenceSession(encoderPath, sess_options=sessionOptions)
+			self.decoderSession = ort.InferenceSession(decoderPath, sess_options=sessionOptions)
 		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
 			raise FileNotFoundError(
 				"model file incomplete"
@@ -97,48 +114,32 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			) from e
 
 		log.info(
-			f"Loaded ONNX models - Encoder: {os.path.basename(encoder_path)}, Decoder: {os.path.basename(decoder_path)}",
+			f"Loaded ONNX models - Encoder: {os.path.basename(encoderPath)}, Decoder: {os.path.basename(decoderPath)}",
 		)
-		log.info(f"Loaded config from: {os.path.realpath(config_path)}")
-		log.info(f"Loaded vocabulary from: {os.path.basename(vocabPath)}")
-		log.info(f"Model config - Image size: {self.imageSize}, Max length: {self.maxLength}")
+		log.info(f"Loaded config : {os.path.basename(configPath)}")
+		log.info(f"Loaded vocabulary : {os.path.basename(vocabPath)}")
+		log.info(
+			f"Model config - Image size: {self.encoderConfig.image_size}, Max length: {self.decoderConfig.max_length}"
+		)
 
 	def _loadModelParams(self) -> None:
 		"""Load all model parameters from configuration file."""
-		# Encoder parameters
-		encoderConfig = self.config.get("encoder", {})
-		self.imageSize = encoderConfig.get("image_size", 224)
-		self.numChannels = encoderConfig.get("num_channels", 3)
-		self.patchSize = encoderConfig.get("patch_size", 16)
-		self.encoderHiddenSize = encoderConfig.get("hidden_size", 768)
-		self.encoderNumLayers = encoderConfig.get("num_hidden_layers", 12)
-		self.encoderNumHeads = encoderConfig.get("num_attention_heads", 12)
-		self.encoderIntermediateSize = encoderConfig.get("intermediate_size", 3072)
+		# Load encoder configuration
+		encoder_dict = self.config.get("encoder", {})
+		self.encoderConfig = _createConfigFromDict(_EncoderConfig, encoder_dict, _DEFAULT_ENCODER_CONFIG)
 
-		# Decoder parameters
-		decoderConfig = self.config.get("decoder", {})
-		self.maxLength = decoderConfig.get("max_length", 20)
-		self.decoderVocabSize = decoderConfig.get("vocab_size", 50257)
-		self.nEmbd = decoderConfig.get("n_embd", 768)
-		self.nLayer = decoderConfig.get("n_layer", 12)
-		self.nHead = decoderConfig.get("n_head", 12)
-		self.nCtx = decoderConfig.get("n_ctx", 1024)
-		self.nPositions = decoderConfig.get("n_positions", 1024)
+		# Load decoder configuration
+		decoder_dict = self.config.get("decoder", {})
+		self.decoderConfig = _createConfigFromDict(_DecoderConfig, decoder_dict, _DEFAULT_DECODER_CONFIG)
 
-		# Special token IDs
-		self.bosTokenId = self.config.get("bos_token_id", 50256)
-		self.eosTokenId = self.config.get("eos_token_id", 50256)
-		self.padTokenId = self.config.get("pad_token_id", 50256)
+		# Load generation configuration
+		generation_dict = self.config.get("generation", {})
+		self.generationConfig = _createConfigFromDict(
+			_GenerationConfig, generation_dict, _DEFAULT_GENERATION_CONFIG
+		)
 
-		# Generation parameters
-		generationConfig = self.config.get("generation", {})
-		self.doSample = generationConfig.get("do_sample", False)
-		self.numBeams = generationConfig.get("num_beams", 1)
-		self.temperature = generationConfig.get("temperature", 1.0)
-		self.topK = generationConfig.get("top_k", 50)
-		self.topP = generationConfig.get("top_p", 1.0)
-		self.repetitionPenalty = generationConfig.get("repetition_penalty", 1.0)
-		self.lengthPenalty = generationConfig.get("length_penalty", 1.0)
+		# Load main model configuration
+		self.modelConfig = _createConfigFromDict(_ModelConfig, self.config, _DEFAULT_MODEL_CONFIG)
 
 	def _loadVocab(self, vocabPath: str) -> dict[int, str]:
 		"""Load vocabulary file.
@@ -162,27 +163,63 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			log.exception(f"Could not load vocabulary from {vocabPath}")
 			raise
 
-	def preprocessImage(self, image: str | bytes) -> np.ndarray:
-		"""Preprocess image for model input.
+	def _loadPreprocessorConfig(self, preprocessorPath: str) -> _PreprocessorConfig:
+		"""Load preprocessor configuration from preprocessor_config.json."""
+		try:
+			with open(preprocessorPath, "r", encoding="utf-8") as f:
+				preprocessor_dict = json.load(f)
+
+			return _createConfigFromDict(
+				_PreprocessorConfig,
+				preprocessor_dict,
+				_DEFAULT_PREPROCESSOR_CONFIG,
+			)
+		except FileNotFoundError:
+			log.warning("Preprocessor config not found, using defaults")
+			return _DEFAULT_PREPROCESSOR_CONFIG
+
+	def _preprocessImage(self, image: str | bytes) -> np.ndarray:
+		"""Preprocess image for model input using external configuration.
 
 		:param image: Image file path or binary data.
 		:return: Preprocessed image array ready for model input.
 		"""
+		# Load image
 		if isinstance(image, str):
 			img = Image.open(image).convert("RGB")
 		else:
 			img = Image.open(io.BytesIO(image)).convert("RGB")
 
-		# Resize image
-		img = img.resize((self.imageSize, self.imageSize), Image.LANCZOS)
+		# Resize image if configured
+		if self.preprocessorConfig.do_resize:
+			target_size = (
+				self.preprocessorConfig.size["width"],
+				self.preprocessorConfig.size["height"],
+			)
+			# Map resample integer to PIL constant
+			resample_map = {
+				0: Image.NEAREST,
+				1: Image.LANCZOS,
+				2: Image.BILINEAR,
+				3: Image.BICUBIC,
+				4: Image.BOX,
+				5: Image.HAMMING,
+			}
+			resample_method = resample_map.get(self.preprocessorConfig.resample, Image.LANCZOS)
+			img = img.resize(target_size, resample_method)
 
-		# Convert to numpy array and normalize to [0, 1]
-		imgArray = np.array(img).astype(np.float32) / 255.0
+		# Convert to numpy array
+		imgArray = np.array(img).astype(np.float32)
 
-		# ImageNet normalization
-		mean = np.array([0.485, 0.456, 0.406])
-		std = np.array([0.229, 0.224, 0.225])
-		imgArray = (imgArray - mean) / std
+		# Rescale if configured (typically from [0, 255] to [0, 1])
+		if self.preprocessorConfig.do_rescale:
+			imgArray = imgArray * self.preprocessorConfig.rescale_factor
+
+		# Normalize if configured
+		if self.preprocessorConfig.do_normalize:
+			mean = np.array(self.preprocessorConfig.image_mean, dtype=np.float32)
+			std = np.array(self.preprocessorConfig.image_std, dtype=np.float32)
+			imgArray = (imgArray - mean) / std
 
 		# Adjust dimensions: (H, W, C) -> (1, C, H, W)
 		imgArray = np.transpose(imgArray, (2, 0, 1))
@@ -190,7 +227,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		return imgArray
 
-	def encodeImage(self, imageArray: np.ndarray) -> np.ndarray:
+	def _encodeImage(self, imageArray: np.ndarray) -> np.ndarray:
 		"""Encode image using ViT encoder.
 
 		:param imageArray: Preprocessed image array.
@@ -206,7 +243,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		# Return last hidden state
 		return encoderOutputs[0]
 
-	def decodeTokens(self, tokenIds: list[int]) -> str:
+	def _decodeTokens(self, tokenIds: list[int]) -> str:
 		"""Decode token IDs to text.
 
 		:param tokenIds: List of token IDs.
@@ -229,14 +266,14 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		return text
 
-	def getDecoderInputNames(self) -> list[str]:
+	def _getDecoderInputNames(self) -> list[str]:
 		"""Get decoder input names for debugging.
 
 		:returns: List of decoder input names.
 		"""
 		return [inp.name for inp in self.decoderSession.get_inputs()]
 
-	def getDecoderOutputNames(self) -> list[str]:
+	def _getDecoderOutputNames(self) -> list[str]:
 		"""Get decoder output names for debugging.
 
 		:return: List of decoder output names.
@@ -252,13 +289,13 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		pastKeyValues = {}
 
 		# Create key and value for each layer
-		for layerIdx in range(self.nLayer):
+		for layerIdx in range(self.decoderConfig.n_layer):
 			# Key and value shape: (batch_size, num_heads, 0, head_dim)
 			# Initial sequence length is 0
-			headDim = self.nEmbd // self.nHead
+			headDim = self.decoderConfig.n_embd // self.decoderConfig.n_head
 
-			keyShape = (batchSize, self.nHead, 0, headDim)
-			valueShape = (batchSize, self.nHead, 0, headDim)
+			keyShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
+			valueShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
 
 			pastKeyValues[f"past_key_values.{layerIdx}.key"] = np.zeros(keyShape, dtype=np.float32)
 			pastKeyValues[f"past_key_values.{layerIdx}.value"] = np.zeros(valueShape, dtype=np.float32)
@@ -278,10 +315,10 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:return: Generated text string.
 		"""
 		if maxLength is None:
-			maxLength = self.maxLength
+			maxLength = self.decoderConfig.max_length
 
 		# Initialize input sequence
-		inputIds = np.array([[self.bosTokenId]], dtype=np.int64)
+		inputIds = np.array([[self.modelConfig.bos_token_id]], dtype=np.int64)
 		generatedTokens = []
 
 		# Initialize past_key_values
@@ -307,26 +344,27 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			nextTokenId = int(np.argmax(nextTokenLogits))
 
 			# Check if generation should end
-			if nextTokenId == self.eosTokenId:
+			if nextTokenId == self.modelConfig.eos_token_id:
 				break
 
 			generatedTokens.append(nextTokenId)
 
 			# Update past_key_values from outputs
 			if len(decoderOutputs) > 1:
-				for layerIdx in range(self.nLayer):
+				for layerIdx in range(self.decoderConfig.n_layer):
 					if len(decoderOutputs) > 1 + layerIdx * 2 + 1:
-						pastKeyValues[f"past_key_values.{layerIdx}.key"] = decoderOutputs[1 + layerIdx * 2]
-						pastKeyValues[f"past_key_values.{layerIdx}.value"] = decoderOutputs[
-							1 + layerIdx * 2 + 1
-						]
+						# [3] -> layer1 key, [4] -> layer1 value
+						keyIndex = 1 + layerIdx * 2
+						valueIndex = keyIndex + 1
+						pastKeyValues[f"past_key_values.{layerIdx}.key"] = decoderOutputs[keyIndex]
+						pastKeyValues[f"past_key_values.{layerIdx}.value"] = decoderOutputs[valueIndex]
 
 			# Avoid sequences that are too long
-			if len(generatedTokens) >= self.nCtx - 1:
+			if len(generatedTokens) >= self.decoderConfig.n_ctx - 1:
 				break
 
 		# Decode generated text
-		return self.decodeTokens(generatedTokens)
+		return self._decodeTokens(generatedTokens)
 
 	def generateCaption(
 		self,
@@ -340,54 +378,54 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:return: Generated image caption.
 		"""
 		# Preprocess image
-		imageArray = self.preprocessImage(image)
+		imageArray = self._preprocessImage(image)
 
 		# Encode image
-		encoderHiddenStates = self.encodeImage(imageArray)
+		encoderHiddenStates = self._encodeImage(imageArray)
 
 		# Generate text
-		caption = self.generateWithGreedy(encoderHiddenStates, maxLength)
+		caption = self._generateWithGreedy(encoderHiddenStates, maxLength)
 
 		return caption
 
 
 def imageCaptionerFactory(
-	config_path: str,
-	encoder_path: str | None = None,
-	decoder_path: str | None = None,
-	monomeric_model_path: str | None = None,
+	configPath: str,
+	encoderPath: str | None = None,
+	decoderPath: str | None = None,
+	monomericModelPath: str | None = None,
 ) -> ImageCaptioner:
 	"""Initialize the image caption generator.
 
-	:param monomeric_model_path: Path to a single merged model file.
-	:param encoder_path: Path to the encoder model file.
-	:param decoder_path: Path to the decoder model file.
-	:param config_path: Path to the configuration file.
+	:param monomericModelPath: Path to a single merged model file.
+	:param encoderPath: Path to the encoder model file.
+	:param decoderPath: Path to the decoder model file.
+	:param configPath: Path to the configuration file.
 	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
 	:raises FileNotFoundError: If config file not found.
 	:raises NotImplementedError: if model architecture is unsupported
 	:raises Exception: If config.json fail to load.
 	:return: instance of ImageCaptioner
 	"""
-	if not monomeric_model_path and not (encoder_path and decoder_path):
+	if not monomericModelPath and not (encoderPath and decoderPath):
 		raise ValueError(
-			"You must provide either 'monomeric_model_path' or both 'encoder_path' and 'decoder_path'.",
+			"You must provide either 'monomericModelPath' or both 'encoderPath' and 'decoderPath'.",
 		)
 
 	try:
-		with open(config_path, "r", encoding="utf-8") as f:
+		with open(configPath, "r", encoding="utf-8") as f:
 			config = json.load(f)
 	except FileNotFoundError:
 		raise FileNotFoundError(
-			f"Caption model config file {config_path} not found, "
+			f"Caption model config file {configPath} not found, "
 			"please download models and config file first!",
 		)
 	except Exception as e:
 		log.exception(e)
 		raise
 
-	model_architecture = config["architectures"][0]
-	if model_architecture == "VisionEncoderDecoderModel":
-		return VitGpt2ImageCaptioner(encoder_path, decoder_path, config_path)
+	modelArchitecture = config["architectures"][0]
+	if modelArchitecture == "VisionEncoderDecoderModel":
+		return VitGpt2ImageCaptioner(encoderPath, decoderPath, configPath)
 	else:
 		raise NotImplementedError("Unsupported model architectures")

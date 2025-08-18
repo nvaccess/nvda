@@ -3638,8 +3638,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 
 class LocalCaptionerSettingsPanel(SettingsPanel):
-	"""Settings panel for Local captioner configuration.
-	"""
+	"""Settings panel for Local captioner configuration."""
 
 	# Translators: This is the label for the local captioner settings panel.
 	title = pgettext("imageDesc", "AI Image Descriptions")
@@ -3661,11 +3660,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
 
 	def onSave(self) -> None:
-		"""Save the configuration settings.
-
-		Only saves if operating in the default profile to prevent
-		configuration issues with custom profiles.
-		"""
+		"""Save the configuration settings."""
 		enabled = self.enable.GetValue()
 		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
 
@@ -3675,13 +3670,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			if enabled != _localCaptioner.isModelLoaded():
 				_localCaptioner.toggleImageCaptioning()
 
-		# Make sure we're operating in the "normal" profile
-		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
-			config.conf["automatedImageDescriptions"]["enable"] = self.enable.GetValue()
-		else:
-			log.debugWarning(
-				"No configuration saved for automatedImageDescriptions since the current profile is not the default one.",
-			)
+		config.conf["automatedImageDescriptions"]["enable"] = enabled
 
 
 class TouchInteractionPanel(SettingsPanel):

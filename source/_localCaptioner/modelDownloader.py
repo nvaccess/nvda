@@ -23,8 +23,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
 from urllib3.util.retry import Retry
-import wx
-from wx import Frame, Event
+from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 
 from logHandler import log
 import config
@@ -418,7 +417,7 @@ class ModelDownloader:
 
 	def downloadModelsMultithreaded(
 		self,
-		modelsDir: str,
+		modelsDir: str = "models",
 		modelName: str = "Xenova/vit-gpt2-image-captioning",
 		filesToDownload: list[str] | None = None,
 		resolvePath: str = "/resolve/main",
@@ -442,6 +441,7 @@ class ModelDownloader:
 			"onnx/decoder_model_merged_quantized.onnx",
 			"config.json",
 			"vocab.json",
+			"preprocessor_config.json",
 		]
 
 		if not filesToDownload:
@@ -514,187 +514,31 @@ class ModelDownloader:
 
 		return successful, failed
 
-	def getModelFilePaths(self, modelName: str = "Xenova/vit-gpt2-image-captioning") -> dict[str, str]:
-		"""
-		Return absolute paths for encoder / decoder / config / vocab.
-
-		:param modelName: Repository name.
-		:return: Dictionary containing model file paths.
-		"""
-		modelsDir = self.ensureModelsDirectory()
-		localDir = os.path.join(modelsDir, modelName)
-		return {
-			"encoderPath": os.path.join(localDir, "onnx", "encoder_model_quantized.onnx"),
-			"decoderPath": os.path.join(localDir, "onnx", "decoder_model_merged_quantized.onnx"),
-			"configPath": os.path.join(localDir, "config.json"),
-			"vocabPath": os.path.join(localDir, "vocab.json"),
-			"modelDir": localDir,
-		}
-
 	def __del__(self):
 		"""Clean up the session when the downloader is destroyed."""
 		if hasattr(self, "session"):
 			self.session.close()
 
 
-class DownloadDialog(wx.Dialog):
-	def __init__(self, parent: Frame, downloader: ModelDownloader):
-		"""create default model download dialog
-
-		:param parent: parent wx frame
-		:param downloader: default model downloader
-		"""
-		# Translators: title of dialog when downloading default model
-		super().__init__(parent, title=pgettext("imageDesc", "AI Image Description"), size=(350, 180))
-		self.downloader = downloader
-		self.retryRequested = False
-		self.downloadThread = None
-
-		vbox = wx.BoxSizer(wx.VERTICAL)
-
-		# Translators: label of dialog when downloading default model
-		self.statusText = wx.StaticText(self, label=pgettext("imageDesc", "Download default model?"))
-		vbox.Add(self.statusText, 0, wx.ALL | wx.CENTER, 10)
-
-		buttonSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-		vbox.Add(buttonSizer, 0, wx.ALL | wx.CENTER, 10)
-
-		self.SetSizer(vbox)
-
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
-
-	def onOk(self, event: Event):
-		"""on ok event
-
-		:param event:		 wx event when choose ok
-		"""
-		# Translators: label when downloading model
-		self.statusText.SetLabel(pgettext("imageDesc", "Downloading, please wait..."))
-		okButton = self.FindWindowById(wx.ID_OK)
-		cancelButton = self.FindWindowById(wx.ID_CANCEL)
-
-		if okButton:
-			okButton.Disable()
-		if cancelButton:
-			# Translators: cancel button label
-			cancelButton.SetLabel(pgettext("imageDesc", "Cancel"))
-
-		# Reset cancellation state for new download
-		self.downloader.resetCancellation()
-
-		self.downloadThread = threading.Thread(target=self.performDownload, daemon=True)
-		self.downloadThread.start()
-
-	def onCancel(self, event: Event):
-		"""on cancel event
-
-		:param event:		 wx event when choose cancel
-		"""
-
-		if self.downloadThread and self.downloadThread.is_alive():
-			# Request cancellation
-			self.downloader.requestCancel()
-			# Translators: Message when cancelling download the model
-			self.statusText.SetLabel(pgettext("imageDesc", "Cancelling download..."))
-
-			# Wait briefly for cancellation to take effect
-			wx.CallLater(1000, self.checkCancellationComplete)
-		else:
-			self.EndModal(wx.ID_CANCEL)
-
-	def onClose(self, event: Event):
-		"""Handle window close event (X button)
-
-		:param event:		 wx event when choose close
-		"""
-		if self.downloadThread and self.downloadThread.is_alive():
-			self.downloader.requestCancel()
-			# Wait briefly for cancellation
-			wx.CallLater(1000, lambda: self.Destroy())
-		else:
-			self.Destroy()
-
-	def checkCancellationComplete(self):
-		"""Check if cancellation is complete and close dialog."""
-		if not self.downloadThread or not self.downloadThread.is_alive():
-			self.EndModal(wx.ID_CANCEL)
-		else:
-			# Check again in a bit
-			wx.CallLater(500, self.checkCancellationComplete)
-
-	def performDownload(self):
-		try:
-			successful, failed = self.downloader.downloadModelsMultithreaded(modelsDir="models")
-			wx.CallAfter(self.onDownloadComplete, successful, failed)
-		except Exception:
-			log.exception("Download error")
-			# Translators: message when fail to download
-			wx.CallAfter(self.onDownloadError, pgettext("imageDesc", "download fail"))
-
-	def onDownloadComplete(self, successful: list[str], failed: list[str]):
-		"""on download complete
-
-		:param success: successful downloaded files
-		:param failed: files fail to downloaded
-		"""
-		if self.downloader.cancelRequested:
-			self.EndModal(wx.ID_CANCEL)
-			return
-
-		if failed:
-			# Translators: message when fail to download
-			msg = pgettext("imageDesc", "Some downloads failed, \nRetry?")
-			dlg = wx.MessageDialog(self, msg, "Download Failed", style=wx.YES_NO | wx.ICON_WARNING)
-			result = dlg.ShowModal()
-			dlg.Destroy()
-
-			if result == wx.ID_YES:
-				# Re-enable the OK button and restart download
-				okButton = self.FindWindowById(wx.ID_OK)
-				cancelButton = self.FindWindowById(wx.ID_CANCEL)
-
-				if okButton:
-					okButton.Enable()
-				if cancelButton:
-					# Translators: cancel downloading model
-					cancelButton.SetLabel(pgettext("imageDesc", "Cancel"))
-
-				self.onOk(None)  # Restart download
-			else:
-				self.EndModal(wx.ID_CANCEL)
-		else:
-			wx.MessageBox(
-				# Translators: Message when successful download the model
-				pgettext("imageDesc", "Download completed!"),
-				# Translators: title when successful download the model
-				pgettext("imageDesc", "Success"),
-				wx.OK | wx.ICON_INFORMATION,
-			)
-			self.EndModal(wx.ID_OK)
-
-	def onDownloadError(self, errorMessage: str):
-		wx.MessageBox(f"Download error: {errorMessage}", "Error", wx.OK | wx.ICON_ERROR)
-		self.EndModal(wx.ID_CANCEL)
-
-
 def openDownloadDialog() -> None:
-	"""Open the model downloader frame window."""
+	confirmation_buttons = (
+		DefaultButton.YES,
+		DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
+	)
 
-	def showDialog() -> None:
-		"""Show the model dialog window."""
-		try:
-			frame = wx.Frame(None)
-			downloader = ModelDownloader()
-			dlg = DownloadDialog(frame, downloader)
-			result = dlg.ShowModal()
-			dlg.Destroy()
-			frame.Destroy()
-			return result
-		except Exception:
-			log.exception("Model downloder")
-			return wx.ID_CANCEL
+	dialog = MessageDialog(
+		parent=None,
+		# Translators: title of dialog when downloading Image captioning
+		title=pgettext("imageDesc", "Confirm download"),
+		message=pgettext(
+			"imageDesc",
+			# Translators: label of dialog when downloading image captioning
+			"Image captioning not installed. Would you like to install (235 MB)?",
+		),
+		dialogType=DialogType.WARNING,
+		buttons=confirmation_buttons,
+	)
 
-	# Ensure execution in main thread
-	wx.CallAfter(showDialog)
+	if dialog.ShowModal() == ReturnCode.YES:
+		downloader = ModelDownloader()
+		threading.Thread(target=downloader.downloadModelsMultithreaded).start()

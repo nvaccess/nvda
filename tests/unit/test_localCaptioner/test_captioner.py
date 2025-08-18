@@ -81,13 +81,13 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		}
 
 		# File paths
-		self.config_path = os.path.join(self.test_dir, "config.json")
+		self.configPath = os.path.join(self.test_dir, "config.json")
 		self.vocab_path = os.path.join(self.test_dir, "vocab.json")
-		self.encoder_path = "mock_encoder.onnx"
-		self.decoder_path = "mock_decoder.onnx"
+		self.encoderPath = "mock_encoder.onnx"
+		self.decoderPath = "mock_decoder.onnx"
 
 		# Write config and vocab files
-		with open(self.config_path, "w", encoding="utf-8") as f:
+		with open(self.configPath, "w", encoding="utf-8") as f:
 			json.dump(self.config_data, f)
 		with open(self.vocab_path, "w", encoding="utf-8") as f:
 			json.dump(self.vocab_data, f)
@@ -106,14 +106,13 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 
-		self.assertEqual(captioner.imageSize, 224)
-		self.assertEqual(captioner.maxLength, 20)
-		self.assertEqual(captioner.bosTokenId, 50256)
+		self.assertEqual(captioner.decoderConfig.max_length, 20)
+		self.assertEqual(captioner.modelConfig.bos_token_id, 50256)
 		self.assertEqual(captioner.vocabSize, len(self.vocab_data))
 		self.assertEqual(mock_session.call_count, 2)
 
@@ -121,9 +120,9 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		"""Test missing config file raises error."""
 		with self.assertRaises(FileNotFoundError) as context:
 			VitGpt2ImageCaptioner(
-				encoder_path=self.encoder_path,
-				decoder_path=self.decoder_path,
-				config_path="nonexistent_config.json",
+				encoderPath=self.encoderPath,
+				decoderPath=self.decoderPath,
+				configPath="nonexistent_config.json",
 			)
 		self.assertIn("config file", str(context.exception))
 
@@ -131,9 +130,9 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_loadVocabSuccess(self, mock_session):
 		"""Test vocabulary loads successfully."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		expected_vocab = {v: k for k, v in self.vocab_data.items()}
 		self.assertEqual(captioner.vocab, expected_vocab)
@@ -142,36 +141,36 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_preprocessImageFromPath(self, mock_session):
 		"""Test preprocessing image from file path."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		test_image = Image.new("RGB", (100, 100), color="red")
 		test_image_path = os.path.join(self.test_dir, "test_image.jpg")
 		test_image.save(test_image_path)
 
-		result = captioner.preprocessImage(test_image_path)
+		result = captioner._preprocessImage(test_image_path)
 
 		self.assertEqual(result.shape, (1, 3, 224, 224))
-		self.assertEqual(result.dtype, np.float64)
+		self.assertEqual(result.dtype, np.float32)
 
 	@patch("onnxruntime.InferenceSession")
 	def test_preprocessImageFromBytes(self, mock_session):
 		"""Test preprocessing image from byte input."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		test_image = Image.new("RGB", (100, 100), color="blue")
 		img_bytes = io.BytesIO()
 		test_image.save(img_bytes, format="PNG")
 		img_bytes = img_bytes.getvalue()
 
-		result = captioner.preprocessImage(img_bytes)
+		result = captioner._preprocessImage(img_bytes)
 
 		self.assertEqual(result.shape, (1, 3, 224, 224))
-		self.assertEqual(result.dtype, np.float64)
+		self.assertEqual(result.dtype, np.float32)
 
 	@patch("onnxruntime.InferenceSession")
 	def test_encodeImage(self, mock_session):
@@ -185,13 +184,13 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 
 		test_input = np.random.randn(1, 3, 224, 224).astype(np.float32)
-		result = captioner.encodeImage(test_input)
+		result = captioner._encodeImage(test_input)
 
 		np.testing.assert_array_equal(result, mock_encoder_output)
 		mock_encoder.run.assert_called_once()
@@ -200,12 +199,12 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_decodeTokens(self, mock_session):
 		"""Test decoding tokens to text."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		token_ids = [1, 2, 4, 5]
-		result = captioner.decodeTokens(token_ids)
+		result = captioner._decodeTokens(token_ids)
 		expected = "the cat is sitting"
 		self.assertEqual(result, expected)
 
@@ -213,12 +212,12 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_decodeTokensWithSpecialTokens(self, mock_session):
 		"""Test decoding tokens with special tokens removed."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		token_ids = [50256, 1, 2, 50256]
-		result = captioner.decodeTokens(token_ids)
+		result = captioner._decodeTokens(token_ids)
 		expected = "the cat"
 		self.assertEqual(result, expected)
 
@@ -226,20 +225,25 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_initializePastKeyValues(self, mock_session):
 		"""Test initialization of past key values."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		past_kv = captioner._initializePastKeyValues(batchSize=1)
-		expected_count = captioner.nLayer * 2
+		expected_count = captioner.decoderConfig.n_layer * 2
 		self.assertEqual(len(past_kv), expected_count)
 
-		for layer_idx in range(captioner.nLayer):
+		for layer_idx in range(captioner.decoderConfig.n_layer):
 			key_name = f"past_key_values.{layer_idx}.key"
 			value_name = f"past_key_values.{layer_idx}.value"
 			self.assertIn(key_name, past_kv)
 			self.assertIn(value_name, past_kv)
-			expected_shape = (1, captioner.nHead, 0, captioner.nEmbd // captioner.nHead)
+			expected_shape = (
+				1,
+				captioner.decoderConfig.n_head,
+				0,
+				captioner.decoderConfig.n_embd // captioner.decoderConfig.n_head,
+			)
 			self.assertEqual(past_kv[key_name].shape, expected_shape)
 			self.assertEqual(past_kv[value_name].shape, expected_shape)
 
@@ -265,12 +269,12 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 		encoder_states = np.random.randn(1, 196, 768).astype(np.float32)
-		result = captioner.generateWithGreedy(encoder_states, maxLength=5)
+		result = captioner._generateWithGreedy(encoder_states, maxLength=5)
 		self.assertEqual(result, "cat")
 
 	@patch("onnxruntime.InferenceSession")
@@ -288,21 +292,21 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		mock_session.side_effect = [mock_encoder, mock_decoder]
 
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 
-		input_names = captioner.getDecoderInputNames()
+		input_names = captioner._getDecoderInputNames()
 		self.assertEqual(input_names, ["input_ids"])
 
-		output_names = captioner.getDecoderOutputNames()
+		output_names = captioner._getDecoderOutputNames()
 		self.assertEqual(output_names, ["logits"])
 
 	@patch("onnxruntime.InferenceSession")
-	@patch.object(VitGpt2ImageCaptioner, "preprocessImage")
-	@patch.object(VitGpt2ImageCaptioner, "encodeImage")
-	@patch.object(VitGpt2ImageCaptioner, "generateWithGreedy")
+	@patch.object(VitGpt2ImageCaptioner, "_preprocessImage")
+	@patch.object(VitGpt2ImageCaptioner, "_encodeImage")
+	@patch.object(VitGpt2ImageCaptioner, "_generateWithGreedy")
 	def test_generateCaptionIntegration(self, mock_greedy, mock_encode, mock_preprocess, mock_session):
 		"""Test full caption generation pipeline integration."""
 		mock_preprocess.return_value = np.random.randn(1, 3, 224, 224)
@@ -310,9 +314,9 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		mock_greedy.return_value = "a cat sitting on a table"
 
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
 
 		result = captioner.generateCaption("test_image.jpg")
@@ -326,24 +330,17 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 	def test_configParameterLoading(self, mock_session):
 		"""Test full config parameter parsing."""
 		captioner = VitGpt2ImageCaptioner(
-			encoder_path=self.encoder_path,
-			decoder_path=self.decoder_path,
-			config_path=self.config_path,
+			encoderPath=self.encoderPath,
+			decoderPath=self.decoderPath,
+			configPath=self.configPath,
 		)
-		self.assertEqual(captioner.imageSize, 224)
-		self.assertEqual(captioner.numChannels, 3)
-		self.assertEqual(captioner.patchSize, 16)
-		self.assertEqual(captioner.encoderHiddenSize, 768)
-		self.assertEqual(captioner.maxLength, 20)
-		self.assertEqual(captioner.decoderVocabSize, 50257)
-		self.assertEqual(captioner.nEmbd, 768)
-		self.assertEqual(captioner.nLayer, 12)
-		self.assertEqual(captioner.bosTokenId, 50256)
-		self.assertEqual(captioner.eosTokenId, 50256)
-		self.assertEqual(captioner.padTokenId, 50256)
-		self.assertEqual(captioner.doSample, False)
-		self.assertEqual(captioner.numBeams, 1)
-		self.assertEqual(captioner.temperature, 1.0)
+		self.assertEqual(captioner.encoderConfig.num_channels, 3)
+		self.assertEqual(captioner.decoderConfig.max_length, 20)
+		self.assertEqual(captioner.decoderConfig.n_embd, 768)
+		self.assertEqual(captioner.decoderConfig.n_layer, 12)
+		self.assertEqual(captioner.modelConfig.bos_token_id, 50256)
+		self.assertEqual(captioner.modelConfig.eos_token_id, 50256)
+		self.assertEqual(captioner.modelConfig.pad_token_id, 50256)
 
 
 if __name__ == "__main__":

@@ -134,11 +134,11 @@ class ImageDescriber:
 
 		try:
 			self.captioner = imageCaptionerFactory(
-				encoder_path=encoderPath,
-				decoder_path=decoderPath,
-				config_path=configPath,
+				encoderPath=encoderPath,
+				decoderPath=decoderPath,
+				configPath=configPath,
 			)
-		except FileNotFoundError as e:
+		except FileNotFoundError:
 			self.isModelLoaded = False
 			from .modelDownloader import openDownloadDialog
 

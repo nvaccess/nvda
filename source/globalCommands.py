@@ -3454,7 +3454,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for go to local captioner settings command.
-		description=pgettext("imageDesc", "Shows the local captioner settings"),
+		description=pgettext("imageDesc", "Shows the AI image descriptions settings"),
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
@@ -5065,23 +5065,6 @@ class GlobalCommands(ScriptableObject):
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
-	@scriptHandler.script(
-		# Translators: Description for the image caption script
-		description=pgettext("imageDesc", "Get an AI generated image description"),
-		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+windows+,",
-	)
-	def script_runCaption(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.runCaption(gesture)
-
-	@scriptHandler.script(
-		# Translators: Description for the toggle image captioning script
-		description=pgettext("imageDesc", "Toggle image captioning"),
-		category=SCRCAT_IMAGE_DESC,
-	)
-	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
-
 	@script(
 		description=pgettext(
 			"remote",
@@ -5093,6 +5076,23 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
+
+	@script(
+		# Translators: Description for the image caption script
+		description=pgettext("imageDesc", "Get an AI generated image description"),
+		category=SCRCAT_IMAGE_DESC,
+		gesture="kb:NVDA+windows+,",
+	)
+	def script_runCaption(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.runCaption(gesture)
+
+	@script(
+		# Translators: Description for the toggle image captioning script
+		description=pgettext("imageDesc", "Toggle image captioning"),
+		category=SCRCAT_IMAGE_DESC,
+	)
+	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
 
 #: The single global commands instance.

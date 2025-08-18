@@ -86,19 +86,6 @@ class TestModelDownloader(unittest.TestCase):
 		self.assertEqual(len(success), 1)
 		self.assertEqual(len(failed), 1)
 
-	@patch("pathlib.Path.mkdir")
-	def test_getModelFilePaths_contains_expected_keys(self, mock_mkdir):
-		"""getModelFilePaths returns all expected keys and paths."""
-		paths = self.downloader.getModelFilePaths("testmodel")
-		for key in ("encoderPath", "decoderPath", "configPath", "vocabPath", "modelDir"):
-			self.assertIn(key, paths)
-
-			self.assertTrue(
-				paths[key].endswith(".onnx")
-				or paths[key].endswith(".json")
-				or paths[key].endswith("testmodel"),
-			)
-
 
 if __name__ == "__main__":
 	unittest.main()

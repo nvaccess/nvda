@@ -505,6 +505,7 @@ class ConfigManager(object):
 		"development",
 		"addonStore",
 		"remote",
+		"automatedImageDescriptions",
 	}
 	"""
 	Sections that only apply to the base configuration;
