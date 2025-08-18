@@ -120,7 +120,7 @@ For more see the [sconstruct file](../../sconstruct).
 To use NVDA's experimental 64-bit support, instruct UV to use a 64-bit version of python.
 
 ```ps
-$env:UV_PYTHON="cpython-3.11.9-windows-x86_64-none"
+$env:UV_PYTHON="cpython-3.13.6-windows-x86_64-none"
 ```
 
 or
