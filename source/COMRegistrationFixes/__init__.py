@@ -29,6 +29,7 @@ PROGRAM_FILES_X86 = os.path.join(SYSTEM_DRIVE, "Program Files (x86)")
 
 def register32bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 32-bit version of regsvr32.
+
 	:param fileName: The 32 bit path to the DLL
 	"""
 	if sysconfig.get_platform() == "win32":
@@ -55,6 +56,7 @@ def register32bitServer(fileName: str) -> None:
 
 def register64bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 64-bit version of regsvr64.
+
 	:param fileName: The 64 bit path to the DLL
 	"""
 	if sysconfig.get_platform() == "win32":
@@ -79,6 +81,7 @@ def register64bitServer(fileName: str) -> None:
 
 def apply32bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 32-bit regExe.
+
 	:param fileName: The 32 bit path to the .reg file
 	"""
 	if not os.path.isfile(fileName):
@@ -107,6 +110,7 @@ def apply32bitRegistryPatch(fileName: str) -> None:
 
 def apply64bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 64-bit regExe.
+
 	:param fileName: The 64 bit path to the .reg file
 	"""
 	if not os.path.isfile(fileName):
