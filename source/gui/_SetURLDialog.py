@@ -20,6 +20,7 @@ from . import guiHelper
 from .settingsDialogs import SettingsDialog
 from . import nvdaControls
 
+
 class _ValidationError(ValueError):
 	"""Exception raised when validation of an OK response returns False.
 	This is only used internally.

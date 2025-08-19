@@ -443,6 +443,7 @@ class TriggersDialog(
 		self.Parent.Enable()
 		self.Destroy()
 
+
 class NewProfileDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO

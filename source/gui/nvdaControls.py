@@ -613,9 +613,9 @@ class FeatureFlagCombo(wx.Choice):
 			},
 		)
 
-class FontActions:
 
-	@staticmethod 
+class FontActions:
+	@staticmethod
 	def getFontFromConfig() -> wx.Font:
 		"""Get the font from the configuration.
 		This is used to ensure that the dialog uses the same font as the rest of NVDA.

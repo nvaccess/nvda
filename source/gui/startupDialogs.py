@@ -21,6 +21,7 @@ import buildVersion
 
 from . import nvdaControls
 
+
 class WelcomeDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
