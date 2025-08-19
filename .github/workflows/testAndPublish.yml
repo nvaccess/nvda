@@ -36,7 +36,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2025", "windows-2022"]'
+  supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
   defaultPythonVersion: '3.13.7'
@@ -79,7 +79,7 @@ jobs:
       APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         submodules: true
     - name: Install Python
@@ -151,7 +151,7 @@ jobs:
     needs: matrix
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         # Include gettext
         submodules: true
@@ -397,11 +397,11 @@ jobs:
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
-      # A bug exists with windows 2022 notepad that prevents NVDA from focusing it.
-      # This causes our symbol pronunciation tests to fail on this runner.
-      exclude:
-        - runner: windows-2022
-          testSuite: symbols
+        # A bug exists with windows 2022 notepad that prevents NVDA from focusing it.
+        # This causes our symbol pronunciation tests to fail on this runner.
+        exclude:
+          - runner: windows-2022
+            testSuite: symbols
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
