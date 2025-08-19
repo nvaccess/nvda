@@ -561,13 +561,10 @@ addTable("th-g1.utb", _("Thai grade 1"), input=False, contracted=True, outputFor
 addTable("th-g2.ctb", _("Thai grade 2"), input=False, contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("tr.ctb", _("Turkish 8 dot computer braille"), inputForLangs={"tr"}, outputForLangs={"tr"})
+addTable("tr.ctb", _("Turkish grade 1"), inputForLangs={"tr"}, outputForLangs={"tr"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("tr-g1.ctb", _("Turkish grade 1"), inputForLangs={"tr"}, outputForLangs={"tr"})
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("tr-g2.ctb", _("Turkish grade 2"), contracted=True, inputForLangs={"tr"}, outputForLangs={"tr"})
+addTable("tr-g2.ctb", _("Turkish grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tsn-za-g1.ctb", _("Setswana grade 1"))
