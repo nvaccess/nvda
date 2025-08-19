@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2025 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import functools
 import winreg
 import platform
 import NVDAState
+from config.registry import RegistryKey
 from logHandler import log
 
 
@@ -54,7 +55,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE,
-		r"Software\Microsoft\Windows NT\CurrentVersion",
+		RegistryKey.NT_CURRENT_VERSION.value,
 	) as currentVersion:
 		# Version 20H2 and later where a separate display version string is used.
 		try:
@@ -83,6 +84,7 @@ class WinVersion(object):
 		major: int = 0,
 		minor: int = 0,
 		build: int = 0,
+		revision: int = 0,
 		releaseName: str | None = None,
 		servicePack: str = "",
 		productType: str = "",
@@ -91,6 +93,7 @@ class WinVersion(object):
 		self.major = major
 		self.minor = minor
 		self.build = build
+		self.revision = revision
 		if releaseName:
 			self.releaseName = releaseName
 		else:
@@ -126,7 +129,7 @@ class WinVersion(object):
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
-		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
+		winVersionText.append(f"({self.major}.{self.minor}.{self.build}.{self.revision})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
@@ -186,10 +189,23 @@ def getWinVer():
 			releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
 	except RuntimeError:
 		releaseName = None
+	# #18266: ask Windows Registry for update build revision (UBR).
+	# UBR is updated whenever cumulative updates are applied.
+	with winreg.OpenKey(
+		winreg.HKEY_LOCAL_MACHINE,
+		RegistryKey.NT_CURRENT_VERSION.value,
+	) as currentVersion:
+		# #18617: in Windows 8.1, attempting to access the below registry path results inn an error.
+		# Therefore, set UBR (update build revision) to 0.
+		try:
+			buildRevision = winreg.QueryValueEx(currentVersion, "UBR")[0]
+		except FileNotFoundError:
+			buildRevision = 0
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
+		revision=buildRevision,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],

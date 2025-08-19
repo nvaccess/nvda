@@ -362,20 +362,21 @@ class WordDocumentTextInfo(UIATextInfo):
 				curLevel = 0
 				mathLevel = None
 				mathStartIndex = None
-				mathEndIndex = None
-				for index in range(len(fields)):
+				index = 0
+				# we delete items from 'fields' in the loop, so we can't use a for loop
+				while index < len(fields):
 					field = fields[index]
 					if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 						curLevel += 1
-						if mathLevel is None and field.field.get("mathml"):
+						if field.field.get("mathml"):
 							mathLevel = curLevel
 							mathStartIndex = index
 					elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
-						if curLevel == mathLevel:
-							mathEndIndex = index
+						if curLevel == mathLevel and field.field.get("mathml"):
+							del fields[mathStartIndex + 1 : index]
+							index = mathStartIndex + 1
 						curLevel -= 1
-				if mathEndIndex is not None:
-					del fields[mathStartIndex + 1 : mathEndIndex]
+					index += 1
 
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
@@ -496,15 +497,23 @@ class WordDocumentTextInfo(UIATextInfo):
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field["text-column-number"] = textColumnNumber
-			expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
-				docElement,
-				textRange,
-				UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
-			)
-			if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
-				formatField.field["collapsed"] = True
-			elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
-				formatField.field["collapsed"] = False
+			# #18279: It is only safe to fetch the expand/collapse state in MS Word 16.0.18226 or later,
+			# as earlier versions that support Custom attribute Values but not this particular argument will crash.
+			try:
+				officeVersion = tuple(int(x) for x in self.obj.appModule.productVersion.split(".")[:3])
+			except Exception:
+				log.error("Unable to parse Office version", exc_info=True)
+				officeVersion = (0, 0, 0)
+			if officeVersion >= (16, 0, 18226):
+				expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
+					docElement,
+					textRange,
+					UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
+				)
+				if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
+					formatField.field["collapsed"] = True
+				elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
+					formatField.field["collapsed"] = False
 		return formatField
 
 	def _getIndentValueDisplayString(self, val: float) -> str:

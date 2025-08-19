@@ -65,6 +65,10 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
+AUTO_LANGUAGE_SWITCHING_KEY = ["speech", "autoLanguageSwitching"]
+AUTO_DIALECT_SWITCHING_KEY = ["speech", "autoDialectSwitching"]
+REPORT_LANGUAGE_KEY = ["speech", "reportLanguage"]
+REPORT_NOT_SUPPORTED_LANGUAGE_KEY = ["speech", "reportNotSupportedLanguage"]
 READ_DETAILS_GESTURE = "NVDA+d"
 
 
@@ -923,7 +927,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("end")
 	_asserts.strings_match(
 		actualSpeech,
-		"link",
+		"blank",
 	)
 	# Read the current line.
 	# Before pr #11606 the next line ("C D")  would have been read.
@@ -1004,18 +1008,12 @@ def test_ariaTreeGrid_browseMode():
 
 def ARIAInvalid_spellingAndGrammar():
 	"""
-		Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
-		Please note that although IAccessible2 allows multiple values for invalid,
-		multiple values to aria-invalid is not yet standard.
-		And even if it were, they would be separated by space, not comma
-	thus the html for this test would need to change,
-		but the expected output shouldn't need to.
+	Tests ARIA invalid values of "spelling" and "grammar".
 	"""
 	_chrome.prepareChrome(
 		r"""
 			<p>Big <span aria-invalid="spelling">caat</span> meos</p>
 			<p>Small <span aria-invalid="grammar">a dog</span> woofs</p>
-			<p>Fat <span aria-invalid="grammar, spelling">a ffrog</span> crokes</p>
 		""",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
@@ -1027,11 +1025,6 @@ def ARIAInvalid_spellingAndGrammar():
 	_asserts.strings_match(
 		actualSpeech,
 		"Small  grammar error  a dog  woofs",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"Fat  spelling error  grammar error  a ffrog  crokes",
 	)
 
 
@@ -1161,6 +1154,9 @@ def test_ariaRoleDescription_focus():
 	)
 
 
+IMG_DESC_MSG = "To get missing image descriptions, open the context menu."
+
+
 def test_ariaRoleDescription_inline_browseMode():
 	"""
 	NVDA should report the custom role for inline elements in browse mode.
@@ -1178,24 +1174,19 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Start  drawing  Our logo  End",
+		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}  End",
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our",
+		"Unlabeled graphic  Our",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"logo  out of drawing",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"End",
+		"logo.",
 	)
 
 
@@ -1262,14 +1253,14 @@ def test_ariaRoleDescription_inline_contentEditable():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Start  drawing  Our logo    End",
+		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}    End",
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our logo    out of drawing",
+		f"Unlabeled graphic  Our logo. {IMG_DESC_MSG}    out of Unlabeled graphic",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
@@ -2859,4 +2850,178 @@ def test_ariaErrorMessage():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4")),
+	)
+
+
+def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
+	_chrome.prepareChrome(
+		"""
+		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
+	""",
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
+
+def test_reportLanguageDisabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, False),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"Cyrille",
+				"created this",
+				"test:",
+				"Let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportLanguageEnabled():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, False),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es_ES"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportLanguageWithoutDialects():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
+		],
+	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportNotSupportedLanguageWithoutOtherLanguages():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, False),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+		],
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				"Cyrille",
+				"created this",
+				"unknown (not supported)",
+				"test:",
+				"Let's mention",
+				"Noelia",
+				"and",
+				"Leonem",
+				"in the same sentence.",
+			),
+		),
+	)
+
+
+def test_reportNotSupportedLanguageAndOtherLanguages():
+	_doTestReportLanguage(
+		nvdaConfValues=[
+			(AUTO_LANGUAGE_SWITCHING_KEY, True),
+			(AUTO_DIALECT_SWITCHING_KEY, False),
+			(REPORT_LANGUAGE_KEY, True),
+			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "speech"),
+		],
+	)
+
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(
+			(
+				spy.getLanguageDescription("fr"),
+				"Cyrille",
+				spy.getLanguageDescription("en"),
+				"created this",
+				"unknown (not supported)",
+				"test:",
+				spy.getLanguageDescription("en"),
+				"Let's mention",
+				spy.getLanguageDescription("es"),
+				"Noelia",
+				spy.getLanguageDescription("en"),
+				"and",
+				spy.getLanguageDescription("la"),
+				"Leonem",
+				spy.getLanguageDescription("en"),
+				"in the same sentence.",
+			),
+		),
 	)

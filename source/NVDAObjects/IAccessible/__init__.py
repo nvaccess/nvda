@@ -176,16 +176,18 @@ def normalizeIA2TextFormatField(formatField):
 	else:
 		formatField["italic"] = False
 	try:
-		invalid = formatField.pop("invalid")
+		invalid: str | None = formatField.pop("invalid")
 	except KeyError:
 		invalid = None
-	if invalid:
-		# aria-invalid can contain multiple values separated by a comma.
-		invalidList = [x.lower().strip() for x in invalid.split(",")]
-		if "spelling" in invalidList:
+	else:
+		invalid = invalid.lower().strip()
+	match invalid:
+		case "spelling":
 			formatField["invalid-spelling"] = True
-		if "grammar" in invalidList:
+		case "grammar":
 			formatField["invalid-grammar"] = True
+		case _:
+			pass
 	color = formatField.get("color")
 	if color:
 		try:
@@ -1078,15 +1080,15 @@ class IAccessible(Window):
 			return 0
 		return res if isinstance(res, int) else 0
 
-	states: typing.Set[controlTypes.State]
+	states: set[controlTypes.State]
 	"""Type info for auto property: _get_states
 	"""
 
 	# C901 '_get_states' is too complex. Look for opportunities to break this method down.
-	def _get_states(self) -> typing.Set[controlTypes.State]:  # noqa: C901
+	def _get_states(self) -> set[controlTypes.State]:  # noqa: C901
 		states = set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
-			states.update(super(IAccessible, self).states)
+			states.update(super().states)
 		try:
 			IAccessibleStates = self.IAccessibleStates
 		except COMError:
@@ -1200,9 +1202,10 @@ class IAccessible(Window):
 		return True
 
 	def _get_labeledBy(self) -> "IAccessible | None":
-		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
-		if label:
-			return label
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
+			if label:
+				return label
 
 		try:
 			ret = IAccessibleHandler.accNavigate(
@@ -1981,27 +1984,34 @@ class IAccessible(Window):
 		return tuple(detailsRelsGen)
 
 	def _get_controllerFor(self) -> list[NVDAObject]:
-		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
-		if control:
-			return [control]
-		return []
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
+			if control:
+				return [control]
+		return super().controllerFor
 
 	#: Type definition for auto prop '_get_flowsTo'
-	flowsTo: typing.Optional["IAccessible"]
+	flowsTo: "IAccessible | None"
 
-	def _get_flowsTo(self) -> typing.Optional["IAccessible"]:
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+	def _get_flowsTo(self) -> "IAccessible | None":
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+		return super().flowsTo
 
 	#: Type definition for auto prop '_get_flowsFrom'
-	flowsFrom: typing.Optional["IAccessible"]
+	flowsFrom: "IAccessible | None"
 
-	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
+	def _get_flowsFrom(self) -> "IAccessible | None":
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
+		return super().flowsFrom
 
 	def _get_errorMessage(self) -> str | None:
-		errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
-		if errorNode is not None:
-			return errorNode.summarizeInProcess()
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+			if errorNode is not None:
+				return errorNode.summarizeInProcess()
+		return super().errorMessage
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
@@ -2423,6 +2433,12 @@ class OutlineItem(IAccessible):
 class List(IAccessible):
 	def _get_role(self):
 		return controlTypes.Role.LIST
+
+	def _get_states(self) -> set[controlTypes.State]:
+		states = super().states
+		if self.windowStyle & winUser.LBS_EXTENDEDSEL:
+			states.add(controlTypes.State.MULTISELECTABLE)
+		return states
 
 
 class SysLinkClient(IAccessible):

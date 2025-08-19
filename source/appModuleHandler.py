@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
@@ -44,6 +43,7 @@ import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
 from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
+from comInterfaces import UIAutomationClient as UIA
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -64,11 +64,13 @@ since appModules in add-ons should take precedence over the one bundled in NVDA.
 
 
 class processEntry32W(ctypes.Structure):
+	"""See https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w"""
+
 	_fields_ = [
 		("dwSize", ctypes.wintypes.DWORD),
 		("cntUsage", ctypes.wintypes.DWORD),
 		("th32ProcessID", ctypes.wintypes.DWORD),
-		("th32DefaultHeapID", ctypes.wintypes.DWORD),
+		("th32DefaultHeapID", ctypes.wintypes.PULONG),
 		("th32ModuleID", ctypes.wintypes.DWORD),
 		("cntThreads", ctypes.wintypes.DWORD),
 		("th32ParentProcessID", ctypes.wintypes.DWORD),
@@ -578,8 +580,17 @@ class AppModule(baseObject.ScriptableObject):
 
 	isAlive: bool
 
-	def _get_isAlive(self):
-		return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+	def _get_isAlive(self) -> bool:
+		try:
+			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
+		except OSError as e:
+			if e.winerror == winKernel.ERROR_INVALID_HANDLE:
+				# The process handle is invalid, so the process is dead.
+				log.debugWarning(
+					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.",
+				)
+				return False
+			raise
 
 	def terminate(self):
 		"""Terminate this app module.
@@ -764,6 +775,36 @@ class AppModule(baseObject.ScriptableObject):
 		shouldAcceptEvent returns False, etc.
 		"""
 		return True
+
+	def shouldProcessUIANotificationEvent(
+		self,
+		sender: UIA.IUIAutomationElement,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = None,
+		displayString: str = "",
+		activityId: str = "",
+	) -> bool:
+		"""
+		Determines whether NVDA should process a UIA notification event.
+
+		By default, events from elements with window handle value set
+		and traversable back to the desktop will be accepted.
+		Returning ``False`` will cause the event to be dropped completely.
+		Returning ``True`` means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+
+		:param sender: UIA element raising the notification event.
+		:param notificationKind: notification kind such as activity completion.
+		:param notificationProcessing: how NVDA should process notifications such as canceling speech.
+		:param displayString: notification content/text.
+		:param activityId: notification description.
+		:return: Whether NVDA components including ap modules and NVDA objects should process notification events.
+		"""
+		import UIAHandler
+
+		# By default, see if UIA tree can be traversed to arrive at the desktop element.
+		return bool(UIAHandler.handler.getNearestWindowHandle(sender))
 
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.

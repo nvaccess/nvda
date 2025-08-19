@@ -39,7 +39,7 @@ This website is considered legacy software, using the NVDA Add-on Store instead 
 
 #### NVDA Community
 
-* [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
+* [NVDA Users Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-users)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Translators list](https://groups.io/g/nvda-translations)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)

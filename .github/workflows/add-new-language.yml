@@ -1,0 +1,94 @@
+name: Add new languages to track from Crowdin
+
+on:
+  workflow_dispatch:
+    inputs:
+      newLanguages:
+        description: 'JSON style list of new languages to track from Crowdin e.g. ["fr", "de"]'
+        required: true
+        type: string
+
+jobs:
+  add-new-languages:
+    runs-on: windows-2025
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        newLanguage: ${{ fromJson(github.event.inputs.newLanguages) }}
+    env:
+      branchName: addLanguage_${{ matrix.newLanguage }}${{ github.run_id }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: beta
+        fetch-depth: 1
+        submodules: true
+
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        architecture: 'x86'
+
+    - name: setup uv
+      uses: astral-sh/setup-uv@v6
+
+    - name: Download translations from Crowdin
+      run: uv run source/l10nUtil.py exportTranslations -o . -l ${{ matrix.newLanguage }}
+      env:
+        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+        pre-commit install
+
+    # Job will fail if pre-commit checks fail
+    - name: Commit language files only
+      id: commit
+      shell: bash
+      run: |
+        git checkout -b ${{ env.branchName }}
+        git config --local user.name "GitHub Actions"
+        git config --local user.email ""
+        git add source/locale/${{ matrix.newLanguage }}
+        git add user_docs/${{ matrix.newLanguage }}
+
+        # Check if there are any changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          git commit -m "Add new language ${{ matrix.newLanguage }} from Crowdin"
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create pull request
+      if: steps.commit.outputs.has_changes == 'true'
+      shell: bash
+      run: |
+        git push --set-upstream origin ${{ env.branchName }}
+        # Create a pull request for the changes
+        gh pr create --base beta --head ${{ env.branchName }} \
+        --title "Add new language ${{ matrix.newLanguage }} from Crowdin" \
+        --body "This pull request adds ${{ matrix.newLanguage }} as a new language to track from Crowdin."
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Merge pull request
+      if: steps.commit.outputs.has_changes == 'true'
+      shell: bash
+      # Sets PR to auto-merge when checks have passed
+      run: |
+        gh pr merge ${{ env.branchName }} \
+        --squash --delete-branch --auto \
+        --body "Merged translations from Crowdin"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}

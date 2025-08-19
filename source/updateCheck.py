@@ -29,9 +29,9 @@ if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
 	raise RuntimeError("updates managed by Windows Store")
-import versionInfo
+import buildVersion
 
-if not versionInfo.updateVersionType:
+if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
@@ -59,7 +59,7 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
-from gui.message import displayDialogAsModal  # noqa: E402
+from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
 from addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
@@ -201,8 +201,8 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
-		"version": versionInfo.version,
-		"versionType": versionInfo.updateVersionType,
+		"version": buildVersion.version,
+		"versionType": buildVersion.updateVersionType,
 		"osVersion": winVersionText,
 		# Check if the architecture is the most common: "AMD64"
 		# Available values of PROCESSOR_ARCHITEW6432 found in:
@@ -412,8 +412,8 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		else:
 			tip = pgettext(
 				"updateCheck",
-				# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
-				"Make sure you are connected to the internet and try again.",
+				# Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
+				"Unable to establish a connection to the NV Access server.",
 			)
 		message = pgettext(
 			"updateCheck",
@@ -587,6 +587,8 @@ class UpdateResultDialog(
 		self.Show()
 
 	def onUpdateButton(self, destPath):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -759,6 +761,8 @@ class UpdateAskInstallDialog(
 		return callback
 
 	def onUpdateButton(self, evt):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
@@ -989,6 +993,39 @@ def saveState():
 		log.debugWarning("Error saving state", exc_info=True)
 
 
+def _warnAndConfirmIfUpdatingRemotely() -> bool:
+	# Import late to avoid circular import
+	from _remoteClient import _remoteClient
+
+	if _remoteClient is not None and _remoteClient.isConnectedAsFollower:
+		confirmationDialog = (
+			MessageDialog(
+				gui.mainFrame,
+				_(
+					# Translators: Message shown to users when attempting to update NVDA
+					# on a computer which is being remotely controlled via NVDA Remote Access
+					"Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
+				)
+				+ _(
+					# Translators: Message shown to users when attempting to update NVDA from an installed copy
+					# on a computer which is being remotely controlled via NVDA Remote Access.
+					"The currently active connection may not be continued during or after the update. "
+					"Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
+					"You should only proceed if you have physical access to the controlled computer.\n\n"
+					"Are you sure you want to continue?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
+	return True
+
+
 def initialize():
 	global state, autoChecker
 	try:
@@ -1013,7 +1050,7 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == buildVersion.version:
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:

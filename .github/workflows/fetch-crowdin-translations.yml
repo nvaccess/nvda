@@ -1,0 +1,94 @@
+name: Fetch Crowdin Translations
+
+# Note: This workflow only updates tracked languages from Crowdin.
+# If you want to add new languages, use the "Add new languages to track from Crowdin" workflow.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Monday at 00:00 UTC
+    # This is because the translation freeze should end at 11:59 UTC on a Sunday.
+    # And we want to perform beta/rc releases soon after 00:00 UTC on a Monday.
+    # Cron jobs are run from the master branch.
+    - cron: '0 0 * * 1'
+
+jobs:
+  download-from-crowdin:
+    runs-on: windows-2025
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      branchName: updateCrowdinTranslations${{ github.run_id }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: beta
+        fetch-depth: 1
+        submodules: true
+
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        architecture: 'x86'
+
+    - name: setup uv
+      uses: astral-sh/setup-uv@v6
+
+    - name: Download translations from Crowdin
+      run: uv run source/l10nUtil.py exportTranslations -o .
+      env:
+        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+        pre-commit install
+
+    # Job will fail if pre-commit checks fail
+    - name: Commit tracked files only
+      id: commit
+      shell: bash
+      run: |
+        git checkout -b ${{ env.branchName }}
+        git config --local user.name "GitHub Actions"
+        git config --local user.email ""
+        git add -u source/locale
+        git add -u user_docs
+
+        # Check if there are any changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          git commit -m "Update tracked translations from Crowdin"
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create pull request
+      if: steps.commit.outputs.has_changes == 'true'
+      shell: bash
+      run: |
+        git push --set-upstream origin ${{ env.branchName }}
+        # Create a pull request for the changes
+        gh pr create --base beta --head ${{ env.branchName }} \
+        --title "Update tracked translations from Crowdin" \
+        --body "This pull request updates translations to languages being tracked from Crowdin."
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Merge pull request
+      if: steps.commit.outputs.has_changes == 'true'
+      shell: bash
+      # Sets PR to auto-merge when checks have passed
+      run: |
+        gh pr merge ${{ env.branchName }} \
+        --squash --delete-branch --auto \
+        --body "Merged translations from Crowdin"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}

@@ -172,6 +172,12 @@ class NVDASpyLib:
 			)
 		self.fakeTranslations.translationResults[invariantString] = replacementString
 
+	def getLanguageDescription(self, lang: str) -> str:
+		import languageHandler
+
+		langDesc = languageHandler.getLanguageDescription(lang)
+		return langDesc
+
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
 
@@ -536,7 +542,7 @@ class NVDASpyLib:
 			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
 			_blockUntilConditionMet(
 				getValue=lambda: queueProcessed,
-				giveUpAfterSeconds=self._minTimeout(5),
+				giveUpAfterSeconds=self._minTimeout(10),
 				errorMessage="Timed out waiting for key to be processed",
 			)
 
@@ -546,7 +552,7 @@ class NVDASpyLib:
 			log.debug("Waiting for core to sleep, to ensure all resulting events have been processed.")
 			_blockUntilConditionMet(
 				getValue=lambda: watchdog.isCoreAsleep(),
-				giveUpAfterSeconds=self._minTimeout(5),
+				giveUpAfterSeconds=self._minTimeout(10),
 				errorMessage="Timed out waiting for core to sleep again",
 			)
 			log.debug("Core sleeping")

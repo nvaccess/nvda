@@ -30,6 +30,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 
 	name = "SpeechSpySynthDriver"  # Name must match configuration files and module.
 	description = "System test speech spy"
+	availableLanguages = {"en", "es", "es_ES", "fr", "la"}
 
 	def __init__(self):
 		super().__init__()
@@ -98,9 +99,11 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 					if self._speechStarted:
 						self._doDoneSpeaking()
 						self._speechStarted = False
-					continue
-				self._speechStarted = True
-				self._processSpeechSequence(speechSequence)
+					else:
+						_yieldThread()
+				else:
+					self._speechStarted = True
+					self._processSpeechSequence(speechSequence)
 		log.debug("Stopping")
 
 	def _processSpeechSequence(self, speechSequence: SpeechSequence):
