@@ -26,7 +26,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-* Add-on authors are now able to provide changelog for an add-on version via "changelog" manifest key. (#14041, @josephsl)
+* Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
   * The changelog should document changes between previous and latest add-on versions.
 
 #### API Breaking Changes
