@@ -466,7 +466,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		if controlTypes.State.PROTECTED in self.obj.states:
-			return "*" * (self._getStoryLength() - 1)
+			return "*" * (self._getStoryLength())
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -501,18 +501,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				)
 			finally:
 				winKernel.virtualFreeEx(processHandle, internalInfo, 0, winKernel.MEM_RELEASE)
-			# Py3 review: investigation with Python 2 NVDA revealed that
-			# adding 1 to this creates an off by one error.
-			# Tested using Wordpad, enforcing EditTextInfo as the textInfo implementation.
-			return textLen + 1
+			return textLen
 		else:
 			# ForWM_GETTEXTLENGTH documentation, see
 			# https://docs.microsoft.com/en-us/windows/desktop/winmsg/wm-gettextlength
 			# It determines the length, in characters, of the text associated with a window.
-			# Py3 review: investigation with Python 2 NVDA revealed that
-			# adding 1 to this created an off by one error.
-			# Tested using Notepad
-			return watchdog.cancellableSendMessage(self.obj.windowHandle, winUser.WM_GETTEXTLENGTH, 0, 0) + 1
+			return watchdog.cancellableSendMessage(self.obj.windowHandle, winUser.WM_GETTEXTLENGTH, 0, 0)
 
 	def _getLineCount(self):
 		return self.obj.windowTextLineCount
