@@ -38,6 +38,7 @@ vector<SCRIPT_LOGATTR> _getLogAttrArray(const wchar_t* text, int textLength) {
 		LOG_ERROR(L"ScriptItemize failed for text '" << text << L"'; hr=" << hr);
 		return {};
 	}
+
 	vector<SCRIPT_LOGATTR> logAttrArray(textLength);
 	// The function always adds a terminal item to the item analysis array.
 	// numItems contains the number of actually processed items excluding the terminating item.
@@ -49,7 +50,7 @@ vector<SCRIPT_LOGATTR> _getLogAttrArray(const wchar_t* text, int textLength) {
 			LOG_ERROR(L"ScriptBreak failed for text '" << text << L"' at run " << itemIndex << L"; hr=" << hr);
 			return {};
 		}
-		// Note, ideally we'd set nextICharPos  to iCharPos, so that the
+		// Note, ideally we'd set nextICharPos to iCharPos, so that the
 		// next iteration of the loop will only call ScriptBreak for the text that belongs to the current item.
 		// Now that we don't do this, every call of ScriptBreak refills logAttrArray
 		// for the characters after this item based on the SCRIPT_ANALYSIS for the current item,
