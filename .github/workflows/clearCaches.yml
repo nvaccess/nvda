@@ -31,5 +31,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          # Filter the past 
+          # Filter the past
           jqStr: 'map(select((.createdAt | sub("\\.\\d+Z$"; "Z") | fromdateiso8601) < (now - ${{ env.CACHE_EXPIRATION_SEC }} * 86400))) | .[].key'
