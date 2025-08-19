@@ -1,0 +1,35 @@
+name: Clear caches
+
+on:
+  schedule:
+    # every 3 hours
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      cache_expiration:
+        description: 'Delete all caches older than X seconds (Default 6 hours, 21600)'
+        required: false
+
+env:
+  CACHE_EXPIRATION_SEC: ${{ inputs.cache_expiration || 21600 }}
+
+jobs:
+  cleanupCache:
+    name: Cleanup caches
+    permissions:
+      actions: write
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Cleanup cache
+        shell: bash
+        run: |
+          gh -R nvaccess/nvda cache list --json key,createdAt | jq -r '${{ env.jqStr }}' | while read -r cache; do
+            gh -R nvaccess/nvda cache delete $cache
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          # Filter the past 
+          jqStr: 'map(select((.createdAt | sub("\\.\\d+Z$"; "Z") | fromdateiso8601) < (now - ${{ env.CACHE_EXPIRATION_SEC }} * 86400))) | .[].key'
