@@ -25,7 +25,7 @@ jobs:
       - name: Cleanup cache
         shell: bash
         run: |
-          gh cache list --json key,lastAccessedAt | jq -r '${{ env.jqStr }}' | while read -r cache; do
+          gh cache list --order asc --json key,lastAccessedAt | jq --raw-output '${{ env.jqStr }}' | while read -r cache; do
             gh cache delete $cache
           done
         env:
