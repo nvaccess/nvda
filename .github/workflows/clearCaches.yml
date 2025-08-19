@@ -25,11 +25,24 @@ jobs:
       - name: Cleanup cache
         shell: bash
         run: |
-          gh cache list --order asc --json key,lastAccessedAt | jq --raw-output '${{ env.jqStr }}' | while read -r cache; do
+          gh cache list --order asc --json id,lastAccessedAt \
+            | jq --raw-output '
+              map(
+                select(
+                  (
+                    .lastAccessedAt
+                    | sub("\\.[0-9]+Z$"; "Z")
+                    | fromdateiso8601
+                  ) < (
+                  now - ${{ env.CACHE_EXPIRATION_HOUR }} * 3600
+                  )
+                )
+              )
+              | .[].id
+            ' \
+            | while read -r cache; do
             gh cache delete "$cache"
           done
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          # Filter for caches last accessed older than the expiration time
-          jqStr: 'map(select((.lastAccessedAt | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601) < (now - ${{ env.CACHE_EXPIRATION_HOUR }} * 3600))) | .[].key'
