@@ -897,7 +897,7 @@ class Config_AggregatedSection_setitem(unittest.TestCase):
 
 
 class Config_AggregatedSection_pollution(unittest.TestCase):
-	"""Ãƒâ€¹nsure that config profiles don't get polluted with overridden values equal to the base config"""
+	"""Ensure that config profiles don't get polluted with overridden values equal to the base config"""
 
 	def setUp(self):
 		manager = ConfigManager()
