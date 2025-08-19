@@ -18,7 +18,7 @@ import gui
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
-
+from . import nvdaControls
 
 class _ValidationError(ValueError):
 	"""Exception raised when validation of an OK response returns False.
@@ -67,7 +67,7 @@ class _SetURLDialog(SettingsDialog):
 		super().__init__(parent, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer: wx.Sizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self._urlControl = urlControl = settingsSizerHelper.addLabeledControl(
 			# Translators: The label of a text box asking the user for a URL.

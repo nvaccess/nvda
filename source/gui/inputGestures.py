@@ -24,6 +24,7 @@ import inputCore
 import keyLabels
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
+from . import nvdaControls
 
 #: Type for structure returned by inputCore
 _ScriptsModel = Dict[
@@ -590,7 +591,7 @@ class InputGesturesDialog(SettingsDialog):
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))

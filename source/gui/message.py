@@ -28,6 +28,8 @@ from . import guiHelper
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta, wxCallOnMain
 
+import config
+
 _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
 
@@ -431,6 +433,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
 		super().__init__(parent, title=title)
+		self.SetFont(self.GetFontFromConfig())
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
 		"""Registry of commands bound to this MessageDialog."""
@@ -1170,6 +1173,17 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if close:
 			self.SetReturnCode(returnCode)
 			self.Close()
+
+	def GetFontFromConfig(self) -> wx.Font:
+		"""Get the font from the configuration.
+		This is used to ensure that the dialog uses the same font as the rest of NVDA.
+		"""
+		try:
+			fontFaceName = config.conf["vision"]["font"]
+		except KeyError:
+			# If the font is not set, use the default system font.
+			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
 
 	# endregion
 

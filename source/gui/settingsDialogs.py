@@ -336,17 +336,6 @@ class SettingsDialog(
 			evt.Skip()
 			self._setInstanceDestroyedState()
 
-	def GetFontFromConfig(self) -> wx.Font:
-		"""Get the font from the configuration.
-		This is used to ensure that the dialog uses the same font as the rest of NVDA.
-		"""
-		try:
-			fontFaceName = config.conf["vision"]["font"]
-		except KeyError:
-			# If the font is not set, use the default system font.
-			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
-		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
-
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
@@ -482,17 +471,6 @@ class SettingsPanel(
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
-	def GetFontFromConfig(self) -> wx.Font:
-		"""Get the font from the configuration.
-		This is used to ensure that the dialog uses the same font as the rest of NVDA.
-		"""
-		try:
-			fontFaceName = config.conf["vision"]["font"]
-		except KeyError:
-			# If the font is not set, use the default system font.
-			fontFaceName = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
-		return wx.Font(wx.FontInfo(10).FaceName(fontFaceName))
-
 
 class SettingsPanelAccessible(wx.Accessible):
 	"""
@@ -575,7 +553,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText = _("&Categories:")
@@ -824,7 +802,7 @@ class GeneralSettingsPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
@@ -1028,7 +1006,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=fontChoices,
 		)
-		self.currentFont = self.GetFontFromConfig()
+		self.currentFont = nvdaControls.FontActions.getFontFromConfig()
 		index = [x for x in self.systemFonts].index(self.currentFont.GetFaceName())
 		self.fontList.SetSelection(index)
 
@@ -1226,7 +1204,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	helpId = "SpeechSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("Synthesizer")
@@ -1311,7 +1289,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	synthNames: List[str] = []
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer dialog.
@@ -1719,7 +1697,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			return self.helpId
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		# Construct synthesizer settings
 		self.updateDriverSettings()
 
@@ -2008,7 +1986,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 	helpId = "KeyboardSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a combobox in the
 		# keyboard settings panel.
@@ -2181,7 +2159,7 @@ class MouseSettingsPanel(SettingsPanel):
 	helpId = "MouseSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for a checkbox in the
@@ -2269,7 +2247,7 @@ class ReviewCursorPanel(SettingsPanel):
 	helpId = "ReviewCursorSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
 		self.followFocusCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
@@ -2308,7 +2286,7 @@ class InputCompositionPanel(SettingsPanel):
 	helpId = "InputCompositionSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		self.autoReportAllCandidatesCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
@@ -2431,7 +2409,7 @@ class ObjectPresentationPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		self.windowText = sHelper.addItem(
@@ -2559,7 +2537,7 @@ class BrowseModePanel(SettingsPanel):
 	helpId = "BrowseModeSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
@@ -2699,7 +2677,7 @@ class DocumentFormattingPanel(SettingsPanel):
 	panelDescription = _("The following options control the types of document formatting reported by NVDA.")
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
@@ -3062,7 +3040,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
@@ -3096,7 +3074,7 @@ class AudioPanel(SettingsPanel):
 	helpId = "AudioSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
@@ -3256,7 +3234,7 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 		automaticUpdatesLabelText = _("Automatic &updates:")
@@ -3376,7 +3354,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		enabledInSecureMode: set[wx.Window] = set()
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
@@ -3634,7 +3612,7 @@ class TouchInteractionPanel(SettingsPanel):
 	helpId = "TouchInteraction"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
@@ -3660,7 +3638,7 @@ class UwpOcrPanel(SettingsPanel):
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Lazily import this.
 		from contentRecog import uwpOcr
@@ -4365,7 +4343,7 @@ class AdvancedPanel(SettingsPanel):
 		"""
 		:type settingsSizer: wx.BoxSizer
 		"""
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		warningSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
 		warningGroup = guiHelper.BoxSizerHelper(self, sizer=warningSizer)
@@ -4433,7 +4411,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	helpId = "BrailleSettings"
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille display")
@@ -4511,7 +4489,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	possiblePorts = []
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
@@ -4664,7 +4642,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		return self.driver
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		shouldDebugGui = gui._isDebug()
 		startTime = 0 if not shouldDebugGui else time.time()
 		# Construct braille display specific settings
@@ -5277,7 +5255,7 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		self.providerPanelInstances = []
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -5400,7 +5378,7 @@ class VisionProviderSubPanel_Settings(
 
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		self.updateDriverSettings()
 
 
@@ -5425,7 +5403,7 @@ class VisionProviderSubPanel_Wrapper(
 			# Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 			label=_("Enable"),
 		)
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		settingsSizer.Add(self._checkBox)
 		self.bindHelpEvent("VisionSettings", self._checkBox)
 		self._optionsSizer = wx.BoxSizer(orient=wx.VERTICAL)
@@ -5604,7 +5582,7 @@ class AddSymbolDialog(
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
 		super().__init__(parent, title=_("Add Symbol"))
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -5646,7 +5624,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		)
 
 	def makeSettings(self, settingsSizer):
-		self.SetFont(self.GetFontFromConfig())
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		self.filteredSymbols = self.symbols = [
 			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
 		]
