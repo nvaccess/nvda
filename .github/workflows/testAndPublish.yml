@@ -36,7 +36,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2025"]'
+  supportedRunners: '["windows-2019", "windows-2022", "windows-2025"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
   defaultPythonVersion: '3.13.7'
