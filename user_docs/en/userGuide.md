@@ -50,7 +50,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
-* Operating Systems: Windows 11 and Windows Server 2025.
+* Operating Systems: Windows 10 (Version 22H2), Windows 11, and Windows Server 2022 and 2025.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
