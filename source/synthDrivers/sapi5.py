@@ -597,7 +597,6 @@ class SynthDriver(SynthDriver):
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
 		self._isCompleted = False  # True when the last speak request reaches EndStream
-		self._cancellationCond = threading.Condition()  # used to wait for cancellation to complete
 		self._thread.start()
 
 	def terminate(self):
@@ -866,16 +865,11 @@ class SynthDriver(SynthDriver):
 					self.player.idle()
 			if self._isCancelling:
 				self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
-				# clear the queue
-				with self._threadCond:
-					self._speakRequests.clear()
 				self._bookmarkLists.clear()
 				if self.sonicStream:
 					self.sonicStream.flush()
 					self.sonicStream.readShort()  # discard data left in stream
-				with self._cancellationCond:
-					self._isCancelling = False
-					self._cancellationCond.notify_all()
+				self._isCancelling = False
 
 	def speak(self, speechSequence):
 		textList = []
@@ -1040,11 +1034,9 @@ class SynthDriver(SynthDriver):
 		self._isCancelling = True
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
+			self._speakRequests = deque()  # clear the queue
 			with self._threadCond:  # wake up the thread
 				self._threadCond.notify()
-			with self._cancellationCond:  # wait for cancellation to complete
-				while self._isCancelling:
-					self._cancellationCond.wait()
 		if self.ttsAudioStream:
 			# For legacy audio
 			# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
