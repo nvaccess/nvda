@@ -140,7 +140,8 @@ class ImageDescriber:
 			)
 		except FileNotFoundError:
 			self.isModelLoaded = False
-			from .modelDownloader import openDownloadDialog
+			# from .modelDownloader import openDownloadDialog
+			from gui._localCaptioner.messageDialogs import openDownloadDialog
 
 			wx.CallAfter(openDownloadDialog)
 		except Exception as e:

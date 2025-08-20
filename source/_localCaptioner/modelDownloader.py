@@ -23,7 +23,6 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
 from urllib3.util.retry import Retry
-from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 
 from logHandler import log
 import config
@@ -519,26 +518,3 @@ class ModelDownloader:
 		if hasattr(self, "session"):
 			self.session.close()
 
-
-def openDownloadDialog() -> None:
-	confirmation_buttons = (
-		DefaultButton.YES,
-		DefaultButton.NO.value._replace(defaultFocus=True, fallbackAction=True),
-	)
-
-	dialog = MessageDialog(
-		parent=None,
-		# Translators: title of dialog when downloading Image captioning
-		title=pgettext("imageDesc", "Confirm download"),
-		message=pgettext(
-			"imageDesc",
-			# Translators: label of dialog when downloading image captioning
-			"Image captioning not installed. Would you like to install (235 MB)?",
-		),
-		dialogType=DialogType.WARNING,
-		buttons=confirmation_buttons,
-	)
-
-	if dialog.ShowModal() == ReturnCode.YES:
-		downloader = ModelDownloader()
-		threading.Thread(target=downloader.downloadModelsMultithreaded).start()
