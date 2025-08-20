@@ -6,7 +6,7 @@
 
 * This release breaks compatibility with existing add-ons.
 * Windows 8.1 is no longer supported.
-Windows 10 (Version 1507) is the minimum Windows version supported.
+Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
 
@@ -19,7 +19,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 
 * NVDA no longer supports Windows 8.1.
 Windows 10 (Version 1507) is the minimum Windows version supported.
-We recommend using Windows 11, or if that is not possible, latest Windows 10 release (Version 22H2). (#18684, @josephsl)
+We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 
 ### Bug Fixes
