@@ -17,7 +17,7 @@ import winKernel
 from comtypes import GUID
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
-from winBindings.advapi32 import RegCloseKey
+from winBindings.advapi32 import RegCloseKey as _RegCloseKey
 from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
 from winBindings.hid import (
 	HIDD_ATTRIBUTES,
@@ -155,7 +155,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 				port = portInfo["port"]
 				entry.update(portInfo)
 		finally:
-			RegCloseKey(regKey)
+			_RegCloseKey(regKey)
 
 		# friendly name
 		if not SetupDiGetDeviceRegistryProperty(
@@ -491,6 +491,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 
 _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
+	"RegCloseKey": ("winBindings.advapi32",),
 	"BLUETOOTH_ADDRESS": ("winBindings.bthprops",),
 	"BLUETOOTH_MAX_NAME_SIZE": ("winBindings.bthprops",),
 	"BTH_ADDR": ("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
