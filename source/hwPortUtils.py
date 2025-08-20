@@ -36,21 +36,21 @@ from winBindings.setupapi import (
 	DICS_FLAG,
 	DIGCF,
 	DIREG,
-	GUID_CLASS_COMPORT,
-	GUID_DEVINTERFACE_USB_DEVICE,
-	HDEVINFO,
-	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
-	SP_DEVICE_INTERFACE_DATA,
-	SP_DEVINFO_DATA,
+	GUID_CLASS_COMPORT as _GUID_CLASS_COMPORT,
+	GUID_DEVINTERFACE_USB_DEVICE as _GUID_DEVINTERFACE_USB_DEVICE,
+	HDEVINFO as _HDEVINFO,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W as _SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+	SP_DEVICE_INTERFACE_DATA as _SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA as _SP_DEVINFO_DATA,
 	SPDRP,
-	DEVPKEY_Device_BusReportedDeviceDesc,
-	SetupDiDestroyDeviceInfoList,
-	SetupDiEnumDeviceInterfaces,
-	SetupDiGetClassDevs,
-	SetupDiGetDeviceInterfaceDetail,
-	SetupDiGetDeviceProperty,
-	SetupDiGetDeviceRegistryProperty,
-	SetupDiOpenDevRegKey,
+	DEVPKEY_Device_BusReportedDeviceDesc as _DEVPKEY_Device_BusReportedDeviceDesc,
+	SetupDiDestroyDeviceInfoList as _SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces as _SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs as _SetupDiGetClassDevs,
+	SetupDiGetDeviceInterfaceDetail as _SetupDiGetDeviceInterfaceDetail,
+	SetupDiGetDeviceProperty as _SetupDiGetDeviceProperty,
+	SetupDiGetDeviceRegistryProperty as _SetupDiGetDeviceRegistryProperty,
+	SetupDiOpenDevRegKey as _SetupDiOpenDevRegKey,
 	_Dummy,
 )
 
@@ -123,10 +123,10 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	:param onlyAvailable: Only return ports that are currently available.
 	:return: Dicts including keys of port, friendlyName and hardwareID.
 	"""
-	for g_hdi, _idd, devinfo, buf in _listDevices(GUID_CLASS_COMPORT, onlyAvailable):
+	for g_hdi, _idd, devinfo, buf in _listDevices(_GUID_CLASS_COMPORT, onlyAvailable):
 		entry = {}
 		# hardware ID
-		if not SetupDiGetDeviceRegistryProperty(
+		if not _SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
 			SPDRP.HARDWAREID,
@@ -142,7 +142,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			hwID = entry["hardwareID"] = buf.value
 
 		# Port info
-		regKey = SetupDiOpenDevRegKey(
+		regKey = _SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
 			DICS_FLAG.GLOBAL,
@@ -161,7 +161,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			_RegCloseKey(regKey)
 
 		# friendly name
-		if not SetupDiGetDeviceRegistryProperty(
+		if not _SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
 			SPDRP.FRIENDLYNAME,
@@ -245,7 +245,7 @@ def getWidcommBluetoothPortInfo(port):
 def _listDevices(
 	deviceClass: GUID,
 	onlyAvailable: bool = True,
-) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
+) -> typing.Iterator[tuple[_HDEVINFO, ctypes.Structure, _SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
 	:param onlyAvailable: Only return devices that are currently available.
@@ -255,13 +255,13 @@ def _listDevices(
 		flags |= DIGCF.PRESENT
 
 	buf = ctypes.create_unicode_buffer(1024)
-	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, None, flags)
+	g_hdi = _SetupDiGetClassDevs(ctypes.byref(deviceClass), None, None, flags)
 	try:
 		for dwIndex in range(256):
-			did = SP_DEVICE_INTERFACE_DATA()
+			did = _SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
 
-			if not SetupDiEnumDeviceInterfaces(
+			if not _SetupDiEnumDeviceInterfaces(
 				g_hdi,
 				None,
 				ctypes.byref(deviceClass),
@@ -274,7 +274,7 @@ def _listDevices(
 
 			dwNeeded = DWORD()
 			# get the size
-			if not SetupDiGetDeviceInterfaceDetail(
+			if not _SetupDiGetDeviceInterfaceDetail(
 				g_hdi,
 				ctypes.byref(did),
 				None,
@@ -302,10 +302,10 @@ def _listDevices(
 					return f"DevicePath:{self.DevicePath!r}"
 
 			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
-			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
-			devinfo = SP_DEVINFO_DATA()
+			idd.cbSize = _SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+			devinfo = _SP_DEVINFO_DATA()
 			devinfo.cbSize = ctypes.sizeof(devinfo)
-			if not SetupDiGetDeviceInterfaceDetail(
+			if not _SetupDiGetDeviceInterfaceDetail(
 				g_hdi,
 				ctypes.byref(did),
 				ctypes.byref(idd),
@@ -318,7 +318,7 @@ def _listDevices(
 			yield (g_hdi, idd, devinfo, buf)
 
 	finally:
-		SetupDiDestroyDeviceInfoList(g_hdi)
+		_SetupDiDestroyDeviceInfoList(g_hdi)
 
 
 def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
@@ -326,10 +326,10 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	:param onlyAvailable: Only return devices that are currently available.
 	:return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
 	"""
-	for g_hdi, idd, devinfo, buf in _listDevices(GUID_DEVINTERFACE_USB_DEVICE, onlyAvailable):
+	for g_hdi, idd, devinfo, buf in _listDevices(_GUID_DEVINTERFACE_USB_DEVICE, onlyAvailable):
 		entry = {}
 		# hardware ID
-		if not SetupDiGetDeviceRegistryProperty(
+		if not _SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
 			SPDRP.HARDWAREID,
@@ -356,10 +356,10 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 		# Bus reported device description
 		propRegDataType = DWORD()
-		if not SetupDiGetDeviceProperty(
+		if not _SetupDiGetDeviceProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			ctypes.byref(DEVPKEY_Device_BusReportedDeviceDesc),
+			ctypes.byref(_DEVPKEY_Device_BusReportedDeviceDesc),
 			ctypes.byref(propRegDataType),
 			ctypes.byref(buf),
 			ctypes.sizeof(buf) - 1,
@@ -470,7 +470,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
-		if not SetupDiGetDeviceRegistryProperty(
+		if not _SetupDiGetDeviceRegistryProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
 			SPDRP.HARDWAREID,
@@ -525,6 +525,20 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 	"SPDRP_LOCATION_INFORMATION": ("winBindings.setupapi", "SPDRP", "LOCATION_INFORMATION"),
 	"DICS_FLAG_GLOBAL": ("winBindings.setupapi", "DICS_FLAG", "GLOBAL"),
 	"DIREG_DEV": ("winBindings.setupapi", "DIREG", "DEV"),
+	"GUID_CLASS_COMPORT": ("winBindings.setupapi",),
+	"GUID_DEVINTERFACE_USB_DEVICE": ("winBindings.setupapi",),
+	"HDEVINFO": ("winBindings.setupapi",),
+	"SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W": ("winBindings.setupapi",),
+	"SP_DEVICE_INTERFACE_DATA": ("winBindings.setupapi",),
+	"SP_DEVINFO_DATA": ("winBindings.setupapi",),
+	"DEVPKEY_Device_BusReportedDeviceDesc": ("winBindings.setupapi",),
+	"SetupDiDestroyDeviceInfoList": ("winBindings.setupapi",),
+	"SetupDiEnumDeviceInterfaces": ("winBindings.setupapi",),
+	"SetupDiGetClassDevs": ("winBindings.setupapi",),
+	"SetupDiGetDeviceInterfaceDetail": ("winBindings.setupapi",),
+	"SetupDiGetDeviceProperty": ("winBindings.setupapi",),
+	"SetupDiGetDeviceRegistryProperty": ("winBindings.setupapi",),
+	"SetupDiOpenDevRegKey": ("winBindings.setupapi",),
 	"ERROR_NO_MORE_ITEMS": ("winAPI.constants", "SystemErrorCodes", "NO_MORE_ITEMS"),
 	"ERROR_INSUFFICIENT_BUFFER": ("winAPI.constants", "SystemErrorCodes", "INSUFFICIENT_BUFFER"),
 }
