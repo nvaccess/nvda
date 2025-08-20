@@ -23,14 +23,14 @@ from winBindings.bthprops import (
 	BluetoothGetDeviceInfo as _BluetoothGetDeviceInfo,
 )
 from winBindings.hid import (
-	HIDD_ATTRIBUTES,
-	HidD_FreePreparsedData,
-	HidD_GetAttributes,
-	HidD_GetHidGuid,
-	HidD_GetManufacturerString,
-	HidD_GetPreparsedData,
-	HidD_GetProductString,
-	HidP_GetCaps,
+	HIDD_ATTRIBUTES as _HIDD_ATTRIBUTES,
+	HidD_FreePreparsedData as _HidD_FreePreparsedData,
+	HidD_GetAttributes as _HidD_GetAttributes,
+	HidD_GetHidGuid as _HidD_GetHidGuid,
+	HidD_GetManufacturerString as _HidD_GetManufacturerString,
+	HidD_GetPreparsedData as _HidD_GetPreparsedData,
+	HidD_GetProductString as _HidD_GetProductString,
+	HidP_GetCaps as _HidP_GetCaps,
 )
 from winBindings.setupapi import (
 	DICS_FLAG,
@@ -425,8 +425,8 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 			log.debugWarning(f"Opening device {path} to get additional info failed: {ctypes.WinError(err)}")
 		return info
 	try:
-		attribs = HIDD_ATTRIBUTES()
-		if HidD_GetAttributes(handle, ctypes.byref(attribs)):
+		attribs = _HIDD_ATTRIBUTES()
+		if _HidD_GetAttributes(handle, ctypes.byref(attribs)):
 			info["vendorID"] = attribs.VendorID
 			info["productID"] = attribs.ProductID
 			info["versionNumber"] = attribs.VersionNumber
@@ -435,18 +435,18 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
 		nrOfBytes = ctypes.sizeof(buf)
-		if HidD_GetManufacturerString(handle, buf, nrOfBytes):
+		if _HidD_GetManufacturerString(handle, buf, nrOfBytes):
 			info["manufacturer"] = buf.value
-		if HidD_GetProductString(handle, buf, nrOfBytes):
+		if _HidD_GetProductString(handle, buf, nrOfBytes):
 			info["product"] = buf.value
 		pd = ctypes.c_void_p()
-		if HidD_GetPreparsedData(handle, ctypes.byref(pd)):
+		if _HidD_GetPreparsedData(handle, ctypes.byref(pd)):
 			try:
 				caps = hidpi.HIDP_CAPS()
-				HidP_GetCaps(pd, ctypes.byref(caps))
+				_HidP_GetCaps(pd, ctypes.byref(caps))
 				info["HIDUsagePage"] = caps.UsagePage
 			finally:
-				HidD_FreePreparsedData(pd)
+				_HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
 	_getHidInfoCache[path] = info
@@ -466,7 +466,7 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	global _hidGuid
 	if not _hidGuid:
 		_hidGuid = GUID()
-		HidD_GetHidGuid(ctypes.byref(_hidGuid))
+		_HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
 	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
@@ -503,6 +503,14 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 	"CM_Get_Device_ID": ("winBindings.cfgmgr32",),
 	"CR_SUCCESS": ("winBindings.cfgmgr32",),
 	"MAX_DEVICE_ID_LEN": ("winBindings.cfgmgr32",),
+	"HIDD_ATTRIBUTES": ("winBindings.hid",),
+	"HidD_FreePreparsedData": ("winBindings.hid",),
+	"HidD_GetAttributes": ("winBindings.hid",),
+	"HidD_GetHidGuid": ("winBindings.hid",),
+	"HidD_GetManufacturerString": ("winBindings.hid",),
+	"HidD_GetPreparsedData": ("winBindings.hid",),
+	"HidD_GetProductString": ("winBindings.hid",),
+	"HidP_GetCaps": ("winBindings.hid",),
 	"DEVPROPKEY": ("winBindings.setupapi",),
 	"dummy": ("winBindings.setupapi", "_Dummy"),
 	"PSP_DEVICE_INTERFACE_DATA": ("winBindings.setupapi",),
