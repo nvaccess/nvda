@@ -18,7 +18,10 @@ from comtypes import GUID
 from logHandler import log
 from winAPI.constants import SystemErrorCodes
 from winBindings.advapi32 import RegCloseKey as _RegCloseKey
-from winBindings.bthprops import BLUETOOTH_DEVICE_INFO, BluetoothGetDeviceInfo
+from winBindings.bthprops import (
+	BLUETOOTH_DEVICE_INFO as _BLUETOOTH_DEVICE_INFO,
+	BluetoothGetDeviceInfo as _BluetoothGetDeviceInfo,
+)
 from winBindings.hid import (
 	HIDD_ATTRIBUTES,
 	HidD_FreePreparsedData,
@@ -182,8 +185,8 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 
 
 def getBluetoothDeviceInfo(address):
-	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
-	res = BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
+	devInfo = _BLUETOOTH_DEVICE_INFO(address=address)
+	res = _BluetoothGetDeviceInfo(None, ctypes.byref(devInfo))
 	if res != 0:
 		raise ctypes.WinError(res)
 	return devInfo
@@ -495,6 +498,8 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 	"BLUETOOTH_ADDRESS": ("winBindings.bthprops",),
 	"BLUETOOTH_MAX_NAME_SIZE": ("winBindings.bthprops",),
 	"BTH_ADDR": ("winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+	"BLUETOOTH_DEVICE_INFO": ("winBindings.bthprops",),
+	"BluetoothGetDeviceInfo": ("winBindings.bthprops",),
 	"CM_Get_Device_ID": ("winBindings.cfgmgr32",),
 	"CR_SUCCESS": ("winBindings.cfgmgr32",),
 	"MAX_DEVICE_ID_LEN": ("winBindings.cfgmgr32",),
