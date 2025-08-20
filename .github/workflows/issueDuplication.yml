@@ -28,7 +28,7 @@ jobs:
 
       - name: Analyze issue For duplicates
         id: analyze-issue
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@v2
         with:
           model: openai/gpt-4o
           enable-github-mcp: true
