@@ -23,6 +23,8 @@ Windows 10 (Version 1507) is the minimum Windows version supported. (#18684, @jo
 
 ### Bug Fixes
 
+* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
@@ -31,6 +33,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
   * The changelog should document changes between previous and latest add-on versions.
+* Updated components
+  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
 #### API Breaking Changes
 
