@@ -34,6 +34,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 
 selOffsetsAtLastCaretEvent = None
 
@@ -169,6 +170,11 @@ WB_RIGHTBREAK = 7
 
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	# Override segFlags to enforce use of Uniscribe
+	charSegFlag = CharSegFlag.UNISCRIBE
+	wordSegFlag = WordSegFlag.UNISCRIBE
+
 	def _getPointFromOffset(self, offset):
 		if self.obj.editAPIVersion == 1 or self.obj.editAPIVersion >= 3:
 			processHandle = self.obj.processHandle

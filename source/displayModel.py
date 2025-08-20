@@ -23,6 +23,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 from typing import (
 	List,
 	Tuple,
@@ -545,8 +546,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return lineEndOffsets[-1]
 		return 0
 
-	useUniscribeForCharOffset = False
-	useWordSegmenterForWordOffset = False
+	# Override segFlags to strictly use the old fallen-back method
+	charSegFlag = CharSegFlag.NONE
+	wordSegFlag = WordSegFlag.NONE
 
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))

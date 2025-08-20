@@ -13,6 +13,7 @@ import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 from dataclasses import dataclass
 from typing import (
 	Optional,
@@ -155,10 +156,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
 	detectFormattingAfterCursorMaybeSlow: bool = True
-	#: Use uniscribe to calculate character offsets.
-	useUniscribeForCharOffset: bool = True
-	#: Use word segmenter to calculate word offsets.
-	useWordSegmenterForWordOffset: bool = True
+	#: Method to calculate character and word offsets.
+	charSegFlag: CharSegFlag = CharSegFlag.UNISCRIBE
+	wordSegFlag: WordSegFlag = WordSegFlag.ON_SEGMENTER
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
@@ -383,7 +383,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart, lineEnd)
 		relOffset = offset - lineStart
-		if self.useUniscribeForCharOffset:
+		if self.charSegFlag == CharSegFlag.UNISCRIBE:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
@@ -407,8 +407,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
-		if self.useWordSegmenterForWordOffset:
-			offsets = textUtils.WordSegmenter(lineText, self.encoding).getSegmentForOffset(relOffset)
+		if self.wordSegFlag:
+			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		# Fall back to the older word offsets detection that only breaks on non alphanumeric

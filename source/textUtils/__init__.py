@@ -21,6 +21,7 @@ from logHandler import log
 
 from .uniscribe import splitAtCharacterBoundaries
 from . import wordSegment
+from .segFlag import WordSegFlag
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
@@ -549,23 +550,30 @@ class WordSegmenter:
 	"""Selects appropriate segmentation strategy and segments text."""
 
 	# Precompiled patterns
-	# Chinese characters and Japanese kanjis (CJK Unified Ideographs) U+4E00 - U+9FFF
-	_HANZI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
-	# Japanese kanas (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
+	# Chinese characters and Japanese kanji (CJK Unified Ideographs U+4E00 - U+9FFF)
+	_CHINESE_CHARACTER_AND_JAPANESE_KANJI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
+	# Japanese kana (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
 	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
 
-	def __init__(self, text: str, encoding: str | None):
+	def __init__(self, text: str, encoding: str | None, wordSegFlag: WordSegFlag):
 		self.text = text
 		self.encoding = encoding
-		self.strategy = self._choose_strategy(self.text, self.encoding)
+		self.wordSegFlag = wordSegFlag
+		self.strategy = self._choose_strategy()
 
-	@staticmethod
-	def _choose_strategy(text: str, encoding: str | None) -> wordSegment.WordSegmentationStrategy:
+	def _choose_strategy(self) -> wordSegment.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""
-		if WordSegmenter._HANZI.search(text) and not WordSegmenter._KANA.search(text):
-			return wordSegment.ChineseWordSegmentationStrategy(text, encoding)
+		if self.wordSegFlag == WordSegFlag.ON_SEGMENTER:
+			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(self.text) and not WordSegmenter._KANA.search(self.text):
+				return wordSegment.ChineseWordSegmentationStrategy(self.text, self.encoding)
+			else:
+				return wordSegment.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 		else:
-			return wordSegment.UniscribeWordSegmentationStrategy(text, encoding)
+			match self.wordSegFlag:
+				case WordSegFlag.UNISCRIBE:
+					return wordSegment.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				case WordSegFlag.CHINESE:
+					return wordSegment.ChineseWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""
