@@ -35,8 +35,7 @@ Please open a GitHub issue if the described add-on API changes result in the API
 
 Make sure to import your code from the original module by checking the NVDA source code.
 
-e.g. if a class is located at `foo.py`.
-you should import it as follows:
+e.g. if a class is located at `foo.py`, you should import it as follows:
 
 ```python
 from foo import Foo
