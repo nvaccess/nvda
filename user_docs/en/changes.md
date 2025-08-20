@@ -20,6 +20,8 @@ This can be enabled using the "Report when lists support multiple selection" set
 
 ### Bug Fixes
 
+* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
