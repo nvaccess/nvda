@@ -53,7 +53,7 @@ from bar import Foo
 #### Stability of pip packages {#APIIncludedPipPackages}
 
 Pip packages may be updated, downgraded, or removed at any time.
-It is recommended to package any pip dependency you share with NVDA directly with your add-on.
+It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
 ### A Note About Python {#aboutPython}
 
