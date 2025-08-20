@@ -281,7 +281,7 @@ class SynthDriverAudioStream(COMObject):
 		if (
 			synth._isFirstAudioChunk
 			and synth.sonicStream.samplesAvailable
-			< synth.sonicStream.sampleRate * 1000 // _FIRST_AUDIO_CHUNK_MIN_DURATION_MS
+			< synth.sonicStream.sampleRate * _FIRST_AUDIO_CHUNK_MIN_DURATION_MS // 1000
 		):
 			return
 		synth._isFirstAudioChunk = False
