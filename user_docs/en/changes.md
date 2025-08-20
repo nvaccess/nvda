@@ -11,11 +11,16 @@ Windows 10 is the minimum Windows version supported.
 
 ### New Features
 
+* Added the possibility to report when multiple items can be selected in a list control.
+This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
+
 ### Changes
 
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 
 ### Bug Fixes
+
+* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -23,6 +28,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
+  * The changelog should document changes between previous and latest add-on versions.
+* Updated components
+  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
 #### API Breaking Changes
 
@@ -31,7 +40,10 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 * NVDA is now built with Python 3.13. (#18591)
 * typing_extensions have been removed.
-  These should be supported natively in Python 3.13. (#18689)
+These should be supported natively in Python 3.13. (#18689)
+* `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
+* Fixed behavior of `TextInfo.collapse()` - previously it was moving TextInfo to the next paragraph in some cases. (#18320, @mltony)
+* Fixed behavior of `OffsetTextInfo.move()` - previously it wouldn't move to the very end of the document unless moving by character. (#18348, @mltony)
 
 #### Deprecations
 
