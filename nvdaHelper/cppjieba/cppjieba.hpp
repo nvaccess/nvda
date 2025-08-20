@@ -56,6 +56,11 @@ JIEBA_API int initJieba();
 /// @return 0 on success, -1 on failure.
 JIEBA_API int segmentOffsets(const char* text, int** charOffsets, int* outLen);
 
+/// Wrapper for word management
+JIEBA_API bool insertUserWord(const string& word, int freq, const string& tag);
+JIEBA_API bool find(const string& word);
+JIEBA_API bool deleteUserWord(const string& word, const string& tag);
+
 /// @brief Free memory allocated by segmentOffsets.
 JIEBA_API void freeOffsets(int* ptr);
 
