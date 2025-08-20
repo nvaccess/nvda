@@ -45,7 +45,7 @@ from foo import Foo
 If `bar.py` imports `Foo` you cannot rely on importing `Foo` from `bar`.
 i.e. you must import it directly from `foo`.
 
-The following is not be supported in the API, as the import in `bar` could be removed at any time.
+The following is not supported in the API, as the import in `bar` could be removed at any time.
 
 ```python
 from bar import Foo
