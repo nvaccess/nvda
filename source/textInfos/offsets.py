@@ -403,7 +403,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
 		if self.wordSegFlag:
-			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(relOffset)
+			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
+				relOffset
+			)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		# Fall back to the older word offsets detection that only breaks on non alphanumeric
