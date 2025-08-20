@@ -26,7 +26,7 @@ jobs:
             core.setOutput('title', issue.data.title)
             core.setOutput('body', issue.data.body)
 
-      - name: Analyze issue For duplicates
+      - name: Analyze issue for duplicates
         id: analyze-issue
         uses: actions/ai-inference@v2
         with:
