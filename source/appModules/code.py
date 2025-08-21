@@ -82,10 +82,7 @@ class AppModule(appModuleHandler.AppModule):
 			return cached
 
 		# Fallback: search the current foreground window tree for a STATUSBAR.
-		try:
-			foreground = api.getForegroundObject()
-		except Exception:
-			foreground = None
+		foreground = api.getForegroundObject()
 		res = self._search_for_statusbar(foreground)
 		if res:
 			self._status = res
