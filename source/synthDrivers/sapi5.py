@@ -1047,7 +1047,8 @@ class SynthDriver(SynthDriver):
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
 			self._speakRequests = deque()  # clear the queue
-			with self._threadCond:  # wake up the thread
+			with self._threadCond:  # clear the queue and wake up the thread
+				self._speakRequests.clear()
 				self._threadCond.notify()
 		if self.ttsAudioStream:
 			# For legacy audio
