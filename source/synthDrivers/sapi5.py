@@ -1046,7 +1046,6 @@ class SynthDriver(SynthDriver):
 		self._isCancelling = True
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
-			self._speakRequests = deque()  # clear the queue
 			with self._threadCond:  # clear the queue and wake up the thread
 				self._speakRequests.clear()
 				self._threadCond.notify()
