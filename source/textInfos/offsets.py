@@ -404,7 +404,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		relOffset = offset - lineStart
 		if self.wordSegFlag:
 			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
-				relOffset
+				relOffset,
 			)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)

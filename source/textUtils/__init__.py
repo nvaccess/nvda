@@ -565,7 +565,7 @@ class WordSegmenter:
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.ON_SEGMENTER:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
-				self.text
+				self.text,
 			) and not WordSegmenter._KANA.search(self.text):
 				return wordSegment.ChineseWordSegmentationStrategy(self.text, self.encoding)
 			else:
