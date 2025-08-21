@@ -556,10 +556,10 @@ class WordSegmenter:
 	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
 
 	def __init__(self, text: str, encoding: str | None, wordSegFlag: WordSegFlag):
-		self.text = text
-		self.encoding = encoding
-		self.wordSegFlag = wordSegFlag
-		self.strategy = self._choose_strategy()
+		self.text: str = text
+		self.encoding: str | None = encoding
+		self.wordSegFlag: WordSegFlag = wordSegFlag
+		self.strategy: wordSegment.WordSegmentationStrategy = self._choose_strategy()
 
 	def _choose_strategy(self) -> wordSegment.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""

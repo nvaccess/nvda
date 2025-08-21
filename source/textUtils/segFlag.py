@@ -6,23 +6,23 @@
 from enum import IntFlag
 
 # shared bit masks (explicit powers of two)
-_ON_SEGMENTER = 1 << 0
-_UNISCRIBE = 1 << 1
-_CHINESE = 1 << 2
+_ON_SEGMENTER: int = 1 << 0
+_UNISCRIBE: int = 1 << 1
+_CHINESE: int = 1 << 2
 
 
 class CharSegFlag(IntFlag):
 	"""Character-level segmentation flags."""
 
-	NONE = 0
-	ON_SEGMENTER = _ON_SEGMENTER
-	UNISCRIBE = _UNISCRIBE
+	NONE: int = 0
+	ON_SEGMENTER: int = _ON_SEGMENTER
+	UNISCRIBE: int = _UNISCRIBE
 
 
 class WordSegFlag(IntFlag):
 	"""Word-level segmentation flags."""
 
-	NONE = 0
-	ON_SEGMENTER = _ON_SEGMENTER
-	UNISCRIBE = _UNISCRIBE
-	CHINESE = _CHINESE
+	NONE: int = 0
+	ON_SEGMENTER: int = _ON_SEGMENTER
+	UNISCRIBE: int = _UNISCRIBE
+	CHINESE: int = _CHINESE
