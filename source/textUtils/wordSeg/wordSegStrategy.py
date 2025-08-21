@@ -8,8 +8,39 @@ import ctypes
 from ctypes import c_char_p, c_int, POINTER, byref
 from abc import ABC, abstractmethod
 from functools import lru_cache
+from collections.abc import Callable
+from typing import Any
+
 from logHandler import log
 import textUtils
+
+# Initializer registry (robust: saves module + qualname + original function + args/kwargs)
+# Each entry: (module_name: str, qualname: str, func_obj: Callable, args: tuple, kwargs: dict)
+initializerList: list[tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = []
+
+def initializerRegistry(*decorator_args, **decorator_kwargs):
+	"""
+	A decorator to register an initializer function.
+	Usage:
+		@initializerRegistry
+		def f(): ...
+	or with arguments:
+		@initializerRegistry(arg1, arg2, kw=val)
+		def f(...): ...
+	We save (func.__module__, func.__qualname__, func, args, kwargs) so that during
+	package initialize() we can dynamically resolve the callable from the module
+	(this handles classmethod/staticmethod ordering issues).
+	"""
+	if decorator_args and callable(decorator_args[0]) and len(decorator_args) == 1 and not decorator_kwargs:
+		func = decorator_args[0]
+		initializerList.append((func.__module__, func.__qualname__, func, (), {}))
+		return func
+
+	def _decorator(func: Callable[..., Any]):
+		initializerList.append((func.__module__, func.__qualname__, func, decorator_args, decorator_kwargs))
+		return func
+
+	return _decorator
 
 
 class WordSegmentationStrategy(ABC):
@@ -28,12 +59,13 @@ class WordSegmentationStrategy(ABC):
 class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	_lib = None
 
-	def __init__(self, text: str, encoding: str | None = None):
-		super().__init__(text, encoding)
-		self._ensureLibLoaded()
-
 	@classmethod
+	@initializerRegistry
 	def _ensureLibLoaded(cls):  # TODO: make cppjieba alternative
+		"""
+		Class-level initializer: attempts to load the versioned cppjieba library and
+		set up ctypes signatures.
+		"""
 		if cls._lib is not None:
 			return
 		try:
@@ -41,7 +73,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 			lib_path = os.path.join(versionedLibPath, "cppjieba.dll")
 			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
-			# Setup function signatures (adjust if your C API differs)
+
+			# Setup function signatures
+			# int initJieba()
 			cls._lib.initJieba.restype = c_int
 			cls._lib.initJieba.argtypes = []
 

@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -905,6 +905,16 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	from textUtils import wordSeg
+	log.debug("Initializing word segmentation module")
+
+	try:
+		wordSeg.initialize()
+	except RuntimeError:
+		log.warning("Word segmentation module disabled in configuration")
+	except:  # noqa: E722
+		log.error("Error initializing word segmentation module", exc_info=True)
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
