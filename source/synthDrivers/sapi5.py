@@ -588,25 +588,31 @@ class SynthDriver(SynthDriver):
 		This variable is not doing anything useful, and may be removed together with all its references
 		when the property "isSpeaking" is removed."""
 		self._isCancelling = False
-		self._isTerminating = False
+		self._isStoppingThread = False
 		self._isFirstAudioChunk = False
 		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 		self._bookmarkLists: deque[deque[int]] = deque()
-		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
+		self._thread: threading.Thread | None = None
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
 		self._isCompleted = False  # True when the last speak request reaches EndStream
-		self._thread.start()
 
-	def terminate(self):
+	def _stopThread(self) -> None:
+		"""Stops the WASAPI speak thread (if it's running) and waits for the thread to quit."""
+		self._isStoppingThread = True
 		# Wake up and wait for the speak thread.
-		self._isTerminating = True
 		if self.player:
 			self.player.stop()  # Ensure the player is stopped to avoid blocking the thread.
-		with self._threadCond:
-			self._threadCond.notify_all()
-		self._thread.join()
+		if self._thread and self._thread.is_alive():
+			with self._threadCond:
+				self._threadCond.notify_all()
+			self._thread.join()
+			self._thread = None
+		self._isStoppingThread = False
+
+	def terminate(self):
+		self._stopThread()
 		self.tts = None
 		if self.player:
 			self.player.close()
@@ -713,6 +719,9 @@ class SynthDriver(SynthDriver):
 		sonicInitialize()
 		self.sonicStream = SonicStream(wfx.nSamplesPerSec, wfx.nChannels)
 
+		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
+		self._thread.start()
+
 	def _initLegacyAudio(self):
 		if audioDucking.isAudioDuckingSupported():
 			self._audioDucker = audioDucking.AudioDucker()
@@ -733,6 +742,7 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.Voice = voice
 
+		self._stopThread()
 		if self.player:
 			self.player.close()
 			self.player = None
@@ -803,10 +813,10 @@ class SynthDriver(SynthDriver):
 		return " ".join(out)
 
 	def _requestsAvailable(self) -> bool:
-		return self._speakRequests or self._isCancelling or self._isTerminating
+		return self._speakRequests or self._isCancelling or self._isStoppingThread
 
 	def _requestCompleted(self) -> bool:
-		return self._isCompleted or self._isCancelling or self._isTerminating
+		return self._isCompleted or self._isCancelling or self._isStoppingThread
 
 	def _onEndStream(self) -> None:
 		"""Common handling when a speech stream ends."""
@@ -823,6 +833,7 @@ class SynthDriver(SynthDriver):
 			self._audioDucker.disable()
 
 	def _speakThread(self):
+		"""Thread that processes speech when WASAPI is enabled."""
 		# Handles speak requests in the queue one by one.
 		# Only one request will be processed (spoken) at a time.
 		# We don't use SAPI5's built-in speech queue,
@@ -835,7 +846,7 @@ class SynthDriver(SynthDriver):
 		request: _SpeakRequest | None = None
 
 		# Process requests one by one.
-		while not self._isTerminating:
+		while not self._isStoppingThread:
 			# Fetch the next request
 			with self._threadCond:
 				self._threadCond.wait_for(self._requestsAvailable)
