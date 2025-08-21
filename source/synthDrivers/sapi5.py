@@ -591,12 +591,12 @@ class SynthDriver(SynthDriver):
 		self._isStoppingThread = False
 		self._isFirstAudioChunk = False
 		self._rateBoost = False
-		self._initTts(_defaultVoiceToken)
 		self._bookmarkLists: deque[deque[int]] = deque()
 		self._thread: threading.Thread | None = None
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
 		self._isCompleted = False  # True when the last speak request reaches EndStream
+		self._initTts(_defaultVoiceToken)
 
 	def _stopThread(self) -> None:
 		"""Stops the WASAPI speak thread (if it's running) and waits for the thread to quit."""
