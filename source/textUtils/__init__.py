@@ -20,7 +20,7 @@ from typing import Generator, Optional, Tuple, Type
 from logHandler import log
 
 from .uniscribe import splitAtCharacterBoundaries
-from . import wordSegment
+from .wordSeg import wordSegStrategy
 from .segFlag import WordSegFlag
 
 WCHAR_ENCODING = "utf_16_le"
@@ -559,23 +559,23 @@ class WordSegmenter:
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordSegFlag: WordSegFlag = wordSegFlag
-		self.strategy: wordSegment.WordSegmentationStrategy = self._choose_strategy()
+		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._choose_strategy()
 
-	def _choose_strategy(self) -> wordSegment.WordSegmentationStrategy:  # TODO: optimize
+	def _choose_strategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.ON_SEGMENTER:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
 				self.text,
 			) and not WordSegmenter._KANA.search(self.text):
-				return wordSegment.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
 			else:
-				return wordSegment.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 		else:
 			match self.wordSegFlag:
 				case WordSegFlag.UNISCRIBE:
-					return wordSegment.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case WordSegFlag.CHINESE:
-					return wordSegment.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""
