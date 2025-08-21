@@ -582,5 +582,5 @@ class WordSegmenter:
 		try:
 			return self.strategy.getSegmentForOffset(self.text, offset)
 		except Exception as e:
-			log.debugWarning("WordSegmenter.getSegmentForOffset failed: %s", e)
+			log.debugWarning("WordSegmenter.getSegmentForOffset failed: %s  text: '%s' offset: %s  segmentation strategy: %s", e, self.text, offset, self.strategy)
 			return None

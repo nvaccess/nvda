@@ -159,7 +159,6 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 				# We need to convert the uniscribe based offsets to str offsets.
 				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
 			return (relStart, relEnd)
-		log.debugWarning(f"Uniscribe failed to calculate word offsets for text {lineText!r}")
 		return None
 
 	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:
