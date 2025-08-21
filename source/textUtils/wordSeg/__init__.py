@@ -6,6 +6,7 @@
 import importlib
 from logHandler import log
 
+
 def initialize():
 	"""
 	Call all registered initializer functions recorded in wordSegStrategy.initializerList.

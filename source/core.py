@@ -907,6 +907,7 @@ def main():
 	_remoteClient.initialize()
 
 	from textUtils import wordSeg
+
 	log.debug("Initializing word segmentation module")
 
 	try:

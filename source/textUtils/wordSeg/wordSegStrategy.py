@@ -18,6 +18,7 @@ import textUtils
 # Each entry: (module_name: str, qualname: str, func_obj: Callable, args: tuple, kwargs: dict)
 initializerList: list[tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = []
 
+
 def initializerRegistry(*decorator_args, **decorator_kwargs):
 	"""
 	A decorator to register an initializer function.
