@@ -1096,4 +1096,4 @@ class SynthDriver(SynthDriver):
 			# and all its references can also be removed,
 			# as it is not doing anything useful.
 			return self._isSpeaking
-		return super().__getattr__(attrName)
+		raise AttributeError(f"'{type(self).__name__}' object has no attribute '{attrName}'")
