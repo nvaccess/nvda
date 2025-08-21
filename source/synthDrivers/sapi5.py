@@ -504,7 +504,7 @@ class SapiSink(COMObject):
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
 		if synth._isCancelling:
-			self._bookmarkLists.clear()
+			synth._bookmarkLists.clear()
 			return
 		if synth.player:
 			# WASAPI is on
