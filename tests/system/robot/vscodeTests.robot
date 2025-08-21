@@ -2,6 +2,7 @@
 # Copyright (C) 2025 Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 *** Settings ***
 Documentation	Visual Studio Code tests
 Force Tags	NVDA	smoke test	vscode

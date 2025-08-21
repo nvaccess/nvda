@@ -430,7 +430,7 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
-    - name: Download and Install Visual Studio Code
+    - name: Download and install Visual Studio Code
       if: ${{ matrix.testSuite == 'vscode' }}
       run: choco install -y vscode
     - name: Run system tests
