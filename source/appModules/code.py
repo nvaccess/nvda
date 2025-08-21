@@ -10,6 +10,7 @@ import appModuleHandler
 import controlTypes
 import re
 from collections import deque
+from logHandler import log
 from NVDAObjects.behaviors import EditableTextBase
 from NVDAObjects.IAccessible.chromium import Document
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -50,6 +51,7 @@ class AppModule(appModuleHandler.AppModule):
 					return obj
 				children = obj.children
 			except Exception:
+				log.exception(f"Not searching descendents of {obj}")
 				children = ()
 			t.extend(children)
 		return None
