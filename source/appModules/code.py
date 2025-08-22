@@ -42,16 +42,19 @@ class AppModule(appModuleHandler.AppModule):
 			if obj in seen:
 				continue
 			seen.add(obj)
+			if obj.role == controlTypes.Role.STATUSBAR:
+				return obj
 			try:
-				if obj.role == controlTypes.Role.STATUSBAR:
-					return obj
 				# IA2 ID often contains "statusbar"
 				ia2id = obj.IA2Attributes.get("id")
-				if ia2id and "statusbar" in ia2id.casefold():
-					return obj
+			except AttributeError:
+				ia2id = None
+			if ia2id and "statusbar" in ia2id.casefold():
+				return obj
+			try:
 				children = obj.children
 			except Exception:
-				log.exception(f"Not searching descendents of {obj}")
+				log.exception(f"Unable to get descendents of {obj}")
 				children = ()
 			t.extend(children)
 		return None
