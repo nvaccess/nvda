@@ -391,6 +391,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	inputCore.manager.loadDefaultGestureMap()
 	import audioDucking
 
 	if audioDucking.isAudioDuckingSupported():
