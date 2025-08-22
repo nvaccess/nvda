@@ -28,6 +28,8 @@ from py2exe.dllfinder import DllFinder  # noqa: E402
 import wx  # noqa: E402
 import importlib.machinery  # noqa: E402
 
+# Explicitly put the nvda_dmp dir on the build path so the DMP library is included
+sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
 manifestTemplateFilePath = "manifest.template.xml"
 
@@ -177,6 +179,19 @@ freeze(
 	},
 	windows=_py2ExeWindows,
 	console=[
+		{
+			"script": os.path.join("..", "include", "nvda_dmp", "nvda_dmp.py"),
+			"icon_resources": [(1, "images/nvda.ico")],
+			"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
+			"version_info": {
+				"version": formatBuildVersionString(),
+				"description": "NVDA Diff-match-patch proxy",
+				"product_name": name,
+				"product_version": version,
+				"copyright": f"{NVDAcopyright}, Bill Dengler",
+				"company_name": f"Bill Dengler, {publisher}",
+			},
+		},
 		{
 			"script": "l10nUtil.py",
 			"version_info": {
