@@ -53,6 +53,7 @@ from winBindings.setupapi import (
 	SetupDiOpenDevRegKey as _SetupDiOpenDevRegKey,
 	_Dummy,
 )
+import utils._deprecate
 
 
 def ValidHandle(value):
@@ -551,31 +552,34 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 """Mapping from symbol name to new (absolute) module and symbol path."""
 
 
-def __getattr__(attrName: str) -> typing.Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	import NVDAState
+# def __getattr__(attrName: str) -> typing.Any:
+# 	"""Module level `__getattr__` used to preserve backward compatibility."""
+# 	import NVDAState
 
-	if NVDAState._allowDeprecatedAPI():
-		# Symbols that have simply been moved elsewhere
-		if attrName in _MOVED_SYMBOLS:
-			from importlib import import_module
+# 	if NVDAState._allowDeprecatedAPI():
+# 		# Symbols that have simply been moved elsewhere
+# 		if attrName in _MOVED_SYMBOLS:
+# 			from importlib import import_module
 
-			newModule, *newPath = _MOVED_SYMBOLS[attrName]
-			newPath = newPath or [attrName]
-			log.warning(
-				f"hwPortUtils.{attrName} is deprecated. Use {newModule}.{'.'.join(newPath)} instead.",
-				stack_info=True,
-			)
-			value = import_module(newModule)
-			for segment in newPath:
-				value = getattr(value, segment)
-			return value
+# 			newModule, *newPath = _MOVED_SYMBOLS[attrName]
+# 			newPath = newPath or [attrName]
+# 			log.warning(
+# 				f"hwPortUtils.{attrName} is deprecated. Use {newModule}.{'.'.join(newPath)} instead.",
+# 				stack_info=True,
+# 			)
+# 			value = import_module(newModule)
+# 			for segment in newPath:
+# 				value = getattr(value, segment)
+# 			return value
 
-		# Other symbols
-		match attrName:
-			case "INVALID_HANDLE_VALUE":
-				log.warning(f"hwPortUtils.{attrName} is deprecated.", stack_info=True)
-				return 0
-			case _:
-				pass
-	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
+# 		# Other symbols
+# 		match attrName:
+# 			case "INVALID_HANDLE_VALUE":
+# 				log.warning(f"hwPortUtils.{attrName} is deprecated.", stack_info=True)
+# 				return 0
+# 			case _:
+# 				pass
+# 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
+
+
+__getattr__ = utils._deprecate.handleMovedSymbols(_MOVED_SYMBOLS)

@@ -1,15 +1,22 @@
 from importlib import import_module
+from types import ModuleType
 import NVDAState
 from collections.abc import Callable
 from typing import Any
 from logHandler import log
+import inspect
+import sys
 
 
-def registerDeprecatedSymbols(
-	modName: str,
-	*,
+def _getCallerModule(level: int = 0) -> ModuleType:
+	return inspect.getmodule(inspect.stack()[level + 1].frame) or sys.modules["__main__"]
+
+
+def handleMovedSymbols(
 	moved: dict[str, tuple[str, ...]] | None,
 ) -> Callable[[str], Any]:
+	modName = _getCallerModule(1).__name__
+
 	def module_getattr(attrName: str) -> Any:
 		if NVDAState._allowDeprecatedAPI():
 			# Symbols that have simply been moved elsewhere
@@ -22,7 +29,7 @@ def registerDeprecatedSymbols(
 				)
 				value = import_module(newModule)
 				for segment in newPath:
-					value = module_getattr(value, segment)
+					value = getattr(value, segment)
 				return value
 
 			# Other symbols
