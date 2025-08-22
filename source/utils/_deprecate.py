@@ -44,6 +44,20 @@ class MovedSymbol(DeprecatedSymbol):
 		return value
 
 
+class RemovedSymbol(DeprecatedSymbol):
+	def __init__(self, name: str, value: Any, *, message: str = "No public replacement is planned."):
+		super().__init__(name)
+		self._value = value
+		self._extraMessage = message
+
+	@property
+	def value(self) -> Any:
+		return self._value
+
+	def logMessage(self, moduleName: str) -> str:
+		return f"{moduleName}.{self.name} is deprecated. {self._extraMessage}"
+
+
 def _getCallerModule(level: int = 0) -> ModuleType:
 	return inspect.getmodule(inspect.stack()[level + 1].frame) or sys.modules["__main__"]
 
@@ -64,21 +78,6 @@ def handleDeprecations(
 					stack_info=True,
 				)
 				return deprecatedSymbol.value
-				# newModule, *newPath = moved[attrName]
-				# newPath = newPath or [attrName]
-
-				# value = import_module(newModule)
-				# for segment in newPath:
-				# value = getattr(value, segment)
-				# return value
-
-			# Other symbols
-			match attrName:
-				case "INVALID_HANDLE_VALUE":
-					log.warning(f"hwPortUtils.{attrName} is deprecated.", stack_info=True)
-					return 0
-				case _:
-					pass
-		raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
+		raise AttributeError(f"module {modName!r} has no attribute {attrName!r}")
 
 	return module_getattr

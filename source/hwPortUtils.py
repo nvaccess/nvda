@@ -588,4 +588,5 @@ __getattr__ = utils._deprecate.handleDeprecations(
 	utils._deprecate.MovedSymbol("BLUETOOTH_MAX_NAME_SIZE", "winBindings.bthprops"),
 	utils._deprecate.MovedSymbol("BluetoothGetDeviceInfo", "winBindings.bthprops"),
 	utils._deprecate.MovedSymbol("BTH_ADDR", "winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+	utils._deprecate.RemovedSymbol("INVALID_HANDLE_VALUE", 0),
 )
