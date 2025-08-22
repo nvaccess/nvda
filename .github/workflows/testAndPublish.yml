@@ -393,7 +393,7 @@ jobs:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols]
+        testSuite: [chrome, installer, startupShutdown, symbols, vscode]
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
@@ -430,6 +430,9 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+    - name: Download and install Visual Studio Code
+      if: ${{ matrix.testSuite == 'vscode' }}
+      run: choco install -y vscode
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
