@@ -35,28 +35,34 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
+  defaultRunner: 'windows-2025'
+  supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x86
   supportedArchitectures: '["x86"]'
-  defaultPythonVersion: '3.11.9'
-  supportedPythonVersions: '["3.11.9", "3.13.6"]'
+  defaultPythonVersion: '3.13.7'
+  supportedPythonVersions: '["3.13.7"]'
 
 jobs:
   matrix:
     name: Set up matrix
     runs-on: ubuntu-latest
     outputs:
+      defaultRunner: ${{ steps.setMatrix.outputs.defaultRunner }}
+      supportedRunners: ${{ steps.setMatrix.outputs.supportedRunners }}
       supportedArchitectures: ${{ steps.setMatrix.outputs.supportedArchitectures }}
       supportedPythonVersions: ${{ steps.setMatrix.outputs.supportedPythonVersions }}
     steps:
     - name: Set architecture and python version
       id: setMatrix
       run: |
+        echo "defaultRunner=${{ env.defaultRunner }}" >> "$GITHUB_OUTPUT"
+        echo "supportedRunners=$(jq -c <<< '${{ env.supportedRunners }}')" >> "$GITHUB_OUTPUT"
         echo "supportedArchitectures=$(jq -c <<< '${{ env.supportedArchitectures }}')" >> "$GITHUB_OUTPUT"
         echo "supportedPythonVersions=$(jq -c <<< '${{ env.supportedPythonVersions }}')" >> "$GITHUB_OUTPUT"
   buildNVDA:
     name: Build NVDA
     needs: matrix
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     strategy:
       fail-fast: false
       matrix:
@@ -73,7 +79,7 @@ jobs:
       APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         submodules: true
     - name: Install Python
@@ -108,7 +114,7 @@ jobs:
     - name: Cache scons build
       uses: actions/cache/save@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
     - name: Store release metadata information
       id: releaseInfo
@@ -120,13 +126,13 @@ jobs:
 
   typeCheck:
     name: Check types with Pyright
-    runs-on: windows-2025
-    needs: buildNVDA
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -141,10 +147,11 @@ jobs:
 
   checkPo:
     name: Check po files for errors
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: matrix
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         # Include gettext
         submodules: true
@@ -153,10 +160,6 @@ jobs:
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
-    - name: Install pre-commit
-      run: |
-        python -m pip install --upgrade pip
-        pip install pre-commit
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Run pre-commit
@@ -164,9 +167,9 @@ jobs:
         # Ensure uv environment is up to date.
         # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
         # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
-        pre-commit run uv-lock --all-files
+        uv run pre-commit run uv-lock --all-files
         # Run pre-commit on the translations
-        pre-commit run checkPo --all-files
+        uv run pre-commit run checkPo --all-files
     - name: Add job summary
       if: ${{ failure() }}
       shell: bash
@@ -175,13 +178,13 @@ jobs:
 
   checkPot:
     name: Check translator comments
-    runs-on: windows-2025
-    needs: buildNVDA
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -204,13 +207,13 @@ jobs:
 
   licenseCheck:
     name: Check license compatibility of dependencies
-    runs-on: windows-2025
-    needs: buildNVDA
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA]
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -225,7 +228,7 @@ jobs:
 
   unitTests:
     name: Run unit tests
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -238,7 +241,7 @@ jobs:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -274,14 +277,14 @@ jobs:
 
   crowdinUpload:
     name: Upload translations to Crowdin
-    runs-on: windows-2025
-    needs: [buildNVDA, checkPot]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Get makePot results
@@ -304,7 +307,7 @@ jobs:
 
   createLauncher:
     name: Create launcher
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -322,7 +325,7 @@ jobs:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -384,22 +387,28 @@ jobs:
 
   systemTests:
     name: Run system tests
-    runs-on: windows-2025
+    runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
     strategy:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols, imageDescriptions]
+        testSuite: [chrome, installer, startupShutdown, symbols, vscode, imageDescriptions]
+        runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
+        # A bug exists with Windows 2022 notepad that prevents NVDA from focusing it.
+        # This causes our symbol pronunciation tests to fail on this runner.
+        exclude:
+          - runner: windows-2022
+            testSuite: symbols
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -421,6 +430,9 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+    - name: Download and install Visual Studio Code
+      if: ${{ matrix.testSuite == 'vscode' }}
+      run: choco install -y vscode
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
@@ -430,7 +442,7 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
+        name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         path: |
           testOutput/system
           testOutput/install
@@ -439,14 +451,14 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ failure() }}
       with:
-        check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
+        check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         detailed_summary: true
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
   createSymbols:
     name: Create symbols
-    runs-on: windows-2025
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     strategy:
       fail-fast: false
@@ -461,7 +473,7 @@ jobs:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Windows SDK
@@ -496,14 +508,14 @@ jobs:
 
   uploadSymbols:
     name: Upload symbols
-    runs-on: windows-2025
-    needs: createSymbols
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, createSymbols]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
       with:
-        path: ${{ github.workspace }}
+        path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
@@ -540,7 +552,7 @@ jobs:
     permissions:
       actions: write
     needs: [matrix, allTestsPass, crowdinUpload, uploadSymbols]
-    if: ${{ always() && (github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner) }}
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.owner == github.repository_owner }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -685,7 +697,8 @@ jobs:
           --prerelease \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
           --notes-file /tmp/releaseNotes.md \
-          --verify-tag
+          --verify-tag \
+          --discussion-category Releases
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       shell: bash
@@ -698,7 +711,12 @@ jobs:
           --notes-file /tmp/releaseNotes.md \
           --verify-tag \
           --discussion-category Releases
-        gh release upload ${{github.ref_name }} \
+    - name: Upload exe to release assets
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release upload ${{ github.ref_name }} \
             --repo ${{ github.repository }} \
             --clobber \
             output/nvda*.exe#Installer

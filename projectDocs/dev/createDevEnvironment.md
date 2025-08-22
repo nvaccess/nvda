@@ -48,7 +48,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.11.9, 32 bit.
+[Python](https://www.python.org/), version 3.13.7, 32 bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv

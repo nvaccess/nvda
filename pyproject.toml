@@ -9,7 +9,7 @@ description = "NonVisual Desktop Access (NVDA)"
 maintainers = [
 	{name = "NV Access", email = "info@nvaccess.org"},
 ]
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.13,<3.14"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: End Users/Desktop",
@@ -33,8 +33,6 @@ dependencies = [
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
 	"fast-diff-match-patch==2.1.0",
-	# typing_extensions are required for specifying default value for `TypeVar` prior to Python 3.13 (see PEP 696)
-	"typing-extensions==4.12.2",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20240210",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
@@ -128,7 +126,6 @@ ignore_packages = [
 	"Markdown",  # BSD-3-Clause, but not in PyPI correctly
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
-	"urllib3",  # MIT license, but not in PyPI
 	"wxPython",  # wxWindows Library License
 ]
 
