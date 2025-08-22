@@ -582,4 +582,10 @@ _MOVED_SYMBOLS: dict[str, tuple[str, ...]] = {
 # 	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
-__getattr__ = utils._deprecate.handleMovedSymbols(_MOVED_SYMBOLS)
+__getattr__ = utils._deprecate.handleDeprecations(
+	utils._deprecate.MovedSymbol("BLUETOOTH_ADDRESS", "winBindings.bthprops"),
+	utils._deprecate.MovedSymbol("BLUETOOTH_DEVICE_INFO", "winBindings.bthprops"),
+	utils._deprecate.MovedSymbol("BLUETOOTH_MAX_NAME_SIZE", "winBindings.bthprops"),
+	utils._deprecate.MovedSymbol("BluetoothGetDeviceInfo", "winBindings.bthprops"),
+	utils._deprecate.MovedSymbol("BTH_ADDR", "winBindings.bthprops", "BLUETOOTH_ADDRESS"),
+)
