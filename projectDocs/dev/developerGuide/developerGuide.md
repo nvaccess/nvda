@@ -12,7 +12,7 @@ This guide provides information concerning NVDA development, including translati
 
 The NVDA Add-on API includes all NVDA internals, except:
 
-* symbols that are prefixed with an underscore
+* symbols that are prefixed with an underscore (`_`)
 * [transitive imports](#APIImports)
 * [included pip packages](#APIIncludedPipPackages)
 
