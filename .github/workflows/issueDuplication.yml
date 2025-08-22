@@ -30,7 +30,7 @@ jobs:
         id: analyze-issue
         uses: actions/ai-inference@v2
         with:
-          model: openai/gpt-4o
+          model: azure-openai/gpt-5
           enable-github-mcp: true
           github-mcp-token: ${{ secrets.MCP_PAT_TOKEN }}
           system-prompt: |
