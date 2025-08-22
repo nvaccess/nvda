@@ -82,6 +82,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
 * Braille:
   * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
   * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+  * NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)
   * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
   Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
