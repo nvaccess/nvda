@@ -6,6 +6,7 @@
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 from _localCaptioner.modelDownloader import ModelDownloader
 
+
 def openDownloadDialog() -> None:
 	confirmation_buttons = (
 		DefaultButton.YES,

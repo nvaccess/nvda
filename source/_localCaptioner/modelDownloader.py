@@ -517,4 +517,3 @@ class ModelDownloader:
 		"""Clean up the session when the downloader is destroyed."""
 		if hasattr(self, "session"):
 			self.session.close()
-

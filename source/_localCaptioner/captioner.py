@@ -119,7 +119,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		log.info(f"Loaded config : {os.path.basename(configPath)}")
 		log.info(f"Loaded vocabulary : {os.path.basename(vocabPath)}")
 		log.info(
-			f"Model config - Image size: {self.encoderConfig.image_size}, Max length: {self.decoderConfig.max_length}"
+			f"Model config - Image size: {self.encoderConfig.image_size}, Max length: {self.decoderConfig.max_length}",
 		)
 
 	def _loadModelParams(self) -> None:
@@ -135,7 +135,9 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		# Load generation configuration
 		generation_dict = self.config.get("generation", {})
 		self.generationConfig = _createConfigFromDict(
-			_GenerationConfig, generation_dict, _DEFAULT_GENERATION_CONFIG
+			_GenerationConfig,
+			generation_dict,
+			_DEFAULT_GENERATION_CONFIG,
 		)
 
 		# Load main model configuration
