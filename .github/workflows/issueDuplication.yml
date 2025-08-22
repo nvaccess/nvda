@@ -32,6 +32,11 @@ jobs:
         with:
           model: openai/gpt-4.1
           enable-github-mcp: true
+          # The average issue body uses around 500 tokens
+          # https://platform.openai.com/tokenizer
+          # The max for free tier is 8000 tokens per request.
+          # https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models#rate-limits
+          max-tokens: 2000
           github-mcp-token: ${{ secrets.MCP_PAT_TOKEN }}
           system-prompt: |
             Given an issue title and text,
