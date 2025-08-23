@@ -82,7 +82,7 @@ class RemoteClient:
 					import synthDriverHandler
 					from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-					synthDriverHandler.setSynth(SilenceSynthDriver.__name__, isFallback=True)
+					synthDriverHandler.setSynth(SilenceSynthDriver.name, isFallback=True)
 				else:
 					log.error("Secure desktop session connected event not received")
 		else:

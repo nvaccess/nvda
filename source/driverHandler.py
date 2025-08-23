@@ -53,7 +53,7 @@ class Driver(AutoSettings):
 		return f"{self.__class__.__name__}({self.name!r})"
 
 	@classmethod
-	def check(cls):
+	def check(cls) -> bool:
 		"""Determine whether this driver is available.
 		The driver will be excluded from the list of available drivers if this method returns C{False}.
 		For example, if a speech synthesizer requires installation and it is not installed, C{False} should be returned.
