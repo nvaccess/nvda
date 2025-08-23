@@ -157,12 +157,18 @@ class SecureDesktopHandler:
 		self.sdLeader = LeaderSession(
 			transport=self.sdRelay,
 			localMachine=self.localMachine,
+			isSecureDesktopSession=True,
 		)
+		self.localMachine.isOnSecureDesktop = True
 		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onLeaderDisplayChange)
 		if self.followerSession is not None:
 			self.followerSession.transport.registerInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onLeaderDisplayChange,
+			)
+			self.followerSession.transport.registerInbound(
+				RemoteMessageType.KEY,
+				self.onLeaderKeysReceived,
 			)
 
 		relayThread = threading.Thread(target=self.sdRelay.run)
@@ -177,6 +183,7 @@ class SecureDesktopHandler:
 	def leaveSecureDesktop(self) -> None:
 		"""Clean up when leaving secure desktop."""
 		log.debug("Attempting to leave secure desktop")
+		self.localMachine.isOnSecureDesktop = False
 		if self.sdServer is not None:
 			self.sdServer.close()
 			self.sdServer = None
@@ -250,3 +257,19 @@ class SecureDesktopHandler:
 			)
 		else:
 			log.warning("No secure desktop relay available, skipping display change")
+
+	def onLeaderKeysReceived(
+		self,
+		vk_code: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
+	) -> None:
+		"""Handle key events ."""
+		if self.sdRelay is not None:
+			log.debug("Propagating key event to secure desktop relay")
+			self.sdRelay.send(
+				type=RemoteMessageType.KEY,
+				vk_code=vk_code,
+				extended=extended,
+				pressed=pressed,
+			)

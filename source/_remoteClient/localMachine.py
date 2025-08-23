@@ -112,6 +112,9 @@ class LocalMachine:
 		self._cachedSizes: Optional[List[int]] = None
 		"""Cached braille display sizes from remote machines"""
 
+		self.isOnSecureDesktop: bool = False
+		"""Set by the secure desktop handler when leading a secure desktop."""
+
 		braille.decide_enabled.register(self.handleDecideEnabled)
 
 	def terminate(self) -> None:
@@ -268,6 +271,9 @@ class LocalMachine:
 		:param extended: Whether this is an extended key
 		:param pressed: True for key press, False for key release
 		"""
+		if self.isOnSecureDesktop:
+			# Never process keys when on the secure desktop.
+			return
 		wx.CallAfter(input.sendKey, vk_code, None, extended, pressed)
 
 	def setClipboardText(self, text: str) -> None:

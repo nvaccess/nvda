@@ -75,15 +75,15 @@ class RemoteClient:
 		if isRunningOnSecureDesktop():
 			connection = self.sdHandler.initializeSecureDesktop()
 			if connection:
-				self.connectAsFollower(connection)
+				self.connectAsFollower(connection, isSecureDestkopSession=True)
 				if self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				):
 					synthDriverHandler.setSynth("noSPeech", isFallback=True)
 		else:
 			urlHandler.registerURLHandler()
-			core.postNvdaStartup.register(self.performAutoconnect)
-		inputCore.decide_handleRawKey.register(self.processKeyInput)
+			inputCore.decide_handleRawKey.register(self.processKeyInput)
+		core.postNvdaStartup.register(self.performAutoconnect)
 
 	def performAutoconnect(self):
 		controlServerConfig = configuration.getRemoteConfig()["controlServer"]
@@ -396,7 +396,7 @@ class RemoteClient:
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
 
-	def connectAsFollower(self, connectionInfo: ConnectionInfo):
+	def connectAsFollower(self, connectionInfo: ConnectionInfo, isSecureDestkopSession: bool = False):
 		transport = RelayTransport.create(
 			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -404,14 +404,16 @@ class RemoteClient:
 		self.followerSession = FollowerSession(
 			transport=transport,
 			localMachine=self.localMachine,
+			isSecureDesktopSession=isSecureDestkopSession,
 		)
 		self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
-		transport.transportCertificateAuthenticationFailed.register(
-			self.onFollowerCertificateFailed,
-		)
-		transport.transportConnected.register(self.onConnectedAsFollower)
-		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
+		if not isSecureDestkopSession:
+			transport.transportCertificateAuthenticationFailed.register(
+				self.onFollowerCertificateFailed,
+			)
+			transport.transportConnected.register(self.onConnectedAsFollower)
+			transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
