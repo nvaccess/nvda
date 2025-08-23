@@ -1,9 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V.,
+# David Sexton, Leonard de Ruijter and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import threading
+
 
 import api
 import braille
@@ -12,7 +14,6 @@ import core
 import globalVars
 import gui
 import inputCore
-import synthDriverHandler
 import ui
 import wx
 from config import isInstalledCopy
@@ -35,8 +36,8 @@ from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
 # Type aliases
-KeyModifier = tuple[int, bool]  # (vk_code, extended)
-Address = tuple[str, int]  # (hostname, port)
+type KeyModifier = tuple[int, bool]  # (vk_code, extended)
+type Address = tuple[str, int]  # (hostname, port)
 
 
 class RemoteClient:
@@ -78,7 +79,12 @@ class RemoteClient:
 				if self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				):
-					synthDriverHandler.setSynth("noSPeech", isFallback=True)
+					import synthDriverHandler
+					from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
+					synthDriverHandler.setSynth(SilenceSynthDriver.__name__, isFallback=True)
+				else:
+					log.error("Secure desktop session connected event not received")
 		else:
 			urlHandler.registerURLHandler()
 			inputCore.decide_handleRawKey.register(self.processKeyInput)
@@ -405,9 +411,9 @@ class RemoteClient:
 			localMachine=self.localMachine,
 			isSecureDesktopSession=isSecureDestkopSession,
 		)
-		self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
 		if not isSecureDestkopSession:
+			self.sdHandler.followerSession = self.followerSession
 			transport.transportCertificateAuthenticationFailed.register(
 				self.onFollowerCertificateFailed,
 			)

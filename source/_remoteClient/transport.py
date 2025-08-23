@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V.,
+# Leonard de Ruijter, David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,6 +25,8 @@ All network operations run in background threads, while message handlers
 are called on the main wxPython thread for thread-safety.
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 import hashlib
 import select
@@ -35,7 +38,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logHandler import log
 from queue import Queue
-from typing import Any, Optional, Self
+from typing import Any, Self
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -63,10 +66,10 @@ class RemoteExtensionPoint[**P]:
 	messageType: RemoteMessageType
 	"""The remote message type to send"""
 
-	filter: Optional[Callable[..., dict[str, Any]]] = None
+	filter: Callable[P, dict[str, Any]] | None = None
 	"""Optional function to transform arguments before sending"""
 
-	transport: Optional["Transport"] = None
+	transport: Transport | None = None
 	"""The transport instance (set on registration)"""
 
 	returnValue: bool = True
@@ -216,7 +219,7 @@ class Transport(ABC):
 		self,
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
-		filter: Optional[Callable[..., dict[str, Any]]] = None,
+		filter: Callable[..., dict[str, Any]] | None = None,
 		returnValue: bool = True,
 	) -> None:
 		"""Register an extension point to a message type.
@@ -396,7 +399,7 @@ class TCPTransport(Transport):
 					[],
 					[self.serverSock],
 				)
-			except socket.error:
+			except OSError:
 				self.buffer = b""
 				break
 			if self.serverSock in error:
@@ -405,7 +408,7 @@ class TCPTransport(Transport):
 			if self.serverSock in readers:
 				try:
 					self.processIncomingSocketData()
-				except socket.error:
+				except OSError:
 					self.buffer = b""
 					break
 
@@ -549,7 +552,7 @@ class TCPTransport(Transport):
 			try:
 				with self.serverSockLock:
 					self.serverSock.sendall(item)
-			except socket.error:
+			except OSError:
 				return
 
 	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
@@ -707,7 +710,7 @@ class ConnectorThread(threading.Thread):
 		while self.running:
 			try:
 				self.connector.run()
-			except socket.error:
+			except OSError:
 				time.sleep(self.reconnectDelay)
 				continue
 			else:

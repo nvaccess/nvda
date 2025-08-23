@@ -225,7 +225,8 @@ class RemoteSession:
 		:note: Logs connection info and plays connection sound
 		"""
 		log.info(f"Client connected: {client!r}")
-		cues.clientConnected()
+		if not self.isSecureDesktopSession:
+			cues.clientConnected()
 
 	def handleClientDisconnected(self, client: dict[str, Any] | None = None) -> None:
 		"""Handle client disconnection.
@@ -233,7 +234,8 @@ class RemoteSession:
 		:param client: Optional client info dictionary
 		:note: Plays disconnection sound when remote client disconnects
 		"""
-		cues.clientDisconnected()
+		if not self.isSecureDesktopSession:
+			cues.clientDisconnected()
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.

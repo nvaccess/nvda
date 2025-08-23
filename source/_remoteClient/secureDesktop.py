@@ -65,7 +65,7 @@ class SecureDesktopHandler:
 	def __init__(self, localMachine: LocalMachine, tempPath: Path = getProgramDataTempPath()) -> None:
 		"""Initialize secure desktop handler.
 
-		:param localMachine: Weak reference to the local machine instance
+		:param localMachine: The local machine instance
 		:param tempPath: Directory for IPC file storage
 		"""
 		self.localMachine: LocalMachine = localMachine
@@ -111,13 +111,12 @@ class SecureDesktopHandler:
 
 		if self._followerSession is not None and self._followerSession.transport is not None:
 			transport = self._followerSession.transport
+			transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
 		self._followerSession = session
 		if session is not None:
-			session.transport.registerInbound(
-				RemoteMessageType.SET_BRAILLE_INFO,
-				self._onLeaderDisplayChange,
-			)
+			session.transport.registerInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
+			session.transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 
 	def _onSecureDesktopChange(self, isSecureDesktop: bool | None = None) -> None:
 		"""Internal callback for secure desktop state changes.
@@ -161,15 +160,12 @@ class SecureDesktopHandler:
 		)
 		self.localMachine.isOnSecureDesktop = True
 		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onLeaderDisplayChange)
-		if self.followerSession is not None:
+		if self.followerSession is not None and self.followerSession.transport is not None:
 			self.followerSession.transport.registerInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onLeaderDisplayChange,
 			)
-			self.followerSession.transport.registerInbound(
-				RemoteMessageType.KEY,
-				self.onLeaderKeysReceived,
-			)
+			self.followerSession.transport.registerInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 
 		relayThread = threading.Thread(target=self.sdRelay.run)
 		relayThread.daemon = True
@@ -184,21 +180,22 @@ class SecureDesktopHandler:
 		"""Clean up when leaving secure desktop."""
 		log.debug("Attempting to leave secure desktop")
 		self.localMachine.isOnSecureDesktop = False
-		if self.sdServer is not None:
-			self.sdServer.close()
-			self.sdServer = None
-
 		if self.sdLeader is not None:
 			self.sdLeader.close()
 			self.sdLeader = None
 			self._sdRelay = None
 
 		if self.followerSession is not None and self.followerSession.transport is not None:
+			self.followerSession.transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 			self.followerSession.transport.unregisterInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onLeaderDisplayChange,
 			)
 			self.followerSession.setDisplaySize()
+
+		if self.sdServer is not None:
+			self.sdServer.close()
+			self.sdServer = None
 
 		try:
 			self.IPCFile.unlink()
@@ -249,14 +246,14 @@ class SecureDesktopHandler:
 	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:
 		"""Handle display size changes."""
 		log.debug("Leader display change detected")
-		if self.sdRelay is not None:
+		if self.sdRelay is not None and self.followerSession is not None:
 			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(
 				type=RemoteMessageType.SET_DISPLAY_SIZE,
 				sizes=self.followerSession.leaderDisplaySizes,
 			)
 		else:
-			log.warning("No secure desktop relay available, skipping display change")
+			log.warning("No secure desktop relay or follower session available, skipping display change")
 
 	def onLeaderKeysReceived(
 		self,
@@ -264,7 +261,8 @@ class SecureDesktopHandler:
 		extended: bool | None = None,
 		pressed: bool | None = None,
 	) -> None:
-		"""Handle key events ."""
+		"""Handle key events."""
+		log.debug("Leader key input received")
 		if self.sdRelay is not None:
 			log.debug("Propagating key event to secure desktop relay")
 			self.sdRelay.send(
@@ -273,3 +271,5 @@ class SecureDesktopHandler:
 				extended=extended,
 				pressed=pressed,
 			)
+		else:
+			log.warning("No secure desktop relay available, skipping key input")
