@@ -172,6 +172,7 @@ WB_RIGHTBREAK = 7
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 	# Override segFlags to enforce use of Uniscribe
 	charSegFlag = CharSegFlag.UNISCRIBE
+
 	@property
 	def wordSegFlag(self):
 		return WordSegFlag.UNISCRIBE

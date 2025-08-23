@@ -548,6 +548,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	# Override segFlags to strictly use the old fallen-back method
 	charSegFlag = CharSegFlag.NONE
+
 	@property
 	def wordSegFlag(self):
 		return WordSegFlag.NONE
