@@ -4,19 +4,25 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from abc import abstractmethod
+from logging import ERROR
 import re
 import ctypes
 import unicodedata
 import NVDAHelper
 import config
+import config.featureFlagEnums
+import documentBase
+import logHandler
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
+import config
 from dataclasses import dataclass
 from typing import (
 	Optional,
+	Union,
 	Tuple,
 	Dict,
 	List,
@@ -158,7 +164,20 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	detectFormattingAfterCursorMaybeSlow: bool = True
 	#: Method to calculate character and word offsets.
 	charSegFlag: CharSegFlag = CharSegFlag.UNISCRIBE
-	wordSegFlag: WordSegFlag = WordSegFlag.ON_SEGMENTER
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag | None:
+		match self.wordSegConf.calculated():
+			case config.featureFlagEnums.WordNavigationUnitFlag.UNISCRIBE:
+				return WordSegFlag.UNISCRIBE
+			case config.featureFlagEnums.WordNavigationUnitFlag.AUTO:
+				return WordSegFlag.AUTO
+			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
+				return WordSegFlag.CHINESE
+			case _:
+				from logHandler import log
+				log.error(f"Unknown word segmentation standard, {self.__wordSegConf.calculated()!r}")
+
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
@@ -479,6 +498,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo, self).__init__(obj, position)
+		self.wordSegConf: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["wordSegmentationStandard"]
+
 		from NVDAObjects import NVDAObject
 
 		if isinstance(position, locationHelper.Point):

@@ -563,7 +563,7 @@ class WordSegmenter:
 
 	def _choose_strategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""
-		if self.wordSegFlag == WordSegFlag.ON_SEGMENTER:
+		if self.wordSegFlag == WordSegFlag.AUTO:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
 				self.text,
 			) and not WordSegmenter._KANA.search(self.text):
