@@ -8,6 +8,7 @@ from _localCaptioner.modelDownloader import ModelDownloader
 import threading
 import wx
 
+
 def onDownload() -> None:
 	modelDownloader = ModelDownloader()
 	(success, fail) = modelDownloader.downloadModelsMultithreaded()
@@ -16,10 +17,9 @@ def onDownload() -> None:
 	else:
 		wx.CallAfter(openFailDialog)
 
+
 def openSuccessDialog() -> None:
-	confirmation_button = (
-		DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),
-	)
+	confirmation_button = (DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),)
 
 	dialog = MessageDialog(
 		parent=None,
@@ -36,6 +36,7 @@ def openSuccessDialog() -> None:
 
 	if dialog.ShowModal() == ReturnCode.YES:
 		pass
+
 
 def openFailDialog() -> None:
 	confirmation_buttons = (
@@ -58,6 +59,7 @@ def openFailDialog() -> None:
 
 	if dialog.ShowModal() == ReturnCode.YES:
 		threading.Thread(target=onDownload).start()
+
 
 def openDownloadDialog() -> None:
 	confirmation_buttons = (
