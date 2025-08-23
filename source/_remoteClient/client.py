@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 import threading
-from typing import Optional, Set, Tuple
 
 import api
 import braille
@@ -36,21 +35,21 @@ from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
 # Type aliases
-KeyModifier = Tuple[int, bool]  # (vk_code, extended)
-Address = Tuple[str, int]  # (hostname, port)
+KeyModifier = tuple[int, bool]  # (vk_code, extended)
+Address = tuple[str, int]  # (hostname, port)
 
 
 class RemoteClient:
-	localScripts: Set[scriptHandler._ScriptFunctionT]
+	localScripts: set[scriptHandler._ScriptFunctionT]
 	localMachine: LocalMachine
-	leaderSession: Optional[LeaderSession]
-	followerSession: Optional[FollowerSession]
-	keyModifiers: Set[KeyModifier]
-	hostPendingModifiers: Set[KeyModifier]
+	leaderSession: LeaderSession | None
+	followerSession: FollowerSession | None
+	keyModifiers: set[KeyModifier]
+	hostPendingModifiers: set[KeyModifier]
 	_connecting: bool
-	leaderTransport: Optional[RelayTransport]
-	followerTransport: Optional[RelayTransport]
-	localControlServer: Optional[server.LocalRelayServer]
+	leaderTransport: RelayTransport | None
+	followerTransport: RelayTransport | None
+	localControlServer: server.LocalRelayServer | None
 	sendingKeys: bool
 
 	def __init__(
@@ -63,9 +62,9 @@ class RemoteClient:
 		self.localMachine = LocalMachine()
 		self.followerSession = None
 		self.leaderSession = None
-		self.menu: Optional[RemoteMenu] = None
+		self.menu: RemoteMenu | None = None
 		if not isRunningOnSecureDesktop():
-			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
+			self.menu: RemoteMenu | None = RemoteMenu(self)
 		self._connecting = False
 		self.leaderTransport = None
 		self.followerTransport = None
