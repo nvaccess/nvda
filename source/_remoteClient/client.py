@@ -13,6 +13,7 @@ import core
 import globalVars
 import gui
 import inputCore
+import synthDriverHandler
 import ui
 import wx
 from config import isInstalledCopy
@@ -66,20 +67,22 @@ class RemoteClient:
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self._connecting = False
-		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
-		self.sdHandler = SecureDesktopHandler()
+		self.sdHandler = SecureDesktopHandler(self.localMachine)
 		if isRunningOnSecureDesktop():
 			connection = self.sdHandler.initializeSecureDesktop()
 			if connection:
 				self.connectAsFollower(connection)
-				self.followerSession.transport.connectedEvent.wait(
+				if self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
-				)
-		core.postNvdaStartup.register(self.performAutoconnect)
+				):
+					synthDriverHandler.setSynth("noSPeech", isFallback=True)
+		else:
+			urlHandler.registerURLHandler()
+			core.postNvdaStartup.register(self.performAutoconnect)
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
 	def performAutoconnect(self):

@@ -35,7 +35,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logHandler import log
 from queue import Queue
-from typing import Any, Literal, Optional, Self
+from typing import Any, Optional, Self
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -47,11 +47,11 @@ from .serializer import Serializer
 
 
 @dataclass
-class RemoteExtensionPoint:
+class RemoteExtensionPoint[**P]:
 	"""Bridges local extension points to remote message sending.
 
 	This class connects local NVDA extension points to the remote transport layer,
-	allowing local events to trigger remote messages with optional argument transformation.
+	allowing local events to trigger remote messages with optional argument transformation and decision making.
 
 	:note: The filter function, if provided, should take (*args, **kwargs) and return
 	       a new kwargs dict to be sent in the message.
@@ -69,21 +69,23 @@ class RemoteExtensionPoint:
 	transport: Optional["Transport"] = None
 	"""The transport instance (set on registration)"""
 
-	def remoteBridge(self, *args: Any, **kwargs: Any) -> Literal[True]:
+	returnValue: bool = True
+
+	def remoteBridge(self, *args: P.args, **kwargs: P.kwargs) -> bool:
 		"""Bridge function that gets registered to the extension point.
 
 		Handles calling the filter if present and sending the message.
 
 		:param args: Positional arguments from the extension point
 		:param kwargs: Keyword arguments from the extension point
-		:return: Always returns True to allow other handlers to process the event
+		:return: the value of self.returnValue
 		"""
 		if self.filter is not None:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
 			kwargs = self.filter(*args, **kwargs)
 		if self.transport is not None:
 			self.transport.send(self.messageType, **kwargs)
-		return True
+		return self.returnValue
 
 	def register(self, transport: "Transport") -> None:
 		"""Register this bridge with a transport and the extension point."""
@@ -215,6 +217,7 @@ class Transport(ABC):
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
 		filter: Optional[Callable[..., dict[str, Any]]] = None,
+		returnValue: bool = True,
 	) -> None:
 		"""Register an extension point to a message type.
 
@@ -222,11 +225,13 @@ class Transport(ABC):
 		:param messageType: The message type to register the extension point to
 		:param filter: Optional function to transform message before sending
 		:note: Filter function should take (*args, **kwargs) and return new kwargs dict
+		:param returnValue: Value to return from the extension point handler, defaults to True
 		"""
 		remoteExtension = RemoteExtensionPoint(
 			extensionPoint=extensionPoint,
 			messageType=messageType,
 			filter=filter,
+			returnValue=returnValue,
 		)
 		remoteExtension.register(self)
 		self.outboundHandlers[messageType] = remoteExtension
@@ -234,8 +239,7 @@ class Transport(ABC):
 	def unregisterOutbound(self, messageType: RemoteMessageType) -> None:
 		"""Unregister an extension point from a message type.
 
-		Args:
-			messageType (RemoteMessageType): The message type to unregister the extension point from
+		:param messageType: The message type to unregister the extension point from
 		"""
 		self.outboundHandlers[messageType].unregister()
 		del self.outboundHandlers[messageType]
