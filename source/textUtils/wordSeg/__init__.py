@@ -21,8 +21,9 @@ def initialize():
 	"""
 
 	from . import wordSegStrategy
+	from threading import Thread
 
-	for module_name, qualname, func_obj, args, kwargs in getattr(wordSegStrategy, "initializerList", []):
+	for module_name, qualname, func_obj, args, kwargs in wordSegStrategy.initializerList:
 		callable_to_call = None
 		# try to resolve module + qualname to a current attribute (handles classmethod/staticmethod)
 		try:
@@ -39,7 +40,7 @@ def initialize():
 		try:
 			if not callable(callable_to_call):
 				raise TypeError(f"Resolved initializer is not callable: {module_name}.{qualname}")
-			callable_to_call(*args, **kwargs)
+			Thread(target=callable_to_call, args=args, kwargs=kwargs, daemon=True).start()
 		except Exception as e:
 			log.debug("Initializer %s.%s failed: %s", module_name, qualname, e)
 		return
