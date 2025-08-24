@@ -5,12 +5,15 @@
 
 import glob
 import os
+import re
 from zipfile import ZipFile
 
 import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
+from speech import getCurrentLanguage
 
+import libmathcat_py as libmathcat
 from . import rulesUtils
 
 
@@ -190,6 +193,36 @@ supportedLanguages = frozenset(
 		"zu",
 	],
 )
+
+RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
+
+
+def getLanguageToUse(mathMl: str = "") -> str:
+	"""Get the language specified in a math tag if the language pref is Auto, else the language preference.
+
+	:param mathMl: The MathML string to examine for language. Defaults to an empty string.
+	:returns: The language string to use.
+	"""
+	mathCATLanguageSetting: str = "Auto"
+	try:
+		# ignore regional differences if the MathCAT language setting doesn't have it.
+		mathCATLanguageSetting = libmathcat.GetPreference("Language")
+	except Exception:
+		log.exception()
+
+	if mathCATLanguageSetting != "Auto":
+		return mathCATLanguageSetting
+
+	languageMatch: re.Match | None = RE_MATH_LANG.search(mathMl)
+	language: str = (
+		languageMatch.group(2) if languageMatch else getCurrentLanguage()
+	)  # seems to be current voice's language
+	language = language.lower().replace("_", "-")
+	if language == "cmn":
+		language = "zh-cmn"
+	elif language == "yue":
+		language = "zh-yue"
+	return language
 
 
 def pathToLanguagesFolder() -> str:
