@@ -8,14 +8,12 @@ import re
 import ctypes
 import unicodedata
 import NVDAHelper
-import config
 import config.featureFlagEnums
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
-import config
 from dataclasses import dataclass
 from typing import (
 	Optional,

@@ -576,6 +576,8 @@ class WordSegmenter:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case WordSegFlag.CHINESE:
 					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				case _:
+					pass
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""
