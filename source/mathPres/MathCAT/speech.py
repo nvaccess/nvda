@@ -35,6 +35,7 @@ RE_MATHML_SPEECH: re.Pattern = re.compile(
 	r"|(?P<content>[^<]+)",
 )
 
+
 def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	"""
 	Change the SSML in the text into NVDA's command structure.
