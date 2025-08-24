@@ -72,6 +72,7 @@ PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
 	"rate": RateCommand,
 }
 
+
 def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	"""
 	Change the SSML in the text into NVDA's command structure.
