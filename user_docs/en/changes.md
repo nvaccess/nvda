@@ -7,6 +7,7 @@
 * This release breaks compatibility with existing add-ons.
 * Windows 8.1 is no longer supported.
 Windows 10 is the minimum Windows version supported.
+We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
 
 ### New Features
@@ -17,6 +18,9 @@ This can be enabled using the "Report when lists support multiple selection" set
 
 ### Changes
 
+* NVDA no longer supports Windows 8.1.
+Windows 10 (Version 1507) is the minimum Windows version supported.
+We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 
 ### Bug Fixes
@@ -45,8 +49,11 @@ These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
 * Fixed behavior of `TextInfo.collapse()` - previously it was moving TextInfo to the next paragraph in some cases. (#18320, @mltony)
 * Fixed behavior of `OffsetTextInfo.move()` - previously it wouldn't move to the very end of the document unless moving by character. (#18348, @mltony)
+* `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
 
 #### Deprecations
+
+* `winVersion.WIN81` constant has been deprecated from winVersion module. (#18684, @josephsl):
 
 ## 2025.3
 

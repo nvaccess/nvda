@@ -36,7 +36,8 @@ git pull
 
 ## Supported Operating Systems
 
-Although NVDA can run on any Windows version starting from Windows 8.1, building NVDA from source is currently limited to only Windows 10 and above.
+At a minimum, running and building NVDA from source requires Windows 10 (Version 1507).
+We recommend Windows 11 to work with features under active support, and if you need to use Windows 10, use Version 22H2.
 
 ## Dependencies
 

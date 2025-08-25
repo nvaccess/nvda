@@ -500,7 +500,7 @@ As with other examples in this guide, remember to delete the created app module 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
 Some executables host various apps inside or are employed by an app to display their interfaces.
-These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some web-based apps, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
 If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
 For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
