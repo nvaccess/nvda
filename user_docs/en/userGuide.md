@@ -1222,11 +1222,6 @@ To activate the button or the element containing the formula, press ctrl+enter.
 
 ### Information for MathCAT users
 
-MathCAT supports a number of options to control speech, braille, and navigation. These are described below.
-Not all options are currently supported. The current state of support for an option is listed with the option and a ✓ is used before the option as a quick reference to indicate at least partial support for that option.
-
-Note: in NVDA, the options can be set by using the Math Settings dialog. The settings are divided into three categories: Speech, Navigation, and Braille. This division is reflected in the documentation below.
-
 The documentation describes many useful ways to navigate math. For those who just want to get started:
 
 - Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
