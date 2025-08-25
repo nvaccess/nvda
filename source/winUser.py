@@ -20,6 +20,7 @@ from typing import (
 )
 
 import winBindings.user32
+from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
@@ -832,15 +833,15 @@ def SendInput(inputs):
 
 
 @contextlib.contextmanager
-def paint(hwnd: int, paintStruct: PAINTSTRUCT | None = None):
+def paint(hwnd: int, paintStruct: _PAINTSTRUCT | None = None):
 	"""
 	Context manager that wraps BeginPaint and EndPaint.
 	:param painStruct: The paint structure used in the call to BeginPaint.
 		if None (default), an empty structure is provided.
 	"""
 	if paintStruct is None:
-		paintStruct = PAINTSTRUCT()
-	elif not isinstance(paintStruct, PAINTSTRUCT):
+		paintStruct = _PAINTSTRUCT()
+	elif not isinstance(paintStruct, _PAINTSTRUCT):
 		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")
 	hdc = winBindings.user32.BeginPaint(hwnd, byref(paintStruct))
 	if hdc == 0:
