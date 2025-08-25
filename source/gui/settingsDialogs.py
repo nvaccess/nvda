@@ -6,8 +6,9 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Container
 import logging
@@ -3073,6 +3074,17 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		WordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=WordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("wordSegmentationStandard", self.wordSegCombo)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3084,6 +3096,7 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
+		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
