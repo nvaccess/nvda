@@ -6,7 +6,7 @@
 
 from ctypes.wintypes import HANDLE, HKEY, HMODULE
 import sysconfig
-from typing import Any, Optional
+from typing import Any
 import typing
 import os
 import warnings
@@ -107,9 +107,9 @@ if typing.TYPE_CHECKING:
 windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 _remoteLib = None
-_remoteLoaderX86: "Optional[_RemoteLoader]" = None
-_remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
-_remoteLoaderARM64: "Optional[_RemoteLoader]" = None
+_remoteLoaderX86: "_RemoteLoader | None" = None
+_remoteLoaderAMD64: "_RemoteLoader | None" = None
+_remoteLoaderARM64: "_RemoteLoader | None" = None
 lastLanguageID = None
 lastLayoutString = None
 

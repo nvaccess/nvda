@@ -185,7 +185,7 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 	return True
 
 
-def openProcess(*args):
+def openProcess(*args) -> int:
 	try:
 		return winBindings.kernel32.OpenProcess(*args)
 	except Exception:

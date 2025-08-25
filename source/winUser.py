@@ -24,13 +24,69 @@ import winBindings.user32
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
-import NVDAState
-from logHandler import log
+from utils import _deprecate
 
 
-from winBindings.user32 import WNDCLASSEXW  # noqa: F401
-from winBindings.user32 import WNDPROC  # noqa: F401
-from winBindings.user32 import PAINTSTRUCT
+from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"WNDCLASSEXW",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"WNDPROC",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"PAINTSTRUCT",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CXSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"CX_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CYSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_CYSCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_SWAPBUTTON",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_SWAPBUTTON",
+	),
+	_deprecate.MovedSymbol(
+		"SM_XVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_XVIRTUALSCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_YVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_YVIRTUALSCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CXVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_CXVIRTUALSCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CYVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SM_CYVIRTUALSCREEN",
+	),
+)
+"""Module __getattr__ to handle backward compatibility."""
 
 
 # dll handles
@@ -48,29 +104,6 @@ HCURSOR = c_long  # noqa: F405
 CS_HREDRAW = 0x0002
 #: Redraws the entire window if a movement or size adjustment changes the height of the client area.
 CS_VREDRAW = 0x0001
-
-
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	from winAPI.winUser.constants import SystemMetrics
-
-	_deprecatedConstantsMap = {
-		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
-		"SM_CYSCREEN": SystemMetrics.CY_SCREEN,
-		"SM_SWAPBUTTON": SystemMetrics.SWAP_BUTTON,
-		"SM_XVIRTUALSCREEN": SystemMetrics.X_VIRTUAL_SCREEN,
-		"SM_YVIRTUALSCREEN": SystemMetrics.Y_VIRTUAL_SCREEN,
-		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
-		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
-	}
-	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
-		replacementSymbol = _deprecatedConstantsMap[attrName]
-		log.warning(
-			f"Importing {attrName} from here is deprecated. "
-			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. ",
-		)
-		return replacementSymbol
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class NMHdrStruct(Structure):

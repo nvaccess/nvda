@@ -60,7 +60,7 @@ def register64bitServer(fileName: str) -> None:
 	:param fileName: The 64 bit path to the DLL
 	"""
 	if sysconfig.get_platform() == "win32":
-		# NVDA  is 32 bit.
+		# NVDA is 32 bit.
 		# On 64 bit systems, Sysnative provides a virtual directory to reach 64-bit executables from 32-bit applications.
 		regsvr32 = os.path.join(SYSTEM_ROOT, "Sysnative", "regsvr32.exe")
 	else:

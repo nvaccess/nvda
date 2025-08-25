@@ -37,8 +37,16 @@ import globalVars
 from speech import SpeechSequence
 from speech.commands import BreakCommand
 from synthDriverHandler import pre_synthSpeak
-from winBindings.mmeapi import WAVEFORMATEX
+from utils import _deprecate
+from winBindings.mmeapi import WAVEFORMATEX as _WAVEFORMATEX
 
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"WAVEFORMATEX",
+		"winBindings.mmeapi",
+	),
+)
+"""Module __getattr__ to handle backward compatibility."""
 
 __all__ = (
 	"WavePlayer",
@@ -217,7 +225,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.channels = channels
 		self.samplesPerSec = samplesPerSec
 		self.bitsPerSample = bitsPerSample
-		format = self._format = WAVEFORMATEX()
+		format = self._format = _WAVEFORMATEX()
 		format.wFormatTag = WAVE_FORMAT_PCM
 		format.nChannels = channels
 		format.nSamplesPerSec = samplesPerSec
