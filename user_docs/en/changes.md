@@ -13,6 +13,7 @@ Windows 10 is the minimum Windows version supported.
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
+* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 
 ### Changes
 
@@ -20,12 +21,18 @@ This can be enabled using the "Report when lists support multiple selection" set
 
 ### Bug Fixes
 
+* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
+  * The changelog should document changes between previous and latest add-on versions.
+* Updated components
+  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
 #### API Breaking Changes
 
@@ -36,6 +43,8 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
+* Fixed behavior of `TextInfo.collapse()` - previously it was moving TextInfo to the next paragraph in some cases. (#18320, @mltony)
+* Fixed behavior of `OffsetTextInfo.move()` - previously it wouldn't move to the very end of the document unless moving by character. (#18348, @mltony)
 
 #### Deprecations
 
@@ -74,6 +83,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
 * Braille:
   * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
   * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+  * NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)
   * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
   Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)

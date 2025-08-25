@@ -20,14 +20,10 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 		raise RuntimeError("NVDAHelper not initialized")
 	if not text:
 		return
-	# uniscribe does some strange things
-	# when you give it a string with not more than two alphanumeric chars in a row.
-	# Inject two alphanumeric characters at the end to fix this
-	uniscribeText = text + "xx"
-	buffer = ctypes.create_unicode_buffer(uniscribeText)
+	buffer = ctypes.create_unicode_buffer(text)
 	textLength = len(buffer) - 1  # Length without terminating NULL character
 	offsetsCount = ctypes.c_int()
-	offsets = (ctypes.c_int * textLength)()
+	offsets = (ctypes.c_int * (textLength + 1))()
 	if not NVDAHelper.localLib.calculateCharacterBoundaries(
 		buffer,
 		textLength,
@@ -36,7 +32,7 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	):
 		raise RuntimeError("NVDAHelper calculateCharacterBoundaries failed")
 	# Get the end offsets of the characters we need.
-	calculatedOffsets = offsets[1 : (offsetsCount.value - 1)]
+	calculatedOffsets = offsets[1 : (offsetsCount.value + 1)]
 	start = 0
 	for end in calculatedOffsets:
 		yield buffer[start:end]
