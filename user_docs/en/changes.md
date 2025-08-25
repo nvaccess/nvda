@@ -131,7 +131,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 #### Deprecations
 
 * `NVDAHelper.versionedLibPath` is deprecated.
-Use `NVDAHelper.versionedLibX86Path` instead. (#18207)
+Use `NVDAState.ReadPaths.versionedLibPath` instead. (#18207)
 * `NVDAHelper.generateBeep` is deprecated.
 Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
 * `NVDAHelper.VBuf_getTextInRange` is deprecated.
@@ -165,6 +165,7 @@ Importing from `md2html` is discouraged. (#18638)
 * `hwPortUtils.dummy` and `hwPortUtils.INVALID_HANDLE_VALUE` are deprecated, with no planned replacement. (#18571)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
   Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
 
 ## 2025.2
 

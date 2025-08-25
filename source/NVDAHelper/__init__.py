@@ -5,7 +5,6 @@
 # See the file COPYING for more details.
 
 from ctypes.wintypes import HANDLE, HKEY, HMODULE
-import sysconfig
 from typing import Any
 import typing
 import os
@@ -32,30 +31,8 @@ from ctypes import (
 	wstring_at,
 )
 
-import buildVersion
 import globalVars
-
-versionedLibPath = os.path.join(globalVars.appDir, "lib")
-
-import NVDAState  # noqa: E402
-
-if not NVDAState.isRunningAsSource():
-	# When running as a py2exe build, libraries are in a version-specific directory
-	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
-
-versionedLibX86Path = os.path.join(versionedLibPath, "x86")
-versionedLibAMD64Path = os.path.join(versionedLibPath, "x64")
-versionedLibARM64Path = os.path.join(versionedLibPath, "arm64")
-
-match sysconfig.get_platform():
-	case "win-amd64":
-		coreArchLibPath = versionedLibAMD64Path
-	case "win-arm64":
-		coreArchLibPath = versionedLibARM64Path
-	case "win32":
-		coreArchLibPath = versionedLibX86Path
-	case _:
-		raise RuntimeError("Unsupported platform")
+import NVDAState
 
 
 def __getattr__(name: str) -> Any:
@@ -69,8 +46,8 @@ def __getattr__(name: str) -> Any:
 	if NVDAState._allowDeprecatedAPI():
 		match name:
 			case "versionedLibPath":
-				warnDeprecatedWithReplacement(name, "NVDAHelper.versionedLibX86Path")
-				return versionedLibX86Path
+				warnDeprecatedWithReplacement(name, "NVDAState.ReadPaths.versionedLibPath")
+				return NVDAState.ReadPaths.versionedLibPath
 			case "generateBeep":
 				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.generateBeep")
 				return localLib.generateBeep
