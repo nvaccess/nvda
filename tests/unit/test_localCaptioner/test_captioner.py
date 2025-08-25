@@ -341,5 +341,3 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.modelConfig.bos_token_id, 50256)
 		self.assertEqual(captioner.modelConfig.eos_token_id, 50256)
 		self.assertEqual(captioner.modelConfig.pad_token_id, 50256)
-
-
