@@ -59,7 +59,7 @@ from winBindings.setupapi import (
 def _ValidHandle(value):
 	if value == 0:
 		raise ctypes.WinError()
-	return res
+	return value
 
 
 def _isDebug():
