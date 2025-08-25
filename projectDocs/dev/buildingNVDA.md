@@ -105,7 +105,6 @@ This is useful when [creating a self signed build](./selfSignedBuild.md).
 * certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.
 * certTimestampServer: The URL of the timestamping server to use to timestamp authenticode signatures. If omitted, signatures will not be timestamped.
 * outputDir: The directory where the final built archives and such will be placed.
-* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
 For example, to build a launcher with a specific version, you might type:
 

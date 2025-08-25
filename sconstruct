@@ -106,20 +106,6 @@ vars.Add(
 		allowed_values=[str(x) for x in range(60)],
 	)
 )
-vars.Add(
-	EnumVariable(
-		"targetArch",
-		help="Target architecture of the build output",
-		default="x86",
-		allowed_values=("x86", "x86_64"),
-		map={
-			"32bit": "x86",
-			"64bit": "x86_64",
-			"x64": "x86_64",
-		},
-		ignorecase=2,  # Always downcase,
-	)
-)
 
 # Base environment for this and sub sconscripts
 env = Environment(
