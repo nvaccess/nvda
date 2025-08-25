@@ -367,7 +367,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [automatedImageDescriptions]
 	enable = boolean(default=false)
-	defaultModelPath = string(default="models/Xenova/vit-gpt2-image-captioning")
+	defaultModelPath = string(default="Xenova/vit-gpt2-image-captioning")
 
 """
 

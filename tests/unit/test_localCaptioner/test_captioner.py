@@ -343,22 +343,3 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 		self.assertEqual(captioner.modelConfig.pad_token_id, 50256)
 
 
-if __name__ == "__main__":
-	# Run the test suite
-	test_loader = unittest.TestLoader()
-	test_suite = test_loader.loadTestsFromModule(__import__(__name__))
-
-	runner = unittest.TextTestRunner(verbosity=2)
-	result = runner.run(test_suite)
-
-	print(f"\n{'=' * 60}")
-	print("Test Summary:")
-	print(f"Tests run: {result.testsRun}")
-	print(f"Failures: {len(result.failures)}")
-	print(f"Errors: {len(result.errors)}")
-	print(
-		f"Success rate: {((result.testsRun - len(result.failures) - len(result.errors)) / result.testsRun * 100):.1f}%"
-		if result.testsRun > 0
-		else "N/A",
-	)
-	print(f"{'=' * 60}")

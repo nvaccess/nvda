@@ -17,9 +17,9 @@ Windows 10 is the minimum Windows version supported.
 * Automated Image Descriptions:
   * Press `NVDA+Windows+,` to get an AI generated image description. (#18475)
   * This is generated locally on the device - no information is sent to the internet.
-  * a new command has been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
-  * a new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
-  * another new unassigned command is available for toggle image captioning. (#18475)
+  * A new command has been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
+  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+  * Another new unassigned command is available for toggle image captioning. (#18475)
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
@@ -43,8 +43,6 @@ Add-ons will need to be re-tested and have their manifest updated.
   * The changelog should document changes between previous and latest add-on versions.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
-
-* Component updates:
   * Updated sphinx to 8.1.3. (#18475)
   * Updated licensecheck to 2025.1. (#18475)
   * Introduced onnxruntime 1.19.2 for model inference. (#18475)

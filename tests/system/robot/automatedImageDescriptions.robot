@@ -6,7 +6,6 @@
 Documentation	Local captioner tests
 Force Tags	NVDA	smoke test	imageDescriptions
 
-# for load model in Test Setup and Test Test Teardown
 Library	NvdaLib.py
 Library	automatedImageDescriptions.py
 Library	ScreenCapLibrary

@@ -17,7 +17,7 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Callable
+from collections.abc import Callable
 
 import requests
 from requests.adapters import HTTPAdapter
