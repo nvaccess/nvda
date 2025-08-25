@@ -5,10 +5,8 @@
 # See the file COPYING for more details.
 
 from ctypes.wintypes import HANDLE, HKEY, HMODULE
-from typing import Any
 import typing
 import os
-import warnings
 import winreg
 import msvcrt
 
@@ -33,46 +31,49 @@ from ctypes import (
 
 import globalVars
 import NVDAState
+from NVDAState import ReadPaths
+
+from . import localLib
+import winVersion
+import winKernel
+import config
+import winUser
+import eventHandler
+import queueHandler
+import api
+from logHandler import log
+from utils.security import isLockScreenModeActive
+from winAPI.constants import SystemErrorCodes
+
+from utils import _deprecate
 
 
-def __getattr__(name: str) -> Any:
-	def warnDeprecatedWithReplacement(deprecated: str, replacement: str):
-		warnings.warn(
-			f"NVDAHelper.{deprecated} is deprecated. Use {replacement} instead.",
-			DeprecationWarning,
-			stacklevel=3,
-		)
-
-	if NVDAState._allowDeprecatedAPI():
-		match name:
-			case "versionedLibPath":
-				warnDeprecatedWithReplacement(name, "NVDAState.ReadPaths.versionedLibPath")
-				return NVDAState.ReadPaths.versionedLibPath
-			case "generateBeep":
-				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.generateBeep")
-				return localLib.generateBeep
-			case "VBuf_getTextInRange":
-				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.VBuf_getTextInRange")
-				return localLib.VBuf_getTextInRange
-			case "onSsmlMarkReached":
-				warnDeprecatedWithReplacement(name, "NVDAHelper.localLib.nvdaController_onSsmlMarkReached")
-				return localLib.nvdaController_onSsmlMarkReached
-			case _:
-				pass
-	raise AttributeError(f"Module {__name__!r} has no attribute {name!r}")
-
-
-from . import localLib  # noqa: E402
-import winVersion  # noqa: E402
-import winKernel  # noqa: E402
-import config  # noqa: E402
-import winUser  # noqa: E402
-import eventHandler  # noqa: E402
-import queueHandler  # noqa: E402
-import api  # noqa: E402
-from logHandler import log  # noqa: E402
-from utils.security import isLockScreenModeActive  # noqa: E402
-from winAPI.constants import SystemErrorCodes  # noqa: E402
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"LOCAL_WIN10_DLL_PATH",
+		"NVDAState",
+		"ReadPaths",
+		"nvdaHelperLocalWin10Dll",
+	),
+	_deprecate.MovedSymbol(
+		"versionedLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"versionedLibX86Path",
+	),
+	_deprecate.MovedSymbol(
+		"generateBeep",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"VBuf_getTextInRange",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"nvdaController_onSsmlMarkReached",
+		"NVDAHelper.localLib",
+	),
+)
 
 if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
@@ -843,7 +844,7 @@ def initialize() -> None:
 		return
 	# Load nvdaHelperRemote.dll
 	h = windll.kernel32.LoadLibraryExW(
-		os.path.join(coreArchLibPath, "nvdaHelperRemote.dll"),
+		ReadPaths.nvdaHelperRemoteDll,
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
@@ -861,16 +862,16 @@ def initialize() -> None:
 	# Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	arch = winVersion.getWinVer().processorArchitecture
-	if arch != "x86" and coreArchLibPath != versionedLibX86Path:
-		_remoteLoaderX86 = _RemoteLoader(versionedLibX86Path)
-	elif arch in ("AMD64", "ARM64") and coreArchLibPath != versionedLibAMD64Path:
-		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
-	elif arch == "ARM64" and coreArchLibPath != versionedLibARM64Path:
-		_remoteLoaderARM64 = _RemoteLoader(versionedLibARM64Path)
+	if arch != "x86" and ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
+		_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
+	elif arch in ("AMD64", "ARM64") and ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
+		_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
+	elif arch == "ARM64" and ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
+		_remoteLoaderARM64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
 		# Windows on ARM from Windows 11 supports running AMD64 apps.
 		# Thus we also need to be able to inject into these.
 		if winVersion.getWinVer() >= winVersion.WIN11:
-			_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
+			_remoteLoaderAMD64 = _RemoteLoader(NVDAState.ReadPaths.versionedLibARM64Path)
 
 
 def terminate():
@@ -890,14 +891,11 @@ def terminate():
 	localLib.nvdaHelperLocal_terminate()
 
 
-LOCAL_WIN10_DLL_PATH = os.path.join(coreArchLibPath, "nvdaHelperLocalWin10.dll")
-
-
 def getHelperLocalWin10Dll():
 	"""Get a ctypes WinDLL instance for the nvdaHelperLocalWin10 dll.
 	This is a C++/CX dll used to provide access to certain UWP functionality.
 	"""
-	return windll[LOCAL_WIN10_DLL_PATH]
+	return windll[ReadPaths.nvdaHelperLocalWin10Dll]
 
 
 def bstrReturn(address):

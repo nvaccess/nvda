@@ -106,20 +106,36 @@ class _ReadPaths:
 		return versionedLibPath
 
 	@property
+	def versionedLibX86Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x86")
+
+	@property
+	def versionedLibAMD64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x64")
+
+	@property
+	def versionedLibARM64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "arm64")
+
+	@property
 	def coreArchLibPath(self) -> str:
 		match sysconfig.get_platform():
 			case "win-amd64":
-				return os.path.join(self.versionedLibPath, "x64")
+				return self.versionedLibAMD64Path
 			case "win-arm64":
-				return os.path.join(self.versionedLibPath, "arm64")
+				return self.versionedLibARM64Path
 			case "win32":
-				return os.path.join(self.versionedLibPath, "x86")
+				return self.versionedLibX86Path
 			case _:
 				raise RuntimeError("Unsupported platform")
 
 	@property
 	def nvdaHelperRemoteDll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperRemote.dll")
+
+	@property
+	def nvdaHelperLocalWin10Dll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
 
 
 WritePaths = _WritePaths()

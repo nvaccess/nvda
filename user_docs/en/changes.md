@@ -131,7 +131,9 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 #### Deprecations
 
 * `NVDAHelper.versionedLibPath` is deprecated.
-Use `NVDAState.ReadPaths.versionedLibPath` instead. (#18207)
+Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.LOCAL_WIN10_DLL_PATH` is deprecated.
+Use `NVDAState.ReadPaths.nvdaHelperLocalWin10Dll` instead. (#18207)
 * `NVDAHelper.generateBeep` is deprecated.
 Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
 * `NVDAHelper.VBuf_getTextInRange` is deprecated.
