@@ -13,10 +13,9 @@ from ctypes import (
 	c_bool,
 )
 from comtypes.automation import VARIANT
-import os
 import enum
+import NVDAState
 from UIAHandler import UIA
-import NVDAHelper
 
 
 """
@@ -56,7 +55,7 @@ class RelativeOffset(c_long):
 		return f"RelativeOffset {self.value}"
 
 
-_dll = oledll[os.path.join(NVDAHelper.coreArchLibPath, "UIARemote.dll")]
+_dll = oledll[NVDAState.ReadPaths.UIARemoteDll]
 
 
 class RemoteOperationResultSet:

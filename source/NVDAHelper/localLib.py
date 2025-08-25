@@ -4,7 +4,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os
 from ctypes import (
 	c_ushort,
 	c_void_p,
@@ -38,14 +37,14 @@ from comtypes import (
 	GUID,
 )
 from comtypes.automation import VARIANT
+import NVDAState
 from winBindings.mmeapi import WAVEFORMATEX
-from . import coreArchLibPath
 
 
 DWORD_PTR = c_size_t
 
 
-dll = cdll.LoadLibrary(os.path.join(coreArchLibPath, "nvdaHelperLocal.dll"))
+dll = cdll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalDll)
 
 nvdaHelperLocal_initialize = dll.nvdaHelperLocal_initialize
 nvdaHelperLocal_initialize.restype = c_voidp

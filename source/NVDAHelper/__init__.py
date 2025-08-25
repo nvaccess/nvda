@@ -62,6 +62,12 @@ __getattr__ = _deprecate.handleDeprecations(
 		"versionedLibX86Path",
 	),
 	_deprecate.MovedSymbol(
+		"coreArchLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"coreArchLibPath",
+	),
+	_deprecate.MovedSymbol(
 		"generateBeep",
 		"NVDAHelper.localLib",
 	),
@@ -871,7 +877,7 @@ def initialize() -> None:
 		# Windows on ARM from Windows 11 supports running AMD64 apps.
 		# Thus we also need to be able to inject into these.
 		if winVersion.getWinVer() >= winVersion.WIN11:
-			_remoteLoaderAMD64 = _RemoteLoader(NVDAState.ReadPaths.versionedLibARM64Path)
+			_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
 
 
 def terminate():

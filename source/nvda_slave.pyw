@@ -36,6 +36,7 @@ globalVars.appPid = os.getpid()
 def getNvdaHelperRemote():
 	import ctypes
 	import winKernel
+
 	h = winBindings.kernel32.LoadLibraryEx(
 		os.path.join(NVDAState.ReadPaths.nvdaHelperRemoteDll),
 		0,

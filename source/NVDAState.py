@@ -134,8 +134,20 @@ class _ReadPaths:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperRemote.dll")
 
 	@property
+	def nvdaHelperLocalDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocal.dll")
+
+	@property
 	def nvdaHelperLocalWin10Dll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def UIARemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "UIARemote.dll")
+
+	@property
+	def javaAccessBridgeDLL(self) -> str:
+		return os.path.join(self.coreArchLibPath, "windowsaccessbridge.dll")
 
 
 WritePaths = _WritePaths()
