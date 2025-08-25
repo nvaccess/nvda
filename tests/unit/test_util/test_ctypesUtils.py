@@ -8,7 +8,7 @@
 import unittest
 from ctypes import c_long, windll
 from ctypes.wintypes import BOOL, HWND, RECT
-from typing import Annotated, Union
+from typing import Annotated
 
 from utils.ctypesUtils import FuncSpec, OutParam, ParamDirectionFlag, Pointer, dllFunc
 
@@ -35,19 +35,6 @@ class Test_FuncSpec(unittest.TestCase):
 		"""Tests that FuncSpec.fromCallable can extract a function signature with union ctypes type hints."""
 
 		def GetClientRect(hWnd: int | HWND, lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
-
-		actualFuncSpec = FuncSpec.fromCallable(GetClientRect)
-		expectedFuncSpec = FuncSpec(
-			BOOL,
-			(HWND, Pointer[RECT]),
-			((ParamDirectionFlag.IN, "hWnd"), (ParamDirectionFlag.IN, "lpRect")),
-		)
-		self.assertEqual(actualFuncSpec, expectedFuncSpec)
-
-	def testLegacyUnionTypesInOnly(self):
-		"""Tests that FuncSpec.fromCallable can extract a function signature with legacy Union ctypes type hints."""
-
-		def GetClientRect(hWnd: Union[int, HWND], lpRect: Pointer[RECT]) -> Annotated[int, BOOL]: ...
 
 		actualFuncSpec = FuncSpec.fromCallable(GetClientRect)
 		expectedFuncSpec = FuncSpec(

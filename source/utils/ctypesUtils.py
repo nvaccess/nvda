@@ -15,7 +15,7 @@ import typing
 from collections.abc import Callable
 from enum import IntEnum
 from types import UnionType
-from typing import Annotated, Any, Self, Union
+from typing import Annotated, Any, Self
 
 from logHandler import log
 
@@ -161,10 +161,7 @@ class FuncSpec[**P, R]:
 		if t is inspect.Parameter.empty:
 			# A missing type annotation defeats the purpose of this helper.
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
-		elif typing.get_origin(t) in (Union, UnionType):
-			# note, we must both support Union and UnionType
-			# Union[a, b] is legacy syntax, a | b results into UnionType
-			# TODO: In python 3.14, they become aliases of eachoter.
+		elif typing.get_origin(t) is UnionType:
 			# The type to be used in argtypes should be the first ctypes compatible type.
 			t = next((c for c in typing.get_args(t) if issubclass(c, CType)), t)
 		if not issubclass(t, CType):
