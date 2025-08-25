@@ -30,7 +30,6 @@ from ctypes import (
 )
 
 import globalVars
-import NVDAState
 from NVDAState import ReadPaths
 
 from . import localLib
