@@ -33,6 +33,9 @@ Add-ons will need to be re-tested and have their manifest updated.
   * The changelog should document changes between previous and latest add-on versions.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
+* Added the `utils.ctypesUtils` module, which implements a convenience decorator (`dllFunc`) to create ctypes function wrappers compatible with static type checkers.
+it is mainly used within the `winBindings` module that was introduced in NVDA 2025.3.
+Consult the developer guide for more information. (#18534, @LeonarddeR)
 
 #### API Breaking Changes
 
