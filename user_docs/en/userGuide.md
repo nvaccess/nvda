@@ -1220,9 +1220,7 @@ When you wish to return to the document, simply press the escape key.
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-### MathCAT Documentation
-
-#### Information for MathCAT users
+### Information for MathCAT users
 
 MathCAT supports a number of options to control speech, braille, and navigation. These are described below.
 Not all options are currently supported. The current state of support for an option is listed with the option and a ✓ is used before the option as a quick reference to indicate at least partial support for that option.
@@ -1244,7 +1242,7 @@ MathCAT’s navigation is the same in Word and in a browser.
 While navigating an expression, “control+c” copies the math content of the current node in NVDA.
 The format of the math copied to the clipboard can be adjusted through the NVDA math settings panel.
 
-## Navigation Modes
+#### Navigation Modes
 
 MathCAT supports the following navigation modes:
 
@@ -1254,7 +1252,7 @@ MathCAT supports the following navigation modes:
 
 **Character mode**:  this is actually two useful modes – word mode and character mode (zoom in to get "real" character mode).  Moves by words/characters.  This differs for numbers of more than one digit and function names such as "sin" that are multiple characters. Otherwise, word and character navigation is the same.
 
-## Table of Commands
+#### Table of Commands
 
 A table of navigation commands is provided in this section.
 
