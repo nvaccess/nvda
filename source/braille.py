@@ -12,6 +12,7 @@ from typing import (
 	Any,
 	Callable,
 	Dict,
+	Final,
 	Generator,
 	Iterable,
 	List,
@@ -66,6 +67,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
+from winAPI.secureDesktop import post_secureDesktopStateChange
 from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
@@ -384,7 +386,7 @@ AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: @type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
 
-NO_BRAILLE_DISPLAY_NAME: str = "noBraille"
+NO_BRAILLE_DISPLAY_NAME: Final[str] = "noBraille"
 """The name of the noBraille display driver."""
 
 #: A port name which indicates that USB should be used.
@@ -2426,6 +2428,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		post_sessionLockStateChanged.register(self._onSessionLockStateChanged)
+		post_secureDesktopStateChange.register(self._onSecureDesktopStateChanged)
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 		# noqa: F401 avoid module level import to prevent cyclical dependency
 		# between speech and braille
@@ -2449,6 +2452,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
+		post_secureDesktopStateChange.unregister(self._onSecureDesktopStateChanged)
 		post_sessionLockStateChanged.unregister(self._onSessionLockStateChanged)
 		if self.display:
 			self.display.terminate()
@@ -2466,6 +2470,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage(False)
 		self.update()
+
+	def _onSecureDesktopStateChanged(self, isSecureDesktop: bool):
+		if isSecureDesktop:
+			self._disableDetection()
+			if self.display:
+				# Supress clearing the display.
+				self.display._suppressDisplayClear = True
+			switchTo = NO_BRAILLE_DISPLAY_NAME
+		else:
+			configured = config.conf["braille"]["display"]
+			switchTo = configured if configured == AUTO_DISPLAY_NAME else self._lastRequestedDisplayName
+		self.setDisplayByName(switchTo, isFallback=True)
 
 	def _onSessionLockStateChanged(self, isNowLocked: bool):
 		"""Clear the braille buffers and update the braille display to prevent leaking potentially sensitive information from a locked session.
@@ -3426,6 +3442,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
 		super().terminate()
+		if getattr(self, "_suppressDisplayClear", False):
+			self._suppressDisplayClear = False
+			return
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
