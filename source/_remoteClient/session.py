@@ -124,25 +124,29 @@ class RemoteSession:
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isSecureDesktopSession: bool = False,
 	) -> None:
 		"""Initialise the remote session.
 
 		:param localMachine: Interface to control local NVDA instance
 		:param transport: Network transport layer instance
+		:param isSecureDesktopSession: Whether the session is a secure desktop session
 		"""
 		log.info("Initializing Remote Session")
 		self.localMachine = localMachine
 		self.callbacksAdded = False
+		self.isSecureDesktopSession = isSecureDesktopSession
 		self.transport = transport
 		self.transport.registerInbound(
 			RemoteMessageType.VERSION_MISMATCH,
 			self.handleVersionMismatch,
 		)
-		self.transport.registerInbound(RemoteMessageType.MOTD, self.handleMOTD)
-		self.transport.registerInbound(
-			RemoteMessageType.SET_CLIPBOARD_TEXT,
-			self.localMachine.setClipboardText,
-		)
+		if not isSecureDesktopSession:
+			self.transport.registerInbound(RemoteMessageType.MOTD, self.handleMOTD)
+			self.transport.registerInbound(
+				RemoteMessageType.SET_CLIPBOARD_TEXT,
+				self.localMachine.setClipboardText,
+			)
 		self.transport.registerInbound(
 			RemoteMessageType.CLIENT_JOINED,
 			self.handleClientConnected,
@@ -221,7 +225,8 @@ class RemoteSession:
 		:note: Logs connection info and plays connection sound
 		"""
 		log.info(f"Client connected: {client!r}")
-		cues.clientConnected()
+		if not self.isSecureDesktopSession:
+			cues.clientConnected()
 
 	def handleClientDisconnected(self, client: dict[str, Any] | None = None) -> None:
 		"""Handle client disconnection.
@@ -229,7 +234,8 @@ class RemoteSession:
 		:param client: Optional client info dictionary
 		:note: Plays disconnection sound when remote client disconnects
 		"""
-		cues.clientDisconnected()
+		if not self.isSecureDesktopSession:
+			cues.clientDisconnected()
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
@@ -293,8 +299,9 @@ class FollowerSession(RemoteSession):
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isSecureDesktopSession: bool = False,
 	) -> None:
-		super().__init__(localMachine, transport)
+		super().__init__(localMachine, transport, isSecureDesktopSession=isSecureDesktopSession)
 		self.transport.registerInbound(
 			RemoteMessageType.KEY,
 			self.localMachine.sendKey,
@@ -322,10 +329,11 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.BRAILLE_INPUT,
 			self.localMachine.brailleInput,
 		)
-		self.transport.registerInbound(
-			RemoteMessageType.SEND_SAS,
-			self.localMachine.sendSAS,
-		)
+		if not isSecureDesktopSession:
+			self.transport.registerInbound(
+				RemoteMessageType.SEND_SAS,
+				self.localMachine.sendSAS,
+			)
 
 	def registerCallbacks(self) -> None:
 		if self.callbacksAdded:
@@ -333,12 +341,17 @@ class FollowerSession(RemoteSession):
 		self.transport.registerOutbound(
 			tones.decide_beep,
 			RemoteMessageType.TONE,
+			returnValue=not self.isSecureDesktopSession,
 		)
 		self.transport.registerOutbound(
 			speechCanceled,
 			RemoteMessageType.CANCEL,
 		)
-		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
+		self.transport.registerOutbound(
+			decide_playWaveFile,
+			RemoteMessageType.WAVE,
+			returnValue=not self.isSecureDesktopSession,
+		)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
 		braille.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
@@ -490,8 +503,9 @@ class LeaderSession(RemoteSession):
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isSecureDesktopSession: bool = False,
 	) -> None:
-		super().__init__(localMachine, transport)
+		super().__init__(localMachine, transport, isSecureDesktopSession=isSecureDesktopSession)
 		self.followers = defaultdict(dict)
 		self.leaders = set()
 		self.transport.registerInbound(

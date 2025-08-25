@@ -5,7 +5,7 @@
 
 from collections import OrderedDict
 import synthDriverHandler
-from speech.commands import IndexCommand
+from speech.commands import IndexCommand, PitchCommand
 
 
 class SynthDriver(synthDriverHandler.SynthDriver):
@@ -16,10 +16,16 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	description = _("No speech")
 
 	@classmethod
-	def check(cls):
+	def check(cls) -> bool:
 		return True
 
 	supportedSettings = frozenset()
+	supportedCommands = {
+		IndexCommand,
+		# Support the pitch command to ensure capital pitch changes are propagated to a remote system when this driver is active.
+		PitchCommand,
+	}
+
 	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})
 
 	def speak(self, speechSequence):

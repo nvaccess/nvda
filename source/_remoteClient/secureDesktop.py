@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V.,
+# David Sexton, Leonard de Ruijter and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,20 +25,21 @@ import socket
 import threading
 import uuid
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from ctypes import c_bool, windll, c_wchar_p, c_ushort, create_unicode_buffer
 from ctypes.wintypes import DWORD, HANDLE
 
+from .localMachine import LocalMachine
 import shlobj
 from logHandler import log
 from winAPI.secureDesktop import post_secureDesktopStateChange
 from NVDAHelper import localLib
 
-from . import bridge, server
+from . import server
 from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
-from .session import FollowerSession
+from .session import FollowerSession, LeaderSession
 from .transport import RelayTransport
 
 
@@ -60,21 +62,23 @@ class SecureDesktopHandler:
 
 	SD_CONNECT_BLOCK_TIMEOUT: int = 1
 
-	def __init__(self, tempPath: Path = getProgramDataTempPath()) -> None:
+	def __init__(self, localMachine: LocalMachine, tempPath: Path = getProgramDataTempPath()) -> None:
 		"""Initialize secure desktop handler.
 
+		:param localMachine: The local machine instance
 		:param tempPath: Directory for IPC file storage
 		"""
+		self.localMachine: LocalMachine = localMachine
 		self.tempPath = tempPath
 		self.IPCPath: Path = self.tempPath / "NVDA"
 		self.IPCPath.mkdir(parents=True, exist_ok=True)
 		self.IPCFile = self.IPCPath / "remote.ipc"
 		log.debug("Initialized SecureDesktopHandler with IPC file: %s", self.IPCFile)
 
-		self._followerSession: Optional[FollowerSession] = None
-		self.sdServer: Optional[server.LocalRelayServer] = None
-		self.sdRelay: Optional[RelayTransport] = None
-		self.sdBridge: Optional[bridge.BridgeTransport] = None
+		self._followerSession: FollowerSession | None = None
+		self.sdServer: server.LocalRelayServer | None = None
+		self.sdRelay: RelayTransport | None = None
+		self.sdLeader: LeaderSession | None = None
 
 		post_secureDesktopStateChange.register(self._onSecureDesktopChange)
 
@@ -91,11 +95,11 @@ class SecureDesktopHandler:
 		log.info("Secure desktop cleanup completed")
 
 	@property
-	def followerSession(self) -> Optional[FollowerSession]:
+	def followerSession(self) -> FollowerSession | None:
 		return self._followerSession
 
 	@followerSession.setter
-	def followerSession(self, session: Optional[FollowerSession]) -> None:
+	def followerSession(self, session: FollowerSession | None) -> None:
 		"""Update follower session reference and handle necessary cleanup/setup."""
 		if self._followerSession == session:
 			log.debug("Follower session unchanged, skipping update")
@@ -107,15 +111,14 @@ class SecureDesktopHandler:
 
 		if self._followerSession is not None and self._followerSession.transport is not None:
 			transport = self._followerSession.transport
+			transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
 		self._followerSession = session
 		if session is not None:
-			session.transport.registerInbound(
-				RemoteMessageType.SET_BRAILLE_INFO,
-				self._onLeaderDisplayChange,
-			)
+			session.transport.registerInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
+			session.transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 
-	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
+	def _onSecureDesktopChange(self, isSecureDesktop: bool | None = None) -> None:
 		"""Internal callback for secure desktop state changes.
 
 		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
@@ -129,9 +132,6 @@ class SecureDesktopHandler:
 	def enterSecureDesktop(self) -> None:
 		"""Set up necessary components when entering secure desktop."""
 		log.debug("Attempting to enter secure desktop")
-		if self.followerSession is None or self.followerSession.transport is None:
-			log.warning("No follower session connected, not entering secure desktop.")
-			return
 		if not self.tempPath.exists():
 			log.debug(f"Creating temp directory: {self.tempPath}")
 			self.tempPath.mkdir(parents=True, exist_ok=True)
@@ -153,13 +153,19 @@ class SecureDesktopHandler:
 			insecure=True,
 			connectionType=ConnectionMode.LEADER,
 		)
-		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onLeaderDisplayChange)
-		self.followerSession.transport.registerInbound(
-			RemoteMessageType.SET_BRAILLE_INFO,
-			self._onLeaderDisplayChange,
+		self.sdLeader = LeaderSession(
+			transport=self.sdRelay,
+			localMachine=self.localMachine,
+			isSecureDesktopSession=True,
 		)
-
-		self.sdBridge = bridge.BridgeTransport(self.followerSession.transport, self.sdRelay)
+		self.localMachine.isOnSecureDesktop = True
+		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onLeaderDisplayChange)
+		if self.followerSession is not None and self.followerSession.transport is not None:
+			self.followerSession.transport.registerInbound(
+				RemoteMessageType.SET_BRAILLE_INFO,
+				self._onLeaderDisplayChange,
+			)
+			self.followerSession.transport.registerInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 
 		relayThread = threading.Thread(target=self.sdRelay.run)
 		relayThread.daemon = True
@@ -173,35 +179,30 @@ class SecureDesktopHandler:
 	def leaveSecureDesktop(self) -> None:
 		"""Clean up when leaving secure desktop."""
 		log.debug("Attempting to leave secure desktop")
-		if self.sdServer is None:
-			log.debug("No secure desktop server running, nothing to clean up")
-			return
-
-		if self.sdBridge is not None:
-			self.sdBridge.disconnect()
-			self.sdBridge = None
-
-		if self.sdServer is not None:
-			self.sdServer.close()
-			self.sdServer = None
-
-		if self.sdRelay is not None:
-			self.sdRelay.close()
-			self.sdRelay = None
+		self.localMachine.isOnSecureDesktop = False
+		if self.sdLeader is not None:
+			self.sdLeader.close()
+			self.sdLeader = None
+			self._sdRelay = None
 
 		if self.followerSession is not None and self.followerSession.transport is not None:
+			self.followerSession.transport.unregisterInbound(RemoteMessageType.KEY, self.onLeaderKeysReceived)
 			self.followerSession.transport.unregisterInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onLeaderDisplayChange,
 			)
 			self.followerSession.setDisplaySize()
 
+		if self.sdServer is not None:
+			self.sdServer.close()
+			self.sdServer = None
+
 		try:
 			self.IPCFile.unlink()
 		except FileNotFoundError:
 			pass
 
-	def initializeSecureDesktop(self) -> Optional[ConnectionInfo]:
+	def initializeSecureDesktop(self) -> ConnectionInfo | None:
 		"""Initialize connection when starting in secure desktop.
 
 		:return: Connection information if successful, None on failure
@@ -253,3 +254,22 @@ class SecureDesktopHandler:
 			)
 		else:
 			log.warning("No secure desktop relay or follower session available, skipping display change")
+
+	def onLeaderKeysReceived(
+		self,
+		vk_code: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
+	) -> None:
+		"""Handle key events."""
+		log.debug("Leader key input received")
+		if self.sdRelay is not None:
+			log.debug("Propagating key event to secure desktop relay")
+			self.sdRelay.send(
+				type=RemoteMessageType.KEY,
+				vk_code=vk_code,
+				extended=extended,
+				pressed=pressed,
+			)
+		else:
+			log.warning("No secure desktop relay available, skipping key input")

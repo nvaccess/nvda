@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V.,
+# Leonard de Ruijter, David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,6 +25,8 @@ All network operations run in background threads, while message handlers
 are called on the main wxPython thread for thread-safety.
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 import hashlib
 import select
@@ -35,7 +38,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logHandler import log
 from queue import Queue
-from typing import Any, Literal, Optional, Self
+from typing import Any, Self
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -47,11 +50,11 @@ from .serializer import Serializer
 
 
 @dataclass
-class RemoteExtensionPoint:
+class RemoteExtensionPoint[**P]:
 	"""Bridges local extension points to remote message sending.
 
 	This class connects local NVDA extension points to the remote transport layer,
-	allowing local events to trigger remote messages with optional argument transformation.
+	allowing local events to trigger remote messages with optional argument transformation and decision making.
 
 	:note: The filter function, if provided, should take (*args, **kwargs) and return
 	       a new kwargs dict to be sent in the message.
@@ -63,27 +66,29 @@ class RemoteExtensionPoint:
 	messageType: RemoteMessageType
 	"""The remote message type to send"""
 
-	filter: Optional[Callable[..., dict[str, Any]]] = None
+	filter: Callable[P, dict[str, Any]] | None = None
 	"""Optional function to transform arguments before sending"""
 
-	transport: Optional["Transport"] = None
+	transport: Transport | None = None
 	"""The transport instance (set on registration)"""
 
-	def remoteBridge(self, *args: Any, **kwargs: Any) -> Literal[True]:
+	returnValue: bool = True
+
+	def remoteBridge(self, *args: P.args, **kwargs: P.kwargs) -> bool:
 		"""Bridge function that gets registered to the extension point.
 
 		Handles calling the filter if present and sending the message.
 
 		:param args: Positional arguments from the extension point
 		:param kwargs: Keyword arguments from the extension point
-		:return: Always returns True to allow other handlers to process the event
+		:return: the value of self.returnValue
 		"""
 		if self.filter is not None:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
 			kwargs = self.filter(*args, **kwargs)
 		if self.transport is not None:
 			self.transport.send(self.messageType, **kwargs)
-		return True
+		return self.returnValue
 
 	def register(self, transport: "Transport") -> None:
 		"""Register this bridge with a transport and the extension point."""
@@ -214,7 +219,8 @@ class Transport(ABC):
 		self,
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
-		filter: Optional[Callable[..., dict[str, Any]]] = None,
+		filter: Callable[..., dict[str, Any]] | None = None,
+		returnValue: bool = True,
 	) -> None:
 		"""Register an extension point to a message type.
 
@@ -222,11 +228,13 @@ class Transport(ABC):
 		:param messageType: The message type to register the extension point to
 		:param filter: Optional function to transform message before sending
 		:note: Filter function should take (*args, **kwargs) and return new kwargs dict
+		:param returnValue: Value to return from the extension point handler, defaults to True
 		"""
 		remoteExtension = RemoteExtensionPoint(
 			extensionPoint=extensionPoint,
 			messageType=messageType,
 			filter=filter,
+			returnValue=returnValue,
 		)
 		remoteExtension.register(self)
 		self.outboundHandlers[messageType] = remoteExtension
@@ -234,8 +242,7 @@ class Transport(ABC):
 	def unregisterOutbound(self, messageType: RemoteMessageType) -> None:
 		"""Unregister an extension point from a message type.
 
-		Args:
-			messageType (RemoteMessageType): The message type to unregister the extension point from
+		:param messageType: The message type to unregister the extension point from
 		"""
 		self.outboundHandlers[messageType].unregister()
 		del self.outboundHandlers[messageType]
@@ -392,7 +399,7 @@ class TCPTransport(Transport):
 					[],
 					[self.serverSock],
 				)
-			except socket.error:
+			except OSError:
 				self.buffer = b""
 				break
 			if self.serverSock in error:
@@ -401,7 +408,7 @@ class TCPTransport(Transport):
 			if self.serverSock in readers:
 				try:
 					self.processIncomingSocketData()
-				except socket.error:
+				except OSError:
 					self.buffer = b""
 					break
 
@@ -545,7 +552,7 @@ class TCPTransport(Transport):
 			try:
 				with self.serverSockLock:
 					self.serverSock.sendall(item)
-			except socket.error:
+			except OSError:
 				return
 
 	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
@@ -703,7 +710,7 @@ class ConnectorThread(threading.Thread):
 		while self.running:
 			try:
 				self.connector.run()
-			except socket.error:
+			except OSError:
 				time.sleep(self.reconnectDelay)
 				continue
 			else:
