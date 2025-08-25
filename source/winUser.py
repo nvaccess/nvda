@@ -72,37 +72,37 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SM_CYSCREEN",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_CYSCREEN",
+		"CY_SCREEN",
 	),
 	_deprecate.MovedSymbol(
 		"SM_SWAPBUTTON",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_SWAPBUTTON",
+		"SWAP_BUTTON",
 	),
 	_deprecate.MovedSymbol(
 		"SM_XVIRTUALSCREEN",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_XVIRTUALSCREEN",
+		"X_VIRTUAL_SCREEN",
 	),
 	_deprecate.MovedSymbol(
 		"SM_YVIRTUALSCREEN",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_YVIRTUALSCREEN",
+		"Y_VIRTUAL_SCREEN",
 	),
 	_deprecate.MovedSymbol(
 		"SM_CXVIRTUALSCREEN",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_CXVIRTUALSCREEN",
+		"CX_VIRTUAL_SCREEN",
 	),
 	_deprecate.MovedSymbol(
 		"SM_CYVIRTUALSCREEN",
 		"winAPI.winUser.constants",
 		"SystemMetrics",
-		"SM_CYVIRTUALSCREEN",
+		"CY_VIRTUAL_SCREEN",
 	),
 )
 """Module __getattr__ to handle backward compatibility."""
