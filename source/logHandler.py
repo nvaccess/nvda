@@ -6,7 +6,6 @@
 
 """Utilities and classes to manage logging in NVDA"""
 
-import sysconfig
 import os
 import ctypes
 import sys
@@ -381,21 +380,10 @@ class Logger(logging.Logger):
 
 class RemoteHandler(logging.Handler):
 	def __init__(self):
-		# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		versionedLibPath = os.path.join(globalVars.appDir, "lib", buildVersion.version)
-		match sysconfig.get_platform():
-			case "win-amd64":
-				coreArchLibPath = os.path.join(versionedLibPath, "x64")
-			case "win-arm64":
-				coreArchLibPath = os.path.join(versionedLibPath, "arm64")
-			case "win32":
-				coreArchLibPath = os.path.join(versionedLibPath, "x86")
-			case _:
-				raise RuntimeError("Unsupported platform")
 		import winBindings.kernel32
 
 		h = winBindings.kernel32.LoadLibraryEx(
-			os.path.join(coreArchLibPath, "nvdaHelperRemote.dll"),
+			os.path.join(NVDAState.ReadPaths.nvdaHelperRemoteDll),
 			0,
 			# Using an altered search path is necessary here
 			# As NVDAHelperRemote needs to locate dependent dlls in the same directory
