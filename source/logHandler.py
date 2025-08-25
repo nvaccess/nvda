@@ -22,7 +22,6 @@ import buildVersion
 from typing import (
 	Literal,
 	NamedTuple,
-	Optional,
 	Protocol,
 	TYPE_CHECKING,
 )
@@ -159,7 +158,7 @@ def getCodePath(f):
 	return ".".join(x for x in (path, className, funcName) if x)
 
 
-_onErrorSoundRequested: Optional["extensionPoints.Action"] = None
+_onErrorSoundRequested: "extensionPoints.Action | None" = None
 """
 Triggered every time an error sound needs to be played.
 When nvwave is initialized, it registers the handler responsible for playing the error sound.
@@ -428,7 +427,7 @@ class Formatter(logging.Formatter):
 			record.codepath = "{name}.{funcName}".format(**record.__dict__)
 		return super().format(record)
 
-	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+	def formatTime(self, record: logging.LogRecord, datefmt: str | None = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT when Python locale
 		is set to a Unicode one (#12160, Python issue 36792)
@@ -482,7 +481,7 @@ logging.setLoggerClass(Logger)
 #: The singleton logger instance.
 log: Logger = logging.getLogger(NVDA_LOGGER_NAME)
 #: The singleton log handler instance.
-logHandler: Optional[logging.Handler] = None
+logHandler: logging.Handler | None = None
 
 
 def _getDefaultLogFilePath():
