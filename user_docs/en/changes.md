@@ -45,8 +45,45 @@ These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
 * Fixed behavior of `TextInfo.collapse()` - previously it was moving TextInfo to the next paragraph in some cases. (#18320, @mltony)
 * Fixed behavior of `OffsetTextInfo.move()` - previously it wouldn't move to the very end of the document unless moving by character. (#18348, @mltony)
+* `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
+Most API consumers should not be impacted by this change.
+Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 
 #### Deprecations
+
+* `NVDAHelper.versionedLibPath` is deprecated.
+Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.coreArchLibPath` is deprecated.
+Use `NVDAState.ReadPaths.coreArchLibPath` instead. (#18207)
+* `NVDAHelper.LOCAL_WIN10_DLL_PATH` is deprecated.
+Use `NVDAState.ReadPaths.nvdaHelperLocalWin10Dll` instead. (#18207)
+* `NVDAHelper.generateBeep` is deprecated.
+Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
+* `NVDAHelper.VBuf_getTextInRange` is deprecated.
+Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
+* `NVDAHelper.onSsmlMarkReached` is deprecated.
+Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
+* `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
+Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
+* `nvwave.WAVEFORMATEX` is deprecated.
+Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
+Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+* `hwPortUtils.BTH_ADDR` is deprecated.
+Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
+Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
+Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
+Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+* The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_` constants in `hwPortUtils` are deprecated.
+Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18571)
+* `hwPortUtils.dummy` and `hwPortUtils.INVALID_HANDLE_VALUE` are deprecated, with no planned replacement. (#18571)
+* `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
+Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
+* `hwPortUtils.ValidHandle` is deprecated with no planned public replacement. (#18571)
 
 ## 2025.3
 
@@ -121,31 +158,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
 
-#### API Breaking Changes
-
-* `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
-Most API consumers should not be impacted by this change.
-Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
-* `hwPortUtils.ValidHandle` has been removed with no public replacement.
-
 #### Deprecations
 
-* `NVDAHelper.versionedLibPath` is deprecated.
-Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
-* `NVDAHelper.coreArchLibPath` is deprecated.
-Use `NVDAState.ReadPaths.coreArchLibPath` instead. (#18207)
-* `NVDAHelper.LOCAL_WIN10_DLL_PATH` is deprecated.
-Use `NVDAState.ReadPaths.nvdaHelperLocalWin10Dll` instead. (#18207)
-* `NVDAHelper.generateBeep` is deprecated.
-Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
-* `NVDAHelper.VBuf_getTextInRange` is deprecated.
-Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
-* `NVDAHelper.onSsmlMarkReached` is deprecated.
-Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
-* `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
-Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
-* `nvwave.WAVEFORMATEX` is deprecated.
-Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)
   * `LP_c_ubyte`
   * `LP_c_ulong`
@@ -154,22 +168,6 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 * Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
 Importing from `md2html` is discouraged. (#18638)
-* The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
-  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
-* `hwPortUtils.BTH_ADDR` is deprecated.
-  Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
-* The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
-  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
-* The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
-  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
-* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
-  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
-* The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_` constants in `hwPortUtils` are deprecated.
-  Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18571)
-* `hwPortUtils.dummy` and `hwPortUtils.INVALID_HANDLE_VALUE` are deprecated, with no planned replacement. (#18571)
-* `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
-  Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
-* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
 
 ## 2025.2
 
