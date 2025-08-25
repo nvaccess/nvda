@@ -19,6 +19,8 @@ import keyboardHandler
 from logHandler import log
 import buildVersion
 
+from . import nvdaControls
+
 
 class WelcomeDialog(
 	gui.contextHelp.ContextHelpMixin,
@@ -47,12 +49,14 @@ class WelcomeDialog(
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		WelcomeDialog._instances.add(self)
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
+		fontFaceName = self.GetFont().GetFaceName()
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 		# This is in larger, bold lettering
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
+		welcomeTextHeader.SetFont(wx.Font(wx.FontInfo(18).Bold().FaceName(fontFaceName)))
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 		mainSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
