@@ -382,7 +382,7 @@ class RemoteHandler(logging.Handler):
 		import winBindings.kernel32
 
 		h = winBindings.kernel32.LoadLibraryEx(
-			os.path.join(NVDAState.ReadPaths.nvdaHelperRemoteDll),
+			NVDAState.ReadPaths.nvdaHelperRemoteDll,
 			0,
 			# Using an altered search path is necessary here
 			# As NVDAHelperRemote needs to locate dependent dlls in the same directory
