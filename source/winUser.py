@@ -16,7 +16,6 @@ from ctypes import byref, WinError, Structure, c_int
 from ctypes.wintypes import *  # noqa: F403
 from ctypes.wintypes import HWND, RECT, DWORD
 from typing import (
-	Any,
 	Tuple,
 )
 
@@ -25,9 +24,6 @@ import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
 from utils import _deprecate
-
-
-from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
 
 
 __getattr__ = _deprecate.handleDeprecations(
