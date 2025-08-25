@@ -192,16 +192,15 @@ class _PreprocessorConfig:
 			object.__setattr__(self, "size", {"height": 224, "width": 224})
 
 
+
 # Default configuration instances
-_DEFAULT_ENCODER_CONFIG = _EncoderConfig()
+_DEFAULT_ENCODER_CONFIG: _EncoderConfig | None = None
+_DEFAULT_DECODER_CONFIG: _DecoderConfig | None = None
+...
 
-_DEFAULT_DECODER_CONFIG = _DecoderConfig()
-
-_DEFAULT_GENERATION_CONFIG = _GenerationConfig()
-
-_DEFAULT_MODEL_CONFIG = _ModelConfig()
-
-_DEFAULT_PREPROCESSOR_CONFIG = _PreprocessorConfig()
+def initialize():
+   globals _DEFAULT_ENCODER_CONFIG, ...
+   _DEFAULT_ENCODER_CONFIG = _EncoderConfig()
 
 
 def _createConfigFromDict(configClass: Any, configdict: dict[str, Any], defaultConfig):

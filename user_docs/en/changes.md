@@ -78,7 +78,6 @@ There are several bug fixes for SAPI5 voices, including fixes for excessive lead
 eSpeak NG and Unicode CLDR have been updated.
 Localisation data for emojis has been added for Belarusian and Bosnian.
 
-
 ### New Features
 
 * Add-on Store:
