@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2024 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2024-2025 NV Access Limited, Leonard de Ruijter
 
 """Wrapper functions for NVDAHelper uniscribe functions."""
 
@@ -27,7 +27,7 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	if not NVDAHelper.localLib.calculateCharacterBoundaries(
 		buffer,
 		textLength,
-		ctypes.byref(offsets),
+		offsets,
 		ctypes.byref(offsetsCount),
 	):
 		raise RuntimeError("NVDAHelper calculateCharacterBoundaries failed")

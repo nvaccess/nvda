@@ -17,6 +17,7 @@ from ctypes import (
 	sizeof,
 	windll,
 )
+import ctypes.wintypes
 from typing import (
 	Generic,
 	Optional,
@@ -31,6 +32,7 @@ import functools
 import shlobj
 from logHandler import log
 from NVDAState import WritePaths
+from winBindings import advapi32
 
 
 @functools.lru_cache(maxsize=1)
@@ -64,7 +66,7 @@ TokenUIAccess = 26
 
 def hasUiAccess():
 	token = ctypes.wintypes.HANDLE()
-	ctypes.windll.advapi32.OpenProcessToken(
+	advapi32.OpenProcessToken(
 		ctypes.windll.kernel32.GetCurrentProcess(),
 		winKernel.MAXIMUM_ALLOWED,
 		ctypes.byref(token),
@@ -115,7 +117,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 	* CloseHandle: To close the token handle.
 	"""
 	token = ctypes.wintypes.HANDLE()
-	if not ctypes.windll.advapi32.OpenProcessToken(
+	if not advapi32.OpenProcessToken(
 		processHandle,
 		winKernel.MAXIMUM_ALLOWED,
 		ctypes.byref(token),

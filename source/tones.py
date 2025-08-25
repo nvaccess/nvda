@@ -81,7 +81,7 @@ def beep(
 		return
 	if not player:
 		return
-	from NVDAHelper import generateBeep
+	from NVDAHelper.localLib import generateBeep
 
 	bufSize = generateBeep(None, hz, length, left, right)
 	buf = create_string_buffer(bufSize)

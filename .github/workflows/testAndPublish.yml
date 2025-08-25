@@ -7,8 +7,6 @@ on:
       - beta
       - rc
       - 'try-**'
-      # Temporarily enabled during the 64bit migration
-      - wip-buildX64
     tags:
       - 'release-**'
 
@@ -38,7 +36,7 @@ env:
   defaultRunner: 'windows-2025'
   supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x86
-  supportedArchitectures: '["x86"]'
+  supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.13.7'
   supportedPythonVersions: '["3.13.7"]'
 

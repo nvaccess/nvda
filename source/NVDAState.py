@@ -5,9 +5,11 @@
 
 import os
 import sys
+import sysconfig
 import time
 import winreg
 
+import buildVersion
 import globalVars
 
 
@@ -94,7 +96,62 @@ class _WritePaths:
 		return os.path.join(self.profilesDir, f"{name}.ini")
 
 
+class _ReadPaths:
+	@property
+	def versionedLibPath(self) -> str:
+		versionedLibPath = os.path.join(globalVars.appDir, "lib")
+		if not isRunningAsSource():
+			# When running as a py2exe build, libraries are in a version-specific directory
+			versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
+		return versionedLibPath
+
+	@property
+	def versionedLibX86Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x86")
+
+	@property
+	def versionedLibAMD64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x64")
+
+	@property
+	def versionedLibARM64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "arm64")
+
+	@property
+	def coreArchLibPath(self) -> str:
+		match sysconfig.get_platform():
+			case "win-amd64":
+				return self.versionedLibAMD64Path
+			case "win-arm64":
+				return self.versionedLibARM64Path
+			case "win32":
+				return self.versionedLibX86Path
+			case _:
+				raise RuntimeError("Unsupported platform")
+
+	@property
+	def nvdaHelperRemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperRemote.dll")
+
+	@property
+	def nvdaHelperLocalDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocal.dll")
+
+	@property
+	def nvdaHelperLocalWin10Dll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def UIARemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "UIARemote.dll")
+
+	@property
+	def javaAccessBridgeDLL(self) -> str:
+		return os.path.join(self.coreArchLibPath, "windowsaccessbridge.dll")
+
+
 WritePaths = _WritePaths()
+ReadPaths = _ReadPaths()
 
 
 def isRunningAsSource() -> bool:
