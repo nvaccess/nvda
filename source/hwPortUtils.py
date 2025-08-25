@@ -13,6 +13,7 @@ from ctypes.wintypes import DWORD, WCHAR
 
 import config
 import hidpi
+import utils._deprecate
 import winKernel
 from comtypes import GUID
 from logHandler import log
@@ -53,7 +54,6 @@ from winBindings.setupapi import (
 	SetupDiOpenDevRegKey as _SetupDiOpenDevRegKey,
 	_Dummy,
 )
-import utils._deprecate
 
 
 def _ValidHandle(value):
