@@ -226,9 +226,13 @@ So the return annotation here means:
   * Treat `RECT` as the return type. Type checkers will communicate as such.
   * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1`).
   To override the pointer type, use the `type` parameter of the `OutParam` class.
-  * The out param is the second entry in the `argtypes` array, index=1.
+  * The out param is the second entry in the `argtypes` array, `index=1`.
 
-For a function with multiple arg types, specify a type hint like `tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]`.
+For a function with multiple arg types, specify a type hint like:
+
+```python
+tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]
+```
 
 ### Language choices
 

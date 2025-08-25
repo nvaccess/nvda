@@ -97,11 +97,14 @@ class OutParam:
 
 	name: str
 	"""The name of the output parameter."""
+
 	position: int = 0
 	"""The position of the output parameter in argtypes."""
+
 	cType: type[Pointer] | type[inspect.Parameter.empty] = inspect.Parameter.empty
 	"""The type of the output parameter. This should be a pointer type.
 	If ``inspect.Parameter.empty`` (default), the type from the annotation is used and a pointer type is created from it automatically."""
+
 	default: CType | type[inspect.Parameter.empty] = inspect.Parameter.empty
 	"""The default value for the output parameter."""
 
@@ -159,7 +162,7 @@ class FuncSpec[**P, R]:
 			# A missing type annotation defeats the purpose of this helper.
 			raise TypeError(f"Missing type annotation for parameter: {param.name}")
 		elif typing.get_origin(t) in (Union, UnionType):
-			# note, we must both support UNion and UnionType
+			# note, we must both support Union and UnionType
 			# Union[a, b] is legacy syntax, a | b results into UnionType
 			# TODO: In python 3.14, they become aliases of eachoter.
 			# The type to be used in argtypes should be the first ctypes compatible type.
@@ -219,7 +222,7 @@ class FuncSpec[**P, R]:
 		# a. A single ctypes type.
 		# b. An Annotated containing the ctypes type in its metadata.
 		# requireOutParamAnnotations will be False.
-		# 2. restype provided: , the return type annotation contains one or more output parameters.
+		# 2. restype provided: the return type annotation contains one or more output parameters.
 		# requireOutParamAnnotations will be True.
 		pyFuncRestype = sig.return_annotation
 		if pyFuncRestype is inspect.Signature.empty:
@@ -281,7 +284,7 @@ class FuncSpec[**P, R]:
 						(ParamDirectionFlag.OUT, outParam.name, outParam.default),
 					)
 			elif isAnnotated:
-				# Flavor 1B
+				# Flavor R1b
 				annotation = t.__metadata__[0]
 				if not issubclass(annotation, CType):
 					raise TypeError(
@@ -289,7 +292,7 @@ class FuncSpec[**P, R]:
 					)
 				restype = annotation
 			else:
-				# Flavor 1A
+				# Flavor R1a
 				restype = t
 
 		return FuncSpec(
