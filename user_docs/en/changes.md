@@ -13,12 +13,15 @@ Windows 10 is the minimum Windows version supported.
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
+* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 
 ### Changes
 
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 
 ### Bug Fixes
+
+* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -28,6 +31,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
   * The changelog should document changes between previous and latest add-on versions.
+* Updated components
+  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
 #### API Breaking Changes
 
@@ -78,6 +83,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
 * Braille:
   * When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)
   * NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)
+  * NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)
   * The Dot Pad braille display driver now supports automatic detection of USB-connected devices.
   Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)
 * When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)
@@ -125,6 +131,21 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 * Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
 Importing from `md2html` is discouraged. (#18638)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
+  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+* `hwPortUtils.BTH_ADDR` is deprecated.
+  Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
+  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
+  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
+  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+* The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_` constants in `hwPortUtils` are deprecated.
+  Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18571)
+* `hwPortUtils.dummy` and `hwPortUtils.INVALID_HANDLE_VALUE` are deprecated, with no planned replacement. (#18571)
+* `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
+  Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
 
 ## 2025.2
 

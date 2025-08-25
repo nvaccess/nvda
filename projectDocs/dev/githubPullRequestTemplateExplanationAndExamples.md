@@ -7,7 +7,6 @@ This page is meant to serve as an explanation for how to fill out
 
 Please use a descriptive title of the changes.
 Avoid relying on references to issues or PRs, ensure the title is self-descriptive.
-To automatically generate a title, set the title to `@coderabbitai title`.
 
 ## The template
 

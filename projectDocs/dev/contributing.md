@@ -74,13 +74,11 @@ If you are new to the project, or looking for some way to help take a look at:
 	- When the PR is approved it will be merged, and the change will be active in the next alpha build.
 	- If issues are raised with your PR, it may be marked as a draft.
 	Please mark it as ready for review when you have addressed the review comments.
-	- CodeRabbit AI can review your code.
-	  - To request a review from CodeRabbit, comment `@coderabbitai review`
-	  - CodeRabbit reviews may be automatically or manually requested by reviewers
+	- CoPilot AI can review your code.
+	  - CoPilot reviews may be automatically or manually requested by reviewers
 	  - Please participate in the review process, the AI can respond to review comments, questions and feedback.
 	  - Some comments may not be helpful due to the nature of AI, and some might be useful.
 	  Please indicate comments which you intend to ignore and why.
-	  For large numbers of unhelpful comments, please mark them as resolved or comment `@coderabbitai resolve` to resolve all comments.
 1. Feedback from alpha users
 	- After a PR is merged, watch for feedback from alpha users / testers.
 	You may have to follow up to address bugs or missed use-cases.

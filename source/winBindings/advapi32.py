@@ -12,6 +12,8 @@ from ctypes.wintypes import (
 	BOOL,
 	DWORD,
 	HANDLE,
+	HKEY,
+	LONG,
 )
 from typing import (
 	Annotated,
@@ -21,7 +23,10 @@ from utils.ctypesUtils import (
 	Pointer,
 )
 
-__all__ = ("OpenProcessToken",)
+__all__ = (
+	"OpenProcessToken",
+	"RegCloseKey",
+)
 
 
 dll = windll.advapi32
@@ -37,4 +42,14 @@ def OpenProcessToken(
 	Opens the access token associated with a process.
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken
+	"""
+
+
+@dllFunc(dll, annotateOriginalCFunc=True)
+def RegCloseKey(hkey: int | HKEY) -> Annotated[int, LONG]:
+	"""
+	Closes a handle to the specified registry key.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey
 	"""
