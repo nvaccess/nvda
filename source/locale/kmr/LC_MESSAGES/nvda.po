@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-18 02:41+0000\n"
-"PO-Revision-Date: 2025-08-18 03:56\n"
+"POT-Creation-Date: 2025-08-22 01:49+0000\n"
+"PO-Revision-Date: 2025-08-25 00:35\n"
 "Last-Translator: \n"
 "Language-Team: Kurmanji (Kurdish)\n"
 "Language: kmr_TR\n"
@@ -7486,71 +7486,71 @@ msgstr "Dû ji nu ve destpêkirinê bê damezrandin"
 #: addonStore\models\status.py:110
 msgctxt "addonStore"
 msgid "Disabled, pending restart"
-msgstr ""
+msgstr "Dû ji nu ve destpêkirinê bê girtin"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:116
 msgctxt "addonStore"
 msgid "Disabled (incompatible), pending restart"
-msgstr ""
+msgstr "Dû ji nu ve destpêkirinê bê girtin(ne guncav)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:119
 msgctxt "addonStore"
 msgid "Disabled (incompatible)"
-msgstr ""
+msgstr "Girtin(Ne guncav e)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:123
 msgctxt "addonStore"
 msgid "Enabled (incompatible), pending restart"
-msgstr ""
+msgstr "Dû ji nu ve destpêkirinê bê vekirin(ne guncav)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:126
 msgctxt "addonStore"
 msgid "Enabled (incompatible)"
-msgstr ""
+msgstr "Vekirin(ne guncav e)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:128
 msgctxt "addonStore"
 msgid "Enabled, pending restart"
-msgstr ""
+msgstr "Dû ji nu ve destpêkirinê bê vekirin"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:134
 msgctxt "addonStore"
 msgid "Unknown status"
-msgstr ""
+msgstr "Rewş naye zanîn"
 
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:175
 msgctxt "addonStore"
 msgid "Installed add-ons"
-msgstr ""
+msgstr "Pêvekên damezrandî"
 
 #. Translators: The label of a tab to display updatable add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:178
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr ""
+msgstr "Pêvekên guncav ji bo rojanekirinê"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:181
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr ""
+msgstr "Pêvekên li dikanê"
 
 #. Translators: The label of a tab to display incompatible add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:184
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr ""
+msgstr "Pêvekên ne guncav yên damezrandî"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7558,7 +7558,7 @@ msgstr ""
 #: addonStore\models\status.py:193
 msgctxt "addonStore"
 msgid "Installed &add-ons"
-msgstr ""
+msgstr "&Pêvekên damezrandî"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7566,7 +7566,7 @@ msgstr ""
 #: addonStore\models\status.py:197
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr ""
+msgstr "&Pêvekên guncav ji bo rojanekirinê"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7574,7 +7574,7 @@ msgstr ""
 #: addonStore\models\status.py:201
 msgctxt "addonStore"
 msgid "Available &add-ons"
-msgstr ""
+msgstr "&Pêvekên heyî"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7582,7 +7582,7 @@ msgstr ""
 #: addonStore\models\status.py:205
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr ""
+msgstr "&Pêvekên ne guncav yên damezrandî"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -7591,7 +7591,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
-msgstr ""
+msgstr "Versiyona NVDAyê ya rojanekirî pêwîst e. NVDA {nvdaVersion} yan jî versiyona pêştir."
 
 #. Translators: The reason an add-on is not compatible.
 #. The addon relies on older, removed features of NVDA, an updated add-on is required.
@@ -7600,21 +7600,21 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of this add-on is required. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
-msgstr ""
+msgstr "Versiyonekî rojanekirî ya pêvekê pêwîst e. Pêvek herî dawî bi versîyona NVDA {lastTestedNVDAVersion} ve hatiye testkirin. Divê pêvek bi versiyona NVDA {nvdaVersion} yan jî versiyonek jortir ve bê testkirin. Bi girtina berpirsiyariyê hûn dikarin pêvekê vekin "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
 #: addonStore\models\version.py:145
 msgctxt "addonStore"
 msgid "Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. After installation, you will be able to manually re-enable these add-ons at your own risk. If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
-msgstr ""
+msgstr "Konfîgurasyona we ya NVDAyê di naveroka xwe de pêvekên bi ev versiyona NVDAyê ve ne guncav dihewîne. Ev pêvekana dû damezrandinê dê bê girtin. Dû damezrandinê bi girtina berpirsiyariyê hûn dikarin ev pêvekana ji nu ve vekin. Ger hûn ev pêvekana bikartînin ji kerema xwe ji bo domandina damezrandinê lîsteyê ji ber çavan derbas bikin "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
 #: addonStore\models\version.py:157
 msgctxt "addonStore"
 msgid "I understand that incompatible add-ons will be disabled and can be manually re-enabled at my own risk after installation."
-msgstr ""
+msgstr "Bê girtina pêvekên ku ne guncav û ji nu ve vekirina pêvekan min fêmkir û berpirsiyariyê digrim."
 
 #: appModules\calc.py:57
 msgid "Display"
@@ -7623,7 +7623,7 @@ msgstr "Ekran"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\eclipse.py:19
 msgid "Eclipse"
-msgstr ""
+msgstr "Eclipse"
 
 #. Translators: Input help mode message for the 'read documentation script
 #: appModules\eclipse.py:57
@@ -8035,12 +8035,12 @@ msgstr "Ger hebe kaniya nivîsê ya berê bi deng dike. Ger du caran bê pêlkir
 #: appModules\poedit.py:217
 msgctxt "poedit"
 msgid "translation issue"
-msgstr ""
+msgstr "agahiya wergerê"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:49
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:134
@@ -8080,7 +8080,7 @@ msgstr "Çîgirtê objeyan"
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:148
 msgid "Chart placeholder"
-msgstr ""
+msgstr "Cîgirtê Şemayê"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:150
@@ -8196,7 +8196,7 @@ msgstr "Nîşandanên biçûk yên Master"
 #: appModules\powerpnt.py:572
 #, python-brace-format
 msgid "Slide {slideNumber}"
-msgstr ""
+msgstr "Slayd {slideNumber}"
 
 #. Translators:   an unlabelled item in Powerpoint another shape is overlapping
 #: appModules\powerpnt.py:633
@@ -8208,24 +8208,24 @@ msgstr "xala din"
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} point"
 msgid_plural "covers left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ji çepa şikla {otherShape} qwasî {distance:.3g} dihewîne"
+msgstr[1] "ji çepa şikla {otherShape} qwasî {distance:.3g} dihewîne"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:672
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} point"
 msgid_plural "behind left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ji çepa şikla {otherShape} qwasî {distance:.3g} paşiya wê"
+msgstr[1] "ji çepa şikla {otherShape} qwasî {distance:.3g} paşiya wê"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:684
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} point"
 msgid_plural "covers top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ji ser şikla {otherShape} qwasî {distance:.3g} dihewîne"
+msgstr[1] "ji ser şikla {otherShape} qwasî {distance:.3g} dihewîne"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:693
@@ -8271,13 +8271,13 @@ msgstr[1] ""
 #: appModules\powerpnt.py:743
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr ""
+msgstr "pêşiya şiklê {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:746
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr ""
+msgstr "paşiya şiklê {otherShape}"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. left edge to the slide's left edge
@@ -8360,18 +8360,18 @@ msgstr ""
 #: appModules\powerpnt.py:1499
 #, python-brace-format
 msgid "Slide show notes - {slideName}"
-msgstr ""
+msgstr "Notên pêşandana slaydê - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 #: appModules\powerpnt.py:1502
 #, python-brace-format
 msgid "Slide show - {slideName}"
-msgstr ""
+msgstr "Pêşandana slaydê - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 #: appModules\powerpnt.py:1505
 msgid "Slide Show - complete"
-msgstr ""
+msgstr "Pêşandana slaydê - dawî bû"
 
 #. Translators: The message for no notes  for a slide in a slide show
 #: appModules\powerpnt.py:1582
@@ -8381,7 +8381,7 @@ msgstr "Not tune ye"
 #. Translators: The message for an empty slide in a slide show
 #: appModules\powerpnt.py:1585 appModules\powerpnt.py:1586
 msgid "Empty slide"
-msgstr ""
+msgstr "Slayda vala"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 #: appModules\powerpnt.py:1625
@@ -8630,12 +8630,12 @@ msgstr ""
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\ecoBraille.py:388
 msgid "EcoBraille displays"
-msgstr ""
+msgstr "Monîtorên EcoBrailleyê"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\freedomScientific.py:176
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr ""
+msgstr "Seriya Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a key on a braille display, that scrolls the display
 #. to show previous/next part of a long line.
@@ -8652,119 +8652,119 @@ msgstr "xêzê bibe û bîne"
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\handyTech.py:680
 msgid "Handy Tech braille displays"
-msgstr ""
+msgstr "Monîtorên brailleyê ya Handy Tech"
 
 #. Translators: message when braille input is enabled
 #: brailleDisplayDrivers\handyTech.py:1125
 msgid "Braille input enabled"
-msgstr ""
+msgstr "Têketina Brailleyê vekirî"
 
 #. Translators: message when braille input is disabled
 #: brailleDisplayDrivers\handyTech.py:1128
 msgid "Braille input disabled"
-msgstr ""
+msgstr "Têketina Brailleyê girtî"
 
 #. Translators: description of the script to toggle braille input
 #: brailleDisplayDrivers\handyTech.py:1131
 msgid "Toggle braille input"
-msgstr ""
+msgstr "Têketina brailleyê diguherîne"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\hidBrailleStandard.py:84
 msgid "Standard HID Braille Display"
-msgstr ""
+msgstr "Monîtora Brailleyê ya Standard HID"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\hims.py:276
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
-msgstr ""
+msgstr "Seriya HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers\lilli.py:112
 msgid "MDV Lilli"
-msgstr ""
+msgstr "MDV Lilli"
 
 #. Translators: Names of braille displays
 #: brailleDisplayDrivers\nattiqbraille.py:35
 msgid "Nattiq nBraille"
-msgstr ""
+msgstr "Nattiq nBraille"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "NLS eReader Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
 msgid "No braille"
-msgstr ""
+msgstr "Braille nîn e"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\papenmeier.py:140
 msgid "Papenmeier BRAILLEX newer models"
-msgstr ""
+msgstr "Modelên nu yên Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\papenmeier_serial.py:69
 msgid "Papenmeier BRAILLEX older models"
-msgstr ""
+msgstr "Modelên kevn yên Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\seika.py:28
 msgid "Seika Braille Displays"
-msgstr ""
+msgstr "Monîtorar Brailleyê ya Seîka"
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers\seikantk.py:103
 msgid "Seika Notetaker"
-msgstr ""
+msgstr "Lênuska notê ya Seîka"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\superBrl.py:30
 msgid "SuperBraille"
-msgstr ""
+msgstr "SuperBraille"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\albatross\driver.py:81
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
 #: brailleDisplayDrivers\albatross\driver.py:480
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr ""
+msgstr "Ji bo Albatrossê bi NVDA bikarbînin, ji menuya Albatrossê hejmara jura rewşê herî zêde {maxCells} eyar bikin û ger pêwîst be NVDA û Albatrossê ji nu ve destpêkirin bidin."
 
 #. Translators: Description of the DotPad Braille / Tactile Graphic display.
 #: brailleDisplayDrivers\dotPad\driver.py:82
 msgid "DotPad Braille / Tactile Graphic display"
-msgstr ""
+msgstr "DotPad Braille / Tactile Graphic display"
 
 #. Translators: Label for a setting that allows the user to choose the destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:112
 msgid "Braille destination"
-msgstr ""
+msgstr "Derketina Brailleyê"
 
 #. Translators: A destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:300
 msgid "Text"
-msgstr ""
+msgstr "Nivîs"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
 msgid "Eurobraille displays"
-msgstr ""
+msgstr "Monîtorên Eurobrailleyê"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 #: brailleDisplayDrivers\eurobraille\driver.py:378
 msgid "HID keyboard input simulation is unavailable."
-msgstr ""
+msgstr "Sîmulasyona klavyeyê ya HID girtî ye."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 #: brailleDisplayDrivers\eurobraille\driver.py:397
 msgid "Toggle HID keyboard simulation"
-msgstr ""
+msgstr "Sîmulasyona klavyeyê ya HID diguherîne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8782,13 +8782,13 @@ msgstr "Dereceya 2 ya Efrîkaya Başûr"
 #. braille settings dialog.
 #: brailleTables\__tables.py:20
 msgid "Akkadian (US) grade 1"
-msgstr ""
+msgstr "Akkadian (US) asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:23
 msgid "Akkadian (Borger) grade 1"
-msgstr ""
+msgstr "Akkadian (Borger) asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8878,19 +8878,19 @@ msgstr "Braille ya Komputerê ya 8 xalî bi Kiptî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:68
 msgid "Coptic grade 1"
-msgstr ""
+msgstr "Koptî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:71
 msgid "Cuneiform (transliterated) grade 1"
-msgstr ""
+msgstr "Nivîsa mîxî (elfabeta latînî) asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:74
 msgid "Cuneiform (transliterated, compact diacritics) grade 1"
-msgstr ""
+msgstr "Nivîsa mîxî (elfabeta latînî, sembolên fonetîk yên givaştî) asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9196,13 +9196,13 @@ msgstr "Gûjartî asta 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:247
 msgid "Greek international braille (2-cell accented letters)"
-msgstr ""
+msgstr "Brailleyê navnetewî ya Yewnanî (tîpên bi devoka 2 jurî)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:250
 msgid "Greek international braille (single-cell accented letters)"
-msgstr ""
+msgstr "Brailleyê navnetewî ya Yewnanî (tîpên bi devoka 1 jurî)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9214,19 +9214,19 @@ msgstr "Îspanyolî ji bo nivîsa Yewnanî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "Îbranî (Mîzgînî) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "Îbranî (Mîzgînî) meqama tumarî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "Îbranî (Mîzgînî) zirav"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9286,7 +9286,7 @@ msgstr "kompitûra braille ya 8 noqte ya Îzlendî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:302
 msgid "International Phonetic Alphabet"
-msgstr ""
+msgstr "Elfabeta Fonetîk ya Navnetewî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9532,7 +9532,7 @@ msgstr "Braille ya wêjeyî bi Lehî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:441
 msgid "Portuguese 6 dot computer braille"
-msgstr ""
+msgstr "Braille ya Komputerê ya 6 Xalî bi Portekîzî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9574,7 +9574,7 @@ msgstr "Romanî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "Kompitûr braille ya 6 xalî ya Ûrisî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9664,7 +9664,7 @@ msgstr "Sirbî asta 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:507
 msgid "Serbian Cyrillic grade 1"
-msgstr ""
+msgstr "Kîrîla Sirbî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9724,7 +9724,7 @@ msgstr "Swahilî (Kenya) asta 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Syriac grade 1"
-msgstr ""
+msgstr "Suryanî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9754,214 +9754,220 @@ msgstr "Braille ya Komputerê ya 8 Xalî bi Thayî"
 #. braille settings dialog.
 #: brailleTables\__tables.py:555
 msgid "Thai grade 0"
-msgstr ""
+msgstr "Taî asta 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:558
 msgid "Thai grade 1"
-msgstr ""
+msgstr "Taî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Thai grade 2"
-msgstr ""
+msgstr "Taî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:564
+msgid "Turkish 8 dot computer braille"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: brailleTables\__tables.py:567
 msgid "Turkish grade 1"
 msgstr "Tirkî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:567
+#: brailleTables\__tables.py:570
 msgid "Turkish grade 2"
-msgstr ""
+msgstr "Tirkî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:570
+#: brailleTables\__tables.py:573
 msgid "Setswana grade 1"
 msgstr "Setswanayî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:573
+#: brailleTables\__tables.py:576
 msgid "Setswana grade 2"
 msgstr "Setswanayî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:576
+#: brailleTables\__tables.py:579
 msgid "Ugaritic grade 1"
-msgstr ""
+msgstr "Ûgarîtî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:579
+#: brailleTables\__tables.py:582
 msgid "Ukrainian grade 1"
 msgstr "Ûkraynî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:582
+#: brailleTables\__tables.py:585
 msgid "Ukrainian literary braille (detailed)"
 msgstr "Braille ya wêjeyî bi Ûkraynî (bi hurgilî)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:585
+#: brailleTables\__tables.py:588
 msgid "Ukrainian computer braille"
 msgstr "Kompîturê Braille bi Ûkraynî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:588
+#: brailleTables\__tables.py:591
 msgid "Urdu grade 1"
 msgstr "Urdî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:591
+#: brailleTables\__tables.py:594
 msgid "Urdu grade 2"
 msgstr "Urdî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:594
+#: brailleTables\__tables.py:597
 msgid "Uzbek grade 1"
 msgstr "Ozbekî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:597
+#: brailleTables\__tables.py:600
 msgid "Unicode braille"
 msgstr "Braille ya koda gerdûnî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:600
+#: brailleTables\__tables.py:603
 msgid "Vietnamese grade 0"
 msgstr "Vîetnamî asta 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:603
+#: brailleTables\__tables.py:606
 msgid "Tshivenda grade 1"
 msgstr "Tshivendayî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:606
+#: brailleTables\__tables.py:609
 msgid "Tshivenda grade 2"
 msgstr "Tshivendayî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:609
+#: brailleTables\__tables.py:612
 msgid "Vietnamese grade 1"
 msgstr "Vîetnamî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:612
+#: brailleTables\__tables.py:615
 msgid "Vietnamese grade 2"
 msgstr "Vîetnamî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:615
+#: brailleTables\__tables.py:618
 msgid "Southern Vietnamese grade 1"
 msgstr "Vîetnamiya Başûr asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:618
+#: brailleTables\__tables.py:621
 msgid "Xhosa grade 1"
 msgstr "Xosayî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:621
+#: brailleTables\__tables.py:624
 msgid "Xhosa grade 2"
 msgstr "Xosayî asta 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:624
+#: brailleTables\__tables.py:627
 msgid "Yiddish grade 1"
-msgstr ""
+msgstr "Yîdîş asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
-#: brailleTables\__tables.py:630
+#: brailleTables\__tables.py:633
 msgid "Chinese common braille (simplified Chinese characters)"
 msgstr "Braille ya gelemperî bi Çînî (Bi karekterên Çînî ya hêsankirî)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#: brailleTables\__tables.py:637
+#: brailleTables\__tables.py:640
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
 msgstr "Sîstema Braille ya heyî ya Çînî (Çîn, Mandarin) (bê tonkirin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文' in Mandarin.
-#: brailleTables\__tables.py:644
+#: brailleTables\__tables.py:647
 msgid "Chinese (China, Mandarin) Current Braille System"
 msgstr "Sîstema Braille ya heyî ya Çînî (Çîn, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
-#: brailleTables\__tables.py:651
+#: brailleTables\__tables.py:654
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
 msgstr "Çînî (Çîn, Mandarin) Sîstema Braille ya Du-fonîk"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:654
+#: brailleTables\__tables.py:657
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Çînî (Honkong, Kantonî)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:657
+#: brailleTables\__tables.py:660
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Çînî (Taywan, Mandarîn)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:661
+#: brailleTables\__tables.py:664
 msgid "Zulu grade 1"
 msgstr "Zûlûyî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:664
+#: brailleTables\__tables.py:667
 msgid "Zulu grade 2"
 msgstr "Zûlûyî asta 2"
 
 #. Translators: The title of the NVDA Braille Viewer tool window.
 #: brailleViewer\brailleViewerGui.py:257
 msgid "NVDA Braille Viewer"
-msgstr ""
+msgstr "Pêşandara NVDA Brailleyê"
 
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether the braille viewer is shown at startup or not.
 #: brailleViewer\brailleViewerGui.py:389
 msgid "&Show Braille Viewer on Startup"
-msgstr ""
+msgstr "&pêşandara Brailleyê di destpêkê de nîşan bide"
 
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 #: brailleViewer\brailleViewerGui.py:402
 msgid "&Hover for cell routing"
-msgstr ""
+msgstr "Ji bo &jûrê veguhezîne were ser"
 
 #. Translators: One of the choices for typing echo in keyboard settings
 #. Translators: This is the label for a combobox in the
@@ -9975,7 +9981,7 @@ msgstr "Vemiriye (Girtîye)"
 #. Translators: One of the choices for typing echo in keyboard settings
 #: config\configFlags.py:71
 msgid "Only in edit controls"
-msgstr ""
+msgstr "Tenê li qadên nivîsê"
 
 #. Translators: One of the choices for typing echo in keyboard settings
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
@@ -10362,69 +10368,69 @@ msgstr ""
 #: controlTypes\formatFields.py:72
 msgctxt "font size"
 msgid "xx-large"
-msgstr ""
+msgstr "xx-mezin"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:74
 msgctxt "font size"
 msgid "xxx-large"
-msgstr ""
+msgstr "xxx-fireh"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:76
 msgctxt "font size"
 msgid "larger"
-msgstr ""
+msgstr "firehtir"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:78
 msgctxt "font size"
 msgid "smaller"
-msgstr ""
+msgstr "biçûktir"
 
 #. Translators: Reported when text is left-aligned.
 #: controlTypes\formatFields.py:130
 msgid "align left"
-msgstr ""
+msgstr "çepkî"
 
 #. Translators: Reported when text is centered.
 #: controlTypes\formatFields.py:132
 msgid "align center"
-msgstr ""
+msgstr "navendkî"
 
 #. Translators: Reported when text is right-aligned.
 #: controlTypes\formatFields.py:134
 msgid "align right"
-msgstr ""
+msgstr "rastkî"
 
 #. Translators: Reported when text is justified.
 #. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 #: controlTypes\formatFields.py:137
 msgid "align justify"
-msgstr ""
+msgstr "bi her du alî ve"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
 #: controlTypes\formatFields.py:140
 msgid "align distributed"
-msgstr ""
+msgstr "belavkirî"
 
 #. Translators: Reported when text is centered across multiple cells.
 #: controlTypes\formatFields.py:142
 msgid "align centered across selection"
-msgstr ""
+msgstr "hilbijartiyan navendkî"
 
 #. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
 #: controlTypes\formatFields.py:145
 msgid "align general"
-msgstr ""
+msgstr "gelenperî"
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
 #: controlTypes\formatFields.py:148
 msgid "align fill"
-msgstr ""
+msgstr "tije"
 
 #. Translators: Reported when text is vertically top-aligned.
 #: controlTypes\formatFields.py:174
@@ -10541,7 +10547,7 @@ msgstr "bijarteya menuyê"
 #. Translators: Identifies a menu such as file menu.
 #: controlTypes\role.py:234 controlTypes\role.py:464
 msgid "menu"
-msgstr ""
+msgstr "menu"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 #: controlTypes\role.py:236
@@ -10578,7 +10584,7 @@ msgstr "amûra şîretan"
 #. Translators: Identifies a link in webpage documents.
 #: controlTypes\role.py:250 speech\speech.py:2961
 msgid "link"
-msgstr ""
+msgstr "lînk"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 #: controlTypes\role.py:252
@@ -10765,7 +10771,7 @@ msgstr "aplîkasyon"
 #. Translators: Identifies a box element.
 #: controlTypes\role.py:326
 msgid "box"
-msgstr ""
+msgstr "qutî"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options
 #. in dialogs).
@@ -10895,7 +10901,7 @@ msgstr "şiva serarastkirinê"
 #. Translators: Identifies a terminal window such as command prompt.
 #: controlTypes\role.py:381
 msgid "terminal"
-msgstr ""
+msgstr "rawestgeh"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
 #. addition to text; encountered on webpages and NvDA log viewer).
@@ -11086,7 +11092,7 @@ msgstr "alava dagirtinê"
 #. Translators: Identifies a panel control for grouping related options.
 #: controlTypes\role.py:466
 msgid "panel"
-msgstr ""
+msgstr "panel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when
 #. logging into web-based email sites).
@@ -11185,11 +11191,11 @@ msgstr "salname"
 
 #: controlTypes\role.py:507
 msgid "video"
-msgstr ""
+msgstr "vîdeo"
 
 #: controlTypes\role.py:508
 msgid "audio"
-msgstr ""
+msgstr "deng"
 
 #. Translators: Identifies a chart element.
 #: controlTypes\role.py:510
@@ -11211,12 +11217,12 @@ msgstr "lê hatiye zêdekirin"
 #. Translators: Identifies a landmark.
 #: controlTypes\role.py:516
 msgid "landmark"
-msgstr ""
+msgstr "şopa sînorê"
 
 #. Translators: Identifies an article.
 #: controlTypes\role.py:518
 msgid "article"
-msgstr ""
+msgstr "gotar"
 
 #. Translators: Identifies a region.
 #: controlTypes\role.py:520
@@ -11226,33 +11232,33 @@ msgstr "Herêm"
 #. Translators: Identifies a figure (commonly seen on some websites).
 #: controlTypes\role.py:522
 msgid "figure"
-msgstr ""
+msgstr "fîgûr"
 
 #. Translators: Identifies marked (highlighted) content
 #: controlTypes\role.py:524
 msgid "highlighted"
-msgstr ""
+msgstr "balkişandî"
 
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 #: controlTypes\role.py:526
 msgid "busy indicator"
-msgstr ""
+msgstr "nîşaneya mijuliyê"
 
 #. Translators: Identifies a comment.
 #: controlTypes\role.py:528
 msgid "comment"
-msgstr ""
+msgstr "şîrove"
 
 #. Translators: Identifies a suggestion.
 #: controlTypes\role.py:530
 msgid "suggestion"
-msgstr ""
+msgstr "pêşniyar"
 
 #. Translators: The word role for a switch control
 #. I.e. a control that can be switched on or off.
 #: controlTypes\role.py:535
 msgid "switch"
-msgstr ""
+msgstr "mifte"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -11301,7 +11307,7 @@ msgstr "nîv kontrol kirî"
 #. Translators: This is presented when a three state toggle button is half pressed.
 #: controlTypes\state.py:129
 msgid "half pressed"
-msgstr ""
+msgstr "nîv pêlkirî"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 #: controlTypes\state.py:131
@@ -11336,7 +11342,7 @@ msgstr "girêdayî"
 #. Translators: This is presented when the control menu item has a submenu.
 #: controlTypes\state.py:143
 msgid "subMenu"
-msgstr ""
+msgstr "menuya jêrîn"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 #: controlTypes\state.py:145
@@ -11377,7 +11383,7 @@ msgstr "pir rêz"
 
 #: controlTypes\state.py:160
 msgid "iconified"
-msgstr ""
+msgstr "şibandî"
 
 #. Translators: Presented when the current control is located off screen.
 #: controlTypes\state.py:162
@@ -11479,33 +11485,33 @@ msgstr "ne klîtkirî"
 #. Translators: a state that denotes the existence of a note.
 #: controlTypes\state.py:198
 msgid "has note"
-msgstr ""
+msgstr "nota wê-wî heye"
 
 #. Translators: Presented when a control has a pop-up dialog.
 #: controlTypes\state.py:203
 msgid "opens dialog"
-msgstr ""
+msgstr "têkiliyê vedike"
 
 #. Translators: Presented when a control has a pop-up grid.
 #: controlTypes\state.py:205
 msgid "opens grid"
-msgstr ""
+msgstr "cax vedike"
 
 #. Translators: Presented when a control has a pop-up list box.
 #: controlTypes\state.py:207
 msgid "opens list"
-msgstr ""
+msgstr "lîste vedike"
 
 #. Translators: Presented when a control has a pop-up tree.
 #: controlTypes\state.py:209
 msgid "opens tree"
-msgstr ""
+msgstr "darê vedike"
 
 #. Translators: Presented when a link destination points to the page containing the link.
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:212
 msgid "same page"
-msgstr ""
+msgstr "heman rûpel"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:218
@@ -11540,28 +11546,28 @@ msgstr "vala"
 #. Translators: this message is given when there is no next paragraph when navigating by paragraph
 #: documentNavigation\paragraphHelper.py:134
 msgid "No next paragraph"
-msgstr ""
+msgstr "Paragrafek din li pêş nîn e"
 
 #. Translators: this message is given when there is no previous paragraph when navigating by paragraph
 #: documentNavigation\paragraphHelper.py:137
 msgid "No previous paragraph"
-msgstr ""
+msgstr "Paragrafek din li paş nîn e"
 
 #. Translators: The label of a text box asking the user for a URL.
 #. The purpose of this text box will be explained elsewhere in the user interface.
 #: gui\_SetURLDialog.py:74
 msgid "&URL:"
-msgstr ""
+msgstr "&URL:"
 
 #. Translators: A button in a dialog which allows the user to test a URL that they have entered.
 #: gui\_SetURLDialog.py:82
 msgid "&Test..."
-msgstr ""
+msgstr "&Test bike..."
 
 #. Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
 #: gui\_SetURLDialog.py:105
 msgid "The URL you have entered failed the connection test. Are you sure you want to save it anyway?"
-msgstr ""
+msgstr "URL ya ku hûn ketin ji testa gihîştinê derbas nekir. Hûn dîsa jî dîxwazin tomar bikin?"
 
 #. Translators: Message shown to users when saving an untested URL to NVDA's settings.
 #: gui\_SetURLDialog.py:110
@@ -16954,13 +16960,13 @@ msgstr ""
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\window\excel.py:755
 msgid "&Sheets"
-msgstr ""
+msgstr "&Rûpelan"
 
 #. Translators: Used to express an address range in excel.
 #: NVDAObjects\window\excel.py:787 NVDAObjects\window\excel.py:1802
 #, python-brace-format
 msgid "{start} through {end}"
-msgstr ""
+msgstr "ji {start} heta {end}"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
@@ -17000,12 +17006,12 @@ msgstr "Binxêzkirî pêxistiye"
 #. Translators: a message when toggling formatting in Microsoft Excel
 #: NVDAObjects\window\excel.py:1318
 msgid "Strikethrough off"
-msgstr ""
+msgstr "Serxêzkirî girtî"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #: NVDAObjects\window\excel.py:1320
 msgid "Strikethrough on"
-msgstr ""
+msgstr "Serxêzkirî vekirî"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1673
