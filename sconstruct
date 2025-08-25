@@ -108,16 +108,16 @@ vars.Add(
 )
 vars.Add(
 	EnumVariable(
-		'targetArch',
+		"targetArch",
 		help="Target architecture of the build output",
-		default='x86',
-		allowed_values=('x86', 'x86_64'),
+		default="x86",
+		allowed_values=("x86", "x86_64"),
 		map={
-			'32bit': 'x86',
-			'64bit': 'x86_64',
-			'x64': 'x86_64',
+			"32bit": "x86",
+			"64bit": "x86_64",
+			"x64": "x86_64",
 		},
-		ignorecase=2  # Always downcase,
+		ignorecase=2,  # Always downcase,
 	)
 )
 
@@ -203,9 +203,9 @@ Export("outFilePrefix")
 outputDir = Dir(env["outputDir"])
 Export("outputDir")
 
-assert not (
-	apiSigningToken and certFile
-), "Cannot specify signing with both API token (cloud) and local certificate"
+assert not (apiSigningToken and certFile), (
+	"Cannot specify signing with both API token (cloud) and local certificate"
+)
 if apiSigningToken:
 	# Code signing with SignPath HSM
 	def signExecApi(target, source, env):
@@ -214,7 +214,9 @@ if apiSigningToken:
 		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
-				ps_cmd = rf"PowerShell -File ci\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				ps_cmd = (
+					rf"PowerShell -File ci\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				)
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
@@ -286,7 +288,9 @@ for targetDir, jabDll in (
 	(sourceLibDir64, "windowsaccessbridge-64.dll"),
 ):
 	Command(
-		targetDir.File("windowsaccessbridge.dll"), env.Dir("#include/javaAccessBridge32").File(jabDll), Copy("$TARGET", "$SOURCE")
+		targetDir.File("windowsaccessbridge.dll"),
+		env.Dir("#include/javaAccessBridge32").File(jabDll),
+		Copy("$TARGET", "$SOURCE"),
 	)
 
 env.SConscript("source/comInterfaces_sconscript", exports=["env"])
@@ -357,14 +361,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	installedLogo = env.Install(styleInstallPath, favicon)
 	env.Depends(
 		htmlFile,
-		[
-			styles,
-			installedStyle,
-			numberedHeadingsStyle,
-			installedHeadingsStyle,
-			favicon,
-			installedLogo
-		],
+		[styles, installedStyle, numberedHeadingsStyle, installedHeadingsStyle, favicon, installedLogo],
 	)
 	env.Depends(htmlFile, mdFile)
 
@@ -532,7 +529,9 @@ uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
 if certFile or apiSigningToken:
 	env.AddPostAction(uninstaller, [env["signExec"]])
 
-devDocTargets = env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "userDocsDir"])
+devDocTargets = env.SConscript(
+	"projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "userDocsDir"]
+)
 dist = env.NVDADist("dist", [sourceDir, userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
 env.Depends(dist, uninstaller)
 env.Depends(dist, devDocTargets)
@@ -580,11 +579,7 @@ outputHeadingStylesFile = env.Command(
 	userDocsDir.File("numberedHeadings.css"),
 	Copy("$TARGET", "$SOURCE"),
 )
-outputLogoFile = env.Command(
-	outputDir.File("favicon.ico"),
-	logo,
-	Copy("$TARGET", "$SOURCE")
-)
+outputLogoFile = env.Command(outputDir.File("favicon.ico"), logo, Copy("$TARGET", "$SOURCE"))
 changesFile = env.Command(
 	outputDir.File("%s_changes.html" % outFilePrefix),
 	userDocsDir.File("en/changes.html"),
@@ -663,6 +658,8 @@ def makePot(target, source, env):
 			out.write(line)
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
+
+
 def getSubDirs(path):
 	for root, dirNames, fileNames in os.walk(path):
 		yield root
