@@ -105,8 +105,9 @@ def setupProfile(
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
 		_pJoin(stagingDir, "nvdaProfile", "nvda.ini"),
 	)
-	if settingsFileName == "standard-doLoadMockModel.ini":
-		_configModels()
+	# if settingsFileName == "standard-doLoadMockModel.ini":
+	if _shouldGenerateMockModel(_pJoin(stagingDir, "nvdaProfile", "nvda.ini")):
+		_configModels(_pJoin(stagingDir, "nvdaProfile", "models", "mock", "vit-gpt2-image-captioning"))
 
 	if gesturesFileName is not None:
 		opSys.copy_file(
@@ -133,57 +134,26 @@ def teardownProfile(stagingDir: str):
 	)
 
 
-def _configModels() -> None:
-	import tempfile
-	import os
+def _configModels(modelsDirectory: str) -> None:
 	from .mockModels import MockVisionEncoderDecoderGenerator
 
 	generator = MockVisionEncoderDecoderGenerator(random_seed=8)
-	# Generate all files relative to repo root
-	tempDir = tempfile.gettempdir()
-	ini_path = os.path.join(tempDir, "nvdaProfile", "nvda.ini")
-	models_directory = os.path.join(tempDir, "nvdaProfile", "models", "mock", "vit-gpt2-image-captioning")
-	generator.generateAllFiles(models_directory)
-	# The location of the temp folder can notbe determined in the nvda.ini file, so change it manually
-	_updateIniForModels(ini_path, models_directory)
+	generator.generateAllFiles(modelsDirectory)
 
-
-def _updateIniForModels(ini_path: str, output_dir: str) -> None:
-	"""
-	Update only the value of 'defaultModelPath' under [automatedImageDescriptions] section
-	in the INI file, preserving original formatting, indentation, and casing.
-	"""
-	import os
-
-	# Normalize the path for Windows (e.g., use backslashes)
-	new_path = os.path.normpath(output_dir)
-
+def _shouldGenerateMockModel(iniPath: str) -> bool:
 	# Read original lines
-	with open(ini_path, "r", encoding="utf-8") as f:
+	with open(iniPath, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
 	# Flags to track if we are in the [automatedImageDescriptions] section
-	in_caption_section = False
-
-	# Updated lines will be stored here
-	updated_lines = []
+	hasCaptionSection  = False
 
 	for line in lines:
 		# Detect section headers
-		strip_line = line.strip()
-		if strip_line.startswith("[") and strip_line.endswith("]"):
-			in_caption_section = strip_line.lower() == "[automatedimagedescriptions]"
-
-		# If inside automatedImageDescriptions section, and line contains defaultModelPath (case-insensitive)
-		if in_caption_section and "defaultModelPath" in line:
-			# Preserve original indentation and formatting
-			prefix, sep, _ = line.partition("=")
-			updated_line = f"{prefix}{sep} {new_path}\n"
-			updated_lines.append(updated_line)
-		else:
-			# Keep line as is
-			updated_lines.append(line)
-
-	# Write back the updated lines
-	with open(ini_path, "w", encoding="utf-8") as f:
-		f.writelines(updated_lines)
+		stripLine = line.strip()
+		if stripLine.startswith("[") and stripLine.endswith("]"):
+			hasCaptionSection = stripLine.lower() == "[automatedimagedescriptions]"
+			if hasCaptionSection:
+				return True
+			else:
+				continue
