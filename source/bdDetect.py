@@ -20,18 +20,10 @@ from concurrent.futures import ThreadPoolExecutor, Future
 from enum import StrEnum
 from typing import (
 	Any,
-	Callable,
-	Dict,
-	Generator,
-	Iterable,
-	Iterator,
-	List,
 	NamedTuple,
-	Optional,
-	OrderedDict,
-	Tuple,
-	Type,
 )
+from collections import OrderedDict
+from collections.abc import Callable, Generator, Iterable, Iterator
 import hwPortUtils
 import NVDAState
 import braille
@@ -128,11 +120,11 @@ class DeviceMatch(NamedTuple):
 	"""The identifier of the device."""
 	port: str
 	"""The port that can be used by a driver to communicate with a device."""
-	deviceInfo: Dict[str, str]
+	deviceInfo: dict[str, str]
 	"""All known information about a device."""
 
 
-MatchFuncT = Callable[[DeviceMatch], bool]
+type MatchFuncT = Callable[[DeviceMatch], bool]
 
 
 @dataclass(frozen=True)
@@ -166,10 +158,11 @@ class _UsbDeviceRegistryEntry:
 		return self.matchFunc(deviceMatch)
 
 
-DriverDictT = defaultdict[CommunicationType, set[_UsbDeviceRegistryEntry] | MatchFuncT]
+type DriverDictT = defaultdict[CommunicationType, set[_UsbDeviceRegistryEntry] | MatchFuncT]
 _driverDevices = OrderedDict[str, DriverDictT]()
+type DriverAndDeviceMatch = tuple[str, DeviceMatch]
 
-scanForDevices = extensionPoints.Chain[Tuple[str, DeviceMatch]]()
+scanForDevices = extensionPoints.Chain[DriverAndDeviceMatch]()
 """
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
@@ -184,13 +177,13 @@ Handlers are called with these keyword arguments:
 """
 
 
-def _isDebug():
+def _isDebug() -> bool:
 	return config.conf["debugLog"]["hwIo"]
 
 
 def getDriversForConnectedUsbDevices(
-	limitToDevices: Optional[List[str]] = None,
-) -> Iterator[Tuple[str, DeviceMatch]]:
+	limitToDevices: list[str] | None = None,
+) -> Iterator[DriverAndDeviceMatch]:
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
@@ -212,14 +205,12 @@ def getDriversForConnectedUsbDevices(
 	# The corollary is that clients of this method don't have to process all devices (and create all
 	# device matches), if one is found early the iteration can stop.
 	usbHidDeviceMatches, usbHidDeviceMatchesForCustom = itertools.tee(
-		(
-			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == CommunicationType.USB
-		)
+		DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
+		for port in deviceInfoFetcher.hidDevices
+		if port["provider"] == CommunicationType.USB
 	)
 
-	fallbackDriversAndMatches: list[tuple[str, DeviceMatch]] = []
+	fallbackDriversAndMatches: list[DriverAndDeviceMatch] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -271,8 +262,8 @@ def HIDUsagePageMatchFuncFactory(usagePage: int) -> MatchFuncT:
 
 
 def getDriversForPossibleBluetoothDevices(
-	limitToDevices: Optional[List[str]] = None,
-) -> Iterator[Tuple[str, DeviceMatch]]:
+	limitToDevices: list[str] | None = None,
+) -> Iterator[DriverAndDeviceMatch]:
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
@@ -291,11 +282,9 @@ def getDriversForPossibleBluetoothDevices(
 	# The corollary is that clients of this method don't have to process all devices (and create all
 	# device matches), if one is found early the iteration can stop.
 	btHidDevMatchesForHid, btHidDevMatchesForCustom = itertools.tee(
-		(
-			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == CommunicationType.BLUETOOTH
-		)
+		DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
+		for port in deviceInfoFetcher.hidDevices
+		if port["provider"] == CommunicationType.BLUETOOTH
 	)
 	for match in itertools.chain(btSerialMatchesForCustom, btHidDevMatchesForCustom):
 		for driver, devs in _driverDevices.items():
@@ -318,7 +307,7 @@ def getDriversForPossibleBluetoothDevices(
 			yield (hidName, match)
 
 
-btDevsCacheT = Optional[List[Tuple[str, DeviceMatch]]]
+type btDevsCacheT = list[DriverAndDeviceMatch] | None
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
@@ -351,9 +340,9 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		return list(hwPortUtils.listComPorts(onlyAvailable=True))
 
 	#: Type info for auto property: _get_usbDevices
-	usbDevices: List[Dict]
+	usbDevices: list[dict]
 
-	def _get_usbDevices(self) -> List[Dict]:
+	def _get_usbDevices(self) -> list[dict]:
 		return list(hwPortUtils.listUsbDevices(onlyAvailable=True))
 
 	#: Type info for auto property: _get_usbComPorts
@@ -374,13 +363,13 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		return comPorts
 
 	#: Type info for auto property: _get_hidDevices
-	hidDevices: List[Dict]
+	hidDevices: list[dict]
 
-	def _get_hidDevices(self) -> List[Dict]:
+	def _get_hidDevices(self) -> list[dict]:
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 
-deviceInfoFetcher: Optional[_DeviceInfoFetcher] = None
+deviceInfoFetcher: _DeviceInfoFetcher | None = None
 
 
 class _Detector:
@@ -393,19 +382,19 @@ class _Detector:
 		After construction, a scan should be queued with L{queueBgScan}.
 		"""
 		self._executor = ThreadPoolExecutor(1)
-		self._queuedFuture: Optional[Future] = None
+		self._queuedFuture: Future | None = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
 		self._detectUsb = True
 		self._detectBluetooth = True
-		self._limitToDevices: Optional[List[str]] = None
+		self._limitToDevices: list[str] | None = None
 
 	def _queueBgScan(
 		self,
 		usb: bool = False,
 		bluetooth: bool = False,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: list[str] | None = None,
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
@@ -438,27 +427,26 @@ class _Detector:
 	@staticmethod
 	def _bgScanUsb(
 		usb: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: list[str] | None = None,
 	):
 		"""Handler for L{scanForDevices} that yields USB devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
 		if not usb:
 			return
-		for driver, match in getDriversForConnectedUsbDevices(limitToDevices):
-			yield (driver, match)
+		yield from getDriversForConnectedUsbDevices(limitToDevices)
 
 	@staticmethod
 	def _bgScanBluetooth(
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: list[str] | None = None,
 	):
 		"""Handler for L{scanForDevices} that yields Bluetooth devices and keeps an internal cache of devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
 		if not bluetooth:
 			return
-		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = deviceInfoFetcher.btDevsCache
+		btDevs: Iterable[DriverAndDeviceMatch] | None = deviceInfoFetcher.btDevsCache
 		if btDevs is None:
 			btDevs = getDriversForPossibleBluetoothDevices(limitToDevices)
 			# Cache Bluetooth devices for next time.
@@ -476,7 +464,7 @@ class _Detector:
 		self,
 		usb: bool,
 		bluetooth: bool,
-		limitToDevices: Optional[List[str]],
+		limitToDevices: list[str] | None,
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
@@ -505,7 +493,7 @@ class _Detector:
 		self,
 		usb: bool = True,
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: list[str] | None = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
@@ -652,7 +640,7 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 
 def getSupportedBrailleDisplayDrivers(
 	onlyEnabled: bool = False,
-) -> Generator[Type["braille.BrailleDisplayDriver"], Any, Any]:
+) -> Generator[type["braille.BrailleDisplayDriver"], Any, Any]:
 	return braille.getDisplayDrivers(
 		lambda d: (
 			d.isThreadSafe
@@ -776,10 +764,8 @@ class DriverRegistrar:
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]
 		driverUsb.update(
-			(
-				_UsbDeviceRegistryEntry(id=id, type=type, useAsFallback=useAsFallback, matchFunc=matchFunc)
-				for id in ids
-			)
+			_UsbDeviceRegistryEntry(id=id, type=type, useAsFallback=useAsFallback, matchFunc=matchFunc)
+			for id in ids
 		)
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
@@ -793,7 +779,7 @@ class DriverRegistrar:
 
 	def addDeviceScanner(
 		self,
-		scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]],
+		scanFunc: Callable[..., Iterable[DriverAndDeviceMatch]],
 		moveToStart: bool = False,
 	):
 		"""Register a callable to scan devices.
