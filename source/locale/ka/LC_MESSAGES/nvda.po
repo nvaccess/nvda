@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-18 02:41+0000\n"
-"PO-Revision-Date: 2025-08-18 03:13\n"
+"POT-Creation-Date: 2025-08-22 01:49+0000\n"
+"PO-Revision-Date: 2025-08-25 00:35\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -110,7 +110,7 @@ msgstr "უცნობი"
 #: appModuleHandler.py:289
 #, python-format
 msgid "Error in appModule %s"
-msgstr "შეცდომა %s მოდულში"
+msgstr "შეცდომა %s appModule-ში"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 #: aria.py:79
@@ -128,7 +128,7 @@ msgstr "დამატებითი"
 #: aria.py:83
 msgctxt "aria"
 msgid "content info"
-msgstr "ინფორმაცია შინაარსის შესახებ"
+msgstr "ინფორმაცია შიგთავსის შესახებ"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 #: aria.py:85
@@ -1622,22 +1622,22 @@ msgstr "არ არის წინა ვერტიკალურად �
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1204
 msgid "moves to the next same style text"
-msgstr "გადადის იმავე სტილის შემდეგ ტექსტზე"
+msgstr "გადადის იგივე სტილის შემდეგ ტექსტზე"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1206
 msgid "No next same style text"
-msgstr "არ არის იმავე სტილის შემდეგი ტექსტი"
+msgstr "არ არის იგივე სტილის შემდეგი ტექსტი"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1208
 msgid "moves to the previous same style text"
-msgstr "გადადის იმავე სტილის წინა ტექსტზე"
+msgstr "გადადის იგივე სტილის წინა ტექსტზე"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1210
 msgid "No previous same style text"
-msgstr "არ არის იმავე სტილის წინა ტექსტი"
+msgstr "არ არის იგივე სტილის წინა ტექსტი"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1216
@@ -1647,7 +1647,7 @@ msgstr "გადადის შემდეგ განსხვავებ�
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1218
 msgid "No next different style text"
-msgstr "არ არის შემდეგი განსხვავებული ტექსტის სტილი"
+msgstr "არ არის შემდეგი განსხვავებული სტილის ტექსტი"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1220
@@ -1759,13 +1759,13 @@ msgstr "ქვედა"
 #. Translators: Description for the Move past end of container command in browse mode.
 #: browseMode.py:2285
 msgid "Moves past the end of the container element, such as a list or table"
-msgstr "გადადის კონტეინერის ელემენტის, მაგალითად, სიის ან ცხრილის, ბოლოში"
+msgstr "გადადის კონტეინერის ელემენტის ბოლოში, როგორიცაა სია ან ცხრილი"
 
 #. Translators: the description for the toggleScreenLayout script.
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 #: browseMode.py:2614 virtualBuffers\__init__.py:702
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "ჩართავს და გამორთავს ეკრანის განლაგების შენარჩუნებას დოკუმენტის შინაარსის რენდერისას"
+msgstr "ჩართავს და გამორთავს ეკრანის განლაგების შენარჩუნებას დოკუმენტის შიგთავსის რენდერირებისას"
 
 #. Translators: The message reported for not supported toggling of screen layout
 #: browseMode.py:2620
@@ -2133,7 +2133,7 @@ msgstr[1] "ვერ მოხერხდა შემდეგი დამა
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr "დამატებებისთვის რამდენიმე ოპერაცია ვერ განხორციელდა. დამატებითი ინფორმაციისთვის, გთხოვთ, იხილოთ ჟურნალის ფაილი.\n"
+msgstr "დამატებებისთვის რამდენიმე ოპერაცია ვერ განხორციელდა. დამატებითი ინფორმაციისთვის, გთხოვთ, იხილოთ აღრიცხვის ფაილი.\n"
 "{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
@@ -2196,8 +2196,8 @@ msgstr "ბრძანების ხაზის უცნობი პარ
 #: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "თქვენი კონფიგურაციის ფაილი შეიცავს შეცდომებს. კონფიგურაცია ჩამოყრილია ქარხნულ პარამეტრებზე.\n"
-"შეცდომების შესახებ დამატებითი დეტალი შეგიძლიათ იხილოთ აღრიცხვის ფაილში."
+msgstr "თქვენი კონფიგურაციის ფაილი შეიცავს შეცდომებს. კონფიგურაცია ქარხნულ პარამეტრებზეა აღდგენილი.\n"
+"შეცდომების შესახებ დამატებითი დეტალების ნახვა შეგიძლიათ აღრიცხვის ფაილში."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 #: core.py:167
@@ -2208,7 +2208,7 @@ msgstr "კონფიგურაციის ფაილის შეცდ�
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "თქვენი ჟესტების დამაკავშირებელი ფაილი შეიცავს შეცდომებს.\n"
-"შეცდომების შესახებ დამატებითი დეტალი შეგიძლიათ იხილოთ აღრიცხვის ფაილში."
+"შეცდომების შესახებ დამატებითი დეტალების ნახვა შეგიძლიათ აღრიცხვის ფაილში."
 
 #: core.py:188
 msgid "gesture map File Error"
@@ -2308,12 +2308,12 @@ msgstr "ცხრილის საზღვარი"
 #. Translators: the description for the next table row script on browseMode documents.
 #: documentBase.py:495
 msgid "moves to the next table row"
-msgstr "გადადის ცხრილის შემდეგ ხაზზე"
+msgstr "გადადის ცხრილის შემდეგ სტრიქონზე"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 #: documentBase.py:501
 msgid "moves to the previous table row"
-msgstr "გადადის ცხრილის წინა ხაზზე"
+msgstr "გადადის ცხრილის წინა სტრიქონზე"
 
 #. Translators: the description for the next table column script on browseMode documents.
 #: documentBase.py:507
@@ -2328,12 +2328,12 @@ msgstr "გადადის ცხრილის წინა სვეტზ
 #. Translators: the description for the first table row script on browseMode documents.
 #: documentBase.py:519
 msgid "moves to the first table row"
-msgstr "გადადის ცხრილის პირველ ხაზზე"
+msgstr "გადადის ცხრილის პირველ სტრიქონზე"
 
 #. Translators: the description for the last table row script on browseMode documents.
 #: documentBase.py:525
 msgid "moves to the last table row"
-msgstr "გადადის ცხრილის ბოლო ხაზზე"
+msgstr "გადადის ცხრილის ბოლო სტრიქონზე"
 
 #. Translators: the description for the first table column script on browseMode documents.
 #: documentBase.py:531
@@ -2348,7 +2348,7 @@ msgstr "გადადის ცხრილის ბოლო სვეტზ
 #. Translators: the description for the sayAll row command
 #: documentBase.py:544
 msgid "Reads the row horizontally from the current cell rightwards to the last cell in the row."
-msgstr "კითხულობს სტრიქონს ჰორიზონტალურად მიმდინარე უჯრიდან მარჯვნივ, რიგის ბოლო უჯრამდე."
+msgstr "კითხულობს სტრიქონს ჰორიზონტალურად მიმდინარე უჯრიდან მარჯვნივ, სტრიქონის ბოლო უჯრამდე."
 
 #. Translators: the description for the sayAll row command
 #: documentBase.py:553
@@ -2527,7 +2527,7 @@ msgstr "შეყვანის დახმარება გამორთ�
 #. Translators: Input help mode message for toggle sleep mode command.
 #: globalCommands.py:231
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "ჩართავს და გამორთავს ძილის რეჟიმს აქტიური პროგრამისთვის."
+msgstr "ჩართავს და გამორთავს ძილის რეჟიმს აქტიური აპლიკაციისთვის."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:241
@@ -2631,7 +2631,7 @@ msgstr "ზრდის ამჟამად აქტიური პარა
 #. Translators: Input help mode message for increasing synth setting value command in larger steps.
 #: globalCommands.py:500
 msgid "Increases the currently active setting in the synth settings ring in a larger step"
-msgstr "ზრდის ამჟამად აქტიურ პარამეტრს სინთეზატორის დარეგულირების რგოლში დიდი მნიშვნელით"
+msgstr "ზრდის ამჟამად აქტიურ პარამეტრს სინთეზატორის პარამეტრების რგოლში დიდი მნიშვნელით"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 #: globalCommands.py:514
@@ -2641,7 +2641,7 @@ msgstr "ამცირებს ამჟამად აქტიური პ
 #. Translators: Input help mode message for decreasing synth setting value command in larger steps.
 #: globalCommands.py:528
 msgid "Decreases the currently active setting in the synth settings ring in a larger step"
-msgstr "ამცირებს ამჟამად აქტიურ პარამეტრს სინთეზატორის დარეგულირების რგოლში დიდი მნიშვნელით"
+msgstr "ამცირებს ამჟამად აქტიურ პარამეტრს სინთეზატორის პარამეტრების რგოლში დიდი მნიშვნელით"
 
 #. Translators: Input help mode message for next synth setting command.
 #: globalCommands.py:542
@@ -2685,12 +2685,12 @@ msgstr "ჩართავს და გამორთავს ბრძან
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:609
 msgid "speak command keys off"
-msgstr "ბრძანებითი კლავიშების გახმოვანება გამორთულია"
+msgstr "ბრძანების ღილაკების გახმოვანება გამორთულია"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:613
 msgid "speak command keys on"
-msgstr "ბრძანებითი კლავიშების გახმოვანება ჩართულია"
+msgstr "ბრძანების ღილაკების გახმოვანება ჩართულია"
 
 #. Translators: Input help mode message for toggle report font name command.
 #: globalCommands.py:619
@@ -2745,7 +2745,7 @@ msgstr "შრიფტის თვისებების ბრაილი�
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:671
 msgid "Speak and braille font attributes"
-msgstr "შრიფტის თვისებების გახმოვანება და ბრაილით გადაცემა"
+msgstr "შრიფტის თვისებების გახმოვანება და ბრაილით გამოტანა"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:677
@@ -2976,7 +2976,7 @@ msgstr "ცხრილების გახმოვანება ჩარ�
 #. Translators: Input help mode message for toggle report table row/column headers command.
 #: globalCommands.py:920
 msgid "Cycle through the possible modes to report table row and column headers"
-msgstr "გადართავს შესაძლო რეჟიმებს ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანებისთვის"
+msgstr "გადართავს შესაძლო რეჟიმებს ცხრილის სტრიქონებისა და სვეტების სათაურის გახმოვანებისთვის"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
@@ -3720,7 +3720,7 @@ msgstr "აკოპირებს მიმდინარე აპლიკ�
 #. Translators: Reported when user attempts to copy content of the empty status line.
 #: globalCommands.py:2939
 msgid "Unable to copy status bar content to clipboard"
-msgstr "სტატუსის ზოლის შინაარსის კოპირება ბუფერში შეუძლებელია"
+msgstr "სტატუსის ზოლის შინაარსის ბუფერში კოპირება შეუძლებელია"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
 #: globalCommands.py:2946
@@ -3803,7 +3803,7 @@ msgstr "აღრიცხავს ინფორმაციას მიმ�
 #. copy a fragment of the log to clipboard
 #: globalCommands.py:3135
 msgid "Mark the current end of the log as the start of the fragment to be copied to clipboard by pressing again."
-msgstr "აღრიცხვის ფაილის მიმდინარე დასასრულის მონიშვნა, როგორც ფრაგმენტის დასაწყისი, რომელიც დაკოპირდება ბუფერში ხელახლა დაჭერისას."
+msgstr "აღრიცხვის ფაილის მიმდინარე დასასრულის მონიშვნა, როგორც ფრაგმენტის დასაწყისი, რომელიც, ხელახლა დაჭერისას დაკოპირდება ბუფერში."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
@@ -3973,7 +3973,7 @@ msgstr "აჩვენებს NVDA-ს ბრაილის პარამ�
 #. Translators: Input help mode message for go to audio settings command.
 #: globalCommands.py:3357
 msgid "Shows NVDA's audio settings"
-msgstr "აჩვენებს NVDA-ს ხმის პარამეტრებს"
+msgstr "აჩვენებს NVDA-ს აუდიო პარამეტრებს"
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3367
@@ -4304,7 +4304,7 @@ msgstr "ბრაილის Unicode-ის ნორმალიზაცი�
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:3913
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr "ახმოვანებს Windows-ის გაცვლის ბუფერში არსებულ ტექსტს. ორჯერ დაჭერისას, ტექსტს კითხულობს ასო-ასო. სამჯერ დაჭერისას, ტექსტს კითხულობს სიმბოლოების აღწერით."
+msgstr "ახმოვანებს Windows-ის ბუფერში არსებულ ტექსტს. ორჯერ დაჭერისას, ტექსტს კითხულობს ასო-ასო. სამჯერ დაჭერისას, ტექსტს კითხულობს სიმბოლოების აღწერით."
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3928
@@ -4318,14 +4318,14 @@ msgstr "ბუფერში ტექსტი არ არის"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] "გაცვლის ბუფერი შეიცავს დიდი რაოდენობით ტექსტს. იგი შედგება %s სიმბოლოსგან"
-msgstr[1] "გაცვლის ბუფერი შეიცავს დიდი რაოდენობით ტექსტს. იგი შედგება %s სიმბოლოსგან"
+msgstr[0] "ბუფერი შეიცავს დიდი რაოდენობით ტექსტს. იგი შედგება %s სიმბოლოსგან"
+msgstr[1] "ბუფერი შეიცავს დიდი რაოდენობით ტექსტს. იგი შედგება %s სიმბოლოსგან"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
 #: globalCommands.py:3954
 msgid "Marks the current position of the review cursor as the start of text to be selected or copied"
-msgstr "მონიშნავს მიმოხილვის კურსორის ამჟამინდელ პოზიციას, როგორც მოსანიშნი ან დასაკოპირებელი ტექსტის დასაწყისს"
+msgstr "მონიშნავს მიმოხილვის კურსორის ამჟამინდელ პოზიციას, როგორც მოსანიშნი ან დასაკოპირებელი ტექსტის დასაწყისი"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 #: globalCommands.py:3967
@@ -4348,7 +4348,7 @@ msgstr "ფრაგმენტის დასაწყისი დადგ�
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 #: globalCommands.py:4005
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
-msgstr "ერთხელ დაჭერის შემთხვევაში, მონიშნავს ტექსტს წინა დაყენებული საწყისი წერტილიდან მიმოხილვის კურსორის მიმდინარე პოზიციის ჩათვლით. ორჯერ დაჭერისას, აკოპირებს გაცვლის ბუფერში"
+msgstr "ერთხელ დაჭერის შემთხვევაში, მონიშნავს ტექსტს წინა დაყენებული საწყისი წერტილიდან მიმოხილვის კურსორის მიმდინარე პოზიციის ჩათვლით. ორჯერ დაჭერისას, აკოპირებს ბუფერში"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 #: globalCommands.py:4023
@@ -4488,12 +4488,12 @@ msgstr "პლაგინები გადატვირთულია"
 #. Translators: input help mode message for Report destination URL of a link command
 #: globalCommands.py:4325
 msgid "Report the destination URL of the link at the position of caret or focus. If pressed twice, shows the URL in a window for easier review."
-msgstr "ახმოვანებს კურსორის ქვეშ ან ფოკუსის პოზიციაზე მყოფი ბმულის სამიზნე URL მისამართს. ორჯერ დაჭერისას, აჩვენებს URL მისამართს ფანჯარაში, გამარტივებული ნახვისთვის."
+msgstr "ახმოვანებს კურსორის ქვეშ ან ფოკუსის პოზიციაზე მყოფი ბმულის სამიზნე მისამართს. ორჯერ დაჭერისას, აჩვენებს მისამართს სპეციალურ ფანჯარაში გამარტივებული ნახვისთვის."
 
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4355
 msgid "Link has no apparent destination"
-msgstr "ბმულს არ აქვს სამიზნე"
+msgstr "ბმულს არ აქვს სამიზნე მისამართი"
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
@@ -4511,7 +4511,7 @@ msgstr "{name} სამიზნე:"
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4379
 msgid "Unable to get the destination of this link."
-msgstr "ამ ბმულის სამიზნე URL მისამართის მოძებნა ვერ მოხერხდა."
+msgstr "ამ ბმულის სამიზნე მისამართის მოძებნა ვერ მოხერხდა."
 
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4382
@@ -4521,7 +4521,7 @@ msgstr "არ არის ბმული."
 #. Translators: input help mode message for Report URL of a link in a window command
 #: globalCommands.py:4387
 msgid "Displays the destination URL of the link at the position of caret or focus in a window, instead of just speaking it. May be preferred by braille users."
-msgstr "აჩვენებს კურსორის ქვეშ ან ფოკუსის პოზიციაზე მყოფი ბმულის სამიზნე URL მისამართს ფანჯარაში, გახმოვანების მაგივრად. შესაძლოა, უპირატესობა მიენიჭოს ბრაილის მომხმარებლების მხრიდან."
+msgstr "აჩვენებს კურსორის ქვეშ ან ფოკუსის პოზიციაზე მყოფი ბმულის სამიზნე მისამართს სპეციალურ ფანჯარაში გახმოვანების მაგივრად. შესაძლოა, უპირატესობა მიენიჭოს ბრაილის მომხმარებლების მხრიდან."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4400
@@ -4769,13 +4769,13 @@ msgstr "ჩართავს და გამორთავს დისტა
 #: globalCommands.py:4984
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
-msgstr "აგზავნის გაცვლის ბუფერის შიგთავსს დისტანციურ კომპიუტერზე"
+msgstr "აგზავნის ბუფერის შიგთავსს დისტანციურ კომპიუტერზე"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
 #: globalCommands.py:4992
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
-msgstr "აკოპირებს დისტანციური მართვის მიმდინარე სესიის ბმულს გაცვლის ბუფერში"
+msgstr "აკოპირებს დისტანციური მართვის მიმდინარე სესიის ბმულს ბუფერში"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
 #: globalCommands.py:5002
@@ -5045,7 +5045,7 @@ msgstr "ციფრული ბლოკის ენთერი"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:67
 msgid "escape"
-msgstr "ესკეიპი"
+msgstr "escape"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:71
@@ -6939,7 +6939,7 @@ msgstr "ტექსტი დაკოპირებულია."
 #. Translators: A notice to the user that a copy operation failed.
 #: ui.py:206
 msgid "Couldn't copy to clipboard."
-msgstr "გაცვლის ბუფერში დაკოპირება ვერ მოხერხდა."
+msgstr "ბუფერში დაკოპირება ვერ მოხერხდა."
 
 #. Translators: The text of a button which closes the window.
 #. Translators: A close button on a message dialog.
@@ -7001,8 +7001,8 @@ msgstr "მიმდინარეობს განახლების შ�
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და NVDA-ს განახლების სერვერის URL სწორია.\n"
-"სერვერის URL: {url}"
+msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და NVDA-ს განახლების სერვერის ბმული სწორია.\n"
+"სერვერის ბმული: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
 #: updateCheck.py:416
@@ -7049,7 +7049,7 @@ msgstr "დამატებების &გადახედვა..."
 #: updateCheck.py:545
 #, python-brace-format
 msgid "&Update to NVDA {version}"
-msgstr "NVDA {version} ვერსიაზე განახლება"
+msgstr "NVDA {version} ვერსიაზე &განახლება"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 #: updateCheck.py:555
@@ -7212,9 +7212,9 @@ msgid "{longName} ({name})\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr "{longName} ({name})\n"
 "ვერსია: {version} ({version_detailed})\n"
-"URL: {url}\n"
+"ბმული: {url}\n"
 "{copyright}\n\n"
-"{name} ვრცელდება GNU ზოგადი საჯარო ლიცენზიით (ვერსია 2). თქვენ თავისუფლად შეგიძლიათ გაავრცელოთ ან შეცვალოთ იგი ნებისმიერი თქვენთვის მოსახერხებელი გზით, თუ კი მას დაურთავთ ლიცენზიას და ხელმისაწვდომს გახდით წყაროს კოდს ნებისმიერი მსურველისთვის. ეს ეხება როგორც ორიგინალურ, ასევე ამ პროგრამის მოდიფიცირებულ ასლებსა და ნებისმიერ სხვა წარმოებულ მუშაობას.\n"
+"{name} ვრცელდება GNU ზოგადი საჯარო ლიცენზიით (ვერსია 2). თქვენ თავისუფლად შეგიძლიათ გაავრცელოთ ან შეცვალოთ იგი ნებისმიერი თქვენთვის მოსახერხებელი გზით, თუ კი მას დაურთავთ ლიცენზიას და ხელმისაწვდომს გახდით საწყის კოდს ნებისმიერი მსურველისთვის. ეს ეხება როგორც ორიგინალურ, ასევე ამ პროგრამის მოდიფიცირებულ ასლებსა და ნებისმიერ სხვა წარმოებულ მუშაობას.\n"
 "დამატებითი ინფორმაციისთვის, შეგიძლიათ იხილოთ ლიცენზია დახმარების მენიუდან.\n"
 "მისი ნახვა ასევე შეგიძლიათ ონლაინ შემდეგ მისამართზე: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n\n"
 "{name} მუშავდება NV Access, არაკომერციული ორგანიზაციის მიერ, რომელიც მიზნად ისახავს, დაეხმაროს და ხელი შეუწყოს უფასო და ღია კოდის მქონე პროგრამებით უსინათლო და მცირემხედველ პირებს.\n"
@@ -7242,7 +7242,7 @@ msgstr "შეცდომა დამატების მონაცემ�
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და დამატებების მაღაზიის სერვერის URL სწორია.\n"
+msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და დამატებების მაღაზიის სერვერის ბმული სწორია.\n"
 "სერვერის URL: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -7331,7 +7331,7 @@ msgstr "სტაბილური"
 #: addonStore\models\channel.py:31
 msgctxt "addonStore"
 msgid "Beta"
-msgstr "ბეტა"
+msgstr "Beta"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #: addonStore\models\channel.py:33
@@ -7586,7 +7586,7 @@ msgstr "დაყენებული შეუთავსებელი &დ
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
-msgstr "საჭიროა NVDA-ს განახლებული ვერსია. NVDA {nvdaVersion} ვერსია ან უფრო ახალი."
+msgstr "საჭიროა NVDA-ს განახლებული ვერსია. NVDA {nvdaVersion} ან უფრო ახალი."
 
 #. Translators: The reason an add-on is not compatible.
 #. The addon relies on older, removed features of NVDA, an updated add-on is required.
@@ -9765,178 +9765,184 @@ msgstr "ტაილანდური 2 დონე"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:564
+msgid "Turkish 8 dot computer braille"
+msgstr "თურქული 8 წერტილიანი კომპიუტერული ბრაილი"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: brailleTables\__tables.py:567
 msgid "Turkish grade 1"
 msgstr "თურქული (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:567
+#: brailleTables\__tables.py:570
 msgid "Turkish grade 2"
 msgstr "თურქული 2 დონე"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:570
+#: brailleTables\__tables.py:573
 msgid "Setswana grade 1"
 msgstr "სეტსვანა (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:573
+#: brailleTables\__tables.py:576
 msgid "Setswana grade 2"
 msgstr "სეტსვანა (2 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:576
+#: brailleTables\__tables.py:579
 msgid "Ugaritic grade 1"
 msgstr "უგარითული 1 დონე"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:579
+#: brailleTables\__tables.py:582
 msgid "Ukrainian grade 1"
 msgstr "უკრაინული (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:582
+#: brailleTables\__tables.py:585
 msgid "Ukrainian literary braille (detailed)"
 msgstr "უკრაინული ლიტერატურული ბრაილი (დეტალური)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:585
+#: brailleTables\__tables.py:588
 msgid "Ukrainian computer braille"
 msgstr "უკრაინული კომპიუტერული ბრაილი"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:588
+#: brailleTables\__tables.py:591
 msgid "Urdu grade 1"
 msgstr "ურდუ (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:591
+#: brailleTables\__tables.py:594
 msgid "Urdu grade 2"
 msgstr "ურდუ (2 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:594
+#: brailleTables\__tables.py:597
 msgid "Uzbek grade 1"
 msgstr "უზბეკური (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:597
+#: brailleTables\__tables.py:600
 msgid "Unicode braille"
 msgstr "უნიკოდ ბრაილი"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:600
+#: brailleTables\__tables.py:603
 msgid "Vietnamese grade 0"
 msgstr "ვიეტნამური (0 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:603
+#: brailleTables\__tables.py:606
 msgid "Tshivenda grade 1"
 msgstr "ტშივენდა (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:606
+#: brailleTables\__tables.py:609
 msgid "Tshivenda grade 2"
 msgstr "ტშივენდა (2 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:609
+#: brailleTables\__tables.py:612
 msgid "Vietnamese grade 1"
 msgstr "ვიეტნამური (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:612
+#: brailleTables\__tables.py:615
 msgid "Vietnamese grade 2"
 msgstr "ვიეტნამური (2 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:615
+#: brailleTables\__tables.py:618
 msgid "Southern Vietnamese grade 1"
 msgstr "სამხრეთ ვიეტნამური (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:618
+#: brailleTables\__tables.py:621
 msgid "Xhosa grade 1"
 msgstr "ქსოზა (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:621
+#: brailleTables\__tables.py:624
 msgid "Xhosa grade 2"
 msgstr "ქსოზა (2 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:624
+#: brailleTables\__tables.py:627
 msgid "Yiddish grade 1"
 msgstr "იდიში 1 დონე"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
-#: brailleTables\__tables.py:630
+#: brailleTables\__tables.py:633
 msgid "Chinese common braille (simplified Chinese characters)"
 msgstr "ჩინური ბრაილი (გამარტივებული ჩინური იეროგლიფები)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#: brailleTables\__tables.py:637
+#: brailleTables\__tables.py:640
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
 msgstr "ჩინური (ჩინეთი, მანდარინი) ბრაილის ამჟამინდელი სისტემა (ტონების გარეშე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文' in Mandarin.
-#: brailleTables\__tables.py:644
+#: brailleTables\__tables.py:647
 msgid "Chinese (China, Mandarin) Current Braille System"
 msgstr "ჩინური (ჩინეთი, Mandarin) მიმდინარე ბრაილის სისტემა"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
-#: brailleTables\__tables.py:651
+#: brailleTables\__tables.py:654
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
 msgstr "ჩინური (ჩინეთი, Mandarin) ორმაგი ხმოვანი ბრაილის სისტემა"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:654
+#: brailleTables\__tables.py:657
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "ჩინური (ჰონკონგი, კანტონური)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:657
+#: brailleTables\__tables.py:660
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "ჩინური (ტაივანი, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:661
+#: brailleTables\__tables.py:664
 msgid "Zulu grade 1"
 msgstr "ზულუ (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:664
+#: brailleTables\__tables.py:667
 msgid "Zulu grade 2"
 msgstr "ზულუ (2 დონე)"
 
@@ -10634,7 +10640,7 @@ msgstr "სვეტი"
 #. Translators: Identifies a row (a group of horizontal cells in a table).
 #: controlTypes\role.py:275
 msgid "row"
-msgstr "ხაზი"
+msgstr "სტრიქონი"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
 #. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
@@ -10656,7 +10662,7 @@ msgstr "სვეტის სათაური"
 #. Translators: Identifies a row header in tables and spreadsheets.
 #: controlTypes\role.py:283
 msgid "row header"
-msgstr "ხაზის სათაური"
+msgstr "სტრიქონის სათაური"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 #: controlTypes\role.py:285
@@ -10754,7 +10760,7 @@ msgstr "ანიმაცია"
 #. Translators: Identifies an application in webpages.
 #: controlTypes\role.py:324
 msgid "application"
-msgstr "პროგრამა"
+msgstr "აპლიკაცია"
 
 #. Translators: Identifies a box element.
 #: controlTypes\role.py:326
@@ -10776,7 +10782,7 @@ msgstr "მახასიათებლების გვერდი"
 #. drawn on the box, like a canvas).
 #: controlTypes\role.py:334
 msgid "canvas"
-msgstr "საფენი"
+msgstr "canvas"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 #: controlTypes\role.py:336
@@ -11555,22 +11561,22 @@ msgstr "შ&ემოწმება..."
 #. Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
 #: gui\_SetURLDialog.py:105
 msgid "The URL you have entered failed the connection test. Are you sure you want to save it anyway?"
-msgstr "თქვენს მიერ შეყვანილმა URL-მა ვერ გაიარა დაკავშირების ტესტი. დარწმუნებული ხართ, რომ გსურთ მისი შენახვა?"
+msgstr "თქვენს მიერ შეყვანილმა ბმულმა ვერ გაიარა დაკავშირების ტესტი. დარწმუნებული ხართ, რომ გსურთ მისი შენახვა?"
 
 #. Translators: Message shown to users when saving an untested URL to NVDA's settings.
 #: gui\_SetURLDialog.py:110
 msgid "The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?"
-msgstr "თქვენს მიერ შეყვანილი URL არ არის შემოწმებული. დარწმუნებული ხართ, რომ გსურთ მისი შენახვა მასთან წინასწარი დაკავშირების მცდელობის გარეშე?"
+msgstr "თქვენს მიერ შეყვანილი ბმული არ არის შემოწმებული. დარწმუნებული ხართ, რომ გსურთ მისი შენახვა მასთან წინასწარი დაკავშირების მცდელობის გარეშე?"
 
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
 msgid "Validating URL..."
-msgstr "URL-ის ვალიდაცია..."
+msgstr "ბმულის ვალიდაცია..."
 
 #. Translators: Message shown to users when testing a given URL has succeeded.
 #: gui\_SetURLDialog.py:175
 msgid "Successfully connected to the given URL."
-msgstr "წარმატებით დაკავშირდა მოცემულ URL-თან."
+msgstr "წარმატებით დაკავშირდა მოცემულ ბმულთან."
 
 #. Translators: The title of a dialog presented when a test succeeds
 #. Translators: The title of a dialog presented to indicate a successful operation.
@@ -11585,12 +11591,12 @@ msgstr "წარმატებულად"
 #. Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
 #: gui\_SetURLDialog.py:186
 msgid "The response from the server was not recognised. Check the URL is correct before trying again."
-msgstr "სერვერის პასუხი ვერ იქნა ამოცნობილი. ხელახლა დაკავშირებამდე შეამოწმეთ, რომ URL სწორია."
+msgstr "სერვერის პასუხი ვერ იქნა ამოცნობილი. ხელახლა დაკავშირებამდე შეამოწმეთ, რომ ბმული სწორია."
 
 #. Translators: Tip shown to users when testing a given URL has failed because the server returned an error.
 #: gui\_SetURLDialog.py:190
 msgid "The server returned an error. Check that the URL is correct before trying again."
-msgstr "სერვერმა შეცდომა დააბრუნა. ხელახლა დაკავშირებამდე შეამოწმეთ, რომ URL სწორია."
+msgstr "სერვერმა შეცდომა დააბრუნა. ხელახლა დაკავშირებამდე შეამოწმეთ, რომ ბმული სწორია."
 
 #. Translators: Tip shown to users when testing a given URL has failed because of a network error.
 #: gui\_SetURLDialog.py:193
@@ -11600,24 +11606,24 @@ msgstr "წარმოიშვა ქსელის შეცდომა. �
 #. Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
 #: gui\_SetURLDialog.py:203
 msgid "The URL you have entered is not valid. Check that it is correct and try again."
-msgstr "თქვენს მიერ შეყვანილი URL არასწორია. შეამოწმეთ, მისი ვალიდურობა და სცადეთ ხელახლა."
+msgstr "თქვენს მიერ შეყვანილი ბმული არასწორია. შეამოწმეთ, მისი ვალიდურობა და სცადეთ ხელახლა."
 
 #. Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
 #: gui\_SetURLDialog.py:206
 msgid "Make sure you are connected to the internet and the URL is correct."
-msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და URL სწორია."
+msgstr "დარწმუნდით, რომ ინტერნეტთან დაკავშირებული ხართ და ბმული სწორია."
 
 #. Translators: Message shown to users when testing a given URL has failed.
 #. {tip} will be replaced with a tip on how to resolve the issue.
 #: gui\_SetURLDialog.py:209
 #, python-brace-format
 msgid "The URL you have entered failed the connection test. {tip}"
-msgstr "თქვენს მიერ შეყვანილმა URL-მა ვერ გაიარა დაკავშირების ტესტი. {tip}"
+msgstr "თქვენს მიერ შეყვანილმა ბმულმა ვერ გაიარა დაკავშირების ტესტი. {tip}"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 #: gui\__init__.py:212
 msgid "Configuration applied"
-msgstr "კონფიგურაცია მინიჭებულია"
+msgstr "კონფიგურაცია დადასტურებულია"
 
 #. Translators: Reported when configuration has been restored to defaults,
 #. by using restore configuration to factory defaults item in NVDA menu.
@@ -11639,7 +11645,7 @@ msgstr "კონფიგურაციის შენახვა ვერ 
 #. Translators: Message shown when current configuration cannot be saved, for an unknown reason.
 #: gui\__init__.py:245
 msgid "Could not save configuration; see the log for more details."
-msgstr "კონფიგურაციის შენახვა ვერ მოხერხდა; დამატებითი ინფორმაციისთვის იხილეთ ჟურნალი."
+msgstr "კონფიგურაციის შენახვა ვერ მოხერხდა; დამატებითი ინფორმაციისთვის იხილეთ აღრიცხვის ფაილი."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog.
 #. Example: when trying to open touch interaction settings on an unsupported system.
@@ -12209,7 +12215,7 @@ msgstr "შეცდომა პროფილის გადარქმე�
 #: gui\configProfiles.py:313
 #, python-format
 msgid "Current application (%s)"
-msgstr "მოქმედი პროგრამა (%s)"
+msgstr "მოქმედი აპლიკაცია (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 #: gui\configProfiles.py:317
@@ -12891,7 +12897,7 @@ msgstr "შეცვლა..."
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:993
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr "ეკრანის გამორთვის გათიშვა ბრაილის შრიფტით კითხვის ან ყველაფრის წაკითხვის დროს"
+msgstr "&ეკრანის გამორთვის გათიშვა ბრაილის შრიფტით კითხვის ან ყველაფრის წაკითხვის დროს"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1007
@@ -14947,13 +14953,13 @@ msgstr "დაყენებული ვერსია:"
 #: gui\addonStoreGui\controls\details.py:277
 msgctxt "addonStore"
 msgid "Minimum NVDA version:"
-msgstr "NVDA-ს მინიმალური ვერსია:"
+msgstr "მინიმალური NVDA ვერსია:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:283
 msgctxt "addonStore"
 msgid "Last tested NVDA version:"
-msgstr "NVDA-ს ბოლო შემოწმებული ვერსია:"
+msgstr "ბოლო შემოწმებული NVDA ვერსია:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:290
@@ -15007,7 +15013,7 @@ msgstr "წყაროს ბმული:"
 #: gui\addonStoreGui\controls\details.py:343
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr "მიმოხილვის URL მისამართი:"
+msgstr "მიმოხილვის ბმული:"
 
 #. Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:351
@@ -15109,7 +15115,7 @@ msgstr "დამატების ჩართვა"
 #: gui\addonStoreGui\controls\messageDialogs.py:238
 #, python-brace-format
 msgid "Installation of {summary} {version} has been blocked. The minimum NVDA version required for this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
-msgstr "{summary} {version}ს დაყენება დაიბლოკა. ამ დამატებისთვის NVDA-ს მინიმალური საჭირო ვერსიაა {minimumNVDAVersion}, თქვენი NVDA-ს მიმდინარე ვერსიაა {NVDAVersion}"
+msgstr "{summary} {version}ს დაყენება დაიბლოკა. ამ დამატებისთვის მინიმალური საჭირო NVDA ვერსიაა {minimumNVDAVersion}, თქვენი NVDA-ს მიმდინარე ვერსიაა {NVDAVersion}"
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:250
@@ -15169,13 +15175,13 @@ msgstr "მთავარი გვერდი: {url}\n"
 #: gui\addonStoreGui\controls\messageDialogs.py:307
 msgctxt "addonStore"
 msgid "Minimum required NVDA version: {}\n"
-msgstr "NVDA მინიმალური საჭირო ვერსია: {}\n"
+msgstr "მინიმალური საჭირო NVDA ვერსია: {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 #: gui\addonStoreGui\controls\messageDialogs.py:312
 msgctxt "addonStore"
 msgid "Last NVDA version tested: {}\n"
-msgstr "NVDA-ს ბოლო შემოწმებული ვერსია: {}\n"
+msgstr "ბოლო შემოწმებული NVDA ვერსია: {}\n"
 
 #. Translators: title for the Addon Information dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:315
@@ -15422,13 +15428,13 @@ msgstr "დაყენების თარიღი"
 #: gui\addonStoreGui\viewModels\addonList.py:107
 msgctxt "addonStore"
 msgid "Minimum NVDA version"
-msgstr "NVDA-ს მინიმალური ვერსია"
+msgstr "მინიმალური NVDA ვერსია"
 
 #. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:112
 msgctxt "addonStore"
 msgid "Last tested NVDA version"
-msgstr "NVDA-ს ბოლო შემოწმებული ვერსია"
+msgstr "ბოლო შემოწმებული NVDA ვერსია"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -15535,7 +15541,7 @@ msgstr "&ლიცენზია"
 #: gui\addonStoreGui\viewModels\store.py:243
 msgctxt "addonStore"
 msgid "Source &Code"
-msgstr "წყაროს &კოდი"
+msgstr "საწყისი &კოდი"
 
 #. Translators: Label for an action that opens the webpage to see and send feedback for the selected add-on
 #: gui\addonStoreGui\viewModels\store.py:250
@@ -15618,12 +15624,12 @@ msgstr "ობიექტის ნავიგატორს გადაა�
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:788
 msgid "Moves the navigator object and focus to the next row"
-msgstr "ფოკუსი და ნავიგატორის ობიექტი გადააქვს შემდეგ ხაზზე"
+msgstr "ფოკუსი და ნავიგატორის ობიექტი გადააქვს შემდეგ სტრიქონზე"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:797
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "ფოკუსი და ნავიგატორის ობიექტი \tგადააქვს წინა ხაზზე"
+msgstr "ფოკუსი და ნავიგატორის ობიექტი გადააქვს წინა სტრიქონზე"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:807
@@ -15638,12 +15644,12 @@ msgstr "გადააქვს ნავიგატორის ობიე�
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:838
 msgid "Moves the navigator object and focus to the first row"
-msgstr "გადააქვს ნავიგატორის ობიექტი და ფოკუსი პირველ ხაზზე"
+msgstr "გადააქვს ნავიგატორის ობიექტი და ფოკუსი პირველ სტრიქონზე"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:849
 msgid "Moves the navigator object and focus to the last row"
-msgstr "გადააქვს ნავიგატორის ობიექტი და ფოკუსი ბოლო ხაზზე"
+msgstr "გადააქვს ნავიგატორის ობიექტი და ფოკუსი ბოლო სტრიქონზე"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 #: NVDAObjects\inputComposition.py:58
@@ -15677,54 +15683,54 @@ msgstr "სვეტის სათაურის დაყენება. �
 #: NVDAObjects\IAccessible\winword.py:260
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber} დაყენდა სვეტების სათაურების საწყისად"
+msgstr "სტრიქონი {rowNumber} სვეტი {columnNumber} დაყენდა სვეტების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:268
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber} სვეტების სათაურების საწყისად უკვე დაყენებულია"
+msgstr "სტრიქონი {rowNumber} სვეტი {columnNumber} სვეტების სათაურების საწყისად უკვე დაყენებულია"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:277
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from column headers"
-msgstr "სვეტის სათაურებიდან მწკრივის {rowNumber} და {columnNumber} წაიშალა"
+msgstr "სვეტის სათაურებიდან სტრიქონის {rowNumber} და {columnNumber} წაიშალა"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:285
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in column headers"
-msgstr "სვეტის სათაურებში ვერ მოიძებნა მწკრივი {rowNumber} სვეტი {columnNumber}"
+msgstr "სვეტის სათაურებში ვერ მოიძებნა სტრიქონი {rowNumber} სვეტი {columnNumber}"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:295
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr "ხაზის სათაურის დაყენება. ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველი ხაზის სათაურად ამ უჯრის ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილის ფარგლებში. ორჯერ დაჭერისას, გაუქმდება ამ უჯრისთვის არსებული ხაზის სათაური."
+msgstr "სტრიქონის სათაურის დაყენება. ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველი სტრიქონის სათაურად ამ უჯრის ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილის ფარგლებში. ორჯერ დაჭერისას, გაუქმდება ამ უჯრისთვის არსებული სტრიქონის სათაური."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:312
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "ხაზის {rowNumber} სვეტის {columnNumber} დაყენება ხაზების სათაურების საწყისად"
+msgstr "სტრიქონის {rowNumber} სვეტის {columnNumber} დაყენება სტრიქონების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:320
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber} უკვე დაყენებულია ხაზების სათაურების საწყისად"
+msgstr "სტრიქონი {rowNumber} სვეტი {columnNumber} უკვე დაყენებულია სტრიქონების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:329
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr "მწკრივის {rowNumber} სვეტის {columnNumber} წაიშალა მწკრივის სათაურებიდან"
+msgstr "სტრიქონის {rowNumber} სვეტის {columnNumber} წაიშალა სტრიქონის სათაურებიდან"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:337
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in row headers"
-msgstr "მწკრივის სათაურებში ვერ მოიძებნა მწკრივი {rowNumber} სვეტი {columnNumber}"
+msgstr "სტრიქონის სათაურებში ვერ მოიძებნა სტრიქონი {rowNumber} სვეტი {columnNumber}"
 
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
@@ -15981,13 +15987,13 @@ msgstr "ახმოვანებს კომენტარის ტექ�
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:729
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr "ბრძანება არ არის მხარდაჭერილი ამ ტიპის დოკუმენტში. ცხრილების პირველი ხაზის უჯრა ავტომატურად დაყენებულია სვეტის სათაურად."
+msgstr "ბრძანება არ არის მხარდაჭერილი ამ ტიპის დოკუმენტში. ცხრილების პირველი სტრიქონის უჯრა ავტომატურად დაყენებულია სვეტის სათაურად."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:740
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr "ბრძანება არ არის მხარდაჭერილი ამ ტიპის დოკუმენტში. ცხრილების პირველი სვეტის უჯრა ავტომატურად დაყენებულია ხაზის სათაურად."
+msgstr "ბრძანება არ არის მხარდაჭერილი ამ ტიპის დოკუმენტში. ცხრილების პირველი სვეტის უჯრა ავტომატურად დაყენებულია სტრიქონის სათაურად."
 
 #: NVDAObjects\window\__init__.py:410
 msgid "Desktop"
@@ -16825,13 +16831,13 @@ msgstr "ავტომატურად"
 #. Checkerboard
 #: NVDAObjects\window\excel.py:238
 msgid "diagonal crosshatch"
-msgstr "დიაგონალური უჯრედებიანი"
+msgstr "დიაგონალური შტრიხი"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 #: NVDAObjects\window\excel.py:241
 msgid "thin diagonal crosshatch"
-msgstr "წვრილი, დიაგონალური უჯრედებიანი"
+msgstr "თხელი დიაგონალური ჯვარედინი შტრიხი"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
@@ -17062,31 +17068,31 @@ msgstr "სვეტის სათაურებში {address}-ის მ�
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1704
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr "აყენებს მიმდინარე უჯრას ხაზის სათაურის დასაწყისად. ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველი ხაზის სათაურად ამ უჯრის ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ არეში. ორჯერ დაჭერისას, გაუქმდება ამ უჯრისთვის არსებული ხაზის სათაური."
+msgstr "აყენებს მიმდინარე უჯრას სტრიქონის სათაურის დასაწყისად. ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველი სტრიქონის სათაურად ამ უჯრის ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ არეში. ორჯერ დაჭერისას, გაუქმდება ამ უჯრისთვის არსებული სტრიქონის სათაური."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1716
 #, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "{address} ხაზების სათაურების საწყისად დაყენება"
+msgstr "{address} სტრიქონის სათაურების საწყისად დაყენება"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1720
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
-msgstr "{address} ხაზების სათაურების საწყისად უკვე დაყენებულია"
+msgstr "{address} სტრიქონის სათაურების საწყისად უკვე დაყენებულია"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1725
 #, python-brace-format
 msgid "Removed {address}    from row headers"
-msgstr "{address}    წაიშალა ხაზების სათაურებიდან"
+msgstr "{address}    წაიშალა სტრიქონის სათაურებიდან"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1728
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
-msgstr "{address}-ის პოვნა ხაზების სათაურებში ვერ მოხერხდა"
+msgstr "{address}-ის პოვნა სტრიქონის სათაურებში ვერ მოხერხდა"
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #: NVDAObjects\window\excel.py:1830
@@ -17546,11 +17552,11 @@ msgstr "სქოლიო"
 
 #: NVDAObjects\window\winword.py:450
 msgid "Primary footer"
-msgstr "პირველი ქვედა კოლონა"
+msgstr "ძირითადი ქვედა კოლონა"
 
 #: NVDAObjects\window\winword.py:451
 msgid "Primary header"
-msgstr "პირველი სათაური"
+msgstr "ძირითადი სათაური"
 
 #: NVDAObjects\window\winword.py:452
 msgid "Text frame"
@@ -17621,7 +17627,7 @@ msgstr "ზუსტად {space:.1f} pt"
 #, python-format
 msgctxt "line spacing value"
 msgid "at least %.1f pt"
-msgstr "%.1f pt მაინც"
+msgstr "მინიმუმ %.1f pt"
 
 #. Translators: line spacing of x lines
 #: NVDAObjects\window\winword.py:1168
@@ -17735,12 +17741,12 @@ msgstr "{size:g} შრიფტის ნიშანი"
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 #: NVDAObjects\window\winword.py:1952
 msgid "Display nonprinting characters"
-msgstr "დაუბეჭდავი სიმბოლოების ჩვენება"
+msgstr "არასაბეჭდი სიმბოლოების ჩვენება"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 #: NVDAObjects\window\winword.py:1955
 msgid "Hide nonprinting characters"
-msgstr "დაუბეჭდავი სიმბოლოების დამალვა"
+msgstr "არასაბეჭდი სიმბოლოების დამალვა"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1993
@@ -17888,7 +17894,7 @@ msgstr "მონიშვნა წაშლილია"
 #: speech\speech.py:2030 speech\speech.py:3079
 #, python-format
 msgid "row %s"
-msgstr "ხაზი %s"
+msgstr "სტრიქონი %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #: speech\speech.py:2034
@@ -17913,7 +17919,7 @@ msgstr "{endCol} -დან"
 #: speech\speech.py:2063
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "{row} ხაზის გასწვრივ {column} სვეტი"
+msgstr "{row} სტრიქონის გასწვრივ {column} სვეტი"
 
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
 #: speech\speech.py:2097
@@ -17947,8 +17953,8 @@ msgstr[1] "%s სვეტით"
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] "%s ხაზით"
-msgstr[1] "%s ხაზით"
+msgstr[0] "%s სტრიქონით"
+msgstr[1] "%s სტრიქონით"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -17956,8 +17962,8 @@ msgstr[1] "%s ხაზით"
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] "{rowCount} ხაზით"
-msgstr[1] "{rowCount} ხაზით"
+msgstr[0] "{rowCount} სტრიქონით"
+msgstr[1] "{rowCount} სტრიქონით"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -18047,7 +18053,7 @@ msgstr "სვეტის გამყოფი"
 #: speech\speech.py:2642
 #, python-format
 msgid "heading level %d"
-msgstr "სათაურის დონე %d"
+msgstr "სათაური %d დონე"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -18639,7 +18645,7 @@ msgstr "არავინ არის დაკავშირებული"
 #: _remoteClient\client.py:164
 msgctxt "remote"
 msgid "Unable to send clipboard"
-msgstr "გაცვლის ბუფერის გაგზავნა შეუძლებელია"
+msgstr "ბუფერის გაგზავნა შეუძლებელია"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: _remoteClient\client.py:179
@@ -18744,12 +18750,12 @@ msgstr "დაკავშირებულია როგორც კონ�
 #: _remoteClient\cues.py:44
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr "გაცვლის ბუფერი გაგზავნილია"
+msgstr "ბუფერი გაგზავნილია"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:49
 msgid "Clipboard received"
-msgstr "გაცვლის ბუფერი მიღებულია"
+msgstr "ბუფერი მიღებულია"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:55 _remoteClient\dialogs.py:217
@@ -18894,13 +18900,13 @@ msgstr "დისტანციური კომპიუტერიდა�
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr "&გაცვლის ბუფერის გაგზავნა"
+msgstr "&ბუფერის გაგზავნა"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr "გაცვლის ბუფერის ტექსტის დისტანციურ კომპიუტერზე გაგზავნა."
+msgstr "ბუფერის ტექსტის დისტანციურ კომპიუტერზე გაგზავნა."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
