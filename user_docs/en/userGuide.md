@@ -4,8 +4,6 @@
 
 <!-- KC:title: NVDA NVDA_VERSION Commands Quick Reference -->
 
-
-
 ## Introduction {#Introduction}
 
 Welcome to NVDA!
@@ -299,6 +297,7 @@ To open NVDA's general settings dialog directly, press `NVDA+control+g`.
 Many settings screens have keystrokes to open them directly, such as `NVDA+control+s` for synthesizer, or `NVDA+control+v` for other voice options.
 
 ### Add-ons {#Addons}
+
 Add-ons are programs which provide new or changed functionality for NVDA.
 Add-ons are developed by the NVDA community, or external companies and are unaffiliated with NV Access.
 As with any software, it is important to trust the developer of an add-on before using it.
@@ -316,6 +315,7 @@ When the Add-on Store opens, it shows "Available add-ons" if no add-ons are inst
 When add-ons are installed, the Add-on Store opens to the "Installed add-ons" tab.
 
 #### Available add-ons {#AvailableAddons}
+
 When the window first opens, add-ons may take a few seconds to load.
 NVDA will read the name of the first add-on once the list of add-ons finishes loading.
 Available add-ons are listed alphabetically in a multi-column list.
@@ -329,6 +329,7 @@ To browse the list and find out about a specific add-on:
 1. To return to the list of add-ons, press `alt+a`, or `shift+tab` until reaching the list.
 
 #### Searching for add-ons {#SearchingForAddons}
+
 As well as browsing all available add-ons, it is possible to filter the add-ons shown.
 To search, press `alt+s` to jump to the "Search" field and type the text to search for.
 Searching checks for matches in the add-on ID, display name, publisher, author and description fields.
@@ -353,6 +354,7 @@ During the installation process, add-ons may display dialogs that you will need 
 1. Press `enter` to restart NVDA.
 
 #### Managing installed add-ons {#ManagingInstalledAddons}
+
 Press `control+tab` to move between the tabs of the Add-on Store.
 The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
 Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and a button to perform actions for the selected add-on.
@@ -364,6 +366,7 @@ These changes will only take effect once NVDA is restarted.
 Note that in the Add-on Store window `escape` works the same as the Close button.
 
 #### Updating add-ons {#UpdatingAddons}
+
 When an update to an add-on you have installed is available, it will be listed in the "Updatable add-ons" tab.
 Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
@@ -410,6 +413,7 @@ You can make bug reports or feature requests via [GitHub](https://github.com/nva
 The [contribution guidelines](https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md) contain valuable information for contributing to the community.
 
 ## More Setup Options {#MoreSetupOptions}
+
 ### Installation Options {#InstallingNVDA}
 
 If installing NVDA directly from the downloaded NVDA launcher, press the Install NVDA button.
@@ -490,6 +494,7 @@ Portable and temporary copies of NVDA have the following restrictions:
 * Audio ducking is not supported.
 
 ## Using NVDA {#GettingStartedWithNVDA}
+
 ### Launching NVDA {#LaunchingNVDA}
 
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
@@ -529,6 +534,7 @@ Note: pressing on "yes" or "no" will save this setting and the dialog will never
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
 
 ### About NVDA keyboard commands {#AboutNVDAKeyboardCommands}
+
 #### The NVDA Modifier Key {#TheNVDAModifierKey}
 
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
@@ -1472,6 +1478,7 @@ To recognize the text in the current navigator object using Windows OCR, press N
 NVDA provides its own extra features for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
 ### Microsoft Word {#MicrosoftWord}
+
 #### Automatic Column and Row Header Reading {#WordAutomaticColumnAndRowHeaderReading}
 
 NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
@@ -1516,6 +1523,7 @@ Pressing twice shows the information in a browsable message.
 All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List when selecting Annotations as the type.
 
 ### Microsoft Excel {#MicrosoftExcel}
+
 #### Automatic Column and Row Header Reading {#ExcelAutomaticColumnAndRowHeaderReading}
 
 NVDA is able to automatically announce appropriate row and column headers when navigating around Excel worksheets.
@@ -4044,6 +4052,7 @@ You can browse available incompatible add-ons using the [available and updatable
 You can browse installed incompatible add-ons using the [incompatible add-ons tab](#AddonStoreFilterStatus).
 
 ## Extra Tools {#ExtraTools}
+
 ### Log Viewer {#LogViewer}
 
 The log viewer, found under Tools in the NVDA menu, allows you to view the logging output that has occurred since the latest session of NVDA was started.
@@ -5500,6 +5509,7 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 <!-- KC:endInclude -->
 
 ## Advanced Topics {#AdvancedTopics}
+
 ### Secure Mode {#SecureMode}
 
 System administrators may wish to configure NVDA to restrict unauthorized system access.
@@ -5607,7 +5617,6 @@ Following are the command line options for NVDA:
 ### Uninstalling NVDA {#UninstallingNVDA}
 
 NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
-
 
 Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
 To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.
