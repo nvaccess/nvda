@@ -30,6 +30,7 @@ from ctypes import (
 )
 
 import winBindings.kernel32
+import winBindings.advapi32
 import globalVars
 from NVDAState import ReadPaths
 
@@ -245,7 +246,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 			if windll.advapi32.RegQueryValueExW(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:  # noqa: F405
 				return buf.value
 		finally:
-			windll.advapi32.RegCloseKey(key)
+			winBindings.advapi32.RegCloseKey(key)
 
 
 @WINFUNCTYPE(c_long, c_wchar_p)
