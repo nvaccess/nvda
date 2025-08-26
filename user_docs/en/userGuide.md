@@ -117,7 +117,7 @@ These steps assume some familiarity with navigating a web page.
 
 * Open your web browser (Press the `Windows` key, type the word "internet" without quotes, and press `enter`)
 * Load the NV Access download page (Press `alt+d`, type the following address and press `enter`):
-https://www.nvaccess.org/download
+<https://www.nvaccess.org/download>
 * Activate the "download" button
 * The browser may or may not prompt for an action after downloading, and then start the download
 * Depending on the browser, the file may run automatically after it downloads
@@ -2005,10 +2005,12 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
-For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
-  1. One stand alone unicode character (ü)
-  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
-  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+   For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
+
+   1. One stand alone unicode character (ü)
+   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+
+   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
 
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
@@ -2047,7 +2049,7 @@ This edit field allows you to type the amount that the pitch of the voice will c
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
 For no pitch change you would use 0.
 Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well.
-In case pitch change for capitals is not supported, consider [Say "cap" before capitals](#SpeechSettingsSayCapBefore) and/or [ Beep for capitals](#SpeechSettingsBeepForCaps) instead.
+In case pitch change for capitals is not supported, consider [Say "cap" before capitals](#SpeechSettingsSayCapBefore) and/or [Beep for capitals](#SpeechSettingsBeepForCaps) instead.
 
 ##### Say "cap" before capitals {#SpeechSettingsSayCapBefore}
 
@@ -3807,10 +3809,12 @@ In this case, the other person has either started the connection via a relay ser
 
 1. For Server, choose "Use existing".
 1. In the Host field, Enter the host address (and port if also given).
-  * You may include the port to connect on by appending a colon (":") and the port number to the host address.
-For example, `example.com:1234`.
+
+   * You may include the port to connect on by appending a colon (":") and the port number to the host address.
+     For example, `example.com:1234`.
+
 1. In the Key field, enter the key provided.
-Be careful to type the key exactly as given.
+   Be careful to type the key exactly as given.
 1. Press OK.
 
 #### Starting a Connection Via a Relay Server {#RemoteAccessConnectRelay}
@@ -3819,12 +3823,16 @@ If allowing another person to connect to you over the internet, the easiest opti
 
 1. For Server, choose "Use existing".
 1. For host, provide the host name of a relay server, such as `nvdaremote.com`.
-You will need to provide this address to the other person.
-  * You may include the port to connect on by appending a colon (":") and the port number to the host.
-For example, `example.com:1234`.
+   You will need to provide this address to the other person.
+
+   * You may include the port to connect on by appending a colon (":") and the port number to the host.
+     For example, `example.com:1234`.
+
 1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
-You will need to provide this to the other person.
-  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+   You will need to provide this to the other person.
+
+   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+
 1. Press OK.
 1. Provide the connection details (such as host and key) to the other person so they can connect.
 
@@ -3838,15 +3846,19 @@ You will need to provide this external IP to the other person.
 1. If connecting over a local network, you will need to provide the other person with your local IP.
 Locating this is not covered in this documentation.
 1. For Port, enter the port you want to use for incoming Remote connections.
-The other person will also need this.
-  * This should be a port that is not used by any other services.
-  * By default, Remote Access uses port 6837.
-  * If connecting over the internet, the port may need to be forwarded.
-  This documentation does not cover how to forward ports.
-  You may need to contact your network administrator to do this.
+   The other person will also need this.
+
+   * This should be a port that is not used by any other services.
+   * By default, Remote Access uses port 6837.
+   * If connecting over the internet, the port may need to be forwarded.
+     This documentation does not cover how to forward ports.
+     You may need to contact your network administrator to do this.
+
 1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
-You will need to provide this to the other person.
-  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+   You will need to provide this to the other person.
+
+   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+
 1. Press OK.
 1. Provide the connection details (such as host and key) to the other person so they can connect.
 
@@ -5608,7 +5620,7 @@ Following are the command line options for NVDA:
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
-|None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)|
+|None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)| <!-- markdownlint-disable-line MD055 MD056 -->
 |None |`--copy-portable-config` |When installing, copy the portable configuration from the provided path (`--config-path`, `-c`) to the current user account|
 |None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
 |None |`--create-portable-silent` |Creates a portable copy of NVDA (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
