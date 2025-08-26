@@ -158,7 +158,7 @@ class _UsbDeviceRegistryEntry:
 		return self.matchFunc(deviceMatch)
 
 
-type DriverDictT = defaultdict[CommunicationType, set[_UsbDeviceRegistryEntry] | MatchFuncT]
+DriverDictT = defaultdict[CommunicationType, set[_UsbDeviceRegistryEntry] | MatchFuncT]
 _driverDevices = OrderedDict[str, DriverDictT]()
 type DriverAndDeviceMatch = tuple[str, DeviceMatch]
 
