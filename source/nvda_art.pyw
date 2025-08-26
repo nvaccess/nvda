@@ -19,7 +19,7 @@ import wx
 from art.runtime.services.addons import AddOnLifecycleService
 
 # Set up crash log file for faulthandler
-crash_log_file = os.path.join(
+crashLogFile = os.path.join(
 	tempfile.gettempdir(), f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
 )
 
@@ -58,16 +58,15 @@ logging.basicConfig(
 )
 
 # Create ART logger
-art_logger = logging.getLogger("ART.Main")
+artLogger = logging.getLogger("ART.Main")
 
 # Set up crash logging with faulthandler
 try:
-	# Enable faulthandler with file output
-	crash_file_handle = open(crash_log_file, "w", buffering=1)
+	crash_file_handle = open(crashLogFile, "w", buffering=1)
 	faulthandler.enable(file=crash_file_handle, all_threads=True)
-	art_logger.info(f"ART Crash Log: {crash_log_file}")
+	artLogger.info(f"ART Crash Log: {crashLogFile}")
 except Exception as e:
-	art_logger.error(f"Failed to set up crash logging: {e}")
+	artLogger.error(f"Failed to set up crash logging: {e}")
 	# Fallback to stderr
 	faulthandler.enable(all_threads=True)
 
@@ -77,23 +76,23 @@ original_stdout = sys.stdout
 original_stderr = sys.stderr
 
 # Log startup information immediately
-art_logger.info("=== ART PROCESS STARTED ===")
-art_logger.info(f"Process ID: {os.getpid()}")
-art_logger.info(f"Command line: {sys.argv}")
-art_logger.info(f"Current working directory: {os.getcwd()}")
-art_logger.info(f"Python executable: {sys.executable}")
-art_logger.info(f"Python version: {sys.version}")
-art_logger.info(f"Log file: {log_file}")
-art_logger.info(f"sys.path: {sys.path}")
+artLogger.info("=== ART PROCESS STARTED ===")
+artLogger.info(f"Process ID: {os.getpid()}")
+artLogger.info(f"Command line: {sys.argv}")
+artLogger.info(f"Current working directory: {os.getcwd()}")
+artLogger.info(f"Python executable: {sys.executable}")
+artLogger.info(f"Python version: {sys.version}")
+artLogger.info(f"Log file: {log_file}")
+artLogger.info(f"sys.path: {sys.path}")
 
 # Also print log file location to stderr for easy discovery
 print(f"ART Debug Log: {log_file}", file=original_stderr)
 
 # Log environment variables related to ART
-art_logger.info("ART Environment variables:")
+artLogger.info("ART Environment variables:")
 for key, value in os.environ.items():
 	if "NVDA" in key or "ART" in key:
-		art_logger.info(f"  {key} = {value}")
+		artLogger.info(f"  {key} = {value}")
 
 Pyro5.config.SERIALIZER = "msgpack"
 Pyro5.config.COMMTIMEOUT = 0.0
@@ -423,8 +422,8 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 		(addon_spec, is_cli_mode) or (None, is_cli_mode) on error
 	"""
 	is_cli_mode = len(sys.argv) > 1
-	art_logger.info(f"=== MODE DETECTION: {'CLI' if is_cli_mode else 'HANDSHAKE'} ===")
-	art_logger.debug(f"Command line arguments: {sys.argv}")
+	artLogger.info(f"=== MODE DETECTION: {'CLI' if is_cli_mode else 'HANDSHAKE'} ===")
+	artLogger.debug(f"Command line arguments: {sys.argv}")
 
 	if is_cli_mode:
 		# CLI mode - parse arguments
@@ -456,71 +455,71 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 	else:
 		# Handshake mode - read from stdin
 		try:
-			art_logger.info("=== HANDSHAKE MODE: Starting stdin processing ===")
-			art_logger.debug("About to read startup line from stdin")
+			artLogger.info("=== HANDSHAKE MODE: Starting stdin processing ===")
+			artLogger.debug("About to read startup line from stdin")
 
 			startup_line = sys.stdin.readline().strip()
-			art_logger.debug(
+			artLogger.debug(
 				f"Raw startup line received (length={len(startup_line)}): {startup_line[:200]}..."
 			)
 
 			if not startup_line:
-				art_logger.error("No startup data received from NVDA Core")
+				artLogger.error("No startup data received from NVDA Core")
 				print("ERROR: No startup data received from NVDA Core", file=sys.stderr)
 				return None, is_cli_mode
 
-			art_logger.debug("About to parse JSON from startup line")
+			artLogger.debug("About to parse JSON from startup line")
 			startup_data = json.loads(startup_line)
-			art_logger.info(
+			artLogger.info(
 				f"Successfully parsed startup data: addon={startup_data.get('addon', {}).get('name', 'unknown')}"
 			)
-			art_logger.debug(f"Full startup data keys: {list(startup_data.keys())}")
+			artLogger.debug(f"Full startup data keys: {list(startup_data.keys())}")
 
 			# Extract and apply configuration
 			config = startup_data.get("config", {})
-			art_logger.debug(f"Config section: {config}")
+			artLogger.debug(f"Config section: {config}")
 
 			if config.get("debug", False):
-				art_logger.debug("Setting NVDA_ART_DEBUG=1 from config")
+				artLogger.debug("Setting NVDA_ART_DEBUG=1 from config")
 				os.environ["NVDA_ART_DEBUG"] = "1"
 
 			# Check for secure desktop mode
 			is_secure_desktop = config.get("secureDesktop", False)
 			if is_secure_desktop:
-				art_logger.info("=== SD-ART MODE: Running on Secure Desktop ===")
-				art_logger.info("Enhanced security restrictions will be applied")
+				artLogger.info("=== SD-ART MODE: Running on Secure Desktop ===")
+				artLogger.info("Enhanced security restrictions will be applied")
 			else:
-				art_logger.info("=== Regular ART MODE: Running on normal desktop ===")
+				artLogger.info("=== Regular ART MODE: Running on normal desktop ===")
 
 			# Set environment variable for later use
 			os.environ["NVDA_ART_SECURE_DESKTOP"] = "1" if is_secure_desktop else "0"
 
 			if config_path := config.get("configPath"):
-				art_logger.debug(f"Setting NVDA_ART_CONFIG_PATH={config_path}")
+				artLogger.debug(f"Setting NVDA_ART_CONFIG_PATH={config_path}")
 				os.environ["NVDA_ART_CONFIG_PATH"] = config_path
 
 			# Set core service URIs
 			core_services = startup_data.get("core_services", {})
-			art_logger.debug(f"Setting {len(core_services)} core service environment variables")
+			artLogger.debug(f"Setting {len(core_services)} core service environment variables")
 			_set_core_service_uris(core_services)
-			art_logger.debug("Core service URIs set in environment")
+			artLogger.debug("Core service URIs set in environment")
 
 			# Get addon spec
 			addon_spec = startup_data.get("addon")
 			if not addon_spec:
-				art_logger.error("No addon specification found in startup data")
+				artLogger.error("No addon specification found in startup data")
 				raise ValueError("No addon specified")
 
-			art_logger.info(
+			artLogger.info(
 				f"Successfully processed handshake for addon: {addon_spec.get('name', 'unknown')}"
 			)
-			art_logger.debug(f"Addon spec keys: {list(addon_spec.keys())}")
+			artLogger.debug(f"Addon spec keys: {list(addon_spec.keys())}")
 
 			return addon_spec, is_cli_mode
 
 		except json.JSONDecodeError as e:
-			art_logger.error(f"Failed to parse JSON from startup line: {e}")
-			art_logger.debug(f"Problematic line: {startup_line}")
+			artLogger.error(f"Failed to parse JSON from startup line: {e}")
+			artLogger.debug(f"Problematic line: {startup_line}")
 			handleStartupError(e, "unknown")
 			return None, is_cli_mode
 		except Exception as e:
@@ -529,8 +528,8 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 				if "startup_data" in locals()
 				else "unknown"
 			)
-			art_logger.error(f"Exception in handshake processing: {e}")
-			art_logger.exception("Full handshake exception traceback")
+			artLogger.error(f"Exception in handshake processing: {e}")
+			artLogger.exception("Full handshake exception traceback")
 			handleStartupError(e, addon_name)
 			return None, is_cli_mode
 
@@ -538,36 +537,36 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, str]]:
 	"""Perform startup with the given addon spec."""
 	try:
-		art_logger.info(
+		artLogger.info(
 			f"=== PERFORMING STARTUP: mode={'CLI' if is_cli_mode else 'HANDSHAKE'}, addon={addon_spec.get('name', 'unknown')} ==="
 		)
 
 		# Start services
-		art_logger.debug("About to call startWithAddonSpec()")
+		artLogger.debug("About to call startWithAddonSpec()")
 		service_uris = startWithAddonSpec(addon_spec)
-		art_logger.info(f"startWithAddonSpec() completed successfully, got {len(service_uris)} service URIs")
+		artLogger.info(f"startWithAddonSpec() completed successfully, got {len(service_uris)} service URIs")
 
 		# Send handshake response if not in CLI mode
 		if not is_cli_mode:
-			art_logger.debug("Preparing handshake response")
+			artLogger.debug("Preparing handshake response")
 			response_data = {
 				"status": "ready",
 				"addon_name": addon_spec["name"],
 				"art_services": service_uris,
 			}
 			response_json = json.dumps(response_data) + "\n"
-			art_logger.debug(
+			artLogger.debug(
 				f"Handshake response prepared (length={len(response_json)}): {response_json[:200]}..."
 			)
 
-			art_logger.debug("Writing handshake response to stdout")
+			artLogger.debug("Writing handshake response to stdout")
 			sys.stdout.write(response_json)
-			art_logger.debug("Flushing stdout")
+			artLogger.debug("Flushing stdout")
 			sys.stdout.flush()
-			art_logger.info("Handshake response sent successfully")
+			artLogger.info("Handshake response sent successfully")
 
 			# Redirect stdout/stderr to prevent pipe buffer deadlock
-			art_logger.debug("Redirecting stdout/stderr to prevent pipe buffer deadlock")
+			artLogger.debug("Redirecting stdout/stderr to prevent pipe buffer deadlock")
 			import os
 
 			sys.stdout = open(os.devnull, "w")
@@ -576,8 +575,8 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 		return service_uris
 
 	except Exception as e:
-		art_logger.error(f"Exception in performStartup(): {e}")
-		art_logger.exception("Full performStartup exception traceback")
+		artLogger.error(f"Exception in performStartup(): {e}")
+		artLogger.exception("Full performStartup exception traceback")
 		handleStartupError(e, addon_spec.get("name", "unknown"))
 		return None
 
@@ -586,19 +585,19 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	"""Common startup logic for both CLI and handshake."""
 	global logger
 
-	art_logger.info("=== startWithAddonSpec() ENTRY ===")
-	art_logger.debug(f"Addon spec: {addon_spec}")
+	artLogger.info("=== startWithAddonSpec() ENTRY ===")
+	artLogger.debug(f"Addon spec: {addon_spec}")
 
 	# Set addon name in environment for components that need it
-	art_logger.debug("Setting NVDA_ART_ADDON_NAME environment variable")
+	artLogger.debug("Setting NVDA_ART_ADDON_NAME environment variable")
 	os.environ["NVDA_ART_ADDON_NAME"] = addon_spec["name"]
-	art_logger.debug("Environment variable set successfully")
+	artLogger.debug("Environment variable set successfully")
 
 	# Don't reconfigure logging - we already have it set up
-	art_logger.debug("Checking debug mode")
+	artLogger.debug("Checking debug mode")
 	debug_mode = os.environ.get("NVDA_ART_DEBUG", "").lower() in ("1", "true", "yes")
-	art_logger.debug(f"Debug mode: {debug_mode}")
-	art_logger.debug("Skipping logging.basicConfig - already configured")
+	artLogger.debug(f"Debug mode: {debug_mode}")
+	artLogger.debug("Skipping logging.basicConfig - already configured")
 
 	logger = logging.getLogger(f"ART.{addon_spec['name']}")
 
@@ -607,10 +606,10 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	logger.info(f"Addon path: {addon_spec.get('path', 'Unknown')}")
 
 	# Log secure mode status
-	is_secure = os.environ.get("NVDA_ART_SECURE_DESKTOP", "0") == "1"
-	mode_str = "SD-ART (Secure Desktop)" if is_secure else "Regular ART"
+	is_Secure = os.environ.get("NVDA_ART_SECURE_DESKTOP", "0") == "1"
+	mode_str = "SD-ART (Secure Desktop)" if is_Secure else "Regular ART"
 	logger.info(f"Runtime mode: {mode_str}")
-	if is_secure:
+	if is_Secure:
 		logger.warning("Running in secure desktop mode - restricted capabilities")
 
 	logger.debug(f"Full addon spec: {addon_spec}")
@@ -618,12 +617,12 @@ def startWithAddonSpec(addon_spec: dict) -> Dict[str, str]:
 	# Set up proxies - add the art directory so we can import art.runtime.proxies
 	if getattr(sys, "frozen", None) is None:
 		# Running from source
-		art_path = Path(__file__).parent / "art"
+		artPath = Path(__file__).parent / "art"
 	else:
 		# Running as py2exe executable
-		art_path = Path(sys.prefix) / "art"
-	sys.path.insert(0, str(art_path))
-	logger.debug(f"Added art to path: {art_path}")
+		artPath = Path(sys.prefix) / "art"
+	sys.path.insert(0, str(artPath))
+	logger.debug(f"Added art to path: {artPath}")
 
 	# Import and set up proxy modules in sys.modules so addons can import them directly
 	try:
@@ -703,37 +702,37 @@ def main():
 	"""Initialize the NVDA ART Runtime."""
 	global wxApp, mainWindow
 
-	art_logger.info("=== ART MAIN STARTING ===")
-	art_logger.debug(f"Command line args: {sys.argv}")
+	artLogger.info("ART MAIN STARTING")
+	artLogger.debug(f"Command line args: {sys.argv}")
 
 	# Get startup info
-	art_logger.debug("About to call getStartupInfo()")
+	artLogger.debug("About to call getStartupInfo()")
 	addon_spec, is_cli_mode = getStartupInfo()
-	art_logger.info(
+	artLogger.info(
 		f"getStartupInfo() returned: is_cli_mode={is_cli_mode}, addon_spec={'present' if addon_spec else 'None'}"
 	)
 
 	if not addon_spec:
-		art_logger.error("No addon spec received, exiting")
+		artLogger.error("No addon spec received, exiting")
 		sys.exit(1)
 
 	# Log environment variables that differ between modes
-	art_logger.debug("=== ENVIRONMENT VARIABLES ===")
+	artLogger.debug("=== ENVIRONMENT VARIABLES ===")
 	for key, value in os.environ.items():
 		if "NVDA" in key or "ART" in key:
-			art_logger.debug(f"  {key} = {value}")
+			artLogger.debug(f"  {key} = {value}")
 
 	# Log final addon spec for comparison
-	art_logger.debug(f"Final addon_spec: {addon_spec}")
+	artLogger.debug(f"Final addon_spec: {addon_spec}")
 
 	# Perform startup
-	art_logger.debug("About to call performStartup()")
+	artLogger.debug("About to call performStartup()")
 	service_uris = performStartup(addon_spec, is_cli_mode)
 	if not service_uris:
-		art_logger.error("performStartup() failed, exiting")
+		artLogger.error("performStartup() failed, exiting")
 		sys.exit(1)
 
-	art_logger.info("=== STARTUP COMPLETED SUCCESSFULLY ===")
+	artLogger.info("=== STARTUP COMPLETED SUCCESSFULLY ===")
 
 	# Initialize wx application
 	wxApp = wx.App(False, useBestVisual=False)
