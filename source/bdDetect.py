@@ -395,14 +395,17 @@ class _Detector:
 		usb: bool = False,
 		bluetooth: bool = False,
 		limitToDevices: list[str] | None = None,
+		preferedDevice: DriverAndDeviceMatch | None = None,
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
 		To explicitely cancel a scan in progress, use L{rescan}.
-		@param usb: Whether USB devices should be detected for this and subsequent scans.
-		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
-		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if default driver filtering according to config should occur.
+		:param usb: Whether USB devices should be detected for this and subsequent scans.
+		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			``None`` if default driver filtering according to config should occur.
+		:param preferedDevice: An optional preferred device to use for detection before scanning.
+			``None`` if no preferred device should be used.
 		"""
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
@@ -414,7 +417,9 @@ class _Detector:
 			# This will cancel a queued scan (i.e. not the currently running scan, if any)
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
 			self._queuedFuture.cancel()
-		self._queuedFuture = self._executor.submit(self._bgScan, usb, bluetooth, limitToDevices)
+		self._queuedFuture = self._executor.submit(
+			self._bgScan, usb, bluetooth, limitToDevices, preferedDevice
+		)
 
 	def _stopBgScan(self):
 		"""Stops the current scan as soon as possible and prevents a queued scan to start."""
@@ -465,17 +470,25 @@ class _Detector:
 		usb: bool,
 		bluetooth: bool,
 		limitToDevices: list[str] | None,
+		preferedDevice: DriverAndDeviceMatch | None,
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
-		@param usb: Whether USB devices should be detected for this particular scan.
-		@param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
-		@param limitToDevices: Drivers to which detection should be limited for this scan.
-			C{None} if no driver filtering should occur.
+		:param usb: Whether USB devices should be detected for this particular scan.
+		:param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
+		:param limitToDevices: Drivers to which detection should be limited for this scan.
+			``None`` if no driver filtering should occur.
+		:param preferedDevice: An optional preferred device to use for detection before scanning.
+			``None`` if no preferred device should be used.
 		"""
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
+		if preferedDevice and braille.handler.setDisplayByName(preferedDevice[0], detected=preferedDevice[1]):
+			return
+		if self._stopEvent.is_set():
+			return
+
 		iterator = scanForDevices.iter(
 			usb=usb,
 			bluetooth=bluetooth,
@@ -494,19 +507,22 @@ class _Detector:
 		usb: bool = True,
 		bluetooth: bool = True,
 		limitToDevices: list[str] | None = None,
+		preferedDevice: DriverAndDeviceMatch | None = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
-		@param usb: Whether USB devices should be detected for this and subsequent scans.
-		@type usb: bool
-		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
-		@type bluetooth: bool
-		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if default driver filtering according to config should occur.
+		:param usb: Whether USB devices should be detected for this and subsequent scans.
+		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			``None`` if default driver filtering according to config should occur.
+		:param preferedDevice: An optional preferred device to use for detection before scanning.
+			``None`` if no preferred device should be used.
 		"""
 		self._stopBgScan()
 		# Clear the cache of bluetooth devices so new devices can be picked up.
 		deviceInfoFetcher.btDevsCache = None
-		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
+		self._queueBgScan(
+			usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices, preferedDevice=preferedDevice
+		)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
 		if msg == winUser.WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:

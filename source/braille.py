@@ -2477,11 +2477,21 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self.display:
 				# Supress clearing the display.
 				self.display._suppressDisplayClear = True
-			switchTo = NO_BRAILLE_DISPLAY_NAME
+			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
 			configured = config.conf["braille"]["display"]
-			switchTo = configured if configured == AUTO_DISPLAY_NAME else self._lastRequestedDisplayName
-		self.setDisplayByName(switchTo, isFallback=True)
+			lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
+			if configured == AUTO_DISPLAY_NAME:
+				preferedDevice: bdDetect.DriverAndDeviceMatch | None = (
+					lastRequested if all(lastRequested) else None
+				)
+				self._enableDetection(preferedDevice=preferedDevice)
+			elif lastRequested[0]:
+				self.setDisplayByName(
+					lastRequested[0],
+					detected=lastRequested[1],
+					isFallback=True,  # Don't write to config
+				)
 
 	def _onSessionLockStateChanged(self, isNowLocked: bool):
 		"""Clear the braille buffers and update the braille display to prevent leaking potentially sensitive information from a locked session.
@@ -2663,8 +2673,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage(shouldUpdate=False)
 
-	_lastRequestedDisplayName = None
+	_lastRequestedDisplayName: str | None = None
 	"""The name of the last requested braille display driver with setDisplayByName,
+	even if it failed and has fallen back to no braille.
+	"""
+	_lastRequestedDeviceMatch: bdDetect.DeviceMatch | None = None
+	"""The last requested device match belonging to _lastRequestedDisplayName,
 	even if it failed and has fallen back to no braille.
 	"""
 
@@ -2682,6 +2696,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName = name
+			self._lastRequestedDeviceMatch = detected
 			if not detected:
 				self._disableDetection()
 
@@ -3230,25 +3245,38 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		usb: bool = True,
 		bluetooth: bool = True,
 		limitToDevices: Optional[List[str]] = None,
+		preferedDevice: bdDetect.DriverAndDeviceMatch | None = None,
 	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		In that case, it is triggered by L{setDisplayByname}.
-		@param usb: Whether to scan for USB devices
-		@param bluetooth: Whether to scan for Bluetooth devices.
-		@param limitToDevices: An optional list of driver names a scan should be limited to.
+		:param usb: Whether to scan for USB devices
+		:param bluetooth: Whether to scan for Bluetooth devices.
+		:param limitToDevices: An optional list of driver names a scan should be limited to.
 			This is used when a Bluetooth device is detected, in order to switch to USB
 			when an USB device for the same driver is found.
-			C{None} if no driver filtering should occur.
+			``None`` if no driver filtering should occur.
+		:param preferedDevice: An optional preferred device to use for detection.
+			this device is attempted to be used before a scan is started.
 		"""
 		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		if self._detector:
-			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
+			self._detector.rescan(
+				usb=usb,
+				bluetooth=bluetooth,
+				limitToDevices=limitToDevices,
+				preferedDevice=preferedDevice,
+			)
 			return
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		self._detector = bdDetect._Detector()
-		self._detector._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
+		self._detector._queueBgScan(
+			usb=usb,
+			bluetooth=bluetooth,
+			limitToDevices=limitToDevices,
+			preferedDevice=preferedDevice,
+		)
 
 	def _disableDetection(self):
 		"""Disables automatic detection of braille displays."""
