@@ -278,8 +278,10 @@ class SynthDriverAudioStream(COMObject):
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
 		# For the first audio chunk, wait for some amount of audio data
 		# in order to avoid audio gaps if further processing takes longer time
+		# when rate boost is enabled.
 		if (
-			synth._isFirstAudioChunk
+			synth.rateBoost
+			and synth._isFirstAudioChunk
 			and synth.sonicStream.samplesAvailable
 			< synth.sonicStream.sampleRate * _FIRST_AUDIO_CHUNK_MIN_DURATION_MS // 1000
 		):
