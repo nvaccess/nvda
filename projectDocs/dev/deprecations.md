@@ -33,7 +33,7 @@ __getattr__ = handleDeprecations(
 	MovedSymbol("eggs", "bar"),
 	# `newPath` is needed, as it's `breakfastMeats.sausage`, not just `sausage`.
 	MovedSymbol("sausage", "bar", "breakfastMeats", "sausage"),
-	# Symbol marked internal (renamed to `foo._sausage`) pending removal at end of deprecation grace period
+	# Symbol marked internal (renamed to `foo._spam`) pending removal at end of deprecation grace period
 	RemovedSymbol("spam", _spam),
 )
 """Module level `__getattr__` used to preserve backward compatibility."""
