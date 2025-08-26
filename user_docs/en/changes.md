@@ -45,9 +45,29 @@ These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
 * Fixed behavior of `TextInfo.collapse()` - previously it was moving TextInfo to the next paragraph in some cases. (#18320, @mltony)
 * Fixed behavior of `OffsetTextInfo.move()` - previously it wouldn't move to the very end of the document unless moving by character. (#18348, @mltony)
+* `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
+Most API consumers should not be impacted by this change.
+Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 
 #### Deprecations
 
+* `NVDAHelper.versionedLibPath` is deprecated.
+Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
+* `NVDAHelper.coreArchLibPath` is deprecated.
+Use `NVDAState.ReadPaths.coreArchLibPath` instead. (#18207)
+* `NVDAHelper.LOCAL_WIN10_DLL_PATH` is deprecated.
+Use `NVDAState.ReadPaths.nvdaHelperLocalWin10Dll` instead. (#18207)
+* `NVDAHelper.generateBeep` is deprecated.
+Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
+* `NVDAHelper.VBuf_getTextInRange` is deprecated.
+Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
+* `NVDAHelper.onSsmlMarkReached` is deprecated.
+Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
+* `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
+Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
+* `nvwave.WAVEFORMATEX` is deprecated.
+Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * `hwPortUtils.BTH_ADDR` is deprecated.

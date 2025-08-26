@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,30 +11,112 @@ When working on this file, consider moving to winAPI.
 
 import contextlib
 import ctypes
-from ctypes import *  # noqa: F403
-from ctypes import byref, WinError, Structure, c_int, c_char
-from ctypes.wintypes import *  # noqa: F403
-from ctypes.wintypes import HWND, RECT, DWORD
-from typing import (
-	Any,
-	Tuple,
+from ctypes import (
+	POINTER,
+	WINFUNCTYPE,
+	Union,
+	byref,
+	WinError,
+	Structure,
+	c_int,
+	c_long,
+	c_short,
+	c_uint,
+	c_ulong,
+	c_ushort,
+	c_wchar,
+	create_unicode_buffer,
+	sizeof,
+	windll,
+	wstring_at,
+)
+from ctypes.wintypes import (
+	BOOL,
+	HANDLE,
+	HWND,
+	POINT,
+	RECT,
+	DWORD,
+	SHORT,
+	WCHAR,
 )
 
+import winBindings.user32
+from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
-import NVDAState
-from logHandler import log
+from utils import _deprecate
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"WNDCLASSEXW",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"WNDPROC",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"PAINTSTRUCT",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CXSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"CX_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CYSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"CY_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_SWAPBUTTON",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"SWAP_BUTTON",
+	),
+	_deprecate.MovedSymbol(
+		"SM_XVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"X_VIRTUAL_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_YVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"Y_VIRTUAL_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CXVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"CX_VIRTUAL_SCREEN",
+	),
+	_deprecate.MovedSymbol(
+		"SM_CYVIRTUALSCREEN",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"CY_VIRTUAL_SCREEN",
+	),
+)
+"""Module __getattr__ to handle backward compatibility."""
+
 
 # dll handles
-user32 = windll.user32  # noqa: F405
+user32 = windll.user32
 
 # rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
 # what may be an invalid or illegal pointer, we'll treat it as an opaque value.
 HWNDVal = int
 
-LRESULT = c_long  # noqa: F405
-HCURSOR = c_long  # noqa: F405
+LRESULT = c_long
+HCURSOR = c_long
 
 # Standard window class stuff
 #: Redraws the entire window if a movement or size adjustment changes the width of the client area.
@@ -42,54 +124,12 @@ CS_HREDRAW = 0x0002
 #: Redraws the entire window if a movement or size adjustment changes the height of the client area.
 CS_VREDRAW = 0x0001
 
-WNDPROC = WINFUNCTYPE(LRESULT, HWND, c_uint, WPARAM, LPARAM)  # noqa: F405
-
-
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	from winAPI.winUser.constants import SystemMetrics
-
-	_deprecatedConstantsMap = {
-		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
-		"SM_CYSCREEN": SystemMetrics.CY_SCREEN,
-		"SM_SWAPBUTTON": SystemMetrics.SWAP_BUTTON,
-		"SM_XVIRTUALSCREEN": SystemMetrics.X_VIRTUAL_SCREEN,
-		"SM_YVIRTUALSCREEN": SystemMetrics.Y_VIRTUAL_SCREEN,
-		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
-		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
-	}
-	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
-		replacementSymbol = _deprecatedConstantsMap[attrName]
-		log.warning(
-			f"Importing {attrName} from here is deprecated. "
-			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. ",
-		)
-		return replacementSymbol
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-
-class WNDCLASSEXW(Structure):
-	_fields_ = [
-		("cbSize", c_uint),  # noqa: F405
-		("style", c_uint),  # noqa: F405
-		("lpfnWndProc", WNDPROC),
-		("cbClsExtra", c_int),
-		("cbWndExtra", c_int),
-		("hInstance", HINSTANCE),  # noqa: F405
-		("hIcon", HICON),  # noqa: F405
-		("HCURSOR", HCURSOR),
-		("hbrBackground", HBRUSH),  # noqa: F405
-		("lpszMenuName", LPWSTR),  # noqa: F405
-		("lpszClassName", LPWSTR),  # noqa: F405
-		("hIconSm", HICON),  # noqa: F405
-	]
-
 
 class NMHdrStruct(Structure):
 	_fields_ = [
 		("hwndFrom", HWND),
-		("idFrom", c_uint),  # noqa: F405
-		("code", c_uint),  # noqa: F405
+		("idFrom", c_uint),
+		("code", c_uint),
 	]
 
 
@@ -431,7 +471,7 @@ def setSystemScreenReaderFlag(val):
 
 
 def getSystemScreenReaderFlag():
-	val = BOOL()  # noqa: F405
+	val = BOOL()
 	user32.SystemParametersInfoW(SPI_GETSCREENREADER, 0, byref(val), 0)
 	return bool(val.value)
 
@@ -457,11 +497,11 @@ def HIWORD(long):
 
 
 def GET_X_LPARAM(lp):
-	return c_short(LOWORD(lp)).value  # noqa: F405
+	return c_short(LOWORD(lp)).value
 
 
 def GET_Y_LPARAM(lp):
-	return c_short(HIWORD(lp)).value  # noqa: F405
+	return c_short(HIWORD(lp)).value
 
 
 def MAKELONG(lo, hi):
@@ -473,7 +513,7 @@ def waitMessage():
 
 
 def getMessage(*args) -> int:
-	return user32.GetMessageW(*args)
+	return winBindings.user32.GetMessage(*args)
 
 
 def translateMessage(*args):
@@ -542,9 +582,9 @@ def getClientRect(hwnd):
 	return r
 
 
-HWINEVENTHOOK = HANDLE  # noqa: F405
+HWINEVENTHOOK = HANDLE
 
-WINEVENTPROC = WINFUNCTYPE(None, HWINEVENTHOOK, DWORD, HWND, c_long, c_long, DWORD, DWORD)  # noqa: F405
+WINEVENTPROC = WINFUNCTYPE(None, HWINEVENTHOOK, DWORD, HWND, c_long, c_long, DWORD, DWORD)
 
 
 def setWinEventHook(*args):
@@ -559,7 +599,7 @@ def sendMessage(hwnd, msg, param1, param2):
 	return user32.SendMessageW(hwnd, msg, param1, param2)
 
 
-def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
+def getWindowThreadProcessID(hwnd: HWNDVal) -> tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
 	processID = c_int()
 	threadID = user32.GetWindowThreadProcessId(hwnd, byref(processID))
@@ -567,7 +607,7 @@ def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 
 
 def getClassName(window: HWNDVal) -> str:
-	buf = create_unicode_buffer(256)  # noqa: F405
+	buf = create_unicode_buffer(256)
 	user32.GetClassNameW(window, buf, 255)
 	return buf.value
 
@@ -602,13 +642,13 @@ def setCursorPos(x, y):
 
 
 def getCursorPos():
-	point = POINT()  # noqa: F405
+	point = POINT()
 	_getCursorPos(byref(point))
 	return [point.x, point.y]
 
 
 def getCaretPos():
-	point = POINT()  # noqa: F405
+	point = POINT()
 	user32.GetCaretPos(byref(point))
 	return [point.x, point.y]
 
@@ -618,7 +658,7 @@ def getTopWindow(hwnd):
 
 
 def getWindowText(hwnd):
-	buf = create_unicode_buffer(1024)  # noqa: F405
+	buf = create_unicode_buffer(1024)
 	user32.InternalGetWindowText(hwnd, buf, 1023)
 	return buf.value
 
@@ -636,7 +676,7 @@ def isWindowEnabled(window):
 
 
 def getGUIThreadInfo(threadID):
-	info = GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))  # noqa: F405
+	info = GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))
 	user32.GetGUIThreadInfo(threadID, byref(info))
 	return info
 
@@ -673,7 +713,7 @@ def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
 
 
 def getKeyNameText(scanCode, extended):
-	buf = create_unicode_buffer(32)  # noqa: F405
+	buf = create_unicode_buffer(32)
 	user32.GetKeyNameTextW((scanCode << 16) | (extended << 24), buf, 31)
 	return buf.value
 
@@ -705,24 +745,24 @@ def PostMessage(hwnd, msg, wParam, lParam):
 		raise WinError()
 
 
-user32.VkKeyScanExW.restype = SHORT  # noqa: F405
+user32.VkKeyScanExW.restype = SHORT
 
 
 def VkKeyScanEx(ch, hkl):
-	res = user32.VkKeyScanExW(WCHAR(ch), hkl)  # noqa: F405
+	res = user32.VkKeyScanExW(WCHAR(ch), hkl)
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF
 
 
 def ScreenToClient(hwnd, x, y):
-	point = POINT(x, y)  # noqa: F405
+	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
 
 
 def ClientToScreen(hwnd, x, y):
-	point = POINT(x, y)  # noqa: F405
+	point = POINT(x, y)
 	user32.ClientToScreen(hwnd, byref(point))
 	return point.x, point.y
 
@@ -738,7 +778,7 @@ class STICKYKEYS(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)  # noqa: F405
+		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)
 
 
 SKF_STICKYKEYSON = 0x00000001
@@ -754,39 +794,39 @@ def getSystemStickyKeys():
 
 
 # START SENDINPUT TYPE DECLARATIONS
-PUL = POINTER(c_ulong)  # noqa: F405
+PUL = POINTER(c_ulong)
 
 
 class KeyBdInput(Structure):
 	_fields_ = [
-		("wVk", c_ushort),  # noqa: F405
-		("wScan", c_ushort),  # noqa: F405
-		("dwFlags", c_ulong),  # noqa: F405
-		("time", c_ulong),  # noqa: F405
+		("wVk", c_ushort),
+		("wScan", c_ushort),
+		("dwFlags", c_ulong),
+		("time", c_ulong),
 		("dwExtraInfo", PUL),
 	]
 
 
 class HardwareInput(Structure):
 	_fields_ = [
-		("uMsg", c_ulong),  # noqa: F405
-		("wParamL", c_short),  # noqa: F405
-		("wParamH", c_ushort),  # noqa: F405
-	]  # noqa: F405
+		("uMsg", c_ulong),
+		("wParamL", c_short),
+		("wParamH", c_ushort),
+	]
 
 
 class MouseInput(Structure):
 	_fields_ = [
-		("dx", c_long),  # noqa: F405
-		("dy", c_long),  # noqa: F405
-		("mouseData", c_ulong),  # noqa: F405
-		("dwFlags", c_ulong),  # noqa: F405
-		("time", c_ulong),  # noqa: F405
+		("dx", c_long),
+		("dy", c_long),
+		("mouseData", c_ulong),
+		("dwFlags", c_ulong),
+		("time", c_ulong),
 		("dwExtraInfo", PUL),
 	]
 
 
-class Input_I(Union):  # noqa: F405
+class Input_I(Union):
 	_fields_ = [
 		("ki", KeyBdInput),
 		("mi", MouseInput),
@@ -796,7 +836,7 @@ class Input_I(Union):  # noqa: F405
 
 class Input(Structure):
 	_fields_ = [
-		("type", c_ulong),  # noqa: F405
+		("type", c_ulong),
 		("ii", Input_I),
 	]
 
@@ -811,38 +851,27 @@ KEYEVENTF_UNICODE = 0x04
 def SendInput(inputs):
 	n = len(inputs)
 	arr = (Input * n)(*inputs)
-	user32.SendInput(n, arr, sizeof(Input))  # noqa: F405
-
-
-class PAINTSTRUCT(Structure):
-	_fields_ = [
-		("hdc", c_int),
-		("fErase", c_int),
-		("rcPaint", RECT),
-		("fRestore", c_int),
-		("fIncUpdate", c_int),
-		("rgbReserved", c_char * 32),
-	]
+	user32.SendInput(n, arr, sizeof(Input))
 
 
 @contextlib.contextmanager
-def paint(hwnd: int, paintStruct: PAINTSTRUCT | None = None):
+def paint(hwnd: int, paintStruct: _PAINTSTRUCT | None = None):
 	"""
 	Context manager that wraps BeginPaint and EndPaint.
 	:param painStruct: The paint structure used in the call to BeginPaint.
 		if None (default), an empty structure is provided.
 	"""
 	if paintStruct is None:
-		paintStruct = PAINTSTRUCT()
-	elif not isinstance(paintStruct, PAINTSTRUCT):
+		paintStruct = _PAINTSTRUCT()
+	elif not isinstance(paintStruct, _PAINTSTRUCT):
 		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")
-	hdc = user32.BeginPaint(hwnd, byref(paintStruct))
+	hdc = winBindings.user32.BeginPaint(hwnd, byref(paintStruct))
 	if hdc == 0:
 		raise WinError()
 	try:
 		yield hdc
 	finally:
-		user32.EndPaint(hwnd, byref(paintStruct))
+		winBindings.user32.EndPaint(hwnd, byref(paintStruct))
 
 
 class WinTimer(object):
@@ -887,17 +916,17 @@ def openClipboard(hwndOwner=None):
 	A context manager version of OpenClipboard from user32.
 	Use as the expression of a 'with' statement, and CloseClipboard will automatically be called at the end.
 	"""
-	if not windll.user32.OpenClipboard(hwndOwner):  # noqa: F405
-		raise ctypes.WinError()  # noqa: F405
+	if not winBindings.user32.OpenClipboard(hwndOwner):
+		raise ctypes.WinError()
 	try:
 		yield
 	finally:
-		windll.user32.CloseClipboard()  # noqa: F405
+		winBindings.user32.CloseClipboard()
 
 
 def emptyClipboard():
-	if not windll.user32.EmptyClipboard():  # noqa: F405
-		raise ctypes.WinError()  # noqa: F405
+	if not windll.user32.EmptyClipboard():
+		raise ctypes.WinError()
 
 
 def getClipboardData(format):
@@ -905,15 +934,15 @@ def getClipboardData(format):
 	if format != CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
 	# Fetch the data from the clipboard as a global memory handle
-	h = windll.user32.GetClipboardData(format)  # noqa: F405
+	h = winBindings.user32.GetClipboardData(format)
 	if not h:
-		raise ctypes.WinError()  # noqa: F405
+		raise ctypes.WinError()
 	# Lock the global memory  while we fetch the unicode string
 	# But make sure not to free the memory accidentally -- it is not ours
 	h = winKernel.HGLOBAL(h, autoFree=False)
 	with h.lock() as addr:
 		# Read the string from the local memory address
-		return wstring_at(addr)  # noqa: F405
+		return wstring_at(addr)
 
 
 def setClipboardData(format, data):
@@ -927,10 +956,10 @@ def setClipboardData(format, data):
 	# Acquire a lock to the global memory receiving a local memory address
 	with h.lock() as addr:
 		# Write the text into the allocated memory
-		buf = (c_wchar * bufLen).from_address(addr)  # noqa: F405
+		buf = (c_wchar * bufLen).from_address(addr)
 		buf.value = text
 	# Set the clipboard data with the global memory
-	if not windll.user32.SetClipboardData(format, h):  # noqa: F405
-		raise ctypes.WinError()  # noqa: F405
+	if not winBindings.user32.SetClipboardData(format, h):
+		raise ctypes.WinError()
 	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
 	h.forget()
