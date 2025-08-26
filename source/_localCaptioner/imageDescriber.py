@@ -130,7 +130,9 @@ class ImageDescriber:
 
 		if not localModelDirPath:
 			baseModelsDir = _WritePaths().modelsDir
-			localModelDirPath = os.path.join(baseModelsDir, config.conf["automatedImageDescriptions"]["defaultModelPath"])
+			localModelDirPath = os.path.join(
+				baseModelsDir, config.conf["automatedImageDescriptions"]["defaultModelPath"]
+			)
 		encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
 		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
 		configPath = f"{localModelDirPath}/config.json"

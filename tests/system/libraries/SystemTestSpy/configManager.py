@@ -140,13 +140,14 @@ def _configModels(modelsDirectory: str) -> None:
 	generator = MockVisionEncoderDecoderGenerator(random_seed=8)
 	generator.generateAllFiles(modelsDirectory)
 
+
 def _shouldGenerateMockModel(iniPath: str) -> bool:
 	# Read original lines
 	with open(iniPath, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
 	# Flags to track if we are in the [automatedImageDescriptions] section
-	hasCaptionSection  = False
+	hasCaptionSection = False
 
 	for line in lines:
 		# Detect section headers

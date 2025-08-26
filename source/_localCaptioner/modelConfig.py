@@ -192,7 +192,6 @@ class _PreprocessorConfig:
 			object.__setattr__(self, "size", {"height": 224, "width": 224})
 
 
-
 # Default configuration instances
 _DEFAULT_ENCODER_CONFIG: _EncoderConfig | None = None
 _DEFAULT_DECODER_CONFIG: _DecoderConfig | None = None
@@ -200,13 +199,20 @@ _DEFAULT_GENERATION_CONFIG: _GenerationConfig | None = None
 _DEFAULT_MODEL_CONFIG: _ModelConfig | None = None
 _DEFAULT_PREPROCESSOR_CONFIG: _PreprocessorConfig | None = None
 
+
 def initialize():
-	global _DEFAULT_ENCODER_CONFIG, _DEFAULT_DECODER_CONFIG, _DEFAULT_GENERATION_CONFIG, _DEFAULT_MODEL_CONFIG, _DEFAULT_PREPROCESSOR_CONFIG
+	global \
+		_DEFAULT_ENCODER_CONFIG, \
+		_DEFAULT_DECODER_CONFIG, \
+		_DEFAULT_GENERATION_CONFIG, \
+		_DEFAULT_MODEL_CONFIG, \
+		_DEFAULT_PREPROCESSOR_CONFIG
 	_DEFAULT_ENCODER_CONFIG = _EncoderConfig()
 	_DEFAULT_DECODER_CONFIG = _DecoderConfig()
 	_DEFAULT_GENERATION_CONFIG = _GenerationConfig()
 	_DEFAULT_MODEL_CONFIG = _ModelConfig()
 	_DEFAULT_PREPROCESSOR_CONFIG = _PreprocessorConfig()
+
 
 def _createConfigFromDict(configClass: Any, configdict: dict[str, Any], defaultConfig):
 	"""Create a dataclass instance from a dictionary with automatic field mapping.

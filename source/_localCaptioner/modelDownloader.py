@@ -24,7 +24,7 @@ from urllib3.util.retry import Retry
 
 from logHandler import log
 import config
-from NVDAState import  _WritePaths
+from NVDAState import _WritePaths
 
 # Type definitions
 ProgressCallback = Callable[[str, int, int, float], None]
@@ -218,7 +218,7 @@ class ModelDownloader:
 	) -> tuple[bool, str]:
 		"""
 		Download a single file with resume support and automatic redirect handling.
-		
+
 		:param url: Remote URL to download from.
 		:param localPath: Local file path to save the downloaded file.
 		:param progressCallback: Optional callback function for progress reporting.
@@ -245,7 +245,9 @@ class ModelDownloader:
 			return False, "Download cancelled"
 
 		# Check if file already exists and is complete
-		success, message = self._checkExistingFile(localPath, remoteSize, fileName, progressCallback, threadId)
+		success, message = self._checkExistingFile(
+			localPath, remoteSize, fileName, progressCallback, threadId
+		)
 		if success is not None:
 			return success, message
 
@@ -255,7 +257,7 @@ class ModelDownloader:
 	def _createDestinationDirectory(self, localPath: str) -> tuple[bool, str]:
 		"""
 		Create destination directory if it doesn't exist.
-		
+
 		:param localPath: Local file path to create directory for.
 		:return: Tuple of (success_flag, error_message).
 		:raises OSError: When directory creation fails due to permissions or disk space.
@@ -272,11 +274,11 @@ class ModelDownloader:
 		remoteSize: int,
 		fileName: str,
 		progressCallback: ProgressCallback | None,
-		threadId: int
+		threadId: int,
 	) -> tuple[bool | None, str]:
 		"""
 		Check if file already exists and is complete.
-		
+
 		:param localPath: Local file path to check.
 		:param remoteSize: Size of remote file in bytes.
 		:param fileName: Base name of the file for progress reporting.
@@ -320,11 +322,11 @@ class ModelDownloader:
 		localPath: str,
 		fileName: str,
 		threadId: int,
-		progressCallback: ProgressCallback | None
+		progressCallback: ProgressCallback | None,
 	) -> tuple[bool, str]:
 		"""
 		Attempt download with retry logic and exponential backoff.
-		
+
 		:param url: Remote URL to download from.
 		:param localPath: Local file path to save the downloaded file.
 		:param fileName: Base name of the file for progress reporting.
@@ -341,8 +343,10 @@ class ModelDownloader:
 
 			try:
 				log.info(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
-				
-				success, message = self._performSingleDownload(url, localPath, fileName, threadId, progressCallback)
+
+				success, message = self._performSingleDownload(
+					url, localPath, fileName, threadId, progressCallback
+				)
 				if success:
 					return True, message
 
@@ -379,11 +383,11 @@ class ModelDownloader:
 		localPath: str,
 		fileName: str,
 		threadId: int,
-		progressCallback: ProgressCallback | None
+		progressCallback: ProgressCallback | None,
 	) -> tuple[bool, str]:
 		"""
 		Perform a single download attempt with resume support.
-		
+
 		:param url: Remote URL to download from.
 		:param localPath: Local file path to save the downloaded file.
 		:param fileName: Base name of the file for progress reporting.
@@ -399,22 +403,27 @@ class ModelDownloader:
 
 		# Get response with resume support
 		response = self._getDownloadResponse(url, resumePos, localPath, threadId)
-		
+
 		if self.cancelRequested:
 			return False, "Download cancelled"
 
 		try:
 			# Determine total file size
 			total = self._calculateTotalSize(response, resumePos)
-			
+
 			if total > 0:
 				log.info(f"[Thread-{threadId}] Total file size: {total:,} bytes")
 
 			# Download file content
 			success, message = self._downloadFileContent(
-				response, localPath, fileName, resumePos, total, progressCallback
+				response,
+				localPath,
+				fileName,
+				resumePos,
+				total,
+				progressCallback,
 			)
-			
+
 			if not success:
 				return False, message
 
@@ -427,7 +436,7 @@ class ModelDownloader:
 	def _getResumePosition(self, localPath: str, threadId: int) -> int:
 		"""
 		Get resume position for partial download.
-		
+
 		:param localPath: Local file path to check.
 		:param threadId: Current thread identifier for logging.
 		:return: Byte position to resume from.
@@ -442,7 +451,7 @@ class ModelDownloader:
 	def _getDownloadResponse(self, url: str, resumePos: int, localPath: str, threadId: int):
 		"""
 		Get download response with resume support and redirect handling.
-		
+
 		:param url: Remote URL to download from.
 		:param resumePos: Byte position to resume from.
 		:param localPath: Local file path for cleanup if needed.
@@ -489,7 +498,7 @@ class ModelDownloader:
 	def _calculateTotalSize(self, response, resumePos: int) -> int:
 		"""
 		Calculate total file size from HTTP response headers.
-		
+
 		:param response: HTTP response object.
 		:param resumePos: Byte position resumed from.
 		:return: Total file size in bytes.
@@ -512,11 +521,11 @@ class ModelDownloader:
 		fileName: str,
 		resumePos: int,
 		total: int,
-		progressCallback: ProgressCallback | None
+		progressCallback: ProgressCallback | None,
 	) -> tuple[bool, str]:
 		"""
 		Download file content with progress reporting and cancellation support.
-		
+
 		:param response: HTTP response object to read from.
 		:param localPath: Local file path to write to.
 		:param fileName: Base name of the file for progress reporting.
@@ -560,11 +569,11 @@ class ModelDownloader:
 		fileName: str,
 		total: int,
 		progressCallback: ProgressCallback | None,
-		threadId: int
+		threadId: int,
 	) -> tuple[bool, str]:
 		"""
 		Verify download integrity and report final progress.
-		
+
 		:param localPath: Local file path to verify.
 		:param fileName: Base name of the file for progress reporting.
 		:param total: Expected total file size in bytes.
@@ -597,11 +606,11 @@ class ModelDownloader:
 		localPath: str,
 		fileName: str,
 		progressCallback: ProgressCallback | None,
-		threadId: int
+		threadId: int,
 	) -> str:
 		"""
 		Handle HTTP errors with special handling for range not satisfiable.
-		
+
 		:param e: HTTP error exception.
 		:param localPath: Local file path to check for completion.
 		:param fileName: Base name of the file for progress reporting.
@@ -624,19 +633,19 @@ class ModelDownloader:
 	def _waitForRetry(self, attempt: int, threadId: int) -> bool:
 		"""
 		Wait for retry with exponential backoff and cancellation support.
-		
+
 		:param attempt: Current retry attempt number.
 		:param threadId: Current thread identifier for logging.
 		:return: True if wait completed, False if cancelled.
 		"""
 		wait = BACKOFF_BASE**attempt
 		log.info(f"[Thread-{threadId}] Waiting {wait}s before retry...")
-		
+
 		for _ in range(wait):
 			if self.cancelRequested:
 				return False
 			time.sleep(1)
-		
+
 		return True
 
 	def downloadModelsMultithreaded(
