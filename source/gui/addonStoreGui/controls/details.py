@@ -129,7 +129,6 @@ class AddonDetails(
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-
 		# It would be nice to override the name using wx.Accessible,
 		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
 		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
