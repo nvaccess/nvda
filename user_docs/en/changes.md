@@ -56,7 +56,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 
 #### Deprecations
 
-* `winVersion.WIN81` constant has been deprecated from winVersion module. (#18684, @josephsl):
+* `winVersion.WIN81` constant has been deprecated from the `winVersion` module. (#18684, @josephsl):
 * `NVDAHelper.versionedLibPath` is deprecated.
 Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
 * `NVDAHelper.coreArchLibPath` is deprecated.
