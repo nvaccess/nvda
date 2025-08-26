@@ -120,7 +120,7 @@ class _ReadPaths:
 			self.versionedLibPath,
 			(
 				# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
-				"arm64ec" if arch == "ARM64" else "x64",
+				"arm64ec" if arch == "ARM64" else "x64"
 			),
 		)
 
