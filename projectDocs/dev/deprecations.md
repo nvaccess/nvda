@@ -1,11 +1,12 @@
-
 # Deprecations
 
 ## Background
+
 The NVDA API must maintain compatibility with add-ons throughout yearly development cycles.
 The first release of a year, i.e. `20XX.1`, is when the NVDA API can introduce breaking changes.
 
 ## Deprecations
+
 Where possible, ensure the NVDA API maintains backwards compatibility.
 If no removal is required or proposed, backwards compatibility can be maintained via the following snippet:
 
@@ -65,18 +66,20 @@ As a result, it not possible to retain backwards compatibility for module level 
 For example, if there is a global variable named `currentState` in `exampleModule.py`, `currentState` cannot be deprecated.
 
 This is because:
+
 * `__getattr__` only fetches variables which are not defined on the module level.
 As such, setting an attribute that is fetched via `__getattr__` will prevent `__getattr__` from fetching the attribute.
 Any future gets will fetch the newly assigned value.
 * Python does not have an equivalent module level `__setattr__` like the `__getattr__` example.
 * Encapsulating a module level variable into another data structure changes the import behaviour.
-	- e.g. if `exampleModule` became a class, so `exampleModule.currentState` was a class level variable with the same namespace as the deprecated symbol, `exampleModule` may not be importable in the same manner.
+  * e.g. if `exampleModule` became a class, so `exampleModule.currentState` was a class level variable with the same namespace as the deprecated symbol, `exampleModule` may not be importable in the same manner.
 
 As a result, module level variables should be avoided.
 
 ## Testing backwards compatibility
 
 To ensure a module retains the same symbol names being importable, check across versions what is imported using the NVDA python console.
+
 ```python
 import controlTypes
 dir(controlTypes)
@@ -87,4 +90,5 @@ Changes different to moving or renaming symbols need to be considered carefully 
 Any API breaking changes such as deprecations marked for removal should be commented with the year of intended removal, and notes on how to implement the API change as an add-on developer and NVDA developer.
 
 ## Announcements
+
 Deprecations should be announced via the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
