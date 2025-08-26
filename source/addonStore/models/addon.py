@@ -56,6 +56,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	addonId: str
 	displayName: str
 	description: str
+	changelog: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
@@ -112,6 +113,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	addonId: str
 	displayName: str
 	description: str
+	changelog: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
@@ -222,6 +224,13 @@ class _AddonManifestModel(_AddonGUIModel):
 		return description
 
 	@property
+	def changelog(self) -> str:
+		changelog: Optional[str] = self.manifest.get("changelog")
+		if changelog is None:
+			return ""
+		return changelog
+
+	@property
 	def installDate(self) -> datetime:
 		return datetime.fromtimestamp(os.path.getctime(self.installPath))
 
@@ -294,6 +303,7 @@ class AddonStoreModel(_AddonStoreModel):
 	addonId: str
 	displayName: str
 	description: str
+	changelog: str
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -350,6 +360,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
 		description=addon["description"],
+		changelog=addon["description"],
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
