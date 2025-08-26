@@ -12,6 +12,8 @@ import winreg
 import buildVersion
 import globalVars
 
+from functools import cached_property
+
 
 class _WritePaths:
 	@property
@@ -109,15 +111,21 @@ class _ReadPaths:
 	def versionedLibX86Path(self) -> str:
 		return os.path.join(self.versionedLibPath, "x86")
 
-	@property
+	@cached_property
 	def versionedLibAMD64Path(self) -> str:
-		return os.path.join(self.versionedLibPath, "x64")
+		import winVersion
+
+		arch = winVersion.getWinVer().processorArchitecture
+		return os.path.join(self.versionedLibPath, (
+			# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
+			"arm64ec" if arch == "ARM64" else "x64",
+		))
 
 	@property
 	def versionedLibARM64Path(self) -> str:
 		return os.path.join(self.versionedLibPath, "arm64")
 
-	@property
+	@cached_property
 	def coreArchLibPath(self) -> str:
 		match sysconfig.get_platform():
 			case "win-amd64":
