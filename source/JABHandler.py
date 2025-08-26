@@ -39,7 +39,6 @@ import controlTypes
 import NVDAObjects.JAB
 import core
 import textUtils
-import NVDAState
 import config
 from utils.security import isRunningOnSecureDesktop
 
