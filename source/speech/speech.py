@@ -505,7 +505,7 @@ def _getSpellingSpeechWithoutCharMode(
 					itemIsNormalized = True
 				else:
 					# Tried to normalize, but it didn't result in normalization at all.
-					# We need to deal with the case wheresplitAtCharacterBoundaries might have merged characters we need to speak separately.
+					# We need to deal with the case where splitAtCharacterBoundaries might have merged characters we need to speak separately.
 					charList = [characterProcessing.processSpeechSymbol(locale, char) for char in speakCharAs]
 			else:
 				charList = [speakCharAs]
