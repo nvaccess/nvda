@@ -532,7 +532,7 @@ class UIAHandler(COMObject):
 			if config.conf["UIA"]["enhancedEventProcessing"]:
 				handler = self._rateLimitedEventHandler = POINTER(IUnknown)()
 				NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
-					self._com_pointers_[IUnknown._iid_],
+					self.QueryInterface(IUnknown),
 					byref(self._rateLimitedEventHandler),
 				)
 			else:
