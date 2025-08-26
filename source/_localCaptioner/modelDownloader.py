@@ -26,6 +26,7 @@ from urllib3.util.retry import Retry
 
 from logHandler import log
 import config
+from NVDAState import  _WritePaths
 
 # Type definitions
 ProgressCallback = Callable[[str, int, int, float], None]
@@ -416,7 +417,7 @@ class ModelDownloader:
 
 	def downloadModelsMultithreaded(
 		self,
-		modelsDir: str = "models",
+		modelsDir: str = _WritePaths().modelsDir,
 		modelName: str = "Xenova/vit-gpt2-image-captioning",
 		filesToDownload: list[str] | None = None,
 		resolvePath: str = "/resolve/main",

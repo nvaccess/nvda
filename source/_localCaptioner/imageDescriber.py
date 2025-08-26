@@ -12,6 +12,7 @@ It allows users to capture screen regions and generate captions using local AI m
 import io
 import threading
 from threading import Thread
+import os
 
 import wx
 import config
@@ -20,6 +21,7 @@ import ui
 import api
 from keyboardHandler import KeyboardInputGesture
 import core
+from NVDAState import _WritePaths
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
@@ -127,7 +129,8 @@ class ImageDescriber:
 		"""
 
 		if not localModelDirPath:
-			localModelDirPath = config.conf["automatedImageDescriptions"]["defaultModelPath"]
+			baseModelsDir = _WritePaths().modelsDir
+			localModelDirPath = os.path.join(baseModelsDir, config.conf["automatedImageDescriptions"]["defaultModelPath"])
 		encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
 		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
 		configPath = f"{localModelDirPath}/config.json"
