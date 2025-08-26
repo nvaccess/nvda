@@ -20,10 +20,10 @@ dll = windll.ole32
 
 
 @dllFunc(dll, annotateOriginalCFunc=True)
-def CoTaskMemAlloc(pv: int | LPVOID) -> None:
+def CoTaskMemFree(pv: int | LPVOID) -> None:
 	"""
 	Frees a block of task memory previously allocated through a call to the CoTaskMemAlloc or CoTaskMemRealloc function.
-	@param pv: A pointer to the memory block to be freed.
+	:param pv: A pointer to the memory block to be freed.
 
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cotaskmemfree
