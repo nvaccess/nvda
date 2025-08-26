@@ -392,10 +392,10 @@ class TestUniscribeSplitAtCharacterBoundaries(unittest.TestCase):
 		self._testHelper("\u0301", ["\u0301"])
 
 	def test_acuteWithSpaceBefore(self):
-		# The accute is bound to the space
+		# The acute is bound to the space
 		self._testHelper(" \u0301", [" \u0301"])
 
-	def test_accuteWithSpaceAfter(self):
+	def test_acuteWithSpaceAfter(self):
 		self._testHelper("\u0301 ", ["\u0301", " "])
 
 	def test_sentenceWithComposites(self):
