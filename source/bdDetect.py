@@ -418,7 +418,11 @@ class _Detector:
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
 			self._queuedFuture.cancel()
 		self._queuedFuture = self._executor.submit(
-			self._bgScan, usb, bluetooth, limitToDevices, preferedDevice
+			self._bgScan,
+			usb,
+			bluetooth,
+			limitToDevices,
+			preferedDevice,
 		)
 
 	def _stopBgScan(self):
@@ -521,7 +525,10 @@ class _Detector:
 		# Clear the cache of bluetooth devices so new devices can be picked up.
 		deviceInfoFetcher.btDevsCache = None
 		self._queueBgScan(
-			usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices, preferedDevice=preferedDevice
+			usb=usb,
+			bluetooth=bluetooth,
+			limitToDevices=limitToDevices,
+			preferedDevice=preferedDevice,
 		)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
