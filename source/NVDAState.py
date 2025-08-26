@@ -116,10 +116,13 @@ class _ReadPaths:
 		import winVersion
 
 		arch = winVersion.getWinVer().processorArchitecture
-		return os.path.join(self.versionedLibPath, (
-			# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
-			"arm64ec" if arch == "ARM64" else "x64",
-		))
+		return os.path.join(
+			self.versionedLibPath,
+			(
+				# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
+				"arm64ec" if arch == "ARM64" else "x64",
+			),
+		)
 
 	@property
 	def versionedLibARM64Path(self) -> str:
