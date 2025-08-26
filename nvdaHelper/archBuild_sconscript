@@ -92,7 +92,7 @@ env.Append(
 		"UNICODE",
 		"_CRT_SECURE_NO_DEPRECATE",
 		("LOGLEVEL", "${nvdaHelperLogLevel}"),
-		("_WIN32_WINNT", "_WIN32_WINNT_WINBLUE"),
+		("_WIN32_WINNT", "_WIN32_WINNT_WIN10"),
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
 		"NOMINMAX",
@@ -103,8 +103,8 @@ env.Append(CXXFLAGS=["/EHsc"])
 
 env.Append(CPPPATH=["#/include", "#/include/wil/include", "#/miscDeps/include", Dir(".").abspath])
 
-# Windows 8.1 (blue)
-subsystem = "/subsystem:windows,6.03"
+# Windows 10
+subsystem = "/subsystem:windows,10.00"
 
 env.Append(
 	LINKFLAGS=[
