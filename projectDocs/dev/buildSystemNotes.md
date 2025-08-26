@@ -17,6 +17,7 @@ Version numbers for dependencies should be used to lock in a version.
 ### Entry points to the build system
 
 These are the only files expected to be executed directly by a user/developer:
+
 - `scons.bat`
 - `runnvda.bat`
 - `rununittests.bat`
@@ -39,6 +40,7 @@ Ensures the build environment is clean, and there are no conflicts with other in
 
 NVDA and its build system have many Python dependencies.
 Using `uv` means:
+
 - Updating is easier than git submodules.
 - Developers need to sync/update their submodules less often.
 - More consistency for dependencies.
