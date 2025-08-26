@@ -37,7 +37,7 @@ This includes Windows and other Microsoft products such as Office.
 * LibreOffice
   * [LibreOffice Bugzilla](https://bugs.documentfoundation.org/).
 * Microsoft Office
-  * [Microsoft Office Support](#microsoft).
+  * [Microsoft Office Support](#Microsoft).
 
 ## Common Websites
 
