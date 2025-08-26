@@ -113,7 +113,7 @@ type ParamFlag = tuple[ParamDirectionFlag, str] | tuple[ParamDirectionFlag, str,
 type ErrcheckType = Callable[[Any, ctypes._CFuncPtr, tuple[Any, ...]], Any]
 
 
-def windowsErrCheckdef(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...]) -> Any:
+def windowsErrCheck(result: int, func: ctypes._CFuncPtr, args: tuple[Any, ...]) -> Any:
 	"""
 	Checks the result of a Windows API call and raises a WinError if the result indicates failure.
 	This function can be used as an error checking callback
