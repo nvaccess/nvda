@@ -1,8 +1,8 @@
-## Albatross
+# Albatross
 
 This module contains driver for Caiku Albatross 46 and 80 braille displays.
 
-### General
+## General
 
 Different to many other displays, Albatross models do not wait for the driver
 to send a query of their presence to the device. Instead, the device continuously sends
@@ -65,7 +65,7 @@ length of display (0 for 46 and 1 for 80 cells model).
 Note: This driver ignores status cells related settings because NVDA does not
 use status cells at the moment.
 
-### Driver requirements
+## Driver requirements
 
 - support for both 46 and 80 cells models
 - support for both automatic and manual detection
@@ -73,7 +73,7 @@ use status cells at the moment.
 on so that display content is up-to-date and buttons work as expected after
 these operations.
 
-### Design
+## Design
 
 Driver has modular structure:
 
