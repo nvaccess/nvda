@@ -272,7 +272,7 @@ class AddonStoreVM:
 					),
 					# Translators: Title for a message showing changes for the current add-on version.
 					title=pgettext("addonStore", "Changes for {curVersion}").format(
-						curVersion=aVM.model.addonVersionName
+						curVersion=aVM.model.addonVersionName,
 					),
 					isHtml=True,
 					copyButton=True,
