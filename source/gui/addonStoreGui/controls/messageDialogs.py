@@ -39,6 +39,7 @@ import NVDAState
 from speech.priorities import SpeechPriority
 import ui
 import windowUtils
+from markdown import markdown
 
 if TYPE_CHECKING:
 	from addonStore.models.version import SupportsVersionCheck
@@ -428,6 +429,11 @@ class UpdatableAddonsDialog(
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
+		showChangelogLabel = pgettext("addonStore", "Show changes for this version...")
+		self.showChangelogButton = bHelper.addButton(self, wx.ID_DEFAULT, label=showChangelogLabel)
+		self.showChangelogButton.Bind(wx.EVT_BUTTON, self.onShowChangelogButton)
+
+		# Translators: The label of a button in a dialog
 		openStoreLabel = pgettext("addonStore", "Open Add-on &Store")
 		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
@@ -480,6 +486,25 @@ class UpdatableAddonsDialog(
 				),
 			)
 		self.addonsList.Refresh()
+
+	def onShowChangelogButton(self, evt: wx.CommandEvent):
+		index = self.addonsList.GetFirstSelected()
+		if index == -1:  # No add-on is selected
+			return
+		listItemVM = AddonListItemVM(self.addonsPendingUpdate[index])
+		if listItemVM.model.changelog is None:
+			# Translators: Message presented when an add-on doesn't provide a description of changes for the current version.
+			ui.message("No changelog provided")
+		else:
+			changelog = markdown(str(listItemVM.model.changelog))
+			ui.browseableMessage(
+				changelog,
+				# Translators: Title of a browseable message showing changes for the current add-on version.
+				title=pgettext("addonStore", "Changes for {curVersion}").format(curVersion=listItemVM.model.addonVersionName),
+				isHtml=True,
+				copyButton=True,
+				closeButton=True,
+			)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
