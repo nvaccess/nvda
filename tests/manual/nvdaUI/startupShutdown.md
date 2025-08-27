@@ -11,7 +11,7 @@ Prerequisites:
 
 Steps:
 
-1. Press (or emulate) Ctrl+Alt+N, observe NVDA starts up
+1. Press (or emulate) `control+alt+n`, observe NVDA starts up
 
 Variation:
 
@@ -62,7 +62,7 @@ Steps:
 Steps:
 
 1. Press `win+r`
-1. Enter \<path to nvda.exe\>
+1. Enter `<path to nvda.exe>`
 1. Press enter
 1. Observe NVDA starts
 

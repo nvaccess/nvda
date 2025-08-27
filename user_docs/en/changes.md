@@ -92,6 +92,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
+
 ## 2025.3
 
 This release includes improvements to Remote Access, SAPI5 voices, braille and the Add-on Store.

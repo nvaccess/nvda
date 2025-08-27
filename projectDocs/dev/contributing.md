@@ -21,7 +21,9 @@ If you are new to the project, or looking for some way to help take a look at:
 * A minor/trivial change which definitely wouldn't require design, user experience or implementation discussion, you can just create a pull request rather than using an issue first.
   * e.g. a fix for a typo/obvious coding error or a simple synthesizer/braille display driver
   * This should be fairly rare.
-* If in doubt, use an issue first. Use this issue to discuss the alternatives you have considered in regards to implementation, design, and user experience. Then give people time to offer feedback.
+* If in doubt, use an issue first.
+Use this issue to discuss the alternatives you have considered in regards to implementation, design, and user experience.
+Then give people time to offer feedback.
 * Issues with translations should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 
 ## Overview of contribution process:

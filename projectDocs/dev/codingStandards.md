@@ -72,7 +72,7 @@ Files can be checked out locally using CRLF if needed for Windows development us
 For example:
 
 ```py
- Translators: The name of a category of NVDA commands.
+# Translators: The name of a category of NVDA commands.
 SCRCAT_TEXTREVIEW = _("Text review")
 ```
 

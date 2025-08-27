@@ -1023,7 +1023,7 @@ When uploading to the Add-on Store certain requirements apply:
   * Add-on versions are expected to be unique for the addon name and channel, meaning that a beta, stable and dev version of the same add-on cannot share a version number.
   This is so there can be a unique ordering of newest to oldest.
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
-* author (string, required): The author of this add-on, preferably in the form Full Name \<email address\>; e.g. `Michael Curran <mick@example.com>`.
+* author (string, required): The author of this add-on, preferably in the form `Full Name <email address>`; e.g. `Michael Curran <mick@example.com>`.
 * description (string): A sentence or two describing what the add-on does.
 * changelog (string): A list of changes between previous and latest add-on releases.
   * This is used to inform users about changes included in the add-on release.

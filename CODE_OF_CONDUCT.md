@@ -53,7 +53,9 @@ NV Access Staff have the right and responsibility to remove, edit, or reject com
 
 ## 6. Reporting Guidelines
 
-If you are subject to or witness unacceptable behaviour, or have any other concerns, please notify NV Access staff as soon as possible via <info@nvaccess.org>. The information required for notifications includes PR/Issue Number, nature of breach, community member responsible, date and time of breach. Please note that the details of the reporter will not be disclosed, unless required to by law.
+If you are subject to or witness unacceptable behaviour, or have any other concerns, please notify NV Access staff as soon as possible via <info@nvaccess.org>.
+The information required for notifications includes PR/Issue Number, nature of breach, community member responsible, date and time of breach.
+Please note that the details of the reporter will not be disclosed, unless required to by law.
 
 ## 7. Addressing Grievances
 

@@ -76,7 +76,8 @@ See [description of test args](#test-args)
 
 Common arguments are kept in the `tests\system\robotArgs.robot` file.
 
-The `whichNVDA` argument allows the tests to be run against an installed copy of NVDA (first ensure it is compatible with the tests). Note valid values are:
+The `whichNVDA` argument allows the tests to be run against an installed copy of NVDA (first ensure it is compatible with the tests).
+Note valid values are:
 
 * "installed" - when running against the installed version of NVDA, you are likely to get errors in the log unless the tests are run from an administrator command prompt.
 * "source"
@@ -107,7 +108,8 @@ An overview of the files:
 
 * The `SystemTestSpy` package is responsible for setting up the global plugin and synth driver.
 * `libraries/NvdaLib` abstracts the setup and running / exiting of NVDA.
-* `speechSpyGlobalPlugin` module creates a RobotFramework Remote Server which gets connected to via the `NvdaLib` library. To make running remote functions easier, methods are created on the remote spy instance which wrap calls to `run_keyword`.
+* `speechSpyGlobalPlugin` module creates a RobotFramework Remote Server which gets connected to via the `NvdaLib` library.
+To make running remote functions easier, methods are created on the remote spy instance which wrap calls to `run_keyword`.
 
 An NVDA sandbox profile is setup in the `%TEMP%` directory like so:
 

@@ -55,21 +55,32 @@ This is the kind of information that might help when investigating the issue fur
 
 ### Regressions
 
-* How is the regression triggered? We may call this the steps to reproduce, perhaps even STR for short. What this means is, that we are looking for the set of steps to make the bug happen on our own system.
+* How is the regression triggered?
+We may call this the steps to reproduce, perhaps even STR for short.
+What this means is, that we are looking for the set of steps to make the bug happen on our own system.
 * What happens / what is the actual behaviour? Some examples might be:
   * a crash
   * a freeze
   * an error noise
   * A log message
-  * If there was an error noise or log message, was there any unexpected behaviour aside from this? For example, did NVDA fail to report something it should have?
+  * If there was an error noise or log message, was there any unexpected behaviour aside from this?
+  For example, did NVDA fail to report something it should have?
 * Even if it seems obvious, what should happen instead?
   * Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
-* What version of NVDA was being used. Its good to get something like: stable, beta, rc, alpha. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". "alpha-28931,186a8d70"
+* What version of NVDA was being used.?
+It's good to get something like: stable, beta, rc, alpha.
+But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to" Help" then "About".
+E.g. "alpha-28931,186a8d70".
 * In which version of NVDA did this work as expected?
 Knowing the last version where this worked in NVDA is very helpful for triage.
 If an issue is a recent regression in alpha, i.e. an unreleased issue, it is fixed with a higher priority.
-* If some other software is needed to reproduce the issue, it helps to know what that software is and what version is being used with NVDA. It's also useful if a test case / document is provided.
-* Some behaviour is specific to operating systems or versions of operating systems. Sometimes a bug can only be reproduced on that particular version of the operating system. So its important to get this information as well. Similar to the NVDA version information, more specific is better. For instance its good if we know the issue occurred on: 'Windows 7', 'Windows 10 Insider'. But even better is to know the version and build too: 'Windows 10, fast insider, version 1703, build 16170.1000'.
+* If some other software is needed to reproduce the issue, it helps to know what that software is and what version is being used with NVDA.
+It's also useful if a test case / document is provided.
+* Some behaviour is specific to operating systems or versions of operating systems.
+Sometimes a bug can only be reproduced on that particular version of the operating system, so its important to get this information as well.
+Similar to the NVDA version information, more specific is better.
+For instance its good if we know the issue occurred on: 'Windows 7', 'Windows 10 Insider'.
+But even better is to know the version and build too: 'Windows 10, fast insider, version 1703, build 16170.1000'.
 * A copy of the (debug) log
 * If it exists, a crash dump file.
 * Can anyone else reproduce the issue?
@@ -114,9 +125,11 @@ Here is an example from a recent Github issue:
 
 ### Who
 
-* Who does it affect? (for instance: Braille users, Speech users, developers working on accessibility for their websites/apps, NVDA developers)
+* Who does it affect?
+For instance: Braille users, Speech users, developers working on accessibility for their websites/apps, NVDA developers.
 * Knowing who, helps to give an estimate on how many users this will help.
-* It also can help to highlight differences in requirements for different users. This happens when we are unable to define the same use case for two groups of users.
+* It also can help to highlight differences in requirements for different users.
+This happens when we are unable to define the same use case for two groups of users.
 
 ### What
 
@@ -192,7 +205,8 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   Note that security issues should not be reported publicly, and so labelling should not apply here.
   * A `P1` causes the inability to perform a popular task or majority of tasks in NVDA or a popular app.
 * `P2`:
-  * Crash, freeze, instability or performance issue that affects a small subset of users. It may be uncommon or difficult to reproduce.
+  * Crash, freeze, instability or performance issue that affects a small subset of users.
+  It may be uncommon or difficult to reproduce.
   * A low severity ([CVSS <4](https://www.first.org/cvss/v4.0/specification-document)) security issue.
   Note that security issues should not be reported publicly, and so labelling should not apply here.
   * Popular documented feature does not work as expected
@@ -236,7 +250,8 @@ If the user identifies a specific gap or bug in the modern technology (e.g. "I c
 * Identify and label: Identify if the issue is tied to a specific legacy component and apply the relevant label.
 Apply the labels `legacy/community-support` and `help wanted`.
 * Keep open for community: These issues should remain open as this keeps them visible and searchable, acknowledging their validity and creating an opportunity for a community member to contribute a fix.
-* User impact priority: Assign a priority appropriate for the impact on users. This represents the immediate-term pain being caused by the issue.
+* User impact priority: Assign a priority appropriate for the impact on users.
+This represents the immediate-term pain being caused by the issue.
 
 ## NV Access staff-created tickets
 
