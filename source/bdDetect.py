@@ -178,7 +178,7 @@ Handlers are called with these keyword arguments:
 
 
 def _isDebug() -> bool:
-	return config.conf["debugLog"]["hwIo"]
+	return config.conf["debugLog"]["bdDetect"]
 
 
 def getDriversForConnectedUsbDevices(
@@ -187,10 +187,12 @@ def getDriversForConnectedUsbDevices(
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
-	@param limitToDevices: Drivers to which detection should be limited.
+	:param limitToDevices: Drivers to which detection should be limited.
 		C{None} if no driver filtering should occur.
-	@return: Generator of pairs of drivers and device information.
+	:return: Generator of pairs of drivers and device information.
 	"""
+	if limitToDevices and _isDebug():
+		log.debug("Limiting connected USB device detection to drivers: %r", limitToDevices)
 	usbCustomDeviceMatches = (
 		DeviceMatch(ProtocolType.CUSTOM, port["usbID"], port["devicePath"], port)
 		for port in deviceInfoFetcher.usbDevices
@@ -214,11 +216,15 @@ def getDriversForConnectedUsbDevices(
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
+				if _isDebug():
+					log.debug("Skipping excluded driver %r for USB device match: %r", driver, match)
 				continue
 			usbDefinitions = devs[CommunicationType.USB]
 			for definition in usbDefinitions:
 				if definition.matches(match):
 					if definition.useAsFallback:
+						if _isDebug():
+							log.debug("Using USB device match %r as fallback for driver $r", match, driver)
 						fallbackDriversAndMatches.append((driver, match))
 					else:
 						yield (driver, match)
@@ -267,10 +273,12 @@ def getDriversForPossibleBluetoothDevices(
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
-	@param limitToDevices: Drivers to which detection should be limited.
+	:param limitToDevices: Drivers to which detection should be limited.
 		C{None} if no driver filtering should occur.
-	@return: Generator of pairs of drivers and port information.
+	:return: Generator of pairs of drivers and port information.
 	"""
+	if limitToDevices and _isDebug():
+		log.debug("Limiting possible Bluetooth device detection to drivers: %r", limitToDevices)
 	btSerialMatchesForCustom = (
 		DeviceMatch(ProtocolType.SERIAL, port["bluetoothName"], port["port"], port)
 		for port in deviceInfoFetcher.comPorts
@@ -292,6 +300,12 @@ def getDriversForPossibleBluetoothDevices(
 				continue
 			matchFunc = devs[CommunicationType.BLUETOOTH]
 			if not callable(matchFunc):
+				if _isDebug():
+					log.debugWarning(
+						"Skipping non-callable matchFunc %r for Bluetooth device match: %r",
+						matchFunc,
+						match,
+					)
 				continue
 			if matchFunc(match):
 				yield (driver, match)
@@ -324,6 +338,8 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 
 	def _get_btDevsCache(self) -> btDevsCacheT:
 		with self._btDevsLock:
+			if _isDebug():
+				log.debug("Fetching Bluetooth device cache")
 			return self._btDevsCache.copy() if self._btDevsCache else None
 
 	def _set_btDevsCache(
@@ -331,6 +347,8 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		cache: btDevsCacheT,
 	):
 		with self._btDevsLock:
+			if _isDebug():
+				log.debug("Setting Bluetooth device cache")
 			self._btDevsCache = cache.copy() if cache else None
 
 	#: Type info for auto property: _get_comPorts
@@ -395,7 +413,7 @@ class _Detector:
 		usb: bool = False,
 		bluetooth: bool = False,
 		limitToDevices: list[str] | None = None,
-		preferedDevice: DriverAndDeviceMatch | None = None,
+		preferredDevice: DriverAndDeviceMatch | None = None,
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
@@ -404,33 +422,53 @@ class _Detector:
 		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
 			``None`` if default driver filtering according to config should occur.
-		:param preferedDevice: An optional preferred device to use for detection before scanning.
+		:param preferredDevice: An optional preferred device to use for detection before scanning.
 			``None`` if no preferred device should be used.
 		"""
+		if _isDebug():
+			log.debug(
+				"Queuing background scan: usb=%r, bluetooth=%r, limitToDevices=%r, preferredDevice=%r",
+				usb,
+				bluetooth,
+				limitToDevices,
+				preferredDevice,
+			)
+
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
 		if limitToDevices is None and config.conf["braille"]["auto"]["excludedDisplays"]:
 			limitToDevices = list(getBrailleDisplayDriversEnabledForDetection())
+			if limitToDevices and _isDebug():
+				log.debug(
+					"Limiting device detection to drivers enabled for auto detection: %r",
+					limitToDevices,
+				)
 		self._limitToDevices = limitToDevices
 
 		if self._queuedFuture:
 			# This will cancel a queued scan (i.e. not the currently running scan, if any)
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
+			if _isDebug():
+				log.debug("Cancelling queued future for next background scan")
 			self._queuedFuture.cancel()
 		self._queuedFuture = self._executor.submit(
 			self._bgScan,
 			usb,
 			bluetooth,
 			limitToDevices,
-			preferedDevice,
+			preferredDevice,
 		)
 
 	def _stopBgScan(self):
 		"""Stops the current scan as soon as possible and prevents a queued scan to start."""
+		if _isDebug():
+			log.debug("Stopping background scan")
 		self._stopEvent.set()
 		if self._queuedFuture:
 			# This will cancel a queued scan (i.e. not the currently running scan, if any)
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
+			if _isDebug():
+				log.debug("Cancelling queued future for next background scan")
 			self._queuedFuture.cancel()
 
 	@staticmethod
@@ -474,7 +512,7 @@ class _Detector:
 		usb: bool,
 		bluetooth: bool,
 		limitToDevices: list[str] | None,
-		preferedDevice: DriverAndDeviceMatch | None,
+		preferredDevice: DriverAndDeviceMatch | None,
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
@@ -482,14 +520,30 @@ class _Detector:
 		:param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
 		:param limitToDevices: Drivers to which detection should be limited for this scan.
 			``None`` if no driver filtering should occur.
-		:param preferedDevice: An optional preferred device to use for detection before scanning.
+		:param preferredDevice: An optional preferred device to use for detection before scanning.
 			``None`` if no preferred device should be used.
 		"""
+		if _isDebug():
+			log.debug(
+				"Starting background scan: usb=%r, bluetooth=%r, limitToDevices=%r, preferredDevice=%r",
+				usb,
+				bluetooth,
+				limitToDevices,
+				preferredDevice,
+			)
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
-		if preferedDevice and braille.handler.setDisplayByName(preferedDevice[0], detected=preferedDevice[1]):
-			return
+		if preferredDevice:
+			if _isDebug():
+				log.debug("Trying preferred device first: %r", preferredDevice)
+			if braille.handler.setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
+				if _isDebug():
+					log.debug("Switched to preferred device: %r", preferredDevice[0])
+				return
+			elif _isDebug():
+				log.debug("Failed to switch to preferred device, continuing scan: %r", preferredDevice)
+
 		if self._stopEvent.is_set():
 			return
 
@@ -501,8 +555,14 @@ class _Detector:
 		for driver, match in iterator:
 			if self._stopEvent.is_set():
 				return
+			if _isDebug():
+				log.debug("Processing driver %r, match %r", driver, match)
 			if braille.handler.setDisplayByName(driver, detected=match):
+				if _isDebug():
+					log.debug("Switched to driver %r, match %r", driver, match)
 				return
+			elif _isDebug():
+				log.debug("Failed to switch to driver %r, match %r. Continuing", driver, match)
 			if self._stopEvent.is_set():
 				return
 
@@ -511,14 +571,14 @@ class _Detector:
 		usb: bool = True,
 		bluetooth: bool = True,
 		limitToDevices: list[str] | None = None,
-		preferedDevice: DriverAndDeviceMatch | None = None,
+		preferredDevice: DriverAndDeviceMatch | None = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		:param usb: Whether USB devices should be detected for this and subsequent scans.
 		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
 			``None`` if default driver filtering according to config should occur.
-		:param preferedDevice: An optional preferred device to use for detection before scanning.
+		:param preferredDevice: An optional preferred device to use for detection before scanning.
 			``None`` if no preferred device should be used.
 		"""
 		self._stopBgScan()
@@ -528,7 +588,7 @@ class _Detector:
 			usb=usb,
 			bluetooth=bluetooth,
 			limitToDevices=limitToDevices,
-			preferedDevice=preferedDevice,
+			preferredDevice=preferredDevice,
 		)
 
 	def handleWindowMessage(self, msg=None, wParam=None):

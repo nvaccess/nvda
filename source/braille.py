@@ -2482,10 +2482,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			configured = config.conf["braille"]["display"]
 			lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
 			if configured == AUTO_DISPLAY_NAME:
-				preferedDevice: bdDetect.DriverAndDeviceMatch | None = (
+				preferredDevice: bdDetect.DriverAndDeviceMatch | None = (
 					lastRequested if all(lastRequested) else None
 				)
-				self._enableDetection(preferedDevice=preferedDevice)
+				self._enableDetection(preferredDevice=preferredDevice)
 			elif lastRequested[0]:
 				self.setDisplayByName(
 					lastRequested[0],
@@ -3245,7 +3245,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		usb: bool = True,
 		bluetooth: bool = True,
 		limitToDevices: Optional[List[str]] = None,
-		preferedDevice: bdDetect.DriverAndDeviceMatch | None = None,
+		preferredDevice: bdDetect.DriverAndDeviceMatch | None = None,
 	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
@@ -3257,7 +3257,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			This is used when a Bluetooth device is detected, in order to switch to USB
 			when an USB device for the same driver is found.
 			``None`` if no driver filtering should occur.
-		:param preferedDevice: An optional preferred device to use for detection.
+		:param preferredDevice: An optional preferred device to use for detection.
 			this device is attempted to be used before a scan is started.
 		"""
 		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
@@ -3266,7 +3266,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				usb=usb,
 				bluetooth=bluetooth,
 				limitToDevices=limitToDevices,
-				preferedDevice=preferedDevice,
+				preferredDevice=preferredDevice,
 			)
 			return
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
@@ -3275,7 +3275,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			usb=usb,
 			bluetooth=bluetooth,
 			limitToDevices=limitToDevices,
-			preferedDevice=preferedDevice,
+			preferredDevice=preferredDevice,
 		)
 
 	def _disableDetection(self):
