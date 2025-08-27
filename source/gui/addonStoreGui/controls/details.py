@@ -46,10 +46,6 @@ class AddonDetails(
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
-	_changelogLabelText: str = pgettext("addonStore", "Changes for this version:")
-
-	# Translators: Label for the text control containing a description of the selected add-on.
-	# In the add-on store dialog.
 	_statusLabelText: str = pgettext("addonStore", "S&tatus:")
 
 	# Translators: Label for the text control containing a description of the selected add-on.
@@ -125,34 +121,6 @@ class AddonDetails(
 		self.descriptionTextCtrl.SetMinSize(descriptionMinSize)
 		self.descriptionTextCtrl.SetMaxSize(descriptionMaxSize)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
-
-		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
-		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-
-		# It would be nice to override the name using wx.Accessible,
-		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
-		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
-		self.changelogLabel = wx.StaticText(
-			self.contentsPanel,
-			label=AddonDetails._changelogLabelText,
-		)
-		self.contents.Add(self.changelogLabel, flag=wx.EXPAND)
-		self.changelogLabel.Hide()
-		self.changelogTextCtrl = wx.TextCtrl(
-			self.contentsPanel,
-			style=(
-				0  # purely to allow subsequent items to line up.
-				| wx.TE_MULTILINE  # details will require multiple lines
-				| wx.TE_READONLY  # the details shouldn't be user editable
-				| wx.BORDER_NONE
-			),
-		)
-		panelWidth = -1  # maximize width
-		changelogMinSize = wx.Size(self.scaleSize((panelWidth, 100)))
-		changelogMaxSize = wx.Size(self.scaleSize((panelWidth, 800)))
-		self.changelogTextCtrl.SetMinSize(changelogMinSize)
-		self.changelogTextCtrl.SetMaxSize(changelogMaxSize)
-		self.contents.Add(self.changelogTextCtrl, flag=wx.EXPAND)
 
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -272,17 +240,6 @@ class AddonDetails(
 				self.descriptionTextCtrl.SetStyle(
 					0,
 					self.descriptionTextCtrl.GetLastPosition(),
-					self.defaultStyle,
-				)
-
-				self.changelogLabel.SetLabelText(AddonDetails._changelogLabelText)
-				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
-				# of AppendText) because AppendText has been overridden to use SetValue(GetValue()+newStr)
-				# which drops formatting. Instead, set the text, then the style.
-				self.changelogTextCtrl.SetValue(details.changelog)
-				self.changelogTextCtrl.SetStyle(
-					0,
-					self.changelogTextCtrl.GetLastPosition(),
 					self.defaultStyle,
 				)
 
