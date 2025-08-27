@@ -227,7 +227,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	bufSize = c_int(2048)
 	key = HKEY()  # noqa: F405
 	if (
-		windll.advapi32.RegOpenKeyExW(
+		winBindings.advapi32.RegOpenKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\" + layoutString,
 			0,
@@ -238,12 +238,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	):  # noqa: F405
 		try:
 			if (
-				windll.advapi32.RegQueryValueExW(key, "Layout Display Name", 0, None, buf, byref(bufSize))  # noqa: F405
+				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", 0, None, buf, byref(bufSize))  # noqa: F405
 				== 0
 			):  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
 				return buf.value
-			if windll.advapi32.RegQueryValueExW(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:  # noqa: F405
+			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:  # noqa: F405
 				return buf.value
 		finally:
 			winBindings.advapi32.RegCloseKey(key)
