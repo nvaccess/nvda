@@ -158,7 +158,7 @@ class _ReadPaths:
 
 	@property
 	def javaAccessBridgeDLL(self) -> str:
-		return os.path.join(self.coreArchLibPath, "windowsaccessbridge.dll")
+		return os.path.join(globalVars.appDir, "windowsaccessbridge.dll")
 
 
 WritePaths = _WritePaths()
