@@ -2472,6 +2472,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.update()
 
 	def _onSecureDesktopStateChanged(self, isSecureDesktop: bool):
+		if not config.getStartOnLogonScreen():
+			return
 		if isSecureDesktop:
 			self._disableDetection()
 			if self.display:

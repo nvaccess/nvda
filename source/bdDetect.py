@@ -172,7 +172,7 @@ Handlers are called with these keyword arguments:
 @param bluetooth: Whether the handler is expected to yield USB devices.
 @type bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
-	C{None} if no driver filtering should occur.
+	``None`` if no driver filtering should occur.
 @type limitToDevices: Optional[List[str]]
 """
 
@@ -188,7 +188,7 @@ def getDriversForConnectedUsbDevices(
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
 	:param limitToDevices: Drivers to which detection should be limited.
-		C{None} if no driver filtering should occur.
+		``None`` if no driver filtering should occur.
 	:return: Generator of pairs of drivers and device information.
 	"""
 	if limitToDevices and _isDebug():
@@ -274,7 +274,7 @@ def getDriversForPossibleBluetoothDevices(
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
 	:param limitToDevices: Drivers to which detection should be limited.
-		C{None} if no driver filtering should occur.
+		``None`` if no driver filtering should occur.
 	:return: Generator of pairs of drivers and port information.
 	"""
 	if limitToDevices and _isDebug():
@@ -874,7 +874,7 @@ class DriverRegistrar:
 			@param bluetooth: Whether the handler is expected to yield USB devices.
 			@type bluetooth: bool
 			@param limitToDevices: Drivers to which detection should be limited.
-				C{None} if no driver filtering should occur.
+				``None`` if no driver filtering should occur.
 			@type limitToDevices: Optional[List[str]]
 		@param moveToStart: If C{True}, the registered callable will be moved to the start
 			of the list of registered handlers.
