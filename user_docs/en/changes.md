@@ -15,7 +15,7 @@ Windows 10 is the minimum Windows version supported.
 ### New Features
 
 * Automated Image Descriptions:
-  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475)
+  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @Tianze)
   * This is generated locally on the device - no information is sent to the internet.
   * A new command has been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
@@ -44,9 +44,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
   * Updated sphinx to 8.1.3. (#18475)
-  * Updated licensecheck to 2025.1. (#18475)
-  * Introduced onnxruntime 1.19.2 for model inference. (#18475)
-  * Introduced onnx 1.18.0 for generating mock models. (#18475)
+  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
+  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
 
 #### API Breaking Changes
 

@@ -5,7 +5,7 @@
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß., tianze
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß., Tianze
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
