@@ -42,6 +42,7 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
+import easeOfAccess
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
@@ -2472,12 +2473,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.update()
 
 	def _onSecureDesktopStateChanged(self, isSecureDesktop: bool):
-		if not config.getStartOnLogonScreen():
+		self.mainBuffer.clear()
+		if not easeOfAccess.isRegistered():
+			if isSecureDesktop:
+				log.warning("Not disabling braille because not registered in ease of access")
 			return
 		if isSecureDesktop:
-			self._disableDetection()
+			self._disableDetection()  # Does nothing when detection inactive
 			if self.display:
-				# Suppress clearing the display.
+				# Suppress setting the display with empty cells when terminating it.
 				self.display._suppressDisplayClear = True
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
