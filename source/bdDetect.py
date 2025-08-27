@@ -224,7 +224,7 @@ def getDriversForConnectedUsbDevices(
 				if definition.matches(match):
 					if definition.useAsFallback:
 						if _isDebug():
-							log.debug("Using USB device match %r as fallback for driver $r", match, driver)
+							log.debug("Using USB device match %r as fallback for driver %r", match, driver)
 						fallbackDriversAndMatches.append((driver, match))
 					else:
 						yield (driver, match)

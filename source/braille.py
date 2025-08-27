@@ -2475,7 +2475,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if isSecureDesktop:
 			self._disableDetection()
 			if self.display:
-				# Supress clearing the display.
+				# Suppress clearing the display.
 				self.display._suppressDisplayClear = True
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
