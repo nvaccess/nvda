@@ -2480,16 +2480,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
 			configured = config.conf["braille"]["display"]
-			lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
 			if configured == AUTO_DISPLAY_NAME:
+				lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
 				preferredDevice: bdDetect.DriverAndDeviceMatch | None = (
 					lastRequested if all(lastRequested) else None
 				)
 				self._enableDetection(preferredDevice=preferredDevice)
-			elif lastRequested[0]:
+			else:
+				# Note, this is executed on the main thread and can take some time for slower drivers.
 				self.setDisplayByName(
-					lastRequested[0],
-					detected=lastRequested[1],
+					configured,
 					isFallback=True,  # Don't write to config
 				)
 
