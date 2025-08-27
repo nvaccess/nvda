@@ -10,7 +10,9 @@
 	"gitignore": true,
 	// Lint *.md files recursively
 	"globs": [
-		"**.md"
+		"**.md",
+		// Our copying file is actually markdown
+		"copying.txt"
 	],
 	// Don't lint the following globs
 	"ignores": [
