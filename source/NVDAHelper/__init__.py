@@ -29,6 +29,7 @@ from ctypes import (
 	wstring_at,
 )
 
+import winBindings.oleaut32
 import winBindings.kernel32
 import winBindings.advapi32
 import globalVars
@@ -911,5 +912,5 @@ def bstrReturn(address):
 	# This will terminate at a null character, even though BSTR allows nulls.
 	# We're only using this for normal, null-terminated strings anyway.
 	val = wstring_at(address)
-	windll.oleaut32.SysFreeString(address)
+	winBindings.oleaut32.SysFreeString(address)
 	return val
