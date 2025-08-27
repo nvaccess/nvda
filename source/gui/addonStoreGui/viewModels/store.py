@@ -279,7 +279,7 @@ class AddonStoreVM:
 					closeButton=True,
 				),
 				validCheck=lambda aVM: (
-					isinstance(aVM.model, _AddonManifestModel) and len(aVM.model.changelog) > 0
+					isinstance(aVM.model, _AddonStoreModel) and aVM.model.changelog is not None
 				),
 				actionTarget=selectedListItem,
 			),
