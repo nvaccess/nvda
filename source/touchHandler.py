@@ -10,8 +10,9 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 
 import threading
 from ctypes import *  # noqa: F403
-from ctypes import windll
+from ctypes import cast, windll
 from ctypes.wintypes import *  # noqa: F403
+from ctypes.wintypes import LPCWSTR
 import re
 import winBindings.kernel32
 import winBindings.user32
@@ -249,7 +250,7 @@ class TouchHandler(threading.Thread):
 			self._wca = winBindings.user32.RegisterClassEx(byref(self._wc))  # noqa: F405
 			self._touchWindow = winBindings.user32.CreateWindowEx(
 				0,
-				self._wca,
+				cast(self._wca, LPCWSTR),
 				"NVDA touch input",
 				0,
 				0,
