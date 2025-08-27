@@ -17,6 +17,7 @@ import winBindings.kernel32
 import winBindings.user32
 import gui
 import config
+import winBindings.oleacc
 import winUser
 import inputCore
 import screenExplorer
@@ -261,7 +262,7 @@ class TouchHandler(threading.Thread):
 				None,
 			)
 			windll.user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
-			oledll.oleacc.AccSetRunningUtilityState(  # noqa: F405
+			winBindings.oleacc.AccSetRunningUtilityState(  # noqa: F405
 				self._touchWindow,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
@@ -277,7 +278,7 @@ class TouchHandler(threading.Thread):
 		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
 			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
 			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
-		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
+		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
 		winBindings.user32.UnregisterClass(self._wca, self._appInstance)
@@ -324,7 +325,7 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		oledll.oleacc.AccNotifyTouchInteraction(  # noqa: F405
+		winBindings.oleacc.AccNotifyTouchInteraction(  # noqa: F405
 			gui.mainFrame.Handle,
 			obj.windowHandle,  # noqa: F405
 			obj.location.center.toPOINT(),

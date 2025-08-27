@@ -9,6 +9,7 @@ import threading
 from typing import Dict
 from ctypes import oledll, wintypes, windll
 import time
+import winBindings.oleacc
 import winBindings.kernel32
 import config
 from logHandler import log
@@ -75,14 +76,14 @@ def _setDuckingState(switch):
 
 			ATWindow = gui.mainFrame.GetHandle()
 			if switch:
-				oledll.oleacc.AccSetRunningUtilityState(
+				winBindings.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
 				_lastDuckedTime = time.time()
 			else:
-				oledll.oleacc.AccSetRunningUtilityState(
+				winBindings.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 					ANRUSDucking.AUDIO_ACTIVE_NODUCK,
