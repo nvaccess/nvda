@@ -67,9 +67,6 @@ from ._sonic import SonicStream, initialize as sonicInitialize
 import NVDAState
 
 
-windll.ole32.CoTaskMemAlloc.restype = c_void_p
-
-
 class _SPAudioState(IntEnum):
 	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
 	CLOSED = 0
@@ -186,14 +183,14 @@ class _SapiEvent(SPEVENT):
 		if not src.lParam:
 			return
 		if src.elParamType == _SPEventLParamType.POINTER:
-			dst.lParam = windll.ole32.CoTaskMemAlloc(src.wParam)
+			dst.lParam = winBindings.ole32.CoTaskMemAlloc(src.wParam)
 			if not dst.lParam:
 				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 			memmove(dst.lParam, src.lParam, src.wParam)
 		elif src.elParamType == _SPEventLParamType.STRING:
 			strbuf = create_unicode_buffer(cast(src.lParam, c_wchar_p).value)
 			bufsize = sizeof(strbuf)
-			dst.lParam = windll.ole32.CoTaskMemAlloc(bufsize)
+			dst.lParam = winBindings.ole32.CoTaskMemAlloc(bufsize)
 			if not dst.lParam:
 				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 			memmove(dst.lParam, byref(strbuf), bufsize)
@@ -334,7 +331,7 @@ class SynthDriverAudioStream(COMObject):
 		"""
 		# pguidFormatId is actually an out parameter
 		pguidFormatId.contents = _SPDFID_WaveFormatEx
-		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		pwfx = cast(winBindings.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		memmove(pwfx, byref(self.waveFormat), sizeof(WAVEFORMATEX))
@@ -381,7 +378,7 @@ class SynthDriverAudioStream(COMObject):
 
 		:returns: A tuple of a GUID, which should always be SPDFID_WaveFormatEx,
 			and a pointer to a WAVEFORMATEX structure, allocated by CoTaskMemAlloc."""
-		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		pwfx = cast(winBindings.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		self._writeDefaultFormat(pwfx.contents)

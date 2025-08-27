@@ -36,6 +36,7 @@ import api
 import appModuleHandler
 import controlTypes
 import globalVars
+import winBindings.ole32
 import winBindings.kernel32
 import winKernel
 import winUser
@@ -470,7 +471,7 @@ class UIAHandler(COMObject):
 
 	def MTAThreadFunc(self):
 		try:
-			oledll.ole32.CoInitializeEx(None, comtypes.COINIT_MULTITHREADED)
+			winBindings.ole32.CoInitializeEx(None, comtypes.COINIT_MULTITHREADED)
 			self.clientObject = CoCreateInstance(
 				UIA.CUIAutomation8._reg_clsid_,
 				# Minimum interface is IUIAutomation3 (Windows 8.1).

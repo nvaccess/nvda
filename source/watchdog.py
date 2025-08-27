@@ -16,6 +16,7 @@ from ctypes import windll, oledll
 import ctypes.wintypes
 import msvcrt
 import comtypes
+import winBindings.ole32
 import winBindings.dbgHelp
 from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
 import winBindings.kernel32
@@ -233,7 +234,7 @@ def _shouldRecoverAfterMinTimeout():
 
 def _recoverAttempt():
 	try:
-		oledll.ole32.CoCancelCall(core.mainThreadId, 0)
+		winBindings.ole32.CoCancelCall(core.mainThreadId, 0)
 	except:  # noqa: E722
 		pass
 
@@ -304,7 +305,7 @@ def initialize():
 	isRunning = True
 	# Catch application crashes.
 	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
-	oledll.ole32.CoEnableCallCancellation(None)
+	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
 		NVDAHelper.localLib.dll,
@@ -331,7 +332,7 @@ def terminate():
 	if not isRunning:
 		return
 	isRunning = False
-	oledll.ole32.CoDisableCallCancellation(None)
+	winBindings.ole32.CoDisableCallCancellation(None)
 	# Wake up the watcher so it knows to finish.
 	windll.kernel32.SetWaitableTimer(
 		_coreDeadTimer,
@@ -390,7 +391,7 @@ class CancellableCallThread(threading.Thread):
 		)
 		waitIndex = ctypes.wintypes.DWORD()
 		if pumpMessages:
-			oledll.ole32.CoWaitForMultipleHandles(
+			winBindings.ole32.CoWaitForMultipleHandles(
 				0,
 				winKernel.INFINITE,
 				2,
