@@ -17,6 +17,8 @@ from typing import (
 import threading
 
 import addonHandler
+from markdown import markdown
+import ui
 from addonStore.dataManager import addonDataManager
 from addonStore.install import installAddon
 from addonStore.models.addon import (
@@ -259,6 +261,22 @@ class AddonStoreVM:
 				),
 				actionTarget=selectedListItem,
 			),
+			AddonActionVM(
+				# Translators: Label for an action that shows changelog for the selected addon
+				displayName=pgettext("addonStore", "&Changes for this version"),
+				actionHandler=lambda aVM: ui.browseableMessage(
+					markdown(str(
+						cast(_AddonManifestModel, aVM.model).changelog,
+					)),
+					# Translators: Title for a message showing changes for the current add-on version.
+					title="Changes",
+					isHtml=True
+				),
+				validCheck=lambda aVM: (
+					isinstance(aVM.model, _AddonManifestModel) and aVM.model.changelog is not None
+				),
+				actionTarget=selectedListItem,
+			),
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
@@ -266,6 +284,9 @@ class AddonStoreVM:
 		path = listItemVM.model._addonHandlerModel.getDocFilePath()
 		assert path is not None
 		startfile(path)
+
+	def changelogAddon(self, listItemVM: AddonListItemVM) -> None:
+		pass
 
 	def removeAddon(
 		self,
