@@ -1136,7 +1136,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join("windowsaccessbridge.dll"),
+			"windowsaccessbridge.dll",
 		)
 	except WindowsError:
 		raise NotImplementedError("dll not available")

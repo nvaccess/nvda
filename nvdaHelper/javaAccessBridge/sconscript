@@ -20,7 +20,7 @@ match TARGET_ARCH:
 		jabDllName = "windowsaccessbridge-64.dll"
 	case _:
 		print(f"No Java Access Bridge support for NVDA core architecture {TARGET_ARCH!r}")
-		jabDllName = None		
+		jabDllName = None
 if jabDllName:
 	env.Command(
 		sourceDir.File("windowsaccessbridge.dll"), env.Dir("#include/javaAccessBridge32").File(jabDllName), Copy("$TARGET", "$SOURCE")
