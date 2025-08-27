@@ -32,6 +32,7 @@ from ctypes import (
 import winBindings.oleaut32
 import winBindings.kernel32
 import winBindings.advapi32
+import winBindings.rpcrt4
 import globalVars
 from NVDAState import ReadPaths
 
@@ -253,7 +254,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
 	pid = c_long()
-	windll.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))  # noqa: F405
+	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))  # noqa: F405
 	pid = pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")
@@ -270,7 +271,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 			"Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"
 			% (pid, res, registrationHandle),
 		)
-		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))  # noqa: F405
+		winBindings.rpcrt4.RpcBindingFree(byref(bindingHandle))  # noqa: F405
 		return -1
 	import appModuleHandler
 
