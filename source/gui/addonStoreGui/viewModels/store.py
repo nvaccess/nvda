@@ -275,7 +275,7 @@ class AddonStoreVM:
 					isHtml=True,
 				),
 				validCheck=lambda aVM: (
-					isinstance(aVM.model, _AddonManifestModel) and aVM.model.changelog is not None
+					isinstance(aVM.model, _AddonManifestModel) and len(aVM.model.changelog) > 0
 				),
 				actionTarget=selectedListItem,
 			),
