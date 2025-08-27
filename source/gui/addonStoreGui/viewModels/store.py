@@ -265,12 +265,14 @@ class AddonStoreVM:
 				# Translators: Label for an action that shows changelog for the selected addon
 				displayName=pgettext("addonStore", "&Changes for this version"),
 				actionHandler=lambda aVM: ui.browseableMessage(
-					markdown(str(
-						cast(_AddonManifestModel, aVM.model).changelog,
-					)),
+					markdown(
+						str(
+							cast(_AddonManifestModel, aVM.model).changelog,
+						),
+					),
 					# Translators: Title for a message showing changes for the current add-on version.
 					title="Changes",
-					isHtml=True
+					isHtml=True,
 				),
 				validCheck=lambda aVM: (
 					isinstance(aVM.model, _AddonManifestModel) and aVM.model.changelog is not None
