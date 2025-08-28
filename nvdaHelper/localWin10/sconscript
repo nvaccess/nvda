@@ -63,7 +63,11 @@ if len(vcRedistDirs) == 0:
 		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
 	)
 vcRedistDirs.sort(reverse=True)
-for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
+vcRedistLibs= ["msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll", "vcruntime140_1.dll"]
+# TODO: Delete when we drop support for x86
+if targetArch == "x86":
+	vcRedistLibs.remove("vcruntime140_1.dll")
+for fn in vcRedistLibs:
 	for vcRedistDir in vcRedistDirs:
 		path = os.path.join(vcRedistDir, fn)
 		if os.path.isfile(path):
