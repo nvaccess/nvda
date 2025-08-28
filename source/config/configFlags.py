@@ -183,7 +183,7 @@ class ReportLineIndentation(DisplayStringIntEnum):
 @unique
 class ReportSpellingErrors(DisplayStringIntFlag):
 	"""IntFlag enumeration containing the possible config values to report spelling errors while reading.
-	
+
 	Use ReportSpellingErrors.MEMBER.value to compare with the config;
 	the config stores a bitwise combination of zero, one or more of these values.
 	Use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
