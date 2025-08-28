@@ -5,26 +5,38 @@
 The NVDA API must maintain compatibility with add-ons throughout yearly development cycles.
 The first release of a year, i.e. `20XX.1`, is when the NVDA API can introduce breaking changes.
 
-## Deprecations
+## Deprecating module attributes
 
 Where possible, ensure the NVDA API maintains backwards compatibility.
-If no removal is required or proposed, backwards compatibility can be maintained via the following snippet:
+To assist with a uniform approach, the `utils._deprecate` module provides a factory function, `handleDeprecations`, which returns a function suitable for use as a module's `__getattr__`.
+Call `handleDeprecations` with any number of concrete `DeprecatedSymbol` objects to handle the logic for emitting a deprecation warning and returning the deprecated symbol.
+The following `DeprecatedSymbol` subclasses are currently available:
 
-```py
-import NVDAState
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "deprecatedSymbolName" and NVDAState._allowDeprecatedAPI():
-		# Note: this should only log in situations where it will not be excessively noisy.
-		log.warning(
-			"Importing deprecatedSymbolName from here is deprecated. "
-			"Import X instead and do Y. ",
-			# Include stack info so testers can report warning to add-on author.
-			stack_info=True,
-		)
-		# Ensure the API of deprecatedSymbolNameReplacement is the same as the deprecated symbol.
-		return deprecatedSymbolNameReplacement
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+* `MovedSymbol(name: str, newModule: str, *newPath: str)`: A symbol that has been moved to a different module, possibly under a different name or as part of a nested data structure.
+If no `newPath` is given, it is assumed to be the same as the old path (i.e. the symbol was moved, but not renamed).
+* `RemovedSymbol(name: str, value: Any, *, message: str)`: A symbol that has been removed (altogether or just from the public API).
+Can optionally be provided with a message to direct API users to its (incompatible) replacement.
+
+Consider the following example: module `foo` defines symbols `egg`, `sausage` and `spam`, but the following changes are to be made to its API:
+
+* `foo.eggs` is to be moved to module `bar`, but keep its name.
+* `foo.sausage` is to be moved to module `bar`, but as part of the `breakfastMeats` data structure.
+* `foo.spam` is to be removed altogether.
+
+The following code in `foo.py` would be used:
+
+```python
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
+
+__getattr__ = handleDeprecations(
+	# `newPath` is not needed as it's the same
+	MovedSymbol("eggs", "bar"),
+	# `newPath` is needed, as it's `breakfastMeats.sausage`, not just `sausage`.
+	MovedSymbol("sausage", "bar", "breakfastMeats", "sausage"),
+	# Symbol marked internal (renamed to `foo._spam`) pending removal at end of deprecation grace period
+	RemovedSymbol("spam", _spam),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
 ```
 
 ## Deprecating extension points
