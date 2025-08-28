@@ -6,12 +6,9 @@
 """Functions exported by oleaut32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	POINTER,
 	windll,
 )
 from comtypes import BSTR
-
-# SIZE_T is not in ctypes.wintypes, but it's equivalent to c_size_t
 
 
 dll = windll.oleaut32
@@ -25,6 +22,6 @@ StringByteLen, or SysReAllocString functions.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-sysfreestring
 """
 SysFreeString.argtypes = (
-	POINTER(BSTR),  # bstrString
+	BSTR,  # bstrString
 )
 SysFreeString.restype = None
