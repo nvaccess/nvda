@@ -366,8 +366,8 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception:
 			log.exception()
 			log.exception(f"MathML is {mathml}")
-			# Translators: this message alerts users to illegal MathML.
-			ui.message(pgettext("math", "Illegal MathML found"))
+			# Translators: this message reports when invalid math is found.
+			ui.message(pgettext("math", "Invalid math formatting found"))
 			libmathcat.SetMathML("<math></math>")
 		try:
 			supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
