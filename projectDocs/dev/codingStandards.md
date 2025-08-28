@@ -10,17 +10,7 @@ If there is a reason you are unable to follow these standards in a contribution 
 
 ### Encoding
 
-* Where Python files contain non-ASCII characters, they should be encoded in UTF-8.
-  * There should be no Unicode BOM at the start of the file, as this unfortunately breaks one of the translation tools we use (`xgettext`).
-  Instead, include this as the first line of the file, only if the file contains non-ASCII characters:
-
-  ```py
-  # -*- coding: UTF-8 -*-
-  ```
-
-  * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
-    This is particularly relevant for braille display drivers.
-    This is due to a `gettext` bug; see [comment on #2592](https://github.com/nvaccess/nvda/issues/2592#issuecomment-155299911).
+* Python files should be encoded in UTF-8.
 * Text files should be committed with `LF` line endings.
 Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
@@ -158,6 +148,17 @@ Type hints make reasoning about code much easier, and allow static analysis tool
   * There is no need to provide type hints for the `self` or `cls` arguments to object/class methods.
 * Prefer union shorthand (`X | Y`) over explicitly using `typing.Union`.
   * Corollary: prefer `T | None` over `typing.Optional[T]`.
+
+### Calling non-python code
+
+When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
+
+* When providing ctypes type information for foreign functions, structures and data types, prefer to use the same name as used in the external library.
+  * E.g. `GetModuleFileName` not `getModuleFileName`, even though the latter is a more Pythonic function name.
+  * Pythonic names should be reserved for wrappers that provide more pythonic access to functions.
+* All Windows API functions, types and data structures should be defined in the `winBindings` package, in modules named according to the DLL which exports the function.
+  * E.g. `winBindings.kernel32`.
+* Ctypes code for nvdaHelper should be defined in the `NVDAHelper.localLib` module.
 
 ### Language choices
 

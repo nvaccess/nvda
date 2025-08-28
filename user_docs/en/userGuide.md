@@ -42,15 +42,15 @@ Major highlights include:
 
 #### Minimum System Requirements {#MinimumSystemRequirements}
 
-* Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
+* Operating Systems: 64-bit editions of Windows 10 and Windows 11.
+Windows Server 2016, 2019, 2022 and 2025.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
-  * Note that 32-bit operating systems are no longer under active support.
-  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
+  * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
+* Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
@@ -1282,6 +1282,7 @@ In order to fit as much information as possible on a braille display, the follow
 |lnk |link|
 |vlnk |visited link|
 |lst |list|
+|mslst |multiselect list|
 |mnu |menu|
 |mnubar |menu bar|
 |mnubtn |menu button|
@@ -1327,6 +1328,7 @@ The following state indicators are also defined:
 |invalid |displayed when an invalid entry has been made|
 |ldesc |displayed when an object (usually a graphic) has a long description|
 |mln |displayed when an edit field allows typing multiple lines of text such as comment fields on websites|
+|msel |displayed when an object allows selecting multiple items|
 |req |displayed when a required form field is encountered|
 |ro |displayed when an object (e.g. an editable text field) is read-only|
 |sel |displayed when an object is selected|
@@ -1541,9 +1543,9 @@ The various types of information available in the Elements List are:
 
 * Charts: This lists all charts in the active worksheet.
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-* Comments: This lists all cells in the active worksheet containing comments.
-The cell address along with its comments are shown for each cell.
-Pressing enter or the Move To button when on a listed comment will move directly to that cell.
+* Notes: This lists all cells in the active worksheet containing notes.
+The cell address along with its note are shown for each cell.
+Pressing enter or the Move To button when on a listed note will move directly to that cell.
 * Formulas: This lists all cells in the worksheet containing a formula.
 The cell address along with its formula are shown for each cell.
 Pressing enter or the Move To button on a listed formula will move directly to that cell.
@@ -2815,6 +2817,11 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
+##### Report when lists support multiple selection {#ReportMultiSelect}
+
+When this option is enabled, NVDA will report when a list box supports selecting multiple items.
+As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.
+
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
 
 Uncheck this checkbox if you don't wish to have the description reported along with objects (i.e. search suggestions, reporting of whole dialog window right after the dialog opens, etc.).
@@ -3173,6 +3180,15 @@ This option controls whether confirmation is required before disconnecting from 
 
 When checked, NVDA will ask for confirmation before disconnecting.
 When unchecked, NVDA will disconnect immediately without confirmation.
+
+##### Mute when controlling the local computer {#RemoteMuteOnLocalControl}
+
+This option controls whether you can hear speech and sounds from the remote computer when controlling the local computer.
+
+When checked, Remote Access will be muted automatically when first connecting as the controlling computer, and when switching to controlling the local computer.
+When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.
+
+You can still manually mute or unmute Remote Access when controlling the local computer [via the Remote Access menu](#RemoteAccessUsage), or by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
@@ -3550,7 +3566,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.11/howto/regex.html).
+For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
@@ -3849,6 +3865,7 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
+| Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
@@ -4145,7 +4162,6 @@ For an even more extensive list of free and commercial synthesizers that you can
 ### eSpeak NG {#eSpeakNG}
 
 The [eSpeak NG](https://github.com/espeak-ng/espeak-ng) synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-On Windows 8.1 NVDA uses eSpeak NG by default ([Windows OneCore](#OneCore) is used in Windows 10 and later by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -4184,7 +4200,7 @@ To use these voices, you will need to install two components:
 
 Windows 10 and later includes voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
-On Windows 10 and later, NVDA uses Windows OneCore voices by default ([eSpeak NG](#eSpeakNG) is used in other releases).
+NVDA uses Windows OneCore voices by default.
 
 To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings.
 Use the "Add voices" option and search for the desired language.
@@ -5278,8 +5294,6 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 ### Nattiq nBraille Displays {#NattiqTechnologies}
 
 NVDA supports displays from [Nattiq Technologies](https://www.nattiq.com/) when connected via USB.
-Windows 10 and later detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
-You can get them from the manufacturer's website.
 
 Following are the key assignments for Nattiq Technologies displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5590,9 +5604,18 @@ Following are the command line options for NVDA:
 |None |`--create-portable-silent` |Creates a portable copy of NVDA (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
 |None |`--portable-path=PORTABLEPATH` |The path where a portable copy will be created|
 
-Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+### Uninstalling NVDA {#UninstallingNVDA}
 
 NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+
+
+Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
+To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.
+
+Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+
+Installed copies of NVDA store their configuration including add-ons in `%APPDATA%\nvda`.
+These files are not removed by NVDA's uninstaller.
 
 The following are the command line options for NVDA's uninstaller:
 

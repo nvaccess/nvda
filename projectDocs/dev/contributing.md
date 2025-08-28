@@ -24,8 +24,9 @@ If you are new to the project, or looking for some way to help take a look at:
 
 
 ### Overview of contribution process:
+
 1. [Setup your development environment](./createDevEnvironment.md).
-    - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
+    - Alternatively, you can use GitHub Actions to build NVDA for you, without setting up a local development environment, by following [our CI/CD README](../../ci/README.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.
@@ -59,9 +60,9 @@ If you are new to the project, or looking for some way to help take a look at:
 		- [pre-commit.ci](https://pre-commit.ci/) will apply linting fixes.
 			- re-run pre-commit on a pull request by commenting `pre-commit.ci run`.
 			- prevent pre-commit from pushing by putting `[skip ci]`, `[ci skip]`, `[skip pre-commit.ci]`, or `[pre-commit.ci skip]` in the commit message.
-		- AppVeyor will build a copy of NVDA when changes are pushed to your PR.
+		- GitHub Actions will build a copy of NVDA when changes are pushed to your PR.
 		A build artifact will be created for a successful build to allow for testing the PR.
-		- AppVeyor will run system tests and other tests.
+		- GitHub Actions will run system tests and other tests.
 		If these fail, please review them.
 		Sometimes system tests fail unexpectedly.
 		If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
@@ -73,13 +74,11 @@ If you are new to the project, or looking for some way to help take a look at:
 	- When the PR is approved it will be merged, and the change will be active in the next alpha build.
 	- If issues are raised with your PR, it may be marked as a draft.
 	Please mark it as ready for review when you have addressed the review comments.
-	- CodeRabbit AI can review your code.
-	  - To request a review from CodeRabbit, comment `@coderabbitai review`
-	  - CodeRabbit reviews may be automatically or manually requested by reviewers
+	- CoPilot AI can review your code.
+	  - CoPilot reviews may be automatically or manually requested by reviewers
 	  - Please participate in the review process, the AI can respond to review comments, questions and feedback.
 	  - Some comments may not be helpful due to the nature of AI, and some might be useful.
 	  Please indicate comments which you intend to ignore and why.
-	  For large numbers of unhelpful comments, please mark them as resolved or comment `@coderabbitai resolve` to resolve all comments.
 1. Feedback from alpha users
 	- After a PR is merged, watch for feedback from alpha users / testers.
 	You may have to follow up to address bugs or missed use-cases.

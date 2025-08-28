@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2024 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
+# Copyright (C) 2008-2025 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
 # Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -9,8 +9,8 @@ import typing
 
 import appModuleHandler
 import api
+import buildVersion
 import controlTypes
-import versionInfo
 from NVDAObjects.IAccessible import IAccessible
 from baseObject import ScriptableObject
 import gui
@@ -199,7 +199,7 @@ class AppModule(appModuleHandler.AppModule):
 		# It seems that context menus always get the name "context" and this cannot be overridden.
 		# Fudge the name of the NVDA system tray menu to make it more friendly.
 		if self.isNvdaMenu(obj):
-			obj.name = versionInfo.name
+			obj.name = buildVersion.name
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.State.INVISIBLE in obj.states:
