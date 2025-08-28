@@ -182,55 +182,93 @@ class MathCATUserPreferences:
 		If a preference is missing or invalid, it is reset to its default value.
 		Validation covers speech, navigation, and braille settings.
 		"""
-		#  Speech:
-		# Impairment: Blindness       # LearningDisability, LowVision, Blindness
+		#  Speech.Impairment
+		# Default value: Blindness
+		# Valid values: LearningDisability, LowVision, Blindness
 		self._validate(
 			"Speech",
 			"Impairment",
 			["LearningDisability", "LowVision", "Blindness"],
 			"Blindness",
 		)
-		#   Language: en                # any known language code and sub-code -- could be en-uk, etc
+		# Speech.Language
+		# Default value: en
+		# Valid values: any known language code and sub-code -- could be en-uk, etc
 		self._validate("Speech", "Language", [], "en")
-		#    Verbosity: Medium           # Terse, Medium, Verbose
+		# Speech.Verbosity
+		# Default value: Medium
+		# Valid values: Terse, Medium, Verbose
 		self._validate("Speech", "Verbosity", ["Terse", "Medium", "Verbose"], "Medium")
-		#    MathRate: 100               # Change from text speech rate (%)
+		# Speech.MathRate
+		# Default value: 100
+		# Valid values: integers in the interval [0, 200]; change from text speech rate (%)
 		self._validateInt("Speech", "MathRate", [0, 200], 100)
-		#    PauseFactor: 100            # TBC
+		# Speech.PauseFactor: 100
+		# Default value: 100
+		# Valid values: integers in the interval [0, 1000]
 		self._validateInt("Speech", "PauseFactor", [0, 1000], 100)
-		#  SpeechSound: None           # make a sound when starting/ending math speech -- None, Beep
+		# Speech.SpeechSound
+		# Default value: None
+		# Valid values: None, Beep -- make a sound when starting / ending math speech
 		self._validate("Speech", "SpeechSound", ["None", "Beep"], "None")
-		#    SpeechStyle: ClearSpeak     # Any known speech style (falls back to ClearSpeak)
+		# Speech.SpeechStyle
+		# Default value: ClearSpeak
+		# Valid values: Any known speech style (falls back to ClearSpeak)
 		self._validate("Speech", "SpeechStyle", [], "ClearSpeak")
-		#    SubjectArea: General        # FIX: still working on this
+		# Speech.SubjectArea
+		# Default value: General
+		# Not yet implemented in MathCAT
 		self._validate("Speech", "SubjectArea", [], "General")
-		#    Chemistry: SpellOut         # SpellOut (H 2 0), AsCompound (Water), Off (H sub 2 O)
+		# Speech.Chemistry
+		# Default value: SpellOut
+		# Valid values: SpellOut (H 2 O), AsCompound (Water), Off (H sub 2 O)
 		self._validate("Speech", "Chemistry", ["SpellOut", "Off"], "SpellOut")
+
 		# Navigation:
-		#  NavMode: Enhanced         # Enhanced, Simple, Character
+
+		# Navigation.NavMode
+		# Default value: Enhanced
+		# Valid values: Enhanced, Simple, Character
 		self._validate("Navigation", "NavMode", ["Enhanced", "Simple", "Character"], "Enhanced")
-		#  ResetNavMode: false       # remember previous value and use it
+		# Navigation.ResetNavMode
+		# Default value: false
+		# Valid values: true, false; remember previous value and use it
 		self._validate("Navigation", "ResetNavMode", [False, True], False)
-		#  Overview: false             # speak the expression or give a description/overview
+		# Navigation.Overview
+		# Default value: false
+		# Valid values: true, false; speak the expression or give a description/overview
 		self._validate("Navigation", "Overview", [False, True], False)
-		#  ResetOverview: true        # remember previous value and use it
+		# Navigation.ResetOverview
+		# Default value: true
+		# Valid values: true, false; remember previous value and use it
 		self._validate("Navigation", "ResetOverview", [False, True], True)
-		#  NavVerbosity: Medium        # Terse, Medium, Full (words to say for nav command)
+		# Navigation.NavVerbosity
+		# Default value: Medium
+		# Valid values: Terse, Medium, Full (words to say for nav command)
 		self._validate("Navigation", "NavVerbosity", ["Terse", "Medium", "Full"], "Medium")
-		#  AutoZoomOut: true           # Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
+		# Navigation.AutoZoomOut
+		# Default value: true
+		# Valid values: true, false; Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
 		self._validate("Navigation", "AutoZoomOut", [False, True], True)
-		#  CopyAs: MathML        # MathML, LaTeX, ASCIIMath, Speech
+		# Navigation.CopyAs
+		# Default value: MathML
+		# Valid values: MathML, LaTeX, ASCIIMath, Speech
 		self._validate("Navigation", "CopyAs", ["MathML", "LaTeX", "ASCIIMath", "Speech"], "MathML")
-		# Braille:
-		#  BrailleNavHighlight: EndPoints
-		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
+
+		# Braille
+
+		# Braille.BrailleNavHighlight
+		# Default value: EndPoints
+		# Valid values: Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
 		self._validate(
 			"Braille",
 			"BrailleNavHighlight",
 			["Off", "FirstChar", "EndPoints", "All"],
 			"EndPoints",
 		)
-		#  BrailleCode: "Nemeth"                # Any supported braille code (currently Nemeth, UEB, CMU, Vietnam)
+		#  Braille.BrailleCode
+		# Default value: "Nemeth"
+		# Valid values: Any supported braille code (currently Nemeth, UEB, CMU, Vietnam)
 		self._validate("Braille", "BrailleCode", [], "Nemeth")
 
 	def _validate(
