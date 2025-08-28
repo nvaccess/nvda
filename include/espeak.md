@@ -98,8 +98,7 @@ It is also different from the build approach within NVDA.
 
 1. Feed the SSML into `espeak-ng.exe`
 
-   <!-- markdownlint-disable commands-show-output -->
    ```sh
    $ cat /c/work/test-espeak-ssml.txt | ./espeak-ng.exe --stdin -m
+   # eSpeak-NG should output speech
    ```
-   <!-- markdown-lint-restore -->
