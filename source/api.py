@@ -332,23 +332,37 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 	globalVars.reviewPosition = None
 	globalVars.reviewPositionObj = None
 	reviewMode = review.getCurrentMode()
+	shouldUseDocumentReview = False
+	shouldSwichReviewMode = False
 	# #3320: If in document review yet there is no document to review the mode should be forced to object.
 	if reviewMode == "document" and (
 		not isinstance(obj.treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
 		or not obj.treeInterceptor.isReady
 		or obj.treeInterceptor.passThrough
 	):
-		review.setCurrentMode("object", False)
+		shouldSwichReviewMode = True
 	elif (
 		isinstance(obj.treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
 		and obj.treeInterceptor.isReady
 		and not obj.treeInterceptor.passThrough
 	):
-		if reviewMode == "object":
+		if reviewMode in ("object", "text"):
 			review.setCurrentMode("document", False)
+
+			shouldUseDocumentReview = True
 		if isFocus:
 			globalVars.reviewPosition = obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj = globalVars.reviewPosition
+
+	if shouldUseDocumentReview:
+		eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
+		return True
+	info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+	isUsingNVDAObjectTextInfo = isinstance(info, NVDAObjects.NVDAObjectTextInfo)
+	if reviewMode in ("object", "document") and not isUsingNVDAObjectTextInfo:
+		review.setCurrentMode("text", False)
+	elif reviewMode in ("text", "document") and isUsingNVDAObjectTextInfo:
+		review.setCurrentMode("object", False)
 	eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 	return True
 
