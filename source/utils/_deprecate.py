@@ -136,7 +136,8 @@ def _getCallerModule(level: int = 0) -> ModuleType:
 		This can be used if calling from a helper function to skip the stack frame created by the helper.
 	:return: The module from which this function was called.
 	"""
-	return sys.modules[inspect.stack()[level + 1].frame.f_globals["__name__"]]
+	moduleName = inspect.stack()[level + 1].frame.f_globals["__name__"]
+	return sys.modules[moduleName]
 
 
 def handleDeprecations(
