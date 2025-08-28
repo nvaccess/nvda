@@ -1716,3 +1716,79 @@ The following convenience class methods are provided (keyword arguments for over
 | `alert` | OK (`okLabel`) | `None` |
 | `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.CANCEL` |
 | `ask` | Yes (`yesLabel`), No (`noLabel`) and Cancel (`cancelLabel`) | `ReturnCode.YES`, `ReturnCode.NO` or `ReturnCode.CANCEL` |
+
+## Calling non-python code
+
+When using parts of the Windows API or other external DLL  libraries, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
+
+NVDA bundles the `utils.ctypesUtils` module with its convenient `dllFunc` decorator to make calling external C functions easier.
+It does so by aiding in two areas:
+
+1. Annotating the ctypes C function pointer with type information (restype and argtypes) so that parameters passed to the function are properly validated by ctypes.
+2. Providing type hints to the several parameters of the function.
+
+The decorator is best explained by a basic example.
+
+```python
+from ctypes import windll
+from ctypes.wintypes import BOOL, HANDLE
+from typing import Annotated
+from utils.ctypesUtils import dllFunc
+
+@dllFunc(windll.kernel32)
+def CloseHandle(hObject: int | HANDLE) -> Annotated[int, BOOL]:
+	...
+```
+
+A properly annotated function is a function of the form:
+
+```python
+def FunctionNameINDll(param1: hint1, param2: hint2) -> ReturnHint:
+```
+
+* By default, the `dllFunc` decorator infers the function name from the name of the Python function.
+It can be overridden by passing an additional parameter to the decorator.
+
+### Function parameters (ctypes input parameters)
+
+Parameter type hints can be of several flavors, but should at least reference a ctypes compatible type.
+* Flavor P1: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
+The first ctypes type found (`HWND`) is used in `restypes`.
+This is the preferred approach.
+* Flavor P2: Just a ctypes type, e.g. `HWND`
+
+### Function return type
+
+Return type hints can also be of several flavors.
+* Flavor R1a: Just a ctypes type, e.g. `BOOL`.
+It will be used as `restype`.
+* Flavor R1b: `typing.Annotated[int, BOOL]`. Preferred, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
+  * Note that the `int | BOOL` form (e.g. input parameter form 2) is not supported here, since a ctypes function will never return a `BOOL`, it will always create a more pythonic value whenever possible.
+* Flavor 2, output parameters are more complex.
+When ctypes knows that a certain parameter is an output parameter, it will automatically create an object and passes a pointer to that object to the C function.
+Therefore, output parameters are defined in a `typing.Annotated` hint as a `OutParam` object. e.g.
+```python
+from ctypes import windll
+from ctypes.wintypes import BOOL, HWND, RECT
+from typing import Annotated
+from utils.ctypesUtils import dllFunc, OutParam, Pointer
+
+@dllFunc(windll.user32, restype=BOOL)
+def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
+	...
+```
+Note that:
+* Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly.
+Not doing so results in a `TypeError`.
+* ctypes automatically returns the contained value of a pointer object.
+So the return annotation here means:
+  * Treat `RECT` as the return type. Type checkers will communicate as such.
+  * Assume `ctypes.POINTER(RECT)` in `argtypes`, unless the return type is an array (e.g. `RECT * 1`).
+  To override the pointer type, use the `type` parameter of the `OutParam` class.
+  * The out param is the second entry in the `argtypes` array, `index=1`.
+
+For a function with multiple arg types, specify a type hint like:
+
+```python
+tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]
+```
