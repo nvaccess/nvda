@@ -131,7 +131,7 @@ CreateBindCtx.restype = HRESULT
 CreateBindCtx.argtypes = (
 	DWORD,  # reserved: This parameter is reserved and must be 0.
 	POINTER(
-		IBindCtx
+		IBindCtx,
 	),  # ppbc: The address of a pointer variable that receives the interface pointer to the new bind context object.
 )
 
@@ -146,6 +146,6 @@ GetRunningObjectTable.restype = HRESULT
 GetRunningObjectTable.argtypes = (
 	DWORD,  # reserved: This parameter is reserved and must be 0.
 	POINTER(
-		IRunningObjectTable
+		IRunningObjectTable,
 	),  # pprot: The address of a pointer variable that receives the interface pointer to the running object table.
 )
