@@ -2481,6 +2481,15 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
+		reportMultiSelectText = _("Report when lists support &multiple selection")
+		self.reportMultiSelectCheckBox = sHelper.addItem(wx.CheckBox(self, label=reportMultiSelectText))
+		self.bindHelpEvent("ReportMultiSelect", self.reportMultiSelectCheckBox)
+		self.reportMultiSelectCheckBox.SetValue(
+			config.conf["presentation"]["reportMultiSelect"],
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings panel.
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox = sHelper.addItem(wx.CheckBox(self, label=descriptionText))
 		self.bindHelpEvent("ObjectPresentationReportDescriptions", self.descriptionCheckBox)
@@ -2543,6 +2552,7 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"] = (
 			self.guessPositionInfoCheckBox.IsChecked()
 		)
+		config.conf["presentation"]["reportMultiSelect"] = self.reportMultiSelectCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"] = self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"] = self.progressLabels[
 			self.progressList.GetSelection()
@@ -3410,6 +3420,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
 		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
+		self.muteOnLocalControl = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
+				# when controlling the local computer.
+				label=pgettext("remote", "&Mute when controlling the local computer"),
+			),
+		)
+		self.bindHelpEvent("RemoteMuteOnLocalControl", self.muteOnLocalControl)
+		enabledInSecureMode.add(self.muteOnLocalControl)
+
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3548,6 +3569,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
+		self.muteOnLocalControl.SetValue(self.config["ui"]["muteOnLocalControl"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3612,6 +3634,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
+		self.config["ui"]["muteOnLocalControl"] = self.muteOnLocalControl.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()

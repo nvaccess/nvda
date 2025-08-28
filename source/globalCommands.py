@@ -5052,6 +5052,18 @@ class GlobalCommands(ScriptableObject):
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
+	@script(
+		description=pgettext(
+			"remote",
+			# Translators: Documentation string for the script that sends alt+ctrl+del to the remote computer
+			"Sends control+alt+delete to the controlled computer.",
+		),
+		category=SCRCAT_REMOTE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
+	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
+		_remoteClient._remoteClient.sendSAS()
+
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

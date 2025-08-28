@@ -154,6 +154,16 @@ _ISpEventSource_GetEvents = WINFUNCTYPE(HRESULT, c_ulong, POINTER(SPEVENT), POIN
 
 _SPDFID_WaveFormatEx = GUID("{c31adbae-527f-4ff5-a230-f62bb61ff70c}")
 
+_FIRST_AUDIO_CHUNK_MIN_DURATION_MS = 50
+"""
+The minimum duration of the first audio chunk in each utterance.
+Audio will not be played until there's at least this amount of audio data
+ready to be read in the SonicStream.
+This is to avoid audio gaps if further processing takes longer time,
+especially when SonicStream is changing the speed to be faster.
+This will also increase the speech latency, so it should not be too big.
+"""
+
 
 class _SapiEvent(SPEVENT):
 	"""Enhanced version of the SPEVENT structure that supports freeing lParam data automatically."""
@@ -264,8 +274,17 @@ class SynthDriverAudioStream(COMObject):
 			log.debugWarning("Called Write method on AudioStream while driver is dead")
 			return hresult.E_UNEXPECTED
 		if synth._isCancelling:
-			return hresult.E_FAIL
+			return hresult.S_OK
 		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
+		# For the first audio chunk, wait for some amount of audio data
+		# in order to avoid audio gaps if further processing takes longer time
+		if (
+			synth._isFirstAudioChunk
+			and synth.sonicStream.samplesAvailable
+			< synth.sonicStream.sampleRate * _FIRST_AUDIO_CHUNK_MIN_DURATION_MS // 1000
+		):
+			return
+		synth._isFirstAudioChunk = False
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
 		if pcbWritten:
@@ -467,6 +486,7 @@ class SapiSink(COMObject):
 			if audioDucking._isDebug():
 				log.debug("Enabling audio ducking due to starting speech stream")
 			synth._audioDucker.enable()
+		synth._isFirstAudioChunk = True
 		synth._isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
@@ -484,28 +504,19 @@ class SapiSink(COMObject):
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
 		if synth._isCancelling:
+			synth._bookmarkLists.clear()
 			return
 		if synth.player:
-			# Flush the stream and get the remaining data.
-			synth.sonicStream.flush()
-			audioData = synth.sonicStream.readShort()
-			synth.player.feed(audioData, len(audioData) * 2)
-		# trigger all untriggered bookmarks
-		if synth._bookmarkLists:
-			for bookmark in synth._bookmarkLists[0]:
-				synthIndexReached.notify(synth=synth, index=bookmark)
-			synth._bookmarkLists.pop()
-		synth._isSpeaking = False
-		synthDoneSpeaking.notify(synth=synth)
-		if synth.player:
-			# notify the thread
+			# WASAPI is on
+			# Notify the thread
+			# Handle EndStream in that thread
 			with synth._threadCond:
 				synth._isCompleted = True
 				synth._threadCond.notify()
-		if synth._audioDucker:
-			if audioDucking._isDebug():
-				log.debug("Disabling audio ducking due to speech stream end")
-			synth._audioDucker.disable()
+		else:
+			# WASAPI is off
+			# Handle EndStream immediately
+			synth._onEndStream()
 
 	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
@@ -578,25 +589,31 @@ class SynthDriver(SynthDriver):
 		This variable is not doing anything useful, and may be removed together with all its references
 		when the property "isSpeaking" is removed."""
 		self._isCancelling = False
-		self._isTerminating = False
+		self._isStoppingThread = False
+		self._isFirstAudioChunk = False
 		self._rateBoost = False
-		self._initTts(_defaultVoiceToken)
 		self._bookmarkLists: deque[deque[int]] = deque()
-		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
+		self._thread: threading.Thread | None = None
 		self._threadCond = threading.Condition()
 		self._speakRequests: deque[_SpeakRequest] = deque()
 		self._isCompleted = False  # True when the last speak request reaches EndStream
-		self._cancellationCond = threading.Condition()  # used to wait for cancellation to complete
-		self._thread.start()
+		self._initTts(_defaultVoiceToken)
 
-	def terminate(self):
+	def _stopThread(self) -> None:
+		"""Stops the WASAPI speak thread (if it's running) and waits for the thread to quit."""
+		self._isStoppingThread = True
 		# Wake up and wait for the speak thread.
-		self._isTerminating = True
 		if self.player:
 			self.player.stop()  # Ensure the player is stopped to avoid blocking the thread.
-		with self._threadCond:
-			self._threadCond.notify_all()
-		self._thread.join()
+		if self._thread and self._thread.is_alive():
+			with self._threadCond:
+				self._threadCond.notify_all()
+			self._thread.join()
+			self._thread = None
+		self._isStoppingThread = False
+
+	def terminate(self):
+		self._stopThread()
 		self.tts = None
 		if self.player:
 			self.player.close()
@@ -703,6 +720,9 @@ class SynthDriver(SynthDriver):
 		sonicInitialize()
 		self.sonicStream = SonicStream(wfx.nSamplesPerSec, wfx.nChannels)
 
+		self._thread = threading.Thread(target=self._speakThread, name="Sapi5SpeakThread")
+		self._thread.start()
+
 	def _initLegacyAudio(self):
 		if audioDucking.isAudioDuckingSupported():
 			self._audioDucker = audioDucking.AudioDucker()
@@ -723,6 +743,7 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.Voice = voice
 
+		self._stopThread()
 		if self.player:
 			self.player.close()
 			self.player = None
@@ -793,12 +814,27 @@ class SynthDriver(SynthDriver):
 		return " ".join(out)
 
 	def _requestsAvailable(self) -> bool:
-		return self._speakRequests or self._isCancelling or self._isTerminating
+		return self._speakRequests or self._isCancelling or self._isStoppingThread
 
 	def _requestCompleted(self) -> bool:
-		return self._isCompleted or self._isCancelling or self._isTerminating
+		return self._isCompleted or self._isCancelling or self._isStoppingThread
+
+	def _onEndStream(self) -> None:
+		"""Common handling when a speech stream ends."""
+		# trigger all untriggered bookmarks
+		if self._bookmarkLists:
+			for bookmark in self._bookmarkLists[0]:
+				synthIndexReached.notify(synth=self, index=bookmark)
+			self._bookmarkLists.pop()
+		self._isSpeaking = False
+		synthDoneSpeaking.notify(synth=self)
+		if self._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to speech stream end")
+			self._audioDucker.disable()
 
 	def _speakThread(self):
+		"""Thread that processes speech when WASAPI is enabled."""
 		# Handles speak requests in the queue one by one.
 		# Only one request will be processed (spoken) at a time.
 		# We don't use SAPI5's built-in speech queue,
@@ -811,12 +847,13 @@ class SynthDriver(SynthDriver):
 		request: _SpeakRequest | None = None
 
 		# Process requests one by one.
-		while not self._isTerminating:
+		while not self._isStoppingThread:
 			# Fetch the next request
 			with self._threadCond:
 				self._threadCond.wait_for(self._requestsAvailable)
 				if self._speakRequests:
 					request = self._speakRequests.popleft()
+					self._isCancelling = False
 					self._isCompleted = False
 			if request is not None:  # There is one request
 				text, bookmarks = request
@@ -826,6 +863,12 @@ class SynthDriver(SynthDriver):
 					self.tts.Speak(text, SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async)
 					with self._threadCond:
 						self._threadCond.wait_for(self._requestCompleted)
+					if not self._isCancelling:
+						# Flush the stream and play the remaining data.
+						self.sonicStream.flush()
+						audioData = self.sonicStream.readShort()
+						self.player.feed(audioData, len(audioData) * 2)
+						self._onEndStream()
 				except Exception:
 					self._bookmarkLists.pop()
 					log.error("Error speaking", exc_info=True)
@@ -835,16 +878,11 @@ class SynthDriver(SynthDriver):
 					self.player.idle()
 			if self._isCancelling:
 				self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
-				# clear the queue
-				with self._threadCond:
-					self._speakRequests.clear()
 				self._bookmarkLists.clear()
 				if self.sonicStream:
 					self.sonicStream.flush()
 					self.sonicStream.readShort()  # discard data left in stream
-				with self._cancellationCond:
-					self._isCancelling = False
-					self._cancellationCond.notify_all()
+				self._isCancelling = False
 
 	def speak(self, speechSequence):
 		textList = []
@@ -1009,11 +1047,9 @@ class SynthDriver(SynthDriver):
 		self._isCancelling = True
 		if self.player:
 			self.player.stop()  # stop the audio and stop waiting for idle()
-			with self._threadCond:  # wake up the thread
+			with self._threadCond:  # clear the queue and wake up the thread
+				self._speakRequests.clear()
 				self._threadCond.notify()
-			with self._cancellationCond:  # wait for cancellation to complete
-				while self._isCancelling:
-					self._cancellationCond.wait()
 		if self.ttsAudioStream:
 			# For legacy audio
 			# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
@@ -1062,4 +1098,4 @@ class SynthDriver(SynthDriver):
 			# and all its references can also be removed,
 			# as it is not doing anything useful.
 			return self._isSpeaking
-		return super().__getattr__(attrName)
+		raise AttributeError(f"'{type(self).__name__}' object has no attribute '{attrName}'")

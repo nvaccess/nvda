@@ -57,7 +57,6 @@ from NVDAObjects import (
 from NVDAObjects.behaviors import (
 	ProgressBar,
 	EditableTextBase,
-	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
 	Notification,
@@ -1449,10 +1448,7 @@ class UIA(Window):
 				clsList.append(XamlEditableText)
 			elif UIAClassName == "WpfTextView":
 				clsList.append(WpfTextView)
-			if UIAHandler.autoSelectDetectionAvailable:
-				clsList.append(EditableTextWithAutoSelectDetection)
-			else:
-				clsList.append(EditableTextWithoutAutoSelectDetection)
+			clsList.append(EditableTextWithAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1892,6 +1888,7 @@ class UIA(Window):
 
 	_UIAStatesPropertyIDs = {
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
+		UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId,
 		UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
 		UIAHandler.UIA_IsDataValidForFormPropertyId,
 		UIAHandler.UIA_IsRequiredForFormPropertyId,
@@ -1935,6 +1932,8 @@ class UIA(Window):
 					if role == controlTypes.Role.RADIOBUTTON
 					else controlTypes.State.SELECTED,
 				)
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId):
+			states.add(controlTypes.State.MULTISELECTABLE)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId, True):
 			states.add(controlTypes.State.UNAVAILABLE)
 		try:

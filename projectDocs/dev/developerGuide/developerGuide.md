@@ -10,7 +10,11 @@ This guide provides information concerning NVDA development, including translati
 
 ### Add-on API stability {#API}
 
-The NVDA Add-on API includes all NVDA internals, except symbols that are prefixed with an underscore.
+The NVDA Add-on API includes all NVDA internals, except:
+
+* symbols that are prefixed with an underscore (`_`)
+* [transitive imports](#APIImports)
+* [included pip packages](#APIIncludedPipPackages)
 
 The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
 Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
@@ -26,6 +30,30 @@ Deprecated API features may have a scheduled removal date, a future breaking rel
 Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
 Note, the roadmap for removals is 'best effort' and may be subject to change.
 Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
+
+#### Stability of transitive imports in the API {#APIImports}
+
+Make sure to import your code from the original module by checking the NVDA source code.
+
+e.g. if a class is located at `foo.py`, you should import it as follows:
+
+```python
+from foo import Foo
+```
+
+If `bar.py` imports `Foo` you cannot rely on importing `Foo` from `bar`.
+i.e. you must import it directly from `foo`.
+
+The following is not supported in the API, as the import in `bar` could be removed at any time.
+
+```python
+from bar import Foo
+```
+
+#### Stability of pip packages {#APIIncludedPipPackages}
+
+Pip packages may be updated, downgraded, or removed at any time.
+It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
 ### A Note About Python {#aboutPython}
 
@@ -472,7 +500,7 @@ As with other examples in this guide, remember to delete the created app module 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
 Some executables host various apps inside or are employed by an app to display their interfaces.
-These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some web-based apps, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
 If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
 For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
@@ -550,20 +578,20 @@ From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken an
 import globalPluginHandler
 from scriptHandler import script
 import ui
-import versionInfo
+import buildVersion
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
-		ui.message(versionInfo.version)
+		ui.message(buildVersion.version)
 ```
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
 
-It also imports a few other modules, namely ui, versionInfo and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
+It also imports a few other modules, namely ui, buildVersion and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
 
 Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
 
@@ -998,6 +1026,11 @@ When uploading to the Add-on Store certain requirements apply:
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
 * author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <<mick@example.com>>.
 * description (string): A sentence or two describing what the add-on does.
+* changelog (string): A list of changes between previous and latest add-on releases.
+  * This is used to inform users about changes included in the add-on release.
+  * Changes can include new features, changes, bug fixes, and localization updates if any.
+  * When releasing add-on updates, changes should be edited if possible.
+  This means not all add-on releases will include notable changes.
 * url (string): A URL where this add-on, further info and upgrades can be found.
   * Starting the URL with `https://` is required for submitting to the Add-on Store.
 * docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation](#AddonDoc) section for more details.

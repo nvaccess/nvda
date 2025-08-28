@@ -116,6 +116,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		reportKeyboardShortcuts = boolean(default=true)
 		reportObjectPositionInformation = boolean(default=true)
 		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
+		reportMultiSelect = boolean(default=false)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
@@ -365,6 +366,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+		muteOnLocalControl = boolean(default=False)
 """
 
 #: The configuration specification
