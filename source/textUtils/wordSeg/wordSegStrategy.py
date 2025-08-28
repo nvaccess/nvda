@@ -6,11 +6,11 @@
 import os
 import ctypes
 from ctypes import (
-    c_bool,
-    c_char_p,
-    c_int,
-    POINTER,
-    byref,
+	c_bool,
+	c_char_p,
+	c_int,
+	POINTER,
+	byref,
 )
 from abc import ABC, abstractmethod
 from functools import lru_cache
