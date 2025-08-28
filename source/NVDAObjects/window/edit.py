@@ -9,12 +9,9 @@ from typing import (
 	Union,
 )
 
-import comtypes.client
 import ctypes
-from comtypes import COMError
-import oleTypes
+from comtypes import BSTR, COMError
 import colors
-import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -35,6 +32,8 @@ import watchdog
 import locationHelper
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
+import NVDAHelper.localLib
+
 
 selOffsetsAtLastCaretEvent = None
 
@@ -810,7 +809,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		label = None
 		try:
 			o = embedRangeObj.GetEmbeddedObject()
-		except comtypes.COMError:
+		except COMError:
 			o = None
 		if not o:
 			return None
@@ -819,7 +818,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 		try:
 			label = o.QueryInterface(oleacc.IAccessible).accName(0)
-		except comtypes.COMError:
+		except COMError:
 			pass
 		if label:
 			return label
@@ -842,23 +841,25 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if label and not label.isspace():
 			return label
 		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
+		text = BSTR()
 		try:
-			dataObj = o.QueryInterface(oleTypes.IDataObject)
-		except comtypes.COMError:
-			dataObj = None
-		if dataObj:
-			text = comtypes.BSTR()
-			NVDAHelper.localLib.getOleClipboardText(dataObj, ctypes.byref(text))
+			NVDAHelper.localLib.getOleClipboardText(o, ctypes.byref(text))
+		except WindowsError:
+			pass
+		else:
 			label = text.value
 		if label:
 			return label
-		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
+		# As a final fallback (e.g. could not get display model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
+		userType = BSTR()
 		try:
-			oleObj = o.QueryInterface(oleTypes.IOleObject)
-			label = oleObj.GetUserType(1)
-		except comtypes.COMError:
+			NVDAHelper.localLib.getOleUserType(o, 0, ctypes.byref(userType))
+		except WindowsError:
 			pass
-		return label
+		else:
+			label = userType.value
+		if label:
+			return label
 
 	def _getTextAtRange(self, rangeObj):
 		embedRangeObj = None

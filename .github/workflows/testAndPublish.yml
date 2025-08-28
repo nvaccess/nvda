@@ -7,8 +7,6 @@ on:
       - beta
       - rc
       - 'try-**'
-      # Temporarily enabled during the 64bit migration
-      - wip-buildX64
     tags:
       - 'release-**'
 
@@ -17,9 +15,6 @@ on:
       - master
       - beta
       - rc
-      # Temporarily enabled during the 64bit migration
-      - wip-buildX64
-
 
   workflow_dispatch:
 
@@ -38,7 +33,7 @@ env:
   defaultRunner: 'windows-2025'
   supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x86
-  supportedArchitectures: '["x86"]'
+  supportedArchitectures: '["x64", "x86"]'
   defaultPythonVersion: '3.13.7'
   supportedPythonVersions: '["3.13.7"]'
 
@@ -393,7 +388,7 @@ jobs:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols]
+        testSuite: [chrome, installer, startupShutdown, symbols, vscode]
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
@@ -430,6 +425,9 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+    - name: Download and install Visual Studio Code
+      if: ${{ matrix.testSuite == 'vscode' }}
+      run: choco install -y vscode
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
@@ -713,7 +711,8 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
+        NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
         gh release upload ${{ github.ref_name }} \
             --repo ${{ github.repository }} \
             --clobber \
-            output/nvda*.exe#Installer
+            $NVDA_EXE_NAME#Installer

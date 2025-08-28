@@ -70,7 +70,7 @@ bool calculateCharacterBoundaries(const wchar_t* text, int textLength, int* offs
 	}
 	int count = 0;
 	for (int i = 0; i <= textLength; ++i) {
-		if (i == textLength || logAttrArray[i].fCharStop) {
+		if (i == 0 || i == textLength || logAttrArray[i].fCharStop) {
 			offsets[count++] = i;
 		}
 	}
