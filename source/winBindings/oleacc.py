@@ -47,8 +47,8 @@ Notifies the system that a touch interaction has occurred.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-accnotifytouchinteraction
 """
 AccNotifyTouchInteraction.argtypes = (
-	HWND,      # hwndApp
-	HWND,      # hwndTarget
+	HWND,  # hwndApp
+	HWND,  # hwndTarget
 	POINT,  # ptTarget
 )
 AccNotifyTouchInteraction.restype = HRESULT
@@ -74,10 +74,10 @@ Retrieves the specified children of an accessible object.
 """
 AccessibleChildren.argtypes = (
 	POINTER(IAccessible),  # paccContainer
-	c_long,                # iChildStart
-	c_long,                # cChildren
-	POINTER(VARIANT),      # rgvarChildren
-	POINTER(c_long),       # pcObtained
+	c_long,  # iChildStart
+	c_long,  # cChildren
+	POINTER(VARIANT),  # rgvarChildren
+	POINTER(c_long),  # pcObtained
 )
 AccessibleChildren.restype = HRESULT
 
@@ -88,11 +88,11 @@ Retrieves the address of the IAccessible interface for the object that generated
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-accessibleobjectfromevent
 """
 AccessibleObjectFromEvent.argtypes = (
-	HWND,                  # hwnd
-	DWORD,                 # dwObjectID
-	DWORD,                 # dwChildID
+	HWND,  # hwnd
+	DWORD,  # dwObjectID
+	DWORD,  # dwChildID
 	POINTER(POINTER(IAccessible)),  # ppacc
-	POINTER(VARIANT),      # pvarChild
+	POINTER(VARIANT),  # pvarChild
 )
 AccessibleObjectFromEvent.restype = HRESULT
 
@@ -103,9 +103,9 @@ Retrieves the address of the IAccessible interface pointer for the object displa
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-accessibleobjectfrompoint
 """
 AccessibleObjectFromPoint.argtypes = (
-	POINT,                 # ptScreen
+	POINT,  # ptScreen
 	POINTER(POINTER(IAccessible)),  # ppacc
-	POINTER(VARIANT),      # pvarChild
+	POINTER(VARIANT),  # pvarChild
 )
 AccessibleObjectFromPoint.restype = HRESULT
 
@@ -116,10 +116,10 @@ Retrieves the address of the IAccessible interface for the object associated wit
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-accessibleobjectfromwindow
 """
 AccessibleObjectFromWindow.argtypes = (
-	HWND,                  # hwnd
-	DWORD,                 # dwId
-	POINTER(GUID),         # riid
-	POINTER(c_void_p),     # ppvObject
+	HWND,  # hwnd
+	DWORD,  # dwId
+	POINTER(GUID),  # riid
+	POINTER(c_void_p),  # ppvObject
 )
 AccessibleObjectFromWindow.restype = HRESULT
 
@@ -130,10 +130,10 @@ Creates a standard object that exposes an IAccessible interface.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-createstdaccessibleobject
 """
 CreateStdAccessibleObject.argtypes = (
-	HWND,                  # hwnd
-	DWORD,                 # idObject
-	POINTER(GUID),         # riid
-	POINTER(c_void_p),     # ppvObject
+	HWND,  # hwnd
+	DWORD,  # idObject
+	POINTER(GUID),  # riid
+	POINTER(c_void_p),  # ppvObject
 )
 CreateStdAccessibleObject.restype = HRESULT
 
@@ -144,11 +144,11 @@ Creates a proxy accessible object for a window.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-createstdaccessibleproxyw
 """
 CreateStdAccessibleProxy.argtypes = (
-	HWND,                  # hwnd
-	LPWSTR,                # lpszClassName
-	DWORD,                 # idObject
-	POINTER(GUID),         # riid
-	POINTER(c_void_p),     # ppvObject
+	HWND,  # hwnd
+	LPWSTR,  # lpszClassName
+	DWORD,  # idObject
+	POINTER(GUID),  # riid
+	POINTER(c_void_p),  # ppvObject
 )
 CreateStdAccessibleProxy.restype = HRESULT
 
@@ -159,9 +159,9 @@ Retrieves a localized string that describes an object's role for the specified r
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-getroletextw
 """
 GetRoleText.argtypes = (
-	DWORD,                 # dwRole
-	LPWSTR,                # lpszRole
-	c_uint,                # cchRoleMax
+	DWORD,  # dwRole
+	LPWSTR,  # lpszRole
+	c_uint,  # cchRoleMax
 )
 GetRoleText.restype = c_uint
 
@@ -172,9 +172,9 @@ Retrieves a localized string that describes an object's state for the specified 
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-getstatetextw
 """
 GetStateText.argtypes = (
-	DWORD,                 # dwStateBit
-	LPWSTR,                # lpszState
-	c_uint,                # cchState
+	DWORD,  # dwStateBit
+	LPWSTR,  # lpszState
+	c_uint,  # cchState
 )
 GetStateText.restype = c_uint
 
@@ -185,9 +185,9 @@ Creates an LRESULT value containing a pointer to a COM interface.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-lresultfromobject
 """
 LresultFromObject.argtypes = (
-	POINTER(GUID),         # riid
-	WPARAM,                # wParam
-	POINTER(IUnknown),     # punk
+	POINTER(GUID),  # riid
+	WPARAM,  # wParam
+	POINTER(IUnknown),  # punk
 )
 LresultFromObject.restype = LRESULT
 
@@ -198,10 +198,10 @@ Retrieves a COM interface pointer from an LRESULT value.
 	https://learn.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-objectfromlresult
 """
 ObjectFromLresult.argtypes = (
-	LRESULT,               # lResult
-	POINTER(GUID),         # riid
-	WPARAM,                # wParam
-	POINTER(c_void_p),     # ppvObject
+	LRESULT,  # lResult
+	POINTER(GUID),  # riid
+	WPARAM,  # wParam
+	POINTER(c_void_p),  # ppvObject
 )
 ObjectFromLresult.restype = HRESULT
 
@@ -213,6 +213,6 @@ Retrieves the window handle for the window that contains the specified accessibl
 """
 WindowFromAccessibleObject.argtypes = (
 	POINTER(IAccessible),  # pacc
-	POINTER(HWND),         # phwnd
+	POINTER(HWND),  # phwnd
 )
 WindowFromAccessibleObject.restype = HRESULT

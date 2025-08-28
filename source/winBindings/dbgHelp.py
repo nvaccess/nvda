@@ -20,12 +20,15 @@ from ctypes.wintypes import (
 
 MINIDUMP_TYPE = DWORD
 
+
 class MINIDUMP_EXCEPTION_INFORMATION(Structure):
 	_fields_ = (
 		("ThreadId", DWORD),
 		("ExceptionPointers", c_void_p),
 		("ClientPointers", BOOL),
 	)
+
+
 PMINIDUMP_EXCEPTION_INFORMATION = POINTER(MINIDUMP_EXCEPTION_INFORMATION)
 
 PMINIDUMP_USER_STREAM_INFORMATION = c_void_p

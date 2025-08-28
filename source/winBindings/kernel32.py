@@ -263,6 +263,6 @@ Sets a new unhandled exception filter function for the current process.
 	https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
 """
 SetUnhandledExceptionFilter.argtypes = (
-	UnhandledExceptionFilter, # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
+	UnhandledExceptionFilter,  # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
 )
 SetUnhandledExceptionFilter.restype = POINTER(c_void_p)

@@ -12,7 +12,6 @@ from ctypes import (
 from comtypes import BSTR
 
 # SIZE_T is not in ctypes.wintypes, but it's equivalent to c_size_t
-from ctypes import c_size_t
 
 
 dll = windll.oleaut32

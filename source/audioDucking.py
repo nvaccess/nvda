@@ -7,7 +7,7 @@ from enum import IntEnum
 from utils.displayString import DisplayStringIntEnum
 import threading
 from typing import Dict
-from ctypes import oledll, wintypes, windll
+from ctypes import wintypes, windll
 import time
 import winBindings.oleacc
 import winBindings.kernel32
@@ -181,7 +181,7 @@ _isAudioDuckingSupported = None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		_isAudioDuckingSupported = (config.isInstalledCopy() or config.isAppX)
+		_isAudioDuckingSupported = config.isInstalledCopy() or config.isAppX
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
 

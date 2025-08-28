@@ -18,7 +18,6 @@ muting and uses wxPython's CallAfter for thread synchronization.
 	not be used directly outside of the remote connection infrastructure.
 """
 
-import ctypes
 from enum import IntEnum, nonmember
 import os
 from typing import Any, Dict, List, Optional

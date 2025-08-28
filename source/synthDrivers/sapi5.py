@@ -18,7 +18,6 @@ from ctypes import (
 	memmove,
 	memset,
 	sizeof,
-	windll,
 )
 from enum import IntEnum
 import locale

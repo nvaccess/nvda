@@ -12,7 +12,7 @@ from typing import (
 	Any,
 )
 import inspect
-from ctypes import windll, oledll
+from ctypes import windll
 import ctypes.wintypes
 import msvcrt
 import comtypes

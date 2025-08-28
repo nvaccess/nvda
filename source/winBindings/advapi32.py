@@ -62,11 +62,11 @@ Opens the specified registry key.
 	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw
 """
 RegOpenKeyEx.argtypes = (
-	HKEY,        # hKey
+	HKEY,  # hKey
 	LPCWSTR,  # lpSubKey
-	DWORD,       # ulOptions
-	DWORD,       # samDesired
-	POINTER(HKEY), # phkResult
+	DWORD,  # ulOptions
+	DWORD,  # samDesired
+	POINTER(HKEY),  # phkResult
 )
 RegOpenKeyEx.restype = LONG
 
@@ -77,11 +77,11 @@ Retrieves the type and data for a specified value name associated with an open r
 	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
 """
 RegQueryValueEx.argtypes = (
-	HKEY,        # hKey
+	HKEY,  # hKey
 	LPCWSTR,  # lpValueName
-	POINTER(DWORD), # lpReserved
-	POINTER(DWORD), # lpType
+	POINTER(DWORD),  # lpReserved
+	POINTER(DWORD),  # lpType
 	POINTER(BYTE),  # lpData
-	POINTER(DWORD), # lpcbData
+	POINTER(DWORD),  # lpcbData
 )
 RegQueryValueEx.restype = LONG

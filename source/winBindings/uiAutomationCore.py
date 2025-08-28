@@ -11,9 +11,7 @@ from ctypes.wintypes import (
 	HWND,
 )
 
-__all__ = (
-	"UiaHasServerSideProvider",
-)
+__all__ = ("UiaHasServerSideProvider",)
 
 
 dll = windll.UIAutomationCore

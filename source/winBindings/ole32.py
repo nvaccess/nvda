@@ -89,7 +89,7 @@ Initializes the COM library for use by the calling thread, sets the thread's con
 CoInitializeEx.restype = HRESULT
 CoInitializeEx.argtypes = (
 	LPVOID,  # pvReserved: This parameter is reserved and must be NULL.
-	DWORD,   # dwCoInit: The concurrency model and initialization options for the thread.
+	DWORD,  # dwCoInit: The concurrency model and initialization options for the thread.
 )
 
 CoTaskMemAlloc = dll.CoTaskMemAlloc
@@ -113,11 +113,11 @@ Waits for specified handles to be signaled or for a specified timeout period to 
 """
 CoWaitForMultipleHandles.restype = HRESULT
 CoWaitForMultipleHandles.argtypes = (
-	DWORD,     # dwFlags: Indicates how the wait is to be handled.
-	DWORD,     # dwTimeout: The timeout period, in milliseconds.
-	ULONG,     # cHandles: The number of elements in the pHandles array.
+	DWORD,  # dwFlags: Indicates how the wait is to be handled.
+	DWORD,  # dwTimeout: The timeout period, in milliseconds.
+	ULONG,  # cHandles: The number of elements in the pHandles array.
 	LPHANDLE,  # pHandles: An array of handles.
-	LPDWORD,   # lpdwindex: A pointer to a variable that receives the zero-based index of the signaled handle.
+	LPDWORD,  # lpdwindex: A pointer to a variable that receives the zero-based index of the signaled handle.
 )
 
 CreateBindCtx = dll.CreateBindCtx
@@ -129,8 +129,10 @@ Creates a new bind context object.
 """
 CreateBindCtx.restype = HRESULT
 CreateBindCtx.argtypes = (
-	DWORD,    # reserved: This parameter is reserved and must be 0.
-	POINTER(IBindCtx),  # ppbc: The address of a pointer variable that receives the interface pointer to the new bind context object.
+	DWORD,  # reserved: This parameter is reserved and must be 0.
+	POINTER(
+		IBindCtx
+	),  # ppbc: The address of a pointer variable that receives the interface pointer to the new bind context object.
 )
 
 GetRunningObjectTable = dll.GetRunningObjectTable
@@ -142,6 +144,8 @@ Retrieves a pointer to the running object table (ROT) for the current context.
 """
 GetRunningObjectTable.restype = HRESULT
 GetRunningObjectTable.argtypes = (
-	DWORD,    # reserved: This parameter is reserved and must be 0.
-	POINTER(IRunningObjectTable),  # pprot: The address of a pointer variable that receives the interface pointer to the running object table.
+	DWORD,  # reserved: This parameter is reserved and must be 0.
+	POINTER(
+		IRunningObjectTable
+	),  # pprot: The address of a pointer variable that receives the interface pointer to the running object table.
 )

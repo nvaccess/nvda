@@ -29,7 +29,7 @@ Obtains the process identifier (PID) of the local client process that made the r
 """
 I_RpcBindingInqLocalClientPID.restype = RPC_STATUS
 I_RpcBindingInqLocalClientPID.argtypes = (
-	RPC_BINDING_HANDLE ,  # Binding: RPC binding handle (can be None)
+	RPC_BINDING_HANDLE,  # Binding: RPC binding handle (can be None)
 	POINTER(c_long),  # ClientPID: Pointer to receive the client process ID
 )
 
@@ -42,7 +42,7 @@ Releases binding handle resources.
 """
 RpcBindingFree.restype = RPC_STATUS
 RpcBindingFree.argtypes = (
-	POINTER(RPC_BINDING_HANDLE ),  # Binding: Pointer to the binding handle to free
+	POINTER(RPC_BINDING_HANDLE),  # Binding: Pointer to the binding handle to free
 )
 
 RpcSsDestroyClientContext = dll.RpcSsDestroyClientContext
