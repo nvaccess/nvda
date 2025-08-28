@@ -6,7 +6,6 @@
 """Functions exported by sas.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	c_voidp,
 	windll,
 )
 from ctypes.wintypes import (
