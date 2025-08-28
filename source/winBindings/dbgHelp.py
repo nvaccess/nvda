@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions exported by ole32.dll, and supporting data structures and enumerations."""
+"""Functions exported by dbgHelp.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
 	c_void_p,
