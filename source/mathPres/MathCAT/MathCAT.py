@@ -417,7 +417,6 @@ class MathCAT(mathPres.MathPresentationProvider):
 		try:
 			libmathcat.SetMathML(mathml)
 		except Exception:
-			log.exception()
 			log.exception(f"MathML is {mathml}")
 			# Translators: this message reports illegal MathML.
 			ui.message(pgettext("math", "Illegal MathML found."))
