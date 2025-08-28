@@ -11,6 +11,7 @@ For full terms and any additional permissions, see the NVDA license file: https:
 
 #include <vector>
 #include <string>
+#include <cstring>
 #include <mutex>
 #include <cstdlib>
 #include "Jieba.hpp"
@@ -55,6 +56,11 @@ JIEBA_API int initJieba();
 /// @brief Segment UTF-8 text into character offsets.
 /// @return 0 on success, -1 on failure.
 JIEBA_API int segmentOffsets(const char* text, int** charOffsets, int* outLen);
+
+/// Wrapper for word management
+JIEBA_API bool insertUserWord(const char* word, int freq, const char* tag);
+JIEBA_API bool deleteUserWord(const char* word, const char* tag);
+JIEBA_API bool find(const char* word);
 
 /// @brief Free memory allocated by segmentOffsets.
 JIEBA_API void freeOffsets(int* ptr);

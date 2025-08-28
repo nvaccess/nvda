@@ -71,6 +71,18 @@ int segmentOffsets(const char* text, int** charOffsets, int* outLen) {
     return 0;
 }
 
+bool insertUserWord(const char* word, int freq, const char* tag = cppjieba::UNKNOWN_TAG) {
+	return JiebaSingleton::getInstance().InsertUserWord(string(word), freq, string(tag));
+}
+
+bool deleteUserWord(const char* word, const char* tag = cppjieba::UNKNOWN_TAG) {
+	return JiebaSingleton::getInstance().DeleteUserWord(string(word), string(tag));
+}
+
+bool find(const char* word) {
+	return JiebaSingleton::getInstance().Find(string(word));
+}
+
 void freeOffsets(int* ptr) {
     if (ptr) free(ptr);
 }
