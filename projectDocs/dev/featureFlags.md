@@ -2,23 +2,27 @@
 
 NVDA makes judicious use of feature flags to enable and disable features that are in early development.
 The following are provided to streamline the creation of new feature flags:
-- A config spec type
-- A GUI control type
+
+* A config spec type
+* A GUI control type
 
 ## Background
+
 When providing a feature flag it is important to understand the importance of providing a "default" state.
 A boolean feature, must have 3 states selectable by the user:
-- `True`
-- `False`
-- `Default` (NVDA developer recommendation)
+
+* `True`
+* `False`
+* `Default` (NVDA developer recommendation)
 
 This allows a choice between the following use-cases to be made at any point in time:
-- **Explicitly opt-in** to the feature, regardless of the default behavior.
+
+* **Explicitly opt-in** to the feature, regardless of the default behavior.
 An early adopter may choose to do this to test the feature and provide feedback.
-- **Explicitly opt-out** of the feature, regardless of the default behavior.
+* **Explicitly opt-out** of the feature, regardless of the default behavior.
 A user may find the pre-existing behavior acceptable, and wants the maximum delay to adopt the new feature.
 They may be prioritising stability, or anticipating this feature flag receives a permanent home in NVDA settings.
-- **Explicitly choose the default** (NVDA developer recommended) behavior.
+* **Explicitly choose the default** (NVDA developer recommended) behavior.
 Noting, that in this case it is important that the user must be able to select one of the other options first,
 and return to the default behavior at any point in time.
 
@@ -35,6 +39,7 @@ those who have tried and found the feature to be unstable and decided they would
 stable.
 
 ## Feature Flag Enum
+
 To aid static typing in NVDA, `enum` classes are used.
 `BoolFlag` is provided, the majority of feature flags are expected to use this.
 However, if more values are required (E.G. `AllowUiaInMSWord` has options `WHEN_NECESSARY`, `WHERE_SUITABLE`, `ALWAYS`, in addition to `DEFAULT`), then a new `enum` class can be defined.
@@ -70,6 +75,7 @@ class AllowUiaInMSWordFlag(DisplayStringEnum):
 ```
 
 ## Config Spec
+
 In `configSpec.py` specify the new config key, ideally in the category that is most relevant to the feature.
 Placing it in a category rather than a catch-all feature flags category, allows for the option to become
 permanent without having to write config upgrade code to move it from section to another.
@@ -82,6 +88,7 @@ permanent without having to write config upgrade code to move it from section to
 
 The `featureFlag` type is a custom spec type.
 It will produce a `config.FeatureFlag` class instance when the key is accessed.
+
 ```python
 newFlagValue: config.FeatureFlag = config.conf["virtualBuffers"]["newOptionForUsers"]
 
@@ -97,15 +104,17 @@ if flagValue == AllowUiaInMSWordFlag.ALWAYS:
 ```
 
 ## GUI
+
 A control (`gui.nvdaControls.FeatureFlagCombo`) is provided to simplify exposing the feature flag to the user.
 
 ### Usage:
-Note the comments in the example:
-- `creation`
-- `is default`
-- `reset to default value`
-- `save GUI value to config`
 
+Note the comments in the example:
+
+* `creation`
+* `is default`
+* `reset to default value`
+* `save GUI value to config`
 
 ```python
 import collections
@@ -144,4 +153,5 @@ self.loadChromeVbufWhenBusyCombo.saveCurrentValueToConf()
 ```
 
 ## User Guide Documentation
+
 Refer to [User Guide Standards](./userGuideStandards.md#feature-settings)

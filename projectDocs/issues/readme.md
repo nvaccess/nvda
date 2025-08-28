@@ -1,4 +1,4 @@
-## Reporting issues or feature requests
+# Reporting issues or feature requests
 
 Issues can be [reported via GitHub](https://github.com/nvaccess/nvda/issues/new/choose).
 Please read the [issue template guide](./githubIssueTemplateExplanationAndExamples.md) for help filling out the appropriate template.

@@ -37,6 +37,7 @@ Poedit is a desktop application which is commonly used to translate files.
 It is fairly accessible and is used by many blind and vision impaired translators.
 
 The workflow for translating with Poedit involves:
+
 1. Downloading the translation file using NVDA's l10n utility
 1. Opening the translation file in Poedit, translating one or more strings, and saving the file.
 1. Uploading the translation file back to Crowdin.
@@ -74,6 +75,7 @@ E.g.
 ```sh
 l10nUtil.exe downloadTranslationFile fr nvda.po
 ```
+
 The first time you will be asked for an authorization token.
 Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
 Ensure that it has at least the translations scope.
@@ -115,16 +117,20 @@ After translating the file with Poedit, upload the file back to Crowdin.
 ```
 l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
 ```
+
 E.g.
+
 ```
 l10nUtil.exe uploadTranslationFile fr nvda.po
 ```
 
 If you had previously saved a copy of the downloaded file before translation, then you will also want to include this in the command, so that l10nUtil only uploads the strings you have actually changed:
 E.g.
+
 ```
 l10nUtil.exe uploadTranslationFile fr nvda.po --old nvda_old.po
 ```
+
 Where `nvda_old.po` was the saved copy.
 
 ## Translating NVDA's interface
@@ -140,16 +146,16 @@ Where `nvda_old.po` was the saved copy.
 
 You will come across several messages that have additional characters or punctuation as part of the message, this section will explain how they should be treated.
 
-- `%d`, digits
-- `%s`, string
-- `%.2f`, a number to 2 digits after the comma, for example 5.25
-- `{keyword}`, the text around the keyword should be translated, but the word should be left as is.
+* `%d`, digits
+* `%s`, string
+* `%.2f`, a number to 2 digits after the comma, for example 5.25
+* `{keyword}`, the text around the keyword should be translated, but the word should be left as is.
 
 #### Examples
 
-- `%d percent`: this means that `%d` will be replaced by a number when the program is running, and you only need to translate the word `percent`.
-- `subject: %s`: here `%s` means that another string will be substituted.
-- `{color} on {backgroundColor}`: In this case, the word `on` should be translated.
+* `%d percent`: this means that `%d` will be replaced by a number when the program is running, and you only need to translate the word `percent`.
+* `subject: %s`: here `%s` means that another string will be substituted.
+* `{color} on {backgroundColor}`: In this case, the word `on` should be translated.
 The rest should be left alone or rearranged in order to suit the language.
 This will be presented as "black on white", "yellow on black", etc.
 
@@ -169,16 +175,16 @@ Strings can have multiple versions depending on the plural form of the subject.
 
 Example:
 
-- `with %s item`
-- English plural form:
-  - Multiple: `with %s items`
-- Arabic plural forms:
-  - Zero: `تتضمن %s من العناصر`
-  - One: `تتضمّن %s من العناصر`
-  - Two: `تتضمَّن عنصرين %s`
-  - Few: `تتضمَّن %s عناصر`
-  - Many: `تتضمَّن %s من العناصر`
-  - Other: `تتضمَّن %s من العناصر`
+* `with %s item`
+* English plural form:
+  * Multiple: `with %s items`
+* Arabic plural forms:
+  * Zero: `تتضمن %s من العناصر`
+  * One: `تتضمّن %s من العناصر`
+  * Two: `تتضمَّن عنصرين %s`
+  * Few: `تتضمَّن %s عناصر`
+  * Many: `تتضمَّن %s من العناصر`
+  * Other: `تتضمَّن %s من العناصر`
 
 In the [Crowdin web interface](https://support.crowdin.com/online-editor/), these can be set for each language using the "Form" section which replaces the standard translation edit box.
 
@@ -186,12 +192,12 @@ In PoEdit, the standard translation edit box has tabs for each plural form.
 [Object navigation](https://download.nvaccess.org/documentation/userGuide.html#ObjectNavigation) is required to move focus to each tab button for the plural form.
 You can do this by:
 
-- By moving to the previous focus object from the edit box, you can cycle through each plural form tab button by continuing to more backward.
-  - Desktop: `NVDA+numpad4`
-  - Laptop: `NVDA+shift+leftArrow`
-- Activate the current object once the desired tab button is reached.
-  - Desktop: `NVDA+numpadEnter`
-  - Laptop: `NVDA+enter`
+* By moving to the previous focus object from the edit box, you can cycle through each plural form tab button by continuing to more backward.
+  * Desktop: `NVDA+numpad4`
+  * Laptop: `NVDA+shift+leftArrow`
+* Activate the current object once the desired tab button is reached.
+  * Desktop: `NVDA+numpadEnter`
+  * Laptop: `NVDA+enter`
 
 If the number of plural forms for your language is incorrect please message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org>.
 
@@ -202,6 +208,7 @@ Translation strings can be grouped by a tag to differentiate contexts.
 Translator comments provide additional context information.
 
 The string `none` is defined three times:
+
 * without any context to report a lack of background pattern in Microsoft Excel
 * with the context tag `symbolLevel`
 * with the context tag `espeakVarient`
@@ -212,8 +219,8 @@ In Crowdin, this information appears at the end of the context section.
 ### Testing the interface translation
 
 1. To test the current interface messages, save the current nvda.po file in Poedit, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
-    - `nvdadir`: the directory where NVDA has been installed
-    - `langcode`: the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
+    * `nvdadir`: the directory where NVDA has been installed
+    * `langcode`: the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
 1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+g` to open General Settings.
 1. From the language list, select your language (if it is listed), press `enter` and say yes when you're asked to restart NVDA.
 1. The messages you have translated should now be heard or brailled in your native language provided that the synthesizer you are using supports your language or a braille code for your language exists.
@@ -245,6 +252,7 @@ Content may still however contain inline markdown syntax such as links, inline c
 This syntax must be kept intact when translating.
 
 All strings for translation contain translator notes which include:
+
 * Line: the original line number in the markdown file.
 * prefix: any structural markdown on the line before this content.
 * Suffix: any structural markdown on the line after this content.
@@ -252,6 +260,7 @@ All strings for translation contain translator notes which include:
 ### Verifying your translation
 
 When ever you have saved the xliff file with Poedit, you can use the NVDA l10nUtil program to generate the html version of the documentation file. E.g.
+
 ```
 l10nUtil.exe xliff2html -t [userGuide|changes|keyCommands] <xliff file> <output html file>
 ```

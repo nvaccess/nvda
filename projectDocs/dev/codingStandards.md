@@ -1,4 +1,4 @@
-## Code Style
+# Code Style
 
 In general, Python contributions to NVDA should follow the [PEP 8 style guide](https://peps.python.org/pep-0008/), except where it contradicts the specific guidance below.
 
@@ -8,13 +8,13 @@ Authors should do their best to adhere to these standards in order to have the b
 In limited circumstances, NV Access may accept contributions that do not follow these coding standards.
 If there is a reason you are unable to follow these standards in a contribution to NVDA, please make note of this when opening your PR.
 
-### Encoding
+## Encoding
 
 * Python files should be encoded in UTF-8.
 * Text files should be committed with `LF` line endings.
 Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
-### Indentation
+## Indentation
 
 * Indentation must be done with tabs (one per level), not spaces.
 * When splitting a single statement over multiple lines, just indent one or more additional levels.
@@ -22,7 +22,7 @@ Files can be checked out locally using CRLF if needed for Windows development us
   * Be aware that this requires a new-line after an opening parenthesis/bracket/brace if you intend
     to split the statement over multiple lines.
 
-### Identifier Names
+## Identifier Names
 
 * Use descriptive names
   * name constants to avoid "magic numbers" and hint at intent or origin of the value.
@@ -64,7 +64,7 @@ Files can be checked out locally using CRLF if needed for Windows development us
       def _formatMember(self): pass
   ```
 
-### Translatable Strings
+## Translatable Strings
 
 * All strings that could be presented to the user should be marked as translatable using the `_()` function
   * e.g. `_("Text review")`.
@@ -94,7 +94,7 @@ self.copySettingsButton = wx.Button(
 )
 ```
 
-### Imports
+## Imports
 
 * Unused imports should be removed where possible.
   * Anything imported into a (sub)module can also be imported from that submodule.
@@ -105,7 +105,7 @@ self.copySettingsButton = wx.Button(
   This will override and define the symbols imported when performing a star import, e.g. `from module import *`.
   * Otherwise, with a comment like `# noqa: <explanation>`.
 
-### Considering future backwards compatibility
+## Considering future backwards compatibility
 
 When writing new code, consider how the code can be moved in future while retaining backwards compatibility.
 Refer to the [limitations to retaining backwards compatibility](./deprecations.md#limitations-to-retaining-backwards-compatibility).
@@ -117,7 +117,7 @@ Any module level variables should be prefixed with an underscore and be encapsul
 * Avoid code which executes at import time.
 Instead use initializer functions.
 
-### Docstrings
+## Docstrings
 
 Docstrings should use [Sphinx format without types](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html), and follow [PEP 257 conventions](https://peps.python.org/pep-0257/).
 
@@ -139,7 +139,7 @@ To learn more about reStructuredText, Sphinx and Python, check out the following
 * [Sphynx' custom reStructuredText Directives](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
 * [Sphynx' Python Domain](https://www.sphinx-doc.org/en/master/usage/domains/python.html)
 
-### Type hints
+## Type hints
 
 All new code contributions to NVDA should use [PEP 484-style type hints](https://peps.python.org/pep-0484/).
 Type hints make reasoning about code much easier, and allow static analysis tools to catch common errors.
@@ -149,7 +149,7 @@ Type hints make reasoning about code much easier, and allow static analysis tool
 * Prefer union shorthand (`X | Y`) over explicitly using `typing.Union`.
   * Corollary: prefer `T | None` over `typing.Optional[T]`.
 
-### Calling non-python code
+## Calling non-python code
 
 When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
 
@@ -160,7 +160,7 @@ When using parts of the Windows API, or parts of NVDA implemented in C++, it is 
   * E.g. `winBindings.kernel32`.
 * Ctypes code for nvdaHelper should be defined in the `NVDAHelper.localLib` module.
 
-### Language choices
+## Language choices
 
 The NVDA community is large and diverse, and we have a responsibility to make everyone feel welcome in it.
 As our [contributor code of conduct](../../CODE_OF_CONDUCT.md) says:
