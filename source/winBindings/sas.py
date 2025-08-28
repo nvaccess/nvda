@@ -24,7 +24,7 @@ Simulates a secure attention sequence (SAS).
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/sas/nf-sas-sendsas
 """
-SendSAS.restype = c_voidp
+SendSAS.restype = None
 SendSAS.argtypes = (
 	BOOL,  # asUser
 )

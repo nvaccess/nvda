@@ -52,4 +52,4 @@ MiniDumpWriteDump.argtypes = (
 	PMINIDUMP_USER_STREAM_INFORMATION,  # UserStreamParam: A pointer to a user-defined data structure that contains additional information to be included in the dump.
 	PMINIDUMP_CALLBACK_INFORMATION,  # CallbackParam: A pointer to a callback function that is called during the dump process.
 )
-MiniDumpWriteDump.restype = bool
+MiniDumpWriteDump.restype = BOOL

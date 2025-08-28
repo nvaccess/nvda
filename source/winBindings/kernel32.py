@@ -265,4 +265,4 @@ Sets a new unhandled exception filter function for the current process.
 SetUnhandledExceptionFilter.argtypes = (
 	UnhandledExceptionFilter,  # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
 )
-SetUnhandledExceptionFilter.restype = POINTER(c_void_p)
+SetUnhandledExceptionFilter.restype = UnhandledExceptionFilter
