@@ -35,12 +35,12 @@ def getRulesFiles(
 		if len(ruleFiles) == 0:
 			# look in the .zip file for the style files, including regional subdirs -- it might not have been unzipped
 			try:
-				zip_file: ZipFile = ZipFile(f"{pathToDir}\\{language}.zip", "r")
-				for file in zip_file.namelist():
+				zipFile: ZipFile = ZipFile(f"{pathToDir}\\{language}.zip", "r")
+				for file in zipFile.namelist():
 					if file.endswith("_Rules.yaml"):
 						ruleFiles.append(file)
-					elif zip_file.getinfo(file).is_dir() and processSubDirs:
+					elif zipFile.getinfo(file).is_dir() and processSubDirs:
 						ruleFiles.extend(processSubDirs(dir, language))
 			except Exception as e:
-				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zip_file}. Error: {e}")
+				log.debugWarning(f"MathCAT Dialog: didn't find zip file {zipFile}. Error: {e}")
 	return ruleFiles
