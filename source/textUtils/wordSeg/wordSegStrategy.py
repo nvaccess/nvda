@@ -5,7 +5,13 @@
 
 import os
 import ctypes
-from ctypes import c_char_p, c_int, POINTER, byref
+from ctypes import (
+    c_bool,
+    c_char_p,
+    c_int,
+    POINTER,
+    byref,
+)
 from abc import ABC, abstractmethod
 from functools import lru_cache
 from collections.abc import Callable
@@ -70,9 +76,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		if cls._lib is not None:
 			return
 		try:
-			from NVDAHelper import versionedLibPath
+			from NVDAState import ReadPaths
 
-			lib_path = os.path.join(versionedLibPath, "cppjieba.dll")
+			lib_path = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
 			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
 
 			# Setup function signatures
@@ -83,6 +89,18 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			# int segmentOffsets(const char* utf8Text, int** outOffsets, int* outLen)
 			cls._lib.segmentOffsets.restype = c_int
 			cls._lib.segmentOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
+
+			# bool insertUserWord(const char* word, int freq, const char* tag)
+			cls._lib.insertUserWord.restype = c_bool
+			cls._lib.insertUserWord.argtypes = [c_char_p, c_int, c_char_p]
+
+			# bool deleteUserWord(const char* word, const char* tag)
+			cls._lib.deleteUserWord.restype = c_bool
+			cls._lib.deleteUserWord.argtypes = [c_char_p, c_char_p]
+
+			# bool find(const char* word)
+			cls._lib.find.restype = c_bool
+			cls._lib.find.argtypes = [c_char_p]
 
 			# void freeOffsets(int* offsets)
 			cls._lib.freeOffsets.restype = None
