@@ -42,8 +42,12 @@ from ctypes.wintypes import (
 )
 
 import winBindings.user32
-from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
+from winBindings.user32 import (
+	WNDENUMPROC as _WNDENUMPROC,
+	PAINTSTRUCT as _PAINTSTRUCT,
+)
 import winKernel
+from collections.abc import Callable
 from textUtils import WCHAR_ENCODING
 import enum
 from utils import _deprecate
@@ -963,3 +967,25 @@ def setClipboardData(format, data):
 		raise ctypes.WinError()
 	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
 	h.forget()
+
+
+def findTopLevelWindow(predicate: Callable[[int], bool]) -> int | None:
+	"""Pythonic convenience wrapper to find a specific window.
+	It uses EnumWindows under the hood.
+	:param predicate: A callable that is held against every enumerated window.
+		When it returns True, the enumerated window is returned and enumeration stops.
+	:returns: The found window handle, if any.
+	"""
+	found = None
+
+	@_WNDENUMPROC
+	def enumWindowsProc(hWnd: int, _lParam: int) -> int:
+		if predicate(hWnd):
+			nonlocal found
+			found = hWnd
+			return 0
+		return 1
+
+	if not winBindings.user32.EnumWindows(enumWindowsProc, 0) and (error := ctypes.get_last_error()):
+		raise ctypes.WinError(error)
+	return found
