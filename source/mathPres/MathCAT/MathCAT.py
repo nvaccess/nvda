@@ -26,6 +26,7 @@ from api import getClipData
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from scriptHandler import script
+from NVDAState import WritePaths
 
 from speech.commands import (
 	BaseProsodyCommand,
@@ -334,13 +335,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		try:
 			# IMPORTANT -- SetRulesDir must be the first call to libmathcat besides GetVersion()
 			rulesDir: str = path.join(
-				path.dirname(path.abspath(__file__)),
-				"..",
-				"..",
-				"..",
-				"include",
-				"nvda-mathcat",
-				"assets",
+				WritePaths.mathCATDir,
 				"Rules",
 			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")

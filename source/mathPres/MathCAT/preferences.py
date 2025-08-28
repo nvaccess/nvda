@@ -9,6 +9,7 @@ import os
 import config
 import yaml
 from logHandler import log
+from NVDAState import WritePaths
 
 import libmathcat_py as libmathcat
 from .rulesUtils import getRulesFiles
@@ -59,13 +60,7 @@ def pathToBrailleFolder() -> str:
 	:return: Absolute path to the Braille folder as a string.
 	"""
 	return os.path.join(
-		os.path.dirname(os.path.abspath(__file__)),
-		"..",
-		"..",
-		"..",
-		"include",
-		"nvda-mathcat",
-		"assets",
+		WritePaths.mathCATDir,
 		"Rules",
 		"Braille",
 	)

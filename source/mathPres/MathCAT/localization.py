@@ -12,6 +12,7 @@ import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
 from speech import getCurrentLanguage
+from NVDAState import WritePaths
 
 import libmathcat_py as libmathcat
 from . import rulesUtils
@@ -235,13 +236,7 @@ def pathToLanguagesFolder() -> str:
 	:return: Absolute path to the Languages folder as a string.
 	"""
 	return os.path.join(
-		os.path.dirname(os.path.abspath(__file__)),
-		"..",
-		"..",
-		"..",
-		"include",
-		"nvda-mathcat",
-		"assets",
+		WritePaths.mathCATDir,
 		"Rules",
 		"Languages",
 	)

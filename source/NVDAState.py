@@ -22,6 +22,15 @@ class _WritePaths:
 		return configPath
 
 	@property
+	def mathCATDir(self) -> str:
+		return os.path.join(
+			sys.prefix,
+			"include",
+			"nvda-mathcat",
+			"assets",
+		)
+
+	@property
 	def addonsDir(self) -> str:
 		return os.path.join(self.configDir, "addons")
 
