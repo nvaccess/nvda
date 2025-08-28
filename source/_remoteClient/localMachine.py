@@ -18,12 +18,12 @@ muting and uses wxPython's CallAfter for thread synchronization.
 	not be used directly outside of the remote connection infrastructure.
 """
 
-import ctypes
 from enum import IntEnum, nonmember
 import os
 from typing import Any, Dict, List, Optional
 import winreg
 
+import winBindings.sas
 import api
 import braille
 from config.registry import RegistryKey
@@ -284,7 +284,7 @@ class LocalMachine:
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
 		if self._canSendSAS():
-			ctypes.windll.sas.SendSAS(not isRunningOnSecureDesktop())
+			winBindings.sas.SendSAS(not isRunningOnSecureDesktop())
 		else:
 			# Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
 			ui.message(pgettext("remote", "Unable to trigger control+alt+delete"))

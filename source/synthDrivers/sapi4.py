@@ -12,6 +12,7 @@ import queue
 import threading
 import time
 import winreg
+import winBindings.ole32
 import winBindings.user32
 from winBindings.mmeapi import WAVEFORMATEX
 from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
@@ -86,9 +87,6 @@ from speech.commands import (
 	BaseProsodyCommand,
 )
 from speech.types import SpeechSequence
-
-
-windll.ole32.CoTaskMemAlloc.restype = c_void_p
 
 
 class SynthDriverBufSink(COMObject):
@@ -579,7 +577,7 @@ class SynthDriverAudio(COMObject):
 		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		size = sizeof(WAVEFORMATEX)
-		ptr = windll.ole32.CoTaskMemAlloc(size)
+		ptr = winBindings.ole32.CoTaskMemAlloc(size)
 		if not ptr:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		memmove(ptr, addressof(self._waveFormat), size)

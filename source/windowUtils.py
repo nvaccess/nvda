@@ -12,6 +12,7 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import ctypes.wintypes
 import weakref
+import winBindings.kernel32
 import winBindings.user32
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
@@ -148,7 +149,7 @@ def getWindowScalingFactor(window: int) -> int:
 	return round(winDpi / DEFAULT_DPI_LEVEL)
 
 
-appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+appInstance = winBindings.kernel32.GetModuleHandle(None)
 
 
 class CustomWindow(AutoPropertyObject):

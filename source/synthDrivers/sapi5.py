@@ -18,13 +18,13 @@ from ctypes import (
 	memmove,
 	memset,
 	sizeof,
-	windll,
 )
 from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
 import threading
 from typing import TYPE_CHECKING, Any, NamedTuple, Generator
+import winBindings.ole32
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
 from comInterfaces.SpeechLib import (
@@ -64,9 +64,6 @@ from speech.commands import (
 from ._sonic import SonicStream, initialize as sonicInitialize
 
 import NVDAState
-
-
-windll.ole32.CoTaskMemAlloc.restype = c_void_p
 
 
 class _SPAudioState(IntEnum):
@@ -173,7 +170,7 @@ class _SapiEvent(SPEVENT):
 		if self.elParamType in (_SPEventLParamType.TOKEN, _SPEventLParamType.OBJECT):
 			_Com_Release(cast(self.lParam, c_void_p))
 		elif self.elParamType in (_SPEventLParamType.POINTER, _SPEventLParamType.STRING):
-			windll.ole32.CoTaskMemFree(cast(self.lParam, c_void_p))
+			winBindings.ole32.CoTaskMemFree(cast(self.lParam, c_void_p))
 		memset(byref(self), 0, sizeof(self))
 
 	def __del__(self):
@@ -185,14 +182,14 @@ class _SapiEvent(SPEVENT):
 		if not src.lParam:
 			return
 		if src.elParamType == _SPEventLParamType.POINTER:
-			dst.lParam = windll.ole32.CoTaskMemAlloc(src.wParam)
+			dst.lParam = winBindings.ole32.CoTaskMemAlloc(src.wParam)
 			if not dst.lParam:
 				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 			memmove(dst.lParam, src.lParam, src.wParam)
 		elif src.elParamType == _SPEventLParamType.STRING:
 			strbuf = create_unicode_buffer(cast(src.lParam, c_wchar_p).value)
 			bufsize = sizeof(strbuf)
-			dst.lParam = windll.ole32.CoTaskMemAlloc(bufsize)
+			dst.lParam = winBindings.ole32.CoTaskMemAlloc(bufsize)
 			if not dst.lParam:
 				raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 			memmove(dst.lParam, byref(strbuf), bufsize)
@@ -333,7 +330,7 @@ class SynthDriverAudioStream(COMObject):
 		"""
 		# pguidFormatId is actually an out parameter
 		pguidFormatId.contents = _SPDFID_WaveFormatEx
-		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		pwfx = cast(winBindings.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		memmove(pwfx, byref(self.waveFormat), sizeof(WAVEFORMATEX))
@@ -380,7 +377,7 @@ class SynthDriverAudioStream(COMObject):
 
 		:returns: A tuple of a GUID, which should always be SPDFID_WaveFormatEx,
 			and a pointer to a WAVEFORMATEX structure, allocated by CoTaskMemAlloc."""
-		pwfx = cast(windll.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
+		pwfx = cast(winBindings.ole32.CoTaskMemAlloc(sizeof(WAVEFORMATEX)), POINTER(WAVEFORMATEX))
 		if not pwfx:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		self._writeDefaultFormat(pwfx.contents)

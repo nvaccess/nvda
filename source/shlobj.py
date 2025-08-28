@@ -18,6 +18,9 @@ import functools
 from typing import Optional, Union
 
 
+import winBindings.ole32
+
+
 class FolderId(str, Enum):
 	"""Contains guids of known folders from Knownfolders.h. Full list is availabe at:
 	https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid"""
@@ -60,5 +63,5 @@ def SHGetKnownFolderPath(
 	if res != 0:
 		raise RuntimeError(f"SHGetKnownFolderPath failed with error code {res}")
 	path = pathPointer.value
-	ctypes.windll.ole32.CoTaskMemFree(pathPointer)
+	winBindings.ole32.CoTaskMemFree(pathPointer)
 	return path
