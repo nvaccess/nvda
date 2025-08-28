@@ -40,9 +40,9 @@ This [method uses a password](https://docs.microsoft.com/en-us/windows/msix/pack
 Use PowerShell.
 Replace the following in this PowerShell script:
 
-- `<nvdaRepositoryRoot>`: the root of your NVDA repository.
-- `<Password>`: a password for the exported certificate file.
-- `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
+* `<nvdaRepositoryRoot>`: the root of your NVDA repository.
+* `<Password>`: a password for the exported certificate file.
+* `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
 
 ```ps1
 cd <nvdaRepositoryRoot>
@@ -58,8 +58,8 @@ Run PowerShell as Administrator, execute [Import-PfxCertificate](https://docs.mi
 
 Replace the following in the PowerShell script:
 
-- `<nvdaRepositoryRoot>`: the root of your NVDA repository.
-- `<Password>`: your password for the exported certificate file.
+* `<nvdaRepositoryRoot>`: the root of your NVDA repository.
+* `<Password>`: your password for the exported certificate file.
 
 ```ps1
 cd <nvdaRepositoryRoot>
@@ -105,12 +105,12 @@ View the certificate for the NVDA launcher:
 1. Navigate to Digital Signatures tab
 1. Open certificate signature
 1. Open View Certificate
-   - If the certificate is not imported correctly:
-      - **General tab:** "This CA Root certificate is not trusted because it is not in the Trusted Root Certification Authorities store."
-      - **Certification Path tab, Certificate Status:** "This CA Root certificate is not trusted because it is not in the Trusted Root Certification Authorities store."
-   - If the certificate is imported correctly:
-      - **General tab:** "Ensures software came from software publisher. Protects software from alteration after publication"
-      - **Certification Path tab, Certificate Status:** "This certificate is OK."
+   * If the certificate is not imported correctly:
+      * **General tab:** "This CA Root certificate is not trusted because it is not in the Trusted Root Certification Authorities store."
+      * **Certification Path tab, Certificate Status:** "This CA Root certificate is not trusted because it is not in the Trusted Root Certification Authorities store."
+   * If the certificate is imported correctly:
+      * **General tab:** "Ensures software came from software publisher. Protects software from alteration after publication"
+      * **Certification Path tab, Certificate Status:** "This certificate is OK."
 
 ## Remove the certificate
 
@@ -122,7 +122,7 @@ The certificate will still be in `Cert:\CurrentUser\My\<Certificate Thumbprint>`
 Use PowerShell, running as administrator.
 Replace the following in this PowerShell script:
 
-- `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
+* `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
 
 ```ps1
 Remove-Item -DeleteKey -Path "Cert:\LocalMachine\Root\<Certificate Thumbprint>"

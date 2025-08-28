@@ -67,9 +67,9 @@ use status cells at the moment.
 
 ## Driver requirements
 
-- support for both 46 and 80 cells models
-- support for both automatic and manual detection
-- when connected allows device plugging out and in, and power switching off and
+* support for both 46 and 80 cells models
+* support for both automatic and manual detection
+* when connected allows device plugging out and in, and power switching off and
 on so that display content is up-to-date and buttons work as expected after
 these operations.
 
@@ -86,10 +86,10 @@ to format data which is meant to be displayed on the braille line.
 
 Important main functions of `BrailleDisplayDriver` are:
 
-- `_readHandling`; performs connecting/reconnecting to the device, and all read
+* `_readHandling`; performs connecting/reconnecting to the device, and all read
 operations during connection
-- `_somethingToWrite`; performs all write operations to the display
-- `display`; prepares data to be displayed on the braille line
+* `_somethingToWrite`; performs all write operations to the display
+* `display`; prepares data to be displayed on the braille line
 
 In `gestures.py` numeric values of pressed buttons are interpreted as gestures
 so that they can be forwarded to NVDA input system.

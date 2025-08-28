@@ -6,8 +6,8 @@ Instructions for testing startup / shutdown.
 
 Prerequisites:
 
-- NVDA installed
-- Shortcut enabled during installation
+* NVDA installed
+* Shortcut enabled during installation
 
 Steps:
 
@@ -15,14 +15,14 @@ Steps:
 
 Variation:
 
-- At step 1. A version of NVDA is already running. Observe running version exits before installed version starts up.
+* At step 1. A version of NVDA is already running. Observe running version exits before installed version starts up.
 
 ## Windows Sign-in screen, automatic start
 
 Prerequisites:
 
-- NVDA installed
-- Enable "Use NVDA during sign-in"
+* NVDA installed
+* Enable "Use NVDA during sign-in"
 
 Steps:
 
@@ -33,9 +33,9 @@ Steps:
 
 Prerequisites:
 
-- NVDA installed
-- An active Windows session (i.e. not signed out, locked)
-- The NVDA installed copy is running
+* NVDA installed
+* An active Windows session (i.e. not signed out, locked)
+* The NVDA installed copy is running
 
 Steps:
 
@@ -48,8 +48,8 @@ Steps:
 
 Prerequisites:
 
-- NVDA installed
-- Enable "Start NVDA after I sign in"
+* NVDA installed
+* Enable "Start NVDA after I sign in"
 
 Steps:
 
@@ -68,19 +68,19 @@ Steps:
 
 Variation:
 
-- using an installer (launcher)
-  - eg: `C:\Users\username\Downloads\nvda_2021.1.exe`
-- using an installed copy
-  - just type `nvda` in place of the .exe
-- using a portable copy
-  - find and use the path to `nvda.exe`, located within the portable copy directory
-  - the installer allows you to create an installed copy and a portable copy
+* using an installer (launcher)
+  * eg: `C:\Users\username\Downloads\nvda_2021.1.exe`
+* using an installed copy
+  * just type `nvda` in place of the .exe
+* using a portable copy
+  * find and use the path to `nvda.exe`, located within the portable copy directory
+  * the installer allows you to create an installed copy and a portable copy
 
 ## Running from source (runnvda.bat)
 
 Prerequisites
 
-- clone project and build NVDA (see [project readme](https://github.com/nvaccess/nvda/blob/master/readme.md#getting-the-source-code)).
+* clone project and build NVDA (see [project readme](https://github.com/nvaccess/nvda/blob/master/readme.md#getting-the-source-code)).
 
 Steps:
 
@@ -91,7 +91,7 @@ Steps:
 
 Prerequisite:
 
-- Input gesture for "Restarts NVDA!" is assigned
+* Input gesture for "Restarts NVDA!" is assigned
 
 Steps:
 

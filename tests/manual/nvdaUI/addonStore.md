@@ -96,8 +96,8 @@ Add-ons can be filtered by display name, publisher and description.
 
 1. Start the install of an incompatible add-on bundle.
 You can do this by:
-    - opening an `.nvda-addon` file while NVDA is running
-    - using the "install from external source" button
+    * opening an `.nvda-addon` file while NVDA is running
+    * using the "install from external source" button
 1. Confirm the warning message about add-on compatibility.
 1. Proceed with the installation.
 
@@ -131,24 +131,24 @@ This process allows you to mock an update for an add-on.
 For example: "Clock".
 1. Go to the "addons" folder in your [NVDA user configuration folder](#editing-user-configuration)
 1. To mock an old release, we need to edit 2 files:
-    - Add-on Store JSON metadata
-        - Example: `source\userConfig\addons\clock.json`
-        - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
-    - Add-on manifest
-        - Example: `source\userConfig\addons\clock\manifest.ini`
-        - Edit "version": decrease the major release value number to match earlier edits.
+    * Add-on Store JSON metadata
+        * Example: `source\userConfig\addons\clock.json`
+        * Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
+    * Add-on manifest
+        * Example: `source\userConfig\addons\clock\manifest.ini`
+        * Edit "version": decrease the major release value number to match earlier edits.
 
 #### Using a script
 
 1. [Install an add-on from the Add-on Store](#install-add-on)
 For example: "Clock".
 1. From PowerShell, call the following script to make the add-on updatable.
-   - `tests\manual\nvdaUI\createUpdatableAddons.ps1 $addonName $configPath`
-   - Replace `$configPath` with your [NVDA user configuration folder](#editing-user-configuration).
+   * `tests\manual\nvdaUI\createUpdatableAddons.ps1 $addonName $configPath`
+   * Replace `$configPath` with your [NVDA user configuration folder](#editing-user-configuration).
    This script defaults to using the installed user config folder in `%APPDATA%`.
-   - Example when running from source: `tests\manual\nvdaUI\createUpdatableAddons.ps1 clock source\userConfig`
-   - Example when running an installed copy: `tests\manual\nvdaUI\createUpdatableAddons.ps1 clock`
-   - Note this script sets the add-on version to 0.0.0.
+   * Example when running from source: `tests\manual\nvdaUI\createUpdatableAddons.ps1 clock source\userConfig`
+   * Example when running an installed copy: `tests\manual\nvdaUI\createUpdatableAddons.ps1 clock`
+   * Note this script sets the add-on version to 0.0.0.
 
 ### Updating from add-on originally installed via Add-on Store
 
@@ -163,12 +163,12 @@ For example: "Clock".
 For example: "Clock".
 1. Go to the "addons" folder in your [NVDA user configuration folder](#editing-user-configuration)
 1. To mock an externally loaded older release, we need to edit 2 files:
-   - Add-on Store JSON metadata
-     - Example: `source\userConfig\addons\clock.json`
-     - Delete this file.
-   - Add-on manifest
-     - Example: `source\userConfig\addons\clock\manifest.ini`
-     - Edit "version": decrease the major release value number to match earlier edits.
+   * Add-on Store JSON metadata
+     * Example: `source\userConfig\addons\clock.json`
+     * Delete this file.
+   * Add-on manifest
+     * Example: `source\userConfig\addons\clock\manifest.ini`
+     * Edit "version": decrease the major release value number to match earlier edits.
 1. Open the add-on store
 1. Ensure the same add-on you edited is available on the add-on store with the status "update".
 1. Install the add-on again to test the "update" path.
@@ -182,12 +182,12 @@ This means using the latest add-on store version might be a downgrade or sidegra
 For example: "Clock".
 1. Go to the "addons" folder in your [NVDA user configuration folder](#editing-user-configuration)
 1. To mock an externally loaded release, with an invalid version, we need to edit 2 files:
-    - Add-on Store JSON metadata
-        - Example: `source\userConfig\addons\clock.json`
-        - Delete this file.
-    - Add-on manifest
-        - Example: `source\userConfig\addons\clock\manifest.ini`
-        - Edit "version": to something invalid e.g. "foo".
+    * Add-on Store JSON metadata
+        * Example: `source\userConfig\addons\clock.json`
+        * Delete this file.
+    * Add-on manifest
+        * Example: `source\userConfig\addons\clock\manifest.ini`
+        * Edit "version": to something invalid e.g. "foo".
 1. Open the add-on store
 1. Ensure the same add-on you edited is available on the add-on store with the status "Migrate to add-on store".
 1. Install the add-on again to test the "migrate" path.
@@ -223,9 +223,9 @@ For example: "Clock".
         ```
 
 1. Test various buttons:
-    - Press "Update All": Ensure NVDA installs the add-ons.
-    - Press "Close": Ensure that NVDA prompts for restart if any add-ons have been installed, enabled, disabled or removed
-    - Press "Open Add-on Store": Ensure NVDA opens to the Updatable tab in the Add-on Store
+    * Press "Update All": Ensure NVDA installs the add-ons.
+    * Press "Close": Ensure that NVDA prompts for restart if any add-ons have been installed, enabled, disabled or removed
+    * Press "Open Add-on Store": Ensure NVDA opens to the Updatable tab in the Add-on Store
 
 ### Automatic updating
 
@@ -292,9 +292,9 @@ There are several scenarios which need to be tested for updating NVDA with incom
 This is an advanced test scenario which requires 3 versions of NVDA to test with.
 Typically, this requires a contributor creating 3 different versions of the same patch of NVDA, with different versions of `addonAPIVersion.CURRENT` and `addonAPIVersion.BACK_COMPAT_TO`
 
-- X.1 e.g `CURRENT=2023.1`, `BACK_COMPAT_TO=2023.1`
-- X.2 e.g `CURRENT=2023.2`, `BACK_COMPAT_TO=2023.1`
-- (X+1).1 e.g `CURRENT=2024.1`, `BACK_COMPAT_TO=2024.1`
+* X.1 e.g `CURRENT=2023.1`, `BACK_COMPAT_TO=2023.1`
+* X.2 e.g `CURRENT=2023.2`, `BACK_COMPAT_TO=2023.1`
+* (X+1).1 e.g `CURRENT=2024.1`, `BACK_COMPAT_TO=2024.1`
 
 | Test Name | Upgrade from | Upgrade to | Test notes |
 |---|---|---|---|
@@ -310,6 +310,6 @@ Typically, this requires a contributor creating 3 different versions of the same
 
 Where you can find your NVDA user configuration folder:
 
-- For installed copies: `%APPDATA%\nvda`
-- For source copies: `source\userConfig`
-- Inside a portable copy directory: `userConfig`
+* For installed copies: `%APPDATA%\nvda`
+* For source copies: `source\userConfig`
+* Inside a portable copy directory: `userConfig`

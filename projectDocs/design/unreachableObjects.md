@@ -50,7 +50,7 @@ Inspecting this should give you a fair idea of where the issue is occurring.
 1. All unreachable objects will now be stored in `gc.garbage`.
    It may be a very large list.
    Some tricks for narrowing this list down:
-   - From the log, you can get the memory address (`id`) of the object.
+   * From the log, you can get the memory address (`id`) of the object.
      Then use:
 
      ``` python
@@ -61,7 +61,7 @@ Inspecting this should give you a fair idea of where the issue is occurring.
      		obj = o
      ```
 
-   - Listing the types collected, look for the type(s) matching the log message:
+   * Listing the types collected, look for the type(s) matching the log message:
 
      ``` python
      for index, o in enumerate(gc.garbage):
@@ -84,4 +84,4 @@ Inspecting this should give you a fair idea of where the issue is occurring.
 
 Some examples of common issues:
 
-- Exceptions caught and assigned to a local variable.
+* Exceptions caught and assigned to a local variable.

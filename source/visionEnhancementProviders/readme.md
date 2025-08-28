@@ -6,8 +6,8 @@ For more information about the implementation of a provider see vision.providerB
 
 Two of the built-in examples are:
 
-- NVDA Highlighter which will react to changes in focus and draw a rectangle outline around the focused object.
-- Screen Curtain which when enabled makes the screen black for privacy reasons.
+* NVDA Highlighter which will react to changes in focus and draw a rectangle outline around the focused object.
+* Screen Curtain which when enabled makes the screen black for privacy reasons.
 
 A vision enhancement provider module should have a class called `VisionEnhancementProvider`.
 To make identifying a provider that is causing errors easier, name your provider class something descriptive and set
