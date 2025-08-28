@@ -181,26 +181,24 @@ class ReportLineIndentation(DisplayStringIntEnum):
 
 
 @unique
-class ReportSpellingErrors(DisplayStringIntEnum):
-	"""Enumeration containing the possible config values to report spelling errors while reading.
-
+class ReportSpellingErrors(DisplayStringIntFlag):
+	"""IntFlag enumeration containing the possible config values to report spelling errors while reading.
+	
 	Use ReportSpellingErrors.MEMBER.value to compare with the config;
-	use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
+	the config stores a bitwise combination of zero, one or more of these values.
+	Use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 
-	OFF = 0
 	SPEECH = 1
 	SOUND = 2
 
 	@property
 	def _displayStringLabels(self) -> dict["ReportSpellingErrors", str]:
 		return {
-			# Translators: A choice in a combo box in the document formatting dialog to not report spelling errors.
-			ReportSpellingErrors.OFF: pgettext("reportSpellingErrorsSetting", "Off"),
-			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
+			# Translators: A choice in a checklist box in the document formatting dialog to report spelling errors
 			# with speech.
 			ReportSpellingErrors.SPEECH: pgettext("reportSpellingErrorsSetting", "Speech"),
-			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
+			# Translators: A choice in a checklist box in the document formatting dialog to report spelling errors
 			# with a sound.
 			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
 		}
