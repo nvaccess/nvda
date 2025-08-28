@@ -441,4 +441,6 @@ class MathCAT(mathPres.MathPresentationProvider):
 		:param mathml: The MathML representing the math to interact with.
 		"""
 		MathCATInteraction(provider=self, mathMl=mathml).setFocus()
-		MathCATInteraction(provider=self, mathMl=mathml).script_navigate(None)
+		interaction = MathCATInteraction(provider=self, mathMl=mathml)
+		interaction.setFocus()
+		interaction.script_navigate(None)
