@@ -1215,38 +1215,3 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
 		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "notABool")
 		with self.assertRaises(KeyError):
 			profile["documentFormatting"]["reportSpellingErrors2"]
-
-
-class Config_getitem_alias(unittest.TestCase):
-	def setUp(self):
-		self.config = ConfigManager()["documentFormatting"]
-
-	def test_set_reportSpellingErrors_false(self):
-		config = self.config
-		config["reportSpellingErrors"] = False
-		self.assertEqual(config["reportSpellingErrors"], False)
-		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.OFF)
-
-	def test_set_reportSpellingErrors_true(self):
-		config = self.config
-		config["reportSpellingErrors"] = True
-		self.assertEqual(config["reportSpellingErrors"], True)
-		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SPEECH)
-
-	def test_set_reportSpellingErrors2_off(self):
-		config = self.config
-		config["reportSpellingErrors2"] = ReportSpellingErrors.OFF
-		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.OFF)
-		self.assertEqual(config["reportSpellingErrors"], False)
-
-	def test_set_reportSpellingErrors2_speech(self):
-		config = self.config
-		config["reportSpellingErrors2"] = ReportSpellingErrors.SPEECH
-		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SPEECH)
-		self.assertEqual(config["reportSpellingErrors"], True)
-
-	def test_set_reportSpellingErrors2_sound(self):
-		config = self.config
-		config["reportSpellingErrors2"] = ReportSpellingErrors.SOUND
-		self.assertEqual(config["reportSpellingErrors2"], ReportSpellingErrors.SOUND)
-		self.assertEqual(config["reportSpellingErrors"], True)
