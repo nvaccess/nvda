@@ -1527,7 +1527,7 @@ def getTextInfoSpeech(  # noqa: C901
 	)
 	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
-		formatConfig["reportSpellingErrors2"] = ReportSpellingErrors.OFF.value
+		formatConfig["reportSpellingErrors2"] = 0
 
 	# Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache = speakTextInfoState.controlFieldStackCache if speakTextInfoState else []
@@ -3004,15 +3004,15 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text no longer contains a bookmark
 				text = _("out of bookmark")
 				textList.append(text)
-	if formatConfig["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value:
+	if formatConfig["reportSpellingErrors2"]:
 		invalidSpelling = attrs.get("invalid-spelling")
 		oldInvalidSpelling = attrsCache.get("invalid-spelling") if attrsCache is not None else None
 		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling != oldInvalidSpelling:
 			if invalidSpelling:
-				if formatConfig["reportSpellingErrors2"] == ReportSpellingErrors.SPEECH.value:
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a spelling error.
 					text = _("spelling error")
-				else:
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
 					text = WaveFileCommand(r"waves\textError.wav")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.

@@ -617,10 +617,10 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 
 	newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
 	profile[section][newKey] = newValue
+	del profile[section][][key]
 	log.debug(
 		(
-			f"Added '{newKey}' with value {newValue} ({ReportSpellingErrors(newValue).name})."
-			f" The old key '{key}' remains with its original value ({oldValue}) since the two keys are aliased in the"
-			" code."
+			f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}"
+			f" ({ReportSpellingErrors(newValue).name}). The old key '{key}' has been deleted."
 		),
 	)

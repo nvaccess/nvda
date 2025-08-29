@@ -189,18 +189,23 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 	Use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 
-	SPEECH = 1
-	SOUND = 2
+	OFF = 0b0
+	SPEECH = 0b1
+	SOUND = 0b10
+	SPEECH_AND_SOUND = SPEECH | SOUND
 
 	@property
 	def _displayStringLabels(self) -> dict["ReportSpellingErrors", str]:
 		return {
-			# Translators: A choice in a checklist box in the document formatting dialog to report spelling errors
-			# with speech.
+			# Translators: A value reported by the cycle script defining how spelling errors are reported.
+			ReportSpellingErrors.OFF: pgettext("reportSpellingErrorsSetting", "Off"),
+			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
+			# as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
 			ReportSpellingErrors.SPEECH: pgettext("reportSpellingErrorsSetting", "Speech"),
-			# Translators: A choice in a checklist box in the document formatting dialog to report spelling errors
-			# with a sound.
+			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
+			# as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
+			ReportSpellingErrors.SPEECH_AND_SOUND: pgettext("reportSpellingErrorsSetting", "Speech and sound"),
 		}
 
 

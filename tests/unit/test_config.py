@@ -1184,7 +1184,8 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_18_to_19(profile)
-		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "False")
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportSpellingErrors"]
 		self.assertEqual(
 			profile["documentFormatting"]["reportSpellingErrors2"],
 			ReportSpellingErrors.OFF.value,
@@ -1198,7 +1199,8 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_18_to_19(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_18_to_19(profile)
-		self.assertEqual(profile["documentFormatting"]["reportSpellingErrors"], "True")
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportSpellingErrors"]
 		self.assertEqual(
 			profile["documentFormatting"]["reportSpellingErrors2"],
 			ReportSpellingErrors.SPEECH.value,

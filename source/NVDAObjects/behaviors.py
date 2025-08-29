@@ -297,7 +297,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 
 	def event_typedCharacter(self, ch: str):
 		if (
-			config.conf["documentFormatting"]["reportSpellingErrors2"]
+			config.conf["documentFormatting"]["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value
 			and config.conf["keyboard"]["alertForSpellingErrors"]
 			and (
 				# Not alpha, apostrophe or control.

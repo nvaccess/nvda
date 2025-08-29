@@ -30,7 +30,7 @@ import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
 import config
-from config.configFlags import ReportSpellingErrors
+config.configFlags import ReportSpellingErrors
 import speech
 import api
 import textInfos
