@@ -596,23 +596,12 @@ def test_symbolInSpeechUI():
 	"""Replace a translation string to include a character that is can be substituted,
 	check if the 'speech UI' translation string the character substituted.
 	"""
-	_notepad.prepareNotepad(
-		(
-			"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
-		),
-	)
+	character = "t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
+	_notepad.prepareNotepad(character)
 	_setConfig(SymLevel.ALL)
 	spy = _NvdaLib.getSpyLib()
 	expected = "shouldn't sub tick symbol"
 	spy.override_translationString(EndSpeech.RIGHT.value, expected)
-
-	# get to the end char
-	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
-	_builtIn.should_be_equal(
-		actual,
-		["blank"],
-		msg="actual vs expected. Unexpected speech when moving to final character.",
-	)
 
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
@@ -622,7 +611,7 @@ def test_symbolInSpeechUI():
 		[
 			# todo: 'tick' is a bug
 			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
-			"\nblank",
+			f"\n{character}",
 		],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
 	)
@@ -632,7 +621,7 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		[f"{expected}\nblank"],
+		[f"{expected}\n{character}"],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
 	)
 

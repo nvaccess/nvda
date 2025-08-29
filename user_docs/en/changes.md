@@ -26,6 +26,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 ### Bug Fixes
 
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+* When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
 
 ### Changes for Developers
 
