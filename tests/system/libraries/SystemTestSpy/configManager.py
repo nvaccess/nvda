@@ -145,7 +145,6 @@ def _shouldGenerateMockModel(iniPath: str) -> bool:
 	with open(iniPath, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
-
 	for line in lines:
 		# Detect section headers
 		stripLine = line.strip()

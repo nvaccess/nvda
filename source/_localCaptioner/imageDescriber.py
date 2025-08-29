@@ -21,7 +21,6 @@ import ui
 import api
 from keyboardHandler import KeyboardInputGesture
 import core
-from NVDAState import _WritePaths
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
