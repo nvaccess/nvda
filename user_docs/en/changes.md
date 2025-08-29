@@ -15,6 +15,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
+* In the add-on store, a new action will allow to see changes for the current version of add-ons. In the Updatable add-ons dialog, this info will be available from a dedicated button. (#14041, @josephsl, @nvdaes)
 
 ### Changes
 
@@ -34,7 +35,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
-  * The changelog should document changes between previous and latest add-on versions.
+  * The changelog should document changes between previous and latest add-on versions, and can be formatted in markdown.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 
