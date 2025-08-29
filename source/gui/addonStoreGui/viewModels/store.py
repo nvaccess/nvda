@@ -267,7 +267,7 @@ class AddonStoreVM:
 				actionHandler=lambda aVM: ui.browseableMessage(
 					markdown(
 						str(
-							cast(_AddonManifestModel, aVM.model).changelog,
+							cast(_AddonStoreModel, aVM.model).changelog,
 						),
 					),
 					# Translators: Title for a message showing changes for the current add-on version.
