@@ -56,7 +56,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str
+	changelog: str | None
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
@@ -113,7 +113,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str
+	changelog: str | None
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
@@ -225,7 +225,7 @@ class _AddonManifestModel(_AddonGUIModel):
 
 	@property
 	def changelog(self) -> str:
-		changelog: Optional[str] = self.manifest.get("changelog")
+		changelog: str | None = self.manifest.get("changelog")
 		if changelog is None:
 			return ""
 		return changelog
@@ -303,7 +303,7 @@ class AddonStoreModel(_AddonStoreModel):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str
+	changelog: str | None
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -360,7 +360,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
 		description=addon["description"],
-		changelog=addon["changelog"],
+		changelog=addon.get("changelog"),
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
