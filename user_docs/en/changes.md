@@ -26,6 +26,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 ### Bug Fixes
 
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+* Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 
 ### Changes for Developers
 

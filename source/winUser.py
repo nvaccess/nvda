@@ -42,8 +42,12 @@ from ctypes.wintypes import (
 )
 
 import winBindings.user32
-from winBindings.user32 import PAINTSTRUCT as _PAINTSTRUCT
+from winBindings.user32 import (
+	WNDENUMPROC as _WNDENUMPROC,
+	PAINTSTRUCT as _PAINTSTRUCT,
+)
 import winKernel
+from collections.abc import Callable
 from textUtils import WCHAR_ENCODING
 import enum
 from utils import _deprecate
@@ -963,3 +967,38 @@ def setClipboardData(format, data):
 		raise ctypes.WinError()
 	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
 	h.forget()
+
+
+def findTopLevelWindow(predicate: Callable[[int], bool]) -> int | None:
+	"""
+	Find the first top-level window that matches the given predicate.
+
+	:param predicate: A callable that takes a window handle (hWnd) as an integer
+		and returns True if the window matches the search criteria, False otherwise
+	:returns: The handle of the first matching top-level window, or None if no
+		matching window is found
+	:raises ctypes.WinError: If the Windows API call fails
+	"""
+	found = None
+
+	@_WNDENUMPROC
+	def enumWindowsProc(hWnd: int, _lParam: int) -> int:
+		"""
+		Callback function for enumerating windows.
+
+		This function is called for each top-level window on the screen during enumeration.
+		It checks if the window matches the predicate criteria and stops enumeration when found.
+
+		:param hWnd: Handle to the window being enumerated
+		:param _lParam: Application-defined value passed to the enumeration function (unused)
+		:return: 0 to stop enumeration when window is found, 1 to continue enumeration
+		"""
+		if predicate(hWnd):
+			nonlocal found
+			found = hWnd
+			return 0
+		return 1
+
+	if not winBindings.user32.EnumWindows(enumWindowsProc, 0) and (error := ctypes.get_last_error()):
+		raise ctypes.WinError(error)
+	return found
