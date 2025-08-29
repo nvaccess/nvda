@@ -207,11 +207,13 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 
 def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumeration: bool = True) -> int:
 	try:
-		if not (processHandle := winKernel.openProcess(
-			winKernel.SYNCHRONIZE | winKernel.PROCESS_QUERY_INFORMATION,
-			False,
-			processId,
-		)):
+		if not (
+			processHandle := winKernel.openProcess(
+				winKernel.SYNCHRONIZE | winKernel.PROCESS_QUERY_INFORMATION,
+				False,
+				processId,
+			)
+		):
 			raise ctypes.WinError()
 	except WindowsError:
 		log.debugWarning("Unable to open process for processId %d", processId, exc_info=True)
@@ -220,13 +222,18 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 
 	if fallBackToTopLevelWindowEnumeration:
 		try:
-			if not (foundWindowHandle := _findTopLevelWindow(lambda hwnd: _getWindowThreadProcessID(hwnd)[0] == processId)):
+			if not (
+				foundWindowHandle := _findTopLevelWindow(
+					lambda hwnd: _getWindowThreadProcessID(hwnd)[0] == processId,
+				)
+			):
 				raise RuntimeError(f"No window handle found for process {processId} to create process handle")
-			if not (processHandle := _getProcessHandleFromHwnd(foundWindowHandle))
+			if not (processHandle := _getProcessHandleFromHwnd(foundWindowHandle)):
 				raise ctypes.WinError()
 		except (WindowsError, RuntimeError):
 			log.debugWarning(
-				"Unable to get process handle using window enumeration and getting process handle from window", processId,
+				"Unable to get process handle using window enumeration and getting process handle from window",
+				processId,
 				exc_info=True,
 			)
 
