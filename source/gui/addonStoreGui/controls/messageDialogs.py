@@ -491,12 +491,12 @@ class UpdatableAddonsDialog(
 		index = self.addonsList.GetFirstSelected()
 		if index == -1:  # No add-on is selected
 			return
-		listItemVM = AddonListItemVM(self.addonsPendingUpdate[index])
-		if listItemVM.model.changelog is None:
+		addon = self.addonsPendingUpdate[index]
+		if addon.changelog is None:
 			# Translators: Message presented when an add-on doesn't provide a description of changes for the current version.
 			ui.message("No changelog provided")
 		else:
-			changelog = markdown(str(listItemVM.model.changelog))
+			changelog = markdown(str(addon.changelog))
 			ui.browseableMessage(
 				changelog,
 				# Translators: Title of a browseable message showing changes for the current add-on version.

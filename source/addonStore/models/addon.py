@@ -56,10 +56,10 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str | None
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
@@ -113,10 +113,10 @@ class _AddonStoreModel(_AddonGUIModel):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str | None
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
@@ -303,11 +303,11 @@ class AddonStoreModel(_AddonStoreModel):
 	addonId: str
 	displayName: str
 	description: str
-	changelog: str | None
 	publisher: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	license: str
 	licenseURL: Optional[str]
 	sourceURL: str
@@ -360,12 +360,12 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
 		description=addon["description"],
-		changelog=addon.get("changelog"),
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
 		addonVersionNumber=MajorMinorPatch(**addon["addonVersionNumber"]),
 		homepage=addon.get("homepage"),
+		changelog=addon.get("changelog"),
 		license=addon["license"],
 		licenseURL=addon.get("licenseURL"),
 		sourceURL=addon["sourceURL"],
