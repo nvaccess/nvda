@@ -207,7 +207,8 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
 			ReportSpellingErrors.SPEECH_AND_SOUND: pgettext(
 				# Translators: A value reported by the cycle script defining how spelling errors are reported.
-				"reportSpellingErrorsSetting", "Speech and sound"
+				"reportSpellingErrorsSetting",
+				"Speech and sound",
 			),
 		}
 
