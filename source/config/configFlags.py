@@ -205,6 +205,7 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 			# as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
+			# Translators: A value reported by the cycle script defining how spelling errors are reported.
 			ReportSpellingErrors.SPEECH_AND_SOUND: pgettext("reportSpellingErrorsSetting", "Speech and sound"),
 		}
 
