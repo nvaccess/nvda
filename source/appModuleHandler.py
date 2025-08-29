@@ -218,6 +218,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 		as a fallback method if direct process opening fails. Defaults to True
 	:return: A handle to the process, or 0 if no handle could be obtained
 	"""
+	processHandle: int = 0
 	try:
 		if not (
 			processHandle := winKernel.openProcess(
