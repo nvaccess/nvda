@@ -85,4 +85,3 @@ class TestModelDownloader(unittest.TestCase):
 		success, failed = self.downloader.downloadModelsMultithreaded(self.temp_dir, "model", files)
 		self.assertEqual(len(success), 1)
 		self.assertEqual(len(failed), 1)
-

@@ -246,7 +246,11 @@ class ModelDownloader:
 
 		# Check if file already exists and is complete
 		success, message = self._checkExistingFile(
-			localPath, remoteSize, fileName, progressCallback, threadId
+			localPath,
+			remoteSize,
+			fileName,
+			progressCallback,
+			threadId,
 		)
 		if success is not None:
 			return success, message
@@ -345,7 +349,11 @@ class ModelDownloader:
 				log.info(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
 
 				success, message = self._performSingleDownload(
-					url, localPath, fileName, threadId, progressCallback
+					url,
+					localPath,
+					fileName,
+					threadId,
+					progressCallback,
 				)
 				if success:
 					return True, message
