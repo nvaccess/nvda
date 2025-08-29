@@ -970,16 +970,29 @@ def setClipboardData(format, data):
 
 
 def findTopLevelWindow(predicate: Callable[[int], bool]) -> int | None:
-	"""Pythonic convenience wrapper to find a specific window.
-	It uses EnumWindows under the hood.
-	:param predicate: A callable that is held against every enumerated window.
-		When it returns True, the enumerated window is returned and enumeration stops.
-	:returns: The found window handle, if any.
+	"""
+	Find the first top-level window that matches the given predicate.
+
+	:param predicate: A callable that takes a window handle (hWnd) as an integer
+		and returns True if the window matches the search criteria, False otherwise
+	:returns: The handle of the first matching top-level window, or None if no
+		matching window is found
+	:raises ctypes.WinError: If the Windows API call fails
 	"""
 	found = None
 
 	@_WNDENUMPROC
 	def enumWindowsProc(hWnd: int, _lParam: int) -> int:
+		"""
+		Callback function for enumerating windows.
+
+		This function is called for each top-level window on the screen during enumeration.
+		It checks if the window matches the predicate criteria and stops enumeration when found.
+
+		:param hWnd: Handle to the window being enumerated
+		:param _lParam: Application-defined value passed to the enumeration function (unused)
+		:return: 0 to stop enumeration when window is found, 1 to continue enumeration
+		"""
 		if predicate(hWnd):
 			nonlocal found
 			found = hWnd

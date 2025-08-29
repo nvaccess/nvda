@@ -206,6 +206,18 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 
 
 def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumeration: bool = True) -> int:
+	"""
+	Get a process handle for the given process ID.
+
+	This function attempts to open a process handle using the Windows API. If the direct
+	approach fails and fallback is enabled, it will attempt to find a top-level window
+	belonging to the process and derive the process handle from that window.
+
+	:param processId: The ID of the process for which to obtain a handle
+	:param fallBackToTopLevelWindowEnumeration: Whether to attempt window enumeration
+		as a fallback method if direct process opening fails. Defaults to True
+	:return: A handle to the process, or 0 if no handle could be obtained
+	"""
 	try:
 		if not (
 			processHandle := winKernel.openProcess(
