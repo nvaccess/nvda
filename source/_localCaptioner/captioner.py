@@ -38,7 +38,7 @@ class ImageCaptioner(ABC):
 	"""
 
 	@abstractmethod
-	def generateCaption(self, image: str | bytes, max_length: int | None = None) -> str:
+	def generateCaption(self, image: str | bytes, maxLength: int | None = None) -> str:
 		"""
 		Generate a caption for the given image.
 
@@ -83,7 +83,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 				"please download models and config file first!",
 			)
 		except Exception as e:
-			log.exception(e)
+			log.exception()
 			raise
 
 		# Load vocabulary from vocab.json in the same directory as config
