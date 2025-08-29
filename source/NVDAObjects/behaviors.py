@@ -31,7 +31,10 @@ import nvwave
 import globalVars
 from typing import List, Union
 import diffHandler
-from config.configFlags import TypingEcho
+from config.configFlags import (
+	TypingEcho,
+	ReportSpellingErrors,
+)
 
 
 class ProgressBar(NVDAObject):
