@@ -82,7 +82,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 				f"Caption model config file {configPath} not found, "
 				"please download models and config file first!",
 			)
-		except Exception as e:
+		except Exception:
 			log.exception()
 			raise
 
