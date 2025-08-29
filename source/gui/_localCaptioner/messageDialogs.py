@@ -51,7 +51,7 @@ def openFailDialog() -> None:
 		message=pgettext(
 			"imageDesc",
 			# Translators: label of dialog when fail to download image captioning
-			"Image captioning download failed. Would you like to retry ?",
+			"Image captioning download failed. Would you like to retry?",
 		),
 		dialogType=DialogType.WARNING,
 		buttons=confirmation_buttons,

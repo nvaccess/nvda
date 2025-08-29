@@ -3888,7 +3888,7 @@ It is not included with the NVDA installer to reduce the installer size.
 
 ### Getting Started {#LocalCaptionerGettingStarted}
 
-Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#).
+Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#LocalCaptionToggle).
 Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
 
 ### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
@@ -3897,9 +3897,9 @@ Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` t
 
 | Name |Key |Description|
 |---|---|---|
-| get an AI generated image description | `NVDA+Windows+,` | recognize the image currently navigated by NVDA. |
-| toggle image captioning | Unassigned | enable or disable AI image descriptions. |
-| Shows the AI image descriptions settings | Unassigned | Opens the AI image descriptions settings panel. |
+| Get an AI generated image description | `NVDA+Windows+,` | Recognize the image currently navigated by NVDA. |
+| Toggle image captioning | None | Enable or disable AI image descriptions. |
+| Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
 
 <!-- KC:endInclude -->
 

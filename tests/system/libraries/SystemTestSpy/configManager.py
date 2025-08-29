@@ -105,7 +105,6 @@ def setupProfile(
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
 		_pJoin(stagingDir, "nvdaProfile", "nvda.ini"),
 	)
-	# if settingsFileName == "standard-doLoadMockModel.ini":
 	if _shouldGenerateMockModel(_pJoin(stagingDir, "nvdaProfile", "nvda.ini")):
 		_configModels(_pJoin(stagingDir, "nvdaProfile", "models", "mock", "vit-gpt2-image-captioning"))
 
@@ -146,8 +145,6 @@ def _shouldGenerateMockModel(iniPath: str) -> bool:
 	with open(iniPath, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
-	# Flags to track if we are in the [automatedImageDescriptions] section
-	hasCaptionSection = False
 
 	for line in lines:
 		# Detect section headers

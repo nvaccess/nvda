@@ -18,7 +18,6 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * Automated Image Descriptions:
   * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @Tianze)
   * This is generated locally on the device - no information is sent to the internet.
-  * A new command has been added: get an AI generated Image description, assigned to `NVDA+Windows+,`. (#18475)
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
   * Another new unassigned command is available for toggle image captioning. (#18475)
 

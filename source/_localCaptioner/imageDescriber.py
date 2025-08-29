@@ -108,7 +108,7 @@ class ImageDescriber:
 	def runCaption(self, gesture: KeyboardInputGesture) -> None:
 		"""Script to run image captioning on the current navigator object.
 
-		:param  gesture: The input gesture that triggered this script.
+		:param gesture: The input gesture that triggered this script.
 		"""
 		imageData = _screenshotNavigator()
 
@@ -129,7 +129,7 @@ class ImageDescriber:
 		"""
 
 		if not localModelDirPath:
-			baseModelsDir = _WritePaths().modelsDir
+			baseModelsDir = WritePaths.modelsDir
 			localModelDirPath = os.path.join(
 				baseModelsDir,
 				config.conf["automatedImageDescriptions"]["defaultModelPath"],
@@ -146,7 +146,6 @@ class ImageDescriber:
 			)
 		except FileNotFoundError:
 			self.isModelLoaded = False
-			# from .modelDownloader import openDownloadDialog
 			from gui._localCaptioner.messageDialogs import openDownloadDialog
 
 			wx.CallAfter(openDownloadDialog)

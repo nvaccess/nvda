@@ -3667,7 +3667,7 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 			wx.CheckBox(self, label=pgettext("imageDesc", "Enable image captioner")),
 		)
 		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
-		self.bindHelpEvent("LocalCaptionerSettingsLoadWhenInit", self.enable)
+		self.bindHelpEvent("LocalCaptionToggle", self.enable)
 
 	def onSave(self) -> None:
 		"""Save the configuration settings."""
