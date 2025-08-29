@@ -3058,15 +3058,14 @@ Enable this option while proof reading documents in applications such as WordPad
 ##### Spelling error reporting {#reportSpellingErrors}
 
 This option allows you to configure how spelling errors are reported while reading text.
-The "Report spelling errors" combo box has three options:
+This checklist box has two options:
 
-* Off: NVDA will not report spelling errors
 * Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
 * Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
 
 When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
 
-Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in the combo box.
+Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
