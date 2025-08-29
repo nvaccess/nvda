@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2012-2025 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """handles touchscreen interaction.
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
@@ -10,9 +10,11 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 
 import threading
 from ctypes import *  # noqa: F403
-from ctypes import windll
+from ctypes import cast, windll
 from ctypes.wintypes import *  # noqa: F403
+from ctypes.wintypes import LPCWSTR
 import re
+import winBindings.user32
 import gui
 import config
 import winUser
@@ -246,7 +248,7 @@ class TouchHandler(threading.Thread):
 			self._wca = windll.user32.RegisterClassExW(byref(self._wc))  # noqa: F405
 			self._touchWindow = windll.user32.CreateWindowExW(
 				0,
-				self._wca,
+				cast(self._wca, LPCWSTR),
 				"NVDA touch input",
 				0,
 				0,
@@ -272,7 +274,7 @@ class TouchHandler(threading.Thread):
 		finally:
 			self.initializedEvent.set()
 		msg = MSG()  # noqa: F405
-		while windll.user32.GetMessageW(byref(msg), None, 0, 0):  # noqa: F405
+		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
 			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
 			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405

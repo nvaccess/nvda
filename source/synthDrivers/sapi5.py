@@ -853,6 +853,7 @@ class SynthDriver(SynthDriver):
 				self._threadCond.wait_for(self._requestsAvailable)
 				if self._speakRequests:
 					request = self._speakRequests.popleft()
+					self._isCancelling = False
 					self._isCompleted = False
 			if request is not None:  # There is one request
 				text, bookmarks = request

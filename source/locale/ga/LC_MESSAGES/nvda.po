@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-18 02:41+0000\n"
-"PO-Revision-Date: 2025-08-18 03:13\n"
+"POT-Creation-Date: 2025-08-22 01:49+0000\n"
+"PO-Revision-Date: 2025-08-25 00:35\n"
 "Last-Translator: \n"
 "Language-Team: Irish\n"
 "Language: ga_IE\n"
@@ -2142,7 +2142,9 @@ msgstr[4] "Theip ar shuiteáil na mbreiseán seo:{} "
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Theip ar roinnt oibríochtaí ar breiseáin. Féach ar thuilleadh eolais sa logchomhad.\n"
+"{failureMsg}\n"
+" "
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -3590,14 +3592,15 @@ msgstr "Níl siombail ionaid ar fáil."
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Carachtar: {character}\n"
+"Carachtar nua: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2365
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Siombail fhairsingithe ({lang})  "
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2371
@@ -4841,7 +4844,7 @@ msgstr "Athraítear rialú idir an ríomhaire logánta agus an ríomhaire cianda
 #: globalCommands.py:5059
 msgctxt "remote"
 msgid "Sends control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Seoltar control+alt+delete go dtí an ríomhaire rialaithe."
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7185,14 +7188,14 @@ msgstr "&Críochnaithe"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1007 gui\installerGui.py:456
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Ní mholtar NVDA a uasdátú nuair atá an ríomhaire ceangailte mar an ríomhaire rialaithe."
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "  D’fhéadfadh nach leanfar ar aghaidh leis an gceangail reatha le linn an uasdátaithe nó tar éis an uasdátaithe. Fiú má leanfar ar aghaidh leis an gceangail, ní bheidh tú in ann leideanna a ghlacadh ón ríomhaire atá ag rialú. Ná téigh ar aghaidh ach amháin má tá rochtain fisiciúil agat ar an ríomhaire."
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -9844,178 +9847,184 @@ msgstr "Téalainnis Grád 2 "
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:564
+msgid "Turkish 8 dot computer braille"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: brailleTables\__tables.py:567
 msgid "Turkish grade 1"
 msgstr "Tuircis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:567
+#: brailleTables\__tables.py:570
 msgid "Turkish grade 2"
 msgstr "Tuircis Grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:570
+#: brailleTables\__tables.py:573
 msgid "Setswana grade 1"
 msgstr "Setswana, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:573
+#: brailleTables\__tables.py:576
 msgid "Setswana grade 2"
 msgstr "Setswana Grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:576
+#: brailleTables\__tables.py:579
 msgid "Ugaritic grade 1"
 msgstr "Úgairítis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:579
+#: brailleTables\__tables.py:582
 msgid "Ukrainian grade 1"
 msgstr "Úcráinis Grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:582
+#: brailleTables\__tables.py:585
 msgid "Ukrainian literary braille (detailed)"
 msgstr "Braille úcráinise litríochta (sonrach)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:585
+#: brailleTables\__tables.py:588
 msgid "Ukrainian computer braille"
 msgstr "RíomhBhraille Úcráinise"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:588
+#: brailleTables\__tables.py:591
 msgid "Urdu grade 1"
 msgstr "Braille Gaelach gan ghiorrúchán"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:591
+#: brailleTables\__tables.py:594
 msgid "Urdu grade 2"
 msgstr "Braille Gaelach Giorraithe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:594
+#: brailleTables\__tables.py:597
 msgid "Uzbek grade 1"
 msgstr "Úisbéiceastáinis Grád 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:597
+#: brailleTables\__tables.py:600
 msgid "Unicode braille"
 msgstr "Braille Unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:600
+#: brailleTables\__tables.py:603
 msgid "Vietnamese grade 0"
 msgstr "Vítneaimis  Grád 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:603
+#: brailleTables\__tables.py:606
 msgid "Tshivenda grade 1"
 msgstr "Tshivenda grád 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:606
+#: brailleTables\__tables.py:609
 msgid "Tshivenda grade 2"
 msgstr "Tshivendis Grád 2 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:609
+#: brailleTables\__tables.py:612
 msgid "Vietnamese grade 1"
 msgstr "Vítneaimis  Grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:612
+#: brailleTables\__tables.py:615
 msgid "Vietnamese grade 2"
 msgstr "Vítneaimis  Grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:615
+#: brailleTables\__tables.py:618
 msgid "Southern Vietnamese grade 1"
 msgstr "Vítneaimis  an deiscirt Grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:618
+#: brailleTables\__tables.py:621
 msgid "Xhosa grade 1"
 msgstr "Cóiréis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:621
+#: brailleTables\__tables.py:624
 msgid "Xhosa grade 2"
 msgstr "Cóiréis, grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:624
+#: brailleTables\__tables.py:627
 msgid "Yiddish grade 1"
 msgstr "Giúdais Grád 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
-#: brailleTables\__tables.py:630
+#: brailleTables\__tables.py:633
 msgid "Chinese common braille (simplified Chinese characters)"
 msgstr "Gnáthbhraille Síneach (carachtair simplithe)."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#: brailleTables\__tables.py:637
+#: brailleTables\__tables.py:640
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
 msgstr "Sínis (An tSín Mandairínis) córas reatha gan tóin"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文' in Mandarin.
-#: brailleTables\__tables.py:644
+#: brailleTables\__tables.py:647
 msgid "Chinese (China, Mandarin) Current Braille System"
 msgstr "Sínis (An tSín Mandairínis) córas Braille reatha "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
-#: brailleTables\__tables.py:651
+#: brailleTables\__tables.py:654
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
 msgstr "Sínis (An tSín Mandairínis) Córas Braille fónach dúbalta "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:654
+#: brailleTables\__tables.py:657
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Sínis (Hong Cong, Cantainis)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:657
+#: brailleTables\__tables.py:660
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Sínis (An Téaváin, Mandairínis)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:661
+#: brailleTables\__tables.py:664
 msgid "Zulu grade 1"
 msgstr "Súlúis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:664
+#: brailleTables\__tables.py:667
 msgid "Zulu grade 2"
 msgstr "Braille Gaelach Giorraithe"
 
@@ -12102,7 +12111,7 @@ msgstr "breiseáin neamh-chomhoiriúnacha"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Tá na breiseáin seo a leanas neamh-chomhoiriúnach le NVDA leagan {version}. Ní féidir na breiseáin seo a chumasú. Téigh i dteagmháil le húdar na mbreiseán chun cabhair a fháil."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12229,7 +12238,7 @@ msgstr "Earráid agus an phróifíl á ghníomhú"
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Scriosfar an phróifíl {name} go buan. Ní féidir an gníomh seo a chealú."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12655,14 +12664,15 @@ msgstr "Tá an fillteán ann cheana"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:462
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Ní mholtar NVDA a shuiteáil nuair atá an ríomhaire ceangailte mar an ríomhaire rialaithe."
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:468
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Ní bheidh tú in ann leideanna ón ríomhaire atá ag rialú a fhreagairt. Ná téigh ar aghaidh mura bhfuil rochtain fisiciúil agat ar an ríomhaire.\n"
+"An bhfuil tú cinnte gur mhian leat dul ar aghaidh? "
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:506
@@ -12822,7 +12832,7 @@ msgstr "Ná sábháil"
 #: gui\nvdaControls.py:606
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Réamhshocrú ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:444
@@ -13894,7 +13904,7 @@ msgstr "Déan dearbhú agus tú ag dícheangail nuair atá an ríomhaire rialait
 #: gui\settingsDialogs.py:3410
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
-msgstr ""
+msgstr "Múch nuair atá an ríomhaire logánta á rialú."
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3420
@@ -15440,11 +15450,11 @@ msgstr "Suiteáil Bhreiseáin"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "{num} bhreiseán á shuiteáil.Fan nóiméad le do thoil. "
+msgstr[1] "{num} bhreiseán á shuiteáil. Fan nóiméad le do thoil. "
+msgstr[2] "{num}  bhreiseán á suiteáil. Fan nóiméad le do thoil."
+msgstr[3] "{num}  mbreiseán á suiteáil. Fan nóiméad le do thoil."
+msgstr[4] "{num}  bhreiseán á suiteáil. Fan nóiméad le do thoil."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15453,11 +15463,11 @@ msgstr[4] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "Íoslódáil {num}  bhreiseán ar siúl. Cealaigh an íoslódáil?"
+msgstr[1] "Íoslódáil {num}  bhreiseán ar siúl. Cealaigh an íoslódáil?"
+msgstr[2] "Íoslódáil {num}  bhreiseán ar siúl. Cealaigh an íoslódáil?"
+msgstr[3] "Íoslódáil {num}  mbreiseán ar siúl. Cealaigh an íoslódáil?"
+msgstr[4] "Íoslódáil {num}  bhreiseán ar siúl. Cealaigh an íoslódáil?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15497,25 +15507,25 @@ msgstr "Údar"
 #: gui\addonStoreGui\viewModels\addonList.py:96
 msgctxt "addonStore"
 msgid "Publication date"
-msgstr ""
+msgstr "Dáta foilseacháin"
 
 #. Translators: The name of the column that contains the installation date of the add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:101
 msgctxt "addonStore"
 msgid "Install date"
-msgstr ""
+msgstr "Dáta suiteála"
 
 #. Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:107
 msgctxt "addonStore"
 msgid "Minimum NVDA version"
-msgstr ""
+msgstr "Íosleagan NVDA"
 
 #. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:112
 msgctxt "addonStore"
 msgid "Last tested NVDA version"
-msgstr ""
+msgstr "Leagan NVDA a bhí tástáilte is déanaí"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -15856,11 +15866,11 @@ msgstr "gair"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "{num}  mholadh"
+msgstr[1] "{num} mholadh "
+msgstr[2] "{num}  mholadh"
+msgstr[3] "{num}  moladh"
+msgstr[4] "{num}  mholadh"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196

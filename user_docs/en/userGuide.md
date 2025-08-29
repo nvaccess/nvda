@@ -42,15 +42,15 @@ Major highlights include:
 
 #### Minimum System Requirements {#MinimumSystemRequirements}
 
-* Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
+* Operating Systems: 64-bit editions of Windows 10 and Windows 11.
+Windows Server 2016, 2019, 2022 and 2025.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
-  * Note that 32-bit operating systems are no longer under active support.
-  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
+  * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
+* Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
   * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
@@ -4197,7 +4197,6 @@ For an even more extensive list of free and commercial synthesizers that you can
 ### eSpeak NG {#eSpeakNG}
 
 The [eSpeak NG](https://github.com/espeak-ng/espeak-ng) synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-On Windows 8.1 NVDA uses eSpeak NG by default ([Windows OneCore](#OneCore) is used in Windows 10 and later by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -4236,7 +4235,7 @@ To use these voices, you will need to install two components:
 
 Windows 10 and later includes voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
-On Windows 10 and later, NVDA uses Windows OneCore voices by default ([eSpeak NG](#eSpeakNG) is used in other releases).
+NVDA uses Windows OneCore voices by default.
 
 To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings.
 Use the "Add voices" option and search for the desired language.
@@ -5330,8 +5329,6 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 ### Nattiq nBraille Displays {#NattiqTechnologies}
 
 NVDA supports displays from [Nattiq Technologies](https://www.nattiq.com/) when connected via USB.
-Windows 10 and later detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
-You can get them from the manufacturer's website.
 
 Following are the key assignments for Nattiq Technologies displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.

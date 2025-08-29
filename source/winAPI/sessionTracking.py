@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,14 +162,6 @@ def isLockScreenModeActive() -> bool:
 
 	if isRunningOnSecureDesktop():
 		# Use secure mode instead if on the secure desktop
-		return False
-
-	import winVersion
-
-	if winVersion.getWinVer() < winVersion.WIN10:
-		# On Windows 8 and Earlier, the lock screen runs on
-		# the secure desktop.
-		# Lock screen mode is not supported on these Windows versions.
 		return False
 
 	return _isWindowsLocked()
