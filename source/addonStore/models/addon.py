@@ -360,7 +360,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
 		description=addon["description"],
-		changelog=addon["description"],
+		changelog=addon["changelog"],
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
