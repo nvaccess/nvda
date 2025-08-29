@@ -54,6 +54,8 @@ These should be supported natively in Python 3.13. (#18689)
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 * `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
+Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 
 #### Deprecations
 
@@ -174,10 +176,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)
 * Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.
 Importing from `md2html` is discouraged. (#18638)
-* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` is deprecated for removal in 2026.1, instead use `[reportSpellingErrors2]`. (#17997, @CyrilleB79)
-  * The new key has an `int` value matching an `ReportSpellingErrors` `enum` with options for off, speech and sound.
-  * API consumers can use the `bool` value as previously, or check the `ReportSpellingErrors` if handling speech or sound specifically.
-  * These keys are currently synchronized until 2026.1.
 
 ## 2025.2
 
