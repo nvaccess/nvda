@@ -95,7 +95,7 @@ class LVITEM(Structure):  # noqa: F405
 		("iSubItem", c_int),  # noqa: F405
 		("state", c_uint),  # noqa: F405
 		("stateMask", c_uint),  # noqa: F405
-		("pszText", c_void_p),  # noqa: F405
+		("pszText", c_ulong),  # noqa: F405
 		("cchTextMax", c_int),  # noqa: F405
 		("iImage", c_int),  # noqa: F405
 		("lParam", LPARAM),  # noqa: F405
@@ -133,7 +133,7 @@ class LVCOLUMN(Structure):  # noqa: F405
 		("mask", c_uint),  # noqa: F405
 		("fmt", c_int),  # noqa: F405
 		("cx", c_int),  # noqa: F405
-		("pszText", c_void_p),  # noqa: F405
+		("pszText", c_ulong),  # noqa: F405
 		("cchTextMax", c_int),  # noqa: F405
 		("iSubItem", c_int),  # noqa: F405
 		("iImage", c_int),  # noqa: F405
