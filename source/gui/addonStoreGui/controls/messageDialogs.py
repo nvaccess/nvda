@@ -429,7 +429,7 @@ class UpdatableAddonsDialog(
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
-		showChangelogLabel = pgettext("addonStore", "Show &changes for this version...")
+		showChangelogLabel = pgettext("addonStore", "Show changes for this &version...")
 		self.showChangelogButton = bHelper.addButton(self, wx.ID_DEFAULT, label=showChangelogLabel)
 		self.showChangelogButton.Bind(wx.EVT_BUTTON, self.onShowChangelogButton)
 
