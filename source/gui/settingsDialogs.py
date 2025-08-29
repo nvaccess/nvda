@@ -3051,7 +3051,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportAlignment"] = self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"] = self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = sum(
-			mode.value for (n, mode) in enumerate(ReportSpellingErrors) if self._spellingErrorsChecklist.IsChecked(n)
+			mode.value
+			for (n, mode) in enumerate(ReportSpellingErrors)
+			if self._spellingErrorsChecklist.IsChecked(n)
 		)
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
