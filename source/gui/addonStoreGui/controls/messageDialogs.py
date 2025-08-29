@@ -501,7 +501,7 @@ class UpdatableAddonsDialog(
 				changelog,
 				# Translators: Title of a browseable message showing changes for the current add-on version.
 				title=pgettext("addonStore", "Changes for {curVersion}").format(
-					curVersion=listItemVM.model.addonVersionName,
+					curVersion=addon.addonVersionName,
 				),
 				isHtml=True,
 				copyButton=True,
