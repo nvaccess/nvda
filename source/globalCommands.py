@@ -792,7 +792,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles through options for how to report spelling errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportSpellingErrors(self, gesture):
+	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
 		toggleIntegerValue(
 			configSection="documentFormatting",
 			configKey="reportSpellingErrors2",
