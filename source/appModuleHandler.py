@@ -232,7 +232,8 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 				raise ctypes.WinError()
 		except (WindowsError, RuntimeError):
 			log.debugWarning(
-				"Unable to get process handle using window enumeration and getting process handle from window",
+				"Unable to get process handle for process %d using window enumeration "
+				"and subsequently getting process handle from that window",
 				processId,
 				exc_info=True,
 			)
