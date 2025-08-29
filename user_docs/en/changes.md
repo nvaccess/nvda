@@ -15,6 +15,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
 
 ### Changes
 
@@ -53,6 +54,8 @@ These should be supported natively in Python 3.13. (#18689)
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 * `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
+Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 
 #### Deprecations
 

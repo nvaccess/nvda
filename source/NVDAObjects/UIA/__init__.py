@@ -30,6 +30,7 @@ import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
 import config
+from config.configFlags import ReportSpellingErrors
 import speech
 import api
 import textInfos
@@ -312,7 +313,7 @@ class UIATextInfo(textInfos.TextInfo):
 		# Always mutate to a tuple to allow for a generic x in y matching
 		if not isinstance(annotationTypes, tuple):
 			annotationTypes = (annotationTypes,)
-		if formatConfig["reportSpellingErrors"]:
+		if formatConfig["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value:
 			if UIAHandler.AnnotationType_SpellingError in annotationTypes:
 				formatField["invalid-spelling"] = True
 			if UIAHandler.AnnotationType_GrammarError in annotationTypes:
@@ -367,7 +368,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range" % textRange)
 		fetchAnnotationTypes = (
-			formatConfig["reportSpellingErrors"]
+			formatConfig["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value
 			or formatConfig["reportComments"]
 			or formatConfig["reportRevisions"]
 			or formatConfig["reportBookmarks"]

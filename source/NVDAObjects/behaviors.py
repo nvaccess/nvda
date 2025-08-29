@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd, Cary-rowen
+# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -31,7 +31,10 @@ import nvwave
 import globalVars
 from typing import List, Union
 import diffHandler
-from config.configFlags import TypingEcho
+from config.configFlags import (
+	TypingEcho,
+	ReportSpellingErrors,
+)
 
 
 class ProgressBar(NVDAObject):
@@ -297,7 +300,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 
 	def event_typedCharacter(self, ch: str):
 		if (
-			config.conf["documentFormatting"]["reportSpellingErrors"]
+			config.conf["documentFormatting"]["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value
 			and config.conf["keyboard"]["alertForSpellingErrors"]
 			and (
 				# Not alpha, apostrophe or control.
