@@ -2474,6 +2474,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _onSecureDesktopStateChanged(self, isSecureDesktop: bool):
 		self.mainBuffer.clear()
+		configured = config.conf["braille"]["display"]
+		if configured != AUTO_DISPLAY_NAME:
+			return  # No automatic disconnect/reconnect unless auto detection is on.
 		if not easeOfAccess.isRegistered():
 			if isSecureDesktop:
 				log.warning("Not disabling braille because not registered in ease of access")
@@ -2485,19 +2488,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.display._suppressDisplayClear = True
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
-			configured = config.conf["braille"]["display"]
-			if configured == AUTO_DISPLAY_NAME:
-				lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
-				preferredDevice: bdDetect.DriverAndDeviceMatch | None = (
-					lastRequested if all(lastRequested) else None
-				)
-				self._enableDetection(preferredDevice=preferredDevice)
-			else:
-				# Note, this is executed on the main thread and can take some time for slower drivers.
-				self.setDisplayByName(
-					configured,
-					isFallback=True,  # Don't write to config
-				)
+			lastRequested = (self._lastRequestedDisplayName, self._lastRequestedDeviceMatch)
+			preferredDevice: bdDetect.DriverAndDeviceMatch | None = (
+				lastRequested if all(lastRequested) else None
+			)
+			self._enableDetection(preferredDevice=preferredDevice)
 
 	def _onSessionLockStateChanged(self, isNowLocked: bool):
 		"""Clear the braille buffers and update the braille display to prevent leaking potentially sensitive information from a locked session.
