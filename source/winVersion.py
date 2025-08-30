@@ -44,6 +44,7 @@ _BUILDS_TO_RELEASE_NAMES: dict[int, str] = {
 	22621: "Windows 11 22H2",
 	22631: "Windows 11 23H2",
 	26100: "Windows 11 24H2",
+	26200: "Windows 11 25H2",
 }
 
 
