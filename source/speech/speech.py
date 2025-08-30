@@ -3008,19 +3008,18 @@ def getFormatFieldSpeech(  # noqa: C901
 		invalidSpelling = attrs.get("invalid-spelling")
 		oldInvalidSpelling = attrsCache.get("invalid-spelling") if attrsCache is not None else None
 		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling != oldInvalidSpelling:
+			texts = []
 			if invalidSpelling:
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
+					texts.append(WaveFileCommand(r"waves\textError.wav"))
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a spelling error.
-					text = _("spelling error")
-				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
-					text = WaveFileCommand(r"waves\textError.wav")
+					texts.append(_("spelling error"))			
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
-				text = _("out of spelling error")
-			else:
-				text = ""
-			if text:
-				textList.append(text)
+				texts.append(_("out of spelling error"))
+			if texts:
+				textList.extend(texts)
 		invalidGrammar = attrs.get("invalid-grammar")
 		oldInvalidGrammar = attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar != oldInvalidGrammar:
