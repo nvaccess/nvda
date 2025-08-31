@@ -240,12 +240,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	):  # noqa: F405
 		try:
 			if (
-				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", 0, None, buf, byref(bufSize))  # noqa: F405
+				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", 0, None, buf, byref(bufSize))
 				== 0
 			):  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
 				return buf.value
-			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:  # noqa: F405
+			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:
 				return buf.value
 		finally:
 			winBindings.advapi32.RegCloseKey(key)
@@ -254,7 +254,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
 	pid = c_long()
-	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))  # noqa: F405
+	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid)) 
 	pid = pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")
@@ -271,7 +271,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 			"Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"
 			% (pid, res, registrationHandle),
 		)
-		winBindings.rpcrt4.RpcBindingFree(byref(bindingHandle))  # noqa: F405
+		winBindings.rpcrt4.RpcBindingFree(byref(bindingHandle))
 		return -1
 	import appModuleHandler
 

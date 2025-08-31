@@ -355,20 +355,20 @@ def GetProcessHandleFromHwnd(windowHandle):
 
 
 def GetRoleText(role):
-	textLen = winBindings.oleacc.GetRoleText(role, 0, 0)  # noqa: F405
+	textLen = winBindings.oleacc.GetRoleText(role, 0, 0)
 	if textLen:
 		buf = create_unicode_buffer(textLen + 2)  # noqa: F405
-		winBindings.oleacc.GetRoleText(role, buf, textLen + 1)  # noqa: F405
+		winBindings.oleacc.GetRoleText(role, buf, textLen + 1) 
 		return buf.value
 	else:
 		return None
 
 
 def GetStateText(state):
-	textLen = winBindings.oleacc.GetStateText(state, 0, 0)  # noqa: F405
+	textLen = winBindings.oleacc.GetStateText(state, 0, 0)
 	if textLen:
 		buf = create_unicode_buffer(textLen + 2)  # noqa: F405
-		winBindings.oleacc.GetStateText(state, buf, textLen + 1)  # noqa: F405
+		winBindings.oleacc.GetStateText(state, buf, textLen + 1)
 		return buf.value
 	else:
 		return None
