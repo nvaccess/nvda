@@ -254,7 +254,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
 	pid = c_long()
-	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid)) 
+	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))
 	pid = pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")

@@ -358,7 +358,7 @@ def GetRoleText(role):
 	textLen = winBindings.oleacc.GetRoleText(role, 0, 0)
 	if textLen:
 		buf = create_unicode_buffer(textLen + 2)  # noqa: F405
-		winBindings.oleacc.GetRoleText(role, buf, textLen + 1) 
+		winBindings.oleacc.GetRoleText(role, buf, textLen + 1)
 		return buf.value
 	else:
 		return None
