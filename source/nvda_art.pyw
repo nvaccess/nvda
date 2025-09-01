@@ -1,4 +1,5 @@
 import argparse
+import base64
 import concurrent.futures
 import datetime
 import faulthandler
@@ -94,7 +95,7 @@ for key, value in os.environ.items():
 	if "NVDA" in key or "ART" in key:
 		artLogger.info(f"  {key} = {value}")
 
-Pyro5.config.SERIALIZER = "msgpack"
+Pyro5.config.SERIALIZER = "msgpack"  # Will be overridden to "encrypted" during startup
 Pyro5.config.COMMTIMEOUT = 0.0
 Pyro5.config.HOST = "127.0.0.1"
 # Pyro5.config.MAX_MESSAGE_SIZE = 4 * 1024 * 1024  # 4MB for large audio data
@@ -415,6 +416,29 @@ def _set_core_service_uris(core_services: Dict[str, str]) -> None:
 		os.environ[env_var] = uri
 
 
+def _setup_encryption(encryption_key_b64: str) -> None:
+	"""Set up encrypted Pyro5 serializer."""
+	try:
+		# Decode the base64 encryption key
+		key_bytes = base64.b64decode(encryption_key_b64)
+		
+		# Import and register encrypted serializer
+		from art.crypto.serializers import EncryptedSerializer
+		encrypted_ser = EncryptedSerializer("msgpack", key_bytes)
+		Pyro5.serializers.serializers["encrypted"] = encrypted_ser
+		
+		# Configure Pyro5 to use encrypted serializer
+		Pyro5.config.SERIALIZER = "encrypted"
+		
+		artLogger.info("Encrypted serializer configured successfully")
+	except ImportError:
+		artLogger.error("Failed to import PyNaCl - encrypted serializer not available")
+		raise
+	except Exception:
+		artLogger.exception("Failed to set up encrypted serializer")
+		raise
+
+
 def getStartupInfo() -> Tuple[Optional[dict], bool]:
 	"""Get addon spec and mode from either CLI args or stdin handshake.
 
@@ -503,6 +527,15 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 			artLogger.debug(f"Setting {len(core_services)} core service environment variables")
 			_set_core_service_uris(core_services)
 			artLogger.debug("Core service URIs set in environment")
+
+			# Set up encryption
+			encryption_key_b64 = startup_data.get("encryption_key")
+			if not encryption_key_b64:
+				artLogger.error("No encryption key provided in handshake")
+				raise ValueError("Missing encryption key")
+			artLogger.debug("Setting up encrypted serializer")
+			_setup_encryption(encryption_key_b64)
+			artLogger.debug("Encrypted serializer setup completed")
 
 			# Get addon spec
 			addon_spec = startup_data.get("addon")
