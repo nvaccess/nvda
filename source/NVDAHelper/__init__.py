@@ -36,6 +36,7 @@ import winBindings.oleaut32
 import winBindings.kernel32
 import winBindings.advapi32
 import winBindings.rpcrt4
+import winBindings.shlwapi
 import globalVars
 from NVDAState import ReadPaths
 
@@ -253,7 +254,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 				)
 				== 0
 			):  # noqa: F405
-				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
+				winBindings.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
 				return buf.value
 			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", None, None, buf, byref(bufSize)) == 0:
 				return buf.value
