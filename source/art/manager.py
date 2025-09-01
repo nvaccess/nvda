@@ -3,7 +3,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import base64
 import json
+import os
 import queue
 import subprocess
 import sys
@@ -98,6 +100,13 @@ class ARTAddonProcess:
 		self.artServices: Dict[str, Pyro5.api.Proxy] = {}
 		self._shutdownEvent = threading.Event()
 
+	def _getEncryptionKey(self) -> bytes:
+		"""Get encryption key from ART manager."""
+		manager = getARTManager()
+		if not manager or not manager._encryptionKey:
+			raise RuntimeError("No encryption key available from ART manager")
+		return manager._encryptionKey
+
 	def _isRunningOnSecureDesktop(self) -> bool:
 		"""Check if we're running on Windows secure desktop."""
 		try:
@@ -140,6 +149,7 @@ class ARTAddonProcess:
 				"debug": getattr(__import__("globalVars").appArgs, "debugLogging", False),
 				"secureDesktop": self._isRunningOnSecureDesktop(),
 			},
+			"encryption_key": base64.b64encode(self._getEncryptionKey()).decode('ascii'),
 		}
 
 		startup_json = json.dumps(startup_data) + "\n"
@@ -185,7 +195,6 @@ class ARTAddonProcess:
 			try:
 				proxy = Pyro5.api.Proxy(uri)
 				proxy._pyroTimeout = 10.0  # Increase timeout to match ART config
-				proxy._pyroSerializer = "msgpack"
 				proxy._pyroMaxRetries = 3  # Allow retries on temporary failures
 				self.artServices[service_name] = proxy
 				log.info(f"Connected to ART service for {self.addon_name}: {service_name}")
@@ -227,16 +236,44 @@ class ARTManager:
 		self.speechService: Optional[SpeechService] = None
 		self._shutdownEvent = threading.Event()
 		self._coreServiceURIs: Dict[str, str] = {}
+		self._encryptionKey: Optional[bytes] = None
 
 	def start(self):
 		"""Start the ART manager and register core services."""
 		log.info("Starting NVDA ART manager")
 
+		# Generate ephemeral encryption key for this session
+		self._encryptionKey = os.urandom(32)
+		log.info("Generated ephemeral encryption key for ART RPC communication")
+
 		# Register as global instance
 		setARTManager(self)
 
+		# Set up encrypted serializer for core services
+		self._setupEncryptedSerializer()
+
 		# Register core services first
 		self._registerCoreServices()
+
+	def _setupEncryptedSerializer(self):
+		"""Set up encrypted serializer for RPC communication."""
+		try:
+			from art.crypto.serializers import EncryptedSerializer
+			
+			# Register the encrypted serializer
+			encrypted_ser = EncryptedSerializer("msgpack", self._encryptionKey)
+			Pyro5.serializers.serializers["encrypted"] = encrypted_ser
+			
+			# Configure Pyro5 to use encrypted serializer by default
+			Pyro5.config.SERIALIZER = "encrypted"
+			
+			log.info("Encrypted serializer registered and configured")
+		except ImportError:
+			log.error("Failed to import PyNaCl - encrypted serializer not available")
+			raise
+		except Exception:
+			log.exception("Failed to set up encrypted serializer")
+			raise
 
 	def _registerCoreServices(self):
 		"""Register core services that run in NVDA process."""
