@@ -1,15 +1,17 @@
 # User Guide Standards
+
 This document aims to create a standard style guide for writing documentation in the User Guide.
 
 The principles outlined in ["The Documentation System" guide for reference materials](https://documentation.divio.com/reference.html) are encouraged when working on the User Guide and this document.
 
 ## General standards
-- Key commands (e.g. `NVDA+control+upArrow`):
-  - should be written in lowerCamelCase
-  - encapsulated in monospace code-block formatting
-  - NVDA should be capitalized
-- When referring to Windows terminology, follow the [Windows style guide](https://docs.microsoft.com/en-us/style-guide/welcome/).
-  - For instance, instead of "system tray" refer to "notification area"
+
+* Key commands (e.g. `NVDA+control+upArrow`):
+  * should be written in lowerCamelCase
+  * encapsulated in monospace code-block formatting
+  * NVDA should be capitalized
+* When referring to Windows terminology, follow the [Windows style guide](https://docs.microsoft.com/en-us/style-guide/welcome/).
+  * For instance, instead of "system tray" refer to "notification area"
 
 ## Feature settings
 
@@ -38,6 +40,7 @@ If necessary, a description of a common use case that is supported by each optio
 ```
 
 ## Generation of Key Commands
+
 Generation of the Key Commands document requires certain commands to be included in the User Guide.
 These commands must begin at the start of the line and take the form:
 
@@ -51,9 +54,11 @@ The other commands are used to select content containing key commands to be incl
 Appropriate headings from the User Guide will be included implicitly.
 
 ### Specifying the title
+
 The `KC:title` command must appear first and specifies the title of the Key Commands document.
 
 For example:
+
 ```md
 <!-- KC:title: NVDA Key Commands -->
 ```
@@ -79,6 +84,7 @@ It specifies the header row for a table summarising the settings indicated by th
 In order, it must consist of a name column, a column for each keyboard layout and a description column.
 
 For example:
+
 ```md
 <!-- KC:settingsSection: || Name | Desktop key | Laptop key | Description | -->
 ```
@@ -95,6 +101,7 @@ It must be followed by:
 * A line describing the setting.
 
 For example:
+
 ```md
 <!-- KC:setting -->
 #### Braille Tethered To
