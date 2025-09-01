@@ -6,17 +6,24 @@
 """Functions exported by advapi32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	sizeof,
+	Structure,
 	POINTER,
 	windll,
 	c_void_p,
+	c_byte,
 )
 from ctypes.wintypes import (
 	BOOL,
 	DWORD,
+	WORD,
 	HANDLE,
 	HKEY,
 	LONG,
 	LPCWSTR,
+	LPWSTR,
+	LPVOID,
+	LPBYTE,
 )
 
 __all__ = (
@@ -24,6 +31,8 @@ __all__ = (
 	"RegCloseKey",
 	"RegOpenKeyEx",
 	"RegQueryValueEx",
+	"CreateProcessAsUser",
+	"GetTokenInformation",
 )
 
 
@@ -85,3 +94,85 @@ RegQueryValueEx.argtypes = (
 	POINTER(DWORD),  # lpcbData
 )
 RegQueryValueEx.restype = LONG
+
+
+class STARTUPINFOW(Structure):
+	_fields_ = (
+		("cb", DWORD),
+		("lpReserved", LPWSTR),
+		("lpDesktop", LPWSTR),
+		("lpTitle", LPWSTR),
+		("dwX", DWORD),
+		("dwY", DWORD),
+		("dwXSize", DWORD),
+		("dwYSize", DWORD),
+		("dwXCountChars", DWORD),
+		("dwYCountChars", DWORD),
+		("dwFillAttribute", DWORD),
+		("dwFlags", DWORD),
+		("wShowWindow", WORD),
+		("cbReserved2", WORD),
+		("lpReserved2", POINTER(c_byte)),
+		("hSTDInput", HANDLE),
+		("hSTDOutput", HANDLE),
+		("hSTDError", HANDLE),
+	)
+
+	def __init__(self, **kwargs):
+		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+
+
+STARTUPINFO = STARTUPINFOW
+
+
+class PROCESS_INFORMATION(Structure):
+	_fields_ = (
+		("hProcess", HANDLE),
+		("hThread", HANDLE),
+		("dwProcessID", DWORD),
+		("dwThreadID", DWORD),
+	)
+
+
+class SECURITY_ATTRIBUTES(Structure):
+	_fields_ = (
+		("nLength", DWORD),
+		("lpSecurityDescriptor", LPVOID),
+		("bInheritHandle", BOOL),
+	)
+
+CreateProcessAsUser = dll.CreateProcessAsUserW
+"""
+Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocessasuserw
+"""
+CreateProcessAsUser.argtypes = (
+	HANDLE,      # hToken
+	LPCWSTR,     # lpApplicationName
+	LPWSTR,      # lpCommandLine
+	POINTER(SECURITY_ATTRIBUTES),      # lpProcessAttributes
+	POINTER(SECURITY_ATTRIBUTES),      # lpThreadAttributes
+	BOOL,        # bInheritHandles
+	DWORD,       # dwCreationFlags
+	LPVOID,      # lpEnvironment
+	LPCWSTR,     # lpCurrentDirectory
+	POINTER(STARTUPINFOW),    # lpStartupInfo
+	POINTER(PROCESS_INFORMATION),    # lpProcessInformation
+)
+CreateProcessAsUser.restype = BOOL
+
+GetTokenInformation = dll.GetTokenInformation
+"""
+Retrieves a specified type of information about an access token.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-gettokeninformation
+"""
+GetTokenInformation.argtypes = (
+	HANDLE,      # TokenHandle
+	DWORD,       # TOKEN_INFORMATION_CLASS
+	LPVOID,      # TokenInformation
+	DWORD,       # TokenInformationLength
+	POINTER(DWORD), # ReturnLength
+)
+GetTokenInformation.restype = BOOL

@@ -781,7 +781,7 @@ class _RemoteLoader:
 		try:
 			loaderPath = os.path.join(loaderDir, "nvdaHelperRemoteLoader.exe")
 			log.debug(f"Starting {loaderPath}")
-			winKernel.CreateProcessAsUser(token, None, loaderPath, None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, loaderPath, None, None, True, 0, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess

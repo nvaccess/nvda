@@ -428,42 +428,8 @@ def CreatePipe(pipeAttributes, size):
 	return read.value, write.value
 
 
-class STARTUPINFOW(Structure):
-	_fields_ = (
-		("cb", DWORD),
-		("lpReserved", LPWSTR),
-		("lpDesktop", LPWSTR),
-		("lpTitle", LPWSTR),
-		("dwX", DWORD),
-		("dwY", DWORD),
-		("dwXSize", DWORD),
-		("dwYSize", DWORD),
-		("dwXCountChars", DWORD),
-		("dwYCountChars", DWORD),
-		("dwFillAttribute", DWORD),
-		("dwFlags", DWORD),
-		("wShowWindow", WORD),
-		("cbReserved2", WORD),
-		("lpReserved2", POINTER(c_byte)),
-		("hSTDInput", HANDLE),
-		("hSTDOutput", HANDLE),
-		("hSTDError", HANDLE),
-	)
-
-	def __init__(self, **kwargs):
-		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
-
-
-STARTUPINFO = STARTUPINFOW
-
-
-class PROCESS_INFORMATION(Structure):
-	_fields_ = (
-		("hProcess", HANDLE),
-		("hThread", HANDLE),
-		("dwProcessID", DWORD),
-		("dwThreadID", DWORD),
-	)
+STARTUPINFO = STARTUPINFOW = winBindings.advapi32.STARTUPINFOW
+PROCESS_INFORMATION = winBindings.advapi32.PROCESS_INFORMATION
 
 
 def CreateProcessAsUser(
@@ -480,7 +446,7 @@ def CreateProcessAsUser(
 	processInformation,
 ):
 	if (
-		advapi32.CreateProcessAsUserW(
+		winBindings.advapi32.CreateProcessAsUser(
 			token,
 			applicationName,
 			commandLine,

@@ -24,6 +24,7 @@ from typing import (
 	TypeVar,
 )
 
+import winBindings.advapi32
 import winBindings.kernel32
 import winKernel
 import winreg
@@ -74,7 +75,7 @@ def hasUiAccess():
 	)
 	try:
 		val = ctypes.wintypes.DWORD()
-		ctypes.windll.advapi32.GetTokenInformation(
+		winBindings.advapi32.GetTokenInformation(
 			token,
 			TokenUIAccess,
 			ctypes.byref(val),
@@ -126,7 +127,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 		raise ctypes.WinError()
 	try:
 		val = TokenOrigin()
-		if not ctypes.windll.advapi32.GetTokenInformation(
+		if not winBindings.advapi32.GetTokenInformation(
 			token,
 			TOKEN_ORIGIN,
 			ctypes.byref(val),
