@@ -349,7 +349,7 @@ def GetProcessHandleFromHwnd(windowHandle: int) -> int:
 	:param windowHandle: a window of a process you wish to retrieve a process handle for
 	:returns: a process handle with read, write and operation access
 	"""
-	return winBindings.oleacc.GetProcessHandleFromHwnd(windowHandle) or 0  # noqa: F405
+	return winBindings.oleacc.GetProcessHandleFromHwnd(windowHandle) or 0
 
 
 def GetRoleText(role):

@@ -229,7 +229,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 		):
 			raise ctypes.WinError()
 	except WindowsError:
-		log.debugWarning("Unable to open process for processId %d", processId, exc_info=True)
+		log.debugWarning(f"Unable to open process for processId {processId}", exc_info=True)
 	else:
 		return processHandle
 
@@ -245,9 +245,8 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 				raise ctypes.WinError()
 		except (WindowsError, RuntimeError):
 			log.debugWarning(
-				"Unable to get process handle for process %d using window enumeration "
+				f"Unable to get process handle for process {processId} using window enumeration "
 				"and subsequently getting process handle from that window",
-				processId,
 				exc_info=True,
 			)
 
