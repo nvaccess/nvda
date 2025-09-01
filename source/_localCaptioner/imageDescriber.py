@@ -175,9 +175,6 @@ class ImageDescriber:
 			# Translators: Message when image captioning terminates
 			ui.message(pgettext("imageDesc", "image captioning off"))
 			self.isModelLoaded = False
-		# Translators: Message when image captioning failed to terminate
-		ui.message(pgettext("imageDesc", "failed to turn off image captioning"))
-
 
 	def toggleSwitch(self) -> None:
 		"""do load/unload the model from memory."""

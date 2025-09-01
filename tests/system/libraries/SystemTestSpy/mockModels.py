@@ -32,13 +32,13 @@ class MockVisionEncoderDecoderGenerator:
 	- vocab.json: Vocabulary mapping
 	"""
 
-	def __init__(self, random_seed: int = 8):
+	def __init__(self, randomSeed: int = 8):
 		"""
 		Initialize the mock model generator.
 
-		:param random_seed (int): Random seed for reproducible weight generation.Defaults to 8.
+		:param randomSeed (int): Random seed for reproducible weight generation.Defaults to 8.
 		"""
-		self.random_seed = random_seed
+		self.randomSeed = randomSeed
 		self._setRandomSeed()
 
 		# Model hyperparameters
@@ -54,24 +54,24 @@ class MockVisionEncoderDecoderGenerator:
 
 	def _setRandomSeed(self) -> None:
 		"""Set random seed for reproducible results."""
-		np.random.seed(self.random_seed)
+		np.random.seed(self.randomSeed)
 
-	def generateAllFiles(self, output_dir: str) -> None:
+	def generateAllFiles(self, outputDir: str) -> None:
 		"""
 		Generate all mock model files in the specified directory.
 
-		:param output_dir (str): Target directory to create the model files. Will create the directory if it doesn't exist.
+		:param outputDir (str): Target directory to create the model files. Will create the directory if it doesn't exist.
 		"""
-		outputPath = Path(output_dir)
+		outputPath = Path(outputDir)
 		outputPath.mkdir(parents=True, exist_ok=True)
 
 		# Create onnx subdirectory
-		onnx_dir = outputPath / "onnx"
-		onnx_dir.mkdir(exist_ok=True)
+		onnxDir = outputPath / "onnx"
+		onnxDir.mkdir(exist_ok=True)
 
 		# Generate all components
-		self._generateEncoderModel(onnx_dir / "encoder_model_quantized.onnx")
-		self._generateDecoderModel(onnx_dir / "decoder_model_merged_quantized.onnx")
+		self._generateEncoderModel(os.path.join(onnxDir, "encoder_model_quantized.onnx"))
+		self._generateDecoderModel(os.path.join(onnxDir, "decoder_model_merged_quantized.onnx"))
 		self._generateConfigFile(os.path.join(outputPath, "config.json"))
 		self._generateVocabFile(os.path.join(outputPath, "vocab.json"))
 
@@ -85,42 +85,42 @@ class MockVisionEncoderDecoderGenerator:
 		:param outputPath (Path): Output path for the encoder ONNX file.
 		"""
 		# Define input and output specifications
-		pixel_values = helper.make_tensor_value_info(
-			"pixel_values",
+		pixelValues = helper.make_tensor_value_info(
+			"pixelValues",
 			TensorProto.FLOAT,
 			["batch", self.num_channels, self.image_size, self.image_size],
 		)
 
-		patch_embeds = helper.make_tensor_value_info(
-			"patch_embeds",
+		patchEmbeds = helper.make_tensor_value_info(
+			"patchEmbeds",
 			TensorProto.FLOAT,
 			["batch", self.num_patches, self.hidden_size],
 		)
 
 		# Generate random but reproducible weights for patch embedding
-		conv_weights = np.random.randn(
+		convWeights = np.random.randn(
 			self.hidden_size,
 			self.num_channels,
 			self.patch_size,
 			self.patch_size,
 		).astype(np.float32)
 
-		conv_bias = np.zeros(self.hidden_size, dtype=np.float32)
+		convBias = np.zeros(self.hidden_size, dtype=np.float32)
 
 		# Create initializers
-		weight_init = numpy_helper.from_array(conv_weights, "conv_weights")
-		bias_init = numpy_helper.from_array(conv_bias, "conv_bias")
+		weightInit = numpy_helper.from_array(convWeights, "convWeights")
+		biasInit = numpy_helper.from_array(convBias, "convBias")
 
 		# Shape constant for reshaping
-		target_shape = np.array([0, self.num_patches, self.hidden_size], dtype=np.int64)
-		shape_init = numpy_helper.from_array(target_shape, "target_shape")
+		targetShape = np.array([0, self.num_patches, self.hidden_size], dtype=np.int64)
+		shapeInit = numpy_helper.from_array(targetShape, "targetShape")
 
 		# Define computation nodes
 		nodes = [
 			# Patch embedding using convolution
 			helper.make_node(
 				"Conv",
-				inputs=["pixel_values", "conv_weights", "conv_bias"],
+				inputs=["pixelValues", "convWeights", "convBias"],
 				outputs=["conv_output"],
 				kernel_shape=[self.patch_size, self.patch_size],
 				strides=[self.patch_size, self.patch_size],
@@ -137,8 +137,8 @@ class MockVisionEncoderDecoderGenerator:
 			# From [batch, patch_h, patch_w, hidden_size] to [batch, num_patches, hidden_size]
 			helper.make_node(
 				"Reshape",
-				inputs=["transposed_output", "target_shape"],
-				outputs=["patch_embeds"],
+				inputs=["transposed_output", "targetShape"],
+				outputs=["patchEmbeds"],
 			),
 		]
 
@@ -146,9 +146,9 @@ class MockVisionEncoderDecoderGenerator:
 		graph = helper.make_graph(
 			nodes=nodes,
 			name="VisionTransformerEncoder",
-			inputs=[pixel_values],
-			outputs=[patch_embeds],
-			initializer=[weight_init, bias_init, shape_init],
+			inputs=[pixelValues],
+			outputs=[patchEmbeds],
+			initializer=[weightInit, biasInit, shapeInit],
 		)
 
 		model = helper.make_model(graph, producer_name="mock-vit-encoder")
@@ -167,19 +167,19 @@ class MockVisionEncoderDecoderGenerator:
 		:param outputPath (Path): Output path for the decoder ONNX file.
 		"""
 		# Generate fixed random weights for reproducibility
-		embedding_weights = np.random.randn(
+		embeddingWeights = np.random.randn(
 			self.vocab_size,
 			self.hidden_size,
 		).astype(np.float32)
 
-		projection_weights = np.random.randn(
+		projectionWeights = np.random.randn(
 			self.hidden_size,
 			self.vocab_size,
 		).astype(np.float32)
 
 		# Create weight initializers
-		emb_init = numpy_helper.from_array(embedding_weights, "embedding_weights")
-		proj_init = numpy_helper.from_array(projection_weights, "projection_weights")
+		embInit = numpy_helper.from_array(embeddingWeights, "embeddingWeights")
+		projInit = numpy_helper.from_array(projectionWeights, "projectionWeights")
 
 		# Define all input specifications
 		inputs = self._createDecoderInputs()
@@ -197,10 +197,10 @@ class MockVisionEncoderDecoderGenerator:
 		nodes = self._createDecoderNodes()
 
 		# Create shape and scaling constants
-		shape_constants = self._createDecoderConstants()
+		shapeConstants = self._createDecoderConstants()
 
 		# Combine all initializers
-		initializers = [emb_init, proj_init] + shape_constants
+		initializers = [embInit, projInit] + shapeConstants
 
 		# Create and save the model
 		graph = helper.make_graph(
@@ -247,16 +247,16 @@ class MockVisionEncoderDecoderGenerator:
 		)
 
 		# Past key-value cache inputs for each layer
-		for layer_idx in range(self.n_layers):
+		for layerIdx in range(self.n_layers):
 			inputs.extend(
 				[
 					helper.make_tensor_value_info(
-						f"past_key_values.{layer_idx}.key",
+						f"past_key_values.{layerIdx}.key",
 						TensorProto.FLOAT,
 						["batch", "num_heads", "past_seq_len", self.hidden_size],
 					),
 					helper.make_tensor_value_info(
-						f"past_key_values.{layer_idx}.value",
+						f"past_key_values.{layerIdx}.value",
 						TensorProto.FLOAT,
 						["batch", "num_heads", "past_seq_len", self.hidden_size],
 					),
@@ -277,7 +277,7 @@ class MockVisionEncoderDecoderGenerator:
 		nodes.append(
 			helper.make_node(
 				"Gather",
-				inputs=["embedding_weights", "input_ids"],
+				inputs=["embeddingWeights", "input_ids"],
 				outputs=["token_embeddings"],
 				axis=0,
 			),
@@ -290,10 +290,10 @@ class MockVisionEncoderDecoderGenerator:
 		nodes.extend(self._createCacheProcessingNodes())
 
 		# Process past key-value pairs
-		cache_features = self._createCacheFeatureNodes(nodes)
+		cacheFeatures = self._createCacheFeatureNodes(nodes)
 
 		# Combine all auxiliary features
-		nodes.extend(self._createFeatureCombinationNodes(cache_features))
+		nodes.extend(self._createFeatureCombinationNodes(cacheFeatures))
 
 		# Apply main computation pipeline
 		nodes.extend(self._createMainComputationNodes())
@@ -313,7 +313,7 @@ class MockVisionEncoderDecoderGenerator:
 			# Reshape for broadcasting
 			helper.make_node(
 				"Reshape",
-				inputs=["encoder_pooled", "shape_batch_1"],
+				inputs=["encoder_pooled", "shapeBatch1"],
 				outputs=["encoder_feature"],
 			),
 		]
@@ -331,7 +331,7 @@ class MockVisionEncoderDecoderGenerator:
 			# Reshape for broadcasting
 			helper.make_node(
 				"Reshape",
-				inputs=["cache_flag_float", "shape_batch_1"],
+				inputs=["cache_flag_float", "shapeBatch1"],
 				outputs=["cache_flag_feature"],
 			),
 		]
@@ -343,22 +343,22 @@ class MockVisionEncoderDecoderGenerator:
 		:param nodes (list): List to append new nodes to.
 		:return: list: Names of cache feature tensors.
 		"""
-		cache_features = []
+		cacheFeatures = []
 
-		for layer_idx in range(self.n_layers):
+		for layerIdx in range(self.n_layers):
 			# Process key cache
 			nodes.extend(
 				[
 					helper.make_node(
 						"ReduceMean",
-						inputs=[f"past_key_values.{layer_idx}.key"],
-						outputs=[f"cache_key_{layer_idx}_pooled"],
+						inputs=[f"past_key_values.{layerIdx}.key"],
+						outputs=[f"cache_key_{layerIdx}_pooled"],
 						axes=[1, 2, 3],  # Global pooling, keep only batch dimension
 					),
 					helper.make_node(
 						"Reshape",
-						inputs=[f"cache_key_{layer_idx}_pooled", "shape_batch_1"],
-						outputs=[f"cache_key_{layer_idx}_feature"],
+						inputs=[f"cache_key_{layerIdx}_pooled", "shapeBatch1"],
+						outputs=[f"cache_key_{layerIdx}_feature"],
 					),
 				],
 			)
@@ -368,84 +368,84 @@ class MockVisionEncoderDecoderGenerator:
 				[
 					helper.make_node(
 						"ReduceMean",
-						inputs=[f"past_key_values.{layer_idx}.value"],
-						outputs=[f"cache_value_{layer_idx}_pooled"],
+						inputs=[f"past_key_values.{layerIdx}.value"],
+						outputs=[f"cache_value_{layerIdx}_pooled"],
 						axes=[1, 2, 3],
 					),
 					helper.make_node(
 						"Reshape",
-						inputs=[f"cache_value_{layer_idx}_pooled", "shape_batch_1"],
-						outputs=[f"cache_value_{layer_idx}_feature"],
+						inputs=[f"cache_value_{layerIdx}_pooled", "shapeBatch1"],
+						outputs=[f"cache_value_{layerIdx}_feature"],
 					),
 				],
 			)
 
-			cache_features.extend(
+			cacheFeatures.extend(
 				[
-					f"cache_key_{layer_idx}_feature",
-					f"cache_value_{layer_idx}_feature",
+					f"cache_key_{layerIdx}_feature",
+					f"cache_value_{layerIdx}_feature",
 				],
 			)
 
-		return cache_features
+		return cacheFeatures
 
-	def _createFeatureCombinationNodes(self, cache_features: list) -> list:
+	def _createFeatureCombinationNodes(self, cacheFeatures: list) -> list:
 		"""
 		Create nodes to combine all auxiliary features.
 
-		:param cache_features (list): List of cache feature tensor names.
+		:param cacheFeatures (list): List of cache feature tensor names.
 		:return: list: Nodes for feature combination.
 		"""
 		nodes = []
-		all_features = ["encoder_feature", "cache_flag_feature"] + cache_features
+		allFeatures = ["encoder_feature", "cache_flag_feature"] + cacheFeatures
 
 		# Sequentially add all features together
-		current_sum = all_features[0]
-		for i, feature in enumerate(all_features[1:], 1):
+		currentSum = allFeatures[0]
+		for i, feature in enumerate(allFeatures[1:], 1):
 			nodes.append(
 				helper.make_node(
 					"Add",
-					inputs=[current_sum, feature],
+					inputs=[currentSum, feature],
 					outputs=[f"combined_features_{i}"],
 				),
 			)
-			current_sum = f"combined_features_{i}"
+			currentSum = f"combined_features_{i}"
 
 		return nodes
 
 	def _createMainComputationNodes(self) -> list:
 		"""Create the main computation pipeline nodes."""
-		final_combined = f"combined_features_{self.n_layers * 2 + 1}"
+		finalCombined = f"combined_features_{self.n_layers * 2 + 1}"
 
 		return [
 			# Flatten token embeddings
 			helper.make_node(
 				"Reshape",
-				inputs=["token_embeddings", "shape_2d"],
+				inputs=["token_embeddings", "shape2d"],
 				outputs=["embeddings_flat"],
 			),
 			# Scale embeddings
 			helper.make_node(
 				"Mul",
-				inputs=["embeddings_flat", "feature_scale"],
+				inputs=["embeddings_flat", "featureScale"],
 				outputs=["scaled_embeddings"],
 			),
 			# Add auxiliary features (broadcasting)
 			helper.make_node(
 				"Add",
-				inputs=["scaled_embeddings", final_combined],
+				inputs=["scaled_embeddings", finalCombined],
 				outputs=["final_features"],
 			),
 			# Project to vocabulary space
 			helper.make_node(
 				"MatMul",
-				inputs=["final_features", "projection_weights"],
+				inputs=["final_features", "projectionWeights"],
 				outputs=["logits_flat"],
 			),
 			# Reshape back to 3D
 			helper.make_node(
 				"Reshape",
-				inputs=["logits_flat", "shape_3d"],
+				inputs=["logits_flat", "shape3d"],
 				outputs=["logits"],
 			),
 		]
@@ -459,28 +459,28 @@ class MockVisionEncoderDecoderGenerator:
 		constants = []
 
 		# Shape constants for reshaping operations
-		shape_2d = numpy_helper.from_array(
+		shape2d = numpy_helper.from_array(
 			np.array([-1, self.hidden_size], dtype=np.int64),
-			name="shape_2d",
+			name="shape2d",
 		)
 
-		shape_3d = numpy_helper.from_array(
+		shape3d = numpy_helper.from_array(
 			np.array([0, -1, self.vocab_size], dtype=np.int64),
-			name="shape_3d",
+			name="shape3d",
 		)
 
-		shape_batch_1 = numpy_helper.from_array(
+		shapeBatch1 = numpy_helper.from_array(
 			np.array([-1, 1], dtype=np.int64),
-			name="shape_batch_1",
+			name="shapeBatch1",
 		)
 
 		# Feature scaling factor
-		feature_scale = numpy_helper.from_array(
+		featureScale = numpy_helper.from_array(
 			np.array([[1.1]], dtype=np.float32),
-			name="feature_scale",
+			name="featureScale",
 		)
 
-		constants.extend([shape_2d, shape_3d, shape_batch_1, feature_scale])
+		constants.extend([shape2d, shape3d, shapeBatch1, featureScale])
 
 		return constants
 
@@ -573,7 +573,7 @@ class MockVisionEncoderDecoderGenerator:
 			"resid_pdrop": 0.1,
 			"return_dict": True,
 			"return_dict_in_generate": False,
-			"scale_attn_by_inverse_layer_idx": False,
+			"scale_attn_by_inverse_layerIdx": False,
 			"scale_attn_weights": True,
 			"sep_token_id": None,
 			"summary_activation": None,

@@ -39,7 +39,7 @@ class ImageCaptioner(ABC):
 		Generate a caption for the given image.
 
 		:param image: Image file path or binary data.
-		:param max_length: Optional maximum length for the generated caption.
+		:param maxLength: Optional maximum length for the generated caption.
 		:return: The generated image caption as a string.
 		"""
 		pass
@@ -108,12 +108,12 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 				f" Please check whether the file is complete or re-download. Original error: {e}",
 			) from e
 
-		log.info(
+		log.debug(
 			f"Loaded ONNX models - Encoder: {os.path.basename(encoderPath)}, Decoder: {os.path.basename(decoderPath)}",
 		)
-		log.info(f"Loaded config : {os.path.basename(configPath)}")
-		log.info(f"Loaded vocabulary : {os.path.basename(vocabPath)}")
-		log.info(
+		log.debug(f"Loaded config : {os.path.basename(configPath)}")
+		log.debug(f"Loaded vocabulary : {os.path.basename(vocabPath)}")
+		log.debug(
 			f"Model config - Image size: {self.encoderConfig.image_size}, Max length: {self.decoderConfig.max_length}",
 		)
 
@@ -182,7 +182,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:return: Preprocessed image array ready for model input.
 		"""
 		# Load image
-		if isinstance(image, str):
+		if isinstance(image, str) and os.path.isfile(image):
 			img = Image.open(image).convert("RGB")
 		else:
 			img = Image.open(io.BytesIO(image)).convert("RGB")

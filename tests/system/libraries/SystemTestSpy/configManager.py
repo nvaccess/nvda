@@ -136,7 +136,7 @@ def teardownProfile(stagingDir: str):
 def _configModels(modelsDirectory: str) -> None:
 	from .mockModels import MockVisionEncoderDecoderGenerator
 
-	generator = MockVisionEncoderDecoderGenerator(random_seed=8)
+	generator = MockVisionEncoderDecoderGenerator(randomSeed=8)
 	generator.generateAllFiles(modelsDirectory)
 
 
