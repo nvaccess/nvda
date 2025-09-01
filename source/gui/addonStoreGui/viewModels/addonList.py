@@ -17,7 +17,6 @@ from typing import (
 	TYPE_CHECKING,
 	Protocol,
 	TypeVar,
-	cast,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -313,7 +312,10 @@ class AddonListVM:
 
 	def _getAddonFieldText(self, listItemVM: AddonListItemVM, field: AddonListField) -> str:
 		assert field in AddonListField
-		if field is AddonListField.currentAddonVersionName and listItemVM.model._addonHandlerModel is not None:
+		if (
+			field is AddonListField.currentAddonVersionName
+			and listItemVM.model._addonHandlerModel is not None
+		):
 			return listItemVM.model._addonHandlerModel.version
 		if field is AddonListField.availableAddonVersionName:
 			return listItemVM.model.addonVersionName
