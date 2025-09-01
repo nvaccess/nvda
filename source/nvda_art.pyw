@@ -426,6 +426,7 @@ def _setup_encryption(encryption_key_b64: str) -> None:
 		from art.crypto.serializers import EncryptedSerializer
 		encrypted_ser = EncryptedSerializer("msgpack", key_bytes)
 		Pyro5.serializers.serializers["encrypted"] = encrypted_ser
+		Pyro5.serializers.serializers_by_id[encrypted_ser.serializer_id] = encrypted_ser
 		
 		# Configure Pyro5 to use encrypted serializer
 		Pyro5.config.SERIALIZER = "encrypted"
