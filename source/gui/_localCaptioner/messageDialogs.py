@@ -6,7 +6,11 @@
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 from _localCaptioner.modelDownloader import ModelDownloader
 import threading
+from threading import Thread
 import wx
+import ui
+
+_downloadThread : Thread | None = None
 
 
 def onDownload() -> None:
@@ -19,7 +23,7 @@ def onDownload() -> None:
 
 
 def openSuccessDialog() -> None:
-	confirmation_button = (DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),)
+	confirmationButton = (DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),)
 
 	dialog = MessageDialog(
 		parent=None,
@@ -31,7 +35,7 @@ def openSuccessDialog() -> None:
 			"Image captioning installed successfully.",
 		),
 		dialogType=DialogType.STANDARD,
-		buttons=confirmation_button,
+		buttons=confirmationButton,
 	)
 
 	if dialog.ShowModal() == ReturnCode.YES:
@@ -39,7 +43,7 @@ def openSuccessDialog() -> None:
 
 
 def openFailDialog() -> None:
-	confirmation_buttons = (
+	confirmationButtons = (
 		DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),
 		DefaultButton.NO,
 	)
@@ -54,7 +58,7 @@ def openFailDialog() -> None:
 			"Image captioning download failed. Would you like to retry?",
 		),
 		dialogType=DialogType.WARNING,
-		buttons=confirmation_buttons,
+		buttons=confirmationButtons,
 	)
 
 	if dialog.ShowModal() == ReturnCode.YES:
@@ -62,7 +66,13 @@ def openFailDialog() -> None:
 
 
 def openDownloadDialog() -> None:
-	confirmation_buttons = (
+	global _downloadThread
+	if _downloadThread is not None and _downloadThread.is_alive(): 
+		# Translators: message when image captioning is still downloading
+		ui.message(pgettext("imageDesc", "image captioning is still downloading, please wait..."))
+		return
+
+	confirmationButtons = (
 		DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),
 		DefaultButton.NO,
 	)
@@ -77,8 +87,9 @@ def openDownloadDialog() -> None:
 			"Image captioning not installed. Would you like to install (235 MB)?",
 		),
 		dialogType=DialogType.WARNING,
-		buttons=confirmation_buttons,
+		buttons=confirmationButtons,
 	)
 
 	if dialog.ShowModal() == ReturnCode.YES:
-		threading.Thread(target=onDownload).start()
+		_downloadThread = threading.Thread(target=onDownload, name="ModelDownloadMainThread", daemon=False)
+		_downloadThread.start()

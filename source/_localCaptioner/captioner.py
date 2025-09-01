@@ -22,13 +22,9 @@ from .modelConfig import (
 	_GenerationConfig,
 	_ModelConfig,
 	_PreprocessorConfig,
-	_DEFAULT_ENCODER_CONFIG,
-	_DEFAULT_DECODER_CONFIG,
-	_DEFAULT_GENERATION_CONFIG,
-	_DEFAULT_MODEL_CONFIG,
-	_DEFAULT_PREPROCESSOR_CONFIG,
 	_createConfigFromDict,
 )
+from . import modelConfig
 
 
 class ImageCaptioner(ABC):
@@ -83,7 +79,6 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 				"please download models and config file first!",
 			)
 		except Exception:
-			log.exception()
 			raise
 
 		# Load vocabulary from vocab.json in the same directory as config
@@ -126,22 +121,22 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""Load all model parameters from configuration file."""
 		# Load encoder configuration
 		encoder_dict = self.config.get("encoder", {})
-		self.encoderConfig = _createConfigFromDict(_EncoderConfig, encoder_dict, _DEFAULT_ENCODER_CONFIG)
+		self.encoderConfig = _createConfigFromDict(_EncoderConfig, encoder_dict, modelConfig._DEFAULT_ENCODER_CONFIG)
 
 		# Load decoder configuration
 		decoder_dict = self.config.get("decoder", {})
-		self.decoderConfig = _createConfigFromDict(_DecoderConfig, decoder_dict, _DEFAULT_DECODER_CONFIG)
+		self.decoderConfig = _createConfigFromDict(_DecoderConfig, decoder_dict, modelConfig._DEFAULT_DECODER_CONFIG)
 
 		# Load generation configuration
 		generation_dict = self.config.get("generation", {})
 		self.generationConfig = _createConfigFromDict(
 			_GenerationConfig,
 			generation_dict,
-			_DEFAULT_GENERATION_CONFIG,
+			modelConfig._DEFAULT_GENERATION_CONFIG,
 		)
 
 		# Load main model configuration
-		self.modelConfig = _createConfigFromDict(_ModelConfig, self.config, _DEFAULT_MODEL_CONFIG)
+		self.modelConfig = _createConfigFromDict(_ModelConfig, self.config, modelConfig._DEFAULT_MODEL_CONFIG)
 
 	def _loadVocab(self, vocabPath: str) -> dict[int, str]:
 		"""Load vocabulary file.
@@ -174,11 +169,11 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			return _createConfigFromDict(
 				_PreprocessorConfig,
 				preprocessor_dict,
-				_DEFAULT_PREPROCESSOR_CONFIG,
+				modelConfig._DEFAULT_PREPROCESSOR_CONFIG,
 			)
 		except FileNotFoundError:
 			log.warning("Preprocessor config not found, using defaults")
-			return _DEFAULT_PREPROCESSOR_CONFIG
+			return modelConfig._DEFAULT_PREPROCESSOR_CONFIG
 
 	def _preprocessImage(self, image: str | bytes) -> np.ndarray:
 		"""Preprocess image for model input using external configuration.
@@ -422,8 +417,8 @@ def imageCaptionerFactory(
 			f"Caption model config file {configPath} not found, "
 			"please download models and config file first!",
 		)
-	except Exception as e:
-		log.exception(e)
+	except Exception:
+		log.exception("config file not found")
 		raise
 
 	modelArchitecture = config["architectures"][0]

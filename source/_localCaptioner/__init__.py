@@ -6,6 +6,7 @@
 from logHandler import log
 
 from .imageDescriber import ImageDescriber
+from . import modelConfig
 
 _localCaptioner = None
 
@@ -14,6 +15,7 @@ def initialize():
 	"""Initialise the local captioner."""
 	global _localCaptioner
 	log.debug("Initializing local captioner")
+	modelConfig.initialize()
 	_localCaptioner = ImageDescriber()
 
 

@@ -24,7 +24,7 @@ from urllib3.util.retry import Retry
 
 from logHandler import log
 import config
-from NVDAState import _WritePaths
+from NVDAState import WritePaths
 
 # Type definitions
 ProgressCallback = Callable[[str, int, int, float], None]
@@ -109,7 +109,7 @@ class ModelDownloader:
 		:return: Absolute path of the *models* directory.
 		:raises OSError: When the directory cannot be created.
 		"""
-		modelsDir = os.path.abspath(config.conf["automatedImageDescriptions"]["defaultModelPath"])
+		modelsDir = os.path.abspath(config.conf["automatedImageDescriptions"]["defaultModel"])
 
 		try:
 			Path(modelsDir).mkdir(parents=True, exist_ok=True)
@@ -658,7 +658,7 @@ class ModelDownloader:
 
 	def downloadModelsMultithreaded(
 		self,
-		modelsDir: str = _WritePaths().modelsDir,
+		modelsDir: str = WritePaths.modelsDir,
 		modelName: str = "Xenova/vit-gpt2-image-captioning",
 		filesToDownload: list[str] | None = None,
 		resolvePath: str = "/resolve/main",

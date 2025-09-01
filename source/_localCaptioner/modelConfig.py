@@ -236,4 +236,3 @@ def _createConfigFromDict(configClass: Any, configdict: dict[str, Any], defaultC
 	return configClass(**kwargs)
 
 
-initialize()

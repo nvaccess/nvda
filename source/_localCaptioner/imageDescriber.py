@@ -20,6 +20,7 @@ from logHandler import log
 import ui
 import api
 from keyboardHandler import KeyboardInputGesture
+from NVDAState import WritePaths
 import core
 
 from .captioner import ImageCaptioner
@@ -72,11 +73,12 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 	"""
 	try:
 		description = captioner.generateCaption(image=imageData)
-		ui.message(description)
 	except Exception:
 		# Translators: error message when an image description cannot be generated
 		ui.message(pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
+	else:
+		ui.message(description)
 
 
 class ImageDescriber:
@@ -116,7 +118,7 @@ class ImageDescriber:
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
 
-		self.captionThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData))
+		self.captionThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData), name="RunCaptionThread",)
 		# Translators: Message when starting image recognition
 		ui.message(pgettext("imageDesc", "getting image description..."))
 		self.captionThread.start()
@@ -131,7 +133,7 @@ class ImageDescriber:
 			baseModelsDir = WritePaths.modelsDir
 			localModelDirPath = os.path.join(
 				baseModelsDir,
-				config.conf["automatedImageDescriptions"]["defaultModelPath"],
+				config.conf["automatedImageDescriptions"]["defaultModel"],
 			)
 		encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
 		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
@@ -152,7 +154,7 @@ class ImageDescriber:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
 			ui.message(pgettext("imageDesc", "failed to load image captioner"))
-			log.exception(e)
+			log.exception()
 		else:
 			self.isModelLoaded = True
 			# Translators: Message when successfully load the model
@@ -163,21 +165,19 @@ class ImageDescriber:
 
 		:param localModelDirPath: path of model directory
 		"""
-		self.loadModelThread = threading.Thread(target=self._loadModel, args=(localModelDirPath,))
+		self.loadModelThread = threading.Thread(target=self._loadModel, args=(localModelDirPath,), name="LoadModelThread")
 		self.loadModelThread.start()
 
 	def _doReleaseModel(self) -> None:
-		try:
-			if hasattr(self, "captioner") and self.captioner:
-				del self.captioner
-				self.captioner = None
-				# Translators: Message when image captioning terminates
-				ui.message(pgettext("imageDesc", "image captioning off"))
-				self.isModelLoaded = False
-		except Exception as e:
-			# Translators: Message when image captioning failed to terminate
-			ui.message(pgettext("imageDesc", "failed to turn off image captioning"))
-			log.exception(e)
+		if hasattr(self, "captioner") and self.captioner:
+			del self.captioner
+			self.captioner = None
+			# Translators: Message when image captioning terminates
+			ui.message(pgettext("imageDesc", "image captioning off"))
+			self.isModelLoaded = False
+		# Translators: Message when image captioning failed to terminate
+		ui.message(pgettext("imageDesc", "failed to turn off image captioning"))
+
 
 	def toggleSwitch(self) -> None:
 		"""do load/unload the model from memory."""
