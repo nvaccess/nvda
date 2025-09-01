@@ -226,7 +226,7 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf = create_unicode_buffer(1024)
-	bufSize = c_int(2048)
+	bufSize = c_ulong(2048)
 	key = HKEY()  # noqa: F405
 	if (
 		winBindings.advapi32.RegOpenKeyEx(
@@ -240,12 +240,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	):  # noqa: F405
 		try:
 			if (
-				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", 0, None, buf, byref(bufSize))
+				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", None, None, buf, byref(bufSize))
 				== 0
 			):  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
 				return buf.value
-			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:
+			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", None, None, buf, byref(bufSize)) == 0:
 				return buf.value
 		finally:
 			winBindings.advapi32.RegCloseKey(key)

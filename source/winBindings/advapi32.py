@@ -8,6 +8,7 @@
 from ctypes import (
 	POINTER,
 	windll,
+	c_void_p,
 )
 from ctypes.wintypes import (
 	BOOL,
@@ -81,7 +82,7 @@ RegQueryValueEx.argtypes = (
 	LPCWSTR,  # lpValueName
 	POINTER(DWORD),  # lpReserved
 	POINTER(DWORD),  # lpType
-	POINTER(BYTE),  # lpData
+	c_void_p,  # lpData
 	POINTER(DWORD),  # lpcbData
 )
 RegQueryValueEx.restype = LONG
