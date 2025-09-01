@@ -21,6 +21,7 @@ from comtypes import IUnknown
 from comtypes import automation
 from comtypes import COMError
 from html import escape
+import winBindings.mshtml
 
 import nh3
 from logHandler import log
@@ -219,7 +220,7 @@ def browseableMessage(
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup()
 	try:
-		windll.mshtml.ShowHTMLDialogEx(
+		winBindings.mshtml.ShowHTMLDialogEx(
 			gui.mainFrame.Handle,
 			moniker,
 			HTMLDLG_MODELESS,
