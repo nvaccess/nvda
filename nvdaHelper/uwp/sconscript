@@ -51,6 +51,5 @@ for fn in vcRedistLibs:
 			break
 		else:
 			raise RuntimeError(
-				"Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"
-				% fn
+				f"Could not locate {fn}. Perhaps the Universal Windows Platform component in visual Studio is not installed"
 			)
