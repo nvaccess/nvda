@@ -20,6 +20,7 @@ Covers:
 import tempfile
 import unittest
 from unittest.mock import patch
+from typing import Dict, Any, Callable, Union
 
 # Import the class and function under test
 from _localCaptioner.modelDownloader import ModelDownloader
@@ -30,58 +31,78 @@ class TestModelDownloader(unittest.TestCase):
 
 	def setUp(self):
 		# No longer passing basePath during initialization
-		self.temp_dir = tempfile.mkdtemp()
+		self.tempDir = tempfile.mkdtemp()
 		self.downloader = ModelDownloader()
 
 	@patch("pathlib.Path.mkdir")
-	def test_ensureModelsDirectory_success(self, mock_mkdir):
+	def test_ensureModelsDirectory_success(self, mockMkdir):
 		"""Ensure directory is created and correct path returned."""
-		mock_mkdir.return_value = None
-		models_dir = self.downloader.ensureModelsDirectory()
-		self.assertTrue(models_dir.endswith("vit-gpt2-image-captioning"))
-		mock_mkdir.assert_called_once()
+		mockMkdir.return_value = None
+		modelsDir = self.downloader.ensureModelsDirectory()
+		self.assertTrue(modelsDir.endswith("vit-gpt2-image-captioning"))
+		mockMkdir.assert_called_once()
 
 	@patch("pathlib.Path.mkdir", side_effect=OSError("Permission denied"))
-	def test_ensureModelsDirectory_failure(self, mock_mkdir):
+	def test_ensureModelsDirectory_failure(self, mockMkdir):
 		"""Ensure OSError is raised when models directory cannot be created."""
 		with self.assertRaises(OSError):
 			self.downloader.ensureModelsDirectory()
 
-	def test_constructDownloadUrl_default_host(self):
+	def test_constructDownloadUrlDefaultHost(self):
 		"""Construct URL when remoteHost has no scheme."""
 		url = self.downloader.constructDownloadUrl("foo/bar", "file.txt")
 		self.assertTrue(url.startswith("https://huggingface.co/foo/bar"))
 
-	def test_constructDownloadUrl_with_http_host(self):
+	def test_constructDownloadUrlWithHttpHost(self):
 		"""Construct URL when remoteHost already contains http://."""
 		self.downloader.remoteHost = "http://example.com"
 		url = self.downloader.constructDownloadUrl("foo", "bar")
 		self.assertEqual(url, "http://example.com/foo/resolve/main/bar")
 
-	def test_reportProgress_triggers_callback(self):
-		"""Callback is triggered when downloaded bytes exceed threshold."""
-		called = {}
-
-		def cb(fname, dl, total, pct):
-			called["fname"] = fname
-			called["dl"] = dl
-
-		last = self.downloader._reportProgress(cb, "file", 1024 * 1024 + 1, 2 * 1024 * 1024, 0)
-		self.assertEqual(called["fname"], "file")
-		self.assertGreater(last, 0)
+	def test_reportProgressTriggersCallback(self) -> None:
+		"""Test that callback is triggered when downloaded bytes exceed threshold."""
+		callbackData: Dict[str, Any] = {}
+		
+		def progressCallback(
+			fileName: str, 
+			downloadedBytes: int, 
+			totalBytes: int, 
+			percentage: float
+		) -> None:
+			"""Callback function to capture progress data."""
+			callbackData["fileName"] = fileName
+			callbackData["downloadedBytes"] = downloadedBytes
+		
+		# Test with download size exceeding 1MB threshold
+		downloadedSize = 1024 * 1024 + 1  # 1MB + 1 byte
+		totalSize = 2 * 1024 * 1024       # 2MB
+		initialTime = 0
+		
+		lastReportedTime = self.downloader._reportProgress(
+			progressCallback, 
+			"test_file.zip", 
+			downloadedSize, 
+			totalSize, 
+			initialTime
+		)
+		
+		# Assertions
+		self.assertEqual(callbackData["fileName"], "test_file.zip")
+		self.assertEqual(callbackData["downloadedBytes"], downloadedSize)
+		self.assertGreater(lastReportedTime, initialTime)
 
 	@patch.object(ModelDownloader, "downloadSingleFile", return_value=(True, "ok"))
-	def test_downloadModelsMultithreaded_all_success(self, mock_single):
+	def test_downloadModelsMultithreadedAllSuccess(self, mockSingle):
 		"""All files are downloaded successfully."""
 		files = ["a.txt", "b.txt"]
-		success, failed = self.downloader.downloadModelsMultithreaded(self.temp_dir, "model", files)
+		success, failed = self.downloader.downloadModelsMultithreaded(self.tempDir, "model", files)
 		self.assertEqual(len(success), 2)
 		self.assertEqual(len(failed), 0)
 
 	@patch.object(ModelDownloader, "downloadSingleFile", side_effect=[(True, "ok"), (False, "err")])
-	def test_downloadModelsMultithreaded_partial_failure(self, mock_single):
+	def test_downloadModelsMultithreadedPartialFailure(self, mockSingle):
 		"""One file succeeds and one fails."""
 		files = ["a.txt", "b.txt"]
-		success, failed = self.downloader.downloadModelsMultithreaded(self.temp_dir, "model", files)
+		success, failed = self.downloader.downloadModelsMultithreaded(self.tempDir, "model", files)
 		self.assertEqual(len(success), 1)
 		self.assertEqual(len(failed), 1)

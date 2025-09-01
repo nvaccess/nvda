@@ -10,6 +10,7 @@ for a Vision-Encoder-Decoder model (ViT-GPT2 style) used for image captioning.
 The generated files can be used for testing and development purposes.
 """
 
+import os
 import json
 from pathlib import Path
 from typing import Any
@@ -61,27 +62,27 @@ class MockVisionEncoderDecoderGenerator:
 
 		:param output_dir (str): Target directory to create the model files. Will create the directory if it doesn't exist.
 		"""
-		output_path = Path(output_dir)
-		output_path.mkdir(parents=True, exist_ok=True)
+		outputPath = Path(output_dir)
+		outputPath.mkdir(parents=True, exist_ok=True)
 
 		# Create onnx subdirectory
-		onnx_dir = output_path / "onnx"
+		onnx_dir = outputPath / "onnx"
 		onnx_dir.mkdir(exist_ok=True)
 
 		# Generate all components
 		self._generateEncoderModel(onnx_dir / "encoder_model_quantized.onnx")
 		self._generateDecoderModel(onnx_dir / "decoder_model_merged_quantized.onnx")
-		self._generateConfigFile(output_path / "config.json")
-		self._generateVocabFile(output_path / "vocab.json")
+		self._generateConfigFile(os.path.join(outputPath, "config.json"))
+		self._generateVocabFile(os.path.join(outputPath, "vocab.json"))
 
-	def _generateEncoderModel(self, output_path: Path) -> None:
+	def _generateEncoderModel(self, outputPath: Path) -> None:
 		"""
 		Generate the Vision Transformer encoder ONNX model.
 
 		This creates a simplified ViT encoder that performs patch embedding
 		using convolution followed by reshaping operations.
 
-		:param output_path (Path): Output path for the encoder ONNX file.
+		:param outputPath (Path): Output path for the encoder ONNX file.
 		"""
 		# Define input and output specifications
 		pixel_values = helper.make_tensor_value_info(
@@ -154,16 +155,16 @@ class MockVisionEncoderDecoderGenerator:
 		model.opset_import[0].version = 13
 		model.ir_version = 10
 
-		onnx.save(model, str(output_path))
+		onnx.save(model, str(outputPath))
 
-	def _generateDecoderModel(self, output_path: Path) -> None:
+	def _generateDecoderModel(self, outputPath: Path) -> None:
 		"""
 		Generate the GPT-2 style decoder ONNX model.
 
 		This creates a simplified decoder that accepts multiple inputs including
 		token IDs, encoder hidden states, cache flags, and past key-value pairs.
 
-		:param output_path (Path): Output path for the decoder ONNX file.
+		:param outputPath (Path): Output path for the decoder ONNX file.
 		"""
 		# Generate fixed random weights for reproducibility
 		embedding_weights = np.random.randn(
@@ -214,7 +215,7 @@ class MockVisionEncoderDecoderGenerator:
 		model.opset_import[0].version = 13
 		model.ir_version = 10
 
-		onnx.save(model, str(output_path))
+		onnx.save(model, str(outputPath))
 
 	def _createDecoderInputs(self) -> list:
 		"""
@@ -483,15 +484,15 @@ class MockVisionEncoderDecoderGenerator:
 
 		return constants
 
-	def _generateConfigFile(self, output_path: Path) -> None:
+	def _generateConfigFile(self, outputPath: Path) -> None:
 		"""
 		Generate the model configuration JSON file.
 
-		:param output_path (Path): Output path for the config.json file.
+		:param outputPath (Path): Output path for the config.json file.
 		"""
 		config = self._getModelConfig()
 
-		with open(output_path, "w", encoding="utf-8") as f:
+		with open(outputPath, "w", encoding="utf-8") as f:
 			json.dump(config, f, indent=2, ensure_ascii=False)
 
 	def _getModelConfig(self) -> dict[str, Any]:
@@ -676,15 +677,15 @@ class MockVisionEncoderDecoderGenerator:
 			"use_bfloat16": False,
 		}
 
-	def _generateVocabFile(self, output_path: Path) -> None:
+	def _generateVocabFile(self, outputPath: Path) -> None:
 		"""
 		Generate the vocabulary JSON file.
 
-		:param output_path (Path): Output path for the vocab.json file.
+		:param outputPath (Path): Output path for the vocab.json file.
 		"""
 		vocab = self._getVocabulary()
 
-		with open(output_path, "w", encoding="utf-8") as f:
+		with open(outputPath, "w", encoding="utf-8") as f:
 			json.dump(vocab, f, indent=2, ensure_ascii=False)
 
 	def _getVocabulary(self) -> dict[str, int]:

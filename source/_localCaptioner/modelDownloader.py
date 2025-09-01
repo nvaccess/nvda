@@ -76,13 +76,7 @@ class ModelDownloader:
 		)
 
 		adapter = HTTPAdapter(max_retries=retryStrategy)
-		self.session.mount("http://", adapter)
 		self.session.mount("https://", adapter)
-
-		# Set default headers
-		self.session.headers.update(
-			{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
-		)
 
 	def requestCancel(self) -> None:
 		"""Request cancellation of all active downloads."""
