@@ -15,11 +15,13 @@ from ctypes.wintypes import (
 	HANDLE,
 	HKEY,
 	LONG,
+	LPCWSTR,
 )
 
 __all__ = (
 	"OpenProcessToken",
 	"RegCloseKey",
+	"RegDeleteTreeW",
 )
 
 
@@ -48,3 +50,14 @@ RegCloseKey.argtypes = (
 	HKEY,  # hKey
 )
 RegCloseKey.restype = LONG
+
+RegDeleteTreeW = dll.RegDeleteTreeW
+"""
+Deletes a subkey and all its descendants.
+https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletetreew
+"""
+RegDeleteTreeW.argtypes = (
+	HKEY,     # hKey
+	LPCWSTR,  # lpSubKey
+)
+RegDeleteTreeW.restype = LONG
