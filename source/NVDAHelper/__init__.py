@@ -240,7 +240,9 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	):  # noqa: F405
 		try:
 			if (
-				winBindings.advapi32.RegQueryValueEx(key, "Layout Display Name", None, None, buf, byref(bufSize))
+				winBindings.advapi32.RegQueryValueEx(
+					key, "Layout Display Name", None, None, buf, byref(bufSize)
+				)
 				== 0
 			):  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)

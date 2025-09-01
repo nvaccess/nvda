@@ -12,7 +12,6 @@ from ctypes import (
 )
 from ctypes.wintypes import (
 	BOOL,
-	BYTE,
 	DWORD,
 	HANDLE,
 	HKEY,
