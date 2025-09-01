@@ -52,7 +52,10 @@ class EncryptedSerializer(Pyro5.serializers.SerializerBase):
 		return self.box.encrypt(plaintext)  # Returns nonce + ciphertext
 	
 	def loads(self, data: bytes) -> Any:
-		"""Decrypt and deserialize data.""" 
+		"""Decrypt and deserialize data."""
+		# Handle bytearray from Pyro5 network layer
+		if isinstance(data, bytearray):
+			data = bytes(data)
 		plaintext = self.box.decrypt(data)  # Auto-extracts nonce, verifies MAC
 		return self.inner.loads(plaintext)
 	
@@ -63,6 +66,9 @@ class EncryptedSerializer(Pyro5.serializers.SerializerBase):
 	
 	def loadsCall(self, data: bytes) -> Tuple[Any, str, Tuple, Dict[str, Any]]:
 		"""Decrypt and deserialize method call."""
+		# Handle bytearray from Pyro5 network layer
+		if isinstance(data, bytearray):
+			data = bytes(data)
 		plaintext = self.box.decrypt(data)
 		return self.inner.loadsCall(plaintext)
 	
