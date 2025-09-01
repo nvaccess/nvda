@@ -91,6 +91,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
   Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
 
+<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
+
 ## 2025.3
 
 This release includes improvements to Remote Access, SAPI5 voices, braille and the Add-on Store.
