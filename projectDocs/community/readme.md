@@ -1,3 +1,5 @@
+# NVDA Community
+
 ## Get support
 
 Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader.
