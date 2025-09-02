@@ -3,13 +3,23 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass, fields
-from typing import Any
+from dataclasses import dataclass, fields, replace
+from typing import Type
 
 
 @dataclass(frozen=True)
 class _EncoderConfig:
-	"""Configuration for Vision Transformer encoder."""
+	"""Configuration for Vision Transformer encoder.
+
+	Based on the Vision Transformer (ViT) specification:
+	https://arxiv.org/abs/2010.11929
+
+	HuggingFace ViT configuration:
+	https://huggingface.co/docs/transformers/model_doc/vit#transformers.ViTConfig
+
+	Note: Variable names follow the original specification and HuggingFace conventions
+	rather than lowerCamelCase to maintain compatibility with pretrained models.
+	"""
 
 	image_size: int = 224
 	num_channels: int = 3
@@ -36,7 +46,7 @@ class _EncoderConfig:
 	output_attentions: bool = False
 	output_hidden_states: bool = False
 	return_dict: bool = True
-	pruned_heads: dict[str, Any] = None
+	pruned_heads: dict[str, list[int]] | None = None
 	tie_word_embeddings: bool = True
 	torch_dtype: str | None = None
 	torchscript: bool = False
@@ -45,7 +55,17 @@ class _EncoderConfig:
 
 @dataclass(frozen=True)
 class _DecoderConfig:
-	"""Configuration for GPT-2 decoder."""
+	"""Configuration for GPT-2 decoder.
+
+	Based on the GPT-2 specification:
+	https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
+
+	HuggingFace GPT-2 configuration:
+	https://huggingface.co/docs/transformers/model_doc/gpt2#transformers.GPT2Config
+
+	Note: Variable names follow the original GPT-2 and HuggingFace conventions
+	rather than lowerCamelCase to maintain compatibility with pretrained models.
+	"""
 
 	vocab_size: int = 50257
 	n_embd: int = 768
@@ -103,8 +123,8 @@ class _DecoderConfig:
 	output_scores: bool = False
 	use_cache: bool = True
 	# Labels
-	id2label: dict[str, str] = None
-	label2id: dict[str, int] = None
+	id2label: dict[str, str] | None = None
+	label2id: dict[str, int] | None = None
 	# Scaling and attention
 	reorder_and_upcast_attn: bool = False
 	scale_attn_by_inverse_layer_idx: bool = False
@@ -116,12 +136,12 @@ class _DecoderConfig:
 	summary_type: str = "cls_index"
 	summary_use_proj: bool = True
 	# Task specific parameters
-	task_specific_params: dict[str, Any] | None = None
+	task_specific_params: dict[str, any] | None = None
 	# Other configurations
 	finetuning_task: str | None = None
 	prefix: str | None = None
 	problem_type: str | None = None
-	pruned_heads: dict[str, Any] = None
+	pruned_heads: dict[str, list[int]] | None = None
 	sep_token_id: int | None = None
 	tf_legacy_loss: bool = False
 	tie_encoder_decoder: bool = False
@@ -134,7 +154,14 @@ class _DecoderConfig:
 
 @dataclass(frozen=True)
 class _GenerationConfig:
-	"""Configuration for text generation parameters."""
+	"""Configuration for text generation parameters.
+
+	Based on HuggingFace GenerationConfig:
+	https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig
+
+	Note: Variable names follow HuggingFace conventions rather than lowerCamelCase
+	to maintain compatibility with the transformers library.
+	"""
 
 	do_sample: bool = False
 	num_beams: int = 1
@@ -154,7 +181,14 @@ class _GenerationConfig:
 
 @dataclass(frozen=True)
 class _ModelConfig:
-	"""Main model configuration."""
+	"""Main model configuration.
+
+	Based on HuggingFace VisionEncoderDecoderConfig:
+	https://huggingface.co/docs/transformers/model_doc/vision-encoder-decoder#transformers.VisionEncoderDecoderConfig
+
+	Note: Variable names follow HuggingFace conventions rather than lowerCamelCase
+	to maintain compatibility with pretrained models.
+	"""
 
 	model_type: str = "vision-encoder-decoder"
 	is_encoder_decoder: bool = True
@@ -164,23 +198,31 @@ class _ModelConfig:
 	pad_token_id: int = 50256
 	decoder_start_token_id: int = 50256
 	transformers_version: str = "4.33.0.dev0"
-	architectures: list[str] = None
+	architectures: list[str] | None = None
 
 
 @dataclass(frozen=True)
 class _PreprocessorConfig:
-	"""Configuration for image preprocessing."""
+	"""Configuration for image preprocessing.
+
+	Based on HuggingFace ViTFeatureExtractor/ViTImageProcessor:
+	https://huggingface.co/docs/transformers/model_doc/vit#transformers.ViTFeatureExtractor
+	https://huggingface.co/docs/transformers/model_doc/vit#transformers.ViTImageProcessor
+
+	Note: Variable names follow HuggingFace conventions rather than lowerCamelCase
+	to maintain compatibility with the transformers library.
+	"""
 
 	do_normalize: bool = True
 	do_rescale: bool = True
 	do_resize: bool = True
 	feature_extractor_type: str = "ViTFeatureExtractor"
 	image_processor_type: str = "ViTFeatureExtractor"
-	image_mean: list[float] = None
-	image_std: list[float] = None
+	image_mean: list[float] | None = None
+	image_std: list[float] | None = None
 	resample: int = 2  # PIL.Image.LANCZOS
 	rescale_factor: float = 0.00392156862745098  # 1/255
-	size: dict[str, int] = None
+	size: dict[str, int] | None = None
 
 	def __post_init__(self):
 		"""Initialize default values for mutable fields."""
@@ -214,7 +256,11 @@ def initialize():
 	_DEFAULT_PREPROCESSOR_CONFIG = _PreprocessorConfig()
 
 
-def _createConfigFromDict(configClass: Any, configdict: dict[str, Any], defaultConfig):
+def _createConfigFromDict[T](
+	configClass: Type[T],
+	configdict: dict[str, str | int | float | bool | list | dict | None],
+	defaultConfig: T,
+) -> T:
 	"""Create a dataclass instance from a dictionary with automatic field mapping.
 
 	:param configClass: The dataclass type to create
@@ -223,16 +269,9 @@ def _createConfigFromDict(configClass: Any, configdict: dict[str, Any], defaultC
 	:return: New dataclass instance with values from configdict or defaults
 	"""
 	# Get all field names from the dataclass
-	field_names = {f.name for f in fields(configClass)}
+	fieldNames = {f.name for f in fields(configClass)}
 
-	# Build kwargs dict with values from configdict or defaults
-	kwargs = {}
-	for field_name in field_names:
-		if field_name in configdict:
-			kwargs[field_name] = configdict[field_name]
-		else:
-			kwargs[field_name] = getattr(defaultConfig, field_name)
+	# Filter configdict to only include valid field names
+	validUpdates = {fieldName: value for fieldName, value in configdict.items() if fieldName in fieldNames}
 
-	return configClass(**kwargs)
-
-
+	return replace(defaultConfig, **validUpdates)

@@ -121,11 +121,15 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""Load all model parameters from configuration file."""
 		# Load encoder configuration
 		encoder_dict = self.config.get("encoder", {})
-		self.encoderConfig = _createConfigFromDict(_EncoderConfig, encoder_dict, modelConfig._DEFAULT_ENCODER_CONFIG)
+		self.encoderConfig = _createConfigFromDict(
+			_EncoderConfig, encoder_dict, modelConfig._DEFAULT_ENCODER_CONFIG
+		)
 
 		# Load decoder configuration
 		decoder_dict = self.config.get("decoder", {})
-		self.decoderConfig = _createConfigFromDict(_DecoderConfig, decoder_dict, modelConfig._DEFAULT_DECODER_CONFIG)
+		self.decoderConfig = _createConfigFromDict(
+			_DecoderConfig, decoder_dict, modelConfig._DEFAULT_DECODER_CONFIG
+		)
 
 		# Load generation configuration
 		generation_dict = self.config.get("generation", {})
@@ -165,15 +169,15 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		try:
 			with open(preprocessorPath, "r", encoding="utf-8") as f:
 				preprocessor_dict = json.load(f)
-
+		except FileNotFoundError:
+			log.warning("Preprocessor config not found, using defaults")
+			return modelConfig._DEFAULT_PREPROCESSOR_CONFIG
+		else:
 			return _createConfigFromDict(
 				_PreprocessorConfig,
 				preprocessor_dict,
 				modelConfig._DEFAULT_PREPROCESSOR_CONFIG,
 			)
-		except FileNotFoundError:
-			log.warning("Preprocessor config not found, using defaults")
-			return modelConfig._DEFAULT_PREPROCESSOR_CONFIG
 
 	def _preprocessImage(self, image: str | bytes) -> np.ndarray:
 		"""Preprocess image for model input using external configuration.
