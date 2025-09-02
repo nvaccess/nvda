@@ -625,9 +625,8 @@ def _deleteKeyAndSubkeys(key: int, subkey: str):
 			parent.handle,
 			subkey,
 		)
-		if result != 0:
-			raise WindowsError(result, f"RegDeleteTreeW failed for {subkey=}")
-		winreg.DeleteKey(parent, "")
+	if result != 0:
+		raise WindowsError(result, f"RegDeleteTreeW failed for {subkey=}")
 
 
 class RetriableFailure(Exception):
