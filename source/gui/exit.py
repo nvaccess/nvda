@@ -20,6 +20,7 @@ import wx
 from . import guiHelper
 from .message import displayDialogAsModal
 from .startupDialogs import WelcomeDialog
+from . import nvdaControls
 
 
 try:
@@ -77,6 +78,7 @@ class ExitDialog(wx.Dialog):
 		ExitDialog._instance = weakref.ref(self)
 		# Translators: The title of the dialog to exit NVDA
 		super().__init__(parent, title=_("Exit NVDA"))
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		warningMessages = []
