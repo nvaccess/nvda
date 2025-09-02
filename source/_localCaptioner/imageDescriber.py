@@ -118,7 +118,9 @@ class ImageDescriber:
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
 
-		self.captionThread = threading.Thread(target=_messageCaption, args=(self.captioner, imageData), name="RunCaptionThread",)
+		self.captionThread = threading.Thread(
+			target=_messageCaption, args=(self.captioner, imageData), name="RunCaptionThread"
+		)
 		# Translators: Message when starting image recognition
 		ui.message(pgettext("imageDesc", "getting image description..."))
 		self.captionThread.start()
@@ -150,7 +152,7 @@ class ImageDescriber:
 			from gui._localCaptioner.messageDialogs import openDownloadDialog
 
 			wx.CallAfter(openDownloadDialog)
-		except Exception as e:
+		except Exception:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
 			ui.message(pgettext("imageDesc", "failed to load image captioner"))
@@ -165,7 +167,9 @@ class ImageDescriber:
 
 		:param localModelDirPath: path of model directory
 		"""
-		self.loadModelThread = threading.Thread(target=self._loadModel, args=(localModelDirPath,), name="LoadModelThread")
+		self.loadModelThread = threading.Thread(
+			target=self._loadModel, args=(localModelDirPath,), name="LoadModelThread"
+		)
 		self.loadModelThread.start()
 
 	def _doReleaseModel(self) -> None:

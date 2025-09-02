@@ -20,7 +20,7 @@ Covers:
 import tempfile
 import unittest
 from unittest.mock import patch
-from typing import Dict, Any, Callable, Union
+from typing import Dict, Any
 
 # Import the class and function under test
 from _localCaptioner.modelDownloader import ModelDownloader
@@ -62,30 +62,30 @@ class TestModelDownloader(unittest.TestCase):
 	def test_reportProgressTriggersCallback(self) -> None:
 		"""Test that callback is triggered when downloaded bytes exceed threshold."""
 		callbackData: Dict[str, Any] = {}
-		
+
 		def progressCallback(
-			fileName: str, 
-			downloadedBytes: int, 
-			totalBytes: int, 
-			percentage: float
+			fileName: str,
+			downloadedBytes: int,
+			totalBytes: int,
+			percentage: float,
 		) -> None:
 			"""Callback function to capture progress data."""
 			callbackData["fileName"] = fileName
 			callbackData["downloadedBytes"] = downloadedBytes
-		
+
 		# Test with download size exceeding 1MB threshold
 		downloadedSize = 1024 * 1024 + 1  # 1MB + 1 byte
-		totalSize = 2 * 1024 * 1024       # 2MB
+		totalSize = 2 * 1024 * 1024  # 2MB
 		initialTime = 0
-		
+
 		lastReportedTime = self.downloader._reportProgress(
-			progressCallback, 
-			"test_file.zip", 
-			downloadedSize, 
-			totalSize, 
-			initialTime
+			progressCallback,
+			"test_file.zip",
+			downloadedSize,
+			totalSize,
+			initialTime,
 		)
-		
+
 		# Assertions
 		self.assertEqual(callbackData["fileName"], "test_file.zip")
 		self.assertEqual(callbackData["downloadedBytes"], downloadedSize)

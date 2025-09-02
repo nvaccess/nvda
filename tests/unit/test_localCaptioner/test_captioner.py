@@ -26,8 +26,8 @@ import io
 
 from _localCaptioner.captioner import VitGpt2ImageCaptioner
 from _localCaptioner import modelConfig
-modelConfig.initialize()
 
+modelConfig.initialize()
 
 
 class TestVitGpt2ImageCaptioner(unittest.TestCase):

@@ -10,7 +10,7 @@ from threading import Thread
 import wx
 import ui
 
-_downloadThread : Thread | None = None
+_downloadThread: Thread | None = None
 
 
 def onDownload() -> None:
@@ -67,7 +67,7 @@ def openFailDialog() -> None:
 
 def openDownloadDialog() -> None:
 	global _downloadThread
-	if _downloadThread is not None and _downloadThread.is_alive(): 
+	if _downloadThread is not None and _downloadThread.is_alive():
 		# Translators: message when image captioning is still downloading
 		ui.message(pgettext("imageDesc", "image captioning is still downloading, please wait..."))
 		return
