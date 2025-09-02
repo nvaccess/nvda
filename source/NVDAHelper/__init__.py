@@ -4,7 +4,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes.wintypes import HANDLE, HKEY, HMODULE
+from ctypes.wintypes import (
+	HANDLE,
+	HKEY,
+)
 import typing
 import os
 import winreg
