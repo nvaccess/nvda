@@ -32,6 +32,7 @@ from collections import namedtuple
 import threading
 from winAPI.messageWindow import WindowMessage
 import winGDI
+from winBindings import gdi32
 import weakref
 from colors import RGB
 import core

@@ -7,17 +7,41 @@
 When working on this file, consider moving to winAPI.
 """
 
-from ctypes import windll, Structure, c_ubyte, c_uint32, c_void_p, c_int, c_float, POINTER, byref, c_ulong
-from ctypes.wintypes import LONG, DWORD, WORD, BOOL
+from ctypes import (
+	windll,
+	POINTER,
+	byref,
+)
 from contextlib import contextmanager
+from winBindings import gdiplus
+from winBindings import gdi32
+from utils import _deprecate
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"GdiplusStartupInput",
+		"gdiplus",
+	),
+	_deprecate.MovedSymbol(
+		"GdiplusStartupOutput",
+		"gdiplus",
+	),
+	_deprecate.MovedSymbol(
+		"RGBQUAD",
+		"gdi32",
+	),
+	_deprecate.MovedSymbol(
+		"BITMAPINFOHEADER",
+		"gdi32",
+	),
+	_deprecate.MovedSymbol(
+		"BITMAPINFO",
+		"gdi32",
+	),
+)
+
 
 user32 = windll.user32
-gdiplus = windll.gdiplus
-
-
-from winBindings.gdi32 import RGBQUAD
-from winBindings.gdi32 import BITMAPINFOHEADER
-from winBindings.gdi32 import BITMAPINFO
 
 
 BI_RGB = 0
@@ -25,42 +49,6 @@ SRCCOPY = 0x00CC0020
 DIB_RGB_COLORS = 0
 
 
-class GdiplusStartupInput(Structure):
-	_fields_ = [
-		("GdiplusVersion", c_uint32),
-		("DebugEventCallback", c_void_p),
-		("SuppressBackgroundThread", BOOL),
-		("SuppressExternalCodecs", BOOL),
-	]
-
-
-class GdiplusStartupOutput(Structure):
-	_fields = [
-		("NotificationHookProc", c_void_p),
-		("NotificationUnhookProc", c_void_p),
-	]
-
-
-gdiplus.GdipCreateFromHDC.argtypes = [c_int, POINTER(c_void_p)]
-gdiplus.GdipCreateFromHDC.restype = c_int
-
-gdiplus.GdipCreatePen1.argtypes = [c_int, c_float, c_int, POINTER(c_void_p)]
-gdiplus.GdipCreatePen1.restype = c_int
-
-gdiplus.GdipSetPenDashStyle.argtypes = [c_void_p, c_int]
-gdiplus.GdipSetPenDashStyle.restype = c_int
-
-gdiplus.GdipDrawLine.argtypes = [c_void_p, c_void_p, c_float, c_float, c_float, c_float]
-gdiplus.GdipDrawLine.restype = c_int
-
-gdiplus.GdipDrawRectangle.argtypes = [c_void_p, c_void_p, c_float, c_float, c_float, c_float]
-gdiplus.GdipDrawRectangle.restype = c_int
-
-gdiplus.GdipDeletePen.argtypes = [c_void_p]
-gdiplus.GdipDeletePen.restype = c_int
-
-gdiplus.GdipDeleteGraphics.argtypes = [c_void_p]
-gdiplus.GdipDeleteGraphics.restype = c_int
 
 # GDI+ dash style enumeration
 DashStyleSolid = 0  # Specifies a solid line.
@@ -80,10 +68,10 @@ def gdiPlusInitialize():
 	global gdipToken
 	if gdipToken:
 		return  # Already initialized
-	gdipToken = c_ulong()
-	startupInput = GdiplusStartupInput()
+	gdipToken = gdiplus.ULONG_PTR()
+	startupInput = gdiplus.GdiplusStartupInput()
 	startupInput.GdiplusVersion = 1
-	startupOutput = GdiplusStartupOutput()
+	startupOutput = gdiplus.GdiplusStartupOutput()
 	gdiplus.GdiplusStartup(byref(gdipToken), byref(startupInput), byref(startupOutput))
 
 
@@ -98,7 +86,7 @@ def gdiPlusTerminate():
 @contextmanager
 def GDIPlusGraphicsContext(hdc):
 	"""Creates a GDI+ graphics context from a device context handle."""
-	gpGraphics = c_void_p()
+	gpGraphics = POINTER(gdiplus.GpGraphics)()
 	gpStatus = gdiplus.GdipCreateFromHDC(hdc, byref(gpGraphics))
 	if gpStatus:
 		# See https://docs.microsoft.com/en-us/windows/desktop/api/Gdiplustypes/ne-gdiplustypes-status
@@ -122,7 +110,7 @@ def GDIPlusPen(color, width, dashStyle=DashStyleSolid):
 		Defaults to C{DashStyleSolid}, which draws solid lines.
 	@type dashStyle: int
 	"""
-	gpPen = c_void_p()
+	gpPen = POINTER(gdiplus.GpPen)()
 	gpStatus = gdiplus.GdipCreatePen1(color, width, UnitPixel, byref(gpPen))
 	if gpStatus:
 		raise RuntimeError("GdipCreatePen1 failed with status code %d" % gpStatus)
