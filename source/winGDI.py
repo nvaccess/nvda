@@ -12,40 +12,12 @@ from ctypes.wintypes import LONG, DWORD, WORD, BOOL
 from contextlib import contextmanager
 
 user32 = windll.user32
-gdi32 = windll.gdi32
 gdiplus = windll.gdiplus
 
 
-class RGBQUAD(Structure):
-	_fields_ = [
-		("rgbBlue", c_ubyte),
-		("rgbGreen", c_ubyte),
-		("rgbRed", c_ubyte),
-		("rgbReserved", c_ubyte),
-	]
-
-
-class BITMAPINFOHEADER(Structure):
-	_fields_ = [
-		("biSize", DWORD),
-		("biWidth", LONG),
-		("biHeight", LONG),
-		("biPlanes", WORD),
-		("biBitCount", WORD),
-		("biCompression", WORD),
-		("biSizeImage", DWORD),
-		("biXPelsPerMeter", LONG),
-		("biYPelsPerMeter", LONG),
-		("biClrUsed", DWORD),
-		("biClrImportant", DWORD),
-	]
-
-
-class BITMAPINFO(Structure):
-	_fields_ = [
-		("bmiHeader", BITMAPINFOHEADER),
-		("bmiColors", (RGBQUAD * 1)),
-	]
+from winBindings.gdi32 import RGBQUAD
+from winBindings.gdi32 import BITMAPINFOHEADER
+from winBindings.gdi32 import BITMAPINFO
 
 
 BI_RGB = 0

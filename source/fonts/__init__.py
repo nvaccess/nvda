@@ -3,13 +3,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 from typing import List
-
 import globalVars
 from logHandler import log
 import os
 from ctypes import WinDLL
 
-gdi32 = WinDLL("gdi32.dll")
+import winBindings.gdi32
+
+
 """
 Loads custom fonts for use in NVDA.
 """
@@ -39,7 +40,7 @@ def addFonts(_fontSearchPath) -> List[str]:
 def _addFontResource(fontPath: str) -> int:
 	# from wingdi.h
 	FR_PRIVATE = 0x10
-	res = gdi32.AddFontResourceExW(
+	res = winBindings.gdi32.AddFontResourceEx(
 		fontPath,
 		# Only this process can use the font.
 		# The system will take care of unloading the font when the process ends.
