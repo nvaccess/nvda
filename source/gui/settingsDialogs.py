@@ -2819,10 +2819,10 @@ class DocumentFormattingPanel(SettingsPanel):
 			choices=[i.displayString for i in ReportSpellingErrors],
 		)
 		checkedItems = []
-		for n, mode in enumerate(ReportSpellingErrors):
+		for i, mode in enumerate(ReportSpellingErrors):
 			if config.conf["documentFormatting"]["reportSpellingErrors2"] & mode.value:
-				checkedItems.append(n)
-		self._spellingErrorsChecklist.CheckedItems = checkedItems
+				checkedItems.append(i)
+		self._spellingErrorsChecklist.SetCheckedItems(checkedItems)
 		self._spellingErrorsChecklist.Select(0)
 		self.bindHelpEvent(
 			"reportSpellingErrors",
