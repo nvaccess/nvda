@@ -6,7 +6,6 @@
 import ctypes
 import ctypes.wintypes
 from ctypes import (
-	oledll,
 	windll,
 	POINTER,
 	CFUNCTYPE,  # noqa: F401
