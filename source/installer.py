@@ -618,7 +618,7 @@ def unregisterAddonFileAssociation():
 	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 
-def _deleteKeyAndSubkeys(key: str, subkey: str):
+def _deleteKeyAndSubkeys(key: int, subkey: str):
 	"""Delete a registry key and all its subkeys using RegDeleteTreeW via winBindings.advapi32."""
 	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
 		result = RegDeleteTreeW(
