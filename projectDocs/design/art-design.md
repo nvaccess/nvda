@@ -47,6 +47,7 @@ ART uses a one-addon-per-process model where each enabled addon runs in its own 
 
 Inter-process communication uses Pyro5 RPC. Security measures include:
 
+- Authenticated Encryption: XSalsa20-Poly1305 encryption with ephemeral session keys
 - Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
 - Process Validation: The Windows Socket API is used to validate process identity
 - Serialization: msgpack serialization is used instead of Pickle to prevent code execution exploits
@@ -265,7 +266,7 @@ sys.path.insert(0, str(proxies_path))
 
 ### 6.1 Pyro5 Configuration
 
-- Serializer: msgpack (chosen for binary data support and security over Pickle)
+- Serializer: encrypted (EncryptedSerializer wrapping msgpack for authenticated encryption)
 - Timeout: 10 seconds with 3 retries
 - Threading: Thread server type with 16 thread pool size
 - Host: 127.0.0.1 (loopback only)
@@ -292,6 +293,16 @@ config.conf
 ### 6.3 RPC Input Validation
 
 All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) MUST be rigorously validated before use. Validation should include, but is not limited to: type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data must be rejected, and the event should be logged. Failure to validate inputs could lead to instability or security vulnerabilities in the receiving process. **Consideration should be given to using libraries like Pydantic to define data models and enforce these validation rules based on type hints and constraints.**
+
+### 6.4 Encrypted Communication
+
+ART encrypts all RPC communication between NVDA Core and ART processes using XSalsa20-Poly1305 authenticated encryption. This addresses the fundamental security gap in the original design where sensitive data like configuration settings, speech text, and addon interactions were transmitted as plaintext over local network sockets.
+
+The implementation uses PyNaCl's SecretBox with ephemeral 32-byte keys generated fresh for each NVDA session. NVDA Core generates the key on startup and distributes it to each ART process during the JSON handshake. The EncryptedSerializer wraps Pyro5's msgpack serializer transparently - addons see no difference in API behavior, but all RPC calls are automatically encrypted with unique nonces to prevent replay attacks.
+
+This approach provides message confidentiality and integrity without architectural changes. The encryption overhead is negligible compared to RPC serialization costs, while eliminating several attack vectors including inter-process eavesdropping, message tampering, and RPC injection attempts. Keys exist only in memory during the NVDA session, providing forward secrecy if the system is compromised later.
+
+The encrypted serializer handles Pyro5's network layer quirks, including automatic conversion of bytearray objects to bytes for compatibility with PyNaCl's C bindings. Each message includes authentication data that prevents modification, ensuring that compromised processes cannot inject malicious RPC calls into the communication stream.
 
 ## 7. GUI System
 
@@ -650,9 +661,7 @@ NVDA Core tracks the Process ID (PID) of each ART process it launches and mainta
 
 All Pyro5 RPC communication binds exclusively to the loopback interface (127.0.0.1) with random ports, preventing external access. ART processes are launched directly by NVDA Core with PID tracking and a bidirectional JSON handshake with 10-second timeout.
 
-The system uses msgpack serialization instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
-
-Several security measures from the original design were decided against: HMAC signature verification, cryptographic authentication, and process validation via Windows Socket API. The current approach relies on process isolation, network isolation, serialization safety, and controlled lifecycle management.
+The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with ephemeral session keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
 
 #### 17.3.2 Process Lifecycle Security  
 - **Parent-Child Relationship**: ART processes are launched directly by NVDA Core
@@ -675,8 +684,9 @@ Several security measures from the original design were decided against: HMAC si
 The current security model relies on:
 1. **Process Isolation**: Operating system process boundaries provide primary security
 2. **Network Isolation**: Loopback-only communication prevents external access  
-3. **Serialization Safety**: Safe serialization prevents code injection
-4. **Lifecycle Management**: Controlled process creation and monitoring
+3. **Authenticated Encryption**: XSalsa20-Poly1305 provides message confidentiality and integrity
+4. **Serialization Safety**: Safe serialization prevents code injection
+5. **Lifecycle Management**: Controlled process creation and monitoring
 
 This approach provides practical security for the intended use case while maintaining simplicity and performance.
 
