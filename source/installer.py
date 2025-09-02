@@ -47,6 +47,7 @@ __getattr__ = handleDeprecations(
 	),
 )
 
+
 def _getWSH():
 	global _wsh
 	if not _wsh:
@@ -415,7 +416,7 @@ def _updateShortcuts(
 	installDir: str,
 	shouldCreateDesktopShortcut: bool,
 	slaveExe: str,
-	startMenuFolder: str
+	startMenuFolder: str,
 ) -> None:
 	if shouldCreateDesktopShortcut:
 		# Translators: The shortcut key used to start NVDA.
@@ -622,7 +623,7 @@ def _deleteKeyAndSubkeys(key: str, subkey: str):
 	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
 		result = RegDeleteTreeW(
 			parent.handle,
-			subkey
+			subkey,
 		)
 		if result != 0:
 			raise WindowsError(result, f"RegDeleteTreeW failed for {subkey=}")

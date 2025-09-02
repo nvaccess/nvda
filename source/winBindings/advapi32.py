@@ -57,7 +57,7 @@ Deletes a subkey and all its descendants.
 https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletetreew
 """
 RegDeleteTreeW.argtypes = (
-	HKEY,     # hKey
+	HKEY,  # hKey
 	LPCWSTR,  # lpSubKey
 )
 RegDeleteTreeW.restype = LONG

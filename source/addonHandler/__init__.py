@@ -69,12 +69,12 @@ __getattr__ = handleDeprecations(
 		"BUNDLE_EXTENSION",
 		"config",
 		"registry",
-		"ADDON_BUNDLE_EXTENSION"
+		"ADDON_BUNDLE_EXTENSION",
 	),
 	MovedSymbol(
 		"NVDA_ADDON_PROG_ID",
 		"config.registry",
-	)
+	),
 )
 
 MANIFEST_FILENAME = "manifest.ini"
