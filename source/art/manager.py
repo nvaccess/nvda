@@ -153,7 +153,12 @@ class ARTAddonProcess:
 		}
 
 		startup_json = json.dumps(startup_data) + "\n"
-		log.debug(f"Sending ART handshake data to {self.addon_name}: {startup_json.strip()}")
+		
+		# Create redacted version for logging (don't log encryption key)
+		startup_data_redacted = startup_data.copy()
+		startup_data_redacted["encryption_key"] = "[REDACTED]"
+		startup_json_redacted = json.dumps(startup_data_redacted)
+		log.debug(f"Sending ART handshake data to {self.addon_name}: {startup_json_redacted}")
 		self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
 		self.subprocessManager.subprocess.stdin.flush()
 
