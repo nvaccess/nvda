@@ -15,13 +15,14 @@ We currently have the following templates:
 * For [feature requests](#feature-request-template)
 * For [bug reports](#bug-report-template)
 * For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
-* For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
+* For security vulnerabilities (please note that these are reported differently, for more information see <https://github.com/nvaccess/nvda/blob/master/security.md>)
 * For developer facing changes:
   * This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
   * This may include API changes, technical debt removal, refactoring and maintenance tasks.
   * Note there is no further guide for this - it is expected that developers can use the template appropriately.
 
 ## General information
+
 The following information applies to all issues and pull requests.
 
 At the start of the template there is an HTML comment block which points to this wiki page, it can
@@ -38,11 +39,13 @@ Github does not allow all
 however, zip files are allowed, so you can always zip your file and attach that instead.
 
 #### Logs
+
 In most cases an NVDA log file is incredibly helpful when trying to understand/fix an issue, please
 remember to attach one.
 More [instructions are available on the wiki](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps). If you are getting a crash dump file (nvda_crash.dmp) please also include it.
 
 #### Screenshots
+
 While we welcome **images/screenshots** to help explain a problem, be aware that many of the
 developers of NVDA are blind and will greatly appreciate this image being described in text.
 Most tools allow you to copy text out of them.
@@ -60,18 +63,22 @@ Then fill in each of the following headings which match those that are found in 
 short description of how to fill in each section.
 
 ### Is your feature request related to a problem? Please describe.
+
 This section should provide a clear and concise description of what the problem is.
 Ex. I'm always frustrated when [...]
 
 ### Describe the solution you'd like
+
 A clear and concise description of what you want to happen.
 If you can provide technical details about how to address the problem, please do so.
 Feel free to add a subheading.
 
 ### Describe alternatives you've considered
+
 A clear and concise description of any alternative solutions or features you've considered.
 
 ### Additional context
+
 Add any other context for the feature request here.
 This might list the application name and version number that the feature is expected to work with
 (EG Firefox or Microsoft Word).
@@ -93,28 +100,31 @@ While you are working out the steps required, please make a copy of your
 [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
 
 *Example:*
+
 > 1. Open Chrome
-> 1. Browse to www.google.com
+> 1. Browse to <www.google.com>
 > 1. Type "Hello"
 > 1. Press Enter
 
 ### Actual behavior:
+
 This section should tell us what actually happens when these steps are taken.
 Please describe verbatim what NVDA does, ideally use speech viewer to copy the speech from NVDA.
 This helps developers to be sure they are reproducing the same issue as you.
 
 *Example:*
 > An NVDA error sound is heard.
-
+>
 > NVDA Speech:
 > "button enable sound"
 
 ### Expected behavior:
+
 This section should tell us what you expect to happen when these steps are taken.
 
 *Example:*
 > There should be no error sound, and the page should change to show the search results.
-
+>
 > NVDA Speech:
 > "checkbox enable sound"
 
@@ -131,23 +141,27 @@ This helps us to be able to reproduce the issue, or help us to investigate why t
 for some users and not others.
 
 #### NVDA installed/portable/running from source:
+
 This tells us how you are using NVDA.
 
 *Example:*
 > Installed
 
 #### NVDA version:
+
 The version of NVDA that you are using when demonstrating the issue.
 This can be copied from the about option, in the NVDA help menu.
 
 *Example:*
 > alpha-15370,21fd217a
-
+>
 > release 2020.4
 
 #### Windows version:
+
 The version of Windows that you are using.
 You can copy this from the "System Information" application:
+
 1. Press `Windows+r` to open the run dialog
 1. Type `msinfo32` and press enter
 1. From the "System summary" treeview item, press tab to get to the right pane.
@@ -158,18 +172,21 @@ You can copy this from the "System Information" application:
 > Windows 10 Version 1607 Build 14393.1066
 
 #### Name and version of other software in use when reproducing the issue:
+
 Typically, you can get this information from the "About" dialog of the software.
 
 *Example:*
 > Chrome version: 67.0.3396.87
 
 #### Other information about your system:
+
 This is other information about your setup that you think might be relevant to us.
 
 *Example:*
 > Running Windows 10 in a VM
 
 ### Other questions:
+
 This section has sub-sections, asking about the basic investigation steps you may have completed.
 Please feel free to add more information here to tell us about what you have tried.
 
@@ -184,6 +201,7 @@ introduced issue.
 It can help us determine if changes in NVDA or other software introduced the problem.
 
 *Example:*
+
 > * NVDA 2018.1 - no error sound
 > * NVDA 2018.2 - has error sound
 
@@ -207,14 +225,15 @@ functionality.
 Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on
 websites or navigation problems in focus or browse mode on different interfaces are encountered.
 
-
 ## Special Case Issue template
 
 ### Detailed description of the issue
+
 Provide a detailed description of the issue you are reporting.
 Include specific details to help us understand the context.
 
 ### Why are the other templates not appropriate in this case?
+
 Explain why this issue cannot be addressed using the standard bug report or feature request templates.
 
 ### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
@@ -226,20 +245,25 @@ Include links to discussion threads if applicable, for example:
 * <https://groups.google.com/a/nvaccess.org/g/nvda-users>
 
 ### Steps to reproduce or illustrate the issue (if applicable)
+
 If possible, provide steps to demonstrate or reproduce the issue.
 Refer to [Steps to reproduce](#steps-to-reproduce) for more information.
 If this or the following sections are not applicable, write "N/A."
 
 ### Expected outcome or behaviour (if applicable)
+
 Describe what you expected to happen or how you expect the project to handle this kind of issue.
 
 ### Logs, screenshots and other attachments (if applicable)
+
 Attach any relevant logs or files that would help in diagnosing or understanding the issue.
 Refer to [Attachments / Images](#attachments--images) for more information.
 
 ### System configuration or software environment (if applicable)
+
 Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
 Refer to [System configuration](#system-configuration) for more information.
 
 ### Additional information (if applicable)
+
 Provide any additional context or information that you think may be helpful for understanding or resolving the issue.
