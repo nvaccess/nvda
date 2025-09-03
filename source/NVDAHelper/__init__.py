@@ -4,7 +4,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes.wintypes import HANDLE, HKEY, HMODULE
+from ctypes.wintypes import (
+	HANDLE,
+	HKEY,
+)
 import typing
 import os
 import winreg
@@ -29,6 +32,10 @@ from ctypes import (
 	wstring_at,
 )
 
+import winBindings.oleaut32
+import winBindings.kernel32
+import winBindings.advapi32
+import winBindings.rpcrt4
 import globalVars
 from NVDAState import ReadPaths
 
@@ -84,10 +91,6 @@ if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
 	from characterProcessing import SymbolLevel
 
-
-# Ensure ctypes knows that LoadLibraryX returns a handle
-# this is necessary on 64-bit.
-windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 _remoteLib = None
 _remoteLoaderX86: "_RemoteLoader | None" = None
@@ -226,10 +229,10 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf = create_unicode_buffer(1024)
-	bufSize = c_int(2048)
+	bufSize = c_ulong(2048)
 	key = HKEY()  # noqa: F405
 	if (
-		windll.advapi32.RegOpenKeyExW(
+		winBindings.advapi32.RegOpenKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\" + layoutString,
 			0,
@@ -240,21 +243,28 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	):  # noqa: F405
 		try:
 			if (
-				windll.advapi32.RegQueryValueExW(key, "Layout Display Name", 0, None, buf, byref(bufSize))  # noqa: F405
+				winBindings.advapi32.RegQueryValueEx(
+					key,
+					"Layout Display Name",
+					None,
+					None,
+					buf,
+					byref(bufSize),
+				)
 				== 0
 			):  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value, buf, 1023, None)
 				return buf.value
-			if windll.advapi32.RegQueryValueExW(key, "Layout Text", 0, None, buf, byref(bufSize)) == 0:  # noqa: F405
+			if winBindings.advapi32.RegQueryValueEx(key, "Layout Text", None, None, buf, byref(bufSize)) == 0:
 				return buf.value
 		finally:
-			windll.advapi32.RegCloseKey(key)
+			winBindings.advapi32.RegCloseKey(key)
 
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
 	pid = c_long()
-	windll.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))  # noqa: F405
+	winBindings.rpcrt4.I_RpcBindingInqLocalClientPID(None, byref(pid))
 	pid = pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")
@@ -271,7 +281,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 			"Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"
 			% (pid, res, registrationHandle),
 		)
-		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))  # noqa: F405
+		winBindings.rpcrt4.RpcBindingFree(byref(bindingHandle))
 		return -1
 	import appModuleHandler
 
@@ -848,7 +858,7 @@ def initialize() -> None:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
 	# Load nvdaHelperRemote.dll
-	h = windll.kernel32.LoadLibraryExW(
+	h = winBindings.kernel32.LoadLibraryEx(
 		ReadPaths.nvdaHelperRemoteDll,
 		0,
 		# Using an altered search path is necessary here
@@ -913,5 +923,5 @@ def bstrReturn(address):
 	# This will terminate at a null character, even though BSTR allows nulls.
 	# We're only using this for normal, null-terminated strings anyway.
 	val = wstring_at(address)
-	windll.oleaut32.SysFreeString(address)
+	winBindings.oleaut32.SysFreeString(address)
 	return val

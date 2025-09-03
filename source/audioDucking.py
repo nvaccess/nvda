@@ -7,8 +7,10 @@ from enum import IntEnum
 from utils.displayString import DisplayStringIntEnum
 import threading
 from typing import Dict
-from ctypes import oledll, wintypes, windll
+from ctypes import wintypes, windll
 import time
+import winBindings.oleacc
+import winBindings.kernel32
 import config
 from logHandler import log
 import systemUtils
@@ -25,7 +27,7 @@ class AutoEvent(wintypes.HANDLE):
 
 	def __del__(self):
 		if self:
-			windll.kernel32.CloseHandle(self)
+			winBindings.kernel32.CloseHandle(self)
 
 
 WAIT_TIMEOUT = 0x102
@@ -74,14 +76,14 @@ def _setDuckingState(switch):
 
 			ATWindow = gui.mainFrame.GetHandle()
 			if switch:
-				oledll.oleacc.AccSetRunningUtilityState(
+				winBindings.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
 				_lastDuckedTime = time.time()
 			else:
-				oledll.oleacc.AccSetRunningUtilityState(
+				winBindings.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 					ANRUSDucking.AUDIO_ACTIVE_NODUCK,
@@ -179,10 +181,7 @@ _isAudioDuckingSupported = None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		_isAudioDuckingSupported = (config.isInstalledCopy() or config.isAppX) and hasattr(
-			oledll.oleacc,
-			"AccSetRunningUtilityState",
-		)
+		_isAudioDuckingSupported = config.isInstalledCopy()
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
 

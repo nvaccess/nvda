@@ -40,6 +40,7 @@ import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
+import winBindings.ole32
 import winUser
 import globalVars  # noqa: F401
 from logHandler import log
@@ -1640,7 +1641,7 @@ class IAccessible(Window):
 				ret.append(text)
 			return "\n".join(ret)
 		finally:
-			ctypes.windll.ole32.CoTaskMemFree(headers)
+			winBindings.ole32.CoTaskMemFree(headers)
 
 	def _get_rowHeaderText(self):
 		return self._tableHeaderTextHelper("row")

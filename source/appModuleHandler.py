@@ -49,6 +49,7 @@ from winUser import (
 	getWindowThreadProcessID as _getWindowThreadProcessID,
 )
 from comInterfaces import UIAutomationClient as UIA
+import winBindings.rpcrt4
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -650,9 +651,9 @@ class AppModule(baseObject.ScriptableObject):
 		if getattr(self, "_helperPreventDisconnect", False):
 			return
 		if self._inprocRegistrationHandle:
-			ctypes.windll.rpcrt4.RpcSsDestroyClientContext(ctypes.byref(self._inprocRegistrationHandle))
+			winBindings.rpcrt4.RpcSsDestroyClientContext(ctypes.byref(self._inprocRegistrationHandle))
 		if self.helperLocalBindingHandle:
-			ctypes.windll.rpcrt4.RpcBindingFree(ctypes.byref(self.helperLocalBindingHandle))
+			winBindings.rpcrt4.RpcBindingFree(ctypes.byref(self.helperLocalBindingHandle))
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		"""Choose NVDAObject overlay classes for a given NVDAObject.
