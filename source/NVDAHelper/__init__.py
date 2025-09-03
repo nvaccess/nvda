@@ -927,6 +927,7 @@ def bstrReturn(address):
 	winBindings.oleaut32.SysFreeString(address)
 	return val
 
+
 def bstrReturnErrcheck(address, __, ___) -> str:
 	"""Handle a BSTR returned from a ctypes function call.
 	This includes freeing the memory.

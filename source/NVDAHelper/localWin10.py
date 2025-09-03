@@ -21,6 +21,7 @@ def _bstrReturnErrcheck(address: int, *_) -> str:
 	SysFreeString(address)
 	return val
 
+
 UwpOcr_P = c_void_p
 
 uwpOcr_getLanguages = dll.uwpOcr_getLanguages

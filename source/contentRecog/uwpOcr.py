@@ -7,7 +7,13 @@
 
 import json
 import NVDAHelper
-from NVDAHelper.localWin10 import uwpOcr_getLanguages, uwpOcr_initialize, uwpOcr_recognize, uwpOcr_terminate, uwpOcr_Callback
+from NVDAHelper.localWin10 import (
+	uwpOcr_getLanguages,
+	uwpOcr_initialize,
+	uwpOcr_recognize,
+	uwpOcr_terminate,
+	uwpOcr_Callback,
+)
 from . import ContentRecognizer, LinesWordsResult
 import config
 import languageHandler
