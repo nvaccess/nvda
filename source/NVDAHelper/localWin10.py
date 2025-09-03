@@ -1,4 +1,5 @@
 from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, cdll, wstring_at
+from comtypes import BSTR
 from winBindings.oleaut32 import SysFreeString
 
 import NVDAState
@@ -26,8 +27,9 @@ UwpOcr_P = c_void_p
 
 uwpOcr_getLanguages = dll.uwpOcr_getLanguages
 uwpOcr_getLanguages.argtypes = ()
-uwpOcr_getLanguages.restype = c_void_p
-uwpOcr_getLanguages.errcheck = _bstrReturnErrcheck
+uwpOcr_getLanguages.restype = BSTR
+# uwpOcr_getLanguages.restype = c_void_p
+# uwpOcr_getLanguages.errcheck = _bstrReturnErrcheck
 
 uwpOcr_Callback = CFUNCTYPE(None, c_wchar_p)
 
