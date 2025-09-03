@@ -5,16 +5,12 @@
 
 """Recognition of text using the UWP OCR engine included in Windows 10 and later."""
 
-import ctypes
-from ctypes.wintypes import LPWSTR, WCHAR
 import json
 import NVDAHelper
-from NVDAHelper.localWin10 import uwpOcr_getLanguages, uwpOcr_initialize, uwpOcr_recognize, uwpOcr_terminate
+from NVDAHelper.localWin10 import uwpOcr_getLanguages, uwpOcr_initialize, uwpOcr_recognize, uwpOcr_terminate, uwpOcr_Callback
 from . import ContentRecognizer, LinesWordsResult
 import config
 import languageHandler
-
-uwpOcr_Callback = ctypes.CFUNCTYPE(None, ctypes.c_wchar_p)
 
 
 def getLanguages():

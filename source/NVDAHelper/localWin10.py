@@ -1,4 +1,4 @@
-from ctypes import c_int, c_void_p, cdll, wstring_at
+from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, cdll, wstring_at
 from winBindings.oleaut32 import SysFreeString
 
 import NVDAState
@@ -21,18 +21,23 @@ def _bstrReturnErrcheck(address: int, *_) -> str:
 	SysFreeString(address)
 	return val
 
+UwpOcr_P = c_void_p
 
 uwpOcr_getLanguages = dll.uwpOcr_getLanguages
 uwpOcr_getLanguages.argtypes = ()
 uwpOcr_getLanguages.restype = c_void_p
 uwpOcr_getLanguages.errcheck = _bstrReturnErrcheck
 
+uwpOcr_Callback = CFUNCTYPE(None, c_wchar_p)
+
 uwpOcr_initialize = dll.uwpOcr_initialize
-uwpOcr_initialize.restype = c_void_p
+uwpOcr_initialize.argtypes = (c_wchar_p, uwpOcr_Callback)
+uwpOcr_initialize.restype = UwpOcr_P
 
 uwpOcr_terminate = dll.uwpOcr_terminate
-uwpOcr_terminate.argtypes = [c_void_p]
+uwpOcr_terminate.argtypes = (UwpOcr_P,)
 uwpOcr_terminate.restype = None
 
 uwpOcr_recognize = dll.uwpOcr_recognize
-uwpOcr_recognize.argtypes = [c_void_p, c_void_p, c_int, c_int]
+uwpOcr_recognize.argtypes = [UwpOcr_P, c_void_p, c_uint, c_uint]
+uwpOcr_recognize.restype = None
