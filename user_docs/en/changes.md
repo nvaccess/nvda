@@ -25,7 +25,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Component updates:
   * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille.
-    * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8dot and Unified English Braille.
+    * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
 
 ### Bug Fixes
 
