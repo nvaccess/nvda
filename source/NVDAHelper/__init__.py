@@ -27,6 +27,7 @@ from ctypes import (
 	c_wchar_p,
 	c_wchar,
 	cast,
+	cdll,
 	create_unicode_buffer,
 	windll,
 	wstring_at,
@@ -924,4 +925,19 @@ def bstrReturn(address):
 	# We're only using this for normal, null-terminated strings anyway.
 	val = wstring_at(address)
 	winBindings.oleaut32.SysFreeString(address)
+	return val
+
+def bstrReturnErrcheck(address, __, ___) -> str:
+	"""Handle a BSTR returned from a ctypes function call.
+	This includes freeing the memory.
+	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
+	"""
+	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
+	# Just access the string ourselves.
+	# This will terminate at a null character, even though BSTR allows nulls.
+	# We're only using this for normal, null-terminated strings anyway.
+	# import comtypes
+	# val = comtypes.BSTR.from_param(address)
+	val = wstring_at(address)
+	# windll.oleaut32.SysFreeString(address)
 	return val
