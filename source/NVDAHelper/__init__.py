@@ -27,10 +27,8 @@ from ctypes import (
 	c_wchar_p,
 	c_wchar,
 	cast,
-	cdll,
 	create_unicode_buffer,
 	windll,
-	wstring_at,
 )
 
 import winBindings.oleaut32

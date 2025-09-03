@@ -1,6 +1,5 @@
-from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, windll, wstring_at
+from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, windll
 from comtypes import BSTR
-from winBindings.oleaut32 import SysFreeString
 
 import NVDAState
 
