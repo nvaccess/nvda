@@ -9,6 +9,7 @@ import ctypes
 from ctypes.wintypes import LPWSTR, WCHAR
 import json
 import NVDAHelper
+from NVDAHelper.localWin10 import uwpOcr_getLanguages, uwpOcr_initialize, uwpOcr_recognize, uwpOcr_terminate
 from . import ContentRecognizer, LinesWordsResult
 import config
 import languageHandler
@@ -23,10 +24,7 @@ def getLanguages():
 		for use as NVDA language codes.
 	@rtype: list of str
 	"""
-	dll = NVDAHelper.getHelperLocalWin10Dll()
-	dll.uwpOcr_getLanguages.restype = ctypes.c_void_p
-	dll.uwpOcr_getLanguages.errcheck = NVDAHelper.bstrReturnErrcheck
-	langs = dll.uwpOcr_getLanguages()
+	langs = uwpOcr_getLanguages()
 	return langs.split(";")[:-1]
 
 
@@ -110,21 +108,15 @@ class UwpOcr(ContentRecognizer):
 					self._onResult(LinesWordsResult(data, imgInfo))
 				else:
 					self._onResult(RuntimeError("UWP OCR failed"))
-			uwpOcr_terminate = self._dll.uwpOcr_terminate
-			uwpOcr_terminate.argtypes = [ctypes.c_void_p]
-			self._dll.uwpOcr_terminate(self._handle)
+			uwpOcr_terminate(self._handle)
 			self._callback = None
 			self._handle = None
 
 		self._callback = callback
-		uwpOcr_initialize = self._dll.uwpOcr_initialize
-		uwpOcr_initialize.restype = ctypes.c_void_p
 		self._handle = uwpOcr_initialize(self.language, callback)
 		if not self._handle:
 			onResult(RuntimeError("UWP OCR initialization failed"))
 			return
-		uwpOcr_recognize = self._dll.uwpOcr_recognize
-		uwpOcr_recognize.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
 		uwpOcr_recognize(self._handle, pixels, imgInfo.recogWidth, imgInfo.recogHeight)
 
 	def cancel(self):
