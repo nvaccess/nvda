@@ -45,7 +45,7 @@ class GdiplusStartupInput(Structure):
 
 
 class GdiplusStartupOutput(Structure):
-	_fields = [
+	_fields_ = [
 		("NotificationHookProc", c_void_p),
 		("NotificationUnhookProc", c_void_p),
 	]
