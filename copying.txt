@@ -105,17 +105,14 @@ portion of it, thus forming a work based on the Program, and copy and
 distribute such modifications or work under the terms of Section 1
 above, provided that you also meet all of these conditions:
 
-  
 **a)** You must cause the modified files to carry prominent notices
 stating that you changed the files and the date of any change.
 
-  
 **b)** You must cause any work that you distribute or publish, that in
 whole or in part contains or is derived from the Program or any part
 thereof, to be licensed as a whole at no charge to all third parties
 under the terms of this License.
 
-  
 **c)** If the modified program normally reads commands interactively
 when run, you must cause it, when started running for such interactive
 use in the most ordinary way, to print or display an announcement
@@ -152,12 +149,10 @@ the scope of this License.
 under Section 2) in object code or executable form under the terms of
 Sections 1 and 2 above provided that you also do one of the following:
 
-  
 **a)** Accompany it with the complete corresponding machine-readable
 source code, which must be distributed under the terms of Sections 1
 and 2 above on a medium customarily used for software interchange; or,
 
-  
 **b)** Accompany it with a written offer, valid for at least three
 years, to give any third party, for a charge no more than your cost of
 physically performing source distribution, a complete machine-readable
@@ -165,7 +160,6 @@ copy of the corresponding source code, to be distributed under the
 terms of Sections 1 and 2 above on a medium customarily used for
 software interchange; or,
 
-  
 **c)** Accompany it with the information you received as to the offer
 to distribute corresponding source code. (This alternative is allowed
 only for noncommercial distribution and only if you received the
@@ -277,7 +271,7 @@ the two goals of preserving the free status of all derivatives of our
 free software and of promoting the sharing and reuse of software
 generally.
 
-**NO WARRANTY**
+#### NO WARRANTY
 
 **11.** BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO
 WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
@@ -300,7 +294,6 @@ FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF
 SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGES.
 
-
 ## Non-GPL Components in Plugins and Drivers
 
 Plugins and drivers, including those provided by third parties, are considered derivative works of NVDA and must therefore be licensed under the terms of the GNU General Public License version 2.
@@ -311,7 +304,6 @@ a. Any such component does not prevent the NVDA plugin or driver from being lice
 b. Any such component does not directly use and is not directly used by any portion of NVDA outside of that plugin or driver.
 For example, a speech synthesizer driver may use a speech synthesiser under a proprietary license.
 In contrast, in a plugin providing support for an application, the code which implements any interface provided by NVDA must be licensed under the GNU General Public License version 2.
-
 
 ## Microsoft Distributable Code
 
@@ -344,18 +336,18 @@ An Excluded License is one that requires, as a condition of use, modification or
 
 ## Third-Party Dependencies
 
-NVDA includes various third-party dependencies, each with its own license terms. 
+NVDA includes various third-party dependencies, each with its own license terms.
 Python pip modules with acceptable licences are automatically limited by our build system to include only BSD, MIT, Python, LGPLV3+ and Apache.
 
 In addition to these dependencies, the following are also included in NVDA:
 
-- eSpeak: GPL-3
-- LibLouis: LGPL-3
-- BrlAPI: LGPL-3
-- IAccessible 2: Simplified BSD 
-- Microsoft Detours: MIT 
-- Python: PSF
-- NSIS: zlib/libpng
+* eSpeak: GPL-3
+* LibLouis: LGPL-3
+* BrlAPI: LGPL-3
+* IAccessible 2: Simplified BSD
+* Microsoft Detours: MIT
+* Python: PSF
+* NSIS: zlib/libpng
 
 Furthermore, NVDA also utilises some static/binary dependencies, details of which can be found at the following URL:
 

@@ -30,8 +30,8 @@ Start by subscribing to the translation list above so that you can get help and 
 
 The current process for translation is split between multiple processes:
 
-- [Crowdin](./crowdin.md) for the NVDA interface and user documentation
-- [Github](./github.md) for Character Descriptions, Symbols and Gestures.
+* [Crowdin](./crowdin.md) for the NVDA interface and user documentation
+* [Github](./github.md) for Character Descriptions, Symbols and Gestures.
 
 Read [Files to be Localized](#files-to-be-localized) to learn the translation for process for these.
 
@@ -46,10 +46,10 @@ If your language is no longer maintained, you can request to be the new maintain
 
 ## Files to be Localized
 
-- nvda.po: NVDA's interface messages, see [Translating using Crowdin](./crowdin.md) for more information.
-- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://download.nvaccess.org/documentation/developerGuide.html#characterDescriptions) for more info.
-- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://download.nvaccess.org/documentation/developerGuide.html#symbolPronunciation) for more information.
-- gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://download.nvaccess.org/documentation/developerGuide.html#TranslatingGestures) for more information.
-- userGuide.md: the User Guide, see [Translating using Crowdin](./crowdin.md) for more information.
-- changes.md (optional): a list of changes between releases, see [Translating using Crowdin](./crowdin.md) for more information.
-- Add-ons (optional, out of date): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
+* nvda.po: NVDA's interface messages, see [Translating using Crowdin](./crowdin.md) for more information.
+* characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://download.nvaccess.org/documentation/developerGuide.html#characterDescriptions) for more info.
+* symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://download.nvaccess.org/documentation/developerGuide.html#symbolPronunciation) for more information.
+* gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://download.nvaccess.org/documentation/developerGuide.html#TranslatingGestures) for more information.
+* userGuide.md: the User Guide, see [Translating using Crowdin](./crowdin.md) for more information.
+* changes.md (optional): a list of changes between releases, see [Translating using Crowdin](./crowdin.md) for more information.
+* Add-ons (optional, out of date): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
