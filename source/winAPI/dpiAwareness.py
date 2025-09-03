@@ -6,6 +6,7 @@
 import ctypes
 
 from logHandler import log
+import winBindings.shcore
 
 from .constants import (
 	HResult,
@@ -66,7 +67,7 @@ def setDPIAwareness() -> None:
 		# These processes are not automatically scaled by the system.
 		PROCESS_PER_MONITOR_DPI_AWARE = 2
 		# Method introduced in Windows 8.1
-		hResult = ctypes.windll.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
+		hResult = winBindings.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
 	except AttributeError:
 		# Windows 8 / Server 2012 - `shcore` library exists,
 		# but `SetProcessDpiAwareness` is not present yet.
