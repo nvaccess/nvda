@@ -184,7 +184,7 @@ GetDIBits.argtypes = (
 	UINT,  # cLines: The number of scan lines to retrieve
 	LPVOID,  # lpvBits: A pointer to a buffer to receive the bitmap data
 	POINTER(
-		BITMAPINFO
+		BITMAPINFO,
 	),  # lpbmi: A pointer to a BITMAPINFO structure that specifies the desired format for the DIB data
 	UINT,  # usage: The format of the bmiColors member of the BITMAPINFO structure
 )

@@ -30,11 +30,11 @@ Creates a URL moniker from a full or partial URL string.
 CreateURLMonikerEx.restype = HRESULT
 CreateURLMonikerEx.argtypes = (
 	POINTER(
-		IMoniker
+		IMoniker,
 	),  # pMkCtx: Pointer to the IMoniker interface of the URL moniker to use as the base for relative URLs (can be NULL)
 	c_wchar_p,  # szURL: String value that contains the URL to be parsed
 	POINTER(
-		POINTER(IMoniker)
+		POINTER(IMoniker),
 	),  # ppmk: Address of an IMoniker pointer variable that receives the interface pointer to the new URL moniker
 	DWORD,  # dwFlags: Flags that control the creation of the URL moniker
 )

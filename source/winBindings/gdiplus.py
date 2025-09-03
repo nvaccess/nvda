@@ -90,7 +90,7 @@ GdipCreateFromHDC.restype = GpStatus
 GdipCreateFromHDC.argtypes = (
 	HDC,  # hdc: Handle to a device context
 	POINTER(
-		POINTER(GpGraphics)
+		POINTER(GpGraphics),
 	),  # graphics: Pointer to a variable that receives a pointer to the new Graphics object
 )
 

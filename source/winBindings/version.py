@@ -61,9 +61,9 @@ VerQueryValue.argtypes = (
 	c_void_p,  # pBlock: Pointer to the buffer containing the version-information resource
 	c_wchar_p,  # lpSubBlock: Pointer to a null-terminated string that specifies the version-information value to retrieve
 	POINTER(
-		c_void_p
+		c_void_p,
 	),  # lplpBuffer: When the function returns, points to the address of the requested version information
 	POINTER(
-		c_uint
+		c_uint,
 	),  # puLen: When the function returns, points to the length, in characters, of the requested version information
 )
