@@ -17,6 +17,7 @@ from typing import (
 	TYPE_CHECKING,
 	Protocol,
 	TypeVar,
+	cast,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -416,10 +417,12 @@ class AddonListVM:
 	def _getFilteredSortedIds(self) -> list[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
-				if getattr(listItemVM.model, "submissionTime", None):
-					return listItemVM.model.submissionTime
+				listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
+				return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
+				listItemVM = cast(AddonListItemVM[_addonHandlerModel], listItemVM)
+
 				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
