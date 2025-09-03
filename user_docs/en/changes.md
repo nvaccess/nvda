@@ -26,6 +26,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 ### Bug Fixes
 
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+* When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -94,6 +95,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `addonHandler.NVDA_ADDON_PROG_ID` has been moved to `config.registry.NVDA_ADDON_PROG_ID`. (#18851)
 * `installer.defaultStartMenuFolder` has been moved to `NVDAState.WritePaths.defaultStartMenuFolder`. (#18851)
 * `installer.defaultInstallPath` has been moved to `NVDAState.WritePaths.defaultInstallDir`. (#18851)
+
+<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
 
 ## 2025.3
 

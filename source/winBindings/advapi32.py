@@ -8,6 +8,7 @@
 from ctypes import (
 	POINTER,
 	windll,
+	c_void_p,
 )
 from ctypes.wintypes import (
 	BOOL,
@@ -22,10 +23,14 @@ __all__ = (
 	"OpenProcessToken",
 	"RegCloseKey",
 	"RegDeleteTreeW",
+	"RegOpenKeyEx",
+	"RegQueryValueEx",
 )
 
 
 dll = windll.advapi32
+
+
 OpenProcessToken = dll.OpenProcessToken
 """
 Opens the access token associated with a process.
@@ -64,3 +69,34 @@ RegDeleteTreeW.argtypes = (
 	LPCWSTR,  # lpSubKey
 )
 RegDeleteTreeW.restype = LONG
+
+RegOpenKeyEx = dll.RegOpenKeyExW
+"""
+Opens the specified registry key.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw
+"""
+RegOpenKeyEx.argtypes = (
+	HKEY,  # hKey
+	LPCWSTR,  # lpSubKey
+	DWORD,  # ulOptions
+	DWORD,  # samDesired
+	POINTER(HKEY),  # phkResult
+)
+RegOpenKeyEx.restype = LONG
+
+RegQueryValueEx = dll.RegQueryValueExW
+"""
+Retrieves the type and data for a specified value name associated with an open registry key.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
+"""
+RegQueryValueEx.argtypes = (
+	HKEY,  # hKey
+	LPCWSTR,  # lpValueName
+	POINTER(DWORD),  # lpReserved
+	POINTER(DWORD),  # lpType
+	c_void_p,  # lpData
+	POINTER(DWORD),  # lpcbData
+)
+RegQueryValueEx.restype = LONG
