@@ -1,4 +1,5 @@
 from ctypes import c_int, c_void_p, cdll, wstring_at
+from winBindings.oleaut32 import SysFreeString
 
 import NVDAState
 
@@ -17,7 +18,7 @@ def _bstrReturnErrcheck(address: int, *_) -> str:
 	# import comtypes
 	# val = comtypes.BSTR.from_param(address)
 	val = wstring_at(address)
-	# windll.oleaut32.SysFreeString(address)
+	SysFreeString(address)
 	return val
 
 
