@@ -102,6 +102,7 @@ class SHELLEXECUTEINFOW(Structure):  # noqa: F405
 	def __init__(self, **kwargs):
 		super(SHELLEXECUTEINFOW, self).__init__(cbSize=sizeof(self), **kwargs)  # noqa: F405
 
+SHELLEXECUTEINFO = SHELLEXECUTEINFOW
 
 ShellExecuteEx = dll.ShellExecuteExW
 """

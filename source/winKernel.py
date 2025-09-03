@@ -28,22 +28,28 @@ if TYPE_CHECKING:
 
 import winBindings.advapi32
 import winBindings.kernel32
+from utils import _deprecate
 
 
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	import NVDAState
-
-	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
-		from logHandler import log
-		from winAPI._powerTracking import SystemPowerStatus
-
-		log.warning(
-			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
-			"use winAPI._powerTracking.SystemPowerStatus instead.",
-		)
-		return SystemPowerStatus
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"SYSTEM_POWER_STATUS",
+		"winAPI._powerTracking",
+		"SystemPowerStatus",
+	),
+	_deprecate.MovedSymbol(
+		"STARTUPINFO",
+		"winBindings.advapi32",
+	),
+	_deprecate.MovedSymbol(
+		"STARTUPINFOW",
+		"winBindings.advapi32",
+	),
+	_deprecate.MovedSymbol(
+		"PROCESS_INFORMATION",
+		"winBindings.advapi32",
+	),
+)
 
 
 kernel32 = ctypes.windll.kernel32
