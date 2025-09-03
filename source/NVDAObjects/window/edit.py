@@ -17,6 +17,7 @@ import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
+import winBindings.oleacc
 import winKernel
 import api
 import winUser
@@ -1051,7 +1052,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 		if not hasattr(self, "_ITextDocumentObject"):
 			try:
 				ptr = ctypes.POINTER(comInterfaces.tom.ITextDocument)()
-				ctypes.windll.oleacc.AccessibleObjectFromWindow(
+				winBindings.oleacc.AccessibleObjectFromWindow(
 					self.windowHandle,
 					-16,
 					ctypes.byref(ptr._iid_),
