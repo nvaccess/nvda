@@ -3,7 +3,7 @@
 When NVDA users encounter issues that are caused by third-party software, it is often most effective to report these problems directly to the maintainers of the affected software.
 Below is a list of common third-party products and frameworks, along with links to their official issue trackers or support channels.
 
-Note: When reporting issues upstream, please provide as much detail as possible, including:
+Note: When reporting issues, please provide as much detail as possible, including:
 
 * Steps to reproduce the issue
 * NVDA version and configuration
@@ -11,7 +11,7 @@ Note: When reporting issues upstream, please provide as much detail as possible,
 * Application or website version
 * Any relevant logs or error messages
 
-Once you have opened an issue, if a related NVDA issue exists, share a link to the issue or issue reference number.
+Once you have opened an issue on the other project, if a related NVDA issue exists, share a link to the third-party issue you created on the NVDA issue so we can keep track of it.
 
 For NVDA-specific triage, see our [issue triage documentation](./README.md).
 
