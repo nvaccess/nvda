@@ -249,3 +249,23 @@ SetClipboardData.argtypes = (
 	HANDLE,  # hMem
 )
 SetClipboardData.restype = HANDLE
+
+WNDENUMPROC = WINFUNCTYPE(BOOL, HWND, LPARAM)
+"""
+An application-defined callback function used with the EnumWindows or EnumDesktopWindows function.
+It receives top-level window handles.
+"""
+
+EnumWindows = dll.EnumWindows
+"""
+Enumerates all top-level windows on the screen by passing the handle to each window,
+in turn, to an application-defined callback function.
+EnumWindows continues until the last top-level window is enumerated or the callback function returns FALSE.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumwindows
+"""
+EnumWindows.argtypes = (
+	WNDENUMPROC,  # lpEnumFunc
+	LPARAM,  # lParam
+)
+EnumWindows.restype = BOOL

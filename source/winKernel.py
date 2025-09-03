@@ -188,7 +188,7 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 
 def openProcess(*args) -> int:
 	try:
-		return winBindings.kernel32.OpenProcess(*args)
+		return winBindings.kernel32.OpenProcess(*args) or 0
 	except Exception:
 		# Compatibility: error should just be a handle of 0.
 		return 0
