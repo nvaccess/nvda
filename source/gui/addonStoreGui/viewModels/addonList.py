@@ -417,14 +417,13 @@ class AddonListVM:
 	def _getFilteredSortedIds(self) -> list[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
-				listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
-				if isinstance(AddonListItemVM, _AddonStoreModel):
+				if getattr(listItemVM.model, "submissionTime", None):
+					listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
 					return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
 				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
-				if isinstance(AddonListItemVM, _AddonManifestModel):
-					return listItemVM.model.installDate
+				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
