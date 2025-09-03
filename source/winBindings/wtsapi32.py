@@ -43,9 +43,9 @@ Retrieves session information for the specified session on the specified Remote 
 """
 WTSQuerySessionInformation.restype = BOOL
 WTSQuerySessionInformation.argtypes = (
-	HANDLE,             # hServer: Handle to the Remote Desktop Session Host server
-	DWORD,              # SessionId: Session identifier
-	c_int,              # WTSInfoClass: Type of information to retrieve (WTS_INFO_CLASS)
-	POINTER(LPWSTR),    # ppBuffer: Pointer to a variable that receives a pointer to the requested information
-	POINTER(DWORD),     # pBytesReturned: Pointer to a variable that receives the size of the data returned
+	HANDLE,  # hServer: Handle to the Remote Desktop Session Host server
+	DWORD,  # SessionId: Session identifier
+	c_int,  # WTSInfoClass: Type of information to retrieve (WTS_INFO_CLASS)
+	POINTER(LPWSTR),  # ppBuffer: Pointer to a variable that receives a pointer to the requested information
+	POINTER(DWORD),  # pBytesReturned: Pointer to a variable that receives the size of the data returned
 )

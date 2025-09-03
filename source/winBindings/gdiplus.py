@@ -61,8 +61,8 @@ Initializes Windows GDI+.
 GdiplusStartup.restype = c_int
 GdiplusStartup.argtypes = (
 	POINTER(ULONG_PTR),  # token: A pointer to a ULONG_PTR that receives a token
-	POINTER(GdiplusStartupInput),          # input: A pointer to a GdiplusStartupInput structure
-	POINTER(GdiplusStartupOutput),          # output: A pointer to a GdiplusStartupOutput structure
+	POINTER(GdiplusStartupInput),  # input: A pointer to a GdiplusStartupInput structure
+	POINTER(GdiplusStartupOutput),  # output: A pointer to a GdiplusStartupOutput structure
 )
 
 
@@ -88,8 +88,10 @@ Creates a Graphics object that is associated with a specified device context.
 """
 GdipCreateFromHDC.restype = GpStatus
 GdipCreateFromHDC.argtypes = (
-	HDC,                # hdc: Handle to a device context
-	POINTER(POINTER(GpGraphics)),    # graphics: Pointer to a variable that receives a pointer to the new Graphics object
+	HDC,  # hdc: Handle to a device context
+	POINTER(
+		POINTER(GpGraphics)
+	),  # graphics: Pointer to a variable that receives a pointer to the new Graphics object
 )
 
 
@@ -102,10 +104,10 @@ Creates a Pen object that has specified color, width, and style.
 """
 GdipCreatePen1.restype = GpStatus
 GdipCreatePen1.argtypes = (
-	ARGB,                # color: ARGB color
-	REAL,              # width: Width of the pen
-	GpUnit,                # unit: Unit of measure for the pen width
-	POINTER(POINTER(GpPen)),    # pen: Pointer to a variable that receives a pointer to the new Pen object
+	ARGB,  # color: ARGB color
+	REAL,  # width: Width of the pen
+	GpUnit,  # unit: Unit of measure for the pen width
+	POINTER(POINTER(GpPen)),  # pen: Pointer to a variable that receives a pointer to the new Pen object
 )
 
 
@@ -119,7 +121,7 @@ Sets the dash style of a Pen object.
 GdipSetPenDashStyle.restype = GpStatus
 GdipSetPenDashStyle.argtypes = (
 	POINTER(GpPen),  # pen: Pointer to the Pen object
-	GpDashStyle,     # dashStyle: Element of the DashStyle enumeration
+	GpDashStyle,  # dashStyle: Element of the DashStyle enumeration
 )
 
 
@@ -134,10 +136,10 @@ GdipDrawLine.restype = GpStatus
 GdipDrawLine.argtypes = (
 	POINTER(GpGraphics),  # graphics: Pointer to the Graphics object
 	POINTER(GpPen),  # pen: Pointer to a pen that is used to draw the line
-	REAL,   # x1: x-coordinate of the starting point of the line
-	REAL,   # y1: y-coordinate of the starting point of the line
-	REAL,   # x2: x-coordinate of the ending point of the line
-	REAL,   # y2: y-coordinate of the ending point of the line
+	REAL,  # x1: x-coordinate of the starting point of the line
+	REAL,  # y1: y-coordinate of the starting point of the line
+	REAL,  # x2: x-coordinate of the ending point of the line
+	REAL,  # y2: y-coordinate of the ending point of the line
 )
 
 
@@ -152,10 +154,10 @@ GdipDrawRectangle.restype = GpStatus
 GdipDrawRectangle.argtypes = (
 	POINTER(GpGraphics),  # graphics: Pointer to the Graphics object
 	POINTER(GpPen),  # pen: Pointer to a pen that is used to draw the rectangle
-	REAL,   # x: x-coordinate of the upper-left corner of the rectangle
-	REAL,   # y: y-coordinate of the upper-left corner of the rectangle
-	REAL,   # width: Width of the rectangle
-	REAL,   # height: Height of the rectangle
+	REAL,  # x: x-coordinate of the upper-left corner of the rectangle
+	REAL,  # y: y-coordinate of the upper-left corner of the rectangle
+	REAL,  # width: Width of the rectangle
+	REAL,  # height: Height of the rectangle
 )
 
 

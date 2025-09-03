@@ -16,7 +16,6 @@ from ctypes import (
 	POINTER,
 )
 import comtypes.client
-from comtypes import IUnknown
 from comtypes import automation
 from comtypes import COMError
 from html import escape

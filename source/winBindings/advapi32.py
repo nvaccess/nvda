@@ -23,7 +23,6 @@ from ctypes.wintypes import (
 	LPCWSTR,
 	LPWSTR,
 	LPVOID,
-	LPBYTE,
 )
 
 __all__ = (
@@ -141,6 +140,7 @@ class SECURITY_ATTRIBUTES(Structure):
 		("bInheritHandle", BOOL),
 	)
 
+
 CreateProcessAsUser = dll.CreateProcessAsUserW
 """
 Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
@@ -148,17 +148,17 @@ Creates a new process and its primary thread. The new process runs in the securi
 	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocessasuserw
 """
 CreateProcessAsUser.argtypes = (
-	HANDLE,      # hToken
-	LPCWSTR,     # lpApplicationName
-	LPWSTR,      # lpCommandLine
-	POINTER(SECURITY_ATTRIBUTES),      # lpProcessAttributes
-	POINTER(SECURITY_ATTRIBUTES),      # lpThreadAttributes
-	BOOL,        # bInheritHandles
-	DWORD,       # dwCreationFlags
-	LPVOID,      # lpEnvironment
-	LPCWSTR,     # lpCurrentDirectory
-	POINTER(STARTUPINFOW),    # lpStartupInfo
-	POINTER(PROCESS_INFORMATION),    # lpProcessInformation
+	HANDLE,  # hToken
+	LPCWSTR,  # lpApplicationName
+	LPWSTR,  # lpCommandLine
+	POINTER(SECURITY_ATTRIBUTES),  # lpProcessAttributes
+	POINTER(SECURITY_ATTRIBUTES),  # lpThreadAttributes
+	BOOL,  # bInheritHandles
+	DWORD,  # dwCreationFlags
+	LPVOID,  # lpEnvironment
+	LPCWSTR,  # lpCurrentDirectory
+	POINTER(STARTUPINFOW),  # lpStartupInfo
+	POINTER(PROCESS_INFORMATION),  # lpProcessInformation
 )
 CreateProcessAsUser.restype = BOOL
 
@@ -169,10 +169,10 @@ Retrieves a specified type of information about an access token.
 	https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-gettokeninformation
 """
 GetTokenInformation.argtypes = (
-	HANDLE,      # TokenHandle
-	DWORD,       # TOKEN_INFORMATION_CLASS
-	LPVOID,      # TokenInformation
-	DWORD,       # TokenInformationLength
-	POINTER(DWORD), # ReturnLength
+	HANDLE,  # TokenHandle
+	DWORD,  # TOKEN_INFORMATION_CLASS
+	LPVOID,  # TokenInformation
+	DWORD,  # TokenInformationLength
+	POINTER(DWORD),  # ReturnLength
 )
 GetTokenInformation.restype = BOOL

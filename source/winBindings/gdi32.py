@@ -41,7 +41,7 @@ Retrieves device-specific information for the specified device.
 """
 GetDeviceCaps.restype = c_int
 GetDeviceCaps.argtypes = (
-	HDC,    # hdc: A handle to the DC
+	HDC,  # hdc: A handle to the DC
 	c_int,  # nIndex: The item to be returned
 )
 
@@ -68,7 +68,7 @@ Creates a bitmap compatible with the device that is associated with the specifie
 """
 CreateCompatibleBitmap.restype = HBITMAP
 CreateCompatibleBitmap.argtypes = (
-	HDC,    # hdc: A handle to a device context
+	HDC,  # hdc: A handle to a device context
 	c_int,  # cx: The bitmap width, in pixels
 	c_int,  # cy: The bitmap height, in pixels
 )
@@ -83,7 +83,7 @@ Selects an object into the specified device context (DC).
 """
 SelectObject.restype = HGDIOBJ
 SelectObject.argtypes = (
-	HDC,      # hdc: A handle to the DC
+	HDC,  # hdc: A handle to the DC
 	HGDIOBJ,  # h: A handle to the object to be selected
 )
 
@@ -123,12 +123,12 @@ Copies a bitmap from a source rectangle into a destination rectangle, stretching
 """
 StretchBlt.restype = BOOL
 StretchBlt.argtypes = (
-	HDC,    # hdcDest: A handle to the destination device context
+	HDC,  # hdcDest: A handle to the destination device context
 	c_int,  # xDest: The x-coordinate, in logical units, of the upper-left corner of the destination rectangle
 	c_int,  # yDest: The y-coordinate, in logical units, of the upper-left corner of the destination rectangle
 	c_int,  # wDest: The width, in logical units, of the destination rectangle
 	c_int,  # hDest: The height, in logical units, of the destination rectangle
-	HDC,    # hdcSrc: A handle to the source device context
+	HDC,  # hdcSrc: A handle to the source device context
 	c_int,  # xSrc: The x-coordinate, in logical units, of the upper-left corner of the source rectangle
 	c_int,  # ySrc: The y-coordinate, in logical units, of the upper-left corner of the source rectangle
 	c_int,  # wSrc: The width, in logical units, of the source rectangle
@@ -178,13 +178,15 @@ Retrieves the bits of the specified compatible bitmap and copies them into a buf
 """
 GetDIBits.restype = c_int
 GetDIBits.argtypes = (
-	HDC,      # hdc: A handle to the device context
+	HDC,  # hdc: A handle to the device context
 	HBITMAP,  # hbm: A handle to the bitmap
-	UINT,     # start: The first scan line to retrieve
-	UINT,     # cLines: The number of scan lines to retrieve
-	LPVOID,   # lpvBits: A pointer to a buffer to receive the bitmap data
-	POINTER(BITMAPINFO), # lpbmi: A pointer to a BITMAPINFO structure that specifies the desired format for the DIB data
-	UINT,     # usage: The format of the bmiColors member of the BITMAPINFO structure
+	UINT,  # start: The first scan line to retrieve
+	UINT,  # cLines: The number of scan lines to retrieve
+	LPVOID,  # lpvBits: A pointer to a buffer to receive the bitmap data
+	POINTER(
+		BITMAPINFO
+	),  # lpbmi: A pointer to a BITMAPINFO structure that specifies the desired format for the DIB data
+	UINT,  # usage: The format of the bmiColors member of the BITMAPINFO structure
 )
 
 
@@ -211,6 +213,6 @@ Adds the font resource from the specified file to the system.
 AddFontResourceEx.restype = c_int
 AddFontResourceEx.argtypes = (
 	LPCWSTR,  # name: A pointer to a null-terminated string that contains a valid font file name
-	DWORD,    # fl: The characteristics of the font to be added to the system
-	c_void_p, # res: Reserved. Must be zero
+	DWORD,  # fl: The characteristics of the font to be added to the system
+	c_void_p,  # res: Reserved. Must be zero
 )

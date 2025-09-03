@@ -6,7 +6,6 @@
 """Functions exported by urlmon.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	c_void_p,
 	c_wchar_p,
 	windll,
 	POINTER,
@@ -30,8 +29,12 @@ Creates a URL moniker from a full or partial URL string.
 """
 CreateURLMonikerEx.restype = HRESULT
 CreateURLMonikerEx.argtypes = (
-	POINTER(IMoniker),   # pMkCtx: Pointer to the IMoniker interface of the URL moniker to use as the base for relative URLs (can be NULL)
+	POINTER(
+		IMoniker
+	),  # pMkCtx: Pointer to the IMoniker interface of the URL moniker to use as the base for relative URLs (can be NULL)
 	c_wchar_p,  # szURL: String value that contains the URL to be parsed
-	POINTER(POINTER(IMoniker)),   # ppmk: Address of an IMoniker pointer variable that receives the interface pointer to the new URL moniker
-	DWORD,      # dwFlags: Flags that control the creation of the URL moniker
+	POINTER(
+		POINTER(IMoniker)
+	),  # ppmk: Address of an IMoniker pointer variable that receives the interface pointer to the new URL moniker
+	DWORD,  # dwFlags: Flags that control the creation of the URL moniker
 )

@@ -56,10 +56,10 @@ Retrieves the full path of a known folder identified by the folder's KNOWNFOLDER
 """
 SHGetKnownFolderPath.restype = HRESULT
 SHGetKnownFolderPath.argtypes = (
-	POINTER(GUID),               # rfid: Reference to the KNOWNFOLDERID that identifies the folder
-	c_uint,                 # dwFlags: Flags that specify special retrieval options
-	HANDLE,                 # hToken: Access token that represents a particular user (can be NULL)
-	POINTER(c_wchar_p),     # ppszPath: Address of a pointer to a null-terminated Unicode string
+	POINTER(GUID),  # rfid: Reference to the KNOWNFOLDERID that identifies the folder
+	c_uint,  # dwFlags: Flags that specify special retrieval options
+	HANDLE,  # hToken: Access token that represents a particular user (can be NULL)
+	POINTER(c_wchar_p),  # ppszPath: Address of a pointer to a null-terminated Unicode string
 )
 
 ShellExecute = dll.ShellExecuteW
@@ -71,12 +71,12 @@ Performs an operation on a specified file.
 """
 ShellExecute.restype = c_void_p  # Returns HINSTANCE (handle)
 ShellExecute.argtypes = (
-	HWND,       # hwnd: Handle to the parent window
-	LPCWSTR,    # lpOperation: String that specifies the operation to perform (can be NULL)
-	LPCWSTR,    # lpFile: String that specifies the file or object on which to execute
-	LPCWSTR,    # lpParameters: String that specifies the parameters to be passed (can be NULL)
-	LPCWSTR,    # lpDirectory: String that specifies the default directory (can be NULL)
-	INT,        # nShowCmd: Flags that specify how an application is to be displayed
+	HWND,  # hwnd: Handle to the parent window
+	LPCWSTR,  # lpOperation: String that specifies the operation to perform (can be NULL)
+	LPCWSTR,  # lpFile: String that specifies the file or object on which to execute
+	LPCWSTR,  # lpParameters: String that specifies the parameters to be passed (can be NULL)
+	LPCWSTR,  # lpDirectory: String that specifies the default directory (can be NULL)
+	INT,  # nShowCmd: Flags that specify how an application is to be displayed
 )
 
 
@@ -102,6 +102,7 @@ class SHELLEXECUTEINFOW(Structure):  # noqa: F405
 	def __init__(self, **kwargs):
 		super(SHELLEXECUTEINFOW, self).__init__(cbSize=sizeof(self), **kwargs)  # noqa: F405
 
+
 SHELLEXECUTEINFO = SHELLEXECUTEINFOW
 
 ShellExecuteEx = dll.ShellExecuteExW
@@ -113,7 +114,7 @@ Performs an operation on a specified file with extended options.
 """
 ShellExecuteEx.restype = BOOL
 ShellExecuteEx.argtypes = (
-	POINTER(SHELLEXECUTEINFOW),   # pExecInfo: Pointer to a SHELLEXECUTEINFO structure
+	POINTER(SHELLEXECUTEINFOW),  # pExecInfo: Pointer to a SHELLEXECUTEINFO structure
 )
 
 SHChangeNotify = dll.SHChangeNotify
@@ -125,8 +126,8 @@ Notifies the system of an event that an application has performed.
 """
 SHChangeNotify.restype = None
 SHChangeNotify.argtypes = (
-	c_long,     # wEventId: Describes the event that has occurred
-	c_uint,     # uFlags: Flags that indicate the meaning of the dwItem1 and dwItem2 parameters
-	c_void_p,   # dwItem1: Optional first item identifier
-	c_void_p,   # dwItem2: Optional second item identifier
+	c_long,  # wEventId: Describes the event that has occurred
+	c_uint,  # uFlags: Flags that indicate the meaning of the dwItem1 and dwItem2 parameters
+	c_void_p,  # dwItem1: Optional first item identifier
+	c_void_p,  # dwItem2: Optional second item identifier
 )

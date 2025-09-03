@@ -30,8 +30,8 @@ Determines whether the operating system can retrieve version information for a s
 """
 GetFileVersionInfoSize.restype = DWORD
 GetFileVersionInfoSize.argtypes = (
-	c_wchar_p,      # lptstrFilename: Pointer to a null-terminated string that specifies the name of the file
-	POINTER(DWORD), # lpdwHandle: Pointer to a variable that the function sets to zero (can be NULL)
+	c_wchar_p,  # lptstrFilename: Pointer to a null-terminated string that specifies the name of the file
+	POINTER(DWORD),  # lpdwHandle: Pointer to a variable that the function sets to zero (can be NULL)
 )
 
 GetFileVersionInfo = dll.GetFileVersionInfoW
@@ -43,9 +43,9 @@ Retrieves version information for the specified file.
 """
 GetFileVersionInfo.restype = BOOL
 GetFileVersionInfo.argtypes = (
-	c_wchar_p, # lptstrFilename: Pointer to a null-terminated string that specifies the name of the file
-	DWORD,     # dwHandle: This parameter is ignored
-	DWORD,     # dwLen: Specifies the size, in bytes, of the buffer pointed to by the lpData parameter
+	c_wchar_p,  # lptstrFilename: Pointer to a null-terminated string that specifies the name of the file
+	DWORD,  # dwHandle: This parameter is ignored
+	DWORD,  # dwLen: Specifies the size, in bytes, of the buffer pointed to by the lpData parameter
 	c_void_p,  # lpData: Pointer to a buffer that receives the file-version information
 )
 
@@ -58,8 +58,12 @@ Retrieves specified version information from the specified version-information r
 """
 VerQueryValue.restype = BOOL
 VerQueryValue.argtypes = (
-	c_void_p,           # pBlock: Pointer to the buffer containing the version-information resource
-	c_wchar_p,          # lpSubBlock: Pointer to a null-terminated string that specifies the version-information value to retrieve
-	POINTER(c_void_p),  # lplpBuffer: When the function returns, points to the address of the requested version information
-	POINTER(c_uint),    # puLen: When the function returns, points to the length, in characters, of the requested version information
+	c_void_p,  # pBlock: Pointer to the buffer containing the version-information resource
+	c_wchar_p,  # lpSubBlock: Pointer to a null-terminated string that specifies the version-information value to retrieve
+	POINTER(
+		c_void_p
+	),  # lplpBuffer: When the function returns, points to the address of the requested version information
+	POINTER(
+		c_uint
+	),  # puLen: When the function returns, points to the length, in characters, of the requested version information
 )

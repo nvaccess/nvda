@@ -14,7 +14,6 @@ from ctypes import (
 )
 from contextlib import contextmanager
 from winBindings import gdiplus
-from winBindings import gdi32
 from utils import _deprecate
 
 __getattr__ = _deprecate.handleDeprecations(
@@ -47,7 +46,6 @@ user32 = windll.user32
 BI_RGB = 0
 SRCCOPY = 0x00CC0020
 DIB_RGB_COLORS = 0
-
 
 
 # GDI+ dash style enumeration

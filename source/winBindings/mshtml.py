@@ -31,10 +31,10 @@ Creates a modeless HTML dialog box.
 """
 ShowHTMLDialogEx.restype = HRESULT
 ShowHTMLDialogEx.argtypes = (
-	HWND,       # hwndParent: Handle to the parent window
-	POINTER(IMoniker),   # pMk: IMoniker interface pointer for the URL
-	DWORD,      # dwDialogFlags: Dialog behavior flags
-	POINTER(VARIANT),   # pvarArgIn: VARIANT pointer for input arguments
+	HWND,  # hwndParent: Handle to the parent window
+	POINTER(IMoniker),  # pMk: IMoniker interface pointer for the URL
+	DWORD,  # dwDialogFlags: Dialog behavior flags
+	POINTER(VARIANT),  # pvarArgIn: VARIANT pointer for input arguments
 	c_wchar_p,  # pchOptions: Dialog options string
-	POINTER(VARIANT),   # pvarArgOut: VARIANT pointer for output arguments (can be NULL)
+	POINTER(VARIANT),  # pvarArgOut: VARIANT pointer for output arguments (can be NULL)
 )

@@ -16,7 +16,6 @@ from enum import (
 from typing import Callable
 import ctypes  # Use for ctypes.Union to prevent name collision with typing.Union
 from ctypes import (
-	windll,
 	c_void_p,
 	c_wchar,
 	c_int,
@@ -29,7 +28,6 @@ from ctypes.wintypes import (
 	LONG,
 	LARGE_INTEGER,
 	LPWSTR,
-	BOOL,
 )
 import winBindings.wtsapi32
 

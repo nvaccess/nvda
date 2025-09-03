@@ -30,6 +30,6 @@ SHLoadIndirectString.restype = HRESULT
 SHLoadIndirectString.argtypes = (
 	c_wchar_p,  # pszSource: The indirect string to extract
 	POINTER(c_wchar),  # pszOutBuf: Buffer to receive the extracted string
-	c_uint,     # cchOutBuf: Size of the output buffer in characters
-	c_void_p,   # ppvReserved: Reserved, must be NULL
+	c_uint,  # cchOutBuf: Size of the output buffer in characters
+	c_void_p,  # ppvReserved: Reserved, must be NULL
 )

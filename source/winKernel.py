@@ -13,11 +13,10 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
+from ctypes import byref, sizeof, Structure, windll, WinError
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID, WORD
 from typing import (
 	TYPE_CHECKING,
-	Any,
 	Optional,
 	Union,
 )

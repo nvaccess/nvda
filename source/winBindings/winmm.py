@@ -11,7 +11,6 @@ from ctypes import (
 	c_long,
 )
 from ctypes.wintypes import (
-	DWORD,
 	HANDLE,
 	UINT,
 )
@@ -43,8 +42,8 @@ Sends a message to the given waveform-audio output device.
 """
 waveOutMessage.restype = MMRESULT
 waveOutMessage.argtypes = (
-	HANDLE,     # hWaveOut: Handle to the waveform-audio output device
-	UINT,       # uMsg: Message to send
-	DWORD_PTR,   # dw1: Message parameter (DWORD_PTR)
-	DWORD_PTR,   # dw2: Message parameter (DWORD_PTR)
+	HANDLE,  # hWaveOut: Handle to the waveform-audio output device
+	UINT,  # uMsg: Message to send
+	DWORD_PTR,  # dw1: Message parameter (DWORD_PTR)
+	DWORD_PTR,  # dw2: Message parameter (DWORD_PTR)
 )
