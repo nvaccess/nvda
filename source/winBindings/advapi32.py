@@ -55,6 +55,9 @@ RegDeleteTreeW = dll.RegDeleteTreeW
 """
 Deletes a subkey and all its descendants.
 https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletetreew
+
+This function can be replaced with winreg.DeleteTree in python 3.14.
+https://github.com/python/cpython/pull/138388
 """
 RegDeleteTreeW.argtypes = (
 	HKEY,  # hKey
