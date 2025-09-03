@@ -2,6 +2,9 @@
 
 ## 2026.1
 
+This release introduces a new local model-based image description feature.
+You can now use `NVDA+Windows+,` to describe images you encounter.
+
 ### Important notes
 
 * This release breaks compatibility with existing add-ons.
@@ -11,6 +14,12 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 
 ### New Features
+
+* Automated Image Descriptions:
+  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @tianzeshi-study)
+  * This is generated locally on the device - no information is sent to the internet.
+  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+  * Another new unassigned command is available for toggle image captioning. (#18475)
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
@@ -38,6 +47,9 @@ Add-ons will need to be re-tested and have their manifest updated.
   * The changelog should document changes between previous and latest add-on versions.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
+  * Updated sphinx to 8.1.3. (#18475)
+  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
+  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
 
 #### API Breaking Changes
 
