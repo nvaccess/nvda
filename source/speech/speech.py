@@ -3018,8 +3018,7 @@ def getFormatFieldSpeech(  # noqa: C901
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
 				texts.append(_("out of spelling error"))
-			if texts:
-				textList.extend(texts)
+			textList.extend(texts)
 		invalidGrammar = attrs.get("invalid-grammar")
 		oldInvalidGrammar = attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar != oldInvalidGrammar:
