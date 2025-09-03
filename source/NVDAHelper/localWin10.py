@@ -1,10 +1,10 @@
-from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, cdll, wstring_at
+from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, windll, wstring_at
 from comtypes import BSTR
 from winBindings.oleaut32 import SysFreeString
 
 import NVDAState
 
-dll = cdll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalWin10Dll)
+dll = windll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalWin10Dll)
 
 
 def _bstrReturnErrcheck(address: int, *_) -> str:
