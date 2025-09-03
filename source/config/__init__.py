@@ -366,7 +366,10 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
-		log.debugWarning("Failed to set start on logon screen's config.", exc_info=True)
+		log.debugWarning(
+			"Failed to set start on logon screen's config, retrying elevated.",
+			exc_info=True,
+		)
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		import systemUtils
 
