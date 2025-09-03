@@ -15,6 +15,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
+* Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 
 ### Changes
 
@@ -39,6 +40,8 @@ Add-ons will need to be re-tested and have their manifest updated.
   * The changelog should document changes between previous and latest add-on versions.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
+* X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
+On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 
 #### API Breaking Changes
 
