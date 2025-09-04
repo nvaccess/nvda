@@ -1774,7 +1774,7 @@ from typing import Annotated
 from utils.ctypesUtils import dllFunc, OutParam, Pointer
 
 @dllFunc(windll.user32, restype=BOOL)
-def GetClientRect(hWnd: Annotated[int, HWND]) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
+def GetClientRect(hWnd: int | HWND) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
 	...
 ```
 Note that:
@@ -1790,5 +1790,5 @@ So the return annotation here means:
 For a function with multiple arg types, specify a type hint like:
 
 ```python
-tuple[Annotated[RECT, OutParam(Pointer[RECT], "lpRect1", 1)], Annotated[RECT, OutParam(Pointer[RECT], "lpRect2", 2)]
+tuple[Annotated[RECT, OutParam("lpRect1", 1, Pointer[RECT])], Annotated[RECT, OutParam("lpRect2", 2, Pointer[RECT])]]
 ```

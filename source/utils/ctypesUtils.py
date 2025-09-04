@@ -246,7 +246,7 @@ class FuncSpec[**P, R]:
 				# Flavor 2
 				if not isAnnotated or not isinstance(t.__metadata__[0], OutParam):
 					raise TypeError(
-						"Expected single annotation of type 'OutParam' for return annotation {t!r}",
+						f"Expected single annotation of type 'OutParam' for return annotation {t!r}",
 					)
 				outParam: OutParam = t.__metadata__[0]
 				# We already processed input parameters above and stored them in argtypes.
@@ -342,7 +342,7 @@ def dllFunc[**P, R](
 		@dllFunc(user32, restype=ctypes.c_bool, errcheck=windowsErrCheck)
 		def GetClientRect(
 			hWnd: int | HWND,
-		) -> Annotated[RECT, OutParam(Pointer[RECT], "lpRect", 1)]: ...
+		) -> Annotated[RECT, OutParam("lpRect", 1, Pointer[RECT])]: ...
 			'''Wraps the GetClientRect function from user32.dll.
 			:param hWnd: Handle to the window.
 			:return: A RECT structure that contains the coordinates of the client area.
