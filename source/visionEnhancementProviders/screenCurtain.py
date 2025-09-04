@@ -11,7 +11,6 @@ import os
 import typing
 from ctypes import Structure, WinError, c_float, windll
 from ctypes.wintypes import BOOL
-from typing import Optional, Type
 
 import globalVars
 import nvwave
@@ -318,7 +317,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		return True
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> type | None:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
