@@ -394,7 +394,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			rightParen = string(default="")
 
 		# see ClearSpeak speak for meanings
-		[[Speech.ClearSpeak]]
+		[[speech.ClearSpeak]]
 			# SayCaps or use pitch
 			capitalLetters = string(default="Auto")
 			# AbsEnd, Cardinality, Determinant
