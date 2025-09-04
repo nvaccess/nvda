@@ -2983,7 +2983,6 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: Text for the braille group.
 		brailleGroupText = pgettext("math", "Braille")
 		brailleGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=brailleGroupText)
-		# brailleGroupBox = brailleGroupSizer.GetStaticBox()
 		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleGroupSizer)
 		sHelper.addItem(brailleGroup)
 
