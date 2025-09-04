@@ -41,7 +41,6 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 * Added the `utils.ctypesUtils` module, which implements a convenience decorator (`dllFunc`) to create ctypes function wrappers compatible with static type checkers.
-It is mainly used within the `winBindings` module that was introduced in NVDA 2025.3.
 Consult the developer guide for more information. (#18534, @LeonarddeR)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
