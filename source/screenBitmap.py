@@ -1,14 +1,14 @@
-# screenBitmap.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2017 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2011-2025 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Functionality to capture and work with bitmaps of the screen."""
 
 import ctypes
 import winGDI
 import winBindings.gdi32
+from utils import _deprecate
 
 user32 = ctypes.windll.user32
 
@@ -81,3 +81,8 @@ class ScreenBitmap(object):
 def rgbPixelBrightness(p):
 	"""Converts a RGBQUAD pixel in to  one grey-scale brightness value."""
 	return int((0.3 * p.rgbBlue) + (0.59 * p.rgbGreen) + (0.11 * p.rgbRed))
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("gdi32", "winBindings.gdi32", "dll"),
+)

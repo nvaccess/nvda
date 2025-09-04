@@ -13,7 +13,7 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import byref, sizeof, Structure, windll, WinError
+from ctypes import byref, sizeof, Structure, WinError
 from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID, WORD
 from typing import (
 	TYPE_CHECKING,
@@ -48,11 +48,11 @@ __getattr__ = _deprecate.handleDeprecations(
 		"PROCESS_INFORMATION",
 		"winBindings.advapi32",
 	),
+	_deprecate.MovedSymbol("advapi32", "winBindings.advapi32", "dll"),
 )
 
 
 kernel32 = ctypes.windll.kernel32
-advapi32 = windll.advapi32
 
 # Constants
 INFINITE = 0xFFFFFFFF
@@ -431,10 +431,6 @@ def CreatePipe(pipeAttributes, size):
 	):
 		raise ctypes.WinError()
 	return read.value, write.value
-
-
-STARTUPINFO = STARTUPINFOW = winBindings.advapi32.STARTUPINFOW
-PROCESS_INFORMATION = winBindings.advapi32.PROCESS_INFORMATION
 
 
 def CreateProcessAsUser(

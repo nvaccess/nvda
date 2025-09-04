@@ -8,6 +8,7 @@ from logHandler import log
 import os
 
 import winBindings.gdi32
+from utils import _deprecate
 
 
 """
@@ -62,3 +63,8 @@ def importFonts():
 
 	log.debug("Loading fonts.")
 	_imported = addFonts(fontsDir)
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("gdi32", "winBindings.gdi32", "dll"),
+)

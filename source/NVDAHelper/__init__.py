@@ -768,13 +768,13 @@ class _RemoteLoader:
 		with open("nul", "wb") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
-		si = winKernel.STARTUPINFO(
+		si = winBindings.advapi32.STARTUPINFO(
 			dwFlags=winKernel.STARTF_USESTDHANDLES,
 			hSTDInput=pipeRead,
 			hSTDOutput=nulHandle,
 			hSTDError=nulHandle,
 		)
-		pi = winKernel.PROCESS_INFORMATION()
+		pi = winBindings.advapi32.PROCESS_INFORMATION()
 		# Even if we have uiAccess privileges, they will not be inherited by default.
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
