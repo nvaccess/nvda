@@ -9,6 +9,7 @@ import api
 import appModuleHandler
 import controlTypes
 import re
+import unicodedata
 from collections import deque
 from logHandler import log
 from NVDAObjects.behaviors import EditableTextBase
@@ -65,19 +66,32 @@ class AppModule(appModuleHandler.AppModule):
 		Detect two integers separated by something that is NOT a dot,
 		to avoid version-like strings.
 		"""
-		it = DIGIT_EXPR.finditer(text)
-		first = next(it, None)
-		if first is None:
+		if not text:
 			return False
-		second = next(it, None)
-		if second is None:
+		s = text.strip()
+		if not s or s[0].isdigit():
 			return False
+		matches = list(DIGIT_EXPR.finditer(text))
+		# Two numbers (line, column) or three (line, column, selection).
+		if len(matches) not in (2, 3):
+			return False
+		first, second = matches[0], matches[1]
 		between = text[first.end() : second.start()]
+		if not between.strip():
+			return False
+		if any(ch.isdigit() for ch in between):
+			return False
 		if "." in between:
 			return False
-		if not between.strip():
-			# Only whitespace or an empty string found,
-			# not the line/column number
+		letters_only = "".join(ch for ch in between if ch.isalpha())
+		# Very long words (like "Warnings") reduce likelihood of line/column.
+		if letters_only and len(letters_only) > 7:
+			return False
+		# Require at least one letter or (Unicode) punctuation
+		# (excluding dot) to signal a label / delimiter.
+		has_letter = any(ch.isalpha() for ch in between)
+		has_punctuation = any(unicodedata.category(ch).startswith("P") and ch != "." for ch in between)
+		if not (has_letter or has_punctuation):
 			return False
 		return True
 
@@ -109,7 +123,10 @@ class AppModule(appModuleHandler.AppModule):
 		if not parts:
 			raise NotImplementedError
 
-		pos_idx = next((i for i, e in enumerate(parts) if self._looks_like_line_col(e)), None)
+		pos_idx = next(
+			(i for i, e in enumerate(parts) if self._looks_like_line_col(e)),
+			None,
+		)
 		if pos_idx is not None and pos_idx > 0:
 			# Move line and column to the start for speech-friendliness
 			parts.insert(0, parts.pop(pos_idx))
