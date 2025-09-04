@@ -13,7 +13,7 @@ from utils import _deprecate
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("SHELLEXECUTEINFO", "winBindings.shell32"),
 	_deprecate.MovedSymbol("SHELLEXECUTEINFOW", "winBindings.shell32"),
-	_deprecate.movedSymbol("shell32", "winBindings.shell32", "dll"),
+	_deprecate.MovedSymbol("shell32", "winBindings.shell32", "dll"),
 )
 
 SEE_MASK_NOCLOSEPROCESS = 0x00000040
