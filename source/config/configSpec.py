@@ -494,7 +494,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			greekVariant = string(default="⠨")
 
 		[[braille.vietnam]]
-			    # drop digits down a row in simple numeric fractions
+			# drop digits down a row in simple numeric fractions
 			useDropNumbers = boolean(default=false)
 			# The guideline is being revised -- current guidance is to follow UEB for alternative scripts
 			# UEB Guide to Technical Material (https://iceb.org/Guidelines_for_Technical_Material_2008-10.pdf)
