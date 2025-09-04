@@ -1,6 +1,8 @@
+# Building Developer Documentation for NVDA
+
 Before building developer documentation, [create your developer environment](./createDevEnvironment.md).
 
-### Building developer documentation
+## Building developer documentation
 
 To generate the NVDA developer guide, type:
 
@@ -18,7 +20,7 @@ scons devDocs
 
 The documentation will be placed in the `NVDA` folder in the output directory.
 
-### Building nvdaHelper developer documentation
+## Building nvdaHelper developer documentation
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 

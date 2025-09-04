@@ -67,12 +67,13 @@ def COMProxyDllBuilder(env, target, source, proxyClsid):
 
 env.AddMethod(COMProxyDllBuilder, "COMProxyDll")
 
-# We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 2):
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
+# We only support compiling with MSVC 14.3 (2022) or newer
+if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 3):
+	raise RuntimeError("Visual C++ 14.3 (Visual Studio 2022) or newer not found")
 
 PYTHON_PLATFORM = sysconfig.get_platform()
 TARGET_ARCH = env["TARGET_ARCH"]
+isArm64EC = env.get("isArm64EC", False)
 
 
 isNVDACoreArch = (
@@ -80,8 +81,11 @@ isNVDACoreArch = (
 	or (PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "x86_64")
 	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
 )
-
-
+isNVDAHelperLocalArch = isNVDACoreArch or (
+	PYTHON_PLATFORM == "win-amd64"
+	and TARGET_ARCH == "arm64"
+	and isArm64EC
+)
 debug = env["nvdaHelperDebugFlags"]
 release = env["release"]
 signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
@@ -123,7 +127,7 @@ env.Append(
 if TARGET_ARCH == "x86_64":
 	env.Append(MIDLFLAGS="/x64")
 elif TARGET_ARCH == "arm64":
-	env.Append(MIDLFLAGS="/arm64")
+	env.Append(MIDLFLAGS="/x64" if isArm64EC else "/arm64")
 else:
 	env.Append(MIDLFLAGS="/win32")
 
@@ -158,6 +162,11 @@ env.Append(
 		# included by the files that you include.
 	]
 )
+
+if isArm64EC:
+	env.Append(CCFLAGS="/arm64EC")
+	env.Append(LINKFLAGS="/machine:arm64ec")
+	env.Append(ARFLAGS="/machine:arm64ec")
 
 if "debugCRT" in debug:
 	env.Append(CCFLAGS=["/MTd"])
@@ -224,7 +233,7 @@ cppjiebaLib = env.SConscript("cppjieba/sconscript")
 Export("cppjiebaLib")
 env.Install(libInstallDir, cppjiebaLib)
 
-if isNVDACoreArch:
+if isNVDAHelperLocalArch:
 	localLib = env.SConscript("local/sconscript")
 	Export("localLib")
 	if signExec:
@@ -253,11 +262,14 @@ if signExec:
 	env.AddPostAction(remoteLib[0], [signExec])
 env.Install(libInstallDir, remoteLib)
 
-remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
-if signExec:
-	env.AddPostAction(remoteLoaderProgram, [signExec])
-env.Install(libInstallDir, remoteLoaderProgram)
+if not isNVDAHelperLocalArch:
+	remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
+	if signExec:
+		env.AddPostAction(remoteLoaderProgram, [signExec])
+	env.Install(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
+	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
+	thirdPartyEnv.SConscript("uwp/sconscript")
