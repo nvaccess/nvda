@@ -13,8 +13,25 @@ from ctypes import (
 	byref,
 )
 from contextlib import contextmanager
-import winBindings.gdiplus
+
 from utils import _deprecate
+from winBindings.gdiplus import (
+	ULONG_PTR,
+	GdipCreateFromHDC,
+	GdipCreatePen1,
+	GdipDeleteGraphics,
+	GdipDeletePen,
+	GdipDrawRectangle,
+	GdiplusShutdown,
+	GdiplusStartup,
+	GdipSetPenDashStyle,
+	GpGraphics,
+	GpPen,
+	# Aliased as these used to be part of this module's public API
+	# and without the alias we can't issue a deprecation warning.
+	GdiplusStartupInput as _GdiplusStartupInput,
+	GdiplusStartupOutput as _GdiplusStartupOutput,
+)
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("gdiplus", "winBindings.gdiplus", "dll"),
@@ -68,26 +85,26 @@ def gdiPlusInitialize():
 	global gdipToken
 	if gdipToken:
 		return  # Already initialized
-	gdipToken = winBindings.gdiplus.ULONG_PTR()
-	startupInput = winBindings.gdiplus.GdiplusStartupInput()
+	gdipToken = ULONG_PTR()
+	startupInput = _GdiplusStartupInput()
 	startupInput.GdiplusVersion = 1
-	startupOutput = winBindings.gdiplus.GdiplusStartupOutput()
-	winBindings.gdiplus.GdiplusStartup(byref(gdipToken), byref(startupInput), byref(startupOutput))
+	startupOutput = _GdiplusStartupOutput()
+	GdiplusStartup(byref(gdipToken), byref(startupInput), byref(startupOutput))
 
 
 def gdiPlusTerminate():
 	global gdipToken
 	if not gdipToken:
 		return  # Not initialized
-	winBindings.gdiplus.GdiplusShutdown(gdipToken)
+	GdiplusShutdown(gdipToken)
 	gdipToken = None
 
 
 @contextmanager
 def GDIPlusGraphicsContext(hdc):
 	"""Creates a GDI+ graphics context from a device context handle."""
-	gpGraphics = POINTER(winBindings.gdiplus.GpGraphics)()
-	gpStatus = winBindings.gdiplus.GdipCreateFromHDC(hdc, byref(gpGraphics))
+	gpGraphics = POINTER(GpGraphics)()
+	gpStatus = GdipCreateFromHDC(hdc, byref(gpGraphics))
 	if gpStatus:
 		# See https://docs.microsoft.com/en-us/windows/desktop/api/Gdiplustypes/ne-gdiplustypes-status
 		# for a list of applicable status codes
@@ -95,7 +112,7 @@ def GDIPlusGraphicsContext(hdc):
 	try:
 		yield gpGraphics
 	finally:
-		winBindings.gdiplus.GdipDeleteGraphics(gpGraphics)
+		GdipDeleteGraphics(gpGraphics)
 
 
 @contextmanager
@@ -110,21 +127,21 @@ def GDIPlusPen(color, width, dashStyle=DashStyleSolid):
 		Defaults to C{DashStyleSolid}, which draws solid lines.
 	@type dashStyle: int
 	"""
-	gpPen = POINTER(winBindings.gdiplus.GpPen)()
-	gpStatus = winBindings.gdiplus.GdipCreatePen1(color, width, UnitPixel, byref(gpPen))
+	gpPen = POINTER(GpPen)()
+	gpStatus = GdipCreatePen1(color, width, UnitPixel, byref(gpPen))
 	if gpStatus:
 		raise RuntimeError("GdipCreatePen1 failed with status code %d" % gpStatus)
-	gpStatus = winBindings.gdiplus.GdipSetPenDashStyle(gpPen, dashStyle)
+	gpStatus = GdipSetPenDashStyle(gpPen, dashStyle)
 	if gpStatus:
 		raise RuntimeError("GdipSetPenDashStyle failed with status code %d" % gpStatus)
 	try:
 		yield gpPen
 	finally:
-		winBindings.gdiplus.GdipDeletePen(gpPen)
+		GdipDeletePen(gpPen)
 
 
 def gdiPlusDrawRectangle(gpGraphics, gpPen, left, top, width, height):
-	gpStatus = winBindings.gdiplus.GdipDrawRectangle(
+	gpStatus = GdipDrawRectangle(
 		gpGraphics,
 		gpPen,
 		float(left),
