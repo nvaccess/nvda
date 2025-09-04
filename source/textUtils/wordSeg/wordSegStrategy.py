@@ -58,9 +58,70 @@ class WordSegmentationStrategy(ABC):
 		self.encoding = encoding
 
 	@abstractmethod
-	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:  # TODO: optimize
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:  # TODO: optimize
 		"""Return (start inclusive, end exclusive) or None. Offsets are str offsets relative to self.text."""
 		pass
+
+	@abstractmethod
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		"""Segmented result with separators."""
+		pass
+
+
+class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
+	"""Windows Uniscribe-based segmentation (calls NVDAHelper.localLib.calculateWordOffsets)."""
+
+	# Copied from OffsetTextInfos. TODO: optimize
+	def _calculateUniscribeOffsets(
+		self,
+		lineText: str,
+		relOffset: int,
+	) -> tuple[int, int] | None:
+		"""
+		Calculates the bounds of a unit at an offset within a given string of text
+		using the Windows uniscribe  library, also used in Notepad, for example.
+		Units supported are character and word.
+		@param lineText: the text string to analyze
+		@param relOffset: the character offset within the text string at which to calculate the bounds.
+		"""
+
+		import NVDAHelper
+
+		helperFunc = NVDAHelper.localLib.calculateWordOffsets
+
+		relStart = ctypes.c_int()
+		relEnd = ctypes.c_int()
+		# uniscribe does some strange things
+		# when you give it a string  with not more than two alphanumeric chars in a row.
+		# Inject two alphanumeric characters at the end to fix this
+		uniscribeLineText = lineText + "xx"
+		# We can't rely on len(lineText) to calculate the length of the line.
+		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+		lineLength = offsetConverter.encodedStringLength
+		if self.encoding != textUtils.WCHAR_ENCODING:
+			# We need to convert the str based line offsets to wide string offsets.
+			relOffset = offsetConverter.strToEncodedOffsets(relOffset, relOffset)[0]
+		uniscribeLineLength = lineLength + 2
+		if helperFunc(
+			uniscribeLineText,
+			uniscribeLineLength,
+			relOffset,
+			ctypes.byref(relStart),
+			ctypes.byref(relEnd),
+		):
+			relStart = relStart.value
+			relEnd = min(lineLength, relEnd.value)
+			if self.encoding != textUtils.WCHAR_ENCODING:
+				# We need to convert the uniscribe based offsets to str offsets.
+				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
+			return (relStart, relEnd)
+		return None
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		return self._calculateUniscribeOffsets(self.text, offset)
+
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		return self.text
 
 
 class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
@@ -140,79 +201,57 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			return []
 
 	@lru_cache(maxsize=128)
-	def _callCPPJieba(self, text: str) -> list[tuple[int, int]] | None:
-		data = text.encode("utf-8")
+	def _callCPPJieba(self) -> list[int] | None:
+		data = self.text.encode("utf-8")
 		charPtr = POINTER(c_int)()
 		outLen = c_int()
 		result = self._lib.segmentOffsets(data, byref(charPtr), byref(outLen))
 		if result != 0 or not charPtr:
-			return [], []
+			return
 		n = outLen.value
-		char_offsets = [charPtr[i] for i in range(n)]
+		charOffsets = [charPtr[i] for i in range(n)]
 		self._lib.freeOffsets(charPtr)
-		return char_offsets
+		return charOffsets
 
-	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:
-		wordEnds = self._callCPPJieba(text)
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		"""Segments the text using the word end indices."""
+		if len(self.wordEndIndex) <= 1:
+			return self.text
+		result = ""
+		for sepIndex in range(len(self.wordEndIndex) - 1):
+			if sepIndex == 0:
+				preIndex = 0
+			else:
+				preIndex = self.wordEndIndex[sepIndex - 1]
+			curIndex = self.wordEndIndex[sepIndex]
+			postIndex = self.wordEndIndex[sepIndex + 1]
+			result += self.text[preIndex:curIndex]
+			if (
+				(sepIndex < len(self.wordEndIndex) - 1)
+				and not (result.endswith(sep))
+				and not (self.text[curIndex:postIndex].startswith(sep))
+			):
+				"""The separator needs adding."""
+				result += sep
+				if newSepIndex is not None:
+					"""Track the index of the separators."""
+					newSepIndex.append(len(result) - len(sep))
+		else:
+			result += self.text[curIndex:postIndex]
+		return result
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		wordEnds = self._callCPPJieba()
 		if wordEnds is None or not wordEnds:
-			return None
+			return
 		index = next((i for i, end in enumerate(wordEnds) if end > offset))
 		if index == 0:
 			start = 0
 		else:
 			start = wordEnds[index - 1]
-		end = wordEnds[index] if index < len(wordEnds) else len(text)
+		end = wordEnds[index] if index < len(wordEnds) else len(self.text)
 		return (start, end)
 
-
-class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
-	"""Windows Uniscribe-based segmentation (calls NVDAHelper.localLib.calculateWordOffsets)."""
-
-	# Copied from OffsetTextInfos. TODO: optimize
-	def _calculateUniscribeOffsets(
-		self,
-		lineText: str,
-		relOffset: int,
-	) -> tuple[int, int] | None:
-		"""
-		Calculates the bounds of a unit at an offset within a given string of text
-		using the Windows uniscribe  library, also used in Notepad, for example.
-		Units supported are character and word.
-		@param lineText: the text string to analyze
-		@param relOffset: the character offset within the text string at which to calculate the bounds.
-		"""
-
-		import NVDAHelper
-
-		helperFunc = NVDAHelper.localLib.calculateWordOffsets
-
-		relStart = ctypes.c_int()
-		relEnd = ctypes.c_int()
-		# uniscribe does some strange things
-		# when you give it a string  with not more than two alphanumeric chars in a row.
-		# Inject two alphanumeric characters at the end to fix this
-		uniscribeLineText = lineText + "xx"
-		# We can't rely on len(lineText) to calculate the length of the line.
-		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-		lineLength = offsetConverter.encodedStringLength
-		if self.encoding != textUtils.WCHAR_ENCODING:
-			# We need to convert the str based line offsets to wide string offsets.
-			relOffset = offsetConverter.strToEncodedOffsets(relOffset, relOffset)[0]
-		uniscribeLineLength = lineLength + 2
-		if helperFunc(
-			uniscribeLineText,
-			uniscribeLineLength,
-			relOffset,
-			ctypes.byref(relStart),
-			ctypes.byref(relEnd),
-		):
-			relStart = relStart.value
-			relEnd = min(lineLength, relEnd.value)
-			if self.encoding != textUtils.WCHAR_ENCODING:
-				# We need to convert the uniscribe based offsets to str offsets.
-				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
-			return (relStart, relEnd)
-		return None
-
-	def getSegmentForOffset(self, text: str, offset: int) -> tuple[int, int] | None:
-		return self._calculateUniscribeOffsets(text, offset)
+	def __init__(self, text, encoding=None):
+		super().__init__(text, encoding)
+		self.wordEndIndex = self._callCPPJieba()

@@ -555,7 +555,7 @@ class WordSegmenter:
 	# Japanese kana (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
 	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
 
-	def __init__(self, text: str, encoding: str | None, wordSegFlag: WordSegFlag):
+	def __init__(self, text: str, encoding: str = "UTF-8", wordSegFlag: WordSegFlag = WordSegFlag.AUTO):
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordSegFlag: WordSegFlag = wordSegFlag
@@ -582,7 +582,7 @@ class WordSegmenter:
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""
 		try:
-			return self.strategy.getSegmentForOffset(self.text, offset)
+			return self.strategy.getSegmentForOffset(offset)
 		except Exception as e:
 			log.debugWarning(
 				"WordSegmenter.getSegmentForOffset failed: %s  text: '%s' offset: %s  segmentation strategy: %s",
@@ -592,3 +592,6 @@ class WordSegmenter:
 				self.strategy,
 			)
 			return None
+
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		return self.strategy.segmentedText(sep, newSepIndex)
