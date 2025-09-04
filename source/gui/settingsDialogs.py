@@ -3002,13 +3002,16 @@ class MathSettingsPanel(SettingsPanel):
 		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
 		brailleHighlightsOptions: list[str] = [
 			# Translators: options for using dots 7 and 8:
-			# Translators: "off" -- don't highlight
+			# Translators: Math option for using dots 7 and 8: don't highlight
 			pgettext("math", "Off"),
-			# Translators: "First character" -- only the first character of the current navigation node uses dots 7 & 8
+			# Translators: Math option for using dots 7 and 8:
+			# only the first character of the current navigation node uses dots 7 & 8
 			pgettext("math", "First character"),
-			# Translators: "Endpoints" -- only the first and last character of the current navigation node uses dots 7 & 8
+			# Translators: Math option for using dots 7 and 8:
+			# only the first and last character of the current navigation node uses dots 7 & 8
 			pgettext("math", "Endpoints"),
-			# Translators: "All" -- all the characters for the current navigation node use dots 7 & 8
+			# Translators: Math option for using dots 7 and 8:
+			# all the characters for the current navigation node use dots 7 & 8
 			pgettext("math", "All"),
 		]
 		self.brailleHighlightsList = navGroup.addLabeledControl(
