@@ -9,13 +9,15 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 
 import os
 import typing
-from utils.ctypesUtils import OutParam, dllFunc, Pointer
-from vision import providerBase
-from ctypes import Structure, windll, c_float, WinError
+from ctypes import Structure, WinError, c_float, windll
 from ctypes.wintypes import BOOL
-from autoSettingsUtils.driverSetting import BooleanDriverSetting
-from autoSettingsUtils.autoSettings import SupportedSettingType
+from typing import Optional, Type
+
+import globalVars
+import nvwave
 import wx
+from autoSettingsUtils.autoSettings import SupportedSettingType
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from gui.nvdaControls import MessageDialog
 from gui.settingsDialogs import (
 	AutoSettingsMixin,
@@ -23,11 +25,10 @@ from gui.settingsDialogs import (
 	VisionProviderStateControl,
 )
 from logHandler import log
-from typing import Optional, Type
-import nvwave
-import globalVars
-import NVDAHelper
+from utils.ctypesUtils import OutParam, Pointer, dllFunc
+from vision import providerBase
 
+import NVDAHelper
 
 isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
 isScreenFullyBlack.argtypes = ()
@@ -267,9 +268,9 @@ class ScreenCurtainGuiPanel(
 		@returns: C{True} when OCR is active, C{False} otherwise.
 		"""
 		import api
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 		import speech
 		import ui
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
