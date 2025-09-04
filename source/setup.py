@@ -260,11 +260,17 @@ freeze(
 		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
 		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
 		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
+		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),
 		("louis/tables", glob("louis/tables/*")),
-		("cppjieba/dicts", glob("cppjieba/dicts/*")),
+		(
+			"cppjieba/dicts",
+			glob("cppjieba/dicts/jieba.dict.utf8")
+			+ glob("cppjieba/dicts/user.dict.utf8")
+			+ glob("cppjieba/dicts/hmm_model.utf8"),
+		),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),

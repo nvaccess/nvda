@@ -48,10 +48,10 @@ if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDi
 		[
 			f
 			for f in env.Glob(f"{cppjiebaDictPath}/*")
-			if f.name
-			not in (
-				"README.md",
-				"pos_dict",
+			if f.name in (
+				"jieba.dict.utf8",
+				"user.dict.utf8",
+				"hmm_model.utf8",
 			)
 			and not f.name.endswith(".in")
 		],
