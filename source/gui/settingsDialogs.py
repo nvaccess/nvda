@@ -2963,11 +2963,11 @@ class MathSettingsPanel(SettingsPanel):
 		navCopyAsOptions: list[str] = [
 			# Translators: options for Copy expression to clipboard as -- "MathML"
 			pgettext("math", "MathML"),
-			# Translators: options for Copy expression to clipboard as -- "LaTeX"
+			# Translators: options for Copy math to clipboard as -- "LaTeX"
 			pgettext("math", "LaTeX"),
-			# Translators: options for Copy expression to clipboard as -- "ASCIIMath"
+			# Translators: options for Copy math to clipboard as -- "ASCIIMath"
 			pgettext("math", "ASCIIMath"),
-			# Translators: options for Copy expression to clipboard as -- speech text
+			# Translators: options for Copy math to clipboard as -- speech text
 			pgettext("math", "Speech"),
 		]
 		self.navCopyAsList = navGroup.addLabeledControl(
