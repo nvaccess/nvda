@@ -1224,11 +1224,11 @@ To activate the button or the element containing the formula, press ctrl+enter.
 
 The documentation describes many useful ways to navigate math. For those who just want to get started:
 
-- Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
-- If inside of a table, Ctrl+Arrow will move by cell
-- Home / End moves to the start/end of the expression
-- Space reads your current position
-- Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
+* If inside of a table, Ctrl+Arrow will move by cell
+* Home / End moves to the start/end of the expression
+* Space reads your current position
+* Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
 
@@ -3154,8 +3154,8 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 A style of speech or coordinated philosophy about how to speak an expression.
 
-- ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT. See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
-- SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b"); these are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT. See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+* SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b"); these are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3220,9 +3220,9 @@ A start and end beep occur before and after reading an expression.
 
 Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 
-- SpellOut: "H 2 0" (verbosity controls whether "sub"/"super" is spoken)
-- AsCompound: "Water"
-- Off: "H sub 2 O"
+* SpellOut: "H 2 0" (verbosity controls whether "sub"/"super" is spoken)
+* AsCompound: "Water"
+* Off: "H sub 2 O"
 
 | . {.hideHeaderRow} | . |
 |---|---|
