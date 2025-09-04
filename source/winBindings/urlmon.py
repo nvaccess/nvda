@@ -6,12 +6,12 @@
 """Functions exported by urlmon.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	c_wchar_p,
 	windll,
 	POINTER,
 )
 from ctypes.wintypes import (
 	DWORD,
+	LPCWSTR,
 )
 from comtypes import HRESULT
 from objidl import IMoniker
@@ -32,7 +32,7 @@ CreateURLMonikerEx.argtypes = (
 	POINTER(
 		IMoniker,
 	),  # pMkCtx: Pointer to the IMoniker interface of the URL moniker to use as the base for relative URLs (can be NULL)
-	c_wchar_p,  # szURL: String value that contains the URL to be parsed
+	LPCWSTR,  # szURL: String value that contains the URL to be parsed
 	POINTER(
 		POINTER(IMoniker),
 	),  # ppmk: Address of an IMoniker pointer variable that receives the interface pointer to the new URL moniker

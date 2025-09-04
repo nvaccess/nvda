@@ -13,7 +13,6 @@ For the latter two actions, one can perform actions prior to and/or after they t
 from enum import Enum
 import globalVars
 import winreg
-import ctypes
 import os
 import sys
 import errno

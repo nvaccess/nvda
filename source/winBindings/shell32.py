@@ -17,6 +17,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import (
+	LPCVOID,
 	ULONG,
 	BOOL,
 	HANDLE,
@@ -57,7 +58,7 @@ Retrieves the full path of a known folder identified by the folder's KNOWNFOLDER
 SHGetKnownFolderPath.restype = HRESULT
 SHGetKnownFolderPath.argtypes = (
 	POINTER(GUID),  # rfid: Reference to the KNOWNFOLDERID that identifies the folder
-	c_uint,  # dwFlags: Flags that specify special retrieval options
+	DWORD,  # dwFlags: Flags that specify special retrieval options
 	HANDLE,  # hToken: Access token that represents a particular user (can be NULL)
 	POINTER(c_wchar_p),  # ppszPath: Address of a pointer to a null-terminated Unicode string
 )
@@ -80,7 +81,7 @@ ShellExecute.argtypes = (
 )
 
 
-class SHELLEXECUTEINFOW(Structure):  # noqa: F405
+class SHELLEXECUTEINFOW(Structure):
 	"""
 	Contains information used by ShellExecuteEx.
 
@@ -89,25 +90,25 @@ class SHELLEXECUTEINFOW(Structure):  # noqa: F405
 	"""
 
 	_fields_ = (
-		("cbSize", DWORD),  # noqa: F405
-		("fMask", ULONG),  # noqa: F405
-		("hwnd", HWND),  # noqa: F405
-		("lpVerb", LPCWSTR),  # noqa: F405
-		("lpFile", LPCWSTR),  # noqa: F405
-		("lpParameters", LPCWSTR),  # noqa: F405
-		("lpDirectory", LPCWSTR),  # noqa: F405
-		("nShow", c_int),  # noqa: F405
-		("hInstApp", HINSTANCE),  # noqa: F405
-		("lpIDList", LPVOID),  # noqa: F405
-		("lpClass", LPCWSTR),  # noqa: F405
-		("hkeyClass", HKEY),  # noqa: F405
-		("dwHotKey", DWORD),  # noqa: F405
-		("hIconOrMonitor", HANDLE),  # noqa: F405
-		("hProcess", HANDLE),  # noqa: F405
+		("cbSize", DWORD),
+		("fMask", ULONG),
+		("hwnd", HWND),
+		("lpVerb", LPCWSTR),
+		("lpFile", LPCWSTR),
+		("lpParameters", LPCWSTR),
+		("lpDirectory", LPCWSTR),
+		("nShow", c_int),
+		("hInstApp", HINSTANCE),
+		("lpIDList", LPVOID),
+		("lpClass", LPCWSTR),
+		("hkeyClass", HKEY),
+		("dwHotKey", DWORD),
+		("hIconOrMonitor", HANDLE),
+		("hProcess", HANDLE),
 	)
 
 	def __init__(self, **kwargs):
-		super(SHELLEXECUTEINFOW, self).__init__(cbSize=sizeof(self), **kwargs)  # noqa: F405
+		super(SHELLEXECUTEINFOW, self).__init__(cbSize=sizeof(self), **kwargs)
 
 
 SHELLEXECUTEINFO = SHELLEXECUTEINFOW
@@ -135,6 +136,6 @@ SHChangeNotify.restype = None
 SHChangeNotify.argtypes = (
 	c_long,  # wEventId: Describes the event that has occurred
 	c_uint,  # uFlags: Flags that indicate the meaning of the dwItem1 and dwItem2 parameters
-	c_void_p,  # dwItem1: Optional first item identifier
-	c_void_p,  # dwItem2: Optional second item identifier
+	LPCVOID,  # dwItem1: Optional first item identifier
+	LPCVOID,  # dwItem2: Optional second item identifier
 )

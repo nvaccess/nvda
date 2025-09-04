@@ -6,7 +6,6 @@ from typing import List
 import globalVars
 from logHandler import log
 import os
-from ctypes import WinDLL
 
 import winBindings.gdi32
 

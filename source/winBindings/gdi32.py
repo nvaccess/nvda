@@ -154,13 +154,20 @@ class RGBQUAD(Structure):
 
 
 class BITMAPINFOHEADER(Structure):
+	"""
+	Contains information about the dimensions and color format of a device-independent bitmap (DIB).
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
+	"""
+
 	_fields_ = [
 		("biSize", DWORD),
 		("biWidth", LONG),
 		("biHeight", LONG),
 		("biPlanes", WORD),
 		("biBitCount", WORD),
-		("biCompression", WORD),
+		("biCompression", DWORD),
 		("biSizeImage", DWORD),
 		("biXPelsPerMeter", LONG),
 		("biYPelsPerMeter", LONG),

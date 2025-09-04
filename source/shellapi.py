@@ -7,11 +7,14 @@ from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
 from typing import Optional
 import winBindings.shell32
+from utils import _deprecate
 
-shell32 = windll.shell32  # noqa: F405
 
-
-SHELLEXECUTEINFO = SHELLEXECUTEINFOW = winBindings.shell32.SHELLEXECUTEINFOW  # noqa: F405
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("SHELLEXECUTEINFO", "winBindings.shell32"),
+	_deprecate.MovedSymbol("SHELLEXECUTEINFOW", "winBindings.shell32"),
+	_deprecate.movedSymbol("shell32", "winBindings.shell32", "dll"),
+)
 
 SEE_MASK_NOCLOSEPROCESS = 0x00000040
 

@@ -20,19 +20,6 @@ from typing import Optional, Union
 
 import winBindings.shell32
 import winBindings.ole32
-from utils import _deprecate
-
-
-__getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol(
-		"SHELLEXECUTEINFO",
-		"winBindings.shell32",
-	),
-	_deprecate.MovedSymbol(
-		"SHELLEXECUTEINFOW",
-		"winBindings.shell32",
-	),
-)
 
 
 class FolderId(str, Enum):

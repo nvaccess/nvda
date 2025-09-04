@@ -10,7 +10,6 @@ from ctypes import (
 	c_float,
 	c_int,
 	c_uint32,
-	c_ulong,
 	c_void_p,
 	POINTER,
 	windll,
@@ -18,12 +17,13 @@ from ctypes import (
 )
 from ctypes.wintypes import (
 	BOOL,
+	DWORD,
 	HDC,
 )
 
 
 ULONG_PTR = c_size_t
-ARGB = c_ulong
+ARGB = DWORD
 REAL = c_float
 GpUnit = c_int
 GpStatus = c_int
