@@ -2,8 +2,6 @@
 
 [TOC]
 
-
-
 ## Introduction {#introduction}
 
 This guide provides information concerning NVDA development, including translation and the development of components for NVDA.
@@ -371,6 +369,7 @@ If the class your looking for does not exist, create this section.
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
 
 ## Plugins {#plugins}
+
 ### Overview {#pluginsOverview}
 
 Plugins allow you to customize the way NVDA behaves overall or within a particular application.
@@ -1024,7 +1023,7 @@ When uploading to the Add-on Store certain requirements apply:
   * Add-on versions are expected to be unique for the addon name and channel, meaning that a beta, stable and dev version of the same add-on cannot share a version number.
   This is so there can be a unique ordering of newest to oldest.
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
-* author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <<mick@example.com>>.
+* author (string, required): The author of this add-on, preferably in the form `Full Name <email address>`; e.g. `Michael Curran <mick@example.com>`.
 * description (string): A sentence or two describing what the add-on does.
 * changelog (string): A list of changes between previous and latest add-on releases.
   * This is used to inform users about changes included in the add-on release.
@@ -1253,12 +1252,13 @@ Pressing control+l clears the output.
 
 The result of the last executed command is stored in the "_" global variable.
 This shadows the gettext function which is stored as a built-in with the same name.
-It can be unshadowed by executing "del _" and avoided altogether by executing "_ = _".
+It can be unshadowed by executing `del _` and avoided altogether by executing `_ = _`.
 
 Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ### Namespace {#PythonConsoleNamespace}
+
 #### Automatic Imports {#pythonConsoleAutoImports}
 
 For convenience, the following modules and variables are automatically imported in the console:
@@ -1649,20 +1649,16 @@ Its fields are as follows:
 | `returnCode` | `ReturnCode` or `None` | `None` | Value to return when a modal dialog is closed. If `None`, the button's ID will be used. |
 
 1. Setting `defaultFocus` only overrides the default focus:
-
-  * If no buttons have this property, the first button will be the default focus.
-  * If multiple buttons have this property, the last one will be the default focus.
+   * If no buttons have this property, the first button will be the default focus.
+   * If multiple buttons have this property, the last one will be the default focus.
 
 2. `fallbackAction` only sets whether to override the fallback action:
-
-  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
-    To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
-  * If multiple buttons have this property, the last one will be the fallback action.
-
+   * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
+     To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
+   * If multiple buttons have this property, the last one will be the fallback action.
 3. Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
-
-  * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
-  * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
+   * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
+   * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
 
 A number of pre-configured buttons are available for you to use from the `DefaultButton` enumeration, complete with pre-translated labels.
 None of these buttons will explicitly set themselves as the fallback action.
@@ -1752,6 +1748,7 @@ It can be overridden by passing an additional parameter to the decorator.
 ### Function parameters (ctypes input parameters)
 
 Parameter type hints can be of several flavors, but should at least reference a ctypes compatible type.
+
 * Flavor P1: `int | HWND`. Both `int` and `HWND` are reported as valid by type checkers.
 The first ctypes type found (`HWND`) is used in `restypes`.
 This is the preferred approach.
@@ -1760,6 +1757,7 @@ This is the preferred approach.
 ### Function return type
 
 Return type hints can also be of several flavors.
+
 * Flavor R1a: Just a ctypes type, e.g. `BOOL`.
 It will be used as `restype`.
 * Flavor R1b: `typing.Annotated[int, BOOL]`. Preferred, because ctypes will automatically convert a `BOOL` to an `int`, whereas `BOOL` will be the `restype`.
@@ -1767,6 +1765,7 @@ It will be used as `restype`.
 * Flavor 2, output parameters are more complex.
 When ctypes knows that a certain parameter is an output parameter, it will automatically create an object and passes a pointer to that object to the C function.
 Therefore, output parameters are defined in a `typing.Annotated` hint as a `OutParam` object. e.g.
+
 ```python
 from ctypes import windll
 from ctypes.wintypes import BOOL, HWND, RECT
@@ -1777,7 +1776,9 @@ from utils.ctypesUtils import dllFunc, OutParam, Pointer
 def GetClientRect(hWnd: int | HWND) -> Annotated[RECT, OutParam("lpRect", 1)]: ...
 	...
 ```
+
 Note that:
+
 * Since specifying output parameters in ctypes swallows up the restype, `restype` needs to be defined on the `dllFunc` decorator explicitly.
 Not doing so results in a `TypeError`.
 * ctypes automatically returns the contained value of a pointer object.
