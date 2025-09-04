@@ -465,7 +465,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		brailleCode = string(default="Nemeth")
 		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
 		brailleNavHighlight = string(default="EndPoints")
-		  # true/false
+		# true/false
 		useSpacesAroundAllOperators = boolean(default=false)
 
 		[[braille.nemeth]]
