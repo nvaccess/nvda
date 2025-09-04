@@ -3120,13 +3120,13 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
-#### MathCAT Settings {#MathCATSettings}
+#### Math Settings {#MathSettings}
 
-This category allows you to adjust the behaviour of MathCAT.
+This category allows you to adjust how NVDA reads mathematical content.
 
 ##### Speech Options {#MathCATSpeechOptions}
 
-###### Impairment {#MathCATImpairment}
+###### Impairment {#MathSpeechImpairment}
 
 This controls whether certain notations are disambiguated or not in speech.
 
@@ -3137,7 +3137,7 @@ This controls whether certain notations are disambiguated or not in speech.
 
 **Status:** The focus has been on Blindness, but there is some support if a different value is used. That support needs to be improved.
 
-###### Language {#MathCATLanguage}
+###### Language {#MathSpeechLanguage}
 
 This value determines the language to be used.
 If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
@@ -3150,7 +3150,7 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 **Status:** Currently only English, Spanish, Finnish, Indonesian, Swedish, Vietnamese, and Chinese are supported. Support for other languages will be added with help from volunteers.
 
-###### Speech Style {#MathCATSpeechStyle}
+###### Speech Style {MathSpeechStyle}
 
 A style of speech or coordinated philosophy about how to speak an expression.
 
@@ -3164,7 +3164,7 @@ A style of speech or coordinated philosophy about how to speak an expression.
 
 **Status:** Currently only ClearSpeak and SimpleSpeak are implemented, but MathSpeak will likely be implemented at some point.
 
-###### Verbosity {#MathCATVerbosity}
+###### Verbosity {#MathSpeechVerbosity}
 
 Controls how much "extra" speech is used.
 For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
@@ -3176,7 +3176,7 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 
 **Status:** Supported, but there will likely be improvements made over time.
 
-###### Math Rate {#MathCATMathRate}
+###### Math Rate {#MathRelativeSpeed}
 
 Changes the relative speech rate.
 The change is a percentage speed change from the standard speech engine's rate.
@@ -3189,7 +3189,7 @@ The change is a percentage speed change from the standard speech engine's rate.
 
 **Status:** This works in NVDA.
 
-###### Pause Factor {#MathCATPauseFactor}
+###### Pause Factor {#MathSpeechPauseFactor}
 
 Changes the relative amount of pausing that MathCAT adds.
 `0` turns off all pausing and `100` makes the pauses 10 times longer than normal.
@@ -3201,7 +3201,7 @@ Changes the relative amount of pausing that MathCAT adds.
 
 **Status:** This works in NVDA.
 
-###### Speech Sound {#MathCATSpeechSound}
+###### Speech Sound {#MathSpeechSound}
 
 A start and end beep occur before and after reading an expression.
 
@@ -3212,11 +3212,11 @@ A start and end beep occur before and after reading an expression.
 
 **Status:** This should work in NVDA.
 
-###### Subject Area {#MathCATSubjectArea}
+###### Subject Area {#MathSpeechSubjectArea}
 
 **Status:** This was used in MathPlayer but not yet currently implemented. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
 
-###### Chemistry {#MathCATChemistry}
+###### Chemistry {#MathSpeechForChemical}
 
 Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 
@@ -3231,9 +3231,9 @@ Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 
 **Status:** Many heuristics have been implemented to infer when some notation is chemistry or not. Inferring chemical notations is a bit tricky so MathCAT will sometimes not recognize them and may sometimes inadvertently classify something as chemistry.
 
-##### Navigation Options {#MathCATNavigationOptions}
+##### Navigation Options {#MathNavigation}
 
-###### Braille Code {#MathCATBrailleCode}
+###### Braille Code {#MathBrailleCode}
 
 The braille math code to use.
 
@@ -3244,16 +3244,17 @@ The braille math code to use.
 
 **Status:** Other braille code support will depend upon help from others.
 
-###### Braille Navigation Highlight {#MathCATBrailleNavHighlight}
+###### Braille Navigation Highlight {#MathBrailleHighlights}
 
 Highlight with dots 7 & 8 the currently selected navigation node.
+The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
 
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | Off, FirstChar, EndPoints, All |
 | Default | EndPoints |
 
-###### UEB: Start Mode {#MathCATUEBStartMode}
+###### UEB: Start Mode {MathStartMode}
 
 Assumed starting mode UEB braille.
 Grade1 assumes we are in G1 passage mode.
