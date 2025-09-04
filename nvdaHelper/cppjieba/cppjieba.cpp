@@ -13,7 +13,7 @@ JiebaSingleton& JiebaSingleton::getInstance() {
     return instance;
 }
 
-JiebaSingleton::JiebaSingleton(): cppjieba::Jieba() { } // call base ctor to load dictionaries, models, etc.
+JiebaSingleton::JiebaSingleton(): cppjieba::JiebaSegmenter() { } // call base ctor to load dictionaries, models, etc.
 
 void JiebaSingleton::getOffsets(const std::string& text, std::vector<int>& charOffsets) {
     std::lock_guard<std::mutex> lock(segMutex);
