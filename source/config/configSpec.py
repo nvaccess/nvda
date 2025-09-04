@@ -378,11 +378,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
     	pauseFactor = integer(default=100)
 		# make a sound when starting/ending math speech -- None, Beep
     	speechSound = string(default="None")
-		# FIX: still working on this
+		# NOTE: not currently working in MathCAT
     	subjectArea = string(default="General")
 		# SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
     	chemistry = string(default="SpellOut")
-		# Brief, SuperBrief
+		# Verbose, Brief, SuperBrief
 		mathSpeak = string(default="Verbose")
 
 		[[speech.speechOverrides]]
@@ -397,55 +397,55 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		[[speech.ClearSpeak]]
 			# SayCaps or use pitch
 			capitalLetters = string(default="Auto")
-			# AbsEnd, Cardinality, Determinant
+			# Valid values: AbsEnd, Cardinality, Determinant, Auto
 			absoluteValue = string(default="Auto")
-			# Ordinal, Over, FracOver, General, EndFrac, GeneralEndFrac, OverEndFrac, Per
+			# Valid values: Ordinal, Over, FracOver, General, EndFrac, GeneralEndFrac, OverEndFrac, Per, Auto
 			fractions = string(default="Auto")
-			# Ordinal, OrdinalPower, AfterPower
+			# Valid values: Ordinal, OrdinalPower, AfterPower, Auto
 			exponents = string(default="Auto")
-			# PosNegSqRoot, RootEnd, PosNegSqRootEnd
+			# Valid values: PosNegSqRoot, RootEnd, PosNegSqRootEnd, Auto
 			roots = string(default="Auto")
-			# None
+			# Valid values: Auto, None
 			functions = string(default="Auto")
-			# TrigInverse, ArcTrig
+			# Valid values: TrigInverse, ArcTrig, Auto
 			trig = string(default="Auto")
-			# LnAsNaturalLog
+			# Valid values: LnAsNaturalLog, Auto
 			log = string(default="Auto")
-			# MoreImpliedTimes , None
+			# Valid values: MoreImpliedTimes , None, Auto
 			impliedTimes = string(default="Auto")
-			# Speak, SpeakNestingLevel, Silent, CoordPoint, Interval
+			# Valid values: Speak, SpeakNestingLevel, Silent, CoordPoint, Interval, Auto
 			paren = string(default="Auto")
-			# SpeakColNum, SilentColNum, EndMatrix, Vector, EndVector, Combinatorics
+			# Valid values: SpeakColNum, SilentColNum, EndMatrix, Vector, EndVector, Combinatorics, Auto
 			matrix = string(default="Auto")
-			# Case, Constraint, Equation, Line, None, Row, Step
+			# Valid values: Case, Constraint, Equation, Line, None, Row, Step, Auto
 			multiLineLabel = string(default="Auto")
-			# None,
+			# Valid values: None, Auto
 			multiLineOverview = string(default="Auto")
-			# Long
+			# Valid values: Long, Short
 			multiLinePausesBetweenColumns = string(default="Short")
-			# woAll, SilentBracket
+			# Valid values: woAll, SilentBracket, Auto
 			sets = string(default="Auto")
-			# By, Cross
+			# Valid values: By, Cross, Auto
 			multSymbolX = string(default="Auto")
-			# Dot
+			# Valid values: Dot, Auto
 			multSymbolDot = string(default="Auto")
-			# Delta
+			# Valid values: Delta, Auto
 			triangleSymbol = string(default="Auto")
-			# AndSoOn,
+			# Valid values: AndSoOn, Auto
 			ellipses = string(default="Auto")
-			# SuchThat, Divides, Given
+			# Valid values: SuchThat, Divides, Given, Auto
 			verticalLine = string(default="Auto")
-			# Belongs, Element, Member
+			# Valid values: Belongs, Element, Member, Auto
 			setMemberSymbol = string(default="Auto")
-			# Angle, Length
+			# Valid values: Angle, Length, Auto
 			prime = string(default="Auto")
-			# ChoosePermute
+			# Valid values: ChoosePermute, Auto
 			combinationPermutation = string(default="Auto")
-			# Bar, Conjugate, Mean
+			# Valid values: Bar, Conjugate, Mean, Auto
 			bar = string(default="Auto")
 
 	[[navigation]]
-		# Enhanced, Simple, Character
+		# Valid values: Enhanced, Simple, Character
 		navMode = string(default="Enhanced")
 		# remember previous value and use it
 		resetNavMode = boolean(default=false)
