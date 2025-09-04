@@ -42,7 +42,7 @@ IsUserAnAdmin = dll.IsUserAnAdmin
 Tests whether the current user is a member of the Administrator's group.
 
 .. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/shlobj/nf-shlobj-isuseranadmin
+	https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-isuseranadmin
 """
 IsUserAnAdmin.restype = BOOL
 IsUserAnAdmin.argtypes = ()
@@ -81,6 +81,13 @@ ShellExecute.argtypes = (
 
 
 class SHELLEXECUTEINFOW(Structure):  # noqa: F405
+	"""
+	Contains information used by ShellExecuteEx.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfow
+	"""
+
 	_fields_ = (
 		("cbSize", DWORD),  # noqa: F405
 		("fMask", ULONG),  # noqa: F405

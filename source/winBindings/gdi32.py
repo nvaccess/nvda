@@ -138,6 +138,13 @@ StretchBlt.argtypes = (
 
 
 class RGBQUAD(Structure):
+	"""
+	Describes a color consisting of relative intensities of red, green, and blue.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-rgbquad
+	"""
+
 	_fields_ = [
 		("rgbBlue", c_ubyte),
 		("rgbGreen", c_ubyte),
@@ -163,6 +170,13 @@ class BITMAPINFOHEADER(Structure):
 
 
 class BITMAPINFO(Structure):
+	"""
+	Defines the dimensions and color information for a DIB.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfo
+	"""
+
 	_fields_ = [
 		("bmiHeader", BITMAPINFOHEADER),
 		("bmiColors", (RGBQUAD * 1)),

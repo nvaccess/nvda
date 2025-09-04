@@ -96,6 +96,13 @@ RegQueryValueEx.restype = LONG
 
 
 class STARTUPINFOW(Structure):
+	"""
+	Specifies the window station, desktop, standard handles, and appearance of the main window for a process at creation time.
+
+	..seealso:
+		https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfow
+	"""
+
 	_fields_ = (
 		("cb", DWORD),
 		("lpReserved", LPWSTR),
@@ -125,6 +132,13 @@ STARTUPINFO = STARTUPINFOW
 
 
 class PROCESS_INFORMATION(Structure):
+	"""
+	Contains information about a newly created process and its primary thread.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-process_information
+	"""
+
 	_fields_ = (
 		("hProcess", HANDLE),
 		("hThread", HANDLE),
@@ -134,6 +148,13 @@ class PROCESS_INFORMATION(Structure):
 
 
 class SECURITY_ATTRIBUTES(Structure):
+	"""
+	Contains the security descriptor for an object and specifies whether the handle retrieved by specifying this structure is inheritable.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa379560(v=vs.85)
+	"""
+
 	_fields_ = (
 		("nLength", DWORD),
 		("lpSecurityDescriptor", LPVOID),
@@ -145,7 +166,7 @@ CreateProcessAsUser = dll.CreateProcessAsUserW
 """
 Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
 .. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocessasuserw
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessasuserw
 """
 CreateProcessAsUser.argtypes = (
 	HANDLE,  # hToken

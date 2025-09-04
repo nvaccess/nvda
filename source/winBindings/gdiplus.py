@@ -36,6 +36,13 @@ dll = windll.gdiplus
 
 
 class GdiplusStartupInput(Structure):
+	"""
+	Holds a block of arguments that are required by the GdiplusStartup function.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/gdiplusinit/ns-gdiplusinit-gdiplusstartupinput
+	"""
+
 	_fields_ = [
 		("GdiplusVersion", c_uint32),
 		("DebugEventCallback", c_void_p),
@@ -45,6 +52,13 @@ class GdiplusStartupInput(Structure):
 
 
 class GdiplusStartupOutput(Structure):
+	"""
+	Stores a pointer to a hook function and a pointer to an unhook function as returned by GdiplusStartup.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/gdiplusinit/ns-gdiplusinit-GdiplusStartupOutput
+	"""
+
 	_fields_ = [
 		("NotificationHookProc", c_void_p),
 		("NotificationUnhookProc", c_void_p),
