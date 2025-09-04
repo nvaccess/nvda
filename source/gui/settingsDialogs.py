@@ -2841,7 +2841,7 @@ class MathSettingsPanel(SettingsPanel):
 
 		subjectAreaText = pgettext(
 			"math",
-			# Translators: label for pull down to specify a subject area (Geometry, Calculus, ...)
+			# Translators: label for combobox to specify a subject area (Geometry, Calculus, ...)
 			"Subject area to be used when it cannot be determined automatically",
 		)
 		# Translators: a generic (non-specific) math subject area
@@ -2856,7 +2856,7 @@ class MathSettingsPanel(SettingsPanel):
 			SpeechOptions.SubjectArea.value.index(config.conf["math"]["speech"]["subjectArea"]),
 		)
 
-		# Translators: label for pull down to specify how verbose/terse the speech should be
+		# Translators: label for combobox to specify how verbose/terse the speech should be
 		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
 		speechForChemicalOptions: list[str] = [
 			# Translators: values for chemistry options with example speech in parenthesis
@@ -2882,7 +2882,7 @@ class MathSettingsPanel(SettingsPanel):
 		navGroup = guiHelper.BoxSizerHelper(self, sizer=navGroupSizer)
 		sHelper.addItem(navGroup)
 
-		# Translators: label for pull down to specify one of three modes use to navigate math expressions
+		# Translators: label for combobox to specify one of three modes use to navigate math expressions
 		navModeText = pgettext("math", "Navigation mode to use when beginning to navigate an equation")
 		self.navModeOptions: list[str] = [
 			# Translators: names of different modes of navigation. "Enhanced" mode understands math structure
@@ -2902,7 +2902,7 @@ class MathSettingsPanel(SettingsPanel):
 			NavigationOptions.NavMode.value.index(config.conf["math"]["navigation"]["navMode"]),
 		)
 
-		# Translators: label for pull down to specify whether the expression is spoken or described (an overview)
+		# Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 		navSpeechText = pgettext("math", "Navigation speech to use when beginning to navigate an equation")
 		navSpeechOptions: list[str] = [
 			# Translators: "Speak" the expression after moving to it
@@ -2934,7 +2934,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MathNavAutoZoom", self.navAutoZoomCheckBox)
 		self.navAutoZoomCheckBox.SetValue(config.conf["math"]["navigation"]["autoZoomOut"])
 
-		# Translators: label for pull down to specify whether you want a terse or verbose reading of navigation commands
+		# Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
 		navSpeechAmountText = pgettext("math", "Speech amount for navigation")
 		# Translators: options for navigation verbosity.
 		navSpeechAmountOptions: list[str] = [
@@ -2958,7 +2958,7 @@ class MathSettingsPanel(SettingsPanel):
 			NavigationOptions.NavVerbosity.value.index(config.conf["math"]["navigation"]["navVerbosity"]),
 		)
 
-		# Translators: label for pull down to specify how math will be copied to the clipboard
+		# Translators: label for combobox to specify how math will be copied to the clipboard
 		navCopyAsText = pgettext("math", "Copy math as")
 		navCopyAsOptions: list[str] = [
 			# Translators: options for Copy expression to clipboard as -- "MathML"
@@ -2987,7 +2987,7 @@ class MathSettingsPanel(SettingsPanel):
 		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleGroupSizer)
 		sHelper.addItem(brailleGroup)
 
-		# Translators: label for pull down to specify which braille code to use
+		# Translators: label for combobox to specify which braille code to use
 		brailleMathCodeText = pgettext("math", "Braille math code for refreshable displays")
 		brailleMathCodeOptions: list[str] = preferences.getBrailleCodes()
 		self.brailleMathCodeList = navGroup.addLabeledControl(
@@ -2998,7 +2998,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MathBrailleCode", self.brailleMathCodeList)
 		self.brailleMathCodeList.SetStringSelection(config.conf["math"]["braille"]["brailleCode"])
 
-		# Translators: label for pull down to specify how braille dots should be modified when navigating/selecting subexprs
+		# Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
 		brailleHighlightsOptions: list[str] = [
 			# Translators: options for using dots 7 and 8:
