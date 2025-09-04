@@ -3164,7 +3164,7 @@ A style of speech or coordinated philosophy about how to speak an expression.
 
 **Status:** Currently only ClearSpeak and SimpleSpeak are implemented, but MathSpeak will likely be implemented at some point.
 
-###### Verbosity {#MathSpeechVerbosity}
+###### Speech verbosity {#MathSpeechVerbosity}
 
 Controls how much "extra" speech is used.
 For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
@@ -3176,7 +3176,7 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 
 **Status:** Supported, but there will likely be improvements made over time.
 
-###### Math Rate {#MathRelativeSpeed}
+###### Relative speech rate {#MathRelativeSpeed}
 
 Changes the relative speech rate.
 The change is a percentage speed change from the standard speech engine's rate.
@@ -3201,7 +3201,7 @@ Changes the relative amount of pausing that MathCAT adds.
 
 **Status:** This works in NVDA.
 
-###### Speech Sound {#MathSpeechSound}
+###### Make a sound when starting/ending math speech {#MathSpeechSound}
 
 A start and end beep occur before and after reading an expression.
 
@@ -3212,11 +3212,11 @@ A start and end beep occur before and after reading an expression.
 
 **Status:** This should work in NVDA.
 
-###### Subject Area {#MathSpeechSubjectArea}
+###### Subject area to be used when it cannot be determined automatically {#MathSpeechSubjectArea}
 
 **Status:** This was used in MathPlayer but not yet currently implemented. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
 
-###### Chemistry {#MathSpeechForChemical}
+###### Speech for chemical formulas {#MathSpeechForChemical}
 
 Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 
@@ -3233,7 +3233,7 @@ Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 
 ##### Navigation Options {#MathNavigation}
 
-###### Braille Code {#MathBrailleCode}
+###### Braille math code for refreshable displays {#MathBrailleCode}
 
 The braille math code to use.
 
@@ -3244,7 +3244,7 @@ The braille math code to use.
 
 **Status:** Other braille code support will depend upon help from others.
 
-###### Braille Navigation Highlight {#MathBrailleHighlights}
+###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
 
 Highlight with dots 7 & 8 the currently selected navigation node.
 The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.

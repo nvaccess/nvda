@@ -2806,7 +2806,7 @@ class MathSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=self.speechAmountOptions,
 		)
-		self.bindHelpEvent("MathSpeechAmount", self.speechAmountList)
+		self.bindHelpEvent("MathSpeechVerbosity", self.speechAmountList)
 		self.speechAmountList.SetSelection(
 			SpeechOptions.Verbosity.value.index(config.conf["math"]["speech"]["verbosity"]),
 		)
@@ -2999,7 +2999,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.brailleMathCodeList.SetStringSelection(config.conf["math"]["braille"]["brailleCode"])
 
 		# Translators: label for pull down to specify how braille dots should be modified when navigating/selecting subexprs
-		brailleHighlightsText = pgettext("math", "Highlight with dots 7 && 8 the current nav node")
+		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
 		brailleHighlightsOptions: list[str] = [
 			# Translators: options for using dots 7 and 8:
 			# Translators: "off" -- don't highlight
