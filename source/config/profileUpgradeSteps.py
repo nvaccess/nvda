@@ -619,8 +619,6 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 	profile[section][newKey] = newValue
 	del profile[section][key]
 	log.debug(
-		(
-			f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}"
-			f" ({ReportSpellingErrors(newValue).name}). The old key '{key}' has been deleted."
-		),
+		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}"
+		f" ({ReportSpellingErrors(newValue).name}). The old key '{key}' has been deleted."
 	)
