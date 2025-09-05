@@ -248,26 +248,7 @@ def _crashHandler(exceptionInfo):
 
 	# Write a minidump.
 	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
-	try:
-		# Though we aren't using pythonic functions to write to the dump file,
-		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
-		with open(dumpPath, "wb") as mdf:
-			mdExc = MINIDUMP_EXCEPTION_INFORMATION(
-				ThreadId=threadId,
-				ExceptionPointers=exceptionInfo,
-				ClientPointers=False,
-			)
-			if not winBindings.dbgHelp.MiniDumpWriteDump(
-				winBindings.kernel32.GetCurrentProcess(),
-				globalVars.appPid,
-				msvcrt.get_osfhandle(mdf.fileno()),
-				0,  # MiniDumpNormal
-				ctypes.byref(mdExc),
-				None,
-				None,
-			):
-				raise ctypes.WinError()
-	except:  # noqa: E722
+	if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
@@ -304,6 +285,7 @@ def initialize():
 		raise RuntimeError("already running")
 	isRunning = True
 	# Catch application crashes.
+	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
 	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
