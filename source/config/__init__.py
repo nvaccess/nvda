@@ -1286,7 +1286,7 @@ class AggregatedSection:
 
 		# Alias old config items to their new counterparts for backwards compatibility.
 		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
+		# if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
 		# self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
