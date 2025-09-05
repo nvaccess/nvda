@@ -20,7 +20,7 @@ uwpOcr_getLanguages = dll.uwpOcr_getLanguages
 """
 Get supported language codes separated by semicolons.
 
-..seealso::
+.. seealso::
 	``nvdaHelper/localWin10/uwpOcr.h``
 """
 uwpOcr_getLanguages.argtypes = ()
@@ -33,7 +33,7 @@ uwpOcr_initialize = dll.uwpOcr_initialize
 """
 Initialise a UWP OCR instance.
 
-..seealso::
+.. seealso::
 	``nvdaHelper/localWin10/uwpOcr.h``
 """
 uwpOcr_initialize.argtypes = (
@@ -46,7 +46,7 @@ uwpOcr_terminate = dll.uwpOcr_terminate
 """
 Terminate a UWP OCR instance.
 
-..seealso::
+.. seealso::
 	``nvdaHelper/localWin10/uwpOcr.h``
 """
 uwpOcr_terminate.argtypes = (
@@ -58,7 +58,7 @@ uwpOcr_recognize = dll.uwpOcr_recognize
 """
 Recognise text in an image.
 
-..seealso::
+.. seealso::
 	``nvdaHelper/localWin10/uwpOcr.h``
 """
 uwpOcr_recognize.argtypes = (
