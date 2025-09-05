@@ -183,6 +183,8 @@ sourceLibDir64 = sourceDir.Dir("lib/x64")
 Export("sourceLibDir64")
 sourceLibDirArm64 = sourceDir.Dir("lib/arm64")
 Export("sourceLibDirArm64")
+sourceLibDirArm64EC = sourceDir.Dir("lib/arm64ec")
+Export("sourceLibDirArm64EC")
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
 Export("outFilePrefix")
@@ -236,10 +238,13 @@ archTools = ["default", "midl", "msrpc"]
 env32 = env.Clone(TARGET_ARCH="x86", tools=archTools)
 env64 = env.Clone(TARGET_ARCH="x86_64", tools=archTools)
 envArm64 = env.Clone(TARGET_ARCH="arm64", tools=archTools)
+envArm64EC = envArm64.Clone()
+envArm64EC["isArm64EC"] = True
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different
 env32["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 env64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 envArm64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
+envArm64EC["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 
 if platform.architecture()[0].startswith("64"):
 	env = env64
@@ -265,9 +270,11 @@ resFile = env.RES(
 env32["projectResFile"] = resFile
 env64["projectResFile"] = resFile
 envArm64["projectResFile"] = resFile
+envArm64EC["projectResFile"] = resFile
 
 # Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir, Dir("miscdeps/source"))
+
 # Copy in some other dependencies.
 for targetDir, jabDll in (
 	(sourceLibDir, "windowsaccessbridge-32.dll"),
@@ -296,6 +303,11 @@ envArm64.SConscript(
 	"nvdaHelper/archBuild_sconscript",
 	exports={"env": envArm64, "clientInstallDir": clientDir.Dir("arm64"), "libInstallDir": sourceLibDirArm64},
 	variant_dir="build/arm64",
+)
+envArm64EC.SConscript(
+	"nvdaHelper/archBuild_sconscript",
+	exports={"env": envArm64EC, "clientInstallDir": clientDir.Dir("arm64ec"), "libInstallDir": sourceLibDirArm64EC},
+	variant_dir="build/arm64ec",
 )
 
 # Allow all NVDA's gettext po files to be compiled in source/locale

@@ -13,11 +13,10 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
+from ctypes import byref, sizeof, Structure, WinError
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID, WORD
 from typing import (
 	TYPE_CHECKING,
-	Any,
 	Optional,
 	Union,
 )
@@ -28,26 +27,32 @@ if TYPE_CHECKING:
 
 import winBindings.advapi32
 import winBindings.kernel32
+from utils import _deprecate
 
 
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	import NVDAState
-
-	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
-		from logHandler import log
-		from winAPI._powerTracking import SystemPowerStatus
-
-		log.warning(
-			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
-			"use winAPI._powerTracking.SystemPowerStatus instead.",
-		)
-		return SystemPowerStatus
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"SYSTEM_POWER_STATUS",
+		"winAPI._powerTracking",
+		"SystemPowerStatus",
+	),
+	_deprecate.MovedSymbol(
+		"STARTUPINFO",
+		"winBindings.advapi32",
+	),
+	_deprecate.MovedSymbol(
+		"STARTUPINFOW",
+		"winBindings.advapi32",
+	),
+	_deprecate.MovedSymbol(
+		"PROCESS_INFORMATION",
+		"winBindings.advapi32",
+	),
+	_deprecate.MovedSymbol("advapi32", "winBindings.advapi32", "dll"),
+)
 
 
 kernel32 = ctypes.windll.kernel32
-advapi32 = windll.advapi32
 
 # Constants
 INFINITE = 0xFFFFFFFF
@@ -188,7 +193,7 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 
 def openProcess(*args) -> int:
 	try:
-		return winBindings.kernel32.OpenProcess(*args)
+		return winBindings.kernel32.OpenProcess(*args) or 0
 	except Exception:
 		# Compatibility: error should just be a handle of 0.
 		return 0
@@ -428,44 +433,6 @@ def CreatePipe(pipeAttributes, size):
 	return read.value, write.value
 
 
-class STARTUPINFOW(Structure):
-	_fields_ = (
-		("cb", DWORD),
-		("lpReserved", LPWSTR),
-		("lpDesktop", LPWSTR),
-		("lpTitle", LPWSTR),
-		("dwX", DWORD),
-		("dwY", DWORD),
-		("dwXSize", DWORD),
-		("dwYSize", DWORD),
-		("dwXCountChars", DWORD),
-		("dwYCountChars", DWORD),
-		("dwFillAttribute", DWORD),
-		("dwFlags", DWORD),
-		("wShowWindow", WORD),
-		("cbReserved2", WORD),
-		("lpReserved2", POINTER(c_byte)),
-		("hSTDInput", HANDLE),
-		("hSTDOutput", HANDLE),
-		("hSTDError", HANDLE),
-	)
-
-	def __init__(self, **kwargs):
-		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
-
-
-STARTUPINFO = STARTUPINFOW
-
-
-class PROCESS_INFORMATION(Structure):
-	_fields_ = (
-		("hProcess", HANDLE),
-		("hThread", HANDLE),
-		("dwProcessID", DWORD),
-		("dwThreadID", DWORD),
-	)
-
-
 def CreateProcessAsUser(
 	token,
 	applicationName,
@@ -480,7 +447,7 @@ def CreateProcessAsUser(
 	processInformation,
 ):
 	if (
-		advapi32.CreateProcessAsUserW(
+		winBindings.advapi32.CreateProcessAsUser(
 			token,
 			applicationName,
 			commandLine,

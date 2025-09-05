@@ -14,6 +14,7 @@ import time
 import winreg
 import winBindings.ole32
 import winBindings.user32
+import winBindings.winmm
 from winBindings.mmeapi import WAVEFORMATEX
 from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
@@ -1226,9 +1227,8 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
 		currEndpointIdByteCount = DWORD()
 		# Defined in mmeapi.h
-		winmm = windll.winmm
-		waveOutMessage = winmm.waveOutMessage
-		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		waveOutMessage = winBindings.winmm.waveOutMessage
+		waveOutGetNumDevs = winBindings.winmm.waveOutGetNumDevs
 		for devID in range(waveOutGetNumDevs()):
 			# Get the length of this device's endpoint ID string.
 			mmr = waveOutMessage(

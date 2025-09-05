@@ -313,7 +313,10 @@ class AddonListVM:
 
 	def _getAddonFieldText(self, listItemVM: AddonListItemVM, field: AddonListField) -> str:
 		assert field in AddonListField
-		if field is AddonListField.currentAddonVersionName:
+		if (
+			field is AddonListField.currentAddonVersionName
+			and listItemVM.model._addonHandlerModel is not None
+		):
 			return listItemVM.model._addonHandlerModel.version
 		if field is AddonListField.availableAddonVersionName:
 			return listItemVM.model.addonVersionName
@@ -415,11 +418,11 @@ class AddonListVM:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
-					listItemVM.model = cast(_AddonStoreModel, listItemVM.model)
+					listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
 					return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
-				listItemVM.model = cast(_AddonManifestModel, listItemVM.model)
+				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
 				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
