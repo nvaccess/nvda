@@ -94,6 +94,22 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `hwPortUtils.dummy`, `hwPortUtils.INVALID_HANDLE_VALUE` and `hwPortUtils.ValidHandle` are deprecated, with no planned replacement. (#18571)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
   Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+* `fonts.gdi32`, `screenBitmap.gdi32` and `winGDI.gdi32` are deprecated.
+  Use `winBindings.gdi32.dll` instead. (#18860)
+* `shellapi.shell32` is deprecated.
+  Use `winBindings.shell32.dll` instead. (#18860)
+* The following symbols have been moved from `shellapi` to `winBindings.shell32`: `SHELLEXECUTEINFO`, `SHELLEXECUTEINFOW`.
+  Access to these symbols via `shellapi` is deprecated. (#18860)
+* `winGDI.gdiplus` is deprecated.
+  Use `winBindings.gdiplus.dll` instead. (#18860)
+* The following symbols have been moved from `winGDI` to `winBindings.gdi32`: `RGBQUAD`, `BITMAPINFOHEADER`, `BITMAPINFO`.
+  Access to these symbols via `winGDI` is deprecated. (#18860)
+* The following symbols have been moved from `winGDI` to `winBindings.gdiplus`: `GdiplusStartupInput`, `GdiplusStartupOutput`.
+  Access to these symbols via `winGDI` is deprecated. (#18860)
+* The following symbols have been moved from `winKernel` to `winBindings.advapi32`: `PROCESS_INFORMATION`, `STARTUPINFO`, `STARTUPINFOW`.
+  Access to these symbols via `winKernel` is deprecated. (#18860)
+* `winKernel.advapi32` is deprecated.
+  Use `winBindings.advapi32.dll` instead. (#18860)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
