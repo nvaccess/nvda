@@ -12,11 +12,12 @@ from NVDAHelper.localWin10 import (
 	uwpOcr_initialize,
 	uwpOcr_recognize,
 	uwpOcr_terminate,
-	uwpOcr_Callback,
+	uwpOcr_Callback as _uwpOcr_Callback,
 )
 from . import ContentRecognizer, LinesWordsResult
 import config
 import languageHandler
+from utils import _deprecate
 
 
 def getLanguages():
@@ -101,7 +102,7 @@ class UwpOcr(ContentRecognizer):
 	def recognize(self, pixels, imgInfo, onResult):
 		self._onResult = onResult
 
-		@uwpOcr_Callback
+		@_uwpOcr_Callback
 		def callback(result):
 			# If self._onResult is None, recognition was cancelled.
 			if self._onResult:
@@ -123,3 +124,8 @@ class UwpOcr(ContentRecognizer):
 
 	def cancel(self):
 		self._onResult = None
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("uwpOcr_Callback", "NVDAHelper.localWin10"),
+)
