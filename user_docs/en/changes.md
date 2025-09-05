@@ -193,6 +193,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
