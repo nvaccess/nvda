@@ -4,8 +4,6 @@
 
 <!-- KC:title: NVDA NVDA_VERSION Commands Quick Reference -->
 
-
-
 ## Introduction {#Introduction}
 
 Welcome to NVDA!
@@ -119,7 +117,7 @@ These steps assume some familiarity with navigating a web page.
 
 * Open your web browser (Press the `Windows` key, type the word "internet" without quotes, and press `enter`)
 * Load the NV Access download page (Press `alt+d`, type the following address and press `enter`):
-https://www.nvaccess.org/download
+<https://www.nvaccess.org/download>
 * Activate the "download" button
 * The browser may or may not prompt for an action after downloading, and then start the download
 * Depending on the browser, the file may run automatically after it downloads
@@ -299,6 +297,7 @@ To open NVDA's general settings dialog directly, press `NVDA+control+g`.
 Many settings screens have keystrokes to open them directly, such as `NVDA+control+s` for synthesizer, or `NVDA+control+v` for other voice options.
 
 ### Add-ons {#Addons}
+
 Add-ons are programs which provide new or changed functionality for NVDA.
 Add-ons are developed by the NVDA community, or external companies and are unaffiliated with NV Access.
 As with any software, it is important to trust the developer of an add-on before using it.
@@ -316,6 +315,7 @@ When the Add-on Store opens, it shows "Available add-ons" if no add-ons are inst
 When add-ons are installed, the Add-on Store opens to the "Installed add-ons" tab.
 
 #### Available add-ons {#AvailableAddons}
+
 When the window first opens, add-ons may take a few seconds to load.
 NVDA will read the name of the first add-on once the list of add-ons finishes loading.
 Available add-ons are listed alphabetically in a multi-column list.
@@ -329,6 +329,7 @@ To browse the list and find out about a specific add-on:
 1. To return to the list of add-ons, press `alt+a`, or `shift+tab` until reaching the list.
 
 #### Searching for add-ons {#SearchingForAddons}
+
 As well as browsing all available add-ons, it is possible to filter the add-ons shown.
 To search, press `alt+s` to jump to the "Search" field and type the text to search for.
 Searching checks for matches in the add-on ID, display name, publisher, author and description fields.
@@ -353,6 +354,7 @@ During the installation process, add-ons may display dialogs that you will need 
 1. Press `enter` to restart NVDA.
 
 #### Managing installed add-ons {#ManagingInstalledAddons}
+
 Press `control+tab` to move between the tabs of the Add-on Store.
 The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
 Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and a button to perform actions for the selected add-on.
@@ -364,6 +366,7 @@ These changes will only take effect once NVDA is restarted.
 Note that in the Add-on Store window `escape` works the same as the Close button.
 
 #### Updating add-ons {#UpdatingAddons}
+
 When an update to an add-on you have installed is available, it will be listed in the "Updatable add-ons" tab.
 Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
@@ -410,6 +413,7 @@ You can make bug reports or feature requests via [GitHub](https://github.com/nva
 The [contribution guidelines](https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md) contain valuable information for contributing to the community.
 
 ## More Setup Options {#MoreSetupOptions}
+
 ### Installation Options {#InstallingNVDA}
 
 If installing NVDA directly from the downloaded NVDA launcher, press the Install NVDA button.
@@ -490,6 +494,7 @@ Portable and temporary copies of NVDA have the following restrictions:
 * Audio ducking is not supported.
 
 ## Using NVDA {#GettingStartedWithNVDA}
+
 ### Launching NVDA {#LaunchingNVDA}
 
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
@@ -529,6 +534,7 @@ Note: pressing on "yes" or "no" will save this setting and the dialog will never
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
 
 ### About NVDA keyboard commands {#AboutNVDAKeyboardCommands}
+
 #### The NVDA Modifier Key {#TheNVDAModifierKey}
 
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
@@ -1472,6 +1478,7 @@ To recognize the text in the current navigator object using Windows OCR, press N
 NVDA provides its own extra features for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
 ### Microsoft Word {#MicrosoftWord}
+
 #### Automatic Column and Row Header Reading {#WordAutomaticColumnAndRowHeaderReading}
 
 NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
@@ -1516,6 +1523,7 @@ Pressing twice shows the information in a browsable message.
 All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List when selecting Annotations as the type.
 
 ### Microsoft Excel {#MicrosoftExcel}
+
 #### Automatic Column and Row Header Reading {#ExcelAutomaticColumnAndRowHeaderReading}
 
 NVDA is able to automatically announce appropriate row and column headers when navigating around Excel worksheets.
@@ -1997,10 +2005,12 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
-For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
-  1. One stand alone unicode character (ü)
-  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
-  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+   For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
+
+   1. One stand alone unicode character (ü)
+   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+
+   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
 
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
@@ -2039,7 +2049,7 @@ This edit field allows you to type the amount that the pitch of the voice will c
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
 For no pitch change you would use 0.
 Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well.
-In case pitch change for capitals is not supported, consider [Say "cap" before capitals](#SpeechSettingsSayCapBefore) and/or [ Beep for capitals](#SpeechSettingsBeepForCaps) instead.
+In case pitch change for capitals is not supported, consider [Say "cap" before capitals](#SpeechSettingsSayCapBefore) and/or [Beep for capitals](#SpeechSettingsBeepForCaps) instead.
 
 ##### Say "cap" before capitals {#SpeechSettingsSayCapBefore}
 
@@ -2658,7 +2668,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
+This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -3006,7 +3016,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors
+  * Spelling errors [(Off, Speech, Sound)](#reportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3054,6 +3064,18 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
+
+##### Spelling error reporting {#reportSpellingErrors}
+
+This option allows you to configure how spelling errors are reported while reading text.
+This checklist box has two options:
+
+* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
+
+When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
+
+Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
@@ -3799,10 +3821,12 @@ In this case, the other person has either started the connection via a relay ser
 
 1. For Server, choose "Use existing".
 1. In the Host field, Enter the host address (and port if also given).
-  * You may include the port to connect on by appending a colon (":") and the port number to the host address.
-For example, `example.com:1234`.
+
+   * You may include the port to connect on by appending a colon (":") and the port number to the host address.
+     For example, `example.com:1234`.
+
 1. In the Key field, enter the key provided.
-Be careful to type the key exactly as given.
+   Be careful to type the key exactly as given.
 1. Press OK.
 
 #### Starting a Connection Via a Relay Server {#RemoteAccessConnectRelay}
@@ -3811,12 +3835,16 @@ If allowing another person to connect to you over the internet, the easiest opti
 
 1. For Server, choose "Use existing".
 1. For host, provide the host name of a relay server, such as `nvdaremote.com`.
-You will need to provide this address to the other person.
-  * You may include the port to connect on by appending a colon (":") and the port number to the host.
-For example, `example.com:1234`.
+   You will need to provide this address to the other person.
+
+   * You may include the port to connect on by appending a colon (":") and the port number to the host.
+     For example, `example.com:1234`.
+
 1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
-You will need to provide this to the other person.
-  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+   You will need to provide this to the other person.
+
+   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+
 1. Press OK.
 1. Provide the connection details (such as host and key) to the other person so they can connect.
 
@@ -3830,15 +3858,19 @@ You will need to provide this external IP to the other person.
 1. If connecting over a local network, you will need to provide the other person with your local IP.
 Locating this is not covered in this documentation.
 1. For Port, enter the port you want to use for incoming Remote connections.
-The other person will also need this.
-  * This should be a port that is not used by any other services.
-  * By default, Remote Access uses port 6837.
-  * If connecting over the internet, the port may need to be forwarded.
-  This documentation does not cover how to forward ports.
-  You may need to contact your network administrator to do this.
+   The other person will also need this.
+
+   * This should be a port that is not used by any other services.
+   * By default, Remote Access uses port 6837.
+   * If connecting over the internet, the port may need to be forwarded.
+     This documentation does not cover how to forward ports.
+     You may need to contact your network administrator to do this.
+
 1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
-You will need to provide this to the other person.
-  * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+   You will need to provide this to the other person.
+
+   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+
 1. Press OK.
 1. Provide the connection details (such as host and key) to the other person so they can connect.
 
@@ -4044,6 +4076,7 @@ You can browse available incompatible add-ons using the [available and updatable
 You can browse installed incompatible add-ons using the [incompatible add-ons tab](#AddonStoreFilterStatus).
 
 ## Extra Tools {#ExtraTools}
+
 ### Log Viewer {#LogViewer}
 
 The log viewer, found under Tools in the NVDA menu, allows you to view the logging output that has occurred since the latest session of NVDA was started.
@@ -5500,6 +5533,7 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 <!-- KC:endInclude -->
 
 ## Advanced Topics {#AdvancedTopics}
+
 ### Secure Mode {#SecureMode}
 
 System administrators may wish to configure NVDA to restrict unauthorized system access.
@@ -5598,7 +5632,7 @@ Following are the command line options for NVDA:
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
-|None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)|
+|None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)| <!-- markdownlint-disable-line MD055 MD056 -->
 |None |`--copy-portable-config` |When installing, copy the portable configuration from the provided path (`--config-path`, `-c`) to the current user account|
 |None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
 |None |`--create-portable-silent` |Creates a portable copy of NVDA (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
@@ -5607,7 +5641,6 @@ Following are the command line options for NVDA:
 ### Uninstalling NVDA {#UninstallingNVDA}
 
 NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
-
 
 Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
 To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.

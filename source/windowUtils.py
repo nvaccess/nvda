@@ -12,7 +12,9 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import ctypes.wintypes
 import weakref
+import winBindings.kernel32
 import winBindings.user32
+import winBindings.gdi32
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
@@ -129,7 +131,7 @@ def getWindowScalingFactor(window: int) -> int:
 	except:  # noqa: E722
 		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
-		winDpi: int = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+		winDpi: int = winBindings.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
 		ret = user32.ReleaseDC(window, dc)
 		if ret != 1:
 			log.error("Unable to release the device context.")
@@ -148,7 +150,7 @@ def getWindowScalingFactor(window: int) -> int:
 	return round(winDpi / DEFAULT_DPI_LEVEL)
 
 
-appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+appInstance = winBindings.kernel32.GetModuleHandle(None)
 
 
 class CustomWindow(AutoPropertyObject):

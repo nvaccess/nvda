@@ -40,6 +40,7 @@ import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
+import winBindings.ole32
 import winUser
 import globalVars  # noqa: F401
 from logHandler import log
@@ -511,6 +512,10 @@ class IAccessible(Window):
 	@type IAccessibleChildID: int
 	"""
 
+	# For Windowless RichEdit.
+	# https://learn.microsoft.com/en-us/windows/win32/api/textserv/nl-textserv-itextservices
+	IID_ITextServices = GUID("{8D33F740-CF58-11CE-A89D-00AA006CADC5}")
+
 	IAccessibleTableUsesTableCellIndexAttrib = (
 		False  #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 	)
@@ -720,15 +725,6 @@ class IAccessible(Window):
 			winConsole.findExtraOverlayClasses(self, clsList)
 
 		# Support for Windowless richEdit
-		if not hasattr(IAccessible, "IID_ITextServices"):
-			try:
-				IAccessible.IID_ITextServices = ctypes.cast(
-					ctypes.windll.msftedit.IID_ITextServices,
-					ctypes.POINTER(GUID),
-				).contents
-			except WindowsError:
-				log.debugWarning("msftedit not available, couldn't retrieve IID_ITextServices")
-				IAccessible.IID_ITextServices = None
 		if IAccessible.IID_ITextServices:
 			try:
 				pDoc = self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(
@@ -1640,7 +1636,7 @@ class IAccessible(Window):
 				ret.append(text)
 			return "\n".join(ret)
 		finally:
-			ctypes.windll.ole32.CoTaskMemFree(headers)
+			winBindings.ole32.CoTaskMemFree(headers)
 
 	def _get_rowHeaderText(self):
 		return self._tableHeaderTextHelper("row")

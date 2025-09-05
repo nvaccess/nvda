@@ -358,7 +358,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			ctypes.byref(relEnd),
 		):
 			relStart = relStart.value
-			relEnd = min(lineLength, relEnd.value)
+			relEnd = relEnd.value
 			if self.encoding != textUtils.WCHAR_ENCODING:
 				# We need to convert the uniscribe based offsets to str offsets.
 				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
