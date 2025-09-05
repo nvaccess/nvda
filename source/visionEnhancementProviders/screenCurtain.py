@@ -8,12 +8,15 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 """
 
 import os
-from vision import providerBase
-from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
+import typing
+from ctypes import Structure, WinError, c_float, windll
 from ctypes.wintypes import BOOL
-from autoSettingsUtils.driverSetting import BooleanDriverSetting
-from autoSettingsUtils.autoSettings import SupportedSettingType
+
+import globalVars
+import nvwave
 import wx
+from autoSettingsUtils.autoSettings import SupportedSettingType
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from gui.nvdaControls import MessageDialog
 from gui.settingsDialogs import (
 	AutoSettingsMixin,
@@ -21,11 +24,10 @@ from gui.settingsDialogs import (
 	VisionProviderStateControl,
 )
 from logHandler import log
-from typing import Optional, Type
-import nvwave
-import globalVars
-import NVDAHelper
+from utils.ctypesUtils import OutParam, Pointer, dllFunc
+from vision import providerBase
 
+import NVDAHelper
 
 isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
 isScreenFullyBlack.argtypes = ()
@@ -54,42 +56,30 @@ class Magnification:
 
 	_magnification = windll.Magnification
 
-	# Set full screen color effect
-	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
-	MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-		("MagSetFullscreenColorEffect", _magnification),
-		_MagSetFullscreenColorEffectArgTypes,
-	)
-	MagSetFullscreenColorEffect.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, errcheck=_errCheck)
+	def MagSetFullscreenColorEffect(
+		effect: Pointer[MAGCOLOREFFECT] | MAGCOLOREFFECT,
+	) -> typing.Annotated[int, BOOL]: ...
 
-	# Get full screen color effect
-	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
-	MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-		("MagGetFullscreenColorEffect", _magnification),
-		_MagGetFullscreenColorEffectArgTypes,
-	)
-	MagGetFullscreenColorEffect.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, restype=BOOL, errcheck=_errCheck)
+	def MagGetFullscreenColorEffect() -> typing.Annotated[
+		MAGCOLOREFFECT,
+		OutParam("effect"),
+	]: ...
 
-	# show system cursor
-	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
-	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
-	MagShowSystemCursor = _MagShowSystemCursorFuncType(
-		("MagShowSystemCursor", _magnification),
-		_MagShowSystemCursorArgTypes,
-	)
-	MagShowSystemCursor.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, errcheck=_errCheck)
+	def MagShowSystemCursor(showCursor: bool | BOOL) -> typing.Annotated[int, BOOL]: ...
 
-	# initialize
-	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
-	MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
-	MagInitialize.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, errcheck=_errCheck)
+	def MagInitialize() -> typing.Annotated[int, BOOL]: ...
 
-	# uninitialize
-	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
-	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
-	MagUninitialize.errcheck = _errCheck
+	@staticmethod
+	@dllFunc(_magnification, errcheck=_errCheck)
+	def MagUninitialize() -> typing.Annotated[int, BOOL]: ...
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
@@ -277,9 +267,9 @@ class ScreenCurtainGuiPanel(
 		@returns: C{True} when OCR is active, C{False} otherwise.
 		"""
 		import api
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 		import speech
 		import ui
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
@@ -327,7 +317,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		return True
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> type | None:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
