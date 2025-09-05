@@ -224,10 +224,8 @@ class _AddonManifestModel(_AddonGUIModel):
 		return description
 
 	@property
-	def changelog(self) -> str:
+	def changelog(self) -> str | None:
 		changelog: str | None = self.manifest.get("changelog")
-		if changelog is None:
-			return ""
 		return changelog
 
 	@property

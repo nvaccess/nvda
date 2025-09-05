@@ -263,7 +263,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for an action that shows changelog for the selected addon
-				displayName=pgettext("addonStore", "&Changes for this version..."),
+				displayName=pgettext("addonStore", "&What's new"),
 				actionHandler=lambda aVM: ui.browseableMessage(
 					markdown(
 						str(
