@@ -65,7 +65,7 @@ class ScreenBitmap(object):
 			winGDI.SRCCOPY,
 		)
 		# Fetch the pixels from our memory bitmap and store them in a buffer to be returned
-		buffer = (winBindings.gdi32.RGBQUAD * self.width * self.height)()
+		buffer = (winBindings.gdi32.RGBQUAD * (self.width * self.height))()
 		winBindings.gdi32.GetDIBits(
 			self._memDC,
 			self._memBitmap,
