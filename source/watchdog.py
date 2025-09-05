@@ -14,11 +14,9 @@ from typing import (
 import inspect
 from ctypes import windll
 import ctypes.wintypes
-import msvcrt
 import comtypes
 import winBindings.ole32
 import winBindings.dbgHelp
-from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
 import winBindings.kernel32
 from winBindings.kernel32 import UnhandledExceptionFilter
 import winUser
