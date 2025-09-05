@@ -19,6 +19,10 @@ import config
 import languageHandler
 from utils import _deprecate
 
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("uwpOcr_Callback", "NVDAHelper.localWin10"),
+)
+
 
 def getLanguages():
 	"""Return the available recognition languages.
@@ -124,8 +128,3 @@ class UwpOcr(ContentRecognizer):
 
 	def cancel(self):
 		self._onResult = None
-
-
-__getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol("uwpOcr_Callback", "NVDAHelper.localWin10"),
-)
