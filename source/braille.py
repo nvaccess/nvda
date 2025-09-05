@@ -711,7 +711,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			states.discard(controlTypes.State.VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
-		elif role == controlTypes.Role.LIST and states and controlTypes.State.MULTISELECTABLE in states:
+		elif (
+			role == controlTypes.Role.LIST
+			and states
+			and controlTypes.State.MULTISELECTABLE in states
+			and config.conf["presentation"]["reportMultiSelect"]
+		):
+			# Collapse the list role and multiselectable state into a single role text.
+			# Note that for other cases where this state is found, regular processing with
+			# controlTypes.processAndLabelStates will discard the state if necessary.
 			states = states.copy()
 			states.discard(controlTypes.State.MULTISELECTABLE)
 			# Translators: Displayed in braille for a multi select list.
