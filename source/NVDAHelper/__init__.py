@@ -881,7 +881,7 @@ def getHelperLocalWin10Dll():
 	return windll[ReadPaths.nvdaHelperLocalWin10Dll]
 
 
-def _bstrReturn(address):
+def _bstrReturn(address: int) -> str:
 	"""Handle a BSTR returned from a ctypes function call.
 	This includes freeing the memory.
 	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
