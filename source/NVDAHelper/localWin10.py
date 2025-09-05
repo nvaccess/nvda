@@ -5,10 +5,11 @@
 
 """Functions exported by nvdaHelperLocalWin10.dll, and supporting definitions."""
 
-from ctypes import CFUNCTYPE, c_uint, c_void_p, c_wchar_p, windll
+from ctypes import CFUNCTYPE, POINTER, c_uint, c_void_p, c_wchar_p, windll
 from comtypes import BSTR
 
 import NVDAState
+from winBindings.gdi32 import RGBQUAD
 
 dll = windll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalWin10Dll)
 
@@ -62,7 +63,7 @@ Recognise text in an image.
 """
 uwpOcr_recognize.argtypes = (
 	UwpOcr_P,  # instance
-	c_void_p,  # image
+	POINTER(RGBQUAD),  # image
 	c_uint,  # width
 	c_uint,  # height
 )
