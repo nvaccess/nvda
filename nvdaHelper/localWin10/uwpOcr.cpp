@@ -109,6 +109,5 @@ BSTR __stdcall uwpOcr_getLanguages() {
 		langsStr += lang.LanguageTag();
 		langsStr += L";";
 	}
-	LOG_INFO(L"Available UWP OCR languages: " << langsStr);
 	return SysAllocString(langsStr.c_str());
 }
