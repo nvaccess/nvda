@@ -291,9 +291,6 @@ class AddonStoreVM:
 		assert path is not None
 		startfile(path)
 
-	def changelogAddon(self, listItemVM: AddonListItemVM) -> None:
-		pass
-
 	def removeAddon(
 		self,
 		listItemVM: AddonListItemVM[_AddonGUIModel],
