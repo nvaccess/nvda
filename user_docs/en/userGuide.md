@@ -2668,7 +2668,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
+This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -3016,7 +3016,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors
+  * Spelling errors [(Off, Speech, Sound)](#reportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3064,6 +3064,18 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
+
+##### Spelling error reporting {#reportSpellingErrors}
+
+This option allows you to configure how spelling errors are reported while reading text.
+This checklist box has two options:
+
+* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
+
+When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
+
+Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
