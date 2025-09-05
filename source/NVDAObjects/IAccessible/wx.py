@@ -56,7 +56,8 @@ class WxWebView(IAccessible):
 						continue
 					else:
 						# Suppress IAccessible focus event handling for the refocus below.
-						# This prevents duplicate or unwanted focus events when refocusing the inner window.
+						# This prevents duplicate or unwanted focus events of the Web View parent control,
+						# since we're actually interested in the focus event from the inner document that focus is propagated to.
 						self.shouldAllowIAccessibleFocusEvent = False
 						self.setFocus()
 						break
