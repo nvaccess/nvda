@@ -55,6 +55,8 @@ class WxWebView(IAccessible):
 						api.processPendingEvents()
 						continue
 					else:
+						# Suppress IAccessible focus event handling for the refocus below.
+						# This prevents duplicate or unwanted focus events when refocusing the inner window.
 						self.shouldAllowIAccessibleFocusEvent = False
 						self.setFocus()
 						break
