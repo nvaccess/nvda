@@ -4059,7 +4059,8 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 
 #### Reading changes for the current version {#AddonStoreChangelog}
 
-If an add-on specifies changes included for the current version, an action will be available to show these changes in browse mode. The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
+If an add-on specifies changes included for the current version, an action will be available to show these changes in browse mode.
+The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
