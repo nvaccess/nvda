@@ -24,7 +24,9 @@ from typing import (
 	TypeVar,
 )
 
+import winBindings.advapi32
 import winBindings.kernel32
+import winBindings.shell32
 import winKernel
 import winreg
 import shellapi
@@ -74,7 +76,7 @@ def hasUiAccess():
 	)
 	try:
 		val = ctypes.wintypes.DWORD()
-		ctypes.windll.advapi32.GetTokenInformation(
+		winBindings.advapi32.GetTokenInformation(
 			token,
 			TokenUIAccess,
 			ctypes.byref(val),
@@ -126,7 +128,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 		raise ctypes.WinError()
 	try:
 		val = TokenOrigin()
-		if not ctypes.windll.advapi32.GetTokenInformation(
+		if not winBindings.advapi32.GetTokenInformation(
 			token,
 			TOKEN_ORIGIN,
 			ctypes.byref(val),
@@ -151,7 +153,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 		params = subprocess.list2cmdline(params)
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
 	# IsUserAnAdmin is apparently deprecated so may not work above Windows 8
-	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
+	if not handleAlreadyElevated or not winBindings.shell32.IsUserAnAdmin():
 		sei.lpVerb = "runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
