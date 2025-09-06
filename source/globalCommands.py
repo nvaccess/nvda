@@ -820,7 +820,6 @@ class GlobalCommands(ScriptableObject):
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = newFormatConfig
 		ui.message(state)
 
-
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
 		description=_("Toggles on and off the reporting of pages"),
