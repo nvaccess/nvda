@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2008-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,10 +12,15 @@ from typing import (
 	Any,
 )
 import inspect
-from ctypes import windll, oledll
+from ctypes import windll
 import ctypes.wintypes
 import msvcrt
 import comtypes
+import winBindings.ole32
+import winBindings.dbgHelp
+from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
+import winBindings.kernel32
+from winBindings.kernel32 import UnhandledExceptionFilter
 import winUser
 import winKernel
 from logHandler import log
@@ -229,20 +234,12 @@ def _shouldRecoverAfterMinTimeout():
 
 def _recoverAttempt():
 	try:
-		oledll.ole32.CoCancelCall(core.mainThreadId, 0)
+		winBindings.ole32.CoCancelCall(core.mainThreadId, 0)
 	except:  # noqa: E722
 		pass
 
 
-class MINIDUMP_EXCEPTION_INFORMATION(ctypes.Structure):
-	_fields_ = (
-		("ThreadId", ctypes.wintypes.DWORD),
-		("ExceptionPointers", ctypes.c_void_p),
-		("ClientPointers", ctypes.wintypes.BOOL),
-	)
-
-
-@ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
+@UnhandledExceptionFilter
 def _crashHandler(exceptionInfo):
 	threadId = ctypes.windll.kernel32.GetCurrentThreadId()
 	# An exception might have been set for this thread.
@@ -260,8 +257,8 @@ def _crashHandler(exceptionInfo):
 				ExceptionPointers=exceptionInfo,
 				ClientPointers=False,
 			)
-			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
-				winKernel.kernel32.GetCurrentProcess(),
+			if not winBindings.dbgHelp.MiniDumpWriteDump(
+				winBindings.kernel32.GetCurrentProcess(),
 				globalVars.appPid,
 				msvcrt.get_osfhandle(mdf.fileno()),
 				0,  # MiniDumpNormal
@@ -307,16 +304,16 @@ def initialize():
 		raise RuntimeError("already running")
 	isRunning = True
 	# Catch application crashes.
-	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
-	oledll.ole32.CoEnableCallCancellation(None)
+	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
+	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"cancelCallEvent",
 	)
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"_notifySendMessageCancelled",
 		_notifySendMessageCancelled,
 	)
@@ -335,7 +332,7 @@ def terminate():
 	if not isRunning:
 		return
 	isRunning = False
-	oledll.ole32.CoDisableCallCancellation(None)
+	winBindings.ole32.CoDisableCallCancellation(None)
 	# Wake up the watcher so it knows to finish.
 	windll.kernel32.SetWaitableTimer(
 		_coreDeadTimer,
@@ -394,7 +391,7 @@ class CancellableCallThread(threading.Thread):
 		)
 		waitIndex = ctypes.wintypes.DWORD()
 		if pumpMessages:
-			oledll.ole32.CoWaitForMultipleHandles(
+			winBindings.ole32.CoWaitForMultipleHandles(
 				0,
 				winKernel.INFINITE,
 				2,
@@ -432,7 +429,7 @@ class CancellableCallThread(threading.Thread):
 			except Exception as e:
 				self._exc_info = e
 			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
-		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
+		winBindings.kernel32.CloseHandle(self._executionDoneEvent)
 
 
 cancellableCallThread = None
@@ -467,12 +464,12 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
 	@raise CallCancelled: If the call was cancelled.
 	"""
-	result = ctypes.wintypes.DWORD()
+	result = NVDAHelper.localLib.DWORD_PTR()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(
 		hwnd,
 		msg,
-		wParam,
-		lParam,
+		wParam or 0,
+		lParam or 0,
 		flags,
 		timeout,
 		ctypes.byref(result),

@@ -33,6 +33,8 @@ from ctypes import (
 from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
+import winBindings.kernel32
+import winBindings.ole32
 import oleacc
 import JABHandler
 import UIAHandler
@@ -228,6 +230,7 @@ IAccessibleStatesToNVDAStates = {
 	oleacc.STATE_SYSTEM_PROTECTED: controlTypes.State.PROTECTED,
 	oleacc.STATE_SYSTEM_SELECTABLE: controlTypes.State.SELECTABLE,
 	oleacc.STATE_SYSTEM_FOCUSABLE: controlTypes.State.FOCUSABLE,
+	oleacc.STATE_SYSTEM_MULTISELECTABLE: controlTypes.State.MULTISELECTABLE,
 }
 
 IAccessible2StatesToNVDAStates = {
@@ -1120,7 +1123,7 @@ def getIAccIdentity(pacc, childID):
 			d["windowHandle"] = fields[1]
 		return d
 	finally:
-		windll.ole32.CoTaskMemFree(stringPtr)
+		winBindings.ole32.CoTaskMemFree(stringPtr)
 
 
 def findGroupboxObject(obj):
@@ -1303,5 +1306,5 @@ def isMarshalledIAccessible(IAccessibleObject):
 	)
 	handle = HANDLE()
 	windll.kernel32.GetModuleHandleExW(6, addr, byref(handle))
-	windll.kernel32.GetModuleFileNameW(handle, buf, 1024)
+	winBindings.kernel32.GetModuleFileName(handle, buf, 1024)
 	return not buf.value.lower().endswith("oleacc.dll")

@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# Copyright (C) 2007-2025 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -30,6 +29,7 @@ from ctypes import (
 )
 from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
+from winBindings.kernel32 import FreeLibrary
 import queueHandler
 from logHandler import log
 import winUser
@@ -39,7 +39,7 @@ import controlTypes
 import NVDAObjects.JAB
 import core
 import textUtils
-import NVDAHelper
+import NVDAState
 import config
 from utils.security import isRunningOnSecureDesktop
 
@@ -1136,9 +1136,7 @@ def enableBridge():
 def initialize():
 	global bridgeDll, isRunning
 	try:
-		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"),
-		)
+		bridgeDll = cdll.LoadLibrary(NVDAState.ReadPaths.javaAccessBridgeDLL)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
@@ -1180,7 +1178,7 @@ def terminate():
 	bridgeDll.setPropertyCaretChangeFP(None)
 	h = bridgeDll._handle
 	bridgeDll = None
-	windll.kernel32.FreeLibrary(h)
+	FreeLibrary(h)
 	isRunning = False
 
 

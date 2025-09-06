@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2023 NV Access Limited, Bill Dengler
+# Copyright (C) 2013-2025 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,13 +10,19 @@ When working on this file, consider moving to winAPI.
 """
 
 import ctypes
+import ctypes.wintypes
 import weakref
+import winBindings.kernel32
+import winBindings.user32
+import winBindings.gdi32
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from typing import Optional
+from winBindings import user32
+
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 
@@ -125,7 +131,7 @@ def getWindowScalingFactor(window: int) -> int:
 	except:  # noqa: E722
 		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
-		winDpi: int = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+		winDpi: int = winBindings.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
 		ret = user32.ReleaseDC(window, dc)
 		if ret != 1:
 			log.error("Unable to release the device context.")
@@ -144,7 +150,7 @@ def getWindowScalingFactor(window: int) -> int:
 	return round(winDpi / DEFAULT_DPI_LEVEL)
 
 
-appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+appInstance = winBindings.kernel32.GetModuleHandle(None)
 
 
 class CustomWindow(AutoPropertyObject):
@@ -212,12 +218,13 @@ class CustomWindow(AutoPropertyObject):
 			raise TypeError("extendedWindowStyle must be an integer")
 		if parent and not isinstance(parent, int):
 			raise TypeError("parent must be an integer")
-		res = self._classAtom = ctypes.windll.user32.RegisterClassExW(ctypes.byref(self._wClass))
+		res = self._classAtom = winBindings.user32.RegisterClassEx(ctypes.byref(self._wClass))
 		if res == 0:
 			raise ctypes.WinError()
-		res = ctypes.windll.user32.CreateWindowExW(
+		res = winBindings.user32.CreateWindowEx(
 			extendedWindowStyle,
-			self._classAtom,
+			# The class atom should be stored as the low word of the class name string pointer.
+			ctypes.cast(ctypes.c_void_p(self._classAtom), ctypes.wintypes.LPCWSTR),
 			windowName or self.className,
 			windowStyle,
 			0,
@@ -246,7 +253,11 @@ class CustomWindow(AutoPropertyObject):
 				exc_info=ctypes.WinError(),
 			)
 		self.handle = None
-		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
+		if not winBindings.user32.UnregisterClass(
+			# The class atom should be stored as the low word of the class name string pointer.
+			ctypes.cast(ctypes.c_void_p(self._classAtom), ctypes.wintypes.LPCWSTR),
+			appInstance,
+		):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",
 				exc_info=ctypes.WinError(),
@@ -281,11 +292,11 @@ class CustomWindow(AutoPropertyObject):
 			inst = CustomWindow._hwndsToInstances[hwnd]
 		except KeyError:
 			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
-			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+			return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 		try:
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
 			if res is not None:
 				return res
 		except:  # noqa: E722
 			log.exception("Error in wndProc")
-		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+		return user32.DefWindowProc(hwnd, msg, wParam, lParam)

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2025 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -22,7 +22,6 @@ import buildVersion
 from typing import (
 	Literal,
 	NamedTuple,
-	Optional,
 	Protocol,
 	TYPE_CHECKING,
 )
@@ -117,7 +116,13 @@ def getCodePath(f):
 			# If an Exception is currently stored as a local variable on that frame,
 			# A reference cycle will be created, holding the frame and all its variables.
 			# Therefore clear f_locals manually.
-			f_locals.clear()
+			for key in list(f_locals.keys()):
+				try:
+					# Note: Python 3.13 changed how to clear frame locals
+					# https://github.com/python/cpython/issues/125590
+					f_locals.pop(key)
+				except ValueError:
+					pass
 		del f_locals
 		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any)
 		# Rather than an instance member of its first argument.
@@ -153,7 +158,7 @@ def getCodePath(f):
 	return ".".join(x for x in (path, className, funcName) if x)
 
 
-_onErrorSoundRequested: Optional["extensionPoints.Action"] = None
+_onErrorSoundRequested: "extensionPoints.Action | None" = None
 """
 Triggered every time an error sound needs to be played.
 When nvwave is initialized, it registers the handler responsible for playing the error sound.
@@ -374,12 +379,17 @@ class Logger(logging.Logger):
 
 class RemoteHandler(logging.Handler):
 	def __init__(self):
-		# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
-		h = ctypes.windll.kernel32.LoadLibraryExW(path, 0, LOAD_WITH_ALTERED_SEARCH_PATH)
-		if not h:
-			raise OSError("Could not load %s" % path)
-		self._remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
+		import winBindings.kernel32
+
+		h = winBindings.kernel32.LoadLibraryEx(
+			NVDAState.ReadPaths.nvdaHelperRemoteDll,
+			0,
+			# Using an altered search path is necessary here
+			# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+			# such as IAccessible2proxy.dll.
+			winKernel.LOAD_WITH_ALTERED_SEARCH_PATH,
+		)
+		self._remoteLib = ctypes.CDLL("nvdaHelperRemote", handle=h)
 		logging.Handler.__init__(self)
 
 	def emit(self, record):
@@ -417,7 +427,7 @@ class Formatter(logging.Formatter):
 			record.codepath = "{name}.{funcName}".format(**record.__dict__)
 		return super().format(record)
 
-	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+	def formatTime(self, record: logging.LogRecord, datefmt: str | None = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT when Python locale
 		is set to a Unicode one (#12160, Python issue 36792)
@@ -471,7 +481,7 @@ logging.setLoggerClass(Logger)
 #: The singleton logger instance.
 log: Logger = logging.getLogger(NVDA_LOGGER_NAME)
 #: The singleton log handler instance.
-logHandler: Optional[logging.Handler] = None
+logHandler: logging.Handler | None = None
 
 
 def _getDefaultLogFilePath():

@@ -28,20 +28,34 @@ vector<SCRIPT_LOGATTR> _getLogAttrArray(const wchar_t* text, int textLength) {
 	if (textLength <= 0 || !text) {
 		return {};
 	}
-	vector<SCRIPT_ITEM> items(textLength + 1);
+	// It is invalid to call ScriptItemize with a buffer to hold less than two SCRIPT_ITEM structures.
+	auto cMaxItems = textLength + 1;
+	// The buffer should be (cMaxItems + 1)
+	vector<SCRIPT_ITEM> items(cMaxItems + 1);
 	int numItems = 0;
-	if (ScriptItemize(text, textLength, textLength, nullptr, nullptr, items.data(), &numItems) != S_OK || numItems == 0) {
+	HRESULT hr;
+	if ((hr = ScriptItemize(text, textLength, cMaxItems, nullptr, nullptr, items.data(), &numItems)) != S_OK || numItems == 0) {
+		LOG_ERROR(L"ScriptItemize failed for text '" << text << L"'; hr=" << hr);
 		return {};
 	}
 
 	vector<SCRIPT_LOGATTR> logAttrArray(textLength);
-	int nextICharPos = textLength;
+	// The function always adds a terminal item to the item analysis array.
+	// numItems contains the number of actually processed items excluding the terminating item.
+	int nextICharPos = textLength;  // should be equal to items[numItems].iCharPos
 	for (int itemIndex = numItems - 1; itemIndex >= 0; --itemIndex) {
 		int iCharPos = items[itemIndex].iCharPos;
 		int iCharLength = nextICharPos - iCharPos;
-		if (ScriptBreak(text + iCharPos, iCharLength, &(items[itemIndex].a), logAttrArray.data() + iCharPos) != S_OK) {
+		if ((hr = ScriptBreak(text + iCharPos, iCharLength, &(items[itemIndex].a), logAttrArray.data() + iCharPos)) != S_OK) {
+			LOG_ERROR(L"ScriptBreak failed for text '" << text << L"' at run " << itemIndex << L"; hr=" << hr);
 			return {};
 		}
+		// Note, ideally we'd set nextICharPos to iCharPos, so that the
+		// next iteration of the loop will only call ScriptBreak for the text that belongs to the current item.
+		// Now that we don't do this, every call of ScriptBreak refills logAttrArray
+		// for the characters after this item based on the SCRIPT_ANALYSIS for the current item,
+		// effectively treating all the characters as belonging to the script at itemIndex = 0.
+		// However, resetting nextICharPos causes word segmentation to differ from the one used in notepad.
 	}
 	return logAttrArray;
 }
@@ -55,8 +69,8 @@ bool calculateCharacterBoundaries(const wchar_t* text, int textLength, int* offs
 		return false;
 	}
 	int count = 0;
-	for (int i = 0; i < textLength; ++i) {
-		if (logAttrArray[i].fCharStop) {
+	for (int i = 0; i <= textLength; ++i) {
+		if (i == 0 || i == textLength || logAttrArray[i].fCharStop) {
 			offsets[count++] = i;
 		}
 	}
@@ -88,6 +102,7 @@ bool _calculateUniscribeOffsets(enum UNIT unit, wchar_t* text, int textLength, i
 				break;
 			}
 		}
+		*endOffset = textLength;
 		for(int i=offset+1;i<textLength;++i) {
 			if (logAttrArray[i].fCharStop) {
 				*endOffset=i;
