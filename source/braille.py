@@ -49,6 +49,7 @@ from config.configFlags import (
 	BrailleMode,
 	ReportTableHeaders,
 	OutputMode,
+	ReportSpellingErrors,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
@@ -416,7 +417,7 @@ class FormattingMarker(NamedTuple):
 		"""
 		formatConfig = config.conf["documentFormatting"]
 		if key == "invalid-spelling":
-			return False
+			return formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE
 		return formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE
 
 
@@ -455,11 +456,11 @@ fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
 	),
 	"invalid-spelling": FormattingMarker(
 		# Translators: Brailled at the start of invalid spelling text.
-		# This is the English letter "m" in braille.
-		start=pgettext("braille formatting symbol", "⠍"),
+		# This is the English letter "e" in braille.
+		start=pgettext("braille formatting symbol", "⠑"),
 		# Translators: Brailled at the end of invalid spelling text.
-		# This is the English letter "m" plus dot 7 in braille.
-		end=pgettext("braille formatting symbol", "⡍"),
+		# This is the English letter "e" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡑"),
 	),
 }
 
