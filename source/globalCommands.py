@@ -71,7 +71,7 @@ import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 import synthDriverHandler
-from utils.displayString import DisplayStringEnum
+from utils.displayString import DisplayStringEnum, DisplayStringIntFlag
 import _remoteClient
 
 #: Script category for text review commands.
@@ -177,6 +177,37 @@ def toggleIntegerValue(
 	config.conf[configSection][configKey] = newValue
 
 	state = enumClass(newValue)
+	msg = messageTemplate.format(mode=state.displayString)
+	ui.message(msg)
+
+
+def toggleBinaryValue(
+	configSection: str,
+	configKey: str,
+	enumClass: "DisplayStringIntFlag",
+	messageTemplate: str,
+	length: int,
+) -> None:
+	"""
+	Cycles through integer configuration values corresponding to a flag and displays the corresponding message.
+
+	:param configSection: The configuration section containing the integer key.
+	:param configKey: The configuration key associated with the integer value.
+	:param enumClass: The enumeration class representing possible states.
+	:param messageTemplate: The message template with a placeholder, `{mode}`, for the state.
+	:param length: The maximum number of values to cycle through.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	index = 0
+	for n in range(length - 1):
+		availableValue = enumClass(n).value
+		if availableValue == currentValue:
+			index = n + 1
+			break
+	newValue = enumClass(index).value
+	config.conf[configSection][configKey] = newValue
+	state = enumClass(index)
 	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
 
@@ -793,13 +824,14 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		toggleIntegerValue(
+		toggleBinaryValue(
 			configSection="documentFormatting",
 			configKey="reportSpellingErrors2",
 			enumClass=ReportSpellingErrors,
 			# Translators: Reported when the user cycles through the choices to report spelling errors.
-			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
+			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 			messageTemplate=_("Report spelling errors {mode}"),
+			length=4,
 		)
 
 	@script(

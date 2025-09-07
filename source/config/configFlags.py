@@ -211,8 +211,7 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 				# Translators: A value reported by the cycle script defining how spelling errors are reported.
 				"Speech and sound",
 			),
-			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
-			# as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
+			# Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
 			ReportSpellingErrors.BRAILLE: pgettext("reportSpellingErrorsSetting", "Braille"),
 		}
 
