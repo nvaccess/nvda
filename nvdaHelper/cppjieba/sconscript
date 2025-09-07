@@ -41,7 +41,7 @@ if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDi
 	env.Install(
 		outDir.Dir("dicts"),
 		[
-			env.File(os.path.join(cppjiebaDictPath, name))
+			env.Dir(cppjiebaDictPath).File(name)
 			for name in (
 				"jieba.dict.utf8",
 				"user.dict.utf8",
