@@ -265,12 +265,7 @@ freeze(
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),
 		("louis/tables", glob("louis/tables/*")),
-		(
-			"cppjieba/dicts",
-			glob("cppjieba/dicts/jieba.dict.utf8")
-			+ glob("cppjieba/dicts/user.dict.utf8")
-			+ glob("cppjieba/dicts/hmm_model.utf8"),
-		),
+		("cppjieba/dicts", glob("cppjieba/dicts/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),
