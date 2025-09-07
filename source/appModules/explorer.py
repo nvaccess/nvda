@@ -189,13 +189,6 @@ class GridGroup(UIA):
 				return child.name
 
 
-class ImmersiveLauncher(UIA):
-	# When the Windows 8 start screen opens, focus correctly goes to the first tile,
-	# but then incorrectly back to the root of the window.
-	# Ignore focus events on this object.
-	shouldAllowUIAFocusEvent = False
-
-
 class StartButton(IAccessible):
 	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons
 	and to suppress selection announcement."""
@@ -323,8 +316,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridListTileElement)
 			elif uiaClassName == "GridGroup":
 				clsList.insert(0, GridGroup)
-			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
-				clsList.insert(0, ImmersiveLauncher)
 			# Multitasking view frame window
 			elif (
 				# Windows 10 and earlier
