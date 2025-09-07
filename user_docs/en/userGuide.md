@@ -1177,7 +1177,7 @@ NVDA is able to read and interact with math equations in Microsoft Word 365/2016
 Note however that any previously created MathType equations must be first converted to Office Math.
 This can be done by selecting each and choosing "Equation Options", then "Convert to Office Math" in the context menu.
 Ensure your version of MathType is the latest version before doing this.
-Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LateX.
+Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LaTeX.
 For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
 * Microsoft Powerpoint, and older versions of Microsoft Word:
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
@@ -1220,9 +1220,7 @@ When you wish to return to the document, simply press the escape key.
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-### Information for MathCAT users
-
-The documentation describes many useful ways to navigate math. For those who just want to get started:
+Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
 * If inside of a table, Ctrl+Arrow will move by cell
@@ -1267,7 +1265,7 @@ NYE = Not Yet Implemented
 
 ## Typical Use
 
-Typically, you will start at the first term of an expression and move right as needed. You might move up and down levels if needed. This done with the arrow keys. alt+ctrl+arrow is used to move around tabular entries.
+Typically, you will start at the first term of an expression and move right as needed. You might move up and down levels if needed. This is done with the arrow keys. alt+ctrl+arrow is used to move around tabular entries.
 
 Backspace will take you back to where you were, which is not always the same as moving to the left. For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
 
