@@ -8,6 +8,7 @@ from __future__ import annotations
 import abc
 import ctypes
 import enum
+import winBindings.gdi32
 
 from typing import Any
 from collections.abc import Callable
@@ -2245,9 +2246,9 @@ class ExcelFormControl(ExcelBase):
 		self.excelApplicationObject = self.parent.excelWorksheetObject.Application
 		hDC = ctypes.windll.user32.GetDC(None)
 		# pixels per inch along screen width
-		px = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
 		# pixels per inch along screen height
-		py = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
 		ctypes.windll.user32.ReleaseDC(None, hDC)
 		zoom = self.excelApplicationObject.ActiveWindow.Zoom
 		zoomRatio = zoom / 100
