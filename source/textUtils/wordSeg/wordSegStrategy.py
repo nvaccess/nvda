@@ -17,8 +17,9 @@ from functools import lru_cache
 from collections.abc import Callable
 from typing import Any
 
-from logHandler import log
 import textUtils
+from logHandler import log
+
 
 # Initializer registry (robust: saves module + qualname + original function + args/kwargs)
 # Each entry: (module_name: str, qualname: str, func_obj: Callable, args: tuple, kwargs: dict)
@@ -147,7 +148,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib.initJieba.restype = c_int
 			cls._lib.initJieba.argtypes = []
 
-			# int segmentOffsets(const char* utf8Text, int** outOffsets, int* outLen)
+			#int segmentOffsets(const char* text, int** wordEndOffsets, int* outLen);
 			cls._lib.segmentOffsets.restype = c_int
 			cls._lib.segmentOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
 
