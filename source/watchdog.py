@@ -283,7 +283,6 @@ def initialize():
 		raise RuntimeError("already running")
 	isRunning = True
 	# Catch application crashes.
-	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
 	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
