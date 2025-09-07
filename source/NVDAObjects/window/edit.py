@@ -3,12 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
-	Dict,
-	Optional,
-	Union,
-)
-
 import ctypes
 from comtypes import BSTR, COMError
 import colors
@@ -381,7 +375,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _setFormatFieldColor(
 		self,
-		charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+		charFormat: CharFormat2AStruct | CharFormat2WStruct,
 		formatField: textInfos.FormatField,
 	) -> None:
 		if charFormat.dwEffects & CFE_AUTOCOLOR:
@@ -662,7 +656,7 @@ ITextDocumentUnitsToNVDAUnits = {
 	comInterfaces.tom.tomStory: textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
 	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
 	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
@@ -915,7 +909,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s" % position)
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		textRange = self._rangeObj.duplicate
