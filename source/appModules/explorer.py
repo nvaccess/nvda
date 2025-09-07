@@ -45,15 +45,6 @@ class MultitaskingViewFrameListItem(UIA):
 			return super(MultitaskingViewFrameListItem, self).container
 
 
-# Support for Win8 start screen search suggestions.
-class SuggestionListItem(UIA):
-	def event_UIA_elementSelected(self):
-		speech.cancelSpeech()
-		if api.setNavigatorObject(self, isFocus=True):
-			self.reportFocus()
-			super().event_UIA_elementSelected()
-
-
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box
 # (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
@@ -334,8 +325,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith("Suggestion_"):
-				clsList.insert(0, SuggestionListItem)
 			# Multitasking view frame window
 			elif (
 				# Windows 10 and earlier
