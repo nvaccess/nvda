@@ -48,6 +48,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 
 #### API Breaking Changes
 
@@ -194,7 +195,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
-* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
