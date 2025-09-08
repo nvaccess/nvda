@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-31 23:25+0000\n"
-"PO-Revision-Date: 2025-09-01 02:15\n"
+"POT-Creation-Date: 2025-09-05 06:01+0000\n"
+"PO-Revision-Date: 2025-09-07 23:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -854,7 +854,7 @@ msgstr "蓝牙串行设备：{port} ({deviceName})"
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "系列：{portName}"
+msgstr "串行：{portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 #: brailleInput.py:250
@@ -893,13 +893,13 @@ msgstr "盲文键盘"
 #. along with any dots on a braille keyboard.
 #: brailleInput.py:570
 msgid "space with any dots"
-msgstr "any dots 空格"
+msgstr "空格加任意点位"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
 #: brailleInput.py:574
 msgid "any dots"
-msgstr "任何凸点"
+msgstr "任意点位"
 
 #. Translators: The mode to interact with controls in documents
 #: browseMode.py:75
@@ -1042,22 +1042,22 @@ msgstr "往上没有链接"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:849
 msgid "moves to the next visited link"
-msgstr "移到下一个以访问的链接"
+msgstr "移到下一个已访问的链接"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:851
 msgid "no next visited link"
-msgstr "往下没有以访问的链接"
+msgstr "往下没有已访问的链接"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:853
 msgid "moves to the previous visited link"
-msgstr "移到上一个以访问的链接"
+msgstr "移到上一个已访问的链接"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:855
 msgid "no previous visited link"
-msgstr "往上没有以访问的链接"
+msgstr "往上没有已访问的链接"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:861
@@ -4936,7 +4936,7 @@ msgstr "搜索页"
 #. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
 #: keyLabels.py:25
 msgid "favorites"
-msgstr "收藏家"
+msgstr "收藏夹"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 #: keyLabels.py:27
@@ -5096,7 +5096,7 @@ msgstr "下光标"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:91
 msgid "applications"
-msgstr "application"
+msgstr "applications"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:93
@@ -5687,7 +5687,7 @@ msgstr "十二边形"
 #: msoAutoShapeTypes.py:312
 msgctxt "shape"
 msgid "Donut"
-msgstr "同心圆"
+msgstr "圆环形"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5988,7 +5988,7 @@ msgstr "心形"
 #: msoAutoShapeTypes.py:447
 msgctxt "shape"
 msgid "Heptagon"
-msgstr "正五边形"
+msgstr "七边形"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6289,7 +6289,7 @@ msgstr "燕尾形箭头"
 #: msoAutoShapeTypes.py:594
 msgctxt "shape"
 msgid "Octagon"
-msgstr "十边形"
+msgstr "八边形"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6583,14 +6583,14 @@ msgstr "动作按钮: 后退或前一项"
 #: msoAutoShapeTypes.py:729
 msgctxt "action"
 msgid "Beginning"
-msgstr "动作按钮: 前进或下一项"
+msgstr "动作按钮: 开始"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:732
 msgctxt "action"
 msgid "Document"
-msgstr "动作按钮: 开始"
+msgstr "动作按钮: 文档"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7591,7 +7591,7 @@ msgctxt "addonStore"
 msgid "An updated version of this add-on is required. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
 msgstr "您安装的插件版本太旧，需要更新。\n"
 "该插件已在 NVDA {lastTestedNVDAVersion} 测试。此版本的 NVDA 要求该插件在 {nvdaVersion} 或更高版本的 NVDA 进行测试。\n"
-"您需要字形承担启用该插件的风险。"
+"您需要自行承担启用该插件的风险。"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -10341,7 +10341,7 @@ msgstr "x-大号"
 #: controlTypes\formatFields.py:72
 msgctxt "font size"
 msgid "xx-large"
-msgstr "xs-大号"
+msgstr "xx-大号"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:74
@@ -10651,7 +10651,7 @@ msgstr "下拉按钮"
 #. Translators: Identifies an element.
 #: controlTypes\role.py:287
 msgid "clock"
-msgstr "时锺"
+msgstr "时钟"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 #: controlTypes\role.py:289
@@ -10869,7 +10869,7 @@ msgstr "分组窗格"
 #. This is deprecated and is not often (if ever) used.
 #: controlTypes\role.py:379
 msgid "edit bar"
-msgstr "编辑兰"
+msgstr "编辑栏"
 
 #. Translators: Identifies a terminal window such as command prompt.
 #: controlTypes\role.py:381
@@ -10880,7 +10880,7 @@ msgstr "终端"
 #. addition to text; encountered on webpages and NvDA log viewer).
 #: controlTypes\role.py:384
 msgid "rich edit"
-msgstr "多功能编辑控件"
+msgstr "富文本编辑框"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 #: controlTypes\role.py:386
@@ -10994,7 +10994,7 @@ msgstr "数学"
 #. Translators: Identifies a grip control.
 #: controlTypes\role.py:432
 msgid "grip"
-msgstr "控制"
+msgstr "手柄"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
 #. assigning shortcut for icons on the desktop).
@@ -11156,7 +11156,7 @@ msgstr "标题项目"
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 #: controlTypes\role.py:505
 msgid "thumb control"
-msgstr "触摸控件"
+msgstr "拖动控件"
 
 #: controlTypes\role.py:506
 msgid "calendar"
@@ -11305,7 +11305,7 @@ msgstr "不可见"
 #. Translators: This is presented when a visited link is encountered.
 #: controlTypes\state.py:139
 msgid "visited"
-msgstr "以访问"
+msgstr "已访问"
 
 #. Translators: This is presented when a link is encountered.
 #: controlTypes\state.py:141
@@ -11603,7 +11603,7 @@ msgstr "您输入的网址连接测试失败。\n"
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 #: gui\__init__.py:212
 msgid "Configuration applied"
-msgstr "配置以应用"
+msgstr "配置已应用"
 
 #. Translators: Reported when configuration has been restored to defaults,
 #. by using restore configuration to factory defaults item in NVDA menu.
@@ -11614,7 +11614,7 @@ msgstr "恢复默认设置"
 #. Translators: Reported when current configuration has been saved.
 #: gui\__init__.py:232
 msgid "Configuration saved"
-msgstr "配置以保存"
+msgstr "配置已保存"
 
 #. Translators: Message shown when current configuration cannot be saved,
 #. such as when running NVDA from a CD.
@@ -11810,7 +11810,7 @@ msgstr "管理配置(&C)..."
 #. Translators: The label for the menu item to revert to saved configuration.
 #: gui\__init__.py:782
 msgid "&Revert to saved configuration"
-msgstr "重新应用以保存的设置(&R)"
+msgstr "重新应用已保存的配置(&R)"
 
 #. Translators: The help text for the menu item to revert to saved configuration.
 #: gui\__init__.py:784
@@ -12127,7 +12127,7 @@ msgstr "手动"
 #. in the Configuration Profiles dialog.
 #: gui\configProfiles.py:155
 msgid "triggered"
-msgstr "以关联"
+msgstr "已关联"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 #: gui\configProfiles.py:180
@@ -12398,9 +12398,9 @@ msgstr "重置(&D)"
 msgid "Are you sure you want to reset all gestures to their factory defaults?\n\n"
 "\t\t\tAll of your user defined gestures, whether previously set or defined during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
-msgstr "您是否要将所有按键与手势重置为默认值？\n"
-"\t\t\t\n"
-"重置后，您先前保存和设置的所有按键与手势都将丢失且无法撤销。"
+msgstr "您是否要将所有按键与手势重置为默认值？\n\n"
+"\t\t\t重置后，您先前保存和设置的所有按键与手势都将丢失。\n"
+"\t\t\t该操作无法撤销。"
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:794
@@ -12840,7 +12840,7 @@ msgstr "在欢迎界面启用 NVDA（需要管理员权限）"
 #. Control (UAC) dialog).
 #: gui\settingsDialogs.py:913
 msgid "Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
-msgstr "应用以保存的配置到欢迎界面和其他安全界面（需要管理员权限）"
+msgstr "应用已保存的配置到欢迎界面和其他安全界面（需要管理员权限）"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
 #. If not checked, user must check for updates manually.
@@ -16534,7 +16534,7 @@ msgstr "Y 误差线"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:486
 msgid "Shape"
-msgstr "主石形状"
+msgstr "形状"
 
 #. Translators: Message reporting the title and type of a chart.
 #: NVDAObjects\window\_msOfficeChart.py:598
@@ -17664,7 +17664,7 @@ msgstr "右对齐"
 #. Translators: a an alignment in Microsoft Word
 #: NVDAObjects\window\winword.py:1819
 msgid "Justified"
-msgstr "段落重排"
+msgstr "两端对齐"
 
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\winword.py:1857

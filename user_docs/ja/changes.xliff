@@ -5819,9 +5819,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)</source>
-        <target>When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)</target>
+        <target>点字の単語折り返しが有効な場合、次の文字がスペースであれば、すべての点字セルが使用されます。(#18016, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="3a6270d0-168e-466e-8bae-03a963f39538">
@@ -5829,9 +5829,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)</source>
-        <target>NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)</target>
+        <target>NVDAは、言語を変更する際に点字テーブルを自動にリセットしなくなりました。(#18538, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="cd3e4017-b567-46e9-bee6-532d719e5d69">
@@ -5839,9 +5839,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 39</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)</source>
-        <target>NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)</target>
+        <target>NVDAはトルコ語1級点字をトルコ語8点コンピューター点字として扱わなくなりました。(#18758, @OzancanKaratas)</target>
       </segment>
     </unit>
     <unit id="c84379c6-9505-49a7-9aa1-4bda4d4ff702">
@@ -5849,18 +5849,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 40</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The Dot Pad braille display driver now supports automatic detection of USB-connected devices.</source>
-        <target>The Dot Pad braille display driver now supports automatic detection of USB-connected devices.</target>
+        <target>Dot Pad点字ディスプレイドライバーは、USB接続されたデバイスの自動検出をサポートするようになりました。</target>
       </segment>
     </unit>
     <unit id="35951f47-6ce1-41f4-838f-3432f66eec70">
       <notes>
         <note appliesTo="source">line: 41</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)</source>
-        <target>  Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)</target>
+        <target>  デバイスが汎用USB識別子を使用しているため、これは既定で無効になっていますが、点字設定で有効にできます。(#18444, @bramd)</target>
       </segment>
     </unit>
     <unit id="627101e5-37f4-4aa8-9b4e-bde1855842a8">
@@ -5868,9 +5868,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 42</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)</source>
-        <target>When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)</target>
+        <target>Microsoft Excelで選択範囲が複数のセルにまたがっている場合、`tab`または`enter`を押してアクティブセルを移動すると、選択範囲全体ではなく新しいアクティブセルが報告されるようになりました。(#6959, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="59771368-a222-46f2-8d5f-87aacd2816f5">
@@ -5878,9 +5878,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)</source>
-        <target>In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)</target>
+        <target>Windows 10バージョン1607以降のターミナルプログラムで、変更されたテキストの計算が外部プロセスではなくNVDA内で実行されます。パフォーマンスと信頼性が向上する可能性があります。(#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="e3eebd76-4540-4cce-99b4-741e78fc67bb">
@@ -5888,9 +5888,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 44</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</source>
-        <target>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</target>
+        <target>NVDAリモートアクセス接続ダイアログは、手動接続の最新の接続モード、サーバータイプ、およびローカルホストのポートを記憶するようになりました。(#18512, #18701)</target>
       </segment>
     </unit>
     <unit id="9ff079b7-a64e-4b66-940a-767f60586c07">
@@ -5898,9 +5898,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>バグ修正</target>
       </segment>
     </unit>
     <unit id="23c98fc5-e388-4f48-9a82-9bba110c309a">
@@ -5908,9 +5908,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 48</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech:</source>
-        <target>Speech:</target>
+        <target>音声:</target>
       </segment>
     </unit>
     <unit id="055e0c4b-6884-4664-83f6-04abf946c1ff">
@@ -5918,9 +5918,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 49</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)</source>
-        <target>Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)</target>
+        <target>一部の音声エンジンを使用する際に、過度な先頭無音のトリミングで音声の一部を削除してしまう問題を修正しました。(#18003, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="58674a00-2180-49be-96a9-9634dc74824f">
@@ -5928,9 +5928,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 50</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)</source>
-        <target>Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)</target>
+        <target>SAPI5音声を使用する際にNVDAが完全にフリーズすることがある問題を修正しました。(#18298, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="1eda598a-1865-43ad-bee4-d869cf150493">
@@ -5938,9 +5938,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 51</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)</source>
-        <target>Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)</target>
+        <target>NVDAがSAPI5 Eloquence音声で起動できず、OneCore音声にフォールバックする問題を修正しました。(#18301, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="cf655119-3e1f-4616-93f0-68d8a8989cf6">
@@ -5948,9 +5948,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 52</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)</source>
-        <target>Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)</target>
+        <target>WASAPIと高速読み上げを有効にして一部のSAPI5音声を使用する際に、音声にギャップが生じる問題を修正しました。(#17967, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b1fa2685-503e-4d5f-ae43-9180116c732c">
@@ -5958,9 +5958,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 53</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Remote Access:</source>
-        <target>Remote Access:</target>
+        <target>リモートアクセス:</target>
       </segment>
     </unit>
     <unit id="e17a8a4c-e745-4cf7-9620-702a14caae2b">
@@ -5968,9 +5968,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 54</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)</source>
-        <target>Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)</target>
+        <target>制御されているPCでオーディオ出力デバイスが有効になっていない場合に、NVDAリモートアクセス経由で音声が機能しなくなるバグを修正しました。(#18544)</target>
       </segment>
     </unit>
     <unit id="b9eeec1b-1c13-42b4-8c16-00cf18e410ef">
@@ -5978,9 +5978,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 55</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)</source>
-        <target>Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)</target>
+        <target>サーバーへの接続中にセッションが中断された場合に、NVDAリモートアクセスが動作しなくなるバグを修正しました。(#18476)</target>
       </segment>
     </unit>
     <unit id="1b3784e7-7ec0-4d8c-b17c-aa04b8ea6387">
@@ -5988,9 +5988,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)</source>
-        <target>Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)</target>
+        <target>Microsoft Word文書で同じ行に複数の数式がある場合のバグを修正しました：最初の数式より後のすべてが読み上げられず、点字表示もされませんでした。(#18386, @NSoiffer)</target>
       </segment>
     </unit>
     <unit id="5da07859-0171-48f7-82bf-f462cd93aa7b">
@@ -5998,9 +5998,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 57</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)</source>
-        <target>Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)</target>
+        <target>Javaアプリでのマウスポインタ位置のテキストの読み上げで段落単位を指定した場合の処理を修正しました。(#18231, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="0f352991-347e-4bef-9619-1d4cec4f1d6c">
@@ -6008,9 +6008,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)</source>
-        <target>Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)</target>
+        <target>Outlookの連絡先オートコンプリートリストでビジュアルハイライトが機能しない問題を修正しました。(#18483, @Nerlant)</target>
       </segment>
     </unit>
     <unit id="49dc7721-26da-4edc-8cbb-49b349174728">
@@ -6018,9 +6018,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 59</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)</source>
-        <target>A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)</target>
+        <target>作成直後に起動されたポータブル版は、その環境自身の設定を正しく使用するようになりました。(#18442, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="e82a6d24-4e16-4955-bdcc-2aadfec1d726">
@@ -6028,18 +6028,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 61</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>開発者向けの変更</target>
       </segment>
     </unit>
     <unit id="ac3da7d2-599d-45d9-a25e-b81f7bf5e460">
       <notes>
         <note appliesTo="source">line: 63</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</target>
+        <target>NVDAのAPIの非推奨および削除プロセスに関する情報は、[開発者ガイド](https://download.nvaccess.org/documentation/developerGuide.html#API)を参照してください。</target>
       </segment>
     </unit>
     <unit id="0be60212-747b-4345-866d-db9fde1970d0">
@@ -6047,9 +6047,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Component updates:</source>
-        <target>Component updates:</target>
+        <target>コンポーネントの更新:</target>
       </segment>
     </unit>
     <unit id="c663a34e-24c3-4290-8eb0-2f61f641c5a7">
@@ -6057,9 +6057,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 66</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated Pyright to 1.1.403. (#18424)</source>
-        <target>Updated Pyright to 1.1.403. (#18424)</target>
+        <target>pyright を 1.1.403 に更新しました。(#18424)</target>
       </segment>
     </unit>
     <unit id="eef694bd-f41e-4de0-93ae-c4063e8372ae">
@@ -6067,9 +6067,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 67</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated Ruff to 0.12.7. (#18424, #18609)</source>
-        <target>Updated Ruff to 0.12.7. (#18424, #18609)</target>
+        <target>Ruff を 0.12.7 に更新しました。(#18424, #18609)</target>
       </segment>
     </unit>
     <unit id="559076e8-4e6b-415a-a48c-140e5b9a6b7f">
@@ -6077,9 +6077,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 68</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated comtypes to 1.4.11. (#18611)</source>
-        <target>Updated comtypes to 1.4.11. (#18611)</target>
+        <target>comtypes パッケージを 1.4.11 に更新しました。(#18611)</target>
       </segment>
     </unit>
     <unit id="f766a91c-ba4d-40bc-b9dc-3a4f3b2426c2">
@@ -6087,9 +6087,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 69</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated py2exe to 0.14.0.0. (#18611)</source>
-        <target>Updated py2exe to 0.14.0.0. (#18611)</target>
+        <target>py2exe をバージョン 0.14.0.0 に更新しました。 (#18611)</target>
       </segment>
     </unit>
     <unit id="2816e878-498a-4c9d-80e8-199a4ad07d54">
@@ -6097,9 +6097,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 70</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated markdown to 3.8.2. (#18638)</source>
-        <target>Updated markdown to 3.8.2. (#18638)</target>
+        <target>markdown を 3.8.2 に更新しました。 (#18638)</target>
       </segment>
     </unit>
     <unit id="d105886f-2e74-4712-a317-2a43fd1fd60b">
@@ -6107,9 +6107,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</source>
-        <target>detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</target>
+        <target>detours を `9764cebcb1a75940e68fa83d6730ffaf0f669401` に更新しました。 (#18447, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="81bf02b2-48fc-4b1f-9c88-f5d28d15110d">
@@ -6117,9 +6117,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</source>
-        <target>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</target>
+        <target>`IAccessible`オブジェクトでは、MSAA（非IA2）オブジェクトに対して`flowsFrom`および`flowsTo`プロパティが`NotImplementedError`を発生させるようになりました。(#18416, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="5220ddaf-59ce-456b-9b8b-f66200103cd6">
@@ -6127,9 +6127,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</source>
-        <target>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</target>
+        <target>`nvda_dmp` ユーティリティが削除されました。(#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="f61e9244-0d56-46b9-ab2a-b0fedd95be66">
@@ -6137,9 +6137,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</source>
-        <target>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</target>
+        <target>`comInterfaces_sconscript`が更新され、`comInterfaces`で生成されたファイルがIDEでよりよく動作するようになりました。 (#17608, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b60467e9-5440-4043-90f5-790987742f63">
@@ -6147,9 +6147,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 75</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</source>
-        <target>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</target>
+        <target>NVDA は GUI 初期化時に `wx.lib.agw.persistenceManager` を設定します。 (#18601)</target>
       </segment>
     </unit>
     <unit id="5cbceb29-4c2d-4866-9394-f7d823750eab">
@@ -6157,9 +6157,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: #### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Deprecations</source>
-        <target>Deprecations</target>
+        <target>非推奨となったAPI</target>
       </segment>
     </unit>
     <unit id="f83a49f5-ac38-4ac4-8f54-725d1572d60e">
@@ -6167,9 +6167,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 79</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</source>
-        <target>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</target>
+        <target>`synthDrivers.sapi5`の次のシンボルは置換なしで非推奨になりました: (#18300, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="5c310bc4-28cc-41c5-ac06-a04d360ad922">
@@ -6177,7 +6177,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 80</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP_c_ubyte`</source>
         <target>`LP_c_ubyte`</target>
       </segment>
@@ -6187,7 +6187,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 81</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP_c_ulong`</source>
         <target>`LP_c_ulong`</target>
       </segment>
@@ -6197,7 +6197,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 82</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP__ULARGE_INTEGER`</source>
         <target>`LP__ULARGE_INTEGER`</target>
       </segment>
@@ -6207,7 +6207,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`SynthDriver.isSpeaking`</source>
         <target>`SynthDriver.isSpeaking`</target>
       </segment>
@@ -6217,9 +6217,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 84</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</source>
-        <target>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</target>
+        <target>`auseOfAccess.RegistryKey` と `config.RegistryKey` は推奨されません。代わりに `config.registry.RegistryKey` を使用します。 (#18608)</target>
       </segment>
     </unit>
     <unit id="bb747d9e-5d1e-48d2-84f5-89c96d755a00">
@@ -6227,18 +6227,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</source>
-        <target>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</target>
+        <target>`md2html` から `DEFAULT_EXTENSIONS` をインポートすることは推奨されません。</target>
       </segment>
     </unit>
     <unit id="ffdab4b2-5995-42fb-9165-ca254496befd">
       <notes>
         <note appliesTo="source">line: 86</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Importing from `md2html` is discouraged. (#18638)</source>
-        <target>Importing from `md2html` is discouraged. (#18638)</target>
+        <target>`md2html`からのインポートは非推奨です。(#18638)</target>
       </segment>
     </unit>
     <unit id="58b2f98c-6705-4ac1-b96c-34020c02e46f">
@@ -14445,7 +14445,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`miranda64` |`miranda32`</source>
         <target>`miranda64` |`miranda32`</target>
       </segment>
@@ -14456,7 +14456,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`mpc-hc` |`mplayerc`</source>
         <target>`mpc-hc` |`mplayerc`</target>
       </segment>
@@ -14467,7 +14467,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`mpc-hc64` |`mplayerc`</source>
         <target>`mpc-hc64` |`mplayerc`</target>
       </segment>
@@ -14478,7 +14478,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`notepad++` |`notepadPlusPlus`</source>
         <target>`notepad++` |`notepadPlusPlus`</target>
       </segment>
@@ -14489,7 +14489,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`searchapp` |`searchui`</source>
         <target>`searchapp` |`searchui`</target>
       </segment>
@@ -14500,7 +14500,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`searchhost` |`searchui`</source>
         <target>`searchhost` |`searchui`</target>
       </segment>
@@ -14511,7 +14511,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`springtoolsuite4` |`eclipse`</source>
         <target>`springtoolsuite4` |`eclipse`</target>
       </segment>
@@ -21680,7 +21680,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>win32calc |calc</source>
         <target>win32calc |calc</target>
       </segment>
@@ -21691,7 +21691,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>winmail |msimn</source>
         <target>winmail |msimn</target>
       </segment>
@@ -21702,7 +21702,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>zend-eclipse-php |eclipse</source>
         <target>zend-eclipse-php |eclipse</target>
       </segment>
@@ -21713,7 +21713,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>zendstudio |eclipse</source>
         <target>zendstudio |eclipse</target>
       </segment>
