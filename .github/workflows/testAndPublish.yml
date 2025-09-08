@@ -102,7 +102,7 @@ jobs:
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
-      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
+      run: scons source %sconsArgs% %sconsCores%
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
@@ -346,9 +346,9 @@ jobs:
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
+        scons %sconsOutTargets% %sconsArgs% %sconsCores%
         :: Run launcher separately as we can't safely generate that in parallel to other scons builds (#18867)
-        scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
+        scons launcher %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
