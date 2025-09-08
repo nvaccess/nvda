@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop";
-$sconsDocsOutTargets = "developerGuide changes userGuide keyCommands"
+$sconsDocsOutTargets = "developerGuide changes userGuide keyCommands user_docs"
 $sconsLauncherOutTargets = "launcher client moduleList"
 $sconsArgs = "version=$env:version"
 $sconsCores = "--all-cores"
