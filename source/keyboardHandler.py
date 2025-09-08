@@ -35,6 +35,7 @@ import NVDAState
 from contextlib import contextmanager
 import threading
 import winKernel
+from winBindings import user32
 
 if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject  # noqa: F401
@@ -298,7 +299,7 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 		):
 			keyStates = (ctypes.c_byte * 256)()
 			for k in range(256):
-				keyStates[k] = ctypes.windll.user32.GetKeyState(k)
+				keyStates[k] = user32.GetKeyState(k)
 			charBuf = ctypes.create_unicode_buffer(5)
 			hkl = ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
 			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.

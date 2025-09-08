@@ -34,6 +34,7 @@ from ctypes.wintypes import (
 	LPWSTR,
 	LPCWSTR,
 	LPMSG,
+	SHORT,
 	UINT,
 	WPARAM,
 	ATOM,
@@ -293,4 +294,16 @@ ChangeWindowMessageFilter.restype = BOOL
 ChangeWindowMessageFilter.argTypes = (
 	UINT,  # message: The message to add to or remove from the filter
 	DWORD,  # dwFlag: The action to be performed
+)
+
+GetKeyState = dll.GetKeyState
+"""
+Retrieves the status (up, down, or toggled) of the specified virtual key.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeystate
+"""
+GetKeyState.restype = SHORT
+GetKeyState.argtypes = (
+	c_int,  # nVirtKey: A virtual key
 )
