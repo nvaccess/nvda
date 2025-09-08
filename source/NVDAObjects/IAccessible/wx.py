@@ -63,4 +63,4 @@ class WxWebView(IAccessible):
 						break
 
 			case _:
-				log.warning("Unexpected inner control in wxWebView: %r", firstChild.windowClassName)
+				log.warning(f"Unexpected inner control in wxWebView: {firstChild.windowClassName}")
