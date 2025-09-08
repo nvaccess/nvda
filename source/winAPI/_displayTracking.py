@@ -10,7 +10,6 @@ When the display resolution changes, the new height and width is sent to NVDA,
 and we notify the user of changes to the orientation.
 """
 
-from ctypes import windll
 from dataclasses import dataclass
 import enum
 from typing import (
@@ -22,6 +21,7 @@ import ui
 import winUser
 
 from .winUser.constants import SystemMetrics
+from winBindings import user32
 
 
 class Orientation(enum.Enum):
@@ -51,12 +51,12 @@ def initialize():
 
 
 def getPrimaryDisplayOrientation() -> OrientationState:
-	width = windll.user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
+	width = user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
 	if width == 0:
 		# If the function fails, the return value is 0.
 		# GetLastError does not provide extended error information.
 		log.error("Failed to get primary display width")
-	height = windll.user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
+	height = user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
 	if height == 0:
 		# If the function fails, the return value is 0.
 		# GetLastError does not provide extended error information.

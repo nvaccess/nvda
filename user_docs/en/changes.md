@@ -121,6 +121,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `NVDAHelper.bstrReturn` is deprecated, with no planned replacement. (#18858)
 * `contentRecog.uwpOcr.uwpOcr_Callback` is deprecated.
   Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
+* `touchHelper.SM_MAXIMUMTOUCHES` is deprecated.
+  Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->

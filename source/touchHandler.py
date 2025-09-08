@@ -14,8 +14,9 @@ from ctypes import cast, windll
 from ctypes.wintypes import *  # noqa: F403
 from ctypes.wintypes import LPCWSTR
 import re
+from winAPI.winUser.constants import SystemMetrics
 import winBindings.kernel32
-import winBindings.user32
+from winBindings import user32
 import gui
 import config
 import winBindings.oleacc
@@ -26,6 +27,16 @@ from logHandler import log
 import touchTracker
 import core
 import systemUtils
+from utils import _deprecate
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"SM_MAXIMUMTOUCHES",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"MAXIMUM_TOUCHES",
+	),
+)
 
 
 availableTouchModes = ["text", "object"]
@@ -35,7 +46,6 @@ touchModeLabels = {
 	"object": _("object mode"),
 }
 
-SM_MAXIMUMTOUCHES = 95
 HWND_MESSAGE = -3
 
 WM_QUIT = 18
@@ -344,7 +354,7 @@ def touchSupported(debugLog: bool = False) -> bool:
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
-	maxTouches = windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	maxTouches = user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES)
 	if maxTouches <= 0:
 		if debugLog:
 			log.debugWarning("No touch devices found")
@@ -378,7 +388,8 @@ def initialize():
 	if not touchSupported(debugLog=True):
 		raise NotImplementedError
 	log.debug(
-		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES),
+		"Touchscreen detected, maximum touch inputs: %d"
+		% user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 	setTouchSupport(config.conf["touch"]["enabled"])

@@ -269,3 +269,15 @@ EnumWindows.argtypes = (
 	LPARAM,  # lParam
 )
 EnumWindows.restype = BOOL
+
+GetSystemMetrics = dll.GetSystemMetrics
+"""
+Retrieves the specified system metric or system configuration setting.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics
+"""
+GetSystemMetrics.restype = c_int
+GetSystemMetrics.argTypes = (
+	c_int,  # nIndex: The system metric or configuration setting to be retrieved
+)

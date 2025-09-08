@@ -61,6 +61,13 @@ class SystemMetrics(IntEnum):
 	SM_CYVIRTUALSCREEN
 	"""
 
+	MAXIMUM_TOUCHES = 95
+	"""
+	The aggregate maximum of the maximum number of contacts supported by every digitizer in the system, or 0 if there are no digitizers in the system.
+
+	SM_MAXIMUMTOUCHES
+	"""
+
 
 class SysColorIndex(IntEnum):
 	"""
