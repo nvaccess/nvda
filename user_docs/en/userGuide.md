@@ -1232,16 +1232,16 @@ To start navigation: press NVDA+Alt+M or the space key to enter math navigation 
 
 MathCAT’s navigation is the same in Word and in a browser.
 
-While navigating an expression, “control+c” copies the math content of the current node in NVDA.
+While navigating an expression, "control+c" copies the math content of the current node in NVDA.
 The format of the math copied to the clipboard can be adjusted through the NVDA math settings panel.
 
 #### Navigation Modes
 
 MathCAT supports the following navigation modes:
 
-**Enhanced mode**:  navigation is by mathematically meaningful pieces (operators, delimiters, and operands)
+**Enhanced mode**:  navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
 
-**Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, …), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
+**Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 
 **Character mode**:  this is actually two useful modes – word mode and character mode (zoom in to get "real" character mode).  Moves by words/characters.  This differs for numbers of more than one digit and function names such as "sin" that are multiple characters. Otherwise, word and character navigation is the same.
 
@@ -3230,6 +3230,64 @@ Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 **Status:** Many heuristics have been implemented to infer when some notation is chemistry or not. Inferring chemical notations is a bit tricky so MathCAT will sometimes not recognize them and may sometimes inadvertently classify something as chemistry.
 
 ##### Navigation Options {#MathNavigation}
+
+###### Navigation mode to use when beginning to navigate an equation {#MathNavMode}
+
+"Enhanced" mode understands math structure.
+"Simple" mode walks by character to find things like fractions, roots, and scripts
+"Character" mode moves around by character, automatically moving into fractions, etc
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Enhanced, Character, Simple |
+| Default | Enhanced |
+
+###### Navigation speech to use when beginning to navigate an equation {#MathNavSpeech}
+
+Whether to speak the expression after moving to it or give an overview.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Speak, Overview |
+| Default | Speak |
+
+###### Make a sound when starting/ending math speech {#MathNavReset}
+
+Whether to play a beep sound when speech starts/ends.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | True, False |
+| Default | True |
+
+###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
+
+Auto zoom out of 2D expressions like fractions (use shift-arrow to force zoom out if this is set to False).
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | True, False |
+| Default | True |
+
+###### Speech amount for navigation {#MathNavSpeechAmount}
+
+Specify whether you want a terse or verbose reading of navigation commands.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+###### Copy math as {#MathNavCopyAs}
+
+Specify how math will be copied to the clipboard.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | MathML, LaTeX, ASCIIMath |
+| Default | MathML |
+
+##### Braille Options {#MathBrailleOptions}
 
 ###### Braille math code for refreshable displays {#MathBrailleCode}
 
