@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-22 01:49+0000\n"
-"PO-Revision-Date: 2025-08-25 00:35\n"
+"POT-Creation-Date: 2025-08-31 23:25+0000\n"
+"PO-Revision-Date: 2025-09-01 02:15\n"
 "Last-Translator: \n"
 "Language-Team: Bosnian\n"
 "Language: bs_BA\n"
@@ -4827,7 +4827,7 @@ msgstr "Određuje hoće li se kontrolisati lokalni ili udaljeni računar"
 #: globalCommands.py:5059
 msgctxt "remote"
 msgid "Sends control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Šalje Control+Alt+Delete na računar koji se kontroliše."
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4855,7 +4855,7 @@ msgstr "Profil {profile} je aktiviran"
 #: globalCommands.py:5126
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "Aktivira ili deaktivira {profile} konfiguracijski profila"
+msgstr "Aktivira ili deaktivira {profile} konfiguracijski profil"
 
 #. Translators: The name of a category of NVDA commands.
 #: inputCore.py:60
@@ -4969,12 +4969,12 @@ msgstr "povećavanje glasnoće"
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:35
 msgid "next track"
-msgstr "sljedeća traka"
+msgstr "sljedeća pjesma"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:37
 msgid "previous track"
-msgstr "prethodna traka"
+msgstr "prethodna pjesma"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 #: keyLabels.py:39
@@ -5004,7 +5004,7 @@ msgstr "prilagođena aplikacija 1"
 #. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
 #: keyLabels.py:49
 msgid "custom application 2"
-msgstr "prilagođena aplikacija 1"
+msgstr "prilagođena aplikacija 2"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:51
@@ -7174,7 +7174,7 @@ msgstr "Ažuriranje NVDA dok je uspostavljena veza kao računar koji se kontroli
 #: updateCheck.py:1012
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "Trenutna uspostavljena veza se možda neće nastaviti tokom ili nakon ažuriranja. Čak i ako je veza nastavljena, nećete moći odgovoriti na upite korisničke kontrole računa s udaljenog računara. Trebali biste nastaviti samo ako imate fizički pristup računaru koji se kontroliše.\n\n"
+msgstr "Trenutna uspostavljena veza se možda neće nastaviti tokom ili nakon ažuriranja. Čak i ako se veza nastavi, nećete moći odgovoriti na upite korisničke kontrole računa s udaljenog računara. Trebali biste nastaviti samo ako imate fizički pristup računaru koji se kontroliše.\n\n"
 "Jeste li sigurni da želite nastaviti?"
 
 #. Translators: The title of a dialog.
@@ -7869,7 +7869,7 @@ msgstr "Odaberi tekst do početka trenutnog rezultata"
 #: appModules\nvda.py:178
 #, python-brace-format
 msgid "Editing profile {profile}"
-msgstr "Uređivanje {profile} profila"
+msgstr "Uređivanje profila {profile}"
 
 #. Translators: the last action taken on an Outlook mail message
 #: appModules\outlook.py:57
@@ -9791,7 +9791,7 @@ msgstr "Tajlandski stepen 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:564
 msgid "Turkish 8 dot computer braille"
-msgstr ""
+msgstr "Turska osmotačkasta računarska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -13848,7 +13848,7 @@ msgstr "Pitaj prije prekidanja veze"
 #: gui\settingsDialogs.py:3410
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
-msgstr ""
+msgstr "Isključi govor s udaljenog računara prilikom kontrolisanja lokalnog"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3420
@@ -15446,25 +15446,25 @@ msgstr "Autori"
 #: gui\addonStoreGui\viewModels\addonList.py:96
 msgctxt "addonStore"
 msgid "Publication date"
-msgstr ""
+msgstr "Datum objavljivanja"
 
 #. Translators: The name of the column that contains the installation date of the add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:101
 msgctxt "addonStore"
 msgid "Install date"
-msgstr ""
+msgstr "Datum instaliranja"
 
 #. Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:107
 msgctxt "addonStore"
 msgid "Minimum NVDA version"
-msgstr ""
+msgstr "Minimalna NVDA verzija"
 
 #. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:112
 msgctxt "addonStore"
 msgid "Last tested NVDA version"
-msgstr ""
+msgstr "Posljednja testirana NVDA verzija"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -18932,7 +18932,7 @@ msgstr "Uspostavi vezu"
 #: _remoteClient\localMachine.py:290
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr "Nije moguće obraditi prečicu Control+Alt+Delete"
+msgstr "Nije moguće obraditi Control+Alt+Delete"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32

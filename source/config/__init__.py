@@ -13,7 +13,6 @@ For the latter two actions, one can perform actions prior to and/or after they t
 from enum import Enum
 import globalVars
 import winreg
-import ctypes
 import os
 import sys
 import errno
@@ -26,6 +25,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
+import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
@@ -396,7 +396,7 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 def setSystemConfigToCurrentConfig():
 	fromPath = WritePaths.configDir
-	if ctypes.windll.shell32.IsUserAnAdmin():
+	if winBindings.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
 		import systemUtils
@@ -1287,7 +1287,7 @@ class AggregatedSection:
 
 		# Alias old config items to their new counterparts for backwards compatibility.
 		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
+		# if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
 		# self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):

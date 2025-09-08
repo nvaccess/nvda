@@ -45,6 +45,7 @@ from config.configFlags import (
 	BrailleMode,
 	OutputMode,
 	TypingEcho,
+	ReportSpellingErrors,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -792,19 +793,18 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report spelling errors command.
-		description=_("Toggles on and off the reporting of spelling errors"),
+		description=_("Cycles through options for how to report spelling errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportSpellingErrors(self, gesture):
-		if config.conf["documentFormatting"]["reportSpellingErrors"]:
-			# Translators: The message announced when toggling the report spelling errors document formatting setting.
-			state = _("report spelling errors off")
-			config.conf["documentFormatting"]["reportSpellingErrors"] = False
-		else:
-			# Translators: The message announced when toggling the report spelling errors document formatting setting.
-			state = _("report spelling errors on")
-			config.conf["documentFormatting"]["reportSpellingErrors"] = True
-		ui.message(state)
+	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
+		toggleIntegerValue(
+			configSection="documentFormatting",
+			configKey="reportSpellingErrors2",
+			enumClass=ReportSpellingErrors,
+			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
+			messageTemplate=_("Report spelling errors {mode}"),
+		)
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -2540,7 +2540,7 @@ class GlobalCommands(ScriptableObject):
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
-			"reportSpellingErrors",
+			"reportSpellingErrors2",
 			"reportLineIndentation",
 			"reportParagraphIndentation",
 			"reportLineSpacing",

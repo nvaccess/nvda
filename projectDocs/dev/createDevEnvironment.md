@@ -59,22 +59,22 @@ Install the python version listed in [.python-versions](../../.python-versions)
 #### Microsoft Visual Studio
 
 * Microsoft Visual Studio 2022
-	* To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions is using](https://github.com/actions/runner-images/tree/main/images/windows).
-	* If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
-	* If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://visualstudio.microsoft.com/vs/community/).
-		* The Professional and Enterprise versions are also supported.
-		* Preview versions are *not* supported.
+  * To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions is using](https://github.com/actions/runner-images/tree/main/images/windows).
+  * If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
+  * If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://visualstudio.microsoft.com/vs/community/).
+    * The Professional and Enterprise versions are also supported.
+    * Preview versions are *not* supported.
 * When installing Visual Studio, additional components must be included:
-	* You can automatically fetch these using [NVDAs .vsconfig](../../.vsconfig) using the [import feature of the VS installer](https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#import-a-configuration).
-	* In the list on the Workloads tab, in the Desktop grouping:
-		* Desktop development with C++.
-			* Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
-	* On the Individual components tab, ensure the following items are selected:
-		* Windows 11 SDK (10.0.26100.0)
-		* MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
-		* MSVC v143 - VS 2022 C++ x64/x86 build tools
-		* C++ ATL for v143 build tools (x86 & x64)
-		* C++ ATL for v143 build tools (ARM64/ARM64EC)
+  * You can automatically fetch these using [NVDAs .vsconfig](../../.vsconfig) using the [import feature of the VS installer](https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#import-a-configuration).
+  * In the list on the Workloads tab, in the Desktop grouping:
+    * Desktop development with C++.
+      * Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
+  * On the Individual components tab, ensure the following items are selected:
+    * Windows 11 SDK (10.0.26100.0)
+    * MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
+    * MSVC v143 - VS 2022 C++ x64/x86 build tools
+    * C++ ATL for v143 build tools (x86 & x64)
+    * C++ ATL for v143 build tools (ARM64/ARM64EC)
 
 ### Git Submodules
 
@@ -88,7 +88,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.34.0
+* [liblouis](http://www.liblouis.io/), version 3.35.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 47.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

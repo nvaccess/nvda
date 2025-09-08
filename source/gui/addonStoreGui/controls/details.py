@@ -265,7 +265,10 @@ class AddonDetails(
 				)
 
 				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
-				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
+				if (
+					currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses
+					and details._addonHandlerModel is not None
+				):
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Installed version:"),
