@@ -281,3 +281,16 @@ GetSystemMetrics.restype = c_int
 GetSystemMetrics.argTypes = (
 	c_int,  # nIndex: The system metric or configuration setting to be retrieved
 )
+
+ChangeWindowMessageFilter = dll.ChangeWindowMessageFilter
+"""
+Adds or removes a message from the User Interface Privilege Isolation (UIPI) message filter.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-changewindowmessagefilter
+"""
+ChangeWindowMessageFilter.restype = BOOL
+ChangeWindowMessageFilter.argTypes = (
+	UINT,  # message: The message to add to or remove from the filter
+	DWORD,  # dwFlag: The action to be performed
+)
