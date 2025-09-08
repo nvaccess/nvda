@@ -18,6 +18,7 @@ from typing import Any, Literal, NamedTuple, Optional, Self
 import core
 import extensionPoints
 import wx
+from wx.html2 import WebView
 from .contextHelp import ContextHelpMixin
 from logHandler import log
 
@@ -413,6 +414,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		*,
 		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
+		isHtmlMessage: bool = False,
 	):
 		"""Initialize the MessageDialog.
 
@@ -425,6 +427,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param buttons: What buttons to place in the dialog, defaults to (DefaultButton.OK,).
 			Further buttons can easily be added later.
 		:param helpId: URL fragment of the relevant help entry in the user guide for this dialog, defaults to ""
+		:param isHtmlMessage: Whether the given message is a HTML message
 		"""
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
@@ -448,7 +451,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-		messageControl = self._messageControl = wx.StaticText(self)
+		if isHtmlMessage:
+			messageControl = self._messageControl = WebView.New(self)
+		else:
+			messageControl = self._messageControl = wx.StaticText(self)
 		contentsSizer.addItem(messageControl)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		mainSizer.Add(
@@ -663,8 +669,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param message: New message to show.
 		:return: Updated instance for chaining.
 		"""
-		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
-		self._messageControl.SetLabelText(message)
+		if isinstance(self._messageControl, WebView):
+			self._messageControl.SetPage(message, "")
+		else:
+			# Use SetLabelText to avoid ampersands being interpreted as accelerators.
+			self._messageControl.SetLabelText(message)
 		self._isLayoutFullyRealized = False
 		return self
 
@@ -954,7 +963,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
-		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
+		if isinstance(self._messageControl, wx.StaticText):
+			self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
 		self._mainSizer.Fit(self)
 		if self.Parent == gui.mainFrame:
 			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.

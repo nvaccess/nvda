@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2024 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Copyright (C) 2008-2025 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
 # Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -10,32 +9,20 @@ This refers to the user interface presented by the screen reader alone, not the 
 See L{gui} for the graphical user interface.
 """
 
-import os
-from ctypes import (
-	byref,
-	POINTER,
-)
-import comtypes.client
-from comtypes import automation
-from comtypes import COMError
-from html import escape
-import winBindings.mshtml
-import winBindings.urlmon
-from objidl import IMoniker
-
-import nh3
-from logHandler import log
-import gui
-import speech
-import braille
-from config.configFlags import TetherTo
-import globalVars
-from typing import Final, Optional
 from collections.abc import Callable
+from html import escape
+from typing import Final
 
-from utils.security import isRunningOnSecureDesktop
+import braille
 import core
-
+import gui
+import nh3
+import speech
+import wx.html2
+from config.configFlags import TetherTo
+from gui.message import MessageDialog, ReturnCode
+from logHandler import log
+from utils.security import isRunningOnSecureDesktop
 
 _DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
 """Duration in milliseconds for which to delay speaking and brailling a message, so that any UI changes don't interrupt it.
@@ -86,8 +73,8 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -
 			" such as the sign-on screen or UAC prompt.",
 		).format(title=title)
 
-	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
+	import wx  # Late import to prevent circular dependency.
 
 	log.debug("Presenting browsable message unavailable warning.")
 	wx.CallAfter(
@@ -128,8 +115,8 @@ def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 		).format(title=title)
 
 	log.debug("Presenting browsable message unavailable warning.")
-	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
+	import wx  # Late import to prevent circular dependency.
 
 	wx.CallAfter(
 		gui.messageBox,
@@ -148,98 +135,60 @@ def browseableMessage(
 	copyButton: bool = False,
 	sanitizeHtmlFunc: Callable[[str], str] = nh3.clean,
 ) -> None:
-	"""Present a message to the user that can be read in browse mode.
-	The message will be presented in an HTML document.
-
-	:param message: The message in either html or text.
-	:param title: The title for the message, defaults to "NVDA Message".
-	:param isHtml: Whether the message is html, defaults to False.
-	:param closeButton: Whether to include a "close" button, defaults to False.
-	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
-	:param sanitizeHtmlFunc: How to sanitize the html message, if isHtml is True.
-	Defaults to `nh3.clean` with default arguments.
-	Ensure to sanitize the html message if the source of it could be untrusted.
-	Any translatable string, or user generated content should be sanitized.
-	"""
 	if isRunningOnSecureDesktop():
 		_warnBrowsableMessageNotAvailableOnSecureScreens(title)
 		return
 
-	htmlFileName = os.path.join(globalVars.appDir, "message.html")
-	if not os.path.isfile(htmlFileName):
-		_warnBrowsableMessageComponentFailure(title)
-		raise LookupError(htmlFileName)
-
-	moniker = POINTER(IMoniker)()
-	try:
-		winBindings.urlmon.CreateURLMonikerEx(None, htmlFileName, byref(moniker), URL_MK_UNIFORM)
-	except OSError as e:
-		log.error(f"OS error during URL moniker creation: {e}")
-		_warnBrowsableMessageComponentFailure(title)
-		return
-	except Exception as e:
-		log.error(f"Unexpected error during URL moniker creation: {e}")
-		_warnBrowsableMessageComponentFailure(title)
-		return
-
-	try:
-		d = comtypes.client.CreateObject("Scripting.Dictionary")
-	except (COMError, OSError):
-		log.error("Scripting.Dictionary component unavailable", exc_info=True)
-		_warnBrowsableMessageComponentFailure(title)
-		return
-
 	if title is None:
-		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
-	d.add("title", title)
 
+	# Sanitize/prepare HTML
 	if not isHtml:
 		messageSanitized = f"<pre>{escape(message)}</pre>"
 	else:
-		log.debug("Sanitizing raw HTML before passing to ui.browseableMessage")
 		messageSanitized = sanitizeHtmlFunc(message)
-	d.add("message", messageSanitized)
+	templatedMessage = f"""
+	<!doctype html>
+	<HTML style="width : 350; height: 300">
+		<HEAD>
+			<TITLE>{title}</TITLE>
+		</HEAD>
+		<body style="margin:1em">
+			<div id="messageDiv">{messageSanitized}</div>
+		</body>
+	</html>
+	"""
 
-	# Translators: A notice to the user that a copy operation succeeded.
-	d.add("copySuccessfulAlertText", _("Text copied."))
-	# Translators: A notice to the user that a copy operation failed.
-	d.add("copyFailedAlertText", _("Couldn't copy to clipboard."))
+	# --- build the dialog ---
+	dialog = MessageDialog(
+		gui.mainFrame,
+		templatedMessage,
+		title,
+		buttons=None,
+		isHtmlMessage=True,
+	)
+
 	if closeButton:
-		# Translators: The text of a button which closes the window.
-		d.add("closeButtonText", _("Close"))
+		dialog.addCloseButton()
 	if copyButton:
-		# Translators: The label of a button to copy the text of the window to the clipboard.
-		d.add("copyButtonText", _("Copy"))
-		# Translators: A portion of an accessibility label for the "Copy" button,
-		# describing the key to press to activate the button. Currently, this key may only be Ctrl+Shift+C.
-		# Translation makes sense here if the Control or Shift keys are called something else in a
-		# given language; or to set this to the empty string if that key combination is unavailable on some keyboard.
-		d.add("copyButtonAcceleratorAccessibilityLabel", _("control+shift+c"))
 
-	dialogArgsVar = automation.VARIANT(d)
-	gui.mainFrame.prePopup()
-	try:
-		winBindings.mshtml.ShowHTMLDialogEx(
-			gui.mainFrame.Handle,
-			moniker,
-			HTMLDLG_MODELESS,
-			byref(dialogArgsVar),
-			DIALOG_OPTIONS,
-			None,
-		)
-	except Exception as e:
-		log.error(f"Failed to show HTML dialog: {e}")
-		_warnBrowsableMessageComponentFailure(title)
-		return
-	finally:
-		gui.mainFrame.postPopup()
+		def doCopy(payload):
+			if wx.TheClipboard.Open():
+				wx.TheClipboard.SetData(wx.TextDataObject(message))
+				wx.TheClipboard.Close()
+				reviewMessage(_("Text copied."))
+			else:
+				reviewMessage(_("Couldn't copy to clipboard."))
+
+		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Copy"), callback=doCopy, closesDialog=False)
+
+	dialog.Show()
 
 
 def message(
 	text: str,
-	speechPriority: Optional[speech.Spri] = None,
-	brailleText: Optional[str] = None,
+	speechPriority: speech.Spri | None = None,
+	brailleText: str | None = None,
 ):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
@@ -278,7 +227,7 @@ def delayedMessage(
 	)
 
 
-def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
+def reviewMessage(text: str, speechPriority: speech.Spri | None = None):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
@@ -289,7 +238,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 		braille.handler.message(text)
 
 
-def reportTextCopiedToClipboard(text: Optional[str] = None):
+def reportTextCopiedToClipboard(text: str | None = None):
 	"""Notify about the result of a "Copy to clipboard" operation.
 	@param text: The text that has been copied. Set to `None` to notify of a failed operation.
 	See: `api.copyToClip`
