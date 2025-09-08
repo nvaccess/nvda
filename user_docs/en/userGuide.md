@@ -1223,7 +1223,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
-* If inside of a table, Ctrl+Arrow will move by cell
+* If inside of a table, control+Arrow will move by cell
 * Home / End moves to the start/end of the expression
 * Space reads your current position
 * Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
@@ -1232,10 +1232,10 @@ To start navigation: press NVDA+Alt+M or the space key to enter math navigation 
 
 MathCAT’s navigation is the same in Word and in a browser.
 
-While navigating an expression, "control+c" copies the math content of the current node in NVDA.
+While navigating an expression, control+c copies the math content of the current node in NVDA.
 The format of the math copied to the clipboard can be adjusted through the NVDA math settings panel.
 
-#### Navigation Modes
+#### Navigation Modes {#MathNavigationModes}
 
 MathCAT supports the following navigation modes:
 
@@ -1265,11 +1265,18 @@ NYE = Not Yet Implemented
 
 ## Typical Use
 
-Typically, you will start at the first term of an expression and move right as needed. You might move up and down levels if needed. This is done with the arrow keys. alt+ctrl+arrow is used to move around tabular entries.
+Typically, you will start at the first term of an expression and move right as needed.
+You might move up and down levels if needed.
+This is done with the arrow keys.
+alt+control+arrow is used to move around tabular entries.
 
-Backspace will take you back to where you were, which is not always the same as moving to the left. For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+Backspace will take you back to where you were, which is not always the same as moving to the left.
+For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
 
-You will likely find one mode of navigation the most natural for you most of the time. This can be set in the MathCAT settings. However, at any time during navigation, you can switch the navigation modes using shift+up/down arrow. This is useful because each mode of navigation has its strengths and weaknesses.
+You will likely find one mode of navigation the most natural for you most of the time.
+This can be set in the MathCAT settings.
+However, at any time during navigation, you can switch the navigation modes using shift+up/down arrow.
+This is useful because each mode of navigation has its strengths and weaknesses.
 
 ## Braille {#Braille}
 
