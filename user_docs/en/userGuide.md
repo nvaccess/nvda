@@ -1233,7 +1233,7 @@ To start navigation: press NVDA+Alt+M or the space key to enter math navigation 
 MathCAT’s navigation is the same in Word and in a browser.
 
 While navigating an expression, control+c copies the math content of the current node in NVDA.
-The format of the math copied to the clipboard can be adjusted through the NVDA math settings panel.
+The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).
 
 #### Navigation Modes {#MathNavigationModes}
 
