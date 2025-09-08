@@ -9,6 +9,7 @@ from ctypes import (
 	Structure,
 	WINFUNCTYPE,
 	c_int,
+	c_size_t,
 	c_uint,
 	c_long,
 	c_longlong,
@@ -21,6 +22,8 @@ from ctypes.wintypes import (
 	BOOL,
 	DWORD,
 	BYTE,
+	LONG,
+	PMSG,
 	RECT,
 	HANDLE,
 	HHOOK,
@@ -39,6 +42,8 @@ from ctypes.wintypes import (
 	WPARAM,
 	ATOM,
 )
+
+UINT_PTR = c_size_t
 
 
 class PAINTSTRUCT(Structure):
@@ -307,3 +312,231 @@ GetKeyState.restype = SHORT
 GetKeyState.argtypes = (
 	c_int,  # nVirtKey: A virtual key
 )
+
+SystemParametersInfoW = dll.SystemParametersInfoW
+"""
+Retrieves or sets the value of one of the system-wide parameters.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfow
+"""
+SystemParametersInfoW.restype = BOOL
+SystemParametersInfoW.argtypes = (
+	UINT,  # uiAction: The system-wide parameter to be retrieved or set
+	UINT,  # uiParam: A parameter whose usage and format depends on the system parameter being queried or set
+	c_void_p,  # pvParam: A parameter whose usage and format depends on the system parameter being queried or set
+	UINT,  # fWinIni: If setting a system parameter, Whether to update the user profile, and if so, whether to  broadcast the change
+)
+
+WaitMessage = dll.WaitMessage
+"""
+Blocks thread execution until the thread needs to process a new message.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-waitmessage
+"""
+WaitMessage.restype = BOOL
+WaitMessage.argtypes = ()
+
+TranslateMessage = dll.TranslateMessage
+"""
+Translates virtual-key messages into character messages.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-translatemessage
+"""
+TranslateMessage.restype = BOOL
+TranslateMessage.argtypes = (
+	PMSG,  # lpMsg: A message retrieved from the calling thread's message queue
+)
+
+DispatchMessage = dll.DispatchMessageW
+"""
+Dispatches a message to a window procedure.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-dispatchmessagew
+"""
+DispatchMessage.restype = LRESULT
+DispatchMessage.argtypes = (
+	PMSG,  # lpMsg
+)
+
+PeekMessage = dll.PeekMessageW
+"""
+Dispatches incoming nonqueued messages, checks the thread message queue for a posted message, and retrieves the message (if any exist).
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-peekmessagew
+"""
+PeekMessage.restype = BOOL
+PeekMessage.argtypes = (
+	LPMSG,  # lpMsg: Pointer to an MSG structure that receives message information
+	HWND,  # hWnd: Handle to the window whose messages are to be retrieved
+	UINT,  # wMsgFilterMin: The value of the first message in the range of messages to be examined
+	UINT,  # wMsgFilterMax: The value of the last message in the range of messages to be examined
+	UINT,  # wRemoveMsg: Specifies how messages are to be handled
+)
+
+GetAsyncKeyState = dll.GetAsyncKeyState
+"""
+Determines whether a key is up or down at the time the function is called.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getasynckeystate
+"""
+GetAsyncKeyState.restype = SHORT
+GetAsyncKeyState.argtypes = (
+	c_int,  # vKey: The virtual-key code
+)
+
+IsWindow = dll.IsWindow
+"""
+Determines whether the specified window handle identifies an existing window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-iswindow
+"""
+IsWindow.restype = BOOL
+IsWindow.argtypes = (
+	HWND,  # hWnd: A handle to the window to be tested
+)
+
+IsChild = dll.IsChild
+"""
+Determines whether a window is a child or descendant window of a specified parent window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ischild
+"""
+IsChild.restype = BOOL
+IsChild.argtypes = (
+	HWND,  # hWndParent: Handle to the parent window
+	HWND,  # hWnd: Handle to the window to be tested
+)
+
+GetForegroundWindow = dll.GetForegroundWindow
+"""
+Retrieves a handle to the foreground window (the window with which the user is currently working)
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getforegroundwindow
+"""
+GetForegroundWindow.restype = HWND
+GetForegroundWindow.argtypes = ()
+
+SetForegroundWindow = dll.SetForegroundWindow
+"""
+Brings the thread that created the specified window into the foreground and activates the window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow
+"""
+SetForegroundWindow.restype = BOOL
+SetForegroundWindow.argtypes = (
+	HWND,  # hWnd: Handle to the window that should be activated and brought to the foreground.
+)
+
+SetFocus = dll.SetFocus
+"""
+Sets the keyboard focus to the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setfocus
+"""
+SetFocus.restype = HWND
+SetFocus.argtypes = (
+	HWND,  # hWnd: Handle to the window that will receive the keyboard input
+)
+
+GetDesktopWindow = dll.GetDesktopWindow
+"""
+Retrieves a handle to the desktop window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdesktopwindow
+"""
+GetDesktopWindow.restype = HWND
+GetDesktopWindow.argtypes = ()
+
+GetWindowLong = dll.GetWindowLongW
+"""
+Retrieves information about the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw
+"""
+GetWindowLong.restype = LONG
+GetWindowLong.argtypes = (
+	HWND,  # hWnd: Handle to the window and, indirectly, the class to which the window belongs
+	c_int,  # nIndex: Zero-based offset to the value to be retrieved
+)
+
+TIMERPROC = WINFUNCTYPE(None, HWND, UINT, UINT_PTR, DWORD)
+"""
+An application-defined callback function that processes WM_TIMER messages.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-timerproc
+"""
+
+SetTimer = dll.SetTimer
+"""
+Creates a timer with the specified time-out value.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-settimer
+"""
+SetTimer.restype = UINT_PTR
+SetTimer.argtypes = (
+	HWND,  # hWnd: handle to the window to be associated with the timer
+	UINT_PTR,  # nIDEvent: A nonzero timer identifier
+	UINT,  # uElapse: The time-out value, in milliseconds
+	TIMERPROC,  # lpTimerFunc: Pointer to the function to be notified when the time-out value elapses
+)
+
+KillTimer = dll.KillTimer
+"""
+Destroys the specified timer.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-killtimer
+"""
+KillTimer.restype = BOOL
+KillTimer.argTypes = (
+	HWND,  # hWnd: Handle to the window associated with the specified timer
+	UINT_PTR,  # uIDEvent: The timer to be destroyed
+)
+
+
+SetWinEventHook = dll.SetWinEventHook
+UnhookWinEvent = dll.UnhookWinEvent
+SendMessage = dll.SendMessageW
+GetWindowThreadProcessId = dll.GetWindowThreadProcessId
+GetClassName = dll.GetClassNameW
+keybd_event = dll.keybd_event
+mouse_event = dll.mouse_event
+GetAncestor = dll.GetAncestor
+SetPhysicalCursorPos = dll.SetPhysicalCursorPos
+GetPhysicalCursorPos = dll.GetPhysicalCursorPos
+GetCaretPos = dll.GetCaretPos
+GetTopWindow = dll.GetTopWindow
+InternalGetWindowText = dll.InternalGetWindowText
+GetWindow = dll.GetWindow
+IsWindowVisible = dll.IsWindowVisible
+IsWindowEnabled = dll.IsWindowEnabled
+GetGUIThreadInfo = dll.GetGUIThreadInfo
+SetWindowLong = dll.SetWindowLongW
+SetLayeredWindowAttributes = dll.SetLayeredWindowAttributes
+GetKeyboardLayout = dll.GetKeyboardLayout
+RedrawWindow = dll.RedrawWindow
+GetKeyNameText = dll.GetKeyNameTextW
+FindWindow = dll.FindWindowW
+MessageBox = dll.MessageBoxW
+PostMessage = dll.PostMessageW
+VkKeyScanEx = dll.VkKeyScanExW
+VkKeyScanEx.restype = SHORT
+ScreenToClient = dll.ScreenToClient
+ClientToScreen = dll.ClientToScreen
+NotifyWinEvent = dll.NotifyWinEvent
+SendInput = dll.SendInput
