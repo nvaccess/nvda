@@ -340,6 +340,9 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+    - name: Build scons targets
+      shell: cmd
+      run: scons %sconsOutTargets% %sconsArgs% %sconsCores%
     - name: Create launcher
       shell: cmd
       # Run launcher separately as we can't safely generate that in parallel to other scons targets (#18867)
@@ -347,7 +350,6 @@ jobs:
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsOutTargets% %sconsArgs% %sconsCores%
         scons launcher %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
