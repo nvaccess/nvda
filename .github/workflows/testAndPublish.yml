@@ -346,7 +346,9 @@ jobs:
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
+        scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
+        :: Run launcher separately as we can't safely generate that in parallel to other scons builds (#18867)
+        scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4

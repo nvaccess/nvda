@@ -1,9 +1,5 @@
 $ErrorActionPreference = "Stop";
-$sconsOutTargets = "launcher developerGuide changes userGuide keyCommands client moduleList"
-# AppX is currently unmaintained and not built by default.
-if ($env:GITHUB_EVENT_NAME -eq "push" -and $env:feature_buildAppx) {
-	$sconsOutTargets += " appx"
-}
+$sconsOutTargets = "developerGuide changes userGuide keyCommands client moduleList"
 $sconsArgs = "version=$env:version"
 if ($env:release) {
 	$sconsArgs += " release=1"
