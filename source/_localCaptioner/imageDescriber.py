@@ -119,7 +119,9 @@ class ImageDescriber:
 			return
 
 		self.captionThread = threading.Thread(
-			target=_messageCaption, args=(self.captioner, imageData), name="RunCaptionThread"
+			target=_messageCaption,
+			args=(self.captioner, imageData),
+			name="RunCaptionThread",
 		)
 		# Translators: Message when starting image recognition
 		ui.message(pgettext("imageDesc", "getting image description..."))
@@ -168,7 +170,9 @@ class ImageDescriber:
 		:param localModelDirPath: path of model directory
 		"""
 		self.loadModelThread = threading.Thread(
-			target=self._loadModel, args=(localModelDirPath,), name="LoadModelThread"
+			target=self._loadModel,
+			args=(localModelDirPath,),
+			name="LoadModelThread",
 		)
 		self.loadModelThread.start()
 
