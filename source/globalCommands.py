@@ -824,15 +824,17 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		toggleBinaryValue(
-			configSection="documentFormatting",
-			configKey="reportSpellingErrors2",
-			enumClass=ReportSpellingErrors,
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
-			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			messageTemplate=_("Report spelling errors {mode}"),
-			length=4,
-		)
+		match config.conf["documentFormatting"]["reportSpellingErrors2"]:
+			case 3 :
+				config.conf["documentFormatting"]["reportSpellingErrors2"] = 0
+			case 7:
+				config.conf["documentFormatting"]["reportSpellingErrors2"] = 4  # braille
+			case _:
+				config.conf["documentFormatting"]["reportSpellingErrors2"] += 1
+		currentValue = config.conf["documentFormatting"]["reportSpellingErrors2"] & ~ReportSpellingErrors.BRAILLE
+		# Translators: Reported when the user cycles through the choices to report spelling errors.
+		# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
+		ui.message(_("Report spelling errors {mode}").format(mode=ReportSpellingErrors(currentValue).displayString))
 
 	@script(
 		# Translators: Input help mode message for command to toggle report spelling errors in braille.
