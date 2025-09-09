@@ -417,7 +417,7 @@ class FormattingMarker(NamedTuple):
 		"""
 		formatConfig = config.conf["documentFormatting"]
 		if key == "invalid-spelling":
-			return formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE
+			return bool(formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE)
 		return formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE
 
 
