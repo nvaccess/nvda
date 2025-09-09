@@ -55,39 +55,6 @@ from winAPI.constants import SystemErrorCodes
 from utils import _deprecate
 
 
-__getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol(
-		"LOCAL_WIN10_DLL_PATH",
-		"NVDAState",
-		"ReadPaths",
-		"nvdaHelperLocalWin10Dll",
-	),
-	_deprecate.MovedSymbol(
-		"versionedLibPath",
-		"NVDAState",
-		"ReadPaths",
-		"versionedLibX86Path",
-	),
-	_deprecate.MovedSymbol(
-		"coreArchLibPath",
-		"NVDAState",
-		"ReadPaths",
-		"coreArchLibPath",
-	),
-	_deprecate.MovedSymbol(
-		"generateBeep",
-		"NVDAHelper.localLib",
-	),
-	_deprecate.MovedSymbol(
-		"VBuf_getTextInRange",
-		"NVDAHelper.localLib",
-	),
-	_deprecate.MovedSymbol(
-		"nvdaController_onSsmlMarkReached",
-		"NVDAHelper.localLib",
-	),
-)
-
 if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
 	from characterProcessing import SymbolLevel
@@ -914,7 +881,7 @@ def getHelperLocalWin10Dll():
 	return windll[ReadPaths.nvdaHelperLocalWin10Dll]
 
 
-def bstrReturn(address):
+def _bstrReturn(address: int) -> str:
 	"""Handle a BSTR returned from a ctypes function call.
 	This includes freeing the memory.
 	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
@@ -926,3 +893,38 @@ def bstrReturn(address):
 	val = wstring_at(address)
 	winBindings.oleaut32.SysFreeString(address)
 	return val
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"LOCAL_WIN10_DLL_PATH",
+		"NVDAState",
+		"ReadPaths",
+		"nvdaHelperLocalWin10Dll",
+	),
+	_deprecate.MovedSymbol(
+		"versionedLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"versionedLibX86Path",
+	),
+	_deprecate.MovedSymbol(
+		"coreArchLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"coreArchLibPath",
+	),
+	_deprecate.MovedSymbol(
+		"generateBeep",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"VBuf_getTextInRange",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"nvdaController_onSsmlMarkReached",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.RemovedSymbol("bstrReturn", _bstrReturn),
+)

@@ -48,6 +48,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 
 #### API Breaking Changes
 
@@ -118,6 +119,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Access to these symbols via `winKernel` is deprecated. (#18860)
 * `winKernel.advapi32` is deprecated.
   Use `winBindings.advapi32.dll` instead. (#18860)
+* `NVDAHelper.bstrReturn` is deprecated, with no planned replacement. (#18858)
+* `contentRecog.uwpOcr.uwpOcr_Callback` is deprecated.
+  Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
@@ -194,7 +198,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
 * NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)
-* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
