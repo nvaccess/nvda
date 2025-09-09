@@ -30,6 +30,7 @@ from ctypes.wintypes import (
 	LONG,
 	LPDWORD,
 	LPPOINT,
+	PBYTE,
 	PHANDLE,
 	PMSG,
 	POINT,
@@ -1204,4 +1205,22 @@ PostThreadMessage.argtypes = (
 	UINT,  # Msg: The type of message to be posted
 	WPARAM,  # wParam: Additional message-specific information
 	LPARAM,  # lParam: Additional message-specific information
+)
+
+ToUnicodeEx = dll.ToUnicodeEx
+"""
+Translates the specified virtual-key code and keyboard state to the corresponding Unicode character or characters.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ToUnicodeEx
+"""
+ToUnicodeEx.restype = int
+ToUnicodeEx.argtypes = (
+	UINT,  # wVirtKey: The virtual-key code to be translated
+	UINT,  # wScanCode: The hardware scan code of the key to be translated
+	PBYTE,  # lpKeyState: a 256-byte array that contains the current keyboard state
+	LPWSTR,  # pwszBuff: The buffer that receives the translated character(s) as UTF-16 code units
+	c_int,  # cchBuff: The size, in characters, of pwszBuff
+	UINT,  # wFlags: The behavior of the function
+	HKL,  # dwhkl: The input locale identifier used to translate the specified code
 )
