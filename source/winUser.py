@@ -115,13 +115,9 @@ __getattr__ = _deprecate.handleDeprecations(
 		"WINEVENTPROC",
 		"winBindings.user32",
 	),
+	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
 )
 """Module __getattr__ to handle backward compatibility."""
-
-
-# dll handles
-# TODO: remove
-user32 = windll.user32
 
 # rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
 # what may be an invalid or illegal pointer, we'll treat it as an opaque value.

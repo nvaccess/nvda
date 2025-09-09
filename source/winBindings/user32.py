@@ -30,7 +30,9 @@ from ctypes.wintypes import (
 	LONG,
 	LPDWORD,
 	LPPOINT,
+	PHANDLE,
 	PMSG,
+	POINT,
 	PRECT,
 	RECT,
 	HANDLE,
@@ -1062,4 +1064,144 @@ ClientToScreen.restype = BOOL
 ClientToScreen.argtypes = (
 	HWND,  # hWnd: Handle to the window whose client area is used for the conversion
 	LPPOINT,  # lpPoint: The client coordinates to be converted
+)
+
+WindowFromPoint = dll.WindowFromPoint
+"""
+Retrieves a handle to the window that contains the specified point.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-windowfrompoint
+"""
+WindowFromPoint.restype = HWND
+WindowFromPoint.argtypes = (
+	POINT,  # Point: The point to be checked
+)
+
+AttachThreadInput = dll.AttachThreadInput
+"""
+Attaches or detaches the input processing mechanism of one thread to that of another thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-AttachThreadInput
+"""
+AttachThreadInput.restype = BOOL
+AttachThreadInput.argtypes = (
+	DWORD,  # idAttach: The identifier of the thread to be attached to another thread
+	DWORD,  # idAttachTo: The identifier of the thread to which idAttach will be attached
+	BOOL,  # fAttach: If TRUE, the threads are attached; otherwise, they are detached
+)
+
+MapVirtualKeyEx = dll.MapVirtualKeyExW
+"""
+Translates a virtual-key code or scan code  into a scan code, character value or virtual-key code.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-MapVirtualKeyExW
+"""
+MapVirtualKeyEx.restype = UINT
+MapVirtualKeyEx.argtypes = (
+	UINT,  # uCode: The virtual key code or scan code for a key
+	UINT,  # uMapType: The translation to perform
+	HKL,  # dwhkl: Input locale identifier to use for translating the specified code
+)
+
+MsgWaitForMultipleObjects = dll.MsgWaitForMultipleObjects
+"""
+Waits until one or all of the specified objects are in the signaled state or the time-out interval elapses.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-msgwaitformultipleobjects
+"""
+MsgWaitForMultipleObjects.restype = DWORD
+MsgWaitForMultipleObjects.argtypes = (
+	DWORD,  # nCount: The number of object handles in the array pointed to by pHandles
+	PHANDLE,  # pHandles: An array of object handles
+	BOOL,  # fWaitAll: Whether to wait for all handles to be signaled
+	DWORD,  # dwMilliseconds: The time-out interval, in milliseconds
+	DWORD,  # dwWakeMask: The input types for which an input event object handle will be added to the array of object handles
+)
+
+ShowWindow = dll.ShowWindow
+"""
+Sets the specified window's show state.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
+"""
+ShowWindow.restype = BOOL
+ShowWindow.argtypes = (
+	HWND,  # hWnd: Handle to the window
+	c_int,  # nCmdShow: Controls how the window is to be shown
+)
+
+SetWindowPos = dll.SetWindowPos
+"""
+Changes the size, position, and Z order of a child, pop-up, or top-level window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetWindowPos
+"""
+SetWindowPos.restype = BOOL
+SetWindowPos.argtypes = (
+	HWND,  # hWnd:Handle to the window
+	HWND,  # hWndInsertAfter: Optional handle to the window to precede the positioned window in the Z order
+	c_int,  # X: The new position of the left side of the window, in client coordinates
+	c_int,  # Y: The new position of the top of the window, in client coordinates
+	c_int,  # cx: The new width of the window, in pixels
+	c_int,  # cy: The new height of the window, in pixels
+	UINT,  # uFlags: The window sizing and positioning flags
+)
+
+UpdateWindow = dll.UpdateWindow
+"""
+Updates the client area of the specified window by sending a WM_PAINT message to the window if the window's update region is not empty.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-UpdateWindow
+"""
+UpdateWindow.restype = BOOL
+UpdateWindow.argtypes = (
+	HWND,  # hWnd: Handle to the window to be updated
+)
+
+PostQuitMessage = dll.PostQuitMessage
+"""
+Indicates to the system that a thread has made a request to terminate.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-postquitmessage
+"""
+PostQuitMessage.restype = None
+PostQuitMessage.argtypes = (
+	c_int,  # nExitCode: The application exit code
+)
+
+InvalidateRect = dll.InvalidateRect
+"""
+Adds a rectangle to the specified window's update region.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-invalidaterect
+"""
+InvalidateRect.restype = BOOL
+InvalidateRect.argtypes = (
+	HWND,  # hWnd: Handle to the window whose update region has changed
+	PRECT,  # lpRect: the client coordinates of the rectangle to be added to the update region
+	BOOL,  # bErase: whether to erased the background when processing the update region
+)
+
+PostThreadMessage = dll.PostThreadMessageW
+"""
+Posts a message to the message queue of the specified thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-postthreadmessagew
+"""
+PostThreadMessage.restype = BOOL
+PostThreadMessage.argtypes = (
+	DWORD,  # idThread: The identifier of the thread to which the message is to be posted
+	UINT,  # Msg: The type of message to be posted
+	WPARAM,  # wParam: Additional message-specific information
+	LPARAM,  # lParam: Additional message-specific information
 )

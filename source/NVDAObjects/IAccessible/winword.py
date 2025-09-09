@@ -8,7 +8,7 @@ import ctypes
 import operator
 import uuid
 from logHandler import log
-import winUser
+from winBindings import user32
 import speech
 import controlTypes
 import config
@@ -586,8 +586,8 @@ class ProtectedDocumentPane(IAccessible):
 		document = next((x for x in self.children if isinstance(x, WordDocument)), None)
 		if document:
 			curThreadID = ctypes.windll.kernel32.GetCurrentThreadId()
-			winUser.user32.AttachThreadInput(curThreadID, document.windowThreadID, True)
-			winUser.user32.SetFocus(document.windowHandle)
-			winUser.user32.AttachThreadInput(curThreadID, document.windowThreadID, False)
+			user32.AttachThreadInput(curThreadID, document.windowThreadID, True)
+			user32.SetFocus(document.windowHandle)
+			user32.AttachThreadInput(curThreadID, document.windowThreadID, False)
 			if not document.WinwordWindowObject.active:
 				document.WinwordWindowObject.activate()

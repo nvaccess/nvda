@@ -40,6 +40,7 @@ import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
+from winBindings import user32
 import winBindings.ole32
 import winUser
 import globalVars  # noqa: F401
@@ -805,7 +806,7 @@ class IAccessible(Window):
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
 			try:
 				left, top, width, height = IAccessibleObject.accLocation(0)
-				windowHandle = winUser.user32.WindowFromPoint(winUser.POINT(left, top))
+				windowHandle = user32.WindowFromPoint(winUser.POINT(left, top))
 			except COMError as e:
 				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:

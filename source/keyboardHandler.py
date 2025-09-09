@@ -402,7 +402,7 @@ def getInputHkl():
 	else:
 		thread = 0
 	print(f"{thread=}")
-	return winUser.user32.GetKeyboardLayout(thread)
+	return user32.GetKeyboardLayout(thread)
 
 
 def canModifiersPerformAction(modifiers):
@@ -528,7 +528,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.vkCode == vkCodes.VK_PACKET:
 			# Unicode character from non-keyboard input.
 			return chr(self.scanCode)
-		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
+		vkChar = user32.MapVirtualKeyEx(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar > 0:
 			if vkChar == 43:  # "+"
 				# A gesture identifier can't include "+" except as a separator.
@@ -801,7 +801,7 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 	if isExtended:
 		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
 		mapScan |= 0xE000
-	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
+	vkCode = user32.MapVirtualKeyEx(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
 	flags = 0
 	if not isPress:
 		flags |= 2

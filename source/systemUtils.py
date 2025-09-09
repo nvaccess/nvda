@@ -35,7 +35,7 @@ import functools
 import shlobj
 from logHandler import log
 from NVDAState import WritePaths
-from winBindings import advapi32
+from winBindings import advapi32, user32
 
 
 @functools.lru_cache(maxsize=1)
@@ -234,10 +234,10 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		threadHandle = ctypes.c_int()
 		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
-		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
-			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
-				winUser.user32.TranslateMessage(ctypes.byref(msg))
-				winUser.user32.DispatchMessageW(ctypes.byref(msg))
+		while user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
+			while user32.PeekMessage(ctypes.byref(msg), None, 0, 0, 1):
+				user32.TranslateMessage(ctypes.byref(msg))
+				user32.DispatchMessage(ctypes.byref(msg))
 		if self.threadExc:
 			raise self.threadExc
 
