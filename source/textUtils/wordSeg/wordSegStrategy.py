@@ -201,7 +201,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				pass
 			return None
 
-
 	def _callCPPJieba(self) -> list[int] | None:
 		"""
 		Instance method: encode self.text and call cppjieba.
