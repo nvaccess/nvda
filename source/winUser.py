@@ -18,7 +18,6 @@ from ctypes import (
 	byref,
 	WinError,
 	Structure,
-	c_int,
 	c_long,
 	c_short,
 	c_uint,
@@ -121,7 +120,8 @@ __getattr__ = _deprecate.handleDeprecations(
 
 
 # dll handles
-# user32 = windll.user32
+# TODO: remove
+user32 = windll.user32
 
 # rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
 # what may be an invalid or illegal pointer, we'll treat it as an opaque value.
@@ -616,7 +616,7 @@ def sendMessage(hwnd, msg, param1, param2):
 
 def getWindowThreadProcessID(hwnd: HWNDVal) -> tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
-	processID = c_int()
+	processID = DWORD()
 	threadID = _user32.GetWindowThreadProcessId(hwnd, byref(processID))
 	return (processID.value, threadID)
 
