@@ -3078,9 +3078,10 @@ When navigating word by word or character by character, "out of spelling error" 
 * Braille: NVDA will indicate spelling errors in braille.
 To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+In these cases, reports can be reported just in braille.
 
-By default, spelling errors will be reported with speech and in braille.
+By default, spelling errors will be reported with speech.
 
 To cycle through available options to report spelling errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are: Off, Speech, Sound, Speech and sound.
