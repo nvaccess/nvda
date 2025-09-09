@@ -148,9 +148,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib.initJieba.restype = c_int
 			cls._lib.initJieba.argtypes = []
 
-			#int segmentOffsets(const char* text, int** wordEndOffsets, int* outLen);
-			cls._lib.segmentOffsets.restype = c_int
-			cls._lib.segmentOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
+			# bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen)
+			cls._lib.calculateWordOffsets.restype = c_bool
+			cls._lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
 
 			# bool insertUserWord(const char* word, int freq, const char* tag)
 			cls._lib.insertUserWord.restype = c_bool
@@ -173,46 +173,69 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			log.debugWarning("Failed to load cppjieba library: %s", e)
 			cls._lib = None
 
-	@staticmethod
 	@lru_cache(maxsize=256)
-	def _callCppjiebaCached(text_utf8: bytes) -> list[int]:
-		"""Module-level cached wrapper to call the C library given utf8 bytes."""
-		if ChineseWordSegmentationStrategy._lib is None:
-			return []
-		lib = ChineseWordSegmentationStrategy._lib
+	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int] | None:
+		if self._lib is None:
+			return None
+
 		charPtr = POINTER(c_int)()
 		outLen = c_int(0)
+
 		try:
-			res = lib.segmentOffsets(text_utf8, byref(charPtr), byref(outLen))
-			if res != 0 or not bool(charPtr):
-				return []
-			n = outLen.value
-			# read n ints
-			offsets = [charPtr[i] for i in range(n)]
-			# free memory allocated by C side
-			lib.freeOffsets(charPtr)
-			return offsets
+			success: bool = self._lib.calculateWordOffsets(text_utf8, byref(charPtr), byref(outLen))
+			if not success or not bool(charPtr) or outLen.value <= 0:
+				return None
+
+			try:
+				n = outLen.value
+				offsets = [charPtr[i] for i in range(n)]
+				return offsets
+			finally:
+				self._lib.freeOffsets(charPtr)
 		except Exception as e:
 			log.debugWarning("Exception calling cppjieba: %s", e)
 			try:
 				if bool(charPtr):
-					lib.freeOffsets(charPtr)
+					self._lib.freeOffsets(charPtr)
 			except Exception:
 				pass
-			return []
+			return None
 
-	@lru_cache(maxsize=128)
+
 	def _callCPPJieba(self) -> list[int] | None:
+		"""
+		Instance method: encode self.text and call cppjieba.
+		Returns list[int] on success, None on failure.
+		Uses LRU cache keyed by utf-8 bytes.
+		"""
 		data = self.text.encode("utf-8")
-		charPtr = POINTER(c_int)()
-		outLen = c_int()
-		result = self._lib.segmentOffsets(data, byref(charPtr), byref(outLen))
-		if result != 0 or not charPtr:
-			return
-		n = outLen.value
-		charOffsets = [charPtr[i] for i in range(n)]
-		self._lib.freeOffsets(charPtr)
-		return charOffsets
+
+		if getattr(self, "_lib", None) is ChineseWordSegmentationStrategy._lib:
+			return self._callCppjiebaCached(data)
+		else:
+			if self._lib is None:
+				return None
+
+			charPtr = POINTER(c_int)()
+			outLen = c_int(0)
+			try:
+				success: bool = self._lib.calculateWordOffsets(data, byref(charPtr), byref(outLen))
+				if not success or not bool(charPtr) or outLen.value <= 0:
+					return None
+
+				try:
+					n = outLen.value
+					return [charPtr[i] for i in range(n)]
+				finally:
+					self._lib.freeOffsets(charPtr)
+			except Exception as e:
+				log.debugWarning("Exception calling cppjieba: %s", e)
+				try:
+					if bool(charPtr):
+						self._lib.freeOffsets(charPtr)
+				except Exception:
+					pass
+				return None
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
