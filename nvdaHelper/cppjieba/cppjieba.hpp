@@ -125,8 +125,8 @@ public:
 
     /// @brief Do thread-safe segmentation and compute word end offsets.
 	/// @param text The input text in UTF-8 encoding.
-	/// @param wordEndOffsets Output vector to hold word offsets.
-    void getOffsets(const string& text, vector<int>& wordEndOffsets);
+	/// @param wordEndOffsets Output vector to hold byte offsets of word ends.
+    void getWordEndOffsets(const string& text, vector<int>& wordEndOffsets);
 
 private:
     JiebaSingleton();         ///< private ctor initializes base Jieba
@@ -154,14 +154,14 @@ JIEBA_API int initJieba();
 
 /// @brief Segment UTF-8 text into character offsets.
 /// @return 0 on success, -1 on failure.
-JIEBA_API int segmentOffsets(const char* text, int** wordEndOffsets, int* outLen);
+JIEBA_API bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen);
 
 /// Wrapper for word management
 JIEBA_API bool insertUserWord(const char* word, int freq, const char* tag);
 JIEBA_API bool deleteUserWord(const char* word, const char* tag);
 JIEBA_API bool find(const char* word);
 
-/// @brief Free memory allocated by segmentOffsets.
+/// @brief Free memory allocated by calculateWordOffsets.
 JIEBA_API void freeOffsets(int* ptr);
 
 } // extern "C"

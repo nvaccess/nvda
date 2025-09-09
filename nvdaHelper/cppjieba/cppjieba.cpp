@@ -7,6 +7,7 @@ For full terms and any additional permissions, see the NVDA license file: https:
 
 #include "cppjieba.hpp"
 
+
 JiebaSingleton& JiebaSingleton::getInstance() {
     // C++11 guarantees thread-safe init of this local static
     static JiebaSingleton instance;
@@ -15,13 +16,13 @@ JiebaSingleton& JiebaSingleton::getInstance() {
 
 JiebaSingleton::JiebaSingleton(): cppjieba::JiebaSegmenter() { } // call base ctor to load dictionaries, models, etc.
 
-void JiebaSingleton::getOffsets(const std::string& text, std::vector<int>& wordEndOffsets) {
+void JiebaSingleton::getWordEndOffsets(const std::string& text, std::vector<int>& wordEndOffsets) {
     std::lock_guard<std::mutex> lock(segMutex);
     std::vector<cppjieba::Word> words;
     this->Cut(text, words, true);
 
     for (auto const& word : words) {
-        wordEndOffsets.push_back(word.unicode_offset);
+        wordEndOffsets.push_back(word.unicode_offset + word.unicode_length);
     }
 }
 
@@ -37,24 +38,24 @@ int initJieba() {
     }
 }
 
-int segmentOffsets(const char* text, int** wordEndOffsets, int* outLen) {
-    if (!text || !wordEndOffsets || !outLen) return -1;
+bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen) {
+    if (!text || !wordEndOffsets || !outLen) return false;
     // we assume initJieba() has already been called successfully
 
-    std::string input(text);
+    std::string textStr(text);
     std::vector<int> offs;
-    JiebaSingleton::getInstance().getOffsets(input, offs);
+    JiebaSingleton::getInstance().getWordEndOffsets(textStr, offs);
 
     int n = static_cast<int>(offs.size());
     int* buf = static_cast<int*>(std::malloc(sizeof(int) * n));
     if (!buf) {
         *outLen = 0;
-        return -1;
+        return false;
     }
     for (int i = 0; i < n; ++i) buf[i] = offs[i];
     *wordEndOffsets = buf;
     *outLen = n;
-    return 0;
+    return true;
 }
 
 bool insertUserWord(const char* word, int freq, const char* tag = cppjieba::UNKNOWN_TAG) {
