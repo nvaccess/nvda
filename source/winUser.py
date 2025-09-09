@@ -108,6 +108,14 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SystemMetrics",
 		"CY_VIRTUAL_SCREEN",
 	),
+	_deprecate.MovedSymbol(
+		"HWINEVENTHOOK",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"WINEVENTPROC",
+		"winBindings.user32",
+	),
 )
 """Module __getattr__ to handle backward compatibility."""
 
@@ -137,6 +145,7 @@ class NMHdrStruct(Structure):
 	]
 
 
+# TODO: remove
 class GUITHREADINFO(Structure):
 	_fields_ = [
 		("cbSize", DWORD),
@@ -586,8 +595,10 @@ def getClientRect(hwnd):
 	return r
 
 
+# TODO: Remove
 HWINEVENTHOOK = HANDLE
 
+# TODO: remove
 WINEVENTPROC = WINFUNCTYPE(None, HWINEVENTHOOK, DWORD, HWND, c_long, c_long, DWORD, DWORD)
 
 
@@ -786,9 +797,11 @@ def getSystemStickyKeys():
 
 
 # START SENDINPUT TYPE DECLARATIONS
+# TODO: remove
 PUL = POINTER(c_ulong)
 
 
+# TODO: remove
 class KeyBdInput(Structure):
 	_fields_ = [
 		("wVk", c_ushort),
@@ -799,6 +812,7 @@ class KeyBdInput(Structure):
 	]
 
 
+# TODO: remove
 class HardwareInput(Structure):
 	_fields_ = [
 		("uMsg", c_ulong),
@@ -807,6 +821,7 @@ class HardwareInput(Structure):
 	]
 
 
+# TODO: remove
 class MouseInput(Structure):
 	_fields_ = [
 		("dx", c_long),
@@ -818,6 +833,7 @@ class MouseInput(Structure):
 	]
 
 
+# TODO: remove
 class Input_I(Union):
 	_fields_ = [
 		("ki", KeyBdInput),
@@ -826,6 +842,7 @@ class Input_I(Union):
 	]
 
 
+# TODO: remove
 class Input(Structure):
 	_fields_ = [
 		("type", c_ulong),
