@@ -31,6 +31,7 @@ import winBindings.kernel32
 from winBindings.kernel32 import (
 	FILETIME,
 	SYSTEMTIME,
+	TIME_ZONE_INFORMATION,
 )
 from utils import _deprecate
 
@@ -53,10 +54,6 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol(
 		"PROCESS_INFORMATION",
 		"winBindings.advapi32",
-	),
-	_deprecate.MovedSymbol(
-		"TIME_ZONE_INFORMATION",
-		"winBindings.kernel32",
 	),
 	_deprecate.MovedSymbol(
 		"PAPCFUNC ",
