@@ -1020,6 +1020,7 @@ IDT_MAX_SPACES = 72
 def getIndentToneDuration() -> int:
 	return config.conf["documentFormatting"]["indentToneDuration"]
 
+
 def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> SpeechSequence:
 	"""Retrieves the indentation speech sequence for a given string of indentation.
 	@param indentation: The string of indentation.
