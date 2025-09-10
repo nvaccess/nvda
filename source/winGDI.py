@@ -8,7 +8,6 @@ When working on this file, consider moving to winAPI.
 """
 
 from ctypes import (
-	windll,
 	POINTER,
 	byref,
 )
@@ -56,10 +55,8 @@ __getattr__ = _deprecate.handleDeprecations(
 		"winBindings.gdi32",
 	),
 	_deprecate.MovedSymbol("gdi32", "winBindings.gdi32", "dll"),
+	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
 )
-
-
-user32 = windll.user32
 
 
 BI_RGB = 0

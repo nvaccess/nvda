@@ -124,7 +124,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 * `touchHelper.SM_MAXIMUMTOUCHES` is deprecated.
   Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
-* `screenBitmap.user32` and `winUser.user32` are deprecated.
+* `screenBitmap.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
   Use `winBindings.user32.dll` instead. (#18883)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
