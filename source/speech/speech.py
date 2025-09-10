@@ -1018,6 +1018,9 @@ IDT_TONE_DURATION = 80  # Milleseconds
 IDT_MAX_SPACES = 72
 
 
+def getIndentToneDuration() -> int:
+	return config.conf["documentFormatting"]["indentToneDuration"]
+
 def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> SpeechSequence:
 	"""Retrieves the indentation speech sequence for a given string of indentation.
 	@param indentation: The string of indentation.
@@ -1038,7 +1041,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	indentSequence: SpeechSequence = []
 	if not indentation:
 		if toneIndentConfig:
-			indentSequence.append(BeepCommand(IDT_BASE_FREQUENCY, IDT_TONE_DURATION))
+			indentSequence.append(BeepCommand(IDT_BASE_FREQUENCY, getIndentToneDuration()))
 		if speechIndentConfig:
 			indentSequence.append(
 				# Translators: This is spoken when the given line has no indentation.
@@ -1068,7 +1071,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	if toneIndentConfig:
 		if quarterTones <= IDT_MAX_SPACES:
 			pitch = IDT_BASE_FREQUENCY * 2 ** (quarterTones / 24.0)  # 24 quarter tones per octave.
-			indentSequence.append(BeepCommand(pitch, IDT_TONE_DURATION))
+			indentSequence.append(BeepCommand(pitch, getIndentToneDuration()))
 		else:
 			# we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
 			speak = True

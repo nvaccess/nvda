@@ -235,6 +235,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
 	reportLineIndentation = integer(0, 3, default=0)
 	ignoreBlankLinesForRLI = boolean(default=False)
+	# Duration of indentation beeps, in milliseconds
+	indentToneDuration = integer(min=1, default=40)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
