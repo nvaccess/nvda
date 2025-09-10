@@ -84,5 +84,6 @@ def formatForGUI(versionTuple: AddonApiVersionT) -> str:
 		# Translators: shown when an addon API version string is unknown
 		default = _("unknown")
 		from logHandler import log
+
 		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
 		return default
