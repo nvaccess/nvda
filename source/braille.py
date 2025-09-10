@@ -38,6 +38,7 @@ import louisHelper
 import louis
 import gui
 from controlTypes.state import State
+import winBindings.kernel32
 import winKernel
 import keyboardHandler
 import baseObject
@@ -2459,7 +2460,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display.terminate()
 			self.display = None
 		if self.ackTimerHandle:
-			if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
+			if not winBindings.kernel32.CancelWaitableTimer(self.ackTimerHandle):
 				raise ctypes.WinError()
 			winKernel.closeHandle(self.ackTimerHandle)
 			self.ackTimerHandle = None
@@ -3662,7 +3663,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Base implementation to handle acknowledgement packets."""
 		if not self.receivesAckPackets:
 			raise NotImplementedError("This display driver does not support ACK packet handling")
-		if not ctypes.windll.kernel32.CancelWaitableTimer(handler.ackTimerHandle):
+		if not winBindings.kernel32.CancelWaitableTimer(handler.ackTimerHandle):
 			raise ctypes.WinError()
 		self._awaitingAck = False
 		handler._writeCellsInBackground()

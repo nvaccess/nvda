@@ -34,6 +34,7 @@ import core
 import NVDAState
 from contextlib import contextmanager
 import threading
+import winBindings.kernel32
 import winKernel
 
 if typing.TYPE_CHECKING:
@@ -342,7 +343,7 @@ def internal_keyUpEvent(vkCode, scanCode, extended, injected):
 				return True
 			if ignoreInjected:
 				if keyCode == _lastInjectedKeyUp:
-					winKernel.kernel32.SetEvent(_injectionDoneEvent)
+					winBindings.kernel32.SetEvent(_injectionDoneEvent)
 				return True
 
 		if passKeyThroughCount >= 1:

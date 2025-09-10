@@ -11,6 +11,7 @@ App modules wishing to support apps hosted inside this process must subclass the
 
 import ctypes
 import appModuleHandler
+import winBindings.kernel32
 import winKernel
 
 
@@ -23,9 +24,9 @@ def getAppNameFromHost(processId):
 		processId,
 	)
 	length = ctypes.c_uint()
-	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
+	winBindings.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
 	appModel = ctypes.create_unicode_buffer(length.value)
-	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), appModel)
+	winBindings.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), appModel)
 	winKernel.closeHandle(processHandle)
 	# Sometimes app model might be empty, so raise errors and fall back to wwahost.
 	if not appModel.value:

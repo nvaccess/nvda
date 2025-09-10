@@ -9,6 +9,7 @@ from ctypes import (
 	WINFUNCTYPE,
 	Structure,
 	c_void_p,
+	c_byte,
 	c_wchar,
 	c_wchar_p,
 	windll,
@@ -16,14 +17,16 @@ from ctypes import (
 	c_size_t,
 	c_int,
 	c_uint,
+	c_long,
 	c_short,
 	c_ushort,
-	c_ulong,
+	HRESULT,
 )
 from ctypes.wintypes import (
 	DWORD,
 	WORD,
 	LONG,
+	PULONG,
 	SMALL_RECT,
 	UINT,
 	HANDLE,
@@ -36,8 +39,8 @@ from ctypes.wintypes import (
 	LCID,
 	LPWSTR,
 	LARGE_INTEGER,
+	WCHAR,
 )
-from comtypes import HRESULT
 from serial.win32 import LPOVERLAPPED
 from .advapi32 import SECURITY_ATTRIBUTES
 ULONG_PTR = c_size_t
@@ -101,6 +104,26 @@ __all__ = (
 	"GetProcessInformation",
 	"RegisterApplicationRestart",
 	"GetLastError",
+	"GetStdHandle",
+	"CreateFileW",
+	"GetSystemPowerStatus",
+	"GetThreadLocale",
+	"Wow64DisableWow64FsRedirection",
+	"Wow64RevertWow64FsRedirection",
+	"FileTimeToSystemTime",
+	"SystemTimeToTzSpecificLocalTime",
+	"GetDateFormatEx",
+	"GetTimeFormatEx",
+	"WaitForSingleObjectEx",
+	"SetProcessShutdownParameters",
+	"GetExitCodeProcess",
+	"TerminateProcess",
+	"GetDriveTypeW",
+	"CreatePipe",
+	"DuplicateHandle",
+	"MoveFileExW",
+	"LCIDToLocaleName",
+	"GetACP",
 )
 
 
@@ -342,7 +365,6 @@ SetUnhandledExceptionFilter.argtypes = (
 SetUnhandledExceptionFilter.restype = UnhandledExceptionFilter
 
 
-# Thread and process functions
 GetCurrentThreadId = dll.GetCurrentThreadId
 """
 Retrieves the thread identifier of the calling thread.
@@ -393,7 +415,6 @@ QueueUserAPC.argtypes = (
 QueueUserAPC.restype = BOOL
 
 
-# Synchronization objects
 CreateEvent = dll.CreateEventW
 """
 Creates or opens a named or unnamed event object.
@@ -402,7 +423,7 @@ Creates or opens a named or unnamed event object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createeventw
 """
 CreateEvent.argtypes = (
-	SECURITY_ATTRIBUTES,  # lpEventAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	POINTER(SECURITY_ATTRIBUTES),  # lpEventAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,      # bManualReset: If TRUE, the function creates a manual-reset event object
 	BOOL,      # bInitialState: If TRUE, the initial state of the event object is signaled
 	LPCWSTR,   # lpName: The name of the event object
@@ -418,7 +439,7 @@ Creates or opens a named or unnamed mutex object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
 """
 CreateMutex.argtypes = (
-	SECURITY_ATTRIBUTES,  # lpMutexAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	POINTER(SECURITY_ATTRIBUTES),  # lpMutexAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,      # bInitialOwner: If TRUE, the calling thread requests immediate ownership
 	LPCWSTR,   # lpName: The name of the mutex object
 )
@@ -426,6 +447,7 @@ CreateMutex.restype = HANDLE
 
 
 CreateWaitableTimer = dll.CreateWaitableTimerW
+CreateWaitableTimerW = dll.CreateWaitableTimerW
 """
 Creates or opens a waitable timer object.
 
@@ -433,7 +455,7 @@ Creates or opens a waitable timer object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createwaitabletimerw
 """
 CreateWaitableTimer.argtypes = (
-	SECURITY_ATTRIBUTES,  # lpTimerAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	POINTER(SECURITY_ATTRIBUTES),  # lpTimerAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,      # bManualReset: If TRUE, the function creates a manual-reset notification timer
 	LPCWSTR,   # lpTimerName: The name of the timer object
 )
@@ -489,7 +511,7 @@ SetWaitableTimer.argtypes = (
 	HANDLE,    # hTimer: A handle to the timer object
 	POINTER(LARGE_INTEGER),  # lpDueTime: A pointer to a LARGE_INTEGER structure
 	c_int,     # lPeriod: The period of the timer, in milliseconds
-	PTIMERAPCROUTINE ,  # pfnCompletionRoutine: A pointer to the completion routine
+	c_void_p,  # pfnCompletionRoutine: An optional pointer to the completion routine
 	LPVOID,  # lpArgToCompletionRoutine: A single value passed to the completion routine
 	BOOL,      # fResume: If TRUE, restores a system in suspended power conservation mode
 )
@@ -525,7 +547,6 @@ WaitForMultipleObjects.argtypes = (
 WaitForMultipleObjects.restype = DWORD
 
 
-# Sleep and execution state functions
 SleepEx = dll.SleepEx
 """
 Suspends the current thread until the specified condition is met.
@@ -567,7 +588,6 @@ An application-defined completion routine used with the ReadFileEx and WriteFile
 """
 
 
-# File I/O functions
 ReadFileEx = dll.ReadFileEx
 """
 Reads data from the specified file or input/output (I/O) device.
@@ -647,7 +667,6 @@ WaitCommEvent.argtypes = (
 WaitCommEvent.restype = BOOL
 
 
-# File system functions
 CopyFile = dll.CopyFileW
 """
 Copies an existing file to a new file.
@@ -663,7 +682,6 @@ CopyFile.argtypes = (
 CopyFile.restype = BOOL
 
 
-# Locale functions
 GetLocaleInfo = dll.GetLocaleInfoW
 """
 Retrieves information about a locale specified by identifier.
@@ -705,7 +723,6 @@ GetUserDefaultUILanguage.argtypes = ()
 GetUserDefaultUILanguage.restype = c_int
 
 
-# Console functions
 AttachConsole = dll.AttachConsole
 """
 Attaches the calling process to the console of the specified process.
@@ -870,7 +887,6 @@ SetConsoleCtrlHandler.argtypes = (
 SetConsoleCtrlHandler.restype = BOOL
 
 
-# Package and module functions
 GetModuleHandleEx = dll.GetModuleHandleExW
 """
 Retrieves a module handle for the specified module and increments the module's reference count.
@@ -901,6 +917,20 @@ GetPackageFullName.argtypes = (
 GetPackageFullName.restype = LONG
 
 
+GetCurrentPackageFullName = dll.GetCurrentPackageFullName
+"""
+Retrieves the package full name for the current process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getcurrentpackagefullname
+"""
+GetCurrentPackageFullName.argtypes = (
+	POINTER(c_uint),  # packageFullNameLength: On input, the size of the packageFullName buffer
+	LPWSTR,           # packageFullName: The package full name
+)
+GetCurrentPackageFullName.restype = LONG
+
+
 QueryFullProcessImageName = dll.QueryFullProcessImageNameW
 """
 Retrieves the full name of the executable image for the specified process.
@@ -917,7 +947,6 @@ QueryFullProcessImageName.argtypes = (
 QueryFullProcessImageName.restype = BOOL
 
 
-# Process and architecture functions
 IsWow64Process = dll.IsWow64Process
 """
 Determines whether the specified process is running under WOW64.
@@ -963,7 +992,64 @@ GetProcessInformation.argtypes = (
 GetProcessInformation.restype = BOOL
 
 
-# System functions
+CreateToolhelp32Snapshot = dll.CreateToolhelp32Snapshot
+"""
+Takes a snapshot of the specified processes, as well as the heaps, modules, and threads used by these processes.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot
+"""
+CreateToolhelp32Snapshot.argtypes = (
+	DWORD,  # dwFlags: The portions of the system to be included in the snapshot
+	DWORD,  # th32ProcessID: The process identifier of the process to be included in the snapshot
+)
+CreateToolhelp32Snapshot.restype = HANDLE
+
+
+class PROCESSENTRY32W(Structure):
+	"""See https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w"""
+
+	_fields_ = [
+		("dwSize", DWORD),
+		("cntUsage", DWORD),
+		("th32ProcessID", DWORD),
+		("th32DefaultHeapID", PULONG),
+		("th32ModuleID", DWORD),
+		("cntThreads", DWORD),
+		("th32ParentProcessID", DWORD),
+		("pcPriClassBase", c_long),
+		("dwFlags", DWORD),
+		("szExeFile", c_wchar * 260),
+	]
+
+
+Process32First = dll.Process32FirstW
+"""
+Retrieves information about the first process encountered in a system snapshot.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-process32firstw
+"""
+Process32First.argtypes = (
+	HANDLE,    # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
+	POINTER(PROCESSENTRY32W),  # lppe: A pointer to a PROCESSENTRY32 structure
+)
+Process32First.restype = BOOL
+
+Process32Next = dll.Process32NextW
+"""
+Retrieves information about the next process recorded in a system snapshot.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-process32nextw
+"""
+Process32Next.argtypes = (
+	HANDLE,    # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
+	POINTER(PROCESSENTRY32W),  # lppe: A pointer to a PROCESSENTRY32 structure
+)
+Process32Next.restype = BOOL
+
+
 RegisterApplicationRestart = dll.RegisterApplicationRestart
 """
 Registers the active instance of an application for restart.
@@ -987,3 +1073,377 @@ Retrieves the calling thread's last-error code value.
 """
 GetLastError.argtypes = ()
 GetLastError.restype = DWORD
+
+
+GetStdHandle = dll.GetStdHandle
+"""
+Retrieves a handle to the specified standard device.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/console/getstdhandle
+"""
+GetStdHandle.argtypes = (
+	DWORD,  # nStdHandle: The standard device
+)
+GetStdHandle.restype = HANDLE
+
+
+CreateFile = dll.CreateFileW
+"""
+Creates or opens a file or I/O device.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+"""
+CreateFile.argtypes = (
+	LPCWSTR,  # lpFileName: The name of the file or device to be created or opened
+	DWORD,    # dwDesiredAccess: The requested access to the file or device
+	DWORD,    # dwShareMode: The requested sharing mode of the file or device
+	POINTER(SECURITY_ATTRIBUTES), # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	DWORD,    # dwCreationDisposition: An action to take on a file or device that exists or does not exist
+	DWORD,    # dwFlagsAndAttributes: The file or device attributes and flags
+	HANDLE,   # hTemplateFile: A valid handle to a template file with the GENERIC_READ access right
+)
+CreateFile.restype = HANDLE
+
+
+class SYSTEM_POWER_STATUS(Structure):
+	# https://docs.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
+	_fields_ = [
+		("ACLineStatus", c_byte),
+		("BatteryFlag", c_byte),
+		("BatteryLifePercent", c_byte),
+		("Reserved1", c_byte),
+		("BatteryLifeTime", DWORD),
+		("BatteryFullLiveTime", DWORD),
+	]
+
+
+GetSystemPowerStatus = dll.GetSystemPowerStatus
+"""
+Retrieves the power status of the system.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getsystempowerstatus
+"""
+GetSystemPowerStatus.argtypes = (
+	c_void_p,  # lpSystemPowerStatus: A pointer to a SYSTEM_POWER_STATUS structure
+)
+GetSystemPowerStatus.restype = BOOL
+
+
+GetThreadLocale = dll.GetThreadLocale
+"""
+Returns the locale identifier for the current thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getthreadlocale
+"""
+GetThreadLocale.argtypes = ()
+GetThreadLocale.restype = LCID
+
+
+Wow64DisableWow64FsRedirection = dll.Wow64DisableWow64FsRedirection
+"""
+Disables file system redirection for the calling thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-wow64disablewow64fsredirection
+"""
+Wow64DisableWow64FsRedirection.argtypes = (
+	c_void_p,  # OldValue: The WOW64 file system redirection value
+)
+Wow64DisableWow64FsRedirection.restype = BOOL
+
+
+Wow64RevertWow64FsRedirection = dll.Wow64RevertWow64FsRedirection
+"""
+Restores file system redirection for the calling thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-wow64revertwow64fsredirection
+"""
+Wow64RevertWow64FsRedirection.argtypes = (
+	LPVOID,  # OldValue: The WOW64 file system redirection value
+)
+Wow64RevertWow64FsRedirection.restype = BOOL
+
+
+class SYSTEMTIME(Structure):
+	_fields_ = (
+		("wYear", WORD),
+		("wMonth", WORD),
+		("wDayOfWeek", WORD),
+		("wDay", WORD),
+		("wHour", WORD),
+		("wMinute", WORD),
+		("wSecond", WORD),
+		("wMilliseconds", WORD),
+	)
+
+
+class FILETIME(Structure):
+	_fields_ = (
+		("dwLowDateTime", DWORD),
+		("dwHighDateTime", DWORD),
+	)
+
+
+FileTimeToSystemTime = dll.FileTimeToSystemTime
+"""
+Converts a file time to system time format.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime
+"""
+FileTimeToSystemTime.argtypes = (
+	POINTER(FILETIME),  # lpFileTime: A pointer to a FILETIME structure
+	POINTER(SYSTEMTIME),  # lpSystemTime: A pointer to a SYSTEMTIME structure
+)
+FileTimeToSystemTime.restype = BOOL
+
+
+class TIME_ZONE_INFORMATION(Structure):
+	_fields_ = (
+		("Bias", LONG),
+		("StandardName", WCHAR * 32),
+		("StandardDate", SYSTEMTIME),
+		("StandardBias", LONG),
+		("DaylightName", WCHAR * 32),
+		("DaylightDate", SYSTEMTIME),
+		("DaylightBias", LONG),
+	)
+
+
+SystemTimeToTzSpecificLocalTime = dll.SystemTimeToTzSpecificLocalTime
+"""
+Converts a time in Coordinated Universal Time (UTC) to a specified time zone's corresponding local time.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetotzspecificlocaltime
+"""
+SystemTimeToTzSpecificLocalTime.argtypes = (
+	POINTER(TIME_ZONE_INFORMATION),  # lpTimeZoneInformation: A pointer to a TIME_ZONE_INFORMATION structure
+	POINTER(SYSTEMTIME),  # lpUniversalTime: A pointer to a SYSTEMTIME structure
+	POINTER(SYSTEMTIME),  # lpLocalTime: A pointer to a SYSTEMTIME structure
+)
+SystemTimeToTzSpecificLocalTime.restype = BOOL
+
+
+GetDateFormatEx = dll.GetDateFormatEx
+"""
+Formats a date as a date string for a locale specified by name.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/datetimeapi/nf-datetimeapi-getdateformatex
+"""
+GetDateFormatEx.argtypes = (
+	LPCWSTR,  # lpLocaleName: Pointer to a locale name
+	DWORD,    # dwFlags: Flags specifying various function options
+	POINTER(SYSTEMTIME), # lpDate: Pointer to a SYSTEMTIME structure
+	LPCWSTR,  # lpFormat: Pointer to a format picture string
+	LPWSTR,   # lpDateStr: Pointer to a buffer to receive the formatted date string
+	c_int,    # cchDate: Size, in characters, of the lpDateStr buffer
+	LPCWSTR,  # lpCalendar: Reserved; must be NULL
+)
+GetDateFormatEx.restype = c_int
+
+
+GetTimeFormatEx = dll.GetTimeFormatEx
+"""
+Formats time as a time string for a locale specified by name.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/datetimeapi/nf-datetimeapi-gettimeformatex
+"""
+GetTimeFormatEx.argtypes = (
+	LPCWSTR,  # lpLocaleName: Pointer to a locale name
+	DWORD,    # dwFlags: Flags specifying various function options
+	POINTER(SYSTEMTIME), # lpTime: Pointer to a SYSTEMTIME structure
+	LPCWSTR,  # lpFormat: Pointer to a format picture string
+	LPWSTR,   # lpTimeStr: Pointer to a buffer to receive the formatted time string
+	c_int,    # cchTime: Size, in characters, of the lpTimeStr buffer
+)
+GetTimeFormatEx.restype = c_int
+
+
+WaitForSingleObjectEx = dll.WaitForSingleObjectEx
+"""
+Waits until the specified object is in the signaled state, an I/O completion routine or APC is queued, or the time-out interval elapses.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobjectex
+"""
+WaitForSingleObjectEx.argtypes = (
+	HANDLE,  # hHandle: A handle to the object
+	DWORD,   # dwMilliseconds: The time-out interval, in milliseconds
+	BOOL,    # bAlertable: If TRUE, the function returns when the system queues an APC
+)
+WaitForSingleObjectEx.restype = DWORD
+
+
+SetProcessShutdownParameters = dll.SetProcessShutdownParameters
+"""
+Sets shutdown parameters for the currently calling process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setprocessshutdownparameters
+"""
+SetProcessShutdownParameters.argtypes = (
+	DWORD,  # dwLevel: The shutdown priority for the process relative to other processes
+	DWORD,  # dwFlags: This parameter can be the following value
+)
+SetProcessShutdownParameters.restype = BOOL
+
+
+GetExitCodeProcess = dll.GetExitCodeProcess
+"""
+Retrieves the termination status of the specified process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getexitcodeprocess
+"""
+GetExitCodeProcess.argtypes = (
+	HANDLE,    # hProcess: A handle to the process
+	POINTER(DWORD),  # lpExitCode: A pointer to a variable to receive the process termination status
+)
+GetExitCodeProcess.restype = BOOL
+
+
+TerminateProcess = dll.TerminateProcess
+"""
+Terminates the specified process and all of its threads.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminateprocess
+"""
+TerminateProcess.argtypes = (
+	HANDLE,  # hProcess: A handle to the process to be terminated
+	UINT,    # uExitCode: The exit code to be used by the process and threads terminated as a result of this call
+)
+TerminateProcess.restype = BOOL
+
+
+GetDriveType = dll.GetDriveTypeW
+"""
+Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdrivetypew
+"""
+GetDriveType.argtypes = (
+	LPCWSTR,  # lpRootPathName: The root directory of the disk to be examined
+)
+GetDriveType.restype = UINT
+
+
+CreatePipe = dll.CreatePipe
+"""
+Creates an anonymous pipe and returns handles to the read and write ends of the pipe.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-createpipe
+"""
+CreatePipe.argtypes = (
+	POINTER(HANDLE),  # hReadPipe: A pointer to a variable that receives the read handle for the pipe
+	POINTER(HANDLE),  # hWritePipe: A pointer to a variable that receives the write handle for the pipe
+	POINTER(SECURITY_ATTRIBUTES),  # lpPipeAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	DWORD,     # nSize: The size of the buffer for the pipe, in bytes
+)
+CreatePipe.restype = BOOL
+
+
+
+MoveFileEx = dll.MoveFileExW
+"""
+Moves an existing file or directory, including its children, with various move options.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw
+"""
+MoveFileEx.argtypes = (
+	LPCWSTR,  # lpExistingFileName: The current name of the file or directory
+	LPCWSTR,  # lpNewFileName: The new name for the file or directory
+	DWORD,    # dwFlags: This parameter can be one or more of the following values
+)
+MoveFileEx.restype = BOOL
+
+
+LCIDToLocaleName = dll.LCIDToLocaleName
+"""
+Converts a locale identifier to a locale name.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-lcidtolocalename
+"""
+LCIDToLocaleName.argtypes = (
+	LCID,     # Locale: The locale identifier to convert
+	LPWSTR,   # lpName: Pointer to a buffer in which this function retrieves the locale name
+	c_int,    # cchName: Size, in characters, of the locale name buffer
+	DWORD,    # dwFlags: Flags controlling the operation
+)
+LCIDToLocaleName.restype = c_int
+
+
+GetLocaleInfoEx = dll.GetLocaleInfoEx
+"""
+Retrieves information about a locale specified by name.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getlocaleinfoex
+"""
+GetLocaleInfoEx.argtypes = (
+	LPCWSTR,  # lpLocaleName: Pointer to a locale name
+	DWORD,    # LCType: The locale information to retrieve
+	LPWSTR,   # lpLCData: Pointer to a buffer in which this function retrieves the requested data
+	c_int,    # cchData: Size, in characters, of the data buffer
+)
+GetLocaleInfoEx.restype = c_int
+
+
+GetACP = dll.GetACP
+"""
+Retrieves the current Windows ANSI code page identifier.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getacp
+"""
+GetACP.argtypes = ()
+GetACP.restype = UINT
+
+SetThreadLocale = dll.SetThreadLocale
+"""
+Sets the locale identifier for the current thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-setthreadlocale
+"""
+SetThreadLocale.argtypes = (
+	LCID,  # Locale: The locale identifier to be set for the current thread
+)
+SetThreadLocale.restype = BOOL
+
+
+GetApplicationUserModelId = dll.GetApplicationUserModelId
+"""
+Retrieves the application user model ID for the specified process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelid
+"""
+GetApplicationUserModelId.argtypes = (
+	HANDLE,           # hProcess: A handle to the process
+	POINTER(DWORD),   # AppUserModelIDLength: On input, the size of the AppUserModelID buffer
+	LPWSTR,           # AppUserModelID: The application user model ID string
+)
+GetApplicationUserModelId.restype = LONG
+
+GetOEMCP = dll.GetOEMCP
+"""
+Retrieves the current OEM code page identifier.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getoemcp
+"""
+GetOEMCP.argtypes = ()
+GetOEMCP.restype = UINT

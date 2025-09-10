@@ -21,6 +21,7 @@ import os
 import time
 import ctypes
 from enum import Enum
+import winBindings.kernel32
 import logHandler
 import languageHandler
 import globalVars
@@ -642,7 +643,7 @@ def _setUpWxApp() -> "wx.App":
 	def onQueryEndSession(evt):
 		if config.isAppX:
 			# Automatically restart NVDA on Windows Store update
-			ctypes.windll.kernel32.RegisterApplicationRestart(None, 0)
+			winBindings.kernel32.RegisterApplicationRestart(None, 0)
 
 	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 

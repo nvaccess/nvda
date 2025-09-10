@@ -31,7 +31,7 @@ from threading import (
 	Timer,
 )
 from typing import Callable
-
+import winBindings.kernel32
 from .constants import KC_INTERVAL
 
 
@@ -91,7 +91,7 @@ class ReadThread(Thread):
 					self._disableFunction()
 					log.debug("SetCommMask failed")
 					continue
-				result = ctypes.windll.kernel32.WaitCommEvent(
+				result = winBindings.kernel32.WaitCommEvent(
 					self._dev._port_handle,
 					byref(dwEvtMask),
 					byref(self._dev._overlapped_read),
@@ -102,7 +102,7 @@ class ReadThread(Thread):
 					self._disableFunction()
 					log.debug("WaitCommEvent failed")
 					continue
-				result = ctypes.windll.kernel32.GetOverlappedResult(
+				result = winBindings.kernel32.GetOverlappedResult(
 					self._dev._port_handle,
 					byref(self._dev._overlapped_read),
 					byref(data),

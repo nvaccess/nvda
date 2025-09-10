@@ -455,7 +455,7 @@ class UIAHandler(COMObject):
 
 		# Terminate the MTA thread
 		MTAThreadHandle = ctypes.wintypes.HANDLE(
-			windll.kernel32.OpenThread(
+			winBindings.kernel32.OpenThread(
 				winKernel.SYNCHRONIZE,
 				False,
 				self.MTAThread.ident,

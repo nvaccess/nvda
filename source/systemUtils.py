@@ -174,7 +174,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 @functools.lru_cache(maxsize=1)
 def _getDesktopName() -> str:
 	UOI_NAME = 2  # The name of the object, as a string
-	desktop = windll.user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
+	desktop = windll.user32.GetThreadDesktop(winBindings.kernel32.GetCurrentThreadId())
 	name = create_unicode_buffer(256)
 	windll.user32.GetUserObjectInformationW(
 		desktop,
@@ -232,7 +232,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.start()
 		time.sleep(0.1)
 		threadHandle = ctypes.c_int()
-		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
+		threadHandle.value = winBindings.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
 		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
 			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
@@ -261,7 +261,7 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 		import config
 
 		preventDisplayTurningOff = config.conf["general"]["preventDisplayTurningOff"]
-	windll.kernel32.SetThreadExecutionState(
+	winBindings.kernel32.SetThreadExecutionState(
 		winKernel.ES_SYSTEM_REQUIRED
 		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurningOff else 0)
 		| (winKernel.ES_CONTINUOUS if persistent else 0),
@@ -270,4 +270,4 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 
 def resetThreadExecutionState() -> None:
 	"""Reset the thread execution state to the default."""
-	windll.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
+	winBindings.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)

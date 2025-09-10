@@ -13,6 +13,7 @@ import ctypes
 import serial
 import inputCore
 import braille
+import winBindings.kernel32
 import hwIo
 import bdDetect
 from logHandler import log
@@ -151,7 +152,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if response is not None and response.cmd == rspCmd and response.dest == dest:
 					break
 				if x > 0:
-					ctypes.windll.kernel32.SleepEx(50, True)
+					winBindings.kernel32.SleepEx(50, True)
 			else:
 				raise RuntimeError(f"No response to {cmd.name}")
 			return response.data

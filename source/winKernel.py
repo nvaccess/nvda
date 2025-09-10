@@ -10,6 +10,7 @@ Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
 When working on this file, consider moving to winAPI.
 """
 
+from __future__ import annotations
 import contextlib
 import ctypes
 import ctypes.wintypes
@@ -27,10 +28,15 @@ if TYPE_CHECKING:
 
 import winBindings.advapi32
 import winBindings.kernel32
+from winBindings.kernel32 import (
+	FILETIME,
+	SYSTEMTIME,
+)
 from utils import _deprecate
 
 
 __getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("kernel32", "winBindings.kernel32", "dll"),
 	_deprecate.MovedSymbol(
 		"SYSTEM_POWER_STATUS",
 		"winAPI._powerTracking",
@@ -48,11 +54,17 @@ __getattr__ = _deprecate.handleDeprecations(
 		"PROCESS_INFORMATION",
 		"winBindings.advapi32",
 	),
+	_deprecate.MovedSymbol(
+		"TIME_ZONE_INFORMATION",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"PAPCFUNC ",
+		"winBindings.kernel32",
+	),
 	_deprecate.MovedSymbol("advapi32", "winBindings.advapi32", "dll"),
 )
 
-
-kernel32 = ctypes.windll.kernel32
 
 # Constants
 INFINITE = 0xFFFFFFFF
@@ -93,7 +105,7 @@ LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
 
 
 def GetStdHandle(handleID):
-	h = kernel32.GetStdHandle(handleID)
+	h = winBindings.kernel32.GetStdHandle(handleID)
 	if h == 0:
 		raise WinError()
 	return h
@@ -116,7 +128,7 @@ def CreateFile(
 	flags,
 	templateFile,
 ):
-	res = kernel32.CreateFileW(
+	res = winBindings.kernel32.CreateFile(
 		fileName,
 		desiredAccess,
 		shareMode,
@@ -131,7 +143,7 @@ def CreateFile(
 
 
 def createEvent(eventAttributes=None, manualReset=False, initialState=False, name=None):
-	res = kernel32.CreateEventW(eventAttributes, manualReset, initialState, name)
+	res = winBindings.kernel32.CreateEvent(eventAttributes, manualReset, initialState, name)
 	if res == 0:
 		raise ctypes.WinError()
 	return res
@@ -151,7 +163,7 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 	@param name: Defaults to C{None}, the timer object is created without a name.
 	@type name: str
 	"""
-	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
+	res = winBindings.kernel32.CreateWaitableTimer(securityAttributes, manualReset, name)
 	if res == 0:
 		raise ctypes.WinError()
 	return res
@@ -177,7 +189,7 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 		when the timer state is set to signaled.
 	@type resume: bool
 	"""
-	res = kernel32.SetWaitableTimer(
+	res = winBindings.kernel32.SetWaitableTimer(
 		handle,
 		# due time is in 100 nanosecond intervals, relative time should be negated.
 		byref(LARGE_INTEGER(dueTime * -10000)),
@@ -204,11 +216,11 @@ def closeHandle(*args):
 
 
 def GetSystemPowerStatus(sps: "SystemPowerStatus") -> int:
-	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+	return winBindings.kernel32.GetSystemPowerStatus(ctypes.byref(sps))
 
 
 def getThreadLocale():
-	return kernel32.GetThreadLocale()
+	return winBindings.kernel32.GetThreadLocale()
 
 
 ERROR_INVALID_FUNCTION = 0x1
@@ -219,14 +231,14 @@ ERROR_INVALID_HANDLE = 0x6
 def suspendWow64Redirection():
 	"""Context manager which disables Wow64 redirection for a section of code and re-enables it afterwards"""
 	oldValue = LPVOID()
-	res = kernel32.Wow64DisableWow64FsRedirection(byref(oldValue))
+	res = winBindings.kernel32.Wow64DisableWow64FsRedirection(byref(oldValue))
 	if res == 0:
 		# Disabling redirection failed.
 		# This can occur if we're running on 32-bit Windows (no Wow64 redirection)
 		# or as a 64-bit process on 64-bit Windows (Wow64 redirection not applicable)
 		# In this case failure is expected and there is no reason to raise an exception.
 		# Inspect last error code to determine reason for the failure.
-		errorCode = kernel32.GetLastError()
+		errorCode = winBindings.kernel32.GetLastError()
 		if errorCode == ERROR_INVALID_FUNCTION:  # Redirection not supported or not applicable.
 			redirectionDisabled = False
 		else:
@@ -237,40 +249,8 @@ def suspendWow64Redirection():
 		yield
 	finally:
 		if redirectionDisabled:
-			if kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
+			if winBindings.kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
 				raise WinError()
-
-
-class SYSTEMTIME(ctypes.Structure):
-	_fields_ = (
-		("wYear", WORD),
-		("wMonth", WORD),
-		("wDayOfWeek", WORD),
-		("wDay", WORD),
-		("wHour", WORD),
-		("wMinute", WORD),
-		("wSecond", WORD),
-		("wMilliseconds", WORD),
-	)
-
-
-class FILETIME(Structure):
-	_fields_ = (
-		("dwLowDateTime", DWORD),
-		("dwHighDateTime", DWORD),
-	)
-
-
-class TIME_ZONE_INFORMATION(Structure):
-	_fields_ = (
-		("Bias", ctypes.wintypes.LONG),
-		("StandardName", ctypes.wintypes.WCHAR * 32),
-		("StandardDate", SYSTEMTIME),
-		("StandardBias", ctypes.wintypes.LONG),
-		("DaylightName", ctypes.wintypes.WCHAR * 32),
-		("DaylightDate", SYSTEMTIME),
-		("DaylightBias", ctypes.wintypes.LONG),
-	)
 
 
 def time_tToFileTime(time_tToConvert: float) -> FILETIME:
@@ -286,7 +266,7 @@ def time_tToFileTime(time_tToConvert: float) -> FILETIME:
 
 
 def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None:
-	if kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
+	if winBindings.kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
 		raise WinError()
 
 
@@ -305,7 +285,7 @@ def SystemTimeToTzSpecificLocalTime(
 	if lpTimeZoneInformation is not None:
 		lpTimeZoneInformation = byref(lpTimeZoneInformation)
 	if (
-		kernel32.SystemTimeToTzSpecificLocalTime(
+		winBindings.kernel32.SystemTimeToTzSpecificLocalTime(
 			lpTimeZoneInformation,
 			byref(lpUniversalTime),
 			byref(lpLocalTime),
@@ -321,9 +301,9 @@ def GetDateFormatEx(Locale, dwFlags, date, lpFormat):
 		lpDate = byref(date)
 	else:
 		lpDate = None
-	bufferLength = kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
+	bufferLength = winBindings.kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
 	buf = ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
+	winBindings.kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
 	return buf.value
 
 
@@ -333,9 +313,9 @@ def GetTimeFormatEx(Locale, dwFlags, date, lpFormat):
 		lpTime = byref(date)
 	else:
 		lpTime = None
-	bufferLength = kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, None, 0)
+	bufferLength = winBindings.kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, None, 0)
 	buf = ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, buf, bufferLength)
+	winBindings.kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, buf, bufferLength)
 	return buf.value
 
 
@@ -366,7 +346,7 @@ def waitForSingleObject(handle, timeout):
 
 
 def waitForSingleObjectEx(handle, timeout, alertable):
-	res = kernel32.WaitForSingleObjectEx(handle, timeout, alertable)
+	res = winBindings.kernel32.WaitForSingleObjectEx(handle, timeout, alertable)
 	if res == WAIT_FAILED:
 		raise ctypes.WinError()
 	return res
@@ -376,20 +356,20 @@ SHUTDOWN_NORETRY = 0x00000001
 
 
 def SetProcessShutdownParameters(level, flags):
-	res = kernel32.SetProcessShutdownParameters(level, flags)
+	res = winBindings.kernel32.SetProcessShutdownParameters(level, flags)
 	if res == 0:
 		raise ctypes.WinError()
 
 
 def GetExitCodeProcess(process):
 	exitCode = ctypes.wintypes.DWORD()
-	if not kernel32.GetExitCodeProcess(process, ctypes.byref(exitCode)):
+	if not winBindings.kernel32.GetExitCodeProcess(process, ctypes.byref(exitCode)):
 		raise ctypes.WinError()
 	return exitCode.value
 
 
 def TerminateProcess(process, exitCode):
-	if not kernel32.TerminateProcess(process, exitCode):
+	if not winBindings.kernel32.TerminateProcess(process, exitCode):
 		raise ctypes.WinError()
 
 
@@ -403,7 +383,7 @@ DRIVE_RAMDISK = 6
 
 
 def GetDriveType(rootPathName):
-	return kernel32.GetDriveTypeW(rootPathName)
+	return winBindings.kernel32.GetDriveType(rootPathName)
 
 
 class SECURITY_ATTRIBUTES(Structure):
@@ -421,7 +401,7 @@ def CreatePipe(pipeAttributes, size):
 	read = ctypes.wintypes.HANDLE()
 	write = ctypes.wintypes.HANDLE()
 	if (
-		kernel32.CreatePipe(
+		winBindings.kernel32.CreatePipe(
 			ctypes.byref(read),
 			ctypes.byref(write),
 			byref(pipeAttributes) if pipeAttributes else None,
@@ -466,7 +446,7 @@ def CreateProcessAsUser(
 
 
 def GetCurrentProcess():
-	return kernel32.GetCurrentProcess()
+	return winBindings.kernel32.GetCurrentProcess()
 
 
 def OpenProcessToken(ProcessHandle, DesiredAccess):
@@ -504,7 +484,6 @@ def DuplicateHandle(
 	return targetHandle.value
 
 
-PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
 
 GMEM_MOVEABLE = 2
@@ -572,7 +551,7 @@ MOVEFILE_WRITE_THROUGH = 0x8
 
 def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
 	# If MoveFileExW fails, Windows will raise appropriate errors.
-	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
+	if not winBindings.kernel32.MoveFileEx(lpExistingFileName, lpNewFileName, dwFlags):
 		raise ctypes.WinError()
 
 
@@ -581,11 +560,9 @@ ES_CONTINUOUS = 0x80000000
 ES_DISPLAY_REQUIRED = 0x2
 ES_SYSTEM_REQUIRED = 0x1
 
-kernel32.SetThreadExecutionState.restype = ctypes.wintypes.DWORD
-
 
 def SetThreadExecutionState(esFlags):
-	res = kernel32.SetThreadExecutionState(esFlags)
+	res = winBindings.kernel32.SetThreadExecutionState(esFlags)
 	if not res:
 		raise WinError()
 	return res
@@ -596,14 +573,14 @@ def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
 	from logHandler import log
 
 	dwFlags = 0
-	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
+	bufferLength = winBindings.kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
 	if bufferLength == 0:
 		# This means that there was an error fetching the LCID.
 		# As the buffer is empty, this indicates that the windowsLCID is invalid.
 		log.debugWarning(f"Invalid LCID {windowsLCID}")
 		return None
 	buffer = ctypes.create_unicode_buffer("", bufferLength)
-	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
+	bufferLength = winBindings.kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
 	if bufferLength == 0:
 		# This means that there was an error fetching the LCID.
 		# As we have already checked if the LCID is valid by receiveing a non-zero buffer length,
