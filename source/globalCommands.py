@@ -837,7 +837,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when the user cycles through the choices to report spelling errors.
 		# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 		ui.message(
-			_("Report spelling errors {mode}").format(mode=ReportSpellingErrors(currentValue).displayString)
+			_("Report spelling errors {mode}").format(mode=ReportSpellingErrors(currentValue).displayString),
 		)
 
 	@script(
