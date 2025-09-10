@@ -775,7 +775,7 @@ class _RemoteLoader:
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderX86, _remoteLoaderAMD64, _remoteLoaderARM64
 	global lastLanguageID, lastLayoutString
-	hkl = c_ulong(user32.GetKeyboardLayout(0)).value
+	hkl = user32.GetKeyboardLayout(0)
 	lastLanguageID = winUser.LOWORD(hkl)
 	KL_NAMELENGTH = 9
 	buf = create_unicode_buffer(KL_NAMELENGTH)
