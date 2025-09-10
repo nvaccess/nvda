@@ -1507,3 +1507,15 @@ else:
 	_GhostWindowFromHungWindow.argtypes = (
 		HWND,  # hwndHung: Handle of a hung window
 	)
+
+GetSysColor = dll.GetSysColor
+"""
+Retrieves the current color of the specified display element.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor
+"""
+GetSysColor.restype = DWORD
+GetSysColor.argtypes = (
+	c_int,  # nIndex: The display element whose color is to be retrieved
+)
