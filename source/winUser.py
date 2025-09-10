@@ -783,7 +783,7 @@ KEYEVENTF_UNICODE = 0x04
 def SendInput(inputs):
 	n = len(inputs)
 	arr = (INPUT * n)(*inputs)
-	_user32.SendInput(n, byref(arr), sizeof(INPUT))
+	_user32.SendInput(n, arr, sizeof(INPUT))
 
 
 @contextlib.contextmanager
