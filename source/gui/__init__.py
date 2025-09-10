@@ -6,7 +6,6 @@
 
 from collections.abc import Callable
 import os
-import ctypes
 import warnings
 import wx
 import wx.adv

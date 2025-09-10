@@ -28,17 +28,9 @@ from typing import (
 from logHandler import log
 import ui
 import winBindings.kernel32
+from winBindings.kernel32 import SYSTEM_POWER_STATUS as SystemPowerStatus
 import winKernel
-from utils import _deprecate
 
-
-__getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol(
-		"SystemPowerStatus",
-		"winBindings.kernel32",
-		"SYSTEM_POWER_STATUS",
-	),
-)
 
 
 BATTERY_LIFE_TIME_UNKNOWN = 0xFFFFFFFF

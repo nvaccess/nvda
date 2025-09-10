@@ -35,7 +35,6 @@ import config
 import languageHandler
 from logHandler import log
 import winBindings.kernel32
-import winKernel
 import addonAPIVersion
 import importlib
 import NVDAState
