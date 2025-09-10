@@ -12,17 +12,12 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 from ctypes import (
-	POINTER,
-	WINFUNCTYPE,
-	Union,
 	byref,
 	WinError,
 	Structure,
 	c_long,
 	c_short,
 	c_uint,
-	c_ulong,
-	c_ushort,
 	c_wchar,
 	create_unicode_buffer,
 	sizeof,
@@ -30,7 +25,6 @@ from ctypes import (
 )
 from ctypes.wintypes import (
 	BOOL,
-	HANDLE,
 	HWND,
 	POINT,
 	RECT,
@@ -43,6 +37,8 @@ from winBindings import user32 as _user32
 from winBindings.user32 import (
 	WNDENUMPROC as _WNDENUMPROC,
 	PAINTSTRUCT as _PAINTSTRUCT,
+	GUITHREADINFO as _GUITHREADINFO,
+	INPUT,
 )
 import winKernel
 from collections.abc import Callable
@@ -115,6 +111,13 @@ __getattr__ = _deprecate.handleDeprecations(
 		"winBindings.user32",
 	),
 	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
+	_deprecate.MovedSymbol("GUITHREADINFO", "winBindings.user32"),
+	_deprecate.MovedSymbol("WINEVENTPROC", "winBindings.user32"),
+	_deprecate.MovedSymbol("HWINEVENTHOOK", "winBindings.user32"),
+	_deprecate.MovedSymbol("Input", "winBindings.user32", "INPUT"),
+	_deprecate.MovedSymbol("KeyBdInput", "winBindings.user32", "KEYBDINPUT"),
+	_deprecate.MovedSymbol("HardwareInput", "winBindings.user32", "HARDWAREINPUT"),
+	_deprecate.MovedSymbol("MouseInput", "winBindings.user32", "MOUSEINPUT"),
 )
 """Module __getattr__ to handle backward compatibility."""
 
@@ -137,21 +140,6 @@ class NMHdrStruct(Structure):
 		("hwndFrom", HWND),
 		("idFrom", c_uint),
 		("code", c_uint),
-	]
-
-
-# TODO: remove
-class GUITHREADINFO(Structure):
-	_fields_ = [
-		("cbSize", DWORD),
-		("flags", DWORD),
-		("hwndActive", HWND),
-		("hwndFocus", HWND),
-		("hwndCapture", HWND),
-		("hwndMenuOwner", HWND),
-		("hwndMoveSize", HWND),
-		("hwndCaret", HWND),
-		("rcCaret", RECT),
 	]
 
 
@@ -590,13 +578,6 @@ def getClientRect(hwnd):
 	return r
 
 
-# TODO: Remove
-HWINEVENTHOOK = HANDLE
-
-# TODO: remove
-WINEVENTPROC = WINFUNCTYPE(None, HWINEVENTHOOK, DWORD, HWND, c_long, c_long, DWORD, DWORD)
-
-
 def setWinEventHook(*args):
 	return _user32.SetWinEventHook(*args)
 
@@ -677,7 +658,7 @@ def isWindowEnabled(window):
 
 
 def getGUIThreadInfo(threadID):
-	info = GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))
+	info = _GUITHREADINFO(cbSize=sizeof(_GUITHREADINFO))
 	_user32.GetGUIThreadInfo(threadID, byref(info))
 	return info
 
@@ -792,59 +773,6 @@ def getSystemStickyKeys():
 
 
 # START SENDINPUT TYPE DECLARATIONS
-# TODO: remove
-PUL = POINTER(c_ulong)
-
-
-# TODO: remove
-class KeyBdInput(Structure):
-	_fields_ = [
-		("wVk", c_ushort),
-		("wScan", c_ushort),
-		("dwFlags", c_ulong),
-		("time", c_ulong),
-		("dwExtraInfo", PUL),
-	]
-
-
-# TODO: remove
-class HardwareInput(Structure):
-	_fields_ = [
-		("uMsg", c_ulong),
-		("wParamL", c_short),
-		("wParamH", c_ushort),
-	]
-
-
-# TODO: remove
-class MouseInput(Structure):
-	_fields_ = [
-		("dx", c_long),
-		("dy", c_long),
-		("mouseData", c_ulong),
-		("dwFlags", c_ulong),
-		("time", c_ulong),
-		("dwExtraInfo", PUL),
-	]
-
-
-# TODO: remove
-class Input_I(Union):
-	_fields_ = [
-		("ki", KeyBdInput),
-		("mi", MouseInput),
-		("hi", HardwareInput),
-	]
-
-
-# TODO: remove
-class Input(Structure):
-	_fields_ = [
-		("type", c_ulong),
-		("ii", Input_I),
-	]
-
-
 INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
 INPUT_KEYBOARD = 1  # The event is a keyboard event. Use the ki structure of the union.
 KEYEVENTF_KEYUP = 0x0002
@@ -854,8 +782,8 @@ KEYEVENTF_UNICODE = 0x04
 
 def SendInput(inputs):
 	n = len(inputs)
-	arr = (Input * n)(*inputs)
-	_user32.SendInput(n, arr, sizeof(Input))
+	arr = (INPUT * n)(*inputs)
+	_user32.SendInput(n, byref(arr), sizeof(INPUT))
 
 
 @contextlib.contextmanager

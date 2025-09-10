@@ -6,6 +6,7 @@
 
 import gui
 import winUser
+import winBindings.user32
 import winKernel
 import wincon
 from colors import RGB
@@ -153,7 +154,7 @@ def getConsoleVisibleLines():
 	return newLines
 
 
-@winUser.WINEVENTPROC
+@winBindings.user32.WINEVENTPROC
 def consoleWinEventHook(handle, eventID, window, objectID, childID, threadID, timestamp):
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 

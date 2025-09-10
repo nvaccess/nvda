@@ -67,6 +67,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
+* `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
 
 #### Deprecations
 
@@ -87,7 +88,7 @@ Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
 * `nvwave.WAVEFORMATEX` is deprecated.
 Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
-* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `GUITHREADINFO`, `HWINEVENTHOOK`, `WINEVENTPROC`, `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207, #18883)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * `hwPortUtils.BTH_ADDR` is deprecated.
@@ -126,6 +127,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 * `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
   Use `winBindings.user32.dll` instead. (#18883)
+  * `winUser.HardwareInput`, `winUser.Input`, `winUser.KeyBdInput`, `winUser.MouseInput` are deprecated.
+  Use `winUser.user32.HARDWAREINPUT`, `winBindings.user32.INPUT`, `winBindings.user32.KEYBDINPUT` `winUser.user32.MOUSEINPUT` instead. (#18883)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
