@@ -112,8 +112,6 @@ __getattr__ = _deprecate.handleDeprecations(
 	),
 	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
 	_deprecate.MovedSymbol("GUITHREADINFO", "winBindings.user32"),
-	_deprecate.MovedSymbol("WINEVENTPROC", "winBindings.user32"),
-	_deprecate.MovedSymbol("HWINEVENTHOOK", "winBindings.user32"),
 	_deprecate.MovedSymbol("Input", "winBindings.user32", "INPUT"),
 	_deprecate.MovedSymbol("KeyBdInput", "winBindings.user32", "KEYBDINPUT"),
 	_deprecate.MovedSymbol("HardwareInput", "winBindings.user32", "HARDWAREINPUT"),

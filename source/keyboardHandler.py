@@ -401,7 +401,6 @@ def getInputHkl():
 		thread = focus.windowThreadID or 0
 	else:
 		thread = 0
-	print(f"{thread=}")
 	return user32.GetKeyboardLayout(thread)
 
 
