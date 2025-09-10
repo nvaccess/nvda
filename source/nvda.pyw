@@ -41,7 +41,7 @@ if NVDAState.isRunningAsSource():
 	# Ensure we are inside the Python virtual environment
 	virtualEnv = os.getenv("VIRTUAL_ENV")
 	if not virtualEnv or Path(appDir).parent != Path(virtualEnv).parent:
-		ctypes.windll.user32.MessageBoxW(
+		user32.MessageBox(
 			0,
 			"NVDA cannot  detect the Python virtual environment. "
 			"To run NVDA from source, please use runnvda.bat in the root of this repository.",

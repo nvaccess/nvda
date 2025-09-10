@@ -55,7 +55,7 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 			return False
 		return True
 
-	ctypes.windll.user32.EnumChildWindows(parent, callback, 0)
+	user32.EnumChildWindows(parent, callback, 0)
 	try:
 		return result[0]
 	except IndexError:
@@ -247,7 +247,7 @@ class CustomWindow(AutoPropertyObject):
 		This will be called automatically when this instance is deleted,
 		but you may wish to call it earlier.
 		"""
-		if not ctypes.windll.user32.DestroyWindow(self.handle):
+		if not user32.DestroyWindow(self.handle):
 			log.error(
 				f"Error destroying window for {self.__class__.__qualname__}",
 				exc_info=ctypes.WinError(),

@@ -10,7 +10,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 
 import threading
 from ctypes import *  # noqa: F403
-from ctypes import cast, windll
+from ctypes import cast
 from ctypes.wintypes import *  # noqa: F403
 from ctypes.wintypes import LPCWSTR
 import re
@@ -243,7 +243,7 @@ class TouchHandler(threading.Thread):
 			raise self.threadExc
 
 	def terminate(self):
-		windll.user32.PostThreadMessageW(self.ident, WM_QUIT, 0, 0)
+		user32.PostThreadMessage(self.ident, WM_QUIT, 0, 0)
 		self.join()
 		self.pendingEmitsTimer.Stop()
 
@@ -272,7 +272,7 @@ class TouchHandler(threading.Thread):
 				self._appInstance,
 				None,
 			)
-			windll.user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
+			user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 			winBindings.oleacc.AccSetRunningUtilityState(  # noqa: F405
 				self._touchWindow,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
@@ -287,11 +287,11 @@ class TouchHandler(threading.Thread):
 			self.initializedEvent.set()
 		msg = MSG()  # noqa: F405
 		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
-			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
-			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
+			user32.TranslateMessage(byref(msg))  # noqa: F405
+			user32.DispatchMessage(byref(msg))  # noqa: F405
 		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
-		windll.user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
-		windll.user32.DestroyWindow(self._touchWindow)
+		user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
+		user32.DestroyWindow(self._touchWindow)
 		winBindings.user32.UnregisterClass(self._wca, self._appInstance)
 
 	def inputTouchWndProc(self, hwnd, msg, wParam, lParam):

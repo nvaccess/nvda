@@ -26,7 +26,6 @@ from ctypes import (
 	c_wchar,
 	create_unicode_buffer,
 	sizeof,
-	windll,
 	wstring_at,
 )
 from ctypes.wintypes import (
@@ -930,7 +929,7 @@ def openClipboard(hwndOwner=None):
 
 
 def emptyClipboard():
-	if not windll.user32.EmptyClipboard():
+	if not _user32.EmptyClipboard():
 		raise ctypes.WinError()
 
 

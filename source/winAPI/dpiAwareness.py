@@ -6,6 +6,7 @@
 import ctypes
 
 from logHandler import log
+from winBindings import user32
 import winBindings.shcore
 
 from .constants import (
@@ -36,7 +37,7 @@ def setDPIAwareness() -> None:
 		DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4
 		# Method introduced in Windows 10
 		# https://docs.microsoft.com/en-us/windows/win32/hidpi/dpi-awareness-context
-		success = ctypes.windll.user32.SetProcessDpiAwarenessContext(
+		success = user32.SetProcessDpiAwarenessContext(
 			DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
 		)
 	except AttributeError:
@@ -92,7 +93,7 @@ def setDPIAwareness() -> None:
 
 	# Method introduced in Windows Vista
 	# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setprocessdpiaware
-	result = ctypes.windll.user32.SetProcessDPIAware()
+	result = user32.SetProcessDPIAware()
 	if result == 0:
 		errorCode = ctypes.GetLastError()
 		log.error(f"Unknown error setting DPI Awareness. Error code: {errorCode}")

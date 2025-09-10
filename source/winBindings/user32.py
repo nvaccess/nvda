@@ -24,6 +24,7 @@ from ctypes.wintypes import (
 	COLORREF,
 	DWORD,
 	BYTE,
+	HDESK,
 	HKL,
 	HMODULE,
 	HRGN,
@@ -58,6 +59,8 @@ from ctypes.wintypes import (
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
+DWORD_PTR = c_size_t
+PDWORD_PTR = POINTER(DWORD_PTR)
 
 
 class PAINTSTRUCT(Structure):
@@ -1212,7 +1215,7 @@ ToUnicodeEx = dll.ToUnicodeEx
 Translates the specified virtual-key code and keyboard state to the corresponding Unicode character or characters.
 
 .. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ToUnicodeEx
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-tounicodeex
 """
 ToUnicodeEx.restype = int
 ToUnicodeEx.argtypes = (
@@ -1224,3 +1227,148 @@ ToUnicodeEx.argtypes = (
 	UINT,  # wFlags: The behavior of the function
 	HKL,  # dwhkl: The input locale identifier used to translate the specified code
 )
+
+SendMessageTimeout = dll.SendMessageTimeoutW
+"""
+Sends the specified message to one or more windows.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessagetimeoutw
+"""
+SendMessageTimeout.restype = LRESULT
+SendMessageTimeout.argtypes = (
+	HWND,  # hWnd: Handle to the window whose window procedure will receive the message
+	UINT,  # Msg: The message to be sent
+	WPARAM,  # wParam: Any additional message-specific information
+	LPARAM,  # lParam: Any additional message-specific information
+	UINT,  # fuFlags: The behavior of this function
+	UINT,  # uTimeout: The duration of the time-out period, in milliseconds
+	PDWORD_PTR,  # lpdwResult: The result of the message processing
+)
+
+GetThreadDesktop = dll.GetThreadDesktop
+"""
+Retrieves a handle to the desktop assigned to the specified thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getthreaddesktop
+"""
+GetThreadDesktop.restype = HDESK
+GetThreadDesktop.argtypes = (
+	DWORD,  # dwThreadId: The thread identifier
+)
+
+GetUserObjectInformation = dll.GetUserObjectInformationW
+"""
+Retrieves information about the specified window station or desktop object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getuserobjectinformationw
+"""
+GetUserObjectInformation.restype = BOOL
+GetUserObjectInformation.argtypes = (
+	HANDLE,  # hObj: Handle to the window station or desktop object
+	c_int,  # nIndex: The information to be retrieved
+	c_void_p,  # pvInfo: Buffer to receive the object information
+	DWORD,  # nLength: Size of pvInfo, in bytes
+	LPDWORD,  # lpnLengthNeeded: receives the number of bytes required to store the requested information
+)
+
+POINTER_INPUT_TYPE = DWORD
+
+RegisterPointerInputTarget = dll.RegisterPointerInputTarget
+"""
+Allows the caller to register a target window to which all pointer input of the specified type is redirected.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerpointerinputtarget
+"""
+RegisterPointerInputTarget.restype = BOOL
+RegisterPointerInputTarget.argtypes = (
+	HWND,  # hwnd: The window to register as a global redirection target.
+	POINTER_INPUT_TYPE,  # pointerType: Type of pointer input to be redirected to the specified window
+)
+
+UnregisterPointerInputTarget = dll.UnregisterPointerInputTarget
+"""
+Allows the caller to unregister a target window to which all pointer input of the specified type is redirected.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-unregisterpointerinputtarget
+"""
+UnregisterPointerInputTarget.restype = BOOL
+UnregisterPointerInputTarget.argtypes = (
+	HWND,  # hwnd: Window to be un-registered as a global redirection target on its desktop
+	POINTER_INPUT_TYPE,  # pointerType: Type of pointer input to no longer be redirected to the specified window
+)
+
+DestroyWindow = dll.DestroyWindow
+"""
+Destroys the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-destroywindow
+"""
+DestroyWindow.restype = BOOL
+DestroyWindow.argtypes = (
+	HWND,  # hWnd: Handle to the window to be destroyed
+)
+
+EnumChildWindows = dll.EnumChildWindows
+"""
+Enumerates the specified window's child windows  by sequentially passing their handles to the given callback.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-EnumChildWindows
+"""
+EnumChildWindows.restype = BOOL
+EnumChildWindows.argtypes = (
+	HWND,  # hWndParent: Handle to the parent window whose child windows are to be enumerated
+	WNDENUMPROC,  # lpEnumFunc: Pointer to an application-defined callback function
+	LPARAM,  # lParam: Application-defined value to be passed to the callback function
+)
+
+UnhookWindowsHookEx = dll.UnhookWindowsHookEx
+"""
+Removes a hook procedure installed in a hook chain by the ``SetWindowsHookEx`` function.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-UnhookWindowsHookEx
+"""
+UnhookWindowsHookEx.restype = BOOL
+UnhookWindowsHookEx.argtypes = (
+	HHOOK,  # hhk: Handle to the hook to be removed
+)
+DPI_AWARENESS_CONTEXT = HANDLE
+
+SetProcessDpiAwarenessContext = dll.SetProcessDpiAwarenessContext
+"""
+Sets the current process to a specified dots per inch (dpi) awareness context.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setprocessdpiawarenesscontext
+"""
+SetProcessDpiAwarenessContext.restype = BOOL
+SetProcessDpiAwarenessContext.argtypes = (
+	DPI_AWARENESS_CONTEXT,  # value: A DPI_AWARENESS_CONTEXT handle to set
+)
+
+SetProcessDPIAware = dll.SetProcessDPIAware
+"""
+Sets the process-default DPI awareness to system-DPI awareness.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setprocessdpiaware
+"""
+SetProcessDPIAware.restype = BOOL
+SetProcessDPIAware.argtypes = ()
+
+EmptyClipboard = dll.EmptyClipboard
+"""
+Empties the clipboard, frees handles to its data, and assigns clipboard ownership to the window with it open.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-EmptyClipboard
+"""
+EmptyClipboard.restype = BOOL
+EmptyClipboard.argtypes = ()
