@@ -1519,3 +1519,15 @@ GetSysColor.restype = DWORD
 GetSysColor.argtypes = (
 	c_int,  # nIndex: The display element whose color is to be retrieved
 )
+
+WindowFromPhysicalPoint = dll.WindowFromPhysicalPoint
+"""
+Retrieves a handle to the window that contains the specified physical point.
+
+... seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-windowfromphysicalpoint
+"""
+WindowFromPhysicalPoint.restype = HWND
+WindowFromPhysicalPoint.argtypes = (
+	POINT,  # Point
+)
