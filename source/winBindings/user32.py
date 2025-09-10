@@ -1557,3 +1557,15 @@ PhysicalToLogicalPointForPerMonitorDPI.argtypes = (
 	HWND,  # hWnd: Handle to the window whose transform is used for the conversion
 	LPPOINT,  # lpPoint: The physical/screen coordinates to be converted in-place
 )
+
+GetDpiForWindow = dll.GetDpiForWindow
+"""
+Returns the dots per inch (dpi) value for the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdpiforwindow
+"""
+GetDpiForWindow.restype = UINT
+GetDpiForWindow.argtypes = (
+	HWND,  # hwnd: The window that you want to get information about
+)
