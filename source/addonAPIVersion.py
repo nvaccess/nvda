@@ -6,7 +6,7 @@
 
 import buildVersion
 import re
-from logHandler import log
+
 
 """
 This module contains add-on API version information for this build of NVDA. This file provides information on
@@ -83,5 +83,6 @@ def formatForGUI(versionTuple: AddonApiVersionT) -> str:
 		# than an exception and unusable dialog.
 		# Translators: shown when an addon API version string is unknown
 		default = _("unknown")
+		from logHandler import log
 		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
 		return default
