@@ -7,7 +7,7 @@ from enum import IntEnum
 from utils.displayString import DisplayStringIntEnum
 import threading
 from typing import Dict
-from ctypes import wintypes, windll
+from ctypes import wintypes
 import time
 import winBindings.oleacc
 import winBindings.kernel32

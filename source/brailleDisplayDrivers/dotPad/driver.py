@@ -9,7 +9,6 @@ import functools
 import operator
 import enum
 from dataclasses import dataclass
-import ctypes
 import serial
 import inputCore
 import braille

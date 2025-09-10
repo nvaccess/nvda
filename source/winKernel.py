@@ -15,7 +15,7 @@ import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, sizeof, Structure, WinError
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID, WORD
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID
 from typing import (
 	TYPE_CHECKING,
 	Optional,

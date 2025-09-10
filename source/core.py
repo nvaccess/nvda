@@ -19,7 +19,6 @@ import winVersion
 import threading
 import os
 import time
-import ctypes
 from enum import Enum
 import winBindings.kernel32
 import logHandler

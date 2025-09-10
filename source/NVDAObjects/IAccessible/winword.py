@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from comtypes import COMError
-import ctypes
 import operator
 import uuid
 from logHandler import log

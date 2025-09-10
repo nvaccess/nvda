@@ -16,7 +16,6 @@ import os
 import sys
 from types import ModuleType
 from typing import (
-	Any,
 	Dict,
 	List,
 	Optional,
@@ -33,7 +32,6 @@ import comtypes.client
 import baseObject
 from logHandler import log
 import NVDAHelper
-import NVDAState
 import winKernel
 import config
 import NVDAObjects  # Catches errors before loading default appModule
@@ -170,7 +168,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winBindings.kernel32.CreateToolhelp32Snapshot(2, 0)
 	FProcessEntry32 = winBindings.kernel32.PROCESSENTRY32W()
-	FProcessEntry32.dwSize = ctypes.sizeof(FProcessEntry32 )
+	FProcessEntry32.dwSize = ctypes.sizeof(FProcessEntry32)
 	ContinueLoop = winBindings.kernel32.Process32First(FSnapshotHandle, ctypes.byref(FProcessEntry32))
 	appName = str()
 	while ContinueLoop:

@@ -11,7 +11,6 @@ import languageHandler
 from languageHandler import LCID_NONE, LCIDS_TO_TRANSLATED_LOCALES
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
-import ctypes
 
 
 def generateUnsupportedWindowsLocales():
@@ -80,7 +79,7 @@ class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
 
 	POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES = {
 		str(winBindings.kernel32.GetACP()),
-		"65001"
+		"65001",
 	}
 
 	def test_ValidEnglishLangNamesAreReturned(self):

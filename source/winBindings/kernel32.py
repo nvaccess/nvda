@@ -43,6 +43,7 @@ from ctypes.wintypes import (
 )
 from serial.win32 import LPOVERLAPPED
 from .advapi32 import SECURITY_ATTRIBUTES
+
 ULONG_PTR = c_size_t
 
 
@@ -385,7 +386,7 @@ Opens an existing thread object.
 """
 OpenThread.argtypes = (
 	DWORD,  # dwDesiredAccess
-	BOOL,   # bInheritHandle
+	BOOL,  # bInheritHandle
 	DWORD,  # dwThreadId
 )
 OpenThread.restype = HANDLE
@@ -408,9 +409,9 @@ Adds a user-mode asynchronous procedure call (APC) object to the APC queue of th
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-queueuserapc
 """
 QueueUserAPC.argtypes = (
-	PAPCFUNC  ,  # pfnAPC: A pointer to the application-supplied APC function
-	HANDLE,    # hThread: A handle to the thread
-	ULONG_PTR,   # dwData: A single value that is passed to the APC function
+	PAPCFUNC,  # pfnAPC: A pointer to the application-supplied APC function
+	HANDLE,  # hThread: A handle to the thread
+	ULONG_PTR,  # dwData: A single value that is passed to the APC function
 )
 QueueUserAPC.restype = BOOL
 
@@ -424,9 +425,9 @@ Creates or opens a named or unnamed event object.
 """
 CreateEvent.argtypes = (
 	POINTER(SECURITY_ATTRIBUTES),  # lpEventAttributes: A pointer to a SECURITY_ATTRIBUTES structure
-	BOOL,      # bManualReset: If TRUE, the function creates a manual-reset event object
-	BOOL,      # bInitialState: If TRUE, the initial state of the event object is signaled
-	LPCWSTR,   # lpName: The name of the event object
+	BOOL,  # bManualReset: If TRUE, the function creates a manual-reset event object
+	BOOL,  # bInitialState: If TRUE, the initial state of the event object is signaled
+	LPCWSTR,  # lpName: The name of the event object
 )
 CreateEvent.restype = HANDLE
 
@@ -440,8 +441,8 @@ Creates or opens a named or unnamed mutex object.
 """
 CreateMutex.argtypes = (
 	POINTER(SECURITY_ATTRIBUTES),  # lpMutexAttributes: A pointer to a SECURITY_ATTRIBUTES structure
-	BOOL,      # bInitialOwner: If TRUE, the calling thread requests immediate ownership
-	LPCWSTR,   # lpName: The name of the mutex object
+	BOOL,  # bInitialOwner: If TRUE, the calling thread requests immediate ownership
+	LPCWSTR,  # lpName: The name of the mutex object
 )
 CreateMutex.restype = HANDLE
 
@@ -456,8 +457,8 @@ Creates or opens a waitable timer object.
 """
 CreateWaitableTimer.argtypes = (
 	POINTER(SECURITY_ATTRIBUTES),  # lpTimerAttributes: A pointer to a SECURITY_ATTRIBUTES structure
-	BOOL,      # bManualReset: If TRUE, the function creates a manual-reset notification timer
-	LPCWSTR,   # lpTimerName: The name of the timer object
+	BOOL,  # bManualReset: If TRUE, the function creates a manual-reset notification timer
+	LPCWSTR,  # lpTimerName: The name of the timer object
 )
 CreateWaitableTimer.restype = HANDLE
 
@@ -488,7 +489,8 @@ ResetEvent.argtypes = (
 ResetEvent.restype = BOOL
 
 
-PTIMERAPCROUTINE = WINFUNCTYPE(None,
+PTIMERAPCROUTINE = WINFUNCTYPE(
+	None,
 	LPVOID,  # lpArgToCompletionRoutine: The argument to be passed to the completion routine
 	# DWORD,  # dwTimerLowValue: The low-order part of the time-out value
 	# DWORD,  # dwTimerHighValue: The high-order part of the time-out
@@ -508,12 +510,12 @@ Activates the specified waitable timer.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-setwaitabletimer
 """
 SetWaitableTimer.argtypes = (
-	HANDLE,    # hTimer: A handle to the timer object
+	HANDLE,  # hTimer: A handle to the timer object
 	POINTER(LARGE_INTEGER),  # lpDueTime: A pointer to a LARGE_INTEGER structure
-	c_int,     # lPeriod: The period of the timer, in milliseconds
+	c_int,  # lPeriod: The period of the timer, in milliseconds
 	c_void_p,  # pfnCompletionRoutine: An optional pointer to the completion routine
 	LPVOID,  # lpArgToCompletionRoutine: A single value passed to the completion routine
-	BOOL,      # fResume: If TRUE, restores a system in suspended power conservation mode
+	BOOL,  # fResume: If TRUE, restores a system in suspended power conservation mode
 )
 SetWaitableTimer.restype = BOOL
 
@@ -539,10 +541,10 @@ Waits until one or all of the specified objects are in the signaled state or the
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitformultipleobjects
 """
 WaitForMultipleObjects.argtypes = (
-	DWORD,     # nCount: The number of object handles in the array
+	DWORD,  # nCount: The number of object handles in the array
 	POINTER(HANDLE),  # lpHandles: An array of object handles
-	BOOL,      # bWaitAll: If TRUE, the function returns when all objects are signaled
-	DWORD,     # dwMilliseconds: The time-out interval, in milliseconds
+	BOOL,  # bWaitAll: If TRUE, the function returns when all objects are signaled
+	DWORD,  # dwMilliseconds: The time-out interval, in milliseconds
 )
 WaitForMultipleObjects.restype = DWORD
 
@@ -556,7 +558,7 @@ Suspends the current thread until the specified condition is met.
 """
 SleepEx.argtypes = (
 	DWORD,  # dwMilliseconds: The time interval for which execution is to be suspended
-	BOOL,   # bAlertable: If TRUE, the function returns when an APC is queued
+	BOOL,  # bAlertable: If TRUE, the function returns when an APC is queued
 )
 SleepEx.restype = DWORD
 
@@ -574,11 +576,11 @@ SetThreadExecutionState.argtypes = (
 SetThreadExecutionState.restype = DWORD
 
 
-
-LpoverlappedCompletionRoutine = WINFUNCTYPE(None,
-		DWORD,   # dwErrorCode: The completion code
-		DWORD,   # dwNumberOfBytesTransfered: The number of bytes transferred
-		LPOVERLAPPED# lpOverlapped: A pointer to the OVERLAPPED structure
+LpoverlappedCompletionRoutine = WINFUNCTYPE(
+	None,
+	DWORD,  # dwErrorCode: The completion code
+	DWORD,  # dwNumberOfBytesTransfered: The number of bytes transferred
+	LPOVERLAPPED,  # lpOverlapped: A pointer to the OVERLAPPED structure
 )
 """
 An application-defined completion routine used with the ReadFileEx and WriteFileEx functions.
@@ -596,11 +598,11 @@ Reads data from the specified file or input/output (I/O) device.
 	https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-readfileex
 """
 ReadFileEx.argtypes = (
-	HANDLE,    # hFile: A handle to the file or I/O device
-	LPVOID,    # lpBuffer: A pointer to the buffer that receives the data
-	DWORD,     # nNumberOfBytesToRead: The maximum number of bytes to be read
+	HANDLE,  # hFile: A handle to the file or I/O device
+	LPVOID,  # lpBuffer: A pointer to the buffer that receives the data
+	DWORD,  # nNumberOfBytesToRead: The maximum number of bytes to be read
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
-	LpoverlappedCompletionRoutine ,  # lpCompletionRoutine: A pointer to the completion routine
+	LpoverlappedCompletionRoutine,  # lpCompletionRoutine: A pointer to the completion routine
 )
 ReadFileEx.restype = BOOL
 
@@ -613,11 +615,13 @@ Writes data to the specified file or input/output (I/O) device.
 	https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-writefile
 """
 WriteFile.argtypes = (
-	HANDLE,     # hFile: A handle to the file or I/O device
-	c_void_p,   # lpBuffer: A pointer to the buffer containing the data
-	DWORD,      # nNumberOfBytesToWrite: The number of bytes to be written
-	POINTER(DWORD),   # lpNumberOfBytesWritten: A pointer to the variable that receives the number of bytes written
-	LPOVERLAPPED,   # lpOverlapped: A pointer to an OVERLAPPED structure
+	HANDLE,  # hFile: A handle to the file or I/O device
+	c_void_p,  # lpBuffer: A pointer to the buffer containing the data
+	DWORD,  # nNumberOfBytesToWrite: The number of bytes to be written
+	POINTER(
+		DWORD
+	),  # lpNumberOfBytesWritten: A pointer to the variable that receives the number of bytes written
+	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
 WriteFile.restype = BOOL
 
@@ -630,10 +634,12 @@ Retrieves the results of an overlapped operation on the specified file, named pi
 	https://learn.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-getoverlappedresult
 """
 GetOverlappedResult.argtypes = (
-	HANDLE,    # hFile: A handle to the file, named pipe, or communications device
+	HANDLE,  # hFile: A handle to the file, named pipe, or communications device
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
-	POINTER(DWORD),  # lpNumberOfBytesTransferred: A pointer to a variable that receives the number of bytes transferred
-	BOOL,      # bWait: If TRUE, the function does not return until the operation has been completed
+	POINTER(
+		DWORD
+	),  # lpNumberOfBytesTransferred: A pointer to a variable that receives the number of bytes transferred
+	BOOL,  # bWait: If TRUE, the function does not return until the operation has been completed
 )
 GetOverlappedResult.restype = BOOL
 
@@ -646,7 +652,7 @@ Marks any outstanding I/O operations for the specified file handle as canceled.
 	https://learn.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-cancelioex
 """
 CancelIoEx.argtypes = (
-	HANDLE,    # hFile: A handle to the file
+	HANDLE,  # hFile: A handle to the file
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
 CancelIoEx.restype = BOOL
@@ -660,7 +666,7 @@ Waits for an event to occur for a specified communications device.
 	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-waitcommevent
 """
 WaitCommEvent.argtypes = (
-	HANDLE,    # hFile: A handle to the communications device
+	HANDLE,  # hFile: A handle to the communications device
 	POINTER(DWORD),  # lpEvtMask: A pointer to a variable that receives a mask indicating the type of event
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
@@ -677,7 +683,7 @@ Copies an existing file to a new file.
 CopyFile.argtypes = (
 	LPCWSTR,  # lpExistingFileName: The name of an existing file
 	LPCWSTR,  # lpNewFileName: The name of the new file
-	BOOL,     # bFailIfExists: If TRUE, the function fails if the new file already exists
+	BOOL,  # bFailIfExists: If TRUE, the function fails if the new file already exists
 )
 CopyFile.restype = BOOL
 
@@ -690,10 +696,10 @@ Retrieves information about a locale specified by identifier.
 	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getlocaleinfow
 """
 GetLocaleInfo.argtypes = (
-	LCID,     # Locale: The locale identifier for which to retrieve information
-	DWORD,    # LCType: The locale information to retrieve
-	LPWSTR,   # lpLCData: Pointer to a buffer in which this function retrieves the requested data
-	c_int,    # cchData: Size, in characters, of the data buffer
+	LCID,  # Locale: The locale identifier for which to retrieve information
+	DWORD,  # LCType: The locale information to retrieve
+	LPWSTR,  # lpLCData: Pointer to a buffer in which this function retrieves the requested data
+	c_int,  # cchData: Size, in characters, of the data buffer
 )
 GetLocaleInfo.restype = c_int
 
@@ -707,7 +713,7 @@ Converts a locale name to a locale identifier.
 """
 LocaleNameToLCID.argtypes = (
 	LPCWSTR,  # lpName: Pointer to a null-terminated string representing a locale name
-	DWORD,    # dwFlags: Flags controlling the operation
+	DWORD,  # dwFlags: Flags controlling the operation
 )
 LocaleNameToLCID.restype = LCID
 
@@ -767,7 +773,7 @@ Retrieves a list of the processes attached to the current console.
 """
 GetConsoleProcessList.argtypes = (
 	POINTER(DWORD),  # lpdwProcessList: A pointer to a buffer that receives the list of process identifiers
-	DWORD,     # dwProcessCount: The maximum number of process identifiers that can be stored
+	DWORD,  # dwProcessCount: The maximum number of process identifiers that can be stored
 )
 GetConsoleProcessList.restype = DWORD
 
@@ -807,8 +813,9 @@ class CHAR_INFO(Structure):
 	]
 
 
-PHANDLER_ROUTINE = WINFUNCTYPE(BOOL,
-	   DWORD, # dwCtrlType: The type of control signal received
+PHANDLER_ROUTINE = WINFUNCTYPE(
+	BOOL,
+	DWORD,  # dwCtrlType: The type of control signal received
 )
 
 
@@ -820,8 +827,10 @@ Retrieves information about the specified console screen buffer.
 	https://learn.microsoft.com/en-us/windows/win32/api/wincon/nf-wincon-getconsolescreenbufferinfo
 """
 GetConsoleScreenBufferInfo.argtypes = (
-	HANDLE,    # hConsoleOutput: A handle to the console screen buffer
-	POINTER(CONSOLE_SCREEN_BUFFER_INFO),  # lpConsoleScreenBufferInfo: A pointer to a CONSOLE_SCREEN_BUFFER_INFO structure
+	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
+	POINTER(
+		CONSOLE_SCREEN_BUFFER_INFO
+	),  # lpConsoleScreenBufferInfo: A pointer to a CONSOLE_SCREEN_BUFFER_INFO structure
 )
 GetConsoleScreenBufferInfo.restype = BOOL
 
@@ -834,7 +843,9 @@ Retrieves information about the current console selection.
 	https://learn.microsoft.com/en-us/windows/console/getconsoleselectioninfo
 """
 GetConsoleSelectionInfo.argtypes = (
-	POINTER(CONSOLE_SELECTION_INFO),  # lpConsoleSelectionInfo: A pointer to a CONSOLE_SELECTION_INFO structure
+	POINTER(
+		CONSOLE_SELECTION_INFO
+	),  # lpConsoleSelectionInfo: A pointer to a CONSOLE_SELECTION_INFO structure
 )
 GetConsoleSelectionInfo.restype = BOOL
 
@@ -847,11 +858,13 @@ Copies a number of characters from consecutive cells of a console screen buffer.
 	https://learn.microsoft.com/en-us/windows/console/readconsoleoutputcharacter
 """
 ReadConsoleOutputCharacter.argtypes = (
-	HANDLE,    # hConsoleOutput: A handle to the console screen buffer
-	LPWSTR,    # lpCharacter: A pointer to a buffer that receives the characters
-	DWORD,     # nLength: The number of characters to be read
+	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
+	LPWSTR,  # lpCharacter: A pointer to a buffer that receives the characters
+	DWORD,  # nLength: The number of characters to be read
 	COORD,  # dwReadCoord: A COORD structure that specifies the coordinates of the first cell
-	POINTER(DWORD),  # lpNumberOfCharsRead: A pointer to a variable that receives the actual number of characters read
+	POINTER(
+		DWORD
+	),  # lpNumberOfCharsRead: A pointer to a variable that receives the actual number of characters read
 )
 ReadConsoleOutputCharacter.restype = BOOL
 
@@ -864,8 +877,10 @@ Reads character and color attribute data from a rectangular block of character c
 	https://learn.microsoft.com/en-us/windows/console/readconsoleoutput
 """
 ReadConsoleOutput.argtypes = (
-	HANDLE,    # hConsoleOutput: A handle to the console screen buffer
-	POINTER(CHAR_INFO),  # lpBuffer: A pointer to the destination buffer that receives the character and attribute data
+	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
+	POINTER(
+		CHAR_INFO
+	),  # lpBuffer: A pointer to the destination buffer that receives the character and attribute data
 	COORD,  # dwBufferSize: A COORD structure that specifies the size of the lpBuffer parameter
 	COORD,  # dwBufferCoord: A COORD structure that specifies the coordinates of the upper-left cell
 	POINTER(SMALL_RECT),  # lpReadRegion: A pointer to a SMALL_RECT structure
@@ -882,7 +897,7 @@ Adds or removes an application-defined HandlerRoutine function from the list of 
 """
 SetConsoleCtrlHandler.argtypes = (
 	PHANDLER_ROUTINE,  # HandlerRoutine: A pointer to the application-defined HandlerRoutine function
-	BOOL,      # Add: If TRUE, the handler is added; if FALSE, the handler is removed
+	BOOL,  # Add: If TRUE, the handler is added; if FALSE, the handler is removed
 )
 SetConsoleCtrlHandler.restype = BOOL
 
@@ -895,8 +910,8 @@ Retrieves a module handle for the specified module and increments the module's r
 	https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandleexw
 """
 GetModuleHandleEx.argtypes = (
-	DWORD,     # dwFlags: Flags to control the operation
-	LPCWSTR,   # lpModuleName: The name of the loaded module
+	DWORD,  # dwFlags: Flags to control the operation
+	LPCWSTR,  # lpModuleName: The name of the loaded module
 	POINTER(HMODULE),  # phModule: A pointer to a variable that receives a handle to the specified module
 )
 GetModuleHandleEx.restype = BOOL
@@ -910,9 +925,9 @@ Gets the package full name for the specified process.
 	https://learn.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getpackagefullname
 """
 GetPackageFullName.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
+	HANDLE,  # hProcess: A handle to the process
 	POINTER(c_uint),  # packageFullNameLength: On input, the size of the packageFullName buffer
-	LPWSTR,    # packageFullName: The package full name
+	LPWSTR,  # packageFullName: The package full name
 )
 GetPackageFullName.restype = LONG
 
@@ -926,7 +941,7 @@ Retrieves the package full name for the current process.
 """
 GetCurrentPackageFullName.argtypes = (
 	POINTER(c_uint),  # packageFullNameLength: On input, the size of the packageFullName buffer
-	LPWSTR,           # packageFullName: The package full name
+	LPWSTR,  # packageFullName: The package full name
 )
 GetCurrentPackageFullName.restype = LONG
 
@@ -939,9 +954,9 @@ Retrieves the full name of the executable image for the specified process.
 	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew
 """
 QueryFullProcessImageName.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
-	DWORD,     # dwFlags: Flags that control the operation
-	LPWSTR,    # lpExeName: The path to the executable image
+	HANDLE,  # hProcess: A handle to the process
+	DWORD,  # dwFlags: Flags that control the operation
+	LPWSTR,  # lpExeName: The path to the executable image
 	POINTER(DWORD),  # lpdwSize: On input, specifies the size of the lpExeName buffer
 )
 QueryFullProcessImageName.restype = BOOL
@@ -955,8 +970,10 @@ Determines whether the specified process is running under WOW64.
 	https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-iswow64process
 """
 IsWow64Process.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
-	POINTER(BOOL),  # Wow64Process: A pointer to a value that is set to TRUE if the process is running under WOW64
+	HANDLE,  # hProcess: A handle to the process
+	POINTER(
+		BOOL
+	),  # Wow64Process: A pointer to a value that is set to TRUE if the process is running under WOW64
 )
 IsWow64Process.restype = BOOL
 
@@ -969,7 +986,7 @@ Determines whether the specified process is running under WOW64; also returns ad
 	https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-iswow64process2
 """
 IsWow64Process2.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
+	HANDLE,  # hProcess: A handle to the process
 	POINTER(c_ushort),  # pProcessMachine: On success, returns a pointer to the machine architecture
 	POINTER(c_ushort),  # pNativeMachine: On success, returns a pointer to the native machine architecture
 )
@@ -984,10 +1001,10 @@ Retrieves information about the specified process.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocessinformation
 """
 GetProcessInformation.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
-	DWORD,     # ProcessInformationClass: The type of process information to be retrieved
+	HANDLE,  # hProcess: A handle to the process
+	DWORD,  # ProcessInformationClass: The type of process information to be retrieved
 	c_void_p,  # ProcessInformation: A pointer to a buffer to receive the process information
-	DWORD,     # ProcessInformationLength: The size of the buffer pointed to by the ProcessInformation parameter
+	DWORD,  # ProcessInformationLength: The size of the buffer pointed to by the ProcessInformation parameter
 )
 GetProcessInformation.restype = BOOL
 
@@ -1031,7 +1048,7 @@ Retrieves information about the first process encountered in a system snapshot.
 	https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-process32firstw
 """
 Process32First.argtypes = (
-	HANDLE,    # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
+	HANDLE,  # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
 	POINTER(PROCESSENTRY32W),  # lppe: A pointer to a PROCESSENTRY32 structure
 )
 Process32First.restype = BOOL
@@ -1044,7 +1061,7 @@ Retrieves information about the next process recorded in a system snapshot.
 	https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-process32nextw
 """
 Process32Next.argtypes = (
-	HANDLE,    # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
+	HANDLE,  # hSnapshot: A handle to the snapshot returned from CreateToolhelp32Snapshot
 	POINTER(PROCESSENTRY32W),  # lppe: A pointer to a PROCESSENTRY32 structure
 )
 Process32Next.restype = BOOL
@@ -1059,7 +1076,7 @@ Registers the active instance of an application for restart.
 """
 RegisterApplicationRestart.argtypes = (
 	LPCWSTR,  # pwzCommandline: A pointer to a Unicode string that specifies the command line arguments
-	DWORD,    # dwFlags: Flags that control restart operations
+	DWORD,  # dwFlags: Flags that control restart operations
 )
 RegisterApplicationRestart.restype = HRESULT
 
@@ -1097,12 +1114,12 @@ Creates or opens a file or I/O device.
 """
 CreateFile.argtypes = (
 	LPCWSTR,  # lpFileName: The name of the file or device to be created or opened
-	DWORD,    # dwDesiredAccess: The requested access to the file or device
-	DWORD,    # dwShareMode: The requested sharing mode of the file or device
-	POINTER(SECURITY_ATTRIBUTES), # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
-	DWORD,    # dwCreationDisposition: An action to take on a file or device that exists or does not exist
-	DWORD,    # dwFlagsAndAttributes: The file or device attributes and flags
-	HANDLE,   # hTemplateFile: A valid handle to a template file with the GENERIC_READ access right
+	DWORD,  # dwDesiredAccess: The requested access to the file or device
+	DWORD,  # dwShareMode: The requested sharing mode of the file or device
+	POINTER(SECURITY_ATTRIBUTES),  # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	DWORD,  # dwCreationDisposition: An action to take on a file or device that exists or does not exist
+	DWORD,  # dwFlagsAndAttributes: The file or device attributes and flags
+	HANDLE,  # hTemplateFile: A valid handle to a template file with the GENERIC_READ access right
 )
 CreateFile.restype = HANDLE
 
@@ -1239,11 +1256,11 @@ Formats a date as a date string for a locale specified by name.
 """
 GetDateFormatEx.argtypes = (
 	LPCWSTR,  # lpLocaleName: Pointer to a locale name
-	DWORD,    # dwFlags: Flags specifying various function options
-	POINTER(SYSTEMTIME), # lpDate: Pointer to a SYSTEMTIME structure
+	DWORD,  # dwFlags: Flags specifying various function options
+	POINTER(SYSTEMTIME),  # lpDate: Pointer to a SYSTEMTIME structure
 	LPCWSTR,  # lpFormat: Pointer to a format picture string
-	LPWSTR,   # lpDateStr: Pointer to a buffer to receive the formatted date string
-	c_int,    # cchDate: Size, in characters, of the lpDateStr buffer
+	LPWSTR,  # lpDateStr: Pointer to a buffer to receive the formatted date string
+	c_int,  # cchDate: Size, in characters, of the lpDateStr buffer
 	LPCWSTR,  # lpCalendar: Reserved; must be NULL
 )
 GetDateFormatEx.restype = c_int
@@ -1258,11 +1275,11 @@ Formats time as a time string for a locale specified by name.
 """
 GetTimeFormatEx.argtypes = (
 	LPCWSTR,  # lpLocaleName: Pointer to a locale name
-	DWORD,    # dwFlags: Flags specifying various function options
-	POINTER(SYSTEMTIME), # lpTime: Pointer to a SYSTEMTIME structure
+	DWORD,  # dwFlags: Flags specifying various function options
+	POINTER(SYSTEMTIME),  # lpTime: Pointer to a SYSTEMTIME structure
 	LPCWSTR,  # lpFormat: Pointer to a format picture string
-	LPWSTR,   # lpTimeStr: Pointer to a buffer to receive the formatted time string
-	c_int,    # cchTime: Size, in characters, of the lpTimeStr buffer
+	LPWSTR,  # lpTimeStr: Pointer to a buffer to receive the formatted time string
+	c_int,  # cchTime: Size, in characters, of the lpTimeStr buffer
 )
 GetTimeFormatEx.restype = c_int
 
@@ -1276,8 +1293,8 @@ Waits until the specified object is in the signaled state, an I/O completion rou
 """
 WaitForSingleObjectEx.argtypes = (
 	HANDLE,  # hHandle: A handle to the object
-	DWORD,   # dwMilliseconds: The time-out interval, in milliseconds
-	BOOL,    # bAlertable: If TRUE, the function returns when the system queues an APC
+	DWORD,  # dwMilliseconds: The time-out interval, in milliseconds
+	BOOL,  # bAlertable: If TRUE, the function returns when the system queues an APC
 )
 WaitForSingleObjectEx.restype = DWORD
 
@@ -1304,7 +1321,7 @@ Retrieves the termination status of the specified process.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getexitcodeprocess
 """
 GetExitCodeProcess.argtypes = (
-	HANDLE,    # hProcess: A handle to the process
+	HANDLE,  # hProcess: A handle to the process
 	POINTER(DWORD),  # lpExitCode: A pointer to a variable to receive the process termination status
 )
 GetExitCodeProcess.restype = BOOL
@@ -1319,7 +1336,7 @@ Terminates the specified process and all of its threads.
 """
 TerminateProcess.argtypes = (
 	HANDLE,  # hProcess: A handle to the process to be terminated
-	UINT,    # uExitCode: The exit code to be used by the process and threads terminated as a result of this call
+	UINT,  # uExitCode: The exit code to be used by the process and threads terminated as a result of this call
 )
 TerminateProcess.restype = BOOL
 
@@ -1348,10 +1365,9 @@ CreatePipe.argtypes = (
 	POINTER(HANDLE),  # hReadPipe: A pointer to a variable that receives the read handle for the pipe
 	POINTER(HANDLE),  # hWritePipe: A pointer to a variable that receives the write handle for the pipe
 	POINTER(SECURITY_ATTRIBUTES),  # lpPipeAttributes: A pointer to a SECURITY_ATTRIBUTES structure
-	DWORD,     # nSize: The size of the buffer for the pipe, in bytes
+	DWORD,  # nSize: The size of the buffer for the pipe, in bytes
 )
 CreatePipe.restype = BOOL
-
 
 
 MoveFileEx = dll.MoveFileExW
@@ -1364,7 +1380,7 @@ Moves an existing file or directory, including its children, with various move o
 MoveFileEx.argtypes = (
 	LPCWSTR,  # lpExistingFileName: The current name of the file or directory
 	LPCWSTR,  # lpNewFileName: The new name for the file or directory
-	DWORD,    # dwFlags: This parameter can be one or more of the following values
+	DWORD,  # dwFlags: This parameter can be one or more of the following values
 )
 MoveFileEx.restype = BOOL
 
@@ -1377,10 +1393,10 @@ Converts a locale identifier to a locale name.
 	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-lcidtolocalename
 """
 LCIDToLocaleName.argtypes = (
-	LCID,     # Locale: The locale identifier to convert
-	LPWSTR,   # lpName: Pointer to a buffer in which this function retrieves the locale name
-	c_int,    # cchName: Size, in characters, of the locale name buffer
-	DWORD,    # dwFlags: Flags controlling the operation
+	LCID,  # Locale: The locale identifier to convert
+	LPWSTR,  # lpName: Pointer to a buffer in which this function retrieves the locale name
+	c_int,  # cchName: Size, in characters, of the locale name buffer
+	DWORD,  # dwFlags: Flags controlling the operation
 )
 LCIDToLocaleName.restype = c_int
 
@@ -1394,9 +1410,9 @@ Retrieves information about a locale specified by name.
 """
 GetLocaleInfoEx.argtypes = (
 	LPCWSTR,  # lpLocaleName: Pointer to a locale name
-	DWORD,    # LCType: The locale information to retrieve
-	LPWSTR,   # lpLCData: Pointer to a buffer in which this function retrieves the requested data
-	c_int,    # cchData: Size, in characters, of the data buffer
+	DWORD,  # LCType: The locale information to retrieve
+	LPWSTR,  # lpLCData: Pointer to a buffer in which this function retrieves the requested data
+	c_int,  # cchData: Size, in characters, of the data buffer
 )
 GetLocaleInfoEx.restype = c_int
 
@@ -1432,9 +1448,9 @@ Retrieves the application user model ID for the specified process.
 	https://learn.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelid
 """
 GetApplicationUserModelId.argtypes = (
-	HANDLE,           # hProcess: A handle to the process
-	POINTER(DWORD),   # AppUserModelIDLength: On input, the size of the AppUserModelID buffer
-	LPWSTR,           # AppUserModelID: The application user model ID string
+	HANDLE,  # hProcess: A handle to the process
+	POINTER(DWORD),  # AppUserModelIDLength: On input, the size of the AppUserModelID buffer
+	LPWSTR,  # AppUserModelID: The application user model ID string
 )
 GetApplicationUserModelId.restype = LONG
 

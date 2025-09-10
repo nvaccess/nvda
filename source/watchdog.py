@@ -12,7 +12,6 @@ from typing import (
 	Any,
 )
 import inspect
-from ctypes import windll
 import ctypes.wintypes
 import comtypes
 import winBindings.ole32

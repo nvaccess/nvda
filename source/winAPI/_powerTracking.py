@@ -95,7 +95,6 @@ class PowerState(IntFlag):
 	AC_ONLINE = 0x1
 	UNKNOWN = 0xFF
 
-
 	BatteryFlag: BatteryFlag
 	ACLineStatus: PowerState
 	BatteryLifePercent: int
