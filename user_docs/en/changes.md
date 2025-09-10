@@ -119,6 +119,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Access to these symbols via `winKernel` is deprecated. (#18860)
 * `winKernel.advapi32` is deprecated.
   Use `winBindings.advapi32.dll` instead. (#18860)
+* `NVDAHelper.bstrReturn` is deprecated, with no planned replacement. (#18858)
+* `contentRecog.uwpOcr.uwpOcr_Callback` is deprecated.
+  Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
