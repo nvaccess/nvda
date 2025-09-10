@@ -1014,7 +1014,6 @@ def splitTextIndentation(text):
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 IDT_BASE_FREQUENCY = 220  # One octave below middle A.
-IDT_TONE_DURATION = 80  # Milleseconds
 IDT_MAX_SPACES = 72
 
 
