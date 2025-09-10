@@ -297,7 +297,7 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 			and not isNVDAModifierKey(vkCode, extended)
 			and vkCode not in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
 		):
-			keyStates = (ctypes.c_byte * 256)()
+			keyStates = (ctypes.c_ubyte * 256)()
 			for k in range(256):
 				keyStates[k] = user32.GetKeyState(k)
 			charBuf = ctypes.create_unicode_buffer(5)
@@ -398,7 +398,7 @@ def getInputHkl():
 	"""
 	focus = api.getFocusObject()
 	if focus:
-		thread = focus.windowThreadID or 0
+		thread = focus.windowThreadID
 	else:
 		thread = 0
 	return user32.GetKeyboardLayout(thread)
