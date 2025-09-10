@@ -527,7 +527,7 @@ def peekMessage(*args):
 
 
 def registerWindowMessage(name):
-	return _user32.RegisterWindowMessageW(name)
+	return _user32.RegisterWindowMessage(name)
 
 
 def getAsyncKeyState(v):
