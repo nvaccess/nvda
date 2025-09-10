@@ -66,6 +66,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 * `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
+* `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
 
 #### Deprecations
 

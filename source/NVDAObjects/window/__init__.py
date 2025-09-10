@@ -7,6 +7,7 @@ import re
 import ctypes
 import ctypes.wintypes
 from winBindings import user32
+from winBindings.user32 import _GhostWindowFromHungWindow
 import winKernel
 import winUser
 from logHandler import log  # noqa: F401
@@ -24,16 +25,11 @@ from diffHandler import prefer_difflib
 re_WindowsForms = re.compile(r"^WindowsForms[0-9]*\.(.*)\.app\..*$")
 re_ATL = re.compile(r"^ATL:(.*)$")
 
-try:
-	GhostWindowFromHungWindow = ctypes.windll.user32.GhostWindowFromHungWindow
-except AttributeError:
-	GhostWindowFromHungWindow = None
-
 
 def isUsableWindow(windowHandle):
 	if not user32.IsWindowVisible(windowHandle):
 		return False
-	if GhostWindowFromHungWindow and ctypes.windll.user32.GhostWindowFromHungWindow(windowHandle):
+	if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
 		return False
 	return True
 
@@ -92,7 +88,7 @@ class Window(NVDAObject):
 		if windowClassName == "#32769":
 			return
 		# If this window has a ghost window its too dangerous to try any higher APIs
-		if GhostWindowFromHungWindow and GhostWindowFromHungWindow(windowHandle):
+		if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
 			return
 		if windowClassName == "EXCEL7" and (relation == "focus" or isinstance(relation, tuple)):
 			from . import excel

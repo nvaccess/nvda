@@ -1487,3 +1487,23 @@ IsWindowUnicode.restype = BOOL
 IsWindowUnicode.argtypes = (
 	HWND,  # hWnd: Handle to the window to be tested
 )
+
+try:
+	_GhostWindowFromHungWindow = dll.GhostWindowFromHungWindow
+	"""
+	Retrieves a handle to a window which is ghosting a hung window.
+
+	.. warning::
+		This is an undocumented part of the Windows API!
+
+	.. seealso::
+		https://undoc.airesoft.co.uk/user32.dll/GhostWindowFromHungWindow.php
+		https://ntdoc.m417z.com/ghostwindowfromhungwindow
+	"""
+except AttributeError:
+	_GhostWindowFromHungWindow = None
+else:
+	_GhostWindowFromHungWindow.restype = HWND
+	_GhostWindowFromHungWindow.argtypes = (
+		HWND,  # hwndHung: Handle of a hung window
+	)
