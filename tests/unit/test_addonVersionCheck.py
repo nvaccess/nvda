@@ -155,7 +155,7 @@ class TestGetAPIVersionTupleFromString(unittest.TestCase):
 class TestFormatAsString(unittest.TestCase):
 	def test_formatAsString_full(self):
 		res = addonAPIVersion.formatForGUI((2019, 1, 1))
-		self.assertEqual("1234.5.6", res)
+		self.assertEqual("2019.1.1", res)
 
 	def test_formatAsString_missingMinor(self):
 		res = addonAPIVersion.formatForGUI((2019, 1, 0))
