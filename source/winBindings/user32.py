@@ -392,15 +392,15 @@ GetKeyState.argtypes = (
 	c_int,  # nVirtKey: A virtual key
 )
 
-SystemParametersInfoW = dll.SystemParametersInfoW
+SystemParametersInfo = dll.SystemParametersInfoW
 """
 Retrieves or sets the value of one of the system-wide parameters.
 
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfow
 """
-SystemParametersInfoW.restype = BOOL
-SystemParametersInfoW.argtypes = (
+SystemParametersInfo.restype = BOOL
+SystemParametersInfo.argtypes = (
 	UINT,  # uiAction: The system-wide parameter to be retrieved or set
 	UINT,  # uiParam: A parameter whose usage and format depends on the system parameter being queried or set
 	c_void_p,  # pvParam: A parameter whose usage and format depends on the system parameter being queried or set

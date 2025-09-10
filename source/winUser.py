@@ -461,12 +461,12 @@ class MSGFLT(enum.IntEnum):
 
 
 def setSystemScreenReaderFlag(val):
-	_user32.SystemParametersInfoW(SPI_SETSCREENREADER, val, 0, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE)
+	_user32.SystemParametersInfo(SPI_SETSCREENREADER, val, 0, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE)
 
 
 def getSystemScreenReaderFlag():
 	val = BOOL()
-	_user32.SystemParametersInfoW(SPI_GETSCREENREADER, 0, byref(val), 0)
+	_user32.SystemParametersInfo(SPI_GETSCREENREADER, 0, byref(val), 0)
 	return bool(val.value)
 
 
@@ -766,7 +766,7 @@ SKF_TWOKEYSOFF = 0x00000100
 
 def getSystemStickyKeys():
 	sk = STICKYKEYS()
-	_user32.SystemParametersInfoW(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
+	_user32.SystemParametersInfo(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
 	return sk
 
 
