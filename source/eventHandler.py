@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Joseph Lee
+# Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., Joseph Lee
 
 import threading
 import typing
