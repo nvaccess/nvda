@@ -62,21 +62,6 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 		raise LookupError("No matching descendant window found")
 
 
-try:
-	# Windows >= 8.1
-	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPointForPerMonitorDPI
-	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPointForPerMonitorDPI
-except AttributeError:
-	try:
-		# Windows Vista..Windows 8
-		_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
-		_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
-	except AttributeError:
-		# Windows <= XP
-		_logicalToPhysicalPoint = None
-		_physicalToLogicalPoint = None
-
-
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
 	This should be used when points are received directly from a window that is not DPI aware.
@@ -88,10 +73,8 @@ def logicalToPhysicalPoint(window, x, y):
 	@return: The physical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _logicalToPhysicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_logicalToPhysicalPoint(window, ctypes.byref(point))
+	user32.LogicalToPhysicalPointForPerMonitorDPI(window, ctypes.byref(point))
 	return point.x, point.y
 
 
@@ -106,10 +89,8 @@ def physicalToLogicalPoint(window, x, y):
 	@return: The logical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _physicalToLogicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_physicalToLogicalPoint(window, ctypes.byref(point))
+	user32.PhysicalToLogicalPointForPerMonitorDPI(window, ctypes.byref(point))
 	return point.x, point.y
 
 

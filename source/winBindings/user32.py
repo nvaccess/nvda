@@ -1531,3 +1531,29 @@ WindowFromPhysicalPoint.restype = HWND
 WindowFromPhysicalPoint.argtypes = (
 	POINT,  # Point
 )
+
+LogicalToPhysicalPointForPerMonitorDPI = dll.LogicalToPhysicalPointForPerMonitorDPI
+"""
+Converts a point in a window from logical to physical coordinates, regardless of the dpi awareness of the caller.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-logicaltophysicalpointforpermonitordpi
+"""
+LogicalToPhysicalPointForPerMonitorDPI.restype = BOOL
+LogicalToPhysicalPointForPerMonitorDPI.argtypes = (
+	HWND,  # hWnd: Handle to the window whose transform is used for the conversion
+	LPPOINT,  # lpPoint: The logical coordinates to be converted in place
+)
+
+PhysicalToLogicalPointForPerMonitorDPI = dll.PhysicalToLogicalPointForPerMonitorDPI
+"""
+Converts a point in a window from physical to logical coordinates, regardless of the dpi awareness of the caller.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-physicaltologicalpointforpermonitordpi
+"""
+PhysicalToLogicalPointForPerMonitorDPI.restype = BOOL
+PhysicalToLogicalPointForPerMonitorDPI.argtypes = (
+	HWND,  # hWnd: Handle to the window whose transform is used for the conversion
+	LPPOINT,  # lpPoint: The physical/screen coordinates to be converted in-place
+)
