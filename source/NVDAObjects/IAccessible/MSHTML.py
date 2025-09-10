@@ -11,6 +11,7 @@ from comtypes import IServiceProvider
 import ctypes
 import ctypes.wintypes
 import contextlib
+from winBindings import user32
 import winUser
 import oleacc
 import UIAHandler
@@ -520,7 +521,7 @@ class MSHTML(IAccessible):
 		elif isinstance(relation, tuple):
 			windowHandle = kwargs.get("windowHandle")
 			p = ctypes.wintypes.POINT(x=relation[0], y=relation[1])
-			ctypes.windll.user32.ScreenToClient(windowHandle, ctypes.byref(p))
+			user32.ScreenToClient(windowHandle, ctypes.byref(p))
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor, yFactor = getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:

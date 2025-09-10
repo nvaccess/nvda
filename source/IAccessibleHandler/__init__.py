@@ -5,6 +5,8 @@
 
 import typing
 
+from winBindings import user32
+
 # F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
 # should be used to export it.
 from .types import RelationType  # noqa: F401
@@ -784,9 +786,9 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 		log.debug(
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}",
 		)
-	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
+	hDesk = user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
-		windll.user32.CloseDesktop(hDesk)
+		user32.CloseDesktop(hDesk)
 		core.callLater(200, _handleUserDesktop)
 	else:
 		# When hDesk == 0, the active desktop has changed.

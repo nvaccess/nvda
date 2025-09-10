@@ -6,6 +6,7 @@
 import re
 import ctypes
 import ctypes.wintypes
+from winBindings import user32
 import winKernel
 import winUser
 from logHandler import log  # noqa: F401
@@ -30,7 +31,7 @@ except AttributeError:
 
 
 def isUsableWindow(windowHandle):
-	if not ctypes.windll.user32.IsWindowVisible(windowHandle):
+	if not user32.IsWindowVisible(windowHandle):
 		return False
 	if GhostWindowFromHungWindow and ctypes.windll.user32.GhostWindowFromHungWindow(windowHandle):
 		return False
@@ -207,7 +208,7 @@ class Window(NVDAObject):
 
 	def _get_location(self):
 		r = ctypes.wintypes.RECT()
-		ctypes.windll.user32.GetWindowRect(self.windowHandle, ctypes.byref(r))
+		user32.GetWindowRect(self.windowHandle, ctypes.byref(r))
 		return RectLTWH.fromCompatibleType(r)
 
 	def _get_displayText(self):
@@ -310,7 +311,7 @@ class Window(NVDAObject):
 
 	def _get_isWindowUnicode(self):
 		if not hasattr(self, "_isWindowUnicode"):
-			self._isWindowUnicode = bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
+			self._isWindowUnicode = bool(user32.IsWindowUnicode(self.windowHandle))
 		return self._isWindowUnicode
 
 	def correctAPIForRelation(self, obj, relation=None):

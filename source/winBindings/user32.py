@@ -31,6 +31,7 @@ from ctypes.wintypes import (
 	LONG,
 	LPDWORD,
 	LPPOINT,
+	LPRECT,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -1372,3 +1373,117 @@ Empties the clipboard, frees handles to its data, and assigns clipboard ownershi
 """
 EmptyClipboard.restype = BOOL
 EmptyClipboard.argtypes = ()
+
+MapVirtualKey = dll.MapVirtualKeyW
+"""
+Translates a virtual-key code or scan code  into a scan code, character value or virtual-key code.
+
+.. seealso::
+	https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-mapvirtualkeyw
+"""
+MapVirtualKey.restype = UINT
+MapVirtualKey.argtypes = (
+	UINT,  # uCode: The virtual key code or scan code for a key
+	UINT,  # uMapType: The translation to be performed
+)
+
+RegisterWindowMessage = dll.RegisterWindowMessageW
+"""
+Defines a new window message that is guaranteed to be unique throughout the system.
+
+.. seealso::
+	https://learn.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-registerwindowmessagew
+"""
+RegisterWindowMessage.restype = UINT
+RegisterWindowMessage.argtypes = (
+	LPCWSTR,  # lpString: The message to be registered
+)
+
+ACCESS_MASK = DWORD
+
+OpenInputDesktop = dll.OpenInputDesktop
+"""
+Opens the desktop that receives user input.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-openinputdesktop
+"""
+OpenInputDesktop.restype = HDESK
+OpenInputDesktop.argtypes = (
+	DWORD,  # dwFlags: Behaviour flags
+	BOOL,  # fInherit: If TRUE, processes created by this process will inherit the handle
+	ACCESS_MASK,  # dwDesiredAccess:
+)
+
+CloseDesktop = dll.CloseDesktop
+"""
+Closes an open handle to a desktop object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-closedesktop
+"""
+CloseDesktop.restype = BOOL
+CloseDesktop.argtypes = (
+	HDESK,  # hDesktop: Handle to the desktop to be closed
+)
+
+GetKeyboardLayoutName = dll.GetKeyboardLayoutNameW
+"""
+Retrieves the name of the active input locale identifier (formerly called the keyboard layout) for the calling thread.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeyboardlayoutnamew
+"""
+GetKeyboardLayoutName.restype = BOOL
+GetKeyboardLayoutName.argtypes = (
+	LPWSTR,  # pwszKLID: The buffer that receives the name of the input locale identifier, including the terminating null character
+)
+
+GetDC = dll.GetDC
+"""
+Retrieves a handle to a device context for the client area of a specified window or the entire screen.
+
+.. seealso::
+https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdc
+"""
+GetDC.restype = HDC
+GetDC.argtypes = (
+	HWND,  # hWnd: Handle to the window whose DC is to be retrieved, or NULL to retrieve the DC for the entire screen
+)
+
+ReleaseDC = dll.ReleaseDC
+"""
+Releases a device context, freeing it for use by other applications.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-releasedc
+"""
+ReleaseDC.restype = int
+ReleaseDC.argtypes = (
+	HWND,  # hWnd: Handle to the window whose DC is to be released
+	HDC,  # hDC: Handle to the DC to be released
+)
+
+GetWindowRect = dll.GetWindowRect
+"""
+Retrieves the dimensions of the bounding rectangle of the specified window.
+
+..  seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrect
+"""
+GetWindowRect.restype = BOOL
+GetWindowRect.argtypes = (
+	HWND,  # hWnd: Handle to the window
+	LPRECT,  # lpRect: RECT that receives the screen coordinates of the upper-left and lower-right corners of the window
+)
+IsWindowUnicode = dll.IsWindowUnicode
+"""
+Determines whether the specified window is a native Unicode window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-iswindowunicode
+"""
+IsWindowUnicode.restype = BOOL
+IsWindowUnicode.argtypes = (
+	HWND,  # hWnd: Handle to the window to be tested
+)

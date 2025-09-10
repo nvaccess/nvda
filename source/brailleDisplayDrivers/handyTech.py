@@ -31,7 +31,7 @@ from logHandler import log
 import bdDetect
 import time
 import datetime
-from ctypes import windll
+from winBindings import user32
 import windowUtils
 
 import wx
@@ -48,7 +48,7 @@ class InvisibleDriverWindow(windowUtils.CustomWindow):
 		# Register shared window message.
 		# Note: There is no corresponding unregister function.
 		# Still this does no harm if done repeatedly.
-		self.window_message = windll.user32.RegisterWindowMessageW("Handy_Tech_Server")
+		self.window_message = user32.RegisterWindowMessage("Handy_Tech_Server")
 
 	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
 		if msg == self.window_message:
