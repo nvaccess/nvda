@@ -67,7 +67,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
-  Call `speech.speech.getIndentToneDuration` instead.
+  Call `speech.speech.getIndentToneDuration` instead. (#18898)
 
 #### Deprecations
 
