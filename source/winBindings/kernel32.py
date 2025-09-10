@@ -619,7 +619,7 @@ WriteFile.argtypes = (
 	c_void_p,  # lpBuffer: A pointer to the buffer containing the data
 	DWORD,  # nNumberOfBytesToWrite: The number of bytes to be written
 	POINTER(
-		DWORD
+		DWORD,
 	),  # lpNumberOfBytesWritten: A pointer to the variable that receives the number of bytes written
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
@@ -637,7 +637,7 @@ GetOverlappedResult.argtypes = (
 	HANDLE,  # hFile: A handle to the file, named pipe, or communications device
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 	POINTER(
-		DWORD
+		DWORD,
 	),  # lpNumberOfBytesTransferred: A pointer to a variable that receives the number of bytes transferred
 	BOOL,  # bWait: If TRUE, the function does not return until the operation has been completed
 )
@@ -829,7 +829,7 @@ Retrieves information about the specified console screen buffer.
 GetConsoleScreenBufferInfo.argtypes = (
 	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
 	POINTER(
-		CONSOLE_SCREEN_BUFFER_INFO
+		CONSOLE_SCREEN_BUFFER_INFO,
 	),  # lpConsoleScreenBufferInfo: A pointer to a CONSOLE_SCREEN_BUFFER_INFO structure
 )
 GetConsoleScreenBufferInfo.restype = BOOL
@@ -844,7 +844,7 @@ Retrieves information about the current console selection.
 """
 GetConsoleSelectionInfo.argtypes = (
 	POINTER(
-		CONSOLE_SELECTION_INFO
+		CONSOLE_SELECTION_INFO,
 	),  # lpConsoleSelectionInfo: A pointer to a CONSOLE_SELECTION_INFO structure
 )
 GetConsoleSelectionInfo.restype = BOOL
@@ -863,7 +863,7 @@ ReadConsoleOutputCharacter.argtypes = (
 	DWORD,  # nLength: The number of characters to be read
 	COORD,  # dwReadCoord: A COORD structure that specifies the coordinates of the first cell
 	POINTER(
-		DWORD
+		DWORD,
 	),  # lpNumberOfCharsRead: A pointer to a variable that receives the actual number of characters read
 )
 ReadConsoleOutputCharacter.restype = BOOL
@@ -879,7 +879,7 @@ Reads character and color attribute data from a rectangular block of character c
 ReadConsoleOutput.argtypes = (
 	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
 	POINTER(
-		CHAR_INFO
+		CHAR_INFO,
 	),  # lpBuffer: A pointer to the destination buffer that receives the character and attribute data
 	COORD,  # dwBufferSize: A COORD structure that specifies the size of the lpBuffer parameter
 	COORD,  # dwBufferCoord: A COORD structure that specifies the coordinates of the upper-left cell
@@ -972,7 +972,7 @@ Determines whether the specified process is running under WOW64.
 IsWow64Process.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
 	POINTER(
-		BOOL
+		BOOL,
 	),  # Wow64Process: A pointer to a value that is set to TRUE if the process is running under WOW64
 )
 IsWow64Process.restype = BOOL

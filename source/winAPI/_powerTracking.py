@@ -32,7 +32,6 @@ from winBindings.kernel32 import SYSTEM_POWER_STATUS as SystemPowerStatus
 import winKernel
 
 
-
 BATTERY_LIFE_TIME_UNKNOWN = 0xFFFFFFFF
 
 
