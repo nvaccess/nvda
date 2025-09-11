@@ -25,6 +25,7 @@ import monkeyPatches
 
 import NVDAState
 import winUser
+from winBindings import user32
 
 monkeyPatches.applyMonkeyPatches()
 
@@ -40,7 +41,7 @@ if NVDAState.isRunningAsSource():
 	# Ensure we are inside the Python virtual environment
 	virtualEnv = os.getenv("VIRTUAL_ENV")
 	if not virtualEnv or Path(appDir).parent != Path(virtualEnv).parent:
-		ctypes.windll.user32.MessageBoxW(
+		user32.MessageBox(
 			0,
 			"NVDA cannot  detect the Python virtual environment. "
 			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
@@ -293,7 +294,7 @@ if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 
 # Accept WM_QUIT from other processes, even if running with higher privileges
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+if not user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
 	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
