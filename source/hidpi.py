@@ -115,6 +115,7 @@ class HIDP_VALUE_CAPS(Structure):
 	Note that both HIDP_BUTTON_CAPS and HIDP_VALUE_CAPS have a member named u1, which are the same type.
 	However the members before are different.
 	"""
+
 	_fields_ = [
 		("UsagePage", USAGE),
 		("ReportID", UCHAR),
@@ -150,6 +151,7 @@ class HIDP_BUTTON_CAPS(Structure):
 	Note that both HIDP_BUTTON_CAPS and HIDP_VALUE_CAPS have a member named u1, which are the same type.
 	However the members before are different.
 	"""
+
 	_fields_ = [
 		("UsagePage", USAGE),
 		("ReportID", UCHAR),

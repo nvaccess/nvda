@@ -189,12 +189,12 @@ Extracts data from a HID report for a specified report type.
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getdata
 """
 HidP_GetData.argtypes = (
-	HIDP_REPORT_TYPE,      # ReportType
-	POINTER(HIDP_DATA ),     # DataList
-	POINTER(ULONG),        # DataLength
+	HIDP_REPORT_TYPE,  # ReportType
+	POINTER(HIDP_DATA),  # DataList
+	POINTER(ULONG),  # DataLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
-	PCHAR,              # Report
-	ULONG                  # ReportLength
+	PCHAR,  # Report
+	ULONG,  # ReportLength
 )
 HidP_GetData.restype = NTSTATUS
 
@@ -207,14 +207,14 @@ Extracts usages from a HID report for a specified report type and usage page.
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getusages
 """
 HidP_GetUsages.argtypes = (
-	HIDP_REPORT_TYPE,      # ReportType
-	USAGE,                 # UsagePage
-	USHORT,                # LinkCollection
-	POINTER(USAGE),        # UsageList
-	POINTER(ULONG),        # UsageLength
+	HIDP_REPORT_TYPE,  # ReportType
+	USAGE,  # UsagePage
+	USHORT,  # LinkCollection
+	POINTER(USAGE),  # UsageList
+	POINTER(ULONG),  # UsageLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
-	PCHAR,              # Report
-	ULONG                  # ReportLength
+	PCHAR,  # Report
+	ULONG,  # ReportLength
 )
 HidP_GetUsages.restype = NTSTATUS
 
@@ -226,15 +226,15 @@ Sets an array of usage values in a HID report for a specified report type and us
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_setusagevaluearray
 """
 HidP_SetUsageValueArray.argtypes = (
-	HIDP_REPORT_TYPE,      # ReportType
-	USAGE,                 # UsagePage
-	USHORT,                # LinkCollection
+	HIDP_REPORT_TYPE,  # ReportType
+	USAGE,  # UsagePage
+	USHORT,  # LinkCollection
 	USAGE,  # Usage
-	PCHAR,        # UsageValue
-	USHORT,                 # UsageValueByteLenth
+	PCHAR,  # UsageValue
+	USHORT,  # UsageValueByteLenth
 	PHIDP_PREPARSED_DATA,  # PreparsedData
-	PCHAR,              # Report
-	ULONG                  # ReportLength
+	PCHAR,  # Report
+	ULONG,  # ReportLength
 )
 HidP_SetUsageValueArray.restype = NTSTATUS
 
@@ -246,9 +246,9 @@ Extracts button capability information from a HID report for a specified report 
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getbuttoncaps
 """
 HidP_GetButtonCaps.argtypes = (
-	HIDP_REPORT_TYPE,      # ReportType
-	POINTER(HIDP_BUTTON_CAPS),     # ButtonCaps
-	POINTER(USHORT),       # ButtonCapsLength
+	HIDP_REPORT_TYPE,  # ReportType
+	POINTER(HIDP_BUTTON_CAPS),  # ButtonCaps
+	POINTER(USHORT),  # ButtonCapsLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 )
 HidP_GetButtonCaps.restype = NTSTATUS
@@ -262,9 +262,9 @@ Extracts value capability information from a HID report for a specified report t
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getvaluecaps
 """
 HidP_GetValueCaps.argtypes = (
-	HIDP_REPORT_TYPE,      # ReportType
-	POINTER(HIDP_VALUE_CAPS),     # ValueCaps
-	POINTER(USHORT),       # ValueCapsLength
+	HIDP_REPORT_TYPE,  # ReportType
+	POINTER(HIDP_VALUE_CAPS),  # ValueCaps
+	POINTER(USHORT),  # ValueCapsLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 )
 HidP_GetValueCaps.restype = NTSTATUS
@@ -279,7 +279,7 @@ The HidD_GetFeature routine retrieves a feature report from a top-level collecti
 HidD_GetFeature.argtypes = (
 	HANDLE,  # HidDeviceObject
 	c_void_p,  # ReportBuffer
-	ULONG,     # ReportBufferLength
+	ULONG,  # ReportBufferLength
 )
 HidD_GetFeature.restype = BOOLEAN
 
@@ -293,7 +293,7 @@ The HidD_SetFeature routine sends a feature report to a top-level collection.
 HidD_SetFeature.argtypes = (
 	HANDLE,  # HidDeviceObject
 	c_void_p,  # ReportBuffer
-	ULONG,     # ReportBufferLength
+	ULONG,  # ReportBufferLength
 )
 HidD_SetFeature.restype = BOOLEAN
 
@@ -305,8 +305,8 @@ The HidD_SetOutputReport routine sends an output report to a top-level collectio
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidsdi/nf-hidsdi-hidd_setoutputreport
 """
 HidD_SetOutputReport.argtypes = (
-	HANDLE,    # HidDeviceObject
+	HANDLE,  # HidDeviceObject
 	c_void_p,  # ReportBuffer
-	ULONG,     # ReportBufferLength
+	ULONG,  # ReportBufferLength
 )
 HidD_SetOutputReport.restype = BOOLEAN
