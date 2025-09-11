@@ -5,11 +5,29 @@
 
 """Functions exported by hid.dll, and supporting data structures and enumerations."""
 
-from ctypes import POINTER, Structure, c_void_p, sizeof, windll
-from ctypes.wintypes import BOOLEAN, HANDLE, ULONG, USHORT
-
+from ctypes import (
+	POINTER,
+	Structure,
+	c_void_p,
+	sizeof,
+	windll,
+)
+from ctypes.wintypes import (
+	BOOLEAN,
+	HANDLE,
+	ULONG,
+	USHORT,
+	PCHAR,
+)
 from comtypes import GUID
-from hidpi import HIDP_CAPS, NTSTATUS
+from hidpi import (
+	HIDP_CAPS,
+	NTSTATUS,
+	HIDP_REPORT_TYPE,
+	USAGE,
+	HIDP_DATA,
+	HIDP_VALUE_CAPS,
+)
 
 dll = windll.hid
 
@@ -131,3 +149,163 @@ HidD_GetHidGuid.argtypes = (
 	LPGUID,  # HidGuid
 )
 HidD_GetHidGuid.restype = None
+
+
+HidP_MaxUsageListLength = dll.HidP_MaxUsageListLength
+"""
+returns the maximum number of HID usages that HidP_GetUsages can return for a specified type of HID report and a specified top-level collection.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_maxusagelistlength
+"""
+HidP_MaxUsageListLength.argtypes = (
+	HIDP_REPORT_TYPE,  # ReportType
+	USAGE,  # UsagePage
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+)
+HidP_MaxUsageListLength.restype = ULONG
+
+
+HidP_MaxDataListLength = dll.HidP_MaxDataListLength
+"""
+Returns the maximum number of HID data structures that HidP_GetData can return for a specified type of HID report and a specified top-level collection.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_maxdatalistlength
+"""
+HidP_MaxDataListLength.argtypes = (
+	HIDP_REPORT_TYPE,  # ReportType
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+)
+HidP_MaxDataListLength.restype = ULONG
+
+
+HidP_GetData = dll.HidP_GetData
+"""
+Extracts data from a HID report for a specified report type.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getdata
+"""
+HidP_GetData.argtypes = (
+	HIDP_REPORT_TYPE,      # ReportType
+	POINTER(HIDP_DATA ),     # DataList
+	POINTER(ULONG),        # DataLength
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+	PCHAR,              # Report
+	ULONG                  # ReportLength
+)
+HidP_GetData.restype = NTSTATUS
+
+
+HidP_GetUsages = dll.HidP_GetUsages
+"""
+Extracts usages from a HID report for a specified report type and usage page.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getusages
+"""
+HidP_GetUsages.argtypes = (
+	HIDP_REPORT_TYPE,      # ReportType
+	USAGE,                 # UsagePage
+	USHORT,                # LinkCollection
+	POINTER(USAGE),        # UsageList
+	POINTER(ULONG),        # UsageLength
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+	PCHAR,              # Report
+	ULONG                  # ReportLength
+)
+HidP_GetUsages.restype = NTSTATUS
+
+HidP_SetUsageValueArray = dll.HidP_SetUsageValueArray
+"""
+Sets an array of usage values in a HID report for a specified report type and usage page.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_setusagevaluearray
+"""
+HidP_SetUsageValueArray.argtypes = (
+	HIDP_REPORT_TYPE,      # ReportType
+	USAGE,                 # UsagePage
+	USHORT,                # LinkCollection
+	USAGE,  # Usage
+	POINTER(PCHAR),        # UsageValue
+	USHORT,                 # UsageValueByteLenth
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+	PCHAR,              # Report
+	ULONG                  # ReportLength
+)
+HidP_SetUsageValueArray.restype = NTSTATUS
+
+HidP_GetButtonCaps = dll.HidP_GetButtonCaps
+"""
+Extracts button capability information from a HID report for a specified report type and usage page.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getbuttoncaps
+"""
+HidP_GetButtonCaps.argtypes = (
+	HIDP_REPORT_TYPE,      # ReportType
+	POINTER(HIDP_VALUE_CAPS),     # ButtonCaps
+	POINTER(USHORT),       # ButtonCapsLength
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+)
+HidP_GetButtonCaps.restype = NTSTATUS
+
+
+HidP_GetValueCaps = dll.HidP_GetValueCaps
+"""
+Extracts value capability information from a HID report for a specified report type and usage page.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getvaluecaps
+"""
+HidP_GetValueCaps.argtypes = (
+	HIDP_REPORT_TYPE,      # ReportType
+	POINTER(HIDP_VALUE_CAPS),     # ValueCaps
+	POINTER(USHORT),       # ValueCapsLength
+	PHIDP_PREPARSED_DATA,  # PreparsedData
+)
+HidP_GetValueCaps.restype = NTSTATUS
+
+HidD_GetFeature = dll.HidD_GetFeature
+"""
+The HidD_GetFeature routine retrieves a feature report from a top-level collection.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidsdi/nf-hidsdi-hidd_getfeature
+"""
+HidD_GetFeature.argtypes = (
+	HANDLE,  # HidDeviceObject
+	c_void_p,  # ReportBuffer
+	ULONG,     # ReportBufferLength
+)
+HidD_GetFeature.restype = BOOLEAN
+
+HidD_SetFeature = dll.HidD_SetFeature
+"""
+The HidD_SetFeature routine sends a feature report to a top-level collection.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidsdi/nf-hidsdi-hidd_setfeature
+"""
+HidD_SetFeature.argtypes = (
+	HANDLE,  # HidDeviceObject
+	c_void_p,  # ReportBuffer
+	ULONG,     # ReportBufferLength
+)
+HidD_SetFeature.restype = BOOLEAN
+
+HidD_SetOutputReport = dll.HidD_SetOutputReport
+"""
+The HidD_SetOutputReport routine sends an output report to a top-level collection.
+
+..seealso::
+	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidsdi/nf-hidsdi-hidd_setoutputreport
+"""
+HidD_SetOutputReport.argtypes = (
+	HANDLE,    # HidDeviceObject
+	c_void_p,  # ReportBuffer
+	ULONG,     # ReportBufferLength
+)
+HidD_SetOutputReport.restype = BOOLEAN
