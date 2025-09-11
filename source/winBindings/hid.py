@@ -27,6 +27,7 @@ from hidpi import (
 	USAGE,
 	HIDP_DATA,
 	HIDP_VALUE_CAPS,
+	HIDP_BUTTON_CAPS,
 )
 
 dll = windll.hid
@@ -246,7 +247,7 @@ Extracts button capability information from a HID report for a specified report 
 """
 HidP_GetButtonCaps.argtypes = (
 	HIDP_REPORT_TYPE,      # ReportType
-	POINTER(HIDP_VALUE_CAPS),     # ButtonCaps
+	POINTER(HIDP_BUTTON_CAPS),     # ButtonCaps
 	POINTER(USHORT),       # ButtonCapsLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 )

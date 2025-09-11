@@ -74,7 +74,7 @@ class HIDP_DATA(Structure):
 	]
 
 
-class _HIDP_VALUE_CAPS_U1_RANGE(Structure):
+class _HIDP_VALUE_AND_BUTTON_CAPS_U1_RANGE(Structure):
 	_fields_ = [
 		("UsageMin", USAGE),
 		("UsageMax", USAGE),
@@ -87,7 +87,7 @@ class _HIDP_VALUE_CAPS_U1_RANGE(Structure):
 	]
 
 
-class _HIDP_VALUE_CAPS_U1_NOT_RANGE(Structure):
+class _HIDP_VALUE_AND_BUTTON_CAPS_U1_NOT_RANGE(Structure):
 	_fields_ = [
 		("Usage", USAGE),
 		("Reserved1", USAGE),
@@ -100,14 +100,21 @@ class _HIDP_VALUE_CAPS_U1_NOT_RANGE(Structure):
 	]
 
 
-class _HIDP_VALUE_CAPS_U1(Union):
+class _HIDP_VALUE_AND_BUTTON_CAPS_U1(Union):
 	_fields_ = [
-		("Range", _HIDP_VALUE_CAPS_U1_RANGE),
-		("NotRange", _HIDP_VALUE_CAPS_U1_NOT_RANGE),
+		("Range", _HIDP_VALUE_AND_BUTTON_CAPS_U1_RANGE),
+		("NotRange", _HIDP_VALUE_AND_BUTTON_CAPS_U1_NOT_RANGE),
 	]
 
 
 class HIDP_VALUE_CAPS(Structure):
+	"""
+	Contains information that describes the capability of a set of HID control values (either a single usage or a usage range).
+	..seealso::
+		https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/ns-hidpi-_hidp_value_caps
+	Note that both HIDP_BUTTON_CAPS and HIDP_VALUE_CAPS have a member named u1, which are the same type.
+	However the members before are different.
+	"""
 	_fields_ = [
 		("UsagePage", USAGE),
 		("ReportID", UCHAR),
@@ -131,7 +138,34 @@ class HIDP_VALUE_CAPS(Structure):
 		("LogicalMax", LONG),
 		("PhysicalMin", LONG),
 		("PhysicalMax", LONG),
-		("u1", _HIDP_VALUE_CAPS_U1),
+		("u1", _HIDP_VALUE_AND_BUTTON_CAPS_U1),
+	]
+
+
+class HIDP_BUTTON_CAPS(Structure):
+	"""
+	Contains information about the capability of a HID control button usage (or a set of buttons associated with a usage range).
+	..seealso::
+		https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/ns-hidpi-_hidp_button_caps
+	Note that both HIDP_BUTTON_CAPS and HIDP_VALUE_CAPS have a member named u1, which are the same type.
+	However the members before are different.
+	"""
+	_fields_ = [
+		("UsagePage", USAGE),
+		("ReportID", UCHAR),
+		("IsAlias", BOOLEAN),
+		("BitField", USHORT),
+		("LinkCollection", USHORT),
+		("LinkUsage", USAGE),
+		("LinkUsagePage", USAGE),
+		("IsRange", BOOLEAN),
+		("IsStringRange", BOOLEAN),
+		("IsDesignatorRange", BOOLEAN),
+		("IsAbsolute", BOOLEAN),
+		("ReportCount", USHORT),
+		("Reserved2", USHORT),
+		("Reserved3", ULONG * 9),
+		("u1", _HIDP_VALUE_AND_BUTTON_CAPS_U1),
 	]
 
 

@@ -202,21 +202,21 @@ class Hid(IoBase):
 		return self._caps
 
 	@property
-	def inputButtonCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
+	def inputButtonCaps(self) -> ctypes.Array[hidpi.HIDP_BUTTON_CAPS]:
 		if hasattr(self, "_inputButtonCaps"):
 			return self._inputButtonCaps
-		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputButtonCaps)()
-		numValueCaps = ctypes.c_long(self.caps.NumberInputButtonCaps)
-		if numValueCaps.value == 0:
-			return valueCapsList
+		buttonCapsList = (hidpi.HIDP_BUTTON_CAPS * self.caps.NumberInputButtonCaps)()
+		numButtonCaps = ctypes.c_ushort(self.caps.NumberInputButtonCaps)
+		if numButtonCaps.value == 0:
+			return buttonCapsList
 		check_HidP_status(
 			winBindings.hid.HidP_GetButtonCaps,
 			hidpi.HIDP_REPORT_TYPE.INPUT,
-			ctypes.byref(valueCapsList),
-			ctypes.byref(numValueCaps),
+			buttonCapsList,
+			ctypes.byref(numButtonCaps),
 			self._pd,
 		)
-		self._inputButtonCaps = valueCapsList
+		self._inputButtonCaps = buttonCapsList
 		return self._inputButtonCaps
 
 	@property
@@ -224,13 +224,13 @@ class Hid(IoBase):
 		if hasattr(self, "_inputValueCaps"):
 			return self._inputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputValueCaps)()
-		numValueCaps = ctypes.c_long(self.caps.NumberInputValueCaps)
+		numValueCaps = ctypes.c_ushort(self.caps.NumberInputValueCaps)
 		if numValueCaps.value == 0:
 			return valueCapsList
 		check_HidP_status(
 			winBindings.hid.HidP_GetValueCaps,
 			hidpi.HIDP_REPORT_TYPE.INPUT,
-			ctypes.byref(valueCapsList),
+			valueCapsList,
 			ctypes.byref(numValueCaps),
 			self._pd,
 		)
@@ -242,13 +242,13 @@ class Hid(IoBase):
 		if hasattr(self, "_outputValueCaps"):
 			return self._outputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberOutputValueCaps)()
-		numValueCaps = ctypes.c_long(self.caps.NumberOutputValueCaps)
+		numValueCaps = ctypes.c_ushort(self.caps.NumberOutputValueCaps)
 		if numValueCaps.value == 0:
 			return valueCapsList
 		check_HidP_status(
 			winBindings.hid.HidP_GetValueCaps,
 			hidpi.HIDP_REPORT_TYPE.OUTPUT,
-			ctypes.byref(valueCapsList),
+			valueCapsList,
 			ctypes.byref(numValueCaps),
 			self._pd,
 		)
