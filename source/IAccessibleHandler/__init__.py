@@ -23,7 +23,6 @@ from typing import (
 import weakref
 from ctypes import (
 	wintypes,
-	windll,
 	byref,
 	c_void_p,
 	c_char,
