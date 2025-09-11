@@ -54,6 +54,11 @@ class HIDP_REPORT_TYPE(enum.IntEnum):
 
 	@classmethod
 	def from_param(cls, obj):
+		"""
+		Used by ctypes for automatic parameter conversion when passing
+		HIDP_REPORT_TYPE values to C functions. Converts the enum or integer
+		to a c_long as required by the Windows API.
+		"""
 		if isinstance(obj, (cls, int)):
 			return c_long(obj)
 		raise TypeError(f"Expected {cls.__name__} or int, got {type(obj).__name__}")
