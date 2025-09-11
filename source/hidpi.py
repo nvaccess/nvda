@@ -9,7 +9,7 @@ Required types and defines from Windows SDK's hidpi.h
 """
 
 import enum
-from ctypes import Structure, Union, c_byte
+from ctypes import Structure, Union, c_byte, c_long
 from ctypes.wintypes import USHORT, BOOLEAN, ULONG, LONG
 
 
@@ -51,6 +51,12 @@ class HIDP_REPORT_TYPE(enum.IntEnum):
 	INPUT = 0
 	OUTPUT = 1
 	FEATURE = 2
+
+	@classmethod
+	def from_param(cls, obj):
+		if isinstance(obj, (cls, int)):
+			return c_long(obj)
+		raise TypeError(f"Expected {cls.__name__} or int, got {type(obj).__name__}")
 
 
 class _HIDP_DATA_U1(Union):
