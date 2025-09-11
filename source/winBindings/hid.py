@@ -229,7 +229,7 @@ HidP_SetUsageValueArray.argtypes = (
 	USAGE,                 # UsagePage
 	USHORT,                # LinkCollection
 	USAGE,  # Usage
-	POINTER(PCHAR),        # UsageValue
+	PCHAR,        # UsageValue
 	USHORT,                 # UsageValueByteLenth
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 	PCHAR,              # Report
