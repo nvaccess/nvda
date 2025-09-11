@@ -194,6 +194,9 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 	SOUND = 0b10
 	SPEECH_AND_SOUND = SPEECH | SOUND
 	BRAILLE = 0b100
+	SPEECH_AND_BRAILLE = SPEECH | BRAILLE
+	SOUND_AND_BRAILLE = SOUND | BRAILLE
+	SPEECH_AND_SOUND_AND_BRAILLE = SPEECH | SOUND | BRAILLE
 
 	@property
 	def _displayStringLabels(self) -> dict["ReportSpellingErrors", str]:
