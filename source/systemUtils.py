@@ -15,7 +15,6 @@ from ctypes import (
 	byref,
 	create_unicode_buffer,
 	sizeof,
-	windll,
 )
 import ctypes.wintypes
 from typing import (
@@ -175,7 +174,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 def _getDesktopName() -> str:
 	UOI_NAME = 2  # The name of the object, as a string
 	desktop = user32.GetThreadDesktop(
-		winBindings.kernel32.GetCurrentThreadId()
+		winBindings.kernel32.GetCurrentThreadId(),
 	)
 	name = create_unicode_buffer(256)
 	user32.GetUserObjectInformation(
