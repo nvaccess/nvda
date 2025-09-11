@@ -18,6 +18,11 @@ from typing import (
 	Tuple,
 )
 from uuid import uuid4
+from winBindings.crypt32 import (
+	CERT_USAGE_MATCH,
+	CERT_CHAIN_PARA,
+)
+
 
 import garbageHandler
 import globalVars
@@ -1077,33 +1082,9 @@ def terminate():
 		autoChecker = None
 
 
-# These structs are only complete enough to achieve what we need.
-class CERT_USAGE_MATCH(ctypes.Structure):
-	_fields_ = (
-		("dwType", ctypes.wintypes.DWORD),
-		# CERT_ENHKEY_USAGE struct
-		("cUsageIdentifier", ctypes.wintypes.DWORD),
-		("rgpszUsageIdentifier", ctypes.c_void_p),  # LPSTR *
-	)
-
-
-class CERT_CHAIN_PARA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", ctypes.wintypes.DWORD),
-		("RequestedUsage", CERT_USAGE_MATCH),
-		("RequestedIssuancePolicy", CERT_USAGE_MATCH),
-		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
-		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
-		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
-		("pftCacheResync", ctypes.c_void_p),  # LPFILETIME
-		("pStrongSignPara", ctypes.c_void_p),  # PCCERT_STRONG_SIGN_PARA
-		("dwStrongSignFlags", ctypes.wintypes.DWORD),
-	)
-
-
 def _updateWindowsRootCertificates():
 	log.debug("Updating Windows root certificates")
-	crypt = ctypes.windll.crypt32
+	crypt = winBindings.crypt32
 	with requests.get(
 		# We must specify versionType so the server doesn't return a 404 error and
 		# thus cause an exception.
