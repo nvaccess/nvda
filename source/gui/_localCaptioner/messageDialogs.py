@@ -28,7 +28,7 @@ def openSuccessDialog() -> None:
 	dialog = MessageDialog(
 		parent=None,
 		# Translators: title of dialog when download successfully
-		title=pgettext("imageDesc", "Download successfully"),
+		title=pgettext("imageDesc", "Download successful"),
 		message=pgettext(
 			"imageDesc",
 			# Translators: label of dialog when downloading image captioning
