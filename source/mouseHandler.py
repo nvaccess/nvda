@@ -127,27 +127,23 @@ def internal_mouseEvent(msg, x, y, injected):
 	return True
 
 
-def executeMouseEvent(flags, x, y, data=0):
+def executeMouseEvent(flags: int, x: int, y: int, data: int = 0) -> None:
 	"""
-	Mouse events generated with this rapper for L{winUser.mouse_event}
-	will be ignored by NVDA.
-	Consult https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-mouse_event
-	for detailed parameter documentation.
-	@param flags: Controls various aspects of mouse motion and button clicking.
-		The supplied value should be one or a combination of the C{winUser.MOUSEEVENTF_*} constants.
-	@type flags: int
-	@param x: The mouse's absolute position along the x-axis
+	Generates mouse events that will be ignored by NVDA.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
+
+	:param flags: Controls various aspects of mouse motion and button clicking.
+		The supplied value should be one or a combination of the :var:`winUser.MOUSEEVENTF_*` constants.
+	:param x: The mouse's absolute position along the x-axis,
 		or its amount of motion since the last mouse event was generated.
-	@type x: int
-	@param y: The mouse's absolute position along the y-axis
+	:param y: The mouse's absolute position along the y-axis,
 		or its amount of motion since the last mouse event was generated.
-	@type y: int
-	@param data: Additional data depending on what flags are specified.
-		This defaults to 0.
-	@type data: int
+	:param data: Additional data depending on what flags are specified, default 0.
 	"""
 	with ignoreInjection():
-		winUser.mouse_event(flags, x, y, data, None)
+		winUser.mouse_event(flags, x, y, data, 0)
 
 
 def getMouseRestrictedToScreens(x, y, displays):
