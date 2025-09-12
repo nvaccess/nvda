@@ -19,11 +19,10 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
-from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
+from addonStore.models.status import _StatusFilterKey, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
-from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
 from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 from gui.contextHelp import ContextHelpMixin
@@ -454,13 +453,14 @@ class UpdatableAddonsDialog(
 		from .actions import _MonoActionsContextMenu
 		from .addonList import AddonVirtualList
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+
 		_storeVM = AddonStoreVM()
 		_storeVM._filteredStatusKey = _StatusFilterKey.UPDATE
 		_storeVM._filterIncludeIncompatible = config.conf["addonStore"]["allowIncompatibleUpdates"]
 		_storeVM.refresh()
 		self.addonsList = AddonVirtualList(
 			parent=self,
-			addonsListVM = _storeVM.listVM,
+			addonsListVM=_storeVM.listVM,
 			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
 		)
 		# Translators: the label for the addons list in the updatable addons dialog.
@@ -498,7 +498,7 @@ class UpdatableAddonsDialog(
 				),
 			)
 			"""
-		#self.addonsList.Refresh()
+		# self.addonsList.Refresh()
 
 	def onShowChangelogButton(self, evt: wx.CommandEvent):
 		index = self.addonsList.GetFirstSelected()
