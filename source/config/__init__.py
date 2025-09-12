@@ -269,59 +269,9 @@ def getStartAfterLogon() -> bool:
 	"""Not to be confused with getStartOnLogonScreen.
 
 	Checks if NVDA is set to start after a logon.
-	Checks related easeOfAccess current user registry keys on Windows 8 or newer.
-	Then, checks the registry run key to see if NVDA
-	has been registered to start after logon on Windows 7
-	or by earlier NVDA versions.
+	Checks related easeOfAccess current user registry keys.
 	"""
-	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON):
-		return True
-	try:
-		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, _RegistryKey.RUN.value)
-	except FileNotFoundError:
-		log.debugWarning(
-			f"Unable to find run registry key {_RegistryKey.RUN}",
-			exc_info=True,
-		)
-		return False
-	except WindowsError:
-		log.error(
-			f"Unable to open run registry key {_RegistryKey.RUN}",
-			exc_info=True,
-		)
-		return False
-
-	try:
-		val = winreg.QueryValueEx(k, "nvda")[0]
-	except FileNotFoundError:
-		log.debug("NVDA is not set to start after logon")
-		return False
-	except WindowsError:
-		log.error("Failed to query NVDA key to set start after logon", exc_info=True)
-		return False
-
-	try:
-		startAfterLogonPath = os.stat(val)
-	except WindowsError:
-		log.error(
-			"Failed to access the start after logon directory.",
-			exc_info=True,
-		)
-		return False
-
-	try:
-		currentSourcePath = os.stat(sys.argv[0])
-	except FileNotFoundError:
-		log.debug("Failed to access the current running NVDA directory.")
-		return False
-	except WindowsError:
-		log.error(
-			"Failed to access the current running NVDA directory.",
-			exc_info=True,
-		)
-		return False
-
-	return currentSourcePath == startAfterLogonPath
+	return easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON)
 
 
 def setStartAfterLogon(enable: bool) -> None:
@@ -329,33 +279,10 @@ def setStartAfterLogon(enable: bool) -> None:
 
 	Toggle if NVDA automatically starts after a logon.
 	Sets easeOfAccess related registry keys.
-
-	When toggling off, always delete the registry run key
-	in case it was set by an earlier version of NVDA.
 	"""
 	if getStartAfterLogon() == enable:
 		return
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
-	if enable:
-		return
-	# We're disabling, so ensure the run key is cleared,
-	# as it might have been set by an old version.
-	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, _RegistryKey.RUN.value, access=winreg.KEY_WRITE)
-	try:
-		winreg.QueryValue(k, "nvda")
-	except FileNotFoundError:
-		log.debug(
-			"The run registry key is not set for setStartAfterLogon."
-			"This is expected since ease of access is used",
-		)
-		return
-	try:
-		winreg.DeleteValue(k, "nvda")
-	except WindowsError:
-		log.error(
-			"Couldn't unset registry key for nvda to start after logon.",
-			exc_info=True,
-		)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -367,27 +294,8 @@ def getStartOnLogonScreen() -> bool:
 	Checks if NVDA is set to start on the logon screen.
 
 	Checks related easeOfAccess local machine registry keys.
-	Then, checks a NVDA registry key to see if NVDA
-	has been registered to start on logon by earlier NVDA versions.
 	"""
-	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN):
-		return True
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKey.NVDA.value)
-	except FileNotFoundError:
-		log.debugWarning(f"Could not find NVDA reg key {_RegistryKey.NVDA}", exc_info=True)
-	except WindowsError:
-		log.error(f"Failed to open NVDA reg key {_RegistryKey.NVDA}", exc_info=True)
-	else:
-		try:
-			return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
-		except FileNotFoundError:
-			log.debug(f"Could not find startOnLogonScreen value for {_RegistryKey.NVDA} - likely unset.")
-			return False
-		except WindowsError:
-			log.error(f"Failed to query startOnLogonScreen value for {_RegistryKey.NVDA}", exc_info=True)
-			return False
-	return False
+	return easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN)
 
 
 def _setStartOnLogonScreen(enable: bool) -> None:
@@ -458,7 +366,10 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
-		log.debugWarning("Failed to set start on logon screen's config.")
+		log.debugWarning(
+			"Failed to set start on logon screen's config, retrying elevated.",
+			exc_info=True,
+		)
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		import systemUtils
 

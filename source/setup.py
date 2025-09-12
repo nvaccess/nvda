@@ -243,6 +243,7 @@ freeze(
 			"markdown_link_attr_modifier",
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
+			"pymdownx",
 			# Required for local image captioning
 			"numpy",
 		],
