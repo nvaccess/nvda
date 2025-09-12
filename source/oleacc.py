@@ -8,6 +8,7 @@ from ctypes.wintypes import *  # noqa: F403
 from comtypes import *  # noqa: F403
 from comtypes.automation import *  # noqa: F403
 import comtypes.client
+from winBindings import user32
 import winUser
 import typing
 
@@ -258,7 +259,7 @@ def AccessibleObjectFromWindow_safe(hwnd, objectID, interface=IAccessible, timeo
 		raise ValueError("Invalid window")
 	wmResult = c_long()  # noqa: F405
 	res = (
-		windll.user32.SendMessageTimeoutW(  # noqa: F405
+		user32.SendMessageTimeout(  # noqa: F405
 			hwnd,
 			winUser.WM_GETOBJECT,
 			0,
