@@ -32,6 +32,7 @@ from ctypes import (
 	wstring_at,
 )
 
+from winBindings import user32
 import winBindings.oleaut32
 import winBindings.kernel32
 import winBindings.advapi32
@@ -54,39 +55,6 @@ from winAPI.constants import SystemErrorCodes
 
 from utils import _deprecate
 
-
-__getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol(
-		"LOCAL_WIN10_DLL_PATH",
-		"NVDAState",
-		"ReadPaths",
-		"nvdaHelperLocalWin10Dll",
-	),
-	_deprecate.MovedSymbol(
-		"versionedLibPath",
-		"NVDAState",
-		"ReadPaths",
-		"versionedLibX86Path",
-	),
-	_deprecate.MovedSymbol(
-		"coreArchLibPath",
-		"NVDAState",
-		"ReadPaths",
-		"coreArchLibPath",
-	),
-	_deprecate.MovedSymbol(
-		"generateBeep",
-		"NVDAHelper.localLib",
-	),
-	_deprecate.MovedSymbol(
-		"VBuf_getTextInRange",
-		"NVDAHelper.localLib",
-	),
-	_deprecate.MovedSymbol(
-		"nvdaController_onSsmlMarkReached",
-		"NVDAHelper.localLib",
-	),
-)
 
 if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
@@ -807,11 +775,11 @@ class _RemoteLoader:
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderX86, _remoteLoaderAMD64, _remoteLoaderARM64
 	global lastLanguageID, lastLayoutString
-	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
+	hkl = user32.GetKeyboardLayout(0)
 	lastLanguageID = winUser.LOWORD(hkl)
 	KL_NAMELENGTH = 9
 	buf = create_unicode_buffer(KL_NAMELENGTH)
-	res = windll.User32.GetKeyboardLayoutNameW(buf)
+	res = user32.GetKeyboardLayoutName(buf)
 	if res:
 		lastLayoutString = buf.value
 	for name, func in [
@@ -914,7 +882,7 @@ def getHelperLocalWin10Dll():
 	return windll[ReadPaths.nvdaHelperLocalWin10Dll]
 
 
-def bstrReturn(address):
+def _bstrReturn(address: int) -> str:
 	"""Handle a BSTR returned from a ctypes function call.
 	This includes freeing the memory.
 	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
@@ -926,3 +894,38 @@ def bstrReturn(address):
 	val = wstring_at(address)
 	winBindings.oleaut32.SysFreeString(address)
 	return val
+
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"LOCAL_WIN10_DLL_PATH",
+		"NVDAState",
+		"ReadPaths",
+		"nvdaHelperLocalWin10Dll",
+	),
+	_deprecate.MovedSymbol(
+		"versionedLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"versionedLibX86Path",
+	),
+	_deprecate.MovedSymbol(
+		"coreArchLibPath",
+		"NVDAState",
+		"ReadPaths",
+		"coreArchLibPath",
+	),
+	_deprecate.MovedSymbol(
+		"generateBeep",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"VBuf_getTextInRange",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.MovedSymbol(
+		"nvdaController_onSsmlMarkReached",
+		"NVDAHelper.localLib",
+	),
+	_deprecate.RemovedSymbol("bstrReturn", _bstrReturn),
+)
