@@ -974,7 +974,8 @@ class SynthDriver(SynthDriver):
 				# If you specify a value greater than 65535, the engine assumes that you want to set the
 				# left and right channels separately and converts the value to a double word,
 				# using the low word for the left channel and the high word for the right channel.
-				val |= val << 16
+				# However, some voices don't handle values greater than 65535 properly in Vol tags,
+				# so here only 0~65535 are used.
 				textList.append(f"\\Vol={val}\\")
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
