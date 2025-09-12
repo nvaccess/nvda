@@ -158,7 +158,7 @@ class ImageDescriber:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
 			ui.message(pgettext("imageDesc", "failed to load image captioner"))
-			log.exception()
+			log.exception("Failed to load image captioner model")
 		else:
 			self.isModelLoaded = True
 			# Translators: Message when successfully load the model

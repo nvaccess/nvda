@@ -66,7 +66,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:param decoderPath: Path to the GPT-2 decoder ONNX model.
 		:param configPath: Path to the configuration file (required).
 		:param enableProfiling: Whether to enable ONNX Runtime profiling.
-		:raisesFileNotFoundError: If config file is not found.
+		:raises FileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
 		# Load configuration file

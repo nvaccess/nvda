@@ -20,7 +20,7 @@ Covers:
 import tempfile
 import unittest
 from unittest.mock import patch
-from typing import Dict, Any
+from typing import Any
 
 # Import the class and function under test
 from _localCaptioner.modelDownloader import ModelDownloader
@@ -61,7 +61,7 @@ class TestModelDownloader(unittest.TestCase):
 
 	def test_reportProgressTriggersCallback(self) -> None:
 		"""Test that callback is triggered when downloaded bytes exceed threshold."""
-		callbackData: Dict[str, Any] = {}
+		callbackData: dict[str, Any] = {}
 
 		def progressCallback(
 			fileName: str,
