@@ -370,7 +370,7 @@ class ModelDownloader:
 					return False, "Download cancelled"
 				message = f"Unexpected error: {str(e)}"
 				log.error(message)
-				
+
 			else:
 				if success:
 					return True, message
@@ -486,7 +486,7 @@ class ModelDownloader:
 
 		# Check if resume is supported
 		if resumePos > 0 and response.status_code != 206:
-			log.debug(f"Server doesn't support resume, starting from beginning")
+			log.debug("Server doesn't support resume, starting from beginning")
 			if os.path.exists(localPath):
 				try:
 					os.remove(localPath)
