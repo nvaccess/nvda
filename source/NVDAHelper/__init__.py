@@ -606,7 +606,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID, hkl, layoutString):
 	import ui
 
 	buf = create_unicode_buffer(1024)
-	res = windll.kernel32.GetLocaleInfoW(languageID, 2, buf, 1024)
+	res = winBindings.kernel32.GetLocaleInfo(languageID, 2, buf, 1024)
 	# Translators: the label for an unknown language when switching input methods.
 	inputLanguageName = buf.value if res else _("unknown language")
 	layoutStringCodes = []

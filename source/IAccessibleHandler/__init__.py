@@ -23,7 +23,6 @@ from typing import (
 import weakref
 from ctypes import (
 	wintypes,
-	windll,
 	byref,
 	c_void_p,
 	c_char,
@@ -1307,6 +1306,6 @@ def isMarshalledIAccessible(IAccessibleObject):
 		.contents.value
 	)
 	handle = HANDLE()
-	windll.kernel32.GetModuleHandleExW(6, addr, byref(handle))
+	winBindings.kernel32.GetModuleHandleEx(6, addr, byref(handle))
 	winBindings.kernel32.GetModuleFileName(handle, buf, 1024)
 	return not buf.value.lower().endswith("oleacc.dll")

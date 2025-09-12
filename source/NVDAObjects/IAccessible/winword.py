@@ -4,10 +4,10 @@
 # See the file COPYING for more details.
 
 from comtypes import COMError
-import ctypes
 import operator
 import uuid
 from logHandler import log
+import winBindings.kernel32
 from winBindings import user32
 import speech
 import controlTypes
@@ -585,7 +585,7 @@ class ProtectedDocumentPane(IAccessible):
 			return
 		document = next((x for x in self.children if isinstance(x, WordDocument)), None)
 		if document:
-			curThreadID = ctypes.windll.kernel32.GetCurrentThreadId()
+			curThreadID = winBindings.kernel32.GetCurrentThreadId()
 			user32.AttachThreadInput(curThreadID, document.windowThreadID, True)
 			user32.SetFocus(document.windowHandle)
 			user32.AttachThreadInput(curThreadID, document.windowThreadID, False)

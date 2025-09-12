@@ -1,51 +1,37 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2025 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+
 from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
+import winBindings.kernel32
+from winBindings.kernel32 import (
+	COORD,
+	CONSOLE_SCREEN_BUFFER_INFO,
+	CONSOLE_SELECTION_INFO,
+	CHAR_INFO,
+)
 import textUtils
+from utils import _deprecate
 
 """
 Lower level utility functions and constants for NVDA's
 legacy Windows console support, for situations where UIA isn't available.
 """
 
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"PHANDLER_ROUTINE",
+		"winBindings.kernel32",
+	),
+)
+
+
 CONSOLE_REAL_OUTPUT_HANDLE = -2
 
-
-class COORD(Structure):  # noqa: F405
-	_fields_ = [
-		("x", c_short),  # noqa: F405
-		("y", c_short),  # noqa: F405
-	]
-
-
-class CONSOLE_SCREEN_BUFFER_INFO(Structure):  # noqa: F405
-	_fields_ = [
-		("dwSize", COORD),
-		("dwCursorPosition", COORD),
-		("wAttributes", WORD),  # noqa: F405
-		("srWindow", SMALL_RECT),  # noqa: F405
-		("dwMaximumWindowSize", COORD),
-	]
-
-
-class CONSOLE_SELECTION_INFO(Structure):  # noqa: F405
-	_fields_ = [
-		("dwFlags", DWORD),  # noqa: F405
-		("dwSelectionAnchor", COORD),
-		("srSelection", SMALL_RECT),  # noqa: F405
-	]
-
-
-class CHAR_INFO(Structure):  # noqa: F405
-	_fields_ = [
-		(
-			"Char",
-			c_wchar,  # noqa: F405
-		),  # union of char and wchar_t isn't needed since we deal only with unicode  # noqa: F405
-		("Attributes", WORD),  # noqa: F405
-	]
-
-
-PHANDLER_ROUTINE = WINFUNCTYPE(BOOL, DWORD)  # noqa: F405
 
 CTRL_C_EVENT = 0
 CTRL_BREAK_EVENT = 1
@@ -60,7 +46,7 @@ CONSOLE_MOUSE_DOWN = 0x8
 
 def GetConsoleSelectionInfo():
 	info = CONSOLE_SELECTION_INFO()
-	if windll.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:  # noqa: F405
+	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 	return info
 
@@ -70,7 +56,7 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 	buf = create_string_buffer(length * 2)  # noqa: F405
 	numCharsRead = c_int()  # noqa: F405
 	if (
-		windll.kernel32.ReadConsoleOutputCharacterW(handle, buf, length, COORD(x, y), byref(numCharsRead))  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutputCharacter(handle, buf, length, COORD(x, y), byref(numCharsRead))  # noqa: F405
 		== 0
 	):  # noqa: F405
 		raise WinError()  # noqa: F405
@@ -86,7 +72,7 @@ def ReadConsoleOutput(handle, length, rect):
 	buf = BufType()
 	# rect=SMALL_RECT(x, y, x+length-1, y)
 	if (
-		windll.kernel32.ReadConsoleOutputW(  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutput(  # noqa: F405
 			handle,
 			buf,
 			COORD(rect.Right - rect.Left + 1, rect.Bottom - rect.Top + 1),
@@ -101,31 +87,31 @@ def ReadConsoleOutput(handle, length, rect):
 
 def GetConsoleScreenBufferInfo(handle):
 	info = CONSOLE_SCREEN_BUFFER_INFO()
-	if windll.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:  # noqa: F405
+	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 	return info
 
 
 def FreeConsole():
-	if windll.kernel32.FreeConsole() == 0:  # noqa: F405
+	if winBindings.kernel32.FreeConsole() == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 
 
 def AttachConsole(processID):
-	if windll.kernel32.AttachConsole(processID) == 0:  # noqa: F405
+	if winBindings.kernel32.AttachConsole(processID) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 
 
 def GetConsoleWindow():
-	return windll.kernel32.GetConsoleWindow()  # noqa: F405
+	return winBindings.kernel32.GetConsoleWindow()  # noqa: F405
 
 
 def GetConsoleProcessList(maxProcessCount):
 	processList = (c_int * maxProcessCount)()  # noqa: F405
-	num = windll.kernel32.GetConsoleProcessList(processList, maxProcessCount)  # noqa: F405
+	num = winBindings.kernel32.GetConsoleProcessList(processList, maxProcessCount)  # noqa: F405
 	return processList[0:num]
 
 
 def SetConsoleCtrlHandler(handler, add):
-	if windll.kernel32.SetConsoleCtrlHandler(handler, add) == 0:  # noqa: F405
+	if winBindings.kernel32.SetConsoleCtrlHandler(handler, add) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405

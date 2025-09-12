@@ -11,6 +11,7 @@ import os
 import tempfile
 import shutil
 import itertools
+import winBindings.kernel32
 import shellapi
 import globalVars
 import languageHandler
@@ -693,7 +694,7 @@ def tryCopyFile(sourceFilePath, destFilePath):
 		sourceFilePath = "\\\\?\\" + sourceFilePath
 	if not destFilePath.startswith("\\\\"):
 		destFilePath = "\\\\?\\" + destFilePath
-	if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
 		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))
 		if not os.path.exists(destFilePath):
@@ -705,7 +706,7 @@ def tryCopyFile(sourceFilePath, destFilePath):
 			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
 		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 			errorCode = ctypes.GetLastError()
 			raise OSError(
 				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
