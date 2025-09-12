@@ -12,7 +12,7 @@ import controlTypes
 
 class PlaceholderNVDAObject(NVDAObject):
 	processID = None  # Must be implemented to instantiate.
-	windowThreadID = None  # Must be implemented for inputCore tests
+	windowThreadID = 0  # Must be implemented for inputCore tests
 
 
 class NVDAObjectWithRole(PlaceholderNVDAObject):

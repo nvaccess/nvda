@@ -21,7 +21,6 @@ from ctypes import (
 	POINTER,
 	byref,
 	cdll,
-	windll,
 	CFUNCTYPE,
 	WinError,
 	create_string_buffer,
@@ -30,6 +29,7 @@ from ctypes import (
 from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
 from winBindings.kernel32 import FreeLibrary
+from winBindings import user32
 import queueHandler
 from logHandler import log
 import winUser
@@ -1146,10 +1146,10 @@ def initialize():
 	):
 		enableBridge()
 	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
-	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, winUser.MSGFLT.ALLOW):
+	if not user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, winUser.MSGFLT.ALLOW):
 		raise WinError()
 	for msg in range(winUser.WM_USER + 1, 0xFFFF):
-		if not windll.user32.ChangeWindowMessageFilter(msg, winUser.MSGFLT.ALLOW):
+		if not user32.ChangeWindowMessageFilter(msg, winUser.MSGFLT.ALLOW):
 			raise WinError()
 	bridgeDll.Windows_run()
 	# Register java events
