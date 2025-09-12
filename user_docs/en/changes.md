@@ -2,7 +2,7 @@
 
 ## 2026.1
 
-This release introduces a new local model-based image description feature.
+This release introduces automatic image descriptions.
 You can now use `NVDA+Windows+,` to describe images you encounter.
 
 ### Important notes

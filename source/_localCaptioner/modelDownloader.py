@@ -343,9 +343,9 @@ class ModelDownloader:
 			if self.cancelRequested:
 				return False, "Download cancelled"
 
-			try:
-				log.debug(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
+			log.debug(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
 
+			try:
 				success, message = self._performSingleDownload(
 					url,
 					localPath,
@@ -353,8 +353,6 @@ class ModelDownloader:
 					threadId,
 					progressCallback,
 				)
-				if success:
-					return True, message
 
 			except requests.exceptions.HTTPError as e:
 				message = self._handleHttpError(e, localPath, fileName, progressCallback, threadId)
@@ -371,6 +369,10 @@ class ModelDownloader:
 					return False, "Download cancelled"
 				message = f"Unexpected error: {str(e)}"
 				log.error(message)
+				
+			else:
+				if success:
+					return True, message
 
 			if not self.cancelRequested:
 				log.debug(f"[Thread-{threadId}] {message} – {url}")
@@ -733,7 +735,7 @@ class ModelDownloader:
 					ok, msg = future.result(timeout=1.0)
 					if ok:
 						successful.append(filePath)
-						log.debug("successful" + filePath)
+						log.debug(f"successful {filePath=}")
 					else:
 						failed.append(filePath)
 						log.debug(f"failed: {filePath} - {msg}")

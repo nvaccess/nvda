@@ -681,7 +681,7 @@ class MockVisionEncoderDecoderGenerator:
 		"""
 		Generate the vocabulary JSON file.
 
-		:param outputPath (Path): Output path for the vocab.json file.
+		:param outputPath: Output path for the vocab.json file.
 		"""
 		vocab = self._getVocabulary()
 
