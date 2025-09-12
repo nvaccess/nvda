@@ -451,8 +451,21 @@ class UpdatableAddonsDialog(
 		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
 
 	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
+		from .actions import _MonoActionsContextMenu
+		from .addonList import AddonVirtualList
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+		_storeVM = AddonStoreVM()
+		_storeVM._filteredStatusKey = _StatusFilterKey.UPDATE
+		_storeVM._filterIncludeIncompatible = config.conf["addonStore"]["allowIncompatibleUpdates"]
+		_storeVM.refresh()
+		self.addonsList = AddonVirtualList(
+			parent=self,
+			addonsListVM = _storeVM.listVM,
+			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
+		)
 		# Translators: the label for the addons list in the updatable addons dialog.
 		entriesLabel = pgettext("addonStore", "Updatable Add-ons")
+		"""
 		self.addonsList = sHelper.addLabeledControl(
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
@@ -469,7 +482,6 @@ class UpdatableAddonsDialog(
 		channelLabel = pgettext("addonStore", "Channel")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 		statusLabel = pgettext("addonStore", "Status")
-
 		self.addonsList.AppendColumn(nameLabel, width=300)
 		self.addonsList.AppendColumn(installedVersionLabel, width=200)
 		self.addonsList.AppendColumn(availableVersionLabel, width=200)
@@ -485,7 +497,8 @@ class UpdatableAddonsDialog(
 					AvailableAddonStatus.UPDATE.displayString,
 				),
 			)
-		self.addonsList.Refresh()
+			"""
+		#self.addonsList.Refresh()
 
 	def onShowChangelogButton(self, evt: wx.CommandEvent):
 		index = self.addonsList.GetFirstSelected()
