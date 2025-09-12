@@ -71,7 +71,7 @@ import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 import synthDriverHandler
-from utils.displayString import DisplayStringEnum
+from utils.displayString import DisplayStringEnum, DisplayStringIntFlag
 import _remoteClient
 
 #: Script category for text review commands.
@@ -177,6 +177,37 @@ def toggleIntegerValue(
 	config.conf[configSection][configKey] = newValue
 
 	state = enumClass(newValue)
+	msg = messageTemplate.format(mode=state.displayString)
+	ui.message(msg)
+
+
+def toggleBinaryValue(
+	configSection: str,
+	configKey: str,
+	enumClass: "DisplayStringIntFlag",
+	messageTemplate: str,
+	length: int,
+) -> None:
+	"""
+	Cycles through integer configuration values corresponding to a flag and displays the corresponding message.
+
+	:param configSection: The configuration section containing the integer key.
+	:param configKey: The configuration key associated with the integer value.
+	:param enumClass: The enumeration class representing possible states.
+	:param messageTemplate: The message template with a placeholder, `{mode}`, for the state.
+	:param length: The maximum number of values to cycle through.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	index = 0
+	for n in range(length - 1):
+		availableValue = enumClass(n).value
+		if availableValue == currentValue:
+			index = n + 1
+			break
+	newValue = enumClass(index).value
+	config.conf[configSection][configKey] = newValue
+	state = enumClass(index)
 	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
 
@@ -793,14 +824,39 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		toggleIntegerValue(
-			configSection="documentFormatting",
-			configKey="reportSpellingErrors2",
-			enumClass=ReportSpellingErrors,
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
-			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
-			messageTemplate=_("Report spelling errors {mode}"),
+		match config.conf["documentFormatting"]["reportSpellingErrors2"]:
+			case ReportSpellingErrors.SPEECH_AND_SOUND:
+				config.conf["documentFormatting"]["reportSpellingErrors2"] = ReportSpellingErrors.OFF
+			case ReportSpellingErrors.SPEECH_AND_SOUND_AND_BRAILLE:
+				config.conf["documentFormatting"]["reportSpellingErrors2"] = ReportSpellingErrors.BRAILLE
+			case _:
+				config.conf["documentFormatting"]["reportSpellingErrors2"] += 1
+		currentValue = (
+			config.conf["documentFormatting"]["reportSpellingErrors2"] & ~ReportSpellingErrors.BRAILLE
 		)
+		ui.message(
+			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
+			_("Report spelling errors {mode}").format(mode=ReportSpellingErrors(currentValue).displayString),
+		)
+
+	@script(
+		# Translators: Input help mode message for command to toggle report spelling errors in braille.
+		description=_("Toggles reporting spelling errors in braille"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
+		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		if formatConfig & ReportSpellingErrors.BRAILLE:
+			newFormatConfig = formatConfig & ~ReportSpellingErrors.BRAILLE
+			# Translators: Message presented when turning off reporting spelling errors in braille.
+			state = _("Report spelling errors in braille off")
+		else:
+			newFormatConfig = formatConfig | ReportSpellingErrors.BRAILLE
+			# Translators: Message presented when turning on reporting spelling errors in braille.
+			state = _("Report spelling errors in braille on")
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = newFormatConfig
+		ui.message(state)
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
