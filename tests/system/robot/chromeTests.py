@@ -59,7 +59,7 @@ def checkbox_labelled_by_inner_element():
 		# The name for the element is also in it's content, the name is spoken twice:
 		# "Simulate evil cat  Simulate evil cat  check box  not checked"
 		# Instead this should be spoken as:
-		"Simulate good cat  check box  not checked",
+		"Simulate evil cat  check box  not checked",
 	)
 
 
