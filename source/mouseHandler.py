@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from dataclasses import dataclass
-from typing import Optional
 import time
 import wx
 import gui
@@ -334,7 +333,7 @@ def getLogicalButtonFlags() -> LogicalButtonFlags:
 def _doClick(
 	downFlag: int,
 	upFlag: int,
-	releaseDelay: Optional[float] = None,
+	releaseDelay: float | None = None,
 ):
 	executeMouseEvent(downFlag, 0, 0)
 	if releaseDelay:
@@ -342,7 +341,7 @@ def _doClick(
 	executeMouseEvent(upFlag, 0, 0)
 
 
-def doPrimaryClick(releaseDelay: Optional[float] = None):
+def doPrimaryClick(releaseDelay: float | None = None):
 	"""
 	Performs a primary mouse click at the current mouse pointer location.
 	The primary button is the one that usually activates or selects an item.
@@ -355,7 +354,7 @@ def doPrimaryClick(releaseDelay: Optional[float] = None):
 	_doClick(buttonFlags.primaryDown, buttonFlags.primaryUp, releaseDelay)
 
 
-def doSecondaryClick(releaseDelay: Optional[float] = None):
+def doSecondaryClick(releaseDelay: float | None = None):
 	"""
 	Performs a secondary mouse click at the current mouse pointer location.
 	The secondary button is the one that usually displays a context menu for an item when clicked.
