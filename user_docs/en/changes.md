@@ -16,6 +16,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
 
 ### Changes
 
@@ -23,12 +24,19 @@ This can be enabled using the "Report when lists support multiple selection" set
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
+* When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
+    * Added Japanese (Rokuten Kanji) Braille.
+    * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
 
 ### Bug Fixes
 
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
+* Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
+* NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -60,6 +68,10 @@ These should be supported natively in Python 3.13. (#18689)
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 * `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+* The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
+Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
+* `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
+* `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
 
 #### Deprecations
 
@@ -80,7 +92,7 @@ Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
 * `nvwave.WAVEFORMATEX` is deprecated.
 Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
-* The following symbols have been moved from `winuser` to `winBindings.user32`: `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `GUITHREADINFO`, `HWINEVENTHOOK`, `WINEVENTPROC`, `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207, #18883)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * `hwPortUtils.BTH_ADDR` is deprecated.
@@ -96,6 +108,31 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `hwPortUtils.dummy`, `hwPortUtils.INVALID_HANDLE_VALUE` and `hwPortUtils.ValidHandle` are deprecated, with no planned replacement. (#18571)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
   Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+* `fonts.gdi32`, `screenBitmap.gdi32` and `winGDI.gdi32` are deprecated.
+  Use `winBindings.gdi32.dll` instead. (#18860)
+* `shellapi.shell32` is deprecated.
+  Use `winBindings.shell32.dll` instead. (#18860)
+* The following symbols have been moved from `shellapi` to `winBindings.shell32`: `SHELLEXECUTEINFO`, `SHELLEXECUTEINFOW`.
+  Access to these symbols via `shellapi` is deprecated. (#18860)
+* `winGDI.gdiplus` is deprecated.
+  Use `winBindings.gdiplus.dll` instead. (#18860)
+* The following symbols have been moved from `winGDI` to `winBindings.gdi32`: `RGBQUAD`, `BITMAPINFOHEADER`, `BITMAPINFO`.
+  Access to these symbols via `winGDI` is deprecated. (#18860)
+* The following symbols have been moved from `winGDI` to `winBindings.gdiplus`: `GdiplusStartupInput`, `GdiplusStartupOutput`.
+  Access to these symbols via `winGDI` is deprecated. (#18860)
+* The following symbols have been moved from `winKernel` to `winBindings.advapi32`: `PROCESS_INFORMATION`, `STARTUPINFO`, `STARTUPINFOW`.
+  Access to these symbols via `winKernel` is deprecated. (#18860)
+* `winKernel.advapi32` is deprecated.
+  Use `winBindings.advapi32.dll` instead. (#18860)
+* `NVDAHelper.bstrReturn` is deprecated, with no planned replacement. (#18858)
+* `contentRecog.uwpOcr.uwpOcr_Callback` is deprecated.
+  Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
+* `touchHelper.SM_MAXIMUMTOUCHES` is deprecated.
+  Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
+* `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
+  Use `winBindings.user32.dll` instead. (#18883)
+  * The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
+  Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->

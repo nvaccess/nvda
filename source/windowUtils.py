@@ -14,6 +14,7 @@ import ctypes.wintypes
 import weakref
 import winBindings.kernel32
 import winBindings.user32
+import winBindings.gdi32
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
@@ -54,26 +55,11 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 			return False
 		return True
 
-	ctypes.windll.user32.EnumChildWindows(parent, callback, 0)
+	user32.EnumChildWindows(parent, callback, 0)
 	try:
 		return result[0]
 	except IndexError:
 		raise LookupError("No matching descendant window found")
-
-
-try:
-	# Windows >= 8.1
-	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPointForPerMonitorDPI
-	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPointForPerMonitorDPI
-except AttributeError:
-	try:
-		# Windows Vista..Windows 8
-		_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
-		_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
-	except AttributeError:
-		# Windows <= XP
-		_logicalToPhysicalPoint = None
-		_physicalToLogicalPoint = None
 
 
 def logicalToPhysicalPoint(window, x, y):
@@ -87,10 +73,8 @@ def logicalToPhysicalPoint(window, x, y):
 	@return: The physical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _logicalToPhysicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_logicalToPhysicalPoint(window, ctypes.byref(point))
+	user32.LogicalToPhysicalPointForPerMonitorDPI(window, ctypes.byref(point))
 	return point.x, point.y
 
 
@@ -105,10 +89,8 @@ def physicalToLogicalPoint(window, x, y):
 	@return: The logical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _physicalToLogicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_physicalToLogicalPoint(window, ctypes.byref(point))
+	user32.PhysicalToLogicalPointForPerMonitorDPI(window, ctypes.byref(point))
 	return point.x, point.y
 
 
@@ -124,13 +106,12 @@ def getWindowScalingFactor(window: int) -> int:
 	percentage in the windows display settings. 100% is typically 96 DPI, 150% is typically 144 DPI.
 	@param window: a native Windows window handle (hWnd)
 	@returns the logical scaling factor. EG. 1.0 if the window DPI level is 96, 1.5 if the window DPI level is 144"""
-	user32 = ctypes.windll.user32
 	try:
 		winDpi: int = user32.GetDpiForWindow(window)
 	except:  # noqa: E722
 		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
-		winDpi: int = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+		winDpi: int = winBindings.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
 		ret = user32.ReleaseDC(window, dc)
 		if ret != 1:
 			log.error("Unable to release the device context.")
@@ -246,7 +227,7 @@ class CustomWindow(AutoPropertyObject):
 		This will be called automatically when this instance is deleted,
 		but you may wish to call it earlier.
 		"""
-		if not ctypes.windll.user32.DestroyWindow(self.handle):
+		if not user32.DestroyWindow(self.handle):
 			log.error(
 				f"Error destroying window for {self.__class__.__qualname__}",
 				exc_info=ctypes.WinError(),
