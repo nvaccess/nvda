@@ -62,7 +62,9 @@ def openFailDialog() -> None:
 	)
 
 	if dialog.ShowModal() == ReturnCode.YES:
-		threading.Thread(target=onDownload).start()
+		global _downloadThread
+		_downloadThread = threading.Thread(target=onDownload, name="ModelDownloadMainThread", daemon=False)
+		_downloadThread.start()
 
 
 def openDownloadDialog() -> None:

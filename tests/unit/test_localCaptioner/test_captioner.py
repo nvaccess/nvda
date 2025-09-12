@@ -23,6 +23,7 @@ import numpy as np
 from unittest.mock import Mock, patch
 from PIL import Image
 import io
+import shutil
 
 from _localCaptioner.captioner import VitGpt2ImageCaptioner
 from _localCaptioner import modelConfig
@@ -97,8 +98,6 @@ class TestVitGpt2ImageCaptioner(unittest.TestCase):
 
 	def tearDown(self):
 		"""Clean up temporary files."""
-		import shutil
-
 		shutil.rmtree(self.testDir)
 
 	@patch("onnxruntime.InferenceSession")

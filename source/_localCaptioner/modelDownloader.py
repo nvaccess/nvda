@@ -20,6 +20,7 @@ from collections.abc import Callable
 import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
+from requests.models import Response
 from urllib3.util.retry import Retry
 
 from logHandler import log
@@ -299,7 +300,7 @@ class ModelDownloader:
 			if localSize == remoteSize:
 				if progressCallback and not self.cancelRequested:
 					progressCallback(fileName, localSize, localSize, 100.0)
-				log.debug(f"[Thread-{threadId}] File already complete: {localPath}")
+				log.debug(f"File already complete: {localPath}")
 				return True, f"File already complete: {localPath}"
 			elif localSize > remoteSize:
 				# Local file is larger than remote, may be corrupted
@@ -313,7 +314,7 @@ class ModelDownloader:
 			if localSize > 0:
 				if progressCallback and not self.cancelRequested:
 					progressCallback(fileName, localSize, localSize, 100.0)
-				log.debug(f"[Thread-{threadId}] File already exists (size unknown): {localPath}")
+				log.debug(f"File already exists (size unknown): {localPath}")
 				return True, f"File already exists: {localPath}"
 
 		return None, ""
@@ -343,7 +344,7 @@ class ModelDownloader:
 			if self.cancelRequested:
 				return False, "Download cancelled"
 
-			log.debug(f"[Thread-{threadId}] Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
+			log.debug(f"Downloading (attempt {attempt + 1}/{self.maxRetries}): {url}")
 
 			try:
 				success, message = self._performSingleDownload(
@@ -375,7 +376,7 @@ class ModelDownloader:
 					return True, message
 
 			if not self.cancelRequested:
-				log.debug(f"[Thread-{threadId}] {message} – {url}")
+				log.debug(f"{message} – {url}")
 				if attempt < self.maxRetries - 1:
 					success = self._waitForRetry(attempt, threadId)
 					if not success:
@@ -420,7 +421,7 @@ class ModelDownloader:
 			total = self._calculateTotalSize(response, resumePos)
 
 			if total > 0:
-				log.debug(f"[Thread-{threadId}] Total file size: {total:,} bytes")
+				log.debug(f"Total file size: {total:,} bytes")
 
 			# Download file content
 			success, message = self._downloadFileContent(
@@ -453,10 +454,10 @@ class ModelDownloader:
 		resumePos = 0
 		if os.path.exists(localPath):
 			resumePos = os.path.getsize(localPath)
-			log.debug(f"[Thread-{threadId}] Resuming from byte {resumePos}")
+			log.debug(f"Resuming from byte {resumePos}")
 		return resumePos
 
-	def _getDownloadResponse(self, url: str, resumePos: int, localPath: str, threadId: int):
+	def _getDownloadResponse(self, url: str, resumePos: int, localPath: str, threadId: int) -> Response:
 		"""
 		Get download response with resume support and redirect handling.
 
@@ -485,7 +486,7 @@ class ModelDownloader:
 
 		# Check if resume is supported
 		if resumePos > 0 and response.status_code != 206:
-			log.debug(f"[Thread-{threadId}] Server doesn't support resume, starting from beginning")
+			log.debug(f"Server doesn't support resume, starting from beginning")
 			if os.path.exists(localPath):
 				try:
 					os.remove(localPath)
@@ -503,7 +504,7 @@ class ModelDownloader:
 		response.raise_for_status()
 		return response
 
-	def _calculateTotalSize(self, response, resumePos: int) -> int:
+	def _calculateTotalSize(self, response: Response, resumePos: int) -> int:
 		"""
 		Calculate total file size from HTTP response headers.
 
@@ -605,12 +606,12 @@ class ModelDownloader:
 		if progressCallback and not self.cancelRequested:
 			progressCallback(fileName, actualSize, max(total, actualSize), 100.0)
 
-		log.debug(f"[Thread-{threadId}] Successfully downloaded: {localPath}")
+		log.debug(f"Successfully downloaded: {localPath}")
 		return True, "Download completed"
 
 	def _handleHttpError(
 		self,
-		e: requests.exceptions.HTTPError,
+		error: requests.exceptions.HTTPError,
 		localPath: str,
 		fileName: str,
 		progressCallback: ProgressCallback | None,
@@ -619,7 +620,7 @@ class ModelDownloader:
 		"""
 		Handle HTTP errors with special handling for range not satisfiable.
 
-		:param e: HTTP error exception.
+		:param error: HTTP error exception.
 		:param localPath: Local file path to check for completion.
 		:param fileName: Base name of the file for progress reporting.
 		:param progressCallback: Optional callback function for progress reporting.
@@ -627,16 +628,16 @@ class ModelDownloader:
 		:return: Error message or completion status.
 		:raises OSError: When file operations fail.
 		"""
-		if e.response is not None and e.response.status_code == 416:  # Range Not Satisfiable
+		if error.response is not None and error.response.status_code == 416:  # Range Not Satisfiable
 			if os.path.exists(localPath):
 				actualSize = os.path.getsize(localPath)
 				if actualSize > 0:
-					log.debug(f"[Thread-{threadId}] File appears to be complete: {localPath}")
+					log.debug(f"File appears to be complete: {localPath}")
 					if progressCallback and not self.cancelRequested:
 						progressCallback(fileName, actualSize, actualSize, 100.0)
 					return "Download completed"
 
-		return f"HTTP {e.response.status_code if e.response else 'Error'}: {str(e)}"
+		return f"HTTP {error.response.status_code if error.response else 'Error'}: {str(error)}"
 
 	def _waitForRetry(self, attempt: int, threadId: int) -> bool:
 		"""
@@ -647,7 +648,7 @@ class ModelDownloader:
 		:return: True if wait completed, False if cancelled.
 		"""
 		wait = BACKOFF_BASE**attempt
-		log.debug(f"[Thread-{threadId}] Waiting {wait}s before retry...")
+		log.debug(f"Waiting {wait}s before retry...")
 
 		for _ in range(wait):
 			if self.cancelRequested:

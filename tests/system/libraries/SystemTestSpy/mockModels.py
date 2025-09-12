@@ -573,7 +573,7 @@ class MockVisionEncoderDecoderGenerator:
 			"resid_pdrop": 0.1,
 			"return_dict": True,
 			"return_dict_in_generate": False,
-			"scale_attn_by_inverse_layerIdx": False,
+			"scale_attn_by_inverse_layer_idx": False,
 			"scale_attn_weights": True,
 			"sep_token_id": None,
 			"summary_activation": None,

@@ -8,7 +8,7 @@ from logHandler import log
 from .imageDescriber import ImageDescriber
 from . import modelConfig
 
-_localCaptioner = None
+_localCaptioner: ImageDescriber | None = None
 
 
 def initialize():
