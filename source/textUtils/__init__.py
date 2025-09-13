@@ -1,23 +1,27 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Łukasz Golonka, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
 import ctypes
+import re
 import encodings
 import locale
 import unicodedata
+
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Generator, Optional, Tuple, Type
+from typing import Generator
 
 from logHandler import log
 
 from .uniscribe import splitAtCharacterBoundaries
+from .wordSeg import wordSegStrategy
+from .segFlag import WordSegFlag
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
@@ -51,7 +55,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to subclass-specific encoded string offsets.
@@ -80,7 +84,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		r"""
 		This method takes two offsets from subclass-specific encoded string representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -136,7 +140,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to wide character string offsets.
@@ -173,7 +177,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int,
 		raiseOnError: bool = False,
-	) -> Tuple[int, int]:
+	) -> tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -241,7 +245,7 @@ class WideStringOffsetConverter(OffsetConverter):
 def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
-	encoding: Optional[str] = None,
+	encoding: str | None = None,
 	errorsFallback: str = "replace",
 ):
 	"""
@@ -343,7 +347,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -362,7 +366,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		r"""
 		This method takes two offsets from UTF-8 representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -403,7 +407,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strEnd is None:
 			return strStart
@@ -414,7 +418,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedEnd is None:
 			return encodedStart
@@ -482,7 +486,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int]:
+	) -> int | tuple[int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -501,7 +505,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int]:
+	) -> int | tuple[int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedStart == 0:
 			resultStart = 0
@@ -526,7 +530,7 @@ def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALI
 	return unicodedata.normalize(normalizationForm, text)
 
 
-ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
+ENCODINGS_TO_CONVERTERS: dict[str, type[OffsetConverter]] = {
 	WCHAR_ENCODING: WideStringOffsetConverter,
 	UTF8_ENCODING: UTF8OffsetConverter,
 	"utf_32_le": IdentityOffsetConverter,
@@ -535,8 +539,59 @@ ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
 }
 
 
-def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
+def getOffsetConverter(encoding: str) -> type[OffsetConverter]:
 	try:
 		return ENCODINGS_TO_CONVERTERS[encoding]
 	except IndexError as e:
 		raise LookupError(f"Don't know how to deal with encoding '{encoding}'", e)
+
+
+class WordSegmenter:
+	"""Selects appropriate segmentation strategy and segments text."""
+
+	# Precompiled patterns
+	# Chinese characters and Japanese kanji (CJK Unified Ideographs U+4E00 - U+9FFF)
+	_CHINESE_CHARACTER_AND_JAPANESE_KANJI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
+	# Japanese kana (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
+	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
+
+	def __init__(self, text: str, encoding: str = "UTF-8", wordSegFlag: WordSegFlag = WordSegFlag.AUTO):
+		self.text: str = text
+		self.encoding: str | None = encoding
+		self.wordSegFlag: WordSegFlag = wordSegFlag
+		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._choose_strategy()
+
+	def _choose_strategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
+		"""Choose the appropriate segmentation strategy based on the text content."""
+		if self.wordSegFlag == WordSegFlag.AUTO:
+			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
+				self.text,
+			) and not WordSegmenter._KANA.search(self.text):
+				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+			else:
+				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+		else:
+			match self.wordSegFlag:
+				case WordSegFlag.UNISCRIBE:
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				case WordSegFlag.CHINESE:
+					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				case _:
+					pass
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		"""Get the segment containing the given offset."""
+		try:
+			return self.strategy.getSegmentForOffset(offset)
+		except Exception as e:
+			log.debugWarning(
+				"WordSegmenter.getSegmentForOffset failed: %s  text: '%s' offset: %s  segmentation strategy: %s",
+				e,
+				self.text,
+				offset,
+				self.strategy,
+			)
+			return None
+
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		return self.strategy.segmentedText(sep, newSepIndex)
