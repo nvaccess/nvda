@@ -236,31 +236,70 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 					pass
 				return None
 
+	# Punctuation that should NOT have a separator BEFORE it (no space before these marks)
+	NO_SEP_BEFORE = {
+		# Common Chinese fullwidth punctuation
+		"。", "，", "、", "；", "：", "？", "！", "…", "...", "—", "–", "——",
+		"）", "】", "》", "〉", "」", "』", "”", "’",
+		"％", "‰", "￥",
+
+		# Common ASCII / halfwidth punctuation
+		".", ",", ";", ":", "?", "!", "%", ".", ")",
+		"]", "}", ">", "\"", "'"
+	}
+
+	# Punctuation that should NOT have a separator AFTER it (no space after these marks)
+	NO_SEP_AFTER = {
+		# Common Chinese fullwidth opening/leading punctuation
+		"（", "【", "《", "〈", "「", "『", "“", "‘",
+
+		# Common ASCII / halfwidth opening/leading punctuation
+		"(", "[", "{", "<", "\"", "'",
+
+		# Currency and prefix-like symbols that typically bind to the following token
+		"$", "€", "£", "¥", "₹",
+
+		# Social/identifier prefixes
+		"@", "#", "&"
+	}
+
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
 		if len(self.wordEndIndex) <= 1:
 			return self.text
+
 		result = ""
 		for sepIndex in range(len(self.wordEndIndex) - 1):
-			if sepIndex == 0:
-				preIndex = 0
-			else:
-				preIndex = self.wordEndIndex[sepIndex - 1]
+			preIndex = 0 if sepIndex == 0 else self.wordEndIndex[sepIndex - 1]
 			curIndex = self.wordEndIndex[sepIndex]
 			postIndex = self.wordEndIndex[sepIndex + 1]
+
+			# append the token before the potential separator position
 			result += self.text[preIndex:curIndex]
-			if (
-				(sepIndex < len(self.wordEndIndex) - 1)
-				and not (result.endswith(sep))
-				and not (self.text[curIndex:postIndex].startswith(sep))
-			):
-				"""The separator needs adding."""
+
+
+			# quick checks: avoid adding duplicate separator if already present
+			if result.endswith(sep) or self.text[curIndex:postIndex].startswith(sep):
+				# separator already present at either side -> skip adding
+				continue
+
+			# slice to check the next token (text between curIndex and postIndex)
+			nextSlice = self.text[curIndex:postIndex]
+
+			# Determine whether any punctuation forbids a separator BEFORE the next token
+			noSepBefore = any(nextSlice.startswith(s) for s in self.NO_SEP_BEFORE)
+			# Determine whether any punctuation forbids a separator AFTER the current result
+			noSepAfter = any(result.endswith(s) for s in self.NO_SEP_AFTER)
+
+			if not (noSepBefore or noSepAfter):
+				# If neither side forbids the separator, add it
 				result += sep
 				if newSepIndex is not None:
-					"""Track the index of the separators."""
 					newSepIndex.append(len(result) - len(sep))
 		else:
+			# append the final trailing token after the loop
 			result += self.text[curIndex:postIndex]
+
 		return result
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
