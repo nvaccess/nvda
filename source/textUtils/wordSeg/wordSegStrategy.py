@@ -239,28 +239,74 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	# Punctuation that should NOT have a separator BEFORE it (no space before these marks)
 	NO_SEP_BEFORE = {
 		# Common Chinese fullwidth punctuation
-		"。", "，", "、", "；", "：", "？", "！", "…", "...", "—", "–", "——",
-		"）", "】", "》", "〉", "」", "』", "”", "’",
-		"％", "‰", "￥",
-
+		"。",
+		"，",
+		"、",
+		"；",
+		"：",
+		"？",
+		"！",
+		"…",
+		"...",
+		"—",
+		"–",
+		"——",
+		"）",
+		"】",
+		"》",
+		"〉",
+		"」",
+		"』",
+		"”",
+		"’",
+		"％",
+		"‰",
+		"￥",
 		# Common ASCII / halfwidth punctuation
-		".", ",", ";", ":", "?", "!", "%", ".", ")",
-		"]", "}", ">", "\"", "'"
+		".",
+		",",
+		";",
+		":",
+		"?",
+		"!",
+		"%",
+		".",
+		")",
+		"]",
+		"}",
+		">",
+		'"',
+		"'",
 	}
 
 	# Punctuation that should NOT have a separator AFTER it (no space after these marks)
 	NO_SEP_AFTER = {
 		# Common Chinese fullwidth opening/leading punctuation
-		"（", "【", "《", "〈", "「", "『", "“", "‘",
-
+		"（",
+		"【",
+		"《",
+		"〈",
+		"「",
+		"『",
+		"“",
+		"‘",
 		# Common ASCII / halfwidth opening/leading punctuation
-		"(", "[", "{", "<", "\"", "'",
-
+		"(",
+		"[",
+		"{",
+		"<",
+		'"',
+		"'",
 		# Currency and prefix-like symbols that typically bind to the following token
-		"$", "€", "£", "¥", "₹",
-
+		"$",
+		"€",
+		"£",
+		"¥",
+		"₹",
 		# Social/identifier prefixes
-		"@", "#", "&"
+		"@",
+		"#",
+		"&",
 	}
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
@@ -276,7 +322,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 			# append the token before the potential separator position
 			result += self.text[preIndex:curIndex]
-
 
 			# quick checks: avoid adding duplicate separator if already present
 			if result.endswith(sep) or self.text[curIndex:postIndex].startswith(sep):
