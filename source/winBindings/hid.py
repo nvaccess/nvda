@@ -191,7 +191,7 @@ Extracts data from a HID report for a specified report type.
 HidP_GetData.argtypes = (
 	HIDP_REPORT_TYPE,  # ReportType
 	POINTER(HIDP_DATA),  # DataList
-	POINTER(ULONG),  # DataLength
+	PULONG,  # DataLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 	PCHAR,  # Report
 	ULONG,  # ReportLength
@@ -211,7 +211,7 @@ HidP_GetUsages.argtypes = (
 	USAGE,  # UsagePage
 	USHORT,  # LinkCollection
 	POINTER(USAGE),  # UsageList
-	POINTER(ULONG),  # UsageLength
+	PULONG,  # UsageLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 	PCHAR,  # Report
 	ULONG,  # ReportLength
@@ -248,7 +248,7 @@ Extracts button capability information from a HID report for a specified report 
 HidP_GetButtonCaps.argtypes = (
 	HIDP_REPORT_TYPE,  # ReportType
 	POINTER(HIDP_BUTTON_CAPS),  # ButtonCaps
-	POINTER(USHORT),  # ButtonCapsLength
+	PUSHORT,  # ButtonCapsLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 )
 HidP_GetButtonCaps.restype = NTSTATUS
@@ -264,14 +264,14 @@ Extracts value capability information from a HID report for a specified report t
 HidP_GetValueCaps.argtypes = (
 	HIDP_REPORT_TYPE,  # ReportType
 	POINTER(HIDP_VALUE_CAPS),  # ValueCaps
-	POINTER(USHORT),  # ValueCapsLength
+	PUSHORT,  # ValueCapsLength
 	PHIDP_PREPARSED_DATA,  # PreparsedData
 )
 HidP_GetValueCaps.restype = NTSTATUS
 
 HidD_GetFeature = dll.HidD_GetFeature
 """
-The HidD_GetFeature routine retrieves a feature report from a top-level collection.
+Retrieves a feature report from a top-level collection.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/hidsdi/nf-hidsdi-hidd_getfeature
