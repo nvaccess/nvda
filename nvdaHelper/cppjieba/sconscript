@@ -46,15 +46,13 @@ if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDi
 	env.Install(
 		outDir.Dir("dicts"),
 		[
-			f
-			for f in env.Glob(f"{cppjiebaDictPath}/*")
-			if f.name in (
+			env.Dir(cppjiebaDictPath).File(name)
+			for name in (
 				"jieba.dict.utf8",
 				"user.dict.utf8",
 				"hmm_model.utf8",
 			)
-			and not f.name.endswith(".in")
-		],
+		]
 	)
 
 Return("cppjiebaLib")

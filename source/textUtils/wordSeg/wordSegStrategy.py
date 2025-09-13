@@ -17,8 +17,9 @@ from functools import lru_cache
 from collections.abc import Callable
 from typing import Any
 
-from logHandler import log
 import textUtils
+from logHandler import log
+
 
 # Initializer registry (robust: saves module + qualname + original function + args/kwargs)
 # Each entry: (module_name: str, qualname: str, func_obj: Callable, args: tuple, kwargs: dict)
@@ -147,9 +148,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib.initJieba.restype = c_int
 			cls._lib.initJieba.argtypes = []
 
-			# int segmentOffsets(const char* utf8Text, int** outOffsets, int* outLen)
-			cls._lib.segmentOffsets.restype = c_int
-			cls._lib.segmentOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
+			# bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen)
+			cls._lib.calculateWordOffsets.restype = c_bool
+			cls._lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
 
 			# bool insertUserWord(const char* word, int freq, const char* tag)
 			cls._lib.insertUserWord.restype = c_bool
@@ -172,72 +173,178 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			log.debugWarning("Failed to load cppjieba library: %s", e)
 			cls._lib = None
 
-	@staticmethod
 	@lru_cache(maxsize=256)
-	def _callCppjiebaCached(text_utf8: bytes) -> list[int]:
-		"""Module-level cached wrapper to call the C library given utf8 bytes."""
-		if ChineseWordSegmentationStrategy._lib is None:
-			return []
-		lib = ChineseWordSegmentationStrategy._lib
+	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int] | None:
+		if self._lib is None:
+			return None
+
 		charPtr = POINTER(c_int)()
 		outLen = c_int(0)
+
 		try:
-			res = lib.segmentOffsets(text_utf8, byref(charPtr), byref(outLen))
-			if res != 0 or not bool(charPtr):
-				return []
-			n = outLen.value
-			# read n ints
-			offsets = [charPtr[i] for i in range(n)]
-			# free memory allocated by C side
-			lib.freeOffsets(charPtr)
-			return offsets
+			success: bool = self._lib.calculateWordOffsets(text_utf8, byref(charPtr), byref(outLen))
+			if not success or not bool(charPtr) or outLen.value <= 0:
+				return None
+
+			try:
+				n = outLen.value
+				offsets = [charPtr[i] for i in range(n)]
+				return offsets
+			finally:
+				self._lib.freeOffsets(charPtr)
 		except Exception as e:
 			log.debugWarning("Exception calling cppjieba: %s", e)
 			try:
 				if bool(charPtr):
-					lib.freeOffsets(charPtr)
+					self._lib.freeOffsets(charPtr)
 			except Exception:
 				pass
-			return []
+			return None
 
-	@lru_cache(maxsize=128)
 	def _callCPPJieba(self) -> list[int] | None:
+		"""
+		Instance method: encode self.text and call cppjieba.
+		Returns list[int] on success, None on failure.
+		Uses LRU cache keyed by utf-8 bytes.
+		"""
 		data = self.text.encode("utf-8")
-		charPtr = POINTER(c_int)()
-		outLen = c_int()
-		result = self._lib.segmentOffsets(data, byref(charPtr), byref(outLen))
-		if result != 0 or not charPtr:
-			return
-		n = outLen.value
-		charOffsets = [charPtr[i] for i in range(n)]
-		self._lib.freeOffsets(charPtr)
-		return charOffsets
+
+		if getattr(self, "_lib", None) is ChineseWordSegmentationStrategy._lib:
+			return self._callCppjiebaCached(data)
+		else:
+			if self._lib is None:
+				return None
+
+			charPtr = POINTER(c_int)()
+			outLen = c_int(0)
+			try:
+				success: bool = self._lib.calculateWordOffsets(data, byref(charPtr), byref(outLen))
+				if not success or not bool(charPtr) or outLen.value <= 0:
+					return None
+
+				try:
+					n = outLen.value
+					return [charPtr[i] for i in range(n)]
+				finally:
+					self._lib.freeOffsets(charPtr)
+			except Exception as e:
+				log.debugWarning("Exception calling cppjieba: %s", e)
+				try:
+					if bool(charPtr):
+						self._lib.freeOffsets(charPtr)
+				except Exception:
+					pass
+				return None
+
+	# Punctuation that should NOT have a separator BEFORE it (no space before these marks)
+	NO_SEP_BEFORE = {
+		# Common Chinese fullwidth punctuation
+		"。",
+		"，",
+		"、",
+		"；",
+		"：",
+		"？",
+		"！",
+		"…",
+		"...",
+		"—",
+		"–",
+		"——",
+		"）",
+		"】",
+		"》",
+		"〉",
+		"」",
+		"』",
+		"”",
+		"’",
+		"％",
+		"‰",
+		"￥",
+		# Common ASCII / halfwidth punctuation
+		".",
+		",",
+		";",
+		":",
+		"?",
+		"!",
+		"%",
+		".",
+		")",
+		"]",
+		"}",
+		">",
+		'"',
+		"'",
+	}
+
+	# Punctuation that should NOT have a separator AFTER it (no space after these marks)
+	NO_SEP_AFTER = {
+		# Common Chinese fullwidth opening/leading punctuation
+		"（",
+		"【",
+		"《",
+		"〈",
+		"「",
+		"『",
+		"“",
+		"‘",
+		# Common ASCII / halfwidth opening/leading punctuation
+		"(",
+		"[",
+		"{",
+		"<",
+		'"',
+		"'",
+		# Currency and prefix-like symbols that typically bind to the following token
+		"$",
+		"€",
+		"£",
+		"¥",
+		"₹",
+		# Social/identifier prefixes
+		"@",
+		"#",
+		"&",
+	}
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
 		if len(self.wordEndIndex) <= 1:
 			return self.text
+
 		result = ""
 		for sepIndex in range(len(self.wordEndIndex) - 1):
-			if sepIndex == 0:
-				preIndex = 0
-			else:
-				preIndex = self.wordEndIndex[sepIndex - 1]
+			preIndex = 0 if sepIndex == 0 else self.wordEndIndex[sepIndex - 1]
 			curIndex = self.wordEndIndex[sepIndex]
 			postIndex = self.wordEndIndex[sepIndex + 1]
+
+			# append the token before the potential separator position
 			result += self.text[preIndex:curIndex]
-			if (
-				(sepIndex < len(self.wordEndIndex) - 1)
-				and not (result.endswith(sep))
-				and not (self.text[curIndex:postIndex].startswith(sep))
-			):
-				"""The separator needs adding."""
+
+			# quick checks: avoid adding duplicate separator if already present
+			if result.endswith(sep) or self.text[curIndex:postIndex].startswith(sep):
+				# separator already present at either side -> skip adding
+				continue
+
+			# slice to check the next token (text between curIndex and postIndex)
+			nextSlice = self.text[curIndex:postIndex]
+
+			# Determine whether any punctuation forbids a separator BEFORE the next token
+			noSepBefore = any(nextSlice.startswith(s) for s in self.NO_SEP_BEFORE)
+			# Determine whether any punctuation forbids a separator AFTER the current result
+			noSepAfter = any(result.endswith(s) for s in self.NO_SEP_AFTER)
+
+			if not (noSepBefore or noSepAfter):
+				# If neither side forbids the separator, add it
 				result += sep
 				if newSepIndex is not None:
-					"""Track the index of the separators."""
 					newSepIndex.append(len(result) - len(sep))
 		else:
+			# append the final trailing token after the loop
 			result += self.text[curIndex:postIndex]
+
 		return result
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:

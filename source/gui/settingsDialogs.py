@@ -42,6 +42,7 @@ from config.configFlags import (
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
@@ -68,9 +69,6 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
-	List,
-	Optional,
-	Set,
 )
 import core
 import keyboardHandler
@@ -196,7 +194,7 @@ class SettingsDialog(
 		hasApplyButton: bool = False,
 		settingsSizerOrientation: int = wx.VERTICAL,
 		multiInstanceAllowed: bool = False,
-		buttons: Set[int] = {wx.OK, wx.CANCEL},
+		buttons: set[int] = {wx.OK, wx.CANCEL},
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
@@ -435,7 +433,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None,
+		category: str | None = None,
 	):
 		if category is None:
 			category = self.title
@@ -504,7 +502,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -1267,7 +1265,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
-	synthNames: List[str] = []
+	synthNames: list[str] = []
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2125,7 +2123,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("KeyboardSettingsAlertForSpellingErrors", self.alertForSpellingErrorsCheckBox)
 		self.alertForSpellingErrorsCheckBox.SetValue(config.conf["keyboard"]["alertForSpellingErrors"])
-		if not config.conf["documentFormatting"]["reportSpellingErrors"]:
+		if not config.conf["documentFormatting"]["reportSpellingErrors2"]:
 			self.alertForSpellingErrorsCheckBox.Disable()
 
 		# Translators: This is the label for a checkbox in the
@@ -2811,11 +2809,23 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
-		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
+		self._spellingErrorsChecklist = docInfoGroup.addLabeledControl(
+			# Translators: This is the label for a checklist in the
+			# document formatting settings panel.
+			_("Spelling e&rrors"),
+			nvdaControls.CustomCheckListBox,
+			choices=[i.displayString for i in ReportSpellingErrors],
+		)
+		checkedItems = []
+		for i, mode in enumerate(ReportSpellingErrors):
+			if config.conf["documentFormatting"]["reportSpellingErrors2"] & mode.value:
+				checkedItems.append(i)
+		self._spellingErrorsChecklist.SetCheckedItems(checkedItems)
+		self._spellingErrorsChecklist.Select(0)
+		self.bindHelpEvent(
+			"reportSpellingErrors",
+			self._spellingErrorsChecklist,
+		)
 
 		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
@@ -3038,7 +3048,11 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"] = self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"] = self.styleCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportSpellingErrors"] = self.spellingErrorsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = sum(
+			mode.value
+			for (n, mode) in enumerate(ReportSpellingErrors)
+			if self._spellingErrorsChecklist.IsChecked(n)
+		)
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
@@ -4181,6 +4195,7 @@ class AdvancedPanelControls(
 			"garbageHandler",
 			"remoteClient",
 			"externalPythonDependencies",
+			"bdDetect",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5128,7 +5143,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 def showStartErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5158,7 +5173,7 @@ def showStartErrorForProviders(
 
 def showTerminationErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5204,7 +5219,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
 
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> vision.providerBase.VisionEnhancementProvider | None:
 		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
@@ -5268,8 +5283,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 class VisionSettingsPanel(SettingsPanel):
 	settingsSizerHelper: guiHelper.BoxSizerHelper
-	providerPanelInstances: List[SettingsPanel]
-	initialProviders: List[vision.providerInfo.ProviderInfo]
+	providerPanelInstances: list[SettingsPanel]
+	initialProviders: list[vision.providerInfo.ProviderInfo]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 	helpId = "VisionSettings"
@@ -5280,7 +5295,7 @@ class VisionSettingsPanel(SettingsPanel):
 	def _createProviderSettingsPanel(
 		self,
 		providerInfo: vision.providerInfo.ProviderInfo,
-	) -> Optional[SettingsPanel]:
+	) -> SettingsPanel | None:
 		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 		if not settingsPanelCls:
 			if gui._isDebug():
@@ -5325,12 +5340,12 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeInitProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 	) -> None:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
@@ -5339,14 +5354,14 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeTerminateProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 		verbose: bool = False,
 	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).terminateProvider(shouldPromptOnError=False)
 			if not success:
@@ -5439,7 +5454,7 @@ class VisionProviderSubPanel_Wrapper(
 		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
-		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettings: VisionProviderSubPanel_Settings | None = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 

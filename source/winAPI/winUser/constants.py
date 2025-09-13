@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -59,6 +59,13 @@ class SystemMetrics(IntEnum):
 	The height of the virtual screen, in pixels.
 
 	SM_CYVIRTUALSCREEN
+	"""
+
+	MAXIMUM_TOUCHES = 95
+	"""
+	The aggregate maximum of the maximum number of contacts supported by every digitizer in the system, or 0 if there are no digitizers in the system.
+
+	SM_MAXIMUMTOUCHES
 	"""
 
 

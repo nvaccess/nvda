@@ -5880,7 +5880,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)</source>
-        <target>在 Windows 10 版本 1607 及更高版本的终端程序中，更改文本的计算现在在 NVDA 内部运行，而不是通过外部进程，这可能会提高性能和可靠性。(#18480, @codeofdusk)</target>
+        <target>在 Windows 10 版本 1607 及更高版本的终端程序中，变更文本的计算现在在 NVDA 内部运行，而不是通过外部进程，这可能会提高性能和可靠性。(#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="e3eebd76-4540-4cce-99b4-741e78fc67bb">
@@ -5890,7 +5890,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</source>
-        <target>远程访问的连接到另一台计算机对话框现会记住上次手动连接时所选的模式、服务器类型和本地托管端口。(#18512, #18701)</target>
+        <target>远程访问的“连接到另一台计算机”对话框现会记住上次手动连接时所选的模式、服务器类型和本地托管端口。(#18512, #18701)</target>
       </segment>
     </unit>
     <unit id="9ff079b7-a64e-4b66-940a-767f60586c07">
@@ -5900,7 +5900,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Bug Fixes</source>
-        <target>错误 修复</target>
+        <target>错误修复</target>
       </segment>
     </unit>
     <unit id="23c98fc5-e388-4f48-9a82-9bba110c309a">
@@ -6000,7 +6000,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)</source>
-        <target>修复了 Java 应用程序中段落鼠标文本单元的支持问题。(#18231, @hwf1324)</target>
+        <target>修复了 Java 应用程序中段落鼠标文本单元的支持。(#18231, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="0f352991-347e-4bef-9619-1d4cec4f1d6c">
@@ -6117,9 +6117,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</source>
-        <target>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</target>
+        <target>对于 `IAccessible` 对象，其 `flowsFrom` 和 `flowsTo` 属性现在会对 MSAA（非 IA2）对象抛出 `NotImplementedError`。(#18416, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="5220ddaf-59ce-456b-9b8b-f66200103cd6">
@@ -6127,9 +6127,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</source>
-        <target>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</target>
+        <target>移除了 `nvda_dmp` 程序。(#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="f61e9244-0d56-46b9-ab2a-b0fedd95be66">
@@ -6137,9 +6137,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</source>
-        <target>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</target>
+        <target>更新了 `comInterfaces_sconscript`，使其在 `comInterfaces` 中生成的文件能更好地用于 IDE。(#17608, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b60467e9-5440-4043-90f5-790987742f63">
@@ -6147,9 +6147,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 75</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</source>
-        <target>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</target>
+        <target>NVDA 现在会在 GUI 初始化时配置 `wx.lib.agw.persist.PersistenceManager`。(#18601)</target>
       </segment>
     </unit>
     <unit id="5cbceb29-4c2d-4866-9394-f7d823750eab">
@@ -6167,9 +6167,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 79</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</source>
-        <target>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</target>
+        <target>`synthDrivers.sapi5` 中的以下符号已弃用且无替代方案：(#18300, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="5c310bc4-28cc-41c5-ac06-a04d360ad922">
@@ -6177,7 +6177,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 80</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP_c_ubyte`</source>
         <target>`LP_c_ubyte`</target>
       </segment>
@@ -6187,7 +6187,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 81</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP_c_ulong`</source>
         <target>`LP_c_ulong`</target>
       </segment>
@@ -6197,7 +6197,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 82</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`LP__ULARGE_INTEGER`</source>
         <target>`LP__ULARGE_INTEGER`</target>
       </segment>
@@ -6207,7 +6207,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`SynthDriver.isSpeaking`</source>
         <target>`SynthDriver.isSpeaking`</target>
       </segment>
@@ -6217,9 +6217,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 84</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</source>
-        <target>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</target>
+        <target>`easeOfAccess.RegistryKey` 和 `config.RegistryKey` 已弃用，请改用 `config.registry.RegistryKey`。(#18608)</target>
       </segment>
     </unit>
     <unit id="bb747d9e-5d1e-48d2-84f5-89c96d755a00">
@@ -6227,18 +6227,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</source>
-        <target>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</target>
+        <target>从 `md2html` 导入 `DEFAULT_EXTENSIONS` 的做法已弃用。</target>
       </segment>
     </unit>
     <unit id="ffdab4b2-5995-42fb-9165-ca254496befd">
       <notes>
         <note appliesTo="source">line: 86</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Importing from `md2html` is discouraged. (#18638)</source>
-        <target>Importing from `md2html` is discouraged. (#18638)</target>
+        <target>不建议从 `md2html` 导入。</target>
       </segment>
     </unit>
     <unit id="58b2f98c-6705-4ac1-b96c-34020c02e46f">
@@ -7140,7 +7140,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Microsoft Office and LibreOffice support has improved, notably with more shortcuts being announced.</source>
-        <target>一如既往的对 Microsoft Office 和 LibreOffice 进行了改进，本版支持读出更多快捷键的操作结果。</target>
+        <target>一如既往地对 Microsoft Office 和 LibreOffice 进行了改进，本版支持读出更多快捷键的操作结果。</target>
       </segment>
     </unit>
     <unit id="46779647-e748-481d-bf67-387ba5a41f24">
@@ -12471,7 +12471,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.</source>
-        <target>如你所知，我们一如既往的对 eSpeak-NG 语音合成器、LibLouis 盲文翻译器和 Unicode CLDR 进行了更新。</target>
+        <target>如你所知，我们一如既往地对 eSpeak-NG 语音合成器、LibLouis 盲文翻译器和 Unicode CLDR 进行了更新。</target>
       </segment>
     </unit>
     <unit id="303df0a0-8919-4a82-8254-185cc9fb0234">
@@ -15305,7 +15305,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.</source>
-        <target>当终端中的文本改变而系统插入福未更新时，会在盲文点显器上体现文本更新。</target>
+        <target>当终端中的文本改变而系统插入符未更新时，会在盲文点显器上体现文本更新。</target>
       </segment>
     </unit>
     <unit id="a3ad23df-2f51-430b-a128-79afe10ef11e">
@@ -15923,7 +15923,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.</source>
-        <target>一如既往的对 eSpeak-NG、LibLouis 盲文翻译器和 Unicode CLDR 等第三方组件进行了常规更新。</target>
+        <target>一如既往地对 eSpeak-NG、LibLouis 盲文翻译器和 Unicode CLDR 等第三方组件进行了常规更新。</target>
       </segment>
     </unit>
     <unit id="4f69cbc6-7b6d-4f14-8635-48ca6a22b524">
@@ -16172,7 +16172,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added gestures for Tivomatic Caiku Albatross braille displays. (#14844, #15002)</source>
-        <target>为 Tivomatic Caiku Albatross 点显器添加了下列首饰。(#14844, #15002)</target>
+        <target>为 Tivomatic Caiku Albatross 点显器添加了下列手势。(#14844, #15002)</target>
       </segment>
     </unit>
     <unit id="9b9503ed-d692-48fc-9193-3b887c928691">
@@ -18490,7 +18490,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>`noMessageTimeout` has been removed, replaced by a value for `showMessages`.</source>
-        <target>`noMessageTimeout` 已经被移除，代替他的是一个 `showMessages` 的值。</target>
+        <target>`noMessageTimeout` 已经被移除，代替它的是一个 `showMessages` 的值。</target>
       </segment>
     </unit>
     <unit id="991c9517-9dd9-44be-8d73-ca880d6c5779">
@@ -18984,7 +18984,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>eSpeak has been updated and LibLouis has been updated.</source>
-        <target>一如既往的对 eSpeak 和 LibLouis 进行了更新。</target>
+        <target>一如既往地对 eSpeak 和 LibLouis 进行了更新。</target>
       </segment>
     </unit>
     <unit id="5485ae63-4af7-4825-9bca-572769fd618b">
@@ -20053,7 +20053,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembourgish and Totontepec Mixe.</source>
-        <target>eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言： 白俄罗斯与、卢森堡语和混合海地克里奥尔语。</target>
+        <target>eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言： 白俄罗斯语、卢森堡语和混合海地克里奥尔语。</target>
       </segment>
     </unit>
     <unit id="d647b641-8956-4b03-b546-9ffd488e0c4f">
@@ -20262,7 +20262,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)</source>
-        <target>使用 Adobe Acrobat / Reader 64 阅读 PDF 文档时不在崩溃。(#12920)</target>
+        <target>使用 Adobe Acrobat / Reader 64 阅读 PDF 文档时不再崩溃。(#12920)</target>
       </segment>
     </unit>
     <unit id="b2ee08be-cb8a-4138-ab36-0a45bb69e486">
@@ -20331,7 +20331,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When rate boost is off, eSpeak's rate does not drop anymore between rates 99% and 100%. (#13876)</source>
-        <target>eSpeapk 的语速加倍关闭后，语速的下降不会在 99% 和 100% 之间横跳。(#13876)</target>
+        <target>eSpeak 的语速加倍关闭后，语速的下降不会在 99% 和 100% 之间横跳。(#13876)</target>
       </segment>
     </unit>
     <unit id="5abd98e0-165f-4b9f-9cf9-24adf85cf77c">
@@ -21938,7 +21938,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)</source>
-        <target>增加了一组在盲文键盘上模拟按下货放开多个修饰键的命令。(#13152)</target>
+        <target>增加了一组在盲文键盘上模拟按下或放开多个修饰键的命令。(#13152)</target>
       </segment>
     </unit>
     <unit id="af0f5f29-c81d-41e2-a0c6-d5e1d3112c21">
@@ -22008,7 +22008,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Espeak-ng has been updated to 1.51-dev commit `7e5457f91e10`. (#12950)</source>
-        <target>Espeak-ng 升级至 1.51-dev commit `7e5457f91e10`。(#12950)</target>
+        <target>Espeak-NG 升级至 1.51-dev commit `7e5457f91e10`。(#12950)</target>
       </segment>
     </unit>
     <unit id="a6a0a081-2ef0-42d3-8049-346bd69ec372">
@@ -22108,7 +22108,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>"Baseline" is no longer reported via the report text formatting command (`NVDA+f`). (#11815)</source>
-        <target>不在通过读出文本格式的命令（`NVDA+f`）读出“基准线”。(#11815)</target>
+        <target>不再通过读出文本格式的命令（`NVDA+f`）读出“基准线”。(#11815)</target>
       </segment>
     </unit>
     <unit id="d9f7ab57-0784-41b4-b091-9fad86b8db43">
@@ -22118,7 +22118,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Activate long description no longer has a default gesture assigned. (#13380)</source>
-        <target>不在默认分配读出长描述的手势。(#13380)</target>
+        <target>不再默认分配读出长描述的手势。(#13380)</target>
       </segment>
     </unit>
     <unit id="de905ab9-15f3-4af0-935c-6754d23eb34d">
@@ -22288,7 +22288,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>HID braille: chorded gestures (e.g. `space+dot4`) can be successfully performed from the Braille display. (#13326)</source>
-        <target>HID 盲文设备：能够通过盲文点显器键入（诸如`空格键+第4点`）这类组合件，并成功实现相应功能。(#13326)</target>
+        <target>HID 盲文设备：能够通过盲文点显器键入（诸如`空格键+第4点`）这类组合键，并成功实现相应功能。(#13326)</target>
       </segment>
     </unit>
     <unit id="4afb8af8-f105-4350-b8ef-80ef8a0164fe">
@@ -22646,7 +22646,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)</source>
-        <target>这确保代码能够将更换鼠标主要案件的权限下放给 Windows 用户。(#12642)</target>
+        <target>这确保代码能够将更换鼠标主要按键的权限下放给 Windows 用户。(#12642)</target>
       </segment>
     </unit>
     <unit id="ee6ea0b4-2379-42da-bef8-0fae8e011006">
@@ -23684,7 +23684,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Espeak-ng has been updated to 1.51-dev commit `74068b91bcd578bd7030a7a6cde2085114b79b44`. (#12665)</source>
-        <target>将 Espeak-ng 更新至 1.51-dev commit `74068b91bcd578bd7030a7a6cde2085114b79b44`. (#12665)</target>
+        <target>将 Espeak-NG 更新至 1.51-dev commit `74068b91bcd578bd7030a7a6cde2085114b79b44`. (#12665)</target>
       </segment>
     </unit>
     <unit id="d038232d-7518-44fb-96d6-259693c5c091">
@@ -23983,7 +23983,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)</source>
-        <target>休复了在 Word 中使用中文输入法（例如微软拼音）时，向前 / 向后滚动盲文显示，会始终跳回原来输入光标位置的问题。(#12855)</target>
+        <target>修复了在 Word 中使用中文输入法（例如微软拼音）时，向前 / 向后滚动盲文显示，会始终跳回原来输入光标位置的问题。(#12855)</target>
       </segment>
     </unit>
     <unit id="5d0277ca-f84c-4c95-bc8f-1a0e2a5f2499">
@@ -24341,7 +24341,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Espeak-ng has been updated to 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`. (#12449, #12202, #12280, #12568)</source>
-        <target>将 Espeak-ng 更新至 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`。(#12449, #12202, #12280, #12568)</target>
+        <target>将 Espeak-NG 更新至 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`。(#12449, #12202, #12280, #12568)</target>
       </segment>
     </unit>
     <unit id="a5e83e4e-4dc4-47a5-bf61-a97e4b684fd2">
@@ -24648,7 +24648,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>There are updates to Unicode CLDR, mathematical symbols, and LibLouis.</source>
-        <target>此外还更新了以下三个本地数据库 Unicode CLDR（通用本地化数据存储库）、LibLouis（盲文表）以及腧穴符号。</target>
+        <target>此外还更新了以下三个本地数据库 Unicode CLDR（通用本地化数据存储库）、LibLouis（盲文表）以及数学符号。</target>
       </segment>
     </unit>
     <unit id="7a8f4f4b-d600-4168-9e5d-81d9452fd18a">
@@ -24657,7 +24657,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>As well as many bug fixes and improvements, including in Office, Visual Studio, and several languages.</source>
-        <target>一如既往的，包含许多 Bug 修复和改进，涵盖 Office、 Visual Studio 以及多语言显示等。</target>
+        <target>一如既往地，包含许多 Bug 修复和改进，涵盖 Office、 Visual Studio 以及多语言显示等。</target>
       </segment>
     </unit>
     <unit id="a6a90e8b-20ea-41e4-b9eb-91ac32ee3dad">
@@ -24816,7 +24816,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added more mathematical symbols to the symbols dictionary. (#11467)</source>
-        <target>在符号词典中增加了更多的数学符号。（译者注：新增了众多腧穴符号，涵盖集合、逻辑、线性代数、几何和微积分等。）(#11467)</target>
+        <target>在符号词典中增加了更多的数学符号。（译者注：新增了众多数学符号，涵盖集合、逻辑、线性代数、几何和微积分等。）(#11467)</target>
       </segment>
     </unit>
     <unit id="c2569152-3871-4295-839e-e1508f1802ba">
@@ -25076,7 +25076,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)</source>
-        <target>TextInfo.getTextInChunks 不再音于富文本控件调用时冻结（如日志查看器）。(#11613)</target>
+        <target>TextInfo.getTextInChunks 不再由于富文本控件调用时冻结（如日志查看器）。(#11613)</target>
       </segment>
     </unit>
     <unit id="9188053b-8c87-46d6-a0ad-1dbba6182fb4">
@@ -26210,7 +26210,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a command to toggle reporting of marked (highlighted) text; There is no default associated gesture. (#11807)</source>
-        <target>增加了一个用于切换是否读出“标记（高亮）”的命令，默认没有分配首饰。(#11807)</target>
+        <target>增加了一个用于切换是否读出“标记（高亮）”的命令，默认没有分配手势。(#11807)</target>
       </segment>
     </unit>
     <unit id="1e27a0e8-ebad-49d2-8d15-12a84ff8e8da">
@@ -26330,7 +26330,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)</source>
-        <target>在浏览模式中使用全文朗读时，，若启用了“在全文朗读模式下启用快捷键导航”选项，“查找下一个”和“查找上一个”命令不再打断朗读，而是从查找结果处继续向下执行全文朗读。(#11563)</target>
+        <target>在浏览模式中使用全文朗读时，若启用了“在全文朗读模式下启用快捷键导航”选项，“查找下一个”和“查找上一个”命令不再打断朗读，而是从查找结果处继续向下执行全文朗读。(#11563)</target>
       </segment>
     </unit>
     <unit id="e312bfb8-5543-4e62-939d-c45300e0d780">
@@ -26640,7 +26640,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by turning off Report Emphasis in NVDA's Document Formatting settings. (#11808)</source>
-        <target>若关闭了 NVDA “文档格式”设置中的“强调”，则不会在错误的读出 Internet Explorer 中的“强调”和“高亮”标记。(#11808)</target>
+        <target>若关闭了 NVDA “文档格式”设置中的“强调”，则不会再错误地读出 Internet Explorer 中的“强调”和“高亮”标记。(#11808)</target>
       </segment>
     </unit>
     <unit id="04f229dc-ffb5-4b10-81db-3074f1b95d8e">
@@ -26848,7 +26848,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)</source>
-        <target>您可以切换 NVDA 的触摸屏支持。在 NVDA 的“输入首饰”的“触摸屏”分类下添加了一个选项。默认热键为 NVDA+control+alt+t。(#9682)</target>
+        <target>您可以切换 NVDA 的触摸屏支持。在 NVDA 的“输入手势”的“触摸屏”分类下添加了一个选项。默认热键为 NVDA+control+alt+t。(#9682)</target>
       </segment>
     </unit>
     <unit id="f7015abc-c070-4128-a808-0b8807907f85">
@@ -26898,7 +26898,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)</source>
-        <target>可以从 NVDA 的“输入首饰”对话框中添加新的模拟系统按键。(#6060)</target>
+        <target>可以从 NVDA 的“输入手势”对话框中添加新的模拟系统按键。(#6060)</target>
       </segment>
     </unit>
     <unit id="d809c425-2bf9-4164-a79f-aa214283105b">
@@ -27108,7 +27108,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Input Gestures dialog, significantly improved performance while filtering. (#10307)</source>
-        <target>在“输入首饰”对话框中，显著提高了查找的性能。(#10307)</target>
+        <target>在“输入手势”对话框中，显著提高了查找的性能。(#10307)</target>
       </segment>
     </unit>
     <unit id="b9e6eb1b-7589-4ed5-b58a-0832954f0cd9">
@@ -27906,7 +27906,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now perform right mouse clicks on touch devices by doing a one finger tap and hold. (#3886)</source>
-        <target>当前，您可以使用单指按下的首饰在触摸设备上单击鼠标右键。(#3886)</target>
+        <target>当前，您可以使用单指按下的手势在触摸设备上单击鼠标右键。(#3886)</target>
       </segment>
     </unit>
     <unit id="ba774011-491e-42bd-ba3b-a4c9a996cfaa">
@@ -28401,7 +28401,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article and grouping using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9485, #9227)</source>
-        <target>在 Internet Explorer、Google Chrome 和 Mozilla Firefox 中，现在可以使用单件导航按“文章”和“分组”进行浏览。该功能默认未绑定快捷手势，您可以在“输入手势”对话框中进行配置。(#9227)</target>
+        <target>在 Internet Explorer、Google Chrome 和 Mozilla Firefox 中，现在可以使用单键导航按“文章”和“分组”进行浏览。该功能默认未绑定快捷手势，您可以在“输入手势”对话框中进行配置。(#9227)</target>
       </segment>
     </unit>
     <unit id="06a7b107-8bec-4885-b3ac-1a787af8b2d3">
@@ -28441,7 +28441,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a script to enable screen curtain (until next restart with one press, or always while NVDA is running with two presses), no default gesture is assigned.</source>
-        <target>新增用于开关黑屏的首饰设置（按一次临时开启黑屏，直至下次重启 NVDA 后恢复，连按两次开启黑屏，需手动关闭），注意：未分配默认手势。</target>
+        <target>新增用于开关黑屏的手势设置（按一次临时开启黑屏，直至下次重启 NVDA 后恢复，连按两次开启黑屏，需手动关闭），注意：未分配默认手势。</target>
       </segment>
     </unit>
     <unit id="d9af3b45-fbb5-4e05-a607-d22ac7e1c27e">
@@ -30109,7 +30109,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)</source>
-        <target>在 Windows 102019 年 5 月更新版中，聚焦于文件管理器，使用物理案件调整音量时，NVDA 将不再连续朗读音量调整提示。(#9466)</target>
+        <target>在 Windows 102019 年 5 月更新版中，聚焦于文件管理器，使用物理按键调整音量时，NVDA 将不再连续朗读音量调整提示。(#9466)</target>
       </segment>
     </unit>
     <unit id="eaf52d4f-95ff-411e-95e6-41447b0cbac6">
@@ -30199,7 +30199,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)</source>
-        <target>在 Freedom Scientific 系列点显器中，保险案件现在工作正常。(#8849)</target>
+        <target>在 Freedom Scientific 系列点显器中，保险按键现在工作正常。(#8849)</target>
       </segment>
     </unit>
     <unit id="2b1c569b-6752-4667-b1a4-60ef1f154000">
@@ -30219,7 +30219,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)</source>
-        <target>HTCom 现在可以合 Handy Tech 盲文点显器以即 NVDA 配合使用。(#9691)</target>
+        <target>HTCom 现在可以和 Handy Tech 盲文点显器以即 NVDA 配合使用。(#9691)</target>
       </segment>
     </unit>
     <unit id="7d6b488b-8386-4381-93e7-34688db53115">
@@ -32316,7 +32316,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306)</source>
-        <target>您现在可以从盲文键盘切换控制，移位，替代，窗口和 NVDA，并将这些修饰符与盲文输入（例如按下 control+s）进行组合。(#7306)</target>
+        <target>您现在可以从盲文键盘切换Control，Shift，Alt，Windows和 NVDA键，并将这些修饰键与盲文输入（例如按下 control+s）进行组合。(#7306)</target>
       </segment>
     </unit>
     <unit id="1599252f-b9a1-45cc-a086-06ffb01f159a">
@@ -33462,7 +33462,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Espeak-ng has been updated to 1.49.2, resolving some issues with producing release builds. (#7385, #7583)</source>
-        <target>Espeak-ng 已经更新到 1.49.2，解决了一些生成发布版本时产生的问题。(#7385，#7583)</target>
+        <target>Espeak-NG 已经更新到 1.49.2，解决了一些生成发布版本时产生的问题。(#7385，#7583)</target>
       </segment>
     </unit>
     <unit id="80597d2d-040e-4984-aa80-7c2636bd7d2f">

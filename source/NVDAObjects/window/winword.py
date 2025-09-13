@@ -28,6 +28,7 @@ import ui
 import NVDAHelper
 import XMLFormatting
 from logHandler import log
+from winBindings import user32
 import winUser
 import oleacc
 import speech
@@ -471,7 +472,7 @@ wdContentControlTypesToNVDARoles = {
 
 winwordWindowIid = GUID("{00020962-0000-0000-C000-000000000046}")
 
-wm_winword_expandToLine = ctypes.windll.user32.RegisterWindowMessageW("wm_winword_expandToLine")
+wm_winword_expandToLine = user32.RegisterWindowMessage("wm_winword_expandToLine")
 
 NVDAUnitsToWordUnits = {
 	textInfos.UNIT_CHARACTER: wdCharacter,

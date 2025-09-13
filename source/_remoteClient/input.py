@@ -14,6 +14,7 @@ import brailleInput
 import globalPluginHandler
 import scriptHandler
 import vision
+from winBindings import user32
 
 
 class InputType(IntEnum):
@@ -221,10 +222,10 @@ def sendKey(vk: int | None = None, scan: int | None = None, extended: bool = Fal
 	if scan:
 		i.union.ki.wScan = scan
 	else:  # No scancode provided, try to get one
-		i.union.ki.wScan = ctypes.windll.user32.MapVirtualKeyW(vk, VKMapType.VK_TO_VSC)
+		i.union.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
 	if not pressed:
 		i.union.ki.dwFlags |= KeyEventFlag.KEY_UP
 	if extended:
 		i.union.ki.dwFlags |= KeyEventFlag.EXTENDED_KEY
 	i.type = InputType.KEYBOARD
-	ctypes.windll.user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(INPUT))
+	user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(INPUT))

@@ -12,7 +12,6 @@ from ctypes import (
 	Structure,
 	byref,
 	c_void_p,
-	windll,
 )
 from ctypes.wintypes import (
 	MSG,
@@ -123,9 +122,9 @@ def hookThreadFunc():
 	msg = MSG()  # noqa: F405
 	while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
 		pass
-	if windll.user32.UnhookWindowsHookEx(keyHookID) == 0:  # noqa: F405
+	if user32.UnhookWindowsHookEx(keyHookID) == 0:  # noqa: F405
 		raise OSError("could not unregister key hook %s" % keyHookID)
-	if windll.user32.UnhookWindowsHookEx(mouseHookID) == 0:  # noqa: F405
+	if user32.UnhookWindowsHookEx(mouseHookID) == 0:  # noqa: F405
 		raise OSError("could not unregister mouse hook %s" % mouseHookID)
 
 
@@ -157,6 +156,6 @@ def terminate():
 		raise RuntimeError("winInputHook not running")
 	hookThreadRefCount -= 1
 	if hookThreadRefCount == 0:
-		windll.user32.PostThreadMessageW(hookThread.ident, winUser.WM_QUIT, 0, 0)  # noqa: F405
+		user32.PostThreadMessage(hookThread.ident, winUser.WM_QUIT, 0, 0)  # noqa: F405
 		hookThread.join()
 		hookThread = None

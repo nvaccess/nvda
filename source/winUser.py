@@ -12,39 +12,33 @@ When working on this file, consider moving to winAPI.
 import contextlib
 import ctypes
 from ctypes import (
-	POINTER,
-	WINFUNCTYPE,
-	Union,
 	byref,
 	WinError,
 	Structure,
-	c_int,
 	c_long,
 	c_short,
 	c_uint,
-	c_ulong,
-	c_ushort,
 	c_wchar,
 	create_unicode_buffer,
 	sizeof,
-	windll,
 	wstring_at,
 )
 from ctypes.wintypes import (
 	BOOL,
-	HANDLE,
 	HWND,
 	POINT,
 	RECT,
 	DWORD,
-	SHORT,
 	WCHAR,
 )
 
 import winBindings.user32
+from winBindings import user32 as _user32
 from winBindings.user32 import (
 	WNDENUMPROC as _WNDENUMPROC,
 	PAINTSTRUCT as _PAINTSTRUCT,
+	GUITHREADINFO as _GUITHREADINFO,
+	INPUT,
 )
 import winKernel
 from collections.abc import Callable
@@ -108,12 +102,22 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SystemMetrics",
 		"CY_VIRTUAL_SCREEN",
 	),
+	_deprecate.MovedSymbol(
+		"HWINEVENTHOOK",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol(
+		"WINEVENTPROC",
+		"winBindings.user32",
+	),
+	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
+	_deprecate.MovedSymbol("GUITHREADINFO", "winBindings.user32"),
+	_deprecate.MovedSymbol("Input", "winBindings.user32", "INPUT"),
+	_deprecate.MovedSymbol("KeyBdInput", "winBindings.user32", "KEYBDINPUT"),
+	_deprecate.MovedSymbol("HardwareInput", "winBindings.user32", "HARDWAREINPUT"),
+	_deprecate.MovedSymbol("MouseInput", "winBindings.user32", "MOUSEINPUT"),
 )
 """Module __getattr__ to handle backward compatibility."""
-
-
-# dll handles
-user32 = windll.user32
 
 # rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
 # what may be an invalid or illegal pointer, we'll treat it as an opaque value.
@@ -134,20 +138,6 @@ class NMHdrStruct(Structure):
 		("hwndFrom", HWND),
 		("idFrom", c_uint),
 		("code", c_uint),
-	]
-
-
-class GUITHREADINFO(Structure):
-	_fields_ = [
-		("cbSize", DWORD),
-		("flags", DWORD),
-		("hwndActive", HWND),
-		("hwndFocus", HWND),
-		("hwndCapture", HWND),
-		("hwndMenuOwner", HWND),
-		("hwndMoveSize", HWND),
-		("hwndCaret", HWND),
-		("rcCaret", RECT),
 	]
 
 
@@ -471,12 +461,12 @@ class MSGFLT(enum.IntEnum):
 
 
 def setSystemScreenReaderFlag(val):
-	user32.SystemParametersInfoW(SPI_SETSCREENREADER, val, 0, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE)
+	_user32.SystemParametersInfo(SPI_SETSCREENREADER, val, 0, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE)
 
 
 def getSystemScreenReaderFlag():
 	val = BOOL()
-	user32.SystemParametersInfoW(SPI_GETSCREENREADER, 0, byref(val), 0)
+	_user32.SystemParametersInfo(SPI_GETSCREENREADER, 0, byref(val), 0)
 	return bool(val.value)
 
 
@@ -513,7 +503,7 @@ def MAKELONG(lo, hi):
 
 
 def waitMessage():
-	return user32.WaitMessage()
+	return _user32.WaitMessage()
 
 
 def getMessage(*args) -> int:
@@ -521,103 +511,98 @@ def getMessage(*args) -> int:
 
 
 def translateMessage(*args):
-	return user32.TranslateMessage(*args)
+	return _user32.TranslateMessage(*args)
 
 
 def dispatchMessage(*args):
-	return user32.DispatchMessageW(*args)
+	return _user32.DispatchMessage(*args)
 
 
 def peekMessage(*args):
 	try:
-		res = user32.PeekMessageW(*args)
+		res = _user32.PeekMessage(*args)
 	except:  # noqa: E722
 		res = 0
 	return res
 
 
 def registerWindowMessage(name):
-	return user32.RegisterWindowMessageW(name)
+	return _user32.RegisterWindowMessage(name)
 
 
 def getAsyncKeyState(v):
-	return user32.GetAsyncKeyState(v)
+	return _user32.GetAsyncKeyState(v)
 
 
 def getKeyState(v):
-	return user32.GetKeyState(v)
+	return _user32.GetKeyState(v)
 
 
 def isWindow(hwnd):
-	return user32.IsWindow(hwnd)
+	return _user32.IsWindow(hwnd)
 
 
 def isDescendantWindow(parentHwnd, childHwnd):
-	if (parentHwnd == childHwnd) or user32.IsChild(parentHwnd, childHwnd):
+	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):
 		return True
 	else:
 		return False
 
 
 def getForegroundWindow() -> HWNDVal:
-	return user32.GetForegroundWindow()
+	return _user32.GetForegroundWindow()
 
 
 def setForegroundWindow(hwnd):
-	user32.SetForegroundWindow(hwnd)
+	_user32.SetForegroundWindow(hwnd)
 
 
 def setFocus(hwnd):
-	user32.SetFocus(hwnd)
+	_user32.SetFocus(hwnd)
 
 
 def getDesktopWindow() -> HWNDVal:
-	return user32.GetDesktopWindow()
+	return _user32.GetDesktopWindow()
 
 
 def getControlID(hwnd):
-	return user32.GetWindowLongW(hwnd, GWL_ID)
+	return _user32.GetWindowLong(hwnd, GWL_ID)
 
 
 def getClientRect(hwnd):
 	r = RECT()
-	if not user32.GetClientRect(hwnd, byref(r)):
+	if not _user32.GetClientRect(hwnd, byref(r)):
 		raise WinError()
 	return r
 
 
-HWINEVENTHOOK = HANDLE
-
-WINEVENTPROC = WINFUNCTYPE(None, HWINEVENTHOOK, DWORD, HWND, c_long, c_long, DWORD, DWORD)
-
-
 def setWinEventHook(*args):
-	return user32.SetWinEventHook(*args)
+	return _user32.SetWinEventHook(*args)
 
 
 def unhookWinEvent(*args):
-	return user32.UnhookWinEvent(*args)
+	return _user32.UnhookWinEvent(*args)
 
 
 def sendMessage(hwnd, msg, param1, param2):
-	return user32.SendMessageW(hwnd, msg, param1, param2)
+	return _user32.SendMessage(hwnd, msg, param1, param2)
 
 
 def getWindowThreadProcessID(hwnd: HWNDVal) -> tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
-	processID = c_int()
-	threadID = user32.GetWindowThreadProcessId(hwnd, byref(processID))
+	processID = DWORD()
+	threadID = _user32.GetWindowThreadProcessId(hwnd, byref(processID))
 	return (processID.value, threadID)
 
 
 def getClassName(window: HWNDVal) -> str:
 	buf = create_unicode_buffer(256)
-	user32.GetClassNameW(window, buf, 255)
+	_user32.GetClassName(window, buf, 255)
 	return buf.value
 
 
 def keybd_event(*args):
-	return user32.keybd_event(*args)
+	return _user32.keybd_event(*args)
 
 
 def mouse_event(*args):
@@ -625,105 +610,96 @@ def mouse_event(*args):
 	# i.e. events generated by calling this wrapper aren't ignored by NVDA.
 	# To generate mouse events that are ignored by NVDA,
 	# call L{mouseHandler.executeMouseEvent} instead.
-	return user32.mouse_event(*args)
+	return _user32.mouse_event(*args)
 
 
 def getAncestor(hwnd, flags):
-	return user32.GetAncestor(hwnd, flags)
-
-
-try:
-	# Windows >= Vista
-	_getCursorPos = user32.GetPhysicalCursorPos
-	_setCursorPos = user32.SetPhysicalCursorPos
-except AttributeError:
-	_getCursorPos = user32.GetCursorPos
-	_setCursorPos = user32.SetCursorPos
+	return _user32.GetAncestor(hwnd, flags)
 
 
 def setCursorPos(x, y):
-	_setCursorPos(x, y)
+	_user32.SetPhysicalCursorPos(x, y)
 
 
 def getCursorPos():
 	point = POINT()
-	_getCursorPos(byref(point))
+	_user32.GetPhysicalCursorPos(byref(point))
 	return [point.x, point.y]
 
 
 def getCaretPos():
 	point = POINT()
-	user32.GetCaretPos(byref(point))
+	_user32.GetCaretPos(byref(point))
 	return [point.x, point.y]
 
 
 def getTopWindow(hwnd):
-	return user32.GetTopWindow(hwnd)
+	return _user32.GetTopWindow(hwnd)
 
 
 def getWindowText(hwnd):
 	buf = create_unicode_buffer(1024)
-	user32.InternalGetWindowText(hwnd, buf, 1023)
+	_user32.InternalGetWindowText(hwnd, buf, 1023)
 	return buf.value
 
 
 def getWindow(window, relation):
-	return user32.GetWindow(window, relation)
+	return _user32.GetWindow(window, relation)
 
 
 def isWindowVisible(window):
-	return bool(user32.IsWindowVisible(window))
+	return bool(_user32.IsWindowVisible(window))
 
 
 def isWindowEnabled(window):
-	return bool(user32.IsWindowEnabled(window))
+	return bool(_user32.IsWindowEnabled(window))
 
 
 def getGUIThreadInfo(threadID):
-	info = GUITHREADINFO(cbSize=sizeof(GUITHREADINFO))
-	user32.GetGUIThreadInfo(threadID, byref(info))
+	info = _GUITHREADINFO(cbSize=sizeof(_GUITHREADINFO))
+	_user32.GetGUIThreadInfo(threadID, byref(info))
 	return info
 
 
 def getWindowStyle(hwnd):
-	return user32.GetWindowLongW(hwnd, GWL_STYLE)
+	return _user32.GetWindowLong(hwnd, GWL_STYLE)
 
 
 def getExtendedWindowStyle(hwnd):
-	return user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
+	return _user32.GetWindowLong(hwnd, GWL_EXSTYLE)
 
 
 def setExtendedWindowStyle(hwnd, exstyle):
-	return user32.SetWindowLongW(hwnd, GWL_EXSTYLE, exstyle)
+	return _user32.SetWindowLong(hwnd, GWL_EXSTYLE, exstyle)
 
 
 def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
-	return user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
+	return _user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
 
 
 def getPreviousWindow(hwnd):
 	try:
-		return user32.GetWindow(hwnd, GW_HWNDPREV)
+		return _user32.GetWindow(hwnd, GW_HWNDPREV)
 	except WindowsError:
 		return 0
 
 
 def getKeyboardLayout(idThread=0):
-	return user32.GetKeyboardLayout(idThread)
+	return _user32.GetKeyboardLayout(idThread)
 
 
 def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
-	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
+	return _user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
 
 
 def getKeyNameText(scanCode, extended):
 	buf = create_unicode_buffer(32)
-	user32.GetKeyNameTextW((scanCode << 16) | (extended << 24), buf, 31)
+	_user32.GetKeyNameText((scanCode << 16) | (extended << 24), buf, 31)
 	return buf.value
 
 
 def FindWindow(className, windowName):
-	res = user32.FindWindowW(className, windowName)
+	res = _user32.FindWindow(className, windowName)
 	if res == 0:
 		raise WinError()
 	return res
@@ -738,22 +714,19 @@ IDCANCEL = 3
 
 
 def MessageBox(hwnd, text, caption, type):
-	res = user32.MessageBoxW(hwnd, text, caption, type)
+	res = _user32.MessageBox(hwnd, text, caption, type)
 	if res == 0:
 		raise WinError()
 	return res
 
 
 def PostMessage(hwnd, msg, wParam, lParam):
-	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
+	if not _user32.PostMessage(hwnd, msg, wParam, lParam):
 		raise WinError()
 
 
-user32.VkKeyScanExW.restype = SHORT
-
-
 def VkKeyScanEx(ch, hkl):
-	res = user32.VkKeyScanExW(WCHAR(ch), hkl)
+	res = _user32.VkKeyScanEx(WCHAR(ch), hkl)
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF
@@ -761,18 +734,18 @@ def VkKeyScanEx(ch, hkl):
 
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ScreenToClient(hwnd, byref(point))
+	_user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
 
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ClientToScreen(hwnd, byref(point))
+	_user32.ClientToScreen(hwnd, byref(point))
 	return point.x, point.y
 
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):
-	user32.NotifyWinEvent(event, hwnd, idObject, idChild)
+	_user32.NotifyWinEvent(event, hwnd, idObject, idChild)
 
 
 class STICKYKEYS(Structure):
@@ -793,58 +766,11 @@ SKF_TWOKEYSOFF = 0x00000100
 
 def getSystemStickyKeys():
 	sk = STICKYKEYS()
-	user32.SystemParametersInfoW(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
+	_user32.SystemParametersInfo(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
 	return sk
 
 
 # START SENDINPUT TYPE DECLARATIONS
-PUL = POINTER(c_ulong)
-
-
-class KeyBdInput(Structure):
-	_fields_ = [
-		("wVk", c_ushort),
-		("wScan", c_ushort),
-		("dwFlags", c_ulong),
-		("time", c_ulong),
-		("dwExtraInfo", PUL),
-	]
-
-
-class HardwareInput(Structure):
-	_fields_ = [
-		("uMsg", c_ulong),
-		("wParamL", c_short),
-		("wParamH", c_ushort),
-	]
-
-
-class MouseInput(Structure):
-	_fields_ = [
-		("dx", c_long),
-		("dy", c_long),
-		("mouseData", c_ulong),
-		("dwFlags", c_ulong),
-		("time", c_ulong),
-		("dwExtraInfo", PUL),
-	]
-
-
-class Input_I(Union):
-	_fields_ = [
-		("ki", KeyBdInput),
-		("mi", MouseInput),
-		("hi", HardwareInput),
-	]
-
-
-class Input(Structure):
-	_fields_ = [
-		("type", c_ulong),
-		("ii", Input_I),
-	]
-
-
 INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
 INPUT_KEYBOARD = 1  # The event is a keyboard event. Use the ki structure of the union.
 KEYEVENTF_KEYUP = 0x0002
@@ -854,8 +780,8 @@ KEYEVENTF_UNICODE = 0x04
 
 def SendInput(inputs):
 	n = len(inputs)
-	arr = (Input * n)(*inputs)
-	user32.SendInput(n, arr, sizeof(Input))
+	arr = (INPUT * n)(*inputs)
+	_user32.SendInput(n, arr, sizeof(INPUT))
 
 
 @contextlib.contextmanager
@@ -893,7 +819,7 @@ class WinTimer(object):
 		self.idEvent = idEvent
 		self.elapse = elapse
 		self.timerFunc = timerFunc
-		self.ident = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		self.ident = _user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
 		if self.ident == 0:
 			raise WinError()
 		if not hwnd:
@@ -906,7 +832,7 @@ class WinTimer(object):
 		"""Terminates the timer.
 		This should be called from the thread that initiated the timer.
 		"""
-		if not user32.KillTimer(self.hwnd, self.idEvent):
+		if not _user32.KillTimer(self.hwnd, self.idEvent):
 			raise WinError()
 
 
@@ -929,7 +855,7 @@ def openClipboard(hwndOwner=None):
 
 
 def emptyClipboard():
-	if not windll.user32.EmptyClipboard():
+	if not _user32.EmptyClipboard():
 		raise ctypes.WinError()
 
 

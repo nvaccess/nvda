@@ -8,6 +8,8 @@ from __future__ import annotations
 import abc
 import ctypes
 import enum
+from winBindings import user32
+import winBindings.gdi32
 
 from typing import Any
 from collections.abc import Callable
@@ -2243,12 +2245,12 @@ class ExcelFormControl(ExcelBase):
 		# bottom right cell's height in points
 		bottomRightCellHeight = bottomRightAddress.Height
 		self.excelApplicationObject = self.parent.excelWorksheetObject.Application
-		hDC = ctypes.windll.user32.GetDC(None)
+		hDC = user32.GetDC(None)
 		# pixels per inch along screen width
-		px = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
 		# pixels per inch along screen height
-		py = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
-		ctypes.windll.user32.ReleaseDC(None, hDC)
+		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+		user32.ReleaseDC(None, hDC)
 		zoom = self.excelApplicationObject.ActiveWindow.Zoom
 		zoomRatio = zoom / 100
 		# Conversion from inches to Points, 1 inch=72points

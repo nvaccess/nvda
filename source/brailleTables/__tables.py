@@ -320,6 +320,12 @@ addTable(
 	input=False,
 	outputForLangs={"ja"},
 )
+addTable(
+	"ja-rokutenkanji.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Japanese (Rokuten Kanji) Braille"),
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ka-in-g1.utb", _("Kannada grade 1"), inputForLangs={"kn"}, outputForLangs={"kn"})

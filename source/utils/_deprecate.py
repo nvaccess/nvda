@@ -14,7 +14,6 @@ from types import ModuleType
 from typing import Any
 
 import NVDAState
-from logHandler import log
 
 
 class DeprecatedSymbol(ABC):
@@ -156,6 +155,9 @@ def handleDeprecations(
 	def module_getattr(attrName: str) -> Any:
 		if NVDAState._allowDeprecatedAPI():
 			if attrName in deprecatedSymbols:
+				# Import late to avoid circular import
+				from logHandler import log
+
 				deprecatedSymbol = deprecatedSymbols[attrName]
 				# TODO: #17783: switch to using warnings.warn when NVDA's support for it matures.
 				log.warning(

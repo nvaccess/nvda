@@ -24,7 +24,9 @@ from typing import (
 	TypeVar,
 )
 
+import winBindings.advapi32
 import winBindings.kernel32
+import winBindings.shell32
 import winKernel
 import winreg
 import shellapi
@@ -33,7 +35,7 @@ import functools
 import shlobj
 from logHandler import log
 from NVDAState import WritePaths
-from winBindings import advapi32
+from winBindings import advapi32, user32
 
 
 @functools.lru_cache(maxsize=1)
@@ -74,7 +76,7 @@ def hasUiAccess():
 	)
 	try:
 		val = ctypes.wintypes.DWORD()
-		ctypes.windll.advapi32.GetTokenInformation(
+		winBindings.advapi32.GetTokenInformation(
 			token,
 			TokenUIAccess,
 			ctypes.byref(val),
@@ -126,7 +128,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 		raise ctypes.WinError()
 	try:
 		val = TokenOrigin()
-		if not ctypes.windll.advapi32.GetTokenInformation(
+		if not winBindings.advapi32.GetTokenInformation(
 			token,
 			TOKEN_ORIGIN,
 			ctypes.byref(val),
@@ -151,7 +153,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 		params = subprocess.list2cmdline(params)
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
 	# IsUserAnAdmin is apparently deprecated so may not work above Windows 8
-	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
+	if not handleAlreadyElevated or not winBindings.shell32.IsUserAnAdmin():
 		sei.lpVerb = "runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
@@ -160,10 +162,10 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 		try:
 			h = ctypes.wintypes.HANDLE(sei.hProcess)
 			msg = ctypes.wintypes.MSG()
-			while ctypes.windll.user32.MsgWaitForMultipleObjects(1, ctypes.byref(h), False, -1, 255) == 1:
-				while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
-					ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
-					ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
+			while user32.MsgWaitForMultipleObjects(1, ctypes.byref(h), False, -1, 255) == 1:
+				while user32.PeekMessage(ctypes.byref(msg), None, 0, 0, 1):
+					user32.TranslateMessage(ctypes.byref(msg))
+					user32.DispatchMessage(ctypes.byref(msg))
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
@@ -172,9 +174,9 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 @functools.lru_cache(maxsize=1)
 def _getDesktopName() -> str:
 	UOI_NAME = 2  # The name of the object, as a string
-	desktop = windll.user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
+	desktop = user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
 	name = create_unicode_buffer(256)
-	windll.user32.GetUserObjectInformationW(
+	user32.GetUserObjectInformation(
 		desktop,
 		UOI_NAME,
 		byref(name),
@@ -232,10 +234,10 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		threadHandle = ctypes.c_int()
 		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
-		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
-			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
-				winUser.user32.TranslateMessage(ctypes.byref(msg))
-				winUser.user32.DispatchMessageW(ctypes.byref(msg))
+		while user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
+			while user32.PeekMessage(ctypes.byref(msg), None, 0, 0, 1):
+				user32.TranslateMessage(ctypes.byref(msg))
+				user32.DispatchMessage(ctypes.byref(msg))
 		if self.threadExc:
 			raise self.threadExc
 
