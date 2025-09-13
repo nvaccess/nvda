@@ -19,11 +19,10 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
-from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
+from addonStore.models.status import _StatusFilterKey, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
-from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
 from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 from gui.contextHelp import ContextHelpMixin
@@ -39,6 +38,7 @@ import NVDAState
 from speech.priorities import SpeechPriority
 import ui
 import windowUtils
+from markdown import markdown
 
 if TYPE_CHECKING:
 	from addonStore.models.version import SupportsVersionCheck
@@ -428,6 +428,11 @@ class UpdatableAddonsDialog(
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
+		showChangelogLabel = pgettext("addonStore", "Show changes for this &version...")
+		self.showChangelogButton = bHelper.addButton(self, wx.ID_DEFAULT, label=showChangelogLabel)
+		self.showChangelogButton.Bind(wx.EVT_BUTTON, self.onShowChangelogButton)
+
+		# Translators: The label of a button in a dialog
 		openStoreLabel = pgettext("addonStore", "Open Add-on &Store")
 		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
@@ -445,8 +450,22 @@ class UpdatableAddonsDialog(
 		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
 
 	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
+		from .actions import _MonoActionsContextMenu
+		from .addonList import AddonVirtualList
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+
+		_storeVM = AddonStoreVM()
+		_storeVM._filteredStatusKey = _StatusFilterKey.UPDATE
+		_storeVM._filterIncludeIncompatible = config.conf["addonStore"]["allowIncompatibleUpdates"]
+		_storeVM.refresh()
+		self.addonsList = AddonVirtualList(
+			parent=self,
+			addonsListVM=_storeVM.listVM,
+			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
+		)
 		# Translators: the label for the addons list in the updatable addons dialog.
 		entriesLabel = pgettext("addonStore", "Updatable Add-ons")
+		"""
 		self.addonsList = sHelper.addLabeledControl(
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
@@ -463,7 +482,6 @@ class UpdatableAddonsDialog(
 		channelLabel = pgettext("addonStore", "Channel")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 		statusLabel = pgettext("addonStore", "Status")
-
 		self.addonsList.AppendColumn(nameLabel, width=300)
 		self.addonsList.AppendColumn(installedVersionLabel, width=200)
 		self.addonsList.AppendColumn(availableVersionLabel, width=200)
@@ -479,7 +497,29 @@ class UpdatableAddonsDialog(
 					AvailableAddonStatus.UPDATE.displayString,
 				),
 			)
-		self.addonsList.Refresh()
+			"""
+		# self.addonsList.Refresh()
+
+	def onShowChangelogButton(self, evt: wx.CommandEvent):
+		index = self.addonsList.GetFirstSelected()
+		if index == -1:  # No add-on is selected
+			return
+		addon = self.addonsPendingUpdate[index]
+		if addon.changelog is None:
+			# Translators: Message presented when an add-on doesn't provide a description of changes for the current version.
+			ui.message("No changelog provided")
+		else:
+			changelog = markdown(str(addon.changelog))
+			ui.browseableMessage(
+				changelog,
+				# Translators: Title of a browseable message showing changes for the current add-on version.
+				title=pgettext("addonStore", "Changes for {curVersion}").format(
+					curVersion=addon.addonVersionName,
+				),
+				isHtml=True,
+				copyButton=True,
+				closeButton=True,
+			)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
