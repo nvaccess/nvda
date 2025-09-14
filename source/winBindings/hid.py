@@ -18,6 +18,8 @@ from ctypes.wintypes import (
 	ULONG,
 	USHORT,
 	PCHAR,
+	PULONG,
+	PUSHORT,
 )
 from comtypes import GUID
 from hidpi import (
