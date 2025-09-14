@@ -23,7 +23,6 @@ __getattr__ = _deprecate.handleDeprecations(
 )
 
 
-
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
