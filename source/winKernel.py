@@ -28,9 +28,9 @@ if TYPE_CHECKING:
 import winBindings.advapi32
 import winBindings.kernel32
 from winBindings.kernel32 import (
-	FILETIME,
-	SYSTEMTIME,
-	TIME_ZONE_INFORMATION,
+	FILETIME as _FILETIME,
+	SYSTEMTIME as _SYSTEMTIME,
+	TIME_ZONE_INFORMATION as _TIME_ZONE_INFORMATION,
 )
 from utils import _deprecate
 
