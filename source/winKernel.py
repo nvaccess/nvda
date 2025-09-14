@@ -39,8 +39,7 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("kernel32", "winBindings.kernel32", "dll"),
 	_deprecate.MovedSymbol(
 		"SYSTEM_POWER_STATUS",
-		"winAPI._powerTracking",
-		"SystemPowerStatus",
+		"winBindings.kernel32",
 	),
 	_deprecate.MovedSymbol(
 		"FILETIME",
