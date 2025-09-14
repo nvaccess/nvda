@@ -1243,7 +1243,10 @@ MathCAT supports the following navigation modes:
 
 **Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 
-**Character mode**:  this is actually two useful modes – word mode and character mode (zoom in to get "real" character mode).  Moves by words/characters.  This differs for numbers of more than one digit and function names such as "sin" that are multiple characters. Otherwise, word and character navigation is the same.
+**Character mode**: this is actually two modes - word mode and character mode (zoom in to get "real" character mode). 
+Moves by words/characters. 
+This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
+Otherwise, word and character navigation is the same.
 
 #### Table of Commands
 
