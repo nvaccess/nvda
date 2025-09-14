@@ -266,7 +266,7 @@ class MathCATUserPreferences:
 			["Off", "FirstChar", "EndPoints", "All"],
 			"EndPoints",
 		)
-		#  Braille.BrailleCode
+		# Braille.BrailleCode
 		# Default value: "Nemeth"
 		# Valid values: Any supported braille code (currently Nemeth, UEB, CMU, Vietnam)
 		self._validate("Braille", "BrailleCode", [], "Nemeth")
