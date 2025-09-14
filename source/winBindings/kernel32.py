@@ -48,6 +48,7 @@ from serial.win32 import LPOVERLAPPED
 from .advapi32 import SECURITY_ATTRIBUTES
 
 ULONG_PTR = c_size_t
+LPSECURITY_ATTRIBUTES = POINTER(SECURITY_ATTRIBUTES)
 
 
 __all__ = (
@@ -427,7 +428,7 @@ Creates or opens a named or unnamed event object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createeventw
 """
 CreateEvent.argtypes = (
-	POINTER(SECURITY_ATTRIBUTES),  # lpEventAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPSECURITY_ATTRIBUTES,  # lpEventAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,  # bManualReset: If TRUE, the function creates a manual-reset event object
 	BOOL,  # bInitialState: If TRUE, the initial state of the event object is signaled
 	LPCWSTR,  # lpName: The name of the event object
@@ -443,7 +444,7 @@ Creates or opens a named or unnamed mutex object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
 """
 CreateMutex.argtypes = (
-	POINTER(SECURITY_ATTRIBUTES),  # lpMutexAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPSECURITY_ATTRIBUTES,  # lpMutexAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,  # bInitialOwner: If TRUE, the calling thread requests immediate ownership
 	LPCWSTR,  # lpName: The name of the mutex object
 )
@@ -459,7 +460,7 @@ Creates or opens a waitable timer object.
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createwaitabletimerw
 """
 CreateWaitableTimer.argtypes = (
-	POINTER(SECURITY_ATTRIBUTES),  # lpTimerAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPSECURITY_ATTRIBUTES,  # lpTimerAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	BOOL,  # bManualReset: If TRUE, the function creates a manual-reset notification timer
 	LPCWSTR,  # lpTimerName: The name of the timer object
 )
@@ -1153,7 +1154,7 @@ CreateFile.argtypes = (
 	LPCWSTR,  # lpFileName: The name of the file or device to be created or opened
 	DWORD,  # dwDesiredAccess: The requested access to the file or device
 	DWORD,  # dwShareMode: The requested sharing mode of the file or device
-	POINTER(SECURITY_ATTRIBUTES),  # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPSECURITY_ATTRIBUTES,  # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	DWORD,  # dwCreationDisposition: An action to take on a file or device that exists or does not exist
 	DWORD,  # dwFlagsAndAttributes: The file or device attributes and flags
 	HANDLE,  # hTemplateFile: A valid handle to a template file with the GENERIC_READ access right
@@ -1428,7 +1429,7 @@ Creates an anonymous pipe and returns handles to the read and write ends of the 
 CreatePipe.argtypes = (
 	PHANDLE,  # hReadPipe: A pointer to a variable that receives the read handle for the pipe
 	PHANDLE,  # hWritePipe: A pointer to a variable that receives the write handle for the pipe
-	POINTER(SECURITY_ATTRIBUTES),  # lpPipeAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPSECURITY_ATTRIBUTES,  # lpPipeAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	DWORD,  # nSize: The size of the buffer for the pipe, in bytes
 )
 CreatePipe.restype = BOOL
