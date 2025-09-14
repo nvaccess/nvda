@@ -1225,8 +1225,8 @@ Below is a summary of the most useful commands for those wanting to quickly get 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
 * If inside of a table, `control+arrow` will move by cell
 * `home` / `end` moves to the start/end of the expression
-* Space reads your current position
-* Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
+* `space` reads your current position
+* `shift+upArrow/downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
 
