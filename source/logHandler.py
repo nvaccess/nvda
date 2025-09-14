@@ -624,7 +624,7 @@ def initialize(shouldDoRemoteLogging=False):
 	logHandler.setFormatter(logFormatter)
 	logHandler.addFilter(filterExternalDependencyLogging)
 	log.root.addHandler(logHandler)
-	# redirectStdout(log)
+	redirectStdout(log)
 	sys.excepthook = _excepthook
 	sys.unraisablehook = _unraisableExceptHook
 	threading.excepthook = _threadExceptHook

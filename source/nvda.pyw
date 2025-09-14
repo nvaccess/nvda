@@ -71,7 +71,7 @@ try:
 except AttributeError:
 	config.isAppX = False
 else:
-	bufLen = ctypes.c_ulong()
+	bufLen = ctypes.c_uint()
 	# Use GetCurrentPackageFullName to detect if we are running as a store app.
 	# #8362: error 15700 (not a package) error is returned if this is not a Windows Store package.
 	config.isAppX = GetCurrentPackageFullName(ctypes.byref(bufLen), None) != 15700

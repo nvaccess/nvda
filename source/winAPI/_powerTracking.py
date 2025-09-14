@@ -11,7 +11,6 @@ we notify the user of the power status.
 The power status can also be reported using script_say_battery_status.
 """
 
-from __future__ import annotations
 import ctypes
 from enum import (
 	Enum,

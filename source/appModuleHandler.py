@@ -56,7 +56,6 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol(
 		"processEntry32W",
 		"winBindings.kernel32",
-		"PROCESSENTRY32W",
 	),
 	_deprecate.MovedSymbol(
 		"_PROCESS_MACHINE_INFORMATION",

@@ -10,7 +10,6 @@ Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
 When working on this file, consider moving to winAPI.
 """
 
-from __future__ import annotations
 import contextlib
 import ctypes
 import ctypes.wintypes
