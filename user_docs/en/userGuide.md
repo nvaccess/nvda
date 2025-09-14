@@ -1248,9 +1248,7 @@ Moves by words/characters.
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
 
-#### Table of Commands
-
-A table of navigation commands is provided in this section.
+The following are key commands uses to navigate math:
 
 | Key        | Unmodified                                           | + Ctrl                                                      | + Shift                                                   | + Ctrl+Shift                                |
 |------------|-----------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------|
