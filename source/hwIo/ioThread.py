@@ -15,13 +15,15 @@ from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
 from logHandler import getFormattedStacksForAllThreads
 import winBindings.kernel32
+from utils import _deprecate
 
-LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
-	None,
-	ctypes.wintypes.DWORD,
-	ctypes.wintypes.DWORD,
-	LPOVERLAPPED,
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("LPOVERLAPPED_COMPLETION_ROUTINE", "winBindings.kernel32"),
 )
+
+
+
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
@@ -107,7 +109,7 @@ class IoThread(threading.Thread):
 				exc_info=True,
 			)
 
-	@LPOVERLAPPED_COMPLETION_ROUTINE
+	@winBindings.kernel32.LPOVERLAPPED_COMPLETION_ROUTINE
 	def _internalCompletionRoutine(
 		error: int,
 		numberOfBytes: int,

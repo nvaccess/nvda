@@ -577,7 +577,7 @@ SetThreadExecutionState.argtypes = (
 SetThreadExecutionState.restype = DWORD
 
 
-LpoverlappedCompletionRoutine = WINFUNCTYPE(
+LPOVERLAPPED_COMPLETION_ROUTINE = WINFUNCTYPE(
 	None,
 	DWORD,  # dwErrorCode: The completion code
 	DWORD,  # dwNumberOfBytesTransfered: The number of bytes transferred
@@ -603,7 +603,7 @@ ReadFileEx.argtypes = (
 	LPVOID,  # lpBuffer: A pointer to the buffer that receives the data
 	DWORD,  # nNumberOfBytesToRead: The maximum number of bytes to be read
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
-	LpoverlappedCompletionRoutine,  # lpCompletionRoutine: A pointer to the completion routine
+	LPOVERLAPPED_COMPLETION_ROUTINE,  # lpCompletionRoutine: A pointer to the completion routine
 )
 ReadFileEx.restype = BOOL
 
