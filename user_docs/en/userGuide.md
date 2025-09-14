@@ -1223,7 +1223,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
-* If inside of a table, control+Arrow will move by cell
+* If inside of a table, `control+arrow` will move by cell
 * Home / End moves to the start/end of the expression
 * Space reads your current position
 * Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
