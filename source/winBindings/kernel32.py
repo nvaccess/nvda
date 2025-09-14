@@ -1012,7 +1012,9 @@ Retrieves information about the specified process.
 GetProcessInformation.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
 	DWORD,  # ProcessInformationClass: The type of process information to be retrieved
-	POINTER(_PROCESS_MACHINE_INFORMATION),  # ProcessInformation: A pointer to a buffer to receive the process information
+	POINTER(
+		_PROCESS_MACHINE_INFORMATION
+	),  # ProcessInformation: A pointer to a buffer to receive the process information
 	DWORD,  # ProcessInformationLength: The size of the buffer pointed to by the ProcessInformation parameter
 )
 GetProcessInformation.restype = BOOL
