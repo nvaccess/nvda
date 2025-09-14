@@ -25,6 +25,7 @@ from ctypes import (
 from ctypes.wintypes import (
 	DWORD,
 	WORD,
+	USHORT,
 	LONG,
 	PULONG,
 	SMALL_RECT,
@@ -993,6 +994,14 @@ IsWow64Process2.argtypes = (
 IsWow64Process2.restype = BOOL
 
 
+class _PROCESS_MACHINE_INFORMATION(Structure):
+	_fields_ = [
+		("ProcessMachine", USHORT),
+		("Res0", USHORT),
+		("MachineAttributes", DWORD),
+	]
+
+
 GetProcessInformation = dll.GetProcessInformation
 """
 Retrieves information about the specified process.
@@ -1003,7 +1012,7 @@ Retrieves information about the specified process.
 GetProcessInformation.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
 	DWORD,  # ProcessInformationClass: The type of process information to be retrieved
-	c_void_p,  # ProcessInformation: A pointer to a buffer to receive the process information
+	POINTER(_PROCESS_MACHINE_INFORMATION),  # ProcessInformation: A pointer to a buffer to receive the process information
 	DWORD,  # ProcessInformationLength: The size of the buffer pointed to by the ProcessInformation parameter
 )
 GetProcessInformation.restype = BOOL

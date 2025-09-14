@@ -86,14 +86,6 @@ since appModules in add-ons should take precedence over the one bundled in NVDA.
 """
 
 
-class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
-	_fields_ = [
-		("ProcessMachine", ctypes.wintypes.USHORT),
-		("Res0", ctypes.wintypes.USHORT),
-		("MachineAttributes", ctypes.wintypes.DWORD),
-	]
-
-
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
 	"""Registers appModule to be used for a given executable."""
 	_executableNamesToAppModsAddons[executableName] = appModName
@@ -748,7 +740,7 @@ class AppModule(baseObject.ScriptableObject):
 		}
 		# #14403: GetProcessInformation can be called from Windows 11 and later to obtain process machine.
 		if winVersion.getWinVer() >= winVersion.WIN11:
-			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
+			processMachineInfo = winBindings.kernel32._PROCESS_MACHINE_INFORMATION()
 			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
 			ProcessMachineTypeInfo = 9
 			# Sometimes getProcessInformation may fail, so say "unknown".
