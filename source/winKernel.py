@@ -27,6 +27,11 @@ if TYPE_CHECKING:
 
 import winBindings.advapi32
 import winBindings.kernel32
+from winBindings.kernel32 import (
+	FILETIME as _FILETIME,
+	SYSTEMTIME as _SYSTEMTIME,
+	TIME_ZONE_INFORMATION as _TIME_ZONE_INFORMATION,
+)
 from utils import _deprecate
 
 
@@ -36,6 +41,18 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SYSTEM_POWER_STATUS",
 		"winAPI._powerTracking",
 		"SystemPowerStatus",
+	),
+	_deprecate.MovedSymbol(
+		"FILETIME",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"SYSTEMTIME",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"TIME_ZONE_INFORMATION",
+		"winBindings.kernel32",
 	),
 	_deprecate.MovedSymbol(
 		"STARTUPINFO",
@@ -244,27 +261,27 @@ def suspendWow64Redirection():
 				raise WinError()
 
 
-def time_tToFileTime(time_tToConvert: float) -> FILETIME:
+def time_tToFileTime(time_tToConvert: float) -> _FILETIME:
 	"""Converts time_t as returned from `time.time` to a FILETIME structure.
 	Based on a code snipped from:
 	https://docs.microsoft.com/en-us/windows/win32/sysinfo/converting-a-time-t-value-to-a-file-time
 	"""
-	timeAsFileTime = FILETIME()
+	timeAsFileTime = _FILETIME()
 	res = (int(time_tToConvert) * 10000000) + 116444736000000000
 	timeAsFileTime.dwLowDateTime = res
 	timeAsFileTime.dwHighDateTime = res >> 32
 	return timeAsFileTime
 
 
-def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None:
+def FileTimeToSystemTime(lpFileTime: _FILETIME, lpSystemTime: _SYSTEMTIME) -> None:
 	if winBindings.kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
 		raise WinError()
 
 
 def SystemTimeToTzSpecificLocalTime(
-	lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
-	lpUniversalTime: SYSTEMTIME,
-	lpLocalTime: SYSTEMTIME,
+	timeZoneInformation: Union[_TIME_ZONE_INFORMATION, None],
+	lpUniversalTime: _SYSTEMTIME,
+	lpLocalTime: _SYSTEMTIME,
 ) -> None:
 	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
 	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
@@ -273,8 +290,10 @@ def SystemTimeToTzSpecificLocalTime(
 	: param lpLocalTime: A SYSTEMTIME structure in which time converted to the desired time zone would be placed.
 	:raises WinError
 	"""
-	if lpTimeZoneInformation is not None:
-		lpTimeZoneInformation = byref(lpTimeZoneInformation)
+	if timeZoneInformation is not None:
+		lpTimeZoneInformation = byref(timeZoneInformation)
+	else:
+		lpTimeZoneInformation = None
 	if (
 		winBindings.kernel32.SystemTimeToTzSpecificLocalTime(
 			lpTimeZoneInformation,
@@ -288,7 +307,7 @@ def SystemTimeToTzSpecificLocalTime(
 
 def GetDateFormatEx(Locale, dwFlags, date, lpFormat):
 	if date is not None:
-		date = SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
+		date = _SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
 		lpDate = byref(date)
 	else:
 		lpDate = None
@@ -300,7 +319,7 @@ def GetDateFormatEx(Locale, dwFlags, date, lpFormat):
 
 def GetTimeFormatEx(Locale, dwFlags, date, lpFormat):
 	if date is not None:
-		date = SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
+		date = _SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
 		lpTime = byref(date)
 	else:
 		lpTime = None
