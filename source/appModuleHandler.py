@@ -748,7 +748,7 @@ class AppModule(baseObject.ScriptableObject):
 				self.processHandle,
 				ProcessMachineTypeInfo,
 				ctypes.byref(processMachineInfo),
-				ctypes.sizeof(processMachineInfo ),
+				ctypes.sizeof(processMachineInfo),
 			):
 				self.appArchitecture = "unknown"
 			else:
