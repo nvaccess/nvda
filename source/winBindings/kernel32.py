@@ -493,8 +493,8 @@ ResetEvent.restype = BOOL
 PTIMERAPCROUTINE = WINFUNCTYPE(
 	None,
 	LPVOID,  # lpArgToCompletionRoutine: The argument to be passed to the completion routine
-	# DWORD,  # dwTimerLowValue: The low-order part of the time-out value
-	# DWORD,  # dwTimerHighValue: The high-order part of the time-out
+	DWORD,  # dwTimerLowValue: The low-order part of the time-out value
+	DWORD,  # dwTimerHighValue: The high-order part of the time-out value
 )
 """
 An application-defined timer completion routine. Specify this address when calling the SetWaitableTimer function.
@@ -513,8 +513,8 @@ Activates the specified waitable timer.
 SetWaitableTimer.argtypes = (
 	HANDLE,  # hTimer: A handle to the timer object
 	POINTER(LARGE_INTEGER),  # lpDueTime: A pointer to a LARGE_INTEGER structure
-	c_int,  # lPeriod: The period of the timer, in milliseconds
-	c_void_p,  # pfnCompletionRoutine: An optional pointer to the completion routine
+	LONG,  # lPeriod: The period of the timer, in milliseconds
+	PTIMERAPCROUTINE,  # pfnCompletionRoutine: An optional pointer to the completion routine
 	LPVOID,  # lpArgToCompletionRoutine: A single value passed to the completion routine
 	BOOL,  # fResume: If TRUE, restores a system in suspended power conservation mode
 )
@@ -617,11 +617,9 @@ Writes data to the specified file or input/output (I/O) device.
 """
 WriteFile.argtypes = (
 	HANDLE,  # hFile: A handle to the file or I/O device
-	c_void_p,  # lpBuffer: A pointer to the buffer containing the data
+	LPCVOID,  # lpBuffer: A pointer to the buffer containing the data
 	DWORD,  # nNumberOfBytesToWrite: The number of bytes to be written
-	POINTER(
-		DWORD,
-	),  # lpNumberOfBytesWritten: A pointer to the variable that receives the number of bytes written
+	LPDWORD,  # lpNumberOfBytesWritten: A pointer to the variable that receives the number of bytes written
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
 WriteFile.restype = BOOL
@@ -637,9 +635,7 @@ Retrieves the results of an overlapped operation on the specified file, named pi
 GetOverlappedResult.argtypes = (
 	HANDLE,  # hFile: A handle to the file, named pipe, or communications device
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
-	POINTER(
-		DWORD,
-	),  # lpNumberOfBytesTransferred: A pointer to a variable that receives the number of bytes transferred
+	LPDWORD,  # lpNumberOfBytesTransferred: A pointer to a variable that receives the number of bytes transferred
 	BOOL,  # bWait: If TRUE, the function does not return until the operation has been completed
 )
 GetOverlappedResult.restype = BOOL
@@ -668,7 +664,7 @@ Waits for an event to occur for a specified communications device.
 """
 WaitCommEvent.argtypes = (
 	HANDLE,  # hFile: A handle to the communications device
-	POINTER(DWORD),  # lpEvtMask: A pointer to a variable that receives a mask indicating the type of event
+	LPDWORD,  # lpEvtMask: A pointer to a variable that receives a mask indicating the type of event
 	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure
 )
 WaitCommEvent.restype = BOOL
@@ -727,7 +723,7 @@ Retrieves the language identifier for the user UI language for the current user.
 	https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getuserdefaultuilanguage
 """
 GetUserDefaultUILanguage.argtypes = ()
-GetUserDefaultUILanguage.restype = c_int
+GetUserDefaultUILanguage.restype = WORD
 
 
 AttachConsole = dll.AttachConsole
@@ -773,51 +769,83 @@ Retrieves a list of the processes attached to the current console.
 	https://learn.microsoft.com/en-us/windows/console/getconsoleprocesslist
 """
 GetConsoleProcessList.argtypes = (
-	POINTER(DWORD),  # lpdwProcessList: A pointer to a buffer that receives the list of process identifiers
+	LPDWORD,  # lpdwProcessList: A pointer to a buffer that receives the list of process identifiers
 	DWORD,  # dwProcessCount: The maximum number of process identifiers that can be stored
 )
 GetConsoleProcessList.restype = DWORD
 
 
-class COORD(Structure):  # noqa: F405
-	_fields_ = [
-		("x", c_short),  # noqa: F405
-		("y", c_short),  # noqa: F405
-	]
+class COORD(Structure):
+	"""
+	Defines the coordinates of a character cell in a console screen buffer.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/console/coord-str
+	"""
+	
+	_fields_ = (
+		("x", SHORT),
+		("y", SHORT),
+	)
 
 
 class CONSOLE_SCREEN_BUFFER_INFO(Structure):
-	_fields_ = [
+	"""
+	Contains information about a console screen buffer.
+	
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/console/console-screen-buffer-info-str
+	"""
+
+	_fields_ = (
 		("dwSize", COORD),
 		("dwCursorPosition", COORD),
 		("wAttributes", WORD),
 		("srWindow", SMALL_RECT),
 		("dwMaximumWindowSize", COORD),
-	]
+	)
 
 
 class CONSOLE_SELECTION_INFO(Structure):
-	_fields_ = [
+	"""
+	Contains information for a console selection.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/console/console-selection-info-str
+	"""
+
+	_fields_ = (
 		("dwFlags", DWORD),
 		("dwSelectionAnchor", COORD),
 		("srSelection", SMALL_RECT),
-	]
+	)
 
 
 class CHAR_INFO(Structure):
-	_fields_ = [
-		(
-			"Char",
-			c_wchar,
-		),  # union of char and wchar_t isn't needed since we deal only with unicode  # noqa: F405
+	"""
+	Specifies a Unicode character and its attributes.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/console/char-info-str
+	"""
+
+	_fields_ = (
+		# union of CHAR and WCHAR isn't needed since we deal only with unicode
+		("Char", WCHAR),
 		("Attributes", WORD),
-	]
+	)
 
 
 PHANDLER_ROUTINE = WINFUNCTYPE(
 	BOOL,
 	DWORD,  # dwCtrlType: The type of control signal received
 )
+"""
+An application-defined function used with the SetConsoleCtrlHandler function.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/console/handlerroutine
+"""
 
 
 GetConsoleScreenBufferInfo = dll.GetConsoleScreenBufferInfo
@@ -825,7 +853,7 @@ GetConsoleScreenBufferInfo = dll.GetConsoleScreenBufferInfo
 Retrieves information about the specified console screen buffer.
 
 .. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/wincon/nf-wincon-getconsolescreenbufferinfo
+	https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
 """
 GetConsoleScreenBufferInfo.argtypes = (
 	HANDLE,  # hConsoleOutput: A handle to the console screen buffer
@@ -863,9 +891,7 @@ ReadConsoleOutputCharacter.argtypes = (
 	LPWSTR,  # lpCharacter: A pointer to a buffer that receives the characters
 	DWORD,  # nLength: The number of characters to be read
 	COORD,  # dwReadCoord: A COORD structure that specifies the coordinates of the first cell
-	POINTER(
-		DWORD,
-	),  # lpNumberOfCharsRead: A pointer to a variable that receives the actual number of characters read
+	LPDWORD,  # lpNumberOfCharsRead: A pointer to a variable that receives the actual number of characters read
 )
 ReadConsoleOutputCharacter.restype = BOOL
 
@@ -884,7 +910,7 @@ ReadConsoleOutput.argtypes = (
 	),  # lpBuffer: A pointer to the destination buffer that receives the character and attribute data
 	COORD,  # dwBufferSize: A COORD structure that specifies the size of the lpBuffer parameter
 	COORD,  # dwBufferCoord: A COORD structure that specifies the coordinates of the upper-left cell
-	POINTER(SMALL_RECT),  # lpReadRegion: A pointer to a SMALL_RECT structure
+	PSMALL_RECT,  # lpReadRegion: A pointer to a SMALL_RECT structure
 )
 ReadConsoleOutput.restype = BOOL
 
@@ -958,7 +984,7 @@ QueryFullProcessImageName.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
 	DWORD,  # dwFlags: Flags that control the operation
 	LPWSTR,  # lpExeName: The path to the executable image
-	POINTER(DWORD),  # lpdwSize: On input, specifies the size of the lpExeName buffer
+	PDWORD,  # lpdwSize: On input, specifies the size of the lpExeName buffer
 )
 QueryFullProcessImageName.restype = BOOL
 
@@ -972,9 +998,7 @@ Determines whether the specified process is running under WOW64.
 """
 IsWow64Process.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
-	POINTER(
-		BOOL,
-	),  # Wow64Process: A pointer to a value that is set to TRUE if the process is running under WOW64
+	PBOOL,  # Wow64Process: A pointer to a value that is set to TRUE if the process is running under WOW64
 )
 IsWow64Process.restype = BOOL
 
@@ -988,8 +1012,8 @@ Determines whether the specified process is running under WOW64; also returns ad
 """
 IsWow64Process2.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
-	POINTER(c_ushort),  # pProcessMachine: On success, returns a pointer to the machine architecture
-	POINTER(c_ushort),  # pNativeMachine: On success, returns a pointer to the native machine architecture
+	POINTER(USHORT),  # pProcessMachine: On success, returns a pointer to the machine architecture
+	POINTER(USHORT),  # pNativeMachine: On success, returns a pointer to the native machine architecture
 )
 IsWow64Process2.restype = BOOL
 
@@ -1041,13 +1065,13 @@ class PROCESSENTRY32W(Structure):
 		("dwSize", DWORD),
 		("cntUsage", DWORD),
 		("th32ProcessID", DWORD),
-		("th32DefaultHeapID", PULONG),
+		("th32DefaultHeapID", ULONG_PTR),
 		("th32ModuleID", DWORD),
 		("cntThreads", DWORD),
 		("th32ParentProcessID", DWORD),
-		("pcPriClassBase", c_long),
+		("pcPriClassBase", LONG),
 		("dwFlags", DWORD),
-		("szExeFile", c_wchar * 260),
+		("szExeFile", WCHAR * 260),
 	]
 
 
@@ -1136,15 +1160,21 @@ CreateFile.restype = HANDLE
 
 
 class SYSTEM_POWER_STATUS(Structure):
-	# https://docs.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
-	_fields_ = [
-		("ACLineStatus", c_byte),
-		("BatteryFlag", c_byte),
-		("BatteryLifePercent", c_byte),
-		("Reserved1", c_byte),
+	"""
+	Contains information about the power status of the system.
+	
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
+	"""
+	
+	_fields_ = (
+		("ACLineStatus", BYTE),
+		("BatteryFlag", BYTE),
+		("BatteryLifePercent", BYTE),
+		("Reserved1", BYTE),
 		("BatteryLifeTime", DWORD),
 		("BatteryFullLiveTime", DWORD),
-	]
+	)
 
 
 GetSystemPowerStatus = dll.GetSystemPowerStatus
@@ -1155,7 +1185,7 @@ Retrieves the power status of the system.
 	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getsystempowerstatus
 """
 GetSystemPowerStatus.argtypes = (
-	c_void_p,  # lpSystemPowerStatus: A pointer to a SYSTEM_POWER_STATUS structure
+	POINTER(SYSTEM_POWER_STATUS),  # lpSystemPowerStatus: A pointer to a SYSTEM_POWER_STATUS structure
 )
 GetSystemPowerStatus.restype = BOOL
 
@@ -1198,6 +1228,13 @@ Wow64RevertWow64FsRedirection.restype = BOOL
 
 
 class SYSTEMTIME(Structure):
+	"""
+	Specifies a date and time, using individual members for each component.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-systemtime
+	"""
+
 	_fields_ = (
 		("wYear", WORD),
 		("wMonth", WORD),
@@ -1211,6 +1248,13 @@ class SYSTEMTIME(Structure):
 
 
 class FILETIME(Structure):
+	"""
+	Represents the number of 100-nanosecond intervals since January 1, 1601 UTC.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime
+	"""
+
 	_fields_ = (
 		("dwLowDateTime", DWORD),
 		("dwHighDateTime", DWORD),
@@ -1232,6 +1276,13 @@ FileTimeToSystemTime.restype = BOOL
 
 
 class TIME_ZONE_INFORMATION(Structure):
+	"""
+	Specifies settings for a time zone.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/ns-timezoneapi-time_zone_information
+	"""
+	
 	_fields_ = (
 		("Bias", LONG),
 		("StandardName", WCHAR * 32),
@@ -1319,7 +1370,7 @@ Sets shutdown parameters for the currently calling process.
 """
 SetProcessShutdownParameters.argtypes = (
 	DWORD,  # dwLevel: The shutdown priority for the process relative to other processes
-	DWORD,  # dwFlags: This parameter can be the following value
+	DWORD,  # dwFlags: Behaviour flags
 )
 SetProcessShutdownParameters.restype = BOOL
 
@@ -1333,7 +1384,7 @@ Retrieves the termination status of the specified process.
 """
 GetExitCodeProcess.argtypes = (
 	HANDLE,  # hProcess: A handle to the process
-	POINTER(DWORD),  # lpExitCode: A pointer to a variable to receive the process termination status
+	LPDWORD,  # lpExitCode: A pointer to a variable to receive the process termination status
 )
 GetExitCodeProcess.restype = BOOL
 
@@ -1373,8 +1424,8 @@ Creates an anonymous pipe and returns handles to the read and write ends of the 
 	https://learn.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-createpipe
 """
 CreatePipe.argtypes = (
-	POINTER(HANDLE),  # hReadPipe: A pointer to a variable that receives the read handle for the pipe
-	POINTER(HANDLE),  # hWritePipe: A pointer to a variable that receives the write handle for the pipe
+	PHANDLE,  # hReadPipe: A pointer to a variable that receives the read handle for the pipe
+	PHANDLE,  # hWritePipe: A pointer to a variable that receives the write handle for the pipe
 	POINTER(SECURITY_ATTRIBUTES),  # lpPipeAttributes: A pointer to a SECURITY_ATTRIBUTES structure
 	DWORD,  # nSize: The size of the buffer for the pipe, in bytes
 )
