@@ -9,17 +9,12 @@ from ctypes import (
 	WINFUNCTYPE,
 	Structure,
 	c_void_p,
-	c_byte,
-	c_wchar,
 	c_wchar_p,
 	windll,
 	POINTER,
 	c_size_t,
 	c_int,
 	c_uint,
-	c_long,
-	c_short,
-	c_ushort,
 	HRESULT,
 )
 from ctypes.wintypes import (
@@ -27,7 +22,6 @@ from ctypes.wintypes import (
 	WORD,
 	USHORT,
 	LONG,
-	PULONG,
 	SMALL_RECT,
 	UINT,
 	HANDLE,
@@ -782,7 +776,7 @@ class COORD(Structure):
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/console/coord-str
 	"""
-	
+
 	_fields_ = (
 		("x", SHORT),
 		("y", SHORT),
@@ -792,7 +786,7 @@ class COORD(Structure):
 class CONSOLE_SCREEN_BUFFER_INFO(Structure):
 	"""
 	Contains information about a console screen buffer.
-	
+
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/console/console-screen-buffer-info-str
 	"""
@@ -1162,11 +1156,11 @@ CreateFile.restype = HANDLE
 class SYSTEM_POWER_STATUS(Structure):
 	"""
 	Contains information about the power status of the system.
-	
+
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
 	"""
-	
+
 	_fields_ = (
 		("ACLineStatus", BYTE),
 		("BatteryFlag", BYTE),
@@ -1282,7 +1276,7 @@ class TIME_ZONE_INFORMATION(Structure):
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/ns-timezoneapi-time_zone_information
 	"""
-	
+
 	_fields_ = (
 		("Bias", LONG),
 		("StandardName", WCHAR * 32),
