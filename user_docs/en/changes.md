@@ -68,6 +68,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
 * `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
+* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 
 #### Deprecations
 
@@ -97,6 +98,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Access to this symbol via `hwPortUtils` is deprecated. (#18571)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* `hwIo.hid.hidDll` is deprecated.
+  Use `winBindings.hid.dll` instead. (#18902)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_*` constants in `hwPortUtils` are deprecated.
