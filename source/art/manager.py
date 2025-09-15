@@ -100,13 +100,6 @@ class ARTAddonProcess:
 		self.artServices: Dict[str, Pyro5.api.Proxy] = {}
 		self._shutdownEvent = threading.Event()
 
-	def _getEncryptionKey(self) -> bytes:
-		"""Get encryption key from ART manager."""
-		manager = getARTManager()
-		if not manager or not manager._encryptionKey:
-			raise RuntimeError("No encryption key available from ART manager")
-		return manager._encryptionKey
-
 	def _isRunningOnSecureDesktop(self) -> bool:
 		"""Check if we're running on Windows secure desktop."""
 		try:
@@ -141,6 +134,11 @@ class ARTAddonProcess:
 		log.info(f"ART subprocess started for {self.addon_name}: PID={self.subprocessManager.subprocess.pid}")
 		log.debug(f"ART subprocess command line: {self.subprocessManager.subprocess.args}")
 
+		# Generate addon-specific encryption configuration
+		log.debug(f"Generating unique encryption for addon: {self.addon_name}")
+		addon_crypto = getARTManager()._generateAddonEncryption(self.addon_name)
+		log.debug(f"Generated serializer_id={addon_crypto['serializer_id']} for addon {self.addon_name}")
+
 		# Send startup data
 		startup_data = {
 			"addon": self.addon_spec,
@@ -149,14 +147,16 @@ class ARTAddonProcess:
 				"debug": getattr(__import__("globalVars").appArgs, "debugLogging", False),
 				"secureDesktop": self._isRunningOnSecureDesktop(),
 			},
-			"encryption_key": base64.b64encode(self._getEncryptionKey()).decode('ascii'),
+			"addon_crypto": addon_crypto,
 		}
 
 		startup_json = json.dumps(startup_data) + "\n"
 		
 		# Create redacted version for logging (don't log encryption key)
 		startup_data_redacted = startup_data.copy()
-		startup_data_redacted["encryption_key"] = "[REDACTED]"
+		addon_crypto_redacted = addon_crypto.copy()
+		addon_crypto_redacted["encryption_key"] = "[REDACTED]"
+		startup_data_redacted["addon_crypto"] = addon_crypto_redacted
 		startup_json_redacted = json.dumps(startup_data_redacted)
 		log.debug(f"Sending ART handshake data to {self.addon_name}: {startup_json_redacted}")
 		self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
@@ -241,44 +241,56 @@ class ARTManager:
 		self.speechService: Optional[SpeechService] = None
 		self._shutdownEvent = threading.Event()
 		self._coreServiceURIs: Dict[str, str] = {}
-		self._encryptionKey: Optional[bytes] = None
+
+		# Per-addon encryption
+		self.addon_keys: Dict[str, bytes] = {}
+		self.addon_serializer_ids: Dict[str, int] = {}
+		self._next_serializer_id = 20  # Start after system serializers (0-19)
 
 	def start(self):
 		"""Start the ART manager and register core services."""
 		log.info("Starting NVDA ART manager")
 
-		# Generate ephemeral encryption key for this session
-		self._encryptionKey = os.urandom(32)
-		log.info("Generated ephemeral encryption key for ART RPC communication")
-
 		# Register as global instance
 		setARTManager(self)
 
-		# Set up encrypted serializer for core services
-		self._setupEncryptedSerializer()
-
-		# Register core services first
+		# Register core services first (per-addon encryption set up when addons start)
 		self._registerCoreServices()
 
-	def _setupEncryptedSerializer(self):
-		"""Set up encrypted serializer for RPC communication."""
+	def _generateAddonEncryption(self, addon_name: str) -> Dict[str, any]:
+		"""Generate unique encryption key and serializer ID for an addon."""
 		try:
 			from art.crypto.serializers import EncryptedSerializer
+			import Pyro5.serializers
 
-			# Register the encrypted serializer
-			encrypted_ser = EncryptedSerializer("msgpack", self._encryptionKey)
-			Pyro5.serializers.serializers["encrypted"] = encrypted_ser
-			Pyro5.serializers.serializers_by_id[encrypted_ser.serializer_id] = encrypted_ser
+			# Generate unique 32-byte encryption key
+			addon_key = os.urandom(32)
+			self.addon_keys[addon_name] = addon_key
 
-			# Configure Pyro5 to use encrypted serializer by default
-			Pyro5.config.SERIALIZER = "encrypted"
+			# Assign unique serializer ID (20, 21, 22, ...)
+			serializer_id = self._next_serializer_id
+			self.addon_serializer_ids[addon_name] = serializer_id
 
-			log.info("Encrypted serializer registered and configured")
+			# Create encrypted serializer for this addon
+			encrypted_ser = EncryptedSerializer("msgpack", addon_key)
+			encrypted_ser.serializer_id = serializer_id
+
+			# Register in core daemon so it can decrypt this addon's messages
+			Pyro5.serializers.serializers_by_id[serializer_id] = encrypted_ser
+			Pyro5.serializers.serializers[f"addon_{serializer_id}"] = encrypted_ser
+
+			log.info(f"Generated encryption for addon {addon_name}: serializer_id={serializer_id}")
+			self._next_serializer_id += 1
+
+			return {
+				"serializer_id": serializer_id,
+				"encryption_key": base64.b64encode(addon_key).decode('ascii')
+			}
 		except ImportError:
 			log.error("Failed to import PyNaCl - encrypted serializer not available")
 			raise
 		except Exception:
-			log.exception("Failed to set up encrypted serializer")
+			log.exception(f"Failed to generate encryption for addon {addon_name}")
 			raise
 
 	def _registerCoreServices(self):
