@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee
+# Copyright (C) 2010-2025 NV Access Limited, Leonard de Ruijter, Joseph Lee
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -8,7 +8,7 @@ from ctypes.wintypes import HWND, BOOL
 from comtypes import HRESULT, GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
 from comtypes.persist import IPersist
 import winBindings.ole32
-import winKernel
+import winBindings.kernel32
 
 WSTRING = c_wchar_p
 
@@ -48,9 +48,9 @@ class tagSTATSTG(Structure):
 		("pwcsName", WSTRING),
 		("type", c_ulong),
 		("cbSize", _ULARGE_INTEGER),
-		("mtime", winKernel.FILETIME),
-		("ctime", winKernel.FILETIME),
-		("atime", winKernel.FILETIME),
+		("mtime", winBindings.kernel32.FILETIME),
+		("ctime", winBindings.kernel32.FILETIME),
+		("atime", winBindings.kernel32.FILETIME),
 		("grfMode", c_ulong),
 		("grfLocksSupported", c_ulong),
 		("clsid", GUID),
@@ -408,7 +408,7 @@ IMoniker._methods_ = [
 		"GetTimeOfLastChange",
 		(["in"], POINTER(IBindCtx), "pbc"),
 		(["in"], POINTER(IMoniker), "pmkToLeft"),
-		(["out"], POINTER(winKernel.FILETIME), "pfiletime"),
+		(["out"], POINTER(winBindings.kernel32.FILETIME), "pfiletime"),
 	),
 	COMMETHOD(
 		[],
@@ -490,14 +490,14 @@ IRunningObjectTable._methods_ = [
 		HRESULT,
 		"NoteChangeTime",
 		(["in"], c_ulong, "dwRegister"),
-		(["in"], POINTER(winKernel.FILETIME), "pfiletime"),
+		(["in"], POINTER(winBindings.kernel32.FILETIME), "pfiletime"),
 	),
 	COMMETHOD(
 		[],
 		HRESULT,
 		"GetTimeOfLastChange",
 		(["in"], POINTER(IMoniker), "pmkObjectName"),
-		(["out"], POINTER(winKernel.FILETIME), "pfiletime"),
+		(["out"], POINTER(winBindings.kernel32.FILETIME), "pfiletime"),
 	),
 	COMMETHOD(
 		[],

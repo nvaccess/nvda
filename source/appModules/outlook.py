@@ -10,6 +10,7 @@ import comtypes.client
 import comtypes.automation
 import ctypes
 from scriptHandler import script
+import winBindings.kernel32
 import winKernel
 import comHelper
 import NVDAHelper
@@ -430,7 +431,7 @@ class CalendarView(IAccessible):
 		bufLength = 4
 		separatorBuf = ctypes.create_unicode_buffer(bufLength)
 		if (
-			ctypes.windll.kernel32.GetLocaleInfoW(
+			winBindings.kernel32.GetLocaleInfo(
 				languageHandler.LOCALE_USER_DEFAULT,
 				languageHandler.LOCALE.SLIST,
 				separatorBuf,
