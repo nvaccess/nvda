@@ -72,7 +72,9 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 	buf = create_string_buffer(length * 2)  # noqa: F405
 	numCharsRead = c_int()  # noqa: F405
 	if (
-		winBindings.kernel32.ReadConsoleOutputCharacter(handle, buf, length, _COORD(x, y), byref(numCharsRead))  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutputCharacter(
+			handle, buf, length, _COORD(x, y), byref(numCharsRead)
+		)  # noqa: F405
 		== 0
 	):  # noqa: F405
 		raise WinError()  # noqa: F405
