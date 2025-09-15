@@ -716,6 +716,10 @@ class IAccessible(Window):
 			from . import webKit
 
 			webKit.findExtraOverlayClasses(self, clsList)
+		elif windowClassName == "wxWindowNR":
+			from . import wx as wxObjects
+
+			wxObjects.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith("Chrome_"):
 			from . import chromium
 
