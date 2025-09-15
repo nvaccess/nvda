@@ -4,8 +4,12 @@
 # See the file COPYING for more details.
 
 
-from ctypes import *  # noqa: F403
-from ctypes.wintypes import *  # noqa: F403
+from ctypes import (
+	byref,
+	WinError,
+	create_string_buffer,
+	c_int,
+)
 import winBindings.kernel32
 from winBindings.kernel32 import (
 	COORD as _COORD,
