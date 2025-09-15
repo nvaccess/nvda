@@ -517,7 +517,7 @@ SetWaitableTimer.argtypes = (
 	HANDLE,  # hTimer: A handle to the timer object
 	POINTER(LARGE_INTEGER),  # lpDueTime: A pointer to a LARGE_INTEGER structure
 	LONG,  # lPeriod: The period of the timer, in milliseconds
-	PTIMERAPCROUTINE ,  # pfnCompletionRoutine: An optional pointer to the completion routine
+	PTIMERAPCROUTINE,  # pfnCompletionRoutine: An optional pointer to the completion routine
 	LPVOID,  # lpArgToCompletionRoutine: A single value passed to the completion routine
 	BOOL,  # fResume: If TRUE, restores a system in suspended power conservation mode
 )
