@@ -95,7 +95,7 @@ def alive():
 			),
 		),
 		0,
-		None,
+		winBindings.kernel32.PTIMERAPCROUTINE(0),
 		None,
 		False,
 	)
@@ -316,7 +316,7 @@ def terminate():
 		_coreDeadTimer,
 		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
 		0,
-		None,
+		winBindings.kernel32.PTIMERAPCROUTINE(0),
 		None,
 		False,
 	)
