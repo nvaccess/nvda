@@ -15,7 +15,7 @@ from winBindings.kernel32 import (
 	COORD as _COORD,
 	CONSOLE_SCREEN_BUFFER_INFO as _CONSOLE_SCREEN_BUFFER_INFO,
 	CONSOLE_SELECTION_INFO as _CONSOLE_SELECTION_INFO,
-	CHAR_INFO as CHAR_INFO,
+	CHAR_INFO as _CHAR_INFO,
 )
 import textUtils
 from utils import _deprecate
@@ -94,7 +94,7 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 
 
 def ReadConsoleOutput(handle, length, rect):
-	BufType = CHAR_INFO * length
+	BufType = _CHAR_INFO * length
 	buf = BufType()
 	# rect=SMALL_RECT(x, y, x+length-1, y)
 	if (
