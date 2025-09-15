@@ -9,10 +9,24 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
-from ctypes import *  # noqa: F403
-from ctypes import cast
-from ctypes.wintypes import *  # noqa: F403
-from ctypes.wintypes import LPCWSTR
+from ctypes import (
+	byref,
+	Structure,
+	sizeof,
+	cast,
+	c_int,
+	c_uint32,
+	c_uint64,
+)
+from ctypes.wintypes import (
+	LPCWSTR,
+	HANDLE,
+	HWND,
+	DWORD,
+	POINT,
+	MSG,
+	RECT,
+)
 import re
 from winAPI.winUser.constants import SystemMetrics
 import winBindings.kernel32
@@ -250,15 +264,15 @@ class TouchHandler(threading.Thread):
 	def run(self):
 		try:
 			self._appInstance = winBindings.kernel32.GetModuleHandle(None)
-			self._cInputTouchWindowProc = winUser.WNDPROC(self.inputTouchWndProc)
-			self._wc = winUser.WNDCLASSEXW(
-				cbSize=sizeof(winUser.WNDCLASSEXW),  # noqa: F405
+			self._cInputTouchWindowProc = user32.WNDPROC(self.inputTouchWndProc)
+			self._wc = user32.WNDCLASSEXW(
+				cbSize=sizeof(user32.WNDCLASSEXW),
 				lpfnWndProc=self._cInputTouchWindowProc,
 				hInstance=self._appInstance,
 				lpszClassName="inputTouchWindowClass",
 			)  # noqa: F405
-			self._wca = winBindings.user32.RegisterClassEx(byref(self._wc))  # noqa: F405
-			self._touchWindow = winBindings.user32.CreateWindowEx(
+			self._wca = user32.RegisterClassEx(byref(self._wc))
+			self._touchWindow = user32.CreateWindowEx(
 				0,
 				cast(self._wca, LPCWSTR),
 				"NVDA touch input",
@@ -286,13 +300,13 @@ class TouchHandler(threading.Thread):
 		finally:
 			self.initializedEvent.set()
 		msg = MSG()  # noqa: F405
-		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
+		while user32.GetMessage(byref(msg), None, 0, 0):
 			user32.TranslateMessage(byref(msg))  # noqa: F405
 			user32.DispatchMessage(byref(msg))  # noqa: F405
 		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
 		user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 		user32.DestroyWindow(self._touchWindow)
-		winBindings.user32.UnregisterClass(self._wca, self._appInstance)
+		user32.UnregisterClass(self._wca, self._appInstance)
 
 	def inputTouchWndProc(self, hwnd, msg, wParam, lParam):
 		if msg >= _WM_POINTER_FIRST and msg <= _WM_POINTER_LAST:
@@ -308,7 +322,7 @@ class TouchHandler(threading.Thread):
 				self.trackerManager.update(ID, x, y, True)
 				core.requestPump()
 			return 0
-		return winBindings.user32.DefWindowProc(hwnd, msg, wParam, lParam)
+		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
 	def setMode(self, mode):
 		if mode not in availableTouchModes:
