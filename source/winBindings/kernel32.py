@@ -417,7 +417,7 @@ QueueUserAPC.argtypes = (
 	HANDLE,  # hThread: A handle to the thread
 	ULONG_PTR,  # dwData: A single value that is passed to the APC function
 )
-QueueUserAPC.restype = BOOL
+QueueUserAPC.restype = DWORD
 
 
 CreateEvent = dll.CreateEventW
@@ -452,7 +452,6 @@ CreateMutex.restype = HANDLE
 
 
 CreateWaitableTimer = dll.CreateWaitableTimerW
-CreateWaitableTimerW = dll.CreateWaitableTimerW
 """
 Creates or opens a waitable timer object.
 
@@ -1022,6 +1021,13 @@ IsWow64Process2.restype = BOOL
 
 
 class _PROCESS_MACHINE_INFORMATION(Structure):
+	"""
+	Specifies the architecture of a process and if that architecture of code can run in user mode, kernel mode, and/or under WoW64 on the host operating system.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-process_machine_information
+	"""
+
 	_fields_ = [
 		("ProcessMachine", USHORT),
 		("Res0", USHORT),
@@ -1445,7 +1451,7 @@ Moves an existing file or directory, including its children, with various move o
 MoveFileEx.argtypes = (
 	LPCWSTR,  # lpExistingFileName: The current name of the file or directory
 	LPCWSTR,  # lpNewFileName: The new name for the file or directory
-	DWORD,  # dwFlags: This parameter can be one or more of the following values
+	DWORD,  # dwFlags: Behaviour flags
 )
 MoveFileEx.restype = BOOL
 
