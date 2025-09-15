@@ -32,6 +32,7 @@ from locationHelper import RectLTWH
 from collections import namedtuple
 import threading
 from winAPI.messageWindow import WindowMessage
+import winBindings.gdi32
 import winGDI
 import weakref
 from colors import RGB
@@ -94,7 +95,7 @@ class HighlightWindow(CustomWindow):
 	def _get__wClass(cls):
 		wClass = super()._wClass
 		wClass.style = winUser.CS_HREDRAW | winUser.CS_VREDRAW
-		wClass.hbrBackground = winGDI.gdi32.CreateSolidBrush(COLORREF(cls.transparentColor))
+		wClass.hbrBackground = winBindings.gdi32.CreateSolidBrush(cls.transparentColor)
 		return wClass
 
 	def updateLocationForDisplays(self):
