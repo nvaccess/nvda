@@ -68,6 +68,7 @@ LVIS_STATEIMAGEMASK = 0xF000
 
 LVS_REPORT = 0x0001
 LVS_TYPEMASK = 0x0003
+LVS_SINGLESEL = 0x0004
 LVS_OWNERDRAWFIXED = 0x0400
 
 # column mask flags
@@ -343,6 +344,13 @@ class List(List):
 			log.error("Cannot fetch column as column order array is unknown")
 			return None
 		return columnOrderArray[presentationIndex - 1]
+
+	def _get_states(self) -> set[controlTypes.State]:
+		states = super().states
+		# The default is multi select supported unless LVS_SINGLESEL is set.
+		if not (self.windowStyle & LVS_SINGLESEL):
+			states.add(controlTypes.State.MULTISELECTABLE)
+		return states
 
 
 class GroupingItem(Window):
