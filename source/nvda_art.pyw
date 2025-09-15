@@ -416,27 +416,31 @@ def _set_core_service_uris(core_services: Dict[str, str]) -> None:
 		os.environ[env_var] = uri
 
 
-def _setup_encryption(encryption_key_b64: str) -> None:
-	"""Set up encrypted Pyro5 serializer."""
+def _setup_encryption(addon_crypto: dict) -> None:
+	"""Set up addon-specific encrypted Pyro5 serializer."""
 	try:
-		# Decode the base64 encryption key
-		key_bytes = base64.b64decode(encryption_key_b64)
-		
-		# Import and register encrypted serializer
+		# Extract addon's unique configuration
+		serializer_id = addon_crypto["serializer_id"]
+		key_b64 = addon_crypto["encryption_key"]
+		key_bytes = base64.b64decode(key_b64)
+
+		# Import and create addon's encrypted serializer
 		from art.crypto.serializers import EncryptedSerializer
-		encrypted_ser = EncryptedSerializer("msgpack", key_bytes)
-		Pyro5.serializers.serializers["encrypted"] = encrypted_ser
-		Pyro5.serializers.serializers_by_id[encrypted_ser.serializer_id] = encrypted_ser
-		
-		# Configure Pyro5 to use encrypted serializer
-		Pyro5.config.SERIALIZER = "encrypted"
-		
-		artLogger.info("Encrypted serializer configured successfully")
-	except ImportError:
-		artLogger.error("Failed to import PyNaCl - encrypted serializer not available")
-		raise
+		addon_ser = EncryptedSerializer("msgpack", key_bytes)
+		addon_ser.serializer_id = serializer_id
+
+		# Register addon's serializer for ALL communication
+		Pyro5.serializers.serializers_by_id[serializer_id] = addon_ser
+		Pyro5.serializers.serializers[f"addon_{serializer_id}"] = addon_ser
+
+		# Configure Pyro5 to use addon's encrypted serializer for ALL messages
+		serializer_name = f"addon_{serializer_id}"
+		Pyro5.config.SERIALIZER = serializer_name
+
+		artLogger.info(f"Addon encryption configured: serializer_id={serializer_id}, name={serializer_name}")
+		artLogger.debug(f"Pyro5 default serializer set to: {Pyro5.config.SERIALIZER}")
 	except Exception:
-		artLogger.exception("Failed to set up encrypted serializer")
+		artLogger.exception("Failed to set up addon encryption")
 		raise
 
 
@@ -529,14 +533,14 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 			_set_core_service_uris(core_services)
 			artLogger.debug("Core service URIs set in environment")
 
-			# Set up encryption
-			encryption_key_b64 = startup_data.get("encryption_key")
-			if not encryption_key_b64:
-				artLogger.error("No encryption key provided in handshake")
-				raise ValueError("Missing encryption key")
-			artLogger.debug("Setting up encrypted serializer")
-			_setup_encryption(encryption_key_b64)
-			artLogger.debug("Encrypted serializer setup completed")
+			# Set up addon-specific encryption
+			addon_crypto = startup_data.get("addon_crypto")
+			if not addon_crypto:
+				artLogger.error("Missing addon crypto configuration in handshake")
+				raise ValueError("No addon encryption configured")
+			artLogger.debug("Setting up addon-specific encrypted serializer")
+			_setup_encryption(addon_crypto)
+			artLogger.debug("Addon-specific encrypted serializer setup completed")
 
 			# Get addon spec
 			addon_spec = startup_data.get("addon")
