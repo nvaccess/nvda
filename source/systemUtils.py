@@ -232,7 +232,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.threadExc: Exception | None = None
 		self.start()
 		time.sleep(0.1)
-		threadHandle = ctypes.c_int()
+		threadHandle = ctypes.wintypes.HANDLE()
 		threadHandle.value = winBindings.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
 		while user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
