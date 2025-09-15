@@ -24,7 +24,7 @@ from gui.settingsDialogs import (
 )
 import api
 from ctypes import byref, WinError
-from ctypes.wintypes import COLORREF, MSG
+from ctypes.wintypes import MSG
 import winUser
 from logHandler import log
 from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
