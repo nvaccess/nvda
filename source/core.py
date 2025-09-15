@@ -550,6 +550,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import globalPluginHandler
 	import watchdog
 	import _remoteClient
+	import _localCaptioner
 
 	try:
 		import updateCheck
@@ -567,6 +568,8 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remoteClient causes it to clean up its menus, so do it here while they still exist
 	_terminate(_remoteClient)
+
+	_terminate(_localCaptioner)
 
 
 def _initializeObjectCaches():
@@ -905,6 +908,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import _localCaptioner
+
+	_localCaptioner.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
