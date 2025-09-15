@@ -8,7 +8,6 @@
 import os
 import pathlib
 
-from AssertsLib import AssertsLib as _AssertsLib
 from ChromeLib import ChromeLib as _ChromeLib
 from SystemTestSpy import (
 	_getLib,
@@ -16,7 +15,6 @@ from SystemTestSpy import (
 import NvdaLib as _nvdaLib
 
 _chrome: _ChromeLib = _getLib("ChromeLib")
-_asserts: _AssertsLib = _getLib("AssertsLib")
 
 
 def NVDA_Caption():
@@ -39,8 +37,7 @@ def NVDA_Caption():
 
 	# locate graph to generate caption
 	spy.emulateKeyPress("g")
-	actualSpeech = _nvdaLib.getSpeechAfterKey("NVDA+windows+,")
-	_asserts.speech_matches(
-		actualSpeech,
+	spy.emulateKeyPress("NVDA+windows+,")
+	spy.wait_for_specific_speech(
 		"visual desk access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual",
 	)
