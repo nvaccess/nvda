@@ -819,7 +819,7 @@ class WinTimer(object):
 		self.idEvent = idEvent
 		self.elapse = elapse
 		# ensure timerFunc is a TIMERPROC, or is converted to a TIMERPROC,
-		# And ensuring that None is handled as the correctly typed null function pointer.
+		# and ensuring that None is handled as the correctly typed null function pointer.
 		if isinstance(timerFunc, winBindings.user32.TIMERPROC):
 			self.timerFunc = timerFunc
 		elif timerFunc is None:
