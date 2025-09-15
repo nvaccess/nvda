@@ -8,10 +8,10 @@ from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
 import winBindings.kernel32
 from winBindings.kernel32 import (
-	COORD,
-	CONSOLE_SCREEN_BUFFER_INFO,
-	CONSOLE_SELECTION_INFO,
-	CHAR_INFO,
+	COORD as _COORD,
+	CONSOLE_SCREEN_BUFFER_INFO as _CONSOLE_SCREEN_BUFFER_INFO,
+	CONSOLE_SELECTION_INFO as _CONSOLE_SELECTION_INFO,
+	CHAR_INFO as CHAR_INFO,
 )
 import textUtils
 from utils import _deprecate
@@ -23,6 +23,22 @@ legacy Windows console support, for situations where UIA isn't available.
 
 
 __getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"COORD",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"CONSOLE_SCREEN_BUFFER_INFO",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"CONSOLE_SELECTION_INFO",
+		"winBindings.kernel32",
+	),
+	_deprecate.MovedSymbol(
+		"CHAR_INFO",
+		"winBindings.kernel32",
+	),
 	_deprecate.MovedSymbol(
 		"PHANDLER_ROUTINE",
 		"winBindings.kernel32",
@@ -45,7 +61,7 @@ CONSOLE_MOUSE_DOWN = 0x8
 
 
 def GetConsoleSelectionInfo():
-	info = CONSOLE_SELECTION_INFO()
+	info = _CONSOLE_SELECTION_INFO()
 	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 	return info
@@ -56,7 +72,7 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 	buf = create_string_buffer(length * 2)  # noqa: F405
 	numCharsRead = c_int()  # noqa: F405
 	if (
-		winBindings.kernel32.ReadConsoleOutputCharacter(handle, buf, length, COORD(x, y), byref(numCharsRead))  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutputCharacter(handle, buf, length, _COORD(x, y), byref(numCharsRead))  # noqa: F405
 		== 0
 	):  # noqa: F405
 		raise WinError()  # noqa: F405
@@ -75,8 +91,8 @@ def ReadConsoleOutput(handle, length, rect):
 		winBindings.kernel32.ReadConsoleOutput(  # noqa: F405
 			handle,
 			buf,
-			COORD(rect.Right - rect.Left + 1, rect.Bottom - rect.Top + 1),
-			COORD(0, 0),
+			_COORD(rect.Right - rect.Left + 1, rect.Bottom - rect.Top + 1),
+			_COORD(0, 0),
 			byref(rect),  # noqa: F405
 		)
 		== 0
@@ -86,7 +102,7 @@ def ReadConsoleOutput(handle, length, rect):
 
 
 def GetConsoleScreenBufferInfo(handle):
-	info = CONSOLE_SCREEN_BUFFER_INFO()
+	info = _CONSOLE_SCREEN_BUFFER_INFO()
 	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:  # noqa: F405
 		raise WinError()  # noqa: F405
 	return info
