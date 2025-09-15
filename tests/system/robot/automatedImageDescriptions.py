@@ -5,17 +5,18 @@
 
 """Logic for automatedImageDescriptions tests."""
 
-import NvdaLib as _nvdaLib
+import os
+import pathlib
+
+from AssertsLib import AssertsLib as _AssertsLib
 from ChromeLib import ChromeLib as _ChromeLib
 from SystemTestSpy import (
 	_getLib,
 )
-
-
-import os
-import pathlib
+import NvdaLib as _nvdaLib
 
 _chrome: _ChromeLib = _getLib("ChromeLib")
+_asserts: _AssertsLib = _getLib("AssertsLib")
 
 
 def NVDA_Caption():
@@ -38,8 +39,8 @@ def NVDA_Caption():
 
 	# locate graph to generate caption
 	spy.emulateKeyPress("g")
-	spy.emulateKeyPress("NVDA+windows+,")
-	spy.wait_for_specific_speech(
-		"at non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual",
-		maxWaitSeconds=60,
+	actualSpeech = _nvdaLib.getSpeechAfterKey("NVDA+windows+,")
+	_asserts.speech_matches(
+		actualSpeech,
+		"visual desk access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual",
 	)

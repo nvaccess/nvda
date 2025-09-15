@@ -2,7 +2,7 @@
 
 ## 2026.1
 
-This release introduces automatic image descriptions.
+This release introduces on-device automatic image descriptions.
 You can now use `NVDA+Windows+,` to describe images you encounter.
 
 ### Important notes

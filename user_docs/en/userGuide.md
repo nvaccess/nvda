@@ -3276,9 +3276,8 @@ This panel provides options to customize the behavior and default settings for t
 
 ##### Enable image captioner {#LocalCaptionToggle}
 
-When this checkbox is enabled, NVDA will automatically load the model during startup.
-This can reduce the wait time when performing the first image recognition.
-However, loading the model at initialization may increase memory usage, especially if you do not use the image description feature frequently.
+When this checkbox is enabled, NVDA will enable automatic image descriptions.
+Loading the model may increase memory usage, so this is disabled by default.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
