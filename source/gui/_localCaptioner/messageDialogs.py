@@ -23,7 +23,7 @@ def onDownload() -> None:
 
 
 def openSuccessDialog() -> None:
-	confirmationButton = (DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=True),)
+	confirmationButton = (DefaultButton.OK.value._replace(defaultFocus=True, fallbackAction=True),)
 
 	dialog = MessageDialog(
 		parent=None,
