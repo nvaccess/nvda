@@ -818,8 +818,15 @@ class WinTimer(object):
 		self.hwnd = hwnd
 		self.idEvent = idEvent
 		self.elapse = elapse
-		self.timerFunc = timerFunc
-		self.ident = _user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		# ensure timerFunc is a TIMERPROC, or is converted to a TIMERPROC,
+		# and ensuring that None is handled as the correctly typed null function pointer.
+		if isinstance(timerFunc, winBindings.user32.TIMERPROC):
+			self.timerFunc = timerFunc
+		elif timerFunc is None:
+			self.timerFunc = winBindings.user32.TIMERPROC(0)
+		else:
+			self.timerFunc = winBindings.user32.TIMERPROC(timerFunc)
+		self.ident = _user32.SetTimer(hwnd, idEvent, elapse, self.timerFunc)
 		if self.ident == 0:
 			raise WinError()
 		if not hwnd:

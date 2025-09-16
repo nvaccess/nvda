@@ -17,6 +17,7 @@ import winsound
 import traceback
 from types import FunctionType, TracebackType
 import globalVars
+import winBindings.kernel32
 import winKernel
 import buildVersion
 from typing import (
@@ -433,9 +434,9 @@ class Formatter(logging.Formatter):
 		is set to a Unicode one (#12160, Python issue 36792)
 		"""
 		timeAsFileTime = winKernel.time_tToFileTime(record.created)
-		timeAsSystemTime = winKernel.SYSTEMTIME()
+		timeAsSystemTime = winBindings.kernel32.SYSTEMTIME()
 		winKernel.FileTimeToSystemTime(timeAsFileTime, timeAsSystemTime)
-		timeAsLocalTime = winKernel.SYSTEMTIME()
+		timeAsLocalTime = winBindings.kernel32.SYSTEMTIME()
 		winKernel.SystemTimeToTzSpecificLocalTime(None, timeAsSystemTime, timeAsLocalTime)
 		res = f"{timeAsLocalTime.wHour:02d}:{timeAsLocalTime.wMinute:02d}:{timeAsLocalTime.wSecond:02d}"
 		return self.default_msec_format % (res, record.msecs)
