@@ -158,40 +158,40 @@ source/art/
 
 The ART Manager handles process management with the following architecture:
 
-**ARTManager Class**:
-- **Core Service Management**: Starts Pyro5 daemon and registers all core services
-- **Multi-Process Coordination**: Manages multiple `ARTAddonProcess` instances (one per addon)
-- **Service Discovery**: Maintains URIs for all core services and distributes them to ART processes
-- **Global Access**: Provides `getARTManager()` for system-wide access to ART services
+ARTManager Class:
+- Core Service Management: Starts Pyro5 daemon and registers all core services
+- Multi-Process Coordination: Manages multiple `ARTAddonProcess` instances (one per addon)
+- Service Discovery: Maintains URIs for all core services and distributes them to ART processes
+- Global Access: Provides `getARTManager()` for system-wide access to ART services
 
-**ARTAddonProcess Class**:
-- **Subprocess Management**: Uses `SubprocessManager` with `ProcessConfig` for robust process control
-- **JSON Handshake Protocol**: Implements bi-directional communication during startup
-- **Service Connection**: Establishes Pyro5 proxy connections to ART services
-- **Error Recovery**: Handles process crashes and communication failures
-- **Secure Desktop Integration**: Detects and configures SD-ART mode automatically
+ARTAddonProcess Class:
+- Subprocess Management: Uses `SubprocessManager` with `ProcessConfig` for robust process control
+- JSON Handshake Protocol: Implements bi-directional communication during startup
+- Service Connection: Establishes Pyro5 proxy connections to ART services
+- Error Recovery: Handles process crashes and communication failures
+- Secure Desktop Integration: Detects and configures SD-ART mode automatically
 
-**Process Configuration**:
-- **Executable**: `nvda_art.exe` (built from `nvda_art.pyw`)
-- **Creation Flags**: `CREATE_NO_WINDOW` for hidden console
-- **Communication**: Bidirectional pipes for JSON handshake
-- **Timeout Handling**: 10-second handshake timeout with graceful failure
+Process Configuration:
+- Executable: `nvda_art.exe` (built from `nvda_art.pyw`)
+- Creation Flags: `CREATE_NO_WINDOW` for hidden console
+- Communication: Bidirectional pipes for JSON handshake
+- Timeout Handling: 10-second handshake timeout with graceful failure
 
-**Key Features**:
-- **One-Addon-Per-Process**: Each addon runs in complete isolation
-- **Automatic Restart**: Failed processes can be restarted without affecting others
-- **Service Proxy Management**: Automatic connection to ART services with retry logic
-- **Detailed Logging**: Process lifecycle and communication logging
+Key Features:
+- One-Addon-Per-Process: Each addon runs in complete isolation
+- Automatic Restart: Failed processes can be restarted without affecting others
+- Service Proxy Management: Automatic connection to ART services with retry logic
+- Detailed Logging: Process lifecycle and communication logging
 
 #### 4.2.2 Core Services (`art.core.services.*`)
 
 Services that run in NVDA Core and are exposed to ART via RPC:
 
-- **ConfigService**: Exposes `config.conf` read/write access
-- **SpeechService**: Handles synthesizer registration and audio streaming
-- **LoggingService**: Receives log messages from ART
-- **EventService**: Forwards NVDA events to ART
-- **NavigationService**: Provides `api.getFocusObject`, `api.getNavigatorObject`
+- ConfigService: Exposes `config.conf` read/write access
+- SpeechService: Handles synthesizer registration and audio streaming
+- LoggingService: Receives log messages from ART
+- EventService: Forwards NVDA events to ART
+- NavigationService: Provides `api.getFocusObject`, `api.getNavigatorObject`
 
 ### 4.3 Add-on Runtime Components
 
@@ -199,10 +199,10 @@ Services that run in NVDA Core and are exposed to ART via RPC:
 
 Services that run in the ART process:
 
-- **AddOnLifecycleService**: Loads and manages the assigned add-on
-- **SynthService**: Manages synthesizer driver instances, handles speech requests, voice management, and audio streaming
-- **ExtensionPointHandlerService**: Executes extension point handlers (integrated in nvda_art.pyw)
-- **ExtensionPointService**: Tracks extension point registrations (integrated in nvda_art.pyw)
+- AddOnLifecycleService: Loads and manages the assigned add-on
+- SynthService: Manages synthesizer driver instances, handles speech requests, voice management, and audio streaming
+- ExtensionPointHandlerService: Executes extension point handlers (integrated in nvda_art.pyw)
+- ExtensionPointService: Tracks extension point registrations (integrated in nvda_art.pyw)
 
 #### 4.3.2 NVDA Module Proxies (`art.runtime.proxies.*`)
 
@@ -292,7 +292,7 @@ config.conf
 
 ### 6.3 RPC Input Validation
 
-All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) MUST be rigorously validated before use. Validation should include, but is not limited to: type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data must be rejected, and the event should be logged. Failure to validate inputs could lead to instability or security vulnerabilities in the receiving process. **Consideration should be given to using libraries like Pydantic to define data models and enforce these validation rules based on type hints and constraints.**
+All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) MUST be rigorously validated before use. Validation should include, but is not limited to: type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data must be rejected, and the event should be logged. Failure to validate inputs could lead to instability or security vulnerabilities in the receiving process. Consideration should be given to using libraries like Pydantic to define data models and enforce these validation rules based on type hints and constraints.
 
 ### 6.4 Encrypted Communication
 
@@ -597,9 +597,9 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 ## 16. Startup Sequence
 
 ### 16.1 NVDA Core Initialization
-1. **NVDA Core initializes** (see `core.main`)
-2. **ARTManager creation** and registration as global instance
-3. **Core Services Setup**:
+1. NVDA Core initializes (see `core.main`)
+2. ARTManager creation and registration as global instance
+3. Core Services Setup:
    - Creates Pyro5 daemon on loopback interface (127.0.0.1:0)
    - Registers all core services: `ConfigService`, `LoggingService`, `SpeechService`, `GlobalVarsService`, `NVWaveService`, `LanguageHandlerService`, `UIService`
    - Starts core daemon thread for RPC request handling
@@ -608,9 +608,9 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 ### 16.2 ART Process Startup (Per Addon)
 
 #### 16.2.1 Process Creation
-1. **ARTAddonProcess instantiation** with addon spec and core service URIs
-2. **Subprocess launch** via `SubprocessManager` using `nvda_art.exe`
-3. **JSON handshake initiation**:
+1. ARTAddonProcess instantiation with addon spec and core service URIs
+2. Subprocess launch via `SubprocessManager` using `nvda_art.exe`
+3. JSON handshake initiation:
    ```json
    // NVDA Core → ART Process
    {
@@ -621,17 +621,17 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
    ```
 
 #### 16.2.2 ART Process Initialization
-1. **Entry point**: `nvda_art.pyw` main function
-2. **Mode detection**: CLI vs handshake mode based on command line arguments
-3. **Startup data parsing**: JSON deserialization and configuration extraction
-4. **Environment setup**: Debug mode, secure desktop detection, path configuration
-5. **Proxy module installation**: Injection of NVDA module proxies into `sys.modules`
-6. **ARTRuntime creation**: Service registration and Pyro5 daemon startup
+1. Entry point: `nvda_art.pyw` main function
+2. Mode detection: CLI vs handshake mode based on command line arguments
+3. Startup data parsing: JSON deserialization and configuration extraction
+4. Environment setup: Debug mode, secure desktop detection, path configuration
+5. Proxy module installation: Injection of NVDA module proxies into `sys.modules`
+6. ARTRuntime creation: Service registration and Pyro5 daemon startup
 
 #### 16.2.3 Service Registration
-1. **ART Services**: `AddOnLifecycleService`, `ExtensionPointHandlerService`, `ExtensionPointService`, `SynthService`
-2. **Pyro5 daemon startup** with msgpack serialization and thread-based server
-3. **Response generation**:
+1. ART Services: `AddOnLifecycleService`, `ExtensionPointHandlerService`, `ExtensionPointService`, `SynthService`
+2. Pyro5 daemon startup with msgpack serialization and thread-based server
+3. Response generation:
    ```json
    // ART Process → NVDA Core
    {
@@ -664,29 +664,29 @@ All Pyro5 RPC communication binds exclusively to the loopback interface (127.0.0
 The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with unique per-addon keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
 
 #### 17.3.2 Process Lifecycle Security  
-- **Parent-Child Relationship**: ART processes are launched directly by NVDA Core
-- **Process Tracking**: NVDA Core tracks Process IDs (PIDs) of launched ART processes
-- **Handshake Protocol**: Bidirectional JSON handshake ensures proper initialization
-- **Timeout Protection**: 10-second handshake timeout prevents hung processes
+- Parent-Child Relationship: ART processes are launched directly by NVDA Core
+- Process Tracking: NVDA Core tracks Process IDs (PIDs) of launched ART processes
+- Handshake Protocol: Bidirectional JSON handshake ensures proper initialization
+- Timeout Protection: 10-second handshake timeout prevents hung processes
 
 #### 17.3.3 Serialization Security
-- **msgpack Serialization**: Uses msgpack instead of Pickle to prevent code execution exploits
-- **Structured Data**: All RPC calls use defined data structures
-- **No Code Injection**: Serialization format prevents arbitrary code execution
+- msgpack Serialization: Uses msgpack instead of Pickle to prevent code execution exploits
+- Structured Data: All RPC calls use defined data structures
+- No Code Injection: Serialization format prevents arbitrary code execution
 
 #### 17.3.4 Access Control via Process Model
-- **Process Isolation**: Each addon runs in separate process with isolated memory space
-- **Service Boundary**: Clear separation between NVDA Core and addon code
-- **Crash Isolation**: Addon crashes do not affect NVDA Core or other addons
+- Process Isolation: Each addon runs in separate process with isolated memory space
+- Service Boundary: Clear separation between NVDA Core and addon code
+- Crash Isolation: Addon crashes do not affect NVDA Core or other addons
 
 
 #### 17.3.6 Security Philosophy
 The current security model relies on:
-1. **Process Isolation**: Operating system process boundaries provide primary security
-2. **Network Isolation**: Loopback-only communication prevents external access  
-3. **Authenticated Encryption**: XSalsa20-Poly1305 provides message confidentiality and integrity
-4. **Serialization Safety**: Safe serialization prevents code injection
-5. **Lifecycle Management**: Controlled process creation and monitoring
+1. Process Isolation: Operating system process boundaries provide primary security
+2. Network Isolation: Loopback-only communication prevents external access  
+3. Authenticated Encryption: XSalsa20-Poly1305 provides message confidentiality and integrity
+4. Serialization Safety: Safe serialization prevents code injection
+5. Lifecycle Management: Controlled process creation and monitoring
 
 This approach provides practical security for the intended use case while maintaining simplicity and performance.
 
