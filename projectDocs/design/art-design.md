@@ -49,10 +49,9 @@ Inter-process communication uses Pyro5 RPC. Security measures include:
 
 - Authenticated Encryption: XSalsa20-Poly1305 encryption with unique per-addon keys
 - Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
-- Process Validation: The Windows Socket API is used to validate process identity
+- Process Validation: Process identity validated through controlled launch and PID tracking
 - Serialization: msgpack serialization is used instead of Pickle to prevent code execution exploits
-- Input Validation: All incoming data is validated using Pydantic before processing
-- Message Size Limits: Maximum message sizes are enforced to prevent denial of service attacks
+- Input Validation: RPC data is validated before processing
 
 ### Data Flow Architecture
 
@@ -295,7 +294,7 @@ config.conf
 
 ### RPC Input Validation
 
-All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) MUST be rigorously validated before use. Validation should include, but is not limited to: type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data must be rejected, and the event should be logged. Failure to validate inputs could lead to instability or security vulnerabilities in the receiving process. Consideration should be given to using libraries like Pydantic to define data models and enforce these validation rules based on type hints and constraints.
+All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) should be validated before use. Validation includes type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data should be rejected and logged. Proper input validation prevents instability and security vulnerabilities in the receiving process.
 
 ### Encrypted Communication
 
@@ -547,48 +546,30 @@ Currently, SD-ART processes are detected and labeled but run with the same permi
 
 To complete SD-ART, we need to implement app containers, integrity levels, and the planned security restrictions.
 
-## Implementation Plan
+## Implementation Status
 
-### Phase 1: Core Infrastructure
+### Completed
 
-1. Reorganize existing code into `art.core` and `art.runtime` packages
-2. Move services from `nvda_art.pyw` to `art.runtime.services`
-3. Fix service discovery mechanism in ARTManager
-4. Implement basic proxy modules in `art.runtime.proxies`
+- Core infrastructure with `art.core` and `art.runtime` packages
+- Essential services: ConfigService, LoggingService, SpeechService, etc.
+- Basic proxy modules for major NVDA modules
+- Synthesizer system with SynthService and proxy support
+- Extension point system with handler registration and invocation
+- Encrypted RPC communication with per-addon keys
+- Process management with ARTManager and ARTAddonProcess
 
-### Phase 2: Essential Services
+### In Progress
 
-1. Implement `art.core.services.config` - ConfigService
-2. Implement `art.core.services.logging` - LoggingService  
-3. Implement `art.runtime.proxies.config` - config module proxy
-4. Implement `art.runtime.proxies.logHandler` - logHandler module proxy
-5. Test basic add-on loading with logging
+- Event forwarding from NVDA to add-ons
+- File system access controls for security boundaries
+- SD-ART security restrictions (app containers, integrity levels)
 
-### Phase 3: Speech System
+### Future Work
 
-1. Implement `art.core.services.speech` - SpeechService
-2. Implement `art.runtime.proxies.synthDriverHandler` - synthDriverHandler proxy
-3. Implement `art.runtime.proxies.speech` - speech module proxy
-4. Test synthesizer registration and basic speech
-
-### Phase 4: Vocalizer Integration
-
-1. Implement remaining proxies (`globalVars`, `addonHandler`, etc.)
-2. Add native DLL loading support
-3. Implement file system access controls
-4. Test full vocalizer add-on loading
-
-### Phase 5: Event System & Extension Points
-
-1. Implement event forwarding from NVDA to add-ons
-2. Complete extension point system
-3. Test with complex add-on interactions
-
-### Phase 6: Polish & Optimization
-
-1. Performance optimization for RPC calls
-2. Enhanced error handling and recovery
-3. Additional proxy modules as needed
+- Performance optimization for RPC calls
+- Enhanced error handling and recovery
+- Additional proxy modules as needed
+- Comprehensive testing with complex add-on interactions
 
 ## Error Handling
 
@@ -657,7 +638,7 @@ ART implements two security models. Regular ART allows network access but restri
 
 ### Process Security
 
-NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. Additional security measures like Windows Socket API validation and cryptographic process authentication were considered but not implemented. The current implementation relies on the operating system's process security model and controlled process creation.
+NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. The current implementation relies on the operating system's process security model and controlled process creation.
 
 ### Communication Security
 
@@ -700,9 +681,9 @@ This provides practical security while maintaining simplicity and performance.
 
 ### Add-on Isolation
 
-- Version 1 does not implement isolation between add-ons within the same runtime
-- Add-ons running in the same runtime process can potentially interact with each other
-- Future versions may implement more granular isolation between add-ons
+- Each addon runs in its own isolated ART process (one-addon-per-process model)
+- Add-ons cannot directly interact with each other due to process boundaries
+- All inter-addon communication must go through NVDA Core
 
 ## Future Enhancements (Post-Version 1)
 
