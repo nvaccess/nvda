@@ -136,7 +136,7 @@ class UwpOcr(ContentRecognizer):
 			# These are identical in memory, so we can just cast.
 			cast(pixels, POINTER(RGBQUAD)),
 			imgInfo.recogWidth,
-			imgInfo.recogHeight
+			imgInfo.recogHeight,
 		)
 
 	def cancel(self):
