@@ -47,7 +47,7 @@ ART uses a one-addon-per-process model where each enabled addon runs in its own 
 
 Inter-process communication uses Pyro5 RPC. Security measures include:
 
-- Authenticated Encryption: XSalsa20-Poly1305 encryption with ephemeral session keys
+- Authenticated Encryption: XSalsa20-Poly1305 encryption with unique per-addon keys
 - Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
 - Process Validation: The Windows Socket API is used to validate process identity
 - Serialization: msgpack serialization is used instead of Pickle to prevent code execution exploits
@@ -661,7 +661,7 @@ NVDA Core tracks the Process ID (PID) of each ART process it launches and mainta
 
 All Pyro5 RPC communication binds exclusively to the loopback interface (127.0.0.1) with random ports, preventing external access. ART processes are launched directly by NVDA Core with PID tracking and a bidirectional JSON handshake with 10-second timeout.
 
-The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with ephemeral session keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
+The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with unique per-addon keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
 
 #### 17.3.2 Process Lifecycle Security  
 - **Parent-Child Relationship**: ART processes are launched directly by NVDA Core
