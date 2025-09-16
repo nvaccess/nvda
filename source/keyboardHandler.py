@@ -529,7 +529,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Unicode character from non-keyboard input.
 			return chr(self.scanCode)
 		vkChar = user32.MapVirtualKeyEx(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
-		if vkChar > 0:
+		if (
+			vkChar > 0
+			# If the highest bit of this 32 bit value is set then it is a dead key.
+			and (vkChar >> 31) == 0
+		):
 			if vkChar == 43:  # "+"
 				# A gesture identifier can't include "+" except as a separator.
 				return "plus"
