@@ -5,7 +5,12 @@
 
 """Recognition of text using the UWP OCR engine included in Windows 10 and later."""
 
+from ctypes import (
+	cast,
+	POINTER,
+)
 import json
+from winBindings.gdi32 import RGBQUAD
 import NVDAHelper
 from NVDAHelper.localWin10 import (
 	uwpOcr_getLanguages,
@@ -124,7 +129,15 @@ class UwpOcr(ContentRecognizer):
 		if not self._handle:
 			onResult(RuntimeError("UWP OCR initialization failed"))
 			return
-		uwpOcr_recognize(self._handle, pixels, imgInfo.recogWidth, imgInfo.recogHeight)
+		uwpOcr_recognize(
+			self._handle,
+			# pixels, as fetched from screenBitmap.captureImage is a 2d array of RGBQUAD values.
+			# However uwpOcr_recognize expects a 1d array (pointer).
+			# These are identical in memory, so we can just cast.
+			cast(pixels, POINTER(RGBQUAD)),
+			imgInfo.recogWidth,
+			imgInfo.recogHeight
+		)
 
 	def cancel(self):
 		self._onResult = None
