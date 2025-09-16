@@ -1,18 +1,18 @@
 # NVDA Add-on Runtime (ART) Design Document
 
-## 1. Introduction
+## Introduction
 
 The NVDA Add-on Runtime (ART) moves NVDA add-ons from the core NVDA process to a separate process. This document describes the architecture and implementation plan for ART.
 
-## 2. Goals
+## Goals
 
 - Move add-ons to a separate process to improve NVDA stability
 - Maintain compatibility with existing add-ons
 - Support basic functionality (extension points, event handling) for the first version
 
-## 3. Architecture
+## Architecture
 
-### 3.1 Process Architecture
+### Process Architecture
 
 ART uses a one-addon-per-process model where each enabled addon runs in its own isolated ART process:
 
@@ -43,7 +43,7 @@ ART uses a one-addon-per-process model where each enabled addon runs in its own 
    - Cannot start new processes
    - Optimized for security-critical environments
 
-### 3.2 Process Communication
+### Process Communication
 
 Inter-process communication uses Pyro5 RPC. Security measures include:
 
@@ -54,7 +54,7 @@ Inter-process communication uses Pyro5 RPC. Security measures include:
 - Input Validation: All incoming data is validated using Pydantic before processing
 - Message Size Limits: Maximum message sizes are enforced to prevent denial of service attacks
 
-### 3.3 Data Flow Architecture
+### Data Flow Architecture
 
 1. Event Flow:
    - System events originate in NVDA Core (via accessibility APIs)
@@ -72,7 +72,7 @@ Inter-process communication uses Pyro5 RPC. Security measures include:
    - PCM audio data is streamed to NVDA Core
    - NVDA Core handles playback through the audio subsystem
 
-### 3.4 Process Lifecycle
+### Process Lifecycle
 
 1. Startup Sequence:
    - NVDA Core initializes
@@ -98,7 +98,7 @@ Inter-process communication uses Pyro5 RPC. Security measures include:
    - Each addon gets its own SD-ART process with more restrictive permissions
    - Addons are isolated from each other even in secure desktop
 
-### 3.5 Security Boundaries
+### Security Boundaries
 
 The architecture establishes multiple security boundaries:
 
@@ -110,9 +110,9 @@ The architecture establishes multiple security boundaries:
 
 These boundaries work together to create a defense-in-depth approach to protecting NVDA Core from potentially malicious or unstable add-ons.
 
-## 4. Components
+## Components
 
-### 4.1 Package Structure
+### Package Structure
 
 ```
 source/art/
@@ -152,9 +152,9 @@ source/art/
         └── visionEnhancementProviders.py # Proxy for visionEnhancementProviders
 ```
 
-### 4.2 NVDA Core Components
+### NVDA Core Components
 
-#### 4.2.1 ART Manager (`art.manager`)
+#### ART Manager (`art.manager`)
 
 The ART Manager handles process management with the following architecture:
 
@@ -183,7 +183,7 @@ Key Features:
 - Service Proxy Management: Automatic connection to ART services with retry logic
 - Detailed Logging: Process lifecycle and communication logging
 
-#### 4.2.2 Core Services (`art.core.services.*`)
+#### Core Services (`art.core.services.*`)
 
 Services that run in NVDA Core and are exposed to ART via RPC:
 
@@ -193,9 +193,9 @@ Services that run in NVDA Core and are exposed to ART via RPC:
 - EventService: Forwards NVDA events to ART
 - NavigationService: Provides `api.getFocusObject`, `api.getNavigatorObject`
 
-### 4.3 Add-on Runtime Components
+### Add-on Runtime Components
 
-#### 4.3.1 Runtime Services (`art.runtime.services.*`)
+#### Runtime Services (`art.runtime.services.*`)
 
 Services that run in the ART process:
 
@@ -204,7 +204,7 @@ Services that run in the ART process:
 - ExtensionPointHandlerService: Executes extension point handlers (integrated in nvda_art.pyw)
 - ExtensionPointService: Tracks extension point registrations (integrated in nvda_art.pyw)
 
-#### 4.3.2 NVDA Module Proxies (`art.runtime.proxies.*`)
+#### NVDA Module Proxies (`art.runtime.proxies.*`)
 
 Proxy modules that make NVDA APIs available to add-ons:
 
@@ -212,7 +212,7 @@ Proxy modules that make NVDA APIs available to add-ons:
 - Each proxy forwards calls to appropriate `art.core.services.*` via RPC
 - Maintains API compatibility with existing NVDA modules
 
-#### 4.3.3 Import Redirection
+#### Import Redirection
 
 ```python
 # In ART process startup
@@ -226,45 +226,45 @@ sys.path.insert(0, str(proxies_path))
 # Now add-ons automatically get proxies when they import NVDA modules
 ```
 
-## 5. Services (Version 1 Minimum Set)
+## Services (Version 1 Minimum Set)
 
-### 5.1 Core Services (exposed to add-ons)
+### Core Services (exposed to add-ons)
 
-#### 5.1.1 NavigationService
+#### NavigationService
 
 - `getFocusObject()`: Gets current focus object (proxies `api.getFocusObject`)
 - `getNavigatorObject()`: Gets current navigator object (proxies `api.getNavigatorObject`)
 
-#### 5.1.2 EventService
+#### EventService
 
 - `registerEventHandler(eventName, handlerId)`: Registers for NVDA events (related to `eventHandler.executeEvent` dispatch)
 - `unregisterEventHandler(eventName, handlerId)`: Unregisters from events
 
-#### 5.1.3 ExtensionPointProxyService
+#### ExtensionPointProxyService
 
 - `getExtensionPoint(name)`: Gets a proxy for an extension point (e.g., `inputCore.decide_executeGesture`)
 - `registerExtensionPoint(name, type)`: Registers an add-on extension point (interacts with `extensionPoints` mechanism)
 
-### 5.2 Add-on Services (exposed to NVDA core)
+### Add-on Services (exposed to NVDA core)
 
-#### 5.2.1 AddOnLifecycleService
+#### AddOnLifecycleService
 
 - `loadAddon(addonPath)`: Loads the single addon assigned to this ART process
 - `getLoadedAddon()`: Returns info about the loaded addon
 - `getAddonInfo()`: Gets information about the loaded addon
 
-#### 5.2.2 EventHandlerService
+#### EventHandlerService
 
 - `dispatchEvent(eventName, obj, **kwargs)`: Sends events to add-ons (mirrors `eventHandler.executeEvent` parameters)
 
-#### 5.2.3 ExtensionPointService
+#### ExtensionPointService
 
 - `registerHandler(addonId, extPointName, handlerId)`: Registers handler (calls `extensionPoints.HandlerRegistrar.register` via proxy)
 - `invokeExtensionPoint(extPointName, *args, **kwargs)`: Calls handlers (invoked by NVDA core when an extension point is triggered)
 
-## 6. Process Communication
+## Process Communication
 
-### 6.1 Pyro5 Configuration
+### Pyro5 Configuration
 
 - Serializer: encrypted (EncryptedSerializer wrapping msgpack for authenticated encryption)
 - Timeout: 10 seconds with 3 retries
@@ -272,7 +272,7 @@ sys.path.insert(0, str(proxies_path))
 - Host: 127.0.0.1 (loopback only)
 - Port: 0 (auto-assigned)
 
-### 6.2 Message Flow
+### Message Flow
 
 ```
 Add-on (ART process)
@@ -290,11 +290,11 @@ config.conf
 - Extension point calls flow from NVDA to add-ons via the ExtensionPointService
 - NVDA module access flows through proxy modules to core services
 
-### 6.3 RPC Input Validation
+### RPC Input Validation
 
 All data received via RPC at service endpoints (both in NVDA Core receiving calls from ART, and ART receiving calls from NVDA Core) MUST be rigorously validated before use. Validation should include, but is not limited to: type checking, length/range constraints for strings and numbers, and sanitization appropriate for the data's intended use. Unexpected or invalid data must be rejected, and the event should be logged. Failure to validate inputs could lead to instability or security vulnerabilities in the receiving process. Consideration should be given to using libraries like Pydantic to define data models and enforce these validation rules based on type hints and constraints.
 
-### 6.4 Encrypted Communication
+### Encrypted Communication
 
 ART encrypts all RPC communication between NVDA Core and ART processes using XSalsa20-Poly1305 authenticated encryption. This addresses the fundamental security gap in the original design where sensitive data like configuration settings, speech text, and addon interactions were transmitted as plaintext over local network sockets.
 
@@ -304,13 +304,13 @@ This per-addon encryption provides complete traffic isolation between addons. Ad
 
 The encrypted serializer handles Pyro5's network layer quirks, including automatic conversion of bytearray objects to bytes for compatibility with PyNaCl's C bindings. Each message includes authentication data that prevents modification, ensuring that compromised processes cannot inject malicious RPC calls into the communication stream.
 
-## 7. GUI System
+## GUI System
 
-### 7.1 Overview
+### Overview
 
 ART has its own copy of wxPython, so add-ons can create GUI elements directly without serialization. Add-ons running in ART can use wx normally to create dialogs, message boxes, and other UI elements.
 
-### 7.2 GUI Creation
+### GUI Creation
 
 Add-ons can use wx directly:
 
@@ -324,13 +324,13 @@ def showSettingsDialog(parent):
     dialog.ShowModal()
 ```
 
-### 7.3 Integration with NVDA
+### Integration with NVDA
 
 Since ART runs in a separate process, GUI elements created by add-ons will appear as separate windows from NVDA's main interface. This is acceptable for add-on settings dialogs and similar functionality.
 
-## 8. Extension Point System
+## Extension Point System
 
-### 8.1 Extension Point Types
+### Extension Point Types
 
 ART supports all NVDA extension point types (defined in `extensionPoints`):
 
@@ -340,20 +340,20 @@ ART supports all NVDA extension point types (defined in `extensionPoints`):
 - AccumulatingDecider: All handlers run (`extensionPoints.AccumulatingDecider`)
 - Chain: Routes iterables (`extensionPoints.Chain`)
 
-### 8.2 Extension Point Registration
+### Extension Point Registration
 
 1. Add-on calls extension point registration method (e.g., `someExtensionPoint.register(handler)`)
 2. Add-on Runtime records registration (using a proxy for `extensionPoints.HandlerRegistrar.register`) and notifies NVDA Core
 3. NVDA Core maintains map of extension points to registered add-ons
 
-### 8.3 Extension Point Invocation
+### Extension Point Invocation
 
 1. NVDA Core invokes an extension point
 2. NVDA Core calls ExtensionPointService.invokeExtensionPoint()
 3. Add-on Runtime calls registered handlers
 4. Add-on Runtime returns results to NVDA Core
 
-### 8.4 Add-on Access
+### Add-on Access
 
 Add-ons access extension points with the same API they use currently (proxied by ART):
 
@@ -368,15 +368,15 @@ inputCore.decide_executeGesture.register(self.myDeciderFunction)
 config.post_configProfileSwitch.register(self.myActionFunction)
 ```
 
-## 9. Event System
+## Event System
 
-### 9.1 Event Registration
+### Event Registration
 
 1. Add-on registers for specific events
 2. Add-on Runtime records registration
 3. Add-on Runtime notifies NVDA Core of interest in these events
 
-### 9.2 Event Dispatching
+### Event Dispatching
 
 1. NVDA Core captures system events (focus changes, etc.) via handlers like `IAccessibleHandler`, `UIAHandler`.
 2. NVDA Core queues events using `eventHandler.queueEvent`.
@@ -384,7 +384,7 @@ config.post_configProfileSwitch.register(self.myActionFunction)
 4. Add-on Runtime routes events to registered add-ons.
 5. Add-on processes the event.
 
-### 9.3 Event Handler Implementation
+### Event Handler Implementation
 
 Add-ons implement event handlers using the current pattern (defined by `eventHandler._EventExecuter.gen`):
 
@@ -395,7 +395,7 @@ def event_gainFocus(self, obj, nextHandler):
     nextHandler()
 ```
 
-## 10. Add-on Loading Process
+## Add-on Loading Process
 
 1. NVDA Core discovers installed add-ons (using `addonHandler`).
 2. For each enabled addon, NVDA Core spawns a separate ART process with addon info.
@@ -403,7 +403,7 @@ def event_gainFocus(self, obj, nextHandler):
 4. Add-on initializes and registers event handlers/extension points (via proxied `register` calls).
 5. Add-on Runtime signals ready status to NVDA Core.
 
-## 11. Synthesizer Architecture
+## Synthesizer Architecture
 
 The `SynthService` in each ART process manages synthesizer drivers and handles speech requests from NVDA Core. It deserializes speech sequences containing text and speech commands like `IndexCommand` (speech bookmarks), `CharacterModeCommand` (character-by-character mode), `BreakCommand` (pauses), `LangChangeCommand` (language switching), and `PitchCommand`/`RateCommand`/`VolumeCommand` for audio parameter changes.
 
@@ -424,7 +424,7 @@ Voice management includes validation (`isValidVoice()`), default selection (`get
 
 When an addon loads a synthesizer driver, the driver registers with `SynthService.setSynthInstance()`. The `SynthService` then becomes a proxy for all synthesizer operations, with NVDA Core communicating via `SpeechService` RPC calls.
 
-## 12. Entry Points and Integration
+## Entry Points and Integration
 
 NVDA initializes ART in `source/core.py`:
 
@@ -519,7 +519,7 @@ for module_name, module_obj in PROXY_MODULE_REGISTRY.items():
 
 Addons can use `import config` to get the proxy implementation.
 
-## 13. SD-ART Implementation Status
+## SD-ART Implementation Status
 
 SD-ART (Secure Desktop Add-on Runtime) detection is implemented but we don't enforce security restrictions yet.
 
@@ -544,16 +544,16 @@ Currently, SD-ART processes are detected and labeled but run with the same permi
 
 To complete SD-ART, we need to implement app containers, integrity levels, and the planned security restrictions.
 
-## 14. Implementation Plan
+## Implementation Plan
 
-### 14.1 Phase 1: Core Infrastructure
+### Phase 1: Core Infrastructure
 
 1. Reorganize existing code into `art.core` and `art.runtime` packages
 2. Move services from `nvda_art.pyw` to `art.runtime.services`
 3. Fix service discovery mechanism in ARTManager
 4. Implement basic proxy modules in `art.runtime.proxies`
 
-### 14.2 Phase 2: Essential Services
+### Phase 2: Essential Services
 
 1. Implement `art.core.services.config` - ConfigService
 2. Implement `art.core.services.logging` - LoggingService  
@@ -561,42 +561,42 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 4. Implement `art.runtime.proxies.logHandler` - logHandler module proxy
 5. Test basic add-on loading with logging
 
-### 14.3 Phase 3: Speech System
+### Phase 3: Speech System
 
 1. Implement `art.core.services.speech` - SpeechService
 2. Implement `art.runtime.proxies.synthDriverHandler` - synthDriverHandler proxy
 3. Implement `art.runtime.proxies.speech` - speech module proxy
 4. Test synthesizer registration and basic speech
 
-### 14.4 Phase 4: Vocalizer Integration
+### Phase 4: Vocalizer Integration
 
 1. Implement remaining proxies (`globalVars`, `addonHandler`, etc.)
 2. Add native DLL loading support
 3. Implement file system access controls
 4. Test full vocalizer add-on loading
 
-### 14.5 Phase 5: Event System & Extension Points
+### Phase 5: Event System & Extension Points
 
 1. Implement EventHandlerService
 2. Implement event forwarding from NVDA to add-ons
 3. Complete extension point system
 4. Test with complex add-on interactions
 
-### 14.6 Phase 6: Polish & Optimization
+### Phase 6: Polish & Optimization
 
 1. Performance optimization for RPC calls
 2. Enhanced error handling and recovery
 3. Additional proxy modules as needed
 
-## 15. Error Handling
+## Error Handling
 
 - ART process crashes: NVDA Core detects and restarts it
 - Add-on crashes: Contained within ART process, logged
 - RPC errors: Timeouts, retries for critical services
 
-## 16. Startup Sequence
+## Startup Sequence
 
-### 16.1 NVDA Core Initialization
+### NVDA Core Initialization
 1. NVDA Core initializes (see `core.main`)
 2. ARTManager creation and registration as global instance
 3. Core Services Setup:
@@ -605,9 +605,9 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
    - Starts core daemon thread for RPC request handling
    - Stores service URIs for distribution to ART processes
 
-### 16.2 ART Process Startup (Per Addon)
+### ART Process Startup (Per Addon)
 
-#### 16.2.1 Process Creation
+#### Process Creation
 1. ARTAddonProcess instantiation with addon spec and core service URIs
 2. Subprocess launch via `SubprocessManager` using `nvda_art.exe`
 3. JSON handshake initiation:
@@ -620,7 +620,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
    }
    ```
 
-#### 16.2.2 ART Process Initialization
+#### ART Process Initialization
 1. Entry point: `nvda_art.pyw` main function
 2. Mode detection: CLI vs handshake mode based on command line arguments
 3. Startup data parsing: JSON deserialization and configuration extraction
@@ -628,7 +628,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 5. Proxy module installation: Injection of NVDA module proxies into `sys.modules`
 6. ARTRuntime creation: Service registration and Pyro5 daemon startup
 
-#### 16.2.3 Service Registration
+#### Service Registration
 1. ART Services: `AddOnLifecycleService`, `ExtensionPointHandlerService`, `ExtensionPointService`, `SynthService`
 2. Pyro5 daemon startup with msgpack serialization and thread-based server
 3. Response generation:
@@ -641,46 +641,46 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
    }
    ```
 
-#### 16.2.4 Addon Loading
+#### Addon Loading
 The ART process connects to NVDA Core services, loads the addon via `AddOnLifecycleService.loadAddonIfNeeded()`, and activates proxy modules. The addon registers extension point handlers and becomes available for RPC calls.
 
-### 16.3 System Ready State
+### System Ready State
 Each addon runs in its own ART process with bidirectional RPC communication to NVDA Core. Core services are accessible from all ART processes, and existing addon APIs work through proxies.
 
-## 17. Security Model
+## Security Model
 
-### 17.1 Add-on Runtime Hosts
+### Add-on Runtime Hosts
 
 ART implements two security models. Regular ART allows network access but restricts file system access to the addon's directory and prevents starting new processes. SD-ART is more restrictive, blocking network access, clipboard access, UI creation outside NVDA, and desktop access. Both are designed to run with low integrity level (IL_LOW) and app container technology, though these restrictions are not yet fully implemented.
 
-### 17.2 Process Security
+### Process Security
 
 NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. Additional security measures like Windows Socket API validation and cryptographic process authentication were considered but not implemented. The current approach relies on the operating system's process security model and controlled process creation.
 
-### 17.3 Communication Security
+### Communication Security
 
 All Pyro5 RPC communication binds exclusively to the loopback interface (127.0.0.1) with random ports, preventing external access. ART processes are launched directly by NVDA Core with PID tracking and a bidirectional JSON handshake with 10-second timeout.
 
 The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with unique per-addon keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
 
-#### 17.3.2 Process Lifecycle Security  
+#### Process Lifecycle Security  
 - Parent-Child Relationship: ART processes are launched directly by NVDA Core
 - Process Tracking: NVDA Core tracks Process IDs (PIDs) of launched ART processes
 - Handshake Protocol: Bidirectional JSON handshake ensures proper initialization
 - Timeout Protection: 10-second handshake timeout prevents hung processes
 
-#### 17.3.3 Serialization Security
+#### Serialization Security
 - msgpack Serialization: Uses msgpack instead of Pickle to prevent code execution exploits
 - Structured Data: All RPC calls use defined data structures
 - No Code Injection: Serialization format prevents arbitrary code execution
 
-#### 17.3.4 Access Control via Process Model
+#### Access Control via Process Model
 - Process Isolation: Each addon runs in separate process with isolated memory space
 - Service Boundary: Clear separation between NVDA Core and addon code
 - Crash Isolation: Addon crashes do not affect NVDA Core or other addons
 
 
-#### 17.3.6 Security Philosophy
+#### Security Philosophy
 The current security model relies on:
 1. Process Isolation: Operating system process boundaries provide primary security
 2. Network Isolation: Loopback-only communication prevents external access  
@@ -690,19 +690,19 @@ The current security model relies on:
 
 This approach provides practical security for the intended use case while maintaining simplicity and performance.
 
-### 17.4 Audio Handling
+### Audio Handling
 
 - NVDA core will handle all audio processing
 - Add-ons will send PCM audio data streams to NVDA for playback
 - Audio generation capabilities remain in add-ons, but playback is controlled by NVDA
 
-### 17.5 Add-on Isolation
+### Add-on Isolation
 
 - Version 1 does not implement isolation between add-ons within the same runtime
 - Add-ons running in the same runtime process can potentially interact with each other
 - Future versions may implement more granular isolation between add-ons
 
-## 18. Future Enhancements (Post-Version 1)
+## Future Enhancements (Post-Version 1)
 
 - Permissions
 - multiprocess runtime
