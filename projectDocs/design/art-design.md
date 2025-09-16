@@ -625,7 +625,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
    ```
 
 #### Addon Loading
-The ART process connects to NVDA Core services, loads the addon via `AddOnLifecycleService.loadAddonIfNeeded()`, and activates proxy modules. The addon registers extension point handlers and becomes available for RPC calls.
+The ART process connects to NVDA Core services, loads the addon via `AddOnLifecycleService.loadAddon()`, and activates proxy modules. The addon registers extension point handlers and becomes available for RPC calls.
 
 ### System Ready State
 Each addon runs in its own ART process with bidirectional RPC communication to NVDA Core. Core services are accessible from all ART processes, and existing addon APIs work through proxies.
