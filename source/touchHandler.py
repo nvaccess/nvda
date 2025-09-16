@@ -94,35 +94,35 @@ POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
 
 
-class POINTER_INFO(Structure):  # noqa: F405
+class POINTER_INFO(Structure):
 	_fields_ = [
-		("pointerType", DWORD),  # noqa: F405
-		("pointerId", c_uint32),  # noqa: F405
-		("frameId", c_uint32),  # noqa: F405
-		("pointerFlags", c_uint32),  # noqa: F405
-		("sourceDevice", HANDLE),  # noqa: F405
-		("hwndTarget", HWND),  # noqa: F405
-		("ptPixelLocation", POINT),  # noqa: F405
-		("ptHimetricLocation", POINT),  # noqa: F405
-		("ptPixelLocationRaw", POINT),  # noqa: F405
-		("ptHimetricLocationRaw", POINT),  # noqa: F405
-		("dwTime", DWORD),  # noqa: F405
-		("historyCount", c_uint32),  # noqa: F405
-		("inputData", c_int),  # noqa: F405
-		("dwKeyStates", DWORD),  # noqa: F405
-		("PerformanceCount", c_uint64),  # noqa: F405
+		("pointerType", DWORD),
+		("pointerId", c_uint32),
+		("frameId", c_uint32),
+		("pointerFlags", c_uint32),
+		("sourceDevice", HANDLE),
+		("hwndTarget", HWND),
+		("ptPixelLocation", POINT),
+		("ptHimetricLocation", POINT),
+		("ptPixelLocationRaw", POINT),
+		("ptHimetricLocationRaw", POINT),
+		("dwTime", DWORD),
+		("historyCount", c_uint32),
+		("inputData", c_int),
+		("dwKeyStates", DWORD),
+		("PerformanceCount", c_uint64),
 	]
 
 
-class POINTER_TOUCH_INFO(Structure):  # noqa: F405
+class POINTER_TOUCH_INFO(Structure):
 	_fields_ = [
 		("pointerInfo", POINTER_INFO),
-		("touchFlags", c_uint32),  # noqa: F405
-		("touchMask", c_uint32),  # noqa: F405
-		("rcContact", RECT),  # noqa: F405
-		("rcContactRaw", RECT),  # noqa: F405
-		("orientation", c_uint32),  # noqa: F405
-		("pressure", c_uint32),  # noqa: F405
+		("touchFlags", c_uint32),
+		("touchMask", c_uint32),
+		("rcContact", RECT),
+		("rcContactRaw", RECT),
+		("orientation", c_uint32),
+		("pressure", c_uint32),
 	]
 
 
@@ -270,7 +270,7 @@ class TouchHandler(threading.Thread):
 				lpfnWndProc=self._cInputTouchWindowProc,
 				hInstance=self._appInstance,
 				lpszClassName="inputTouchWindowClass",
-			)  # noqa: F405
+			)
 			self._wca = user32.RegisterClassEx(byref(self._wc))
 			self._touchWindow = user32.CreateWindowEx(
 				0,
@@ -287,11 +287,11 @@ class TouchHandler(threading.Thread):
 				None,
 			)
 			user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
-			winBindings.oleacc.AccSetRunningUtilityState(  # noqa: F405
+			winBindings.oleacc.AccSetRunningUtilityState(
 				self._touchWindow,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
-			)  # noqa: F405
+			)
 			self.trackerManager = touchTracker.TrackerManager()
 			self.screenExplorer = screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview = True
@@ -299,11 +299,11 @@ class TouchHandler(threading.Thread):
 			self.threadExc = e
 		finally:
 			self.initializedEvent.set()
-		msg = MSG()  # noqa: F405
+		msg = MSG()
 		while user32.GetMessage(byref(msg), None, 0, 0):
-			user32.TranslateMessage(byref(msg))  # noqa: F405
-			user32.DispatchMessage(byref(msg))  # noqa: F405
-		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
+			user32.TranslateMessage(byref(msg))
+			user32.DispatchMessage(byref(msg))
+		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)
 		user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 		user32.DestroyWindow(self._touchWindow)
 		user32.UnregisterClass(self._wca, self._appInstance)
@@ -350,7 +350,7 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		winBindings.oleacc.AccNotifyTouchInteraction(  # noqa: F405
+		winBindings.oleacc.AccNotifyTouchInteraction(
 			gui.mainFrame.Handle,
 			obj.windowHandle,  # noqa: F405
 			obj.location.center.toPOINT(),
