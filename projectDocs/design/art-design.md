@@ -118,37 +118,53 @@ These boundaries work together to create a defense-in-depth approach to protecti
 source/art/
 ├── __init__.py
 ├── manager.py                    # ARTManager - handles startup/shutdown/monitoring
+├── daemon.py                     # Daemon management utilities
+├── extensionPointRegistry.py     # Extension point registry
+├── synthProxyGenerator.py       # Synthesizer proxy generation
+├── crypto/                       # Encryption components
+│   ├── __init__.py
+│   └── serializers.py            # EncryptedSerializer for authenticated encryption
+├── services/                     # Extension point services
+│   ├── __init__.py
+│   └── extensionPoints.py        # ExtensionPointProxy
 ├── core/                         # Services that run in NVDA Core process
 │   ├── __init__.py
 │   └── services/
 │       ├── __init__.py
+│       ├── base.py               # Base service class
+│       ├── braille.py            # BrailleService - braille display operations
 │       ├── config.py             # ConfigService - exposes config.conf
-│       ├── speech.py             # SpeechService - handles synth registration
+│       ├── globalVars.py         # GlobalVarsService - global variables access
+│       ├── languageHandler.py    # LanguageHandlerService - language functions
 │       ├── logging.py            # LoggingService - receives log messages
-│       ├── events.py             # EventService - sends events to ART
-│       └── navigation.py         # NavigationService - api.getFocusObject
+│       ├── nvwave.py             # NVWaveService - audio/wave functionality
+│       ├── speech.py             # SpeechService - handles synth registration
+│       └── ui.py                 # UIService - user interface operations
 └── runtime/                      # Code that runs in ART process
     ├── __init__.py
     ├── services/
     │   ├── __init__.py
     │   ├── addons.py             # AddOnLifecycleService
+    │   ├── braille.py            # BrailleDisplayService - braille display management
     │   └── synth.py              # SynthService - synthesizer implementation
     └── proxies/                  # NVDA module proxies for add-ons
         ├── __init__.py
-        ├── config.py             # Proxy for config module
-        ├── speech.py             # Proxy for speech module
-        ├── synthDriverHandler.py # Proxy for synthDriverHandler
-        ├── globalVars.py         # Proxy for globalVars module
-        ├── logHandler.py         # Proxy for logHandler module
-        ├── languageHandler.py    # Proxy for languageHandler module
-        ├── nvwave.py             # Proxy for nvwave module
-        ├── ui.py                 # Proxy for ui module
+        ├── base.py               # Base proxy class
         ├── addonHandler.py       # Proxy for addonHandler module
         ├── appModules.py         # Proxy for appModules module
+        ├── braille.py            # Proxy for braille module
         ├── brailleDisplayDrivers.py # Proxy for brailleDisplayDrivers
+        ├── config.py             # Proxy for config module
         ├── extensionPoints.py    # Proxy for extensionPoints module
         ├── globalPlugins.py      # Proxy for globalPlugins module
+        ├── globalVars.py         # Proxy for globalVars module
+        ├── languageHandler.py    # Proxy for languageHandler module
+        ├── logHandler.py         # Proxy for logHandler module
+        ├── nvwave.py             # Proxy for nvwave module
+        ├── speech.py             # Proxy for speech module
+        ├── synthDriverHandler.py # Proxy for synthDriverHandler
         ├── synthDrivers.py       # Proxy for synthDrivers module
+        ├── ui.py                 # Proxy for ui module
         └── visionEnhancementProviders.py # Proxy for visionEnhancementProviders
 ```
 
@@ -187,11 +203,14 @@ Key Features:
 
 Services that run in NVDA Core and are exposed to ART via RPC:
 
+- BrailleService: Handles braille display operations
 - ConfigService: Exposes `config.conf` read/write access
-- SpeechService: Handles synthesizer registration and audio streaming
+- GlobalVarsService: Provides access to global variables
+- LanguageHandlerService: Handles language and localization functions
 - LoggingService: Receives log messages from ART
-- EventService: Forwards NVDA events to ART
-- NavigationService: Provides `api.getFocusObject`, `api.getNavigatorObject`
+- NVWaveService: Provides audio/wave functionality
+- SpeechService: Handles synthesizer registration and audio streaming
+- UIService: Provides user interface operations
 
 ### Add-on Runtime Components
 
@@ -200,6 +219,7 @@ Services that run in NVDA Core and are exposed to ART via RPC:
 Services that run in the ART process:
 
 - AddOnLifecycleService: Loads and manages the assigned add-on
+- BrailleDisplayService: Manages braille display driver instances
 - SynthService: Manages synthesizer driver instances, handles speech requests, voice management, and audio streaming
 - ExtensionPointHandlerService: Executes extension point handlers (integrated in nvda_art.pyw)
 - ExtensionPointService: Tracks extension point registrations (integrated in nvda_art.pyw)
@@ -230,20 +250,7 @@ sys.path.insert(0, str(proxies_path))
 
 ### Core Services (exposed to add-ons)
 
-#### NavigationService
-
-- `getFocusObject()`: Gets current focus object (proxies `api.getFocusObject`)
-- `getNavigatorObject()`: Gets current navigator object (proxies `api.getNavigatorObject`)
-
-#### EventService
-
-- `registerEventHandler(eventName, handlerId)`: Registers for NVDA events (related to `eventHandler.executeEvent` dispatch)
-- `unregisterEventHandler(eventName, handlerId)`: Unregisters from events
-
-#### ExtensionPointProxyService
-
-- `getExtensionPoint(name)`: Gets a proxy for an extension point (e.g., `inputCore.decide_executeGesture`)
-- `registerExtensionPoint(name, type)`: Registers an add-on extension point (interacts with `extensionPoints` mechanism)
+The core services listed in the Components section are exposed to add-ons via RPC.
 
 ### Add-on Services (exposed to NVDA core)
 
@@ -252,10 +259,6 @@ sys.path.insert(0, str(proxies_path))
 - `loadAddon(addonPath)`: Loads the single addon assigned to this ART process
 - `getLoadedAddon()`: Returns info about the loaded addon
 - `getAddonInfo()`: Gets information about the loaded addon
-
-#### EventHandlerService
-
-- `dispatchEvent(eventName, obj, **kwargs)`: Sends events to add-ons (mirrors `eventHandler.executeEvent` parameters)
 
 #### ExtensionPointService
 
@@ -286,7 +289,7 @@ config.conf
 
 - Method calls are serialized and sent via RPC
 - Objects are serialized when possible
-- Events flow from NVDA to add-ons via the EventHandlerService
+- Events flow from NVDA to add-ons via the ExtensionPointHandlerService
 - Extension point calls flow from NVDA to add-ons via the ExtensionPointService
 - NVDA module access flows through proxy modules to core services
 
@@ -380,7 +383,7 @@ config.post_configProfileSwitch.register(self.myActionFunction)
 
 1. NVDA Core captures system events (focus changes, etc.) via handlers like `IAccessibleHandler`, `UIAHandler`.
 2. NVDA Core queues events using `eventHandler.queueEvent`.
-3. `eventHandler.executeEvent` eventually runs, which will call `EventHandlerService.dispatchEvent()` for ART.
+3. `eventHandler.executeEvent` eventually runs, which forwards events to ART processes.
 4. Add-on Runtime routes events to registered add-ons.
 5. Add-on processes the event.
 
@@ -577,10 +580,9 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 
 ### Phase 5: Event System & Extension Points
 
-1. Implement EventHandlerService
-2. Implement event forwarding from NVDA to add-ons
-3. Complete extension point system
-4. Test with complex add-on interactions
+1. Implement event forwarding from NVDA to add-ons
+2. Complete extension point system
+3. Test with complex add-on interactions
 
 ### Phase 6: Polish & Optimization
 
