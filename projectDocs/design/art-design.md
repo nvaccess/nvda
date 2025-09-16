@@ -41,7 +41,7 @@ ART uses a one-addon-per-process model where each enabled addon runs in its own 
    - Also runs at low integrity level (IL_LOW)
    - Cannot create UI outside of NVDA
    - Cannot start new processes
-   - Optimized for security-critical environments
+   - Restricted permissions for secure desktop sessions
 
 ### Process Communication
 
@@ -108,7 +108,7 @@ The architecture establishes multiple security boundaries:
 4. File System Boundary: Add-ons can only access their own directories
 5. Network Boundary: SD-ART has no network access, ART has network access
 
-These boundaries work together to create a defense-in-depth approach to protecting NVDA Core from potentially malicious or unstable add-ons.
+These boundaries protect NVDA Core from potentially malicious or unstable add-ons.
 
 ## Components
 
@@ -181,7 +181,7 @@ ARTManager Class:
 - Global Access: Provides `getARTManager()` for system-wide access to ART services
 
 ARTAddonProcess Class:
-- Subprocess Management: Uses `SubprocessManager` with `ProcessConfig` for robust process control
+- Subprocess Management: Uses `SubprocessManager` with `ProcessConfig` for process control
 - JSON Handshake Protocol: Implements bi-directional communication during startup
 - Service Connection: Establishes Pyro5 proxy connections to ART services
 - Error Recovery: Handles process crashes and communication failures
@@ -299,13 +299,13 @@ All data received via RPC at service endpoints (both in NVDA Core receiving call
 
 ### Encrypted Communication
 
-ART encrypts all RPC communication between NVDA Core and ART processes using XSalsa20-Poly1305 authenticated encryption. This addresses the fundamental security gap in the original design where sensitive data like configuration settings, speech text, and addon interactions were transmitted as plaintext over local network sockets.
+ART encrypts all RPC communication between NVDA Core and ART processes using XSalsa20-Poly1305 authenticated encryption. This prevents sensitive data like configuration settings, speech text, and addon interactions from being transmitted as plaintext over local network sockets.
 
 The implementation uses PyNaCl's SecretBox with unique ephemeral 32-byte keys generated for each addon. NVDA Core generates a unique key and serializer ID for each ART process, using incremental serializer IDs starting at 20. Each addon receives its unique encryption configuration during the JSON handshake. The EncryptedSerializer wraps Pyro5's msgpack serializer transparently - addons see no difference in API behavior, but all RPC calls are automatically encrypted with unique nonces to prevent replay attacks.
 
-This per-addon encryption provides complete traffic isolation between addons. Addon A cannot decrypt communication from Addon B, as each uses different encryption keys and serializer IDs. Pyro5's serializer_id mechanism automatically routes messages to the correct encrypted serializer without performance overhead. The encryption overhead is negligible compared to RPC serialization costs, while eliminating several attack vectors including inter-process eavesdropping, message tampering, cross-addon attacks, and RPC injection attempts. Keys exist only in memory during the NVDA session, providing forward secrecy if the system is compromised later.
+This per-addon encryption provides complete traffic isolation between addons. Addon A cannot decrypt communication from Addon B, as each uses different encryption keys and serializer IDs. Pyro5's serializer_id mechanism routes messages to the correct encrypted serializer. This eliminates attack vectors including inter-process eavesdropping, message tampering, cross-addon attacks, and RPC injection attempts. Keys exist only in memory during the NVDA session, providing forward secrecy if the system is compromised later.
 
-The encrypted serializer handles Pyro5's network layer quirks, including automatic conversion of bytearray objects to bytes for compatibility with PyNaCl's C bindings. Each message includes authentication data that prevents modification, ensuring that compromised processes cannot inject malicious RPC calls into the communication stream.
+The encrypted serializer handles Pyro5's network layer quirks, including automatic conversion of bytearray objects to bytes for compatibility with PyNaCl's C bindings. Each message includes authentication data that prevents modification, preventing compromised processes from injecting malicious RPC calls.
 
 ## GUI System
 
@@ -594,7 +594,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 
 - ART process crashes: NVDA Core detects and restarts it
 - Add-on crashes: Contained within ART process, logged
-- RPC errors: Timeouts, retries for critical services
+- RPC errors: Timeouts, retries for services
 
 ## Startup Sequence
 
@@ -657,7 +657,7 @@ ART implements two security models. Regular ART allows network access but restri
 
 ### Process Security
 
-NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. Additional security measures like Windows Socket API validation and cryptographic process authentication were considered but not implemented. The current approach relies on the operating system's process security model and controlled process creation.
+NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. Additional security measures like Windows Socket API validation and cryptographic process authentication were considered but not implemented. The current implementation relies on the operating system's process security model and controlled process creation.
 
 ### Communication Security
 
@@ -668,7 +668,7 @@ The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1
 #### Process Lifecycle Security  
 - Parent-Child Relationship: ART processes are launched directly by NVDA Core
 - Process Tracking: NVDA Core tracks Process IDs (PIDs) of launched ART processes
-- Handshake Protocol: Bidirectional JSON handshake ensures proper initialization
+- Handshake Protocol: Bidirectional JSON handshake for initialization
 - Timeout Protection: 10-second handshake timeout prevents hung processes
 
 #### Serialization Security
@@ -690,7 +690,7 @@ The current security model relies on:
 4. Serialization Safety: Safe serialization prevents code injection
 5. Lifecycle Management: Controlled process creation and monitoring
 
-This approach provides practical security for the intended use case while maintaining simplicity and performance.
+This provides practical security while maintaining simplicity and performance.
 
 ### Audio Handling
 
