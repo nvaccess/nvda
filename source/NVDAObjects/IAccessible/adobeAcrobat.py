@@ -230,7 +230,7 @@ class AcrobatNode(IAccessible):
 
 		# not MathML -- fall back to return the contents, which is hopefully alt text, inside an <mtext>
 		# note: we need to convert '<' and '%' to entity names
-		answer = f"<math><mtext>{html.escape(s=mathMl)}</mtext></math>"
+		answer = f"<math><mtext>{html.escape(mathMl)}</mtext></math>"
 		log.debug(f"_get_mathMl: didn't find MathML -- returning value as mtext: {answer}")
 		return answer
 
