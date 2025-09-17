@@ -19,7 +19,7 @@ We currently have the following templates:
   * Please note that these are reported differently, for more information refer to our [disclosure policy/procedure](https://github.com/nvaccess/nvda/blob/master/security.md)
 
 These are a fillable form that guides you through the process of providing the necessary information for your issue.
-The "Advanced" version of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) ask for the same information, but in a more free-form manner, with less supporting information.
+The "Advanced" version of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) asks for the same information, but in a more free-form manner, with less supporting information.
 
 ## Help
 
@@ -30,7 +30,7 @@ If you have trouble following this template, or with the initial investigation t
 * Read through the template first in Browse mode before filling it out, to ensure you don't skip over contextual text between form fields.
 * The template uses GitHub markdown in multi-line edit controls, to provide formatting for headings, lists, quotes etc.
 If you are not familiar, please take some time to learn about [Github markdown](https://guides.github.com/features/mastering-markdown/).
-* In multi-line edit boxes, consider swapping to the preview tab in order to read through the details and confirm the formatting reads as expected.
+* In multi-line edit boxes, consider switching to the preview tab in order to read through the details and confirm the formatting reads as expected.
 
 ## Attachments / Images
 

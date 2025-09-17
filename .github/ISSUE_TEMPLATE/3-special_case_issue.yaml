@@ -6,13 +6,14 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Attenion!
+        ## Attention!
 
-        Please read [this guide](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) for guidance on how to fill in this template, including how to provide the required files.
+        Please read [our guide to creating issues on the NVDA project](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) for guidance on how to fill in this template, including how to provide the required files.
         If your issue doesn't neatly fit into either the bug report or feature request categories, and it involves a more complex or unique scenario, use this template.
         Before proceeding, please review the existing templates to ensure that those do not better suit your needs:
-        - [Bug Report Template](https://github.com/nvaccess/nvda/issues/new?template=1-bug_report.yaml)
-        - [Feature Request Template](https://github.com/nvaccess/nvda/issues/new?template=2-feature_request.yaml)
+        
+        * [Bug Report Template](https://github.com/nvaccess/nvda/issues/new?template=1-bug_report.yaml)
+        * [Feature Request Template](https://github.com/nvaccess/nvda/issues/new?template=2-feature_request.yaml)
 
         If the required information is not provided upon request, the issue may be closed.
 
@@ -71,12 +72,11 @@ body:
         While performing the steps required, please make a copy of your [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
         It's important to include any files that are required to reproduce an issue.
         This might be an example file, or a link to a minimal code example using CodePen or JSFiddle.
-
-        *Example:*
-        >1. Open Chrome
-        >1. Browse to www.google.com
-        >1. Type "Hello"
-        >1. Press Enter
+      placeholder: |
+        1. Open Chrome
+        2. Browse to www.google.com
+        3. Type "Hello"
+        4. Press Enter
 
   - type: textarea
     id: expected-outcome
@@ -99,8 +99,8 @@ body:
 
         The following questions are about the system you are using when encountering the issue.
         If you are encountering the issue with multiple different configurations, please list them.
-        This helps us to be able to reproduce the issue, or help us to investigate why this issue occurs
-        for some users and not others.
+        This helps us to be able to reproduce the issue, or find out why this issue occurs for some users and not others.
+        
         If this or the following sections are not applicable, write "N/A." or leave blank.
 
   - type: dropdown
@@ -127,9 +127,9 @@ body:
         Knowing whether this issue occurs in previous releases helps us to understand if this is a newly introduced issue.
         It can help us determine if changes in NVDA or other software introduced the problem.
 
-        *Example:*
-        > * NVDA 2018.1 - no error sound
-        > * NVDA 2018.2 - has error sound
+      placeholder: |
+        * NVDA 2018.1 - no error sound
+        * NVDA 2018.2 - has error sound
 
   - type: input
     id: winVersion
@@ -138,14 +138,14 @@ body:
       description: |
         The version of Windows that you are using.
         You can copy this from the "System Information" application:
+        
         1. Press `Windows+r` to open the run dialog
         1. Type `msinfo32` and press enter
         1. From the "System summary" tree-view item, press tab to get to the right pane.
         1. Press down arrow twice to get to "Version"
         1. Press `Control+C` to copy the version information.
 
-        *Example:*
-        > Windows 10 Version 1607 Build 14393.1066
+      placeholder: "Windows 10 Version 1607 Build 14393.1066"
 
   - type: textarea
     id: otherVersions
@@ -154,8 +154,7 @@ body:
       description: |
         Typically, you can get this information from the "About" dialog of the software.
 
-        *Example:*
-        > Chrome version: 67.0.3396.87
+      placeholder: Chrome version: 67.0.3396.87
 
   - type: textarea
     id: otherSysInfo
@@ -164,5 +163,4 @@ body:
       description: |
         This is other information about your setup that you think might be relevant to us.
 
-        *Example:*
-        > Running Windows 10 in a VM
+      placeholder:  Running Windows 10 in a VM
