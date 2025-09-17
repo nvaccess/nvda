@@ -119,6 +119,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `installer.defaultInstallPath` has been moved to `NVDAState.WritePaths.defaultInstallDir`. (#18851)
 * `fonts.gdi32`, `screenBitmap.gdi32` and `winGDI.gdi32` are deprecated.
   Use `winBindings.gdi32.dll` instead. (#18860)
+* `shellapi.shell32` is deprecated.
   Use `winBindings.shell32.dll` instead. (#18860)
 * The following symbols have been moved from `shellapi` to `winBindings.shell32`: `SHELLEXECUTEINFO`, `SHELLEXECUTEINFOW`.
   Access to these symbols via `shellapi` is deprecated. (#18860)
@@ -147,6 +148,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
 
 ## 2025.3
 
