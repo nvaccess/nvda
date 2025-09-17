@@ -28,7 +28,7 @@ import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from utils._deprecate import handleDeprecations, MovedSymbol
-from winBindings.advapi32 import RegDeleteTreeW
+from winBindings.advapi32 import RegDeleteTree
 
 _wsh = None
 
@@ -619,14 +619,14 @@ def unregisterAddonFileAssociation():
 
 
 def _deleteKeyAndSubkeys(key: int, subkey: str):
-	"""Delete a registry key and all its subkeys using RegDeleteTreeW via winBindings.advapi32."""
+	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
 	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
-		result = RegDeleteTreeW(
+		result = RegDeleteTree(
 			parent.handle,
 			subkey,
 		)
 	if result != 0:
-		raise WindowsError(result, f"RegDeleteTreeW failed for {subkey=}")
+		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
 
 
 class RetriableFailure(Exception):
