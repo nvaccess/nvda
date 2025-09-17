@@ -150,7 +150,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 
 	if params is not None:
 		params = subprocess.list2cmdline(params)
-	sei = shellapi.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
+	sei = winBindings.shell32.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
 	# IsUserAnAdmin is apparently deprecated so may not work above Windows 8
 	if not handleAlreadyElevated or not winBindings.shell32.IsUserAnAdmin():
 		sei.lpVerb = "runas"
@@ -232,7 +232,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.threadExc: Exception | None = None
 		self.start()
 		time.sleep(0.1)
-		threadHandle = ctypes.c_int()
+		threadHandle = ctypes.wintypes.HANDLE()
 		threadHandle.value = winBindings.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
 		while user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
