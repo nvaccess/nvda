@@ -8,6 +8,7 @@ from ctypes.wintypes import *  # noqa: F403
 from comtypes import *  # noqa: F403
 from comtypes.automation import *  # noqa: F403
 import comtypes.client
+from winBindings import user32
 import winUser
 import typing
 
@@ -258,7 +259,7 @@ def AccessibleObjectFromWindow_safe(hwnd, objectID, interface=IAccessible, timeo
 		raise ValueError("Invalid window")
 	wmResult = c_long()  # noqa: F405
 	res = (
-		windll.user32.SendMessageTimeoutW(  # noqa: F405
+		user32.SendMessageTimeout(  # noqa: F405
 			hwnd,
 			winUser.WM_GETOBJECT,
 			0,
@@ -343,15 +344,13 @@ def AccessibleChildren(pacc, iChildStart, cChildren):
 	return [x.value for x in varChildren[0 : pcObtained.value]]
 
 
-def GetProcessHandleFromHwnd(windowHandle):
+def GetProcessHandleFromHwnd(windowHandle: int) -> int:
 	"""Retrieves a process handle of the process who owns the window.
 	This uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process that is elevated.
-	@param windowHandle: a window of a process you wish to retreave a process handle for
-	@type windowHandle: integer
-	@returns: a process handle with read, write and operation access
-	@rtype: integer
+	:param windowHandle: a window of a process you wish to retrieve a process handle for
+	:returns: a process handle with read, write and operation access
 	"""
-	return winBindings.oleacc.GetProcessHandleFromHwnd(windowHandle)  # noqa: F405
+	return winBindings.oleacc.GetProcessHandleFromHwnd(windowHandle) or 0
 
 
 def GetRoleText(role):

@@ -15,6 +15,7 @@ on:
       - master
       - beta
       - rc
+      - 'try-**'
 
   workflow_dispatch:
 
@@ -103,7 +104,7 @@ jobs:
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
-      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
+      run: scons source %sconsArgs% %sconsCores%
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
@@ -338,13 +339,17 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
-    - name: Create launcher
+    - name: Build scons docs targets
+      shell: cmd
+      run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
+    # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
+    - name: Create launcher and controller client
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
+        scons %sconsLauncherOutTargets% %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
@@ -496,10 +501,13 @@ jobs:
     # Used to protect branches/tags as a general status check so we can check a single job for all rulesets.
     name: Check if all tests pass
     runs-on: ubuntu-latest
+    if: always()
     needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
     steps:
     - name: Check if all tests pass
-      run: echo "All tests passed successfully."
+      uses: re-actors/alls-green@v1.2.2
+      with:
+        jobs: ${{ toJSON(needs) }}
 
   uploadSymbols:
     name: Upload symbols
