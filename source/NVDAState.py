@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from functools import cached_property
+from functools import lru_cache
 import os
 import sys
 import sysconfig
@@ -95,7 +95,8 @@ class _WritePaths:
 		"""Name of a specific folder in the start menu, not a full path"""
 		return buildVersion.name
 
-	@cached_property
+	@lru_cache(maxsize=1)
+	@property
 	def startMenuFolder(self) -> str | None:
 		"""Name of a specific folder in the start menu, not a full path"""
 		from config.registry import RegistryKey
@@ -106,7 +107,8 @@ class _WritePaths:
 		except WindowsError:
 			return None
 
-	@cached_property
+	@lru_cache(maxsize=1)
+	@property
 	def defaultInstallDir(self) -> str:
 		from config.registry import RegistryKey
 
@@ -114,7 +116,8 @@ class _WritePaths:
 			programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
 		return os.path.join(programFilesPath, buildVersion.name)
 
-	@cached_property
+	@lru_cache(maxsize=1)
+	@property
 	def installDir(self) -> str | None:
 		from config.registry import RegistryKey
 
