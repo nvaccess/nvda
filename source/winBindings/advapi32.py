@@ -64,7 +64,7 @@ RegCloseKey.argtypes = (
 )
 RegCloseKey.restype = LONG
 
-RegDeleteTree = dll.RegDeleteTree
+RegDeleteTree = dll.RegDeleteTreeW
 """
 Deletes a subkey and all its descendants.
 .. seealso::
