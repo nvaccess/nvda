@@ -13,6 +13,13 @@ NV Access also maintains a [development roadmap](https://www.nvaccess.org/post/n
 NVDA is available under a modified GNU General Public License version 2.
 Please refer to [our license](./copying.txt) for more information.
 
+## Important temporary notice for contributors: Proposed license update
+
+We are proposing an update to the NVDA license and are seeking feedback from all historical contributors.
+To ensure you have an opportunity to contribute to the discussion, please review the proposal:
+[Proposed update to the NVDA license](https://github.com/nvaccess/nvda/discussions/18574).
+The consultation period ends on 28 September 2025.
+
 ## Acknowledgements
 
 We would like to extend our sincere gratitude to [SignPath](https://www.signpath.io/) for their generous support in providing code signing services to many open source projects, including NVDA.
@@ -33,8 +40,7 @@ This includes information on reporting issues, triaging issues, testing, transla
 
 ## Status checks
 
-* AppVeyor
-  * Alpha build status: [![view latest alpha builds](https://ci.appveyor.com/api/projects/status/sqeer6p8lc80lvqe/branch/master?svg=true)](https://ci.appveyor.com/project/NVAccess/nvda/branch/master)
-  * Beta build status: [![view latest beta builds](https://ci.appveyor.com/api/projects/status/sqeer6p8lc80lvqe/branch/beta?svg=true)](https://ci.appveyor.com/project/NVAccess/nvda/branch/beta)
+* Alpha build status: [![view latest alpha builds](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml/badge.svg?branch=master)](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml?query=branch%3Amaster+event%3Apush)
+* Beta build status: [![view latest beta builds](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml/badge.svg?branch=beta)](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml?query=branch%3Abeta+event%3Apush)
 * Pre-commit status (master): [![view pre-commit checks on master](https://results.pre-commit.ci/badge/github/nvaccess/nvda/master.svg)](https://results.pre-commit.ci/latest/github/nvaccess/nvda/master)
 * CodeQL security analysis status (master): [![view CodeQL security analysis checks on master](https://github.com/nvaccess/nvda/actions/workflows/github-code-scanning/codeql/badge.svg?branch=master)](https://github.com/nvaccess/nvda/actions/workflows/github-code-scanning/codeql?query=branch%3Amaster)

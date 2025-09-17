@@ -17,12 +17,13 @@ Version numbers for dependencies should be used to lock in a version.
 ### Entry points to the build system
 
 These are the only files expected to be executed directly by a user/developer:
-- `scons.bat`
-- `runnvda.bat`
-- `rununittests.bat`
-- `runsystemtests.bat`
-- `runlint.bat`
-- `runlicensecheck.bat`
+
+* `scons.bat`
+* `runnvda.bat`
+* `rununittests.bat`
+* `runsystemtests.bat`
+* `runlint.bat`
+* `runlicensecheck.bat`
 
 **Note:** The `runnvda.bat` script uses `uv run`, which executes `nvda.pyw` as a GUI application by default.
 This is the more common and expected way to run NVDA.
@@ -39,11 +40,12 @@ Ensures the build environment is clean, and there are no conflicts with other in
 
 NVDA and its build system have many Python dependencies.
 Using `uv` means:
-- Updating is easier than git submodules.
-- Developers need to sync/update their submodules less often.
-- More consistency for dependencies.
-- IDE's can be configured more easily, for NVDA development as well as for development of add-ons.
-- No conflict between NVDA dependencies and Python packages already installed globally on the
+
+* Updating is easier than git submodules.
+* Developers need to sync/update their submodules less often.
+* More consistency for dependencies.
+* IDE's can be configured more easily, for NVDA development as well as for development of add-ons.
+* No conflict between NVDA dependencies and Python packages already installed globally on the
   developer's system.
-- Don't interfere with the developer's system. Installing packages globally may break things
+* Don't interfere with the developer's system. Installing packages globally may break things
   outside of NVDA.

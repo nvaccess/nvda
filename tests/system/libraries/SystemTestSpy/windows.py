@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2021-2025 NV Access Limited, Łukasz Golonka, Bill Dengler
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """This module provides functions to interact with the Windows system."""
 
+from collections.abc import Callable
 from ctypes.wintypes import LPARAM
 from ctypes import (
 	c_bool,
@@ -16,10 +17,7 @@ from ctypes import (
 	WinError,
 )
 from typing import (
-	Callable,
-	List,
 	NamedTuple,
-	Optional,
 )
 import re
 from SystemTestSpy.blockUntilConditionMet import _blockUntilConditionMet
@@ -49,8 +47,8 @@ def _GetWindowTitle(hwnd: HWNDVal) -> str:
 
 def _GetWindows(
 	filterUsingWindow: Callable[[Window], bool] = lambda _: True,
-) -> List[Window]:
-	windows: List[Window] = []
+) -> list[Window]:
+	windows: list[Window] = []
 
 	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
 	# HWND as a pointer creates confusion, treat as an int
@@ -69,7 +67,7 @@ def _GetWindows(
 	return windows
 
 
-def _GetVisibleWindows() -> List[Window]:
+def _GetVisibleWindows() -> list[Window]:
 	return _GetWindows(
 		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title),
 	)
@@ -77,14 +75,14 @@ def _GetVisibleWindows() -> List[Window]:
 
 def CloseWindow(window: Window) -> bool:
 	"""
-	@return: True if the window exists and the message was sent.
+	Request that the target window close gracefully (WM_CLOSE).
+	:return: True if the window exists and the message was posted.
 	"""
 	if windowWithHandleExists(window.hwndVal):
-		return bool(
-			windll.user32.CloseWindow(
-				window.hwndVal,
-			),
-		)
+		# We do not use user32.CloseWindow, which minimizes (rather than
+		# closing) the window.
+		WM_CLOSE: int = 0x0010
+		return bool(windll.user32.PostMessageW(window.hwndVal, WM_CLOSE, 0, 0))
 	return False
 
 
@@ -110,7 +108,7 @@ def SetForegroundWindow(window: Window, logger: Logger) -> bool:
 	return windll.user32.SetForegroundWindow(window.hwndVal)
 
 
-def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
+def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Window | None:
 	windows = _GetWindows(
 		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title)),
 	)
@@ -125,7 +123,7 @@ def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Wind
 		return None
 
 
-def GetVisibleWindowTitles() -> List[str]:
+def GetVisibleWindowTitles() -> list[str]:
 	windows = _GetVisibleWindows()
 	return [w.title for w in windows]
 
@@ -153,3 +151,18 @@ def getWindowHandle(windowClassName: str, windowName: str) -> HWNDVal:
 
 def windowWithHandleExists(handle: HWNDVal) -> bool:
 	return bool(windll.user32.IsWindow(handle))
+
+
+def sendKeyboardEvent(
+	vk: int,
+	scanCode: int,
+	flags: int,
+	extraInfo: int,
+):
+	"""Wrapper for ctypes.windll.user32.keybd_event to simulate keyboard events."""
+	return windll.user32.keybd_event(
+		vk,
+		scanCode,
+		flags,
+		extraInfo,
+	)

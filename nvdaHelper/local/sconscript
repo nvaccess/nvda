@@ -99,6 +99,7 @@ localLib = env.SharedLibrary(
 		"wasapi.cpp",
 		"screenCurtain.cpp",
 		"remoteAccess.cpp",
+		"crashDump.cpp",
 	],
 	LIBS=[
 		"advapi32.lib",
@@ -114,6 +115,7 @@ localLib = env.SharedLibrary(
 		"Iphlpapi",
 		"Ws2_32",
 		"runtimeobject",
+		"dbghelp",
 	],
 )
 

@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited
+# Copyright (C) 2006-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+import sysconfig
 
 Import(
 	"env",
@@ -66,11 +67,25 @@ def COMProxyDllBuilder(env, target, source, proxyClsid):
 
 env.AddMethod(COMProxyDllBuilder, "COMProxyDll")
 
-# We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 2):
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
+# We only support compiling with MSVC 14.3 (2022) or newer
+if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 3):
+	raise RuntimeError("Visual C++ 14.3 (Visual Studio 2022) or newer not found")
 
+PYTHON_PLATFORM = sysconfig.get_platform()
 TARGET_ARCH = env["TARGET_ARCH"]
+isArm64EC = env.get("isArm64EC", False)
+
+
+isNVDACoreArch = (
+	(PYTHON_PLATFORM == "win32" and TARGET_ARCH == "x86")
+	or (PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "x86_64")
+	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
+)
+isNVDAHelperLocalArch = isNVDACoreArch or (
+	PYTHON_PLATFORM == "win-amd64"
+	and TARGET_ARCH == "arm64"
+	and isArm64EC
+)
 debug = env["nvdaHelperDebugFlags"]
 release = env["release"]
 signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
@@ -81,7 +96,7 @@ env.Append(
 		"UNICODE",
 		"_CRT_SECURE_NO_DEPRECATE",
 		("LOGLEVEL", "${nvdaHelperLogLevel}"),
-		("_WIN32_WINNT", "_WIN32_WINNT_WINBLUE"),
+		("_WIN32_WINNT", "_WIN32_WINNT_WIN10"),
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
 		"NOMINMAX",
@@ -92,21 +107,27 @@ env.Append(CXXFLAGS=["/EHsc"])
 
 env.Append(CPPPATH=["#/include", "#/include/wil/include", "#/miscDeps/include", Dir(".").abspath])
 
-# Windows 8.1 (blue)
-subsystem = "/subsystem:windows,6.03"
+# Windows 10
+subsystem = "/subsystem:windows,10.00"
 
 env.Append(
 	LINKFLAGS=[
 		"/incremental:no",
 		"/WX",
 		subsystem,
+		"/release",  # We always want a checksum in the header
 	]
 )
-env.Append(LINKFLAGS="/release")  # We always want a checksum in the header
+env.Append(
+	ARFLAGS=[
+		"/WX",
+		subsystem,
+	]
+)
 if TARGET_ARCH == "x86_64":
 	env.Append(MIDLFLAGS="/x64")
 elif TARGET_ARCH == "arm64":
-	env.Append(MIDLFLAGS="/arm64")
+	env.Append(MIDLFLAGS="/x64" if isArm64EC else "/arm64")
 else:
 	env.Append(MIDLFLAGS="/win32")
 
@@ -116,6 +137,7 @@ else:
 	env.Append(CCFLAGS="/O2")
 	env.Append(CCFLAGS="/GL")
 	env.Append(LINKFLAGS=["/LTCG"])
+	env.Append(ARFLAGS=["/LTCG"])
 
 if "debugCRT" not in debug:
 	env.Append(CPPDEFINES="NDEBUG")
@@ -140,6 +162,11 @@ env.Append(
 		# included by the files that you include.
 	]
 )
+
+if isArm64EC:
+	env.Append(CCFLAGS="/arm64EC")
+	env.Append(LINKFLAGS="/machine:arm64ec")
+	env.Append(ARFLAGS="/machine:arm64ec")
 
 if "debugCRT" in debug:
 	env.Append(CCFLAGS=["/MTd"])
@@ -174,7 +201,7 @@ Export("env")
 
 acrobatAccessRPCStubs = env.SConscript("acrobatAccess_sconscript")
 Export("acrobatAccessRPCStubs")
-if TARGET_ARCH == "x86":
+if isNVDACoreArch:
 	env.Install(sourceTypelibDir, acrobatAccessRPCStubs[0])  # typelib
 
 ia2RPCStubs = env.SConscript("ia2_sconscript")
@@ -182,18 +209,18 @@ Export("ia2RPCStubs")
 if signExec:
 	env.AddPostAction(ia2RPCStubs[0], [signExec])
 env.Install(libInstallDir, ia2RPCStubs[0])  # proxy dll
-if TARGET_ARCH == "x86":
+if isNVDACoreArch:
 	env.Install(sourceTypelibDir, ia2RPCStubs[1])  # typelib
 
 iSimpleDomRPCStubs = env.SConscript("ISimpleDOM_sconscript")
 if signExec:
 	env.AddPostAction(iSimpleDomRPCStubs[0], [signExec])
 env.Install(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
-if TARGET_ARCH == "x86":
+if isNVDACoreArch:
 	env.Install(sourceTypelibDir, iSimpleDomRPCStubs[1])  # typelib
 
 mathPlayerRPCStubs = env.SConscript("mathPlayer_sconscript")
-if TARGET_ARCH == "x86":
+if isNVDACoreArch:
 	env.Install(sourceTypelibDir, mathPlayerRPCStubs[0])  # typelib
 
 detoursLib = env.SConscript("detours/sconscript")
@@ -202,7 +229,7 @@ Export("detoursLib")
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
 
-if TARGET_ARCH == "x86":
+if isNVDAHelperLocalArch:
 	localLib = env.SConscript("local/sconscript")
 	Export("localLib")
 	if signExec:
@@ -231,12 +258,14 @@ if signExec:
 	env.AddPostAction(remoteLib[0], [signExec])
 env.Install(libInstallDir, remoteLib)
 
-if TARGET_ARCH in ("x86_64", "arm64"):
+if not isNVDAHelperLocalArch:
 	remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
 	if signExec:
 		env.AddPostAction(remoteLoaderProgram, [signExec])
 	env.Install(libInstallDir, remoteLoaderProgram)
 
-if TARGET_ARCH == "x86":
+if isNVDACoreArch:
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
+	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
+	thirdPartyEnv.SConscript("uwp/sconscript")

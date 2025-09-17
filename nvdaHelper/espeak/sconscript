@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2025 NV Access Limited
 
+import ctypes.wintypes
 import enum
 import typing
 import os
@@ -22,10 +23,13 @@ Import(
 	]
 )
 
+freeLibrary = ctypes.windll.kernel32.FreeLibrary
+freeLibrary.argtypes = (ctypes.wintypes.HANDLE,)
+
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
-		ctypes.windll.kernel32.FreeLibrary(self._handle)
+		freeLibrary(self._handle)
 
 
 synthDriversDir = sourceDir.Dir("synthDrivers")
@@ -1014,7 +1018,7 @@ def espeak_compileDict_buildAction(
 		# returns: espeak_ERROR
 		setVoiceResult = espeak.espeak_SetVoiceByProperties(ctypes.byref(voice))
 		if espeak_ERROR.EE_OK.value != setVoiceResult:
-			print(f"Failed to switch to language: '{lang}'" f"\n result: {espeak_ERROR(setVoiceResult)!s}")
+			print(f"Failed to switch to language: '{lang}'\n result: {espeak_ERROR(setVoiceResult)!s}")
 			return ACTION_FAILURE
 
 		rulesPathEncoded = os.fsencode(dirForRules.abspath + "/")

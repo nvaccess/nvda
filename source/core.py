@@ -19,8 +19,8 @@ import winVersion
 import threading
 import os
 import time
-import ctypes
 from enum import Enum
+import winBindings.kernel32
 import logHandler
 import languageHandler
 import globalVars
@@ -31,7 +31,6 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
-import truststore
 
 if TYPE_CHECKING:
 	import wx
@@ -114,8 +113,9 @@ def _showAddonsErrors() -> None:
 		gui.messageBox(
 			_(
 				# Translators: Shown when one or more actions on add-ons failed.
-				"Some operations on add-ons failed. See the log file for more details.\n{}",
-			).format("\n".join(addonFailureMessages)),
+				# {failureMsg} will be replaced with the specific error message.
+				"Some operations on add-ons failed. See the log file for more details.\n{failureMsg}",
+			).format(failureMsg="\n".join(addonFailureMessages)),
 			# Translators: Title of message shown when requested action on add-ons failed.
 			_("Error"),
 			wx.ICON_ERROR | wx.OK,
@@ -642,7 +642,7 @@ def _setUpWxApp() -> "wx.App":
 	def onQueryEndSession(evt):
 		if config.isAppX:
 			# Automatically restart NVDA on Windows Store update
-			ctypes.windll.kernel32.RegisterApplicationRestart(None, 0)
+			winBindings.kernel32.RegisterApplicationRestart(None, 0)
 
 	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 
@@ -673,10 +673,6 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-
-	# Use Windows root certificates for requests rather than certifi.
-	truststore.inject_into_ssl()
-
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
 		from winAPI.dpiAwareness import setDPIAwareness
@@ -699,7 +695,6 @@ def main():
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
-
 	# Initialize the config path (make sure it exists)
 	config.initConfigPath()
 	log.info(f"Config dir: {WritePaths.configDir}")
@@ -832,9 +827,9 @@ def main():
 		wx.CallAfter(audioDucking.initialize)
 
 	from winAPI.messageWindow import _MessageWindow
-	import versionInfo
+	import buildVersion
 
-	messageWindow = _MessageWindow(versionInfo.name)
+	messageWindow = _MessageWindow(buildVersion.name)
 
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
@@ -1098,15 +1093,6 @@ def main():
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	_terminate(schedule, name="task scheduler")
-	# DMP is only started if needed.
-	# Terminate manually (and let it write to the log if necessary)
-	# as core._terminate always writes an entry.
-	try:
-		import diffHandler
-
-		diffHandler._dmp._terminate()
-	except Exception:
-		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:

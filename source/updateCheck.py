@@ -29,9 +29,9 @@ if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
 	raise RuntimeError("updates managed by Windows Store")
-import versionInfo
+import buildVersion
 
-if not versionInfo.updateVersionType:
+if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
@@ -48,6 +48,9 @@ import pickle
 import urllib.request
 import urllib.parse
 import hashlib
+import ctypes.wintypes
+import requests
+import ssl
 import wx
 import languageHandler
 
@@ -56,7 +59,7 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
-from gui.message import displayDialogAsModal  # noqa: E402
+from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
 from addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
@@ -65,40 +68,8 @@ from addonStore.models.version import (  # noqa: E402
 import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
 import winKernel
-from utils.networking import _fetchUrlAndUpdateRootCertificates
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from dataclasses import dataclass
-
-import NVDAState
-
-
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "CERT_USAGE_MATCH" and NVDAState._allowDeprecatedAPI():
-		log.warning(
-			"CERT_USAGE_MATCH is deprecated and will be removed in a future version of NVDA. ",
-			stack_info=True,
-		)
-		from utils.networking import _CERT_USAGE_MATCH as CERT_USAGE_MATCH
-
-		return CERT_USAGE_MATCH
-	if attrName == "CERT_CHAIN_PARA" and NVDAState._allowDeprecatedAPI():
-		log.warning(
-			"CERT_CHAIN_PARA is deprecated and will be removed in a future version of NVDA. ",
-			stack_info=True,
-		)
-		from utils.networking import _CERT_CHAIN_PARA as CERT_CHAIN_PARA
-
-		return CERT_CHAIN_PARA
-	if attrName == "UPDATE_FETCH_TIMEOUT_S" and NVDAState._allowDeprecatedAPI():
-		log.warning(
-			"UPDATE_FETCH_TIMEOUT_S is deprecated and will be removed in a future version of NVDA. ",
-			stack_info=True,
-		)
-		from utils.networking import _FETCH_TIMEOUT_S as UPDATE_FETCH_TIMEOUT_S
-
-		return UPDATE_FETCH_TIMEOUT_S
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 #: The URL to use for update checks.
@@ -205,6 +176,9 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
+UPDATE_FETCH_TIMEOUT_S = 30  # seconds
+
+
 def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -227,8 +201,8 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
-		"version": versionInfo.version,
-		"versionType": versionInfo.updateVersionType,
+		"version": buildVersion.version,
+		"versionType": buildVersion.updateVersionType,
 		"osVersion": winVersionText,
 		# Check if the architecture is the most common: "AMD64"
 		# Available values of PROCESSOR_ARCHITEW6432 found in:
@@ -256,17 +230,28 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		}
 		params.update(extraParams)
 
-	result = _fetchUrlAndUpdateRootCertificates(
-		url=f"{_getCheckURL()}?{urllib.parse.urlencode(params)}",
-		# We must specify versionType so the server doesn't return a 404 error and
-		# thus cause an exception.
-		certFetchUrl=f"{_getCheckURL()}?versionType=stable",
-	)
+	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
+	try:
+		log.debug(f"Fetching update data from {url}")
+		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
+	except IOError as e:
+		if (
+			isinstance(e.reason, ssl.SSLCertVerificationError)
+			and e.reason.reason == "CERTIFICATE_VERIFY_FAILED"
+		):
+			# #4803: Windows fetches trusted root certificates on demand.
+			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
+			_updateWindowsRootCertificates()
+			# Retry the update check
+			log.debug(f"Retrying update check from {url}")
+			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
+		else:
+			raise
 
-	if result.status_code != 200:
-		raise RuntimeError(f"Checking for update failed with HTTP status code {result.status_code}.")
+	if res.code != 200:
+		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
 
-	data = result.content.decode("utf-8")  # Ensure the response is decoded correctly
+	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
 	# if data is empty, we return None, because the server returns an empty response if there is no update.
 	if not data:
 		return None
@@ -602,6 +587,8 @@ class UpdateResultDialog(
 		self.Show()
 
 	def onUpdateButton(self, destPath):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -774,6 +761,8 @@ class UpdateAskInstallDialog(
 		return callback
 
 	def onUpdateButton(self, evt):
+		if not _warnAndConfirmIfUpdatingRemotely():
+			return
 		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
@@ -1004,6 +993,39 @@ def saveState():
 		log.debugWarning("Error saving state", exc_info=True)
 
 
+def _warnAndConfirmIfUpdatingRemotely() -> bool:
+	# Import late to avoid circular import
+	from _remoteClient import _remoteClient
+
+	if _remoteClient is not None and _remoteClient.isConnectedAsFollower:
+		confirmationDialog = (
+			MessageDialog(
+				gui.mainFrame,
+				_(
+					# Translators: Message shown to users when attempting to update NVDA
+					# on a computer which is being remotely controlled via NVDA Remote Access
+					"Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
+				)
+				+ _(
+					# Translators: Message shown to users when attempting to update NVDA from an installed copy
+					# on a computer which is being remotely controlled via NVDA Remote Access.
+					"The currently active connection may not be continued during or after the update. "
+					"Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
+					"You should only proceed if you have physical access to the controlled computer.\n\n"
+					"Are you sure you want to continue?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
+	return True
+
+
 def initialize():
 	global state, autoChecker
 	try:
@@ -1028,7 +1050,7 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == buildVersion.version:
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:
@@ -1053,3 +1075,68 @@ def terminate():
 	if autoChecker:
 		autoChecker.terminate()
 		autoChecker = None
+
+
+# These structs are only complete enough to achieve what we need.
+class CERT_USAGE_MATCH(ctypes.Structure):
+	_fields_ = (
+		("dwType", ctypes.wintypes.DWORD),
+		# CERT_ENHKEY_USAGE struct
+		("cUsageIdentifier", ctypes.wintypes.DWORD),
+		("rgpszUsageIdentifier", ctypes.c_void_p),  # LPSTR *
+	)
+
+
+class CERT_CHAIN_PARA(ctypes.Structure):
+	_fields_ = (
+		("cbSize", ctypes.wintypes.DWORD),
+		("RequestedUsage", CERT_USAGE_MATCH),
+		("RequestedIssuancePolicy", CERT_USAGE_MATCH),
+		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
+		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
+		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
+		("pftCacheResync", ctypes.c_void_p),  # LPFILETIME
+		("pStrongSignPara", ctypes.c_void_p),  # PCCERT_STRONG_SIGN_PARA
+		("dwStrongSignFlags", ctypes.wintypes.DWORD),
+	)
+
+
+def _updateWindowsRootCertificates():
+	log.debug("Updating Windows root certificates")
+	crypt = ctypes.windll.crypt32
+	with requests.get(
+		# We must specify versionType so the server doesn't return a 404 error and
+		# thus cause an exception.
+		f"{_getCheckURL()}?versionType=stable",
+		timeout=UPDATE_FETCH_TIMEOUT_S,
+		# Use an unverified connection to avoid a certificate error.
+		verify=False,
+		stream=True,
+	) as response:
+		# Get the server certificate.
+		cert = response.raw.connection.sock.getpeercert(True)
+	# Convert to a form usable by Windows.
+	certCont = crypt.CertCreateCertificateContext(
+		0x00000001,  # X509_ASN_ENCODING
+		cert,
+		len(cert),
+	)
+	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
+	chainCont = ctypes.c_void_p()
+	crypt.CertGetCertificateChain(
+		None,
+		certCont,
+		None,
+		None,
+		ctypes.byref(
+			CERT_CHAIN_PARA(
+				cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
+				RequestedUsage=CERT_USAGE_MATCH(),
+			),
+		),
+		0,
+		None,
+		ctypes.byref(chainCont),
+	)
+	crypt.CertFreeCertificateChain(chainCont)
+	crypt.CertFreeCertificateContext(certCont)

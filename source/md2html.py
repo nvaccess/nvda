@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023-2024 NV Access Limited
+# Copyright (C) 2023-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -8,21 +8,43 @@ from copy import deepcopy
 import io
 import re
 import shutil
+from typing import Any
 
-DEFAULT_EXTENSIONS = frozenset(
-	{
-		# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
-		"markdown.extensions.extra",
-		# Allows TOC with [TOC]"
-		"markdown.extensions.toc",
-		# Makes list behaviour better, including 2 space indents by default
-		"mdx_truly_sane_lists",
-		# External links will open in a new tab, and title will be set to the link text
-		"markdown_link_attr_modifier",
-		# Adds links to GitHub authors, issues and PRs
-		"mdx_gh_links",
-	},
+_DEFAULT_EXTENSIONS_ORDERED = (
+	# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
+	"markdown.extensions.extra",
+	# Used to preserve tabs in code blocks
+	"pymdownx.superfences",
+	# Allows TOC with [TOC]"
+	"markdown.extensions.toc",
+	# Makes list behaviour better, including 2 space indents by default
+	"mdx_truly_sane_lists",
+	# External links will open in a new tab, and title will be set to the link text
+	"markdown_link_attr_modifier",
+	# Adds links to GitHub authors, issues and PRs
+	"mdx_gh_links",
 )
+"""
+Default extensions to use for markdown conversion.
+Order is important, as some extensions depend on or affect others.
+"""
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "DEFAULT_EXTENSIONS":
+		# Note: this should only log in situations where it will not be excessively noisy.
+		from logHandler import log
+
+		log.warning(
+			"Importing DEFAULT_EXTENSIONS from here is deprecated. Importing from md2html is discouraged. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		# Return a frozenset to match the API of the deprecated DEFAULT_EXTENSIONS symbol.
+		return frozenset(_DEFAULT_EXTENSIONS_ORDERED)
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 EXTENSIONS_CONFIG = {
 	"markdown_link_attr_modifier": {
@@ -32,6 +54,9 @@ EXTENSIONS_CONFIG = {
 	"mdx_gh_links": {
 		"user": "nvaccess",
 		"repo": "nvda",
+	},
+	"pymdownx.superfences": {
+		"preserve_tabs": True,
 	},
 }
 
@@ -107,11 +132,11 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	import markdown
 	import nh3
 
-	extensions = set(DEFAULT_EXTENSIONS)
+	extensions = list(_DEFAULT_EXTENSIONS_ORDERED)
 	if isKeyCommands:
 		from keyCommandsDoc import KeyCommandsExtension
 
-		extensions.add(KeyCommandsExtension())
+		extensions.append(KeyCommandsExtension())
 
 	htmlOutput = markdown.markdown(
 		text=md,
@@ -133,7 +158,7 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 
 
 def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
-	print(f"Converting {docType or 'document'} at {source} to {dest}, {lang=}")
+	print(f"Converting {docType or 'document'} ({lang=}) at {source} to {dest}")
 	isUserGuide = docType == "userGuide"
 	isDevGuide = docType == "developerGuide"
 	isChanges = docType == "changes"

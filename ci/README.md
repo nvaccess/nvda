@@ -29,7 +29,7 @@ Some of these steps run concurrently.
   * Build launcher
   * Install NVDA
   * Run systems tests
-* Deploy (not fully active currently):
+* Deploy:
   * On tagged/snapshot builds, upload symbols to Mozilla
   * On beta branch builds, upload translation to Crowdin.
   * On snapshot builds, deploy to the server.
@@ -43,7 +43,14 @@ PowerShell scripts continue on non-terminating errors unless the file is prefixe
 
 ## Setup requirements
 
-The repository hosting GitHub Actions must be configured correctly for different parts of the build process.
+Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
+You just need to enable GitHub Actions on your fork.
+
+The following configuration is required only for more advanced development such as:
+
+* signed builds
+* Crowdin synchronisation
+* publishing releases to a server
 
 ### Publisher name
 

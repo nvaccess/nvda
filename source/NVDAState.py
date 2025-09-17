@@ -1,14 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import os
 import sys
+import sysconfig
 import time
 import winreg
 
+import buildVersion
 import globalVars
+
+from functools import cached_property
 
 
 class _WritePaths:
@@ -83,6 +87,10 @@ class _WritePaths:
 	def updateCheckStateFile(self) -> str:
 		return os.path.join(self.configDir, "updateCheckState.pickle")
 
+	@property
+	def guiStateFile(self) -> str:
+		return os.path.join(self.configDir, "guiState.ini")
+
 	def getSymbolsConfigFile(self, locale: str) -> str:
 		return os.path.join(self.configDir, f"symbols-{locale}.dic")
 
@@ -90,7 +98,71 @@ class _WritePaths:
 		return os.path.join(self.profilesDir, f"{name}.ini")
 
 
+class _ReadPaths:
+	@property
+	def versionedLibPath(self) -> str:
+		versionedLibPath = os.path.join(globalVars.appDir, "lib")
+		if not isRunningAsSource():
+			# When running as a py2exe build, libraries are in a version-specific directory
+			versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
+		return versionedLibPath
+
+	@property
+	def versionedLibX86Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x86")
+
+	@cached_property
+	def versionedLibAMD64Path(self) -> str:
+		import winVersion
+
+		arch = winVersion.getWinVer().processorArchitecture
+		return os.path.join(
+			self.versionedLibPath,
+			(
+				# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
+				"arm64ec" if arch == "ARM64" else "x64"
+			),
+		)
+
+	@property
+	def versionedLibARM64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "arm64")
+
+	@cached_property
+	def coreArchLibPath(self) -> str:
+		match sysconfig.get_platform():
+			case "win-amd64":
+				return self.versionedLibAMD64Path
+			case "win-arm64":
+				return self.versionedLibARM64Path
+			case "win32":
+				return self.versionedLibX86Path
+			case _:
+				raise RuntimeError("Unsupported platform")
+
+	@property
+	def nvdaHelperRemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperRemote.dll")
+
+	@property
+	def nvdaHelperLocalDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocal.dll")
+
+	@property
+	def nvdaHelperLocalWin10Dll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def UIARemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "UIARemote.dll")
+
+	@property
+	def javaAccessBridgeDLL(self) -> str:
+		return os.path.join(globalVars.appDir, "windowsaccessbridge.dll")
+
+
 WritePaths = _WritePaths()
+ReadPaths = _ReadPaths()
 
 
 def isRunningAsSource() -> bool:
@@ -165,7 +237,8 @@ class _TrackNVDAInitialization:
 
 
 def _forceSecureModeEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular import
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -176,7 +249,8 @@ def _forceSecureModeEnabled() -> bool:
 
 
 def _serviceDebugEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular import
+	from config.registry import RegistryKey
 
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
@@ -187,7 +261,8 @@ def _serviceDebugEnabled() -> bool:
 
 
 def _configInLocalAppDataEnabled() -> bool:
-	from config import RegistryKey
+	# Avoid circular imports
+	from config.registry import RegistryKey
 	from logHandler import log
 
 	try:

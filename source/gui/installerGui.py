@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2023 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Copyright (C) 2011-2025 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
@@ -12,6 +12,7 @@ import winUser
 import wx
 import config
 import core
+from winBindings import shell32
 import globalVars
 import installer
 from logHandler import log
@@ -22,7 +23,14 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
 import ui
 from NVDAState import WritePaths
-from .message import displayDialogAsModal
+from .message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
+
+
+def _shouldWarnBeforeUpdate() -> bool:
+	"""Whether or not a warning about being unable to complete installation when connected as follower should be shown to the user."""
+	from _remoteClient import _remoteClient
+
+	return _remoteClient is not None and _remoteClient.isConnectedAsFollower and not shell32.IsUserAnAdmin()
 
 
 def _canPortableConfigBeCopied() -> bool:
@@ -300,6 +308,8 @@ class InstallerDialog(
 		self.CentreOnScreen()
 
 	def onInstall(self, evt):
+		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
+			return
 		self.Hide()
 		doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
@@ -428,6 +438,43 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 		_("Directory Exists"),
 		wx.YES_NO | wx.ICON_QUESTION,
 	)
+
+
+def _warnAndConfirmIfInstallingRemotely(isUpdate: bool) -> bool:
+	if _shouldWarnBeforeUpdate():
+		confirmationDialog = (
+			MessageDialog(
+				gui.mainFrame,
+				(
+					_(
+						# Translators: Message shown to users when attempting to update NVDA
+						# on a computer which is being remotely controlled via NVDA Remote Access
+						"Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
+					)
+					if isUpdate
+					else _(
+						# Translators: Message shown to users when attempting to install NVDA
+						# on a computer which is being remotely controlled via NVDA Remote Access
+						"Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. ",
+					)
+				)
+				+ _(
+					# Translators: Message shown to users when attempting to install or update NVDA from the launcher
+					# on a computer which is being remotely controlled via NVDA Remote Access
+					"You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. "
+					"You should only proceed if you have physical access to the controlled computer.\n\n"
+					"Are you sure you want to continue?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
+	return True
 
 
 def _getUniqueNewPortableDirectory(basePath: str) -> str:
@@ -622,7 +669,7 @@ def doCreatePortable(
 		if startAfterCreate:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(portableDirectory, "nvda.exe"),
-				parameters=_generate_executionParameters(),
+				parameters=None,
 			)
 		if not core.triggerNVDAExit(newNVDA):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")

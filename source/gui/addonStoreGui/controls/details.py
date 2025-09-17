@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -265,24 +265,27 @@ class AddonDetails(
 				)
 
 				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
-				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
+				if (
+					currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses
+					and details._addonHandlerModel is not None
+				):
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Installed version:"),
 						details._addonHandlerModel.version,
 					)
 
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-						pgettext("addonStore", "Minimum NVDA version:"),
-						formatVersionForGUI(*details.minimumNVDAVersion),
-					)
+				self._appendDetailsLabelValue(
+					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+					pgettext("addonStore", "Minimum NVDA version:"),
+					formatVersionForGUI(*details.minimumNVDAVersion),
+				)
 
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-						pgettext("addonStore", "Last tested NVDA version:"),
-						formatVersionForGUI(*details.lastTestedNVDAVersion),
-					)
+				self._appendDetailsLabelValue(
+					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+					pgettext("addonStore", "Last tested NVDA version:"),
+					formatVersionForGUI(*details.lastTestedNVDAVersion),
+				)
 
 				if currentStatusKey not in AddonListField.availableAddonVersionName.hideStatuses:
 					self._appendDetailsLabelValue(
@@ -344,14 +347,15 @@ class AddonDetails(
 							details.reviewURL,
 						)
 
-					if isinstance(details, _AddonManifestModel):
-						# Installed add-ons with a manifest only
-						self._appendDetailsLabelValue(
-							# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
-							pgettext("addonStore", "Install date:"),
-							details.installDate.strftime("%x"),
-						)
+				if isinstance(details, _AddonManifestModel):
+					# Installed add-ons with a manifest only
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
+						pgettext("addonStore", "Install date:"),
+						details.installDate.strftime("%x"),
+					)
 
+				if isinstance(details, _AddonStoreModel):
 					if details.publicationDate is not None:
 						self._appendDetailsLabelValue(
 							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
