@@ -13,35 +13,35 @@ body:
         If this involves a user facing change e.g. a feature or bug, please use one of our other templates.
 
   - type: textarea
-    id: related-issues
+    id: relatedIssues
     attributes:
       label: Related issues, PRs or discussions
     validations:
       required: false
 
   - type: textarea
-    id: current-state
+    id: currentState
     attributes:
       label: What is the current state of the codebase?
     validations:
       required: true
 
   - type: textarea
-    id: why-changes
+    id: whyChanges
     attributes:
       label: Why are changes required?
     validations:
       required: true
 
   - type: textarea
-    id: technical-changes
+    id: technicalChanges
     attributes:
       label: What technical changes are required?
     validations:
       required: true
 
   - type: dropdown
-    id: api-breaking
+    id: apiBreaking
     attributes:
       label: Are the proposed technical changes API breaking?
       options:
@@ -52,7 +52,7 @@ body:
       required: true
 
   - type: textarea
-    id: risks-issues
+    id: risksIssues
     attributes:
       label: Are there potential risks or issues with the proposed implementation?
     validations:
