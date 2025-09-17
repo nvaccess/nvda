@@ -34,7 +34,7 @@ from configobj.validate import Validator
 import config
 import languageHandler
 from logHandler import log
-import winKernel
+import winBindings.kernel32
 import addonAPIVersion
 import importlib
 import NVDAState
@@ -950,7 +950,8 @@ class AddonBundle(AddonBase):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
-					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
+					oemcp = winBindings.kernel32.GetOEMCP()
+					info.filename = info.filename.decode(f"cp{oemcp}")
 				z.extract(info, addonPath)
 
 	@property
@@ -1019,6 +1020,10 @@ author = string()
 # Suggested convention is <major>.<minor>.<patch> format.
 version = string()
 
+# Changelog for the add-on version.
+# Document changes between the previous and the current versions.
+changelog = string(default=None)
+
 # The minimum required NVDA version for this add-on to work correctly.
 # Should be less than or equal to lastTestedNVDAVersion
 minimumNVDAVersion = apiVersion(default="0.0.0")
@@ -1080,7 +1085,7 @@ docFileName = string(default=None)
 		self._translatedConfig = None
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, encoding="utf-8", default_encoding="utf-8")
-			for k in ("summary", "description"):
+			for k in ("summary", "description", "changelog"):
 				val = self._translatedConfig.get(k)
 				if val:
 					self[k] = val

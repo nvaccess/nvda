@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 00:01+0000\n"
-"PO-Revision-Date: 2025-08-07 00:13\n"
+"POT-Creation-Date: 2025-09-05 06:01+0000\n"
+"PO-Revision-Date: 2025-09-08 00:45\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -107,7 +107,7 @@ msgstr "அறியப்படாதது"
 
 #. Translators: This is presented when errors are found in an appModule
 #. (example output: error in appModule explorer).
-#: appModuleHandler.py:288
+#: appModuleHandler.py:289
 #, python-format
 msgid "Error in appModule %s"
 msgstr "%s பயன்பாட்டு நிரற்கூறில் பிழை"
@@ -823,34 +823,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3613
+#: braille.py:3616
 msgid "Dot firm&ness"
 msgstr "புள்ளியின் திண்மை (&N)"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3626
+#: braille.py:3629
 msgid "Braille inp&ut"
 msgstr "பிரெயில் உள்ளீடு (&U)"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3636
+#: braille.py:3639
 msgid "&HID keyboard input simulation"
 msgstr "எச்.ஐ.டி. விசைப் பலகை உள்ளீட்டு உருவகமாக்கம் (&H)"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3800
+#: braille.py:3803
 msgid "Unknown braille display"
 msgstr "அறியப்படாத பிரெயில் காட்சியமைவு"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:3841
+#: braille.py:3844
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "ஊடலைத் தொடர் நுழைவாயில்: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:3850 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:3853 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -1663,7 +1663,7 @@ msgstr "முந்தைய மாறுபட்ட பாங்கு உர
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1236 gui\settingsDialogs.py:2935
+#: browseMode.py:1236 gui\settingsDialogs.py:2933
 msgid "Lin&ks"
 msgstr "தொடுப்புகள் (&K)"
 
@@ -1671,13 +1671,13 @@ msgstr "தொடுப்புகள் (&K)"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1239 gui\settingsDialogs.py:2930
+#: browseMode.py:1239 gui\settingsDialogs.py:2928
 msgid "&Headings"
 msgstr "தலைப்புகள் (&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1242 NVDAObjects\window\excel.py:747
+#: browseMode.py:1242 NVDAObjects\window\excel.py:752
 msgid "&Form fields"
 msgstr "படிவக் களங்கள் (&F)"
 
@@ -2164,8 +2164,8 @@ msgstr "நீட்சிநிரல்கள் மீதான சில ச
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
 #: core.py:120 documentationUtils.py:74 updateCheck.py:430 updateCheck.py:745
-#: updateCheck.py:917 gui\__init__.py:238 gui\__init__.py:246
-#: gui\__init__.py:263 gui\addonGui.py:145 gui\addonGui.py:265
+#: updateCheck.py:917 gui\__init__.py:239 gui\__init__.py:247
+#: gui\__init__.py:264 gui\addonGui.py:145 gui\addonGui.py:265
 #: gui\addonGui.py:280 gui\configProfiles.py:182 gui\configProfiles.py:219
 #: gui\configProfiles.py:272 gui\configProfiles.py:284
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
@@ -2173,10 +2173,10 @@ msgstr "நீட்சிநிரல்கள் மீதான சில ச
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
 #: gui\installerGui.py:124 gui\installerGui.py:571 gui\installerGui.py:586
 #: gui\installerGui.py:658 gui\logViewer.py:112 gui\logViewer.py:143
-#: gui\message.py:161 gui\settingsDialogs.py:1077 gui\settingsDialogs.py:5472
-#: gui\settingsDialogs.py:5832 gui\startupDialogs.py:128
-#: _remoteClient\dialogs.py:62 _remoteClient\dialogs.py:300
-#: _remoteClient\dialogs.py:384
+#: gui\message.py:161 gui\settingsDialogs.py:1077 gui\settingsDialogs.py:5483
+#: gui\settingsDialogs.py:5843 gui\startupDialogs.py:128
+#: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
+#: _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "பிழை"
 
@@ -2280,9 +2280,9 @@ msgstr "தெரிவு ஏதுமில்லை"
 
 #. Translators: Abbreviation for points, a measurement of font size.
 #: displayModel.py:576 appModules\powerpnt.py:1223 appModules\soffice.py:99
-#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:202
+#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:206
 #: NVDAObjects\UIA\__init__.py:195 NVDAObjects\window\edit.py:345
-#: NVDAObjects\window\edit.py:714 NVDAObjects\window\excel.py:1312
+#: NVDAObjects\window\edit.py:714 NVDAObjects\window\excel.py:1352
 #: NVDAObjects\window\scintilla.py:154 NVDAObjects\window\winword.py:1225
 #: virtualBuffers\adobeAcrobat.py:83
 #, python-format
@@ -2407,7 +2407,7 @@ msgstr "இமைக்கும் சுட்டுக்குறி"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
-#: globalCommands.py:87 gui\settingsDialogs.py:2188
+#: globalCommands.py:87 gui\settingsDialogs.py:2186
 msgid "Mouse"
 msgstr "சுட்டி"
 
@@ -2416,8 +2416,8 @@ msgstr "சுட்டி"
 #. Translators: This is the label for the speech panel
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: globalCommands.py:90 config\configFlags.py:277 gui\settingsDialogs.py:1186
-#: gui\settingsDialogs.py:4012
+#: globalCommands.py:90 config\configFlags.py:277 gui\settingsDialogs.py:1184
+#: gui\settingsDialogs.py:4023
 msgid "Speech"
 msgstr "பேச்சு"
 
@@ -2436,14 +2436,14 @@ msgstr "அமைவடிவ தனியமைப்புகள்"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:99 config\configFlags.py:279 gui\settingsDialogs.py:3918
-#: gui\settingsDialogs.py:4427
+#: globalCommands.py:99 config\configFlags.py:279 gui\settingsDialogs.py:3929
+#: gui\settingsDialogs.py:4438
 msgid "Braille"
 msgstr "பிரெயில்"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:102 gui\settingsDialogs.py:5240
+#: globalCommands.py:102 gui\settingsDialogs.py:5251
 msgid "Vision"
 msgstr "பார்வை"
 
@@ -2481,13 +2481,13 @@ msgstr "ஆவண வடிவூட்டம்"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:123 gui\settingsDialogs.py:3096
+#: globalCommands.py:123 gui\settingsDialogs.py:3094
 msgid "Audio"
 msgstr "ஒலிதம்"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:126 gui\settingsDialogs.py:3374
+#: globalCommands.py:126 gui\settingsDialogs.py:3372
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "தொலைநிலை அணுகல்"
@@ -4497,7 +4497,7 @@ msgstr "தொடுப்பிற்கு வெளிப்படையா�
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
-#: globalCommands.py:4364 brailleDisplayDrivers\dotPad\driver.py:257
+#: globalCommands.py:4364 brailleDisplayDrivers\dotPad\driver.py:306
 msgid "Graphic"
 msgstr "வரைகலை"
 
@@ -4763,7 +4763,7 @@ msgstr "இமைக்கும் சுட்டியின் இடத்�
 #: globalCommands.py:4974
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
-msgstr "தொலைநிலை கணினியிடமிருந்து வரும் பேச்சை அமைதியாக்குகிறது, அல்லது அமைதியை நீக்குகிறது"
+msgstr "தொலைநிலை கணினியிடமிருந்து வரும் பேச்சை ஒலியடக்குகிறது, அல்லது ஒலியடக்கத்தை நீக்குகிறது"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
 #: globalCommands.py:4984
@@ -4790,8 +4790,8 @@ msgstr "நடப்பு தொலைநிலை அணுகல் அமர
 #. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
 #: globalCommands.py:5008 _remoteClient\client.py:125
-#: _remoteClient\client.py:149 _remoteClient\client.py:171
-#: _remoteClient\client.py:187 _remoteClient\client.py:522
+#: _remoteClient\client.py:152 _remoteClient\client.py:174
+#: _remoteClient\client.py:190 _remoteClient\client.py:548
 msgctxt "remote"
 msgid "Not connected"
 msgstr "இணைக்கப்படவில்லை"
@@ -4817,24 +4817,30 @@ msgstr "தொலைநிலை அணுகல் இணைக்கப்ப�
 #: globalCommands.py:5046
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
-msgstr "தன்னகக் கணினி, அல்லது தொலைநிலைக் கணினி - எதை விசைப்பலகை கட்டுப்படுத்துகிறது என்பதை மாற்றியமைக்கிறது"
+msgstr "தனிக்கணினி, அல்லது தொலைநிலைக் கணினி - எதை விசைப்பலகை கட்டுப்படுத்துகிறது என்பதை மாற்றியமைக்கிறது"
+
+#. Translators: Documentation string for the script that sends alt+ctrl+del to the remote computer
+#: globalCommands.py:5059
+msgctxt "remote"
+msgid "Sends control+alt+delete to the controlled computer."
+msgstr "கட்டுப்பாடு+நிலைமாற்றி+அழி விசையை கட்டுப்படுத்தப்படும் கணினிக்கு அனுப்பிடுக."
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-#: globalCommands.py:5088
+#: globalCommands.py:5100
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr "ஒரு என்விடிஏ உரையாடல் திறந்திருக்கும் நிலையில், இயக்கத்திலிருக்கும் தனியமைப்பினை மாற்ற இயலாது"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5093
+#: globalCommands.py:5105
 #, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "{profile} தனியமைப்பின் ?இயக்கம் நிறுத்தப்பட்டது"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5098
+#: globalCommands.py:5110
 #, python-brace-format
 msgid "{profile} profile activated"
 msgstr "{profile} தனியமைப்பு இயக்கப்பட்டது"
@@ -4842,7 +4848,7 @@ msgstr "{profile} தனியமைப்பு இயக்கப்பட்�
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5114
+#: globalCommands.py:5126
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "{profile} அமைவடிவ தனியமைப்பினை முடுக்குகிறது, அல்லது முடக்குகிறது"
@@ -4862,47 +4868,47 @@ msgstr "இதரவை"
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-#: installer.py:438
+#: installer.py:436
 msgid "CTRL+ALT+N"
 msgstr "கட்டுப்பாடு+நிலைமாற்றி+n"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-#: installer.py:461
+#: installer.py:459
 msgid "NVDA web site"
 msgstr "என்விடிஏ வலைத்தளம் (&W)"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-#: installer.py:470
+#: installer.py:468
 msgid "Uninstall NVDA"
 msgstr "என்விடிஏவை நிறுவு நீக்கம் செய்க"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-#: installer.py:480
+#: installer.py:478
 msgid "Explore NVDA user configuration directory"
 msgstr "என்விடிஏ பயனர் அமைவடிவ அடைவினை ஆய்வு செய்க"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
-#: installer.py:491
+#: installer.py:489
 msgid "Documentation"
 msgstr "ஆவணமாக்கல்"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-#: installer.py:494
+#: installer.py:492
 msgid "Commands Quick Reference"
 msgstr "கட்டளைகளுக்கான விரைவுக் குறிப்பு"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
-#: installer.py:503
+#: installer.py:501
 msgid "User Guide"
 msgstr "பயனர் வழிகாட்டி"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
-#: installer.py:512
+#: installer.py:510
 msgid "What's new"
 msgstr "புதிதாக என்ன? (&N)"
 
 #. Translators: A file extension label for NVDA add-on package.
-#: installer.py:582
+#: installer.py:580
 msgid "NVDA add-on package"
 msgstr "என்விடிஏ நீட்சிநிரல் தொகுதி"
 
@@ -5321,7 +5327,7 @@ msgstr "இடப்பட்டது"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:631 synthSettingsRing.py:117 controlTypes\state.py:227
-#: gui\settingsDialogs.py:2423 gui\speechDict.py:198
+#: gui\settingsDialogs.py:2421 gui\speechDict.py:198
 msgid "off"
 msgstr "நீக்கப்பட்டது"
 
@@ -7136,7 +7142,7 @@ msgstr "அருள்கூர்ந்து நன்கொடையளி�
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 #. Translators: The label for the menu item to open donate page.
-#: updateCheck.py:957 gui\__init__.py:700
+#: updateCheck.py:957 gui\__init__.py:701
 msgid "&Donate"
 msgstr "நன்கொடையளிக்கிறேன் (&D)"
 
@@ -7175,8 +7181,8 @@ msgstr "தற்போதைய இணைப்பு தொடர்ந்த�
 #. Translators: Title of warning dialog
 #: updateCheck.py:1018 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:348 gui\installerGui.py:473 gui\settingsDialogs.py:1039
-#: gui\settingsDialogs.py:1981 visionEnhancementProviders\screenCurtain.py:152
-#: _remoteClient\dialogs.py:285
+#: gui\settingsDialogs.py:1979 visionEnhancementProviders\screenCurtain.py:152
+#: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "எச்சரிக்கை"
 
@@ -7737,7 +7743,7 @@ msgid "No message yet"
 msgstr "இதுவரை தகவல் ஏதுமில்லை"
 
 #. Translators: This Outlook Express message has an attachment
-#: appModules\msimn.py:20 appModules\outlook.py:545
+#: appModules\msimn.py:20 appModules\outlook.py:571
 msgid "has attachment"
 msgstr "இணைப்புக்கொண்டது"
 
@@ -7812,7 +7818,7 @@ msgid "BCC:"
 msgstr "மறைநிலைப் பெறுநர்:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules\msimn.py:161 appModules\outlook.py:95 appModules\outlook.py:521
+#: appModules\msimn.py:161 appModules\outlook.py:97 appModules\outlook.py:547
 msgid "unread"
 msgstr "படிக்கப்படாதது"
 
@@ -7861,73 +7867,73 @@ msgid "Editing profile {profile}"
 msgstr "{profile} தனியமைப்பு தொகுக்கப்படுகிறது"
 
 #. Translators: the last action taken on an Outlook mail message
-#: appModules\outlook.py:55
+#: appModules\outlook.py:57
 msgid "replied"
 msgstr "மறுமொழியிடப்பட்டது"
 
 #. Translators: the last action taken on an Outlook mail message
-#: appModules\outlook.py:57
+#: appModules\outlook.py:59
 msgid "replied all"
 msgstr "அனைவருக்கும் மறுமொழியிடப்பட்டது"
 
 #. Translators: the last action taken on an Outlook mail message
-#: appModules\outlook.py:59
+#: appModules\outlook.py:61
 msgid "forwarded"
 msgstr "முன்செலுத்தப்பட்டது"
 
 #. Translators: for a high importance email
-#: appModules\outlook.py:69
+#: appModules\outlook.py:71
 msgid "high importance"
 msgstr "உயர் முக்கியத்துவம்"
 
 #. Translators: For a low importance email
-#: appModules\outlook.py:71
+#: appModules\outlook.py:73
 msgid "low importance"
 msgstr "குறை முக்கியத்துவம்"
 
 #. Translators: This is presented in outlook or live mail, email subject
-#: appModules\outlook.py:89 appModules\outlook.py:105
+#: appModules\outlook.py:91 appModules\outlook.py:107
 #, python-format
 msgid "subject: %s"
 msgstr "பொருளடக்கம்: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
-#: appModules\outlook.py:91
+#: appModules\outlook.py:93
 #, python-format
 msgid "received: %s"
 msgstr "பெறப்பட்டது: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
-#: appModules\outlook.py:98
+#: appModules\outlook.py:100
 msgid "attachment"
 msgstr "இணைப்பு"
 
 #. Translators: This is presented in outlook or live mail, email sent date
-#: appModules\outlook.py:107
+#: appModules\outlook.py:109
 #, python-format
 msgid "sent: %s"
 msgstr "அனுப்பப்பட்டது: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
-#: appModules\outlook.py:136
+#: appModules\outlook.py:138
 msgid "Waiting for Outlook..."
 msgstr "ஔட்லுக்கிற்காக காத்துக்கொண்டிருக்கிறது..."
 
 #. Translators: a message reporting the date of a all day Outlook calendar entry
-#: appModules\outlook.py:384
+#: appModules\outlook.py:410
 #, python-brace-format
 msgid "{date} (all day)"
 msgstr "(நாள் முழுவதும்) {date}"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#: appModules\outlook.py:395
+#: appModules\outlook.py:421
 #, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} முதல் {endTime} வரை"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#: appModules\outlook.py:421
+#: appModules\outlook.py:447
 #, python-brace-format
 msgid "category {categories}"
 msgid_plural "categories {categories}"
@@ -7935,18 +7941,18 @@ msgstr[0] "வகைமை {categories}"
 msgstr[1] "வகைமைகள் {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
-#: appModules\outlook.py:446
+#: appModules\outlook.py:472
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "முன்பதிவு {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-#: appModules\outlook.py:492
+#: appModules\outlook.py:518
 msgid "Has appointment"
 msgstr "முன்பதிவுள்ளது"
 
 #. Translators: the email is a meeting request
-#: appModules\outlook.py:559
+#: appModules\outlook.py:585
 msgid "meeting request"
 msgstr "தொடர்புக்கான வேண்டுகோள்"
 
@@ -8661,7 +8667,7 @@ msgstr "பிரெயில் உள்ளீட்டினை மாற்�
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\hidBrailleStandard.py:84
 msgid "Standard HID Braille Display"
-msgstr "எச்.ஐ.டி. தகுதர பிரெயில் காட்சியமைவு"
+msgstr "எச். ஐ. டி. தரநிலை பிரெயில் காட்சியமைவு"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\hims.py:276
@@ -8726,17 +8732,17 @@ msgid "To use an Albatross with NVDA, change the number of status cells in the A
 msgstr "என்விடிஏவுடன் அல்பட்ராஸைப் பயன்படுத்த, அல்பட்ராஸின் உள்ளக பட்டியலில் காணப்படும் நிலைப் பிரெயில் களங்களின் எண்ணிக்கையை 'பல' {maxCells} என மாற்றி, தேவைப்பட்டால், அல்பட்ராஸையும், என்விடிஏவையும் மறுதுவக்கவும்."
 
 #. Translators: Description of the DotPad Braille / Tactile Graphic display.
-#: brailleDisplayDrivers\dotPad\driver.py:81
+#: brailleDisplayDrivers\dotPad\driver.py:82
 msgid "DotPad Braille / Tactile Graphic display"
 msgstr "டாட்பேட் பிரெயில்/ தொட்டுணர் வரைகலை காட்சியமைவு"
 
 #. Translators: Label for a setting that allows the user to choose the destination for braille output.
-#: brailleDisplayDrivers\dotPad\driver.py:102
+#: brailleDisplayDrivers\dotPad\driver.py:112
 msgid "Braille destination"
 msgstr "பிரெயில் இலக்கு"
 
 #. Translators: A destination for braille output.
-#: brailleDisplayDrivers\dotPad\driver.py:251
+#: brailleDisplayDrivers\dotPad\driver.py:300
 msgid "Text"
 msgstr "உரை"
 
@@ -9760,178 +9766,184 @@ msgstr "தாய் படிநிலை 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:564
+msgid "Turkish 8 dot computer braille"
+msgstr "துருக்கிய 8 புள்ளி கணினி பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: brailleTables\__tables.py:567
 msgid "Turkish grade 1"
 msgstr "துருக்கிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:567
+#: brailleTables\__tables.py:570
 msgid "Turkish grade 2"
 msgstr "துருக்கிய படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:570
+#: brailleTables\__tables.py:573
 msgid "Setswana grade 1"
 msgstr "செட்ஸ்வானா படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:573
+#: brailleTables\__tables.py:576
 msgid "Setswana grade 2"
 msgstr "செட்ஸ்வானா படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:576
+#: brailleTables\__tables.py:579
 msgid "Ugaritic grade 1"
 msgstr "யுகாரிட்டிக் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:579
+#: brailleTables\__tables.py:582
 msgid "Ukrainian grade 1"
 msgstr "உக்ரேனிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:582
+#: brailleTables\__tables.py:585
 msgid "Ukrainian literary braille (detailed)"
 msgstr "உக்ரேனிய இலக்கிய பிரெயில் (விளக்கமானது)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:585
+#: brailleTables\__tables.py:588
 msgid "Ukrainian computer braille"
 msgstr "உக்ரேனிய கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:588
+#: brailleTables\__tables.py:591
 msgid "Urdu grade 1"
 msgstr "உருது படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:591
+#: brailleTables\__tables.py:594
 msgid "Urdu grade 2"
 msgstr "உருது படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:594
+#: brailleTables\__tables.py:597
 msgid "Uzbek grade 1"
 msgstr "ஊஸ்பெக் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:597
+#: brailleTables\__tables.py:600
 msgid "Unicode braille"
 msgstr "ஒருங்குறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:600
+#: brailleTables\__tables.py:603
 msgid "Vietnamese grade 0"
 msgstr "வியட்நாமிய படிநிலை 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:603
+#: brailleTables\__tables.py:606
 msgid "Tshivenda grade 1"
 msgstr "ஷிவெந்த படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:606
+#: brailleTables\__tables.py:609
 msgid "Tshivenda grade 2"
 msgstr "ஷிவெந்த படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:609
+#: brailleTables\__tables.py:612
 msgid "Vietnamese grade 1"
 msgstr "வியட்நாமிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:612
+#: brailleTables\__tables.py:615
 msgid "Vietnamese grade 2"
 msgstr "வியட்நாமிய படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:615
+#: brailleTables\__tables.py:618
 msgid "Southern Vietnamese grade 1"
 msgstr "தென் வியட்நாமிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:618
+#: brailleTables\__tables.py:621
 msgid "Xhosa grade 1"
 msgstr "கோசா படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:621
+#: brailleTables\__tables.py:624
 msgid "Xhosa grade 2"
 msgstr "கோசா படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:624
+#: brailleTables\__tables.py:627
 msgid "Yiddish grade 1"
 msgstr "இட்டிஷ் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
-#: brailleTables\__tables.py:630
+#: brailleTables\__tables.py:633
 msgid "Chinese common braille (simplified Chinese characters)"
 msgstr "சீன பொது பிரெயில் (எளிமையாக்கப்பட்ட சீன வரியுருக்கள்)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#: brailleTables\__tables.py:637
+#: brailleTables\__tables.py:640
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
 msgstr "சீனம் (சீனா, மாண்டரீன்) தற்போதைய பிரெயில் கட்டமைப்பு (தொனிகளற்றது)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文' in Mandarin.
-#: brailleTables\__tables.py:644
+#: brailleTables\__tables.py:647
 msgid "Chinese (China, Mandarin) Current Braille System"
 msgstr "சீனம் (சீனா, மாண்டரீன்) தற்போதைய பிரெயில் கட்டமைப்பு"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
-#: brailleTables\__tables.py:651
+#: brailleTables\__tables.py:654
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
 msgstr "சீனம் (சீனா, மாண்டரீன்) இரட்டை ஒலிப்பு பிரெயில் கட்டமைப்பு"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:654
+#: brailleTables\__tables.py:657
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ்)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:657
+#: brailleTables\__tables.py:660
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:661
+#: brailleTables\__tables.py:664
 msgid "Zulu grade 1"
 msgstr "ஜூலு படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: brailleTables\__tables.py:664
+#: brailleTables\__tables.py:667
 msgid "Zulu grade 2"
 msgstr "ஜூலு படிநிலை 2"
 
@@ -10922,7 +10934,7 @@ msgstr "பிளவுப் பலகை"
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 #: controlTypes\role.py:398
 msgid "view port"
-msgstr "பகுதித் தோற்றம்"
+msgstr "பகுதிக் காட்சி"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
@@ -11573,7 +11585,7 @@ msgstr "கொடுக்கப்பட்டுள்ள இணைய மு�
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
 #: gui\_SetURLDialog.py:177 gui\installerGui.py:141 gui\installerGui.py:669
-#: gui\settingsDialogs.py:1083 _remoteClient\dialogs.py:274
+#: gui\settingsDialogs.py:1083 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "வெற்றி"
 
@@ -11610,45 +11622,45 @@ msgid "The URL you have entered failed the connection test. {tip}"
 msgstr "தாங்கள் உள்ளிட்ட இணைய முகவரி இணைப்புப் பரிசோதனையில் தோல்வியடைந்தது. {tip}"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
-#: gui\__init__.py:211
+#: gui\__init__.py:212
 msgid "Configuration applied"
 msgstr "அமைவடிவம் இடப்பட்டது"
 
 #. Translators: Reported when configuration has been restored to defaults,
 #. by using restore configuration to factory defaults item in NVDA menu.
-#: gui\__init__.py:220
+#: gui\__init__.py:221
 msgid "Configuration restored to factory defaults"
 msgstr "அமைவடிவம் தொழிற்சாலை இயல்பிற்கு மீட்டெடுக்கப்பட்டது"
 
 #. Translators: Reported when current configuration has been saved.
-#: gui\__init__.py:231
+#: gui\__init__.py:232
 msgid "Configuration saved"
 msgstr "அமைவடிவம் சேமிக்கப்பட்டது"
 
 #. Translators: Message shown when current configuration cannot be saved,
 #. such as when running NVDA from a CD.
-#: gui\__init__.py:236
+#: gui\__init__.py:237
 msgid "Could not save configuration - probably read only file system"
 msgstr "அமைவடிவத்தைச் சேமிக்க இயலவில்லை. ஒருவேளை படிக்க மட்டுமேயான கோப்பாக இருக்கலாம்"
 
 #. Translators: Message shown when current configuration cannot be saved, for an unknown reason.
-#: gui\__init__.py:244
+#: gui\__init__.py:245
 msgid "Could not save configuration; see the log for more details."
 msgstr "அமைவடிவத்தைச் சேமிக்க இயலவில்லை. கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டினைப் பார்க்கவும்."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog.
 #. Example: when trying to open touch interaction settings on an unsupported system.
-#: gui\__init__.py:261
+#: gui\__init__.py:262
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "தாங்கள் திறக்க முயன்ற அமைப்புகளின் பலகை இக்கட்டமைப்பின் கிடைப்பிலில்லை."
 
 #. Translators: The title of the dialog to show about info for NVDA.
-#: gui\__init__.py:401 gui\__init__.py:848
+#: gui\__init__.py:402 gui\__init__.py:849
 msgid "About NVDA"
 msgstr "என்விடிஏ குறித்து"
 
 #. Translators: Explain the COM Registration Fixing tool to users before running
-#: gui\__init__.py:516
+#: gui\__init__.py:517
 msgid "Welcome to the COM Registration Fixing tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
@@ -11659,17 +11671,17 @@ msgstr "COM பதிவுப் பிழை நீக்கி தங்க�
 "பிழை நீக்கியை இப்பொழுது இயக்க 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
-#: gui\__init__.py:541
+#: gui\__init__.py:542
 msgid "Fix COM Registrations"
 msgstr "COM பதிவுகளைச் சரிசெய்யவும்"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
-#: gui\__init__.py:556
+#: gui\__init__.py:557
 msgid "Please wait while NVDA attempts to fix your system's COM registrations..."
 msgstr "தங்கள் கணினியின் COM பதிவுகளை சரிசெய்ய என்விடிஏ முயல்கிறது, அருள் கூர்ந்து காத்திருக்கவும்..."
 
 #. Translators: message shown to the user on COM Registration Fix fail
-#: gui\__init__.py:583
+#: gui\__init__.py:584
 #, python-brace-format
 msgid "The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
@@ -11677,245 +11689,245 @@ msgstr "COM பதிவுப் பிழை நீக்கி தோல்�
 "{error}"
 
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
-#: gui\__init__.py:587
+#: gui\__init__.py:588
 msgid "COM Registration Fixing Tool Failed"
 msgstr "COM பதிவுப் பிழை நீக்கி தோல்வியடைந்தது"
 
 #. Translators: Message shown when the COM Registration Fixing tool completes.
-#: gui\__init__.py:594
+#: gui\__init__.py:595
 msgid "The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
 msgstr "COM பதிவுப் பிழை நீக்கி வெற்றிகரமாக முடிந்துள்ளது.\n"
 "மாற்றங்கள் முழுமையாக செயலுக்கு வர, கணினியை தாங்கள் இப்பொழுது மறுதுவக்க மிகவும் பரிந்துரைக்கப்படுகிறது."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#: gui\__init__.py:621
+#: gui\__init__.py:622
 msgid "&Settings..."
 msgstr "அமைப்புகள்... (&S)"
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#: gui\__init__.py:623
+#: gui\__init__.py:624
 msgid "NVDA settings"
 msgstr "என்விடிஏ அமைப்புகள்"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-#: gui\__init__.py:628
+#: gui\__init__.py:629
 msgid "Speech &dictionaries"
 msgstr "பேச்சு அகரமுதலிகள் (&D)"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
-#: gui\__init__.py:630
+#: gui\__init__.py:631
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "நிறுத்தற்குறிகள்/குறியெழுத்துகளின் ஒலிப்பு... (&P)"
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
-#: gui\__init__.py:633
+#: gui\__init__.py:634
 msgid "I&nput gestures..."
 msgstr "உள்ளீட்டுச் சைகைகள்... (&N)"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
-#: gui\__init__.py:636
+#: gui\__init__.py:637
 msgid "&Preferences"
 msgstr "விருப்பங்கள் (&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-#: gui\__init__.py:641
+#: gui\__init__.py:642
 msgid "View &log"
 msgstr "செயற்குறிப்பேட்டுத் தோற்றம் (&L)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-#: gui\__init__.py:647
+#: gui\__init__.py:648
 msgid "&Speech viewer"
 msgstr "பேச்சுத் தோற்றம் (&S)"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#: gui\__init__.py:655
+#: gui\__init__.py:656
 msgid "&Braille viewer"
 msgstr "பிரெயில் தோற்றம் (&B)"
 
 #. Translators: The label of a menu item to open the Add-on store
-#: gui\__init__.py:667
+#: gui\__init__.py:668
 msgid "&Add-on store..."
 msgstr "நீட்சிநிரல் அங்காடி... (&A)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-#: gui\__init__.py:672
+#: gui\__init__.py:673
 msgid "&Python console"
 msgstr "பைத்தன் கட்டுப்பாட்டகம் (&P)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-#: gui\__init__.py:677
+#: gui\__init__.py:678
 msgid "&Create portable copy..."
 msgstr "கொண்டுசெல்லத்தக்கப் படியை உருவாக்குக... (&C)"
 
 #. Translators: The label for the menu item to install NVDA on the computer.
-#: gui\__init__.py:681
+#: gui\__init__.py:682
 msgid "&Install NVDA..."
 msgstr "என்விடிஏவை நிறுவுக... (&I)"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-#: gui\__init__.py:684
+#: gui\__init__.py:685
 msgid "Run COM Registration Fixing tool..."
 msgstr "COM பதிவுப் பிழை நீக்கியை இயக்குக... (&R)"
 
 #. Translators: The label for the menu item to reload plugins.
-#: gui\__init__.py:688
+#: gui\__init__.py:689
 msgid "Reload plugins"
 msgstr "செருகுநிரல்களை மீளேற்றுக (&E)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-#: gui\__init__.py:691
+#: gui\__init__.py:692
 msgid "&Tools"
 msgstr "கருவிகள் (&T)"
 
 #. Translators: The label for the menu item to exit NVDA
 #. Translators: The label for a menu item in NVDA log viewer to exit.
 #. Translators: The label for a button to exit the NVDA launcher.
-#: gui\__init__.py:709 gui\logViewer.py:58 gui\startupDialogs.py:207
+#: gui\__init__.py:710 gui\logViewer.py:58 gui\startupDialogs.py:207
 msgid "E&xit"
 msgstr "வெளியேறுக (&X)"
 
 #. Translators: The help string for the menu item to exit NVDA
 #. Translators: The title of the dialog to exit NVDA
-#: gui\__init__.py:711 gui\exit.py:79
+#: gui\__init__.py:712 gui\exit.py:79
 msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறுக"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
-#: gui\__init__.py:746
+#: gui\__init__.py:747
 msgid "&Default dictionary..."
 msgstr "இயல்பகரமுதலி... (&D)"
 
 #. Translators: The help text for the menu item to open Default speech dictionary dialog.
-#: gui\__init__.py:748
+#: gui\__init__.py:749
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "பட்டியலில் அகரமுதலிகளைச் சேர்த்து, இயல்பகரமுதலியை அமைக்கும் உரையாடல்..."
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-#: gui\__init__.py:754
+#: gui\__init__.py:755
 msgid "&Voice dictionary..."
 msgstr "குரல் அகரமுதலி... (&V)"
 
 #. Translators: The help text for the menu item
 #. to open Voice specific speech dictionary dialog.
-#: gui\__init__.py:758
+#: gui\__init__.py:759
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "பட்டியலில் அகரமுதலிகளைச் சேர்த்து, குரல்களின் தனிப்பட்ட அகரமுதலியை அமைக்கும் உரையாடல்..."
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-#: gui\__init__.py:766
+#: gui\__init__.py:767
 msgid "&Temporary dictionary..."
 msgstr "தற்காலிக அகரமுதலி... (&T)"
 
 #. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-#: gui\__init__.py:768
+#: gui\__init__.py:769
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "தொகுப் பெட்டியில்  அகரமுதலிகளைச் சேர்த்து, தற்காலிக அகரமுதலியை அமைக்கும் உரையாடல்"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
-#: gui\__init__.py:776
+#: gui\__init__.py:777
 msgid "&Configuration profiles..."
 msgstr "அமைவடிவ தனியமைப்புகள்... (&C)"
 
 #. Translators: The label for the menu item to revert to saved configuration.
-#: gui\__init__.py:781
+#: gui\__init__.py:782
 msgid "&Revert to saved configuration"
 msgstr "சேமிக்கப்பட்டுள்ள அமைவடிவத்திற்குத் திரும்பிச் செல்க (&R)"
 
 #. Translators: The help text for the menu item to revert to saved configuration.
-#: gui\__init__.py:783
+#: gui\__init__.py:784
 msgid "Reset all settings to saved state"
 msgstr "எல்லா அமைப்புகளையும் சேமிக்கப்பட்ட நிலைக்கு மாற்றியமை"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#: gui\__init__.py:790
+#: gui\__init__.py:791
 msgid "Reset configuration to &factory defaults"
 msgstr "அமைவடிவத்தைத் தொழிற்சாலை இயல்பிற்கு மாற்றியமைத்திடுக (&F)"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#: gui\__init__.py:793
+#: gui\__init__.py:794
 msgid "Reset all settings to default state"
 msgstr "எல்லா அமைப்புகளையும் இயல்பிருப்பிற்கு மாற்றியமைத்திடுக"
 
 #. Translators: The label for the menu item to save current settings.
-#: gui\__init__.py:800
+#: gui\__init__.py:801
 msgid "&Save configuration"
 msgstr "அமைவடிவத்தைச் சேமித்திடுக (&S)"
 
 #. Translators: The help text for the menu item to save current settings.
-#: gui\__init__.py:802
+#: gui\__init__.py:803
 msgid "Write the current configuration to nvda.ini"
 msgstr "தற்போதைய அமைவடிவத்தை nvda.ini கோப்பில் எழுதுக"
 
 #. Translators: The label of a menu item to open NVDA user guide.
-#: gui\__init__.py:811
+#: gui\__init__.py:812
 msgid "&User Guide"
 msgstr "பயனர் வழிகாட்டி (&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
-#: gui\__init__.py:814
+#: gui\__init__.py:815
 msgid "Commands &Quick Reference"
 msgstr "கட்டளைகளுக்கான விரைவுக் குறிப்பு (&Q)"
 
 #. Translators: The label for the menu item to open What's New document.
-#: gui\__init__.py:817
+#: gui\__init__.py:818
 msgid "What's &new"
 msgstr "புதிதாக என்ன? (&N)"
 
 #. Translators: The label for the menu item to view the NVDA website
-#: gui\__init__.py:823
+#: gui\__init__.py:824
 msgid "NV Access &web site"
 msgstr "என்வி அக்ஸஸ் இணையதளம்"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
-#: gui\__init__.py:826
+#: gui\__init__.py:827
 msgid "&Help, training and support"
 msgstr "உதவி, பயிற்சி மற்றும் ஆதரவு (&H)"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
-#: gui\__init__.py:829
+#: gui\__init__.py:830
 msgid "NV Access &shop"
 msgstr "என்வி அக்ஸஸ் அங்காடி (&S)"
 
 #. Translators: The label for the menu item to view the NVDA License.
-#: gui\__init__.py:835
+#: gui\__init__.py:836
 msgid "L&icense"
 msgstr "உரிமம் (&I)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-#: gui\__init__.py:839
+#: gui\__init__.py:840
 msgid "We&lcome dialog..."
 msgstr "வரவேற்பு உரையாடல் (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui\__init__.py:844
+#: gui\__init__.py:845
 msgid "&Check for update..."
 msgstr "இற்றாக்கத்திற்குத் துழாவுக... (&C)"
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-#: gui\__init__.py:848
+#: gui\__init__.py:849
 msgid "&About..."
 msgstr "குறித்து... (&A)"
 
 #. Translators: The label for the Help submenu in NVDA menu.
-#: gui\__init__.py:852
+#: gui\__init__.py:853
 msgid "&Help"
 msgstr "உதவி (&H)"
 
 #. Translators: The label for the menu item to run a pending update.
-#: gui\__init__.py:868
+#: gui\__init__.py:869
 msgid "Install pending &update"
 msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவுக (&U)"
 
 #. Translators: The description for the menu item to run a pending update.
-#: gui\__init__.py:870
+#: gui\__init__.py:871
 msgid "Execute a previously downloaded NVDA update"
 msgstr "முன்னதாக தரவிறக்கப்பட்டிருக்கும் என்விடிஏவின் இற்றாக்கத்தை இயக்குக"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
-#: gui\__init__.py:947
+#: gui\__init__.py:955
 msgid "Please wait"
 msgstr "அருள்கூர்ந்து காத்திருக்கவும்"
 
@@ -12389,7 +12401,7 @@ msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:5720 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:5731 gui\speechDict.py:215
 msgid "&Add"
 msgstr "கூட்டுக (&A)"
 
@@ -12879,7 +12891,7 @@ msgstr "மாற்று இற்றாக்க வழங்கி"
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:977 gui\settingsDialogs.py:3311
+#: gui\settingsDialogs.py:977 gui\settingsDialogs.py:3309
 msgid "Change..."
 msgstr "மாற்றுக..."
 
@@ -12939,32 +12951,32 @@ msgid "Insufficient Privileges"
 msgstr "போதாத சிறப்புரிமைகள்"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1134 gui\settingsDialogs.py:3357
+#: gui\settingsDialogs.py:1134 gui\settingsDialogs.py:3355
 msgid "No mirror"
 msgstr "மாற்று வழங்கி ஏதுமில்லை"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1153
+#: gui\settingsDialogs.py:1151
 msgid "Language Configuration Change"
 msgstr "மொழி அமைவடிவ மாற்றம்"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
-#: gui\settingsDialogs.py:1158
+#: gui\settingsDialogs.py:1156
 msgid "NVDA must be restarted for the new language to take effect."
 msgstr "புதிய மொழி செயல்படத் துவங்க என்விடிஏ மறுதுவக்கப்பட வேண்டும்."
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1163
+#: gui\settingsDialogs.py:1161
 msgid "Restart &now"
 msgstr "இப்பொழுது மறுதுவக்குக (&N)"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1168
+#: gui\settingsDialogs.py:1166
 msgid "Restart &later"
 msgstr "பிறகு மறுதுவக்குக (&L)"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#: gui\settingsDialogs.py:1192
+#: gui\settingsDialogs.py:1190
 msgid "Synthesizer"
 msgstr "ஒலிப்பான்"
 
@@ -12972,848 +12984,855 @@ msgstr "ஒலிப்பான்"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1214 gui\settingsDialogs.py:4448
+#: gui\settingsDialogs.py:1212 gui\settingsDialogs.py:4459
 msgid "C&hange..."
 msgstr "மாற்றுக... (&H)"
 
 #. Translators: This is the label for the synthesizer selection dialog
-#: gui\settingsDialogs.py:1269
+#: gui\settingsDialogs.py:1267
 msgid "Select Synthesizer"
 msgstr "ஒலிப்பானைத் தெரிவுசெய்க"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:1277
+#: gui\settingsDialogs.py:1275
 msgid "&Synthesizer:"
 msgstr "ஒலிப்பான் (&S):"
 
 #. Translators: This is the label for the voice settings panel.
-#: gui\settingsDialogs.py:1661
+#: gui\settingsDialogs.py:1659
 msgid "Voice"
 msgstr "குரல்"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1696
+#: gui\settingsDialogs.py:1694
 msgid "Automatic language switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு மொழிக்குத் தானாக மாறுக"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, different voices for dialects will be used to
 #. read text in that dialect).
-#: gui\settingsDialogs.py:1712
+#: gui\settingsDialogs.py:1710
 msgid "Automatic dialect switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு வட்டார வழக்கிற்குத் தானாக மாறுக"
 
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-#: gui\settingsDialogs.py:1721
+#: gui\settingsDialogs.py:1719
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
 msgstr "படிக்கும்பொழுது மொழி மாற்றங்களை அறிவித்திடுக (&G)"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
-#: gui\settingsDialogs.py:1737
+#: gui\settingsDialogs.py:1735
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
 msgstr "மொழி மாற்று அறிவிப்பிற்கு ஒலிப்பானில் ஆதரவில்லை (&U)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
-#: gui\settingsDialogs.py:1756
+#: gui\settingsDialogs.py:1754
 msgid "Punctuation/symbol &level:"
 msgstr "நிறுத்தற்குறிகள்/குறியெழுத்துகள் நிலை (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1774
+#: gui\settingsDialogs.py:1772
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது குரலின் மொழியை நம்புக"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1784 gui\settingsDialogs.py:5001
+#: gui\settingsDialogs.py:1782 gui\settingsDialogs.py:5012
 msgid "Unicode normali&zation"
 msgstr "ஒருங்குறி இயல்பாக்கம் (&Z)"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
-#: gui\settingsDialogs.py:1795
+#: gui\settingsDialogs.py:1793
 msgid "Report '&Normalized' when navigating by character"
 msgstr "வரியுருக்களாக வழிசெலுத்தும்பொழுது 'இயல்பாக்கப்பட்டது' என்று அறிவித்திடுக (&N)"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
-#: gui\settingsDialogs.py:1828
+#: gui\settingsDialogs.py:1826
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1843
+#: gui\settingsDialogs.py:1841
 msgid "Say &cap before capitals"
 msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு முன், Cap என்று சொல்க (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1854
+#: gui\settingsDialogs.py:1852
 msgid "&Beep for capitals"
 msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு சிற்றொலியை எழுப்புக (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1868
+#: gui\settingsDialogs.py:1866
 msgid "Use &spelling functionality if supported"
 msgstr "எழுத்துகளாக படித்திடும் வசதியிருந்தால், அதைப் பயன்படுத்துக (&S)"
 
 #. Translators: Label of the list where user can enable or disable symbol dictionaires.
-#: gui\settingsDialogs.py:1884
+#: gui\settingsDialogs.py:1882
 msgid "E&xtra dictionaries for character and symbol processing:"
 msgstr "வரியுரு மற்றும் குறியெழுத்து செயலாக்கத்திற்கான கூடுதல் அகரமுதலிகள் (&X):"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
-#: gui\settingsDialogs.py:1898
+#: gui\settingsDialogs.py:1896
 msgid "&Modes available in the Cycle speech mode command:"
 msgstr "பேச்சு முறை சுழற்சியில் இருக்கும் நிலைகள் (&M):"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
-#: gui\settingsDialogs.py:1912
+#: gui\settingsDialogs.py:1910
 msgid "&Delayed descriptions for characters on cursor movement"
 msgstr "சுட்டுக்குறி நகரும்பொழுது தாமதிக்கப்பட்ட எழுத்து விளக்கங்கள் (&D)"
 
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
-#: gui\settingsDialogs.py:1976
+#: gui\settingsDialogs.py:1974
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
 msgstr "தங்களின் பேச்சுமுறை விருப்பத் தேர்வுகளில் ஒன்றாக 'பேசுக' என்பதை தாங்கள் தேர்வுச் செய்யவில்லை. இதன் விளைவாக பேச்சின் வெளியீடு இல்லாமல் போகலாம் என்பதை நினைவில் கொள்க. தாங்கள் கட்டாயம் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
-#: gui\settingsDialogs.py:2004
+#: gui\settingsDialogs.py:2002
 msgid "At least two speech modes have to be checked."
 msgstr "குறைந்தபட்சம் இரு பேச்சு முறைகளையாவது தேர்வு செய்திருக்க வேண்டும்."
 
 #. Translators: Same as the label for the list of checkboxes where user can select speech modes that will
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:2007
+#: gui\settingsDialogs.py:2005
 msgid "Modes available in the Cycle speech mode command"
 msgstr "பேச்சு முறை கட்டளை சுழற்சியில் இருக்கும் பேச்சு முறைகள்"
 
 #. Translators: This is the label for the keyboard settings panel.
-#: gui\settingsDialogs.py:2016
+#: gui\settingsDialogs.py:2014
 msgid "Keyboard"
 msgstr "விசைப்பலகை"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 #. Translators: The label of a combobox in the Welcome dialog.
-#: gui\settingsDialogs.py:2023 gui\startupDialogs.py:69
+#: gui\settingsDialogs.py:2021 gui\startupDialogs.py:69
 msgid "&Keyboard layout:"
 msgstr "விசைப்பலகைத் தளவமைப்பு (&K):"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#: gui\settingsDialogs.py:2037
+#: gui\settingsDialogs.py:2035
 msgid "&Select NVDA Modifier Keys"
 msgstr "என்விடிஏ மாற்றியமைப்பி விசைகளைத் தெரிவுசெய்க (&S)"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2053
+#: gui\settingsDialogs.py:2051
 msgid "Speak typed &characters:"
 msgstr "தட்டச்சிடப்பட்ட வரியுருவைப் பேசுக (&C):"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2064
+#: gui\settingsDialogs.py:2062
 msgid "Speak typed &words:"
 msgstr "தட்டச்சிடப்பட்ட சொற்களைப் பேசுக (&W):"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2076
+#: gui\settingsDialogs.py:2074
 msgid "Speech &interrupt for typed characters"
 msgstr "வரியுருக்கள் தட்டச்சிடப்படும்பொழுது பேச்சைக் குறுக்கிடுக (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2088
+#: gui\settingsDialogs.py:2086
 msgid "Speech i&nterrupt for Enter key"
 msgstr "உள்ளிடு விசை அழுத்தப்படும்பொழுது பேச்சைக் குறுக்கிடுக (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2097
+#: gui\settingsDialogs.py:2095
 msgid "Allow skim &reading in Say All"
 msgstr "எல்லாம் படித்திடும்பொழுது மேலோட்டப் படித்தலை அனுமதித்திடுக (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2107
+#: gui\settingsDialogs.py:2105
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr "முகப்பெழுத்து பூட்டப்பட்டிருக்கும்பொழுது கீழ்தட்டு விசையை அழுத்தினால் சிற்றொலியை எழுப்புக (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2116
+#: gui\settingsDialogs.py:2114
 msgid "Speak c&ommand keys"
 msgstr "கட்டளை விசைகளைப் பேசுக (&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2123
+#: gui\settingsDialogs.py:2121
 msgid "Play sound for &spelling errors while typing"
 msgstr "தட்டச்சிடும்பொழுது ஏற்படும் எழுத்துப் பிழைகளை அறிவிக்க ஒலியை எழுப்புக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2134
+#: gui\settingsDialogs.py:2132
 msgid "Handle keys from other &applications"
 msgstr "பிற பயன்பாடுகளின் விசைகளைக் கையாள்க (&A)"
 
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
-#: gui\settingsDialogs.py:2142
+#: gui\settingsDialogs.py:2140
 msgid "&Multiple key press timeout (ms):"
 msgstr "பல விசைகள் அழுத்தத்திற்கான காலாவதி நேரம் (நுண்வினாடிகளில்) (&M):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
-#: gui\settingsDialogs.py:2158
+#: gui\settingsDialogs.py:2156
 msgid "At least one key must be used as the NVDA key."
 msgstr "குறைந்தபட்சம் ஒரு விசையாவது என்விடிஏ விசையாக பயன்படுத்தப்பட வேண்டும்."
 
 #. Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
-#: gui\settingsDialogs.py:2161
+#: gui\settingsDialogs.py:2159
 msgid "Select NVDA Modifier Keys"
 msgstr "என்விடிஏ மாற்றியமைப்பி விசைகளை தெரிவுசெய்க"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2196
+#: gui\settingsDialogs.py:2194
 msgid "Report mouse &shape changes"
 msgstr "சுட்டியின் உருவ மாற்றங்களை அறிவித்திடுக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2203
+#: gui\settingsDialogs.py:2201
 msgid "Enable mouse &tracking"
 msgstr "சுட்டியின் பின்தொடருதலை முடுக்குக(&T)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2210
+#: gui\settingsDialogs.py:2208
 msgid "Text &unit resolution:"
 msgstr "உரைத் தொகுதியின் துல்லியம் (&U)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2229
+#: gui\settingsDialogs.py:2227
 msgid "Report &object when mouse enters it"
 msgstr "பொருுக்குள் சுட்டுக்குறி நுழையும்பொழுது பொருளை அறிவித்திடுக"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2238
+#: gui\settingsDialogs.py:2236
 msgid "&Play audio coordinates when mouse moves"
 msgstr "சுட்டி நகரும்பொழுது கேட்பொலி இசைவுகளை இயக்குக (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2245
+#: gui\settingsDialogs.py:2243
 msgid "&Brightness controls audio coordinates volume"
 msgstr "கேட்பொலி இசைவுகலின் ஒலியளவை ஒளிர்வு கட்டுப்படுத்துகிறது (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2254
+#: gui\settingsDialogs.py:2252
 msgid "Ignore mouse input from other &applications"
 msgstr "பிற பயன்பாடுகளின் சுட்டி உள்ளீட்டினைப் புறந்தள்ளுக (&A)"
 
 #. Translators: This is the label for the review cursor settings panel.
-#: gui\settingsDialogs.py:2275
+#: gui\settingsDialogs.py:2273
 msgid "Review Cursor"
 msgstr "சீராய்வுச் சுட்டுக்குறி"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2281
+#: gui\settingsDialogs.py:2279
 msgid "Follow system &focus"
 msgstr "கணினிக் குவிமையத்தைப் பின்தொடர்க (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2287
+#: gui\settingsDialogs.py:2285
 msgid "Follow System &Caret"
 msgstr "இமைக்கும் சுட்டுக்குறியைப் பின்தொடர்க (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2293
+#: gui\settingsDialogs.py:2291
 msgid "Follow &mouse cursor"
 msgstr "சுட்டியின் குறிமுள்ளைப் பின்தொடர்க (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2299
+#: gui\settingsDialogs.py:2297
 msgid "&Simple review mode"
 msgstr "எளிய சீராய்வு நிலை (&S)"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#: gui\settingsDialogs.py:2313
+#: gui\settingsDialogs.py:2311
 msgid "Input Composition"
 msgstr "உள்ளீடு இயற்றல்"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2322
+#: gui\settingsDialogs.py:2320
 msgid "Automatically report all available &candidates"
 msgstr "இருக்கும் எல்லாத் தேர்வுருக்களையும் தானாக அறிவித்திடுக (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2334
+#: gui\settingsDialogs.py:2332
 msgid "Announce &selected candidate"
 msgstr "தெரிவாகியுள்ள தேர்வுருவை அறிவித்திடுக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2349
+#: gui\settingsDialogs.py:2347
 msgid "Always include short character &description when announcing candidates"
 msgstr "தேர்வுருக்களை அறிவித்திடும்பொழுது, குறுகிய எழுத்து விளக்கங்களை எப்பொழுதும் சேர்த்துக் கொள்க (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2364
+#: gui\settingsDialogs.py:2362
 msgid "Report changes to the &reading string"
 msgstr "படித்திடும் சரத்தில் ஏற்படும் மாற்றங்களை அறிவித்திடுக (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2379
+#: gui\settingsDialogs.py:2377
 msgid "Report changes to the &composition string"
 msgstr "இயற்றல் சரத்தில் ஏற்படும் மாற்றங்களை அறிவித்திடுக (&C)"
 
 #. Translators: This is a label appearing on the Object Presentation settings panel.
-#: gui\settingsDialogs.py:2411
+#: gui\settingsDialogs.py:2409
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
 msgstr "கட்டுப்பாடுகள் குறித்து என்விடிஏ அளிக்கும் தகவலின் அளவினை அமைவடிவமாக்குக. குவிமைய அறிவித்தலுக்கும், என்விடிஏ பொருள் வழிசெலுத்தலுக்கும் இவ்விருப்பத் தேர்வு பொருந்தும், ஆனால், உலாவு நிலையில் வலைப் பக்கத்தில் இருக்கும் உள்ளடக்கங்களைப் படிப்பது போன்ற உரைப் படித்தலுக்குப் பொருந்தாது."
 
 #. Translators: This is the label for the object presentation panel.
-#: gui\settingsDialogs.py:2417
+#: gui\settingsDialogs.py:2415
 msgid "Object Presentation"
 msgstr "பொருளளிக்கை"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2427
+#: gui\settingsDialogs.py:2425
 msgid "Speak"
 msgstr "பேசுக"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2431
+#: gui\settingsDialogs.py:2429
 msgid "Beep"
 msgstr "சிற்றொலிகளை எழுப்புக"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2435
+#: gui\settingsDialogs.py:2433
 msgid "Speak and beep"
 msgstr "பேசுக, சிற்றொலிகளை எழுப்புக"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2448
+#: gui\settingsDialogs.py:2446
 msgid "Report &tooltips"
 msgstr "கருவிக் குறிப்புகளை அறிவித்திடுக (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2455
+#: gui\settingsDialogs.py:2453
 msgid "Report &notifications"
 msgstr "அறிவிக்கைகளை அறிவித்திடுக (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2462
+#: gui\settingsDialogs.py:2460
 msgid "Report object shortcut &keys"
 msgstr "பொருளின் குறுக்கு விசைகளை அறிவித்திடுக (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2469
+#: gui\settingsDialogs.py:2467
 msgid "Report object &position information"
 msgstr "பொருள் நிலையின் தகவலை அறிவித்திடுக (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2476
+#: gui\settingsDialogs.py:2474
 msgid "&Guess object position information when unavailable"
 msgstr "பொருள் நிலையின் தகவல் இல்லாதபொழுது அதை ஊகித்திடுக (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2485
+#: gui\settingsDialogs.py:2483
 msgid "Report object &descriptions"
 msgstr "பொருள் விளக்கங்களை அறிவித்திடுக (&D)"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2492
+#: gui\settingsDialogs.py:2490
 msgid "Progress &bar output:"
 msgstr "முன்னேற்றப் பட்டையின் வெளியீடு (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2505
+#: gui\settingsDialogs.py:2503
 msgid "Report backg&round progress bars"
 msgstr "பின்புல முன்னேற்றப்பட்டைகளின் இயக்கத்தை அறிவித்திடுக (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2519
+#: gui\settingsDialogs.py:2517
 msgid "Report dynamic &content changes"
 msgstr "ியங்குநிலை உள்ளடக்க மாற்றங்களை அறிவித்திடுக (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2529
+#: gui\settingsDialogs.py:2527
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "தன்னியக்க பரிந்துரைகள் தோன்றும்பொழுது ஒலியை எழுப்புக (&A)"
 
 #. Translators: This is the label for the browse mode settings panel.
-#: gui\settingsDialogs.py:2562
+#: gui\settingsDialogs.py:2560
 msgid "Browse Mode"
 msgstr "உலாவும் நிலை"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2569
+#: gui\settingsDialogs.py:2567
 msgid "&Maximum number of characters on one line"
 msgstr "ஒரு வரியில் இருக்கக்கூடிய வரியுருக்களின் உச்ச அளவு (&M)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2582
+#: gui\settingsDialogs.py:2580
 msgid "&Number of lines per page"
 msgstr "ஒரு பக்கத்தில் இருக்கக்கூடிய வரிகளின் எண்ணிக்கை (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2595
+#: gui\settingsDialogs.py:2593
 msgid "Use &screen layout (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது திரைத் தளவமைப்பைப் பயன்படுத்துக (&S)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
-#: gui\settingsDialogs.py:2602
+#: gui\settingsDialogs.py:2600
 msgid "&Enable browse mode on page load"
 msgstr "ஆவணம் ஏற்றப்படும்பொழுது உலாவு நிலையை முடுக்குக (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2609
+#: gui\settingsDialogs.py:2607
 msgid "Automatic &Say All on page load"
 msgstr "பக்கம் ஏற்றப்படும்பொழுது எல்லாவற்றையும் தானாகப் படித்திடுக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2616
+#: gui\settingsDialogs.py:2614
 msgid "Include l&ayout tables"
 msgstr "தளவமைப்பு அட்டவணைகளைச் சேர்த்துக் கொள்க (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2623
+#: gui\settingsDialogs.py:2621
 msgid "Automatic focus mode for focus changes"
 msgstr "குவிமைய மாற்றங்களுக்கான தன்னியக்க குவிமைய நிலை"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2637
+#: gui\settingsDialogs.py:2635
 msgid "Automatic focus mode for caret movement"
 msgstr "இமைக்கும் சுட்டுக்குறிக்கான தன்னியக்க குவிமைய நிலை"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2651
+#: gui\settingsDialogs.py:2649
 msgid "Audio indication of focus and browse modes"
 msgstr "குவிமைய நிலை, உலாவும் நிலை ஆகியவைகளுக்குக் கேட்பொலிச் சைகையை எழுப்புக"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2665
+#: gui\settingsDialogs.py:2663
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "கட்டளைகள் அல்லாத எல்லா சைகைகளையும் ஆவணத்திற்குச் செல்லாமல் தடுத்திடுக (&T)"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:2698 gui\settingsDialogs.py:4105
+#: gui\settingsDialogs.py:2696 gui\settingsDialogs.py:4116
 msgid "Document Formatting"
 msgstr "ஆவண வடிவூட்டம்"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:2702
+#: gui\settingsDialogs.py:2700
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "என்விடிஏ அறிவித்திடும் ஆவண வடிவூட்ட வகைகளை, கீழ்க்காணும் விருப்பத் தேர்வுகள் கட்டுப்படுத்துகின்றன."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:2711
+#: gui\settingsDialogs.py:2709
 msgid "Font"
 msgstr "எழுத்துரு"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2719
+#: gui\settingsDialogs.py:2717
 msgid "&Font name"
 msgstr "எழுத்துருப் பெயர் (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2725
+#: gui\settingsDialogs.py:2723
 msgid "Font &size"
 msgstr "எழுத்துரு அளவு (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2731
+#: gui\settingsDialogs.py:2729
 msgid "Font attrib&utes"
 msgstr "எழுத்துரு பண்புகள் (&U)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2743
+#: gui\settingsDialogs.py:2741
 msgid "Su&perscripts and subscripts"
 msgstr "மேலெழுத்துகளும் கீழெழுத்துகளும் (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2753
+#: gui\settingsDialogs.py:2751
 msgid "E&mphasis"
 msgstr "வலியுறுத்தல்கள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2759
+#: gui\settingsDialogs.py:2757
 msgid "Highlighted (mar&ked) text"
 msgstr "துலக்கமாக்கப்பட்ட (குறியிடப்பட்ட) உரை (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2769
+#: gui\settingsDialogs.py:2767
 msgid "St&yle"
 msgstr "பாங்கு (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2775
+#: gui\settingsDialogs.py:2773
 msgid "&Colors"
 msgstr "நிறங்கள் (&C)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:2781
+#: gui\settingsDialogs.py:2779
 msgid "Document information"
 msgstr "ஆவணத் தகவல்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2789
+#: gui\settingsDialogs.py:2787
 msgid "No&tes and comments"
 msgstr "குறிப்புகளும் கருத்துரைகளும் (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2795
+#: gui\settingsDialogs.py:2793
 msgid "&Bookmarks"
 msgstr "நூற்குறிகள் (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2801
+#: gui\settingsDialogs.py:2799
 msgid "&Editor revisions"
 msgstr "தொகுப்பாளர் திருத்தங்கள் (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2807
+#: gui\settingsDialogs.py:2805
 msgid "Spelling e&rrors"
 msgstr "எழுத்துப் பிழைகள் (&R)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:2813
+#: gui\settingsDialogs.py:2811
 msgid "Pages and spacing"
 msgstr "பக்கங்களும் இடைவெளியும்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2821
+#: gui\settingsDialogs.py:2819
 msgid "&Pages"
 msgstr "பக்கங்கள் (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2827
+#: gui\settingsDialogs.py:2825
 msgid "Line &numbers"
 msgstr "வரி எண்கள் (&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:2835
+#: gui\settingsDialogs.py:2833
 msgid "Line &indentation reporting:"
 msgstr "வரியோரச் சீர்மையை அறிவித்தல் (&I):"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:2849
+#: gui\settingsDialogs.py:2847
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "வரியோரச் சீர்மையை அறிவித்திடும்பொழுது வெற்று வரிகளை புறக்கணித்திடுக (&B)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:2861
+#: gui\settingsDialogs.py:2859
 msgid "&Paragraph indentation"
 msgstr "பத்தியோரச் சீர்மையை அறிவித்தல் (&P)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:2870
+#: gui\settingsDialogs.py:2868
 msgid "&Line spacing"
 msgstr "வரி இடைவெளி (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2877
+#: gui\settingsDialogs.py:2875
 msgid "&Alignment"
 msgstr "ஒழுங்கமைப்பு (&A)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:2883
+#: gui\settingsDialogs.py:2881
 msgid "Table information"
 msgstr "அட்டவணைத் தகவல்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2891
+#: gui\settingsDialogs.py:2889
 msgid "&Tables"
 msgstr "அட்டவணைகள் (&T)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2898
+#: gui\settingsDialogs.py:2896
 msgid "H&eaders"
 msgstr "தலைப்புரைகள் (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2906
+#: gui\settingsDialogs.py:2904
 msgid "Cell c&oordinates"
 msgstr "கள சந்தி நிலை (&O)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2914
+#: gui\settingsDialogs.py:2912
 msgid "Cell &borders:"
 msgstr "கள எல்லைகள் (&B):"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:2922
+#: gui\settingsDialogs.py:2920
 msgid "Elements"
 msgstr "கூறுகள்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2941
+#: gui\settingsDialogs.py:2939
 msgid "Link type"
 msgstr "தொடுப்பின் வகை"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2947
+#: gui\settingsDialogs.py:2945
 msgid "&Graphics"
 msgstr "வரைகலைகள்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2952
+#: gui\settingsDialogs.py:2950
 msgid "&Lists"
 msgstr "வரிசைப் பட்டியல்கள் (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2957
+#: gui\settingsDialogs.py:2955
 msgid "Block &quotes"
 msgstr "உரைத் தொகுதி (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2963
+#: gui\settingsDialogs.py:2961
 msgid "&Groupings"
 msgstr "குழுவாக்கங்கள் (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2969
+#: gui\settingsDialogs.py:2967
 msgid "Lan&dmarks and regions"
 msgstr "நிலக்குறிகளும் பகுதிகளும் (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2975
+#: gui\settingsDialogs.py:2973
 msgid "Arti&cles"
 msgstr "பிரிவுக்கூறுகள் (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2980
+#: gui\settingsDialogs.py:2978
 msgid "Fra&mes"
 msgstr "சட்டகங்கள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2986
+#: gui\settingsDialogs.py:2984
 msgid "&Figures and captions"
 msgstr "உருவங்களும் உருவவிளக்கங்களும் (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2992
+#: gui\settingsDialogs.py:2990
 msgid "&Clickable"
 msgstr "சொடுக்கத்தக்கது (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:2997
+#: gui\settingsDialogs.py:2995
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "சுட்டுக்குறிக்குப் பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவித்திடுக (இது தேக்கத்தை ஏற்படுத்தலாம்) (&G)"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3063
+#: gui\settingsDialogs.py:3061
 msgid "Document Navigation"
 msgstr "ஆவண வழிசெலுத்தல்"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3069
+#: gui\settingsDialogs.py:3067
 msgid "&Paragraph style:"
 msgstr "பத்திப் பாங்கு (&P)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3086
+#: gui\settingsDialogs.py:3084
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "%s ஒலிப்பானை ஏற்றிட இயலவில்லை."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3089
+#: gui\settingsDialogs.py:3087
 msgid "Synthesizer Error"
 msgstr "ஒலிப்பான் பிழை"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3104
+#: gui\settingsDialogs.py:3102
 msgid "Audio output &device:"
 msgstr "ஒலித வெளியீட்டுக் கருவி (&D):"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3119
+#: gui\settingsDialogs.py:3117
 msgid "Audio d&ucking mode:"
 msgstr "பின்புல ஒலியினைத் தாழ்த்திடும் தன்மை (&U)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3133
+#: gui\settingsDialogs.py:3131
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "குரல் ஒலியளவினை என்விடிஏ ஒலியளவு பின்தொடர்கிறது"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3141
+#: gui\settingsDialogs.py:3139
 msgid "Volume of NVDA sounds"
 msgstr "என்விடிஏ ஒலிகளின் ஒலியளவு"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3152
+#: gui\settingsDialogs.py:3150
 msgid "&Sound split mode:"
 msgstr "ஒலிப் பிளவு முறை (&S):"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3169
+#: gui\settingsDialogs.py:3167
 msgid "Time to &keep audio device awake after speech (seconds)"
 msgstr "பேச்சிற்குப் பிறகு ஒலிக் கருவி விழித்திருக்க வேண்டிய நேரம் (வினாடிகளில்) (&k)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3186
+#: gui\settingsDialogs.py:3184
 msgid "&Modes available in the 'Cycle sound split mode' command:"
 msgstr "ஒலிப் பிளவு கட்டளை சுழற்சியில் இருக்கும் முறைகள் (&M):"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3244
+#: gui\settingsDialogs.py:3242
 msgid "At least one sound split mode has to be checked."
 msgstr "குறைந்தபட்சம் ஒரு ஒலிப் பிளவு முறையையாவது தேர்வுச் செய்யவேண்டும்."
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3247
+#: gui\settingsDialogs.py:3245
 msgid "Modes available in the 'Cycle sound split mode' command"
 msgstr "ஒலிப் பிளவு கட்டளை சுழற்சியில் இருக்கும் முறைகள்"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3255
+#: gui\settingsDialogs.py:3253
 msgid "Add-on Store"
 msgstr "நீட்சிநிரல் அங்காடி"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3261
+#: gui\settingsDialogs.py:3259
 msgid "Automatic &updates:"
 msgstr "தன்னியக்க இற்றாக்கங்கள் (&U):"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3273
+#: gui\settingsDialogs.py:3271
 msgid "Default update &channel:"
 msgstr "இயல்பிருப்பு இற்றாக்க அலைத்தடம் (&C):"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3287
+#: gui\settingsDialogs.py:3285
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "இணக்கமற்ற நீட்சிநிரல்களை நிறுவ தன்னியக்க இற்றாக்கங்களை அனுமதித்திடுக"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3293
+#: gui\settingsDialogs.py:3291
 msgid "Mirror server"
 msgstr "மாற்று வழங்கி"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3330
+#: gui\settingsDialogs.py:3328
 msgid "Set Add-on Store Mirror Server"
 msgstr "நீட்சிநிரல் அங்காடியின் மாற்று வழங்கியை அமைத்திடுக"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3384
+#: gui\settingsDialogs.py:3382
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "தொலைநிலை அணுகலை முடுக்கிடுக"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3401
+#: gui\settingsDialogs.py:3399
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "கட்டுப்பாட்டில் இருக்கும்பொழுது இணைப்பைத் துண்டிக்கும் முன் உறுதிசெய்யவும்"
 
+#. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
+#. when controlling the local computer.
+#: gui\settingsDialogs.py:3410
+msgctxt "remote"
+msgid "&Mute when controlling the local computer"
+msgstr "தனிக்கணினியைக் கட்டுப்படுத்தும்பொழுது ஒலியடக்குக (&M)"
+
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3411
+#: gui\settingsDialogs.py:3420
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "என்விடிஏ துவங்கியவுடன் தானாக இணைத்திடுக"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3421
+#: gui\settingsDialogs.py:3430
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "தன்னியக்க இணைப்பு"
@@ -13821,7 +13840,7 @@ msgstr "தன்னியக்க இணைப்பு"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3430 _remoteClient\dialogs.py:318
+#: gui\settingsDialogs.py:3439 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "பயன்முறை (&M):"
@@ -13829,7 +13848,7 @@ msgstr "பயன்முறை (&M):"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3439 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3448 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "வழங்கி வகை (&S):"
@@ -13837,7 +13856,7 @@ msgstr "வழங்கி வகை (&S):"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3449 _remoteClient\dialogs.py:41
+#: gui\settingsDialogs.py:3458 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "வழங்கியின் முகவரி (&H):"
 
@@ -13845,25 +13864,25 @@ msgstr "வழங்கியின் முகவரி (&H):"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3458 gui\settingsDialogs.py:4526
-#: _remoteClient\dialogs.py:202
+#: gui\settingsDialogs.py:3467 gui\settingsDialogs.py:4537
+#: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "நுழைவாயில் (&P)"
 
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3479 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3488 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "திறவுச்சொல் (&K):"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3486
+#: gui\settingsDialogs.py:3495
 msgid "Delete all trusted fingerprints"
 msgstr "நம்பகமான அனைத்து கைரேகைகளையும் அழித்திடுக"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3564
+#: gui\settingsDialogs.py:3574
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -13872,179 +13891,179 @@ msgstr "முன்னர் நம்பகமாக இருந்த எல
 "கட்டாயம் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3569
+#: gui\settingsDialogs.py:3579
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "நம்பகமான அனைத்து கைரேகைகளையும் அழித்திடுக"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:3586
+#: gui\settingsDialogs.py:3596
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "என்விடிஏ துவங்கியவுடன் ஏற்கெனவே இருக்கும் வழங்கியைப் பயன்படுத்தி தானாக இணைக்க, வழங்கி மற்றும் திறவுச்சொல் ஆகிய இரண்டையும் தொலைநிலை அணுகல் பிரிவில் அமைக்க வேண்டும்."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:3592
+#: gui\settingsDialogs.py:3602
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "என்விடிஏ துவங்கியவுடன் தன்னகத்தே இயங்கும் வழங்கியைப் பயன்படுத்தி தானாக இணைக்க, நுழைவாயில் மற்றும் திறவுச்சொல் ஆகிய இரண்டையும் தொலைநிலை அணுகல் வகைமையில் அமைக்க வேண்டும்."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:3598
+#: gui\settingsDialogs.py:3608
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "தொலைநிலை அணுகல் பிழை"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:3631
+#: gui\settingsDialogs.py:3642
 msgid "Touch Interaction"
 msgstr "தொட்டளவளாவல்"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:3638
+#: gui\settingsDialogs.py:3649
 msgid "Enable touch interaction support"
 msgstr "தொட்டளவளாவலுக்கான ஆதரவினை முடுக்குக"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:3644
+#: gui\settingsDialogs.py:3655
 msgid "&Touch typing mode"
 msgstr "தொடு தட்டச்சு நிலை (&T)"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:3656
+#: gui\settingsDialogs.py:3667
 msgid "Windows OCR"
 msgstr "விண்டோஸ் எழுத்துணரி"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:3675
+#: gui\settingsDialogs.py:3686
 msgid "Recognition &language:"
 msgstr "எழுத்துணரும் மொழி (&L)"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:3685
+#: gui\settingsDialogs.py:3696
 msgid "Periodically &refresh recognized content"
 msgstr "உணரப்பட்ட உள்ளடக்கத்தை அவ்வப்போது புத்தாக்குக (&R)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3716
+#: gui\settingsDialogs.py:3727
 msgid "NVDA Development"
 msgstr "என்விடிஏ மேம்படுத்துதல்"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3724
+#: gui\settingsDialogs.py:3735
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "மேம்படுத்துநரின் தற்காலிக நினைவக அடைவிலிருந்து தனிப்பயனாக்கப்பட்ட குறிமுறையின் ஏற்றலை முடுக்குக"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:3737
+#: gui\settingsDialogs.py:3748
 msgid "Open developer scratchpad directory"
 msgstr "மேம்படுத்துநரின் தற்காலிக நினைவக அடைவினை திறவுக"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3747
+#: gui\settingsDialogs.py:3758
 msgid "Microsoft UI Automation"
 msgstr "மைக்ரோசாஃப்ட் இடைமுகப்பு தன்னியக்கமாக்கல்"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:3757
+#: gui\settingsDialogs.py:3768
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "பயனர் இடைமுகப்பு தன்னியக்கமாக்கல் நிகழ்வுகளுக்கும், பண்பு மாற்றங்களுக்குமான பதிவு (&S)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:3763
+#: gui\settingsDialogs.py:3774
 msgid "Automatic (prefer selective)"
 msgstr "தன்னியக்கம் (தேர்ந்தெடுக்கப்பட்டதற்கு முன்னுரிமையளி)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:3767
+#: gui\settingsDialogs.py:3778
 msgid "Selective"
 msgstr "தேர்ந்தெடுக்கப்பட்டது"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:3771
+#: gui\settingsDialogs.py:3782
 msgid "Global"
 msgstr "முழுதளாவியது"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3800
+#: gui\settingsDialogs.py:3811
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "மைக்ரோசாஃப்ட் வேர்ட் ஆவணக் கட்டுப்பாடுகளை அணுக, இடைமுகப்பு தன்னியக்கமாக்கலைப் பயன்படுத்துக (&W)"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3805
+#: gui\settingsDialogs.py:3816
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "இயல்பிருப்பு (பொருத்தமான இடங்களில்)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3807
+#: gui\settingsDialogs.py:3818
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "தேவைப்படும்பொழுது மட்டும்"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3809
+#: gui\settingsDialogs.py:3820
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "பொருத்தமான இடங்களில்"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3811
+#: gui\settingsDialogs.py:3822
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "எப்பொழுதும்"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3820
+#: gui\settingsDialogs.py:3831
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "மைக்ரோசாஃப்ட் எக்ஸெல் விரிதாள் கட்டுப்பாடுகளை அணுக, இடைமுகப்பு தன்னியக்கமாக்கலை கிடைப்பிலிருந்தால் பயன்படுத்துக"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:3828
+#: gui\settingsDialogs.py:3839
 msgid "Windows C&onsole support:"
 msgstr "விண்டோஸ் கட்டுப்பாட்டக ஆதரவு (&O)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:3833
+#: gui\settingsDialogs.py:3844
 msgid "Automatic (prefer UIA)"
 msgstr "தன்னியக்கம் (பயனர் இடைமுகப்பு தன்னியக்கமாக்கலுக்கு முன்னுரிமை)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:3836
+#: gui\settingsDialogs.py:3847
 msgid "UIA when available"
 msgstr "கிடைப்பிலிருந்தால் பயனர் இடைமுகப்பு தன்னியக்கமாக்கல்"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:3840
+#: gui\settingsDialogs.py:3851
 msgid "Legacy"
 msgstr "மரபு"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:3863
+#: gui\settingsDialogs.py:3874
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14053,72 +14072,72 @@ msgstr "மைக்ரோசாஃப்ட் எட்ஜ் மற்று�
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:3868
+#: gui\settingsDialogs.py:3879
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "இயல்பிருப்பு (தேவைப்படும்பொழுது மட்டும்)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3870
+#: gui\settingsDialogs.py:3881
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "தேவைப்படும்பொழுது மட்டும்"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3872
+#: gui\settingsDialogs.py:3883
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "ஆம்"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:3874
+#: gui\settingsDialogs.py:3885
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "இல்லை"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:3882
+#: gui\settingsDialogs.py:3893
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "மேம்படுத்தப்பட்ட நிகழ்வு செயலாக்கத்தைப் பயன்படுத்துக (மறுதுவக்கம் தேவைப்படுகிறது) (&H)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3893
+#: gui\settingsDialogs.py:3904
 msgid "Annotations"
 msgstr "விளக்கவுரைகள்"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3902
+#: gui\settingsDialogs.py:3913
 msgid "Report 'has details' for structured annotations"
 msgstr "கட்டமை விளக்கவுரைகளுக்கான விளக்கங்களை அறிக்கை கொண்டுள்ளது"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3909
+#: gui\settingsDialogs.py:3920
 msgid "Report aria-description always"
 msgstr "ஆரியா விளக்கங்களை எப்பொழுதும் அறிவித்திடுக"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:3925
+#: gui\settingsDialogs.py:3936
 msgid "Report live regions:"
 msgstr "உயிர்ப்புடனிருக்கும் பகுதிகளை அறிவித்திடுக:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3934
+#: gui\settingsDialogs.py:3945
 msgid "Terminal programs"
 msgstr "முனைய நிரல்கள்"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3941
+#: gui\settingsDialogs.py:3952
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "எல்லா மேம்பட்ட கட்டுப்பாட்டகங்களில் கடவுச் சொற்களைப் பேசுக. (இது செயல்திறனை மேம்படுத்தலாம்)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:3950
+#: gui\settingsDialogs.py:3961
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "மரபு விண்டோஸ் கட்டுப்பாட்டகத்தில் எழுத்துகளாக தட்டச்சிடும் வசதிக்கான ஆதரவை கிடைப்பிலிருந்தால் பயன்படுத்துக (&Y)"
 
@@ -14126,328 +14145,328 @@ msgstr "மரபு விண்டோஸ் கட்டுப்பாட்�
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:3963
+#: gui\settingsDialogs.py:3974
 msgid "&Diff algorithm:"
 msgstr "வேறுபாடுகளைக் கண்டறிவதற்கான படிமுறைத் தீர்வு (&D):"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:3968
+#: gui\settingsDialogs.py:3979
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "தன்னியக்கம் (வரியுரு அளவிலான வேறுபாடுகளைக் கண்டறிவதற்கு முன்னுரிமையளித்தல்)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:3972
+#: gui\settingsDialogs.py:3983
 msgid "Diff Match Patch"
 msgstr "வரியுரு அளவிலான வேறுபாடுகளைக் கண்டறிதல்"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:3976
+#: gui\settingsDialogs.py:3987
 msgid "Difflib"
 msgstr "வரியளவிலான வேறுபாடுகளைக் கண்டறிதல் கட்டாயப்படுத்தப்படும்"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4002
+#: gui\settingsDialogs.py:4013
 msgid "Speak new text in Windows Terminal via:"
 msgstr "விண்டோஸ் முனையத்தில் இருக்கும் புதிய உரையை இதன் வழியே படித்திடுக:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4021
+#: gui\settingsDialogs.py:4032
 msgid "Default (Yes)"
 msgstr "இயல்பிருப்பு (ஆம்)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4024
+#: gui\settingsDialogs.py:4035
 msgid "Yes"
 msgstr "ஆம்"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4027
+#: gui\settingsDialogs.py:4038
 msgid "No"
 msgstr "இல்லை"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4031
+#: gui\settingsDialogs.py:4042
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "காலாவதியான குவிமைய நிகழ்வுகளுக்கான பேச்சை விலக்கிக்கொள்ள முயல்க:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4047
+#: gui\settingsDialogs.py:4058
 msgid "Trim leading silence in speech audio"
 msgstr "பேச்சொலியில் இருக்கும் படித்தல் அமைதியை ஒழுங்கமைக்கவும்"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4055
+#: gui\settingsDialogs.py:4066
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "சாப்பி 4 ஒலி வெளியீட்டிற்கு வாஸாப்பியைப் பயன்படுத்துக:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4066
+#: gui\settingsDialogs.py:4077
 msgid "Virtual Buffers"
 msgstr "மெய்நிகர் இடையகங்கள்"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4074
+#: gui\settingsDialogs.py:4085
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "ஆவணம் மும்முரமாக இருக்கும்பொழுது குரோமியம் மெய்நிகர் இடையகத்தை ஏற்றுக."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4083
+#: gui\settingsDialogs.py:4094
 msgid "Editable Text"
 msgstr "தொகுக்கப்படக்்கூடிய உரை"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4090
+#: gui\settingsDialogs.py:4101
 msgid "Caret movement timeout (in ms)"
 msgstr "இமைக்கும் சுட்டுக்குறியின் நகர்வு காட்சியளிக்கும் நேரம் (நுண்வினாடிகளில்)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4113
+#: gui\settingsDialogs.py:4124
 msgid "Report transparent color values"
 msgstr "ஒளிபுகு நிறங்களின் மதிப்புகளை அறிவித்திடுக"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4127
+#: gui\settingsDialogs.py:4138
 msgid "Debug logging"
 msgstr "வழுநீக்க செயற்குறிப்பேட்டுப் பதிவு"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4153
+#: gui\settingsDialogs.py:4164
 msgid "Enabled logging categories"
 msgstr "முடுக்கப்பட்ட செயற்குறிப்பேட்டுப் பதிவு வகைமைகள்"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4173
+#: gui\settingsDialogs.py:4184
 msgid "Play a sound for logged e&rrors:"
 msgstr "செயற்குறிப்பேட்டுப் பிழைகளுக்கு ஒலியை எழுப்புக: (&R)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4176
+#: gui\settingsDialogs.py:4187
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "என்விடிஏ பரிசோதனைப் பதிப்புகளில் மட்டும்"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4178
+#: gui\settingsDialogs.py:4189
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "ஆம்"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4191
+#: gui\settingsDialogs.py:4202
 msgid "Regular expression for text paragraph navigation"
 msgstr "உரைப் பத்தி வழிசெழுத்துதலுக்கான சுருங்குறித் தொடர்"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4213
+#: gui\settingsDialogs.py:4224
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "%s உரைப் பத்தி சுருங்குறித் தொடரைத் தொகுப்பதில் தோல்வி"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4343
+#: gui\settingsDialogs.py:4354
 msgid "Advanced"
 msgstr "மேம்பட்டவை"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4348
+#: gui\settingsDialogs.py:4359
 msgid "Warning!"
 msgstr "எச்சரிக்கை!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4352
+#: gui\settingsDialogs.py:4363
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "கீழ் கண்ட அமைப்புகள் மேம்பட்ட பயனர்களுக்காக மட்டுமே. இவ்வமைப்புகளை மாற்றியமைத்தால், என்விடிஏ சரிவர செயல்படாமலிருக்க வாய்ப்பிருக்கிறது. தாங்கள் என்ன செய்கிறீர்கள் என்பதை தாங்கள் முழுமையாக அறிந்திருந்தால், அல்லது என்விடிஏ மேம்படுத்துநர்களால் குறிப்பாக அறிவுருத்தப்பட்டிருந்தால் மட்டுமே இவ்வமைப்புகளை மாற்றியமைத்திடுக."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4379
+#: gui\settingsDialogs.py:4390
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "இவ்வமைப்புகளை மாற்றியமைத்தால் என்விடிஏ சரிவர செயல்படாது என்பதை அறிகிறேன்."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4390
+#: gui\settingsDialogs.py:4401
 msgid "Restore defaults"
 msgstr "இயல்பிருப்புகளை மீட்டமைத்திடுக"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4433
+#: gui\settingsDialogs.py:4444
 msgid "Braille display"
 msgstr "பிரெயில் காட்சியமைவு"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:4502
+#: gui\settingsDialogs.py:4513
 msgid "Select Braille Display"
 msgstr "பிரெயில் காட்சியமைவைத் தெரிவுசெய்க"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:4511
+#: gui\settingsDialogs.py:4522
 msgid "Braille &display:"
 msgstr "பிரெயில் காட்சியமைவு (&D):"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:4517
+#: gui\settingsDialogs.py:4528
 msgid "&Displays to detect automatically:"
 msgstr "தானாகக் கண்டறியும் காட்சியமைவுகள் (&D):"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:4633
+#: gui\settingsDialogs.py:4644
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "{display} காட்சியமைவை ஏற்றிட இயலவில்லை."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:4636
+#: gui\settingsDialogs.py:4647
 msgid "Braille Display Error"
 msgstr "பிரெயில் காட்சியமைவுப் பிழை"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:4669
+#: gui\settingsDialogs.py:4680
 msgid "&Output table:"
 msgstr "வெளியீடு அட்டவணை (&O)"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:4677 gui\settingsDialogs.py:4704
+#: gui\settingsDialogs.py:4688 gui\settingsDialogs.py:4715
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "தன்னியக்கம் ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:4696
+#: gui\settingsDialogs.py:4707
 msgid "&Input table:"
 msgstr "உள்ளீடு அட்டவணை (&I)"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:4722
+#: gui\settingsDialogs.py:4733
 msgid "Braille mode:"
 msgstr "பிரெயில் முறை:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:4737
+#: gui\settingsDialogs.py:4748
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "சுட்டுக்குறியினிடத்தில் இருக்கும் சொல்லை, கணினி பிரெயிலுக்காக விரிவாக்குக (&X)"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:4745
+#: gui\settingsDialogs.py:4756
 msgid "&Show cursor"
 msgstr "பிரெயில் சுட்டுக்குறியைக் காட்டுக (&S)"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:4754
+#: gui\settingsDialogs.py:4765
 msgid "Blink cursor"
 msgstr "சுட்டுக்குறி இமைத்தல்"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:4765
+#: gui\settingsDialogs.py:4776
 msgid "Cursor blink rate (ms)"
 msgstr "சுட்டுக்குறி இமைக்கும் விகிதம் (நுண்வினாடிகளில்)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:4787
+#: gui\settingsDialogs.py:4798
 msgid "Cursor shape for &focus:"
 msgstr "குவிமையத்திற்கான சுட்டுக்குறியின் வடிவம் (&F):"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:4803
+#: gui\settingsDialogs.py:4814
 msgid "Cursor shape for &review:"
 msgstr "சீராய்விற்கான சுட்டுக்குறியின் வடிவம் (&R):"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:4825
+#: gui\settingsDialogs.py:4836
 msgid "Show messages"
 msgstr "தகவல்களைக் காட்டுக"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:4847
+#: gui\settingsDialogs.py:4858
 msgid "Message &timeout (sec)"
 msgstr "தகவல் காட்சியளிக்கும் நொடிகள் (&T)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:4866
+#: gui\settingsDialogs.py:4877
 msgid "Tether B&raille:"
 msgstr "பிரெயிலைக் கட்டுக (&R)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4890
+#: gui\settingsDialogs.py:4901
 msgid "Move system caret when ro&uting review cursor"
 msgstr "சீராய்வுச் சுட்டுக்குறியை வழியமைத்திடும்பொழுது இமைக்கும் சுட்டுக்குறியை நகர்த்திடுக (&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:4906
+#: gui\settingsDialogs.py:4917
 msgid "Read by &paragraph"
 msgstr "பத்தியாகப் படித்திடுக (&P)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:4915
+#: gui\settingsDialogs.py:4926
 msgid "Paragraph start marker:"
 msgstr "பத்தித் துவக்கக் குறி:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:4930
+#: gui\settingsDialogs.py:4941
 msgid "Focus context presentation:"
 msgstr "குவிமைய சூழலளிக்கை:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4951
+#: gui\settingsDialogs.py:4962
 msgid "Show se&lection"
 msgstr "தெரிவினைக் காட்டிடுக (&L)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:4963
+#: gui\settingsDialogs.py:4974
 msgid "Formatting &display"
 msgstr "வடிவூட்டக் காட்சியமைவு (&D)\""
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:4972
+#: gui\settingsDialogs.py:4983
 msgid "Spea&k character when routing cursor in text"
 msgstr "உரையில் சுட்டுக்குறியை வழியமைத்திடும்பொழுது வரியுருவைப் பேசுக (&K)"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:4980
+#: gui\settingsDialogs.py:4991
 msgid "Speak when navigating by &line or paragraph"
 msgstr "வரிகளாக, அல்லது பத்திகளாக வழிசெல்லும்பொழுது பேசிடுக"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:4993
+#: gui\settingsDialogs.py:5004
 msgid "Avoid splitting &words when possible"
 msgstr "இயலும் இடங்களில் சொற்களின் பிளவைத் தவிர்த்திடுக (&W)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5012
+#: gui\settingsDialogs.py:5023
 msgid "I&nterrupt speech while scrolling"
 msgstr "உருளலின்பொழுது பேச்சைக் குறுக்கிடுக (&N)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5106
+#: gui\settingsDialogs.py:5117
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "{providerName} பார்வைத் துலக்க ஊக்கிகளை ஏற்றிட இயலவில்லை"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5113
+#: gui\settingsDialogs.py:5124
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14455,20 +14474,20 @@ msgstr "பின்வரும் பார்வைத் துலக்க 
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5119 gui\settingsDialogs.py:5149
+#: gui\settingsDialogs.py:5130 gui\settingsDialogs.py:5160
 msgid "Vision Enhancement Provider Error"
 msgstr "பார்வைத் துலக்க ஊக்கிப் பிழை"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5136
+#: gui\settingsDialogs.py:5147
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "{providerName} பார்வைத் துலக்க ஊக்கியை நயமாக முடிவிற்கு கொண்டுவர இயலவில்லை"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5144
+#: gui\settingsDialogs.py:5155
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14476,119 +14495,119 @@ msgstr "பின்வரும் பார்வைத் துலக்க 
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5244
+#: gui\settingsDialogs.py:5255
 msgid "Configure visual aids."
 msgstr "பார்வைத் துணைக் கருவிகளை அமைவடிவமாக்குக."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5416
+#: gui\settingsDialogs.py:5427
 msgid "Enable"
 msgstr "முடுக்குக"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5423
+#: gui\settingsDialogs.py:5434
 #: visionEnhancementProviders\NVDAHighlighter.py:307
 #: visionEnhancementProviders\screenCurtain.py:251
 msgid "Options:"
 msgstr "விருப்பத் தேர்வுகள்:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:5469
+#: gui\settingsDialogs.py:5480
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "பார்வைத் துலக்க ஊக்கியின் பயனர் இடைமுகப்பை அமைவடிவமாக்க இயலவில்லை. ஆகவே, அது முடுக்கப்பட மாட்டாது."
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:5514
+#: gui\settingsDialogs.py:5525
 msgid "NVDA Settings"
 msgstr "என்விடிஏ அமைப்புகள்"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:5560
+#: gui\settingsDialogs.py:5571
 msgid "normal configuration"
 msgstr "(இயல் அமைவடிவம்)"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:5595
+#: gui\settingsDialogs.py:5606
 msgid "Add Symbol"
 msgstr "குறியெழுத்தினைக் கூட்டுக"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:5600
+#: gui\settingsDialogs.py:5611
 msgid "&Symbol:"
 msgstr "குறியெழுத்து (&S)"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:5630
+#: gui\settingsDialogs.py:5641
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "குறியெழுத்துகளின் ஒலிப்பு (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:5644
+#: gui\settingsDialogs.py:5655
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:5653
+#: gui\settingsDialogs.py:5664
 msgid "&Symbols"
 msgstr "குறியெழுத்துகள் (&S)"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:5663
+#: gui\settingsDialogs.py:5674
 msgid "Symbol"
 msgstr "குறியெழுத்து"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:5665 gui\speechDict.py:191
+#: gui\settingsDialogs.py:5676 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "மாற்றமர்வு"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:5667
+#: gui\settingsDialogs.py:5678
 msgid "Level"
 msgstr "நிலை"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:5670
+#: gui\settingsDialogs.py:5681
 msgid "Preserve"
 msgstr "பாதுகாத்து வைத்திருக்கவும்"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:5674
+#: gui\settingsDialogs.py:5685
 msgid "Change selected symbol"
 msgstr "தெரிவாகியுள்ள குறியெழுத்தை மாற்றுக"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:5692 gui\speechDict.py:55
+#: gui\settingsDialogs.py:5703 gui\speechDict.py:55
 msgid "&Replacement"
 msgstr "மாற்றமர்வு (&R)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:5701
+#: gui\settingsDialogs.py:5712
 msgid "&Level"
 msgstr "நிலை (&L)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:5708
+#: gui\settingsDialogs.py:5719
 msgid "&Send actual symbol to synthesizer"
 msgstr "உள்ளபடியான குறியெழுத்தினை ஒலிப்பானுக்கு அனுப்பவும் (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:5723
+#: gui\settingsDialogs.py:5734
 msgid "Re&move"
 msgstr "நீக்குக (&M)"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:5830
+#: gui\settingsDialogs.py:5841
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "%s குறியெழுத்து ஏற்கெனவே உள்ளது."
@@ -14659,7 +14678,7 @@ msgstr "அகரமுதலியின் உள்ளீடுகள் (&D)
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #. Translators: title for Word comment dialog.
 #: gui\speechDict.py:185 NVDAObjects\IAccessible\winword.py:375
-#: NVDAObjects\UIA\wordDocument.py:715
+#: NVDAObjects\UIA\wordDocument.py:716
 msgid "Comment"
 msgstr "கருத்துரை"
 
@@ -15005,7 +15024,7 @@ msgid "Install date:"
 msgstr "நிறுவப்பட்ட தேதி:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:358
+#: gui\addonStoreGui\controls\details.py:359
 msgctxt "addonStore"
 msgid "Publication date:"
 msgstr "பதிப்புத் தேதி:"
@@ -15234,7 +15253,7 @@ msgstr "இற்றாக்கத்தக்க நீட்சிநிர�
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains names of addons.
 #: gui\addonStoreGui\controls\messageDialogs.py:457
-#: gui\addonStoreGui\viewModels\addonList.py:55
+#: gui\addonStoreGui\viewModels\addonList.py:56
 msgctxt "addonStore"
 msgid "Name"
 msgstr "பெயர்"
@@ -15242,7 +15261,7 @@ msgstr "பெயர்"
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains the installed addon's version string.
 #: gui\addonStoreGui\controls\messageDialogs.py:459
-#: gui\addonStoreGui\viewModels\addonList.py:66
+#: gui\addonStoreGui\viewModels\addonList.py:67
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "நிறுவப்பட்டுள்ள பதிப்பு"
@@ -15250,7 +15269,7 @@ msgstr "நிறுவப்பட்டுள்ள பதிப்பு"
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains the available addon's version string.
 #: gui\addonStoreGui\controls\messageDialogs.py:461
-#: gui\addonStoreGui\viewModels\addonList.py:72
+#: gui\addonStoreGui\viewModels\addonList.py:73
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "கிடைப்பிலுள்ள பதிப்பு"
@@ -15258,7 +15277,7 @@ msgstr "கிடைப்பிலுள்ள பதிப்பு"
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
 #: gui\addonStoreGui\controls\messageDialogs.py:463
-#: gui\addonStoreGui\viewModels\addonList.py:78
+#: gui\addonStoreGui\viewModels\addonList.py:79
 msgctxt "addonStore"
 msgid "Channel"
 msgstr "அலைத்தடம்"
@@ -15267,7 +15286,7 @@ msgstr "அலைத்தடம்"
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
 #: gui\addonStoreGui\controls\messageDialogs.py:465
-#: gui\addonStoreGui\viewModels\addonList.py:61
+#: gui\addonStoreGui\viewModels\addonList.py:62
 msgctxt "addonStore"
 msgid "Status"
 msgstr "நிலை"
@@ -15383,26 +15402,44 @@ msgid "Choose Add-on Package File"
 msgstr "நீட்சிநிரல் தொகுப்புக் கோப்பினைத் தெரிவுசெய்க"
 
 #. Translators: The name of the column that contains the addon's publisher.
-#: gui\addonStoreGui\viewModels\addonList.py:83
+#: gui\addonStoreGui\viewModels\addonList.py:84
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "பதிப்பாளர்"
 
 #. Translators: The name of the column that contains the addon's author.
-#: gui\addonStoreGui\viewModels\addonList.py:89
+#: gui\addonStoreGui\viewModels\addonList.py:90
 msgctxt "addonStore"
 msgid "Author"
 msgstr "படைப்பாளர்"
 
 #. Translators: The name of the column that contains the publication date of the add-on.
-#: gui\addonStoreGui\viewModels\addonList.py:95
+#: gui\addonStoreGui\viewModels\addonList.py:96
 msgctxt "addonStore"
-msgid "Date"
-msgstr "தேதி"
+msgid "Publication date"
+msgstr "பதிப்புத் தேதி"
+
+#. Translators: The name of the column that contains the installation date of the add-on.
+#: gui\addonStoreGui\viewModels\addonList.py:101
+msgctxt "addonStore"
+msgid "Install date"
+msgstr "நிறுவு தேதி"
+
+#. Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
+#: gui\addonStoreGui\viewModels\addonList.py:107
+msgctxt "addonStore"
+msgid "Minimum NVDA version"
+msgstr "குறைந்தபட்ச என்விடிஏ பதிப்பு"
+
+#. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
+#: gui\addonStoreGui\viewModels\addonList.py:112
+msgctxt "addonStore"
+msgid "Last tested NVDA version"
+msgstr "கடைசியாக பரிசோதிக்கப்பட்ட என்விடிஏ பதிப்பு"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:368
+#: gui\addonStoreGui\viewModels\addonList.py:391
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
@@ -15410,7 +15447,7 @@ msgstr "{column} (ஏறுமுகமாக)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:378
+#: gui\addonStoreGui\viewModels\addonList.py:401
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
@@ -15620,7 +15657,7 @@ msgstr "வழிசெலுத்திப் பொருளை நகர்�
 msgid "Composition"
 msgstr "இயற்றல்"
 
-#: NVDAObjects\IAccessible\__init__.py:2492
+#: NVDAObjects\IAccessible\__init__.py:2502
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
@@ -15702,7 +15739,7 @@ msgid "Reports the text of the comment where the system caret is located.If pres
 msgstr "இமைக்கும் சுட்டுக்குறியின் இடத்திலிருக்கும் கருத்துரையின் உரையை அறிவித்திடும். இருமுறை அழுத்தினால், தகவலை உலாவு நிலையில் காட்டிடும்."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:719
+#: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:720
 msgid "No comments"
 msgstr "கருத்துரைகள் ஏதுமில்லை"
 
@@ -15938,24 +15975,24 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "கருத்துரை: {comment}, படைப்பாளர்: {author}, தேதி: {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:661
+#: NVDAObjects\UIA\wordDocument.py:662
 msgid "Navigating by sentence not supported in this document"
 msgstr "சொற்றொடர் வழிசெலுத்தலுக்கு இவ்வாவணத்தில் ஆதரவில்லை"
 
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\UIA\wordDocument.py:697
+#: NVDAObjects\UIA\wordDocument.py:698
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
 msgstr "இமைக்கும் சுட்டுக்குறியின் இடத்திலிருக்கும் கருத்துரையின் உரையை அறிவித்திடும். இருமுறை அழுத்தினால், தகவலை உலாவு நிலையில் காட்டிடும்"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:728
+#: NVDAObjects\UIA\wordDocument.py:729
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "இவ்வகை ஆவணத்தில் இக்கட்டளை ஆதரிக்கப்படுவதில்லை. அட்டவணைகளின் முதல் கிடைவரிசையில் இருக்கும் களங்கள் நெடுவரிசையின் தலைப்புரைகளாக தானாக அமைக்கப்பட்டுள்ளன."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:739
+#: NVDAObjects\UIA\wordDocument.py:740
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "இவ்வகை ஆவணத்தில் இக்கட்டளை ஆதரிக்கப்படுவதில்லை. அட்டவணைகளின் முதல் நெடுவரிசையில் இருக்கும் களங்கள் கிடைவரிசையின் தலைப்புரைகளாக தானாக அமைக்கப்பட்டுள்ளன."
 
@@ -16787,316 +16824,316 @@ msgstr "அறியப்படாத நிறம்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
-#: NVDAObjects\window\excel.py:230
+#: NVDAObjects\window\excel.py:235
 msgid "automatic"
 msgstr "தன்னியக்கம்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-#: NVDAObjects\window\excel.py:233
+#: NVDAObjects\window\excel.py:238
 msgid "diagonal crosshatch"
 msgstr "சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-#: NVDAObjects\window\excel.py:236
+#: NVDAObjects\window\excel.py:241
 msgid "thin diagonal crosshatch"
 msgstr "மெல்லிய சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-#: NVDAObjects\window\excel.py:239
+#: NVDAObjects\window\excel.py:244
 msgid "reverse diagonal stripe"
 msgstr "திரும்பிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#: NVDAObjects\window\excel.py:243
+#: NVDAObjects\window\excel.py:248
 #, no-python-format
 msgid "12.5% gray"
 msgstr "12.5 விழுக்காடு சாம்பல்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#: NVDAObjects\window\excel.py:247
+#: NVDAObjects\window\excel.py:252
 #, no-python-format
 msgid "25% gray"
 msgstr "25 விழுக்காடு சாம்பல்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#: NVDAObjects\window\excel.py:251
+#: NVDAObjects\window\excel.py:256
 #, no-python-format
 msgid "50% gray"
 msgstr "50 விழுக்காடு சாம்பல்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#: NVDAObjects\window\excel.py:255
+#: NVDAObjects\window\excel.py:260
 #, no-python-format
 msgid "75% gray"
 msgstr "75 விழுக்காடு சாம்பல்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#: NVDAObjects\window\excel.py:259
+#: NVDAObjects\window\excel.py:264
 #, no-python-format
 msgid "6.25% gray"
 msgstr "6.25 விழுக்காடு சாம்பல்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-#: NVDAObjects\window\excel.py:262
+#: NVDAObjects\window\excel.py:267
 msgid "thin horizontal crosshatch"
 msgstr "மெல்லிய கிடைக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-#: NVDAObjects\window\excel.py:265
+#: NVDAObjects\window\excel.py:270
 msgid "horizontal stripe"
 msgstr "கிடைப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-#: NVDAObjects\window\excel.py:268
+#: NVDAObjects\window\excel.py:273
 msgid "thin reverse diagonal stripe"
 msgstr "மெல்லிய திரும்பிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#: NVDAObjects\window\excel.py:271
+#: NVDAObjects\window\excel.py:276
 msgid "thin horizontal stripe"
 msgstr "மெல்லிய கிடைப் பட்டைக் கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-#: NVDAObjects\window\excel.py:274
+#: NVDAObjects\window\excel.py:279
 msgid "thin diagonal stripe"
 msgstr "மெல்லிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#: NVDAObjects\window\excel.py:277
+#: NVDAObjects\window\excel.py:282
 msgid "thin vertical stripe"
 msgstr "மெல்லிய செங்குத்துப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
-#: NVDAObjects\window\excel.py:280 speech\speech.py:2737
+#: NVDAObjects\window\excel.py:285 speech\speech.py:2737
 msgid "none"
 msgstr "ஏதுமில்லை"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-#: NVDAObjects\window\excel.py:283
+#: NVDAObjects\window\excel.py:288
 msgid "thick diagonal crosshatch"
 msgstr "அடர் சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
-#: NVDAObjects\window\excel.py:286
+#: NVDAObjects\window\excel.py:291
 msgid "solid"
 msgstr "திண்மம்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-#: NVDAObjects\window\excel.py:289
+#: NVDAObjects\window\excel.py:294
 msgid "diagonal stripe"
 msgstr "சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#: NVDAObjects\window\excel.py:292
+#: NVDAObjects\window\excel.py:297
 msgid "vertical stripe"
 msgstr "செங்குத்துப் பட்டைக் கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#: NVDAObjects\window\excel.py:294
+#: NVDAObjects\window\excel.py:299
 msgid "linear gradient"
 msgstr "நேர்கோட்டுச் சரிவு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#: NVDAObjects\window\excel.py:296
+#: NVDAObjects\window\excel.py:301
 msgid "rectangular gradient"
 msgstr "செவ்வகச் சரிவு"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-#: NVDAObjects\window\excel.py:728
+#: NVDAObjects\window\excel.py:733
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "இவ்விரிதாளில் இருக்கும் பல்வகைக் கூறுகளைப் பட்டியலிடுகிறது"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:738 NVDAObjects\window\winword.py:2159
+#: NVDAObjects\window\excel.py:743 NVDAObjects\window\winword.py:2159
 msgid "&Charts"
 msgstr "விளக்கப்படங்கள் (&C)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:741
+#: NVDAObjects\window\excel.py:746
 msgid "N&otes"
 msgstr "குறிப்புகள் (&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:744
+#: NVDAObjects\window\excel.py:749
 msgid "Fo&rmulas"
 msgstr "சூத்திரங்கள் (&R)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:750
+#: NVDAObjects\window\excel.py:755
 msgid "&Sheets"
 msgstr "தாள்கள் (&S)"
 
 #. Translators: Used to express an address range in excel.
-#: NVDAObjects\window\excel.py:782 NVDAObjects\window\excel.py:1762
+#: NVDAObjects\window\excel.py:787 NVDAObjects\window\excel.py:1802
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} முதல் {end} வரை"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1236 NVDAObjects\window\winword.py:1700
+#: NVDAObjects\window\excel.py:1276 NVDAObjects\window\winword.py:1700
 msgid "Bold off"
 msgstr "அடர்த்தி நீக்கப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1238 NVDAObjects\window\winword.py:1697
+#: NVDAObjects\window\excel.py:1278 NVDAObjects\window\winword.py:1697
 msgid "Bold on"
 msgstr "அடர்த்தியிடப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1250 NVDAObjects\window\winword.py:1718
+#: NVDAObjects\window\excel.py:1290 NVDAObjects\window\winword.py:1718
 msgid "Italic off"
 msgstr "சாய்வு நீக்கப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1252 NVDAObjects\window\winword.py:1715
+#: NVDAObjects\window\excel.py:1292 NVDAObjects\window\winword.py:1715
 msgid "Italic on"
 msgstr "சாய்விடப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1264 NVDAObjects\window\winword.py:1747
+#: NVDAObjects\window\excel.py:1304 NVDAObjects\window\winword.py:1747
 msgid "Underline off"
 msgstr "அடிக்கோடு நீக்கப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1266
+#: NVDAObjects\window\excel.py:1306
 msgid "Underline on"
 msgstr "அடிக்கோடிடப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1278
+#: NVDAObjects\window\excel.py:1318
 msgid "Strikethrough off"
 msgstr "ஊடாகக் கோடிடப்படாதது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1280
+#: NVDAObjects\window\excel.py:1320
 msgid "Strikethrough on"
 msgstr "ஊடாகக் கோடிடப்பட்டது"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1633
+#: NVDAObjects\window\excel.py:1673
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
 msgstr "தற்போதைய களத்தை நெடுவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கிறது. ஒரு முறை அழுத்தினால், தற்போதைய களத்தின் கீழாகவும், வலமாகவும் நடப்புப் பகுதியில் அமைந்திருக்கும் களங்களுக்கு தற்போதைய களத்தை முதல் நெடுவரிசைத் தலைப்புரையாக அமைக்கிறது. இரு முறை அழுத்தினால், தற்போதைய களத்தில் அமைக்கப்பட்டிருக்கும் நெடுவரிசைத் தலைப்புரையை நீக்கிடும்."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1645
+#: NVDAObjects\window\excel.py:1685
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைத்திடுக"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1649
+#: NVDAObjects\window\excel.py:1689
 #, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} ஏற்கெனவே நெடுவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1654
+#: NVDAObjects\window\excel.py:1694
 #, python-brace-format
 msgid "Removed {address} from column headers"
 msgstr "நெடுவரிசைத் தலைப்புரைகளிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1658
+#: NVDAObjects\window\excel.py:1698
 #, python-brace-format
 msgid "Cannot find {address} in column headers"
 msgstr "நெடுவரிசைத் தலைப்புரைகளில் {address} கண்டறிய இயலவில்லை"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1664
+#: NVDAObjects\window\excel.py:1704
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
 msgstr "தற்போதைய களத்தை கிடைவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கிறது. ஒரு முறை அழுத்தினால், தற்போதைய களத்தின் கீழாகவும், வலமாகவும் நடப்புப் பகுதியில் அமைந்திருக்கும் களங்களுக்கு தற்போதைய களத்தை முதல் கிடைவரிசைத் தலைப்புரையாக அமைக்கிறது. இரு முறை அழுத்தினால், தற்போதைய களத்தில் அமைக்கப்பட்டிருக்கும் கிடைவரிசைத் தலைப்புரையை நீக்கிடும்."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1676
+#: NVDAObjects\window\excel.py:1716
 #, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைத்திடுக"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1680
+#: NVDAObjects\window\excel.py:1720
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} ஏற்கெனவே கிடைவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1685
+#: NVDAObjects\window\excel.py:1725
 #, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1688
+#: NVDAObjects\window\excel.py:1728
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையில் {address} காணப்படவில்லை"
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
-#: NVDAObjects\window\excel.py:1790
+#: NVDAObjects\window\excel.py:1830
 #, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "தாள் {0}, {1}"
 
-#: NVDAObjects\window\excel.py:1870
+#: NVDAObjects\window\excel.py:1910
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {title}: {message}"
 
-#: NVDAObjects\window\excel.py:1872
+#: NVDAObjects\window\excel.py:1912
 #, python-brace-format
 msgid "Input Message is {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {message}"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1887
+#: NVDAObjects\window\excel.py:1927
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
 msgstr "தற்போதைய களத்தின் குறிப்புரையை அறிவித்திடும். இருமுறை அழுத்தினால், தகவலை உலாவு நிலையில் காட்டிடும்"
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
-#: NVDAObjects\window\excel.py:1904 NVDAObjects\window\excel.py:1923
+#: NVDAObjects\window\excel.py:1944 NVDAObjects\window\excel.py:1963
 msgid "Note"
 msgstr "குறிப்பு"
 
 #. Translators: A message in Excel when there is no note
-#: NVDAObjects\window\excel.py:1908
+#: NVDAObjects\window\excel.py:1948
 msgid "Not on a note"
 msgstr "ஒரு கருத்துரையின் மீது இஇல்லை"
 
 #. Translators: the description  for a script for Excel
-#: NVDAObjects\window\excel.py:1912
+#: NVDAObjects\window\excel.py:1952
 msgid "Opens the note editing dialog"
 msgstr "குறிப்புகளைத் தொகுக்கும் உரையாடலைத் திறக்கிறது"
 
 #. Translators: Dialog text for the note editing dialog
-#: NVDAObjects\window\excel.py:1921
+#: NVDAObjects\window\excel.py:1961
 #, python-brace-format
 msgid "Editing note for cell {address}"
 msgstr "{address} களத்திற்கான குறிப்பு தொகுக்கப்படுகிறது"
@@ -17104,7 +17141,7 @@ msgstr "{address} களத்திற்கான குறிப்பு த
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
 #. may mix the address and the content when the cell contains a 3-digit number.
-#: NVDAObjects\window\excel.py:1977
+#: NVDAObjects\window\excel.py:2017
 #, python-brace-format
 msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr "{firstAddress} {firstContent} முதல் {lastAddress} {lastContent} வரை"
@@ -18583,246 +18620,245 @@ msgstr "பாதுகாப்பான மேசைத்தளம்"
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
 #. Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
-#: _remoteClient\client.py:129 _remoteClient\client.py:190
-#: _remoteClient\client.py:526
+#: _remoteClient\client.py:129 _remoteClient\client.py:193
+#: _remoteClient\client.py:552
 msgctxt "remote"
 msgid "Not the controlling computer"
 msgstr "கட்டுப்படுத்தும் கணினி அல்ல"
 
 #. Translators: Displayed when muting speech and sounds from the remote computer
-#: _remoteClient\client.py:134
+#: _remoteClient\client.py:133
 msgid "Muted remote"
 msgstr "அமைதியாக்கப்பட்ட தொலைநிலை"
 
 #. Translators: Displayed when unmuting speech and sounds from the remote computer
-#: _remoteClient\client.py:136
+#: _remoteClient\client.py:135
 msgid "Unmuted remote"
-msgstr "அமைதி நீக்கப்பட்ட தொலைநிலை"
+msgstr "ஒலியடக்கம் நீக்கப்பட்ட தொலைநிலை"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
-#: _remoteClient\client.py:153
+#: _remoteClient\client.py:156
 msgctxt "remote"
 msgid "No one else is connected"
 msgstr "வேறு யாரும் இணைக்கப்படவில்லை"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
-#: _remoteClient\client.py:161
+#: _remoteClient\client.py:164
 msgctxt "remote"
 msgid "Unable to send clipboard"
 msgstr "பிடிப்புப்பலகையை அனுப்ப இயலவில்லை"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
-#: _remoteClient\client.py:176
+#: _remoteClient\client.py:179
 msgid "Copied link"
 msgstr "தொடுப்பு படியெடுக்கப்பட்டது"
 
 #. Translators: Title of the Remote Access disconnection confirmation dialog.
-#: _remoteClient\client.py:226
+#: _remoteClient\client.py:230
 msgctxt "remote"
 msgid "Confirm Disconnection"
 msgstr "இணைப்புத் துண்டிப்பை உறுதிசெய்க"
 
 #. Translators: Message shown when disconnecting from the remote computer.
-#: _remoteClient\client.py:230
+#: _remoteClient\client.py:234
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
 msgstr "தொலைநிலை அணுகல் அமர்விடமிருந்து தாங்கள் கட்டாயம் துண்டிக்கப்பட வேண்டுமா?"
 
 #. Translators: Title of the connection error dialog.
-#: _remoteClient\client.py:282
+#: _remoteClient\client.py:293
 msgid "Error Connecting"
 msgstr "இணைப்பதில் பிழை"
 
 #. Translators: Message shown when unable to connect to the remote computer.
-#: _remoteClient\client.py:284
+#: _remoteClient\client.py:295
 msgid "Unable to connect to the remote computer"
 msgstr "தொலைநிலை கணினியுடன் இணைக்க இயலவில்லை"
 
-#. Translators: Title of the Remote Access connection dialog.
-#: _remoteClient\client.py:308
-msgctxt "remote"
-msgid "Connect to Another Computer"
-msgstr "பிரிதொரு கணினியுடன் இணைக்கவும்"
-
-#. Translators: Presented when connected to the remote computer.
-#: _remoteClient\client.py:351
-msgid "Connected"
-msgstr "இணைக்கப்பட்டது"
-
-#. Translators: Presented when connection to a remote computer was interupted.
-#. Translators: Message shown when the connection to the remote computer is lost.
-#: _remoteClient\client.py:369 _remoteClient\cues.py:27
-msgid "Disconnected"
-msgstr "இணைப்பு துண்டிக்கப்பட்டது"
-
-#. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
-#: _remoteClient\client.py:530
-msgctxt "remote"
-msgid "No controlled computers are connected"
-msgstr "கட்டுப்படுத்தப்பட்ட கணினிகள் ஏதும் இணைக்கப்படவில்லை"
-
-#. Translators: Presented when keyboard control is back to the controlling computer.
-#: _remoteClient\client.py:544
-msgctxt "remote"
-msgid "Controlling local computer"
-msgstr "அகக்கணினியைக் கட்டுப்படுத்துதல்"
-
-#. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
-#: _remoteClient\client.py:553
-msgctxt "remote"
-msgid "Controlling remote computer"
-msgstr "தொலைநிலை கணினியைக் கட்டுப்படுத்துதல்"
-
 #. Translators: Message shown when trying to connect while already connected.
-#: _remoteClient\client.py:617
+#: _remoteClient\client.py:318 _remoteClient\client.py:645
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
 msgstr "ஒரு தொலைநிலை அணுகல் அமர்வு ஏற்கனவே நடப்பிலுள்ளது. புதிய அமர்வைத் துவங்குவதற்கு முன் இதை துண்டித்திடவும்."
 
 #. Translators: Title of the connection error dialog.
-#: _remoteClient\client.py:620
+#: _remoteClient\client.py:321 _remoteClient\client.py:648
 msgctxt "remote"
 msgid "Already Connected"
 msgstr "ஏற்கெனவே இணைக்கப்பட்டுள்ளது"
 
+#. Translators: Title of the Remote Access connection dialog.
+#: _remoteClient\client.py:332
+msgctxt "remote"
+msgid "Connect to Another Computer"
+msgstr "பிரிதொரு கணினியுடன் இணைக்கவும்"
+
+#. Translators: Presented when connected to the remote computer.
+#: _remoteClient\client.py:378
+msgid "Connected"
+msgstr "இணைக்கப்பட்டது"
+
+#. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
+#: _remoteClient\client.py:556
+msgctxt "remote"
+msgid "No controlled computers are connected"
+msgstr "கட்டுப்படுத்தப்பட்ட கணினிகள் ஏதும் இணைக்கப்படவில்லை"
+
+#. Translators: Presented when keyboard control is back to the controlling computer.
+#: _remoteClient\client.py:570
+msgctxt "remote"
+msgid "Controlling local computer"
+msgstr "தனிக்கணினியைக் கட்டுப்படுத்துதல்"
+
+#. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
+#: _remoteClient\client.py:581
+msgctxt "remote"
+msgid "Controlling remote computer"
+msgstr "தொலைநிலை கணினியைக் கட்டுப்படுத்துதல்"
+
 #. Translators: Ask the user if they want to control the remote computer.
-#: _remoteClient\client.py:635
+#: _remoteClient\client.py:663
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
 msgstr "{key} திறவுச்சொல்லைக் கொண்டு {server} வழங்கியில் இருக்கும் கணினியைக் கட்டுப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
-#: _remoteClient\client.py:641
+#: _remoteClient\client.py:669
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
 msgstr "{key} திறவுச்சொல்லைக் கொண்டு {server} வழங்கியில் இக்கணினி கட்டுப்படுவதை அனுமதிக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title of the connection request dialog.
-#: _remoteClient\client.py:647
+#: _remoteClient\client.py:675
 msgctxt "remote"
 msgid "Remote Access Connection Request"
 msgstr "தொலைநிலை அணுகல் இணைப்புக் கோரிக்கை"
 
+#. Translators: Message shown when the connection to the remote computer is lost.
+#: _remoteClient\cues.py:28
+msgid "Disconnected"
+msgstr "இணைப்பு துண்டிக்கப்பட்டது"
+
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
-#: _remoteClient\cues.py:32
+#: _remoteClient\cues.py:33
 msgctxt "remote"
 msgid "Connected as controlled computer"
 msgstr "கட்டுப்படுத்தப்படும் கணினியாக இணைக்கப்பட்டுள்ளது"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
-#: _remoteClient\cues.py:43
+#: _remoteClient\cues.py:44
 msgctxt "remote"
 msgid "Clipboard sent"
 msgstr "பிடிப்புப்பலகை அணுப்பப்பட்டது"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
-#: _remoteClient\cues.py:48
+#: _remoteClient\cues.py:49
 msgid "Clipboard received"
 msgstr "பிடிப்புப்பலகை பெறப்பட்டது"
 
 #. Translators: The button used to generate a random key/password.
-#: _remoteClient\dialogs.py:50 _remoteClient\dialogs.py:211
+#: _remoteClient\dialogs.py:55 _remoteClient\dialogs.py:217
 msgid "&Generate Key"
 msgstr "திறவுச்சொல்லை உருவாக்குக (&G)"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
-#: _remoteClient\dialogs.py:60
+#: _remoteClient\dialogs.py:65
 msgid "Host must be set."
 msgstr "வழங்கியின் முகவரி அமைக்கப்பட வேண்டும்."
 
 #. Translators: Title of a dialog shown to users when asking a Remote Access server to generate a key
-#: _remoteClient\dialogs.py:74
+#: _remoteClient\dialogs.py:79
 msgctxt "remote"
 msgid "Generating key"
 msgstr "திறவுச்சொல்லை உருவாக்குதல்"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
-#: _remoteClient\dialogs.py:76
+#: _remoteClient\dialogs.py:81
 msgctxt "remote"
 msgid "Generating key..."
 msgstr "திறவுச்சொல் உருவாக்கப்படுகிறது..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
-#: _remoteClient\dialogs.py:120
+#: _remoteClient\dialogs.py:125
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
 msgstr "{host} உடன் இணைய இயலவில்லை. தங்களுக்கு இணைய அணுகல் இருக்கிறது என்பதையும், 'வழங்கியின் முகவரி' களத்தில் எந்தத் தவறும் இல்லை என்பதையும் உறுதிசெய்துகொள்ளவும்."
 
 #. Translators: Title of a dialog.
-#: _remoteClient\dialogs.py:123
+#: _remoteClient\dialogs.py:128
 msgctxt "remote"
 msgid "Host connection failed"
 msgstr "வழங்கி இணைப்பு தோல்வியடைந்தது"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
-#: _remoteClient\dialogs.py:187
+#: _remoteClient\dialogs.py:192
 msgid "&External IP:"
 msgstr "வெளிப்புற இணைய நெறிமுறை (IP) (&E):"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
-#: _remoteClient\dialogs.py:192
+#: _remoteClient\dialogs.py:197
 msgid "Get External &IP"
 msgstr "வெறிப்புற இணைய நெறிமுறையைப் (IP) பெறுக (&I)"
 
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: _remoteClient\dialogs.py:209
+#: _remoteClient\dialogs.py:215
 msgctxt "remote"
 msgid "&Key"
 msgstr "திறவுச்சொல் (&K)"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
-#: _remoteClient\dialogs.py:230
+#: _remoteClient\dialogs.py:236
 msgctxt "remote"
 msgid "Getting external IP"
 msgstr "வெளிப்புற இணைய நெறிமுறையைப் (IP) பெறுதல்"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
-#: _remoteClient\dialogs.py:232
+#: _remoteClient\dialogs.py:238
 msgctxt "remote"
 msgid "Getting external IP..."
 msgstr "வெளிப்புற இணைய நெறிமுறை (IP) பெறப்படுகிறது..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
-#: _remoteClient\dialogs.py:272
+#: _remoteClient\dialogs.py:278
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
 msgstr "இணைய நெறிமுறை (IP) முகவரி வெற்றிகரமாக மீட்கப்பட்டது. நுழைவாயில் {port} திறந்துள்ளது."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
-#: _remoteClient\dialogs.py:283
+#: _remoteClient\dialogs.py:289
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
 msgstr "வெளிப்புற இணைய நெறிமுறை (IP) மீட்கப்பட்டது. ஆனால், நுழைவாயில் {port} தற்பொழுது பெரும்பாலும் பகிரப்படவில்லை."
 
 #. Translators: Error message when unable to get IP address from portcheck server
-#: _remoteClient\dialogs.py:298
+#: _remoteClient\dialogs.py:304
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
 msgstr "நுழைவாயில் சரிபார்ப்பு வழங்கியைத் தொடர்புகொள்ள இயலவில்லை. தங்களின் இணைய நெறிமுறை (IP) முகவரியை கைமுறையில் மீட்கவும்"
 
 #. Translators: Message displayed when the host or key field is empty and the user tries to connect.
-#: _remoteClient\dialogs.py:368
+#: _remoteClient\dialogs.py:414
 msgid "Both host and key must be set."
 msgstr "வழங்கியின் முகவரி, திறவுச்சொல் ஆகிய இரண்டும் அமைக்கப்பட வேண்டும்."
 
 #. Translators: Message displayed when the port or key field is empty and the user tries to connect.
-#: _remoteClient\dialogs.py:376
+#: _remoteClient\dialogs.py:422
 msgid "Both port and key must be set."
 msgstr "நுழைவாயில், திறவுச்சொல் ஆகிய இரண்டும் அமைக்கப்பட வேண்டும்."
 
 #. Translators: Title of the dialog presented when attempting to connect to a server with an untrusted certificate.
-#: _remoteClient\dialogs.py:429
+#: _remoteClient\dialogs.py:480
 msgctxt "remote"
 msgid "Security Warning"
 msgstr "பாதுகாப்பு எச்சரிக்கை"
 
 #. Translators: Message presented when attempting to connect to a server with an untrusted certificate.
 #. {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
-#: _remoteClient\dialogs.py:434
+#: _remoteClient\dialogs.py:485
 #, python-brace-format
 msgctxt "remote"
 msgid "The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n\n"
@@ -18835,17 +18871,17 @@ msgstr "இவ்வழங்கியின் சான்றிதழை ச�
 "எப்படியாகினும் இணைப்பைத் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
-#: _remoteClient\dialogs.py:449
+#: _remoteClient\dialogs.py:500
 msgid "Connect and do not ask again for this server"
 msgstr "இணைப்பதோடு, இவ்வழங்கிக்கு மீண்டும் கேட்காமல் இருந்திடுக"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
-#: _remoteClient\dialogs.py:451
+#: _remoteClient\dialogs.py:502
 msgid "Connect"
 msgstr "இணைத்திடுக"
 
 #. Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
-#: _remoteClient\localMachine.py:289
+#: _remoteClient\localMachine.py:290
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
 msgstr "கட்டுப்பாடு+நிலைமாற்றி+அழி விசையைத் தூண்ட இயலவில்லை"

@@ -320,6 +320,12 @@ addTable(
 	input=False,
 	outputForLangs={"ja"},
 )
+addTable(
+	"ja-rokutenkanji.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Japanese (Rokuten Kanji) Braille"),
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ka-in-g1.utb", _("Kannada grade 1"), inputForLangs={"kn"}, outputForLangs={"kn"})
@@ -561,7 +567,10 @@ addTable("th-g1.utb", _("Thai grade 1"), input=False, contracted=True, outputFor
 addTable("th-g2.ctb", _("Thai grade 2"), input=False, contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("tr.ctb", _("Turkish grade 1"), inputForLangs={"tr"}, outputForLangs={"tr"})
+addTable("tr.ctb", _("Turkish 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("tr-g1.ctb", _("Turkish grade 1"), inputForLangs={"tr"}, outputForLangs={"tr"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tr-g2.ctb", _("Turkish grade 2"), contracted=True)
