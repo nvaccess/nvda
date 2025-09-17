@@ -313,15 +313,15 @@ def AccessibleObjectFromEvent_safe(hwnd, objectID, childID, timeout=2):
 
 def WindowFromAccessibleObject(pacc):
 	"""
-	Retreaves the handle of the window this IAccessible object belongs to.
+	Retrieves the handle of the window this IAccessible object belongs to.
 	@param pacc: the IAccessible object who's window you want to fetch.
 	@type pacc: POINTER(IAccessible)
 	@return: the window handle.
 	@rtype: int
 	"""
-	hwnd = c_int()  # noqa: F405
+	hwnd = HWND()  # noqa: F405
 	winBindings.oleacc.WindowFromAccessibleObject(pacc, byref(hwnd))  # noqa: F405
-	return hwnd.value
+	return hwnd.value or 0
 
 
 def AccessibleObjectFromPoint(x, y):

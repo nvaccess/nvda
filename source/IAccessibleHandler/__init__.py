@@ -371,7 +371,8 @@ def accessibleObjectFromPoint(x, y):
 def windowFromAccessibleObject(ia):
 	try:
 		return oleacc.WindowFromAccessibleObject(ia)
-	except:  # noqa: E722 Bare except
+	except WindowsError:
+		log.debugWarning("windowFromAccessibleObject failed", exc_info=True)
 		return 0
 
 
