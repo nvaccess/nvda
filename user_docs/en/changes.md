@@ -129,8 +129,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 * `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
   Use `winBindings.user32.dll` instead. (#18883)
-  * The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
+* The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
   Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
+* The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated. Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
