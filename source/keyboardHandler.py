@@ -34,6 +34,7 @@ import core
 import NVDAState
 from contextlib import contextmanager
 import threading
+import winBindings.kernel32
 import winKernel
 from winBindings import user32
 
@@ -343,7 +344,7 @@ def internal_keyUpEvent(vkCode, scanCode, extended, injected):
 				return True
 			if ignoreInjected:
 				if keyCode == _lastInjectedKeyUp:
-					winKernel.kernel32.SetEvent(_injectionDoneEvent)
+					winBindings.kernel32.SetEvent(_injectionDoneEvent)
 				return True
 
 		if passKeyThroughCount >= 1:
@@ -528,7 +529,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Unicode character from non-keyboard input.
 			return chr(self.scanCode)
 		vkChar = user32.MapVirtualKeyEx(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
-		if vkChar > 0:
+		# the highest bit of a 32 bit value denotes a dead key
+		DEAD_KEY_FLAG = 0x80000000
+		if vkChar > 0 and not (vkChar & DEAD_KEY_FLAG):
 			if vkChar == 43:  # "+"
 				# A gesture identifier can't include "+" except as a separator.
 				return "plus"

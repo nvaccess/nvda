@@ -25,6 +25,7 @@ Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
+* The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
 * Component updates:
   * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille.
@@ -32,6 +33,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 
 ### Bug Fixes
 
+* Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
@@ -70,6 +72,9 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
 * `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
+* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
+* `speech.speech.IDT_TONE_DURATION` has been removed.
+  Call `speech.speech.getIndentToneDuration` instead. (#18898)
 
 #### Deprecations
 
@@ -99,6 +104,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Access to this symbol via `hwPortUtils` is deprecated. (#18571)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
   Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+* `hwIo.hid.hidDll` is deprecated.
+  Use `winBindings.hid.dll` instead. (#18902)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
   Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_*` constants in `hwPortUtils` are deprecated.
@@ -131,6 +138,10 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use `winBindings.user32.dll` instead. (#18883)
 * The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
   Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
+* `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION` have been moved from `winKernal` to `winBindings.kernel32`. (#18896)
+* `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE` have been moved from `wincon` to `winBindings.kernel32`. (#18896)
+* `appModuleHandler.processEntry32W` has been moved to `winBindings.kernel32.PROCESSENTRY32W`. (#18896)
+* `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
 * The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated. Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
