@@ -38,8 +38,13 @@ def openSuccessDialog() -> None:
 		buttons=confirmationButton,
 	)
 
-	if dialog.ShowModal() == ReturnCode.YES:
-		pass
+	if dialog.ShowModal() == ReturnCode.OK:
+		# load image desc after successful download
+		import _localCaptioner		
+		
+		if not _localCaptioner.isModelLoaded():
+			_localCaptioner.toggleImageCaptioning()
+
 
 
 def openFailDialog() -> None:
