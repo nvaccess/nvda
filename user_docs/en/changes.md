@@ -142,7 +142,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE` have been moved from `wincon` to `winBindings.kernel32`. (#18896)
 * `appModuleHandler.processEntry32W` has been moved to `winBindings.kernel32.PROCESSENTRY32W`. (#18896)
 * `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
-* The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated. Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
+* The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated.
+  Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
