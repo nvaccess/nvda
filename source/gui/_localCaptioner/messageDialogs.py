@@ -40,11 +40,10 @@ def openSuccessDialog() -> None:
 
 	if dialog.ShowModal() == ReturnCode.OK:
 		# load image desc after successful download
-		import _localCaptioner		
-		
+		import _localCaptioner
+
 		if not _localCaptioner.isModelLoaded():
 			_localCaptioner.toggleImageCaptioning()
-
 
 
 def openFailDialog() -> None:
