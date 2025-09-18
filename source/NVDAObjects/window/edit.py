@@ -1,13 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-
-from typing import (
-	Dict,
-	Optional,
-	Union,
-)
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from comtypes import BSTR, COMError
@@ -32,6 +26,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 import NVDAHelper.localLib
 
 
@@ -169,6 +164,13 @@ WB_RIGHTBREAK = 7
 
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
+	# Override segFlags to enforce use of Uniscribe
+	charSegFlag = CharSegFlag.UNISCRIBE
+
+	@property
+	def wordSegFlag(self):
+		return WordSegFlag.UNISCRIBE
+
 	def _getPointFromOffset(self, offset):
 		if self.obj.editAPIVersion == 1 or self.obj.editAPIVersion >= 3:
 			processHandle = self.obj.processHandle
@@ -373,7 +375,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _setFormatFieldColor(
 		self,
-		charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+		charFormat: CharFormat2AStruct | CharFormat2WStruct,
 		formatField: textInfos.FormatField,
 	) -> None:
 		if charFormat.dwEffects & CFE_AUTOCOLOR:
@@ -654,7 +656,7 @@ ITextDocumentUnitsToNVDAUnits = {
 	comInterfaces.tom.tomStory: textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
 	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
 	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
@@ -907,7 +909,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s" % position)
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		textRange = self._rangeObj.duplicate

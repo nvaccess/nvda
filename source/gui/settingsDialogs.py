@@ -6,8 +6,9 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Container
 import logging
@@ -68,9 +69,6 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
-	List,
-	Optional,
-	Set,
 )
 import core
 import keyboardHandler
@@ -196,7 +194,7 @@ class SettingsDialog(
 		hasApplyButton: bool = False,
 		settingsSizerOrientation: int = wx.VERTICAL,
 		multiInstanceAllowed: bool = False,
-		buttons: Set[int] = {wx.OK, wx.CANCEL},
+		buttons: set[int] = {wx.OK, wx.CANCEL},
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
@@ -435,7 +433,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None,
+		category: str | None = None,
 	):
 		if category is None:
 			category = self.title
@@ -504,7 +502,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -1267,7 +1265,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
-	synthNames: List[str] = []
+	synthNames: list[str] = []
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3090,6 +3088,17 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		WordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=WordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("wordSegmentationStandard", self.wordSegCombo)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3101,6 +3110,7 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
+		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
@@ -5133,7 +5143,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 def showStartErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5163,7 +5173,7 @@ def showStartErrorForProviders(
 
 def showTerminationErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5209,7 +5219,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
 
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> vision.providerBase.VisionEnhancementProvider | None:
 		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
@@ -5273,8 +5283,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 class VisionSettingsPanel(SettingsPanel):
 	settingsSizerHelper: guiHelper.BoxSizerHelper
-	providerPanelInstances: List[SettingsPanel]
-	initialProviders: List[vision.providerInfo.ProviderInfo]
+	providerPanelInstances: list[SettingsPanel]
+	initialProviders: list[vision.providerInfo.ProviderInfo]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 	helpId = "VisionSettings"
@@ -5285,7 +5295,7 @@ class VisionSettingsPanel(SettingsPanel):
 	def _createProviderSettingsPanel(
 		self,
 		providerInfo: vision.providerInfo.ProviderInfo,
-	) -> Optional[SettingsPanel]:
+	) -> SettingsPanel | None:
 		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 		if not settingsPanelCls:
 			if gui._isDebug():
@@ -5330,12 +5340,12 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeInitProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 	) -> None:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
@@ -5344,14 +5354,14 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeTerminateProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 		verbose: bool = False,
 	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).terminateProvider(shouldPromptOnError=False)
 			if not success:
@@ -5444,7 +5454,7 @@ class VisionProviderSubPanel_Wrapper(
 		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
-		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettings: VisionProviderSubPanel_Settings | None = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 
