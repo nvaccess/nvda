@@ -5,6 +5,7 @@
 
 from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
+from ctypes.wintypes import HWND
 from comtypes import *  # noqa: F403
 from comtypes.automation import *  # noqa: F403
 import comtypes.client
@@ -311,15 +312,14 @@ def AccessibleObjectFromEvent_safe(hwnd, objectID, childID, timeout=2):
 	return (obj, childID)
 
 
-def WindowFromAccessibleObject(pacc):
+def WindowFromAccessibleObject(pacc) -> int:
 	"""
 	Retrieves the handle of the window this IAccessible object belongs to.
-	@param pacc: the IAccessible object who's window you want to fetch.
-	@type pacc: POINTER(IAccessible)
-	@return: the window handle.
-	@rtype: int
+	:param pacc: the IAccessible object who's window you want to fetch.
+	:type pacc: POINTER(IAccessible)
+	:return: the window handle.
 	"""
-	hwnd = HWND()  # noqa: F405
+	hwnd = HWND()
 	winBindings.oleacc.WindowFromAccessibleObject(pacc, byref(hwnd))  # noqa: F405
 	return hwnd.value or 0
 
