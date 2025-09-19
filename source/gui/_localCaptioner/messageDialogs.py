@@ -9,6 +9,7 @@ import threading
 from threading import Thread
 import wx
 import ui
+import _localCaptioner
 
 _downloadThread: Thread | None = None
 
@@ -40,8 +41,6 @@ def openSuccessDialog() -> None:
 
 	if dialog.ShowModal() == ReturnCode.OK:
 		# load image desc after successful download
-		import _localCaptioner
-
 		if not _localCaptioner.isModelLoaded():
 			_localCaptioner.toggleImageCaptioning()
 
