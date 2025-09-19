@@ -57,6 +57,7 @@ from ctypes.wintypes import (
 	WPARAM,
 	ATOM,
 )
+from enum import IntEnum, IntFlag
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
@@ -636,6 +637,30 @@ class MOUSEINPUT(Structure):
 	)
 
 
+class KEYEVENTF(IntFlag):
+	"""Specifies various aspects of a keystroke in a ``KEYBDINPUT`` struct.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput
+	"""
+
+	EXTENDEDKEY = 0x0001
+	"""If specified, the wScan scan code consists of a sequence of two bytes, where the first byte has a value of 0xE0."""
+
+	KEYUP = 0x0002
+	"""If specified, the key is being released. If not specified, the key is being pressed. """
+
+	SCANCODE = 0x0008
+	"""If specified, wScan identifies the key and wVk is ignored. """
+
+	UNICODE = 0x0004
+	"""If specified, the system synthesizes a VK_PACKET keystroke.
+
+	.. warning::
+		Must only be combined with :const:`KEY_UP`.
+	"""
+
+
 class KEYBDINPUT(Structure):
 	"""
 	Contains information about a simulated keyboard event.
@@ -678,6 +703,23 @@ class _INPUT_I(Union):
 		("ki", KEYBDINPUT),
 		("hi", HARDWAREINPUT),
 	)
+
+
+class INPUT_TYPE(IntEnum):
+	"""Values permissible as the ``type`` field in an ``INPUT`` struct.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input
+	"""
+
+	MOUSE = 0
+	"""The event is a mouse event. Use the mi structure of the union."""
+
+	KEYBOARD = 1
+	"""The event is a keyboard event. Use the ki structure of the union."""
+
+	HARDWARE = 2
+	"""The event is a hardware event. Use the hi structure of the union."""
 
 
 class INPUT(Structure):

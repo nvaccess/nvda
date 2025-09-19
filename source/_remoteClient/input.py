@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import ctypes
-from enum import IntEnum, IntFlag
+from enum import IntEnum
 
 import api
 import baseObject
@@ -16,23 +16,6 @@ import vision
 from winBindings import user32
 
 
-class InputType(IntEnum):
-	"""Values permissible as the `type` field in an `INPUT` struct.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input
-	"""
-
-	MOUSE = 0
-	"""The event is a mouse event. Use the mi structure of the union."""
-
-	KEYBOARD = 1
-	"""The event is a keyboard event. Use the ki structure of the union."""
-
-	HARDWARE = 2
-	"""The event is a hardware event. Use the hi structure of the union."""
-
-
 class VKMapType(IntEnum):
 	"""Type of mapping to be performed between virtual key code and virtual scan code.
 
@@ -42,30 +25,6 @@ class VKMapType(IntEnum):
 
 	VK_TO_VSC = 0
 	"""Maps a virtual key code to a scan code."""
-
-
-class KeyEventFlag(IntFlag):
-	"""Specifies various aspects of a keystroke in a KEYBDINPUT struct.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput
-	"""
-
-	EXTENDED_KEY = 0x0001
-	"""If specified, the wScan scan code consists of a sequence of two bytes, where the first byte has a value of 0xE0."""
-
-	KEY_UP = 0x0002
-	"""If specified, the key is being released. If not specified, the key is being pressed. """
-
-	SCAN_CODE = 0x0008
-	"""If specified, wScan identifies the key and wVk is ignored. """
-
-	UNICODE = 0x0004
-	"""If specified, the system synthesizes a VK_PACKET keystroke.
-
-	.. warning::
-		Must only be combined with :const:`KEY_UP`.
-	"""
 
 
 class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -173,8 +132,8 @@ def sendKey(vk: int | None = None, scan: int | None = None, extended: bool = Fal
 	else:  # No scancode provided, try to get one
 		i.ii.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
 	if not pressed:
-		i.ii.ki.dwFlags |= KeyEventFlag.KEY_UP
+		i.ii.ki.dwFlags |= user32.KEYEVENTF.KEYUP
 	if extended:
-		i.ii.ki.dwFlags |= KeyEventFlag.EXTENDED_KEY
-	i.type = InputType.KEYBOARD
+		i.ii.ki.dwFlags |= user32.KEYEVENTF.EXTENDEDKEY
+	i.type = user32.INPUT_TYPE.KEYBOARD
 	user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(user32.INPUT))
