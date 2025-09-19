@@ -40,7 +40,7 @@ body:
       required: true
 
   - type: input
-    id: community-discussion
+    id: communityDiscussion
     attributes:
       label: Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
       description: |
@@ -143,9 +143,10 @@ body:
         1. Type `msinfo32` and press enter
         1. From the "System summary" tree-view item, press tab to get to the right pane.
         1. Press down arrow twice to get to "Version"
-        1. Press `Control+C` to copy the version information.
+        1. Press `control+c` to copy the version information.
 
-      placeholder: "Windows 10 Version 1607 Build 14393.1066"
+      placeholder: |
+        Windows 10 Version 1607 Build 14393.1066
 
   - type: textarea
     id: otherVersions
@@ -154,7 +155,8 @@ body:
       description: |
         Typically, you can get this information from the "About" dialog of the software.
 
-      placeholder: Chrome version: 67.0.3396.87
+      placeholder: |
+        Chrome version: 67.0.3396.87
 
   - type: textarea
     id: otherSysInfo
@@ -163,4 +165,5 @@ body:
       description: |
         This is other information about your setup that you think might be relevant to us.
 
-      placeholder:  Running Windows 10 in a VM
+      placeholder: |
+        Running Windows 10 in a VM
