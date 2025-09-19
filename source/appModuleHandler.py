@@ -625,9 +625,9 @@ class AppModule(baseObject.ScriptableObject):
 				)
 				return False
 			elif e.winerror == winKernel.ERROR_ACCESS_DENIED:
-				# Although we opened the process asking for the SYNCRHONIZE access right,
-				# The process is refuzing us the permission when waiting on the handle.
-				# This may be a be a protected process like 1Password.
+				# Although we opened the process asking for the SYNCHRONIZE access right,
+				# The process is refusing us the permission when waiting on the handle.
+				# This may be a protected process like 1Password.
 				# Currently there is no alternative way to check if the process is dead, so we must assume it stays alive for ever.
 				log.debugWarning(
 					f"Access denied waiting on Process handle {self.processHandle} for {self}, cannot verify dead, marking as living for ever.",
