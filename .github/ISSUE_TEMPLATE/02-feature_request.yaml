@@ -1,0 +1,53 @@
+name: Feature request
+description: Suggest an idea for this project
+type: Feature
+labels: [feature]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Attention!
+
+        Please read [our guide](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) on how to fill in this template, including how to provide the required files.
+        Issues may be closed if the required information is not present.
+        
+        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
+        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+        This includes creating or commenting on issues and pull requests.
+
+  - type: textarea
+    id: problem
+    validations:
+      required: true
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+      description: This section should provide a clear and concise description of what the problem is.
+
+  - type: textarea
+    id: solution
+    validations:
+      required: true
+    attributes:
+      label: Describe the solution you'd like
+      description: |
+        A clear and concise description of what you want to happen.
+        If you can provide technical details about how to address the problem, please do so.
+        Feel free to add subheadings with markdown.
+
+  - type: textarea
+    id: altSolution
+    attributes:
+      label: Describe alternatives you've considered
+      description: |
+        A clear and concise description of any alternative solutions or features you've considered.
+        If a workaround or solution currently exists, please include why your proposed solution is preferred.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: |
+        Add any other context for the feature request here.
+        This might list the application name and version number that the feature is expected to work with (e.g. Firefox or Microsoft Word).
+        Also consider whether you can upload an attachment document to be used to demonstrate the missing feature.

@@ -1,0 +1,235 @@
+name: Bug report
+description: Create a bug report to help us improve
+type: Bug
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Attention!
+
+        Please read [our guide](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) on how to fill in this template, including how to provide the required files.
+        Issues may be closed if the required information is not present.
+        
+        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
+        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+        This includes creating or commenting on issues and pull requests.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Brief summary
+
+  - type: textarea
+    id: reproSteps
+    attributes:
+      label: Steps to reproduce
+      description: |
+        This section should contain a clear and concise list of the steps you take to demonstrate the problem.
+        While performing the steps required, please make a copy of your [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
+        It's important to include any files that are required to reproduce an issue.
+        This might be an example file, or a link to a minimal code example using CodePen or JSFiddle.
+
+      placeholder: |
+        Example:
+
+        1. Open Chrome
+        2. Browse to www.google.com
+        3. Type "Hello"
+        4. Press Enter
+    validations:
+      required: true
+
+  - type: textarea
+    id: actualBehavior
+    attributes:
+      label: Actual behavior
+      description: |
+        This section should tell us what actually happens when these steps are taken.
+        Please describe verbatim what NVDA does, use speech and braille viewer to copy the speech/braille from NVDA.
+        This helps developers to be sure they are reproducing the same issue as you.
+        Enabling "Speak command keys" (`NVDA+4`) may be helpful.
+
+      placeholder: |
+        Example:
+
+        An NVDA error sound is heard.
+
+        NVDA Speech:
+        "button enable sound"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expectedBehavior
+    attributes:
+      label: Expected behavior
+      description: |
+        This section should tell us what you expect to happen when these steps are taken.
+
+      placeholder: |
+        Example:
+
+        There should be no error sound, and the page should change to show the search results.
+
+        NVDA Speech:
+        "checkbox enable sound"
+    validations:
+      required: true
+
+  - type: textarea
+    id: attachedFiles
+    attributes:
+      label: NVDA logs, crash dumps and other attachments
+      description: |
+        In most cases an NVDA log file is incredibly helpful when trying to understand/fix an issue.
+        More [instructions are available on the wiki](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
+        If a crash dump file (nvda_crash.dmp) is created, please also include it.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### System Configuration
+
+        The following questions are about the system you are using when encountering the issue.
+        If you are encountering the issue with multiple different configurations, please list them.
+        This helps us to be able to reproduce the issue, or help us to investigate why this issue occurs for some users and not others.
+
+  - type: dropdown
+    id: nvdaType
+    attributes:
+      label: NVDA type
+      description: Is this reproduced with NVDA installed/portable/running from source?
+      multiple: true
+      options: ["installed copy", "portable copy", "installer/launcher copy", "source copy"]
+    validations:
+      required: true
+
+  - type: input
+    id: nvdaVersion
+    attributes:
+      label: NVDA version
+      description: |
+        Which version(s) of NVDA can you reproduce this issue with?
+        This can be copied from the about dialog, from the NVDA help menu.
+    validations:
+      required: true
+
+  - type: textarea
+    id: otherNvdaVersions
+    attributes:
+      label: Have you tried any other versions of NVDA? If so, please report their behaviors.
+      description: |
+        Knowing whether this issue occurs in previous releases helps us to understand if this is a newly introduced issue.
+        It can help us determine if changes in NVDA or other software introduced the problem.
+
+      placeholder: |
+        Example:
+
+        * NVDA 2018.1 - no error sound
+        * NVDA 2018.2 - has error sound
+
+  - type: input
+    id: winVersion
+    attributes:
+      label: Windows version
+      description: |
+        The version of Windows that you are using.
+        You can copy this from the "System Information" application:
+        1. Press `Windows+r` to open the run dialog
+        1. Type `msinfo32` and press enter
+        1. From the "System summary" tree-view item, press tab to get to the right pane.
+        1. Press down arrow twice to get to "Version"
+        1. Press `Control+C` to copy the version information.
+
+      placeholder: |
+        Example: Windows 10 Version 1607 Build 14393.1066
+
+    validations:
+      required: true
+
+  - type: textarea
+    id: otherVersions
+    attributes:
+      label: Name and version of other software in use when reproducing the issue
+      description: |
+        Typically, you can get this information from the "About" dialog of the software.
+
+      placeholder: |
+        Example:
+
+        Chrome version: 67.0.3396.87
+
+  - type: textarea
+    id: otherSysInfo
+    attributes:
+      label: Other information about your system
+      description: |
+        This is other information about your setup that you think might be relevant to us.
+
+      placeholder: |
+        Example:
+
+        Running Windows 10 in a VM
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Troubleshooting steps
+
+        The following questions ask about the basic investigation steps you may have completed.
+        Please feel free to add more information here to tell us about what you have tried.
+
+  - type: dropdown
+    id: restart
+    validations:
+      required: true
+    attributes:
+      label: Does the issue still occur after restarting your computer?
+      description: |
+        Restarting your computer will help to ensure that software is in a fresh state.
+      options: [
+        "I have restarted my computer and the issue still occurs",
+        "Restarting my computer fixes the issue temporarily, but it comes back later",
+        "Restarting my computer fixed the issue",
+        "I have not restarted my computer",
+      ]
+
+  - type: dropdown
+    id: addons
+    validations:
+      required: true
+    attributes:
+      label: If NVDA add-ons are disabled, is your problem still occurring?
+      description: |
+        In many cases issues could be caused by an add-on not working correctly or conflicting with other features already integrated in NVDA itself.
+        Therefore, it is recommended to reproduce issues with all add-ons disabled.
+        You can restart NVDA with add-ons disabled through the exit dialog.
+        In case the issue is caused by an add-on, it is recommended to contact the author of the add-on first.
+      options: [
+        "I have restarted NVDA with add-ons disabled and the issue still occurs",
+        "I have restarted NVDA with add-ons disabled and the issue no longer occurs",
+        "I have not restarted NVDA with add-ons disabled",
+        "I do not have any NVDA add-ons installed",
+      ]
+
+  - type: dropdown
+    id: comRegFix
+    validations:
+      required: true
+    attributes:
+      label: Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
+      description: |
+        COM DLL files, which the IAccessible COM interface depends on, can get unregistered after installing and uninstalling different programs on a computer.
+        The consequence is that NVDA in certain cases does not work properly.
+        Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
+        The COM registry fixing tool has been introduced in order to re-register those DLL files.
+        In any case, re-registering those DLL files does not have any negative impact on a computer's functionality.
+        Note that when installing NVDA, this tool is run automatically.
+        Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
+      options: [
+        "I have run the COM Registration Fixing Tool and the issue still occurs",
+        "I have run the COM Registration Fixing Tool and the issue no longer occurs",
+        "I have not run the COM Registration Fixing Tool",
+      ]
