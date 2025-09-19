@@ -657,7 +657,7 @@ class KEYEVENTF(IntFlag):
 	"""If specified, the system synthesizes a VK_PACKET keystroke.
 
 	.. warning::
-		Must only be combined with :const:`KEY_UP`.
+		Must only be combined with :const:`KEYUP`.
 	"""
 
 
