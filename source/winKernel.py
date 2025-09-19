@@ -181,7 +181,7 @@ def setWaitableTimer(
 	handle: int,
 	dueTime: int,
 	period: int = 0,
-	completionRoutine: _PTIMERAPCROUTINE = _PTIMERAPCROUTINE(0),
+	completionRoutine: _PTIMERAPCROUTINE | None = None,
 	arg: int | None = None,
 	resume: bool = False,
 ):
@@ -192,12 +192,14 @@ def setWaitableTimer(
 		Note that the original function requires relative time to be supplied as a negative nanoseconds value.
 	:param period: Defaults to 0, timer is only executed once.
 		Value should be supplied in miliseconds.
-	:param completionRoutine: The function to be executed when the timer elapses.
+	:param completionRoutine: An optional function to be executed when the timer elapses.
 	:param arg: Defaults to C{None}; a pointer to a structure that is passed to the completion routine.
 	:param resume: Defaults to C{False}; the system is not restored.
 		If this parameter is TRUE, restores a system in suspended power conservation mode
 		when the timer state is set to signaled.
 	"""
+	if completionRoutine is None:
+		completionRoutine = _PTIMERAPCROUTINE(0)
 	res = winBindings.kernel32.SetWaitableTimer(
 		handle,
 		# due time is in 100 nanosecond intervals, relative time should be negated.
