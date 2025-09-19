@@ -17,6 +17,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+* Spelling errors can be reported in braille. (#7608, @nvdaes)
 
 ### Changes
 

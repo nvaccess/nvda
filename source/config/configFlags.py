@@ -193,6 +193,10 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 	SPEECH = 0b1
 	SOUND = 0b10
 	SPEECH_AND_SOUND = SPEECH | SOUND
+	BRAILLE = 0b100
+	SPEECH_AND_BRAILLE = SPEECH | BRAILLE
+	SOUND_AND_BRAILLE = SOUND | BRAILLE
+	SPEECH_AND_SOUND_AND_BRAILLE = SPEECH | SOUND | BRAILLE
 
 	@property
 	def _displayStringLabels(self) -> dict["ReportSpellingErrors", str]:
@@ -210,6 +214,8 @@ class ReportSpellingErrors(DisplayStringIntFlag):
 				# Translators: A value reported by the cycle script defining how spelling errors are reported.
 				"Speech and sound",
 			),
+			# Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
+			ReportSpellingErrors.BRAILLE: pgettext("reportSpellingErrorsSetting", "Braille"),
 		}
 
 
