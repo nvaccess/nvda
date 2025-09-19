@@ -604,9 +604,17 @@ class AppModule(baseObject.ScriptableObject):
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split(".")[-1]
 
+	_liveForEver: bool = False
+	"""
+	Set to true when NVDA cannot get enough permissions to successfully verify if the process is dead.
+	E.g. Security software such as 1Password which blocks the SYNCHRONIZE access right.
+	"""
+
 	isAlive: bool
 
 	def _get_isAlive(self) -> bool:
+		if self._liveForEver:
+			return True
 		try:
 			return bool(winKernel.waitForSingleObject(self.processHandle, 0))
 		except OSError as e:
@@ -616,6 +624,16 @@ class AppModule(baseObject.ScriptableObject):
 					f"Process handle {self.processHandle} for {self} is invalid, assuming process is dead.",
 				)
 				return False
+			elif e.winerror == winKernel.ERROR_ACCESS_DENIED:
+				# Although we opened the process asking for the SYNCRHONIZE access right,
+				# The process is refuzing us the permission when waiting on the handle.
+				# This may be a be a protected process like 1Password.
+				# Currently there is no alternative way to check if the process is dead, so we must assume it stays alive for ever.
+				log.debugWarning(
+					f"Access denied waiting on Process handle {self.processHandle} for {self}, cannot verify dead, marking as living for ever."
+				)
+				self._liveForEver = True
+				return True
 			raise
 
 	def terminate(self):
