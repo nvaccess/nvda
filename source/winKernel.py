@@ -181,7 +181,7 @@ def setWaitableTimer(
 	handle: int,
 	dueTime: int,
 	period: int = 0,
-	completionRoutine: _PTIMERAPCROUTINE = _PTIMERAPCROUTINE(None),
+	completionRoutine: _PTIMERAPCROUTINE = _PTIMERAPCROUTINE(0),
 	arg: int | None = None,
 	resume: bool = False,
 ):
