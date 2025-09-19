@@ -369,10 +369,11 @@ def accessibleObjectFromPoint(x, y):
 	return normalizeIAccessible(pacc, child), child
 
 
-def windowFromAccessibleObject(ia):
+def windowFromAccessibleObject(ia) -> int:
 	try:
 		return oleacc.WindowFromAccessibleObject(ia)
-	except:  # noqa: E722 Bare except
+	except WindowsError:
+		log.debugWarning("windowFromAccessibleObject failed", exc_info=True)
 		return 0
 
 
