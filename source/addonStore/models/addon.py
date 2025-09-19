@@ -59,6 +59,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
@@ -115,6 +116,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	legacy: bool
@@ -222,6 +224,11 @@ class _AddonManifestModel(_AddonGUIModel):
 		return description
 
 	@property
+	def changelog(self) -> str | None:
+		changelog: str | None = self.manifest.get("changelog")
+		return changelog
+
+	@property
 	def installDate(self) -> datetime:
 		return datetime.fromtimestamp(os.path.getctime(self.installPath))
 
@@ -298,6 +305,7 @@ class AddonStoreModel(_AddonStoreModel):
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
+	changelog: str | None
 	license: str
 	licenseURL: Optional[str]
 	sourceURL: str
@@ -355,6 +363,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		addonVersionName=addon["addonVersionName"],
 		addonVersionNumber=MajorMinorPatch(**addon["addonVersionNumber"]),
 		homepage=addon.get("homepage"),
+		changelog=addon.get("changelog"),
 		license=addon["license"],
 		licenseURL=addon.get("licenseURL"),
 		sourceURL=addon["sourceURL"],
