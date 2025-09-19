@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 import ctypes
-from ctypes import POINTER, Structure, Union, c_long, c_ulong, wintypes
 from enum import IntEnum, IntFlag
 
 import api
@@ -67,56 +66,6 @@ class KeyEventFlag(IntFlag):
 	.. warning::
 		Must only be combined with :const:`KEY_UP`.
 	"""
-
-
-class MOUSEINPUT(Structure):
-	_fields_ = (
-		("dx", c_long),
-		("dy", c_long),
-		("mouseData", wintypes.DWORD),
-		("dwFlags", wintypes.DWORD),
-		("time", wintypes.DWORD),
-		("dwExtraInfo", POINTER(c_ulong)),
-	)
-
-
-class KEYBDINPUT(Structure):
-	_fields_ = (
-		("wVk", wintypes.WORD),
-		("wScan", wintypes.WORD),
-		("dwFlags", wintypes.DWORD),
-		("time", wintypes.DWORD),
-		("dwExtraInfo", POINTER(c_ulong)),
-	)
-
-
-class HARDWAREINPUT(Structure):
-	_fields_ = (
-		("uMsg", wintypes.DWORD),
-		("wParamL", wintypes.WORD),
-		("wParamH", wintypes.WORD),
-	)
-
-
-class INPUTUnion(Union):
-	_fields_ = (
-		("mi", MOUSEINPUT),
-		("ki", KEYBDINPUT),
-		("hi", HARDWAREINPUT),
-	)
-
-
-class INPUT(Structure):
-	"""Stores information for synthesizing input events.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input
-	"""
-
-	_fields_ = (
-		("type", wintypes.DWORD),
-		("union", INPUTUnion),
-	)
 
 
 class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -217,15 +166,15 @@ def sendKey(vk: int | None = None, scan: int | None = None, extended: bool = Fal
 	:param extended: Whether this is an extended key, defaults to False
 	:param pressed: ``True`` if key pressed; ``False`` if released, defaults to True
 	"""
-	i = INPUT()
-	i.union.ki.wVk = vk
+	i = user32.INPUT()
+	i.ii.ki.wVk = vk
 	if scan:
-		i.union.ki.wScan = scan
+		i.ii.ki.wScan = scan
 	else:  # No scancode provided, try to get one
-		i.union.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
+		i.ii.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
 	if not pressed:
-		i.union.ki.dwFlags |= KeyEventFlag.KEY_UP
+		i.ii.ki.dwFlags |= KeyEventFlag.KEY_UP
 	if extended:
-		i.union.ki.dwFlags |= KeyEventFlag.EXTENDED_KEY
+		i.ii.ki.dwFlags |= KeyEventFlag.EXTENDED_KEY
 	i.type = InputType.KEYBOARD
-	user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(INPUT))
+	user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(user32.INPUT))
