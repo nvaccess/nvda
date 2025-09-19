@@ -125,15 +125,15 @@ def sendKey(vk: int | None = None, scan: int | None = None, extended: bool = Fal
 	:param extended: Whether this is an extended key, defaults to False
 	:param pressed: ``True`` if key pressed; ``False`` if released, defaults to True
 	"""
-	i = user32.INPUT()
-	i.ii.ki.wVk = vk
+	input = user32.INPUT()
+	input.ii.ki.wVk = vk
 	if scan:
-		i.ii.ki.wScan = scan
+		input.ii.ki.wScan = scan
 	else:  # No scancode provided, try to get one
-		i.ii.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
+		input.ii.ki.wScan = user32.MapVirtualKey(vk, VKMapType.VK_TO_VSC)
 	if not pressed:
-		i.ii.ki.dwFlags |= user32.KEYEVENTF.KEYUP
+		input.ii.ki.dwFlags |= user32.KEYEVENTF.KEYUP
 	if extended:
-		i.ii.ki.dwFlags |= user32.KEYEVENTF.EXTENDEDKEY
-	i.type = user32.INPUT_TYPE.KEYBOARD
-	user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(user32.INPUT))
+		input.ii.ki.dwFlags |= user32.KEYEVENTF.EXTENDEDKEY
+	input.type = user32.INPUT_TYPE.KEYBOARD
+	user32.SendInput(1, ctypes.byref(input), ctypes.sizeof(user32.INPUT))
