@@ -68,6 +68,7 @@ These should be supported natively in Python 3.13. (#18689)
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
 * `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+* The following symbols have been removed from `installer` with no direct replacement: `programFilesPath`, `getStartMenuFolder`, `getInstallPath`. (#18851)
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
@@ -113,6 +114,9 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `hwPortUtils.dummy`, `hwPortUtils.INVALID_HANDLE_VALUE` and `hwPortUtils.ValidHandle` are deprecated, with no planned replacement. (#18571)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
   Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+* `addonHandler.BUNDLE_EXTENSION` has been moved to `config.registry.ADDON_BUNDLE_EXTENSION`. (#18851)
+* `addonHandler.NVDA_ADDON_PROG_ID` has been moved to `config.registry.NVDA_ADDON_PROG_ID`. (#18851)
+* `installer.defaultInstallPath` has been moved to `NVDAState.WritePaths.defaultInstallDir`. (#18851)
 * `fonts.gdi32`, `screenBitmap.gdi32` and `winGDI.gdi32` are deprecated.
   Use `winBindings.gdi32.dll` instead. (#18860)
 * `shellapi.shell32` is deprecated.
