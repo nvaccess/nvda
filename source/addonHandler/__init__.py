@@ -32,6 +32,7 @@ import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
 import config
+from config.registry import ADDON_BUNDLE_EXTENSION
 import languageHandler
 from logHandler import log
 import winBindings.kernel32
@@ -44,6 +45,7 @@ from types import ModuleType
 from addonStore.models.status import AddonStateCategory, SupportsAddonState
 from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
+from utils._deprecate import handleDeprecations, MovedSymbol
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
@@ -62,11 +64,22 @@ if TYPE_CHECKING:
 		InstalledAddonStoreModel,
 	)
 
+__getattr__ = handleDeprecations(
+	MovedSymbol(
+		"BUNDLE_EXTENSION",
+		"config",
+		"registry",
+		"ADDON_BUNDLE_EXTENSION",
+	),
+	MovedSymbol(
+		"NVDA_ADDON_PROG_ID",
+		"config.registry",
+	),
+)
+
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename = "addonsState.pickle"
-BUNDLE_EXTENSION = "nvda-addon"
 BUNDLE_MIMETYPE = "application/x-nvda-addon"
-NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX = ".pendingInstall"
 DELETEDIR_SUFFIX = ".delete"
 
@@ -979,7 +992,7 @@ def createAddonBundleFromPath(path, destDir=None):
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
 		raise AddonError("Manifest file has errors.")
-	bundleFilename = "%s-%s.%s" % (manifest["name"], manifest["version"], BUNDLE_EXTENSION)
+	bundleFilename = f"{manifest['name']}-{manifest['version']}.{ADDON_BUNDLE_EXTENSION}"
 	bundleDestination = os.path.join(destDir, bundleFilename)
 	with zipfile.ZipFile(bundleDestination, "w") as z:
 		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
