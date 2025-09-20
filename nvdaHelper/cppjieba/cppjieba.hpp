@@ -14,6 +14,8 @@ For full terms and any additional permissions, see the NVDA license file: https:
 #include <cstring>
 #include <mutex>
 #include <cstdlib>
+#include <set>
+#include <stdexcept>
 #include "QuerySegment.hpp"
 
 using namespace std;
@@ -22,11 +24,11 @@ namespace cppjieba {  // copied from Jieba.hpp and modified to drop off its keyw
 
 class JiebaSegmenter {
  public:
-  JiebaSegmenter(const string& dict_path = "",
-        const string& model_path = "",
-        const string& user_dict_path = "")
-    : dict_trie_(getPath(dict_path, "jieba.dict.utf8"), getPath(user_dict_path, "user.dict.utf8")),
-      model_(getPath(model_path, "hmm_model.utf8")),
+  JiebaSegmenter(const string& dict_path,
+        const string& model_path,
+        const string& user_dict_path)
+    : dict_trie_(pathJoin(dict_path, "jieba.dict.utf8"), pathJoin(user_dict_path, "user.dict.utf8")),
+      model_(pathJoin(model_path, "hmm_model.utf8")),
       mix_seg_(&dict_trie_, &model_) {
   }
   ~JiebaSegmenter() {
@@ -97,17 +99,6 @@ class JiebaSegmenter {
     return (pos == string::npos) ? "" : path.substr(0, pos);
   }
 
-  static string getPath(const string& path, const string& default_file) {
-    if (path.empty()) {
-      string current_dir = getCurrentDirectory();
-      string parent_dir = current_dir.substr(0, current_dir.find_last_of("/\\"));
-      string grandparent_dir = parent_dir.substr(0, parent_dir.find_last_of("/\\"));
-      string root_dir = grandparent_dir.substr(0, grandparent_dir.find_last_of("/\\"));
-      return pathJoin(pathJoin(pathJoin(root_dir, "include\\cppjieba"), "dict"), default_file);
-    }
-    return path;
-  }
-
   DictTrie dict_trie_;
   HMMModel model_;
 
@@ -121,21 +112,27 @@ class JiebaSegmenter {
 class JiebaSingleton : public cppjieba::JiebaSegmenter {
 public:
     /// @brief Returns the single instance, constructing on first call.
+    static JiebaSingleton& getInstance(const char* dictDir);
+
     static JiebaSingleton& getInstance();
 
     /// @brief Do thread-safe segmentation and compute word end offsets.
-	/// @param text The input text in UTF-8 encoding.
-	/// @param wordEndOffsets Output vector to hold byte offsets of word ends.
-    void getWordEndOffsets(const string& text, vector<int>& wordEndOffsets);
+    /// @param text The input text in UTF-8 encoding.
+    /// @param wordEndOffsets Output vector to hold byte offsets of word ends.
+    void getWordEndOffsets(const std::string& text, std::vector<int>& wordEndOffsets);
+
+    // singleton bookkeeping
+    static JiebaSingleton* instance;
+    static std::once_flag initFlag;
 
 private:
-    JiebaSingleton();         ///< private ctor initializes base Jieba
+    JiebaSingleton(const char* dictDir);         ///< private ctor initializes base Jieba
 
-	/// Disable copy and move
-	JiebaSingleton(const JiebaSingleton&) = delete;
-	JiebaSingleton& operator = (const JiebaSingleton&) = delete;
-	JiebaSingleton(JiebaSingleton&&) = delete;
-	JiebaSingleton& operator = (JiebaSingleton&&) = delete;
+    /// Disable copy and move
+    JiebaSingleton(const JiebaSingleton&) = delete;
+    JiebaSingleton& operator = (const JiebaSingleton&) = delete;
+    JiebaSingleton(JiebaSingleton&&) = delete;
+    JiebaSingleton& operator = (JiebaSingleton&&) = delete;
 
     std::mutex segMutex;      ///< guards concurrent Cut() calls
 };
@@ -149,8 +146,7 @@ private:
 extern "C" {
 
 /// @brief Force singleton construction (load dicts, etc.) before any segmentation.
-/// @return 0 on success, -1 on failure.
-JIEBA_API int initJieba();
+JIEBA_API bool initJieba(const char* dictDir);
 
 /// @brief Segment UTF-8 text into character offsets.
 /// @return 0 on success, -1 on failure.
