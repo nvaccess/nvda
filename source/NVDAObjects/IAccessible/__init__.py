@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -40,6 +40,7 @@ import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
+from winBindings import user32
 import winBindings.ole32
 import winUser
 import globalVars  # noqa: F401
@@ -715,6 +716,10 @@ class IAccessible(Window):
 			from . import webKit
 
 			webKit.findExtraOverlayClasses(self, clsList)
+		elif windowClassName == "wxWindowNR":
+			from . import wx as wxObjects
+
+			wxObjects.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith("Chrome_"):
 			from . import chromium
 
@@ -805,7 +810,7 @@ class IAccessible(Window):
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
 			try:
 				left, top, width, height = IAccessibleObject.accLocation(0)
-				windowHandle = winUser.user32.WindowFromPoint(winUser.POINT(left, top))
+				windowHandle = user32.WindowFromPoint(winUser.POINT(left, top))
 			except COMError as e:
 				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:

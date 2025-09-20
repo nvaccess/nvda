@@ -32,6 +32,7 @@ from ctypes import (
 	wstring_at,
 )
 
+from winBindings import user32
 import winBindings.oleaut32
 import winBindings.kernel32
 import winBindings.advapi32
@@ -605,7 +606,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID, hkl, layoutString):
 	import ui
 
 	buf = create_unicode_buffer(1024)
-	res = windll.kernel32.GetLocaleInfoW(languageID, 2, buf, 1024)
+	res = winBindings.kernel32.GetLocaleInfo(languageID, 2, buf, 1024)
 	# Translators: the label for an unknown language when switching input methods.
 	inputLanguageName = buf.value if res else _("unknown language")
 	layoutStringCodes = []
@@ -774,11 +775,11 @@ class _RemoteLoader:
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderX86, _remoteLoaderAMD64, _remoteLoaderARM64
 	global lastLanguageID, lastLayoutString
-	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
+	hkl = user32.GetKeyboardLayout(0)
 	lastLanguageID = winUser.LOWORD(hkl)
 	KL_NAMELENGTH = 9
 	buf = create_unicode_buffer(KL_NAMELENGTH)
-	res = windll.User32.GetKeyboardLayoutNameW(buf)
+	res = user32.GetKeyboardLayoutName(buf)
 	if res:
 		lastLayoutString = buf.value
 	for name, func in [

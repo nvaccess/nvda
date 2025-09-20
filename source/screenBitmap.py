@@ -8,9 +8,8 @@
 import ctypes
 import winGDI
 import winBindings.gdi32
+from winBindings import user32 as _user32
 from utils import _deprecate
-
-user32 = ctypes.windll.user32
 
 
 class ScreenBitmap(object):
@@ -24,7 +23,7 @@ class ScreenBitmap(object):
 		self.width = width
 		self.height = height
 		# Fetch the device context for the screen
-		self._screenDC = user32.GetDC(0)
+		self._screenDC = _user32.GetDC(0)
 		# Create a memory device context with which we can copy screen content to on request.
 		self._memDC = winBindings.gdi32.CreateCompatibleDC(self._screenDC)
 		# Create a new bitmap of the chosen size, and set this as the memory device context's bitmap, so that what is drawn is captured.
@@ -44,7 +43,7 @@ class ScreenBitmap(object):
 		winBindings.gdi32.SelectObject(self._memDC, self._oldBitmap)
 		winBindings.gdi32.DeleteObject(self._memBitmap)
 		winBindings.gdi32.DeleteDC(self._memDC)
-		user32.ReleaseDC(0, self._screenDC)
+		_user32.ReleaseDC(0, self._screenDC)
 
 	def captureImage(self, x, y, w, h):
 		"""
@@ -65,7 +64,7 @@ class ScreenBitmap(object):
 			winGDI.SRCCOPY,
 		)
 		# Fetch the pixels from our memory bitmap and store them in a buffer to be returned
-		buffer = (winBindings.gdi32.RGBQUAD * (self.width * self.height))()
+		buffer = (winBindings.gdi32.RGBQUAD * self.width * self.height)()
 		winBindings.gdi32.GetDIBits(
 			self._memDC,
 			self._memBitmap,
@@ -85,4 +84,5 @@ def rgbPixelBrightness(p):
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("gdi32", "winBindings.gdi32", "dll"),
+	_deprecate.MovedSymbol("user32", "winBindings.user32", "dll"),
 )

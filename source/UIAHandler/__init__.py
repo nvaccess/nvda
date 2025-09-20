@@ -6,7 +6,6 @@
 import ctypes
 import ctypes.wintypes
 from ctypes import (
-	windll,
 	POINTER,
 	CFUNCTYPE,  # noqa: F401
 	c_voidp,  # noqa: F401
@@ -35,6 +34,7 @@ import api
 import appModuleHandler
 import controlTypes
 import globalVars
+from winBindings import user32
 import winBindings.ole32
 import winBindings.kernel32
 import winKernel
@@ -455,7 +455,7 @@ class UIAHandler(COMObject):
 
 		# Terminate the MTA thread
 		MTAThreadHandle = ctypes.wintypes.HANDLE(
-			windll.kernel32.OpenThread(
+			winBindings.kernel32.OpenThread(
 				winKernel.SYNCHRONIZE,
 				False,
 				self.MTAThread.ident,
@@ -463,7 +463,7 @@ class UIAHandler(COMObject):
 		)
 		self.MTAThreadQueue.put_nowait(None)
 		# Wait for the MTA thread to die (while still message pumping)
-		if windll.user32.MsgWaitForMultipleObjects(1, byref(MTAThreadHandle), False, 200, 0) != 0:
+		if user32.MsgWaitForMultipleObjects(1, byref(MTAThreadHandle), False, 200, 0) != 0:
 			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
 		winBindings.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread

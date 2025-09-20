@@ -1,9 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import typing
+
+from winBindings import user32
 
 # F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
 # should be used to export it.
@@ -21,7 +23,6 @@ from typing import (
 import weakref
 from ctypes import (
 	wintypes,
-	windll,
 	byref,
 	c_void_p,
 	c_char,
@@ -368,10 +369,11 @@ def accessibleObjectFromPoint(x, y):
 	return normalizeIAccessible(pacc, child), child
 
 
-def windowFromAccessibleObject(ia):
+def windowFromAccessibleObject(ia) -> int:
 	try:
 		return oleacc.WindowFromAccessibleObject(ia)
-	except:  # noqa: E722 Bare except
+	except WindowsError:
+		log.debugWarning("windowFromAccessibleObject failed", exc_info=True)
 		return 0
 
 
@@ -552,7 +554,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# Make sure this window does not have a ghost window if possible
-	if NVDAObjects.window.GhostWindowFromHungWindow and NVDAObjects.window.GhostWindowFromHungWindow(window):
+	if user32._GhostWindowFromHungWindow is not None and user32._GhostWindowFromHungWindow(window):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
@@ -784,9 +786,9 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 		log.debug(
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}",
 		)
-	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
+	hDesk = user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
-		windll.user32.CloseDesktop(hDesk)
+		user32.CloseDesktop(hDesk)
 		core.callLater(200, _handleUserDesktop)
 	else:
 		# When hDesk == 0, the active desktop has changed.
@@ -1305,6 +1307,6 @@ def isMarshalledIAccessible(IAccessibleObject):
 		.contents.value
 	)
 	handle = HANDLE()
-	windll.kernel32.GetModuleHandleExW(6, addr, byref(handle))
+	winBindings.kernel32.GetModuleHandleEx(6, addr, byref(handle))
 	winBindings.kernel32.GetModuleFileName(handle, buf, 1024)
 	return not buf.value.lower().endswith("oleacc.dll")
