@@ -140,7 +140,7 @@ def doInstall(
 	newNVDA = None
 	if startAfterInstall:
 		newNVDA = core.NewNVDAInstance(
-			filePath=os.path.join(installer.defaultInstallPath, "nvda.exe"),
+			filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
 			parameters=_generate_executionParameters(),
 		)
 	if not core.triggerNVDAExit(newNVDA):
@@ -219,11 +219,11 @@ class InstallerDialog(
 				# Translators: An informational message in the Install NVDA dialog.
 				"A previous copy of NVDA has been found on your system. This copy will be updated.",
 			)
-			if not os.path.isdir(installer.defaultInstallPath):
+			if not os.path.isdir(WritePaths.defaultInstallDir):
 				msg += " " + _(
 					# Translators: a message in the installer telling the user NVDA is now located in a different place.
 					"The installation path for NVDA has changed. it will now  be installed in {path}",
-				).format(path=installer.defaultInstallPath)
+				).format(path=WritePaths.defaultInstallDir)
 		if shouldAskAboutAddons:
 			msg += "\n\n" + getAddonCompatibilityMessage()
 

@@ -409,12 +409,12 @@ class BrailleInputHandler(AutoPropertyObject):
 			for ch in chars
 		)
 		for ch in chars:
-			for direction in (0, winUser.KEYEVENTF_KEYUP):
+			for direction in (0, winBindings.user32.KEYEVENTF.KEYUP):
 				input = winBindings.user32.INPUT()
-				input.type = winUser.INPUT_KEYBOARD
+				input.type = winBindings.user32.INPUT_TYPE.KEYBOARD
 				input.ii.ki = winBindings.user32.KEYBDINPUT()
 				input.ii.ki.wScan = ord(ch)
-				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE | direction
+				input.ii.ki.dwFlags = winBindings.user32.KEYEVENTF.UNICODE | direction
 				inputs.append(input)
 		winUser.SendInput(inputs)
 		focusObj = api.getFocusObject()

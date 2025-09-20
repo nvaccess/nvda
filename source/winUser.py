@@ -116,6 +116,10 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("KeyBdInput", "winBindings.user32", "KEYBDINPUT"),
 	_deprecate.MovedSymbol("HardwareInput", "winBindings.user32", "HARDWAREINPUT"),
 	_deprecate.MovedSymbol("MouseInput", "winBindings.user32", "MOUSEINPUT"),
+	_deprecate.MovedSymbol("INPUT_MOUSE", "winBindings.user32", "INPUT_TYPE", "MOUSE"),
+	_deprecate.MovedSymbol("INPUT_KEYBOARD", "winBindings.user32", "INPUT_TYPE", "KEYBOARD"),
+	_deprecate.MovedSymbol("KEYEVENTF_KEYUP", "winBindings.user32", "KEYEVENTF", "KEYUP"),
+	_deprecate.MovedSymbol("KEYEVENTF_UNICODE", "winBindings.user32", "KEYEVENTF", "UNICODE"),
 )
 """Module __getattr__ to handle backward compatibility."""
 
@@ -768,14 +772,6 @@ def getSystemStickyKeys():
 	sk = STICKYKEYS()
 	_user32.SystemParametersInfo(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
 	return sk
-
-
-# START SENDINPUT TYPE DECLARATIONS
-INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
-INPUT_KEYBOARD = 1  # The event is a keyboard event. Use the ki structure of the union.
-KEYEVENTF_KEYUP = 0x0002
-KEYEVENTF_UNICODE = 0x04
-# END SENDINPUT TYPE DECLARATIONS
 
 
 def SendInput(inputs):

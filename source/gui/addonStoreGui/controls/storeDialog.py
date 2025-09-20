@@ -7,9 +7,6 @@
 import wx
 from wx.adv import BannerWindow
 
-from addonHandler import (
-	BUNDLE_EXTENSION,
-)
 from addonStore.dataManager import addonDataManager
 from addonStore.models.channel import Channel, _channelFilters
 from addonStore.models.status import (
@@ -17,6 +14,7 @@ from addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
+from config.registry import ADDON_BUNDLE_EXTENSION
 from core import callLater
 import globalVars
 import gui
@@ -418,7 +416,7 @@ class AddonStoreDialog(SettingsDialog):
 			# Translators: The message displayed in the dialog that
 			# allows you to choose an add-on package for installation.
 			message=pgettext("addonStore", "Choose Add-on Package File"),
-			wildcard=(fileTypeLabel + "|*.{ext}").format(ext=BUNDLE_EXTENSION),
+			wildcard=(fileTypeLabel + "|*.{ext}").format(ext=ADDON_BUNDLE_EXTENSION),
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
