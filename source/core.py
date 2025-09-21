@@ -914,7 +914,7 @@ def main():
 		wordSeg.initialize()
 	except RuntimeError:
 		log.warning("Word segmentation module disabled in configuration")
-	except:  # noqa: E722
+	except Exception:
 		log.error("Error initializing word segmentation module", exc_info=True)
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
