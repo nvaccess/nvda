@@ -188,7 +188,7 @@ def setWaitableTimer(
 	"""Wrapper to the kernel32 SETWaitableTimer function.
 
 	Consult https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-setwaitabletimer for Microsoft's documentation.
-	
+
 	:param handle: A handle to the timer object.
 	:param dueTime: Relative time (in milliseconds).
 		Note that the original function requires relative time to be supplied as a negative nanoseconds value.
