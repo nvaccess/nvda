@@ -1223,10 +1223,10 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
-* If inside of a table, control+Arrow will move by cell
-* Home / End moves to the start/end of the expression
-* Space reads your current position
-* Shift+Up/Down will change the mode of navigation, which will be discussed in more detail in the following section.
+* If inside of a table, `control+arrow` will move by cell
+* `home` / `end` moves to the start/end of the expression
+* `space` reads your current position
+* `shift+upArrow/downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
 
@@ -1243,11 +1243,12 @@ MathCAT supports the following navigation modes:
 
 **Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 
-**Character mode**:  this is actually two useful modes – word mode and character mode (zoom in to get "real" character mode).  Moves by words/characters.  This differs for numbers of more than one digit and function names such as "sin" that are multiple characters. Otherwise, word and character navigation is the same.
+**Character mode**: this is actually two modes - word mode and character mode (zoom in to get "real" character mode). 
+Moves by words/characters. 
+This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
+Otherwise, word and character navigation is the same.
 
-#### Table of Commands
-
-A table of navigation commands is provided in this section.
+The following are key commands uses to navigate math:
 
 | Key        | Unmodified                                           | + Ctrl                                                      | + Shift                                                   | + Ctrl+Shift                                |
 |------------|-----------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------|
