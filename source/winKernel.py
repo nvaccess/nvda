@@ -186,17 +186,18 @@ def setWaitableTimer(
 	resume: bool = False,
 ):
 	"""Wrapper to the kernel32 SETWaitableTimer function.
-	Consult https://msdn.microsoft.com/en-us/library/windows/desktop/ms686289.aspx for Microsoft's documentation.
+
+	Consult https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-setwaitabletimer for Microsoft's documentation.
+	
 	:param handle: A handle to the timer object.
-	:param dueTime: Relative time (in miliseconds).
+	:param dueTime: Relative time (in milliseconds).
 		Note that the original function requires relative time to be supplied as a negative nanoseconds value.
 	:param period: Defaults to 0, timer is only executed once.
-		Value should be supplied in miliseconds.
+		Value should be supplied in milliseconds.
 	:param completionRoutine: An optional function to be executed when the timer elapses.
-	:param arg: Defaults to C{None}; a pointer to a structure that is passed to the completion routine.
-	:param resume: Defaults to C{False}; the system is not restored.
-		If this parameter is TRUE, restores a system in suspended power conservation mode
-		when the timer state is set to signaled.
+	:param arg: A pointer to a structure that is passed to the completion routine, defaults to ``None``. .
+	:param resume: Whether to restore a system in suspended power conservation mode when the timer state is set to signaled, defaults to ``False``.
+		If the system does not support a restore, the call succeeds, but ``GetLastError`` returns ``ERROR_NOT_SUPPORTED``.
 	"""
 	if completionRoutine is None:
 		completionRoutine = _PTIMERAPCROUTINE(0)
