@@ -15,7 +15,6 @@ from ctypes import (
 	byref,
 	create_unicode_buffer,
 	sizeof,
-	windll,
 )
 import ctypes.wintypes
 from typing import (
@@ -151,7 +150,7 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 
 	if params is not None:
 		params = subprocess.list2cmdline(params)
-	sei = shellapi.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
+	sei = winBindings.shell32.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
 	# IsUserAnAdmin is apparently deprecated so may not work above Windows 8
 	if not handleAlreadyElevated or not winBindings.shell32.IsUserAnAdmin():
 		sei.lpVerb = "runas"
@@ -174,7 +173,9 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 @functools.lru_cache(maxsize=1)
 def _getDesktopName() -> str:
 	UOI_NAME = 2  # The name of the object, as a string
-	desktop = user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
+	desktop = user32.GetThreadDesktop(
+		winBindings.kernel32.GetCurrentThreadId(),
+	)
 	name = create_unicode_buffer(256)
 	user32.GetUserObjectInformation(
 		desktop,
@@ -231,8 +232,8 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.threadExc: Exception | None = None
 		self.start()
 		time.sleep(0.1)
-		threadHandle = ctypes.c_int()
-		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
+		threadHandle = ctypes.wintypes.HANDLE()
+		threadHandle.value = winBindings.kernel32.OpenThread(0x100000, False, self.ident)
 		msg = ctypes.wintypes.MSG()
 		while user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
 			while user32.PeekMessage(ctypes.byref(msg), None, 0, 0, 1):
@@ -261,7 +262,7 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 		import config
 
 		preventDisplayTurningOff = config.conf["general"]["preventDisplayTurningOff"]
-	windll.kernel32.SetThreadExecutionState(
+	winBindings.kernel32.SetThreadExecutionState(
 		winKernel.ES_SYSTEM_REQUIRED
 		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurningOff else 0)
 		| (winKernel.ES_CONTINUOUS if persistent else 0),
@@ -270,4 +271,4 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 
 def resetThreadExecutionState() -> None:
 	"""Reset the thread execution state to the default."""
-	windll.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
+	winBindings.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)

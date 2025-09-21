@@ -8,54 +8,101 @@ For full terms and any additional permissions, see the NVDA license file: https:
 #include "cppjieba.hpp"
 
 
-JiebaSingleton& JiebaSingleton::getInstance() {
-    // C++11 guarantees thread-safe init of this local static
-    static JiebaSingleton instance;
-    return instance;
+using namespace std;
+
+// static members for singleton bookkeeping
+JiebaSingleton* JiebaSingleton::instance = nullptr;
+std::once_flag JiebaSingleton::initFlag;
+
+JiebaSingleton& JiebaSingleton::getInstance(const char* dictDir) {
+    // convert incoming C-string+length to std::string (handles dictDir == nullptr)
+    std::string dir = dictDir;
+
+    // ensure singleton is constructed exactly once
+    std::call_once(JiebaSingleton::initFlag, [&]() {
+        // allocate on heap, so we avoid copy/move and control lifetime
+        JiebaSingleton::instance = new JiebaSingleton(dir.c_str());
+        // optional: register deleter at exit
+        std::atexit([]() {
+            delete JiebaSingleton::instance;
+            JiebaSingleton::instance = nullptr;
+        });
+    });
+
+    // after call_once, instance must be non-null
+    return *JiebaSingleton::instance;
 }
 
-JiebaSingleton::JiebaSingleton(): cppjieba::JiebaSegmenter() { } // call base ctor to load dictionaries, models, etc.
+JiebaSingleton& JiebaSingleton::getInstance() {
+    if (!JiebaSingleton::instance) {
+        throw std::runtime_error("JiebaSingleton::getInstance() called before initialization. Call getInstance(dictDir) or initJieba() first.");
+    }
+    return *JiebaSingleton::instance;
+}
+
+JiebaSingleton::JiebaSingleton(const char* dictDir)
+: cppjieba::JiebaSegmenter(
+    std::string(dictDir),
+    std::string(dictDir),
+    std::string(dictDir)
+  )
+{
+    // base class ctor will load dictionaries/models
+}
 
 void JiebaSingleton::getWordEndOffsets(const std::string& text, std::vector<int>& wordEndOffsets) {
     std::lock_guard<std::mutex> lock(segMutex);
+    wordEndOffsets.clear();
     std::vector<cppjieba::Word> words;
     this->Cut(text, words, true);
 
-    for (auto const& word : words) {
+    for (const auto& word : words) {
         wordEndOffsets.push_back(word.unicode_offset + word.unicode_length);
     }
 }
 
 extern "C" {
 
-int initJieba() {
+bool initJieba(const char* dictDir) {
     try {
         // simply force the singleton into existence
-        (void)JiebaSingleton::getInstance();
-        return 0;
+        (void)JiebaSingleton::getInstance(dictDir);
+        return true;
     } catch (...) {
-        return -1;
+        return false;
     }
 }
 
 bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen) {
     if (!text || !wordEndOffsets || !outLen) return false;
-    // we assume initJieba() has already been called successfully
 
-    std::string textStr(text);
-    std::vector<int> offs;
-    JiebaSingleton::getInstance().getWordEndOffsets(textStr, offs);
+    try {
+        std::string textStr(text);
+        std::vector<int> offs;
+        JiebaSingleton::getInstance().getWordEndOffsets(textStr, offs);
 
-    int n = static_cast<int>(offs.size());
-    int* buf = static_cast<int*>(std::malloc(sizeof(int) * n));
-    if (!buf) {
+        int n = static_cast<int>(offs.size());
+        if (n == 0) {
+            *wordEndOffsets = nullptr;
+            *outLen = 0;
+            return true; // success, but no offsets
+        }
+
+        int* buf = static_cast<int*>(std::malloc(sizeof(int) * n));
+        if (!buf) {
+            *wordEndOffsets = nullptr;
+            *outLen = 0;
+            return false;
+        }
+        for (int i = 0; i < n; ++i) buf[i] = offs[i];
+        *wordEndOffsets = buf;
+        *outLen = n;
+        return true;
+    } catch (...) {
+        *wordEndOffsets = nullptr;
         *outLen = 0;
         return false;
     }
-    for (int i = 0; i < n; ++i) buf[i] = offs[i];
-    *wordEndOffsets = buf;
-    *outLen = n;
-    return true;
 }
 
 bool insertUserWord(const char* word, int freq, const char* tag = cppjieba::UNKNOWN_TAG) {
@@ -71,7 +118,7 @@ bool find(const char* word) {
 }
 
 void freeOffsets(int* ptr) {
-    if (ptr) free(ptr);
+    if (ptr) std::free(ptr);
 }
 
 } // extern "C"

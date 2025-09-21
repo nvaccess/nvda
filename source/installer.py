@@ -3,6 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2025 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
 
+from collections.abc import Iterable
+import comtypes.client
 import ctypes
 import pathlib
 import winreg
@@ -10,12 +12,12 @@ import time
 import os
 import tempfile
 import shutil
-import itertools
+import winBindings.kernel32
 import shellapi
 import globalVars
 import languageHandler
 import config
-from config.registry import RegistryKey
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -23,41 +25,45 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
-from typing import (
-	Dict,
-	Iterable,
-	Union,
-)
 import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
+from utils._deprecate import handleDeprecations, MovedSymbol
+from winBindings.advapi32 import RegDeleteTree
 
 _wsh = None
+
+__getattr__ = handleDeprecations(
+	MovedSymbol(
+		"defaultStartMenuFolder",
+		"NVDAState",
+		"WritePaths",
+		"defaultStartMenuFolder",
+	),
+	MovedSymbol(
+		"defaultInstallPath",
+		"NVDAState",
+		"WritePaths",
+		"defaultInstallDir",
+	),
+)
 
 
 def _getWSH():
 	global _wsh
 	if not _wsh:
-		import comtypes.client
-
 		_wsh = comtypes.client.CreateObject("wScript.Shell", dynamic=True)
 	return _wsh
 
 
-defaultStartMenuFolder = buildVersion.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.CURRENT_VERSION.value) as k:
-	programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
-defaultInstallPath = os.path.join(programFilesPath, buildVersion.name)
-
-
 def createShortcut(
-	path,
-	targetPath=None,
-	arguments=None,
-	iconLocation=None,
-	workingDirectory=None,
-	hotkey=None,
-	prependSpecialFolder=None,
+	path: str,
+	targetPath: str | None = None,
+	arguments: str | None = None,
+	iconLocation: str | None = None,
+	workingDirectory: str | None = None,
+	hotkey: str | None = None,
+	prependSpecialFolder: str | None = None,
 ):
 	# #7696: The shortcut is only physically saved to disk if it does not already exist, or one or more properties have changed.
 	wsh = _getWSH()
@@ -88,31 +94,12 @@ def createShortcut(
 		short.Save()
 
 
-def getStartMenuFolder(noDefault=False):
-	try:
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
-			return winreg.QueryValueEx(k, "Start Menu Folder")[0]
-	except WindowsError:
-		return defaultStartMenuFolder if not noDefault else None
-
-
-def getInstallPath(noDefault: bool = False) -> str | None:
-	try:
-		k = winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.INSTALLED_COPY.value,
-		)
-		return winreg.QueryValueEx(k, "UninstallDirectory")[0]
-	except WindowsError:
-		return defaultInstallPath if not noDefault else None
-
-
 def comparePreviousInstall() -> int | None:
 	"""Returns 1 if the existing installation is newer than this running version,
 	0 if it is the same, -1 if it is older,
 	None if there is no existing installation.
 	"""
-	path = getInstallPath(True)
+	path = WritePaths.installDir
 	if not path or not os.path.isdir(path):
 		return None
 	try:
@@ -123,7 +110,7 @@ def comparePreviousInstall() -> int | None:
 	return (oldTime > newTime) - (oldTime < newTime)
 
 
-def getDocFilePath(fileName, installDir):
+def getDocFilePath(fileName: str, installDir: str):
 	rootPath = os.path.join(installDir, "documentation")
 	lang = languageHandler.getLanguage()
 	tryLangs = [lang]
@@ -142,7 +129,7 @@ def getDocFilePath(fileName, installDir):
 			return tryPath
 
 
-def copyProgramFiles(destPath):
+def copyProgramFiles(destPath: str):
 	sourcePath = globalVars.appDir
 	detectUserConfig = True
 	for curSourceDir, subDirs, files in os.walk(sourcePath):
@@ -163,7 +150,7 @@ def copyProgramFiles(destPath):
 			tryCopyFile(sourceFilePath, destFilePath)
 
 
-def copyUserConfig(destPath):
+def copyUserConfig(destPath: str):
 	sourcePath = WritePaths.configDir
 	for curSourceDir, subDirs, files in os.walk(sourcePath):
 		curDestDir = os.path.join(destPath, os.path.relpath(curSourceDir, sourcePath))
@@ -175,13 +162,11 @@ def copyUserConfig(destPath):
 			tryCopyFile(sourceFilePath, destFilePath)
 
 
-def removeOldLibFiles(destPath, rebootOK=False):
+def removeOldLibFiles(destPath: str, rebootOK: bool = False):
 	"""
 	Removes library files from previous versions of NVDA.
-	@param destPath: The path where NVDA is installed.
-	@type destPath: string
-	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
-	@type rebootOK: boolean
+	:param destPath: The path where NVDA is installed.
+	:param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	"""
 	for topDir in ("lib", "lib64", "libArm64"):
 		currentLibPath = os.path.join(destPath, topDir, buildVersion.version)
@@ -216,7 +201,7 @@ def removeOldLibFiles(destPath, rebootOK=False):
 					)
 
 
-def removeOldProgramFiles(destPath):
+def removeOldProgramFiles(destPath: str):
 	# #3181: Remove espeak-ng-data\voices except for variants.
 	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
 	root = os.path.join(destPath, "synthDrivers", "espeak-ng-data", "voices")
@@ -266,7 +251,7 @@ def removeOldProgramFiles(destPath):
 					log.warning(f"Couldn't remove file: {path!r}")
 
 
-def getUninstallerRegInfo(installDir: str) -> Dict[str, Union[str, int]]:
+def getUninstallerRegInfo(installDir: str) -> dict[str, str | int]:
 	"""
 	Constructs a dictionary that is written to the registry for NVDA to show up
 	in the Windows "Apps and Features" overview.
@@ -369,15 +354,15 @@ def registerInstallation(
 
 
 def _createShortcutWithFallback(
-	path,
-	targetPath=None,
-	arguments=None,
-	iconLocation=None,
-	workingDirectory=None,
-	hotkey=None,
-	prependSpecialFolder=None,
-	fallbackHotkey=None,
-	fallbackPath=None,
+	path: str,
+	targetPath: str | None = None,
+	arguments: str | None = None,
+	iconLocation: str | None = None,
+	workingDirectory: str | None = None,
+	hotkey: str | None = None,
+	prependSpecialFolder: str | None = None,
+	fallbackHotkey: str | None = None,
+	fallbackPath: str | None = None,
 ):
 	"""Sometimes translations are used (for `path` or `hotkey` arguments) which include unicode characters
 	which cause the createShortcut method to fail. In these cases, try again using the English string if it is
@@ -427,7 +412,13 @@ def _createShortcutWithFallback(
 			)
 
 
-def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder) -> None:
+def _updateShortcuts(
+	NVDAExe: str,
+	installDir: str,
+	shouldCreateDesktopShortcut: bool,
+	slaveExe: str,
+	startMenuFolder: str,
+) -> None:
 	if shouldCreateDesktopShortcut:
 		# Translators: The shortcut key used to start NVDA.
 		# This should normally be left as is, but might be changed for some locales
@@ -541,12 +532,13 @@ def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
 			os.remove(desktopPath)
 		except WindowsError:
 			pass
-	startMenuFolder = getStartMenuFolder()
-	if startMenuFolder:
-		programsPath = wsh.SpecialFolders("AllUsersPrograms")
-		startMenuPath = os.path.join(programsPath, startMenuFolder)
-		if os.path.isdir(startMenuPath):
-			shutil.rmtree(startMenuPath, ignore_errors=True)
+	startMenuFolder = WritePaths.startMenuFolder
+	if startMenuFolder is None:
+		startMenuFolder = WritePaths.defaultStartMenuFolder
+	programsPath = wsh.SpecialFolders("AllUsersPrograms")
+	startMenuPath = os.path.join(programsPath, startMenuFolder)
+	if os.path.isdir(startMenuPath):
+		shutil.rmtree(startMenuPath, ignore_errors=True)
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -568,12 +560,12 @@ def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
 	unregisterAddonFileAssociation()
 
 
-def registerAddonFileAssociation(slaveExe):
+def registerAddonFileAssociation(slaveExe: str):
 	try:
 		# Create progID for NVDA ad-ons
 		with winreg.CreateKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
-			"SOFTWARE\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID,
+			RegistryKey.ADDON_PROG.value,
 			0,
 			winreg.KEY_WRITE,
 		) as k:
@@ -588,21 +580,21 @@ def registerAddonFileAssociation(slaveExe):
 					None,
 					0,
 					winreg.REG_SZ,
-					'"{slaveExe}" addons_installAddonPackage "%1"'.format(slaveExe=slaveExe),
+					f'"{slaveExe}" addons_installAddonPackage "%1"',
 				)
 		# Now associate addon extension to the created prog id.
 		with winreg.CreateKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
-			"SOFTWARE\\Classes\\.%s" % addonHandler.BUNDLE_EXTENSION,
+			RegistryKey.ADDON_EXT.value,
 			0,
 			winreg.KEY_WRITE,
 		) as k:
-			winreg.SetValueEx(k, None, 0, winreg.REG_SZ, addonHandler.NVDA_ADDON_PROG_ID)
+			winreg.SetValueEx(k, None, 0, winreg.REG_SZ, NVDA_ADDON_PROG_ID)
 			winreg.SetValueEx(k, "Content Type", 0, winreg.REG_SZ, addonHandler.BUNDLE_MIMETYPE)
 			# Add NVDA to the "open With" list
 			k2 = winreg.CreateKeyEx(
 				k,
-				"OpenWithProgids\\%s" % addonHandler.NVDA_ADDON_PROG_ID,
+				os.path.join("OpenWithProgids", NVDA_ADDON_PROG_ID),
 				0,
 				winreg.KEY_WRITE,
 			)
@@ -618,7 +610,7 @@ def unregisterAddonFileAssociation():
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(
 			winreg.HKEY_LOCAL_MACHINE,
-			"Software\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID,
+			RegistryKey.ADDON_PROG.value,
 		)
 	except WindowsError:
 		# This is probably the first install, so just ignore the error.
@@ -627,20 +619,15 @@ def unregisterAddonFileAssociation():
 	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 
-# Windows API call regDeleteTree is only available on vist and above so rule our own.
-def _deleteKeyAndSubkeys(key, subkey):
-	with winreg.OpenKey(key, subkey, access=winreg.KEY_WRITE | winreg.KEY_READ) as k:
-		# Recursively delete subkeys (Depth first search order)
-		# So Pythonic... </rant>
-		for i in itertools.count():
-			try:
-				subkeyName = winreg.EnumKey(k, i)
-			except WindowsError:
-				break
-			# Recursive call.
-			_deleteKeyAndSubkeys(k, subkeyName)
-		# Delete this key
-		winreg.DeleteKey(k, "")
+def _deleteKeyAndSubkeys(key: int, subkey: str):
+	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
+	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
+		result = RegDeleteTree(
+			parent.handle,
+			subkey,
+		)
+	if result != 0:
+		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
 
 
 class RetriableFailure(Exception):
@@ -688,12 +675,12 @@ def tryRemoveFile(
 	raise RetriableFailure("File %s could not be removed" % path)
 
 
-def tryCopyFile(sourceFilePath, destFilePath):
+def tryCopyFile(sourceFilePath: str, destFilePath: str):
 	if not sourceFilePath.startswith("\\\\"):
 		sourceFilePath = "\\\\?\\" + sourceFilePath
 	if not destFilePath.startswith("\\\\"):
 		destFilePath = "\\\\?\\" + destFilePath
-	if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
 		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))
 		if not os.path.exists(destFilePath):
@@ -705,7 +692,7 @@ def tryCopyFile(sourceFilePath, destFilePath):
 			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
 		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 			errorCode = ctypes.GetLastError()
 			raise OSError(
 				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
@@ -787,9 +774,9 @@ def _deleteFileGroupOrFail(
 
 
 def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
-	prevInstallPath = getInstallPath(noDefault=True)
-	installDir = defaultInstallPath
-	startMenuFolder = defaultStartMenuFolder
+	prevInstallPath = WritePaths.installDir
+	installDir = WritePaths.defaultInstallDir
+	startMenuFolder = WritePaths.defaultStartMenuFolder
 	# Give some time for the installed NVDA (which may have been running on a secure screen)
 	# to shut down before we start deleting files.
 	time.sleep(1)
@@ -832,7 +819,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
-def removeOldLoggedFiles(installPath):
+def removeOldLoggedFiles(installPath: str):
 	datPath = os.path.join(installPath, "uninstall.dat")
 	lines = []
 	if os.path.isfile(datPath):
@@ -848,7 +835,7 @@ def removeOldLoggedFiles(installPath):
 			tryRemoveFile(filePath, rebootOK=True)
 
 
-def createPortableCopy(destPath, shouldCopyUserConfig=True):
+def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):
 	assert os.path.isabs(destPath), f"Destination path {destPath} is not absolute"
 	# Remove all the main executables always
 	_deleteFileGroupOrFail(destPath, {"nvda.exe", "nvda_noUIAccess.exe", "nvda_UIAccess.exe"})
@@ -860,7 +847,7 @@ def createPortableCopy(destPath, shouldCopyUserConfig=True):
 	removeOldLibFiles(destPath, rebootOK=True)
 
 
-def registerEaseOfAccess(installDir):
+def registerEaseOfAccess(installDir: str):
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
 		RegistryKey.EASE_OF_ACCESS_APP.value,

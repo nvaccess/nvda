@@ -15,6 +15,7 @@ on:
       - master
       - beta
       - rc
+      - 'try-**'
 
   workflow_dispatch:
 
@@ -500,10 +501,13 @@ jobs:
     # Used to protect branches/tags as a general status check so we can check a single job for all rulesets.
     name: Check if all tests pass
     runs-on: ubuntu-latest
+    if: always()
     needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
     steps:
     - name: Check if all tests pass
-      run: echo "All tests passed successfully."
+      uses: re-actors/alls-green@v1.2.2
+      with:
+        jobs: ${{ toJSON(needs) }}
 
   uploadSymbols:
     name: Upload symbols
