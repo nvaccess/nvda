@@ -9,6 +9,7 @@ from ctypes import (
 	c_bool,
 	c_char_p,
 	c_int,
+	create_string_buffer,
 	POINTER,
 	byref,
 )
@@ -144,9 +145,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
 
 			# Setup function signatures
-			# int initJieba()
-			cls._lib.initJieba.restype = c_int
-			cls._lib.initJieba.argtypes = []
+			# bool initJieba(const char* dictDir)
+			cls._lib.initJieba.restype = c_bool
+			cls._lib.initJieba.argtypes = [c_char_p]
 
 			# bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen)
 			cls._lib.calculateWordOffsets.restype = c_bool
@@ -168,7 +169,13 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib.freeOffsets.restype = None
 			cls._lib.freeOffsets.argtypes = [POINTER(c_int)]
 
-			cls._lib.initJieba()
+			# Initialize with dictionary path
+			import globalVars
+
+			DICTS_DIR = os.path.join(globalVars.appDir, "cppjieba", "dicts")
+			DICTS_DIR_BYTES = DICTS_DIR.encode("utf-8")
+			dictDir = create_string_buffer(DICTS_DIR_BYTES)
+			cls._lib.initJieba(dictDir)
 		except Exception as e:
 			log.debugWarning("Failed to load cppjieba library: %s", e)
 			cls._lib = None
