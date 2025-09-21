@@ -3,14 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import (
-	byref,
-	c_short,
-	c_long,
-)
+from ctypes import byref, c_short, c_long
 import unicodedata
 import math
-
 from NVDAHelper import localLib
 import colors
 import XMLFormatting
@@ -27,11 +22,13 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
-from textUtils.segFlag import (
-	CharSegFlag,
-	WordSegFlag,
+from textUtils.segFlag import CharSegFlag, WordSegFlag
+from typing import (
+	List,
+	Tuple,
+	Optional,
+	Dict,
 )
-
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -388,11 +385,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	def _get__storyFieldsAndRects(
 		self,
-	) -> tuple[
-		list[textInfos.TextInfo.TextOrFieldsT],
-		list[RectLTRB],
-		list[int],
-		list[int],
+	) -> Tuple[
+		List[textInfos.TextInfo.TextOrFieldsT],
+		List[RectLTRB],
+		List[int],
+		List[int],
 	]:
 		# All returned coordinates are logical coordinates.
 		if self._location:
@@ -539,7 +536,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))
 
-	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:

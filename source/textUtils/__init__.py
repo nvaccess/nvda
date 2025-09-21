@@ -15,7 +15,7 @@ import unicodedata
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Generator
+from typing import Generator, Optional, Tuple, Type
 
 from logHandler import log
 
@@ -55,7 +55,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to subclass-specific encoded string offsets.
@@ -84,7 +84,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		r"""
 		This method takes two offsets from subclass-specific encoded string representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -140,7 +140,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to wide character string offsets.
@@ -177,7 +177,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int,
 		raiseOnError: bool = False,
-	) -> tuple[int, int]:
+	) -> Tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -245,7 +245,7 @@ class WideStringOffsetConverter(OffsetConverter):
 def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
-	encoding: str | None = None,
+	encoding: Optional[str] = None,
 	errorsFallback: str = "replace",
 ):
 	"""
@@ -347,7 +347,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -366,7 +366,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		r"""
 		This method takes two offsets from UTF-8 representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -407,7 +407,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strEnd is None:
 			return strStart
@@ -418,7 +418,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int, int]:
+	) -> int | Tuple[int, int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedEnd is None:
 			return encodedStart
@@ -486,7 +486,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int]:
+	) -> int | Tuple[int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -505,7 +505,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int]:
+	) -> int | Tuple[int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedStart == 0:
 			resultStart = 0
@@ -530,7 +530,7 @@ def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALI
 	return unicodedata.normalize(normalizationForm, text)
 
 
-ENCODINGS_TO_CONVERTERS: dict[str, type[OffsetConverter]] = {
+ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
 	WCHAR_ENCODING: WideStringOffsetConverter,
 	UTF8_ENCODING: UTF8OffsetConverter,
 	"utf_32_le": IdentityOffsetConverter,
@@ -539,7 +539,7 @@ ENCODINGS_TO_CONVERTERS: dict[str, type[OffsetConverter]] = {
 }
 
 
-def getOffsetConverter(encoding: str) -> type[OffsetConverter]:
+def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
 	try:
 		return ENCODINGS_TO_CONVERTERS[encoding]
 	except IndexError as e:

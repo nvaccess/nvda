@@ -7,9 +7,6 @@ from abc import abstractmethod
 import re
 import ctypes
 import unicodedata
-from dataclasses import dataclass
-from typing import Self
-
 import NVDAHelper
 import config.featureFlagEnums
 import textInfos
@@ -17,6 +14,14 @@ import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
+from dataclasses import dataclass
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	List,
+	Self,
+)
 from logHandler import log
 
 
@@ -169,7 +174,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				log.error(f"Unknown word segmentation standard, {self.__wordSegConf.calculated()!r}")
 
 	#: The encoding internal to the underlying text info implementation.
-	encoding: str | None = textUtils.WCHAR_ENCODING
+	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
 	def __eq__(self, other):
 		if self is other or (
@@ -204,7 +209,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	# C901 '_get_boundingRects' is too complex
 	# Note: when working on _get_boundingRects, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_boundingRects(self) -> list[locationHelper.RectLTWH]:  # noqa: C901
+	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -337,7 +342,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText: str,
 		unit: str,
 		relOffset: int,
-	) -> tuple[int, int] | None:
+	) -> Optional[Tuple[int, int]]:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -618,7 +623,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			else:
 				self._startOffset = self._endOffset
 
-	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:

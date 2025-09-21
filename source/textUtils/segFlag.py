@@ -5,7 +5,6 @@
 
 from enum import IntFlag
 
-
 # shared bit masks (explicit powers of two)
 _AUTO: int = 1 << 0
 _UNISCRIBE: int = 1 << 1
