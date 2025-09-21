@@ -1228,7 +1228,7 @@ Below is a summary of the most useful commands for those wanting to quickly get 
 * `space` reads your current position
 * `shift+upArrow/downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
-To start navigation: press NVDA+Alt+M or the space key to enter math navigation mode, press Esc to exit.
+To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
 
 MathCAT’s navigation is the same in Word and in a browser.
 
