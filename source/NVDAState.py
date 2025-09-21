@@ -3,6 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from functools import lru_cache
 import os
 import sys
 import sysconfig
@@ -94,6 +95,46 @@ class _WritePaths:
 	@property
 	def guiStateFile(self) -> str:
 		return os.path.join(self.configDir, "guiState.ini")
+
+	@property
+	def defaultStartMenuFolder(self) -> str:
+		"""Name of a specific folder in the start menu, not a full path"""
+		return buildVersion.name
+
+	@property
+	@lru_cache(maxsize=1)
+	def startMenuFolder(self) -> str | None:
+		"""Name of a specific folder in the start menu, not a full path"""
+		from config.registry import RegistryKey
+
+		try:
+			with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
+				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
+		except WindowsError:
+			return None
+
+	@property
+	@lru_cache(maxsize=1)
+	def defaultInstallDir(self) -> str:
+		from config.registry import RegistryKey
+
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.CURRENT_VERSION.value) as k:
+			programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
+		return os.path.join(programFilesPath, buildVersion.name)
+
+	@property
+	@lru_cache(maxsize=1)
+	def installDir(self) -> str | None:
+		from config.registry import RegistryKey
+
+		try:
+			k = winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE,
+				RegistryKey.INSTALLED_COPY.value,
+			)
+			return winreg.QueryValueEx(k, "UninstallDirectory")[0]
+		except WindowsError:
+			return None
 
 	def getSymbolsConfigFile(self, locale: str) -> str:
 		return os.path.join(self.configDir, f"symbols-{locale}.dic")

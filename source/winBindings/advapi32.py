@@ -28,6 +28,7 @@ from ctypes.wintypes import (
 __all__ = (
 	"OpenProcessToken",
 	"RegCloseKey",
+	"RegDeleteTree",
 	"RegOpenKeyEx",
 	"RegQueryValueEx",
 	"CreateProcessAsUser",
@@ -62,6 +63,22 @@ RegCloseKey.argtypes = (
 	HKEY,  # hKey
 )
 RegCloseKey.restype = LONG
+
+RegDeleteTree = dll.RegDeleteTreeW
+"""
+Deletes a subkey and all its descendants.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-RegDeleteTree
+
+.. note::
+	This function can be replaced with ``winreg.DeleteTree`` in python 3.14.
+	https://github.com/python/cpython/pull/138388
+"""
+RegDeleteTree.argtypes = (
+	HKEY,  # hKey
+	LPCWSTR,  # lpSubKey
+)
+RegDeleteTree.restype = LONG
 
 RegOpenKeyEx = dll.RegOpenKeyExW
 """

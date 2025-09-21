@@ -116,6 +116,10 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("KeyBdInput", "winBindings.user32", "KEYBDINPUT"),
 	_deprecate.MovedSymbol("HardwareInput", "winBindings.user32", "HARDWAREINPUT"),
 	_deprecate.MovedSymbol("MouseInput", "winBindings.user32", "MOUSEINPUT"),
+	_deprecate.MovedSymbol("INPUT_MOUSE", "winBindings.user32", "INPUT_TYPE", "MOUSE"),
+	_deprecate.MovedSymbol("INPUT_KEYBOARD", "winBindings.user32", "INPUT_TYPE", "KEYBOARD"),
+	_deprecate.MovedSymbol("KEYEVENTF_KEYUP", "winBindings.user32", "KEYEVENTF", "KEYUP"),
+	_deprecate.MovedSymbol("KEYEVENTF_UNICODE", "winBindings.user32", "KEYEVENTF", "UNICODE"),
 )
 """Module __getattr__ to handle backward compatibility."""
 
@@ -770,14 +774,6 @@ def getSystemStickyKeys():
 	return sk
 
 
-# START SENDINPUT TYPE DECLARATIONS
-INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
-INPUT_KEYBOARD = 1  # The event is a keyboard event. Use the ki structure of the union.
-KEYEVENTF_KEYUP = 0x0002
-KEYEVENTF_UNICODE = 0x04
-# END SENDINPUT TYPE DECLARATIONS
-
-
 def SendInput(inputs):
 	n = len(inputs)
 	arr = (INPUT * n)(*inputs)
@@ -818,8 +814,15 @@ class WinTimer(object):
 		self.hwnd = hwnd
 		self.idEvent = idEvent
 		self.elapse = elapse
-		self.timerFunc = timerFunc
-		self.ident = _user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		# ensure timerFunc is a TIMERPROC, or is converted to a TIMERPROC,
+		# and ensuring that None is handled as the correctly typed null function pointer.
+		if isinstance(timerFunc, winBindings.user32.TIMERPROC):
+			self.timerFunc = timerFunc
+		elif timerFunc is None:
+			self.timerFunc = winBindings.user32.TIMERPROC(0)
+		else:
+			self.timerFunc = winBindings.user32.TIMERPROC(timerFunc)
+		self.ident = _user32.SetTimer(hwnd, idEvent, elapse, self.timerFunc)
 		if self.ident == 0:
 			raise WinError()
 		if not hwnd:
