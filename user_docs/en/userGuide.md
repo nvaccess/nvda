@@ -1230,20 +1230,22 @@ Below is a summary of the most useful commands for those wanting to quickly get 
 
 To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
 
-MathCAT’s navigation is the same in Word and in a browser.
+MathCAT's navigation is the same in Microsoft Word and in a web browser.
 
-While navigating an expression, control+c copies the math content of the current node in NVDA.
+While navigating an expression, `control+c` copies the math content of the current node in NVDA.
 The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).
 
 #### Navigation Modes {#MathNavigationModes}
 
 MathCAT supports the following navigation modes:
 
-**Enhanced mode**:  navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+In Enhanced Mode, navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
 
-**Simple mode**: this moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation. Zooming in lets you explore the 2D notation in the same mode. Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
+Simple mode moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+Zooming in lets you explore the 2D notation in the same mode.
+Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 
-**Character mode**: this is actually two modes - word mode and character mode (zoom in to get "real" character mode). 
+Character mode is actually two modes - word mode and character mode (zoom in to get "real" character mode).
 Moves by words/characters. 
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
