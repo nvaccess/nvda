@@ -38,7 +38,6 @@ import NVDAState
 from speech.priorities import SpeechPriority
 import ui
 import windowUtils
-from markdown import markdown
 
 if TYPE_CHECKING:
 	from addonStore.models.version import SupportsVersionCheck
