@@ -3067,7 +3067,7 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling error reporting {#reportSpellingErrors}
+##### Spelling error reporting {#ReportSpellingErrors}
 
 This option allows you to configure how spelling errors are reported while reading text.
 This checklist box has three options:
