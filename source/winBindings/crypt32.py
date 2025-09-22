@@ -16,18 +16,22 @@ from ctypes.wintypes import (
 	BOOL,
 	DWORD,
 	HANDLE,
+	LPSTR,
 )
+from .kernel32 import FILETIME
 
 
 PCCERT_CONTEXT = c_void_p
 PCCERT_CHAIN_CONTEXT = c_void_p
 HCERTSTORE = HANDLE
-HChainEngine = HANDLE
+HCERTCHAINENGINE = HANDLE
+LPFILETIME = POINTER(FILETIME)
 
 
 class CERT_USAGE_MATCH(Structure):
 	"""
 	Provides criteria for identifying issuer certificates to be used to build a certificate chain.
+
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/ns-wincrypt-cert_usage_match
 	"""
@@ -36,13 +40,14 @@ class CERT_USAGE_MATCH(Structure):
 		("dwType", DWORD),
 		# CERT_ENHKEY_USAGE struct
 		("cUsageIdentifier", DWORD),
-		("rgpszUsageIdentifier", c_void_p),  # LPSTR *
+		("rgpszUsageIdentifier", POINTER(LPSTR)),
 	)
 
 
 class CERT_CHAIN_PARA(Structure):
 	"""
 	Establishes the searching and matching criteria to be used in building a certificate chain.
+
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/ns-wincrypt-cert_chain_para
 	"""
@@ -54,10 +59,13 @@ class CERT_CHAIN_PARA(Structure):
 		("dwUrlRetrievalTimeout", DWORD),
 		("fCheckRevocationFreshnessTime", BOOL),
 		("dwRevocationFreshnessTime", DWORD),
-		("pftCacheResync", c_void_p),  # LPFILETIME
+		("pftCacheResync", LPFILETIME),
 		("pStrongSignPara", c_void_p),  # PCCERT_STRONG_SIGN_PARA
 		("dwStrongSignFlags", DWORD),
 	)
+
+
+PCERT_CHAIN_PARA = POINTER(CERT_CHAIN_PARA)
 
 
 dll = windll.crypt32
@@ -75,7 +83,7 @@ CertCreateCertificateContext.argtypes = (
 	POINTER(c_byte),  # pbCertEncoded
 	DWORD,  # cbCertEncoded
 )
-CertCreateCertificateContext.restype = c_void_p  # PCCERT_CONTEXT
+CertCreateCertificateContext.restype = PCCERT_CONTEXT
 
 CertFreeCertificateChain = dll.CertFreeCertificateChain
 """
@@ -109,13 +117,13 @@ Builds a certificate chain context starting from a specified certificate context
 	https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certgetcertificatechain
 """
 CertGetCertificateChain.argtypes = (
-	HChainEngine,  # hChainEngine
-	PCCERT_CONTEXT,  # pCertContext (PCCERT_CONTEXT)
-	c_void_p,  # pTime (LPFILETIME)
-	HCERTSTORE,  # hAdditionalStore (HCERTSTORE)
-	POINTER(CERT_CHAIN_PARA),  # pChainPara
+	HCERTCHAINENGINE,  # hChainEngine
+	PCCERT_CONTEXT,  # pCertContext
+	LPFILETIME,  # pTime
+	HCERTSTORE,  # hAdditionalStore
+	PCERT_CHAIN_PARA,  # pChainPara
 	DWORD,  # dwFlags
 	c_void_p,  # pvReserved
-	POINTER(PCCERT_CHAIN_CONTEXT),  # ppChainContext (PCCERT_CHAIN_CONTEXT*)
+	POINTER(PCCERT_CHAIN_CONTEXT),  # ppChainContext
 )
 CertGetCertificateChain.restype = BOOL
