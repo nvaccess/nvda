@@ -207,7 +207,7 @@ class IoThread(threading.Thread):
 		winKernel.setWaitableTimer(
 			handle,
 			dueTime,
-			completionRoutine=self._internalApc,
+			completionRoutine=ctypes.cast(self._internalApc, winBindings.kernel32.PTIMERAPCROUTINE),
 			arg=internalParam,
 		)
 
