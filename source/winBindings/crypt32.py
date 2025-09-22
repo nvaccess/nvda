@@ -6,7 +6,6 @@
 """Functions exported by crypt32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	sizeof,
 	Structure,
 	POINTER,
 	windll,
@@ -16,13 +15,7 @@ from ctypes import (
 from ctypes.wintypes import (
 	BOOL,
 	DWORD,
-	WORD,
 	HANDLE,
-	HKEY,
-	LONG,
-	LPCWSTR,
-	LPWSTR,
-	LPVOID,
 )
 
 
@@ -38,6 +31,7 @@ class CERT_USAGE_MATCH(Structure):
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/ns-wincrypt-cert_usage_match
 	"""
+
 	_fields_ = (
 		("dwType", DWORD),
 		# CERT_ENHKEY_USAGE struct
@@ -52,6 +46,7 @@ class CERT_CHAIN_PARA(Structure):
 	.. seealso::
 		https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/ns-wincrypt-cert_chain_para
 	"""
+
 	_fields_ = (
 		("cbSize", DWORD),
 		("RequestedUsage", CERT_USAGE_MATCH),
@@ -90,7 +85,7 @@ Frees a certificate chain context.
 	https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certfreecertificatechain
 """
 CertFreeCertificateChain.argtypes = (
-	PCCERT_CHAIN_CONTEXT, # pChainContext
+	PCCERT_CHAIN_CONTEXT,  # pChainContext
 )
 CertFreeCertificateChain.restype = None
 
@@ -114,13 +109,13 @@ Builds a certificate chain context starting from a specified certificate context
 	https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certgetcertificatechain
 """
 CertGetCertificateChain.argtypes = (
-	HChainEngine,      # hChainEngine
-	PCCERT_CONTEXT,      # pCertContext (PCCERT_CONTEXT)
-	c_void_p,      # pTime (LPFILETIME)
-	HCERTSTORE,      # hAdditionalStore (HCERTSTORE)
+	HChainEngine,  # hChainEngine
+	PCCERT_CONTEXT,  # pCertContext (PCCERT_CONTEXT)
+	c_void_p,  # pTime (LPFILETIME)
+	HCERTSTORE,  # hAdditionalStore (HCERTSTORE)
 	POINTER(CERT_CHAIN_PARA),  # pChainPara
-	DWORD,         # dwFlags
-	c_void_p,      # pvReserved
+	DWORD,  # dwFlags
+	c_void_p,  # pvReserved
 	POINTER(PCCERT_CHAIN_CONTEXT),  # ppChainContext (PCCERT_CHAIN_CONTEXT*)
 )
 CertGetCertificateChain.restype = BOOL
