@@ -149,6 +149,8 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
 * The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated.
   Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
+* The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
+Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
