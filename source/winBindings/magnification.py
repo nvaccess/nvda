@@ -7,6 +7,8 @@
 
 from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, windll
 from ctypes.wintypes import BOOL
+from _ctypes import CFuncPtr
+from typing import Any
 
 dll = windll.Magnification
 
@@ -25,7 +27,7 @@ class MAGCOLOREFFECT(Structure):
 PMAGCOLOREFFECT = POINTER(MAGCOLOREFFECT)
 
 
-def _errCheck(result, func, args):
+def _errCheck[T: tuple[Any]](result: int, func: CFuncPtr, args: T) -> T:
 	if result == 0:
 		raise WinError()
 	return args
