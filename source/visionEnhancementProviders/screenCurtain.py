@@ -23,13 +23,19 @@ from typing import Optional, Type
 import nvwave
 import globalVars
 from NVDAHelper.localLib import isScreenFullyBlack
-from winBindings.magnification import MAGCOLOREFFECT
+from winBindings.magnification import MAGCOLOREFFECT as _MAGCOLOREFFECT
 from winBindings import magnification
+from utils import _deprecate
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("Magnification", "winBindings", "magnification"),
+	_deprecate.MovedSymbol("MAGCOLOREFFECT", "winBindings.magnification", "MAGCOLOREFFECT"),
+)
 
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
+TRANSFORM_BLACK = _MAGCOLOREFFECT()  # empty transformation
 TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
 TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 

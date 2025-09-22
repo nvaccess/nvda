@@ -7,8 +7,9 @@
 
 import unittest
 
-from visionEnhancementProviders.screenCurtain import TRANSFORM_BLACK, MAGCOLOREFFECT
+from visionEnhancementProviders.screenCurtain import TRANSFORM_BLACK
 from winBindings import magnification
+from winBindings.magnification import MAGCOLOREFFECT
 
 
 class _Test_MagnificationAPI(unittest.TestCase):
