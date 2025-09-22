@@ -16,7 +16,7 @@ import winBindings.kernel32
 import winBindings.user32
 import winBindings.gdi32
 import winUser
-from winUser import WNDCLASSEXW, WNDPROC
+from winBindings.user32 import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
