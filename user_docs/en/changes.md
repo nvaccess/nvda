@@ -150,6 +150,11 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
+* `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
+Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
+* `visionEnhancementProviders.screenCurtain.Magnification` is deprecated.
+Use `winBindings.magnification` instead.
+Note that this is a module, not a class, so some API consumers may be unable to use the automatic migration provided. (#18958)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
