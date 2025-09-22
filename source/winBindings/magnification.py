@@ -8,9 +8,21 @@
 from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, windll
 from ctypes.wintypes import BOOL
 
+dll = windll.Magnification
+
 
 class MAGCOLOREFFECT(Structure):
+	"""
+	Describes a color transformation matrix that a magnifier control uses to apply a color effect to magnified screen content.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/magnification/ns-magnification-magcoloreffect
+	"""
+
 	_fields_ = (("transform", c_float * 5 * 5),)
+
+
+PMAGCOLOREFFECT = POINTER(MAGCOLOREFFECT)
 
 
 def _errCheck(result, func, args):
@@ -19,40 +31,56 @@ def _errCheck(result, func, args):
 	return args
 
 
-_magnification = windll.Magnification
-# Set full screen color effect
-_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
-MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-	("MagSetFullscreenColorEffect", _magnification),
-	_MagSetFullscreenColorEffectArgTypes,
+MagSetFullscreenColorEffect = WINFUNCTYPE(BOOL, PMAGCOLOREFFECT)(
+	("MagSetFullscreenColorEffect", dll),
+	((1, "pEffect"),),
 )
+"""
+Changes the color transformation matrix associated with the full-screen magnifier.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreencoloreffect
+"""
 MagSetFullscreenColorEffect.errcheck = _errCheck
 
-# Get full screen color effect
-_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
-_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
-MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-	("MagGetFullscreenColorEffect", _magnification),
-	_MagGetFullscreenColorEffectArgTypes,
+MagGetFullscreenColorEffect = WINFUNCTYPE(BOOL, PMAGCOLOREFFECT)(
+	("MagGetFullscreenColorEffect", dll),
+	((2, "effect"),),
 )
+"""
+Retrieves the color transformation matrix associated with the full-screen magnifier.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maggetfullscreencoloreffect
+"""
 MagGetFullscreenColorEffect.errcheck = _errCheck
 
-# show system cursor
-_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
-_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
-MagShowSystemCursor = _MagShowSystemCursorFuncType(
-	("MagShowSystemCursor", _magnification),
-	_MagShowSystemCursorArgTypes,
+MagShowSystemCursor = WINFUNCTYPE(BOOL, BOOL)(
+	("MagShowSystemCursor", dll),
+	((1, "showCursor"),),
 )
+"""
+Shows or hides the system cursor.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magshowsystemcursor
+"""
 MagShowSystemCursor.errcheck = _errCheck
 
-# initialize
-_MagInitializeFuncType = WINFUNCTYPE(BOOL)
-MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
+MagInitialize = WINFUNCTYPE(BOOL)(("MagInitialize", dll))
+"""
+Creates and initializes the magnifier run-time objects.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maginitialize
+"""
 MagInitialize.errcheck = _errCheck
 
-# uninitialize
-_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
-MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
+MagUninitialize = WINFUNCTYPE(BOOL)(("MagUninitialize", dll))
+"""
+Destroys the magnifier run-time objects.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maguninitialize
+"""
 MagUninitialize.errcheck = _errCheck
