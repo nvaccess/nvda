@@ -3143,8 +3143,6 @@ This controls whether certain notations are disambiguated or not in speech.
 | Options | Blindness, Low Vision, Learning Disability |
 | Default | Blindness |
 
-The focus has been on Blindness, but there is some support if a different value is used. That support needs to be improved.
-
 ###### Language {#MathSpeechLanguage}
 
 This value determines the language to be used.
@@ -3155,8 +3153,6 @@ If speech rules for the main language can not be found, English ("en") is used.
 |---|---|
 | Options | Any known language code and sub-code, e.g. "en-uk". See [this site for a list of options](https://www.venea.net/web/culture_code). |
 | Default | en |
-
-Currently only English, Spanish, Finnish, Indonesian, Swedish, Vietnamese, and Chinese are supported. Support for other languages will be added with help from volunteers.
 
 ###### Speech Style {MathSpeechStyle}
 
@@ -3170,8 +3166,6 @@ A style of speech or coordinated philosophy about how to speak an expression.
 | Options | ClearSpeak, SimpleSpeak |
 | Default | ClearSpeak |
 
-Currently only ClearSpeak and SimpleSpeak are implemented, but MathSpeak will likely be implemented at some point.
-
 ###### Speech verbosity {#MathSpeechVerbosity}
 
 Controls how much "extra" speech is used.
@@ -3181,8 +3175,6 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 |---|---|
 | Options | Terse, Medium, Verbose |
 | Default | Medium |
-
-Supported, but there will likely be improvements made over time.
 
 ###### Relative speech rate {#MathRelativeSpeed}
 
@@ -3216,7 +3208,7 @@ A start and end beep occur before and after reading an expression.
 
 ###### Subject area to be used when it cannot be determined automatically {#MathSpeechSubjectArea}
 
-This was used in MathPlayer but not yet currently implemented. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
+This was used in MathPlayer but not yet currently implemented in NVDA. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
 
 ###### Speech for chemical formulas {#MathSpeechForChemical}
 
@@ -3230,8 +3222,6 @@ Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
 |---|---|
 | Options | Spell Out, As Compound, Off |
 | Default | SpellOut |
-
-Many heuristics have been implemented to infer when some notation is chemistry or not. Inferring chemical notations is a bit tricky so MathCAT will sometimes not recognize them and may sometimes inadvertently classify something as chemistry.
 
 ##### Navigation Options {#MathNavigation}
 
