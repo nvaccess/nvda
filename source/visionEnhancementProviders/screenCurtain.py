@@ -22,14 +22,15 @@ from logHandler import log
 from typing import Optional, Type
 import nvwave
 import globalVars
-from NVDAHelper.localLib import isScreenFullyBlack
+from NVDAHelper.localLib import isScreenFullyBlack as _isScreenFullyBlack
 from winBindings.magnification import MAGCOLOREFFECT as _MAGCOLOREFFECT
 from winBindings import magnification
 from utils import _deprecate
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("Magnification", "winBindings", "magnification"),
-	_deprecate.MovedSymbol("MAGCOLOREFFECT", "winBindings.magnification", "MAGCOLOREFFECT"),
+	_deprecate.MovedSymbol("MAGCOLOREFFECT", "winBindings.magnification"),
+	_deprecate.MovedSymbol("isScreenFullyBlack", "NVDAHelper.localLib"),
 )
 
 
@@ -292,7 +293,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		try:
 			magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 			magnification.MagShowSystemCursor(False)
-			if not isScreenFullyBlack():
+			if not _isScreenFullyBlack():
 				raise RuntimeError("Screen is not black.")
 		except Exception as e:
 			magnification.MagUninitialize()

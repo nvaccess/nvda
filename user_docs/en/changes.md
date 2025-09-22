@@ -155,6 +155,8 @@ Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.Magnification` is deprecated.
 Use `winBindings.magnification` instead.
 Note that this is a module, not a class, so some API consumers may be unable to use the automatic migration provided. (#18958)
+* `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
+Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
