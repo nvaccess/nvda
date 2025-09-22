@@ -24,12 +24,7 @@ from logHandler import log
 from typing import Optional, Type
 import nvwave
 import globalVars
-import NVDAHelper
-
-
-isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
-isScreenFullyBlack.argtypes = ()
-isScreenFullyBlack.restype = BOOL
+from NVDAHelper.localLib import isScreenFullyBlack
 
 
 class MAGCOLOREFFECT(Structure):
