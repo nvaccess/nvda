@@ -19,7 +19,7 @@ from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture, canModifiersPerformAction
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
-from utils.security import isRunningOnSecureDesktop
+from utils.security import isRunningOnSecureDesktop, post_sessionLockStateChanged
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 import winUser
@@ -71,6 +71,7 @@ class RemoteClient:
 		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
+		self._wasSendingKeysBeforeLock: bool = False
 		self.sdHandler = SecureDesktopHandler()
 		if isRunningOnSecureDesktop():
 			connection = self.sdHandler.initializeSecureDesktop()
@@ -373,6 +374,7 @@ class RemoteClient:
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
+		post_sessionLockStateChanged.register(self._sessionLockStateChangeHandler)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected"),
@@ -388,6 +390,7 @@ class RemoteClient:
 			self.localMachine.isMuted = False
 		self.sendingKeys = False
 		self.keyModifiers = set()
+		post_sessionLockStateChanged.unregister(self._sessionLockStateChangeHandler)
 
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
@@ -571,16 +574,25 @@ class RemoteClient:
 		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
 			self.toggleMute()
 
-	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
+	def _switchToRemoteControl(self, gesture: KeyboardInputGesture | None) -> None:
 		"""Switch to controlling the remote computer."""
 		self.sendingKeys = True
 		log.info("Remote key control enabled")
 		self.setReceivingBraille(self.sendingKeys)
-		self.hostPendingModifiers = gesture.modifiers
+		if gesture is not None:
+			self.hostPendingModifiers = gesture.modifiers
 		# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 		ui.message(pgettext("remote", "Controlling remote computer"))
 		if self.localMachine.isMuted:
 			self.toggleMute()
+
+	def _sessionLockStateChangeHandler(self, isNowLocked: bool):
+		if isNowLocked and self.sendingKeys:
+			self._wasSendingKeysBeforeLock = True
+			self._switchToLocalControl()
+		elif not isNowLocked and self._wasSendingKeysBeforeLock:
+			self._wasSendingKeysBeforeLock = False
+			self._switchToRemoteControl(None)
 
 	def releaseKeys(self):
 		"""Release all pressed keys on the remote machine.
