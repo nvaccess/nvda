@@ -590,7 +590,6 @@ class UpdatableAddonsDialog(
 				wx.CallAfter(delayCreateDialog)
 
 			case AddonsAutomaticUpdate.UPDATE:
-
 				# Translators: Message shown when updating add-ons automatically
 				wx.CallAfter(ui.message, pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
 				threading.Thread(
@@ -611,6 +610,7 @@ def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
 	This function is treated as message box to prevent NVDA from exiting while the download/install is in progress.
 	"""
 	from ..viewModels.store import AddonStoreVM
+
 	listVMs = {AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate}
 	AddonStoreVM.getAddons(
 		listVMs,
