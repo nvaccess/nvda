@@ -7,6 +7,8 @@ from enum import Enum, nonmember
 
 
 EASE_OF_ACCESS_APP_KEY_NAME = "nvda_nvda_v1"
+NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
+ADDON_BUNDLE_EXTENSION = "nvda-addon"
 
 
 class RegistryKey(str, Enum):
@@ -27,6 +29,8 @@ class RegistryKey(str, Enum):
 	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
 	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
+	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
+	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
 
 	# Sub keys
 
@@ -62,3 +66,5 @@ class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
 	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
+	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
+	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"

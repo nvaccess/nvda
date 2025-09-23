@@ -8,20 +8,20 @@ Remote  enables remote assistance functionality between two computers running NV
 
 ### Host Configuration
 
-- Windows 11 Pro
-- Memory: at least 16GB
-- Processor: at least 4 core
-- NVDA Version: latest
-- NVDA Remote Version: 2.6.4 (installed via addon store)
+* Windows 11 Pro
+* Memory: at least 16GB
+* Processor: at least 4 core
+* NVDA Version: latest
+* NVDA Remote Version: 2.6.4 (installed via addon store)
 
 ### Guest Configuration
 
-- Another computer similar to the host or VMware Windows 11 Home running on the host with similar specs to the host computer
-- Storage: 64GB disk
-- Memory: 16GB
-- Processor: 8 core
-- NVDA Version: Custom build from <https://github.com/nvda-art/nvda> (remote branch)
-- Base Position: latest
+* Another computer similar to the host or VMware Windows 11 Home running on the host with similar specs to the host computer
+* Storage: 64GB disk
+* Memory: 16GB
+* Processor: 8 core
+* NVDA Version: Custom build from <https://github.com/nvda-art/nvda> (remote branch)
+* Base Position: latest
 
 ## Pre-Test Setup
 

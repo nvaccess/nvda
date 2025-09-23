@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 18
+latestSchemaVersion = 19
 
 #: The configuration specification string
 #: @type: String
@@ -116,6 +116,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		reportKeyboardShortcuts = boolean(default=true)
 		reportObjectPositionInformation = boolean(default=true)
 		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
+		reportMultiSelect = boolean(default=false)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
@@ -226,12 +227,16 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
-	reportSpellingErrors = boolean(default=true)
+	# Bitwise combination of none, some or all values of ReportSpellingErrors
+	# 1: Speech, 2: Sound
+	reportSpellingErrors2 = integer(min=0, max=3, default=1)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
 	reportLineIndentation = integer(0, 3, default=0)
 	ignoreBlankLinesForRLI = boolean(default=False)
+	# Duration of indentation beeps, in milliseconds
+	indentToneDuration = integer(min=10, max=2000, default=40)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
@@ -317,6 +322,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	garbageHandler = boolean(default=false)
 	remoteClient = boolean(default=False)
 	externalPythonDependencies = boolean(default=False)
+	bdDetect = boolean(default=False)
 
 [uwpOcr]
 	language = string(default="")

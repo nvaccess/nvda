@@ -3,12 +3,17 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from functools import lru_cache
 import os
 import sys
+import sysconfig
 import time
 import winreg
 
+import buildVersion
 import globalVars
+
+from functools import cached_property
 
 
 class _WritePaths:
@@ -87,6 +92,46 @@ class _WritePaths:
 	def guiStateFile(self) -> str:
 		return os.path.join(self.configDir, "guiState.ini")
 
+	@property
+	def defaultStartMenuFolder(self) -> str:
+		"""Name of a specific folder in the start menu, not a full path"""
+		return buildVersion.name
+
+	@property
+	@lru_cache(maxsize=1)
+	def startMenuFolder(self) -> str | None:
+		"""Name of a specific folder in the start menu, not a full path"""
+		from config.registry import RegistryKey
+
+		try:
+			with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
+				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
+		except WindowsError:
+			return None
+
+	@property
+	@lru_cache(maxsize=1)
+	def defaultInstallDir(self) -> str:
+		from config.registry import RegistryKey
+
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.CURRENT_VERSION.value) as k:
+			programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
+		return os.path.join(programFilesPath, buildVersion.name)
+
+	@property
+	@lru_cache(maxsize=1)
+	def installDir(self) -> str | None:
+		from config.registry import RegistryKey
+
+		try:
+			k = winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE,
+				RegistryKey.INSTALLED_COPY.value,
+			)
+			return winreg.QueryValueEx(k, "UninstallDirectory")[0]
+		except WindowsError:
+			return None
+
 	def getSymbolsConfigFile(self, locale: str) -> str:
 		return os.path.join(self.configDir, f"symbols-{locale}.dic")
 
@@ -94,7 +139,71 @@ class _WritePaths:
 		return os.path.join(self.profilesDir, f"{name}.ini")
 
 
+class _ReadPaths:
+	@property
+	def versionedLibPath(self) -> str:
+		versionedLibPath = os.path.join(globalVars.appDir, "lib")
+		if not isRunningAsSource():
+			# When running as a py2exe build, libraries are in a version-specific directory
+			versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
+		return versionedLibPath
+
+	@property
+	def versionedLibX86Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "x86")
+
+	@cached_property
+	def versionedLibAMD64Path(self) -> str:
+		import winVersion
+
+		arch = winVersion.getWinVer().processorArchitecture
+		return os.path.join(
+			self.versionedLibPath,
+			(
+				# On ARM64 Windows, we use arm64ec libraries for interop with x64 code.
+				"arm64ec" if arch == "ARM64" else "x64"
+			),
+		)
+
+	@property
+	def versionedLibARM64Path(self) -> str:
+		return os.path.join(self.versionedLibPath, "arm64")
+
+	@cached_property
+	def coreArchLibPath(self) -> str:
+		match sysconfig.get_platform():
+			case "win-amd64":
+				return self.versionedLibAMD64Path
+			case "win-arm64":
+				return self.versionedLibARM64Path
+			case "win32":
+				return self.versionedLibX86Path
+			case _:
+				raise RuntimeError("Unsupported platform")
+
+	@property
+	def nvdaHelperRemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperRemote.dll")
+
+	@property
+	def nvdaHelperLocalDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocal.dll")
+
+	@property
+	def nvdaHelperLocalWin10Dll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def UIARemoteDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "UIARemote.dll")
+
+	@property
+	def javaAccessBridgeDLL(self) -> str:
+		return os.path.join(globalVars.appDir, "windowsaccessbridge.dll")
+
+
 WritePaths = _WritePaths()
+ReadPaths = _ReadPaths()
 
 
 def isRunningAsSource() -> bool:

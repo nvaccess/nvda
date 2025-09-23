@@ -29,9 +29,9 @@ if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
 	raise RuntimeError("updates managed by Windows Store")
-import versionInfo
+import buildVersion
 
-if not versionInfo.updateVersionType:
+if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
@@ -201,8 +201,8 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
-		"version": versionInfo.version,
-		"versionType": versionInfo.updateVersionType,
+		"version": buildVersion.version,
+		"versionType": buildVersion.updateVersionType,
 		"osVersion": winVersionText,
 		# Check if the architecture is the most common: "AMD64"
 		# Available values of PROCESSOR_ARCHITEW6432 found in:
@@ -1050,7 +1050,7 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == buildVersion.version:
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:

@@ -2,15 +2,17 @@
 
 [TOC]
 
-
-
 ## Introduction {#introduction}
 
 This guide provides information concerning NVDA development, including translation and the development of components for NVDA.
 
 ### Add-on API stability {#API}
 
-The NVDA Add-on API includes all NVDA internals, except symbols that are prefixed with an underscore.
+The NVDA Add-on API includes all NVDA internals, except:
+
+* symbols that are prefixed with an underscore (`_`)
+* [transitive imports](#APIImports)
+* [included pip packages](#APIIncludedPipPackages)
 
 The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
 Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
@@ -26,6 +28,30 @@ Deprecated API features may have a scheduled removal date, a future breaking rel
 Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
 Note, the roadmap for removals is 'best effort' and may be subject to change.
 Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
+
+#### Stability of transitive imports in the API {#APIImports}
+
+Make sure to import your code from the original module by checking the NVDA source code.
+
+e.g. if a class is located at `foo.py`, you should import it as follows:
+
+```python
+from foo import Foo
+```
+
+If `bar.py` imports `Foo` you cannot rely on importing `Foo` from `bar`.
+i.e. you must import it directly from `foo`.
+
+The following is not supported in the API, as the import in `bar` could be removed at any time.
+
+```python
+from bar import Foo
+```
+
+#### Stability of pip packages {#APIIncludedPipPackages}
+
+Pip packages may be updated, downgraded, or removed at any time.
+It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
 ### A Note About Python {#aboutPython}
 
@@ -343,6 +369,7 @@ If the class your looking for does not exist, create this section.
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
 
 ## Plugins {#plugins}
+
 ### Overview {#pluginsOverview}
 
 Plugins allow you to customize the way NVDA behaves overall or within a particular application.
@@ -472,7 +499,7 @@ As with other examples in this guide, remember to delete the created app module 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
 Some executables host various apps inside or are employed by an app to display their interfaces.
-These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some web-based apps, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
 If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
 For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
@@ -550,20 +577,20 @@ From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken an
 import globalPluginHandler
 from scriptHandler import script
 import ui
-import versionInfo
+import buildVersion
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
-		ui.message(versionInfo.version)
+		ui.message(buildVersion.version)
 ```
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
 
-It also imports a few other modules, namely ui, versionInfo and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
+It also imports a few other modules, namely ui, buildVersion and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
 
 Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
 
@@ -996,8 +1023,13 @@ When uploading to the Add-on Store certain requirements apply:
   * Add-on versions are expected to be unique for the addon name and channel, meaning that a beta, stable and dev version of the same add-on cannot share a version number.
   This is so there can be a unique ordering of newest to oldest.
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
-* author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <<mick@example.com>>.
+* author (string, required): The author of this add-on, preferably in the form `Full Name <email address>`; e.g. `Michael Curran <mick@example.com>`.
 * description (string): A sentence or two describing what the add-on does.
+* changelog (string): A list of changes between previous and latest add-on releases.
+  * This is used to inform users about changes included in the add-on release.
+  * Changes can include new features, changes, bug fixes, and localization updates if any.
+  * When releasing add-on updates, changes should be edited if possible.
+  This means not all add-on releases will include notable changes.
 * url (string): A URL where this add-on, further info and upgrades can be found.
   * Starting the URL with `https://` is required for submitting to the Add-on Store.
 * docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation](#AddonDoc) section for more details.
@@ -1220,12 +1252,13 @@ Pressing control+l clears the output.
 
 The result of the last executed command is stored in the "_" global variable.
 This shadows the gettext function which is stored as a built-in with the same name.
-It can be unshadowed by executing "del _" and avoided altogether by executing "_ = _".
+It can be unshadowed by executing `del _` and avoided altogether by executing `_ = _`.
 
 Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ### Namespace {#PythonConsoleNamespace}
+
 #### Automatic Imports {#pythonConsoleAutoImports}
 
 For convenience, the following modules and variables are automatically imported in the console:
@@ -1616,20 +1649,16 @@ Its fields are as follows:
 | `returnCode` | `ReturnCode` or `None` | `None` | Value to return when a modal dialog is closed. If `None`, the button's ID will be used. |
 
 1. Setting `defaultFocus` only overrides the default focus:
-
-  * If no buttons have this property, the first button will be the default focus.
-  * If multiple buttons have this property, the last one will be the default focus.
+   * If no buttons have this property, the first button will be the default focus.
+   * If multiple buttons have this property, the last one will be the default focus.
 
 2. `fallbackAction` only sets whether to override the fallback action:
-
-  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
-    To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
-  * If multiple buttons have this property, the last one will be the fallback action.
-
+   * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
+     To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
+   * If multiple buttons have this property, the last one will be the fallback action.
 3. Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
-
-  * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
-  * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
+   * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
+   * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
 
 A number of pre-configured buttons are available for you to use from the `DefaultButton` enumeration, complete with pre-translated labels.
 None of these buttons will explicitly set themselves as the fallback action.

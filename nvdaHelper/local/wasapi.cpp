@@ -1,15 +1,8 @@
 /*
-This file is a part of the NVDA project.
-URL: http://www.nvda-project.org/
-Copyright 2023-2024 NV Access Limited, James Teh.
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2.0, as published by
-    the Free Software Foundation.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-This license can be found at:
-http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2023-2025 NV Access Limited, James Teh.
+This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 */
 
 #include <thread>
@@ -361,7 +354,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		} else {
 			// Silence ends in this chunk. Skip the silence and continue.
 			data += silenceSize;
-			size -= silenceSize;
+			size -= (unsigned int)silenceSize;
 			remainingFrames = size / format.nBlockAlign;
 			isTrimmingLeadingSilence = false;  // Stop checking for silence
 
@@ -780,12 +773,12 @@ void SilencePlayer::generateWhiteNoise(float volume) {
 	if (volume == 0) {
 		return;
 	}
-	UINT32 n = whiteNoiseData.size();
+	size_t n = whiteNoiseData.size();
 	const double mean = 0.0;
 	const double stddev = volume * 256;
 	std::default_random_engine generator;
 	std::normal_distribution<double> dist(mean, stddev);
-	for (UINT32 i = 0; i < n; i++) {
+	for (size_t i = 0; i < n; i++) {
 		whiteNoiseData[i] = (INT16)dist(generator);
 	}
 }
