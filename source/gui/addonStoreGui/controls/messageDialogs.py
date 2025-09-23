@@ -452,12 +452,12 @@ class UpdatableAddonsDialog(
 		_storeVM._filteredStatusKey = _StatusFilterKey.UPDATE
 		_storeVM._filterIncludeIncompatible = config.conf["addonStore"]["allowIncompatibleUpdates"]
 		_storeVM.refresh()
-		self.addonListView = AddonVirtualList(
+		self.addonsList = AddonVirtualList(
 			parent=self,
 			addonsListVM=_storeVM.listVM,
 			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
 		)
-		sHelper.addItem(self.addonListView, flag=wx.EXPAND, proportion=1)
+		sHelper.addItem(self.addonsList, flag=wx.EXPAND, proportion=1)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
