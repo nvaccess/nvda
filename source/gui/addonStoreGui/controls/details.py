@@ -376,8 +376,8 @@ class AddonDetails(
 								"addonStore",
 								"{malicious} out of {total} malware scanners detected this add-on as malicious.",
 							).format(
-								malicious=details.scanResults.malicious,
-								total=details.scanResults.malicious + details.scanResults.undetected,
+								malicious=details.scanResults.totalFlagged,
+								total=details.scanResults.totalScans,
 							),
 						)
 						self._appendDetailsLabelValue(

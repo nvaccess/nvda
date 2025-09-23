@@ -12,6 +12,12 @@ class VirusTotalScanResults:
 	scanUrl: str
 	malicious: int
 	undetected: int
+	harmless: int
+	suspicious: int
+	failure: int
+	timeout: int
+	confirmedTimeout: int = 0
+	typeUnsupported: int = 0
 
 	@classmethod
 	def fromDict(cls, addon: dict[str, Any]) -> "VirusTotalScanResults | None":
@@ -21,6 +27,25 @@ class VirusTotalScanResults:
 				scanUrl=addon["vtScanUrl"],
 				malicious=analysisStats["malicious"],
 				undetected=analysisStats["undetected"],
+				harmless=analysisStats["harmless"],
+				suspicious=analysisStats["suspicious"],
+				failure=analysisStats["failure"],
+				timeout=analysisStats["timeout"],
+				confirmedTimeout=analysisStats["confirmed-timeout"],
+				typeUnsupported=analysisStats["type-unsupported"],
 			)
 		except KeyError:
 			return None
+
+	@property
+	def totalScans(self) -> int:
+		return (
+			self.malicious
+			+ self.undetected
+			+ self.harmless
+			+ self.suspicious
+		)
+
+	@property
+	def totalFlagged(self) -> int:
+		return self.malicious + self.suspicious
