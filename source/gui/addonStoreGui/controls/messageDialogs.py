@@ -403,7 +403,7 @@ class UpdatableAddonsDialog(
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.CentreOnScreen()
+		self.Maximize()
 
 	def onCharHook(self, evt: wx.KeyEvent):
 		if evt.KeyCode == wx.WXK_ESCAPE:
@@ -452,11 +452,12 @@ class UpdatableAddonsDialog(
 		_storeVM._filteredStatusKey = _StatusFilterKey.UPDATE
 		_storeVM._filterIncludeIncompatible = config.conf["addonStore"]["allowIncompatibleUpdates"]
 		_storeVM.refresh()
-		self.addonsList = AddonVirtualList(
+		self.addonListView = AddonVirtualList(
 			parent=self,
 			addonsListVM=_storeVM.listVM,
 			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
 		)
+		sHelper.addItem(self.addonListView, flag=wx.EXPAND, proportion=1)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
