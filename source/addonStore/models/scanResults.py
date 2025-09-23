@@ -39,12 +39,7 @@ class VirusTotalScanResults:
 
 	@property
 	def totalScans(self) -> int:
-		return (
-			self.malicious
-			+ self.undetected
-			+ self.harmless
-			+ self.suspicious
-		)
+		return self.malicious + self.undetected + self.harmless + self.suspicious
 
 	@property
 	def totalFlagged(self) -> int:
