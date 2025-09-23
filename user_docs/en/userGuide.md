@@ -3929,7 +3929,7 @@ This could include accessing and modifying your personal data or even the entire
 Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).
 This can detect known malware from when the add-on was submitted.
 However, VirusTotal results may be inaccurate or out of date.
-i.e. an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious, might actually be malicious.
+For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.
 You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.
 You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).
 
