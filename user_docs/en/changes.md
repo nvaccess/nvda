@@ -76,6 +76,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
+* the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 
 #### Deprecations
 
