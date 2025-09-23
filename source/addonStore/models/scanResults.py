@@ -16,8 +16,8 @@ class VirusTotalScanResults:
 	suspicious: int
 	failure: int
 	timeout: int
-	confirmedTimeout: int = 0
-	typeUnsupported: int = 0
+	confirmedTimeout: int
+	typeUnsupported: int
 
 	@classmethod
 	def fromDict(cls, addon: dict[str, Any]) -> "VirusTotalScanResults | None":
