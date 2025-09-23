@@ -20,7 +20,6 @@ from typing import (
 from uuid import uuid4
 from winBindings import crypt32
 
-
 import garbageHandler
 import globalVars
 import config
