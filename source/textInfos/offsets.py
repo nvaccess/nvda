@@ -1,27 +1,22 @@
-# textInfos/offsets.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from abc import abstractmethod
 import re
 import ctypes
 import unicodedata
+from dataclasses import dataclass
+from typing import Self
+
 import NVDAHelper
-import config
+import config.featureFlagEnums
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
-from dataclasses import dataclass
-from typing import (
-	Optional,
-	Tuple,
-	Dict,
-	List,
-	Self,
-)
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 from logHandler import log
 
 
@@ -156,10 +151,25 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
 	detectFormattingAfterCursorMaybeSlow: bool = True
-	#: Use uniscribe to calculate word offsets etc.
-	useUniscribe: bool = True
+	#: Method to calculate character and word offsets.
+	charSegFlag: CharSegFlag = CharSegFlag.UNISCRIBE
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag | None:
+		match self.wordSegConf.calculated():
+			case config.featureFlagEnums.WordNavigationUnitFlag.UNISCRIBE:
+				return WordSegFlag.UNISCRIBE
+			case config.featureFlagEnums.WordNavigationUnitFlag.AUTO:
+				return WordSegFlag.AUTO
+			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
+				return WordSegFlag.CHINESE
+			case _:
+				from logHandler import log
+
+				log.error(f"Unknown word segmentation standard, {self.__wordSegConf.calculated()!r}")
+
 	#: The encoding internal to the underlying text info implementation.
-	encoding: Optional[str] = textUtils.WCHAR_ENCODING
+	encoding: str | None = textUtils.WCHAR_ENCODING
 
 	def __eq__(self, other):
 		if self is other or (
@@ -194,7 +204,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	# C901 '_get_boundingRects' is too complex
 	# Note: when working on _get_boundingRects, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
+	def _get_boundingRects(self) -> list[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -327,7 +337,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText: str,
 		unit: str,
 		relOffset: int,
-	) -> Optional[Tuple[int, int]]:
+	) -> tuple[int, int] | None:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -377,7 +387,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart, lineEnd)
 		relOffset = offset - lineStart
-		if self.useUniscribe:
+		if self.charSegFlag == CharSegFlag.UNISCRIBE:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
@@ -401,8 +411,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
-		if self.useUniscribe:
-			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_WORD, relOffset)
+		if self.wordSegFlag:
+			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
+				relOffset,
+			)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		# Fall back to the older word offsets detection that only breaks on non alphanumeric
@@ -476,6 +488,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo, self).__init__(obj, position)
+		self.wordSegConf: config.featureFlag.FeatureFlag = config.conf["documentNavigation"][
+			"wordSegmentationStandard"
+		]
+
 		from NVDAObjects import NVDAObject
 
 		if isinstance(position, locationHelper.Point):
@@ -602,7 +618,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			else:
 				self._startOffset = self._endOffset
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:
