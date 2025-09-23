@@ -372,10 +372,13 @@ class AddonDetails(
 							# {malicious} is the number of vendors that detected the add-on as malicious,
 							# {total} is the total number of vendors that scanned the add-on.
 							# In the add-on store dialog.
-							pgettext("addonStore", "{malicious} out of {total} malware scanners detected this add-on as malicious.").format(
+							pgettext(
+								"addonStore",
+								"{malicious} out of {total} malware scanners detected this add-on as malicious.",
+							).format(
 								malicious=details.scanResults.malicious,
 								total=details.scanResults.malicious + details.scanResults.undetected,
-							)
+							),
 						)
 						self._appendDetailsLabelValue(
 							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
