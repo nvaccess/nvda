@@ -259,6 +259,13 @@ class AddonStoreVM:
 				),
 				actionTarget=selectedListItem,
 			),
+			AddonActionVM(
+				# Translators: Label for an action that opens the VirusTotal scan results for the selected addon
+				displayName=pgettext("addonStore", "VirusTotal scan results"),
+				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).scanResults.scanUrl),
+				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel) and aVM.model.scanResults is not None,
+				actionTarget=selectedListItem,
+			),
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
