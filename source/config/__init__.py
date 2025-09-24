@@ -141,6 +141,8 @@ def isInstalledCopy() -> bool:
 			exc_info=True,
 		)
 		return False
+	else:
+		k.Close()
 
 	try:
 		instDir = winreg.QueryValueEx(k, "UninstallDirectory")[0]
