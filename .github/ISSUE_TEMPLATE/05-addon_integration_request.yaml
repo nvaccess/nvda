@@ -1,0 +1,98 @@
+name: "Addon Integration Request"
+description: "Propose an existing community addon for integration into NVDA's core."
+title: "[Addon Integration] <Name of Addon>"
+labels: ["enhancement", "Addon/integration"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is for integrating *existing* community addons. 
+        Please provide the following information to help us evaluate your request.
+        Note: For new feature ideas, please use the "Feature Request" template. 
+        
+        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
+        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+        This includes creating or commenting on issues and pull requests.
+
+  - type: input
+    id: addon-name
+    attributes:
+      label: "Name of the Addon"
+      description: "The official name of the addon you are proposing for integration."
+      placeholder: "eg Awesome App Support"
+    validations:
+      required: true
+
+  - type: input
+    id: addon-link
+    attributes:
+      label: "Link to Addon Repository or Website"
+      description: "Where can we find the source code for this addon?"
+      placeholder: "https://github.com/user/addon-repo"
+    validations:
+      required: true
+
+  - type: input
+    id: addon-maintainers
+    attributes:
+      label: "Current Maintainer(s)"
+      description: "Please provide the GitHub username(s) or name(s) of the current maintainer(s)."
+      placeholder: "@username or 'Name'"
+    validations:
+      required: false
+
+  - type: textarea
+    id: user-impact
+    attributes:
+      label: "User Impact and Utility"
+      description: |
+        This section helps us understand the benefit for users.
+        - What problem does this addon solve for NVDA users?
+        - Who is the target audience for this addon (eg all users, developers, users of a specific application)?
+        - How widely used is this addon? Please provide any available data or anecdotal evidence of its popularity (eg download numbers, community feedback).
+      placeholder: "Describe the problem solved, target users and estimated usage."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: license
+    attributes:
+      label: "Addon License"
+      description: "Is the license of the addon's code compatible with NVDA's GPL license?"
+      options:
+        - "GPL-compatible"
+        - "Not GPL-compatible"
+        - "I don't know"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: maintenance
+    attributes:
+      label: "Maintenance and Future Development"
+      description: "Are the current maintainers willing and able to continue supporting the addon after integration?"
+      options:
+        - "Yes"
+        - "No"
+        - "I don't know"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Why should this be in core vs. remaining an addon?"
+      description: |
+        - Why is it beneficial for this functionality to be built into NVDA directly?
+        - Are there other addons that provide similar functionality? If so, why is this one the preferred solution for integration?
+      placeholder: "Justify the need for core integration."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "Additional Context"
+      description: "Please provide any other information that you believe is relevant to this integration request."
+      placeholder: "Dependencies, potential conflicts or other relevant details."
