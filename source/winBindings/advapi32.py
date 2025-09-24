@@ -40,7 +40,7 @@ __all__ = (
 dll = windll.advapi32
 
 
-OpenProcessToken = WINFUNCTYPE(None)(('OpenProcessToken', dll))
+OpenProcessToken = WINFUNCTYPE(None)(("OpenProcessToken", dll))
 """
 Opens the access token associated with a process.
 .. seealso::
@@ -53,7 +53,7 @@ OpenProcessToken.argtypes = (
 )
 OpenProcessToken.restype = BOOL
 
-RegCloseKey = WINFUNCTYPE(None)(('RegCloseKey', dll))
+RegCloseKey = WINFUNCTYPE(None)(("RegCloseKey", dll))
 """
 Closes a handle to the specified registry key.
 
@@ -65,7 +65,7 @@ RegCloseKey.argtypes = (
 )
 RegCloseKey.restype = LONG
 
-RegDeleteTree = WINFUNCTYPE(None)(('RegDeleteTreeW', dll))
+RegDeleteTree = WINFUNCTYPE(None)(("RegDeleteTreeW", dll))
 """
 Deletes a subkey and all its descendants.
 .. seealso::
@@ -81,7 +81,7 @@ RegDeleteTree.argtypes = (
 )
 RegDeleteTree.restype = LONG
 
-RegOpenKeyEx = WINFUNCTYPE(None)(('RegOpenKeyExW', dll))
+RegOpenKeyEx = WINFUNCTYPE(None)(("RegOpenKeyExW", dll))
 """
 Opens the specified registry key.
 .. seealso::
@@ -96,7 +96,7 @@ RegOpenKeyEx.argtypes = (
 )
 RegOpenKeyEx.restype = LONG
 
-RegQueryValueEx = WINFUNCTYPE(None)(('RegQueryValueExW', dll))
+RegQueryValueEx = WINFUNCTYPE(None)(("RegQueryValueExW", dll))
 """
 Retrieves the type and data for a specified value name associated with an open registry key.
 .. seealso::
@@ -180,7 +180,7 @@ class SECURITY_ATTRIBUTES(Structure):
 	)
 
 
-CreateProcessAsUser = WINFUNCTYPE(None)(('CreateProcessAsUserW', dll))
+CreateProcessAsUser = WINFUNCTYPE(None)(("CreateProcessAsUserW", dll))
 """
 Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
 .. seealso::
@@ -201,7 +201,7 @@ CreateProcessAsUser.argtypes = (
 )
 CreateProcessAsUser.restype = BOOL
 
-GetTokenInformation = WINFUNCTYPE(None)(('GetTokenInformation', dll))
+GetTokenInformation = WINFUNCTYPE(None)(("GetTokenInformation", dll))
 """
 Retrieves a specified type of information about an access token.
 .. seealso::

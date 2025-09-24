@@ -19,7 +19,7 @@ __all__ = ("UiaHasServerSideProvider",)
 
 dll = windll.UIAutomationCore
 
-UiaHasServerSideProvider = WINFUNCTYPE(None)(('UiaHasServerSideProvider', dll))
+UiaHasServerSideProvider = WINFUNCTYPE(None)(("UiaHasServerSideProvider", dll))
 """
 Returns a Boolean value that indicates whether a window has a Microsoft UI Automation server-side provider.
 

@@ -72,7 +72,7 @@ PCERT_CHAIN_PARA = POINTER(CERT_CHAIN_PARA)
 dll = windll.crypt32
 
 
-CertCreateCertificateContext = WINFUNCTYPE(None)(('CertCreateCertificateContext', dll))
+CertCreateCertificateContext = WINFUNCTYPE(None)(("CertCreateCertificateContext", dll))
 """
 Creates a certificate context from an encoded certificate.
 
@@ -86,7 +86,7 @@ CertCreateCertificateContext.argtypes = (
 )
 CertCreateCertificateContext.restype = PCCERT_CONTEXT
 
-CertFreeCertificateChain = WINFUNCTYPE(None)(('CertFreeCertificateChain', dll))
+CertFreeCertificateChain = WINFUNCTYPE(None)(("CertFreeCertificateChain", dll))
 """
 Frees a certificate chain context.
 
@@ -98,7 +98,7 @@ CertFreeCertificateChain.argtypes = (
 )
 CertFreeCertificateChain.restype = None
 
-CertFreeCertificateContext = WINFUNCTYPE(None)(('CertFreeCertificateContext', dll))
+CertFreeCertificateContext = WINFUNCTYPE(None)(("CertFreeCertificateContext", dll))
 """
 Frees a certificate context.
 
@@ -110,7 +110,7 @@ CertFreeCertificateContext.argtypes = (
 )
 CertFreeCertificateContext.restype = BOOL
 
-CertGetCertificateChain = WINFUNCTYPE(None)(('CertGetCertificateChain', dll))
+CertGetCertificateChain = WINFUNCTYPE(None)(("CertGetCertificateChain", dll))
 """
 Builds a certificate chain context starting from a specified certificate context.
 

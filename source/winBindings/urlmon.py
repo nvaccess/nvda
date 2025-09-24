@@ -21,7 +21,7 @@ from objidl import IMoniker
 dll = windll.urlmon
 
 
-CreateURLMonikerEx = WINFUNCTYPE(None)(('CreateURLMonikerEx', dll))
+CreateURLMonikerEx = WINFUNCTYPE(None)(("CreateURLMonikerEx", dll))
 """
 Creates a URL moniker from a full or partial URL string.
 

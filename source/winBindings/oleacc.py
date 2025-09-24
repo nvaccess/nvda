@@ -30,7 +30,7 @@ from comtypes import IUnknown, GUID
 
 dll = windll.oleacc
 
-GetProcessHandleFromHwnd = WINFUNCTYPE(None)(('GetProcessHandleFromHwnd', dll))
+GetProcessHandleFromHwnd = WINFUNCTYPE(None)(("GetProcessHandleFromHwnd", dll))
 """
 Retrieves a process handle from a window handle.
 .. seealso::
@@ -41,7 +41,7 @@ GetProcessHandleFromHwnd.argtypes = (
 )
 GetProcessHandleFromHwnd.restype = HANDLE
 
-AccNotifyTouchInteraction = WINFUNCTYPE(None)(('AccNotifyTouchInteraction', dll))
+AccNotifyTouchInteraction = WINFUNCTYPE(None)(("AccNotifyTouchInteraction", dll))
 """
 Notifies the system that a touch interaction has occurred.
 .. seealso::
@@ -54,7 +54,7 @@ AccNotifyTouchInteraction.argtypes = (
 )
 AccNotifyTouchInteraction.restype = HRESULT
 
-AccSetRunningUtilityState = WINFUNCTYPE(None)(('AccSetRunningUtilityState', dll))
+AccSetRunningUtilityState = WINFUNCTYPE(None)(("AccSetRunningUtilityState", dll))
 """
 Sets the running utility state for accessibility.
 .. seealso::
@@ -67,7 +67,7 @@ AccSetRunningUtilityState.argtypes = (
 )
 AccSetRunningUtilityState.restype = HRESULT
 
-AccessibleChildren = WINFUNCTYPE(None)(('AccessibleChildren', dll))
+AccessibleChildren = WINFUNCTYPE(None)(("AccessibleChildren", dll))
 """
 Retrieves the specified children of an accessible object.
 .. seealso::
@@ -82,7 +82,7 @@ AccessibleChildren.argtypes = (
 )
 AccessibleChildren.restype = HRESULT
 
-AccessibleObjectFromEvent = WINFUNCTYPE(None)(('AccessibleObjectFromEvent', dll))
+AccessibleObjectFromEvent = WINFUNCTYPE(None)(("AccessibleObjectFromEvent", dll))
 """
 Retrieves the address of the IAccessible interface for the object that generated the event and the child ID.
 .. seealso::
@@ -97,7 +97,7 @@ AccessibleObjectFromEvent.argtypes = (
 )
 AccessibleObjectFromEvent.restype = HRESULT
 
-AccessibleObjectFromPoint = WINFUNCTYPE(None)(('AccessibleObjectFromPoint', dll))
+AccessibleObjectFromPoint = WINFUNCTYPE(None)(("AccessibleObjectFromPoint", dll))
 """
 Retrieves the address of the IAccessible interface pointer for the object displayed at a specified point on the screen.
 .. seealso::
@@ -110,7 +110,7 @@ AccessibleObjectFromPoint.argtypes = (
 )
 AccessibleObjectFromPoint.restype = HRESULT
 
-AccessibleObjectFromWindow = WINFUNCTYPE(None)(('AccessibleObjectFromWindow', dll))
+AccessibleObjectFromWindow = WINFUNCTYPE(None)(("AccessibleObjectFromWindow", dll))
 """
 Retrieves the address of the IAccessible interface for the object associated with the specified window.
 .. seealso::
@@ -124,7 +124,7 @@ AccessibleObjectFromWindow.argtypes = (
 )
 AccessibleObjectFromWindow.restype = HRESULT
 
-CreateStdAccessibleObject = WINFUNCTYPE(None)(('CreateStdAccessibleObject', dll))
+CreateStdAccessibleObject = WINFUNCTYPE(None)(("CreateStdAccessibleObject", dll))
 """
 Creates a standard object that exposes an IAccessible interface.
 .. seealso::
@@ -138,7 +138,7 @@ CreateStdAccessibleObject.argtypes = (
 )
 CreateStdAccessibleObject.restype = HRESULT
 
-CreateStdAccessibleProxy = WINFUNCTYPE(None)(('CreateStdAccessibleProxyW', dll))
+CreateStdAccessibleProxy = WINFUNCTYPE(None)(("CreateStdAccessibleProxyW", dll))
 """
 Creates a proxy accessible object for a window.
 .. seealso::
@@ -153,7 +153,7 @@ CreateStdAccessibleProxy.argtypes = (
 )
 CreateStdAccessibleProxy.restype = HRESULT
 
-GetRoleText = WINFUNCTYPE(None)(('GetRoleTextW', dll))
+GetRoleText = WINFUNCTYPE(None)(("GetRoleTextW", dll))
 """
 Retrieves a localized string that describes an object's role for the specified role value.
 .. seealso::
@@ -166,7 +166,7 @@ GetRoleText.argtypes = (
 )
 GetRoleText.restype = c_uint
 
-GetStateText = WINFUNCTYPE(None)(('GetStateTextW', dll))
+GetStateText = WINFUNCTYPE(None)(("GetStateTextW", dll))
 """
 Retrieves a localized string that describes an object's state for the specified state value.
 .. seealso::
@@ -179,7 +179,7 @@ GetStateText.argtypes = (
 )
 GetStateText.restype = c_uint
 
-LresultFromObject = WINFUNCTYPE(None)(('LresultFromObject', dll))
+LresultFromObject = WINFUNCTYPE(None)(("LresultFromObject", dll))
 """
 Creates an LRESULT value containing a pointer to a COM interface.
 .. seealso::
@@ -192,7 +192,7 @@ LresultFromObject.argtypes = (
 )
 LresultFromObject.restype = LRESULT
 
-ObjectFromLresult = WINFUNCTYPE(None)(('ObjectFromLresult', dll))
+ObjectFromLresult = WINFUNCTYPE(None)(("ObjectFromLresult", dll))
 """
 Retrieves a COM interface pointer from an LRESULT value.
 .. seealso::
@@ -206,7 +206,7 @@ ObjectFromLresult.argtypes = (
 )
 ObjectFromLresult.restype = HRESULT
 
-WindowFromAccessibleObject = WINFUNCTYPE(None)(('WindowFromAccessibleObject', dll))
+WindowFromAccessibleObject = WINFUNCTYPE(None)(("WindowFromAccessibleObject", dll))
 """
 Retrieves the window handle for the window that contains the specified accessible object.
 .. seealso::

@@ -24,7 +24,7 @@ from ctypes.wintypes import (
 dll = windll.version
 
 
-GetFileVersionInfoSize = WINFUNCTYPE(None)(('GetFileVersionInfoSizeW', dll))
+GetFileVersionInfoSize = WINFUNCTYPE(None)(("GetFileVersionInfoSizeW", dll))
 """
 Determines whether the operating system can retrieve version information for a specified file.
 
@@ -37,7 +37,7 @@ GetFileVersionInfoSize.argtypes = (
 	LPDWORD,  # lpdwHandle: Pointer to a variable that the function sets to zero (can be NULL)
 )
 
-GetFileVersionInfo = WINFUNCTYPE(None)(('GetFileVersionInfoW', dll))
+GetFileVersionInfo = WINFUNCTYPE(None)(("GetFileVersionInfoW", dll))
 """
 Retrieves version information for the specified file.
 
@@ -52,7 +52,7 @@ GetFileVersionInfo.argtypes = (
 	LPVOID,  # lpData: Pointer to a buffer that receives the file-version information
 )
 
-VerQueryValue = WINFUNCTYPE(None)(('VerQueryValueW', dll))
+VerQueryValue = WINFUNCTYPE(None)(("VerQueryValueW", dll))
 """
 Retrieves specified version information from the specified version-information resource.
 

@@ -16,7 +16,7 @@ from comtypes import HRESULT
 dll = windll.shcore
 
 
-SetProcessDpiAwareness = WINFUNCTYPE(None)(('SetProcessDpiAwareness', dll))
+SetProcessDpiAwareness = WINFUNCTYPE(None)(("SetProcessDpiAwareness", dll))
 """
 Sets the current process to a specified dots per inch (DPI) awareness level. The DPI awareness levels are from the PROCESS_DPI_AWARENESS enumeration.
 

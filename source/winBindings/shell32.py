@@ -39,7 +39,7 @@ from comtypes import (
 dll = windll.shell32
 
 
-IsUserAnAdmin = WINFUNCTYPE(None)(('IsUserAnAdmin', dll))
+IsUserAnAdmin = WINFUNCTYPE(None)(("IsUserAnAdmin", dll))
 """
 Tests whether the current user is a member of the Administrator's group.
 
@@ -49,7 +49,7 @@ Tests whether the current user is a member of the Administrator's group.
 IsUserAnAdmin.restype = BOOL
 IsUserAnAdmin.argtypes = ()
 
-SHGetKnownFolderPath = WINFUNCTYPE(None)(('SHGetKnownFolderPath', dll))
+SHGetKnownFolderPath = WINFUNCTYPE(None)(("SHGetKnownFolderPath", dll))
 """
 Retrieves the full path of a known folder identified by the folder's KNOWNFOLDERID.
 
@@ -64,7 +64,7 @@ SHGetKnownFolderPath.argtypes = (
 	POINTER(c_wchar_p),  # ppszPath: Address of a pointer to a null-terminated Unicode string
 )
 
-ShellExecute = WINFUNCTYPE(None)(('ShellExecuteW', dll))
+ShellExecute = WINFUNCTYPE(None)(("ShellExecuteW", dll))
 """
 Performs an operation on a specified file.
 
@@ -114,7 +114,7 @@ class SHELLEXECUTEINFOW(Structure):
 
 SHELLEXECUTEINFO = SHELLEXECUTEINFOW
 
-ShellExecuteEx = WINFUNCTYPE(None)(('ShellExecuteExW', dll))
+ShellExecuteEx = WINFUNCTYPE(None)(("ShellExecuteExW", dll))
 """
 Performs an operation on a specified file with extended options.
 
@@ -126,7 +126,7 @@ ShellExecuteEx.argtypes = (
 	POINTER(SHELLEXECUTEINFOW),  # pExecInfo: Pointer to a SHELLEXECUTEINFO structure
 )
 
-SHChangeNotify = WINFUNCTYPE(None)(('SHChangeNotify', dll))
+SHChangeNotify = WINFUNCTYPE(None)(("SHChangeNotify", dll))
 """
 Notifies the system of an event that an application has performed.
 

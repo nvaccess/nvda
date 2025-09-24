@@ -24,7 +24,7 @@ MMRESULT = c_long
 dll = windll.winmm
 
 
-waveOutGetNumDevs = WINFUNCTYPE(None)(('waveOutGetNumDevs', dll))
+waveOutGetNumDevs = WINFUNCTYPE(None)(("waveOutGetNumDevs", dll))
 """
 Retrieves the number of waveform-audio output devices present in the system.
 
@@ -34,7 +34,7 @@ Retrieves the number of waveform-audio output devices present in the system.
 waveOutGetNumDevs.restype = UINT
 waveOutGetNumDevs.argtypes = ()
 
-waveOutMessage = WINFUNCTYPE(None)(('waveOutMessage', dll))
+waveOutMessage = WINFUNCTYPE(None)(("waveOutMessage", dll))
 """
 Sends a message to the given waveform-audio output device.
 

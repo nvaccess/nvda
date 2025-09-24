@@ -66,7 +66,7 @@ class GdiplusStartupOutput(Structure):
 	]
 
 
-GdiplusStartup = WINFUNCTYPE(None)(('GdiplusStartup', dll))
+GdiplusStartup = WINFUNCTYPE(None)(("GdiplusStartup", dll))
 """
 Initializes Windows GDI+.
 
@@ -81,7 +81,7 @@ GdiplusStartup.argtypes = (
 )
 
 
-GdiplusShutdown = WINFUNCTYPE(None)(('GdiplusShutdown', dll))
+GdiplusShutdown = WINFUNCTYPE(None)(("GdiplusShutdown", dll))
 """
 Cleans up resources used by Windows GDI+.
 
@@ -94,7 +94,7 @@ GdiplusShutdown.argtypes = (
 )
 
 
-GdipCreateFromHDC = WINFUNCTYPE(None)(('GdipCreateFromHDC', dll))
+GdipCreateFromHDC = WINFUNCTYPE(None)(("GdipCreateFromHDC", dll))
 """
 Creates a Graphics object that is associated with a specified device context.
 
@@ -110,7 +110,7 @@ GdipCreateFromHDC.argtypes = (
 )
 
 
-GdipCreatePen1 = WINFUNCTYPE(None)(('GdipCreatePen1', dll))
+GdipCreatePen1 = WINFUNCTYPE(None)(("GdipCreatePen1", dll))
 """
 Creates a Pen object that has specified color, width, and style.
 
@@ -126,7 +126,7 @@ GdipCreatePen1.argtypes = (
 )
 
 
-GdipSetPenDashStyle = WINFUNCTYPE(None)(('GdipSetPenDashStyle', dll))
+GdipSetPenDashStyle = WINFUNCTYPE(None)(("GdipSetPenDashStyle", dll))
 """
 Sets the dash style of a Pen object.
 
@@ -140,7 +140,7 @@ GdipSetPenDashStyle.argtypes = (
 )
 
 
-GdipDrawLine = WINFUNCTYPE(None)(('GdipDrawLine', dll))
+GdipDrawLine = WINFUNCTYPE(None)(("GdipDrawLine", dll))
 """
 Draws a line.
 
@@ -158,7 +158,7 @@ GdipDrawLine.argtypes = (
 )
 
 
-GdipDrawRectangle = WINFUNCTYPE(None)(('GdipDrawRectangle', dll))
+GdipDrawRectangle = WINFUNCTYPE(None)(("GdipDrawRectangle", dll))
 """
 Draws a rectangle.
 
@@ -176,7 +176,7 @@ GdipDrawRectangle.argtypes = (
 )
 
 
-GdipDeletePen = WINFUNCTYPE(None)(('GdipDeletePen', dll))
+GdipDeletePen = WINFUNCTYPE(None)(("GdipDeletePen", dll))
 """
 Deletes a Pen object.
 
@@ -189,7 +189,7 @@ GdipDeletePen.argtypes = (
 )
 
 
-GdipDeleteGraphics = WINFUNCTYPE(None)(('GdipDeleteGraphics', dll))
+GdipDeleteGraphics = WINFUNCTYPE(None)(("GdipDeleteGraphics", dll))
 """
 Deletes a Graphics object.
 

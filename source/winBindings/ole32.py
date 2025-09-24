@@ -31,7 +31,7 @@ from ctypes import c_size_t
 dll = windll.ole32
 
 
-CoTaskMemFree = WINFUNCTYPE(None)(('CoTaskMemFree', dll))
+CoTaskMemFree = WINFUNCTYPE(None)(("CoTaskMemFree", dll))
 """
 Frees a block of task memory previously allocated through a call to the CoTaskMemAlloc or CoTaskMemRealloc function.
 
@@ -43,7 +43,7 @@ CoTaskMemFree.argtypes = (
 	LPVOID,  # pv: A pointer to the memory block to be freed.
 )
 
-CoCancelCall = WINFUNCTYPE(None)(('CoCancelCall', dll))
+CoCancelCall = WINFUNCTYPE(None)(("CoCancelCall", dll))
 """
 Requests that a call be canceled.
 
@@ -56,7 +56,7 @@ CoCancelCall.argtypes = (
 	ULONG,  # ulTimeout: The number of milliseconds to wait for the call cancellation.
 )
 
-CoDisableCallCancellation = WINFUNCTYPE(None)(('CoDisableCallCancellation', dll))
+CoDisableCallCancellation = WINFUNCTYPE(None)(("CoDisableCallCancellation", dll))
 """
 Undoes the action of a call to CoEnableCallCancellation. Disables cancellation of synchronous calls on the calling thread when all calls to CoEnableCallCancellation are balanced by calls to CoDisableCallCancellation.
 
@@ -68,7 +68,7 @@ CoDisableCallCancellation.argtypes = (
 	LPVOID,  # pReserved: This parameter is reserved and must be NULL.
 )
 
-CoEnableCallCancellation = WINFUNCTYPE(None)(('CoEnableCallCancellation', dll))
+CoEnableCallCancellation = WINFUNCTYPE(None)(("CoEnableCallCancellation", dll))
 """
 Enables cancellation of synchronous calls on the calling thread.
 
@@ -80,7 +80,7 @@ CoEnableCallCancellation.argtypes = (
 	LPVOID,  # pReserved: This parameter is reserved and must be NULL.
 )
 
-CoInitializeEx = WINFUNCTYPE(None)(('CoInitializeEx', dll))
+CoInitializeEx = WINFUNCTYPE(None)(("CoInitializeEx", dll))
 """
 Initializes the COM library for use by the calling thread, sets the thread's concurrency model, and creates a new apartment for the thread if one is required.
 
@@ -93,7 +93,7 @@ CoInitializeEx.argtypes = (
 	DWORD,  # dwCoInit: The concurrency model and initialization options for the thread.
 )
 
-CoTaskMemAlloc = WINFUNCTYPE(None)(('CoTaskMemAlloc', dll))
+CoTaskMemAlloc = WINFUNCTYPE(None)(("CoTaskMemAlloc", dll))
 """
 Allocates a block of task memory in the same way as if IMalloc::Alloc was called.
 
@@ -105,7 +105,7 @@ CoTaskMemAlloc.argtypes = (
 	c_size_t,  # cb: The size of the memory block to be allocated, in bytes.
 )
 
-CoWaitForMultipleHandles = WINFUNCTYPE(None)(('CoWaitForMultipleHandles', dll))
+CoWaitForMultipleHandles = WINFUNCTYPE(None)(("CoWaitForMultipleHandles", dll))
 """
 Waits for specified handles to be signaled or for a specified timeout period to elapse.
 
@@ -121,7 +121,7 @@ CoWaitForMultipleHandles.argtypes = (
 	LPDWORD,  # lpdwindex: A pointer to a variable that receives the zero-based index of the signaled handle.
 )
 
-CreateBindCtx = WINFUNCTYPE(None)(('CreateBindCtx', dll))
+CreateBindCtx = WINFUNCTYPE(None)(("CreateBindCtx", dll))
 """
 Creates a new bind context object.
 
@@ -136,7 +136,7 @@ CreateBindCtx.argtypes = (
 	),  # ppbc: The address of a pointer variable that receives the interface pointer to the new bind context object.
 )
 
-GetRunningObjectTable = WINFUNCTYPE(None)(('GetRunningObjectTable', dll))
+GetRunningObjectTable = WINFUNCTYPE(None)(("GetRunningObjectTable", dll))
 """
 Retrieves a pointer to the running object table (ROT) for the current context.
 

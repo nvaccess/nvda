@@ -17,7 +17,7 @@ dll = windll.cfgmgr32
 CR_SUCCESS = 0
 MAX_DEVICE_ID_LEN = 200
 
-CM_Get_Device_ID = WINFUNCTYPE(None)(('CM_Get_Device_IDW', dll))
+CM_Get_Device_ID = WINFUNCTYPE(None)(("CM_Get_Device_IDW", dll))
 """
 Retrieves the device instance ID for a specified device instance on the local machine.
 

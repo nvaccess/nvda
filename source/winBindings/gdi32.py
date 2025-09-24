@@ -33,7 +33,7 @@ from ctypes.wintypes import (
 dll = windll.gdi32
 
 
-GetDeviceCaps = WINFUNCTYPE(None)(('GetDeviceCaps', dll))
+GetDeviceCaps = WINFUNCTYPE(None)(("GetDeviceCaps", dll))
 """
 Retrieves device-specific information for the specified device.
 
@@ -47,7 +47,7 @@ GetDeviceCaps.argtypes = (
 )
 
 
-CreateCompatibleDC = WINFUNCTYPE(None)(('CreateCompatibleDC', dll))
+CreateCompatibleDC = WINFUNCTYPE(None)(("CreateCompatibleDC", dll))
 """
 Creates a memory device context (DC) compatible with the specified device.
 
@@ -60,7 +60,7 @@ CreateCompatibleDC.argtypes = (
 )
 
 
-CreateCompatibleBitmap = WINFUNCTYPE(None)(('CreateCompatibleBitmap', dll))
+CreateCompatibleBitmap = WINFUNCTYPE(None)(("CreateCompatibleBitmap", dll))
 """
 Creates a bitmap compatible with the device that is associated with the specified device context.
 
@@ -75,7 +75,7 @@ CreateCompatibleBitmap.argtypes = (
 )
 
 
-SelectObject = WINFUNCTYPE(None)(('SelectObject', dll))
+SelectObject = WINFUNCTYPE(None)(("SelectObject", dll))
 """
 Selects an object into the specified device context (DC).
 
@@ -89,7 +89,7 @@ SelectObject.argtypes = (
 )
 
 
-DeleteObject = WINFUNCTYPE(None)(('DeleteObject', dll))
+DeleteObject = WINFUNCTYPE(None)(("DeleteObject", dll))
 """
 Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated with the object.
 
@@ -102,7 +102,7 @@ DeleteObject.argtypes = (
 )
 
 
-DeleteDC = WINFUNCTYPE(None)(('DeleteDC', dll))
+DeleteDC = WINFUNCTYPE(None)(("DeleteDC", dll))
 """
 Deletes the specified device context (DC).
 
@@ -115,7 +115,7 @@ DeleteDC.argtypes = (
 )
 
 
-StretchBlt = WINFUNCTYPE(None)(('StretchBlt', dll))
+StretchBlt = WINFUNCTYPE(None)(("StretchBlt", dll))
 """
 Copies a bitmap from a source rectangle into a destination rectangle, stretching or compressing the bitmap to fit the dimensions of the destination rectangle.
 
@@ -191,7 +191,7 @@ class BITMAPINFO(Structure):
 	]
 
 
-GetDIBits = WINFUNCTYPE(None)(('GetDIBits', dll))
+GetDIBits = WINFUNCTYPE(None)(("GetDIBits", dll))
 """
 Retrieves the bits of the specified compatible bitmap and copies them into a buffer as a DIB using the specified format.
 
@@ -212,7 +212,7 @@ GetDIBits.argtypes = (
 )
 
 
-CreateSolidBrush = WINFUNCTYPE(None)(('CreateSolidBrush', dll))
+CreateSolidBrush = WINFUNCTYPE(None)(("CreateSolidBrush", dll))
 """
 Creates a logical brush that has the specified solid color.
 
@@ -225,7 +225,7 @@ CreateSolidBrush.argtypes = (
 )
 
 
-AddFontResourceEx = WINFUNCTYPE(None)(('AddFontResourceExW', dll))
+AddFontResourceEx = WINFUNCTYPE(None)(("AddFontResourceExW", dll))
 """
 Adds the font resource from the specified file to the system.
 

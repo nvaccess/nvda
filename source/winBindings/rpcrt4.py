@@ -21,7 +21,7 @@ RPC_STATUS = c_ulong
 RPC_BINDING_HANDLE = c_void_p
 
 
-I_RpcBindingInqLocalClientPID = WINFUNCTYPE(None)(('I_RpcBindingInqLocalClientPID', dll))
+I_RpcBindingInqLocalClientPID = WINFUNCTYPE(None)(("I_RpcBindingInqLocalClientPID", dll))
 """
 Obtains the process identifier (PID) of the local client process that made the remote procedure call.
 
@@ -34,7 +34,7 @@ I_RpcBindingInqLocalClientPID.argtypes = (
 	POINTER(c_long),  # ClientPID: Pointer to receive the client process ID
 )
 
-RpcBindingFree = WINFUNCTYPE(None)(('RpcBindingFree', dll))
+RpcBindingFree = WINFUNCTYPE(None)(("RpcBindingFree", dll))
 """
 Releases binding handle resources.
 
@@ -46,7 +46,7 @@ RpcBindingFree.argtypes = (
 	POINTER(RPC_BINDING_HANDLE),  # Binding: Pointer to the binding handle to free
 )
 
-RpcSsDestroyClientContext = WINFUNCTYPE(None)(('RpcSsDestroyClientContext', dll))
+RpcSsDestroyClientContext = WINFUNCTYPE(None)(("RpcSsDestroyClientContext", dll))
 """
 Destroys a client context handle and releases associated resources.
 

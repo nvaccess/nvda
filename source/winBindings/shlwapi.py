@@ -20,7 +20,7 @@ from ctypes import (
 dll = windll.shlwapi
 
 
-SHLoadIndirectString = WINFUNCTYPE(None)(('SHLoadIndirectString', dll))
+SHLoadIndirectString = WINFUNCTYPE(None)(("SHLoadIndirectString", dll))
 """
 Extracts a specified text resource when given an indirect string.
 

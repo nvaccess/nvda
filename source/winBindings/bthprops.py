@@ -6,7 +6,6 @@
 """Functions exported by bthprops.cpl, and supporting data structures and enumerations."""
 
 from ctypes import (
-	WINFUNCTYPE,
 	POINTER,
 	Structure,
 	c_ulonglong,

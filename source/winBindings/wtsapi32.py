@@ -23,7 +23,7 @@ from ctypes.wintypes import (
 dll = windll.wtsapi32
 
 
-WTSFreeMemory = WINFUNCTYPE(None)(('WTSFreeMemory', dll))
+WTSFreeMemory = WINFUNCTYPE(None)(("WTSFreeMemory", dll))
 """
 Frees memory allocated by a Windows Terminal Services function.
 
@@ -35,7 +35,7 @@ WTSFreeMemory.argtypes = (
 	c_void_p,  # pMemory: Pointer to the memory to free
 )
 
-WTSQuerySessionInformation = WINFUNCTYPE(None)(('WTSQuerySessionInformationW', dll))
+WTSQuerySessionInformation = WINFUNCTYPE(None)(("WTSQuerySessionInformationW", dll))
 """
 Retrieves session information for the specified session on the specified Remote Desktop Session Host server.
 

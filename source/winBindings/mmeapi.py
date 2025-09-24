@@ -6,7 +6,6 @@
 """Functions exported by mmeapi.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
-	WINFUNCTYPE,
 	Structure,
 )
 from ctypes.wintypes import DWORD, WORD

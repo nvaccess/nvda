@@ -15,7 +15,7 @@ from comtypes import BSTR
 dll = windll.oleaut32
 
 
-SysFreeString = WINFUNCTYPE(None)(('SysFreeString', dll))
+SysFreeString = WINFUNCTYPE(None)(("SysFreeString", dll))
 """
 Frees a string allocated previously by the SysAllocString, SysAllocStringLen, SysAlloc
 StringByteLen, or SysReAllocString functions.

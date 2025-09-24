@@ -38,7 +38,7 @@ PMINIDUMP_CALLBACK_INFORMATION = c_void_p
 dll = windll.dbgHelp
 
 
-MiniDumpWriteDump = WINFUNCTYPE(None)(('MiniDumpWriteDump', dll))
+MiniDumpWriteDump = WINFUNCTYPE(None)(("MiniDumpWriteDump", dll))
 """
 Writes a memory dump of the specified process to a file.
 .. seealso::

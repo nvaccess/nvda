@@ -23,7 +23,7 @@ from objidl import IMoniker
 dll = windll.mshtml
 
 
-ShowHTMLDialogEx = WINFUNCTYPE(None)(('ShowHTMLDialogEx', dll))
+ShowHTMLDialogEx = WINFUNCTYPE(None)(("ShowHTMLDialogEx", dll))
 """
 Creates a modeless HTML dialog box.
 

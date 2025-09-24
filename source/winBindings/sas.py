@@ -17,7 +17,7 @@ from ctypes.wintypes import (
 dll = windll.sas
 
 
-SendSAS = WINFUNCTYPE(None)(('SendSAS', dll))
+SendSAS = WINFUNCTYPE(None)(("SendSAS", dll))
 """
 Simulates a secure attention sequence (SAS).
 

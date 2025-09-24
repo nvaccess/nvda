@@ -57,7 +57,7 @@ class HIDD_ATTRIBUTES(Structure):
 
 PHID_ATTRIBUTES = POINTER(HIDD_ATTRIBUTES)
 
-HidD_GetAttributes = WINFUNCTYPE(None)(('HidD_GetAttributes', dll))
+HidD_GetAttributes = WINFUNCTYPE(None)(("HidD_GetAttributes", dll))
 """
 The HidD_GetAttributes routine returns the attributes of a specified top-level collection.
 
@@ -70,7 +70,7 @@ HidD_GetAttributes.argtypes = (
 )
 HidD_GetAttributes.restype = BOOLEAN
 
-HidD_GetManufacturerString = WINFUNCTYPE(None)(('HidD_GetManufacturerString', dll))
+HidD_GetManufacturerString = WINFUNCTYPE(None)(("HidD_GetManufacturerString", dll))
 """
 Returns a top-level collection's embedded string that identifies the manufacturer.
 
@@ -84,7 +84,7 @@ HidD_GetManufacturerString.argtypes = (
 )
 HidD_GetManufacturerString.restype = BOOLEAN
 
-HidD_GetProductString = WINFUNCTYPE(None)(('HidD_GetProductString', dll))
+HidD_GetProductString = WINFUNCTYPE(None)(("HidD_GetProductString", dll))
 """
 The HidD_GetProductString routine returns the embedded string of a top-level collection that identifies the manufacturer's product.
 
@@ -100,7 +100,7 @@ HidD_GetProductString.restype = BOOLEAN
 
 PHIDP_PREPARSED_DATA = c_void_p
 
-HidD_GetPreparsedData = WINFUNCTYPE(None)(('HidD_GetPreparsedData', dll))
+HidD_GetPreparsedData = WINFUNCTYPE(None)(("HidD_GetPreparsedData", dll))
 """
 The HidD_GetPreparsedData routine returns a top-level collection's preparsed data.
 
@@ -113,7 +113,7 @@ HidD_GetPreparsedData.argtypes = (
 )
 HidD_GetPreparsedData.restype = BOOLEAN
 
-HidD_FreePreparsedData = WINFUNCTYPE(None)(('HidD_FreePreparsedData', dll))
+HidD_FreePreparsedData = WINFUNCTYPE(None)(("HidD_FreePreparsedData", dll))
 """
 The HidD_FreePreparsedData routine releases the resources that the HID class driver allocated to hold a top-level collection's preparsed data.
 
@@ -127,7 +127,7 @@ HidD_FreePreparsedData.restype = BOOLEAN
 
 PHIDP_CAPS = POINTER(HIDP_CAPS)
 
-HidP_GetCaps = WINFUNCTYPE(None)(('HidP_GetCaps', dll))
+HidP_GetCaps = WINFUNCTYPE(None)(("HidP_GetCaps", dll))
 """
 Returns a top-level collection's HIDP_CAPS structure.
 
@@ -142,7 +142,7 @@ HidP_GetCaps.restype = NTSTATUS
 
 LPGUID = POINTER(GUID)
 
-HidD_GetHidGuid = WINFUNCTYPE(None)(('HidD_GetHidGuid', dll))
+HidD_GetHidGuid = WINFUNCTYPE(None)(("HidD_GetHidGuid", dll))
 """
 Returns the device interface GUID for HIDClass devices.
 
@@ -155,7 +155,7 @@ HidD_GetHidGuid.argtypes = (
 HidD_GetHidGuid.restype = None
 
 
-HidP_MaxUsageListLength = WINFUNCTYPE(None)(('HidP_MaxUsageListLength', dll))
+HidP_MaxUsageListLength = WINFUNCTYPE(None)(("HidP_MaxUsageListLength", dll))
 """
 returns the maximum number of HID usages that HidP_GetUsages can return for a specified type of HID report and a specified top-level collection.
 
@@ -170,7 +170,7 @@ HidP_MaxUsageListLength.argtypes = (
 HidP_MaxUsageListLength.restype = ULONG
 
 
-HidP_MaxDataListLength = WINFUNCTYPE(None)(('HidP_MaxDataListLength', dll))
+HidP_MaxDataListLength = WINFUNCTYPE(None)(("HidP_MaxDataListLength", dll))
 """
 Returns the maximum number of HID data structures that HidP_GetData can return for a specified type of HID report and a specified top-level collection.
 
@@ -184,7 +184,7 @@ HidP_MaxDataListLength.argtypes = (
 HidP_MaxDataListLength.restype = ULONG
 
 
-HidP_GetData = WINFUNCTYPE(None)(('HidP_GetData', dll))
+HidP_GetData = WINFUNCTYPE(None)(("HidP_GetData", dll))
 """
 Extracts data from a HID report for a specified report type.
 
@@ -202,7 +202,7 @@ HidP_GetData.argtypes = (
 HidP_GetData.restype = NTSTATUS
 
 
-HidP_GetUsages = WINFUNCTYPE(None)(('HidP_GetUsages', dll))
+HidP_GetUsages = WINFUNCTYPE(None)(("HidP_GetUsages", dll))
 """
 Extracts usages from a HID report for a specified report type and usage page.
 
@@ -221,7 +221,7 @@ HidP_GetUsages.argtypes = (
 )
 HidP_GetUsages.restype = NTSTATUS
 
-HidP_SetUsageValueArray = WINFUNCTYPE(None)(('HidP_SetUsageValueArray', dll))
+HidP_SetUsageValueArray = WINFUNCTYPE(None)(("HidP_SetUsageValueArray", dll))
 """
 Sets an array of usage values in a HID report for a specified report type and usage page.
 
@@ -241,7 +241,7 @@ HidP_SetUsageValueArray.argtypes = (
 )
 HidP_SetUsageValueArray.restype = NTSTATUS
 
-HidP_GetButtonCaps = WINFUNCTYPE(None)(('HidP_GetButtonCaps', dll))
+HidP_GetButtonCaps = WINFUNCTYPE(None)(("HidP_GetButtonCaps", dll))
 """
 Extracts button capability information from a HID report for a specified report type and usage page.
 
@@ -257,7 +257,7 @@ HidP_GetButtonCaps.argtypes = (
 HidP_GetButtonCaps.restype = NTSTATUS
 
 
-HidP_GetValueCaps = WINFUNCTYPE(None)(('HidP_GetValueCaps', dll))
+HidP_GetValueCaps = WINFUNCTYPE(None)(("HidP_GetValueCaps", dll))
 """
 Extracts value capability information from a HID report for a specified report type and usage page.
 
@@ -272,7 +272,7 @@ HidP_GetValueCaps.argtypes = (
 )
 HidP_GetValueCaps.restype = NTSTATUS
 
-HidD_GetFeature = WINFUNCTYPE(None)(('HidD_GetFeature', dll))
+HidD_GetFeature = WINFUNCTYPE(None)(("HidD_GetFeature", dll))
 """
 Retrieves a feature report from a top-level collection.
 
@@ -286,7 +286,7 @@ HidD_GetFeature.argtypes = (
 )
 HidD_GetFeature.restype = BOOLEAN
 
-HidD_SetFeature = WINFUNCTYPE(None)(('HidD_SetFeature', dll))
+HidD_SetFeature = WINFUNCTYPE(None)(("HidD_SetFeature", dll))
 """
 The HidD_SetFeature routine sends a feature report to a top-level collection.
 
@@ -300,7 +300,7 @@ HidD_SetFeature.argtypes = (
 )
 HidD_SetFeature.restype = BOOLEAN
 
-HidD_SetOutputReport = WINFUNCTYPE(None)(('HidD_SetOutputReport', dll))
+HidD_SetOutputReport = WINFUNCTYPE(None)(("HidD_SetOutputReport", dll))
 """
 The HidD_SetOutputReport routine sends an output report to a top-level collection.
 

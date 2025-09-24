@@ -166,7 +166,7 @@ SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = sizeof(_Dummy)
 PSP_DEVICE_INTERFACE_DETAIL_DATA = c_void_p
 
 
-SetupDiDestroyDeviceInfoList = WINFUNCTYPE(None)(('SetupDiDestroyDeviceInfoList', dll))
+SetupDiDestroyDeviceInfoList = WINFUNCTYPE(None)(("SetupDiDestroyDeviceInfoList", dll))
 """
 Deletes a device information set and frees all associated memory.
 
@@ -185,7 +185,7 @@ def _validHandle_errcheck(res, func, args):
 	return res
 
 
-SetupDiGetClassDevs = WINFUNCTYPE(None)(('SetupDiGetClassDevsW', dll))
+SetupDiGetClassDevs = WINFUNCTYPE(None)(("SetupDiGetClassDevsW", dll))
 """
 Returns a handle to a device information set that contains requested device information elements for a local computer.
 
@@ -201,7 +201,7 @@ SetupDiGetClassDevs.argtypes = (
 SetupDiGetClassDevs.restype = HDEVINFO
 SetupDiGetClassDevs.errcheck = _validHandle_errcheck  # HDEVINFO
 
-SetupDiGetDeviceProperty = WINFUNCTYPE(None)(('SetupDiGetDevicePropertyW', dll))
+SetupDiGetDeviceProperty = WINFUNCTYPE(None)(("SetupDiGetDevicePropertyW", dll))
 """
 The SetupDiGetDeviceProperty function retrieves a device instance property.
 
@@ -220,7 +220,7 @@ SetupDiGetDeviceProperty.argtypes = (
 )
 SetupDiGetDeviceProperty.restype = BOOL
 
-SetupDiEnumDeviceInterfaces = WINFUNCTYPE(None)(('SetupDiEnumDeviceInterfaces', dll))
+SetupDiEnumDeviceInterfaces = WINFUNCTYPE(None)(("SetupDiEnumDeviceInterfaces", dll))
 """
 Enumerates the device interfaces that are contained in a device information set.
 
@@ -236,7 +236,7 @@ SetupDiEnumDeviceInterfaces.argtypes = (
 )
 SetupDiEnumDeviceInterfaces.restype = BOOL
 
-SetupDiGetDeviceInterfaceDetail = WINFUNCTYPE(None)(('SetupDiGetDeviceInterfaceDetailW', dll))
+SetupDiGetDeviceInterfaceDetail = WINFUNCTYPE(None)(("SetupDiGetDeviceInterfaceDetailW", dll))
 """
 Returns details about a device interface.
 
@@ -253,7 +253,7 @@ SetupDiGetDeviceInterfaceDetail.argtypes = (
 )
 SetupDiGetDeviceInterfaceDetail.restype = BOOL
 
-SetupDiGetDeviceRegistryProperty = WINFUNCTYPE(None)(('SetupDiGetDeviceRegistryPropertyW', dll))
+SetupDiGetDeviceRegistryProperty = WINFUNCTYPE(None)(("SetupDiGetDeviceRegistryPropertyW", dll))
 """
 Retrieves a specified Plug and Play device property.
 
@@ -271,7 +271,7 @@ SetupDiGetDeviceRegistryProperty.argtypes = (
 )
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
-SetupDiEnumDeviceInfo = WINFUNCTYPE(None)(('SetupDiEnumDeviceInfo', dll))
+SetupDiEnumDeviceInfo = WINFUNCTYPE(None)(("SetupDiEnumDeviceInfo", dll))
 """
 Returns a SP_DEVINFO_DATA structure that specifies a device information element in a device information set.
 
@@ -285,7 +285,7 @@ SetupDiEnumDeviceInfo.argtypes = (
 )
 SetupDiEnumDeviceInfo.restype = BOOL
 
-SetupDiOpenDevRegKey = WINFUNCTYPE(None)(('SetupDiOpenDevRegKey', dll))
+SetupDiOpenDevRegKey = WINFUNCTYPE(None)(("SetupDiOpenDevRegKey", dll))
 """
 Opens a registry key for device-specific configuration information.
 
