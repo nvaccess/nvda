@@ -725,7 +725,9 @@ class RemoteClient:
 		"""
 		print("isConnected called")
 		if (connector := self._transport) is not None:
+			print("We have a transport.")
 			return connector.connected
+		print("No transport")
 		return False
 
 	@property

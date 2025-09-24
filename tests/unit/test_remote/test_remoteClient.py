@@ -29,6 +29,10 @@ class FakeLocalMachine:
 	def display(self, *a, **k): ...
 
 
+def fakeAlwaysCallAfter(func):
+	return func
+
+
 class FakeMenu:
 	def __init__(self):
 		self.muteItem = self.FakeMuteItem()
@@ -242,26 +246,50 @@ class TestRemoteClient(unittest.TestCase):
 		fakeControl.close.assert_called_once()
 
 	def test_lockWhileSendingKeys(self):
-		connInfo = ConnectionInfo(
-			hostname="localhost",
-			mode=ConnectionMode.LEADER,
-			key="abc",
-			port=4321,
-			insecure=False,
-		)
-		self.client.connect(connInfo)
-		print(list(self.client.leaderTransport.transportConnected.handlers))
-		self.client.leaderTransport.transportConnected.notify()
-		self.client.leaderSession.followers = [""]
-		self.assertFalse(self.client.sendingKeys, "Should initially not be sending keys")
-		self.client.toggleRemoteKeyControl(KeyboardInputGesture.fromName("NVDA+alt+tab"))
-		self.assertTrue(self.client.sendingKeys, "We just started sending keys")
-		print(list(post_sessionLockStateChanged.handlers))
-		post_sessionLockStateChanged.notify(isNowLocked=True)
-		self.assertFalse(
-			self.client.sendingKeys, "We should stop sending keys when switching to the lockscreen"
-		)
+		with patch(
+			"_remoteClient.client.RemoteClient.onConnectedAsLeader",
+			rcClient.RemoteClient.onConnectedAsLeader.__wrapped__,
+		):
+			connInfo = ConnectionInfo(
+				hostname="localhost",
+				mode=ConnectionMode.LEADER,
+				key="abc",
+				port=4321,
+				insecure=False,
+			)
+			self.client.connect(connInfo)
+			# print(f"{self.client.localSession=}")
+
+			# print(self.client)
+			# print(self.client.leaderTransport)
+			# print(self.client.leaderTransport.transportConnected)
+			# self.client.leaderTransport.transportConnected.register(tch)
+			# print(list(self.client.leaderTransport.transportConnected.handlers))
+			# print("Calling notify on transportConnected")
+			self.client.leaderTransport.transportConnected.notify()
+			self.client.leaderTransport.connected = True
+			self.client.leaderSession.followers = [""]
+			self.assertFalse(self.client.sendingKeys, "Should initially not be sending keys")
+			self.client.toggleRemoteKeyControl(KeyboardInputGesture.fromName("NVDA+alt+tab"))
+			self.assertTrue(self.client.sendingKeys, "We just started sending keys")
+			# post_sessionLockStateChanged.register(lambda isNowLocked: print(f"This is a test. {isNowLocked=}"))
+			# print(list(post_sessionLockStateChanged.handlers))
+			# print("Calling notify on post_sessionLockStateChanged")
+			post_sessionLockStateChanged.notify(isNowLocked=True)
+			self.assertFalse(
+				self.client.sendingKeys,
+				"We should stop sending keys when switching to the lockscreen",
+			)
+			post_sessionLockStateChanged.notify(isNowLocked=False)
+			self.assertTrue(
+				self.client.sendingKeys,
+				"We should resume sending keys after returning from the lock screen",
+			)
 
 
 if __name__ == "__main__":
 	unittest.main()
+
+
+def tch():
+	print("Test transportConnected handler")
