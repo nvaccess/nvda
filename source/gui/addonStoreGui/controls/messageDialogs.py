@@ -457,7 +457,7 @@ class UpdatableAddonsDialog(
 			addonsListVM=_storeVM.listVM,
 			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
 		)
-		sHelper.addItem(self.addonsList, flag=wx.EXPAND, proportion=1)
+		sHelper.addItem(self.addonsList, proportion=1)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
