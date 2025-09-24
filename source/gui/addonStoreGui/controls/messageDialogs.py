@@ -457,6 +457,9 @@ class UpdatableAddonsDialog(
 			addonsListVM=_storeVM.listVM,
 			actionsContextMenu=_MonoActionsContextMenu(_storeVM),
 		)
+		self.addonsList.SetMinSize(self.addonsList.scaleSize((500, 100)))
+		self.SetMinSize(self.addonsList.scaleSize((500, 100)))
+		self.addonsList.Refresh()
 		sHelper.addItem(self.addonsList, proportion=1)
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
