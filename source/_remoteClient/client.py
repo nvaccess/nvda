@@ -205,9 +205,12 @@ class RemoteClient:
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
 		self._connecting = True
+		print("Connecting")
 		if connectionInfo.mode == ConnectionMode.LEADER:
+			print("Calling connect as leader")
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
+			print("Calling connect as follower")
 			self.connectAsFollower(connectionInfo)
 
 	@alwaysCallAfter
@@ -345,6 +348,7 @@ class RemoteClient:
 		gui.runScriptModalDialog(dlg, callback=handleDialogCompletion)
 
 	def connectAsLeader(self, connectionInfo: ConnectionInfo):
+		print("Connecting as leader")
 		transport = RelayTransport.create(
 			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -366,9 +370,11 @@ class RemoteClient:
 			self.menu.handleConnecting(connectionInfo.mode)
 		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
 			self._doToggleMute()
+		print("Connecting complete, waiting for conection")
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
+		print("On connected as leader called.")
 		log.info("Successfully connected as leader")
 		self._connecting = False
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
@@ -380,6 +386,7 @@ class RemoteClient:
 			_("Connected"),
 		)
 		cues.connected()
+		print("Connected")
 
 	@alwaysCallAfter
 	def onDisconnectingAsLeader(self):
@@ -549,19 +556,24 @@ class RemoteClient:
 		if not self.isConnected() and not self.sendingKeys:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(pgettext("remote", "Not connected"))
+			print("Not connected")
 			return
 		elif not self.leaderTransport:
 			# Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
+			print("Not leader")
 			return
 		elif self.leaderSession.connectedFollowersCount < 1 and not self.sendingKeys:
 			# Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 			ui.message(pgettext("remote", "No controlled computers are connected"))
+			print("No followers.")
 			return
 		if self.sendingKeys:
 			self._switchToLocalControl()
+			print("switched to local control")
 		else:
 			self._switchToRemoteControl(gesture)
+			print("Switched to remote control")
 
 	def _switchToLocalControl(self) -> None:
 		"""Switch to controlling the local computer."""
@@ -587,10 +599,13 @@ class RemoteClient:
 			self.toggleMute()
 
 	def _sessionLockStateChangeHandler(self, isNowLocked: bool):
+		print("Session lock state changed.")
 		if isNowLocked and self.sendingKeys:
+			print("Now locked and sending keys. Returning to local control")
 			self._wasSendingKeysBeforeLock = True
 			self._switchToLocalControl()
 		elif not isNowLocked and self._wasSendingKeysBeforeLock:
+			print("Was previously sending keys and now unlocked, returning to remote control")
 			self._wasSendingKeysBeforeLock = False
 			self._switchToRemoteControl(None)
 
@@ -708,6 +723,7 @@ class RemoteClient:
 
 		:return: True if either follower or leader transport is connected
 		"""
+		print("isConnected called")
 		if (connector := self._transport) is not None:
 			return connector.connected
 		return False

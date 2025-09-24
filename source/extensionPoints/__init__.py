@@ -51,6 +51,7 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 		"""Notify all registered handlers that the action has occurred.
 		@param kwargs: Arguments to pass to the handlers.
 		"""
+		print("Notifying")
 		for handler in self.handlers:
 			try:
 				callWithSupportedKwargs(handler, **kwargs)

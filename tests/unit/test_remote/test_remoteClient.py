@@ -2,13 +2,15 @@
 # Copyright (C) 2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+import time
 import unittest
 from unittest.mock import MagicMock, patch
 import _remoteClient.client as rcClient
 from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
 from _remoteClient.protocol import RemoteMessageType
 from gui.message import ReturnCode
+from keyboardHandler import KeyboardInputGesture
+from utils.security import post_sessionLockStateChanged
 
 
 # Fake implementations for testing
@@ -18,6 +20,14 @@ class FakeLocalMachine:
 
 	def terminate(self):
 		pass
+
+	def setClipboardText(self, *a, **k): ...
+	def speak(self, *a, **k): ...
+	def cancelSpeech(self, *a, **k): ...
+	def pauseSpeech(self, *a, **k): ...
+	def beep(self, *a, **k): ...
+	def playWave(self, *a, **k): ...
+	def display(self, *a, **k): ...
 
 
 class FakeMenu:
@@ -32,6 +42,7 @@ class FakeMenu:
 			self.checked = value
 
 	def handleConnected(self, *args, **kwargs): ...
+	def handleConnecting(self, *a, **k): ...
 
 
 class FakeTransport:
@@ -230,6 +241,25 @@ class TestRemoteClient(unittest.TestCase):
 		with patch.object(rcClient.MessageDialog, "ShowModal", lambda *a, **k: ReturnCode.YES):
 			self.client.disconnect()
 		fakeControl.close.assert_called_once()
+
+	def test_lockWhileSendingKeys(self):
+		connInfo = ConnectionInfo(
+			hostname="localhost",
+			mode=ConnectionMode.LEADER,
+			key="abc",
+			port=4321,
+			insecure=False,
+		)
+		self.client.connect(connInfo)
+		print(list(self.client.leaderTransport.transportConnected.handlers))
+		self.client.leaderTransport.transportConnected.notify()
+		self.client.leaderSession.followers = [""]
+		self.assertFalse(self.client.sendingKeys, "Should initially not be sending keys")
+		self.client.toggleRemoteKeyControl(KeyboardInputGesture.fromName("NVDA+alt+tab"))
+		self.assertTrue(self.client.sendingKeys, "We just started sending keys")
+		print(list(post_sessionLockStateChanged.handlers))
+		post_sessionLockStateChanged.notify(isNowLocked=True)
+		self.assertFalse(self.client.sendingKeys, "We should stop sending keys when switching to the lockscreen")
 
 
 if __name__ == "__main__":
