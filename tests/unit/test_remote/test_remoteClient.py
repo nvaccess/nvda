@@ -2,6 +2,7 @@
 # Copyright (C) 2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import unittest
 from unittest.mock import MagicMock, patch
 import _remoteClient.client as rcClient
@@ -27,10 +28,6 @@ class FakeLocalMachine:
 	def beep(self, *a, **k): ...
 	def playWave(self, *a, **k): ...
 	def display(self, *a, **k): ...
-
-
-def fakeAlwaysCallAfter(func):
-	return func
 
 
 class FakeMenu:
