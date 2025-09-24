@@ -6,6 +6,7 @@
 """Functions exported by sas.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	windll,
 )
 from ctypes.wintypes import (
@@ -16,7 +17,7 @@ from ctypes.wintypes import (
 dll = windll.sas
 
 
-SendSAS = dll.SendSAS
+SendSAS = WINFUNCTYPE(None)(("SendSAS", dll))
 """
 Simulates a secure attention sequence (SAS).
 
