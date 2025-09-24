@@ -78,6 +78,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
+* the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 
 #### Deprecations
 
@@ -152,6 +153,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
+* The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
