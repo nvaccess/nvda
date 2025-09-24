@@ -590,6 +590,8 @@ class UpdatableAddonsDialog(
 				wx.CallAfter(delayCreateDialog)
 
 			case AddonsAutomaticUpdate.UPDATE:
+				# Translators: Message shown when updating add-ons automatically
+				wx.CallAfter(ui.message, pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
 				threading.Thread(
 					name="AutomaticAddonUpdate",
 					target=_updateAddons,
@@ -609,8 +611,6 @@ def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
 	"""
 	from ..viewModels.store import AddonStoreVM
 
-	# Translators: Message shown when updating add-ons automatically
-	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
 	listVMs = {AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate}
 	AddonStoreVM.getAddons(
 		listVMs,
