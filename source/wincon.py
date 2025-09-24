@@ -7,9 +7,10 @@
 from ctypes import (
 	byref,
 	WinError,
-	create_string_buffer,
+	create_unicode_buffer,
 	c_int,
 )
+from ctypes.wintypes import DWORD
 import winBindings.kernel32
 from winBindings.kernel32 import (
 	COORD as _COORD,
@@ -72,9 +73,8 @@ def GetConsoleSelectionInfo():
 
 
 def ReadConsoleOutputCharacter(handle, length, x, y):
-	# Use a string buffer, as from an unicode buffer, we can't get the raw data.
-	buf = create_string_buffer(length * 2)  # noqa: F405
-	numCharsRead = c_int()  # noqa: F405
+	buf = create_unicode_buffer(length)
+	numCharsRead = DWORD()
 	if (
 		winBindings.kernel32.ReadConsoleOutputCharacter(
 			handle,
@@ -82,13 +82,14 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 			length,
 			_COORD(x, y),
 			byref(numCharsRead),
-		)  # noqa: F405
+		)
 		== 0
-	):  # noqa: F405
-		raise WinError()  # noqa: F405
+	):
+		raise WinError()
+	rawBytes = buf.value.encode('utf-16')
 	return textUtils.getTextFromRawBytes(
-		buf.raw,
-		numChars=numCharsRead.value,
+		rawBytes,
+		numChars=len(rawBytes),
 		encoding=textUtils.WCHAR_ENCODING,
 	)
 
@@ -133,8 +134,8 @@ def GetConsoleWindow():
 
 
 def GetConsoleProcessList(maxProcessCount):
-	processList = (c_int * maxProcessCount)()  # noqa: F405
-	num = winBindings.kernel32.GetConsoleProcessList(processList, maxProcessCount)  # noqa: F405
+	processList = (DWORD * maxProcessCount)()
+	num = winBindings.kernel32.GetConsoleProcessList(processList, maxProcessCount)
 	return processList[0:num]
 
 
