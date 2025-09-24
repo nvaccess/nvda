@@ -78,6 +78,8 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
+* `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
+All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 
 #### Deprecations
 
@@ -153,6 +155,10 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
+* `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
+Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
+* `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
+Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
