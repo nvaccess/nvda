@@ -364,7 +364,7 @@ Retrieves the specified system metric or system configuration setting.
 	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics
 """
 GetSystemMetrics.restype = c_int
-GetSystemMetrics.argTypes = (
+GetSystemMetrics.argtypes = (
 	c_int,  # nIndex: The system metric or configuration setting to be retrieved
 )
 
@@ -376,7 +376,7 @@ Adds or removes a message from the User Interface Privilege Isolation (UIPI) mes
 	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-changewindowmessagefilter
 """
 ChangeWindowMessageFilter.restype = BOOL
-ChangeWindowMessageFilter.argTypes = (
+ChangeWindowMessageFilter.argtypes = (
 	UINT,  # message: The message to add to or remove from the filter
 	DWORD,  # dwFlag: The action to be performed
 )
@@ -613,7 +613,7 @@ Destroys the specified timer.
 	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-killtimer
 """
 KillTimer.restype = BOOL
-KillTimer.argTypes = (
+KillTimer.argtypes = (
 	HWND,  # hWnd: Handle to the window associated with the specified timer
 	UINT_PTR,  # uIDEvent: The timer to be destroyed
 )
