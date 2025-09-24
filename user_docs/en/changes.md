@@ -81,7 +81,6 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of the `addonList/AddonVirtualList` class. (#18816, @nvdaes)
 
-
 #### Deprecations
 
 * `winVersion.WIN81` constant has been deprecated from the `winVersion` module. (#18684, @josephsl):
