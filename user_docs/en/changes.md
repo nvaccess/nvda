@@ -6,7 +6,7 @@ This is a patch release to fix a bug.
 
 ### Bug Fixes
 
-* NVDA Remote Access now returns control to the local computer if it locks while controlling the remote computer. (#18951)
+* Remote Access now returns control to the local computer if it locks while controlling the remote computer. (#18951)
 
 ## 2025.3
 
