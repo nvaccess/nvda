@@ -403,7 +403,7 @@ class UpdatableAddonsDialog(
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Maximize()
+		self.CenterOnScreen()
 
 	def onCharHook(self, evt: wx.KeyEvent):
 		if evt.KeyCode == wx.WXK_ESCAPE:
