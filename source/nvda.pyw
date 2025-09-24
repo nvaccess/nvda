@@ -67,15 +67,14 @@ import winKernel  # noqa: E402
 # Find out if NVDA is running as a Windows Store application
 bufLen = ctypes.c_int()
 try:
-	GetCurrentPackageFullName = ctypes.windll.kernel32.GetCurrentPackageFullName
+	GetCurrentPackageFullName = winBindings.kernel32.GetCurrentPackageFullName
 except AttributeError:
 	config.isAppX = False
 else:
-	bufLen = ctypes.c_int()
+	bufLen = ctypes.c_uint()
 	# Use GetCurrentPackageFullName to detect if we are running as a store app.
 	# #8362: error 15700 (not a package) error is returned if this is not a Windows Store package.
 	config.isAppX = GetCurrentPackageFullName(ctypes.byref(bufLen), None) != 15700
-
 
 NVDAState._initializeStartTime()
 
@@ -203,14 +202,14 @@ def _acquireMutex(_desktopName: str) -> wintypes.HANDLE | None:
 	# > When using this technique, you should set the bInitialOwner flag to FALSE; otherwise, it can be difficult
 	# > to be certain which process has initial ownership.
 	# > https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
-	_mutex = ctypes.windll.kernel32.CreateMutexW(
+	_mutex = winBindings.kernel32.CreateMutex(
 		None,  # lpMutexAttributes,
 		# Don't take initial ownership, use wait to acquire ownership instead.
 		# Allows waiting for a prior process to finish exiting.
 		False,  # bInitialOwner
 		f"Local\\NVDA_{_desktopName}",  # lpName
 	)
-	createMutexResult = ctypes.windll.kernel32.GetLastError()
+	createMutexResult = winBindings.kernel32.GetLastError()
 	if not _mutex:
 		_log.error(f"Unable to create mutex, last error: {createMutexResult}")
 		raise winUser.WinError(createMutexResult)
@@ -243,11 +242,11 @@ def _acquireMutex(_desktopName: str) -> wintypes.HANDLE | None:
 				waitError = winUser.GetLastError()
 				_log.debug(f"Failed waiting for mutex, error: {waitError}")
 				exception = winUser.WinError(waitError)
-			releaseResult = ctypes.windll.kernel32.ReleaseMutex(_mutex)
+			releaseResult = winBindings.kernel32.ReleaseMutex(_mutex)
 			if 0 == releaseResult:
 				releaseError = winUser.GetLastError()
 				_log.debug(f"Failed to release mutex, error: {releaseError}")
-			closeResult = ctypes.windll.kernel32.CloseHandle(_mutex)
+			closeResult = winBindings.kernel32.CloseHandle(_mutex)
 			if 0 == closeResult:
 				closeError = winUser.GetLastError()
 				_log.debug(f"Failed to close mutex handle, error: {closeError}")
