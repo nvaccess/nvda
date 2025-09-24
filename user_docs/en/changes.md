@@ -79,7 +79,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
-* The `UpdatableAddonsDialog.addonsList` is an instance of the `addonList/AddonVirtualList` class. (#18816, @nvdaes)
+* The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 
 #### Deprecations
 
