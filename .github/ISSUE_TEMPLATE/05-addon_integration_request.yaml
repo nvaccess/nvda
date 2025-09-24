@@ -18,7 +18,7 @@ body:
   - type: input
     id: addon-name
     attributes:
-      label: "Name of the Addon"
+      label: "Name of the addon"
       description: "The official name of the addon you are proposing for integration."
       placeholder: "eg Awesome App Support"
     validations:
@@ -27,7 +27,7 @@ body:
   - type: input
     id: addon-link
     attributes:
-      label: "Link to Addon Repository or Website"
+      label: "Link to addon repository or website"
       description: "Where can we find the source code for this addon?"
       placeholder: "https://github.com/user/addon-repo"
     validations:
@@ -36,7 +36,7 @@ body:
   - type: input
     id: addon-maintainers
     attributes:
-      label: "Current Maintainer(s)"
+      label: "Current maintainer(s)"
       description: "Please provide the GitHub username(s) or name(s) of the current maintainer(s)."
       placeholder: "@username or 'Name'"
     validations:
@@ -45,7 +45,7 @@ body:
   - type: textarea
     id: user-impact
     attributes:
-      label: "User Impact and Utility"
+      label: "User impact and utility"
       description: |
         This section helps us understand the benefit for users.
         - What problem does this addon solve for NVDA users?
@@ -58,7 +58,7 @@ body:
   - type: dropdown
     id: license
     attributes:
-      label: "Addon License"
+      label: "Addon license"
       description: "Is the license of the addon's code compatible with NVDA's GPL license?"
       options:
         - "GPL-compatible"
@@ -70,7 +70,7 @@ body:
   - type: dropdown
     id: maintenance
     attributes:
-      label: "Maintenance and Future Development"
+      label: "Maintenance and future development"
       description: "Are the current maintainers willing and able to continue supporting the addon after integration?"
       options:
         - "Yes"
@@ -93,6 +93,6 @@ body:
   - type: textarea
     id: additional-context
     attributes:
-      label: "Additional Context"
+      label: "Additional context"
       description: "Please provide any other information that you believe is relevant to this integration request."
       placeholder: "Dependencies, potential conflicts or other relevant details."
