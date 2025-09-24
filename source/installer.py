@@ -17,7 +17,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
-from config.registry import NVDA_ADDON_PROG_ID, RegistryKey
+from config.registry import NVDA_ADDON_PROG_ID, _RegistryKeyX86, RegistryKey
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -515,16 +515,30 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 
-def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
+def _unregisterEaseOfAccessApp():
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.EASE_OF_ACCESS_APP.value,
 			winreg.KEY_WOW64_64KEY,
 		)
+	except WindowsError:
+		log.debug("Ease of Access app key not found for 64-bit, nothing to unregister.")
+	try:
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			_RegistryKeyX86.EASE_OF_ACCESS_APP.value,
+			winreg.KEY_WOW64_64KEY,
+		)
+	except WindowsError:
+		log.debug("Ease of Access app key not found for 32-bit, nothing to unregister.")
+	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
-		pass
+		log.debug("Could not disable auto start on logon screen.")
+
+
+def _unregisterDesktopShortcut(keepDesktopShortcut: bool):
 	wsh = _getWSH()
 	desktopPath = os.path.join(wsh.SpecialFolders("AllUsersDesktop"), "NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
@@ -532,31 +546,77 @@ def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
 			os.remove(desktopPath)
 		except WindowsError:
 			pass
+
+
+def _unregisterFromStartMenu():
+	wsh = _getWSH()
+	programsPath = wsh.SpecialFolders("AllUsersPrograms")
 	startMenuFolder = WritePaths.startMenuFolder
 	if startMenuFolder is None:
 		startMenuFolder = WritePaths.defaultStartMenuFolder
-	programsPath = wsh.SpecialFolders("AllUsersPrograms")
 	startMenuPath = os.path.join(programsPath, startMenuFolder)
 	if os.path.isdir(startMenuPath):
 		shutil.rmtree(startMenuPath, ignore_errors=True)
+	startMenuFolderX86 = WritePaths._startMenuFolderX86
+	if startMenuFolderX86 is None:
+		startMenuFolderX86 = WritePaths.defaultStartMenuFolder
+	startMenuPathX86 = os.path.join(programsPath, startMenuFolderX86)
+	if os.path.isdir(startMenuPathX86):
+		shutil.rmtree(startMenuPathX86, ignore_errors=True)
+
+
+def _unregisterFromUninstallRegistry():
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.INSTALLED_COPY.value,
 		)
 	except WindowsError:
-		pass
+		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
+	try:
+		winreg.DeleteKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			_RegistryKeyX86.INSTALLED_COPY.value,
+		)
+	except WindowsError:
+		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
+
+
+def _unregisterFromAppPathRegistry():
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP_PATH.value,
 		)
 	except WindowsError:
-		pass
+		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
+	try:
+		winreg.DeleteKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			_RegistryKeyX86.APP_PATH.value,
+		)
+	except WindowsError:
+		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
+
+
+def _unregisterFromSoftwareRegistry():
 	try:
 		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 	except WindowsError:
-		pass
+		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
+	try:
+		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKeyX86.NVDA.value)
+	except WindowsError:
+		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
+
+
+def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
+	_unregisterEaseOfAccessApp()
+	_unregisterDesktopShortcut(keepDesktopShortcut)
+	_unregisterFromStartMenu()
+	_unregisterFromUninstallRegistry()
+	_unregisterFromAppPathRegistry()
+	_unregisterFromSoftwareRegistry()
 	unregisterAddonFileAssociation()
 
 
@@ -606,6 +666,7 @@ def registerAddonFileAssociation(slaveExe: str):
 
 
 def unregisterAddonFileAssociation():
+	unregisteredSuccess = False
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(
@@ -613,10 +674,21 @@ def unregisterAddonFileAssociation():
 			RegistryKey.ADDON_PROG.value,
 		)
 	except WindowsError:
-		# This is probably the first install, so just ignore the error.
-		return
-	# Notify the shell that a file association has changed:
-	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
+		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
+	else:
+		unregisteredSuccess = True
+	try:
+		_deleteKeyAndSubkeys(
+			winreg.HKEY_LOCAL_MACHINE,
+			_RegistryKeyX86.ADDON_PROG.value,
+		)
+	except WindowsError:
+		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
+	else:
+		unregisteredSuccess = True
+	if unregisteredSuccess:
+		# Notify the shell that a file association has changed:
+		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 
 def _deleteKeyAndSubkeys(key: int, subkey: str):
