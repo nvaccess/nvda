@@ -258,23 +258,12 @@ class TestRemoteClient(unittest.TestCase):
 				insecure=False,
 			)
 			self.client.connect(connInfo)
-			# print(f"{self.client.localSession=}")
-
-			# print(self.client)
-			# print(self.client.leaderTransport)
-			# print(self.client.leaderTransport.transportConnected)
-			# self.client.leaderTransport.transportConnected.register(tch)
-			# print(list(self.client.leaderTransport.transportConnected.handlers))
-			# print("Calling notify on transportConnected")
 			self.client.leaderTransport.transportConnected.notify()
 			self.client.leaderTransport.connected = True
 			self.client.leaderSession.followers = [""]
 			self.assertFalse(self.client.sendingKeys, "Should initially not be sending keys")
 			self.client.toggleRemoteKeyControl(KeyboardInputGesture.fromName("NVDA+alt+tab"))
 			self.assertTrue(self.client.sendingKeys, "We just started sending keys")
-			# post_sessionLockStateChanged.register(lambda isNowLocked: print(f"This is a test. {isNowLocked=}"))
-			# print(list(post_sessionLockStateChanged.handlers))
-			# print("Calling notify on post_sessionLockStateChanged")
 			post_sessionLockStateChanged.notify(isNowLocked=True)
 			self.assertFalse(
 				self.client.sendingKeys,
@@ -289,7 +278,3 @@ class TestRemoteClient(unittest.TestCase):
 
 if __name__ == "__main__":
 	unittest.main()
-
-
-def tch():
-	print("Test transportConnected handler")
