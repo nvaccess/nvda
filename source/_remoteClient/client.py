@@ -583,8 +583,6 @@ class RemoteClient:
 			self.hostPendingModifiers = gesture.modifiers
 		else:
 			self.hostPendingModifiers = set()
-		else:
-			self.hostPendingModifiers = set()
 		# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 		ui.message(pgettext("remote", "Controlling remote computer"))
 		if self.localMachine.isMuted:
