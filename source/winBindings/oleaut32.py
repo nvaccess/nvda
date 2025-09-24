@@ -6,6 +6,7 @@
 """Functions exported by oleaut32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	windll,
 )
 from comtypes import BSTR
@@ -14,7 +15,7 @@ from comtypes import BSTR
 dll = windll.oleaut32
 
 
-SysFreeString = dll.SysFreeString
+SysFreeString = WINFUNCTYPE(None)(('SysFreeString', dll))
 """
 Frees a string allocated previously by the SysAllocString, SysAllocStringLen, SysAlloc
 StringByteLen, or SysReAllocString functions.

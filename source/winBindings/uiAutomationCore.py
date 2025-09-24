@@ -5,7 +5,10 @@
 
 """Functions exported by UIAutomationCore.dll, and supporting data structures and enumerations."""
 
-from ctypes import windll
+from ctypes import (
+	WINFUNCTYPE,
+	windll,
+)
 from ctypes.wintypes import (
 	BOOL,
 	HWND,
@@ -16,7 +19,7 @@ __all__ = ("UiaHasServerSideProvider",)
 
 dll = windll.UIAutomationCore
 
-UiaHasServerSideProvider = dll.UiaHasServerSideProvider
+UiaHasServerSideProvider = WINFUNCTYPE(None)(('UiaHasServerSideProvider', dll))
 """
 Returns a Boolean value that indicates whether a window has a Microsoft UI Automation server-side provider.
 

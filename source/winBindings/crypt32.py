@@ -6,6 +6,7 @@
 """Functions exported by crypt32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	Structure,
 	POINTER,
 	windll,
@@ -71,7 +72,7 @@ PCERT_CHAIN_PARA = POINTER(CERT_CHAIN_PARA)
 dll = windll.crypt32
 
 
-CertCreateCertificateContext = dll.CertCreateCertificateContext
+CertCreateCertificateContext = WINFUNCTYPE(None)(('CertCreateCertificateContext', dll))
 """
 Creates a certificate context from an encoded certificate.
 
@@ -85,7 +86,7 @@ CertCreateCertificateContext.argtypes = (
 )
 CertCreateCertificateContext.restype = PCCERT_CONTEXT
 
-CertFreeCertificateChain = dll.CertFreeCertificateChain
+CertFreeCertificateChain = WINFUNCTYPE(None)(('CertFreeCertificateChain', dll))
 """
 Frees a certificate chain context.
 
@@ -97,7 +98,7 @@ CertFreeCertificateChain.argtypes = (
 )
 CertFreeCertificateChain.restype = None
 
-CertFreeCertificateContext = dll.CertFreeCertificateContext
+CertFreeCertificateContext = WINFUNCTYPE(None)(('CertFreeCertificateContext', dll))
 """
 Frees a certificate context.
 
@@ -109,7 +110,7 @@ CertFreeCertificateContext.argtypes = (
 )
 CertFreeCertificateContext.restype = BOOL
 
-CertGetCertificateChain = dll.CertGetCertificateChain
+CertGetCertificateChain = WINFUNCTYPE(None)(('CertGetCertificateChain', dll))
 """
 Builds a certificate chain context starting from a specified certificate context.
 

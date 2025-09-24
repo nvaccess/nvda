@@ -6,6 +6,7 @@
 """Functions exported by mshtml.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	windll,
 	POINTER,
 )
@@ -22,7 +23,7 @@ from objidl import IMoniker
 dll = windll.mshtml
 
 
-ShowHTMLDialogEx = dll.ShowHTMLDialogEx
+ShowHTMLDialogEx = WINFUNCTYPE(None)(('ShowHTMLDialogEx', dll))
 """
 Creates a modeless HTML dialog box.
 

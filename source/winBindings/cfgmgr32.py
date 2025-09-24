@@ -5,7 +5,11 @@
 
 """Functions exported by cfgmgr32.dll, and supporting data structures and enumerations."""
 
-from ctypes import c_wchar_p, windll
+from ctypes import (
+	WINFUNCTYPE,
+	c_wchar_p,
+	windll,
+)
 from ctypes.wintypes import DWORD, ULONG
 
 dll = windll.cfgmgr32
@@ -13,7 +17,7 @@ dll = windll.cfgmgr32
 CR_SUCCESS = 0
 MAX_DEVICE_ID_LEN = 200
 
-CM_Get_Device_ID = dll.CM_Get_Device_IDW
+CM_Get_Device_ID = WINFUNCTYPE(None)(('CM_Get_Device_IDW', dll))
 """
 Retrieves the device instance ID for a specified device instance on the local machine.
 

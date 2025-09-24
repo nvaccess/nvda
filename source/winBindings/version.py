@@ -6,6 +6,7 @@
 """Functions exported by version.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	POINTER,
 	windll,
 )
@@ -23,7 +24,7 @@ from ctypes.wintypes import (
 dll = windll.version
 
 
-GetFileVersionInfoSize = dll.GetFileVersionInfoSizeW
+GetFileVersionInfoSize = WINFUNCTYPE(None)(('GetFileVersionInfoSizeW', dll))
 """
 Determines whether the operating system can retrieve version information for a specified file.
 
@@ -36,7 +37,7 @@ GetFileVersionInfoSize.argtypes = (
 	LPDWORD,  # lpdwHandle: Pointer to a variable that the function sets to zero (can be NULL)
 )
 
-GetFileVersionInfo = dll.GetFileVersionInfoW
+GetFileVersionInfo = WINFUNCTYPE(None)(('GetFileVersionInfoW', dll))
 """
 Retrieves version information for the specified file.
 
@@ -51,7 +52,7 @@ GetFileVersionInfo.argtypes = (
 	LPVOID,  # lpData: Pointer to a buffer that receives the file-version information
 )
 
-VerQueryValue = dll.VerQueryValueW
+VerQueryValue = WINFUNCTYPE(None)(('VerQueryValueW', dll))
 """
 Retrieves specified version information from the specified version-information resource.
 

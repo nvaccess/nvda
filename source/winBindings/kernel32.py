@@ -134,7 +134,7 @@ __all__ = (
 
 dll = windll.kernel32
 
-GetModuleHandle = dll.GetModuleHandleW
+GetModuleHandle = WINFUNCTYPE(None)(('GetModuleHandleW', dll))
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
 
@@ -144,7 +144,7 @@ Retrieves a module handle for the specified module, which must have been loaded 
 GetModuleHandle.argtypes = (c_wchar_p,)
 GetModuleHandle.restype = HMODULE
 
-GetModuleFileName = dll.GetModuleFileNameW
+GetModuleFileName = WINFUNCTYPE(None)(('GetModuleFileNameW', dll))
 """
 Retrieves the fully qualified path for the file that contains the specified module, which must have been loaded by the current process.
 
@@ -154,7 +154,7 @@ Retrieves the fully qualified path for the file that contains the specified modu
 GetModuleFileName.argtypes = (HANDLE, c_wchar_p, DWORD)
 GetModuleFileName.restype = DWORD
 
-LoadLibraryEx = dll.LoadLibraryExW
+LoadLibraryEx = WINFUNCTYPE(None)(('LoadLibraryExW', dll))
 """
 Loads the specified module into the address space of the calling process.
 The specified module may cause other modules to be loaded.
@@ -169,7 +169,7 @@ LoadLibraryEx.argtypes = (
 )
 LoadLibraryEx.restype = HMODULE
 
-FreeLibrary = dll.FreeLibrary
+FreeLibrary = WINFUNCTYPE(None)(('FreeLibrary', dll))
 """
 Frees the loaded module and decrements its reference count.
 If the reference count reaches zero, the module is unloaded from the address space of the calling process.
@@ -179,7 +179,7 @@ If the reference count reaches zero, the module is unloaded from the address spa
 FreeLibrary.argtypes = (HMODULE,)
 FreeLibrary.restype = BOOL
 
-CloseHandle = dll.CloseHandle
+CloseHandle = WINFUNCTYPE(None)(('CloseHandle', dll))
 """
 Closes an open object handle. The handle must have been created by the calling process.
 .. seealso::
@@ -188,7 +188,7 @@ Closes an open object handle. The handle must have been created by the calling p
 CloseHandle.argtypes = (HANDLE,)
 CloseHandle.restype = BOOL
 
-ReleaseMutex = dll.ReleaseMutex
+ReleaseMutex = WINFUNCTYPE(None)(('ReleaseMutex', dll))
 """
 Releases ownership of the specified mutex object. The calling thread must have owned the mutex object.
 .. seealso::
@@ -197,7 +197,7 @@ Releases ownership of the specified mutex object. The calling thread must have o
 ReleaseMutex.argtypes = (HANDLE,)
 ReleaseMutex.restype = BOOL
 
-WaitForSingleObject = dll.WaitForSingleObject
+WaitForSingleObject = WINFUNCTYPE(None)(('WaitForSingleObject', dll))
 """
 Waits until the specified object is in the signaled state or the time-out interval elapses.
 .. seealso::
@@ -209,7 +209,7 @@ WaitForSingleObject.argtypes = (
 )
 WaitForSingleObject.restype = DWORD
 
-OpenProcess = dll.OpenProcess
+OpenProcess = WINFUNCTYPE(None)(('OpenProcess', dll))
 """
 Opens an existing local process object.
 .. seealso::
@@ -222,7 +222,7 @@ OpenProcess.argtypes = (
 )
 OpenProcess.restype = HANDLE
 
-VirtualAllocEx = dll.VirtualAllocEx
+VirtualAllocEx = WINFUNCTYPE(None)(('VirtualAllocEx', dll))
 """
 Allocates memory in the virtual address space of a specified process.
 .. seealso::
@@ -237,7 +237,7 @@ VirtualAllocEx.argtypes = (
 )
 VirtualAllocEx.restype = LPVOID
 
-VirtualFreeEx = dll.VirtualFreeEx
+VirtualFreeEx = WINFUNCTYPE(None)(('VirtualFreeEx', dll))
 """
 Frees or releases a region of memory within the virtual address space of a specified process.
 .. seealso::
@@ -251,7 +251,7 @@ VirtualFreeEx.argtypes = (
 )
 VirtualFreeEx.restype = BOOL
 
-ReadProcessMemory = dll.ReadProcessMemory
+ReadProcessMemory = WINFUNCTYPE(None)(('ReadProcessMemory', dll))
 """
 Reads data from the memory of a specified process.
 .. seealso::
@@ -266,7 +266,7 @@ ReadProcessMemory.argtypes = (
 )
 ReadProcessMemory.restype = BOOL
 
-WriteProcessMemory = dll.WriteProcessMemory
+WriteProcessMemory = WINFUNCTYPE(None)(('WriteProcessMemory', dll))
 """
 Writes data to an area of memory in a specified process.
 .. seealso::
@@ -281,7 +281,7 @@ WriteProcessMemory.argtypes = (
 )
 WriteProcessMemory.restype = BOOL
 
-DuplicateHandle = dll.DuplicateHandle
+DuplicateHandle = WINFUNCTYPE(None)(('DuplicateHandle', dll))
 """
 Duplicates an object handle.
 .. seealso::
@@ -298,7 +298,7 @@ DuplicateHandle.argtypes = (
 )
 DuplicateHandle.restype = BOOL
 
-GlobalAlloc = dll.GlobalAlloc
+GlobalAlloc = WINFUNCTYPE(None)(('GlobalAlloc', dll))
 """
 Allocates global memory and returns a handle to the allocated memory.
 .. seealso::
@@ -311,7 +311,7 @@ GlobalAlloc.argtypes = (
 GlobalAlloc.restype = HGLOBAL
 
 
-GlobalFree = dll.GlobalFree
+GlobalFree = WINFUNCTYPE(None)(('GlobalFree', dll))
 """
 Frees the specified global memory object and invalidates its handle.
 .. seealso::
@@ -322,7 +322,7 @@ GlobalFree.argtypes = (
 )
 GlobalFree.restype = HGLOBAL
 
-GlobalLock = dll.GlobalLock
+GlobalLock = WINFUNCTYPE(None)(('GlobalLock', dll))
 """
 Locks a global memory object and returns a pointer to the first byte of the object's memory block.
 .. seealso::
@@ -333,7 +333,7 @@ GlobalLock.argtypes = (
 )
 GlobalLock.restype = LPVOID
 
-GlobalUnlock = dll.GlobalUnlock
+GlobalUnlock = WINFUNCTYPE(None)(('GlobalUnlock', dll))
 """
 Unlocks a global memory object, allowing it to be accessed by other processes.
 .. seealso::
@@ -344,7 +344,7 @@ GlobalUnlock.argtypes = (
 )
 GlobalUnlock.restype = BOOL
 
-GetCurrentProcess = dll.GetCurrentProcess
+GetCurrentProcess = WINFUNCTYPE(None)(('GetCurrentProcess', dll))
 """
 Retrieves a pseudo handle for the current process.
 .. seealso::
@@ -358,7 +358,7 @@ UnhandledExceptionFilter = WINFUNCTYPE(
 	c_void_p,  # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
 )
 
-SetUnhandledExceptionFilter = dll.SetUnhandledExceptionFilter
+SetUnhandledExceptionFilter = WINFUNCTYPE(None)(('SetUnhandledExceptionFilter', dll))
 """
 Sets a new unhandled exception filter function for the current process.
 .. seealso::
@@ -370,7 +370,7 @@ SetUnhandledExceptionFilter.argtypes = (
 SetUnhandledExceptionFilter.restype = UnhandledExceptionFilter
 
 
-GetCurrentThreadId = dll.GetCurrentThreadId
+GetCurrentThreadId = WINFUNCTYPE(None)(('GetCurrentThreadId', dll))
 """
 Retrieves the thread identifier of the calling thread.
 
@@ -381,7 +381,7 @@ GetCurrentThreadId.argtypes = ()
 GetCurrentThreadId.restype = DWORD
 
 
-OpenThread = dll.OpenThread
+OpenThread = WINFUNCTYPE(None)(('OpenThread', dll))
 """
 Opens an existing thread object.
 
@@ -405,7 +405,7 @@ An application-defined completion routine. Specify this address when calling the
 """
 
 
-QueueUserAPC = dll.QueueUserAPC
+QueueUserAPC = WINFUNCTYPE(None)(('QueueUserAPC', dll))
 """
 Adds a user-mode asynchronous procedure call (APC) object to the APC queue of the specified thread.
 
@@ -420,7 +420,7 @@ QueueUserAPC.argtypes = (
 QueueUserAPC.restype = DWORD
 
 
-CreateEvent = dll.CreateEventW
+CreateEvent = WINFUNCTYPE(None)(('CreateEventW', dll))
 """
 Creates or opens a named or unnamed event object.
 
@@ -436,7 +436,7 @@ CreateEvent.argtypes = (
 CreateEvent.restype = HANDLE
 
 
-CreateMutex = dll.CreateMutexW
+CreateMutex = WINFUNCTYPE(None)(('CreateMutexW', dll))
 """
 Creates or opens a named or unnamed mutex object.
 
@@ -451,7 +451,7 @@ CreateMutex.argtypes = (
 CreateMutex.restype = HANDLE
 
 
-CreateWaitableTimer = dll.CreateWaitableTimerW
+CreateWaitableTimer = WINFUNCTYPE(None)(('CreateWaitableTimerW', dll))
 """
 Creates or opens a waitable timer object.
 
@@ -466,7 +466,7 @@ CreateWaitableTimer.argtypes = (
 CreateWaitableTimer.restype = HANDLE
 
 
-SetEvent = dll.SetEvent
+SetEvent = WINFUNCTYPE(None)(('SetEvent', dll))
 """
 Sets the specified event object to the signaled state.
 
@@ -479,7 +479,7 @@ SetEvent.argtypes = (
 SetEvent.restype = BOOL
 
 
-ResetEvent = dll.ResetEvent
+ResetEvent = WINFUNCTYPE(None)(('ResetEvent', dll))
 """
 Sets the specified event object to the nonsignaled state.
 
@@ -505,7 +505,7 @@ An application-defined timer completion routine. Specify this address when calli
 	https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nc-synchapi-ptimerapcroutine
 """
 
-SetWaitableTimer = dll.SetWaitableTimer
+SetWaitableTimer = WINFUNCTYPE(None)(('SetWaitableTimer', dll))
 """
 Activates the specified waitable timer.
 
@@ -523,7 +523,7 @@ SetWaitableTimer.argtypes = (
 SetWaitableTimer.restype = BOOL
 
 
-CancelWaitableTimer = dll.CancelWaitableTimer
+CancelWaitableTimer = WINFUNCTYPE(None)(('CancelWaitableTimer', dll))
 """
 Sets the specified waitable timer to the inactive state.
 
@@ -536,7 +536,7 @@ CancelWaitableTimer.argtypes = (
 CancelWaitableTimer.restype = BOOL
 
 
-WaitForMultipleObjects = dll.WaitForMultipleObjects
+WaitForMultipleObjects = WINFUNCTYPE(None)(('WaitForMultipleObjects', dll))
 """
 Waits until one or all of the specified objects are in the signaled state or the time-out interval elapses.
 
@@ -552,7 +552,7 @@ WaitForMultipleObjects.argtypes = (
 WaitForMultipleObjects.restype = DWORD
 
 
-SleepEx = dll.SleepEx
+SleepEx = WINFUNCTYPE(None)(('SleepEx', dll))
 """
 Suspends the current thread until the specified condition is met.
 
@@ -566,7 +566,7 @@ SleepEx.argtypes = (
 SleepEx.restype = DWORD
 
 
-SetThreadExecutionState = dll.SetThreadExecutionState
+SetThreadExecutionState = WINFUNCTYPE(None)(('SetThreadExecutionState', dll))
 """
 Enables an application to inform the system that it is in use.
 
@@ -593,7 +593,7 @@ An application-defined completion routine used with the ReadFileEx and WriteFile
 """
 
 
-ReadFileEx = dll.ReadFileEx
+ReadFileEx = WINFUNCTYPE(None)(('ReadFileEx', dll))
 """
 Reads data from the specified file or input/output (I/O) device.
 
@@ -610,7 +610,7 @@ ReadFileEx.argtypes = (
 ReadFileEx.restype = BOOL
 
 
-WriteFile = dll.WriteFile
+WriteFile = WINFUNCTYPE(None)(('WriteFile', dll))
 """
 Writes data to the specified file or input/output (I/O) device.
 
@@ -627,7 +627,7 @@ WriteFile.argtypes = (
 WriteFile.restype = BOOL
 
 
-GetOverlappedResult = dll.GetOverlappedResult
+GetOverlappedResult = WINFUNCTYPE(None)(('GetOverlappedResult', dll))
 """
 Retrieves the results of an overlapped operation on the specified file, named pipe, or communications device.
 
@@ -643,7 +643,7 @@ GetOverlappedResult.argtypes = (
 GetOverlappedResult.restype = BOOL
 
 
-CancelIoEx = dll.CancelIoEx
+CancelIoEx = WINFUNCTYPE(None)(('CancelIoEx', dll))
 """
 Marks any outstanding I/O operations for the specified file handle as canceled.
 
@@ -657,7 +657,7 @@ CancelIoEx.argtypes = (
 CancelIoEx.restype = BOOL
 
 
-WaitCommEvent = dll.WaitCommEvent
+WaitCommEvent = WINFUNCTYPE(None)(('WaitCommEvent', dll))
 """
 Waits for an event to occur for a specified communications device.
 
@@ -672,7 +672,7 @@ WaitCommEvent.argtypes = (
 WaitCommEvent.restype = BOOL
 
 
-CopyFile = dll.CopyFileW
+CopyFile = WINFUNCTYPE(None)(('CopyFileW', dll))
 """
 Copies an existing file to a new file.
 
@@ -687,7 +687,7 @@ CopyFile.argtypes = (
 CopyFile.restype = BOOL
 
 
-GetLocaleInfo = dll.GetLocaleInfoW
+GetLocaleInfo = WINFUNCTYPE(None)(('GetLocaleInfoW', dll))
 """
 Retrieves information about a locale specified by identifier.
 
@@ -703,7 +703,7 @@ GetLocaleInfo.argtypes = (
 GetLocaleInfo.restype = c_int
 
 
-LocaleNameToLCID = dll.LocaleNameToLCID
+LocaleNameToLCID = WINFUNCTYPE(None)(('LocaleNameToLCID', dll))
 """
 Converts a locale name to a locale identifier.
 
@@ -717,7 +717,7 @@ LocaleNameToLCID.argtypes = (
 LocaleNameToLCID.restype = LCID
 
 
-GetUserDefaultUILanguage = dll.GetUserDefaultUILanguage
+GetUserDefaultUILanguage = WINFUNCTYPE(None)(('GetUserDefaultUILanguage', dll))
 """
 Retrieves the language identifier for the user UI language for the current user.
 
@@ -728,7 +728,7 @@ GetUserDefaultUILanguage.argtypes = ()
 GetUserDefaultUILanguage.restype = WORD
 
 
-AttachConsole = dll.AttachConsole
+AttachConsole = WINFUNCTYPE(None)(('AttachConsole', dll))
 """
 Attaches the calling process to the console of the specified process.
 
@@ -741,7 +741,7 @@ AttachConsole.argtypes = (
 AttachConsole.restype = BOOL
 
 
-FreeConsole = dll.FreeConsole
+FreeConsole = WINFUNCTYPE(None)(('FreeConsole', dll))
 """
 Detaches the calling process from its console.
 
@@ -752,7 +752,7 @@ FreeConsole.argtypes = ()
 FreeConsole.restype = BOOL
 
 
-GetConsoleWindow = dll.GetConsoleWindow
+GetConsoleWindow = WINFUNCTYPE(None)(('GetConsoleWindow', dll))
 """
 Retrieves the window handle used by the console associated with the calling process.
 
@@ -763,7 +763,7 @@ GetConsoleWindow.argtypes = ()
 GetConsoleWindow.restype = HWND
 
 
-GetConsoleProcessList = dll.GetConsoleProcessList
+GetConsoleProcessList = WINFUNCTYPE(None)(('GetConsoleProcessList', dll))
 """
 Retrieves a list of the processes attached to the current console.
 
@@ -850,7 +850,7 @@ An application-defined function used with the SetConsoleCtrlHandler function.
 """
 
 
-GetConsoleScreenBufferInfo = dll.GetConsoleScreenBufferInfo
+GetConsoleScreenBufferInfo = WINFUNCTYPE(None)(('GetConsoleScreenBufferInfo', dll))
 """
 Retrieves information about the specified console screen buffer.
 
@@ -866,7 +866,7 @@ GetConsoleScreenBufferInfo.argtypes = (
 GetConsoleScreenBufferInfo.restype = BOOL
 
 
-GetConsoleSelectionInfo = dll.GetConsoleSelectionInfo
+GetConsoleSelectionInfo = WINFUNCTYPE(None)(('GetConsoleSelectionInfo', dll))
 """
 Retrieves information about the current console selection.
 
@@ -881,7 +881,7 @@ GetConsoleSelectionInfo.argtypes = (
 GetConsoleSelectionInfo.restype = BOOL
 
 
-ReadConsoleOutputCharacter = dll.ReadConsoleOutputCharacterW
+ReadConsoleOutputCharacter = WINFUNCTYPE(None)(('ReadConsoleOutputCharacterW', dll))
 """
 Copies a number of characters from consecutive cells of a console screen buffer.
 
@@ -898,7 +898,7 @@ ReadConsoleOutputCharacter.argtypes = (
 ReadConsoleOutputCharacter.restype = BOOL
 
 
-ReadConsoleOutput = dll.ReadConsoleOutputW
+ReadConsoleOutput = WINFUNCTYPE(None)(('ReadConsoleOutputW', dll))
 """
 Reads character and color attribute data from a rectangular block of character cells in a console screen buffer.
 
@@ -917,7 +917,7 @@ ReadConsoleOutput.argtypes = (
 ReadConsoleOutput.restype = BOOL
 
 
-SetConsoleCtrlHandler = dll.SetConsoleCtrlHandler
+SetConsoleCtrlHandler = WINFUNCTYPE(None)(('SetConsoleCtrlHandler', dll))
 """
 Adds or removes an application-defined HandlerRoutine function from the list of handler functions.
 
@@ -931,7 +931,7 @@ SetConsoleCtrlHandler.argtypes = (
 SetConsoleCtrlHandler.restype = BOOL
 
 
-GetModuleHandleEx = dll.GetModuleHandleExW
+GetModuleHandleEx = WINFUNCTYPE(None)(('GetModuleHandleExW', dll))
 """
 Retrieves a module handle for the specified module and increments the module's reference count.
 
@@ -946,7 +946,7 @@ GetModuleHandleEx.argtypes = (
 GetModuleHandleEx.restype = BOOL
 
 
-GetPackageFullName = dll.GetPackageFullName
+GetPackageFullName = WINFUNCTYPE(None)(('GetPackageFullName', dll))
 """
 Gets the package full name for the specified process.
 
@@ -961,7 +961,7 @@ GetPackageFullName.argtypes = (
 GetPackageFullName.restype = LONG
 
 
-GetCurrentPackageFullName = dll.GetCurrentPackageFullName
+GetCurrentPackageFullName = WINFUNCTYPE(None)(('GetCurrentPackageFullName', dll))
 """
 Retrieves the package full name for the current process.
 
@@ -975,7 +975,7 @@ GetCurrentPackageFullName.argtypes = (
 GetCurrentPackageFullName.restype = LONG
 
 
-QueryFullProcessImageName = dll.QueryFullProcessImageNameW
+QueryFullProcessImageName = WINFUNCTYPE(None)(('QueryFullProcessImageNameW', dll))
 """
 Retrieves the full name of the executable image for the specified process.
 
@@ -991,7 +991,7 @@ QueryFullProcessImageName.argtypes = (
 QueryFullProcessImageName.restype = BOOL
 
 
-IsWow64Process = dll.IsWow64Process
+IsWow64Process = WINFUNCTYPE(None)(('IsWow64Process', dll))
 """
 Determines whether the specified process is running under WOW64.
 
@@ -1005,7 +1005,7 @@ IsWow64Process.argtypes = (
 IsWow64Process.restype = BOOL
 
 
-IsWow64Process2 = dll.IsWow64Process2
+IsWow64Process2 = WINFUNCTYPE(None)(('IsWow64Process2', dll))
 """
 Determines whether the specified process is running under WOW64; also returns additional machine process information.
 
@@ -1035,7 +1035,7 @@ class _PROCESS_MACHINE_INFORMATION(Structure):
 	]
 
 
-GetProcessInformation = dll.GetProcessInformation
+GetProcessInformation = WINFUNCTYPE(None)(('GetProcessInformation', dll))
 """
 Retrieves information about the specified process.
 
@@ -1053,7 +1053,7 @@ GetProcessInformation.argtypes = (
 GetProcessInformation.restype = BOOL
 
 
-CreateToolhelp32Snapshot = dll.CreateToolhelp32Snapshot
+CreateToolhelp32Snapshot = WINFUNCTYPE(None)(('CreateToolhelp32Snapshot', dll))
 """
 Takes a snapshot of the specified processes, as well as the heaps, modules, and threads used by these processes.
 
@@ -1084,7 +1084,7 @@ class PROCESSENTRY32W(Structure):
 	]
 
 
-Process32First = dll.Process32FirstW
+Process32First = WINFUNCTYPE(None)(('Process32FirstW', dll))
 """
 Retrieves information about the first process encountered in a system snapshot.
 
@@ -1097,7 +1097,7 @@ Process32First.argtypes = (
 )
 Process32First.restype = BOOL
 
-Process32Next = dll.Process32NextW
+Process32Next = WINFUNCTYPE(None)(('Process32NextW', dll))
 """
 Retrieves information about the next process recorded in a system snapshot.
 
@@ -1111,7 +1111,7 @@ Process32Next.argtypes = (
 Process32Next.restype = BOOL
 
 
-RegisterApplicationRestart = dll.RegisterApplicationRestart
+RegisterApplicationRestart = WINFUNCTYPE(None)(('RegisterApplicationRestart', dll))
 """
 Registers the active instance of an application for restart.
 
@@ -1125,7 +1125,7 @@ RegisterApplicationRestart.argtypes = (
 RegisterApplicationRestart.restype = HRESULT
 
 
-GetLastError = dll.GetLastError
+GetLastError = WINFUNCTYPE(None)(('GetLastError', dll))
 """
 Retrieves the calling thread's last-error code value.
 
@@ -1136,7 +1136,7 @@ GetLastError.argtypes = ()
 GetLastError.restype = DWORD
 
 
-GetStdHandle = dll.GetStdHandle
+GetStdHandle = WINFUNCTYPE(None)(('GetStdHandle', dll))
 """
 Retrieves a handle to the specified standard device.
 
@@ -1149,7 +1149,7 @@ GetStdHandle.argtypes = (
 GetStdHandle.restype = HANDLE
 
 
-CreateFile = dll.CreateFileW
+CreateFile = WINFUNCTYPE(None)(('CreateFileW', dll))
 """
 Creates or opens a file or I/O device.
 
@@ -1186,7 +1186,7 @@ class SYSTEM_POWER_STATUS(Structure):
 	)
 
 
-GetSystemPowerStatus = dll.GetSystemPowerStatus
+GetSystemPowerStatus = WINFUNCTYPE(None)(('GetSystemPowerStatus', dll))
 """
 Retrieves the power status of the system.
 
@@ -1199,7 +1199,7 @@ GetSystemPowerStatus.argtypes = (
 GetSystemPowerStatus.restype = BOOL
 
 
-GetThreadLocale = dll.GetThreadLocale
+GetThreadLocale = WINFUNCTYPE(None)(('GetThreadLocale', dll))
 """
 Returns the locale identifier for the current thread.
 
@@ -1210,7 +1210,7 @@ GetThreadLocale.argtypes = ()
 GetThreadLocale.restype = LCID
 
 
-Wow64DisableWow64FsRedirection = dll.Wow64DisableWow64FsRedirection
+Wow64DisableWow64FsRedirection = WINFUNCTYPE(None)(('Wow64DisableWow64FsRedirection', dll))
 """
 Disables file system redirection for the calling thread.
 
@@ -1223,7 +1223,7 @@ Wow64DisableWow64FsRedirection.argtypes = (
 Wow64DisableWow64FsRedirection.restype = BOOL
 
 
-Wow64RevertWow64FsRedirection = dll.Wow64RevertWow64FsRedirection
+Wow64RevertWow64FsRedirection = WINFUNCTYPE(None)(('Wow64RevertWow64FsRedirection', dll))
 """
 Restores file system redirection for the calling thread.
 
@@ -1270,7 +1270,7 @@ class FILETIME(Structure):
 	)
 
 
-FileTimeToSystemTime = dll.FileTimeToSystemTime
+FileTimeToSystemTime = WINFUNCTYPE(None)(('FileTimeToSystemTime', dll))
 """
 Converts a file time to system time format.
 
@@ -1303,7 +1303,7 @@ class TIME_ZONE_INFORMATION(Structure):
 	)
 
 
-SystemTimeToTzSpecificLocalTime = dll.SystemTimeToTzSpecificLocalTime
+SystemTimeToTzSpecificLocalTime = WINFUNCTYPE(None)(('SystemTimeToTzSpecificLocalTime', dll))
 """
 Converts a time in Coordinated Universal Time (UTC) to a specified time zone's corresponding local time.
 
@@ -1318,7 +1318,7 @@ SystemTimeToTzSpecificLocalTime.argtypes = (
 SystemTimeToTzSpecificLocalTime.restype = BOOL
 
 
-GetDateFormatEx = dll.GetDateFormatEx
+GetDateFormatEx = WINFUNCTYPE(None)(('GetDateFormatEx', dll))
 """
 Formats a date as a date string for a locale specified by name.
 
@@ -1337,7 +1337,7 @@ GetDateFormatEx.argtypes = (
 GetDateFormatEx.restype = c_int
 
 
-GetTimeFormatEx = dll.GetTimeFormatEx
+GetTimeFormatEx = WINFUNCTYPE(None)(('GetTimeFormatEx', dll))
 """
 Formats time as a time string for a locale specified by name.
 
@@ -1355,7 +1355,7 @@ GetTimeFormatEx.argtypes = (
 GetTimeFormatEx.restype = c_int
 
 
-WaitForSingleObjectEx = dll.WaitForSingleObjectEx
+WaitForSingleObjectEx = WINFUNCTYPE(None)(('WaitForSingleObjectEx', dll))
 """
 Waits until the specified object is in the signaled state, an I/O completion routine or APC is queued, or the time-out interval elapses.
 
@@ -1370,7 +1370,7 @@ WaitForSingleObjectEx.argtypes = (
 WaitForSingleObjectEx.restype = DWORD
 
 
-SetProcessShutdownParameters = dll.SetProcessShutdownParameters
+SetProcessShutdownParameters = WINFUNCTYPE(None)(('SetProcessShutdownParameters', dll))
 """
 Sets shutdown parameters for the currently calling process.
 
@@ -1384,7 +1384,7 @@ SetProcessShutdownParameters.argtypes = (
 SetProcessShutdownParameters.restype = BOOL
 
 
-GetExitCodeProcess = dll.GetExitCodeProcess
+GetExitCodeProcess = WINFUNCTYPE(None)(('GetExitCodeProcess', dll))
 """
 Retrieves the termination status of the specified process.
 
@@ -1398,7 +1398,7 @@ GetExitCodeProcess.argtypes = (
 GetExitCodeProcess.restype = BOOL
 
 
-TerminateProcess = dll.TerminateProcess
+TerminateProcess = WINFUNCTYPE(None)(('TerminateProcess', dll))
 """
 Terminates the specified process and all of its threads.
 
@@ -1412,7 +1412,7 @@ TerminateProcess.argtypes = (
 TerminateProcess.restype = BOOL
 
 
-GetDriveType = dll.GetDriveTypeW
+GetDriveType = WINFUNCTYPE(None)(('GetDriveTypeW', dll))
 """
 Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
 
@@ -1425,7 +1425,7 @@ GetDriveType.argtypes = (
 GetDriveType.restype = UINT
 
 
-CreatePipe = dll.CreatePipe
+CreatePipe = WINFUNCTYPE(None)(('CreatePipe', dll))
 """
 Creates an anonymous pipe and returns handles to the read and write ends of the pipe.
 
@@ -1441,7 +1441,7 @@ CreatePipe.argtypes = (
 CreatePipe.restype = BOOL
 
 
-MoveFileEx = dll.MoveFileExW
+MoveFileEx = WINFUNCTYPE(None)(('MoveFileExW', dll))
 """
 Moves an existing file or directory, including its children, with various move options.
 
@@ -1456,7 +1456,7 @@ MoveFileEx.argtypes = (
 MoveFileEx.restype = BOOL
 
 
-LCIDToLocaleName = dll.LCIDToLocaleName
+LCIDToLocaleName = WINFUNCTYPE(None)(('LCIDToLocaleName', dll))
 """
 Converts a locale identifier to a locale name.
 
@@ -1472,7 +1472,7 @@ LCIDToLocaleName.argtypes = (
 LCIDToLocaleName.restype = c_int
 
 
-GetLocaleInfoEx = dll.GetLocaleInfoEx
+GetLocaleInfoEx = WINFUNCTYPE(None)(('GetLocaleInfoEx', dll))
 """
 Retrieves information about a locale specified by name.
 
@@ -1488,7 +1488,7 @@ GetLocaleInfoEx.argtypes = (
 GetLocaleInfoEx.restype = c_int
 
 
-GetACP = dll.GetACP
+GetACP = WINFUNCTYPE(None)(('GetACP', dll))
 """
 Retrieves the current Windows ANSI code page identifier.
 
@@ -1498,7 +1498,7 @@ Retrieves the current Windows ANSI code page identifier.
 GetACP.argtypes = ()
 GetACP.restype = UINT
 
-SetThreadLocale = dll.SetThreadLocale
+SetThreadLocale = WINFUNCTYPE(None)(('SetThreadLocale', dll))
 """
 Sets the locale identifier for the current thread.
 
@@ -1511,7 +1511,7 @@ SetThreadLocale.argtypes = (
 SetThreadLocale.restype = BOOL
 
 
-GetApplicationUserModelId = dll.GetApplicationUserModelId
+GetApplicationUserModelId = WINFUNCTYPE(None)(('GetApplicationUserModelId', dll))
 """
 Retrieves the application user model ID for the specified process.
 
@@ -1525,7 +1525,7 @@ GetApplicationUserModelId.argtypes = (
 )
 GetApplicationUserModelId.restype = LONG
 
-GetOEMCP = dll.GetOEMCP
+GetOEMCP = WINFUNCTYPE(None)(('GetOEMCP', dll))
 """
 Retrieves the current OEM code page identifier.
 

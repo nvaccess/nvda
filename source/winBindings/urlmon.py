@@ -6,6 +6,7 @@
 """Functions exported by urlmon.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	windll,
 	POINTER,
 )
@@ -20,7 +21,7 @@ from objidl import IMoniker
 dll = windll.urlmon
 
 
-CreateURLMonikerEx = dll.CreateURLMonikerEx
+CreateURLMonikerEx = WINFUNCTYPE(None)(('CreateURLMonikerEx', dll))
 """
 Creates a URL moniker from a full or partial URL string.
 

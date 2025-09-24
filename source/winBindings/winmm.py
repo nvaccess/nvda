@@ -6,6 +6,7 @@
 """Functions exported by winmm.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	c_size_t,
 	windll,
 	c_long,
@@ -23,7 +24,7 @@ MMRESULT = c_long
 dll = windll.winmm
 
 
-waveOutGetNumDevs = dll.waveOutGetNumDevs
+waveOutGetNumDevs = WINFUNCTYPE(None)(('waveOutGetNumDevs', dll))
 """
 Retrieves the number of waveform-audio output devices present in the system.
 
@@ -33,7 +34,7 @@ Retrieves the number of waveform-audio output devices present in the system.
 waveOutGetNumDevs.restype = UINT
 waveOutGetNumDevs.argtypes = ()
 
-waveOutMessage = dll.waveOutMessage
+waveOutMessage = WINFUNCTYPE(None)(('waveOutMessage', dll))
 """
 Sends a message to the given waveform-audio output device.
 

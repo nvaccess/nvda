@@ -6,6 +6,7 @@
 """Functions exported by shlwapi.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	c_uint,
 	c_void_p,
 	c_wchar_p,
@@ -19,7 +20,7 @@ from ctypes import (
 dll = windll.shlwapi
 
 
-SHLoadIndirectString = dll.SHLoadIndirectString
+SHLoadIndirectString = WINFUNCTYPE(None)(('SHLoadIndirectString', dll))
 """
 Extracts a specified text resource when given an indirect string.
 

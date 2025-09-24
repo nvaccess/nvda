@@ -6,6 +6,7 @@
 """Functions exported by advapi32.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	sizeof,
 	Structure,
 	POINTER,
@@ -39,7 +40,7 @@ __all__ = (
 dll = windll.advapi32
 
 
-OpenProcessToken = dll.OpenProcessToken
+OpenProcessToken = WINFUNCTYPE(None)(('OpenProcessToken', dll))
 """
 Opens the access token associated with a process.
 .. seealso::
@@ -52,7 +53,7 @@ OpenProcessToken.argtypes = (
 )
 OpenProcessToken.restype = BOOL
 
-RegCloseKey = dll.RegCloseKey
+RegCloseKey = WINFUNCTYPE(None)(('RegCloseKey', dll))
 """
 Closes a handle to the specified registry key.
 
@@ -64,7 +65,7 @@ RegCloseKey.argtypes = (
 )
 RegCloseKey.restype = LONG
 
-RegDeleteTree = dll.RegDeleteTreeW
+RegDeleteTree = WINFUNCTYPE(None)(('RegDeleteTreeW', dll))
 """
 Deletes a subkey and all its descendants.
 .. seealso::
@@ -80,7 +81,7 @@ RegDeleteTree.argtypes = (
 )
 RegDeleteTree.restype = LONG
 
-RegOpenKeyEx = dll.RegOpenKeyExW
+RegOpenKeyEx = WINFUNCTYPE(None)(('RegOpenKeyExW', dll))
 """
 Opens the specified registry key.
 .. seealso::
@@ -95,7 +96,7 @@ RegOpenKeyEx.argtypes = (
 )
 RegOpenKeyEx.restype = LONG
 
-RegQueryValueEx = dll.RegQueryValueExW
+RegQueryValueEx = WINFUNCTYPE(None)(('RegQueryValueExW', dll))
 """
 Retrieves the type and data for a specified value name associated with an open registry key.
 .. seealso::
@@ -179,7 +180,7 @@ class SECURITY_ATTRIBUTES(Structure):
 	)
 
 
-CreateProcessAsUser = dll.CreateProcessAsUserW
+CreateProcessAsUser = WINFUNCTYPE(None)(('CreateProcessAsUserW', dll))
 """
 Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
 .. seealso::
@@ -200,7 +201,7 @@ CreateProcessAsUser.argtypes = (
 )
 CreateProcessAsUser.restype = BOOL
 
-GetTokenInformation = dll.GetTokenInformation
+GetTokenInformation = WINFUNCTYPE(None)(('GetTokenInformation', dll))
 """
 Retrieves a specified type of information about an access token.
 .. seealso::
