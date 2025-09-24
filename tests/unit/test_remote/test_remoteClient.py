@@ -2,7 +2,6 @@
 # Copyright (C) 2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-import time
 import unittest
 from unittest.mock import MagicMock, patch
 import _remoteClient.client as rcClient
@@ -259,7 +258,9 @@ class TestRemoteClient(unittest.TestCase):
 		self.assertTrue(self.client.sendingKeys, "We just started sending keys")
 		print(list(post_sessionLockStateChanged.handlers))
 		post_sessionLockStateChanged.notify(isNowLocked=True)
-		self.assertFalse(self.client.sendingKeys, "We should stop sending keys when switching to the lockscreen")
+		self.assertFalse(
+			self.client.sendingKeys, "We should stop sending keys when switching to the lockscreen"
+		)
 
 
 if __name__ == "__main__":
