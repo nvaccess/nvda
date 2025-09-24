@@ -76,6 +76,8 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
+* `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
+All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 
 #### Deprecations
 
@@ -152,9 +154,6 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
-* `visionEnhancementProviders.screenCurtain.Magnification` is deprecated.
-Use `winBindings.magnification` instead.
-Note that this is a module, not a class, so some API consumers may be unable to use the automatic migration provided. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 

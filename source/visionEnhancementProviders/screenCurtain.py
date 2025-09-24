@@ -28,7 +28,6 @@ from winBindings import magnification
 from utils import _deprecate
 
 __getattr__ = _deprecate.handleDeprecations(
-	_deprecate.MovedSymbol("Magnification", "winBindings", "magnification"),
 	_deprecate.MovedSymbol("MAGCOLOREFFECT", "winBindings.magnification"),
 	_deprecate.MovedSymbol("isScreenFullyBlack", "NVDAHelper.localLib"),
 )
