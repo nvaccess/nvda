@@ -18,7 +18,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
-An action has been added to view the full scan results on VirusTotal. (#18974)
+An action has been added to view the full scan results on the VirusTotal website. (#18974)
 
 ### Changes
 
