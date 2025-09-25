@@ -10,6 +10,7 @@ import gui
 from logHandler import log
 import globalVars
 from . import guiHelper
+from . import nvdaControls
 import gui.contextHelp
 
 
@@ -34,6 +35,7 @@ class ProfilesDialog(
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super().__init__(parent, title=_("Configuration Profiles"))
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -358,6 +360,7 @@ class TriggersDialog(
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
 		super().__init__(parent, title=_("Profile Triggers"))
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -450,6 +453,7 @@ class NewProfileDialog(
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
 		super().__init__(parent, title=_("New Profile"))
+		self.SetFont(nvdaControls.FontActions.getFontFromConfig())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
