@@ -567,7 +567,10 @@ class WordSegmenter:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
 				self.text,
 			) and not WordSegmenter._KANA.search(self.text):
-				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
+					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				else:
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 			else:
 				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 		else:
@@ -575,9 +578,12 @@ class WordSegmenter:
 				case WordSegFlag.UNISCRIBE:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case WordSegFlag.CHINESE:
-					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
+						return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					else:
+						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case _:
-					pass
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""

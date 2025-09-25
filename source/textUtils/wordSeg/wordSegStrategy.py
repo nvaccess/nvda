@@ -131,12 +131,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	@classmethod
 	@initializerRegistry
-	def _ensureLibLoaded(cls):  # TODO: make cppjieba alternative
+	def _initCppJieba(cls):  # TODO: make cppjieba alternative
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
 		set up ctypes signatures.
 		"""
-		if cls._lib is not None:
+		import config
+
+		if not config.conf["general"]["language"].startswith("zh") or cls._lib is not None:
 			return
 		try:
 			from NVDAState import ReadPaths
