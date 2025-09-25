@@ -6,6 +6,7 @@
 """Functions exported by shcore.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	c_long,
 	windll,
 )
@@ -15,7 +16,7 @@ from comtypes import HRESULT
 dll = windll.shcore
 
 
-SetProcessDpiAwareness = dll.SetProcessDpiAwareness
+SetProcessDpiAwareness = WINFUNCTYPE(None)(("SetProcessDpiAwareness", dll))
 """
 Sets the current process to a specified dots per inch (DPI) awareness level. The DPI awareness levels are from the PROCESS_DPI_AWARENESS enumeration.
 
