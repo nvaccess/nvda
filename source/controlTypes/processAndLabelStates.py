@@ -5,9 +5,11 @@
 
 from typing import Dict, List, Optional, Set
 
-from .role import Role, clickableRoles
-from .state import State, STATES_SORTED, STATES_LINK_TYPE
+import config
+
 from .outputReason import OutputReason
+from .role import Role, clickableRoles
+from .state import STATES_LINK_TYPE, STATES_SORTED, State
 
 
 def _processPositiveStates(
@@ -33,9 +35,6 @@ def _processPositiveStates(
 		positiveStates.discard(State.VISITED)
 		positiveStates.discard(State.INTERNAL_LINK)
 	positiveStates.discard(State.SELECTABLE)
-
-	import config
-
 	if not config.conf["presentation"]["reportMultiSelect"]:
 		positiveStates.discard(State.MULTISELECTABLE)
 	positiveStates.discard(State.FOCUSABLE)
