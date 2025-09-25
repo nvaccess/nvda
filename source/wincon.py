@@ -6,8 +6,11 @@
 
 from ctypes import (
 	byref,
+	cast,
 	WinError,
 	create_unicode_buffer,
+	c_char,
+	c_void_p,
 )
 from ctypes.wintypes import DWORD
 import winBindings.kernel32
@@ -85,10 +88,13 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 		== 0
 	):
 		raise WinError()
-	rawBytes = buf.value.encode("utf-16")
+	numRawBytes = numCharsRead.value * 2
+	rawBuf = (c_char * numRawBytes).from_address(
+		cast(buf, c_void_p).value or 0
+	)
 	return textUtils.getTextFromRawBytes(
-		rawBytes,
-		numChars=len(rawBytes),
+		rawBuf.raw,
+		numChars=numCharsRead.value,
 		encoding=textUtils.WCHAR_ENCODING,
 	)
 
