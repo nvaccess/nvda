@@ -523,15 +523,7 @@ def _unregisterEaseOfAccessApp():
 			winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
-		log.debug("Ease of Access app key not found for 64-bit, nothing to unregister.")
-	try:
-		winreg.DeleteKeyEx(
-			winreg.HKEY_LOCAL_MACHINE,
-			_RegistryKeyX86.EASE_OF_ACCESS_APP.value,
-			winreg.KEY_WOW64_64KEY,
-		)
-	except WindowsError:
-		log.debug("Ease of Access app key not found for 32-bit, nothing to unregister.")
+		log.debug("Ease of Access app key not found nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:

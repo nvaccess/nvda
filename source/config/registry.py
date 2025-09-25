@@ -28,6 +28,8 @@ class RegistryKey(str, Enum):
 	NT_CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
 	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
 	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
+	# This should always be accessed with 64-bit view of the registry.
+	# TODO: remove winreg.KEY_WOW64_64KEY from usages when NVDA is 64-bit only.
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
 	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
@@ -65,6 +67,5 @@ class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 	NT_CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
 	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
 	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
-	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
 	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
