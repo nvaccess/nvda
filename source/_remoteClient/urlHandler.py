@@ -44,7 +44,7 @@ def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 				try:
 					_createRegistryStructure(subkey, value)
 				finally:
-					winreg.CloseKey(subkey)
+					subkey.Close()
 			except WindowsError as e:
 				raise OSError(f"Failed to create registry subkey {name}: {e}")
 		else:

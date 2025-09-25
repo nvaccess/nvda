@@ -141,8 +141,6 @@ def isInstalledCopy() -> bool:
 			exc_info=True,
 		)
 		return False
-	else:
-		k.Close()
 
 	try:
 		instDir = winreg.QueryValueEx(k, "UninstallDirectory")[0]
@@ -156,7 +154,7 @@ def isInstalledCopy() -> bool:
 		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
 		return False
 
-	winreg.CloseKey(k)
+	k.Close()
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except (WindowsError, FileNotFoundError):
