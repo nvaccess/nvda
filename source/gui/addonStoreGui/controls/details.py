@@ -374,7 +374,7 @@ class AddonDetails(
 								# {malicious} is the number of vendors that detected the add-on as malicious,
 								# {total} is the total number of vendors that scanned the add-on.
 								# In the add-on store dialog.
-								"{malicious} out of {total} malware scanners detected this add-on as malicious.",
+								"{malicious} out of {total} malware scanners detected this add-on as potentially malicious.",
 							).format(
 								malicious=details.scanResults.totalFlagged,
 								total=details.scanResults.totalScans,

@@ -3927,7 +3927,7 @@ The functionality of add-ons is unrestricted inside NVDA.
 This could include accessing and modifying your personal data or even the entire system.
 
 Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).
-This can detect known malware from when the add-on was submitted.
+This can detect malware that was known when the add-on was submitted.
 However, VirusTotal results may be inaccurate or out of date.
 For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.
 You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.
