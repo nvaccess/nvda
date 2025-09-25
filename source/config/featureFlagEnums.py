@@ -148,7 +148,7 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 			# Translators: Label for a method of word segmentation.
 			self.AUTO: _("Auto"),
 			# Translators: Label for a method of word segmentation.
-			self.UNISCRIBE: _("Uniscribe"),
+			self.UNISCRIBE: _("Standard"),
 			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
 		}
