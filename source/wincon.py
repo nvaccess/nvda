@@ -67,8 +67,8 @@ CONSOLE_MOUSE_DOWN = 0x8
 
 def GetConsoleSelectionInfo():
 	info = _CONSOLE_SELECTION_INFO()
-	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:
+		raise WinError()
 	return info
 
 
@@ -99,38 +99,38 @@ def ReadConsoleOutput(handle, length, rect):
 	buf = BufType()
 	# rect=SMALL_RECT(x, y, x+length-1, y)
 	if (
-		winBindings.kernel32.ReadConsoleOutput(  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutput(
 			handle,
 			buf,
 			_COORD(rect.Right - rect.Left + 1, rect.Bottom - rect.Top + 1),
 			_COORD(0, 0),
-			byref(rect),  # noqa: F405
+			byref(rect),
 		)
 		== 0
-	):  # noqa: F405
-		raise WinError()  # noqa: F405
+	):
+		raise WinError()
 	return buf
 
 
 def GetConsoleScreenBufferInfo(handle):
 	info = _CONSOLE_SCREEN_BUFFER_INFO()
-	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:
+		raise WinError()
 	return info
 
 
 def FreeConsole():
-	if winBindings.kernel32.FreeConsole() == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.FreeConsole() == 0:
+		raise WinError()
 
 
 def AttachConsole(processID):
-	if winBindings.kernel32.AttachConsole(processID) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.AttachConsole(processID) == 0:
+		raise WinError()
 
 
 def GetConsoleWindow():
-	return winBindings.kernel32.GetConsoleWindow()  # noqa: F405
+	return winBindings.kernel32.GetConsoleWindow()
 
 
 def GetConsoleProcessList(maxProcessCount):
@@ -140,5 +140,5 @@ def GetConsoleProcessList(maxProcessCount):
 
 
 def SetConsoleCtrlHandler(handler, add):
-	if winBindings.kernel32.SetConsoleCtrlHandler(handler, add) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.SetConsoleCtrlHandler(handler, add) == 0:
+		raise WinError()
