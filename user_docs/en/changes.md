@@ -17,6 +17,9 @@ This can be enabled using the "Report when lists support multiple selection" set
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+* VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
+An action has been added to view the full scan results on the VirusTotal website. (#18974)
+* In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 
 ### Changes
 
@@ -48,7 +51,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
-  * The changelog should document changes between previous and latest add-on versions.
+  * The changelog should document changes between previous and latest add-on versions, and can be formatted in markdown.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
@@ -78,6 +81,9 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
+* The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
+* `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
+All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 
 #### Deprecations
 
@@ -153,6 +159,10 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
+* `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
+Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
+* `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
+Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
