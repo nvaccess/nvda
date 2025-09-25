@@ -90,7 +90,7 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 		raise WinError()
 	numRawBytes = numCharsRead.value * 2
 	rawBuf = (c_char * numRawBytes).from_address(
-		cast(buf, c_void_p).value or 0
+		cast(buf, c_void_p).value or 0,
 	)
 	return textUtils.getTextFromRawBytes(
 		rawBuf.raw,
