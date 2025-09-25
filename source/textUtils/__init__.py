@@ -559,9 +559,9 @@ class WordSegmenter:
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordSegFlag: WordSegFlag = wordSegFlag
-		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._choose_strategy()
+		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._chooseStrategy()
 
-	def _choose_strategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
+	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.AUTO:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
