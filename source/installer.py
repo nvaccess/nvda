@@ -520,7 +520,8 @@ def _unregisterEaseOfAccessApp():
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.EASE_OF_ACCESS_APP.value,
-			winreg.KEY_WOW64_64KEY,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
 		log.debug("Ease of Access app key not found nothing to unregister.")
@@ -549,6 +550,7 @@ def _unregisterFromStartMenu():
 	startMenuPath = os.path.join(programsPath, startMenuFolder)
 	if os.path.isdir(startMenuPath):
 		shutil.rmtree(startMenuPath, ignore_errors=True)
+	# Also remove the x86 start menu folder if it is different.
 	startMenuFolderX86 = WritePaths._startMenuFolderX86
 	if startMenuFolderX86 is None:
 		startMenuFolderX86 = WritePaths.defaultStartMenuFolder
@@ -559,9 +561,11 @@ def _unregisterFromStartMenu():
 
 def _unregisterFromUninstallRegistry():
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.INSTALLED_COPY.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
 		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
@@ -576,9 +580,11 @@ def _unregisterFromUninstallRegistry():
 
 def _unregisterFromAppPathRegistry():
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP_PATH.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
 		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
@@ -593,11 +599,19 @@ def _unregisterFromAppPathRegistry():
 
 def _unregisterFromSoftwareRegistry():
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.NVDA.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
+		)
 	except WindowsError:
 		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKeyX86.NVDA.value)
+		winreg.DeleteKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			_RegistryKeyX86.NVDA.value,
+		)
 	except WindowsError:
 		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
 
