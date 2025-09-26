@@ -69,6 +69,17 @@ class WordSegmentationStrategy(ABC):
 		"""Segmented result with separators."""
 		pass
 
+	def getWordOffsetRange(
+			self,
+			offset: int,
+		) -> tuple[int, int] | None:
+		"""Helper to get word offset range from a list of word end offsets."""
+		if not self.wordEnds:
+			return None
+		index = next((i for i, end in enumerate(self.wordEnds) if end > offset), len(self.wordEnds) - 1)
+		start = 0 if index == 0 else self.wordEnds[index - 1]
+		end = self.wordEnds[index]
+		return (start, end)
 
 class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 	"""Windows Uniscribe-based segmentation (calls NVDAHelper.localLib.calculateWordOffsets)."""
@@ -357,17 +368,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		return result
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
-		wordEnds = self._callCPPJieba()
-		if wordEnds is None or not wordEnds:
-			return
-		index = next((i for i, end in enumerate(wordEnds) if end > offset))
-		if index == 0:
-			start = 0
-		else:
-			start = wordEnds[index - 1]
-		end = wordEnds[index] if index < len(wordEnds) else len(self.text)
-		return (start, end)
+		return self.getWordOffsetRange(offset)
 
 	def __init__(self, text, encoding=None):
 		super().__init__(text, encoding)
-		self.wordEndIndex = self._callCPPJieba()
+		self.wordEnds = self._callCPPJieba()
