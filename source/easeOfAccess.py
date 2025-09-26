@@ -127,6 +127,8 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 			exc_info=True,
 		)
 		return []
+	else:
+		k.Close()
 
 	try:
 		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
@@ -167,15 +169,15 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 		changed = True
 
 	if changed:
-		k = winreg.OpenKey(
+		with winreg.OpenKey(
 			autoStartContext.value,
 			_RegistryKey.EASE_OF_ACCESS.value,
 			access=winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
-		)
-		winreg.SetValueEx(
-			k,
-			"Configuration",
-			None,
-			winreg.REG_SZ,
-			",".join(conf),
-		)
+		) as k:
+			winreg.SetValueEx(
+				k,
+				"Configuration",
+				None,
+				winreg.REG_SZ,
+				",".join(conf),
+			)
