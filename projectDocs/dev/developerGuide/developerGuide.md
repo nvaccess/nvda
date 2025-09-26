@@ -1028,6 +1028,7 @@ When uploading to the Add-on Store certain requirements apply:
 * changelog (string): A list of changes between previous and latest add-on releases.
   * This is used to inform users about changes included in the add-on release.
   * Changes can include new features, changes, bug fixes, and localization updates if any.
+  * Markdown can be used to format the list of changes, as they will be converted to HTML to be shown in browse mode.
   * When releasing add-on updates, changes should be edited if possible.
   This means not all add-on releases will include notable changes.
 * url (string): A URL where this add-on, further info and upgrades can be found.

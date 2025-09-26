@@ -362,6 +362,30 @@ class AddonDetails(
 							pgettext("addonStore", "Publication date:"),
 							details.publicationDate,
 						)
+
+				if isinstance(details, _AddonStoreModel):
+					if details.scanResults is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "VirusTotal scan results:"),
+							pgettext(
+								"addonStore",
+								# Translators: Summary of VirusTotal scan results for the selected add-on.
+								# {malicious} is the number of vendors that detected the add-on as malicious,
+								# {total} is the total number of vendors that scanned the add-on.
+								# In the add-on store dialog.
+								"{malicious} out of {total} malware scanners detected this add-on as potentially malicious.",
+							).format(
+								malicious=details.scanResults.totalFlagged,
+								total=details.scanResults.totalScans,
+							),
+						)
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "VirusTotal scan URL:"),
+							details.scanResults.scanUrl,
+						)
+
 				self.contentsPanel.Show()
 
 		self.Layout()

@@ -323,6 +323,8 @@ def GetDateFormatEx(Locale, dwFlags, date, lpFormat):
 
 
 def GetTimeFormatEx(Locale, dwFlags, date, lpFormat):
+	if dwFlags is None:
+		dwFlags = 0
 	if date is not None:
 		date = _SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
 		lpTime = byref(date)

@@ -17,6 +17,8 @@ from typing import (
 import threading
 
 import addonHandler
+from markdown import markdown
+import ui
 from addonStore.dataManager import addonDataManager
 from addonStore.install import installAddon
 from addonStore.models.addon import (
@@ -256,6 +258,36 @@ class AddonStoreVM:
 				),
 				validCheck=lambda aVM: (
 					isinstance(aVM.model, _AddonStoreModel) and aVM.model.reviewURL is not None
+				),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that opens the VirusTotal scan results for the selected addon
+				displayName=pgettext("addonStore", "VirusTotal scan results"),
+				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).scanResults.scanUrl),
+				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel)
+				and aVM.model.scanResults is not None,
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that shows changelog for the selected addon
+				displayName=pgettext("addonStore", "&What's new"),
+				actionHandler=lambda aVM: ui.browseableMessage(
+					markdown(
+						str(
+							cast(_AddonStoreModel, aVM.model).changelog,
+						),
+					),
+					# Translators: Title for a message showing changes for the current add-on version.
+					title=pgettext("addonStore", "Changes for {curVersion}").format(
+						curVersion=aVM.model.addonVersionName,
+					),
+					isHtml=True,
+					copyButton=True,
+					closeButton=True,
+				),
+				validCheck=lambda aVM: (
+					isinstance(aVM.model, _AddonStoreModel) and aVM.model.changelog is not None
 				),
 				actionTarget=selectedListItem,
 			),

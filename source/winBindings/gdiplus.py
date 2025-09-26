@@ -6,6 +6,7 @@
 """Functions exported by gdiplus.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	Structure,
 	c_float,
 	c_int,
@@ -65,7 +66,7 @@ class GdiplusStartupOutput(Structure):
 	]
 
 
-GdiplusStartup = dll.GdiplusStartup
+GdiplusStartup = WINFUNCTYPE(None)(("GdiplusStartup", dll))
 """
 Initializes Windows GDI+.
 
@@ -80,7 +81,7 @@ GdiplusStartup.argtypes = (
 )
 
 
-GdiplusShutdown = dll.GdiplusShutdown
+GdiplusShutdown = WINFUNCTYPE(None)(("GdiplusShutdown", dll))
 """
 Cleans up resources used by Windows GDI+.
 
@@ -93,7 +94,7 @@ GdiplusShutdown.argtypes = (
 )
 
 
-GdipCreateFromHDC = dll.GdipCreateFromHDC
+GdipCreateFromHDC = WINFUNCTYPE(None)(("GdipCreateFromHDC", dll))
 """
 Creates a Graphics object that is associated with a specified device context.
 
@@ -109,7 +110,7 @@ GdipCreateFromHDC.argtypes = (
 )
 
 
-GdipCreatePen1 = dll.GdipCreatePen1
+GdipCreatePen1 = WINFUNCTYPE(None)(("GdipCreatePen1", dll))
 """
 Creates a Pen object that has specified color, width, and style.
 
@@ -125,7 +126,7 @@ GdipCreatePen1.argtypes = (
 )
 
 
-GdipSetPenDashStyle = dll.GdipSetPenDashStyle
+GdipSetPenDashStyle = WINFUNCTYPE(None)(("GdipSetPenDashStyle", dll))
 """
 Sets the dash style of a Pen object.
 
@@ -139,7 +140,7 @@ GdipSetPenDashStyle.argtypes = (
 )
 
 
-GdipDrawLine = dll.GdipDrawLine
+GdipDrawLine = WINFUNCTYPE(None)(("GdipDrawLine", dll))
 """
 Draws a line.
 
@@ -157,7 +158,7 @@ GdipDrawLine.argtypes = (
 )
 
 
-GdipDrawRectangle = dll.GdipDrawRectangle
+GdipDrawRectangle = WINFUNCTYPE(None)(("GdipDrawRectangle", dll))
 """
 Draws a rectangle.
 
@@ -175,7 +176,7 @@ GdipDrawRectangle.argtypes = (
 )
 
 
-GdipDeletePen = dll.GdipDeletePen
+GdipDeletePen = WINFUNCTYPE(None)(("GdipDeletePen", dll))
 """
 Deletes a Pen object.
 
@@ -188,7 +189,7 @@ GdipDeletePen.argtypes = (
 )
 
 
-GdipDeleteGraphics = dll.GdipDeleteGraphics
+GdipDeleteGraphics = WINFUNCTYPE(None)(("GdipDeleteGraphics", dll))
 """
 Deletes a Graphics object.
 
