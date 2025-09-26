@@ -6,6 +6,7 @@
 """Functions exported by dbgHelp.dll, and supporting data structures and enumerations."""
 
 from ctypes import (
+	WINFUNCTYPE,
 	c_void_p,
 	POINTER,
 	Structure,
@@ -37,7 +38,7 @@ PMINIDUMP_CALLBACK_INFORMATION = c_void_p
 dll = windll.dbgHelp
 
 
-MiniDumpWriteDump = dll.MiniDumpWriteDump
+MiniDumpWriteDump = WINFUNCTYPE(None)(("MiniDumpWriteDump", dll))
 """
 Writes a memory dump of the specified process to a file.
 .. seealso::
