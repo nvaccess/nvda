@@ -5597,7 +5597,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# And finally the Advanced panel which should always be last.
 	if not globalVars.appArgs.secure:
 		categoryClasses.append(ConfigProfilesSettingsPanel)
-
+		# And finally the Advanced panel which should always be last.
 		categoryClasses.append(AdvancedPanel)
 
 	def makeSettings(self, settingsSizer):
