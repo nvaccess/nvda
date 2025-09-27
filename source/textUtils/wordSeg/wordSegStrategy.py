@@ -275,7 +275,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
-		from .wordSegUtils import NO_SEP_BEFORE, NO_SEP_AFTER
 
 		if len(self.wordEndIndex) <= 1:
 			return self.text
