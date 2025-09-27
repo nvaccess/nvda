@@ -275,16 +275,17 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
-		from .wordSegUtils import NO_SEP_BEFORE, NO_SEP_AFTER
 
-		if len(self.wordEndIndex) <= 1:
+		if len(self.wordEnds) <= 1:
 			return self.text
 
+		from .wordSegUtils import NO_SEP_BEFORE, NO_SEP_AFTER
+
 		result = ""
-		for sepIndex in range(len(self.wordEndIndex) - 1):
-			preIndex = 0 if sepIndex == 0 else self.wordEndIndex[sepIndex - 1]
-			curIndex = self.wordEndIndex[sepIndex]
-			postIndex = self.wordEndIndex[sepIndex + 1]
+		for sepIndex in range(len(self.wordEnds) - 1):
+			preIndex = 0 if sepIndex == 0 else self.wordEnds[sepIndex - 1]
+			curIndex = self.wordEnds[sepIndex]
+			postIndex = self.wordEnds[sepIndex + 1]
 
 			# append the token before the potential separator position
 			result += self.text[preIndex:curIndex]
@@ -298,9 +299,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			nextSlice = self.text[curIndex:postIndex]
 
 			# Determine whether any punctuation forbids a separator BEFORE the next token
-			noSepBefore = any(nextSlice.startswith(s) for s in self.NO_SEP_BEFORE)
+			noSepBefore = any(nextSlice.startswith(s) for s in NO_SEP_BEFORE)
 			# Determine whether any punctuation forbids a separator AFTER the current result
-			noSepAfter = any(result.endswith(s) for s in self.NO_SEP_AFTER)
+			noSepAfter = any(result.endswith(s) for s in NO_SEP_AFTER)
 
 			if not (noSepBefore or noSepAfter):
 				# If neither side forbids the separator, add it
