@@ -262,6 +262,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
+	initWordSegForUnusedLang = boolean(default=false)
 	wordSegmentationStandard = featureFlag(optionsEnum="WordNavigationUnitFlag", behaviorOfDefault="Auto")
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 

@@ -17,6 +17,7 @@ from abc import ABC, abstractmethod
 from functools import lru_cache
 from collections.abc import Callable
 from typing import Any
+import re
 
 import textUtils
 from logHandler import log
@@ -81,6 +82,13 @@ class WordSegmentationStrategy(ABC):
 		end = self.wordEnds[index]
 		return (start, end)
 
+	@classmethod
+	def isUsingRelatedLanguage(cls) -> bool:
+		"""Returns True if this strategy is for the current language."""
+		return re.match(cls._LANGUAGE_PATTERN, languageHandler.getWindowsLanguage()) \
+			or re.match(cls._LANGUAGE_PATTERN, languageHandler.getLanguage()) \
+			or re.match(cls._LANGUAGE_PATTERN, braille.handler.table.fileName)
+
 class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 	"""Windows Uniscribe-based segmentation (calls NVDAHelper.localLib.calculateWordOffsets)."""
 
@@ -139,6 +147,7 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 
 class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	_lib = None
+	_LANGUAGE_PATTERN = re.compile(r"^zh", re.IGNORECASE)
 
 	@classmethod
 	@initializerRegistry
@@ -148,8 +157,12 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		set up ctypes signatures.
 		"""
 		import config
+		import braille
+		import languageHandler
 
-		if not config.conf["general"]["language"].startswith("zh") or cls._lib is not None:
+		if cls._lib is not None \
+  			or not (config.conf["documentNavigation"]["initWordSegForUnusedLang"] \
+			or cls.isUsingRelatedLanguage()):
 			return
 		try:
 			from NVDAState import ReadPaths
