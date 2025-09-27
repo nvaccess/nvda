@@ -85,6 +85,9 @@ class WordSegmentationStrategy(ABC):
 	@classmethod
 	def isUsingRelatedLanguage(cls) -> bool:
 		"""Returns True if this strategy is for the current language."""
+		import languageHandler
+		import braille
+
 		return (
 			re.match(cls._LANGUAGE_PATTERN, languageHandler.getWindowsLanguage())
 			or re.match(cls._LANGUAGE_PATTERN, languageHandler.getLanguage())
