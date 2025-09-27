@@ -280,6 +280,7 @@ class ARTManager:
 			Pyro5.serializers.serializers[f"addon_{serializer_id}"] = encrypted_ser
 
 			log.info(f"Generated encryption for addon {addon_name}: serializer_id={serializer_id}")
+			log.info(f"Registered EncryptedSerializer in core: by_id[{serializer_id}] and by_name['addon_{serializer_id}']")
 			self._next_serializer_id += 1
 
 			return {
