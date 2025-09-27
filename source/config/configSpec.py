@@ -369,6 +369,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
 		muteOnLocalControl = boolean(default=False)
+["configProfiles"]
+	"reportProfileNameWhenSwitching" = boolean(default=False)
 """
 
 #: The configuration specification

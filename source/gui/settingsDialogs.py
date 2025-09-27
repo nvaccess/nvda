@@ -3733,6 +3733,24 @@ class UwpOcrPanel(SettingsPanel):
 		config.conf["uwpOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
 
 
+class ConfigProfilesSettingsPanel(SettingsPanel):
+	# Translators: Title of the Configuration Profiles settings panel.
+	title = pgettext("configProfilesSettings", "Configuration profiles")
+	helpId = "ConfigProfiles"
+
+	def makeSettings(self, sizer: wx.BoxSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+
+		self.reportProfileNameWhenSwitching = sHelper.addItem(
+			# Translators: Label of a checkbox in Configuration Profiles settings.
+			wx.CheckBox(self, label=pgettext("configProfilesSettings", "Report editing profile &name when switching profiles")),
+		)
+
+	def onSave(self):
+		config.conf["configProfiles"]["reportProfileNameWhenSwitching"] = self.reportProfileNameWhenSwitching.IsChecked()
+
+
+
 class AdvancedPanelControls(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
@@ -5566,6 +5584,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
+		ConfigProfilesSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
@@ -5577,6 +5596,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		categoryClasses.append(UwpOcrPanel)
 	# And finally the Advanced panel which should always be last.
 	if not globalVars.appArgs.secure:
+		categoryClasses.append(ConfigProfilesSettingsPanel)
+
 		categoryClasses.append(AdvancedPanel)
 
 	def makeSettings(self, settingsSizer):
@@ -5594,6 +5615,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
+			or isinstance(self.currentCategory, ConfigProfilesSettingsPanel)
+
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
