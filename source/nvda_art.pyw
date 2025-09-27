@@ -438,7 +438,8 @@ def _setup_encryption(addon_crypto: dict) -> None:
 		Pyro5.config.SERIALIZER = serializer_name
 
 		artLogger.info(f"Addon encryption configured: serializer_id={serializer_id}, name={serializer_name}")
-		artLogger.debug(f"Pyro5 default serializer set to: {Pyro5.config.SERIALIZER}")
+		artLogger.info(f"Registered EncryptedSerializer in ART: by_id[{serializer_id}] and by_name['{serializer_name}']")
+		artLogger.info(f"Pyro5 default serializer set to: {Pyro5.config.SERIALIZER}")
 	except Exception:
 		artLogger.exception("Failed to set up addon encryption")
 		raise
