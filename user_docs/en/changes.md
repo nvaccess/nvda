@@ -20,6 +20,8 @@ This can be enabled using the "Report when lists support multiple selection" set
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* Chinese text can be navigated by word via build-in input gestures.
+  Several GUI elements are added for its configuration in `Document Navigation` panel. (#18735, @CrazySteve0605)
 
 ### Changes
 
@@ -164,6 +166,8 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `useUniscribe` from `textUtils.offset.OffsetsTextInfo` and its subclasses is deprecated.
+  Use `charSegFlag` and `wordSegFlag` instead. (#18735)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
