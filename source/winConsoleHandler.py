@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2025 NV Access Limited, Babbage B.V.
 
+from ctypes.wintypes import SMALL_RECT
 import gui
 import winUser
 import winBindings.kernel32
@@ -264,7 +265,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatConfig = config.conf["documentFormatting"]
 		left, top = self._consoleCoordFromOffset(self._startOffset)
 		right, bottom = self._consoleCoordFromOffset(self._endOffset - 1)
-		rect = wincon.SMALL_RECT(left, top, right, bottom)
+		rect = SMALL_RECT(left, top, right, bottom)
 		if bottom - top > 0:  # offsets span multiple lines
 			rect.Left = 0
 			rect.Right = self.consoleScreenBufferInfo.dwSize.x - 1

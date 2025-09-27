@@ -1,13 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2019-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
 
 """Unit tests for the textUtils module."""
 
 import unittest
 
-from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter
+from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
 from textUtils.uniscribe import splitAtCharacterBoundaries
 
 FACE_PALM = "\U0001f926"  # 🤦
@@ -442,3 +442,45 @@ class TestUniscribeSplitAtCharacterBoundaries(unittest.TestCase):
 
 	def test_hebrew(self):
 		self._testHelper("בְּרֵאשִׁית", ["בְּ", "רֵ", "א", "שִׁ", "י", "ת"])
+
+
+class TestWordSegmenter(unittest.TestCase):
+	"""Tests for the WordSegmenter class."""
+
+	def test_basicLatin(self):
+		text = "hello world"
+		segmenter = WordSegmenter(text)
+		self.assertEqual(segmenter.getSegmentForOffset(0), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(1), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(2), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(3), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(4), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(5), (0, 6))
+		self.assertEqual(segmenter.getSegmentForOffset(6), (6, 11))
+		self.assertEqual(segmenter.getSegmentForOffset(7), (6, 11))
+		self.assertEqual(segmenter.getSegmentForOffset(8), (6, 11))
+		self.assertEqual(segmenter.getSegmentForOffset(9), (6, 11))
+		self.assertEqual(segmenter.getSegmentForOffset(10), (6, 11))
+		self.assertEqual(segmenter.getSegmentForOffset(11), (6, 11))
+
+	def test_chinese(self):
+		text = "你好世界"
+
+		# ensure that the Chinese segmentation strategy is used
+		import config
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		temp = config.conf["documentNavigation"]["initWordSegForUnusedLang"]
+		# ensure the word segmenters for unused languages are initialized
+		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = True
+
+		ChineseWordSegmentationStrategy._initCppJieba()
+		segmenter = WordSegmenter(text)
+		self.assertEqual(segmenter.getSegmentForOffset(0), (0, 2))
+		self.assertEqual(segmenter.getSegmentForOffset(1), (0, 2))
+		self.assertEqual(segmenter.getSegmentForOffset(2), (2, 4))
+		self.assertEqual(segmenter.getSegmentForOffset(3), (2, 4))
+		self.assertEqual(segmenter.getSegmentForOffset(4), (2, 4))
+
+		# revert the config change
+		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = temp

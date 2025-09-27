@@ -666,7 +666,7 @@ calculateWordOffsets.argtypes = (
 )
 
 isScreenFullyBlack = dll.isScreenFullyBlack
-isScreenFullyBlack.argtypes = tuple()
+isScreenFullyBlack.argtypes = ()
 isScreenFullyBlack.restype = c_bool
 
 localListeningSocketExists = dll.localListeningSocketExists
