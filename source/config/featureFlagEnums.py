@@ -138,6 +138,7 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
 		}
 
+
 class InitWordSegForUnusedLnagFlag(DisplayStringEnum):
 	"""Boolean flag for whether to initialize the word segmenters for all languages, even if they are not used."""
 

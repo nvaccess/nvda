@@ -71,9 +71,9 @@ class WordSegmentationStrategy(ABC):
 		pass
 
 	def getWordOffsetRange(
-			self,
-			offset: int,
-		) -> tuple[int, int] | None:
+		self,
+		offset: int,
+	) -> tuple[int, int] | None:
 		"""Helper to get word offset range from a list of word end offsets."""
 		if not self.wordEnds:
 			return None
@@ -85,9 +85,12 @@ class WordSegmentationStrategy(ABC):
 	@classmethod
 	def isUsingRelatedLanguage(cls) -> bool:
 		"""Returns True if this strategy is for the current language."""
-		return re.match(cls._LANGUAGE_PATTERN, languageHandler.getWindowsLanguage()) \
-			or re.match(cls._LANGUAGE_PATTERN, languageHandler.getLanguage()) \
+		return (
+			re.match(cls._LANGUAGE_PATTERN, languageHandler.getWindowsLanguage())
+			or re.match(cls._LANGUAGE_PATTERN, languageHandler.getLanguage())
 			or re.match(cls._LANGUAGE_PATTERN, braille.handler.table.fileName)
+		)
+
 
 class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 	"""Windows Uniscribe-based segmentation (calls NVDAHelper.localLib.calculateWordOffsets)."""
@@ -157,12 +160,10 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		set up ctypes signatures.
 		"""
 		import config
-		import braille
-		import languageHandler
 
-		if cls._lib is not None \
-  			or not (config.conf["documentNavigation"]["initWordSegForUnusedLang"] \
-			or cls.isUsingRelatedLanguage()):
+		if cls._lib is not None or not (
+			config.conf["documentNavigation"]["initWordSegForUnusedLang"] or cls.isUsingRelatedLanguage()
+		):
 			return
 		try:
 			from NVDAState import ReadPaths

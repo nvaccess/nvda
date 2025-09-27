@@ -3094,7 +3094,9 @@ class DocumentNavigationPanel(SettingsPanel):
 
 		# Translators: This is a label for the initialization for word segmenters for unused languages in the document navigation dialog
 		initUnusedLangLabel = _("&Initialize word segmenters for unused languages:")
-		self.initUnusedLangCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=initUnusedLangLabel))
+		self.initUnusedLangCheckBox: wx.CheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=initUnusedLangLabel)
+		)
 		self.bindHelpEvent("initWordSegForUnusedLang", self.initUnusedLangCheckBox)
 
 		# Translators: This is a label for the word segmentation standard in the document navigation dialog
@@ -3118,7 +3120,9 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
-		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = self.initUnusedLangCheckBox.IsChecked()
+		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = (
+			self.initUnusedLangCheckBox.IsChecked()
+		)
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
