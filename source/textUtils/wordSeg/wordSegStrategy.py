@@ -273,81 +273,10 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 					pass
 				return None
 
-	# Punctuation that should NOT have a separator BEFORE it (no space before these marks)
-	NO_SEP_BEFORE = {
-		# Common Chinese fullwidth punctuation
-		"。",
-		"，",
-		"、",
-		"；",
-		"：",
-		"？",
-		"！",
-		"…",
-		"...",
-		"—",
-		"–",
-		"——",
-		"）",
-		"】",
-		"》",
-		"〉",
-		"」",
-		"』",
-		"”",
-		"’",
-		"％",
-		"‰",
-		"￥",
-		# Common ASCII / halfwidth punctuation
-		".",
-		",",
-		";",
-		":",
-		"?",
-		"!",
-		"%",
-		".",
-		")",
-		"]",
-		"}",
-		">",
-		'"',
-		"'",
-	}
-
-	# Punctuation that should NOT have a separator AFTER it (no space after these marks)
-	NO_SEP_AFTER = {
-		# Common Chinese fullwidth opening/leading punctuation
-		"（",
-		"【",
-		"《",
-		"〈",
-		"「",
-		"『",
-		"“",
-		"‘",
-		# Common ASCII / halfwidth opening/leading punctuation
-		"(",
-		"[",
-		"{",
-		"<",
-		'"',
-		"'",
-		# Currency and prefix-like symbols that typically bind to the following token
-		"$",
-		"€",
-		"£",
-		"¥",
-		"₹",
-		# Social/identifier prefixes
-		"@",
-		"#",
-		"&",
-	}
-
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
+		from .wordSegUtils import NO_SEP_BEFORE, NO_SEP_AFTER
+
 		if len(self.wordEndIndex) <= 1:
 			return self.text
 
