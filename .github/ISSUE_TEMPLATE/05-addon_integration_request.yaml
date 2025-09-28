@@ -1,4 +1,4 @@
-name: "Addon Integration Request"
+name: "Add-on Integration Request"
 description: "Propose an existing community addon for integration into NVDA's core."
 title: "[Addon Integration] <Name of Addon>"
 labels: ["enhancement", "Addon/integration"]
@@ -19,8 +19,8 @@ body:
     id: addon-name
     attributes:
       label: "Name of the addon"
-      description: "The official name of the addon you are proposing for integration."
-      placeholder: "eg Awesome App Support"
+      description: "The official name of the add-on you are proposing for integration."
+      placeholder: "e.g. Awesome App Support"
     validations:
       required: true
 
@@ -48,9 +48,10 @@ body:
       label: "User impact and utility"
       description: |
         This section helps us understand the benefit for users.
-        - What problem does this addon solve for NVDA users?
-        - Who is the target audience for this addon (eg all users, developers, users of a specific application)?
-        - How widely used is this addon? Please provide any available data or anecdotal evidence of its popularity (eg download numbers, community feedback).
+
+        * What problem does this add-on solve for NVDA users?
+        * Who is the target audience for this add-on (e.g. all users, developers, users of a specific application)?
+        * How widely used is this add-on? Please provide any available data or anecdotal evidence of its popularity (e.g. download numbers, community feedback).
       placeholder: "Describe the problem solved, target users and estimated usage."
     validations:
       required: true
@@ -82,11 +83,11 @@ body:
   - type: textarea
     id: alternatives
     attributes:
-      label: "Why should this be in core vs. remaining an addon?"
+      label: "Why should this be in NVDA vs. remaining an add-on?"
       description: |
         - Why is it beneficial for this functionality to be built into NVDA directly?
         - Are there other addons that provide similar functionality? If so, why is this one the preferred solution for integration?
-      placeholder: "Justify the need for core integration."
+      placeholder: "Justify the need for NVDA integration."
     validations:
       required: true
 
