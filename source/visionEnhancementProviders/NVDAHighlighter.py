@@ -177,8 +177,9 @@ class HighlightWindow(CustomWindow):
 			user32.PostQuitMessage(0)
 			return
 		contextRects: dict[Context, RectLTRB] = {}
+		highlighter.lastContextToRectMap = highlighter.contextToRectMap.copy()
 		for context in highlighter.enabledContexts:
-			rect = highlighter.contextToRectMap.get(context)
+			rect = highlighter.lastContextToRectMap.get(context)
 			if not rect:
 				continue
 			elif context == Context.NAVIGATOR and contextRects.get(Context.FOCUS) == rect:
@@ -404,7 +405,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
 	}
-	_refreshInterval = 100
+	_refreshInterval = 1000
 	customWindowClass = HighlightWindow
 	_settings = NVDAHighlighterSettings()
 	_window: HighlightWindow | None = None
@@ -437,11 +438,13 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
+		extensionPoints.post_coreCycle.register(self.refresh)
 
 	def __init__(self):
 		super().__init__()
 		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap: dict[Context, RectLTRB | None] = {}
+		self.lastContextToRectMap = self.contextToRectMap.copy()
 		winGDI.gdiPlusInitialize()
 		self._highlighterThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
@@ -466,6 +469,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
+		self.lastContextToRectMap.clear()
 		super().terminate()
 
 	def _run(self):
@@ -522,7 +526,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights."""
-		if self._window and self._window.handle:
+		if self._window and self._window.handle and self.lastContextToRectMap != self.contextToRectMap:
 			self._window.refresh()
 
 	def _get_enabledContexts(self):
