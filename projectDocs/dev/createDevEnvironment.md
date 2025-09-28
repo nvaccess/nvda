@@ -88,7 +88,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.34.0
+* [liblouis](http://www.liblouis.io/), version 3.35.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 47.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -100,7 +100,8 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
   * We are in the process of switching to: Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8Zulu (17.60.17)
 * [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
-* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `9b40903ed6cbd795367ea64f9a7d3f3bc4aa4714`
+* [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
+* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `9408c1d08facc6e324dc90260e8cb20ecceebf70`
 
 #### Build time dependencies
 

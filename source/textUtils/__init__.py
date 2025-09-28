@@ -559,15 +559,18 @@ class WordSegmenter:
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordSegFlag: WordSegFlag = wordSegFlag
-		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._choose_strategy()
+		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._chooseStrategy()
 
-	def _choose_strategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
+	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.AUTO:
 			if WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
 				self.text,
 			) and not WordSegmenter._KANA.search(self.text):
-				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
+					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+				else:
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 			else:
 				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 		else:
@@ -575,9 +578,12 @@ class WordSegmenter:
 				case WordSegFlag.UNISCRIBE:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case WordSegFlag.CHINESE:
-					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
+						return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					else:
+						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case _:
-					pass
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""

@@ -139,6 +139,23 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 		}
 
 
+class InitWordSegForUnusedLnagFlag(DisplayStringEnum):
+	"""Boolean flag for whether to initialize the word segmenters for all languages, even if they are not used."""
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for an option in NVDA settings.
+			self.DISABLED: _("Disabled"),
+			# Translators: Label for an option in NVDA settings.
+			self.ENABLED: _("Enabled"),
+		}
+
+	DEFAULT = enum.auto()
+	DISABLED = enum.auto()
+	ENABLED = enum.auto()
+
+
 class WordNavigationUnitFlag(DisplayStringEnum):
 	"""Enumeration for word navigation."""
 
@@ -148,7 +165,7 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 			# Translators: Label for a method of word segmentation.
 			self.AUTO: _("Auto"),
 			# Translators: Label for a method of word segmentation.
-			self.UNISCRIBE: _("Uniscribe"),
+			self.UNISCRIBE: _("Standard"),
 			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
 		}

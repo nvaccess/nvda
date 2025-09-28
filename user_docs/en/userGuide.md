@@ -2668,7 +2668,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
+This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -3016,7 +3016,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors
+  * Spelling errors [(Off, Speech, Sound)](#reportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3064,6 +3064,18 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
+
+##### Spelling error reporting {#reportSpellingErrors}
+
+This option allows you to configure how spelling errors are reported while reading text.
+This checklist box has two options:
+
+* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
+
+When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
+
+Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
@@ -3907,6 +3919,28 @@ If you install an add-on with paid components and change your mind about using i
 The Add-on Store is accessed from the Tools submenu of the NVDA menu.
 To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+### Security warning for add-ons {#AddonStoreSecurityWarning}
+
+Add-ons listed in the Add-on Store have not been vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA.
+This could include accessing and modifying your personal data or even the entire system.
+
+Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).
+This can detect malware that was known when the add-on was submitted.
+However, VirusTotal results may be inaccurate or out of date.
+For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.
+You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.
+You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).
+
+There are a number of other ways of investigating the safety of an add-on:
+
+* Research the developer's reputation (e.g. how long have they been contributing)
+* Look for user feedback in the [NVDA user group](https://groups.google.com/a/nvaccess.org/g/nvda-users) or the [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
+* Verify that the add-on is regularly updated
+* Read [Community reviews](#AddonStoreReviews) of the add-on
+* Seek community feedback through forums or social media
+
 ### Browsing add-ons {#AddonStoreBrowsing}
 
 When opened, the Add-on Store displays a list of add-ons.
@@ -3974,10 +4008,9 @@ This menu can also be accessed through an Actions button in the selected add-on'
 
 #### Installing add-ons {#AddonStoreInstalling}
 
-Just because an add-on is available in the NVDA Add-on Store, does not mean that it has been approved or vetted by NV Access or anyone else.
-It is very important to only install add-ons from sources you trust.
-The functionality of add-ons is unrestricted inside NVDA.
-This could include accessing your personal data or even the entire system.
+Note: Add-ons are programs that can modify and access your device like any other software you download.
+Make sure to only install add-ons from sources you trust.
+Please read [our security warning](#AddonStoreSecurityWarning) for more details before installing add-ons.
 
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
@@ -4044,6 +4077,11 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 | Beta or dev | Add-on will automatically update to beta or dev versions |
 | Beta | Add-on will automatically update to beta versions |
 | Dev | Add-on will automatically update to dev versions |
+
+#### What's new in the current version {#AddonStoreChangelog}
+
+If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.
+The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 

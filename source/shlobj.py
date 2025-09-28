@@ -18,6 +18,7 @@ import functools
 from typing import Optional, Union
 
 
+import winBindings.shell32
 import winBindings.ole32
 
 
@@ -54,7 +55,7 @@ def SHGetKnownFolderPath(
 	guid = comtypes.GUID(folderGuid)
 
 	pathPointer = ctypes.c_wchar_p()
-	res = ctypes.windll.shell32.SHGetKnownFolderPath(
+	res = winBindings.shell32.SHGetKnownFolderPath(
 		comtypes.byref(guid),
 		dwFlags,
 		hToken,

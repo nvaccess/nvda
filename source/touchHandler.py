@@ -9,13 +9,28 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
-from ctypes import *  # noqa: F403
-from ctypes import cast, windll
-from ctypes.wintypes import *  # noqa: F403
-from ctypes.wintypes import LPCWSTR
+from ctypes import (
+	byref,
+	Structure,
+	sizeof,
+	cast,
+	c_int,
+	c_uint32,
+	c_uint64,
+)
+from ctypes.wintypes import (
+	LPCWSTR,
+	HANDLE,
+	HWND,
+	DWORD,
+	POINT,
+	MSG,
+	RECT,
+)
 import re
+from winAPI.winUser.constants import SystemMetrics
 import winBindings.kernel32
-import winBindings.user32
+from winBindings import user32
 import gui
 import config
 import winBindings.oleacc
@@ -26,6 +41,16 @@ from logHandler import log
 import touchTracker
 import core
 import systemUtils
+from utils import _deprecate
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"SM_MAXIMUMTOUCHES",
+		"winAPI.winUser.constants",
+		"SystemMetrics",
+		"MAXIMUM_TOUCHES",
+	),
+)
 
 
 availableTouchModes = ["text", "object"]
@@ -35,7 +60,6 @@ touchModeLabels = {
 	"object": _("object mode"),
 }
 
-SM_MAXIMUMTOUCHES = 95
 HWND_MESSAGE = -3
 
 WM_QUIT = 18
@@ -70,35 +94,35 @@ POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
 
 
-class POINTER_INFO(Structure):  # noqa: F405
+class POINTER_INFO(Structure):
 	_fields_ = [
-		("pointerType", DWORD),  # noqa: F405
-		("pointerId", c_uint32),  # noqa: F405
-		("frameId", c_uint32),  # noqa: F405
-		("pointerFlags", c_uint32),  # noqa: F405
-		("sourceDevice", HANDLE),  # noqa: F405
-		("hwndTarget", HWND),  # noqa: F405
-		("ptPixelLocation", POINT),  # noqa: F405
-		("ptHimetricLocation", POINT),  # noqa: F405
-		("ptPixelLocationRaw", POINT),  # noqa: F405
-		("ptHimetricLocationRaw", POINT),  # noqa: F405
-		("dwTime", DWORD),  # noqa: F405
-		("historyCount", c_uint32),  # noqa: F405
-		("inputData", c_int),  # noqa: F405
-		("dwKeyStates", DWORD),  # noqa: F405
-		("PerformanceCount", c_uint64),  # noqa: F405
+		("pointerType", DWORD),
+		("pointerId", c_uint32),
+		("frameId", c_uint32),
+		("pointerFlags", c_uint32),
+		("sourceDevice", HANDLE),
+		("hwndTarget", HWND),
+		("ptPixelLocation", POINT),
+		("ptHimetricLocation", POINT),
+		("ptPixelLocationRaw", POINT),
+		("ptHimetricLocationRaw", POINT),
+		("dwTime", DWORD),
+		("historyCount", c_uint32),
+		("inputData", c_int),
+		("dwKeyStates", DWORD),
+		("PerformanceCount", c_uint64),
 	]
 
 
-class POINTER_TOUCH_INFO(Structure):  # noqa: F405
+class POINTER_TOUCH_INFO(Structure):
 	_fields_ = [
 		("pointerInfo", POINTER_INFO),
-		("touchFlags", c_uint32),  # noqa: F405
-		("touchMask", c_uint32),  # noqa: F405
-		("rcContact", RECT),  # noqa: F405
-		("rcContactRaw", RECT),  # noqa: F405
-		("orientation", c_uint32),  # noqa: F405
-		("pressure", c_uint32),  # noqa: F405
+		("touchFlags", c_uint32),
+		("touchMask", c_uint32),
+		("rcContact", RECT),
+		("rcContactRaw", RECT),
+		("orientation", c_uint32),
+		("pressure", c_uint32),
 	]
 
 
@@ -233,22 +257,22 @@ class TouchHandler(threading.Thread):
 			raise self.threadExc
 
 	def terminate(self):
-		windll.user32.PostThreadMessageW(self.ident, WM_QUIT, 0, 0)
+		user32.PostThreadMessage(self.ident, WM_QUIT, 0, 0)
 		self.join()
 		self.pendingEmitsTimer.Stop()
 
 	def run(self):
 		try:
 			self._appInstance = winBindings.kernel32.GetModuleHandle(None)
-			self._cInputTouchWindowProc = winUser.WNDPROC(self.inputTouchWndProc)
-			self._wc = winUser.WNDCLASSEXW(
-				cbSize=sizeof(winUser.WNDCLASSEXW),  # noqa: F405
+			self._cInputTouchWindowProc = user32.WNDPROC(self.inputTouchWndProc)
+			self._wc = user32.WNDCLASSEXW(
+				cbSize=sizeof(user32.WNDCLASSEXW),
 				lpfnWndProc=self._cInputTouchWindowProc,
 				hInstance=self._appInstance,
 				lpszClassName="inputTouchWindowClass",
-			)  # noqa: F405
-			self._wca = winBindings.user32.RegisterClassEx(byref(self._wc))  # noqa: F405
-			self._touchWindow = winBindings.user32.CreateWindowEx(
+			)
+			self._wca = user32.RegisterClassEx(byref(self._wc))
+			self._touchWindow = user32.CreateWindowEx(
 				0,
 				cast(self._wca, LPCWSTR),
 				"NVDA touch input",
@@ -262,12 +286,12 @@ class TouchHandler(threading.Thread):
 				self._appInstance,
 				None,
 			)
-			windll.user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
-			winBindings.oleacc.AccSetRunningUtilityState(  # noqa: F405
+			user32.RegisterPointerInputTarget(self._touchWindow, PT_TOUCH)
+			winBindings.oleacc.AccSetRunningUtilityState(
 				self._touchWindow,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
 				ANRUS_TOUCH_MODIFICATION_ACTIVE,
-			)  # noqa: F405
+			)
 			self.trackerManager = touchTracker.TrackerManager()
 			self.screenExplorer = screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview = True
@@ -275,14 +299,14 @@ class TouchHandler(threading.Thread):
 			self.threadExc = e
 		finally:
 			self.initializedEvent.set()
-		msg = MSG()  # noqa: F405
-		while winBindings.user32.GetMessage(byref(msg), None, 0, 0):  # noqa: F405
-			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
-			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
-		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)  # noqa: F405
-		windll.user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
-		windll.user32.DestroyWindow(self._touchWindow)
-		winBindings.user32.UnregisterClass(self._wca, self._appInstance)
+		msg = MSG()
+		while user32.GetMessage(byref(msg), None, 0, 0):
+			user32.TranslateMessage(byref(msg))
+			user32.DispatchMessage(byref(msg))
+		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)
+		user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
+		user32.DestroyWindow(self._touchWindow)
+		user32.UnregisterClass(self._wca, self._appInstance)
 
 	def inputTouchWndProc(self, hwnd, msg, wParam, lParam):
 		if msg >= _WM_POINTER_FIRST and msg <= _WM_POINTER_LAST:
@@ -298,7 +322,7 @@ class TouchHandler(threading.Thread):
 				self.trackerManager.update(ID, x, y, True)
 				core.requestPump()
 			return 0
-		return winBindings.user32.DefWindowProc(hwnd, msg, wParam, lParam)
+		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
 	def setMode(self, mode):
 		if mode not in availableTouchModes:
@@ -326,7 +350,7 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		winBindings.oleacc.AccNotifyTouchInteraction(  # noqa: F405
+		winBindings.oleacc.AccNotifyTouchInteraction(
 			gui.mainFrame.Handle,
 			obj.windowHandle,  # noqa: F405
 			obj.location.center.toPOINT(),
@@ -344,7 +368,7 @@ def touchSupported(debugLog: bool = False) -> bool:
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
-	maxTouches = windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	maxTouches = user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES)
 	if maxTouches <= 0:
 		if debugLog:
 			log.debugWarning("No touch devices found")
@@ -378,7 +402,8 @@ def initialize():
 	if not touchSupported(debugLog=True):
 		raise NotImplementedError
 	log.debug(
-		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES),
+		"Touchscreen detected, maximum touch inputs: %d"
+		% user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 	setTouchSupport(config.conf["touch"]["enabled"])

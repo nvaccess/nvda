@@ -5,10 +5,16 @@
 
 """Functions exported by bthprops.cpl, and supporting data structures and enumerations."""
 
-from ctypes import POINTER, Structure, c_ulonglong, sizeof, windll
+from ctypes import (
+	POINTER,
+	Structure,
+	c_ulonglong,
+	sizeof,
+	windll,
+)
 from ctypes.wintypes import BOOL, DWORD, HANDLE, ULONG, WCHAR
 
-from winKernel import SYSTEMTIME
+from winBindings.kernel32 import SYSTEMTIME
 
 cpl = windll["bthprops.cpl"]
 

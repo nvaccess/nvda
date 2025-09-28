@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Rui Batista, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Rui Batista, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ we notify the user of the power status.
 The power status can also be reported using script_say_battery_status.
 """
 
+from __future__ import annotations
 import ctypes
 from enum import (
 	Enum,
@@ -26,6 +27,8 @@ from typing import (
 
 from logHandler import log
 import ui
+import winBindings.kernel32
+from winBindings.kernel32 import SYSTEM_POWER_STATUS as SystemPowerStatus
 import winKernel
 
 
@@ -83,18 +86,6 @@ class PowerState(IntFlag):
 	AC_ONLINE = 0x1
 	UNKNOWN = 0xFF
 
-
-class SystemPowerStatus(ctypes.Structure):
-	# https://docs.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
-	_fields_ = [
-		("ACLineStatus", ctypes.c_byte),
-		("BatteryFlag", ctypes.c_byte),
-		("BatteryLifePercent", ctypes.c_byte),
-		("Reserved1", ctypes.c_byte),
-		("BatteryLifeTime", ctypes.wintypes.DWORD),
-		("BatteryFullLiveTime", ctypes.wintypes.DWORD),
-	]
-
 	BatteryFlag: BatteryFlag
 	ACLineStatus: PowerState
 	BatteryLifePercent: int
@@ -112,7 +103,7 @@ def initialize():
 	we fetch the initial power state manually.
 	"""
 	global _powerState
-	systemPowerStatus = SystemPowerStatus()
+	systemPowerStatus = winBindings.kernel32.SYSTEM_POWER_STATUS()
 	if (
 		not winKernel.GetSystemPowerStatus(systemPowerStatus)
 		or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN

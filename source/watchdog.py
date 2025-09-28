@@ -12,13 +12,10 @@ from typing import (
 	Any,
 )
 import inspect
-from ctypes import windll
 import ctypes.wintypes
-import msvcrt
 import comtypes
 import winBindings.ole32
 import winBindings.dbgHelp
-from winBindings.dbgHelp import MINIDUMP_EXCEPTION_INFORMATION
 import winBindings.kernel32
 from winBindings.kernel32 import UnhandledExceptionFilter
 import winUser
@@ -67,7 +64,7 @@ isRunning = False
 isAttemptingRecovery: bool = False
 _coreIsAsleep = False
 
-_coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
+_coreDeadTimer = winBindings.kernel32.CreateWaitableTimer(None, True, None)
 _suspended = False
 _watcherThread = None
 _cancelCallEvent = None
@@ -78,11 +75,11 @@ def alive():
 	global _coreIsAsleep
 	_coreIsAsleep = False
 	# Stop cancelling calls.
-	windll.kernel32.ResetEvent(_cancelCallEvent)
+	winBindings.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
 	SECOND_TO_100_NANOSECOND = 10**7  # nanosecond is 10^9, 10^7 is hundreds of nanoseconds
-	windll.kernel32.SetWaitableTimer(
+	winBindings.kernel32.SetWaitableTimer(
 		_coreDeadTimer,
 		ctypes.byref(
 			ctypes.wintypes.LARGE_INTEGER(
@@ -98,7 +95,7 @@ def alive():
 			),
 		),
 		0,
-		None,
+		winBindings.kernel32.PTIMERAPCROUTINE(0),
 		None,
 		False,
 	)
@@ -111,7 +108,7 @@ def asleep():
 	alive()
 	# CancelWaitableTimer does not reset the signaled state; if it was signaled, it remains signaled.
 	# However, alive() calls SetWaitableTimer, which resets the timer to unsignaled.
-	windll.kernel32.CancelWaitableTimer(_coreDeadTimer)
+	winBindings.kernel32.CancelWaitableTimer(_coreDeadTimer)
 	_coreIsAsleep = True
 
 
@@ -183,7 +180,7 @@ def waitForFreezeRecovery(waitedSince: float):
 
 	# Cancel calls until the core is alive.
 	# This event will be reset by alive().
-	windll.kernel32.SetEvent(_cancelCallEvent)
+	winBindings.kernel32.SetEvent(_cancelCallEvent)
 
 	# Some calls have to be killed individually.
 	while not _isAlive():
@@ -241,33 +238,14 @@ def _recoverAttempt():
 
 @UnhandledExceptionFilter
 def _crashHandler(exceptionInfo):
-	threadId = ctypes.windll.kernel32.GetCurrentThreadId()
+	threadId = winBindings.kernel32.GetCurrentThreadId()
 	# An exception might have been set for this thread.
 	# Clear it so that it doesn't get raised in this function.
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
 	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
-	try:
-		# Though we aren't using pythonic functions to write to the dump file,
-		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
-		with open(dumpPath, "wb") as mdf:
-			mdExc = MINIDUMP_EXCEPTION_INFORMATION(
-				ThreadId=threadId,
-				ExceptionPointers=exceptionInfo,
-				ClientPointers=False,
-			)
-			if not winBindings.dbgHelp.MiniDumpWriteDump(
-				winBindings.kernel32.GetCurrentProcess(),
-				globalVars.appPid,
-				msvcrt.get_osfhandle(mdf.fileno()),
-				0,  # MiniDumpNormal
-				ctypes.byref(mdExc),
-				None,
-				None,
-			):
-				raise ctypes.WinError()
-	except:  # noqa: E722
+	if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
@@ -334,11 +312,11 @@ def terminate():
 	isRunning = False
 	winBindings.ole32.CoDisableCallCancellation(None)
 	# Wake up the watcher so it knows to finish.
-	windll.kernel32.SetWaitableTimer(
+	winBindings.kernel32.SetWaitableTimer(
 		_coreDeadTimer,
 		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
 		0,
-		None,
+		winBindings.kernel32.PTIMERAPCROUTINE(0),
 		None,
 		False,
 	)
@@ -368,7 +346,7 @@ class CancellableCallThread(threading.Thread):
 		super(CancellableCallThread, self).__init__()
 		self.daemon = True
 		self._executeEvent = threading.Event()
-		self._executionDoneEvent = ctypes.windll.kernel32.CreateEventW(None, False, False, None)
+		self._executionDoneEvent = winBindings.kernel32.CreateEvent(None, False, False, None)
 		self.isUsable = True
 
 	def execute(self, func, *args, pumpMessages=True, **kwargs):
@@ -399,7 +377,7 @@ class CancellableCallThread(threading.Thread):
 				ctypes.byref(waitIndex),
 			)
 		else:
-			waitIndex.value = windll.kernel32.WaitForMultipleObjects(
+			waitIndex.value = winBindings.kernel32.WaitForMultipleObjects(
 				2,
 				waitHandles,
 				False,
@@ -428,7 +406,7 @@ class CancellableCallThread(threading.Thread):
 				self._result = self._func(*self._args, **self._kwargs)
 			except Exception as e:
 				self._exc_info = e
-			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
+			winBindings.kernel32.SetEvent(self._executionDoneEvent)
 		winBindings.kernel32.CloseHandle(self._executionDoneEvent)
 
 
