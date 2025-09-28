@@ -495,7 +495,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			log.exception("Exception in NVDA Highlighter thread")
 
 	def updateContextRect(
-		self, context: Context, rect: RectLTRB | None = None, obj: "NVDAObject | None" = None
+		self,
+		context: Context,
+		rect: RectLTRB | None = None,
+		obj: "NVDAObject | None" = None,
 	):
 		"""Updates the position rectangle of the highlight for the specified context.
 		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
