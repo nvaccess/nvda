@@ -846,17 +846,19 @@ def initialize() -> None:
 	# Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	arch = winVersion.getWinVer().processorArchitecture
-	if arch != "x86" and ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
-		_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
-	elif arch in ("AMD64", "ARM64") and ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
-		_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
-	elif arch == "ARM64" and ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
-		_remoteLoaderARM64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
-		# Windows on ARM from Windows 11 supports running AMD64 apps.
-		# Thus we also need to be able to inject into these.
-		if winVersion.getWinVer() >= winVersion.WIN11:
+	if arch == "AMD64":
+		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
+			_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
+		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
 			_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
-
+	elif arch == "ARM64":
+		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
+			_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
+		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
+			if winVersion.getWinVer() >= winVersion.WIN11:
+				_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
+		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
+			_remoteLoaderARM64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
