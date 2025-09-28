@@ -855,6 +855,8 @@ def initialize() -> None:
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
 			_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
+			# Windows 10 on ARM does not support AMD64 emulation.
+			# Thus only start the AMD64 remote loader if on Windows 11 or above.
 			if winVersion.getWinVer() >= winVersion.WIN11:
 				_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
