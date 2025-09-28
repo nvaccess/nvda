@@ -18,34 +18,83 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		super().__init__(text)
 		self.newSepIndex: list[int] = []
 		self.encoded = WordSegmenter(text).segmentedText(sep=self.sep, newSepIndex=self.newSepIndex)
-		self.computedStrToEncodedOffsets = list(range(self.strLength))
-		for i in range(len(self.computedStrToEncodedOffsets)):
-			self.computedStrToEncodedOffsets[i] += self._relevantStrToEncodedOffsets[i]
-		self.computedEncodedToStrOffsets = list(range(self.encodedStringLength))
-		for j in range(len(self.computedEncodedToStrOffsets)):
-			self.computedEncodedToStrOffsets[j] += self._relevantEncodedToStrOffsets[j]
 
 	@property
-	def _relevantStrToEncodedOffsets(self) -> list[int]:
-		relevantIndex: list[int] = [0 for _ in range(self.strLength)]
-		j = 0
-		m = len(self.newSepIndex)
-		for i in range(self.strLength):
-			while j < m and self.newSepIndex[j] <= i + j:
-				j += 1
-			relevantIndex[i] = j
-		return relevantIndex
+	def computedStrToEncodedOffsets(self) -> list[int]:
+		"""
+		Compute a list of offsets so that:
+			encodedIndex = strIndex + relevantStrToEncodedOffsets[strIndex]
+
+		We build an explicit mapping from original string indices to encoded indices
+		by marking separator positions in the encoded string and then assigning
+		each non-separator encoded slot to the next original-character index.
+		The returned list contains the delta (encodedIndex - strIndex) for each
+		original index.
+		"""
+		strLen = self.strLength
+		encodedLen = self.encodedStringLength
+		sepCount = len(self.newSepIndex)
+
+		# validate separator positions (optional but makes bugs obvious)
+		for pos in self.newSepIndex:
+			if pos < 0 or pos >= encodedLen:
+				raise ValueError(f"separator position {pos} out of range for encoded length {encodedLen}")
+
+		# mark which encoded positions are separators
+		isSep = [False] * encodedLen
+		for pos in self.newSepIndex:
+			isSep[pos] = True
+
+		# build explicit str -> encoded mapping
+		strToEncoded: list[int] = [0] * strLen
+		nextStrIndex = 0
+		for encodedIndex in range(encodedLen):
+			if not isSep[encodedIndex]:
+				# assign the current original-char index to this encoded slot
+				# then advance to the next original index
+				if nextStrIndex >= strLen:
+					# defensive: there should not be more non-sep encoded slots than strLen
+					# but handle gracefully
+					break
+				strToEncoded[nextStrIndex] = encodedIndex
+				nextStrIndex += 1
+
+		return strToEncoded
+
 
 	@property
-	def _relevantEncodedToStrOffsets(self) -> list[int]:
-		relevantIndex: list[int] = [0 for _ in range(self.encodedStringLength)]
-		j = 0
-		m = len(self.newSepIndex)
-		for i in range(self.encodedStringLength):
-			while j < m and self.newSepIndex[j] < i + j:
-				j += 1
-			relevantIndex[i] = -j
-		return relevantIndex
+	def computedEncodedToStrOffsets(self) -> list[int]:
+		encodedLen = self.encodedStringLength
+		strLen = self.strLength
+		sepCount = len(self.newSepIndex)
+
+		# validate separator positions
+		for pos in self.newSepIndex:
+			if pos < 0 or pos >= encodedLen:
+				raise ValueError(f"separator position {pos} out of range for encoded length {encodedLen}")
+
+		# mark which encoded positions are separators
+		isSep = [False] * encodedLen
+		for pos in self.newSepIndex:
+			isSep[pos] = True
+
+		# build explicit encoded -> str mapping
+		# semantics: separator positions and the following encoded character
+		# both map to the same upcoming original str index (insertion point semantics).
+		encodedToStr: list[int] = [0] * encodedLen
+		nextStrIndex = 0
+		for encodedIndex in range(encodedLen):
+			if isSep[encodedIndex]:
+				# map separator to the next original character index (insertion point)
+				encodedToStr[encodedIndex] = nextStrIndex
+			else:
+				# map this encoded character to the current original index,
+				# then advance the original index for subsequent positions
+				encodedToStr[encodedIndex] = nextStrIndex
+				nextStrIndex += 1
+
+		return encodedToStr
+
 
 	@cached_property
 	def encodedStringLength(self) -> int:
