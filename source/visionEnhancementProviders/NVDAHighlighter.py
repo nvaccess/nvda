@@ -40,6 +40,7 @@ from windowUtils import CustomWindow
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
+	from cursorManager import CursorManager
 
 
 class HighlightStyle(NamedTuple):
@@ -523,7 +524,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	def handleReviewMove(self, context: Context):
 		self.updateContextRect(context=Context.NAVIGATOR)
 
-	def handleBrowseModeMove(self, obj: "NVDAObject | None" = None):
+	def handleBrowseModeMove(self, obj: "CursorManager | None" = None):
 		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def refresh(self):
