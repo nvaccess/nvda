@@ -860,6 +860,7 @@ def initialize() -> None:
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
 			_remoteLoaderARM64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
 
+
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
 	if not config.isAppX:
