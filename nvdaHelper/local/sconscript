@@ -85,7 +85,7 @@ localLib = env.SharedLibrary(
 		"nvdaController.cpp",
 		winIPCUtilsObj,
 		controllerRPCServerSource,
-		"nvdaControllerInternal.c",
+		"nvdaControllerInternal.cpp",
 		controllerInternalRPCServerSource,
 		"dllImportTableHooks.cpp",
 		"nvdaHelperLocal.def",
