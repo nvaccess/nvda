@@ -570,6 +570,8 @@ class WordSegmenter:
 				if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
 					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
 				else:
+					log.debugWarning("Chinese word segmenter is loading. Falling back to Uniscribe.")
+					wordSegStrategy.ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 			else:
 				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
@@ -581,6 +583,7 @@ class WordSegmenter:
 					if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
 						return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
 					else:
+						log.debugWarning("Chinese word segmenter is loading. Falling back to Uniscribe.")
 						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case _:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
