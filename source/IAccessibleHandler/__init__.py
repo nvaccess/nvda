@@ -602,20 +602,15 @@ def winEventToNVDAEvent(  # noqa: C901
 	return (NVDAEventName, obj)
 
 
-def processGenericWinEvent(eventID, window, objectID, childID):
+def processGenericWinEvent(eventID: int, window: int, objectID: int, childID: int):
 	"""Converts the win event to an NVDA event,
 	Checks to see if this NVDAObject  equals the current focus.
 	If all goes well, then the event is queued and we return True
-	@param eventID: a win event ID (type)
-	@type eventID: integer
-	@param window: a win event's window handle
-	@type window: integer
-	@param objectID: a win event's object ID
-	@type objectID: integer
-	@param childID: a win event's child ID
-	@type childID: integer
-	@returns: True if the event was processed, False otherwise.
-	@rtype: boolean
+	:param eventID: a win event ID (type)
+	:param window: a win event's window handle
+	:param objectID: a win event's object ID
+	:param childID: a win event's child ID
+	:returns: True if the event was processed, False otherwise.
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -681,19 +676,15 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	return True
 
 
-def processFocusWinEvent(window, objectID, childID, force=False):
+def processFocusWinEvent(window: int, objectID: int, childID: int, force: bool = False) -> bool:
 	"""checks to see if the focus win event is not the same as the existing focus,
 	then converts the win event to an NVDA event (instantiating an NVDA Object) then calls
 	processFocusNVDAEvent. If all is ok it returns True.
-	@type window: integer
-	@param objectID: a win event's object ID
-	@type objectID: integer
-	@param childID: a win event's child ID
-	@type childID: integer
-	@param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
-	@type force: boolean
-	@returns: True if the focus is valid and was handled, False otherwise.
-	@rtype: boolean
+	:param window: a win event's window handle
+	:param objectID: a win event's object ID
+	:param childID: a win event's child ID
+	:param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
+	:returns: True if the focus is valid and was handled, False otherwise.
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -779,7 +770,7 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-def processDesktopSwitchWinEvent(window, objectID, childID):
+def processDesktopSwitchWinEvent(window: int, objectID: int, childID: int):
 	from winAPI.secureDesktop import _handleSecureDesktopChange
 
 	if isMSAADebugLoggingEnabled():
@@ -787,12 +778,12 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}",
 		)
 	hDesk = user32.OpenInputDesktop(0, False, 0)
-	if hDesk != 0:
+	if hDesk is not None:
 		user32.CloseDesktop(hDesk)
 		core.callLater(200, _handleUserDesktop)
 	else:
-		# When hDesk == 0, the active desktop has changed.
-		# This is usually means the secure desktop has been launched,
+		# When hDesk == None, the active desktop has changed.
+		# This usually means the secure desktop has been launched,
 		# but the new desktop can also be a secondary desktop created through the Windows API.
 		# https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopa
 		# This secondary desktop has some bugs, and as such is not properly supported (#14395).
@@ -1027,7 +1018,9 @@ def pumpAll():  # noqa: C901
 		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
 
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = internalWinEventHandler.winEventLimiter.flushEvents(alwaysAllowedObjects)
+	winEvents: list[tuple[int, int, int, int]] = internalWinEventHandler.winEventLimiter.flushEvents(
+		alwaysAllowedObjects,
+	)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
