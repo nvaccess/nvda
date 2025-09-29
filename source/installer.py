@@ -902,7 +902,6 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	removeOldLibFiles(installDir, rebootOK=True)
 	if shouldCleanX86:
 		removeOldLibFiles(installDirX86, rebootOK=True)
-		tryRemoveFile(installDirX86, rebootOK=True)
 	registerInstallation(
 		installDir,
 		startMenuFolder,
@@ -910,6 +909,10 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		shouldRunAtLogon,
 		NVDAState._configInLocalAppDataEnabled(),
 	)
+	tryRemoveFile(installDir, rebootOK=True)
+	if shouldCleanX86:
+		tryRemoveFile(installDirX86, rebootOK=True)
+
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
