@@ -902,6 +902,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	removeOldLibFiles(installDir, rebootOK=True)
 	if shouldCleanX86:
 		removeOldLibFiles(installDirX86, rebootOK=True)
+		tryRemoveFile(installDirX86, rebootOK=True)
 	registerInstallation(
 		installDir,
 		startMenuFolder,
