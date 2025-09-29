@@ -178,9 +178,9 @@ class HighlightWindow(CustomWindow):
 			user32.PostQuitMessage(0)
 			return
 		contextRects: dict[Context, RectLTRB] = {}
-		highlighter.lastContextToRectMap = highlighter.contextToRectMap.copy()
+		highlighter._lastContextToRectMap = highlighter.contextToRectMap.copy()
 		for context in highlighter.enabledContexts:
-			rect = highlighter.lastContextToRectMap.get(context)
+			rect = highlighter._lastContextToRectMap.get(context)
 			if not rect:
 				continue
 			elif context == Context.NAVIGATOR and contextRects.get(Context.FOCUS) == rect:
@@ -445,7 +445,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		super().__init__()
 		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap: dict[Context, RectLTRB | None] = {}
-		self.lastContextToRectMap = self.contextToRectMap.copy()
+		self._lastContextToRectMap = self.contextToRectMap.copy()
 		winGDI.gdiPlusInitialize()
 		self._highlighterThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
@@ -470,7 +470,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		self.lastContextToRectMap.clear()
+		self._lastContextToRectMap.clear()
 
 	def _run(self):
 		try:
@@ -529,7 +529,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights."""
-		if self._window and self._window.handle and self.lastContextToRectMap != self.contextToRectMap:
+		if self._window and self._window.handle and self._lastContextToRectMap != self.contextToRectMap:
 			self._window.refresh()
 
 	def _get_enabledContexts(self):
