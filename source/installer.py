@@ -856,6 +856,7 @@ def _deleteFileGroupOrFail(
 def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath = WritePaths.installDir
 	installDir = WritePaths.defaultInstallDir
+	installDirX86 = WritePaths._installDirX86
 	startMenuFolder = WritePaths.defaultStartMenuFolder
 	# Give some time for the installed NVDA (which may have been running on a secure screen)
 	# to shut down before we start deleting files.
@@ -876,10 +877,17 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		numTries=6,
 		retryWaitInterval=0.5,
 	)
+	_deleteFileGroupOrFail(
+		installDirX86,
+		_nvdaExes.union({"nvda_service.exe", "nvda_eoaProxy.exe"}),
+		numTries=6,
+		retryWaitInterval=0.5,
+	)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
 	removeOldProgramFiles(installDir)
+	removeOldProgramFiles(installDirX86)
 	copyProgramFiles(installDir)
 	for f in ("nvda_UIAccess.exe", "nvda_noUIAccess.exe"):
 		f = os.path.join(installDir, f)
@@ -889,6 +897,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	removeOldLibFiles(installDir, rebootOK=True)
+	removeOldLibFiles(installDirX86, rebootOK=True)
 	registerInstallation(
 		installDir,
 		startMenuFolder,
