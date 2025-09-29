@@ -165,10 +165,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		import config
 		from ..segFlag import WordSegFlag
 
-		if not forceInit and (cls._lib or (
-			not config.conf["documentNavigation"]["wordSegmentationStandard"].calculate() == WordSegFlag.CHINESE \
-			and not cls.isUsingRelatedLanguage()
-		)):
+		if not forceInit and (
+			cls._lib
+			or (
+				not config.conf["documentNavigation"]["wordSegmentationStandard"].calculate()
+				== WordSegFlag.CHINESE
+				and not cls.isUsingRelatedLanguage()
+			)
+		):
 			return
 		try:
 			from NVDAState import ReadPaths
