@@ -127,8 +127,6 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 			exc_info=True,
 		)
 		return []
-	else:
-		k.Close()
 
 	try:
 		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
@@ -140,6 +138,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 			exc_info=True,
 		)
 	else:
+		k.Close()
 		if not conf[0]:
 			# "".split(",") returns [""], so remove the empty string.
 			del conf[0]
