@@ -550,6 +550,7 @@ def _unregisterFromStartMenu():
 	startMenuPath = os.path.join(programsPath, startMenuFolder)
 	if os.path.isdir(startMenuPath):
 		shutil.rmtree(startMenuPath, ignore_errors=True)
+		log.debug(f"Removed start menu folder: {startMenuPath}")
 	# Also remove the x86 start menu folder if it is different.
 	startMenuFolderX86 = WritePaths._startMenuFolderX86
 	if startMenuFolderX86 is None:
@@ -557,6 +558,7 @@ def _unregisterFromStartMenu():
 	startMenuPathX86 = os.path.join(programsPath, startMenuFolderX86)
 	if os.path.isdir(startMenuPathX86):
 		shutil.rmtree(startMenuPathX86, ignore_errors=True)
+		log.debug(f"Removed start menu (x86) folder: {startMenuPathX86}")
 
 
 def _unregisterFromUninstallRegistry():
