@@ -267,6 +267,7 @@ class AddonStoreVM:
 				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).scanResults.scanUrl),
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel)
 				and aVM.model.scanResults is not None,
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that shows changelog for the selected addon
