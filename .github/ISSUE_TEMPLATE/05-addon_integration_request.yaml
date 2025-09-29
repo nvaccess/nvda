@@ -1,13 +1,13 @@
 name: "Add-on Integration Request"
-description: "Propose an existing community addon for integration into NVDA's core."
-title: "[Addon Integration] <Name of Addon>"
-labels: ["enhancement", "Addon/integration"]
+description: "Propose an existing community add-on for integration into NVDA's core."
+title: "[add-on Integration] <Name of add-on>"
+labels: ["enhancement", "add-on/integration"]
 
 body:
   - type: markdown
     attributes:
       value: |
-        This template is for integrating *existing* community addons.
+        This template is for integrating *existing* community add-ons.
         Please provide the following information to help us evaluate your request.
         Note: For new feature ideas, please use the "Feature Request" template.
 
@@ -16,25 +16,25 @@ body:
         This includes creating or commenting on issues and pull requests.
 
   - type: input
-    id: addon-name
+    id: add-on-name
     attributes:
-      label: "Name of the addon"
+      label: "Name of the add-on"
       description: "The official name of the add-on you are proposing for integration."
       placeholder: "e.g. Awesome App Support"
     validations:
       required: true
 
   - type: input
-    id: addon-link
+    id: add-on-link
     attributes:
-      label: "Link to addon repository or website"
-      description: "Where can we find the source code for this addon?"
-      placeholder: "https://github.com/user/addon-repo"
+      label: "Link to add-on repository or website"
+      description: "Where can we find the source code for this add-on?"
+      placeholder: "https://github.com/user/add-on-repo"
     validations:
       required: true
 
   - type: input
-    id: addon-maintainers
+    id: add-on-maintainers
     attributes:
       label: "Current maintainer(s)"
       description: "Please provide the GitHub username(s) or name(s) of the current maintainer(s)."
@@ -59,12 +59,13 @@ body:
   - type: dropdown
     id: license
     attributes:
-      label: "Addon license"
-      description: "Is the license of the addon's code compatible with NVDA's GPL license?"
+      label: "Add-on License Status"
+      description: "NVDA is licensed under GPL-2.0 or later. To be included, the add-on's code must be available under these terms. Please specify the add-on's current license situation."
       options:
-        - "GPL-compatible"
-        - "Not GPL-compatible"
-        - "I don't know"
+        - "GPL-2.0 or later (No relicensing needed)"
+        - "Other GPL-compatible license (Author has agreed to relicense)"
+        - "Other GPL-compatible license (Relicensing permission is not yet confirmed)"
+        - "I don't know / Needs investigation"
     validations:
       required: true
 
@@ -72,7 +73,7 @@ body:
     id: maintenance
     attributes:
       label: "Maintenance and future development"
-      description: "Are the current maintainers willing and able to continue supporting the addon after integration?"
+      description: "Are the current maintainers willing and able to continue supporting the add-on after integration?"
       options:
         - "Yes"
         - "No"
@@ -86,7 +87,7 @@ body:
       label: "Why should this be in NVDA vs. remaining an add-on?"
       description: |
         - Why is it beneficial for this functionality to be built into NVDA directly?
-        - Are there other addons that provide similar functionality? If so, why is this one the preferred solution for integration?
+        - Are there other add-ons that provide similar functionality? If so, why is this one the preferred solution for integration?
       placeholder: "Justify the need for NVDA integration."
     validations:
       required: true
