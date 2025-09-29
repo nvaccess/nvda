@@ -3953,6 +3953,28 @@ If you install an add-on with paid components and change your mind about using i
 The Add-on Store is accessed from the Tools submenu of the NVDA menu.
 To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+### Security warning for add-ons {#AddonStoreSecurityWarning}
+
+Add-ons listed in the Add-on Store have not been vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA.
+This could include accessing and modifying your personal data or even the entire system.
+
+Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).
+This can detect malware that was known when the add-on was submitted.
+However, VirusTotal results may be inaccurate or out of date.
+For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.
+You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.
+You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).
+
+There are a number of other ways of investigating the safety of an add-on:
+
+* Research the developer's reputation (e.g. how long have they been contributing)
+* Look for user feedback in the [NVDA user group](https://groups.google.com/a/nvaccess.org/g/nvda-users) or the [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
+* Verify that the add-on is regularly updated
+* Read [Community reviews](#AddonStoreReviews) of the add-on
+* Seek community feedback through forums or social media
+
 ### Browsing add-ons {#AddonStoreBrowsing}
 
 When opened, the Add-on Store displays a list of add-ons.
@@ -4020,10 +4042,9 @@ This menu can also be accessed through an Actions button in the selected add-on'
 
 #### Installing add-ons {#AddonStoreInstalling}
 
-Just because an add-on is available in the NVDA Add-on Store, does not mean that it has been approved or vetted by NV Access or anyone else.
-It is very important to only install add-ons from sources you trust.
-The functionality of add-ons is unrestricted inside NVDA.
-This could include accessing your personal data or even the entire system.
+Note: Add-ons are programs that can modify and access your device like any other software you download.
+Make sure to only install add-ons from sources you trust.
+Please read [our security warning](#AddonStoreSecurityWarning) for more details before installing add-ons.
 
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
@@ -4090,6 +4111,11 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 | Beta or dev | Add-on will automatically update to beta or dev versions |
 | Beta | Add-on will automatically update to beta versions |
 | Dev | Add-on will automatically update to dev versions |
+
+#### What's new in the current version {#AddonStoreChangelog}
+
+If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.
+The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
