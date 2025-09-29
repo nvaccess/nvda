@@ -674,7 +674,7 @@ def registerAddonFileAssociation(slaveExe: str):
 
 
 def unregisterAddonFileAssociation():
-	unregisteredSuccess = False
+	shouldNotifyShell = False
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(
@@ -684,7 +684,7 @@ def unregisterAddonFileAssociation():
 	except WindowsError:
 		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
 	else:
-		unregisteredSuccess = True
+		shouldNotifyShell = True
 	try:
 		_deleteKeyAndSubkeys(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -693,8 +693,8 @@ def unregisterAddonFileAssociation():
 	except WindowsError:
 		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
 	else:
-		unregisteredSuccess = True
-	if unregisteredSuccess:
+		shouldNotifyShell = True
+	if shouldNotifyShell:
 		# Notify the shell that a file association has changed:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
