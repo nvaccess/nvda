@@ -909,10 +909,8 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		shouldRunAtLogon,
 		NVDAState._configInLocalAppDataEnabled(),
 	)
-	tryRemoveFile(installDir, rebootOK=True)
 	if shouldCleanX86:
 		tryRemoveFile(installDirX86, rebootOK=True)
-
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
