@@ -163,7 +163,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		set up ctypes signatures.
 		"""
 		import config
-		from ..segFlag import WordSegFlag
 
 		if not forceInit and (
 			cls._lib
