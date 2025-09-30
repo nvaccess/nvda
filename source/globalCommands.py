@@ -816,16 +816,13 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
 		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
-		if formatConfig & ReportSpellingErrors.BRAILLE:
-			newFormatConfig = formatConfig & ~ReportSpellingErrors.BRAILLE
-			# Translators: Message presented when turning off reporting spelling errors in braille.
-			state = _("Report spelling errors in braille off")
-		else:
-			newFormatConfig = formatConfig | ReportSpellingErrors.BRAILLE
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = formatConfig ^ ReportSpellingErrors.BRAILLE
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] | ReportSpellingErrors.BRAILLE:
 			# Translators: Message presented when turning on reporting spelling errors in braille.
-			state = _("Report spelling errors in braille on")
-		config.conf["documentFormatting"]["reportSpellingErrors2"] = newFormatConfig
-		ui.message(state)
+			ui.message(_("Report spelling errors in braille on"))
+		else:
+			# Translators: Message presented when turning off reporting spelling errors in braille.
+			ui.message(_("Report spelling errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
