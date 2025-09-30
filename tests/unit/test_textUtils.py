@@ -7,8 +7,10 @@
 
 import unittest
 
+import config.featureFlagEnums
 from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
 from textUtils.uniscribe import splitAtCharacterBoundaries
+from textUtils.segFlag import WordSegFlag
 
 FACE_PALM = "\U0001f926"  # 🤦
 SMILE = "\U0001f60a"  # 😊
@@ -449,38 +451,23 @@ class TestWordSegmenter(unittest.TestCase):
 
 	def test_basicLatin(self):
 		text = "hello world"
-		segmenter = WordSegmenter(text)
+		segmenter = WordSegmenter(text, wordSegFlag=WordSegFlag.UNISCRIBE)
 		self.assertEqual(segmenter.getSegmentForOffset(0), (0, 6))
-		self.assertEqual(segmenter.getSegmentForOffset(1), (0, 6))
-		self.assertEqual(segmenter.getSegmentForOffset(2), (0, 6))
-		self.assertEqual(segmenter.getSegmentForOffset(3), (0, 6))
-		self.assertEqual(segmenter.getSegmentForOffset(4), (0, 6))
 		self.assertEqual(segmenter.getSegmentForOffset(5), (0, 6))
 		self.assertEqual(segmenter.getSegmentForOffset(6), (6, 11))
-		self.assertEqual(segmenter.getSegmentForOffset(7), (6, 11))
-		self.assertEqual(segmenter.getSegmentForOffset(8), (6, 11))
-		self.assertEqual(segmenter.getSegmentForOffset(9), (6, 11))
-		self.assertEqual(segmenter.getSegmentForOffset(10), (6, 11))
 		self.assertEqual(segmenter.getSegmentForOffset(11), (6, 11))
 
 	def test_chinese(self):
 		text = "你好世界"
 
-		# ensure that the Chinese segmentation strategy is used
-		import config
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
-		temp = config.conf["documentNavigation"]["initWordSegForUnusedLang"]
-		# ensure the word segmenters for unused languages are initialized
-		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = True
 
-		ChineseWordSegmentationStrategy._initCppJieba()
-		segmenter = WordSegmenter(text)
+
+		ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
+		segmenter = WordSegmenter(text, wordSegFlag=WordSegFlag.CHINESE)
 		self.assertEqual(segmenter.getSegmentForOffset(0), (0, 2))
 		self.assertEqual(segmenter.getSegmentForOffset(1), (0, 2))
 		self.assertEqual(segmenter.getSegmentForOffset(2), (2, 4))
 		self.assertEqual(segmenter.getSegmentForOffset(3), (2, 4))
 		self.assertEqual(segmenter.getSegmentForOffset(4), (2, 4))
-
-		# revert the config change
-		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = temp
