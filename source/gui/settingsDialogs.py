@@ -3113,9 +3113,6 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
-		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = (
-			self.initUnusedLangCheckBox.IsChecked()
-		)
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 

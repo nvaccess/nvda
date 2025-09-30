@@ -168,8 +168,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		if not forceInit and (
 			cls._lib
 			or (
-				not config.conf["documentNavigation"]["wordSegmentationStandard"].calculate()
-				== WordSegFlag.CHINESE
+				config.conf["documentNavigation"]["wordSegmentationStandard"].calculated()
+				!= config.featureFlagEnums.WordNavigationUnitFlag.CHINESE
 				and not cls.isUsingRelatedLanguage()
 			)
 		):
