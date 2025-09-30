@@ -602,7 +602,7 @@ def winEventToNVDAEvent(  # noqa: C901
 	return (NVDAEventName, obj)
 
 
-def processGenericWinEvent(eventID: int, window: int, objectID: int, childID: int):
+def processGenericWinEvent(eventID: int, window: int, objectID: int, childID: int) -> bool:
 	"""Converts the win event to an NVDA event,
 	Checks to see if this NVDAObject  equals the current focus.
 	If all goes well, then the event is queued and we return True
@@ -610,7 +610,7 @@ def processGenericWinEvent(eventID: int, window: int, objectID: int, childID: in
 	:param window: a win event's window handle
 	:param objectID: a win event's object ID
 	:param childID: a win event's child ID
-	:returns: True if the event was processed, False otherwise.
+	:return: True if the event was processed, False otherwise.
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -684,7 +684,7 @@ def processFocusWinEvent(window: int, objectID: int, childID: int, force: bool =
 	:param objectID: a win event's object ID
 	:param childID: a win event's child ID
 	:param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
-	:returns: True if the focus is valid and was handled, False otherwise.
+	:return: True if the focus is valid and was handled, False otherwise.
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -770,7 +770,7 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-def processDesktopSwitchWinEvent(window: int, objectID: int, childID: int):
+def processDesktopSwitchWinEvent(window: int, objectID: int, childID: int) -> None:
 	from winAPI.secureDesktop import _handleSecureDesktopChange
 
 	if isMSAADebugLoggingEnabled():
