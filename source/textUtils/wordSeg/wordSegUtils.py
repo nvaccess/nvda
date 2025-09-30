@@ -33,7 +33,6 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		"""
 		strLen = self.strLength
 		encodedLen = self.encodedStringLength
-		sepCount = len(self.newSepIndex)
 
 		# validate separator positions (optional but makes bugs obvious)
 		for pos in self.newSepIndex:
@@ -61,12 +60,9 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 
 		return strToEncoded
 
-
 	@property
 	def computedEncodedToStrOffsets(self) -> list[int]:
 		encodedLen = self.encodedStringLength
-		strLen = self.strLength
-		sepCount = len(self.newSepIndex)
 
 		# validate separator positions
 		for pos in self.newSepIndex:
@@ -94,7 +90,6 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 				nextStrIndex += 1
 
 		return encodedToStr
-
 
 	@cached_property
 	def encodedStringLength(self) -> int:
@@ -138,6 +133,8 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		else:
 			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
 			return (resultStart, resultEnd)
+
+
 # Punctuation that should NOT have a separator BEFORE it (no space before these marks)
 NO_SEP_BEFORE = {
 	# Common Chinese fullwidth punctuation
