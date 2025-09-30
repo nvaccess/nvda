@@ -3092,13 +3092,6 @@ class DocumentNavigationPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label for the initialization for word segmenters for unused languages in the document navigation dialog
-		initUnusedLangLabel = _("&Initialize Word Segmenters for Unused Languages:")
-		self.initUnusedLangCheckBox: wx.CheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=initUnusedLangLabel),
-		)
-		self.bindHelpEvent("initWordSegForUnusedLang", self.initUnusedLangCheckBox)
-
 		# Translators: This is a label for the word segmentation standard in the document navigation dialog
 		WordNavigationUnitLabel = _("&Word Segmentation Standard:")
 		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3120,9 +3113,6 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
-		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = (
-			self.initUnusedLangCheckBox.IsChecked()
-		)
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 

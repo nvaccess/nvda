@@ -157,15 +157,21 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	@classmethod
 	@initializerRegistry
-	def _initCppJieba(cls):  # TODO: make cppjieba alternative
+	def _initCppJieba(cls, forceInit: bool = False):  # TODO: make cppjieba alternative
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
 		set up ctypes signatures.
 		"""
 		import config
+		from ..segFlag import WordSegFlag
 
-		if cls._lib is not None or not (
-			config.conf["documentNavigation"]["initWordSegForUnusedLang"] or cls.isUsingRelatedLanguage()
+		if not forceInit and (
+			cls._lib
+			or (
+				config.conf["documentNavigation"]["wordSegmentationStandard"].calculated()
+				!= config.featureFlagEnums.WordNavigationUnitFlag.CHINESE
+				and not cls.isUsingRelatedLanguage()
+			)
 		):
 			return
 		try:
