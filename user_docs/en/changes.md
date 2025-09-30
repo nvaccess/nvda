@@ -12,6 +12,7 @@ You can now use `NVDA+Windows+,` to describe images you encounter.
 Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
+ARM64 Windows 10 is also no longer supported.
 
 ### New Features
 
@@ -35,6 +36,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * NVDA no longer supports Windows 8.1.
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
+* NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)

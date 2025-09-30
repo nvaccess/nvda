@@ -29,7 +29,7 @@ Major highlights include:
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
 * Translated into 54 languages
-* Support for modern Windows Operating Systems including both 32 and 64 bit variants
+* Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
@@ -42,14 +42,16 @@ Major highlights include:
 
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
   * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
