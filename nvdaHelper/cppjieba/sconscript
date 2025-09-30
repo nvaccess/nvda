@@ -35,6 +35,11 @@ sourceFiles = [
 	"cppjieba.def",
 ]
 
+env.AppendUnique(
+    CCFLAGS=['/wd4819'],
+    CXXFLAGS=['/wd4819'],
+)
+
 cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
 
 if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDir.Dir("dicts").get_abspath()): # insure dicts installation happens only once and avoid a scons' warning
