@@ -3079,7 +3079,7 @@ When navigating word by word or character by character, "out of spelling error" 
 To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
 Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, reports can be reported just in braille.
+In these cases, spelling errors can be reported just in braille.
 
 By default, spelling errors will be reported with speech.
 
