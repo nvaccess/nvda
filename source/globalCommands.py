@@ -812,7 +812,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
 		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = formatConfig ^ ReportSpellingErrors.BRAILLE
-		if config.conf["documentFormatting"]["reportSpellingErrors2"] | ReportSpellingErrors.BRAILLE:
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
 			# Translators: Message presented when turning on reporting spelling errors in braille.
 			ui.message(_("Report spelling errors in braille on"))
 		else:
