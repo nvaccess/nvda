@@ -793,20 +793,15 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		match config.conf["documentFormatting"]["reportSpellingErrors2"]:
-			case ReportSpellingErrors.SPEECH_AND_SOUND:
-				config.conf["documentFormatting"]["reportSpellingErrors2"] = ReportSpellingErrors.OFF
-			case ReportSpellingErrors.SPEECH_AND_SOUND_AND_BRAILLE:
-				config.conf["documentFormatting"]["reportSpellingErrors2"] = ReportSpellingErrors.BRAILLE
-			case _:
-				config.conf["documentFormatting"]["reportSpellingErrors2"] += 1
-		currentValue = (
-			config.conf["documentFormatting"]["reportSpellingErrors2"] & ~ReportSpellingErrors.BRAILLE
-		)
+		currentValue = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		newValue = ((currentValue + 1) % ReportSpellingErrors.BRAILLE) | (currentValue & ReportSpellingErrors.BRAILLE)
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
 		ui.message(
 			# Translators: Reported when the user cycles through the choices to report spelling errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			_("Report spelling errors {mode}").format(mode=ReportSpellingErrors(currentValue).displayString),
+			_("Report spelling errors {mode}").format(
+				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
+			),
 		)
 
 	@script(
