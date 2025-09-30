@@ -71,7 +71,7 @@ import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 import synthDriverHandler
-from utils.displayString import DisplayStringEnum, DisplayStringIntFlag
+from utils.displayString import DisplayStringEnum
 import _remoteClient
 
 #: Script category for text review commands.
@@ -794,7 +794,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
 		currentValue = config.conf["documentFormatting"]["reportSpellingErrors2"]
-		newValue = ((currentValue + 1) % ReportSpellingErrors.BRAILLE) | (currentValue & ReportSpellingErrors.BRAILLE)
+		newValue = ((currentValue + 1) % ReportSpellingErrors.BRAILLE) | (
+			currentValue & ReportSpellingErrors.BRAILLE
+		)
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
 		ui.message(
 			# Translators: Reported when the user cycles through the choices to report spelling errors.
@@ -811,7 +813,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
 		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
-		config.conf["documentFormatting"]["reportSpellingErrors2"] = formatConfig ^ ReportSpellingErrors.BRAILLE
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = (
+			formatConfig ^ ReportSpellingErrors.BRAILLE
+		)
 		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
 			# Translators: Message presented when turning on reporting spelling errors in braille.
 			ui.message(_("Report spelling errors in braille on"))
