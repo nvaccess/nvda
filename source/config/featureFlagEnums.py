@@ -138,6 +138,7 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
 		}
 
+
 class WordNavigationUnitFlag(DisplayStringEnum):
 	"""Enumeration for word navigation."""
 

@@ -7,7 +7,6 @@
 
 import unittest
 
-import config.featureFlagEnums
 from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
 from textUtils.uniscribe import splitAtCharacterBoundaries
 from textUtils.segFlag import WordSegFlag
@@ -461,8 +460,6 @@ class TestWordSegmenter(unittest.TestCase):
 		text = "你好世界"
 
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
-
-
 
 		ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
 		segmenter = WordSegmenter(text, wordSegFlag=WordSegFlag.CHINESE)
