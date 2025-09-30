@@ -524,7 +524,7 @@ def _unregisterEaseOfAccessApp():
 			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
-		log.debug("Ease of Access app key not found nothing to unregister.")
+		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
