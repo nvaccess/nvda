@@ -181,37 +181,6 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def toggleBinaryValue(
-	configSection: str,
-	configKey: str,
-	enumClass: "DisplayStringIntFlag",
-	messageTemplate: str,
-	length: int,
-) -> None:
-	"""
-	Cycles through integer configuration values corresponding to a flag and displays the corresponding message.
-
-	:param configSection: The configuration section containing the integer key.
-	:param configKey: The configuration key associated with the integer value.
-	:param enumClass: The enumeration class representing possible states.
-	:param messageTemplate: The message template with a placeholder, `{mode}`, for the state.
-	:param length: The maximum number of values to cycle through.
-	:return: None.
-	"""
-	currentValue = config.conf[configSection][configKey]
-	index = 0
-	for n in range(length - 1):
-		availableValue = enumClass(n).value
-		if availableValue == currentValue:
-			index = n + 1
-			break
-	newValue = enumClass(index).value
-	config.conf[configSection][configKey] = newValue
-	state = enumClass(index)
-	msg = messageTemplate.format(mode=state.displayString)
-	ui.message(msg)
-
-
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
 
