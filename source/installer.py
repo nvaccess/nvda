@@ -541,7 +541,7 @@ def _unregisterDesktopShortcut(keepDesktopShortcut: bool):
 			pass
 
 
-def _unregisterFromStartMenu():
+def _unregisterFromStartMenu() -> None:
 	wsh = _getWSH()
 	programsPath = wsh.SpecialFolders("AllUsersPrograms")
 	startMenuFolder = WritePaths.startMenuFolder
@@ -561,7 +561,7 @@ def _unregisterFromStartMenu():
 		log.debug(f"Removed start menu (x86) folder: {startMenuPathX86}")
 
 
-def _unregisterFromUninstallRegistry():
+def _unregisterFromUninstallRegistry() -> None:
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -580,7 +580,7 @@ def _unregisterFromUninstallRegistry():
 		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
 
 
-def _unregisterFromAppPathRegistry():
+def _unregisterFromAppPathRegistry() -> None:
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -599,7 +599,7 @@ def _unregisterFromAppPathRegistry():
 		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
 
 
-def _unregisterFromSoftwareRegistry():
+def _unregisterFromSoftwareRegistry() -> None:
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
@@ -673,7 +673,7 @@ def registerAddonFileAssociation(slaveExe: str):
 		log.error("Can not create addon file association.", exc_info=True)
 
 
-def unregisterAddonFileAssociation():
+def unregisterAddonFileAssociation() -> None:
 	shouldNotifyShell = False
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
@@ -853,7 +853,7 @@ def _deleteFileGroupOrFail(
 			log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
 
 
-def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
+def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True) -> None:
 	prevInstallPath = WritePaths.installDir
 	installDir = WritePaths.defaultInstallDir
 	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
