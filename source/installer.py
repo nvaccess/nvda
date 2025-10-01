@@ -99,7 +99,7 @@ def comparePreviousInstall() -> int | None:
 	0 if it is the same, -1 if it is older,
 	None if there is no existing installation.
 	"""
-	pathX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
+	pathX86 = WritePaths._installDirX86
 	path = WritePaths.installDir
 	if (not path or not os.path.isdir(path)) and (not pathX86 or not os.path.isdir(pathX86)):
 		return None
