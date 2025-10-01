@@ -856,9 +856,9 @@ def _deleteFileGroupOrFail(
 def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath = WritePaths.installDir
 	installDir = WritePaths.defaultInstallDir
-	installDirX86 = WritePaths._installDirX86
+	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	shouldCleanX86 = installDirX86 is not None
+	shouldCleanX86 = installDirX86 is not None and os.path.isdir(installDirX86)
 	# Give some time for the installed NVDA (which may have been running on a secure screen)
 	# to shut down before we start deleting files.
 	time.sleep(1)
