@@ -153,7 +153,19 @@ class _WritePaths:
 		except WindowsError:
 			return None
 
-	_installDirX86 = os.path.join("C:", "Program Files (x86)", "NVDA")
+	@property
+	@lru_cache(maxsize=1)
+	def _installDirX86(self) -> str | None:
+		from config.registry import _RegistryKeyX86
+
+		try:
+			with winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE,
+				_RegistryKeyX86.INSTALLED_COPY.value,
+			) as k:
+				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
+		except WindowsError:
+			return None
 
 	def getSymbolsConfigFile(self, locale: str) -> str:
 		return os.path.join(self.configDir, f"symbols-{locale}.dic")
