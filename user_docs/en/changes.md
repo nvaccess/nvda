@@ -12,7 +12,7 @@ You can now use `NVDA+Windows+,` to describe images you encounter.
 Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
-ARM64 Windows 10 is also no longer supported.
+Windows 10 on ARM is also no longer supported.
 
 ### New Features
 
