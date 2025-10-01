@@ -113,10 +113,14 @@ class _WritePaths:
 	@lru_cache(maxsize=1)
 	def _startMenuFolderX86(self) -> str | None:
 		"""Name of a specific folder in the start menu, not a full path"""
-		from config.registry import _RegistryKeyX86
+		from config.registry import RegistryKey
 
 		try:
-			with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKeyX86.NVDA.value) as k:
+			with winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE,
+				RegistryKey.NVDA.value,
+				access=winreg.KEY_WOW64_32KEY,
+			) as k:
 				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
 		except WindowsError:
 			return None
@@ -133,9 +137,13 @@ class _WritePaths:
 	@property
 	@lru_cache(maxsize=1)
 	def _defaultInstallDirX86(self) -> str:
-		from config.registry import _RegistryKeyX86
+		from config.registry import RegistryKey
 
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKeyX86.CURRENT_VERSION.value) as k:
+		with winreg.OpenKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.CURRENT_VERSION.value,
+			access=winreg.KEY_WOW64_32KEY,
+		) as k:
 			programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
 		return os.path.join(programFilesPath, buildVersion.name)
 
@@ -156,12 +164,13 @@ class _WritePaths:
 	@property
 	@lru_cache(maxsize=1)
 	def _installDirX86(self) -> str | None:
-		from config.registry import _RegistryKeyX86
+		from config.registry import RegistryKey
 
 		try:
 			with winreg.OpenKey(
 				winreg.HKEY_LOCAL_MACHINE,
-				_RegistryKeyX86.INSTALLED_COPY.value,
+				RegistryKey.INSTALLED_COPY.value,
+				access=winreg.KEY_WOW64_32KEY,
 			) as k:
 				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
 		except WindowsError:

@@ -17,7 +17,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
-from config.registry import NVDA_ADDON_PROG_ID, _RegistryKeyX86, RegistryKey
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -585,7 +585,8 @@ def _unregisterFromUninstallRegistry() -> None:
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			_RegistryKeyX86.INSTALLED_COPY.value,
+			RegistryKey.INSTALLED_COPY.value,
+			access=winreg.KEY_WOW64_32KEY,
 		)
 	except WindowsError:
 		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
@@ -604,7 +605,8 @@ def _unregisterFromAppPathRegistry() -> None:
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			_RegistryKeyX86.APP_PATH.value,
+			RegistryKey.APP_PATH.value,
+			access=winreg.KEY_WOW64_32KEY,
 		)
 	except WindowsError:
 		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
@@ -623,7 +625,8 @@ def _unregisterFromSoftwareRegistry() -> None:
 	try:
 		winreg.DeleteKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			_RegistryKeyX86.NVDA.value,
+			RegistryKey.NVDA.value,
+			access=winreg.KEY_WOW64_32KEY,
 		)
 	except WindowsError:
 		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
@@ -691,6 +694,8 @@ def unregisterAddonFileAssociation() -> None:
 		_deleteKeyAndSubkeys(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.ADDON_PROG.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
 		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
@@ -699,7 +704,8 @@ def unregisterAddonFileAssociation() -> None:
 	try:
 		_deleteKeyAndSubkeys(
 			winreg.HKEY_LOCAL_MACHINE,
-			_RegistryKeyX86.ADDON_PROG.value,
+			RegistryKey.ADDON_PROG.value,
+			access=winreg.KEY_WOW64_32KEY,
 		)
 	except WindowsError:
 		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
@@ -710,9 +716,9 @@ def unregisterAddonFileAssociation() -> None:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 
-def _deleteKeyAndSubkeys(key: int, subkey: str):
+def _deleteKeyAndSubkeys(key: int, subkey: str, access: int = 0) -> None:
 	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
-	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
+	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ | access) as parent:
 		result = RegDeleteTree(
 			parent.handle,
 			subkey,

@@ -48,24 +48,3 @@ class RegistryKey(str, Enum):
 	"""
 	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
 	SERVICE_DEBUG_SUBKEY = "serviceDebug"
-
-
-class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
-	"""
-	Used to access the 32-bit registry view on x64 systems.
-	For cleaning up legacy 32-bit NVDA copies.
-	"""
-
-	_SOFTWARE = nonmember(r"SOFTWARE\WOW6432Node")
-	CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows\CurrentVersion"
-	INSTALLED_COPY = rf"{CURRENT_VERSION}\Uninstall\NVDA"
-	RUN = rf"{CURRENT_VERSION}\Run"
-	NVDA = rf"{_SOFTWARE}\NVDA"
-	APP_PATH = rf"{CURRENT_VERSION}\App Paths\nvda.exe"
-	EXPLORER_ADVANCED = rf"{CURRENT_VERSION}\Explorer\Advanced"
-	SYSTEM_POLICIES = rf"{CURRENT_VERSION}\Policies\System"
-	NT_CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows NT\CurrentVersion"
-	EASE_OF_ACCESS = rf"{NT_CURRENT_VERSION}\Accessibility"
-	EASE_OF_ACCESS_TEMP = rf"{NT_CURRENT_VERSION}\AccessibilityTemp"
-	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
-	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
