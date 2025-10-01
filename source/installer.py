@@ -99,13 +99,33 @@ def comparePreviousInstall() -> int | None:
 	0 if it is the same, -1 if it is older,
 	None if there is no existing installation.
 	"""
+	pathX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
 	path = WritePaths.installDir
-	if not path or not os.path.isdir(path):
+	if (
+		(
+			not path
+			or not os.path.isdir(path)
+		)
+		and (
+			not pathX86
+			or not os.path.isdir(pathX86)
+		)
+	):
 		return None
 	try:
 		oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+	except OSError:
+		log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
+		try:
+			oldTime = os.path.getmtime(os.path.join(pathX86, "nvda_slave.exe"))
+		except OSError:
+			log.debug("Unable to get modification time of nvda_slave.exe in previous installation (x86).")
+			return None
+	try:
 		newTime = os.path.getmtime("nvda_slave.exe")
 	except OSError:
+		# This should never happen.
+		log.error("Unable to get modification time of nvda_slave.exe in current process.")
 		return None
 	return (oldTime > newTime) - (oldTime < newTime)
 
@@ -410,6 +430,16 @@ def _createShortcutWithFallback(
 				f"Error creating {path}, no mitigation possible. "
 				f"Perhaps controlled folder access is active for this directory.",
 			)
+
+
+def _getShortCutHotkey() -> str | None:
+	wsh = _getWSH()
+	specialPath = wsh.SpecialFolders("AllUsersDesktop")
+	shortcutPath = os.path.join(specialPath, "NVDA.lnk")
+	if os.path.isfile(shortcutPath):
+		short = wsh.CreateShortcut(shortcutPath)
+		return short.Hotkey
+	return None
 
 
 def _updateShortcuts(
