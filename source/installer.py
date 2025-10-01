@@ -423,16 +423,6 @@ def _createShortcutWithFallback(
 			)
 
 
-def _getShortCutHotkey() -> str | None:
-	wsh = _getWSH()
-	specialPath = wsh.SpecialFolders("AllUsersDesktop")
-	shortcutPath = os.path.join(specialPath, "NVDA.lnk")
-	if os.path.isfile(shortcutPath):
-		short = wsh.CreateShortcut(shortcutPath)
-		return short.Hotkey
-	return None
-
-
 def _updateShortcuts(
 	NVDAExe: str,
 	installDir: str,
