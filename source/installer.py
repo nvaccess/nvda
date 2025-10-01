@@ -101,16 +101,7 @@ def comparePreviousInstall() -> int | None:
 	"""
 	pathX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
 	path = WritePaths.installDir
-	if (
-		(
-			not path
-			or not os.path.isdir(path)
-		)
-		and (
-			not pathX86
-			or not os.path.isdir(pathX86)
-		)
-	):
+	if (not path or not os.path.isdir(path)) and (not pathX86 or not os.path.isdir(pathX86)):
 		return None
 	try:
 		oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
