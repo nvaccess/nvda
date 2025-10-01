@@ -16,3 +16,12 @@ if "%1" NEQ "" (
 ) else (
     call uv run --group lint --directory "%here%" ruff format %ruffFormatArgs%
 )
+if ERRORLEVEL 1 exit /b %ERRORLEVEL%
+
+rem Run pyright for type checking
+if "%1" NEQ "" (
+    call uv run --group lint --directory "%here%" pyright > %1/pyright-output.txt
+) else (
+    call uv run --group lint --directory "%here%" pyright
+)
+if ERRORLEVEL 1 exit /b %ERRORLEVEL%
