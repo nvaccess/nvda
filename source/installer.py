@@ -875,7 +875,9 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	installDir = WritePaths.defaultInstallDir
 	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	shouldCleanX86 = installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir
+	shouldCleanX86 = (
+		installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir
+	)
 	# Give some time for the installed NVDA (which may have been running on a secure screen)
 	# to shut down before we start deleting files.
 	time.sleep(1)
