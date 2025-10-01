@@ -51,6 +51,7 @@ class RemoteClient:
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
+	sdHandler: SecureDesktopHandler | None
 
 	def __init__(
 		self,
@@ -72,14 +73,19 @@ class RemoteClient:
 		self.localControlServer = None
 		self.sendingKeys = False
 		self._wasSendingKeysBeforeLock: bool = False
-		self.sdHandler = SecureDesktopHandler()
-		if isRunningOnSecureDesktop():
-			connection = self.sdHandler.initializeSecureDesktop()
-			if connection:
-				self.connectAsFollower(connection)
-				self.followerSession.transport.connectedEvent.wait(
-					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
-				)
+		try:
+			self.sdHandler = SecureDesktopHandler()
+		except RuntimeError:
+			log.error("Failed to initialise the secure desktop handler.", exc_info=True)
+			self.sdHandler = None
+		else:
+			if isRunningOnSecureDesktop():
+				connection = self.sdHandler.initializeSecureDesktop()
+				if connection:
+					self.connectAsFollower(connection)
+					self.followerSession.transport.connectedEvent.wait(
+						self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
+					)
 		core.postNvdaStartup.register(self.performAutoconnect)
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
@@ -103,7 +109,8 @@ class RemoteClient:
 		self.connect(conInfo)
 
 	def terminate(self):
-		self.sdHandler.terminate()
+		if self.sdHandler is not None:
+			self.sdHandler.terminate()
 		self.disconnect()
 		self.localMachine.terminate()
 		self.localMachine = None
@@ -277,7 +284,8 @@ class RemoteClient:
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
-		self.sdHandler.followerSession = None
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = None
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 		self._connecting = False
@@ -405,7 +413,8 @@ class RemoteClient:
 			transport=transport,
 			localMachine=self.localMachine,
 		)
-		self.sdHandler.followerSession = self.followerSession
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onFollowerCertificateFailed,
