@@ -583,7 +583,7 @@ def _unregisterFromUninstallRegistry() -> None:
 	except WindowsError:
 		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.INSTALLED_COPY.value,
 			access=winreg.KEY_WOW64_32KEY,
@@ -603,7 +603,7 @@ def _unregisterFromAppPathRegistry() -> None:
 	except WindowsError:
 		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP_PATH.value,
 			access=winreg.KEY_WOW64_32KEY,
@@ -623,7 +623,7 @@ def _unregisterFromSoftwareRegistry() -> None:
 	except WindowsError:
 		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.NVDA.value,
 			access=winreg.KEY_WOW64_32KEY,
