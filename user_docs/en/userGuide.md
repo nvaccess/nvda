@@ -1252,22 +1252,23 @@ Otherwise, word and character navigation is the same.
 
 The following are key commands used to navigate math:
 
+<!-- KC:beginInclude -->
 | Shortcut | Description |
 |---|---|
 | `leftArrow` | Move to previous |
-| `control+leftArrow` | Move to previous cell in a table, or previous digit if in columnar math |
+| `control+leftArrow` | Move to previous cell in a table, or previous digit if in columnar math. Note: `control+alt+leftArrow` can also be used. |
 | `shift+leftArrow` | Read previous |
 | `control+shift+leftArrow` | Describe previous |
 | `rightArrow` | Move to next |
-| `control+rightArrow` | Move to next cell in a table, or next digit if in columnar math |
+| `control+rightArrow` | Move to next cell in a table, or next digit if in columnar math. Note: `control+alt+rightArrow` can also be used. |
 | `shift+rightArrow` | Read next |
 | `control+shift+rightArrow` | Describe next |
-| `upArrow` | Zoom out | 
-| `control+upArrow` | Move to cell above in a table, or digit above in columnar math |
+| `upArrow` | Zoom out |
+| `control+upArrow` | Move to cell above in a table, or digit above in columnar math. Note: `control+alt+upArrow` can also be used. |
 | `shift+upArrow` | Change Navigation Mode (Enhanced/Simple/Character) to larger |
 | `control+shift+upArrow` | Zoom out all the way |
 | `downArrow` | Zoom in |
-| `control+downArrow` | Move to cell below in a table, or digit below in columnar math |
+| `control+downArrow` | Move to cell below in a table, or digit below in columnar math. Note: `control+shift+downArrow` can also be used. |
 | `shift+downArrow` | Change Navigation Mode (Enhanced/Simple/Character) to smaller |
 | `control+shift+downArrow` | Zoom in all the way |
 | `enter` | Where am I |
@@ -1287,6 +1288,7 @@ The following are key commands used to navigate math:
 | `control+end` | Move to end of line |
 | `shift+end` | Move to end of column in table, or move to digit at botton in columnar math |
 | `backspace` | Move back to last position |
+<!-- KC:endInclude -->
 
 ## Typical Use
 
