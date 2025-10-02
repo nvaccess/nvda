@@ -99,13 +99,19 @@ def comparePreviousInstall() -> int | None:
 	None if there is no existing installation.
 	"""
 	pathX86 = WritePaths._installDirX86
+	pathX86Exists = pathX86 and os.path.isdir(pathX86)
 	path = WritePaths.installDir
-	if (not path or not os.path.isdir(path)) and (not pathX86 or not os.path.isdir(pathX86)):
+	pathExists = path and os.path.isdir(path)
+	oldTime = None
+	if not (pathExists or pathX86Exists):
 		return None
-	try:
-		oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
-	except OSError:
-		log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
+	if pathExists:
+		try:
+			oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+		except OSError:
+			log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
+			return None
+	elif pathX86Exists:
 		try:
 			oldTime = os.path.getmtime(os.path.join(pathX86, "nvda_slave.exe"))
 		except OSError:
