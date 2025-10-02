@@ -5,6 +5,7 @@
 
 from functools import lru_cache
 import os
+import platform
 import sys
 import sysconfig
 import time
@@ -137,12 +138,19 @@ class _WritePaths:
 	@property
 	@lru_cache(maxsize=1)
 	def _defaultInstallDirX86(self) -> str:
-		from config.registry import RegistryKey
+		from config.registry import RegistryKey, _RegistryKeyX86
+
+		if platform.architecture()[0].startswith("64"):
+			# We are a 64-bit process, so we want to get the 32-bit view of the registry.
+			# Using winreg.KEY_WOW64_32KEY in this case raises Access Denied on a non-elevated process.
+			key = _RegistryKeyX86.CURRENT_VERSION.value
+		else:
+			# We are a 32-bit process, so RegistryKey defaults to the 32-bit view of the registry.
+			key = RegistryKey.CURRENT_VERSION.value
 
 		with winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.CURRENT_VERSION.value,
-			access=winreg.KEY_WOW64_32KEY,
+			key,
 		) as k:
 			programFilesPath = winreg.QueryValueEx(k, "ProgramFilesDir")[0]
 		return os.path.join(programFilesPath, buildVersion.name)

@@ -48,3 +48,13 @@ class RegistryKey(str, Enum):
 	"""
 	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
 	SERVICE_DEBUG_SUBKEY = "serviceDebug"
+
+
+class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
+	"""
+	Used to access the 32-bit registry view on x64 systems.
+	For cleaning up legacy 32-bit NVDA copies.
+	"""
+
+	_SOFTWARE = nonmember(r"SOFTWARE\WOW6432Node")
+	CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows\CurrentVersion"
