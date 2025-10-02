@@ -1252,19 +1252,41 @@ Otherwise, word and character navigation is the same.
 
 The following are key commands used to navigate math:
 
-| Key        | Unmodified                                           | + Ctrl                                                      | + Shift                                                   | + Ctrl+Shift                                |
-|------------|-----------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------|
-| Left       | Move to previous                                    | In table: move to previous cell<br>In columnar math: move to previous digit<br>Note: Ctrl+Alt+Left can also be used | Read previous                                            | Describe previous                           |
-| Right      | Move to next                                        | In table: move to next cell<br>In columnar math: move to next digit<br>Note: Ctrl+Alt+Right can also be used   | Read next                                                | Describe next                               |
-| Up         | Zoom out                                            | In table: move to cell above<br>In columnar math: move to digit above<br>Note: Ctrl+Alt+Up can also be used | Change Navigation Mode (Enhanced/Simple/Character) to larger | Zoom out all the way                        |
-| Down       | Zoom in                                             | In table: move to cell below<br>In columnar math: move to digit below<br>Note: Ctrl+Alt+Down can also be used | Change Navigation Mode (Enhanced/Simple/Character) to smaller | Zoom in all the way                          |
-| Enter      | Where am I                                         | Global Where am I                                           |                                                           |                                            |
-| Numbers 1-10 (0 is 10) | Jump to Place Marker                         | Set placemarker                                             | Read Placemarker                                         | Describe Placemarker                        |
-| Space      | Read current                                        | Read Current cell                                           | Toggle “speech mode” to read or describe                 | Describe current                            |
-| Home       | Move to start of expression                         | Move to start of line                                       | Move to start of column<br>Move to digit at top          | NYI: Read from start of expression         |
-| End        | Move to end of expression                           | Move to end of line                                         | Move to end of column<br>Move to digit at bottom         | NYI: Read to end of expression             |
-| Backspace  | Move back to last position                           |                                                             |                                                           |                                            |
-NYE = Not Yet Implemented
+| Shortcut | Description |
+|---|---|
+| `leftArrow` | Move to previous |
+| `control+leftArrow` | Move to previous cell in a table, or previous digit if in columnar math |
+| `shift+leftArrow` | Read previous |
+| `control+shift+leftArrow` | Describe previous |
+| `rightArrow` | Move to next |
+| `control+rightArrow` | Move to next cell in a table, or next digit if in columnar math |
+| `shift+rightArrow` | Read next |
+| `control+shift+rightArrow` | Describe next |
+| `upArrow` | Zoom out | 
+| `control+upArrow` | Move to cell above in a table, or digit above in columnar math |
+| `shift+upArrow` | Change Navigation Mode (Enhanced/Simple/Character) to larger |
+| `control+shift+upArrow` | Zoom out all the way |
+| `downArrow` | Zoom in |
+| `control+downArrow` | Move to cell below in a table, or digit below in columnar math |
+| `shift+downArrow` | Change Navigation Mode (Enhanced/Simple/Character) to smaller |
+| `control+shift+downArrow` | Zoom in all the way |
+| `enter` | Where am I |
+| `control+center` | Global Where am I |
+| 1 through 10 (0 is 10) | Jump to placemarker |
+| `control+1` through `control+0` | Set placemarker |
+| `shift+1` through `shift+0` | Read placemarker |
+| `control+shift+1` through `shift+0` | Describe placemarker |
+| `space` | Read current |
+| `control+space` | Read current cell |
+| `shift+space` | Toggle "speech mode" to Read or Rescribe |
+| `control+shift+space` | Describe current |
+| `home` | Move to start of expression |
+| `control+home` | Move to start of line |
+| `shift+home` | Move to start of column in table, or move to digit at top in columnar math |
+| `end` | Move to end of expression |
+| `control+end` | Move to end of line |
+| `shift+end` | Move to end of column in table, or move to digit at botton in columnar math |
+| `backspace` | Move back to last position |
 
 ## Typical Use
 
