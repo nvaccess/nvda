@@ -1185,9 +1185,9 @@ MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
 * Adobe Acrobat Reader:
-* Tagged PDF with MathML Structure elements.
+Tagged PDF with MathML Structure elements.
 * Foxit PDF Reader:
-* Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
+Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1224,7 +1224,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
-* Use the arrow keys to move left/right or up/down a mathematical structure (e.g., into/out of a fraction)
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction)
 * If inside of a table, `control+arrow` will move by cell
 * `home` / `end` moves to the start/end of the expression
 * `space` reads your current position
@@ -1295,14 +1295,14 @@ The following are key commands used to navigate math:
 Typically, you will start at the first term of an expression and move right as needed.
 You might move up and down levels if needed.
 This is done with the arrow keys.
-alt+control+arrow is used to move around tabular entries.
+`control+alt+arrow` is used to move around tabular entries.
 
 Backspace will take you back to where you were, which is not always the same as moving to the left.
 For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
 
 You will likely find one mode of navigation the most natural for you most of the time.
 This can be set in the MathCAT settings.
-However, at any time during navigation, you can switch the navigation modes using shift+up/down arrow.
+However, at any time during navigation, you can switch the navigation modes using `shift+up/down arrow`.
 This is useful because each mode of navigation has its strengths and weaknesses.
 
 ## Braille {#Braille}
@@ -3175,7 +3175,7 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". See [this site for a list of options](https://www.venea.net/web/culture_code). |
+| Options | Any known language code and sub-code, e.g. "en-uk". |
 | Default | en |
 
 ###### Speech Style {MathSpeechStyle}
@@ -3280,7 +3280,7 @@ Whether to play a beep sound when speech starts/ends.
 
 ###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
 
-Auto zoom out of 2D expressions like fractions (use shift-arrow to force zoom out if this is set to False).
+Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is set to False).
 
 | . {.hideHeaderRow} | . |
 |---|---|
