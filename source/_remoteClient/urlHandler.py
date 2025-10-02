@@ -73,7 +73,7 @@ def unregisterURLHandler():
 	"""
 	try:
 		_deleteKeyAndSubkeys(
-			winreg.HKEY_LOCAL_MACHINE,
+			winreg.HKEY_CURRENT_USER,
 			RegistryKey.REMOTE_URL_HANDLER.value,
 		)
 	except WindowsError as e:
