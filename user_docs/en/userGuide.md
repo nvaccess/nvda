@@ -1184,8 +1184,10 @@ NVDA can read and navigate MathType equations in both Microsoft Powerpoint and M
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
-* Adobe Acrobat Reader: tagged PDF with MathML Structure elements.
-* Foxit PDF Reader: tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
+* Adobe Acrobat Reader:
+* Tagged PDF with MathML Structure elements.
+* Foxit PDF Reader:
+* Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1239,13 +1241,11 @@ The format of the math copied to the clipboard can be adjusted through the [math
 
 MathCAT supports the following navigation modes:
 
-In Enhanced Mode, navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
-
-Simple mode moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+* Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
 Zooming in lets you explore the 2D notation in the same mode.
 Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
-
-Character mode is actually two modes - word mode and character mode (zoom in to get "real" character mode).
+* Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
 Moves by words/characters. 
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
