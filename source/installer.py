@@ -17,7 +17,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
-from config.registry import NVDA_ADDON_PROG_ID, RegistryKey
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -29,7 +29,6 @@ import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from utils._deprecate import handleDeprecations, MovedSymbol
-from winBindings.advapi32 import RegDeleteTree
 
 _wsh = None
 
@@ -714,17 +713,6 @@ def unregisterAddonFileAssociation() -> None:
 	if shouldNotifyShell:
 		# Notify the shell that a file association has changed:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
-
-
-def _deleteKeyAndSubkeys(key: int, subkey: str, access: int = 0) -> None:
-	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
-	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ | access) as parent:
-		result = RegDeleteTree(
-			parent.handle,
-			subkey,
-		)
-	if result != 0:
-		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
 
 
 class RetriableFailure(Exception):

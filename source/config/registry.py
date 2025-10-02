@@ -4,6 +4,9 @@
 # See the file COPYING for more details.
 
 from enum import Enum, nonmember
+import winreg
+
+from winBindings.advapi32 import RegDeleteTree
 
 
 EASE_OF_ACCESS_APP_KEY_NAME = "nvda_nvda_v1"
@@ -33,6 +36,7 @@ class RegistryKey(str, Enum):
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
 	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
+	REMOTE_URL_HANDLER = rf"{_SOFTWARE}\Classes\nvdaremote"
 
 	# Sub keys
 
@@ -58,3 +62,14 @@ class _RegistryKeyX86(str, Enum):  # type: ignore[reportUnusedClass]
 
 	_SOFTWARE = nonmember(r"SOFTWARE\WOW6432Node")
 	CURRENT_VERSION = rf"{_SOFTWARE}\Microsoft\Windows\CurrentVersion"
+
+
+def _deleteKeyAndSubkeys(key: int, subkey: str, access: int = 0) -> None:
+	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
+	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ | access) as parent:
+		result = RegDeleteTree(
+			parent.handle,
+			subkey,
+		)
+	if result != 0:
+		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
