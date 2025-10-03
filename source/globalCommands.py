@@ -793,14 +793,35 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		toggleIntegerValue(
-			configSection="documentFormatting",
-			configKey="reportSpellingErrors2",
-			enumClass=ReportSpellingErrors,
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
-			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
-			messageTemplate=_("Report spelling errors {mode}"),
+		currentValue = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		newValue = ((currentValue + 1) % ReportSpellingErrors.BRAILLE) | (
+			currentValue & ReportSpellingErrors.BRAILLE
 		)
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
+		ui.message(
+			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
+			_("Report spelling errors {mode}").format(
+				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
+			),
+		)
+
+	@script(
+		# Translators: Input help mode message for command to toggle report spelling errors in braille.
+		description=_("Toggles reporting spelling errors in braille"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
+		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = (
+			formatConfig ^ ReportSpellingErrors.BRAILLE
+		)
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
+			# Translators: Message presented when turning on reporting spelling errors in braille.
+			ui.message(_("Report spelling errors in braille on"))
+		else:
+			# Translators: Message presented when turning off reporting spelling errors in braille.
+			ui.message(_("Report spelling errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.

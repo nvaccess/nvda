@@ -17,6 +17,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+* Spelling errors can be reported in braille. (#7608, @nvdaes)
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
@@ -56,6 +57,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
+* In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 
 #### API Breaking Changes
 
