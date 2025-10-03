@@ -14,7 +14,7 @@ on:
 
 jobs:
   download-from-crowdin:
-    runs-on: windows-latest
+    runs-on: windows-2025
     permissions:
       contents: write
       pull-requests: write
@@ -29,6 +29,12 @@ jobs:
         fetch-depth: 1
         submodules: true
 
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        architecture: 'x86'
+
     - name: setup uv
       uses: astral-sh/setup-uv@v6
 
@@ -37,11 +43,6 @@ jobs:
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-
-    - name: Set up python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
 
     - name: Install pre-commit
       run: |

@@ -1,19 +1,23 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
 from locale import strxfrm
 from typing import (
+	Any,
 	FrozenSet,
 	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
+	Protocol,
 	TypeVar,
+	cast,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -30,13 +34,16 @@ from addonStore.models.status import (
 )
 import core
 import extensionPoints
+from buildVersion import formatVersionForGUI
 from logHandler import log
 
 
 if TYPE_CHECKING:
-	# Remove when https://github.com/python/typing/issues/760 is resolved
-	from _typeshed import SupportsLessThan  # noqa: F401
 	from .store import AddonStoreVM
+
+	class _SupportsLessThan(Protocol):
+		@abstractmethod
+		def __lt__(self, other: Any) -> bool: ...
 
 
 @dataclass
@@ -92,7 +99,23 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "Date"),
+		pgettext("addonStore", "Publication date"),
+		50,
+	)
+	installDate = (
+		# Translators: The name of the column that contains the installation date of the add-on.
+		pgettext("addonStore", "Install date"),
+		50,
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
+	)
+	minimumNVDAVersion = (
+		# Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
+		pgettext("addonStore", "Minimum NVDA version"),
+		50,
+	)
+	lastTestedVersion = (
+		# Translators: The name of the column that contains the last version of NVDA tested with this add-on.
+		pgettext("addonStore", "Last tested NVDA version"),
 		50,
 	)
 
@@ -290,7 +313,10 @@ class AddonListVM:
 
 	def _getAddonFieldText(self, listItemVM: AddonListItemVM, field: AddonListField) -> str:
 		assert field in AddonListField
-		if field is AddonListField.currentAddonVersionName:
+		if (
+			field is AddonListField.currentAddonVersionName
+			and listItemVM.model._addonHandlerModel is not None
+		):
 			return listItemVM.model._addonHandlerModel.version
 		if field is AddonListField.availableAddonVersionName:
 			return listItemVM.model.addonVersionName
@@ -298,6 +324,12 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
+		if field is AddonListField.installDate:
+			return listItemVM.model.installDate.strftime("%x")
+		if field is AddonListField.minimumNVDAVersion:
+			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
+		if field is AddonListField.lastTestedVersion:
+			return formatVersionForGUI(*listItemVM.model.lastTestedVersion)
 		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
@@ -382,12 +414,16 @@ class AddonListVM:
 			)
 		return columnChoices
 
-	def _getFilteredSortedIds(self) -> List[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+	def _getFilteredSortedIds(self) -> list[str]:
+		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
+					listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
 					return listItemVM.model.submissionTime
 				return 0
+			if self._sortByModelField == AddonListField.installDate:
+				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
+				return listItemVM.model.installDate
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:

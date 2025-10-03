@@ -13,8 +13,6 @@ For the latter two actions, one can perform actions prior to and/or after they t
 from enum import Enum
 import globalVars
 import winreg
-import ctypes
-import ctypes.wintypes
 import os
 import sys
 import errno
@@ -27,6 +25,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
+import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
@@ -40,6 +39,7 @@ from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
 )
+from .registry import RegistryKey as _RegistryKey
 from typing import (
 	Any,
 	Dict,
@@ -77,12 +77,15 @@ post_configReset = extensionPoints.Action()
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "RegistryKey" and NVDAState._allowDeprecatedAPI():
+		log.warning("Importing RegistryKey from here is deprecated, use config.registry.RegistryKey instead.")
+		return _RegistryKey
 	if attrName == "NVDA_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
-		return RegistryKey.NVDA.value
+		return _RegistryKey.NVDA.value
 	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
-		return RegistryKey.RUN.value
+		return _RegistryKey.RUN.value
 	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"addConfigDirsToPythonPackagePath is deprecated, "
@@ -98,7 +101,7 @@ def __getattr__(attrName: str) -> Any:
 			"Instead use RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY. ",
 			stack_info=True,
 		)
-		return RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
+		return _RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -119,45 +122,22 @@ def saveOnExit():
 			pass
 
 
-class RegistryKey(str, Enum):
-	INSTALLED_COPY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA"
-	RUN = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
-	NVDA = r"SOFTWARE\NVDA"
-	r"""
-	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
-	Note that NVDA is a 32-bit application, so on X64 systems,
-	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
-	"""
-	CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
-	"""
-	#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
-	which will make an installed NVDA load the user configuration either from the local or from
-	the roaming application data profile.
-	The registry value is unset by default.
-	When setting it manually, a DWORD value is preferred.
-	A value of 0 will evaluate to loading the configuration from the roaming application data (default).
-	A value of 1 means loading the configuration from the local application data folder.
-	"""
-	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
-	SERVICE_DEBUG_SUBKEY = "serviceDebug"
-
-
 def isInstalledCopy() -> bool:
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
 		k = winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.INSTALLED_COPY.value,
+			_RegistryKey.INSTALLED_COPY.value,
 		)
 	except FileNotFoundError:
 		log.debug(
-			f"Unable to find isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}"
+			f"Unable to find isInstalledCopy registry key {_RegistryKey.INSTALLED_COPY}"
 			"- this is not an installed copy.",
 		)
 		return False
 	except WindowsError:
 		log.error(
-			f"Unable to open isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}",
+			f"Unable to open isInstalledCopy registry key {_RegistryKey.INSTALLED_COPY}",
 			exc_info=True,
 		)
 		return False
@@ -166,7 +146,7 @@ def isInstalledCopy() -> bool:
 		instDir = winreg.QueryValueEx(k, "UninstallDirectory")[0]
 	except FileNotFoundError:
 		log.debug(
-			f"Unable to find UninstallDirectory value for {RegistryKey.INSTALLED_COPY}"
+			f"Unable to find UninstallDirectory value for {_RegistryKey.INSTALLED_COPY}"
 			"- this may not be an installed copy.",
 		)
 		return False
@@ -174,7 +154,7 @@ def isInstalledCopy() -> bool:
 		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
 		return False
 
-	winreg.CloseKey(k)
+	k.Close()
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except (WindowsError, FileNotFoundError):
@@ -188,7 +168,7 @@ def isInstalledCopy() -> bool:
 
 def getInstalledUserConfigPath() -> Optional[str]:
 	try:
-		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKey.NVDA.value)
 	except FileNotFoundError:
 		log.debug("Could not find nvda registry key, NVDA is not currently installed")
 		return None
@@ -289,59 +269,9 @@ def getStartAfterLogon() -> bool:
 	"""Not to be confused with getStartOnLogonScreen.
 
 	Checks if NVDA is set to start after a logon.
-	Checks related easeOfAccess current user registry keys on Windows 8 or newer.
-	Then, checks the registry run key to see if NVDA
-	has been registered to start after logon on Windows 7
-	or by earlier NVDA versions.
+	Checks related easeOfAccess current user registry keys.
 	"""
-	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON):
-		return True
-	try:
-		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value)
-	except FileNotFoundError:
-		log.debugWarning(
-			f"Unable to find run registry key {RegistryKey.RUN}",
-			exc_info=True,
-		)
-		return False
-	except WindowsError:
-		log.error(
-			f"Unable to open run registry key {RegistryKey.RUN}",
-			exc_info=True,
-		)
-		return False
-
-	try:
-		val = winreg.QueryValueEx(k, "nvda")[0]
-	except FileNotFoundError:
-		log.debug("NVDA is not set to start after logon")
-		return False
-	except WindowsError:
-		log.error("Failed to query NVDA key to set start after logon", exc_info=True)
-		return False
-
-	try:
-		startAfterLogonPath = os.stat(val)
-	except WindowsError:
-		log.error(
-			"Failed to access the start after logon directory.",
-			exc_info=True,
-		)
-		return False
-
-	try:
-		currentSourcePath = os.stat(sys.argv[0])
-	except FileNotFoundError:
-		log.debug("Failed to access the current running NVDA directory.")
-		return False
-	except WindowsError:
-		log.error(
-			"Failed to access the current running NVDA directory.",
-			exc_info=True,
-		)
-		return False
-
-	return currentSourcePath == startAfterLogonPath
+	return easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON)
 
 
 def setStartAfterLogon(enable: bool) -> None:
@@ -349,33 +279,10 @@ def setStartAfterLogon(enable: bool) -> None:
 
 	Toggle if NVDA automatically starts after a logon.
 	Sets easeOfAccess related registry keys.
-
-	When toggling off, always delete the registry run key
-	in case it was set by an earlier version of NVDA.
 	"""
 	if getStartAfterLogon() == enable:
 		return
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
-	if enable:
-		return
-	# We're disabling, so ensure the run key is cleared,
-	# as it might have been set by an old version.
-	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value, 0, winreg.KEY_WRITE)
-	try:
-		winreg.QueryValue(k, "nvda")
-	except FileNotFoundError:
-		log.debug(
-			"The run registry key is not set for setStartAfterLogon."
-			"This is expected since ease of access is used",
-		)
-		return
-	try:
-		winreg.DeleteValue(k, "nvda")
-	except WindowsError:
-		log.error(
-			"Couldn't unset registry key for nvda to start after logon.",
-			exc_info=True,
-		)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -387,27 +294,8 @@ def getStartOnLogonScreen() -> bool:
 	Checks if NVDA is set to start on the logon screen.
 
 	Checks related easeOfAccess local machine registry keys.
-	Then, checks a NVDA registry key to see if NVDA
-	has been registered to start on logon by earlier NVDA versions.
 	"""
-	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN):
-		return True
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
-	except FileNotFoundError:
-		log.debugWarning(f"Could not find NVDA reg key {RegistryKey.NVDA}", exc_info=True)
-	except WindowsError:
-		log.error(f"Failed to open NVDA reg key {RegistryKey.NVDA}", exc_info=True)
-	else:
-		try:
-			return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
-		except FileNotFoundError:
-			log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
-			return False
-		except WindowsError:
-			log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
-			return False
-	return False
+	return easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN)
 
 
 def _setStartOnLogonScreen(enable: bool) -> None:
@@ -416,7 +304,7 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 def setSystemConfigToCurrentConfig():
 	fromPath = WritePaths.configDir
-	if ctypes.windll.shell32.IsUserAnAdmin():
+	if winBindings.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
 		import systemUtils
@@ -478,7 +366,10 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
-		log.debugWarning("Failed to set start on logon screen's config.")
+		log.debugWarning(
+			"Failed to set start on logon screen's config, retrying elevated.",
+			exc_info=True,
+		)
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		import systemUtils
 
@@ -525,6 +416,7 @@ class ConfigManager(object):
 		"development",
 		"addonStore",
 		"remote",
+		"automatedImageDescriptions",
 	}
 	"""
 	Sections that only apply to the base configuration;
@@ -1306,7 +1198,7 @@ class AggregatedSection:
 
 		# Alias old config items to their new counterparts for backwards compatibility.
 		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2026, 1, 0) and NVDAState._allowDeprecatedAPI():
+		# if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
 		# self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):

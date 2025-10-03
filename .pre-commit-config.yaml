@@ -17,7 +17,7 @@ ci:
   submodules: true
 
 default_language_version:
-  python: python3.11
+  python: python3.13
 
 repos:
 - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
@@ -101,7 +101,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.11.12
+  rev: v0.12.7
   hooks:
     - id: ruff
       name: lint with ruff
@@ -110,18 +110,25 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.401
+  rev: v1.1.403
   hooks:
   - id: pyright
     name: Check types with pyright
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.7.9
+  rev: 0.8.4
   hooks:
     - id: uv-lock
       name: Verify uv lock file
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
-      args: ["-p3.11"]
+      args: ["-p3.13"]
+
+- repo: https://github.com/DavidAnson/markdownlint-cli2
+  rev: v0.18.1
+  hooks:
+  - id: markdownlint-cli2
+    name: Lint markdown files
+    args: ["--fix"]
 
 - repo: local
   hooks:

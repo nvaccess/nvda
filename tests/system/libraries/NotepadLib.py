@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.plaintext
 
@@ -11,7 +11,6 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 from os.path import join as _pJoin
 import datetime as _datetime
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -47,8 +46,8 @@ class NotepadLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	notepadWindow: _Optional[_Window] = None
-	processRFHandleForStart: _Optional[int] = None
+	notepadWindow: _Window | None = None
+	processRFHandleForStart: int | None = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
@@ -95,7 +94,7 @@ class NotepadLib:
 				expectedTitlePattern,
 				lambda message: builtIn.log(message, "DEBUG"),
 			),
-			giveUpAfterSeconds=3,
+			giveUpAfterSeconds=5,
 			shouldStopEvaluator=lambda _window: _window is not None,
 			intervalBetweenSeconds=0.5,
 			errorMessage="Unable to get notepad window",
@@ -151,12 +150,6 @@ class NotepadLib:
 			f"Unable to focus Notepad.\n{windowInformation}",
 		)
 
-	def canNotepadTitleBeReported(self, notepadTitleSpeechPattern: re.Pattern) -> bool:
-		titleSpeech = _NvdaLib.getSpeechAfterKey("NVDA+t")
-		return bool(
-			notepadTitleSpeechPattern.search(titleSpeech),
-		)
-
 	def prepareNotepad(self, testCase: str) -> None:
 		"""
 		Starts Notepad opening a file containing the plaintext sample.
@@ -172,18 +165,23 @@ class NotepadLib:
 
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path, expectedTitlePattern=uniqueTitleRegex)
-
-		windowsLib.logForegroundWindowTitle()
-		testCaseNotepadTitleSpeech = re.compile(
-			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
-			f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)",
-		)
-		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
+		try:
+			self._waitForNotepadFocus(uniqueTitleRegex)
+		except AssertionError:
+			# NVDA has waited but something prevented notepad from focusing.
+			# A window may have stolen focus or windows may have failed to focus notepad.
+			# Attempt to switch windows directly.
+			windowsLib.logForegroundWindowTitle()
+			testCaseNotepadTitleSpeech = re.compile(
+				# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
+				f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)",
+			)
 			builtIn.log("Trying to switch to notepad Window")
 			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=testCaseNotepadTitleSpeech)
 			windowsLib.logForegroundWindowTitle()
 
-		self._waitForNotepadFocus(uniqueTitleRegex)
-		windowsLib.logForegroundWindowTitle()
+			self._waitForNotepadFocus(uniqueTitleRegex)
+		finally:
+			windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
-		_NvdaLib.getSpeechAfterKey("home")
+		_NvdaLib.getSpeechAfterKey("control+home")

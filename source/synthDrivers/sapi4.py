@@ -12,6 +12,10 @@ import queue
 import threading
 import time
 import winreg
+import winBindings.ole32
+from winBindings import user32
+import winBindings.winmm
+from winBindings.mmeapi import WAVEFORMATEX
 from comtypes import CoCreateInstance, CoInitialize, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
 	addressof,
@@ -26,7 +30,6 @@ from ctypes import (
 	memmove,
 	string_at,
 	sizeof,
-	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
 from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
@@ -209,15 +212,15 @@ class _ComThread(threading.Thread):
 		msg = MSG()
 		# Force the message queue to be created first
 		PM_NOREMOVE = 0
-		windll.user32.PeekMessageW(byref(msg), None, 0, 0, PM_NOREMOVE)
+		user32.PeekMessage(byref(msg), None, 0, 0, PM_NOREMOVE)
 		CoInitialize()
 		self._ready.set()
 		# Run a message loop, as it's required by SAPI 4.
 		# When queueing a new task, post a message to this thread to wake it up.
 		# When done, post WM_QUIT to this thread.
-		while windll.user32.GetMessageW(byref(msg), None, 0, 0):
-			windll.user32.TranslateMessage(byref(msg))
-			windll.user32.DispatchMessageW(byref(msg))
+		while user32.GetMessage(byref(msg), None, 0, 0):
+			user32.TranslateMessage(byref(msg))
+			user32.DispatchMessage(byref(msg))
 			# Process queued tasks outside window procedures
 			# to avoid COM error RPC_E_CANTCALLOUT_INEXTERNALCALL
 			# (-2147418107, 0x80010005).
@@ -237,7 +240,7 @@ class _ComThread(threading.Thread):
 
 	def stop(self):
 		WM_QUIT = 18
-		windll.user32.PostThreadMessageW(self.native_id, WM_QUIT, 0, 0)
+		user32.PostThreadMessage(self.native_id, WM_QUIT, 0, 0)
 		self.join()
 
 	def submit(self, func: Callable, *args, **kwargs) -> _ComThreadTask:
@@ -247,7 +250,7 @@ class _ComThread(threading.Thread):
 		task = _ComThreadTask(func, *args, **kwargs)
 		self._tasks.put(task)
 		# post a message to wake up the thread
-		windll.user32.PostThreadMessageW(self.native_id, 0, 0, 0)
+		user32.PostThreadMessage(self.native_id, 0, 0, 0)
 		return task
 
 	def invoke(self, func: Callable, *args, **kwargs):
@@ -334,7 +337,7 @@ class SynthDriverAudio(COMObject):
 		self._allowDelete = False
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = _AudioState.INVALID
-		self._waveFormat: nvwave.WAVEFORMATEX | None = None
+		self._waveFormat: WAVEFORMATEX | None = None
 		self._player: nvwave.WavePlayer | None = None
 		self._writtenBytes = 0
 		self._playedBytes = 0
@@ -573,8 +576,8 @@ class SynthDriverAudio(COMObject):
 			Should be freed by the caller using CoTaskMemFree."""
 		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		size = sizeof(nvwave.WAVEFORMATEX)
-		ptr = windll.ole32.CoTaskMemAlloc(size)
+		size = sizeof(WAVEFORMATEX)
+		ptr = winBindings.ole32.CoTaskMemAlloc(size)
 		if not ptr:
 			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
 		memmove(ptr, addressof(self._waveFormat), size)
@@ -586,7 +589,7 @@ class SynthDriverAudio(COMObject):
 		size = 18  # SAPI4 uses 18 bytes without the final padding
 		if not dWFEX.pData or dWFEX.dwSize < size:
 			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
-		wfx = nvwave.WAVEFORMATEX()
+		wfx = WAVEFORMATEX()
 		memmove(addressof(wfx), dWFEX.pData, size)
 		if self._deviceState != _AudioState.INVALID:
 			# Setting wave format more than once is not allowed.
@@ -971,7 +974,8 @@ class SynthDriver(SynthDriver):
 				# If you specify a value greater than 65535, the engine assumes that you want to set the
 				# left and right channels separately and converts the value to a double word,
 				# using the low word for the left channel and the high word for the right channel.
-				val |= val << 16
+				# However, some voices don't handle values greater than 65535 properly in Vol tags,
+				# so here only 0~65535 are used.
 				textList.append(f"\\Vol={val}\\")
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
@@ -1223,9 +1227,8 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
 		currEndpointIdByteCount = DWORD()
 		# Defined in mmeapi.h
-		winmm = windll.winmm
-		waveOutMessage = winmm.waveOutMessage
-		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		waveOutMessage = winBindings.winmm.waveOutMessage
+		waveOutGetNumDevs = winBindings.winmm.waveOutGetNumDevs
 		for devID in range(waveOutGetNumDevs()):
 			# Get the length of this device's endpoint ID string.
 			mmr = waveOutMessage(
