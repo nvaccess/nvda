@@ -29,7 +29,7 @@ Major highlights include:
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
 * Translated into 54 languages
-* Support for modern Windows Operating Systems including both 32 and 64 bit variants
+* Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
@@ -42,14 +42,16 @@ Major highlights include:
 
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
   * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
@@ -3281,6 +3283,15 @@ You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
 
+#### AI Image Descriptions Settings {#LocalCaptionerSettings}
+
+This panel provides options to customize the behavior and default settings for the ["Image Captioner"](#LocalCaptioner).
+
+##### Enable image captioner {#LocalCaptionToggle}
+
+When this checkbox is enabled, NVDA will enable automatic image descriptions.
+Loading the model may increase memory usage, so this is disabled by default.
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3909,6 +3920,31 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
+<!-- KC:endInclude -->
+
+## Image Captioner {#LocalCaptioner}
+
+NVDA supports generating image descriptions on your device without connecting to the internet.
+This feature allows NVDA to describe images encountered during navigation.
+
+Note: An internet connection is required to enable and install the Image Captioner for the first time.
+It is not included with the NVDA installer to reduce the installer size.
+
+### Getting Started {#LocalCaptionerGettingStarted}
+
+Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#LocalCaptionToggle).
+Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+
+### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
+
+<!-- KC:beginInclude -->
+
+| Name |Key |Description|
+|---|---|---|
+| Get an AI generated image description | `NVDA+Windows+,` | Recognize the image currently navigated by NVDA. |
+| Toggle image captioning | None | Enable or disable AI image descriptions. |
+| Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
+
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
