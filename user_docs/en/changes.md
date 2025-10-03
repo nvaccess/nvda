@@ -81,6 +81,8 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
+* NVDA now uses `truststore` to always use Windows root certificates, which injects to libraries like `requests`.
+Wrap code with `truststore.extract_from_ssl` and `truststore.inject_into_ssl` to disable this behavior where required. (#18528)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
