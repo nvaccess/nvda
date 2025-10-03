@@ -46,6 +46,9 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Added Japanese (Rokuten Kanji) Braille.
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
+* Native selection mode is now enabled by default in Chrome, Edge, Firefox and Thunderbird.
+This means formatting will be copied when selecting text in these documents. (#15908)
+  * You can disable Native Selection Mode on a case-by-case basis with `NVDA+shift+f10`.
 
 ### Bug Fixes
 
