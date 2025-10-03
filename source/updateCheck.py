@@ -213,10 +213,10 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		"versionType": buildVersion.updateVersionType,
 		"osVersion": winVersionText,
 		# Check if the architecture is the most common: "AMD64"
-		# Available values of PROCESSOR_ARCHITEW6432 found in:
+		# Available values of PROCESSOR_ARCHITECTURE found in:
 		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
-		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
-		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
+		"osArchitecture": os.environ["PROCESSOR_ARCHITECTURE"],
+		"x64": True,
 	}
 
 	if auto and allowUsageStats:
