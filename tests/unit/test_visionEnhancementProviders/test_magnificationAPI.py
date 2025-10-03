@@ -7,15 +7,17 @@
 
 import unittest
 
-from visionEnhancementProviders.screenCurtain import Magnification, TRANSFORM_BLACK, MAGCOLOREFFECT
+from visionEnhancementProviders.screenCurtain import TRANSFORM_BLACK
+from winBindings import magnification
+from winBindings.magnification import MAGCOLOREFFECT
 
 
 class _Test_MagnificationAPI(unittest.TestCase):
 	def setUp(self):
-		self.assertTrue(Magnification.MagInitialize())
+		self.assertTrue(magnification.MagInitialize())
 
 	def tearDown(self):
-		self.assertTrue(Magnification.MagUninitialize())
+		self.assertTrue(magnification.MagUninitialize())
 
 
 class Test_ScreenCurtain(_Test_MagnificationAPI):
@@ -32,7 +34,7 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 
 	def setUp(self):
 		super().setUp()
-		resultEffect = Magnification.MagGetFullscreenColorEffect()
+		resultEffect = magnification.MagGetFullscreenColorEffect()
 		if not self._isIdentityMatrix(resultEffect):
 			# If the resultEffect is not the identity matrix, skip the test.
 			# This is because a full screen colour effect is already set external to testing.
@@ -43,9 +45,9 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 		return
 
 	def test_setAndConfirmBlackFullscreenColorEffect(self):
-		result = Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+		result = magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 		self.assertTrue(result)
-		resultEffect = Magnification.MagGetFullscreenColorEffect()
+		resultEffect = magnification.MagGetFullscreenColorEffect()
 		for i in range(5):
 			for j in range(5):
 				with self.subTest(i=i, j=j):
@@ -58,9 +60,9 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 
 class Test_Mouse(_Test_MagnificationAPI):
 	def test_MagShowSystemCursor(self):
-		result = Magnification.MagShowSystemCursor(True)
+		result = magnification.MagShowSystemCursor(True)
 		self.assertTrue(result)
 
 	def test_MagHideSystemCursor(self):
-		result = Magnification.MagShowSystemCursor(False)
+		result = magnification.MagShowSystemCursor(False)
 		self.assertTrue(result)

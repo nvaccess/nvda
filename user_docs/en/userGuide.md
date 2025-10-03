@@ -29,7 +29,7 @@ Major highlights include:
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
 * Translated into 54 languages
-* Support for modern Windows Operating Systems including both 32 and 64 bit variants
+* Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
@@ -42,14 +42,16 @@ Major highlights include:
 
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
   * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
-  * both AMD64 and ARM64 variants of Windows are supported, including Copilot+ PCs.
+  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Note that ARM64 Windows 10 is not supported.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
@@ -2344,6 +2346,8 @@ The following symbols are defined:
 | ⡥ ("u" with dot 7) | End underline |
 | ⠎ ("s")| Start strikethrough |
 | ⡎ ("s" with dot 7) | End strikethrough |
+| ⠑ ("e")| Start spelling error |
+| ⡑ ("e" with dot 7) | End spelling error |
 
 ##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
@@ -3016,7 +3020,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors [(Off, Speech, Sound)](#reportSpellingErrors)
+  * Spelling errors [(Off, Speech, Sound, braille)](#reportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3065,17 +3069,26 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling error reporting {#reportSpellingErrors}
+##### Spelling error reporting {#ReportSpellingErrors}
 
 This option allows you to configure how spelling errors are reported while reading text.
-This checklist box has two options:
+This checklist box has three options:
 
 * Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
 * Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
-
 When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
+* Braille: NVDA will indicate spelling errors in braille.
+To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, spelling errors are not reported when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+In these cases, spelling errors can be reported just in braille.
+
+By default, spelling errors will be reported with speech.
+
+To cycle through available options to report spelling errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are: Off, Speech, Sound, Speech and sound.
+
+You can also assign a custom gesture to toggle the reporting of spelling errors in braille using the [Input Gestures dialog](#InputGestures).
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
@@ -3269,6 +3282,15 @@ This means that you will again be asked whether to connect to all unrecognised R
 You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
+
+#### AI Image Descriptions Settings {#LocalCaptionerSettings}
+
+This panel provides options to customize the behavior and default settings for the ["Image Captioner"](#LocalCaptioner).
+
+##### Enable image captioner {#LocalCaptionToggle}
+
+When this checkbox is enabled, NVDA will enable automatic image descriptions.
+Loading the model may increase memory usage, so this is disabled by default.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3900,6 +3922,31 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
+## Image Captioner {#LocalCaptioner}
+
+NVDA supports generating image descriptions on your device without connecting to the internet.
+This feature allows NVDA to describe images encountered during navigation.
+
+Note: An internet connection is required to enable and install the Image Captioner for the first time.
+It is not included with the NVDA installer to reduce the installer size.
+
+### Getting Started {#LocalCaptionerGettingStarted}
+
+Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#LocalCaptionToggle).
+Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+
+### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
+
+<!-- KC:beginInclude -->
+
+| Name |Key |Description|
+|---|---|---|
+| Get an AI generated image description | `NVDA+Windows+,` | Recognize the image currently navigated by NVDA. |
+| Toggle image captioning | None | Enable or disable AI image descriptions. |
+| Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
+
+<!-- KC:endInclude -->
+
 ## Add-ons and the Add-on Store {#AddonsManager}
 
 Add-ons are software packages which provide new or altered functionality for NVDA.
@@ -3918,6 +3965,28 @@ If you install an add-on with paid components and change your mind about using i
 
 The Add-on Store is accessed from the Tools submenu of the NVDA menu.
 To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+### Security warning for add-ons {#AddonStoreSecurityWarning}
+
+Add-ons listed in the Add-on Store have not been vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA.
+This could include accessing and modifying your personal data or even the entire system.
+
+Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).
+This can detect malware that was known when the add-on was submitted.
+However, VirusTotal results may be inaccurate or out of date.
+For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.
+You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.
+You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).
+
+There are a number of other ways of investigating the safety of an add-on:
+
+* Research the developer's reputation (e.g. how long have they been contributing)
+* Look for user feedback in the [NVDA user group](https://groups.google.com/a/nvaccess.org/g/nvda-users) or the [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
+* Verify that the add-on is regularly updated
+* Read [Community reviews](#AddonStoreReviews) of the add-on
+* Seek community feedback through forums or social media
 
 ### Browsing add-ons {#AddonStoreBrowsing}
 
@@ -3986,10 +4055,9 @@ This menu can also be accessed through an Actions button in the selected add-on'
 
 #### Installing add-ons {#AddonStoreInstalling}
 
-Just because an add-on is available in the NVDA Add-on Store, does not mean that it has been approved or vetted by NV Access or anyone else.
-It is very important to only install add-ons from sources you trust.
-The functionality of add-ons is unrestricted inside NVDA.
-This could include accessing your personal data or even the entire system.
+Note: Add-ons are programs that can modify and access your device like any other software you download.
+Make sure to only install add-ons from sources you trust.
+Please read [our security warning](#AddonStoreSecurityWarning) for more details before installing add-ons.
 
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
@@ -4056,6 +4124,11 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 | Beta or dev | Add-on will automatically update to beta or dev versions |
 | Beta | Add-on will automatically update to beta versions |
 | Dev | Add-on will automatically update to dev versions |
+
+#### What's new in the current version {#AddonStoreChangelog}
+
+If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.
+The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 

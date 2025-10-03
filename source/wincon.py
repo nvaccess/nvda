@@ -6,10 +6,13 @@
 
 from ctypes import (
 	byref,
+	cast,
 	WinError,
-	create_string_buffer,
-	c_int,
+	create_unicode_buffer,
+	c_char,
+	c_void_p,
 )
+from ctypes.wintypes import DWORD
 import winBindings.kernel32
 from winBindings.kernel32 import (
 	COORD as _COORD,
@@ -66,15 +69,14 @@ CONSOLE_MOUSE_DOWN = 0x8
 
 def GetConsoleSelectionInfo():
 	info = _CONSOLE_SELECTION_INFO()
-	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.GetConsoleSelectionInfo(byref(info)) == 0:
+		raise WinError()
 	return info
 
 
 def ReadConsoleOutputCharacter(handle, length, x, y):
-	# Use a string buffer, as from an unicode buffer, we can't get the raw data.
-	buf = create_string_buffer(length * 2)  # noqa: F405
-	numCharsRead = c_int()  # noqa: F405
+	buf = create_unicode_buffer(length)
+	numCharsRead = DWORD()
 	if (
 		winBindings.kernel32.ReadConsoleOutputCharacter(
 			handle,
@@ -82,12 +84,16 @@ def ReadConsoleOutputCharacter(handle, length, x, y):
 			length,
 			_COORD(x, y),
 			byref(numCharsRead),
-		)  # noqa: F405
+		)
 		== 0
-	):  # noqa: F405
-		raise WinError()  # noqa: F405
+	):
+		raise WinError()
+	numRawBytes = numCharsRead.value * 2
+	rawBuf = (c_char * numRawBytes).from_address(
+		cast(buf, c_void_p).value or 0,
+	)
 	return textUtils.getTextFromRawBytes(
-		buf.raw,
+		rawBuf.raw,
 		numChars=numCharsRead.value,
 		encoding=textUtils.WCHAR_ENCODING,
 	)
@@ -98,46 +104,46 @@ def ReadConsoleOutput(handle, length, rect):
 	buf = BufType()
 	# rect=SMALL_RECT(x, y, x+length-1, y)
 	if (
-		winBindings.kernel32.ReadConsoleOutput(  # noqa: F405
+		winBindings.kernel32.ReadConsoleOutput(
 			handle,
 			buf,
 			_COORD(rect.Right - rect.Left + 1, rect.Bottom - rect.Top + 1),
 			_COORD(0, 0),
-			byref(rect),  # noqa: F405
+			byref(rect),
 		)
 		== 0
-	):  # noqa: F405
-		raise WinError()  # noqa: F405
+	):
+		raise WinError()
 	return buf
 
 
 def GetConsoleScreenBufferInfo(handle):
 	info = _CONSOLE_SCREEN_BUFFER_INFO()
-	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.GetConsoleScreenBufferInfo(handle, byref(info)) == 0:
+		raise WinError()
 	return info
 
 
 def FreeConsole():
-	if winBindings.kernel32.FreeConsole() == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.FreeConsole() == 0:
+		raise WinError()
 
 
 def AttachConsole(processID):
-	if winBindings.kernel32.AttachConsole(processID) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.AttachConsole(processID) == 0:
+		raise WinError()
 
 
 def GetConsoleWindow():
-	return winBindings.kernel32.GetConsoleWindow()  # noqa: F405
+	return winBindings.kernel32.GetConsoleWindow()
 
 
 def GetConsoleProcessList(maxProcessCount):
-	processList = (c_int * maxProcessCount)()  # noqa: F405
-	num = winBindings.kernel32.GetConsoleProcessList(processList, maxProcessCount)  # noqa: F405
+	processList = (DWORD * maxProcessCount)()
+	num = winBindings.kernel32.GetConsoleProcessList(processList, maxProcessCount)
 	return processList[0:num]
 
 
 def SetConsoleCtrlHandler(handler, add):
-	if winBindings.kernel32.SetConsoleCtrlHandler(handler, add) == 0:  # noqa: F405
-		raise WinError()  # noqa: F405
+	if winBindings.kernel32.SetConsoleCtrlHandler(handler, add) == 0:
+		raise WinError()

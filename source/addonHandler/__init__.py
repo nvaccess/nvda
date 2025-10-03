@@ -801,7 +801,7 @@ class Addon(AddonBase):
 		self._importedAddonModules.clear()
 		for modName in set(sys.modules.keys()) - self._modulesBeforeInstall:
 			module = sys.modules[modName]
-			if module.__file__ and module.__file__.startswith(self.path):
+			if module.__name__ and module.__name__.startswith(self.path):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
