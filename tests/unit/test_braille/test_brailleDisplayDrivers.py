@@ -5,8 +5,6 @@
 
 """Unit tests for braille display drivers."""
 
-import sysconfig
-import sys
 from brailleDisplayDrivers import seikantk
 import unittest
 import braille
