@@ -143,7 +143,7 @@ class TouchInputGesture(inputCore.InputGesture):
 	* Hover: a finger is still touching the screen, and may be moving around. Only the most recent finger to be hovering causes these gestures.
 	* Hover up: a finger that was classed as a hover, releases contact with the screen.
 	All actions accept for Hover down, Hover and Hover up, can be made up of multiple fingers. It is possible to have things such as a 3-finger tap, or a 2-finger Tap and Hold, or a 4 finger Flick right.
-	Taps maybe pluralized (I.e. a tap very quickly followed by another tap of the same number of fingers will be represented by a double tap, rather than two separate taps). Currently double, tripple and quadruple plural taps are detected.
+	Taps maybe pluralized (I.e. a tap very quickly followed by another tap of the same number of fingers will be represented by a double tap, rather than two separate taps). Currently double, triple and quadruple plural taps are detected.
 	Tap and holds can be pluralized also (E.g. a double tap and hold means that there were two taps before the hold).
 	Actions also communicate if other fingers are currently held while performing the action. E.g. a hold+tap is when a finger touches the screen long enough to become a hover, and a tap with another finger is performed, while the first finger remains on the screen. Holds themselves also can be made of multiple fingers.
 	Based on all of this, gestures could be as complicated as a 5-finger hold + 5-finger quadruple tap and hold.
@@ -152,7 +152,7 @@ class TouchInputGesture(inputCore.InputGesture):
 	See touchHandler.MultitouchTracker for definitions of the available properties.
 	"""
 
-	counterNames = ["single", "double", "tripple", "quodruple"]
+	counterNames = ["single", "double", "triple", "quadruple"]
 
 	pluralActionLabels = {
 		# Translators: a touch screen action performed once
@@ -160,9 +160,9 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen action performed twice
 		"double": _("double {action}"),
 		# Translators: a touch screen action performed 3 times
-		"tripple": _("tripple {action}"),
+		"triple": _("triple {action}"),
 		# Translators: a touch screen action performed 4 times
-		"quodruple": _("quadruple {action}"),
+		"quadruple": _("quadruple {action}"),
 	}
 
 	def _get_speechEffectWhenExecuted(self):
