@@ -180,14 +180,6 @@ class TestGestureMap(unittest.TestCase):
 					self.assertRegex(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 
-@unittest.skipUnless(
-	sysconfig.get_platform() == "win32",
-	"BRLTTY is only supported on 32-bit Windows",
-)
-@unittest.skipUnless(
-	sys.version_info.major == 3 and sys.version_info.minor == 11,
-	"Skipping brlapi tests unless Python 3.11",
-)
 class TestBRLTTY(unittest.TestCase):
 	"""Tests the integrity of the bundled brlapi module."""
 
