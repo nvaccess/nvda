@@ -5,41 +5,17 @@
 # Babbage B.V., Joseph Lee, Christopher Proß
 
 import ctypes
-import ctypes.wintypes
 import ssl
 
 import requests
 
 from logHandler import log
 from winBindings import crypt32
+from winBindings.crypt32 import CERT_CHAIN_PARA, CERT_USAGE_MATCH
 
 
 _FETCH_TIMEOUT_S = 30
 """Timeout for fetching in seconds."""
-
-
-# These structs are only complete enough to achieve what we need.
-class _CERT_USAGE_MATCH(ctypes.Structure):
-	_fields_ = (
-		("dwType", ctypes.wintypes.DWORD),
-		# CERT_ENHKEY_USAGE struct
-		("cUsageIdentifier", ctypes.wintypes.DWORD),
-		("rgpszUsageIdentifier", ctypes.c_void_p),  # LPSTR *
-	)
-
-
-class _CERT_CHAIN_PARA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", ctypes.wintypes.DWORD),
-		("RequestedUsage", _CERT_USAGE_MATCH),
-		("RequestedIssuancePolicy", _CERT_USAGE_MATCH),
-		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
-		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
-		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
-		("pftCacheResync", ctypes.c_void_p),  # LPFILETIME
-		("pStrongSignPara", ctypes.c_void_p),  # PCCERT_STRONG_SIGN_PARA
-		("dwStrongSignFlags", ctypes.wintypes.DWORD),
-	)
 
 
 def _getCertificate(url: str) -> bytes:
@@ -73,9 +49,9 @@ def _updateWindowsRootCertificates(cert: bytes) -> None:
 		None,
 		None,
 		ctypes.byref(
-			_CERT_CHAIN_PARA(
-				cbSize=ctypes.sizeof(_CERT_CHAIN_PARA),
-				RequestedUsage=_CERT_USAGE_MATCH(),
+			CERT_CHAIN_PARA(
+				cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
+				RequestedUsage=CERT_USAGE_MATCH(),
 			),
 		),
 		0,
