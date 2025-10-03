@@ -56,6 +56,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
+* Fixed bug when trying to access the Add-on Store from certain environments such as corporates. (#18354)
 
 ### Changes for Developers
 
@@ -376,6 +377,11 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 The several built-in table definitions are moved to the `__tables` module in that package. (#18194, @LeonarddeR)
 * Microsoft SQL Server Management Studio now uses the Visual Studio app module, as SSMS is based on Visual Studio. (#18176, @LeonarddeR)
 * NVDA will report Windows release revision number (for example: 10.0.26100.0) when `winVersion.getWinVer` is called and log this information at startup. (#18266, @josephsl)
+* `ssl.SSLContext` now uses Windows' trusted certificate stores, not `certifi` via `truststore` patching. (#15905)
+
+#### Deprecations
+
+* The following symbols in `updateCheck` are deprecated for removal without replacement: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`, `UPDATE_FETCH_TIMEOUT_S`. (#18354)
 
 ## 2025.1.2
 
