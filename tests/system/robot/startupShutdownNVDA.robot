@@ -17,7 +17,7 @@ Test Teardown	default teardown
 *** Keywords ***
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
-	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	Run Keyword If Test Failed	Take Screenshot	${screenshotName}
 	quit NVDA
 
 *** Test Cases ***
