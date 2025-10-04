@@ -69,7 +69,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:raises Exception: If model initialization fails.
 		"""
 		import onnxruntime as ort
-		
+
 		# Load configuration file
 		try:
 			with open(configPath, "r", encoding="utf-8") as f:
