@@ -33,7 +33,8 @@ class ImageDescDownloader:
 	def onDownload(self, progressCallback: ProgressCallback) -> None:
 		self.modelDownloader = ModelDownloader()
 		(success, fail) = self.modelDownloader.downloadModelsMultithreaded(
-			filesToDownload=self.filesToDownload, progressCallback=progressCallback
+			filesToDownload=self.filesToDownload,
+			progressCallback=progressCallback,
 		)
 		if len(fail) == 0:
 			wx.CallAfter(self.openSuccessDialog)
@@ -150,7 +151,10 @@ class ImageDescDownloader:
 					self._stopped()
 
 		ImageDescDownloader._downloadThread = threading.Thread(
-			target=self.onDownload, name="ModelDownloadMainThread", daemon=False, args=(progressCallback,)
+			target=self.onDownload,
+			name="ModelDownloadMainThread",
+			daemon=False,
+			args=(progressCallback,),
 		)
 		ImageDescDownloader._downloadThread.start()
 
