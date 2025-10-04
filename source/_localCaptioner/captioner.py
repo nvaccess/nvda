@@ -102,7 +102,10 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		try:
 			self.encoderSession = ort.InferenceSession(encoderPath, sess_options=sessionOptions)
 			self.decoderSession = ort.InferenceSession(decoderPath, sess_options=sessionOptions)
-		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
+		except (
+			ort.capi.onnxruntime_pybind11_state.InvalidProtobuf,
+			ort.capi.onnxruntime_pybind11_state.NoSuchFile,
+		) as e:
 			raise FileNotFoundError(
 				"model file incomplete"
 				f" Please check whether the file is complete or re-download. Original error: {e}",
@@ -158,7 +161,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 			# Convert to id -> token format
 			vocab = {v: k for k, v in vocabData.items()}
-			log.info(f"Successfully loaded vocabulary with {len(vocab)} tokens")
+			log.debug(f"Successfully loaded vocabulary with {len(vocab)} tokens")
 			return vocab
 
 		except FileNotFoundError:
