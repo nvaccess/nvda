@@ -32,6 +32,7 @@ from speech import (
 	sayAll,
 	shortcutKeys,
 )
+from speech.priorities import Spri
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -183,6 +184,24 @@ def toggleIntegerValue(
 	state = enumClass(newValue)
 	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
+
+
+def reportConfigProfileSwitchedTo(prevProfileName: str | None =None) -> None:
+	"""Report the configuration profile switched to when NVDA is configured to do it.
+	:param prevProfileName: The name of the previous editing profile.
+	"""
+
+	if not config.conf["configProfiles"]["reportProfileNameWhenSwitching"]:
+		return
+	profileName = config.conf.profiles[-1].name
+	if profileName == prevProfileName:
+		return
+	if profileName is None:
+		# Translators: Message reported when switching to the normal configuration.
+		profileMessage = _("Normal configuration")
+	else:
+		profileMessage = profileName
+	ui.delayedMessage(profileMessage, Spri.NOW)
 
 
 class GlobalCommands(ScriptableObject):
@@ -5128,6 +5147,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def __new__(cls, *args, **kwargs):
+		config.post_configProfileSwitch.register(reportConfigProfileSwitchedTo)
 		# Iterate through the available profiles, creating scripts for them.
 		for profile in config.conf.listProfiles():
 			cls.addScriptForProfile(profile)

@@ -417,6 +417,7 @@ class ConfigManager(object):
 		"addonStore",
 		"remote",
 		"automatedImageDescriptions",
+		"configProfiles",
 	}
 	"""
 	Sections that only apply to the base configuration;
@@ -448,20 +449,23 @@ class ConfigManager(object):
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: Set[str] = set()
+		self.lastProfileName: str
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
 			self._pendingHandleProfileSwitch = True
 			return
 		currentRootSection = self.rootSection
+		currentProfileName = self.lastProfileName
 		init = currentRootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+		self.lastProfileName = self.profiles[-1].name
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
 		if shouldNotify:
-			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
+			post_configProfileSwitch.notify(prevConf=currentRootSection.dict(), prevProfileName=currentProfileName)
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = WritePaths.nvdaConfigFile
@@ -504,6 +508,7 @@ class ConfigManager(object):
 
 		self._profileCache[None] = profile
 		self.profiles.append(profile)
+		self.lastProfileName = self.profiles[-1].name
 		self._handleProfileSwitch()
 
 	def _loadConfig(self, fn, fileError=False):
