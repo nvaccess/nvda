@@ -33,7 +33,7 @@ repos:
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
     # Prevents commits to certain branches
     - id: no-commit-to-branch
@@ -101,7 +101,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.12.7
+  rev: v0.13.3
   hooks:
     - id: ruff
       name: lint with ruff
@@ -110,13 +110,13 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.403
+  rev: v1.1.406
   hooks:
   - id: pyright
     name: Check types with pyright
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.8.4
+  rev: 0.8.23
   hooks:
     - id: uv-lock
       name: Verify uv lock file
