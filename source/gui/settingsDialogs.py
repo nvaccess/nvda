@@ -3778,8 +3778,11 @@ class ConfigProfilesSettingsPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
 		self.reportProfileNameWhenSwitching = sHelper.addItem(
-			# Translators: Label of a checkbox in Configuration Profiles settings.
-			wx.CheckBox(self, label=pgettext("configProfilesSettings", "Report editing profile &name when switching profiles")),
+			wx.CheckBox(
+				self,
+				# Translators: Label of a checkbox in Configuration Profiles settings.
+				label=pgettext("configProfilesSettings", "Report editing profile &name when switching profiles")
+			),
 		)
 
 	def onSave(self):
