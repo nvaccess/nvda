@@ -3780,14 +3780,17 @@ class ConfigProfilesSettingsPanel(SettingsPanel):
 		self.reportProfileNameWhenSwitching = sHelper.addItem(
 			wx.CheckBox(
 				self,
-				# Translators: Label of a checkbox in Configuration Profiles settings.
-				label=pgettext("configProfilesSettings", "Report editing profile &name when switching profiles")
+				label=pgettext(
+					# Translators: Label of a checkbox in Configuration Profiles settings.
+					"configProfilesSettings", "Report editing profile &name when switching profiles"
+				),
 			),
 		)
 
 	def onSave(self):
-		config.conf["configProfiles"]["reportProfileNameWhenSwitching"] = self.reportProfileNameWhenSwitching.IsChecked()
-
+		config.conf["configProfiles"]["reportProfileNameWhenSwitching"] = (
+			self.reportProfileNameWhenSwitching.IsChecked()
+		)
 
 
 class AdvancedPanelControls(
@@ -5656,7 +5659,6 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
 			or isinstance(self.currentCategory, ConfigProfilesSettingsPanel)
-
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
