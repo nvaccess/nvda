@@ -20,7 +20,7 @@ Windows 10 on ARM is also no longer supported.
   * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @tianzeshi-study)
   * This is generated locally on the device - no information is sent to the internet.
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
-  * Another new unassigned command is available for toggle image captioning. (#18475)
+  * Another new unassigned command is available to toggle image captioning. (#18475)
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)

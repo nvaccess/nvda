@@ -75,10 +75,10 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		description = captioner.generateCaption(image=imageData)
 	except Exception:
 		# Translators: error message when an image description cannot be generated
-		ui.message(pgettext("imageDesc", "Failed to generate description"))
+		wx.CallAfter(ui.message, pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
 	else:
-		ui.message(description)
+		wx.CallAfter(ui.message, description)
 
 
 class ImageDescriber:
@@ -97,7 +97,7 @@ class ImageDescriber:
 		enable = config.conf["automatedImageDescriptions"]["enable"]
 		# Load model when initializing (may cause high memory usage)
 		if enable:
-			core.postNvdaStartup.register(self._loadModel)
+			core.postNvdaStartup.register(self.loadModelInBackground)
 
 	def terminate(self):
 		for t in [self.captionThread, self.loadModelThread]:
@@ -158,12 +158,12 @@ class ImageDescriber:
 		except Exception:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
-			ui.message(pgettext("imageDesc", "failed to load image captioner"))
+			wx.CallAfter(ui.message, pgettext("imageDesc", "failed to load image captioner"))
 			log.exception("Failed to load image captioner model")
 		else:
 			self.isModelLoaded = True
 			# Translators: Message when successfully load the model
-			ui.message(pgettext("imageDesc", "image captioning on"))
+			wx.CallAfter(ui.message, pgettext("imageDesc", "image captioning on"))
 
 	def loadModelInBackground(self, localModelDirPath: str | None = None) -> None:
 		"""load model in child thread
