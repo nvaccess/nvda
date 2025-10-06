@@ -66,6 +66,7 @@ class ImageDescDownloader:
 	def openFailDialog(self) -> None:
 		if self._shouldCancel:
 			return
+
 		confirmationButtons = (
 			DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=False),
 			DefaultButton.NO.value._replace(defaultFocus=False, fallbackAction=True),
