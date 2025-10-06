@@ -13,6 +13,7 @@ from typing import (
 	Tuple,
 	Union,
 )
+from NVDAMagnifier import NVDAMagnifier, FullScreenFocusMode, ZoomType, ColorFilter
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -4901,6 +4902,141 @@ class GlobalCommands(ScriptableObject):
 					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
 					return
 				_enableScreenCurtain()
+
+	# Instance of NVDA magnifier
+
+	_nvdaMagnifier = None
+
+	def _getNVDAMagnifier(self):
+		"""Returns the singleton NVDAMagnifier instance, creating it if necessary."""
+		if GlobalCommands._nvdaMagnifier is None:
+			GlobalCommands._nvdaMagnifier = NVDAMagnifier()
+		return GlobalCommands._nvdaMagnifier
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off."
+		),
+		category=SCRCAT_VISION,
+		gestures=["kb:windows+numLock+numpadPlus", "kb:windows+numpadPlus", "kb:windows+="],
+	)
+	def script_startMagnifier(self, gesture):
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if nvdaMagnifier.magnifierSettings.isActive():
+			nvdaMagnifier._zoom(+1)
+		else:
+			nvdaMagnifier.magnifierSettings.setActive(True)
+			nvdaMagnifier._continueMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"decreases the magnification level of the screen magnifier."
+		),
+		gestures=["kb:windows+numLock+numpadMinus", "kb:windows+numpadMinus", "kb:windows+$"],
+	)
+	def script_zoomOut(self, gesture):
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if not nvdaMagnifier.magnifierSettings.isActive():
+			return
+		nvdaMagnifier._zoom(-1)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Stop the magnifier"
+		),
+		gesture="kb:windows+escape",
+	)
+	def script_StopMagnifier(self, gesture):
+		"""Stop the magnifier and reset settings."""
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if not nvdaMagnifier.magnifierSettings.isActive():
+			return
+
+		nvdaMagnifier._stopMagnifier()
+		nvdaMagnifier.magnifierSettings.reset()
+		nvdaMagnifier.focusManager.reset()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycle color filters (normal, grayscale, invert)"
+		),
+		gesture="kb:control+alt+i",
+	)
+	def script_cycleColorFilter(self, gesture):
+		"""Cycle to the next color filter."""
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if nvdaMagnifier._requireMagnifierActive("the magnifier is not activated"):
+			filters = list(ColorFilter)
+			idx = filters.index(nvdaMagnifier.magnifierSettings.getFilter())
+			nvdaMagnifier.magnifierSettings.setFilter(filters[(idx + 1) % len(filters)])
+			nvdaMagnifier._setColorEffect(nvdaMagnifier.magnifierSettings.getFilter())
+			ui.message(f"Color filter: {nvdaMagnifier.magnifierSettings.getFilter().name.lower()}")
+		else:
+			return
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"toggle mouse between center and border"
+		),
+		gesture="kb:NVDA+shift+q",
+	)
+	def script_toggleFullscreenMode(self, gesture):
+		"""Cycle through fullscreen focus modes (center, border, relative)."""
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if nvdaMagnifier._requireMagnifierActive() and nvdaMagnifier._requireFullscreenMode():
+			modes = list(FullScreenFocusMode)
+			currentMode = nvdaMagnifier.magnifierSettings.getFullscreenFocusMode()
+			idx = modes.index(currentMode)
+			newMode = modes[(idx + 1) % len(modes)]
+			nvdaMagnifier.magnifierSettings.setFullscreenFocusMode(newMode)
+			ui.message(f"Fullscreen mode: {newMode.name.lower()}")
+		else:
+			return
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycle through magnifier modes"
+		),
+		gesture="kb:control+alt+m",
+	)
+	def script_cycleMagnifierMode(self, gesture):
+		"""Cycle to the next magnifier mode."""
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if nvdaMagnifier._requireMagnifierActive("the magnifier is not activated"):
+			# Stop current magnifier
+			nvdaMagnifier._stopMagnifier()
+
+			# Cycle to next mode
+			modes = list(ZoomType)
+			idx = modes.index(nvdaMagnifier.magnifierSettings.zoomType)
+			nvdaMagnifier.magnifierSettings.zoomType = modes[(idx + 1) % len(modes)]
+
+			# Restart magnifier in new mode
+			nvdaMagnifier._continueMagnifier()
+			ui.message(f"Magnifier mode: {nvdaMagnifier.magnifierSettings.zoomType.name.lower()}")
+		else:
+			return
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Zoom out to show where the magnifier window is located, then zoom back to the correct dynamic position"
+		),
+		gesture="kb:control+alt+space",
+	)
+	def script_spotlight(self, gesture):
+		"""Show magnifier overview by zooming out temporarily."""
+		nvdaMagnifier = self._getNVDAMagnifier()
+		if nvdaMagnifier._requireFullscreenMode() and nvdaMagnifier._requireMagnifierActive():
+			nvdaMagnifier.fullscreenMagnifier.spotlight(onFinish=nvdaMagnifier._continueMagnifier)
+		else:
+			return
 
 	@script(
 		description=_(
