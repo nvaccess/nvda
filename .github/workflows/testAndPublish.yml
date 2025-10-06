@@ -33,8 +33,8 @@ env:
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
   supportedRunners: '["windows-2022", "windows-2025"]'
-  defaultArch: x86
-  supportedArchitectures: '["x64", "x86"]'
+  defaultArch: x64
+  supportedArchitectures: '["x64"]'
   defaultPythonVersion: '3.13.7'
   supportedPythonVersions: '["3.13.7"]'
 
@@ -393,7 +393,7 @@ jobs:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols, vscode]
+        testSuite: [chrome, installer, startupShutdown, symbols, vscode, imageDescriptions]
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}

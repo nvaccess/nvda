@@ -8,15 +8,10 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 """
 
 import os
-import typing
-from ctypes import Structure, WinError, c_float, windll
-from ctypes.wintypes import BOOL
-
-import globalVars
-import nvwave
-import wx
-from autoSettingsUtils.autoSettings import SupportedSettingType
+from vision import providerBase
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
+from autoSettingsUtils.autoSettings import SupportedSettingType
+import wx
 from gui.nvdaControls import MessageDialog
 from gui.settingsDialogs import (
 	AutoSettingsMixin,
@@ -24,63 +19,25 @@ from gui.settingsDialogs import (
 	VisionProviderStateControl,
 )
 from logHandler import log
-from utils.ctypesUtils import OutParam, Pointer, dllFunc
-from vision import providerBase
+from typing import Optional, Type
+import nvwave
+import globalVars
+from NVDAHelper.localLib import isScreenFullyBlack as _isScreenFullyBlack
+from winBindings.magnification import MAGCOLOREFFECT as _MAGCOLOREFFECT
+from winBindings import magnification
+from utils import _deprecate
 
-import NVDAHelper
-
-isScreenFullyBlack = NVDAHelper.localLib.isScreenFullyBlack
-isScreenFullyBlack.argtypes = ()
-isScreenFullyBlack.restype = BOOL
-
-
-class MAGCOLOREFFECT(Structure):
-	_fields_ = (("transform", c_float * 5 * 5),)
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("MAGCOLOREFFECT", "winBindings.magnification"),
+	_deprecate.MovedSymbol("isScreenFullyBlack", "NVDAHelper.localLib"),
+)
 
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
+TRANSFORM_BLACK = _MAGCOLOREFFECT()  # empty transformation
 TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
 TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
-
-
-def _errCheck(result, func, args):
-	if result == 0:
-		raise WinError()
-	return args
-
-
-class Magnification:
-	"""Static class that wraps necessary functions from the Windows magnification API."""
-
-	_magnification = windll.Magnification
-
-	@staticmethod
-	@dllFunc(_magnification, errcheck=_errCheck)
-	def MagSetFullscreenColorEffect(
-		effect: Pointer[MAGCOLOREFFECT] | MAGCOLOREFFECT,
-	) -> typing.Annotated[int, BOOL]: ...
-
-	@staticmethod
-	@dllFunc(_magnification, restype=BOOL, errcheck=_errCheck)
-	def MagGetFullscreenColorEffect() -> typing.Annotated[
-		MAGCOLOREFFECT,
-		OutParam("effect"),
-	]: ...
-
-	@staticmethod
-	@dllFunc(_magnification, errcheck=_errCheck)
-	def MagShowSystemCursor(showCursor: bool | BOOL) -> typing.Annotated[int, BOOL]: ...
-
-	@staticmethod
-	@dllFunc(_magnification, errcheck=_errCheck)
-	def MagInitialize() -> typing.Annotated[int, BOOL]: ...
-
-	@staticmethod
-	@dllFunc(_magnification, errcheck=_errCheck)
-	def MagUninitialize() -> typing.Annotated[int, BOOL]: ...
-
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
 # making it black.
@@ -267,9 +224,9 @@ class ScreenCurtainGuiPanel(
 		@returns: C{True} when OCR is active, C{False} otherwise.
 		"""
 		import api
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 		import speech
 		import ui
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
@@ -317,7 +274,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		return True
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> type | None:
+	def getSettingsPanelClass(cls) -> Optional[Type]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
@@ -331,14 +288,14 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 	def __init__(self):
 		super().__init__()
 		log.debug("Starting ScreenCurtain")
-		Magnification.MagInitialize()
+		magnification.MagInitialize()
 		try:
-			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
-			Magnification.MagShowSystemCursor(False)
-			if not isScreenFullyBlack():
+			magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+			magnification.MagShowSystemCursor(False)
+			if not _isScreenFullyBlack():
 				raise RuntimeError("Screen is not black.")
 		except Exception as e:
-			Magnification.MagUninitialize()
+			magnification.MagUninitialize()
 			raise e
 		if self.getSettings().playToggleSounds:
 			try:
@@ -351,8 +308,8 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		try:
 			super().terminate()
 		finally:
-			Magnification.MagShowSystemCursor(True)
-			Magnification.MagUninitialize()
+			magnification.MagShowSystemCursor(True)
+			magnification.MagUninitialize()
 			if self.getSettings().playToggleSounds:
 				try:
 					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
