@@ -68,6 +68,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:raises FileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
+		# Import late to avoid importing numpy at initialization
 		import onnxruntime as ort
 
 		# Load configuration file
