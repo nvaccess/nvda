@@ -186,7 +186,7 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def reportConfigProfileSwitchedTo(prevProfileName: str | None =None) -> None:
+def reportConfigProfileSwitchedTo(prevProfileName: str | None = None) -> None:
 	"""Report the configuration profile switched to when NVDA is configured to do it.
 	:param prevProfileName: The name of the previous editing profile.
 	"""

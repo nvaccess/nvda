@@ -465,7 +465,9 @@ class ConfigManager(object):
 			# We're still initialising, so don't notify anyone about this change.
 			return
 		if shouldNotify:
-			post_configProfileSwitch.notify(prevConf=currentRootSection.dict(), prevProfileName=currentProfileName)
+			post_configProfileSwitch.notify(
+				prevConf=currentRootSection.dict(), prevProfileName=currentProfileName
+			)
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = WritePaths.nvdaConfigFile
