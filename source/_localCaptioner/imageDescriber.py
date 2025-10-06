@@ -151,9 +151,10 @@ class ImageDescriber:
 			)
 		except FileNotFoundError:
 			self.isModelLoaded = False
-			from gui._localCaptioner.messageDialogs import openDownloadDialog
+			from gui._localCaptioner.messageDialogs import ImageDescDownloader
 
-			wx.CallAfter(openDownloadDialog)
+			descDownloader = ImageDescDownloader()
+			wx.CallAfter(descDownloader.openDownloadDialog)
 		except Exception:
 			self.isModelLoaded = False
 			# Translators: error message when fail to load model
