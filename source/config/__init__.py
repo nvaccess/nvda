@@ -466,7 +466,8 @@ class ConfigManager(object):
 			return
 		if shouldNotify:
 			post_configProfileSwitch.notify(
-				prevConf=currentRootSection.dict(), prevProfileName=currentProfileName
+				prevConf=currentRootSection.dict(),
+				prevProfileName=currentProfileName,
 			)
 
 	def _initBaseConf(self, factoryDefaults=False):

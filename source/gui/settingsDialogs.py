@@ -3782,11 +3782,14 @@ class ConfigProfilesSettingsPanel(SettingsPanel):
 				self,
 				label=pgettext(
 					# Translators: Label of a checkbox in Configuration Profiles settings.
-					"configProfilesSettings", "Report editing profile &name when switching profiles"
+					"configProfilesSettings",
+					"Report editing profile &name when switching profiles",
 				),
 			),
 		)
-		self.reportProfileNameWhenSwitching .SetValue(config.conf["configProfiles"]["reportProfileNameWhenSwitching"])
+		self.reportProfileNameWhenSwitching.SetValue(
+			config.conf["configProfiles"]["reportProfileNameWhenSwitching"]
+		)
 
 	def onSave(self):
 		config.conf["configProfiles"]["reportProfileNameWhenSwitching"] = (
