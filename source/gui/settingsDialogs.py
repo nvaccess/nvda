@@ -3786,6 +3786,7 @@ class ConfigProfilesSettingsPanel(SettingsPanel):
 				),
 			),
 		)
+		self.reportProfileNameWhenSwitching .SetValue(config.conf["configProfiles"]["reportProfileNameWhenSwitching"])
 
 	def onSave(self):
 		config.conf["configProfiles"]["reportProfileNameWhenSwitching"] = (
