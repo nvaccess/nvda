@@ -12,7 +12,6 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 from PIL import Image
-import onnxruntime as ort
 
 from logHandler import log
 
@@ -69,6 +68,9 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:raises FileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
+		# Import late to avoid importing numpy at initialization
+		import onnxruntime as ort
+
 		# Load configuration file
 		try:
 			with open(configPath, "r", encoding="utf-8") as f:
@@ -102,7 +104,10 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		try:
 			self.encoderSession = ort.InferenceSession(encoderPath, sess_options=sessionOptions)
 			self.decoderSession = ort.InferenceSession(decoderPath, sess_options=sessionOptions)
-		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
+		except (
+			ort.capi.onnxruntime_pybind11_state.InvalidProtobuf,
+			ort.capi.onnxruntime_pybind11_state.NoSuchFile,
+		) as e:
 			raise FileNotFoundError(
 				"model file incomplete"
 				f" Please check whether the file is complete or re-download. Original error: {e}",
@@ -158,7 +163,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 			# Convert to id -> token format
 			vocab = {v: k for k, v in vocabData.items()}
-			log.info(f"Successfully loaded vocabulary with {len(vocab)} tokens")
+			log.debug(f"Successfully loaded vocabulary with {len(vocab)} tokens")
 			return vocab
 
 		except FileNotFoundError:
