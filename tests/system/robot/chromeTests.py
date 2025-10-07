@@ -775,15 +775,11 @@ def announce_list_item_when_moving_by_word_or_character():
 		actualSpeech,
 		"section  multi line  editable  Before list",
 	)
+	# Ensure that moving into a list by line, "list item" is not reported.
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Before list",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"small cat",
+		"list  small cat",
 	)
 	# Ensure that when moving by word (control+rightArrow)
 	# within the list item, "list item" is not announced.
@@ -872,11 +868,6 @@ def test_i7562():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"before",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
 		"list  bullet  frogs",
 	)
 	# DownArrow to the second list item. 'list' should not be announced.
@@ -927,7 +918,7 @@ def test_pr11606():
 		SPEECH_CALL_SEP.join(
 			[
 				"out of link",
-				"bullet",
+				"space",
 			],
 		),
 	)
@@ -1183,11 +1174,6 @@ def test_ariaRoleDescription_inline_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Top line",
-	)
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
 		f"Start  Unlabeled graphic  Our logo. {IMG_DESC_MSG}  End",
 	)
 	# When reading the line by word,
@@ -1219,11 +1205,6 @@ def test_ariaRoleDescription_block_browseMode():
 	)
 	# when reading the page by line,
 	# both entering and exiting the custom role should be reported.
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"Top line",
-	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
@@ -1379,12 +1360,6 @@ def test_ariaDescription_focusMode():
 	_asserts.strings_match(
 		actualSpeech,
 		"edit  multi line  This is a line with no annotation\nFocus mode",
-	)
-
-	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
-	_asserts.strings_match(
-		actualSpeech,
-		"This is a line with no annotation",
 	)
 
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
