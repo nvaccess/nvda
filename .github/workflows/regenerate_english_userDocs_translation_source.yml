@@ -84,7 +84,7 @@ jobs:
       # which will cause needless retranslation of existing strings.
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
-        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+        crowdinAuthToken: "break"
       run: |
         # Check if we changed userGuide.xliff in this action.
         # If we did, upload it to Crowdin.
