@@ -114,6 +114,7 @@ class LocalMachine:
 
 		self._showingLocalUiMessage: bool = False
 		self._oldReceivingBraille: bool = False
+		self._lastCells: list[int] = []
 
 		braille.decide_enabled.register(self.handleDecideEnabled)
 		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
@@ -214,6 +215,7 @@ class LocalMachine:
 			and len(cells) <= braille.handler.displaySize
 		):
 			cells = cells + [0] * (braille.handler.displaySize - len(cells))
+			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
 
 	def brailleInput(self, **kwargs: Dict[str, Any]) -> None:
@@ -272,6 +274,7 @@ class LocalMachine:
 		self._showingLocalUiMessage = False
 		self.receivingBraille = self._oldReceivingBraille
 		braille.handler.enabled
+		self.display(self._lastCells)
 
 	def sendKey(
 		self,
