@@ -1155,6 +1155,7 @@ Currently, Native Selection Mode is supported in:
 * Mozilla Firefox
 * Mozilla Thunderbird
 * Chrome, Edge, and any browser based on Chromium 134 or newer
+* Microsoft Word and Outlook, where it cannot be toggled off
 
 <!-- KC:beginInclude -->
 

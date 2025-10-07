@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
+# Copyright (C) 2008-2025 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
 # Julien Cochuyt, Noelia Ruiz Martínez, Leonard de Ruijter
 
 from dataclasses import dataclass
@@ -14,8 +14,8 @@ from ctypes import byref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
 import controlTypes
-import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
+from NVDAObjects import NVDAObject
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -276,8 +276,8 @@ class Gecko_ia2(VirtualBuffer):
 	_nativeAppSelectionMode = True
 	_nativeAppSelectionModeSupported = True
 
-	def __init__(self, rootNVDAObject):
-		super(Gecko_ia2, self).__init__(rootNVDAObject, backendName="gecko_ia2")
+	def __init__(self, rootNVDAObject: NVDAObject):
+		super().__init__(rootNVDAObject, backendName="gecko_ia2")
 		self._initialScrollObj = None
 
 	def __contains__(self, obj):
@@ -357,11 +357,12 @@ class Gecko_ia2(VirtualBuffer):
 			return True
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
-	def _postGainFocus(self, obj):
+	def _postGainFocus(self, obj: NVDAObject):
+		self._initialize_nativeAppSelectionModeSupport()
 		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
-		super(Gecko_ia2, self)._postGainFocus(obj)
+		super()._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
@@ -615,6 +616,18 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 
+
+	def _initialize_nativeAppSelectionModeSupport(self) -> None:
+		try:
+			self.clearAppSelection()
+			self.updateAppSelection()
+		except (NotImplementedError, COMError):
+			self._nativeAppSelectionMode = False
+			self._nativeAppSelectionModeSupported = False
+		else:
+			self._nativeAppSelectionMode = True
+			self._nativeAppSelectionModeSupported = True
+
 	def _getStartSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
 		"""Get the start of the selection.
 
@@ -713,6 +726,7 @@ class Gecko_ia2(VirtualBuffer):
 				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
+			self._nativeAppSelectionModeSupported = False
 			raise NotImplementedError from e
 		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if not selInfo.isCollapsed:
@@ -731,10 +745,13 @@ class Gecko_ia2(VirtualBuffer):
 				ia2Sel.endOffset,
 				False,
 			)
-			paccTextSelectionContainer.SetSelections(1, byref(r))
 		else:  # No selection
 			r = IA2TextSelection(None, 0, None, 0, False)
+		try:
 			paccTextSelectionContainer.SetSelections(0, byref(r))
+		except COMError as e:
+			self._nativeAppSelectionModeSupported = False
+			raise NotImplementedError from e
 
 	def clearAppSelection(self):
 		"""Clear the native selection in the application."""
@@ -743,9 +760,14 @@ class Gecko_ia2(VirtualBuffer):
 				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
+			self._nativeAppSelectionModeSupported = False
 			raise NotImplementedError from e
 		r = IA2TextSelection(None, 0, None, 0, False)
-		paccTextSelectionContainer.SetSelections(0, byref(r))
+		try:
+			paccTextSelectionContainer.SetSelections(0, byref(r))
+		except COMError as e:
+			self._nativeAppSelectionModeSupported = False
+			raise NotImplementedError from e
 
 
 @dataclass

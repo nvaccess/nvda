@@ -1630,6 +1630,7 @@ class BrowseModeDocumentTreeInterceptor(
 		doSayAll = False
 		hadFirstGainFocus = self._hadFirstGainFocus
 		if not hadFirstGainFocus:
+			self._initialize_nativeAppSelectionModeSupport()
 			# This treeInterceptor is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the treeInterceptor may have missed the actual focus event.
 			focus = api.getFocusObject()
@@ -2634,12 +2635,12 @@ class BrowseModeDocumentTreeInterceptor(
 	)
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		if not self._nativeAppSelectionModeSupported:
-			if not self._nativeAppSelectionMode:
-				# Translators: the message when native selection mode is not available in this browse mode document.
-				ui.message(_("Native selection mode unsupported in this browse mode document"))
-			else:
+			if self._nativeAppSelectionMode:
 				# Translators: the message when native selection mode cannot be turned off in this browse mode document.
 				ui.message(_("Native selection mode cannot be turned off in this browse mode document"))
+			else:
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this browse mode document"))
 			return
 		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
 		if nativeAppSelectionModeOn:

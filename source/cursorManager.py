@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
+# Copyright (C) 2006-2025 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -530,6 +530,18 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	_nativeAppSelectionMode: bool = False
 	"Whether native selection mode is turned on or off"
+
+	def _initialize_nativeAppSelectionModeSupport(self) -> None:
+		"""Initialize support for native application selection mode.
+
+		This method should be overridden in subclasses to provide support for native application selection mode.
+		It should set the following attributes:
+			- self._nativeAppSelectionModeSupported: whether native application selection mode is supported
+			- self._nativeAppSelectionMode: whether native application selection mode is currently enabled
+		By default, this method sets both attributes to False.
+		"""
+		self._nativeAppSelectionModeSupported = False
+		self._nativeAppSelectionMode = False
 
 	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
 		if self._nativeAppSelectionMode:
