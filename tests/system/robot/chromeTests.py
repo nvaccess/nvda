@@ -1382,6 +1382,12 @@ def test_ariaDescription_focusMode():
 	)
 
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"This is a line with no annotation",
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
