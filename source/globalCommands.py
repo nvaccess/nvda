@@ -4907,10 +4907,8 @@ class GlobalCommands(ScriptableObject):
 
 	_nvdaMagnifier = None
 
-	def _getNVDAMagnifier(self):
-		"""Returns the singleton NVDAMagnifier instance, creating it if necessary."""
-		if GlobalCommands._nvdaMagnifier is None:
-			GlobalCommands._nvdaMagnifier = NVDAMagnifier()
+	def _getNVDAMagnifier(self) -> NVDAMagnifier | None:
+		"""Returns the NVDAMagnifier instance, creating it if necessary."""
 		return GlobalCommands._nvdaMagnifier
 
 	@script(
@@ -4922,6 +4920,8 @@ class GlobalCommands(ScriptableObject):
 		gestures=["kb:windows+numLock+numpadPlus", "kb:windows+numpadPlus", "kb:windows+="],
 	)
 	def script_startMagnifier(self, gesture):
+		if GlobalCommands._nvdaMagnifier is None:
+			GlobalCommands._nvdaMagnifier = NVDAMagnifier()
 		nvdaMagnifier = self._getNVDAMagnifier()
 		if nvdaMagnifier.magnifierSettings.isActive():
 			nvdaMagnifier._zoom(+1)
@@ -4938,9 +4938,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_zoomOut(self, gesture):
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if not nvdaMagnifier.magnifierSettings.isActive():
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive():
+			nvdaMagnifier._zoom(-1)
+		else:
 			return
-		nvdaMagnifier._zoom(-1)
 
 	@script(
 		description=_(
@@ -4952,12 +4953,13 @@ class GlobalCommands(ScriptableObject):
 	def script_StopMagnifier(self, gesture):
 		"""Stop the magnifier and reset settings."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if not nvdaMagnifier.magnifierSettings.isActive():
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive():
+			nvdaMagnifier._stopMagnifier()
+			nvdaMagnifier.magnifierSettings.reset()
+			nvdaMagnifier.focusManager.reset()
+			GlobalCommands._nvdaMagnifier = None
+		else:
 			return
-
-		nvdaMagnifier._stopMagnifier()
-		nvdaMagnifier.magnifierSettings.reset()
-		nvdaMagnifier.focusManager.reset()
 
 	@script(
 		description=_(
@@ -4969,7 +4971,7 @@ class GlobalCommands(ScriptableObject):
 	def script_cycleColorFilter(self, gesture):
 		"""Cycle to the next color filter."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier._requireMagnifierActive("the magnifier is not activated"):
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive():
 			filters = list(ColorFilter)
 			idx = filters.index(nvdaMagnifier.magnifierSettings.getFilter())
 			nvdaMagnifier.magnifierSettings.setFilter(filters[(idx + 1) % len(filters)])
@@ -4988,7 +4990,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleFullscreenMode(self, gesture):
 		"""Cycle through fullscreen focus modes (center, border, relative)."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier._requireMagnifierActive() and nvdaMagnifier._requireFullscreenMode():
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive() and nvdaMagnifier._fullscreenModeIsActive():
 			modes = list(FullScreenFocusMode)
 			currentMode = nvdaMagnifier.magnifierSettings.getFullscreenFocusMode()
 			idx = modes.index(currentMode)
@@ -5008,7 +5010,7 @@ class GlobalCommands(ScriptableObject):
 	def script_cycleMagnifierMode(self, gesture):
 		"""Cycle to the next magnifier mode."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier._requireMagnifierActive("the magnifier is not activated"):
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive():
 			# Stop current magnifier
 			nvdaMagnifier._stopMagnifier()
 
@@ -5033,7 +5035,7 @@ class GlobalCommands(ScriptableObject):
 	def script_spotlight(self, gesture):
 		"""Show magnifier overview by zooming out temporarily."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier._requireFullscreenMode() and nvdaMagnifier._requireMagnifierActive():
+		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive() and nvdaMagnifier._fullscreenModeIsActive():
 			nvdaMagnifier.fullscreenMagnifier.spotlight(onFinish=nvdaMagnifier._continueMagnifier)
 		else:
 			return

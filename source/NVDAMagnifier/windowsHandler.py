@@ -22,9 +22,9 @@ def loadMagnifierApi() -> None:
 	try:
 		# Attempt to access the magnification DLL
 		ctypes.windll.magnification
-	except (OSError, AttributeError):
+	except Exception as e:
 		# If the DLL is not available, log this and exit the function
-		log.info("Magnification API not available")
+		log.error(f"Magnification API not available with error {e}")
 		return
 	# Try to initialize the magnification API
 	# MagInitialize returns 0 if already initialized or on failure
@@ -35,12 +35,11 @@ def loadMagnifierApi() -> None:
 	log.info("Magnification API initialized")
 
 
-def getMagnifierPosition(x: int, y: int, zoomLevel: float) -> (int, int, int, int):
+def getMagnifierPosition(x: int, y: int, zoomLevel: float) ->  tuple[int, int, int, int]:
 	"""
 	Compute the top-left corner of the magnifier window centered on (x, y).
 	Returns (left, top, visibleWidth, visibleHeight).
 	"""
-	# Get the screen size in pixels
 	screenWidth, screenHeight = getScreenSize()
 
 	# Calculate the size of the visible area at the current zoom level
@@ -88,8 +87,6 @@ class GlobalPanel(wx.Panel):
 		# Bind paint event
 		self.Bind(wx.EVT_PAINT, self.onPaint)
 
-		log.info(f"GlobalPanel initialized - type: {self.panelType}, parent: {parent}")
-
 	def setContent(self, content: wx.Bitmap , cursorPos: tuple[int, int]) -> None:
 		"""
 		Set the magnified content and cursor position.
@@ -135,13 +132,8 @@ class GlobalPanel(wx.Panel):
 
 	def onPaint(self, event) -> None:
 		"""Paint the magnified content and cursor overlay."""
-		log.info(f"GlobalPanel ({self.panelType}) onPaint called")
-
 		dc = wx.PaintDC(self)
 		panelSize = self.GetSize()
-		width, height = panelSize.width, panelSize.height
-
-		log.info(f"Panel size in paint: {width}x{height}")
 
 		# Clear background
 		dc.Clear()
@@ -158,8 +150,6 @@ class GlobalPanel(wx.Panel):
 		else:
 			# Draw placeholder
 			self.drawPlaceholder(dc)
-
-		log.info(f"GlobalPanel ({self.panelType}) paint completed")
 
 
 class GlobalFrame(wx.Frame):
@@ -198,8 +188,6 @@ class GlobalFrame(wx.Frame):
 		if position is not None:
 			self.SetPosition(position)
 
-		log.info(f"GlobalFrame initialized - type: {frameType}, size: {size}")
-
 	def createPanel(self) -> GlobalPanel:
 		"""Create the magnifier panel - can be overridden by subclasses."""
 		self.panel = GlobalPanel(self, self.frameType)
@@ -212,7 +200,6 @@ class GlobalFrame(wx.Frame):
 		sizer.Add(self.panel, 1, wx.EXPAND | wx.ALL, 0)
 		self.SetSizer(sizer)
 		self.Layout()
-		log.info(f"{self.frameType.capitalize()} sizer configured and layout forced")
 
 	def setColorFilter(self, colorFilter: string) -> None:
 		self.colorFilter = colorFilter
@@ -240,13 +227,10 @@ class GlobalFrame(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.stopMagnifying)
 		self.screenWidth, self.screenHeight = getScreenSize()
 
-		log.info(f"{self.frameType.capitalize()} magnifying started")
-
 	def stopMagnifying(self) -> None:
 		"""Stop the magnification."""
 		self.running = False
 		self.Destroy()
-		log.info(f"{self.frameType.capitalize()} magnifying stopped")
 
 	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float) -> None:
 		"""Update magnifier - base implementation with common checks."""
@@ -270,8 +254,6 @@ class GlobalFrame(wx.Frame):
 			captureX = max(0, min(captureX, screenWidth - captureWidth))
 			captureY = max(0, min(captureY, screenHeight - captureHeight))
 
-			log.info(f"Capture area: {captureX},{captureY} size: {captureWidth}x{captureHeight}")
-
 			# Capture screen - convert to int only here where needed
 			screen = wx.ScreenDC()
 			bitmap = wx.Bitmap(int(captureWidth), int(captureHeight))
@@ -281,8 +263,6 @@ class GlobalFrame(wx.Frame):
 				0, 0, int(captureWidth), int(captureHeight), screen, int(captureX), int(captureY)
 			)
 			memoryDc.SelectObject(wx.NullBitmap)
-
-			log.info(f"Capture success: {success}, bitmap OK: {bitmap.IsOk()}")
 
 			if success and bitmap.IsOk():
 				# Convert to image and scale to fill the entire panel
@@ -304,8 +284,6 @@ class GlobalFrame(wx.Frame):
 				# Scale cursor position to panel coordinates
 				cursorPanelX = (cursorCaptureX / captureWidth) * panelWidth
 				cursorPanelY = (cursorCaptureY / captureHeight) * panelHeight
-
-				log.info(f"Panel size: {panelWidth}x{panelHeight}, Cursor pos: {cursorPanelX},{cursorPanelY}")
 
 				wx.CallAfter(
 					self.panel.setContent,
@@ -354,7 +332,7 @@ class DockedFrame(GlobalFrame):
 			0,
 			0,
 		):
-			log.info("No significant movement detected, skipping update")
+			# return if mouse didn't move to prevent infinite zoom on crosshair
 			return
 
 		super().updateMagnifier(focusX, focusY, zoomLevel)
@@ -364,7 +342,6 @@ class LensFrame(GlobalFrame):
 	"""Circular lens magnifier that follows the cursor."""
 
 	def __init__(self):
-		# Initialize lens properties first
 		self.lensSize = 300
 
 		super().__init__(
