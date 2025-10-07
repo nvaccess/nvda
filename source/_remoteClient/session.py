@@ -617,7 +617,17 @@ class LeaderSession(RemoteSession):
 		:return: False if gesture was processed and sent, True otherwise
 		:note: Extracts gesture details and script info before sending
 		"""
+		from globalCommands import commands
+
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+			log.info(f"{gesture=}; {gesture.script=}; {self.localMachine._showingLocalUiMessage=}")
+			if self.localMachine._showingLocalUiMessage and gesture.script in (
+				commands.script_braille_routeTo,
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
+			):
+				tones.beep(500, 100)
+				return True
 			dict = {
 				key: gesture.__dict__[key]
 				for key in gesture.__dict__

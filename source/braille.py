@@ -2396,6 +2396,9 @@ the local braille handler should be disabled as long as the system is in control
 Handlers are called without arguments.
 """
 
+_pre_showBrailleMessage = extensionPoints.Action()
+_post_dismissBrailleMessage = extensionPoints.Action()
+
 
 class BrailleHandler(baseObject.AutoPropertyObject):
 	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
@@ -2960,6 +2963,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
+		_pre_showBrailleMessage.notify()
 		if (
 			not self.enabled
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
@@ -3005,6 +3009,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		if shouldUpdate:
 			self.update()
+		_post_dismissBrailleMessage.notify()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:

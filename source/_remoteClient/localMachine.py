@@ -112,7 +112,12 @@ class LocalMachine:
 		self._cachedSizes: Optional[List[int]] = None
 		"""Cached braille display sizes from remote machines"""
 
+		self._showingLocalUiMessage: bool = False
+		self._oldReceivingBraille: bool = False
+
 		braille.decide_enabled.register(self.handleDecideEnabled)
+		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
+		braille._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
 
 	def terminate(self) -> None:
 		"""Clean up resources when the local machine controller is terminated.
@@ -254,7 +259,19 @@ class LocalMachine:
 
 		:return: False if receiving remote braille, True otherwise
 		"""
-		return not self.receivingBraille
+		return not self.receivingBraille or self._showingLocalUiMessage
+
+	def _handleShowBrailleMessage(self):
+		tones.beep(750, 100)
+		self._showingLocalUiMessage = True
+		self._oldReceivingBraille, self.receivingBraille = self.receivingBraille, False
+		braille.handler.enabled
+
+	def _handleDismissBrailleMessage(self):
+		tones.beep(250, 100)
+		self._showingLocalUiMessage = False
+		self.receivingBraille = self._oldReceivingBraille
+		braille.handler.enabled
 
 	def sendKey(
 		self,
