@@ -4973,7 +4973,7 @@ class GlobalCommands(ScriptableObject):
 			filters = list(ColorFilter)
 			idx = filters.index(nvdaMagnifier.magnifierSettings.getFilter())
 			nvdaMagnifier.magnifierSettings.setFilter(filters[(idx + 1) % len(filters)])
-			nvdaMagnifier._setColorEffect(nvdaMagnifier.magnifierSettings.getFilter())
+			nvdaMagnifier._setColorEffect()
 			ui.message(f"Color filter: {nvdaMagnifier.magnifierSettings.getFilter().name.lower()}")
 		else:
 			return

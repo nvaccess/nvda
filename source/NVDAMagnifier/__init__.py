@@ -16,91 +16,75 @@ TIMER_INTERVAL_MS = 15
 MARGIN_BORDER = 50
 
 
+class ColorFilterMatrix(Enum):
+	NORMAL = (ctypes.c_float * 25)(
+		1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+	)
+
+	GREYSCALE = (ctypes.c_float * 25)(
+		0.33,
+		0.33,
+		0.33,
+		0.0,
+		0.0,
+		0.59,
+		0.59,
+		0.59,
+		0.0,
+		0.0,
+		0.11,
+		0.11,
+		0.11,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+	)
+
+	INVERTED = (ctypes.c_float * 25)(
+		-1.0, 0.0, 0.0, 0.0, 0.0,
+		0.0, -1.0, 0.0, 0.0, 0.0,
+		0.0, 0.0, -1.0, 0.0, 0.0,
+		0.0, 0.0, 0.0, 1.0, 0.0,
+		1.0, 1.0, 1.0, 0.0, 1.0
+	)
+
 class ColorFilter(Enum):
-	BASEMATRIX = (ctypes.c_float * 25)(
-		1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-	)
-
-	GREYSCALEMATRIX = (ctypes.c_float * 25)(
-		0.33,
-		0.33,
-		0.33,
-		0.0,
-		0.0,
-		0.59,
-		0.59,
-		0.59,
-		0.0,
-		0.0,
-		0.11,
-		0.11,
-		0.11,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-	)
-
-	INVERTMATRIX = (ctypes.c_float * 25)(
-		-1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		-1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		-1.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		1.0,
-		1.0,
-		1.0,
-		0.0,
-		1.0,
-	)
-
+	NORMAL = "normal"
+	GREYSCALE = "greyscale"
+	INVERTED = "inverted"
 
 class FullScreenFocusMode(Enum):
 	CENTER = "center"
@@ -131,21 +115,21 @@ class NVDAMagnifier:
 		)
 		windowsHandler.loadMagnifierApi()
 
-	def _requireMagnifierActive(self, inactiveMessage="activate the magnifier before changing mode"):
+	def _requireMagnifierActive(self, inactiveMessage="activate the magnifier before changing mode") -> bool:
 		"""Check if magnifier is active and show message if not."""
 		if not self.magnifierSettings.isActive():
 			ui.message(inactiveMessage)
 			return False
 		return True
 
-	def _requireFullscreenMode(self, wrongModeMessage="activate the magnifier in Fullscreen mode"):
+	def _requireFullscreenMode(self, wrongModeMessage="activate the magnifier in Fullscreen mode") -> bool:
 		"""Check if magnifier is in fullscreen mode and show message if not."""
 		if self.magnifierSettings.zoomType != ZoomType.FULLSCREEN:
 			ui.message(wrongModeMessage)
 			return False
 		return True
 
-	def _zoom(self, direction):
+	def _zoom(self, direction: int) -> None:
 		"""
 		Change the zoom level.
 		direction: +1 to zoom in, -1 to zoom out.
@@ -163,7 +147,7 @@ class NVDAMagnifier:
 		else:
 			ui.message("activate the magnifier with NVDA shift w before zooming")
 
-	def _continueMagnifier(self):
+	def _continueMagnifier(self) -> None:
 		"""Start or continue magnifier based on current zoom type."""
 		if self.magnifierSettings.isActive():
 			if self.magnifierSettings.zoomType == ZoomType.FULLSCREEN:
@@ -175,7 +159,7 @@ class NVDAMagnifier:
 		else:
 			self._stopMagnifier()
 
-	def _stopMagnifier(self):
+	def _stopMagnifier(self) -> None:
 		"""Stop magnifier based on current zoom type."""
 		if self.magnifierSettings.zoomType == ZoomType.FULLSCREEN:
 			self.fullscreenMagnifier.stopFullScreenMagnifier()
@@ -184,20 +168,22 @@ class NVDAMagnifier:
 		elif self.magnifierSettings.zoomType == ZoomType.LENS:
 			self.lensMagnifier.stopLensMagnifier()
 
-	def _setColorEffect(self, colorFilter):
+	def _setColorEffect(self) -> None:
 		"""
 		Apply the given color filter (ColorFilter Enum).
 		"""
-		matrix = colorFilter.value
-		try:
-			result = ctypes.windll.magnification.MagSetFullscreenColorEffect(matrix)
-			if result:
-				log.info("########color change success###########")
-			else:
-				log.info("########color change failed###########")
-		except Exception as e:
-			log.error(f"Exception in MagSetColorEffect: {e}")
-
+		if self.magnifierSettings.zoomType.value == "fullscreen":
+			filter = self.magnifierSettings.currentColorFilter.value
+			log.info(f'filter is {filter}')
+			if filter == "normal":
+				matrix = ColorFilterMatrix.NORMAL
+			elif filter == "greyscale":
+				matrix = ColorFilterMatrix.GREYSCALE
+			elif filter == "inverted":
+				matrix = ColorFilterMatrix.INVERTED
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(matrix.value)
+		else:
+			pass
 
 ## MAGNIFIER SETTINGS
 
@@ -211,47 +197,47 @@ class MagnifierSettings:
 		self.zoomType = ZoomType.FULLSCREEN
 		self.fullscreenFocusMode = FullScreenFocusMode.CENTER
 		self.magnifierIsOn = False
-		self.currentColorFilter = ColorFilter.BASEMATRIX
+		self.currentColorFilter = ColorFilter.NORMAL
 
-	def getZoomLevel(self):
+	def getZoomLevel(self) -> float:
 		"""Get current zoom level."""
 		return self.zoomLevel
 
-	def setZoomLevel(self, level):
+	def setZoomLevel(self, level: float) -> None:
 		"""Set zoom level within valid range."""
 		self.zoomLevel = max(ZOOM_MIN, min(level, ZOOM_MAX))
 
-	def getFullscreenFocusMode(self):
+	def getFullscreenFocusMode(self) -> FullScreenFocusMode:
 		"""Get current fullscreen focus mode."""
 		return self.fullscreenFocusMode
 
-	def setFullscreenFocusMode(self, mode):
+	def setFullscreenFocusMode(self, mode: FullScreenFocusMode):
 		"""Set fullscreen focus mode."""
 		self.fullscreenFocusMode = mode
 
-	def getFilter(self):
+	def getFilter(self) -> ColorFilter:
 		"""Get current color filter."""
 		return self.currentColorFilter
 
-	def setFilter(self, filter):
+	def setFilter(self, filter: ColorFilter):
 		"""Set color filter."""
 		self.currentColorFilter = filter
 
-	def isActive(self):
+	def isActive(self) -> bool:
 		"""Check if magnifier is currently active."""
 		return self.magnifierIsOn
 
-	def setActive(self, active):
+	def setActive(self, active: bool):
 		"""Set magnifier active state."""
 		self.magnifierIsOn = active
 
-	def reset(self):
+	def reset(self) -> None:
 		"""Reset all settings to default values."""
 		self.setActive(False)
 		self.setZoomLevel(2.0)
 		self.zoomType = ZoomType.FULLSCREEN
 		self.setFullscreenFocusMode(FullScreenFocusMode.CENTER)
-		self.setFilter(ColorFilter.BASEMATRIX)
+		self.setFilter(ColorFilter.NORMAL)
 
 
 ## FOCUS MANAGER
@@ -266,21 +252,21 @@ class FocusManager:
 		self.lastNvdaPos = (0, 0)
 		self.mouseHandler = MouseHandler()
 
-	def reset(self):
+	def reset(self) -> None:
 		"""Reset focus manager to initial state."""
 		self.lastFocusedObject = ""
 
-	def getLastFocusedObject(self):
+	def getLastFocusedObject(self) -> str:
 		"""Return the last focused object."""
 		return self.lastFocusedObject
 
-	def _setLastNvdaPos(self, pos):
+	def _setLastNvdaPos(self, pos:tuple[int, int]):
 		self.lastNvdaPos = pos
 
-	def _getLastNvdaPos(self):
+	def _getLastNvdaPos(self) -> tuple[int, int]:
 		return self.lastNvdaPos
 
-	def _getNvdaPos(self):
+	def _getNvdaPos(self) -> tuple[int, int]:
 		"""
 		Get the current review position as (x, y), falling back to navigator object if needed.
 		Tries to get the review position from NVDA's API, or the center of the navigator object.
@@ -310,22 +296,22 @@ class FocusManager:
 			# If no location is found, log this and return (0, 0)
 			return 0, 0
 
-	def getFocusCoordinates(self):
+	def getFocusCoordinates(self) -> tuple[int, int]:
 		"""Return position (x,y) of current focus element."""
 		nvdaPos = self._getNvdaPos()
-		mousePos = self.mouseHandler.getMousePos()
+		mousePos = self.mouseHandler.getMousePosition()
 
 		# Check if left mouse button is pressed
 		isClickPressed = self.mouseHandler.isLeftClickPressed()
 
 		# Always update positions in background (keep them synchronized)
 		nvdaChanged = self._getLastNvdaPos() != nvdaPos
-		mouseChanged = self.mouseHandler.getLastMousePos() != mousePos
+		mouseChanged = self.mouseHandler.getLastMousePosition() != mousePos
 
 		if nvdaChanged:
 			self._setLastNvdaPos(nvdaPos)
 		if mouseChanged:
-			self.mouseHandler.setLastMousePos(mousePos)
+			self.mouseHandler.setLastMousePosition(mousePos)
 
 		# During drag & drop, force focus on mouse
 		if isClickPressed:
@@ -351,17 +337,20 @@ class FocusManager:
 			return mousePos
 
 
+# MOUSE HANDLER
+
+
 class MouseHandler:
 	def __init__(self):
-		self._lastMousePos = (0, 0)
+		self.lastMousePos = (0, 0)
 
-	def setLastMousePos(self, pos):
-		self._lastMousePos = pos
+	def setLastMousePosition(self, pos: tuple[int, int]):
+		self.lastMousePos = pos
 
-	def getLastMousePos(self):
-		return self._lastMousePos
+	def getLastMousePosition(self) -> tuple[int, int]:
+		return self.lastMousePos
 
-	def getMousePos(self):
+	def getMousePosition(self) -> tuple[int, int]:
 		"""
 		Get the current mouse position as (x, y).
 		"""
@@ -369,7 +358,7 @@ class MouseHandler:
 		ctypes.windll.user32.GetCursorPos(ctypes.byref(pt))
 		return (pt.x, pt.y)
 
-	def isLeftClickPressed(self):
+	def isLeftClickPressed(self) -> bool:
 		"""
 		Check if the left mouse button is currently pressed.
 		"""
@@ -388,14 +377,14 @@ class MagnifierTimer:
 		"""Initialize timer."""
 		self.timer = None
 
-	def startTimer(self, callback):
+	def startTimer(self, callback) -> None:
 		"""Start timer with callback function."""
 		self.stopTimer()
 		self.timer = wx.Timer()
 		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
 		self.timer.Start(TIMER_INTERVAL_MS, oneShot=True)
 
-	def continueTimer(self, callback):
+	def continueTimer(self, callback) -> None:
 		"""Continue timer execution with callback."""
 		if self.timer and self.timer.IsRunning():
 			self.timer.Stop()
@@ -403,7 +392,7 @@ class MagnifierTimer:
 		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
 		self.timer.Start(TIMER_INTERVAL_MS, oneShot=True)
 
-	def stopTimer(self):
+	def stopTimer(self) -> None:
 		"""Stop timer execution."""
 		if self.timer and self.timer.IsRunning():
 			self.timer.Stop()
@@ -416,7 +405,7 @@ class MagnifierTimer:
 class FullscreenMagnifier:
 	"""Fullscreen magnifier implementation."""
 
-	def __init__(self, magnifierSettings, focusManager, magnifierTimer, mouseHandler):
+	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
 		"""Initialize fullscreen magnifier with settings and focus manager."""
 		self.isActive = False
 		self.currentX = 0
@@ -437,7 +426,7 @@ class FullscreenMagnifier:
 		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
 		return MagSetFullscreenTransform
 
-	def fullscreenMagnifier(self, x, y):
+	def fullscreenMagnifier(self, x: int, y: int):
 		"""Apply fullscreen magnification at given coordinates."""
 		zoomLevel = self.magnifierSettings.getZoomLevel()
 		left, top, visibleWidth, visibleHeight = windowsHandler.getMagnifierPosition(x, y, zoomLevel)
@@ -451,7 +440,7 @@ class FullscreenMagnifier:
 		except AttributeError:
 			log.info("Magnification API not available")
 
-	def _updateMagnifier(self):
+	def _updateMagnifier(self) -> None:
 		"""Timer callback to update magnifier position."""
 		if not self.isActive or self.spotlightIsActive:
 			return
@@ -490,7 +479,7 @@ class FullscreenMagnifier:
 		# Continue loop
 		self.magnifierTimer.continueTimer(self._updateMagnifier)
 
-	def startFullScreenMagnifier(self):
+	def startFullScreenMagnifier(self) -> None:
 		"""Start fullscreen magnifier with update loop."""
 		# Get initial position via FocusManager
 		if self.focusManager:
@@ -509,7 +498,7 @@ class FullscreenMagnifier:
 			f"FullscreenMagnifier started - Position: ({self.currentX}, {self.currentY}), Zoom: {zoomLevel}"
 		)
 
-	def stopFullScreenMagnifier(self):
+	def stopFullScreenMagnifier(self) -> None:
 		"""Reset magnifier to default (1x zoom) and stop update loop."""
 		self.isActive = False
 		self.magnifierTimer.stopTimer()
@@ -527,7 +516,7 @@ class FullscreenMagnifier:
 			# If the magnification API is not available, log an error
 			log.info("Magnification API not available")
 
-	def _borderPos(self, focusX, focusY):
+	def _borderPos(self, focusX: int, focusY: int) -> tuple[int, int]:
 		"""
 		Check if focus is near magnifier border and adjust position accordingly.
 		Returns adjusted position to keep focus within margin limits.
@@ -562,7 +551,7 @@ class FullscreenMagnifier:
 		else:
 			return windowsHandler.lastScreenPosition
 
-	def _relativePos(self, mouseX, mouseY):
+	def _relativePos(self, mouseX: int, mouseY: int) -> tuple[int, int]:
 		"""
 		Calculate magnifier center maintaining mouse relative position.
 		Handles screen edges to prevent going off-screen.
@@ -612,24 +601,24 @@ class FullscreenMagnifier:
 		self.spotlightIsActive = True
 		self.spotlightZoom = passedZoom
 
-		def checkMouseIdle():
+		def checkMouseIdle() -> None:
 			"""Check if the mouse is moving to keep spotlight active."""
-			currentPos = self.mouseHandler.getMousePos()
+			currentPos = self.mouseHandler.getMousePosition()
 			if currentPos != self._spotlightLastMousePos:
 				self._spotlightLastMousePos = currentPos
-				self.mouseHandler.setLastMousePos(currentPos)
+				self.mouseHandler.setLastMousePosition(currentPos)
 				self.spotlightTimer = wx.CallLater(1000, checkMouseIdle)
 			else:
 				restoreZoom()
 
-		def restoreZoom():
+		def restoreZoom() -> None:
 			"""Restore zoom level and position after spotlight."""
 			# Stop spotlight timer
 			if self.spotlightTimer and self.spotlightTimer.IsRunning():
 				self.spotlightTimer.Stop()
 				self.spotlightTimer = None
 
-			x, y = self.mouseHandler.getMousePos()
+			x, y = self.mouseHandler.getMousePosition()
 			if focusMode == FullScreenFocusMode.RELATIVE:
 				x, y = self._relativePos(x, y)
 			else:
@@ -640,7 +629,7 @@ class FullscreenMagnifier:
 			self.currentX = x
 			self.currentY = y
 
-			def restartAfterAnimation():
+			def restartAfterAnimation() -> None:
 				# Restart fullscreen timer
 				self.magnifierTimer.startTimer(self._updateMagnifier)
 				if onFinish:
@@ -650,7 +639,7 @@ class FullscreenMagnifier:
 
 		self._animateZoom(1.0, centerX, centerY, callback=lambda: wx.CallLater(2000, checkMouseIdle))
 
-	def _animateZoom(self, targetZoom, centerX, centerY, callback=None):
+	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback=None) -> None:
 		"""Animate zoom smoothly using magnifierTimer."""
 		# Animation constants
 		animationSteps = 40
@@ -672,7 +661,7 @@ class FullscreenMagnifier:
 		self.magnifierTimer.stopTimer()
 		self.magnifierTimer.startTimer(self._onAnimationStep)
 
-	def _onAnimationStep(self):
+	def _onAnimationStep(self) -> None:
 		"""Animation step called by magnifierTimer."""
 		if self._animationStep < self._animationSteps:
 			# Calculate and apply current zoom
@@ -700,14 +689,14 @@ class FullscreenMagnifier:
 class DockedMagnifier:
 	"""Simple docked magnifier management."""
 
-	def __init__(self, magnifierSettings, focusManager, magnifierTimer, mouseHandler):
+	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
 		self.magnifierTimer = magnifierTimer
 		self.magnifierSettings = magnifierSettings
 		self.focusManager = focusManager
 		self.mouseHandler = mouseHandler
 		self.dockedFrame = None
 
-	def startDockedMagnifier(self):
+	def startDockedMagnifier(self) -> None: 
 		"""Start docked magnifier."""
 		try:
 			# Close existing frame if any
@@ -721,14 +710,14 @@ class DockedMagnifier:
 			# Create new magnifier frame
 			self.dockedFrame = windowsHandler.DockedFrame()
 			self.dockedFrame.Show()
-			self.dockedFrame.startMagnifying(self.mouseHandler.getLastMousePos())
+			self.dockedFrame.startMagnifying(self.mouseHandler.getMousePosition())
 			self.magnifierTimer.startTimer(self._updateMagnifier)
 			ui.message("Docked magnifier started")
 		except Exception as e:
 			log.error(f"Error starting docked magnifier: {e}")
 			ui.message("Error starting docked magnifier")
 
-	def stopDockedMagnifier(self):
+	def stopDockedMagnifier(self) -> None:
 		"""Stop docked magnifier."""
 		try:
 			if self.dockedFrame:
@@ -741,7 +730,7 @@ class DockedMagnifier:
 		except Exception as e:
 			log.error(f"Error stopping docked magnifier: {e}")
 
-	def _updateMagnifier(self):
+	def _updateMagnifier(self) -> None:
 		"""Update magnifier position"""
 		if self.dockedFrame:
 			if self.focusManager:
@@ -750,7 +739,7 @@ class DockedMagnifier:
 					f"DockedMagnifier updating position to ({x}, {y}) with zoom {self.magnifierSettings.getZoomLevel()}"
 				)
 				self.dockedFrame.updateMagnifier(
-					x, y, self.magnifierSettings.getZoomLevel(), self.mouseHandler.getMousePos()
+					x, y, self.magnifierSettings.getZoomLevel(), self.mouseHandler.getMousePosition()
 				)
 			self.magnifierTimer.continueTimer(self._updateMagnifier)
 
@@ -758,14 +747,14 @@ class DockedMagnifier:
 class LensMagnifier:
 	"""Simple lens magnifier management."""
 
-	def __init__(self, magnifierSettings, focusManager, magnifierTimer, mouseHandler):
+	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
 		self.magnifierTimer = magnifierTimer
 		self.magnifierSettings = magnifierSettings
 		self.focusManager = focusManager
 		self.mouseHandler = mouseHandler
 		self.lensFrame = None
 
-	def startLensMagnifier(self):
+	def startLensMagnifier(self) -> None:
 		"""Start lens magnifier."""
 		try:
 			# Close existing lens if any
@@ -787,7 +776,7 @@ class LensMagnifier:
 			log.error(f"Error starting lens magnifier: {e}")
 			ui.message("Error starting lens magnifier")
 
-	def stopLensMagnifier(self):
+	def stopLensMagnifier(self) -> None:
 		"""Stop lens magnifier."""
 		try:
 			if self.lensFrame:
@@ -800,11 +789,11 @@ class LensMagnifier:
 		except Exception as e:
 			log.error(f"Error stopping lens magnifier: {e}")
 
-	def _updateMagnifier(self):
+	def _updateMagnifier(self) -> None:
 		"""Update lens magnifier position."""
 		if self.lensFrame:
 			if self.focusManager:
-				x, y = self.mouseHandler.getMousePos()
+				x, y = self.mouseHandler.getMousePosition()
 				# Always center lens on mouse position
 				log.info(
 					f"LensMagnifier updating position to ({x}, {y}) with zoom {self.magnifierSettings.getZoomLevel()}"

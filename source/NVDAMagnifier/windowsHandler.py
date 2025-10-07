@@ -1,4 +1,5 @@
 import ctypes
+import string
 
 from logHandler import log
 import wx
@@ -7,7 +8,7 @@ import wx
 lastScreenPosition = [0, 0]
 
 
-def getScreenSize():
+def getScreenSize() -> tuple[int, int]:
 	"""Return screen width and height."""
 	screenWidth, screenHeight = (
 		ctypes.windll.user32.GetSystemMetrics(0),
@@ -16,7 +17,7 @@ def getScreenSize():
 	return screenWidth, screenHeight
 
 
-def loadMagnifierApi():
+def loadMagnifierApi() -> None:
 	"""Initialize the Magnification API."""
 	try:
 		# Attempt to access the magnification DLL
@@ -34,7 +35,7 @@ def loadMagnifierApi():
 	log.info("Magnification API initialized")
 
 
-def getMagnifierPosition(x, y, zoomLevel):
+def getMagnifierPosition(x: int, y: int, zoomLevel: float) -> (int, int, int, int):
 	"""
 	Compute the top-left corner of the magnifier window centered on (x, y).
 	Returns (left, top, visibleWidth, visibleHeight).
@@ -60,7 +61,7 @@ def getMagnifierPosition(x, y, zoomLevel):
 class GlobalPanel(wx.Panel):
 	"""Unified panel that handles both docked and lens magnification display."""
 
-	def __init__(self, parent, panelType):
+	def __init__(self, parent: wx.Frame, panelType: str):
 		"""
 		Initialize the global panel.
 
@@ -75,7 +76,6 @@ class GlobalPanel(wx.Panel):
 		self.SetName(panelType)
 
 		# Content properties
-		self.contentImage = None
 		self.contentBitmap = None
 		self.cursorPos = (0, 0)
 
@@ -90,39 +90,15 @@ class GlobalPanel(wx.Panel):
 
 		log.info(f"GlobalPanel initialized - type: {self.panelType}, parent: {parent}")
 
-	def setContent(self, content, cursorPos):
+	def setContent(self, content: wx.Bitmap , cursorPos: tuple[int, int]) -> None:
 		"""
 		Set the magnified content and cursor position.
-
-		Args:
-		    content: Either wx.Bitmap (for docked) or wx.Image (for lens)
-		    cursorPos: Tuple (x, y) for cursor position
 		"""
-		log.info(f"Setting {self.panelType} content: content={content is not None}, cursor={cursorPos}")
-
-		# Handle different content types
-		if content:
-			if isinstance(content, wx.Bitmap):
-				self.contentBitmap = content
-				self.contentImage = content.ConvertToImage() if content.IsOk() else None
-			elif isinstance(content, wx.Image):
-				self.contentImage = content
-				self.contentBitmap = wx.Bitmap(content) if content.IsOk() else None
-			else:
-				log.error(f"Unknown content type: {type(content)}")
-				return
-
-			if self.contentImage:
-				log.info(f"Content details: {self.contentImage.GetWidth()}x{self.contentImage.GetHeight()}")
-		else:
-			self.contentBitmap = None
-			self.contentImage = None
-
+		self.contentBitmap = content
 		self.cursorPos = cursorPos
 		self.Refresh()
-		log.info(f"{self.panelType.capitalize()} panel refreshed")
 
-	def drawCrosshair(self, dc, x, y):
+	def drawCrosshair(self, dc: wx.PaintDC, x: int, y: int) -> None:
 		"""
 		Draw crosshair at specified position.
 
@@ -143,7 +119,7 @@ class GlobalPanel(wx.Panel):
 			# Draw vertical line
 			dc.DrawLine(x, y - self.crosshairSize, x, y + self.crosshairSize)
 
-	def drawPlaceholder(self, dc):
+	def drawPlaceholder(self, dc: wx.PaintDC) -> None:
 		"""Draw placeholder content when no image is available."""
 		panelSize = self.GetSize()
 		width, height = panelSize.width, panelSize.height
@@ -157,7 +133,7 @@ class GlobalPanel(wx.Panel):
 		text_y = (height - textSize.height) // 2
 		dc.DrawText(self.placeholderText, text_x, text_y)
 
-	def onPaint(self, event):
+	def onPaint(self, event) -> None:
 		"""Paint the magnified content and cursor overlay."""
 		log.info(f"GlobalPanel ({self.panelType}) onPaint called")
 
@@ -171,7 +147,7 @@ class GlobalPanel(wx.Panel):
 		dc.Clear()
 
 		# Draw content if available
-		if self.contentImage and self.contentImage.IsOk():
+		if self.contentBitmap:
 			# Draw the magnified content
 			dc.DrawBitmap(self.contentBitmap, 0, 0)
 
@@ -189,7 +165,7 @@ class GlobalPanel(wx.Panel):
 class GlobalFrame(wx.Frame):
 	"""Base frame class that handles common magnifier functionality."""
 
-	def __init__(self, frameType, title=None, size=None, style=None, position=None):
+	def __init__(self, frameType: str, title=None, size=None, style=None, position=None, colorFilter="normal"):
 		"""
 		Initialize the global frame.
 
@@ -210,6 +186,7 @@ class GlobalFrame(wx.Frame):
 
 		# Store frame configuration
 		self.frameType = frameType
+		self.filter = colorFilter
 
 		# Common properties
 		self.running = False
@@ -223,12 +200,12 @@ class GlobalFrame(wx.Frame):
 
 		log.info(f"GlobalFrame initialized - type: {frameType}, size: {size}")
 
-	def createPanel(self):
+	def createPanel(self) -> GlobalPanel:
 		"""Create the magnifier panel - can be overridden by subclasses."""
 		self.panel = GlobalPanel(self, self.frameType)
 		return self.panel
 
-	def setupLayout(self):
+	def setupLayout(self) -> None:
 		"""Setup the window layout with panel."""
 		self.createPanel()
 		sizer = wx.BoxSizer(wx.VERTICAL)
@@ -237,13 +214,24 @@ class GlobalFrame(wx.Frame):
 		self.Layout()
 		log.info(f"{self.frameType.capitalize()} sizer configured and layout forced")
 
-	def forceRefresh(self):
+	def setColorFilter(self, colorFilter: string) -> None:
+		self.colorFilter = colorFilter
+
+	def applyColorFilter(self, image: wx.Image) -> wx.Image:
+		if self.colorFilter == "normal":
+			return image
+		if self.colorFilter == "greyscale":
+			return image
+		elif self.colorFilter == "inverted":
+			return image
+
+	def forceRefresh(self) -> None:
 		"""Force immediate paint events on the panel."""
 		if self.panel:
 			wx.CallAfter(self.panel.Refresh)
 			wx.CallAfter(self.panel.Update)
 
-	def startMagnifying(self):
+	def startMagnifying(self) -> None:
 		"""Start the magnification."""
 		self.running = True
 		self.setupLayout()
@@ -254,13 +242,13 @@ class GlobalFrame(wx.Frame):
 
 		log.info(f"{self.frameType.capitalize()} magnifying started")
 
-	def stopMagnifying(self, event=None):
+	def stopMagnifying(self) -> None:
 		"""Stop the magnification."""
 		self.running = False
 		self.Destroy()
 		log.info(f"{self.frameType.capitalize()} magnifying stopped")
 
-	def updateMagnifier(self, focusX, focusY, zoomLevel):
+	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float) -> None:
 		"""Update magnifier - base implementation with common checks."""
 		if not self.running or not self.panel:
 			return
@@ -351,12 +339,12 @@ class DockedFrame(GlobalFrame):
 			position=(0, 0),
 		)
 
-	def startMagnifying(self, lastMousePos):
+	def startMagnifying(self, lastMousePos: tuple[int, int]) -> None:
 		"""Start the magnification with docked-specific settings."""
 		self.lastMousePos = lastMousePos
 		super().startMagnifying()
 
-	def updateMagnifier(self, focusX, focusY, zoomLevel, mousePos):
+	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float, mousePos: tuple[int, int]) -> None:
 		"""Implementation of docked magnifier update."""
 		mouseX, mouseY = mousePos
 		lastMouseX, lastMouseY = self.lastMousePos
@@ -386,11 +374,11 @@ class LensFrame(GlobalFrame):
 			style=wx.STAY_ON_TOP | wx.FRAME_NO_TASKBAR,
 		)
 
-	def startMagnifying(self):
+	def startMagnifying(self) -> None:
 		"""Start the magnification with lens-specific settings."""
 		super().startMagnifying()
 
-	def updateMagnifier(self, focusX, focusY, zoomLevel):
+	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float) -> None:
 		"""Implementation of lens magnifier update."""
 		offsetX = 120  # Move lens to the right of mouse
 		offsetY = -120  # Move lens above the mouse
