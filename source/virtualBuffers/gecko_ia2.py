@@ -616,7 +616,6 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 
-
 	def _initialize_nativeAppSelectionModeSupport(self) -> None:
 		try:
 			self.clearAppSelection()
