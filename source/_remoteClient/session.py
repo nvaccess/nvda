@@ -626,7 +626,6 @@ class LeaderSession(RemoteSession):
 				commands.script_braille_scrollBack,
 				commands.script_braille_scrollForward,
 			):
-				tones.beep(500, 100)
 				return True
 			dict = {
 				key: gesture.__dict__[key]
