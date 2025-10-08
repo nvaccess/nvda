@@ -98,6 +98,15 @@ class LocalMachine:
 	    - :mod:`transport` - Network transport layer
 	"""
 
+	@property
+	def receivingBraille(self) -> bool:
+		return self._receivingBraille
+
+	@receivingBraille.setter
+	def receivingBraille(self, val: bool):
+		self._receivingBraille = val
+		braille.handler._refreshEnabled(True)
+
 	def __init__(self) -> None:
 		"""Initialize the local machine controller.
 
@@ -106,7 +115,7 @@ class LocalMachine:
 		self.isMuted: bool = False
 		"""When True, most remote commands will be ignored"""
 
-		self.receivingBraille: bool = False
+		self.receivingBraille = False
 		"""When True, braille output comes from remote"""
 
 		self._cachedSizes: Optional[List[int]] = None
@@ -119,6 +128,7 @@ class LocalMachine:
 		braille.decide_enabled.register(self.handleDecideEnabled)
 		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
 		braille._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
+		braille._decide_disabledIncludesMessages.register(self._handleDecideDisabledIncludesMessages)
 
 	def terminate(self) -> None:
 		"""Clean up resources when the local machine controller is terminated.
@@ -263,16 +273,26 @@ class LocalMachine:
 		"""
 		return not self.receivingBraille or self._showingLocalUiMessage
 
+	def _handleDecideDisabledIncludesMessages(self) -> bool:
+		"""Determine if the local braille display should be enabled.
+
+		:return: False if receiving remote braille, True otherwise
+		"""
+		log.info(
+			f"Deciding if disabled braille includes messages. {self.receivingBraille=} returning {not self.receivingBraille}",
+		)
+		return not self.receivingBraille
+
 	def _handleShowBrailleMessage(self):
 		tones.beep(750, 100)
-		self._showingLocalUiMessage = True
 		self._oldReceivingBraille, self.receivingBraille = self.receivingBraille, False
-		braille.handler.enabled
+		braille.handler._refreshEnabled(True)
+		self._showingLocalUiMessage = True
 
 	def _handleDismissBrailleMessage(self):
 		tones.beep(250, 100)
-		self._showingLocalUiMessage = False
 		self.receivingBraille = self._oldReceivingBraille
+		self._showingLocalUiMessage = False
 		braille.handler.enabled
 		self.display(self._lastCells)
 

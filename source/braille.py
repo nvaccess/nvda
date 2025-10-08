@@ -2396,8 +2396,25 @@ the local braille handler should be disabled as long as the system is in control
 Handlers are called without arguments.
 """
 
+_decide_disabledIncludesMessages = extensionPoints.Decider()
+"""
+Allows Remote Access to decide whether an exception should be made for showing ui.message.
+Handlers are called without arguments.
+"""
+
 _pre_showBrailleMessage = extensionPoints.Action()
+"""
+Called before a `ui.message` is shown,
+to allow Remote Access to show local messages to users who are controlling a remote computer.
+Handlers are called without arguments.
+"""
+
 _post_dismissBrailleMessage = extensionPoints.Action()
+"""
+Called after a `ui.message` is dismissed,
+to allow Remote Access to show local messages to users who are controlling a remote computer.
+Handlers are called without arguments.
+"""
 
 
 class BrailleHandler(baseObject.AutoPropertyObject):
@@ -2685,12 +2702,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		and thus is C{True} when the display size is greater than 0.
 		This is a read only property and can't be set.
 		"""
+		self._refreshEnabled()
+		return self._enabled
+
+	def _refreshEnabled(self, block: bool = False) -> None:
 		currentEnabled = bool(self.displaySize) and decide_enabled.decide()
 		if self._enabled != currentEnabled:
+			log.info(f"{self._enabled=}, {currentEnabled=}")
 			self._enabled = currentEnabled
 			if currentEnabled is False:
-				wx.CallAfter(self._handleEnabledDecisionFalse)
-		return currentEnabled
+				if block:
+					from gui.guiHelper import wxCallOnMain
+
+					wxCallOnMain(self._handleEnabledDecisionFalse)
+				else:
+					log.info("Queueing handleEnabledDecisionFalse.", stack_info=True)
+					wx.CallAfter(self._handleEnabledDecisionFalse)
 
 	def _set_enabled(self, value):
 		raise AttributeError(
@@ -2701,6 +2728,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""When a decider handler decides to disable the braille handler, ensure braille doesn't continue.
 		This should be called from the main thread to avoid wx assertions.
 		"""
+		log.info("Handle enabled decision false called.", stack_info=True)
 		if self._cursorBlinkTimer:
 			# A blinking cursor should be stopped
 			self._cursorBlinkTimer.Stop()
@@ -2963,14 +2991,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		_pre_showBrailleMessage.notify()
 		if (
-			not self.enabled
+			(not self.enabled and _decide_disabledIncludesMessages.decide())
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
 			or text is None
 			or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
 		):
 			return
+		_pre_showBrailleMessage.notify()
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
 		else:
@@ -3002,6 +3030,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		@precondition: A message is currently being displayed.
 		@postcondition: The display returns to the main buffer.
 		"""
+		log.info("Dismiss message called.", stack_info=True)
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
 		if self._messageCallLater:
