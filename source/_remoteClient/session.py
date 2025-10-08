@@ -617,6 +617,7 @@ class LeaderSession(RemoteSession):
 		:return: False if gesture was processed and sent, True otherwise
 		:note: Extracts gesture details and script info before sending
 		"""
+		# Import late to avoid circular import
 		from globalCommands import commands
 
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):

@@ -74,6 +74,7 @@ from winAPI.secureDesktop import post_secureDesktopStateChange
 from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
+from gui.guiHelper import wxCallOnMain
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -2711,8 +2712,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._enabled = currentEnabled
 			if currentEnabled is False:
 				if block:
-					from gui.guiHelper import wxCallOnMain
-
 					wxCallOnMain(self._handleEnabledDecisionFalse)
 				else:
 					wx.CallAfter(self._handleEnabledDecisionFalse)
