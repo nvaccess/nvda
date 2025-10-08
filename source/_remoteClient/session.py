@@ -620,7 +620,6 @@ class LeaderSession(RemoteSession):
 		from globalCommands import commands
 
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
-			log.info(f"{gesture=}; {gesture.script=}; {self.localMachine._showingLocalUiMessage=}")
 			if self.localMachine._showingLocalUiMessage and gesture.script in (
 				commands.script_braille_routeTo,
 				commands.script_braille_scrollBack,

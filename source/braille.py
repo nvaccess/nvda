@@ -2708,7 +2708,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _refreshEnabled(self, block: bool = False) -> None:
 		currentEnabled = bool(self.displaySize) and decide_enabled.decide()
 		if self._enabled != currentEnabled:
-			log.info(f"{self._enabled=}, {currentEnabled=}")
 			self._enabled = currentEnabled
 			if currentEnabled is False:
 				if block:
@@ -2716,7 +2715,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 					wxCallOnMain(self._handleEnabledDecisionFalse)
 				else:
-					log.info("Queueing handleEnabledDecisionFalse.", stack_info=True)
 					wx.CallAfter(self._handleEnabledDecisionFalse)
 
 	def _set_enabled(self, value):
@@ -2728,7 +2726,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""When a decider handler decides to disable the braille handler, ensure braille doesn't continue.
 		This should be called from the main thread to avoid wx assertions.
 		"""
-		log.info("Handle enabled decision false called.", stack_info=True)
 		if self._cursorBlinkTimer:
 			# A blinking cursor should be stopped
 			self._cursorBlinkTimer.Stop()
@@ -3030,7 +3027,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		@precondition: A message is currently being displayed.
 		@postcondition: The display returns to the main buffer.
 		"""
-		log.info("Dismiss message called.", stack_info=True)
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
 		if self._messageCallLater:

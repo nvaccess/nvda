@@ -274,13 +274,10 @@ class LocalMachine:
 		return not self.receivingBraille or self._showingLocalUiMessage
 
 	def _handleDecideDisabledIncludesMessages(self) -> bool:
-		"""Determine if the local braille display should be enabled.
+		"""Determine if the local display being disabled should exclude ui.message.
 
-		:return: False if receiving remote braille, True otherwise
+		:return: ``True`` if we should block UI messages; ``False`` if we should let them show.
 		"""
-		log.info(
-			f"Deciding if disabled braille includes messages. {self.receivingBraille=} returning {not self.receivingBraille}",
-		)
 		return not self.receivingBraille
 
 	def _handleShowBrailleMessage(self):
