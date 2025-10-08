@@ -471,6 +471,10 @@ class FullscreenMagnifier:
 		"""Start fullscreen magnifier with update loop."""
 		self.currentX, self.currentY = self.focusManager.getFocusCoordinates()
 		self.isActive = True
+		if self.magnifierSettings.currentColorFilter.value == "greyscale":
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(ColorFilterMatrix.GREYSCALE.value)
+		elif self.magnifierSettings.currentColorFilter.value == "inverted":
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(ColorFilterMatrix.INVERTED.value)
 		self.magnifierTimer.startTimer(self._updateMagnifier)
 
 	def stopFullScreenMagnifier(self) -> None:
@@ -676,7 +680,7 @@ class DockedMagnifier:
 			# Create new magnifier frame
 			self.dockedFrame = windowsHandler.DockedFrame()
 			self.dockedFrame.Show()
-			self.dockedFrame.startMagnifying(self.mouseHandler.getMousePosition())
+			self.dockedFrame.startMagnifying(self.mouseHandler.getMousePosition(), self.magnifierSettings.getFilter().value)
 			self.magnifierTimer.startTimer(self._updateMagnifier)
 		except Exception as e:
 			log.error(f"Error starting docked magnifier: {e}")
@@ -700,7 +704,7 @@ class DockedMagnifier:
 			if self.focusManager:
 				x, y = self.focusManager.getFocusCoordinates()
 				self.dockedFrame.updateMagnifier(
-					x, y, self.magnifierSettings.getZoomLevel(), self.mouseHandler.getMousePosition()
+					x, y, self.magnifierSettings.getZoomLevel(), self.mouseHandler.getMousePosition(), self.magnifierSettings.getFilter().value
 				)
 			self.magnifierTimer.continueTimer(self._updateMagnifier)
 
@@ -729,7 +733,7 @@ class LensMagnifier:
 			# Create new lens window
 			self.lensFrame = windowsHandler.LensFrame()
 			self.lensFrame.Show()
-			self.lensFrame.startMagnifying()
+			self.lensFrame.startMagnifying(self.magnifierSettings.getFilter().value)
 			self.magnifierTimer.startTimer(self._updateMagnifier)
 
 		except Exception as e:
@@ -753,5 +757,5 @@ class LensMagnifier:
 			if self.focusManager:
 				x, y = self.mouseHandler.getMousePosition()
 				# Always center lens on mouse position
-				self.lensFrame.updateMagnifier(x, y, self.magnifierSettings.getZoomLevel())
+				self.lensFrame.updateMagnifier(x, y, self.magnifierSettings.getZoomLevel(), self.magnifierSettings.getFilter().value)
 			self.magnifierTimer.continueTimer(self._updateMagnifier)

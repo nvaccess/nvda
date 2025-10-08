@@ -202,15 +202,28 @@ class GlobalFrame(wx.Frame):
 		self.Layout()
 
 	def setColorFilter(self, colorFilter: string) -> None:
+		log.info(f"Setting color filter: {colorFilter}")
 		self.colorFilter = colorFilter
 
 	def applyColorFilter(self, image: wx.Image) -> wx.Image:
+		log.info(f"Applying color filter: {self.colorFilter}")
 		if self.colorFilter == "normal":
-			return image
+			pass
+		width, height = image.GetWidth(), image.GetHeight()
 		if self.colorFilter == "greyscale":
-			return image
+			for y in range(height):
+				for x in range(width):
+					r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
+					gray = int(0.299 * r + 0.587 * g + 0.114 * b)
+					gray = max(0, min(255, gray))
+					image.SetRGB(x, y, gray, gray, gray)
 		elif self.colorFilter == "inverted":
-			return image
+			for y in range(height):
+				for x in range(width):
+					r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
+					image.SetRGB(x, y, 255 - r, 255 - g, 255 - b)
+		return image
+	
 
 	def forceRefresh(self) -> None:
 		"""Force immediate paint events on the panel."""
@@ -268,6 +281,9 @@ class GlobalFrame(wx.Frame):
 				# Convert to image and scale to fill the entire panel
 				image = bitmap.ConvertToImage()
 
+				# Apply color filter
+				image = self.applyColorFilter(image)
+
 				# Get panel size to scale the image to fill it completely
 				panelSize = self.panel.GetSize()
 				panelWidth, panelHeight = panelSize.width, panelSize.height
@@ -317,12 +333,13 @@ class DockedFrame(GlobalFrame):
 			position=(0, 0),
 		)
 
-	def startMagnifying(self, lastMousePos: tuple[int, int]) -> None:
+	def startMagnifying(self, lastMousePos: tuple[int, int], colorFilter: str) -> None:
 		"""Start the magnification with docked-specific settings."""
 		self.lastMousePos = lastMousePos
+		self.setColorFilter(colorFilter)
 		super().startMagnifying()
 
-	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float, mousePos: tuple[int, int]) -> None:
+	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float, mousePos: tuple[int, int], colorFilter: str) -> None:
 		"""Implementation of docked magnifier update."""
 		mouseX, mouseY = mousePos
 		lastMouseX, lastMouseY = self.lastMousePos
@@ -334,7 +351,8 @@ class DockedFrame(GlobalFrame):
 		):
 			# return if mouse didn't move to prevent infinite zoom on crosshair
 			return
-
+		if colorFilter != self.colorFilter:
+			self.setColorFilter(colorFilter)
 		super().updateMagnifier(focusX, focusY, zoomLevel)
 
 
@@ -351,18 +369,20 @@ class LensFrame(GlobalFrame):
 			style=wx.STAY_ON_TOP | wx.FRAME_NO_TASKBAR,
 		)
 
-	def startMagnifying(self) -> None:
+	def startMagnifying(self, colorFilter: str) -> None:
 		"""Start the magnification with lens-specific settings."""
+		self.setColorFilter(colorFilter)
 		super().startMagnifying()
 
-	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float) -> None:
+	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float, colorFilter: str) -> None:
 		"""Implementation of lens magnifier update."""
-		offsetX = 120  # Move lens to the right of mouse
-		offsetY = -120  # Move lens above the mouse
+		offsetX = 125  # Move lens to the right of mouse
+		offsetY = -125  # Move lens above the mouse
 
 		lensX = min(max(0, focusX + offsetX), self.screenWidth - self.lensSize)
 		lensY = min(max(0, focusY + offsetY), self.screenHeight - self.lensSize)
 
 		self.SetPosition((lensX, lensY))
-
+		if colorFilter != self.colorFilter:
+			self.setColorFilter(colorFilter)
 		super().updateMagnifier(focusX, focusY, zoomLevel)
