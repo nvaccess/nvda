@@ -244,6 +244,9 @@ class LocalMachine:
 			# Cache these cells in case we need them later
 			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
+		elif not self.receivingBraille and self._showingLocalUiMessage:
+			# Cache this cell array for after the local ui.message is dismissed
+			self._lastCells = cells
 
 	def brailleInput(self, **kwargs: Dict[str, Any]) -> None:
 		"""Process braille input gestures from a remote machine.
