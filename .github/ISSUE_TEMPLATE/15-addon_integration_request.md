@@ -8,9 +8,9 @@ labels: ["enhancement", "add-on/integration"]
 
 ### Add-on information
 
-*   **Name of the add-on:**
-*   **Link to add-on repository or website:**
-*   **Current maintainer(s):**
+* **Name of the add-on:**
+* **Link to add-on repository or website:**
+* **Current maintainer(s):**
 
 ### User impact and utility
 
