@@ -300,13 +300,13 @@ class LocalMachine:
 		"""
 		return not self.receivingBraille
 
-	def _handleShowBrailleMessage(self):
+	def _handleShowBrailleMessage(self) -> None:
 		"""Prepare to display a local `ui.message`."""
 		tones.beep(750, 100)
 		self._oldReceivingBraille, self.receivingBraille = self.receivingBraille, False
 		self._showingLocalUiMessage = True
 
-	def _handleDismissBrailleMessage(self):
+	def _handleDismissBrailleMessage(self) -> None:
 		"""Handle returning from showing a local `ui.message`."""
 		tones.beep(250, 100)
 		self.receivingBraille = self._oldReceivingBraille
