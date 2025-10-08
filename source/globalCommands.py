@@ -4991,7 +4991,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleFullscreenMode(self, gesture):
 		"""Cycle through fullscreen focus modes (center, border, relative)."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive() and nvdaMagnifier._fullscreenModeIsActive():
+		if (
+			nvdaMagnifier
+			and nvdaMagnifier.magnifierSettings.isActive()
+			and nvdaMagnifier._fullscreenModeIsActive()
+		):
 			modes = list(FullScreenFocusMode)
 			currentMode = nvdaMagnifier.magnifierSettings.getFullscreenFocusMode()
 			idx = modes.index(currentMode)
@@ -5036,7 +5040,11 @@ class GlobalCommands(ScriptableObject):
 	def script_spotlight(self, gesture):
 		"""Show magnifier overview by zooming out temporarily."""
 		nvdaMagnifier = self._getNVDAMagnifier()
-		if nvdaMagnifier and nvdaMagnifier.magnifierSettings.isActive() and nvdaMagnifier._fullscreenModeIsActive():
+		if (
+			nvdaMagnifier
+			and nvdaMagnifier.magnifierSettings.isActive()
+			and nvdaMagnifier._fullscreenModeIsActive()
+		):
 			nvdaMagnifier.fullscreenMagnifier.spotlight(onFinish=nvdaMagnifier._continueMagnifier)
 		else:
 			return

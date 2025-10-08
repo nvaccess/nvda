@@ -1,5 +1,5 @@
 import ctypes
-import string
+import array
 
 from logHandler import log
 import wx
@@ -35,7 +35,7 @@ def loadMagnifierApi() -> None:
 	log.info("Magnification API initialized")
 
 
-def getMagnifierPosition(x: int, y: int, zoomLevel: float) ->  tuple[int, int, int, int]:
+def getMagnifierPosition(x: int, y: int, zoomLevel: float) -> tuple[int, int, int, int]:
 	"""
 	Compute the top-left corner of the magnifier window centered on (x, y).
 	Returns (left, top, visibleWidth, visibleHeight).
@@ -87,7 +87,7 @@ class GlobalPanel(wx.Panel):
 		# Bind paint event
 		self.Bind(wx.EVT_PAINT, self.onPaint)
 
-	def setContent(self, content: wx.Bitmap , cursorPos: tuple[int, int]) -> None:
+	def setContent(self, content: wx.Bitmap, cursorPos: tuple[int, int]) -> None:
 		"""
 		Set the magnified content and cursor position.
 		"""
@@ -133,8 +133,6 @@ class GlobalPanel(wx.Panel):
 	def onPaint(self, event) -> None:
 		"""Paint the magnified content and cursor overlay."""
 		dc = wx.PaintDC(self)
-		panelSize = self.GetSize()
-
 		# Clear background
 		dc.Clear()
 
@@ -155,7 +153,9 @@ class GlobalPanel(wx.Panel):
 class GlobalFrame(wx.Frame):
 	"""Base frame class that handles common magnifier functionality."""
 
-	def __init__(self, frameType: str, title=None, size=None, style=None, position=None, colorFilter="normal"):
+	def __init__(
+		self, frameType: str, title=None, size=None, style=None, position=None, colorFilter="normal"
+	):
 		"""
 		Initialize the global frame.
 
@@ -201,29 +201,62 @@ class GlobalFrame(wx.Frame):
 		self.SetSizer(sizer)
 		self.Layout()
 
-	def setColorFilter(self, colorFilter: string) -> None:
+	def setColorFilter(self, colorFilter: str) -> None:
 		log.info(f"Setting color filter: {colorFilter}")
 		self.colorFilter = colorFilter
 
 	def applyColorFilter(self, image: wx.Image) -> wx.Image:
+		"""Apply color filter with early exit optimization."""
 		log.info(f"Applying color filter: {self.colorFilter}")
-		if self.colorFilter == "normal":
-			pass
-		width, height = image.GetWidth(), image.GetHeight()
-		if self.colorFilter == "greyscale":
-			for y in range(height):
-				for x in range(width):
-					r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
+		# width, height = image.GetWidth(), image.GetHeight()
+		# if self.colorFilter == "normal":
+		# 	return image
+		# elif self.colorFilter == "greyscale":
+		# 	for y in range(height):
+		# 		for x in range(width):
+		# 			r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
+		# 			gray = int(0.299 * r + 0.587 * g + 0.114 * b)
+		# 			gray = max(0, min(255, gray))
+		# 			image.SetRGB(x, y, gray, gray, gray)
+		# elif self.colorFilter == "inverted":
+		# 	for y in range(height):
+		# 		for x in range(width):
+		# 			r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
+		# 			image.SetRGB(x, y, 255 - r, 255 - g, 255 - b)
+		# return image
+
+		if self.colorFilter == "normal" or not image or not image.IsOk():
+			return image
+
+		try:
+			# Get raw image data as bytes
+			width, height = image.GetWidth(), image.GetHeight()
+			data = image.GetData()  # Returns RGB data as bytes
+
+			# Convert to array for faster manipulation
+			rgb_array = array.array("B", data)  # 'B' = unsigned char (0-255)
+
+			if self.colorFilter == "greyscale":
+				# Process 3 bytes at a time (R, G, B)
+				for i in range(0, len(rgb_array), 3):
+					r, g, b = rgb_array[i], rgb_array[i + 1], rgb_array[i + 2]
+					# Standard grayscale formula
 					gray = int(0.299 * r + 0.587 * g + 0.114 * b)
-					gray = max(0, min(255, gray))
-					image.SetRGB(x, y, gray, gray, gray)
-		elif self.colorFilter == "inverted":
-			for y in range(height):
-				for x in range(width):
-					r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
-					image.SetRGB(x, y, 255 - r, 255 - g, 255 - b)
-		return image
-	
+					rgb_array[i] = rgb_array[i + 1] = rgb_array[i + 2] = gray
+
+			elif self.colorFilter == "inverted":
+				# Invert all values
+				for i in range(len(rgb_array)):
+					rgb_array[i] = 255 - rgb_array[i]
+
+			# Create new image with modified data
+			new_image = wx.Image(width, height)
+			new_image.SetData(rgb_array.tobytes())
+			return new_image
+
+		except Exception as e:
+			log.error(f"Error in optimized color filter: {e}")
+			return image
 
 	def forceRefresh(self) -> None:
 		"""Force immediate paint events on the panel."""
@@ -339,7 +372,9 @@ class DockedFrame(GlobalFrame):
 		self.setColorFilter(colorFilter)
 		super().startMagnifying()
 
-	def updateMagnifier(self, focusX: int, focusY: int, zoomLevel: float, mousePos: tuple[int, int], colorFilter: str) -> None:
+	def updateMagnifier(
+		self, focusX: int, focusY: int, zoomLevel: float, mousePos: tuple[int, int], colorFilter: str
+	) -> None:
 		"""Implementation of docked magnifier update."""
 		mouseX, mouseY = mousePos
 		lastMouseX, lastMouseY = self.lastMousePos

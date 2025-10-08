@@ -12,7 +12,7 @@ from . import windowsHandler
 ZOOM_MIN = 1.0
 ZOOM_MAX = 10.0
 ZOOM_STEP = 0.5
-TIMER_INTERVAL_MS = 15
+TIMER_INTERVAL_MS = 20
 MARGIN_BORDER = 50
 
 
@@ -74,17 +74,39 @@ class ColorFilterMatrix(Enum):
 	)
 
 	INVERTED = (ctypes.c_float * 25)(
-		-1.0, 0.0, 0.0, 0.0, 0.0,
-		0.0, -1.0, 0.0, 0.0, 0.0,
-		0.0, 0.0, -1.0, 0.0, 0.0,
-		0.0, 0.0, 0.0, 1.0, 0.0,
-		1.0, 1.0, 1.0, 0.0, 1.0
+		-1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		-1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		-1.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		0.0,
+		1.0,
+		0.0,
+		1.0,
+		1.0,
+		1.0,
+		0.0,
+		1.0,
 	)
+
 
 class ColorFilter(Enum):
 	NORMAL = "normal"
 	GREYSCALE = "greyscale"
 	INVERTED = "inverted"
+
 
 class FullScreenFocusMode(Enum):
 	CENTER = "center"
@@ -174,6 +196,7 @@ class NVDAMagnifier:
 		else:
 			pass
 
+
 ## MAGNIFIER SETTINGS
 
 
@@ -249,7 +272,7 @@ class FocusManager:
 		"""Return the last focused object."""
 		return self.lastFocusedObject
 
-	def _setLastNvdaPos(self, pos:tuple[int, int]):
+	def _setLastNvdaPos(self, pos: tuple[int, int]) -> None:
 		self.lastNvdaPos = pos
 
 	def _getLastNvdaPos(self) -> tuple[int, int]:
@@ -394,7 +417,13 @@ class MagnifierTimer:
 class FullscreenMagnifier:
 	"""Fullscreen magnifier implementation."""
 
-	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
+	def __init__(
+		self,
+		magnifierSettings: MagnifierSettings,
+		focusManager: FocusManager,
+		magnifierTimer: MagnifierTimer,
+		mouseHandler: MouseHandler,
+	):
 		"""Initialize fullscreen magnifier with settings and focus manager."""
 		self.isActive = False
 		self.currentX = 0
@@ -415,7 +444,7 @@ class FullscreenMagnifier:
 		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
 		return MagSetFullscreenTransform
 
-	def fullscreenMagnifier(self, x: int, y: int):
+	def fullscreenMagnifier(self, x: int, y: int) -> None:
 		"""Apply fullscreen magnification at given coordinates."""
 		zoomLevel = self.magnifierSettings.getZoomLevel()
 		left, top, visibleWidth, visibleHeight = windowsHandler.getMagnifierPosition(x, y, zoomLevel)
@@ -479,7 +508,7 @@ class FullscreenMagnifier:
 
 	def stopFullScreenMagnifier(self) -> None:
 		"""Reset magnifier to default (1x zoom) and stop update loop."""
-		# reset color filter of fullscreen to normal 
+		# reset color filter of fullscreen to normal
 		ctypes.windll.magnification.MagSetFullscreenColorEffect(ColorFilterMatrix.NORMAL.value)
 		try:
 			# Get MagSetFullscreenTransform function from magnification API
@@ -490,7 +519,7 @@ class FullscreenMagnifier:
 			log.info("Magnification API not available")
 
 		self.isActive = False
-		self.magnifierTimer.stopTimer()	
+		self.magnifierTimer.stopTimer()
 
 	def _borderPos(self, focusX: int, focusY: int) -> tuple[int, int]:
 		"""
@@ -555,7 +584,7 @@ class FullscreenMagnifier:
 		windowsHandler.lastScreenPosition[1] = int(top + visibleHeight / 2)
 		return windowsHandler.lastScreenPosition
 
-	def spotlight(self, onFinish=None):
+	def spotlight(self, onFinish=None) -> None:
 		"""Show magnifier overview by temporarily zooming out."""
 		# Stop fullscreen timer immediately
 		self.magnifierTimer.stopTimer()
@@ -647,7 +676,7 @@ class FullscreenMagnifier:
 			# Animation finished
 			self._finishAnimation()
 
-	def _finishAnimation(self):
+	def _finishAnimation(self) -> None:
 		"""Finish animation and execute callback."""
 		self.magnifierSettings.setZoomLevel(self._animationTargetZoom)
 		self.fullscreenMagnifier(self._animationCenterX, self._animationCenterY)
@@ -659,14 +688,20 @@ class FullscreenMagnifier:
 class DockedMagnifier:
 	"""Simple docked magnifier management."""
 
-	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
+	def __init__(
+		self,
+		magnifierSettings: MagnifierSettings,
+		focusManager: FocusManager,
+		magnifierTimer: MagnifierTimer,
+		mouseHandler: MouseHandler,
+	):
 		self.magnifierTimer = magnifierTimer
 		self.magnifierSettings = magnifierSettings
 		self.focusManager = focusManager
 		self.mouseHandler = mouseHandler
 		self.dockedFrame = None
 
-	def startDockedMagnifier(self) -> None: 
+	def startDockedMagnifier(self) -> None:
 		"""Start docked magnifier."""
 		try:
 			# Close existing frame if any
@@ -680,7 +715,9 @@ class DockedMagnifier:
 			# Create new magnifier frame
 			self.dockedFrame = windowsHandler.DockedFrame()
 			self.dockedFrame.Show()
-			self.dockedFrame.startMagnifying(self.mouseHandler.getMousePosition(), self.magnifierSettings.getFilter().value)
+			self.dockedFrame.startMagnifying(
+				self.mouseHandler.getMousePosition(), self.magnifierSettings.getFilter().value
+			)
 			self.magnifierTimer.startTimer(self._updateMagnifier)
 		except Exception as e:
 			log.error(f"Error starting docked magnifier: {e}")
@@ -704,7 +741,11 @@ class DockedMagnifier:
 			if self.focusManager:
 				x, y = self.focusManager.getFocusCoordinates()
 				self.dockedFrame.updateMagnifier(
-					x, y, self.magnifierSettings.getZoomLevel(), self.mouseHandler.getMousePosition(), self.magnifierSettings.getFilter().value
+					x,
+					y,
+					self.magnifierSettings.getZoomLevel(),
+					self.mouseHandler.getMousePosition(),
+					self.magnifierSettings.getFilter().value,
 				)
 			self.magnifierTimer.continueTimer(self._updateMagnifier)
 
@@ -712,7 +753,13 @@ class DockedMagnifier:
 class LensMagnifier:
 	"""Simple lens magnifier management."""
 
-	def __init__(self, magnifierSettings: MagnifierSettings, focusManager: FocusManager, magnifierTimer: MagnifierTimer, mouseHandler: MouseHandler):
+	def __init__(
+		self,
+		magnifierSettings: MagnifierSettings,
+		focusManager: FocusManager,
+		magnifierTimer: MagnifierTimer,
+		mouseHandler: MouseHandler,
+	):
 		self.magnifierTimer = magnifierTimer
 		self.magnifierSettings = magnifierSettings
 		self.focusManager = focusManager
@@ -757,5 +804,7 @@ class LensMagnifier:
 			if self.focusManager:
 				x, y = self.mouseHandler.getMousePosition()
 				# Always center lens on mouse position
-				self.lensFrame.updateMagnifier(x, y, self.magnifierSettings.getZoomLevel(), self.magnifierSettings.getFilter().value)
+				self.lensFrame.updateMagnifier(
+					x, y, self.magnifierSettings.getZoomLevel(), self.magnifierSettings.getFilter().value
+				)
 			self.magnifierTimer.continueTimer(self._updateMagnifier)
