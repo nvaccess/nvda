@@ -1,25 +1,62 @@
-name: "Add-on Integration Request"
-description: "Propose an existing community add-on for integration into NVDA's core."
-title: "[add-on Integration] <Name of add-on>"
+name: "Feature from Add-on"
+description: "Propose specific functionality from an existing community add-on for integration into NVDA's core."
+title: "[Feature from Add-on] <Briefly describe the functionality>"
 labels: ["enhancement", "add-on/integration"]
 
 body:
   - type: markdown
     attributes:
       value: |
-        This template is for integrating *existing* community add-ons.
-        Please provide the following information to help us evaluate your request.
-        Note: For new feature ideas, please use the "Feature Request" template.
+        This template is for proposing that a specific feature from an existing community add-on be integrated into NVDA's core.
+        Please focus your request on a single, conceptually focused piece of functionality. 
+        Requests to "integrate this entire add-on" will be closed if the add-on provides many unrelated features. 
+        The goal is to identify functionality that is essential for the core user experience.
 
-        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
-        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
-        This includes creating or commenting on issues and pull requests.
+  - type: textarea
+    id: specific-feature
+    attributes:
+      label: "Describe the specific functionality to be integrated"
+      description: |
+        Clearly and concisely describe the feature you are requesting.
+        If the add-on has multiple features, please list only the specific ones you believe are essential for inclusion in NVDA's core.
+      placeholder: "e.g. 'Add a hotkey to announce the title of the current tab in web browsers.'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-and-impact
+    attributes:
+      label: "What problem does this functionality solve?"
+      description: |
+        Help us understand the benefit of this feature for users.
+        * What common user task becomes easier or possible with this feature?
+        * Who is the primary target audience for this functionality (e.g. all users, developers, users of a specific application)?
+        * How does this improve upon NVDA's existing behavior?
+      placeholder: "Describe the problem solved and the target users."
+    validations:
+      required: true
+
+  - type: textarea
+    id: core-justification
+    attributes:
+      label: "Why should this be in NVDA's core vs. remaining an add-on?"
+      description: "Justify why this functionality is fundamental enough to be included in NVDA by default for all users, rather than being an optional installation."
+      placeholder: "e.g., 'This functionality is critical for accessibility in application XYZ, which is widely used and shouldn't require users to find and install a separate add-on.'"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### Source Add-on Information
+        Please provide details about the add-on where this feature is currently implemented.
 
   - type: input
     id: add-on-name
     attributes:
-      label: "Name of the add-on"
-      description: "The official name of the add-on you are proposing for integration."
+      label: "Name of the source add-on"
+      description: "The official name of the add-on that currently provides this functionality."
       placeholder: "e.g. Awesome App Support"
     validations:
       required: true
@@ -28,7 +65,7 @@ body:
     id: add-on-link
     attributes:
       label: "Link to add-on repository or website"
-      description: "Where can we find the source code for this add-on?"
+      description: "Where can we find the source code and license for this add-on?"
       placeholder: "https://github.com/user/add-on-repo"
     validations:
       required: true
@@ -36,25 +73,11 @@ body:
   - type: input
     id: add-on-maintainers
     attributes:
-      label: "Current maintainer(s)"
-      description: "Please provide the GitHub username(s) or name(s) of the current maintainer(s)."
+      label: "Current maintainer(s) of the add-on"
+      description: "Please provide the GitHub username or name of the current maintainer, if known."
       placeholder: "@username or 'Name'"
     validations:
       required: false
-
-  - type: textarea
-    id: user-impact
-    attributes:
-      label: "User impact and utility"
-      description: |
-        This section helps us understand the benefit for users.
-
-        * What problem does this add-on solve for NVDA users?
-        * Who is the target audience for this add-on (e.g. all users, developers, users of a specific application)?
-        * How widely used is this add-on? Please provide any available data or anecdotal evidence of its popularity (e.g. download numbers, community feedback).
-      placeholder: "Describe the problem solved, target users and estimated usage."
-    validations:
-      required: true
 
   - type: dropdown
     id: license
@@ -69,32 +92,9 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: maintenance
-    attributes:
-      label: "Maintenance and future development"
-      description: "Are the current maintainers willing and able to continue supporting the add-on after integration?"
-      options:
-        - "Yes"
-        - "No"
-        - "I don't know"
-    validations:
-      required: true
-
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: "Why should this be in NVDA vs. remaining an add-on?"
-      description: |
-        - Why is it beneficial for this functionality to be built into NVDA directly?
-        - Are there other add-ons that provide similar functionality? If so, why is this one the preferred solution for integration?
-      placeholder: "Justify the need for NVDA integration."
-    validations:
-      required: true
-
   - type: textarea
     id: additional-context
     attributes:
       label: "Additional context"
-      description: "Please provide any other information that you believe is relevant to this integration request."
-      placeholder: "Dependencies, potential conflicts or other relevant details."
+      description: "Please provide any other information you believe is relevant, such as dependencies, potential conflicts or other add-ons with similar functionality."
+      placeholder: "Any other details that might help us."
