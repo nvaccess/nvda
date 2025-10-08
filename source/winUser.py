@@ -651,7 +651,7 @@ def getWindowText(hwnd):
 	return buf.value
 
 
-def getWindow(window: HWNDVal , relation: int) -> HWNDVal:
+def getWindow(window: HWNDVal, relation: int) -> HWNDVal:
 	hwnd = _user32.GetWindow(window, relation)
 	return hwnd or 0
 
