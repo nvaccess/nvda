@@ -5104,6 +5104,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+windows+,",
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_runCaption(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.runCaption(gesture)
 
@@ -5112,6 +5113,7 @@ class GlobalCommands(ScriptableObject):
 		description=pgettext("imageDesc", "Toggle image captioning"),
 		category=SCRCAT_IMAGE_DESC,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
