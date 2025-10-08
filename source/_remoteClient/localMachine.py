@@ -98,14 +98,23 @@ class LocalMachine:
 	    - :mod:`transport` - Network transport layer
 	"""
 
+	_receivingBraille: bool
+	"""Internal storage for :attr:`receivingBraille`."""
+
 	@property
 	def receivingBraille(self) -> bool:
+		"""When True, braille output comes from remote"""
 		return self._receivingBraille
 
 	@receivingBraille.setter
 	def receivingBraille(self, val: bool):
 		self._receivingBraille = val
-		braille.handler._refreshEnabled(True)
+		# Let the braille handler know that whether it's enabled has changed.
+		# This needs to be blocking,
+		# otherwise there is a race condition between
+		# our handling of `ui.message`,
+		# and the braille handler clearing the message buffer.
+		braille.handler._refreshEnabled(block=True)
 
 	def __init__(self) -> None:
 		"""Initialize the local machine controller.
@@ -116,14 +125,18 @@ class LocalMachine:
 		"""When True, most remote commands will be ignored"""
 
 		self.receivingBraille = False
-		"""When True, braille output comes from remote"""
 
 		self._cachedSizes: Optional[List[int]] = None
 		"""Cached braille display sizes from remote machines"""
 
 		self._showingLocalUiMessage: bool = False
+		"""Whether we're currently showing a `ui.message` while showing remote braille."""
+
 		self._oldReceivingBraille: bool = False
+		"""Cached value of `self.receivingBraille` for when we show a `ui.message`."""
+
 		self._lastCells: list[int] = []
+		"""Cached cells for display when we return from controling the local computer, or displaying a `ui.message`."""
 
 		braille.decide_enabled.register(self.handleDecideEnabled)
 		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
@@ -137,6 +150,9 @@ class LocalMachine:
 		    ensure proper cleanup when the remote connection ends.
 		"""
 		braille.decide_enabled.unregister(self.handleDecideEnabled)
+		braille._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
+		braille._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
+		braille._decide_disabledIncludesMessages.unregister(self._handleDecideDisabledIncludesMessages)
 
 	def playWave(self, fileName: str) -> None:
 		"""Play a wave file on the local machine.
@@ -225,6 +241,7 @@ class LocalMachine:
 			and len(cells) <= braille.handler.displaySize
 		):
 			cells = cells + [0] * (braille.handler.displaySize - len(cells))
+			# Cache these cells in case we need them later
 			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
 
@@ -281,12 +298,13 @@ class LocalMachine:
 		return not self.receivingBraille
 
 	def _handleShowBrailleMessage(self):
+		"""Prepare to display a local `ui.message`."""
 		tones.beep(750, 100)
 		self._oldReceivingBraille, self.receivingBraille = self.receivingBraille, False
-		braille.handler._refreshEnabled(True)
 		self._showingLocalUiMessage = True
 
 	def _handleDismissBrailleMessage(self):
+		"""Handle returning from showing a local `ui.message`."""
 		tones.beep(250, 100)
 		self.receivingBraille = self._oldReceivingBraille
 		self._showingLocalUiMessage = False
