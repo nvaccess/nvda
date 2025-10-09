@@ -311,6 +311,12 @@ class LocalMachine:
 		self.receivingBraille = self._oldReceivingBraille
 		self.display(self._lastCells)
 
+	def _dismissLocalBrailleMessage(self) -> None:
+		"""Dismiss a local ``ui.message``, if one is being shown."""
+		if not self._showingLocalUiMessage:
+			return
+		braille.handler._dismissMessage()
+
 	def sendKey(
 		self,
 		vk_code: Optional[int] = None,
