@@ -145,7 +145,13 @@ def terminate():
 	louis.liblouis.lou_free()
 
 
-def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
+def translate(
+	tableList: list[str],
+	inbuf: str,
+	typeform: list[int] | None = None,
+	cursorPos: int | None = None,
+	mode: int = 0,
+) -> tuple[list[int], list[int], list[int], int | None]:
 	"""
 	Convenience wrapper for louis.translate that:
 	* returns a list of integers instead of a string with cells, and
