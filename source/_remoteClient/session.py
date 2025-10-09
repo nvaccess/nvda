@@ -621,12 +621,15 @@ class LeaderSession(RemoteSession):
 		from globalCommands import commands
 
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
-			if self.localMachine._showingLocalUiMessage and gesture.script in (
-				commands.script_braille_routeTo,
-				commands.script_braille_scrollBack,
-				commands.script_braille_scrollForward,
-			):
-				return True
+			if self.localMachine._showingLocalUiMessage:
+				if gesture.script in (
+					commands.script_braille_routeTo,
+					commands.script_braille_scrollBack,
+					commands.script_braille_scrollForward,
+				):
+					return True
+				else:
+					braille.handler._dismissMessage()
 			dict = {
 				key: gesture.__dict__[key]
 				for key in gesture.__dict__
