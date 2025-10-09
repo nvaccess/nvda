@@ -2,6 +2,9 @@
 
 ## 2026.1
 
+This release introduces on-device automatic image descriptions.
+You can now use `NVDA+Windows+,` to describe images you encounter.
+
 ### Important notes
 
 * This release breaks compatibility with existing add-ons.
@@ -9,14 +12,22 @@
 Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
+Windows 10 on ARM is also no longer supported.
 
 ### New Features
+
+* Automated Image Descriptions:
+  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @tianzeshi-study)
+  * This is generated locally on the device - no information is sent to the internet.
+  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
+  * Another new unassigned command is available to toggle image captioning. (#18475)
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+* Spelling errors can be reported in braille. (#7608, @nvdaes)
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
@@ -26,13 +37,16 @@ An action has been added to view the full scan results on the VirusTotal website
 * NVDA no longer supports Windows 8.1.
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
+* NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
+* When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
 * Component updates:
   * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille.
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
+  * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 
 ### Bug Fixes
 
@@ -54,9 +68,14 @@ Add-ons will need to be re-tested and have their manifest updated.
   * The changelog should document changes between previous and latest add-on versions, and can be formatted in markdown.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
+  * Updated sphinx to 8.1.3. (#18475)
+  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
+  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
+* In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
+
 
 #### API Breaking Changes
 
@@ -170,7 +189,13 @@ Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 
 ## 2025.3.1
 
-This is a patch release to fix a bug.
+This is a patch release to fix a security issue and a bug.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-vr27-g5ph-xvq2](https://github.com/nvaccess/nvda/security/advisories/GHSA-vr27-g5ph-xvq2))
 
 ### Bug Fixes
 
@@ -243,7 +268,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated comtypes to 1.4.11. (#18611)
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
-  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+  * Updated detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
+  * Updated SCons to 4.10.0. (#19016, @LeonarddeR)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
