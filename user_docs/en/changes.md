@@ -79,8 +79,6 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 
 
-#### API Breaking Changes
-
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
