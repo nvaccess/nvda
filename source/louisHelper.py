@@ -97,7 +97,9 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:
 	# Terminate the list of paths
 	paths.append(None)
 	if _isDebug():
-		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
+		log.debug(
+			f"Storing paths in a null terminated array of length {len(paths)} with null terminated strings",
+		)
 	# Keeping a reference to the last returned value to ensure the returned
 	# value is not GC'ed before it is copied on liblouis' side.
 	_resolveTable._lastRes = arr = (c_char_p * len(paths))(*paths)
