@@ -8,6 +8,7 @@
 
 import unittest
 import brailleTables
+import louis
 import louisHelper
 import os.path
 
@@ -37,9 +38,25 @@ class TestTranslate(unittest.TestCase):
 	"""Ensures that all tables can be used for translation."""
 
 	def test_translate(self):
+		"""Tests whether all tables can be used for translation."""
 		tables = brailleTables.listTables()
 		for table in tables:
 			if not table.output:
 				continue
 			with self.subTest(table=table.fileName):
-				louisHelper.translate([table.fileName, "braille-patterns.cti"], "test")
+				try:
+					louisHelper.translate([table.fileName, "braille-patterns.cti"], "test")
+				except Exception as e:
+					self.fail(f"Translation failed for {table.displayName}: {e}")
+
+	def test_backtranslate(self):
+		"""Tests whether all tables can be used for back-translation."""
+		tables = brailleTables.listTables()
+		for table in tables:
+			if not table.input:
+				continue
+			with self.subTest(table=table.fileName):
+				try:
+					louis.backTranslate([table.fileName, "braille-patterns.cti"], "⠞⠑⠎⠞")
+				except Exception as e:
+					self.fail(f"Back-translation failed for {table.displayName}: {e}")

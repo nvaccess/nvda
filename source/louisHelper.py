@@ -94,6 +94,8 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:
 	except LookupError:
 		log.exception()
 		return None
+	# Terminate the list of paths
+	paths.append(None)
 	if _isDebug():
 		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
 	# Keeping a reference to the last returned value to ensure the returned
