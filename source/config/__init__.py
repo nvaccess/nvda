@@ -318,10 +318,10 @@ def setSystemConfigToCurrentConfig():
 			raise RuntimeError("Slave failure")
 
 
-def _setSystemConfig(fromPath):
+def _setSystemConfig(fromPath, *, prefix=sys.prefix):
 	import installer
 
-	toPath = os.path.join(sys.prefix, "systemConfig")
+	toPath = os.path.join(prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
