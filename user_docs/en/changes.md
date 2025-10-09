@@ -56,7 +56,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
-* Fixed bug when trying to access the Add-on Store from certain environments such as corporates. (#18354)
+* Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
 
 ### Changes for Developers
 
