@@ -29,9 +29,9 @@ if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
 	raise RuntimeError("updates managed by Windows Store")
-import versionInfo
+import buildVersion
 
-if not versionInfo.updateVersionType:
+if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
@@ -48,9 +48,6 @@ import pickle
 import urllib.request
 import urllib.parse
 import hashlib
-import ctypes.wintypes
-import requests
-import ssl
 import wx
 import languageHandler
 
@@ -68,8 +65,16 @@ from addonStore.models.version import (  # noqa: E402
 import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
 import winKernel
+from utils.networking import _fetchUrlAndUpdateRootCertificates
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from dataclasses import dataclass
+from utils import _deprecate
+
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol("CERT_USAGE_MATCH", "winBindings.crypt32"),
+	_deprecate.MovedSymbol("CERT_CHAIN_PARA", "winBindings.crypt32"),
+	_deprecate.MovedSymbol("UPDATE_FETCH_TIMEOUT_S", "utils.networking", "_FETCH_TIMEOUT_S"),
+)
 
 
 #: The URL to use for update checks.
@@ -176,9 +181,6 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
-UPDATE_FETCH_TIMEOUT_S = 30  # seconds
-
-
 def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -201,14 +203,14 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
-		"version": versionInfo.version,
-		"versionType": versionInfo.updateVersionType,
+		"version": buildVersion.version,
+		"versionType": buildVersion.updateVersionType,
 		"osVersion": winVersionText,
 		# Check if the architecture is the most common: "AMD64"
-		# Available values of PROCESSOR_ARCHITEW6432 found in:
+		# Available values of PROCESSOR_ARCHITECTURE found in:
 		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
-		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
-		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
+		"x64": os.environ["PROCESSOR_ARCHITECTURE"] == "AMD64",
+		"osArchitecture": os.environ["PROCESSOR_ARCHITECTURE"],
 	}
 
 	if auto and allowUsageStats:
@@ -230,28 +232,17 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		}
 		params.update(extraParams)
 
-	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
-	try:
-		log.debug(f"Fetching update data from {url}")
-		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-	except IOError as e:
-		if (
-			isinstance(e.reason, ssl.SSLCertVerificationError)
-			and e.reason.reason == "CERTIFICATE_VERIFY_FAILED"
-		):
-			# #4803: Windows fetches trusted root certificates on demand.
-			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
-			_updateWindowsRootCertificates()
-			# Retry the update check
-			log.debug(f"Retrying update check from {url}")
-			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-		else:
-			raise
+	result = _fetchUrlAndUpdateRootCertificates(
+		url=f"{_getCheckURL()}?{urllib.parse.urlencode(params)}",
+		# We must specify versionType so the server doesn't return a 404 error and
+		# thus cause an exception.
+		certFetchUrl=f"{_getCheckURL()}?versionType=stable",
+	)
 
-	if res.code != 200:
-		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
+	if result.status_code != 200:
+		raise RuntimeError(f"Checking for update failed with HTTP status code {result.status_code}.")
 
-	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
+	data = result.content.decode("utf-8")  # Ensure the response is decoded correctly
 	# if data is empty, we return None, because the server returns an empty response if there is no update.
 	if not data:
 		return None
@@ -1050,7 +1041,7 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == buildVersion.version:
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:
@@ -1075,68 +1066,3 @@ def terminate():
 	if autoChecker:
 		autoChecker.terminate()
 		autoChecker = None
-
-
-# These structs are only complete enough to achieve what we need.
-class CERT_USAGE_MATCH(ctypes.Structure):
-	_fields_ = (
-		("dwType", ctypes.wintypes.DWORD),
-		# CERT_ENHKEY_USAGE struct
-		("cUsageIdentifier", ctypes.wintypes.DWORD),
-		("rgpszUsageIdentifier", ctypes.c_void_p),  # LPSTR *
-	)
-
-
-class CERT_CHAIN_PARA(ctypes.Structure):
-	_fields_ = (
-		("cbSize", ctypes.wintypes.DWORD),
-		("RequestedUsage", CERT_USAGE_MATCH),
-		("RequestedIssuancePolicy", CERT_USAGE_MATCH),
-		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
-		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
-		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
-		("pftCacheResync", ctypes.c_void_p),  # LPFILETIME
-		("pStrongSignPara", ctypes.c_void_p),  # PCCERT_STRONG_SIGN_PARA
-		("dwStrongSignFlags", ctypes.wintypes.DWORD),
-	)
-
-
-def _updateWindowsRootCertificates():
-	log.debug("Updating Windows root certificates")
-	crypt = ctypes.windll.crypt32
-	with requests.get(
-		# We must specify versionType so the server doesn't return a 404 error and
-		# thus cause an exception.
-		f"{_getCheckURL()}?versionType=stable",
-		timeout=UPDATE_FETCH_TIMEOUT_S,
-		# Use an unverified connection to avoid a certificate error.
-		verify=False,
-		stream=True,
-	) as response:
-		# Get the server certificate.
-		cert = response.raw.connection.sock.getpeercert(True)
-	# Convert to a form usable by Windows.
-	certCont = crypt.CertCreateCertificateContext(
-		0x00000001,  # X509_ASN_ENCODING
-		cert,
-		len(cert),
-	)
-	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
-	chainCont = ctypes.c_void_p()
-	crypt.CertGetCertificateChain(
-		None,
-		certCont,
-		None,
-		None,
-		ctypes.byref(
-			CERT_CHAIN_PARA(
-				cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
-				RequestedUsage=CERT_USAGE_MATCH(),
-			),
-		),
-		0,
-		None,
-		ctypes.byref(chainCont),
-	)
-	crypt.CertFreeCertificateChain(chainCont)
-	crypt.CertFreeCertificateContext(certCont)

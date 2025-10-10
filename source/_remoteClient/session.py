@@ -617,7 +617,16 @@ class LeaderSession(RemoteSession):
 		:return: False if gesture was processed and sent, True otherwise
 		:note: Extracts gesture details and script info before sending
 		"""
+		# Import late to avoid circular import
+		from globalCommands import commands
+
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+			if self.localMachine._showingLocalUiMessage and gesture.script in (
+				commands.script_braille_routeTo,
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
+			):
+				return True
 			dict = {
 				key: gesture.__dict__[key]
 				for key in gesture.__dict__
@@ -658,6 +667,7 @@ class LeaderSession(RemoteSession):
 				dict["space"] = gesture.space
 			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
 				dict["routingIndex"] = gesture.routingIndex
+			self.localMachine._dismissLocalBrailleMessage()
 			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False
 		else:

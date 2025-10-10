@@ -1,15 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023-2024 NV Access Limited
+# Copyright (C) 2023-2025 NV Access Limited
 
 
 from __future__ import annotations
 from typing import (
 	Type,
-	Any,
 	Self,
-	ParamSpec,
 	Iterable,
 	Generic,
 	TypeVar,
@@ -38,11 +36,6 @@ from ..remoteFuncWrapper import (
 	remoteMethod_mutable,
 )
 from .. import operation
-
-
-_remoteFunc_self = TypeVar("_remoteFunc_self", bound=builder._RemoteBase)
-_remoteFunc_paramSpec = ParamSpec("_remoteFunc_paramSpec")
-_remoteFunc_return = TypeVar("_remoteFunc_return")
 
 
 LocalTypeVar = TypeVar("LocalTypeVar")

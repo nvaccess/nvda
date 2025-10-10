@@ -5,7 +5,6 @@
 
 """Unit tests for braille display drivers."""
 
-import sys
 from brailleDisplayDrivers import seikantk
 import unittest
 import braille
@@ -182,10 +181,6 @@ class TestGestureMap(unittest.TestCase):
 class TestBRLTTY(unittest.TestCase):
 	"""Tests the integrity of the bundled brlapi module."""
 
-	@unittest.skipUnless(
-		sys.version_info.major == 3 and sys.version_info.minor == 11,
-		"Skipping brlapi tests unless Python 3.11",
-	)
 	def test_brlapi(self):
 		try:
 			# SUpress Flake8 F401 imported but unused, as we're testing the import
