@@ -219,14 +219,14 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
 		nHours = systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR
 		nMinutes = (systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
-		
+
 		# Skip if both hours and minutes are zero
 		if nHours == 0 and nMinutes == 0:
 			return text
-		
+
 		hourText = ""
 		minuteText = ""
-		
+
 		# Handle hours - only if greater than 0
 		if nHours > 0:
 			hourText = ngettext(
@@ -236,7 +236,7 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 				"{hours:d} hours",
 				nHours,
 			).format(hours=nHours)
-		
+
 		# Handle minutes - only if greater than 0
 		if nMinutes > 0:
 			minuteText = ngettext(
@@ -246,7 +246,7 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 				"{minutes:d} minutes",
 				nMinutes,
 			).format(minutes=nMinutes)
-		
+
 		# Combine hours and minutes appropriately
 		if hourText and minuteText:
 			text.append(
