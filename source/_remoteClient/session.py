@@ -590,16 +590,17 @@ class LeaderSession(RemoteSession):
 	def sendBrailleInfo(
 		self,
 		display: braille.BrailleDisplayDriver | None = None,
-		displaySize: int | None = None,
+		displayDimensions: braille.DisplayDimensions | None = None,
 	) -> None:
 		if display is None:
 			display = braille.handler.display
-		if displaySize is None:
-			displaySize = braille.handler.displaySize
+		if displayDimensions is None:
+			displayDimensions = braille.handler.displayDimensions
+		displaySize = displayDimensions.numCols
 		log.debug(
-			"Sending braille info to follower - display: %s, size: %d",
+			"Sending braille info to follower - display: %s, width: %d",
 			display.name if display else "None",
-			displaySize if displaySize else 0,
+			displaySize,
 		)
 		self.transport.send(
 			type=RemoteMessageType.SET_BRAILLE_INFO,

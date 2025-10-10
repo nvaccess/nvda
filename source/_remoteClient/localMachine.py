@@ -238,9 +238,9 @@ class LocalMachine:
 		if (
 			self.receivingBraille
 			and braille.handler.displaySize > 0
-			and len(cells) <= braille.handler.displaySize
+			and len(cells) <= braille.handler.displayDimensions.numCols
 		):
-			cells = cells + [0] * (braille.handler.displaySize - len(cells))
+			cells = cells + [0] * (braille.handler.displayDimensions.numCols - len(cells))
 			# Cache these cells in case we need them later
 			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
