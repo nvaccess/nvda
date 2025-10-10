@@ -94,14 +94,14 @@ In this case the translation period will need to be extended by an appropriate a
 * For most items, an issue will be filed and discussed before a pull request is submitted.
 * If priority should be given to an issue for inclusion in a specific release, its milestone should be set to the appropriate release milestone (e.g. 2014.4).
 * Once a pull request is squash merged to the master branch, the milestone for the pull request should be set to the next release milestone (e.g. 2013.2) and any associated issue should be closed as fixed.
-* Issues/pull requests for bug fixes for an rc or beta should have their milestone set to the relevant release (e.g. 2013.2).
+* Issues/pull requests for bug fixes for an rc or beta should have their milestone manually set to the relevant release (e.g. 2013.2).
 
 ### Scheduled Releases
 
 * In the past NVDA has been released around 4 times per year.
 This is not expected to change drastically.
-* The exact date for each release will be determined by the lead developers.
-NVDA releases occur when a stable commit is ready on a frequency based schedule of roughly 2-3 months, rather than targetting calendar dates for release timings.
+* NVDA releases occur when a stable commit is ready on a frequency based schedule of roughly 2-3 months, rather than targeting calendar dates
+You can use the [release workflow](#release-workflow) schedule to estimate when the next release will come out.
 * 202X.1 releases may take slightly longer than other releases due to managing API breaking changes.
 
 ### Patch Release
