@@ -14,7 +14,6 @@ from typing import (
 import warnings
 
 import wx
-from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
 
 import config
