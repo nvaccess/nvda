@@ -18,7 +18,6 @@ from typing import (
 	Tuple,
 )
 from uuid import uuid4
-from winBindings import crypt32
 
 import garbageHandler
 import globalVars
@@ -49,9 +48,6 @@ import pickle
 import urllib.request
 import urllib.parse
 import hashlib
-import ctypes.wintypes
-import requests
-import ssl
 import wx
 import languageHandler
 
@@ -69,14 +65,15 @@ from addonStore.models.version import (  # noqa: E402
 import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
 import winKernel
+from utils.networking import _fetchUrlAndUpdateRootCertificates
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from dataclasses import dataclass
-
 from utils import _deprecate
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("CERT_USAGE_MATCH", "winBindings.crypt32"),
 	_deprecate.MovedSymbol("CERT_CHAIN_PARA", "winBindings.crypt32"),
+	_deprecate.MovedSymbol("UPDATE_FETCH_TIMEOUT_S", "utils.networking", "_FETCH_TIMEOUT_S"),
 )
 
 
@@ -184,9 +181,6 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
-UPDATE_FETCH_TIMEOUT_S = 30  # seconds
-
-
 def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -238,28 +232,17 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		}
 		params.update(extraParams)
 
-	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
-	try:
-		log.debug(f"Fetching update data from {url}")
-		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-	except IOError as e:
-		if (
-			isinstance(e.reason, ssl.SSLCertVerificationError)
-			and e.reason.reason == "CERTIFICATE_VERIFY_FAILED"
-		):
-			# #4803: Windows fetches trusted root certificates on demand.
-			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
-			_updateWindowsRootCertificates()
-			# Retry the update check
-			log.debug(f"Retrying update check from {url}")
-			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-		else:
-			raise
+	result = _fetchUrlAndUpdateRootCertificates(
+		url=f"{_getCheckURL()}?{urllib.parse.urlencode(params)}",
+		# We must specify versionType so the server doesn't return a 404 error and
+		# thus cause an exception.
+		certFetchUrl=f"{_getCheckURL()}?versionType=stable",
+	)
 
-	if res.code != 200:
-		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
+	if result.status_code != 200:
+		raise RuntimeError(f"Checking for update failed with HTTP status code {result.status_code}.")
 
-	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
+	data = result.content.decode("utf-8")  # Ensure the response is decoded correctly
 	# if data is empty, we return None, because the server returns an empty response if there is no update.
 	if not data:
 		return None
@@ -1083,43 +1066,3 @@ def terminate():
 	if autoChecker:
 		autoChecker.terminate()
 		autoChecker = None
-
-
-def _updateWindowsRootCertificates():
-	log.debug("Updating Windows root certificates")
-	with requests.get(
-		# We must specify versionType so the server doesn't return a 404 error and
-		# thus cause an exception.
-		f"{_getCheckURL()}?versionType=stable",
-		timeout=UPDATE_FETCH_TIMEOUT_S,
-		# Use an unverified connection to avoid a certificate error.
-		verify=False,
-		stream=True,
-	) as response:
-		# Get the server certificate.
-		cert = response.raw.connection.sock.getpeercert(True)
-	# Convert to a form usable by Windows.
-	certCont = crypt32.CertCreateCertificateContext(
-		0x00000001,  # X509_ASN_ENCODING
-		cert,
-		len(cert),
-	)
-	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
-	chainCont = ctypes.c_void_p()
-	crypt32.CertGetCertificateChain(
-		None,
-		certCont,
-		None,
-		None,
-		ctypes.byref(
-			crypt32.CERT_CHAIN_PARA(
-				cbSize=ctypes.sizeof(crypt32.CERT_CHAIN_PARA),
-				RequestedUsage=crypt32.CERT_USAGE_MATCH(),
-			),
-		),
-		0,
-		None,
-		ctypes.byref(chainCont),
-	)
-	crypt32.CertFreeCertificateChain(chainCont)
-	crypt32.CertFreeCertificateContext(certCont)

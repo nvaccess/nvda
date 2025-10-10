@@ -57,6 +57,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
+* Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
 
 ### Changes for Developers
 
@@ -81,6 +82,8 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
+* NVDA now uses `truststore` to always use Windows root certificates, which injects to libraries like `requests`.
+Wrap code with `truststore.extract_from_ssl` and `truststore.inject_into_ssl` to disable this behavior where required. (#18528)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -181,6 +184,7 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `updateCheck.UPDATE_FETCH_TIMEOUT_S` is deprecated for removal without replacement. (#18354)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
