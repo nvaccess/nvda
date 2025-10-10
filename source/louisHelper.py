@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 """Helper module to ease communication to and from liblouis."""
 
@@ -94,8 +94,12 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:
 	except LookupError:
 		log.exception()
 		return None
+	# Terminate the list of paths
+	paths.append(None)
 	if _isDebug():
-		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
+		log.debug(
+			f"Storing paths in a null terminated array of length {len(paths)} with null terminated strings",
+		)
 	# Keeping a reference to the last returned value to ensure the returned
 	# value is not GC'ed before it is copied on liblouis' side.
 	_resolveTable._lastRes = arr = (c_char_p * len(paths))(*paths)
@@ -145,7 +149,13 @@ def terminate():
 	louis.liblouis.lou_free()
 
 
-def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
+def translate(
+	tableList: list[str],
+	inbuf: str,
+	typeform: list[int] | None = None,
+	cursorPos: int | None = None,
+	mode: int = 0,
+) -> tuple[list[int], list[int], list[int], int | None]:
 	"""
 	Convenience wrapper for louis.translate that:
 	* returns a list of integers instead of a string with cells, and
