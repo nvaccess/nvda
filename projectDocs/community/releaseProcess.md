@@ -44,7 +44,8 @@ The production of a release consists of the following:
 * Once a pull request has been reviewed and approved by at least one NV Access employee and all relevant build checks have passed, NV Access will squash merge the pull request into master.
 * If the merging of a pull request to `master` causes any build checks on `master` to fail, the pull request is reverted without question.
 This is however unlikely to be an issue as build checks on the pull request itself must have already passed.
-* If a merged pull request has been identified as causing a regression, new bug, or does not work as originally reported, the pull request may be reverted at the discretion of the lead developers. Reasons in favor of not reverting the pull request may be:
+* If a merged pull request has been identified as causing a regression, new bug, or does not work as originally reported, the pull request may be reverted at the discretion of the lead developers.
+Reasons in favor of not reverting the pull request may be:
   * The pull request was submitted by an active collaborator who is likely to follow up with a suitable pull request to address the issues.
   * The bug is trivial enough to be fixed by a collaborator.
   * Use the [PR revert template](../../.github/PULL_REQUEST_TEMPLATE/revert.md) when reverting.
@@ -92,12 +93,16 @@ In this case the translation period will need to be extended by an appropriate a
 
 * For most items, an issue will be filed and discussed before a pull request is submitted.
 * If priority should be given to an issue for inclusion in a specific release, its milestone should be set to the appropriate release milestone (e.g. 2014.4).
-* Once a pull request is squash merged to the master branch, the milestone for the issue (if any) and pull request should be set to the next release milestone (e.g. 2013.2) and it should be closed as fixed.
-* Issues/pull requests for bug fixes for an rc should have their milestone set to the relevant release (e.g. 2013.2).
+* Once a pull request is squash merged to the master branch, the milestone for the pull request should be set to the next release milestone (e.g. 2013.2) and any associated issue should be closed as fixed.
+* Issues/pull requests for bug fixes for an rc or beta should have their milestone set to the relevant release (e.g. 2013.2).
 
 ### Scheduled Releases
 
-* In the past NVDA has been released 4 times per year. This is not expected to change drastically. The exact date for each release will be determined by the lead developers.
+* In the past NVDA has been released around 4 times per year.
+This is not expected to change drastically.
+* The exact date for each release will be determined by the lead developers.
+NVDA releases occur when a stable commit is ready on a frequency based schedule of roughly 2-3 months, rather than targetting calendar dates for release timings.
+* 202X.1 releases may take slightly longer than other releases due to managing API breaking changes.
 
 ### Patch Release
 
