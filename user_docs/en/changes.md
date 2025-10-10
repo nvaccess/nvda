@@ -58,6 +58,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
+* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 
 ### Changes for Developers
 
