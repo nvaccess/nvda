@@ -269,22 +269,29 @@ class LocalMachine:
 		"""
 		self._cachedSizes = sizes
 
-	def handleFilterDisplaySize(self, value: int) -> int:
-		"""Filter the local display size based on remote display sizes.
+	def _handleFilterDisplayDimensions(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+		"""Filter the local display dimensions based on remote display dimensions.
 
-		Determines the optimal display size when sharing braille output by
-		finding the smallest positive size among local and remote displays.
+		Determines the optimal display dimensions when sharing braille output by
+		finding the smallest positive width among local and remote displays.
 
-		:param value: Local display size in cells
-		:return: The negotiated display size to use
+		.. note::
+			We can currently only support a single line of braille,
+			as sending display dimensions would require changing the Remote Access protocol.
+
+		:param value: Local display dimensions
+		:return: The negotiated display dimensions to use.
 		"""
 		if not self._cachedSizes:
-			return value
-		sizes = self._cachedSizes + [value]
+			# We cannot support multiline displays without breaking the Remote Access protocol,
+			# so always force numRows to 1.
+			return value._replace(numRows=1)
+		# There is no point storing the number of rows if we are always going to set it to 1.
+		sizes = self._cachedSizes + [value.numCols]
 		try:
-			return min(i for i in sizes if i > 0)
+			return braille.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
 		except ValueError:
-			return value
+			return value._replace(numRows=1)
 
 	def handleDecideEnabled(self) -> bool:
 		"""Determine if the local braille display should be enabled.

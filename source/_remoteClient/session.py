@@ -315,8 +315,8 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
-		braille.filter_displaySize.register(
-			self.localMachine.handleFilterDisplaySize,
+		braille.filter_displayDimensions.register(
+			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
 			RemoteMessageType.BRAILLE_INPUT,
