@@ -1254,7 +1254,7 @@ MathCAT supports the following navigation modes:
 Zooming in lets you explore the 2D notation in the same mode.
 Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 * Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
-Moves by words/characters. 
+Moves by words/characters.
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
 
@@ -3399,7 +3399,7 @@ However, that may not be given and only the language code is given, so NVDA need
 | . {.hideHeaderRow} | . |
 |---|---|
 | Decimal Separators | ".", "," |
-| Default            | "."      |  
+| Default            | "."      |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
