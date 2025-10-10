@@ -72,6 +72,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sphinx to 8.1.3. (#18475)
   * Introduced onnxruntime 1.22.1 for model inference. (#18475)
   * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Updated wxPython to 4.2.3. (#19080)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
@@ -105,6 +106,8 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
+* `gui.nvdaControls.TabbableScrolledPanel` has been removed.
+Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 
 #### Deprecations
 
