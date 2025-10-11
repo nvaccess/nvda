@@ -3272,9 +3272,6 @@ A start and end beep occur before and after reading an expression.
 | Options | None, Beep |
 | Default | None |
 
-###### Subject area to be used when it cannot be determined automatically {#MathSpeechSubjectArea}
-
-This was used in MathPlayer but not yet currently implemented in NVDA. Waiting on further discussion in the MathML group which might add this as a means of providing different default `intent` values.
 
 ###### Speech for chemical formulas {#MathSpeechForChemical}
 
