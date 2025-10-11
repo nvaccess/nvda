@@ -1261,41 +1261,41 @@ Otherwise, word and character navigation is the same.
 The following are key commands used to navigate math:
 
 <!-- KC:beginInclude -->
-| Shortcut | Description |
+| Name | Key |
 |---|---|
-| `leftArrow` | Move to previous |
-| `control+leftArrow` | Move to previous cell in a table, or previous digit if in columnar math. Note: `control+alt+leftArrow` can also be used. |
-| `shift+leftArrow` | Read previous |
-| `control+shift+leftArrow` | Describe previous |
-| `rightArrow` | Move to next |
-| `control+rightArrow` | Move to next cell in a table, or next digit if in columnar math. Note: `control+alt+rightArrow` can also be used. |
-| `shift+rightArrow` | Read next |
-| `control+shift+rightArrow` | Describe next |
-| `upArrow` | Zoom out |
-| `control+upArrow` | Move to cell above in a table, or digit above in columnar math. Note: `control+alt+upArrow` can also be used. |
-| `shift+upArrow` | Change Navigation Mode (Enhanced/Simple/Character) to larger |
-| `control+shift+upArrow` | Zoom out all the way |
-| `downArrow` | Zoom in |
-| `control+downArrow` | Move to cell below in a table, or digit below in columnar math. Note: `control+shift+downArrow` can also be used. |
-| `shift+downArrow` | Change Navigation Mode (Enhanced/Simple/Character) to smaller |
-| `control+shift+downArrow` | Zoom in all the way |
-| `enter` | Where am I |
-| `control+center` | Global Where am I |
-| 1 through 10 (0 is 10) | Jump to placemarker |
-| `control+1` through `control+0` | Set placemarker |
-| `shift+1` through `shift+0` | Read placemarker |
-| `control+shift+1` through `shift+0` | Describe placemarker |
-| `space` | Read current |
-| `control+space` | Read current cell |
-| `shift+space` | Toggle "speech mode" to Read or Rescribe |
-| `control+shift+space` | Describe current |
-| `home` | Move to start of expression |
-| `control+home` | Move to start of line |
-| `shift+home` | Move to start of column in table, or move to digit at top in columnar math |
-| `end` | Move to end of expression |
-| `control+end` | Move to end of line |
-| `shift+end` | Move to end of column in table, or move to digit at botton in columnar math |
-| `backspace` | Move back to last position |
+| Move to previous | `leftArrow` |
+| Move to previous cell in a table, or previous digit if in columnar math. Note: `control+alt+leftArrow` can also be used. | `control+leftArrow` |
+| Read previous | `shift+leftArrow` |
+| Describe previous | `control+shift+leftArrow` |
+| Move to next | `rightArrow` |
+| Move to next cell in a table, or next digit if in columnar math. Note: `control+alt+rightArrow` can also be used. | `control+rightArrow` |
+| Read next | `shift+rightArrow` |
+| Describe next | `control+shift+rightArrow` |
+| Zoom out | `upArrow` |
+| Move to cell above in a table, or digit above in columnar math. Note: `control+alt+upArrow` can also be used. | `control+upArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
+| Zoom out all the way | `control+shift+upArrow` |
+| Zoom in | `downArrow` |
+| Move to cell below in a table, or digit below in columnar math. Note: `control+shift+downArrow` can also be used. | `control+downArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
+| Zoom in all the way | `control+shift+downArrow` |
+| Where am I | `enter` |
+| Global Where am I | `control+center` |
+| Jump to placemarker | 1 through 10 (0 is 10) |
+| Set placemarker | `control+1` through `control+0` |
+| Read placemarker | `shift+1` through `shift+0` |
+| Describe placemarker | `control+shift+1` through `shift+0` |
+| Read current | `space` |
+| Read current cell | `control+space` |
+| Toggle "speech mode" to Read or Rescribe | `shift+space` |
+| Describe current | `control+shift+space` |
+| Move to start of expression | `home` |
+| Move to start of line | `control+home` |
+| Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
+| Move to end of expression | `end` |
+| Move to end of line | `control+end` |
+| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
 ## Typical Use
@@ -3224,8 +3224,10 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 A style of speech or coordinated philosophy about how to speak an expression.
 
-* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT. See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
-* SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b"); these are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT.
+See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+* SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
+These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 
 | . {.hideHeaderRow} | . |
 |---|---|
