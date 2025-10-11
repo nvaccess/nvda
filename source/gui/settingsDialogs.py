@@ -2855,17 +2855,6 @@ class MathSettingsPanel(SettingsPanel):
 			# Translators: label for combobox to specify a subject area (Geometry, Calculus, ...)
 			"Subject area to be used when it cannot be determined automatically",
 		)
-		# Translators: a generic (non-specific) math subject area
-		subjectAreaOptions: list[str] = [pgettext("math", "General")]
-		self.subjectAreaList = speechGroup.addLabeledControl(
-			subjectAreaText,
-			wx.Choice,
-			choices=subjectAreaOptions,
-		)
-		self.bindHelpEvent("MathSpeechSubjectArea", self.subjectAreaList)
-		self.subjectAreaList.SetSelection(
-			SpeechOptions.SubjectArea.value.index(config.conf["math"]["speech"]["subjectArea"]),
-		)
 
 		# Translators: label for combobox to specify how verbose/terse the speech should be
 		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
