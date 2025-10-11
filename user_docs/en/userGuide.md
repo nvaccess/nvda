@@ -3275,8 +3275,6 @@ A start and end beep occur before and after reading an expression.
 | Default | None |
 
 
-Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
-
 * SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
 * AsCompound: "Water"
 * Off: "H sub 2 O"
