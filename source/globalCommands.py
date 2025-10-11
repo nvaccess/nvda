@@ -5099,10 +5099,13 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.sendSAS()
 
 	@script(
-		# Translators: Description for the image caption script
-		description=pgettext("imageDesc", "Get an AI generated image description"),
+		description=pgettext(
+			# Translators: Description for the image caption script
+			"imageDesc",
+			"Get an AI-generated description of the visual content under the navigator object.",
+		),
 		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+windows+,",
+		gesture="kb:NVDA+windows+d",
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_runCaption(self, gesture: "inputCore.InputGesture"):
