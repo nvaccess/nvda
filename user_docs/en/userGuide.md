@@ -3206,7 +3206,7 @@ This controls whether certain notations are disambiguated or not in speech.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Blindness, Low Vision, Learning Disability |
+| Options | Blindness, Low Vision, Learning disabilities |
 | Default | Blindness |
 
 ###### Language {#MathSpeechLanguage}
