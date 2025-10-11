@@ -5099,8 +5099,8 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.sendSAS()
 
 	@script(
-		# Translators: Description for the image caption script
 		description=pgettext(
+			# Translators: Description for the image caption script
 			"imageDesc", "Get an AI-generated description of the visual content under the navigator object."
 		),
 		category=SCRCAT_IMAGE_DESC,
