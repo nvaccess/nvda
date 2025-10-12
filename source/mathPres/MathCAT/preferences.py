@@ -12,13 +12,14 @@ from logHandler import log
 from NVDAState import WritePaths
 from utils.displayString import DisplayStringStrEnum
 
-# Importing for translation support  
+# Importing for translation support
 try:
 	from languageHandler import pgettext
 except ImportError:
 	# Fallback for testing environments
 	def pgettext(context, message):
 		return message
+
 
 import libmathcat_py as libmathcat
 from .rulesUtils import getRulesFiles
@@ -28,7 +29,7 @@ class ImpairmentOption(DisplayStringStrEnum):
 	LEARNING_DISABILITY = "LearningDisability"
 	BLINDNESS = "Blindness"
 	LOW_VISION = "LowVision"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["ImpairmentOption", str]:
 		return {
@@ -47,7 +48,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	DOT = "."
 	COMMA = ","
 	CUSTOM = "Custom"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
@@ -67,7 +68,7 @@ class VerbosityOption(DisplayStringStrEnum):
 	TERSE = "Terse"
 	MEDIUM = "Medium"
 	VERBOSE = "Verbose"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["VerbosityOption", str]:
 		return {
@@ -83,7 +84,7 @@ class VerbosityOption(DisplayStringStrEnum):
 class ChemistryOption(DisplayStringStrEnum):
 	SPELL_OUT = "SpellOut"
 	OFF = "Off"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["ChemistryOption", str]:
 		return {
@@ -98,7 +99,7 @@ class NavModeOption(DisplayStringStrEnum):
 	ENHANCED = "Enhanced"
 	SIMPLE = "Simple"
 	CHARACTER = "Character"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["NavModeOption", str]:
 		return {
@@ -115,7 +116,7 @@ class NavVerbosityOption(DisplayStringStrEnum):
 	TERSE = "Terse"
 	MEDIUM = "Medium"
 	VERBOSE = "Verbose"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["NavVerbosityOption", str]:
 		return {
@@ -133,7 +134,7 @@ class CopyAsOption(DisplayStringStrEnum):
 	LATEX = "LaTeX"
 	ASCIIMATH = "ASCIIMath"
 	SPEECH = "Speech"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["CopyAsOption", str]:
 		return {
@@ -153,7 +154,7 @@ class BrailleNavHighlightOption(DisplayStringStrEnum):
 	FIRST_CHAR = "FirstChar"
 	ENDPOINTS = "EndPoints"
 	ALL = "All"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["BrailleNavHighlightOption", str]:
 		return {
@@ -337,9 +338,9 @@ class MathCATUserPreferences:
 		# Default value: Medium
 		# Valid values: Terse, Medium, Verbose
 		self._validate(
-			"Speech", 
-			"Verbosity", 
-			[option.value for option in VerbosityOption], 
+			"Speech",
+			"Verbosity",
+			[option.value for option in VerbosityOption],
 			VerbosityOption.MEDIUM.value,
 		)
 		# Speech.MathRate
@@ -366,9 +367,9 @@ class MathCATUserPreferences:
 		# Default value: SpellOut
 		# Valid values: SpellOut (H 2 O), AsCompound (Water), Off (H sub 2 O)
 		self._validate(
-			"Speech", 
-			"Chemistry", 
-			[option.value for option in ChemistryOption], 
+			"Speech",
+			"Chemistry",
+			[option.value for option in ChemistryOption],
 			ChemistryOption.SPELL_OUT.value,
 		)
 
@@ -378,9 +379,9 @@ class MathCATUserPreferences:
 		# Default value: Enhanced
 		# Valid values: Enhanced, Simple, Character
 		self._validate(
-			"Navigation", 
-			"NavMode", 
-			[option.value for option in NavModeOption], 
+			"Navigation",
+			"NavMode",
+			[option.value for option in NavModeOption],
 			NavModeOption.ENHANCED.value,
 		)
 		# Navigation.ResetNavMode
@@ -399,9 +400,9 @@ class MathCATUserPreferences:
 		# Default value: Medium
 		# Valid values: Terse, Medium, Verbose (words to say for nav command)
 		self._validate(
-			"Navigation", 
-			"NavVerbosity", 
-			[option.value for option in NavVerbosityOption], 
+			"Navigation",
+			"NavVerbosity",
+			[option.value for option in NavVerbosityOption],
 			NavVerbosityOption.MEDIUM.value,
 		)
 		# Navigation.AutoZoomOut
@@ -412,9 +413,9 @@ class MathCATUserPreferences:
 		# Default value: MathML
 		# Valid values: MathML, LaTeX, ASCIIMath, Speech
 		self._validate(
-			"Navigation", 
-			"CopyAs", 
-			[option.value for option in CopyAsOption], 
+			"Navigation",
+			"CopyAs",
+			[option.value for option in CopyAsOption],
 			CopyAsOption.MATHML.value,
 		)
 
