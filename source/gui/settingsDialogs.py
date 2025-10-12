@@ -2738,12 +2738,12 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: Select an impairment for MathCAT
 		impairmentText = pgettext("math", "Impairment")
 		self.impairmentOptions = [
-			# Translators: these are the categories of impairments that MathCAT supports
+			# Translators: category of impairment that MathCAT supports
 			# Translators: Learning disabilities includes dyslexia and ADHD
 			pgettext("math", "Learning disabilities"),
-			# Translators: target people who are blind
+			# Translators: category of impairment that MathCAT supports: people who are blind
 			pgettext("math", "Blindness"),
-			# Translators: target people who have low vision
+			# Translators: category of impairment that MathCAT supports: people who have low vision
 			pgettext("math", "Low vision"),
 		]
 		self.impairmentList = speechGroup.addLabeledControl(
