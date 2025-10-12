@@ -5100,8 +5100,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=pgettext(
-			# Translators: Description for the image caption script
 			"imageDesc",
+			# Translators: Description for the image caption script
 			"Get an AI-generated description of the visual content under the navigator object.",
 		),
 		category=SCRCAT_IMAGE_DESC,
