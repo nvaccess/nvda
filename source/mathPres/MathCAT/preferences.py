@@ -10,27 +10,165 @@ import config
 import yaml
 from logHandler import log
 from NVDAState import WritePaths
+from utils.displayString import DisplayStringStrEnum
+
+# Importing for translation support  
+try:
+	from languageHandler import pgettext
+except ImportError:
+	# Fallback for testing environments
+	def pgettext(context, message):
+		return message
 
 import libmathcat_py as libmathcat
 from .rulesUtils import getRulesFiles
 
 
-class SpeechOptions(Enum):
-	DecimalSeparator = ("Auto", ".", ",", "Custom")
-	Impairment = ("LearningDisability", "Blindness", "LowVision")
-	Verbosity = ("Terse", "Medium", "Verbose")
-	SubjectArea = ("General",)
-	Chemistry = ("SpellOut", "Off")
+class ImpairmentOption(DisplayStringStrEnum):
+	LEARNING_DISABILITY = "LearningDisability"
+	BLINDNESS = "Blindness"
+	LOW_VISION = "LowVision"
+	
+	@property
+	def _displayStringLabels(self) -> dict["ImpairmentOption", str]:
+		return {
+			# Translators: category of impairment that MathCAT supports
+			# Translators: Learning disabilities includes dyslexia and ADHD
+			self.LEARNING_DISABILITY: pgettext("math", "Learning disabilities"),
+			# Translators: category of impairment that MathCAT supports: people who are blind
+			self.BLINDNESS: pgettext("math", "Blindness"),
+			# Translators: category of impairment that MathCAT supports: people who have low vision
+			self.LOW_VISION: pgettext("math", "Low vision"),
+		}
 
 
-class NavigationOptions(Enum):
-	NavMode = ("Enhanced", "Simple", "Character")
-	NavVerbosity = ("Terse", "Medium", "Verbose")
-	CopyAs = ("MathML", "LaTeX", "ASCIIMath", "Speech")
+class DecimalSeparatorOption(DisplayStringStrEnum):
+	AUTO = "Auto"
+	DOT = "."
+	COMMA = ","
+	CUSTOM = "Custom"
+	
+	@property
+	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
+		return {
+			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
+			self.AUTO: pgettext("math", "Auto"),
+			# options for decimal separator -- use "."  (and use ", " for block separators)
+			self.DOT: ".",
+			# options for decimal separator -- use ","  (and use ". " for block separators)
+			self.COMMA: ",",
+			# Translators: options for decimal separator -- "Custom" = user sets it
+			#   Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
+			self.CUSTOM: pgettext("math", "Custom"),
+		}
 
 
-class BrailleOptions(Enum):
-	BrailleNavHighlight = ("Off", "FirstChar", "EndPoints", "All")
+class VerbosityOption(DisplayStringStrEnum):
+	TERSE = "Terse"
+	MEDIUM = "Medium"
+	VERBOSE = "Verbose"
+	
+	@property
+	def _displayStringLabels(self) -> dict["VerbosityOption", str]:
+		return {
+			# Translators: options for speech verbosity -- "terse" = use less words
+			self.TERSE: pgettext("math", "Terse"),
+			# Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
+			self.MEDIUM: pgettext("math", "Medium"),
+			# Translators: options for speech verbosity -- "verbose" = use more words
+			self.VERBOSE: pgettext("math", "Verbose"),
+		}
+
+
+class ChemistryOption(DisplayStringStrEnum):
+	SPELL_OUT = "SpellOut"
+	OFF = "Off"
+	
+	@property
+	def _displayStringLabels(self) -> dict["ChemistryOption", str]:
+		return {
+			# Translators: values for chemistry options with example speech in parenthesis
+			self.SPELL_OUT: pgettext("math", "Spell it out (H 2 O)"),
+			# Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
+			self.OFF: pgettext("math", "Off (H sub 2 O)"),
+		}
+
+
+class NavModeOption(DisplayStringStrEnum):
+	ENHANCED = "Enhanced"
+	SIMPLE = "Simple"
+	CHARACTER = "Character"
+	
+	@property
+	def _displayStringLabels(self) -> dict["NavModeOption", str]:
+		return {
+			# Translators: names of different modes of navigation. "Enhanced" mode understands math structure
+			self.ENHANCED: pgettext("math", "Enhanced"),
+			# Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
+			self.SIMPLE: pgettext("math", "Simple"),
+			# Translators: "Character" moves around by character, automatically moving into fractions, etc
+			self.CHARACTER: pgettext("math", "Character"),
+		}
+
+
+class NavVerbosityOption(DisplayStringStrEnum):
+	TERSE = "Terse"
+	MEDIUM = "Medium"
+	VERBOSE = "Verbose"
+	
+	@property
+	def _displayStringLabels(self) -> dict["NavVerbosityOption", str]:
+		return {
+			# Translators: options for navigation verbosity -- "terse" = use less words
+			self.TERSE: pgettext("math", "Terse"),
+			# Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
+			self.MEDIUM: pgettext("math", "Medium"),
+			# Translators: options for navigation verbosity -- "verbose" = use more words
+			self.VERBOSE: pgettext("math", "Verbose"),
+		}
+
+
+class CopyAsOption(DisplayStringStrEnum):
+	MATHML = "MathML"
+	LATEX = "LaTeX"
+	ASCIIMATH = "ASCIIMath"
+	SPEECH = "Speech"
+	
+	@property
+	def _displayStringLabels(self) -> dict["CopyAsOption", str]:
+		return {
+			# Translators: options for Copy expression to clipboard as -- "MathML"
+			self.MATHML: pgettext("math", "MathML"),
+			# Translators: options for Copy math to clipboard as -- "LaTeX"
+			self.LATEX: pgettext("math", "LaTeX"),
+			# Translators: options for Copy math to clipboard as -- "ASCIIMath"
+			self.ASCIIMATH: pgettext("math", "ASCIIMath"),
+			# Translators: options for Copy math to clipboard as -- speech text
+			self.SPEECH: pgettext("math", "Speech"),
+		}
+
+
+class BrailleNavHighlightOption(DisplayStringStrEnum):
+	OFF = "Off"
+	FIRST_CHAR = "FirstChar"
+	ENDPOINTS = "EndPoints"
+	ALL = "All"
+	
+	@property
+	def _displayStringLabels(self) -> dict["BrailleNavHighlightOption", str]:
+		return {
+			# Translators: Math option for using dots 7 and 8: don't highlight
+			self.OFF: pgettext("math", "Off"),
+			# Translators: Math option for using dots 7 and 8:
+			# only the first character of the current navigation node uses dots 7 & 8
+			self.FIRST_CHAR: pgettext("math", "First character"),
+			# Translators: Math option for using dots 7 and 8:
+			# only the first and last character of the current navigation node uses dots 7 & 8
+			self.ENDPOINTS: pgettext("math", "Endpoints"),
+			# Translators: Math option for using dots 7 and 8:
+			# all the characters for the current navigation node use dots 7 & 8
+			self.ALL: pgettext("math", "All"),
+		}
 
 
 # two constants to scale "PauseFactor"
@@ -188,8 +326,8 @@ class MathCATUserPreferences:
 		self._validate(
 			"Speech",
 			"Impairment",
-			["LearningDisability", "LowVision", "Blindness"],
-			"Blindness",
+			[option.value for option in ImpairmentOption],
+			ImpairmentOption.BLINDNESS.value,
 		)
 		# Speech.Language
 		# Default value: en
@@ -198,7 +336,12 @@ class MathCATUserPreferences:
 		# Speech.Verbosity
 		# Default value: Medium
 		# Valid values: Terse, Medium, Verbose
-		self._validate("Speech", "Verbosity", ["Terse", "Medium", "Verbose"], "Medium")
+		self._validate(
+			"Speech", 
+			"Verbosity", 
+			[option.value for option in VerbosityOption], 
+			VerbosityOption.MEDIUM.value,
+		)
 		# Speech.MathRate
 		# Default value: 100
 		# Valid values: integers in the interval [0, 200]; change from text speech rate (%)
@@ -222,14 +365,24 @@ class MathCATUserPreferences:
 		# Speech.Chemistry
 		# Default value: SpellOut
 		# Valid values: SpellOut (H 2 O), AsCompound (Water), Off (H sub 2 O)
-		self._validate("Speech", "Chemistry", ["SpellOut", "Off"], "SpellOut")
+		self._validate(
+			"Speech", 
+			"Chemistry", 
+			[option.value for option in ChemistryOption], 
+			ChemistryOption.SPELL_OUT.value,
+		)
 
 		# Navigation:
 
 		# Navigation.NavMode
 		# Default value: Enhanced
 		# Valid values: Enhanced, Simple, Character
-		self._validate("Navigation", "NavMode", ["Enhanced", "Simple", "Character"], "Enhanced")
+		self._validate(
+			"Navigation", 
+			"NavMode", 
+			[option.value for option in NavModeOption], 
+			NavModeOption.ENHANCED.value,
+		)
 		# Navigation.ResetNavMode
 		# Default value: false
 		# Valid values: true, false; remember previous value and use it
@@ -244,8 +397,13 @@ class MathCATUserPreferences:
 		self._validate("Navigation", "ResetOverview", [False, True], True)
 		# Navigation.NavVerbosity
 		# Default value: Medium
-		# Valid values: Terse, Medium, Full (words to say for nav command)
-		self._validate("Navigation", "NavVerbosity", ["Terse", "Medium", "Full"], "Medium")
+		# Valid values: Terse, Medium, Verbose (words to say for nav command)
+		self._validate(
+			"Navigation", 
+			"NavVerbosity", 
+			[option.value for option in NavVerbosityOption], 
+			NavVerbosityOption.MEDIUM.value,
+		)
 		# Navigation.AutoZoomOut
 		# Default value: true
 		# Valid values: true, false; Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
@@ -253,7 +411,12 @@ class MathCATUserPreferences:
 		# Navigation.CopyAs
 		# Default value: MathML
 		# Valid values: MathML, LaTeX, ASCIIMath, Speech
-		self._validate("Navigation", "CopyAs", ["MathML", "LaTeX", "ASCIIMath", "Speech"], "MathML")
+		self._validate(
+			"Navigation", 
+			"CopyAs", 
+			[option.value for option in CopyAsOption], 
+			CopyAsOption.MATHML.value,
+		)
 
 		# Braille
 
@@ -263,8 +426,8 @@ class MathCATUserPreferences:
 		self._validate(
 			"Braille",
 			"BrailleNavHighlight",
-			["Off", "FirstChar", "EndPoints", "All"],
-			"EndPoints",
+			[option.value for option in BrailleNavHighlightOption],
+			BrailleNavHighlightOption.ENDPOINTS.value,
 		)
 		# Braille.BrailleCode
 		# Default value: "Nemeth"

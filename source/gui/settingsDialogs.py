@@ -2717,12 +2717,31 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
+	def _getEnumIndexFromConfigValue(self, enumClass, configValue):
+		try:
+			return list(enumClass).index(enumClass(configValue))
+		except (ValueError, KeyError):
+			# If the config value is not found, default to the first option
+			return 0
+
+	def _getEnumValueFromSelection(self, enumClass, selectionIndex):
+		try:
+			return list(enumClass)[selectionIndex].value
+		except (IndexError, AttributeError):
+			# If the selection is invalid, return the first option's value
+			return list(enumClass)[0].value
+
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
 		from mathPres.MathCAT.preferences import (
-			SpeechOptions,
-			NavigationOptions,
-			BrailleOptions,
+			ImpairmentOption,
+			DecimalSeparatorOption,
+			VerbosityOption,
+			ChemistryOption,
+			NavModeOption,
+			NavVerbosityOption,
+			CopyAsOption,
+			BrailleNavHighlightOption,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2737,23 +2756,14 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: Select an impairment for MathCAT
 		impairmentText = pgettext("math", "Impairment")
-		self.impairmentOptions = [
-			# Translators: category of impairment that MathCAT supports
-			# Translators: Learning disabilities includes dyslexia and ADHD
-			pgettext("math", "Learning disabilities"),
-			# Translators: category of impairment that MathCAT supports: people who are blind
-			pgettext("math", "Blindness"),
-			# Translators: category of impairment that MathCAT supports: people who have low vision
-			pgettext("math", "Low vision"),
-		]
 		self.impairmentList = speechGroup.addLabeledControl(
 			impairmentText,
 			wx.Choice,
-			choices=self.impairmentOptions,
+			choices=[option.displayString for option in ImpairmentOption],
 		)
 		self.bindHelpEvent("MathSpeechImpairment", self.impairmentList)
 		self.impairmentList.SetSelection(
-			SpeechOptions.Impairment.value.index(config.conf["math"]["speech"]["impairment"]),
+			self._getEnumIndexFromConfigValue(ImpairmentOption, config.conf["math"]["speech"]["impairment"]),
 		)
 
 		# Translators: MathCAT language option
@@ -2770,25 +2780,14 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT decimal separator option.
 		decimalSeparatorText = pgettext("math", "Decimal separator for numbers:")
-		self.decimalSeparatorOptions = [
-			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-			pgettext("math", "Auto"),
-			# options for decimal separator -- use "."  (and use ", " for block separators)
-			("."),
-			# options for decimal separator -- use ","  (and use ". " for block separators)
-			(","),
-			# Translators: options for decimal separator -- "Custom" = user sets it
-			#   Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
-			pgettext("math", "Custom"),
-		]
 		self.decimalSeparatorList = speechGroup.addLabeledControl(
 			decimalSeparatorText,
 			wx.Choice,
-			choices=self.decimalSeparatorOptions,
+			choices=[option.displayString for option in DecimalSeparatorOption],
 		)
 		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
-			SpeechOptions.DecimalSeparator.value.index(config.conf["math"]["other"]["decimalSeparator"]),
+			self._getEnumIndexFromConfigValue(DecimalSeparatorOption, config.conf["math"]["other"]["decimalSeparator"]),
 		)
 
 		# Translators: Select a speech style.
@@ -2804,22 +2803,14 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT's verbosity setting
 		speechAmountText = pgettext("math", "Speech verbosity")
-		self.speechAmountOptions = [
-			# Translators: options for speech verbosity -- "terse" = use less words
-			pgettext("math", "Terse"),
-			# Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
-			pgettext("math", "Medium"),
-			# Translators: options for speech verbosity -- "verbose" = use more words
-			pgettext("math", "Verbose"),
-		]
 		self.speechAmountList = speechGroup.addLabeledControl(
 			speechAmountText,
 			wx.Choice,
-			choices=self.speechAmountOptions,
+			choices=[option.displayString for option in VerbosityOption],
 		)
 		self.bindHelpEvent("MathSpeechVerbosity", self.speechAmountList)
 		self.speechAmountList.SetSelection(
-			SpeechOptions.Verbosity.value.index(config.conf["math"]["speech"]["verbosity"]),
+			self._getEnumIndexFromConfigValue(VerbosityOption, config.conf["math"]["speech"]["verbosity"]),
 		)
 
 		# Translators: MathCAT's relative speed setting
@@ -2858,22 +2849,15 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: label for combobox to specify how verbose/terse the speech should be
 		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
-		speechForChemicalOptions: list[str] = [
-			# Translators: values for chemistry options with example speech in parenthesis
-			pgettext("math", "Spell it out (H 2 O)"),
-			# Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
-			pgettext("math", "Off (H sub 2 O)"),
-		]
 		self.speechForChemicalList = speechGroup.addLabeledControl(
 			speechForChemicalText,
 			wx.Choice,
-			choices=speechForChemicalOptions,
+			choices=[option.displayString for option in ChemistryOption],
 		)
 		self.bindHelpEvent("MathSpeechForChemical", self.speechForChemicalList)
-		if config.conf["math"]["speech"]["chemistry"] == "Off":
-			self.speechForChemicalList.SetSelection(1)
-		else:
-			self.speechForChemicalList.SetSelection(0)
+		self.speechForChemicalList.SetSelection(
+			self._getEnumIndexFromConfigValue(ChemistryOption, config.conf["math"]["speech"]["chemistry"]),
+		)
 
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
@@ -2884,22 +2868,14 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: label for combobox to specify one of three modes use to navigate math expressions
 		navModeText = pgettext("math", "Navigation mode to use when beginning to navigate an equation")
-		self.navModeOptions: list[str] = [
-			# Translators: names of different modes of navigation. "Enhanced" mode understands math structure
-			pgettext("math", "Enhanced"),
-			# Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
-			pgettext("math", "Simple"),
-			# Translators: "Character" moves around by character, automatically moving into fractions, etc
-			pgettext("math", "Character"),
-		]
 		self.navModeList = speechGroup.addLabeledControl(
 			navModeText,
 			wx.Choice,
-			choices=self.navModeOptions,
+			choices=[option.displayString for option in NavModeOption],
 		)
 		self.bindHelpEvent("MathNavMode", self.navModeList)
 		self.navModeList.SetSelection(
-			NavigationOptions.NavMode.value.index(config.conf["math"]["navigation"]["navMode"]),
+			self._getEnumIndexFromConfigValue(NavModeOption, config.conf["math"]["navigation"]["navMode"]),
 		)
 
 		# Translators: label for combobox to specify whether the expression is spoken or described (an overview)
@@ -2936,48 +2912,29 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
 		navSpeechAmountText = pgettext("math", "Speech amount for navigation")
-		# Translators: options for navigation verbosity.
-		navSpeechAmountOptions: list[str] = [
-			# Translators: options for navigation verbosity -- "terse" = use less words
-			pgettext("math", "Terse"),
-			# Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
-			pgettext("math", "Medium"),
-			# Translators: options for navigation verbosity -- "verbose" = use more words
-			pgettext("math", "Verbose"),
-		]
 		self.navSpeechAmountList = navGroup.addLabeledControl(
 			navSpeechAmountText,
 			wx.Choice,
-			choices=navSpeechAmountOptions,
+			choices=[option.displayString for option in NavVerbosityOption],
 		)
 		self.bindHelpEvent(
 			"MathNavSpeechAmount",
 			self.navSpeechAmountList,
 		)
 		self.navSpeechAmountList.SetSelection(
-			NavigationOptions.NavVerbosity.value.index(config.conf["math"]["navigation"]["navVerbosity"]),
+			self._getEnumIndexFromConfigValue(NavVerbosityOption, config.conf["math"]["navigation"]["navVerbosity"]),
 		)
 
 		# Translators: label for combobox to specify how math will be copied to the clipboard
 		navCopyAsText = pgettext("math", "Copy math as")
-		navCopyAsOptions: list[str] = [
-			# Translators: options for Copy expression to clipboard as -- "MathML"
-			pgettext("math", "MathML"),
-			# Translators: options for Copy math to clipboard as -- "LaTeX"
-			pgettext("math", "LaTeX"),
-			# Translators: options for Copy math to clipboard as -- "ASCIIMath"
-			pgettext("math", "ASCIIMath"),
-			# Translators: options for Copy math to clipboard as -- speech text
-			pgettext("math", "Speech"),
-		]
 		self.navCopyAsList = navGroup.addLabeledControl(
 			navCopyAsText,
 			wx.Choice,
-			choices=navCopyAsOptions,
+			choices=[option.displayString for option in CopyAsOption],
 		)
 		self.bindHelpEvent("MathNavCopyAs", self.navCopyAsList)
 		self.navCopyAsList.SetSelection(
-			NavigationOptions.CopyAs.value.index(config.conf["math"]["navigation"]["copyAs"]),
+			self._getEnumIndexFromConfigValue(CopyAsOption, config.conf["math"]["navigation"]["copyAs"]),
 		)
 
 		# Translators: Text for the braille group.
@@ -2999,29 +2956,16 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
-		brailleHighlightsOptions: list[str] = [
-			# Translators: options for using dots 7 and 8:
-			# Translators: Math option for using dots 7 and 8: don't highlight
-			pgettext("math", "Off"),
-			# Translators: Math option for using dots 7 and 8:
-			# only the first character of the current navigation node uses dots 7 & 8
-			pgettext("math", "First character"),
-			# Translators: Math option for using dots 7 and 8:
-			# only the first and last character of the current navigation node uses dots 7 & 8
-			pgettext("math", "Endpoints"),
-			# Translators: Math option for using dots 7 and 8:
-			# all the characters for the current navigation node use dots 7 & 8
-			pgettext("math", "All"),
-		]
 		self.brailleHighlightsList = navGroup.addLabeledControl(
 			brailleHighlightsText,
 			wx.Choice,
-			choices=brailleHighlightsOptions,
+			choices=[option.displayString for option in BrailleNavHighlightOption],
 		)
 		self.bindHelpEvent("MathBrailleHighlights", self.brailleHighlightsList)
 		self.brailleHighlightsList.SetSelection(
-			BrailleOptions.BrailleNavHighlight.value.index(
-				config.conf["math"]["braille"]["brailleNavHighlight"],
+			self._getEnumIndexFromConfigValue(
+				BrailleNavHighlightOption,
+				config.conf["math"]["braille"]["brailleNavHighlight"]
 			),
 		)
 
@@ -3030,20 +2974,26 @@ class MathSettingsPanel(SettingsPanel):
 
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		from mathPres.MathCAT.preferences import (
-			SpeechOptions,
-			NavigationOptions,
-			BrailleOptions,
+			ImpairmentOption,
+			VerbosityOption,
+			DecimalSeparatorOption,
+			ChemistryOption,
+			NavModeOption,
+			NavVerbosityOption,
+			CopyAsOption,
+			BrailleNavHighlightOption,
 			PauseFactor,
 		)
 
 		mathConf = config.conf["math"]
-		mathConf["speech"]["impairment"] = SpeechOptions.Impairment.value[self.impairmentList.GetSelection()]
+		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(ImpairmentOption, self.impairmentList.GetSelection())
 		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
-		mathConf["other"]["decimalSeparator"] = SpeechOptions.DecimalSeparator.value[
+		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
+			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection()
-		]
+		)
 		mathConf["speech"]["speechStyle"] = self.speechStyleList.GetStringSelection()
-		mathConf["speech"]["verbosity"] = SpeechOptions.Verbosity.value[self.speechAmountList.GetSelection()]
+		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(VerbosityOption, self.speechAmountList.GetSelection())
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
@@ -3054,22 +3004,25 @@ class MathSettingsPanel(SettingsPanel):
 			mathConf["speech"]["speechSound"] = "Beep"
 		else:
 			mathConf["speech"]["speechSound"] = "None"
-		mathConf["speech"]["chemistry"] = SpeechOptions.Chemistry.value[
+		mathConf["speech"]["chemistry"] = self._getEnumValueFromSelection(
+			ChemistryOption,
 			self.speechForChemicalList.GetSelection()
-		]
-		mathConf["navigation"]["navMode"] = NavigationOptions.NavMode.value[self.navModeList.GetSelection()]
+		)
+		mathConf["navigation"]["navMode"] = self._getEnumValueFromSelection(NavModeOption, self.navModeList.GetSelection())
 		mathConf["navigation"]["resetNavMode"] = self.resetNavSpeechCheckBox.GetValue()
-		mathConf["navigation"]["navVerbosity"] = NavigationOptions.NavVerbosity.value[
+		mathConf["navigation"]["navVerbosity"] = self._getEnumValueFromSelection(
+			NavVerbosityOption,
 			self.navSpeechAmountList.GetSelection()
-		]
+		)
 		mathConf["navigation"]["overview"] = self.navSpeechList.GetSelection() != 0
 		mathConf["navigation"]["resetOverview"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["autoZoomOut"] = self.navAutoZoomCheckBox.GetValue()
-		mathConf["navigation"]["copyAs"] = NavigationOptions.CopyAs.value[self.navCopyAsList.GetSelection()]
+		mathConf["navigation"]["copyAs"] = self._getEnumValueFromSelection(CopyAsOption, self.navCopyAsList.GetSelection())
 
-		mathConf["braille"]["brailleNavHighlight"] = BrailleOptions.BrailleNavHighlight.value[
+		mathConf["braille"]["brailleNavHighlight"] = self._getEnumValueFromSelection(
+			BrailleNavHighlightOption,
 			self.brailleHighlightsList.GetSelection()
-		]
+		)
 		mathConf["braille"]["brailleCode"] = self.brailleMathCodeList.GetStringSelection()
 		mcPrefs: MathCATUserPreferences = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.save()
