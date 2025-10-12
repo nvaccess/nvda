@@ -3289,8 +3289,8 @@ This panel provides options to customize the behavior and default settings for t
 
 ##### Enable image captioner {#LocalCaptionToggle}
 
-When this checkbox is enabled, NVDA will enable automatic image descriptions.
-Loading the model may increase memory usage, so this is disabled by default.
+When this checkbox is enabled, NVDA will load the image captioner in memory, enabling the use of the image description command.
+Loading the image captioner may increase memory usage, so this is disabled by default.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
