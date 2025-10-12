@@ -106,10 +106,10 @@ class RemoteExecutionResult(ExecutionResult):
 	resultSet: lowLevel.RemoteOperationResultSet
 
 	def hasOperand(self, operandId: lowLevel.OperandId) -> bool:
-		return self.resultSet.hasOperand(operandId)
+		return self.resultSet.hasOperand(operandId.value)
 
 	def getOperand(self, operandId: lowLevel.OperandId) -> object:
-		return self.resultSet.getOperand(operandId)
+		return self.resultSet.getOperand(operandId.value)
 
 
 class RemoteExecutor(Executor):
@@ -121,15 +121,15 @@ class RemoteExecutor(Executor):
 		self._ro = lowLevel.RemoteOperation()
 
 	def importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
-		self._ro.importElement(operandId, element)
+		self._ro.importElement(operandId.value, element)
 		self._isConnectionBound = True
 
 	def importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
-		self._ro.importTextRange(operandId, textRange)
+		self._ro.importTextRange(operandId.value, textRange)
 		self._isConnectionBound = True
 
 	def addToResults(self, operandId: lowLevel.OperandId):
-		self._ro.addToResults(operandId)
+		self._ro.addToResults(operandId.value)
 
 	def loadInstructions(self, rob: builder.RemoteOperationBuilder):
 		self._byteCode = rob.getByteCode()

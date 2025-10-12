@@ -10,236 +10,230 @@ For full terms and any additional permissions, see the NVDA license file: https:
 #include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.ui.uiautomation.core.h>
 #include <atlcomcli.h>
+#include <common/log.h>
+#define PYBIND11_DETAILED_ERROR_MESSAGES
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
 
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::UI::UIAutomation;
 using namespace winrt::Windows::UI::UIAutomation::Core;
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_create(void** ppRemoteOp) {
-	*ppRemoteOp = winrt::detach_abi(CoreAutomationRemoteOperation());
-	return S_OK;
+inline py::object get_ctypes_POINTER_func() {
+	static py::module ctypes = py::module::import("ctypes");
+	static py::object ctypes_POINTER   = ctypes.attr("POINTER");
+	return ctypes_POINTER;
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_free(void* arg_pRemoteOp) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::attach_abi(operation, arg_pRemoteOp);
-	return S_OK;
+inline py::object get_comtypes_IUnknown_class() {
+	static py::module comtypes = py::module::import("comtypes");
+	static py::object comtypes_IUnknown = comtypes.attr("IUnknown");
+	static py::object ptr = get_ctypes_POINTER_func()(comtypes_IUnknown);
+	return ptr;
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_importElement(void* arg_pRemoteOp, int arg_registerID, IUIAutomationElement* arg_pElement) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::copy_from_abi(operation, arg_pRemoteOp);
-	if(!operation) {
-		return E_FAIL;
-	}
-	AutomationElement element {nullptr};
-	winrt::copy_from_abi(element, arg_pElement);
-	if(!element) {
-		return E_FAIL;
-	}
-	operation.ImportElement(AutomationRemoteOperationOperandId{arg_registerID}, element);
-	return S_OK;
+inline py::object get_comtypes_IUIAutomationElement_class() {
+	static py::module  UIAHandler = py::module::import("UIAHandler");
+	static py::object comtypes_IUIAutomationElement = UIAHandler.attr("IUIAutomationElement");
+	static py::object ptr = get_ctypes_POINTER_func()(comtypes_IUIAutomationElement);
+	return ptr;
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_importTextRange(void* arg_pRemoteOp, int arg_registerID, IUIAutomationTextRange* arg_pTextRange) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::copy_from_abi(operation, arg_pRemoteOp);
-	if(!operation) {
-		return E_FAIL;
-	}
-	AutomationTextRange textRange {nullptr};
-	winrt::copy_from_abi(textRange, arg_pTextRange);
-	if(!textRange) {
-		return E_FAIL;
-	}
-	operation.ImportTextRange(AutomationRemoteOperationOperandId{arg_registerID}, textRange);
-	return S_OK;
+inline py::object get_comtypes_IUIAutomationTextRange_class() {
+	static py::module  UIAHandler = py::module::import("UIAHandler");
+	static py::object comtypes_IUIAutomationTextRange = UIAHandler.attr("IUIAutomationTextRange");
+	static py::object ptr = get_ctypes_POINTER_func()(comtypes_IUIAutomationTextRange);
+	return ptr;
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_addToResults(void* arg_pRemoteOp, int arg_registerID) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::copy_from_abi(operation, arg_pRemoteOp);
-	if(!operation) {
-		return E_FAIL;
+inline void* getcomTypesIUnknownPointerAddress(const py::object& obj) {
+	if(!py::isinstance(obj, get_comtypes_IUnknown_class())) {
+		throw std::invalid_argument("Not a COM object");
 	}
-	operation.AddToResults(AutomationRemoteOperationOperandId{arg_registerID});
-	return S_OK;
+	std::size_t h = py::hash(obj);
+	if(h == 0) {
+		throw std::invalid_argument("Invalid COM object");
+	}
+	return reinterpret_cast<void*>(h);
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_isOpcodeSupported(void* arg_pRemoteOp, uint32_t arg_opcode, bool* pIsSupported) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::copy_from_abi(operation, arg_pRemoteOp);
-	if(!operation) {
-		return E_FAIL;
+inline py::object IInspectableToPythonObject(IInspectable const& insp) {
+	if(!insp) {
+		return py::none();
 	}
-	*pIsSupported = operation.IsOpcodeSupported(arg_opcode);
-	return S_OK;
-}
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOp_execute(void* arg_pRemoteOp, uint8_t arg_byteCodeBuffer[], int arg_byteCodeBufferLength, void** ppResults) {
-	CoreAutomationRemoteOperation operation {nullptr};
-	winrt::copy_from_abi(operation, arg_pRemoteOp);
-	if(!operation) {
-		return E_FAIL;
-	}
-	auto results = operation.Execute(winrt::array_view<uint8_t>(arg_byteCodeBuffer, arg_byteCodeBufferLength));
-	*ppResults = winrt::detach_abi(results);
-	return S_OK;
-}
-
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getErrorLocation(void* arg_pResults, int* pErrorLocation) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
-	}
-	*pErrorLocation = results.ErrorLocation();
-	return S_OK;
-}
-
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getExtendedError(void* arg_pResults, HRESULT* pExtendedError) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
-	}
-	*pExtendedError = results.ExtendedError();
-	return S_OK;
-}
-
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getStatus(void* arg_pResults, int* pStatus) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
-	}
-	auto status = results.Status();
-	*pStatus = static_cast<int>(status);
-	return S_OK;
-}
-
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_hasOperand(void* arg_pResults, int arg_registerID, bool* pHasOperand) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
-	}
-	*pHasOperand = results.HasOperand(AutomationRemoteOperationOperandId{arg_registerID});
-	return S_OK;
-}
-
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_free(void* arg_pResults) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::attach_abi(results, arg_pResults);
-	return S_OK;
-}
-
-HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, VARIANT* arg_pVariant) {
-	if(!result) {
-		// operand is NULL.
-		return S_OK;
-	}
-	auto propVal = result.try_as<IPropertyValue>();
-	if(propVal) {
-		// Unbox property value into VARIANT
-		auto propType = propVal.Type();
-		switch(propVal.Type()) {
+	// ───── Simple scalar PropertyValue ────────────────────────────────
+	auto pv = insp.try_as<IPropertyValue>();
+	if(pv) {
+		switch(pv.Type()) {
 			case PropertyType::Int32:
-				arg_pVariant->vt = VT_I4;
-				arg_pVariant->lVal = propVal.GetInt32();
-				break;
-			case PropertyType::UInt32:
-				arg_pVariant->vt = VT_UI4;
-				arg_pVariant->ulVal = propVal.GetUInt32();
-				break;
+			return py::int_(pv.GetInt32());
 			case PropertyType::Int64:
-				arg_pVariant->vt = VT_I8;
-				arg_pVariant->llVal = propVal.GetInt64();
-				break;
-			case PropertyType::Single:
-				arg_pVariant->vt = VT_R4;
-				arg_pVariant->fltVal = propVal.GetSingle();
-				break;
+			return py::int_(pv.GetInt64());
+			case PropertyType::UInt64:
+			return py::int_(static_cast<long long>(pv.GetUInt64()));
 			case PropertyType::Double:
-				arg_pVariant->vt = VT_R8;
-				arg_pVariant->dblVal = propVal.GetDouble();
-				break;
-			case PropertyType::String:
-				arg_pVariant->vt = VT_BSTR;
-				arg_pVariant->bstrVal = SysAllocString(propVal.GetString().c_str());
-				break;
+			return py::float_(pv.GetDouble());
+			case PropertyType::Single:
+			return py::float_(pv.GetSingle());
 			case PropertyType::Boolean:
-				arg_pVariant->vt = VT_BOOL;
-				arg_pVariant->boolVal = propVal.GetBoolean() ? VARIANT_TRUE : VARIANT_FALSE;
-				break;
-			case PropertyType::Inspectable:
-				arg_pVariant->vt = VT_UNKNOWN;
-				arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(propVal.as<winrt::Windows::Foundation::IUnknown>()));
-				break;
+			return py::bool_(pv.GetBoolean());
+			case PropertyType::String:
+			return py::str(winrt::to_string(pv.GetString()));
 			default:
-				return E_NOTIMPL;
+				throw py::value_error("Unsupported PropertyType");
 		}
-		return S_OK;
-	}
-	auto vec = result.try_as<winrt::Windows::Foundation::Collections::IVector<winrt::Windows::Foundation::IInspectable>>();
-	if(vec) {
-		// Unbox vector into VARIANT array.
-		auto vecSize = vec.Size();
-		arg_pVariant->vt = VT_ARRAY | VT_VARIANT;
-		arg_pVariant->parray = SafeArrayCreateVector(VT_VARIANT, 0, vecSize);
-		if(!arg_pVariant->parray) {
-			return E_OUTOFMEMORY;
-		}
-		for(ULONG i = 0; i < vecSize; i++) {
-			auto vecItem = vec.GetAt(i);
-			auto hr = IInspectableToVariant(vecItem, &static_cast<VARIANT*>(arg_pVariant->parray->pvData)[i]);
-			if(FAILED(hr)) {
-				return hr;
-			}
-		}
-		return S_OK;
-	}
-	auto stringMap = result.try_as<winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>>();
-	if(stringMap) {
-		// Create a scripting.Dictionary object from Windows script host, populate it with the map, and return it.
-		// This is a bit of a hack, but it works.
-		CComPtr<IDispatch> dictionary;
-		CLSID clsid_scripting_dictionary{};
-		HRESULT hr = CLSIDFromProgID(L"Scripting.Dictionary", &clsid_scripting_dictionary);
-		if(FAILED(hr)) {
-			return hr;
-		}
-		hr = CoCreateInstance(clsid_scripting_dictionary, nullptr, CLSCTX_INPROC_SERVER, IID_IDispatch, reinterpret_cast<void**>(&dictionary));
-		if (FAILED(hr)) {
-			return hr;
-		}
-		CComDispatchDriver dictionaryDriver(dictionary.p);
-		for(auto it = stringMap.First(); it.HasCurrent(); it.MoveNext()) {
-			CComVariant args[2];
-			IInspectableToVariant(it.Current().Value(), &args[0]);
-			args[1] = static_cast<PCWSTR>(it.Current().Key().c_str());
-			hr = dictionaryDriver.InvokeN(L"Add", args, 2, nullptr);
-			if(FAILED(hr)) {
-				return hr;
-			}
-		}
-		arg_pVariant->vt = VT_DISPATCH;
-		arg_pVariant->pdispVal = dictionary.Detach();
-		return S_OK;
 	}
 
-	// Just treat it as an IUnknown.
-	arg_pVariant->vt = VT_UNKNOWN;
-	arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(result.as<winrt::Windows::Foundation::IUnknown>()));
-	return S_OK;
+	// ───── Vector<IInspectable> ➜ list ───────────────────────────────
+	auto vec = insp.try_as<winrt::Windows::Foundation::Collections::IVector<winrt::Windows::Foundation::IInspectable>>();
+	if(vec) {
+		py::list out;
+		for(IInspectable const& item : vec) {
+			out.append(IInspectableToPythonObject(item));
+		}
+		return out;
+	}
+
+	// ───── Map<hstring,IInspectable> ➜ dict ──────────────────────────
+	auto stringMap = insp.try_as<winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>>();
+	if(stringMap) {
+		py::dict d;
+		for(auto it = stringMap.First(); it.HasCurrent(); it.MoveNext()) {
+			auto cur	= it.Current();
+			d[py::str(winrt::to_string(cur.Key()))] = IInspectableToPythonObject(cur.Value());
+		}
+		return d;
+	}
+
+	auto element = insp.try_as<IUIAutomationElement>();
+	if(element) {
+		IUIAutomationElement* pElement {nullptr};
+		element.copy_to(&pElement);
+		auto raw = reinterpret_cast<std::uintptr_t>(pElement);
+		return get_comtypes_IUIAutomationElement_class()(raw);
+	}
+
+	auto textRange = insp.try_as<IUIAutomationTextRange>();
+	if(textRange) {
+		IUIAutomationTextRange* pTextRange {nullptr};
+		textRange.copy_to(&pTextRange);
+		auto raw = reinterpret_cast<std::uintptr_t>(pTextRange);
+		return get_comtypes_IUIAutomationTextRange_class()(raw);
+	}
+
+	return py::none();
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getOperand(void* arg_pResults, int arg_registerID, VARIANT* arg_pVariant) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
+class RemoteOperationResult {
+	private:
+	AutomationRemoteOperationResult m_results {nullptr};
+
+	public:
+	RemoteOperationResult(AutomationRemoteOperationResult results) : m_results(results) {
+		if(!m_results) {
+			throw std::invalid_argument("Invalid AutomationRemoteOperationResult");
+		}
 	}
-	auto result = results.GetOperand(AutomationRemoteOperationOperandId{arg_registerID});
-	return IInspectableToVariant(result, arg_pVariant);
+
+	int getErrorLocation() {
+		return m_results.ErrorLocation();
+	}
+
+	HRESULT getExtendedError() {
+		return m_results.ExtendedError();
+	}
+
+	int getStatus() {
+		auto status = m_results.Status();
+		return static_cast<int>(status);
+	}
+
+	bool hasOperand(int arg_registerID) {
+		return m_results.HasOperand(AutomationRemoteOperationOperandId{arg_registerID});
+	}
+
+	py::object getOperand(int arg_registerID) {
+		auto operand = m_results.GetOperand(AutomationRemoteOperationOperandId{arg_registerID});
+		if(!operand) {
+			throw std::runtime_error("Invalid operand ID");
+		}
+		return IInspectableToPythonObject(operand);
+	}
+
+};
+
+
+class RemoteOperation {
+	private:
+		CoreAutomationRemoteOperation m_operation {CoreAutomationRemoteOperation()};
+
+	public:
+	RemoteOperation() = default;
+
+	void importElement(int arg_registerID, py::object arg_pElement) {
+		if(!py::isinstance(arg_pElement, get_comtypes_IUIAutomationElement_class())) {
+			throw std::invalid_argument("Not a valid AutomationElement");
+		}
+		AutomationElement element {nullptr};
+		winrt::copy_from_abi(element, getcomTypesIUnknownPointerAddress(arg_pElement));
+		if(!element) {
+			throw std::runtime_error("Invlid AutomationElement");
+		}
+		m_operation.ImportElement(AutomationRemoteOperationOperandId{arg_registerID}, element);
+	}
+
+	void importTextRange(int arg_registerID, py::object arg_pTextRange) {
+				if(!py::isinstance(arg_pTextRange, get_comtypes_IUIAutomationTextRange_class())) {
+			throw std::invalid_argument("Not a valid AutomationTextRange");
+		}
+		AutomationTextRange textRange {nullptr};
+		winrt::copy_from_abi(textRange, getcomTypesIUnknownPointerAddress(arg_pTextRange));
+		if(!textRange) {
+			throw std::runtime_error("Invalid AutomationTextRange");
+		}
+		m_operation.ImportTextRange(AutomationRemoteOperationOperandId{arg_registerID}, textRange);
+	}
+
+	void addToResults(int arg_registerID) {
+		m_operation.AddToResults(AutomationRemoteOperationOperandId{arg_registerID});
+	}
+
+	bool isOpcodeSupported(uint32_t arg_opcode) {
+		return m_operation.IsOpcodeSupported(arg_opcode);
+	}
+
+	RemoteOperationResult execute(py::bytes bytecode) {
+		std::string_view buf = bytecode;
+		auto results = m_operation.Execute(winrt::array_view<const std::uint8_t>(
+			reinterpret_cast<const std::uint8_t*>(buf.data()),
+			static_cast<uint32_t>(buf.size())
+		));
+		if(!results) {
+			throw std::runtime_error("Invalid AutomationRemoteOperationResult");
+		}
+		return RemoteOperationResult(results);
+	}
+
+};
+
+PYBIND11_MODULE(_lowLevel, m) {
+	m.doc() = "WinRT CoreAutomationRemoteOperation bridge for NVDA";
+
+	py::class_<RemoteOperationResult>(m, "RemoteOperationResult")
+		.def_property_readonly("errorLocation", &RemoteOperationResult::getErrorLocation)
+		.def_property_readonly("extendedError", &RemoteOperationResult::getExtendedError)
+		.def_property_readonly("status", &RemoteOperationResult::getStatus)
+		.def("hasOperand", &RemoteOperationResult::hasOperand)
+		.def("getOperand", &RemoteOperationResult::getOperand);
+
+	py::class_<RemoteOperation>(m, "RemoteOperation")
+		.def(py::init<>())
+		.def("importElement", &RemoteOperation::importElement)
+		.def("importTextRange", &RemoteOperation::importTextRange)
+		.def("addToResults", &RemoteOperation::addToResults)
+		.def("isOpcodeSupported", &RemoteOperation::isOpcodeSupported)
+		.def("execute", &RemoteOperation::execute,
+			py::arg("bytecode"));
 }

@@ -13,6 +13,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+import sysconfig
+import os
+
 Import(
 	[
 		"env",
@@ -20,8 +23,22 @@ Import(
 	],
 )
 
+
+py_version = sysconfig.get_python_version()
+py_base = sysconfig.get_config_var("installed_base")
+py_inc = os.path.join(py_base, "include")
+py_libpath = os.path.join(py_base, "libs")
+py_lib = f"python{py_version.replace('.', '')}"
+
+env = env.Clone()
+env.Append(CPPPATH=[
+	"#include/pybind11/include",
+	py_inc,
+])
+env.Append(LIBPATH=[py_libpath])
+
 UIARemoteLib = env.SharedLibrary(
-	target="UIARemote",
+	target="_lowLevel",
 	source=[
 		env["projectResFile"],
 		"lowLevel.cpp",
@@ -32,7 +49,9 @@ UIARemoteLib = env.SharedLibrary(
 		"oleaut32",
 		"ole32",
 		localLib[2],
+		py_lib,
 	],
+	SHLIBSUFFIX=".pyd",
 )
 
-Return("UIARemoteLib")
+Return('UIARemoteLib')

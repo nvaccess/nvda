@@ -628,36 +628,7 @@ class RemoteString(RemoteBaseObject[str]):
 		return copy
 
 
-class RemoteContainer(RemoteBaseObject):
-	_LOCAL_COM_INTERFACES = [
-		UIA.IUIAutomationElement,
-		UIA.IUIAutomationTextRange,
-	]
-
-	def _unpackVariant(self, item: object) -> object:
-		if isinstance(item, comtypes.client.lazybind.Dispatch):
-			# disp is a Scripting.Dictionary object
-			keys = item.keys()
-			values = [self._unpackVariant(value) for value in item.items()]
-			return {key: values[index] for index, key in enumerate(keys)}
-		if isinstance(item, IUnknown):
-			for interface in self._LOCAL_COM_INTERFACES:
-				try:
-					item = item.QueryInterface(interface)
-					break
-				except COMError:
-					pass
-		elif isinstance(item, tuple):
-			item = [self._unpackVariant(subItem) for subItem in item]
-		return item
-
-
-class RemoteArray(RemoteContainer):
-
-	@property
-	def localValue(self) -> list:
-		items = super().localValue
-		return [self._unpackVariant(item) for item in items]
+class RemoteArray(RemoteBaseObject):
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewArray(
@@ -720,11 +691,7 @@ class RemoteArray(RemoteContainer):
 		)
 
 
-class RemoteStringMap(RemoteContainer):
-
-	@property
-	def localValue(self) -> dict[str, Any]:
-		return cast(dict[str, Any], self._unpackVariant(super().localValue))
+class RemoteStringMap(RemoteBaseObject):
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewStringMap(

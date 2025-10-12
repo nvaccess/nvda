@@ -247,7 +247,7 @@ if isNVDAHelperLocalArch:
 	UIARemoteLib = env.SConscript("UIARemote/sconscript")
 	if signExec:
 		env.AddPostAction(UIARemoteLib[0], [signExec])
-	env.Install(libInstallDir, UIARemoteLib)
+	env.Install(sourceDir.Dir('UIAHandler/_remoteOps'), UIARemoteLib[0])
 
 clientLib = env.SConscript("client/sconscript")
 Export("clientLib")

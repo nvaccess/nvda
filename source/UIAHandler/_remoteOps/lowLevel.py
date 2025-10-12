@@ -17,7 +17,8 @@ from comtypes.automation import VARIANT
 import enum
 import NVDAState
 from UIAHandler import UIA
-
+from ._lowLevel import RemoteOperation
+from . import _lowLevel
 
 """
 This module contains classes and constants for the low-level Windows UI Automation Remote Operations API,
