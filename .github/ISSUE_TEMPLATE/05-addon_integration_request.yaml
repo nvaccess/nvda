@@ -1,5 +1,5 @@
 name: "Feature from Add-on"
-description: "Propose specific functionality from an existing community add-on for integration into NVDA's core."
+description: "Propose specific functionality from an existing community add-on for integration into NVDA."
 title: "[Feature from Add-on] <Briefly describe the functionality>"
 labels: ["enhancement", "add-on/integration"]
 
@@ -7,10 +7,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        This template is for proposing that a specific feature from an existing community add-on be integrated into NVDA's core.
+        This template is for proposing that a specific feature from an existing community add-on be integrated into NVDA.
         Please focus your request on a single, conceptually focused piece of functionality.
         Requests to "integrate this entire add-on" will be closed if the add-on provides many unrelated features.
         The goal is to identify functionality that is essential for the core user experience.
+        
+         Please read [our guide](https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md) on how to fill in this template, including how to provide the required files.
+        Issues may be closed if the required information is not present.
+
+        Please also note that the NVDA project has a [Citizen and Contributor Code of Conduct](https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md).
+        NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+        This includes creating or commenting on issues and pull requests.
 
   - type: textarea
     id: specific-feature
@@ -18,7 +25,7 @@ body:
       label: "Describe the specific functionality to be integrated"
       description: |
         Clearly and concisely describe the feature you are requesting.
-        If the add-on has multiple features, please list only the specific ones you believe are essential for inclusion in NVDA's core.
+        If the add-on has multiple features, please list only the specific ones you believe are essential for inclusion in NVDA.
       placeholder: "e.g. 'Add a hotkey to announce the title of the current tab in web browsers.'"
     validations:
       required: true
@@ -29,6 +36,7 @@ body:
       label: "What problem does this functionality solve?"
       description: |
         Help us understand the benefit of this feature for users.
+
         * What common user task becomes easier or possible with this feature?
         * Who is the primary target audience for this functionality (e.g. all users, developers, users of a specific application)?
         * How does this improve upon NVDA's existing behavior?
@@ -39,7 +47,7 @@ body:
   - type: textarea
     id: core-justification
     attributes:
-      label: "Why should this be in NVDA's core vs. remaining an add-on?"
+      label: "Why should this be in NVDA vs. remaining an add-on?"
       description: "Justify why this functionality is fundamental enough to be included in NVDA by default for all users, rather than being an optional installation."
       placeholder: "e.g., 'This functionality is critical for accessibility in application XYZ, which is widely used and shouldn't require users to find and install a separate add-on.'"
     validations:

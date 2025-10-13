@@ -1,6 +1,6 @@
 ---
 name: "(Advanced) Feature from Add-on"
-description: "Propose specific functionality from an existing community add-on for integration into NVDA's core."
+description: "Propose specific functionality from an existing community add-on for integration into NVDA."
 about: "Free text feature request template for those familiar with GitHub."
 type: enhancement
 labels: ["enhancement", "add-on/integration"]
@@ -10,7 +10,7 @@ labels: ["enhancement", "add-on/integration"]
 
 ### What problem does this functionality solve?
 
-### Why should this be in core vs. remaining an add-on?
+### Why should this be in NVDA vs. remaining an add-on?
 
 ### Source Add-on Information
 * **Name of the source add-on:**
