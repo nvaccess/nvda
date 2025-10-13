@@ -285,6 +285,8 @@ def getSpeechStyleConfigValue(displayString: str, languageCode: str) -> str:
 	for style in SpeechStyleOption:
 		if style.displayString == displayString:
 			return style.value
+
+
 class MathCATUserPreferences:
 	_prefs: PreferencesDict
 
