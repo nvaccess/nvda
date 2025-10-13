@@ -3942,7 +3942,7 @@ Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+d` t
 | Name |Key |Description|
 |---|---|---|
 | Get an AI-generated image description of the visual content under the navigator object. | `NVDA+Windows+d` | Recognize the image currently navigated by NVDA. |
-| Toggle image captioning | None | Enable or disable AI image descriptions. |
+| Load or unload the image captioner | None | Load or unload the image captioner in memory, enabling the use of the image description command. |
 | Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
 
 <!-- KC:endInclude -->
