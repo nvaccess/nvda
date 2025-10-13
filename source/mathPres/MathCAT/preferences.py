@@ -12,14 +12,6 @@ from logHandler import log
 from NVDAState import WritePaths
 from utils.displayString import DisplayStringStrEnum
 
-# Importing for translation support  
-try:
-	from languageHandler import pgettext
-except ImportError:
-	# Fallback for testing environments
-	def pgettext(context, message):
-		return message
-
 import libmathcat_py as libmathcat
 from .rulesUtils import getRulesFiles
 
@@ -28,7 +20,7 @@ class ImpairmentOption(DisplayStringStrEnum):
 	LEARNING_DISABILITY = "LearningDisability"
 	BLINDNESS = "Blindness"
 	LOW_VISION = "LowVision"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["ImpairmentOption", str]:
 		return {
@@ -47,7 +39,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	DOT = "."
 	COMMA = ","
 	CUSTOM = "Custom"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
@@ -67,7 +59,7 @@ class VerbosityOption(DisplayStringStrEnum):
 	TERSE = "Terse"
 	MEDIUM = "Medium"
 	VERBOSE = "Verbose"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["VerbosityOption", str]:
 		return {
@@ -83,7 +75,7 @@ class VerbosityOption(DisplayStringStrEnum):
 class ChemistryOption(DisplayStringStrEnum):
 	SPELL_OUT = "SpellOut"
 	OFF = "Off"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["ChemistryOption", str]:
 		return {
@@ -98,7 +90,7 @@ class NavModeOption(DisplayStringStrEnum):
 	ENHANCED = "Enhanced"
 	SIMPLE = "Simple"
 	CHARACTER = "Character"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["NavModeOption", str]:
 		return {
@@ -115,7 +107,7 @@ class NavVerbosityOption(DisplayStringStrEnum):
 	TERSE = "Terse"
 	MEDIUM = "Medium"
 	VERBOSE = "Verbose"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["NavVerbosityOption", str]:
 		return {
@@ -133,7 +125,7 @@ class CopyAsOption(DisplayStringStrEnum):
 	LATEX = "LaTeX"
 	ASCIIMATH = "ASCIIMath"
 	SPEECH = "Speech"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["CopyAsOption", str]:
 		return {
@@ -153,7 +145,7 @@ class BrailleNavHighlightOption(DisplayStringStrEnum):
 	FIRST_CHAR = "FirstChar"
 	ENDPOINTS = "EndPoints"
 	ALL = "All"
-	
+
 	@property
 	def _displayStringLabels(self) -> dict["BrailleNavHighlightOption", str]:
 		return {
@@ -168,6 +160,23 @@ class BrailleNavHighlightOption(DisplayStringStrEnum):
 			# Translators: Math option for using dots 7 and 8:
 			# all the characters for the current navigation node use dots 7 & 8
 			self.ALL: pgettext("math", "All"),
+		}
+
+
+class SpeechStyleOption(DisplayStringStrEnum):
+	CLEAR_SPEAK = "ClearSpeak"
+	SIMPLE_SPEAK = "SimpleSpeak"
+	LITERAL_SPEAK = "LiteralSpeak"
+
+	@property
+	def _displayStringLabels(self) -> dict["SpeechStyleOption", str]:
+		return {
+			# Translators: ClearSpeak is a speech style developed by ETS for use on high-stakes tests such as the SAT
+			self.CLEAR_SPEAK: pgettext("math", "ClearSpeak"),
+			# Translators: SimpleSpeak is a speech style that tries to minimize speech by speaking simple expressions without bracketing words
+			self.SIMPLE_SPEAK: pgettext("math", "SimpleSpeak"),
+			# Translators: LiteralSpeak is a speech style with no language-specific rules that reads math character by character
+			self.LITERAL_SPEAK: pgettext("math", "LiteralSpeak"),
 		}
 
 
@@ -235,6 +244,47 @@ def toNVDAConfigKey(key: str) -> str:
 type PreferencesDict = dict[str, dict[str, int | str | bool]]
 
 
+def getSpeechStyleChoicesWithTranslations(languageCode: str) -> list[str]:
+	"""Get speech style choices with translations for known styles.
+
+	This function gets the available speech styles from MathCAT's localization system
+	and provides translations for the core speech styles (ClearSpeak, SimpleSpeak, LiteralSpeak)
+	while keeping language-specific styles untranslated.
+
+	:param languageCode: The language code to get speech styles for
+	:return: List of speech style display strings (some translated, some original)
+	"""
+	from . import localization
+
+	rawStyles = localization.getSpeechStyles(languageCode)
+	displayChoices = []
+
+	knownStyleValues = [style.value for style in SpeechStyleOption]
+
+	for style in rawStyles:
+		if style in knownStyleValues:
+			# Get translated version for known styles
+			enumOption = SpeechStyleOption(style)
+			displayChoices.append(enumOption.displayString)
+		else:
+			# Unknown style, use original name as fallback
+			displayChoices.append(style)
+
+	return displayChoices
+
+
+def getSpeechStyleConfigValue(displayString: str, languageCode: str) -> str:
+	"""
+	Convert a display string back to its config value.
+
+	:param displayString: The display string from the UI selection
+	:param languageCode: The current language code
+	:return: The config value to save for this speech style
+	"""
+	# Try to find matching enum first
+	for style in SpeechStyleOption:
+		if style.displayString == displayString:
+			return style.value
 class MathCATUserPreferences:
 	_prefs: PreferencesDict
 
@@ -337,9 +387,9 @@ class MathCATUserPreferences:
 		# Default value: Medium
 		# Valid values: Terse, Medium, Verbose
 		self._validate(
-			"Speech", 
-			"Verbosity", 
-			[option.value for option in VerbosityOption], 
+			"Speech",
+			"Verbosity",
+			[option.value for option in VerbosityOption],
 			VerbosityOption.MEDIUM.value,
 		)
 		# Speech.MathRate
@@ -366,9 +416,9 @@ class MathCATUserPreferences:
 		# Default value: SpellOut
 		# Valid values: SpellOut (H 2 O), AsCompound (Water), Off (H sub 2 O)
 		self._validate(
-			"Speech", 
-			"Chemistry", 
-			[option.value for option in ChemistryOption], 
+			"Speech",
+			"Chemistry",
+			[option.value for option in ChemistryOption],
 			ChemistryOption.SPELL_OUT.value,
 		)
 
@@ -378,9 +428,9 @@ class MathCATUserPreferences:
 		# Default value: Enhanced
 		# Valid values: Enhanced, Simple, Character
 		self._validate(
-			"Navigation", 
-			"NavMode", 
-			[option.value for option in NavModeOption], 
+			"Navigation",
+			"NavMode",
+			[option.value for option in NavModeOption],
 			NavModeOption.ENHANCED.value,
 		)
 		# Navigation.ResetNavMode
@@ -399,9 +449,9 @@ class MathCATUserPreferences:
 		# Default value: Medium
 		# Valid values: Terse, Medium, Verbose (words to say for nav command)
 		self._validate(
-			"Navigation", 
-			"NavVerbosity", 
-			[option.value for option in NavVerbosityOption], 
+			"Navigation",
+			"NavVerbosity",
+			[option.value for option in NavVerbosityOption],
 			NavVerbosityOption.MEDIUM.value,
 		)
 		# Navigation.AutoZoomOut
@@ -412,9 +462,9 @@ class MathCATUserPreferences:
 		# Default value: MathML
 		# Valid values: MathML, LaTeX, ASCIIMath, Speech
 		self._validate(
-			"Navigation", 
-			"CopyAs", 
-			[option.value for option in CopyAsOption], 
+			"Navigation",
+			"CopyAs",
+			[option.value for option in CopyAsOption],
 			CopyAsOption.MATHML.value,
 		)
 

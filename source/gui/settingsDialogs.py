@@ -2717,7 +2717,31 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
+	def _getSpeechStyleDisplayString(self, configValue: str, languageCode: str) -> str:
+		"""Helper function to get the display string for a speech style config value.
+
+		:param configValue: The config value to find the display string for
+		:param languageCode: The current language code
+		:return: The display string to show in the UI
+		"""
+		from mathPres.MathCAT.preferences import SpeechStyleOption
+
+		# Check if it's a known enum value by comparing directly
+		knownStyleValues = [style.value for style in SpeechStyleOption]
+		if configValue in knownStyleValues:
+			enumOption = SpeechStyleOption(configValue)
+			return enumOption.displayString
+		else:
+			# Not a known enum, so the config value IS the display string
+			return configValue
+
 	def _getEnumIndexFromConfigValue(self, enumClass, configValue):
+		"""Helper function to get the index of an enum option based on its config value.
+
+		:param enumClass: The DisplayStringStrEnum class to search in
+		:param configValue: The config value to find the index for
+		:return: The index of the enum option with the matching value
+		"""
 		try:
 			return list(enumClass).index(enumClass(configValue))
 		except (ValueError, KeyError):
@@ -2725,6 +2749,12 @@ class MathSettingsPanel(SettingsPanel):
 			return 0
 
 	def _getEnumValueFromSelection(self, enumClass, selectionIndex):
+		"""Helper function to get the config value from a selection index.
+
+		:param enumClass: The DisplayStringStrEnum class to get the value from
+		:param selectionIndex: The index of the selected option
+		:return: The config value of the selected enum option
+		"""
 		try:
 			return list(enumClass)[selectionIndex].value
 		except (IndexError, AttributeError):
@@ -2742,6 +2772,7 @@ class MathSettingsPanel(SettingsPanel):
 			NavVerbosityOption,
 			CopyAsOption,
 			BrailleNavHighlightOption,
+			getSpeechStyleChoicesWithTranslations,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2792,14 +2823,18 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style")
-		self.speechStyleOptions = localization.getSpeechStyles(config.conf["math"]["speech"]["language"])
+		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(config.conf["math"]["speech"]["language"])
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
 			choices=self.speechStyleOptions,
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		self.speechStyleList.SetStringSelection(config.conf["math"]["speech"]["speechStyle"])
+		speechStyleDisplayString = self._getSpeechStyleDisplayString(
+			config.conf["math"]["speech"]["speechStyle"],
+			config.conf["math"]["speech"]["language"]
+		)
+		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
 
 		# Translators: MathCAT's verbosity setting
 		speechAmountText = pgettext("math", "Speech verbosity")
@@ -2840,12 +2875,6 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
 		self.bindHelpEvent("MathSpeechSound", self.speechSoundCheckBox)
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"] != "None")
-
-		subjectAreaText = pgettext(
-			"math",
-			# Translators: label for combobox to specify a subject area (Geometry, Calculus, ...)
-			"Subject area to be used when it cannot be determined automatically",
-		)
 
 		# Translators: label for combobox to specify how verbose/terse the speech should be
 		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
@@ -2983,6 +3012,7 @@ class MathSettingsPanel(SettingsPanel):
 			CopyAsOption,
 			BrailleNavHighlightOption,
 			PauseFactor,
+			getSpeechStyleConfigValue,
 		)
 
 		mathConf = config.conf["math"]
@@ -2992,7 +3022,10 @@ class MathSettingsPanel(SettingsPanel):
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection()
 		)
-		mathConf["speech"]["speechStyle"] = self.speechStyleList.GetStringSelection()
+		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
+			self.speechStyleList.GetStringSelection(),
+			self.languageCodes[self.languageList.GetSelection()]
+		)
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(VerbosityOption, self.speechAmountList.GetSelection())
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
