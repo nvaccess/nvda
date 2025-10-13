@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - beta
+      - regenXliffFix
     paths:
       - 'user_docs/en/*.md'
 
@@ -13,9 +14,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0
+        token: ${{ secrets.NVACCESSAUTO_PUSH_PAT }}   
 
     - name: Set up python
       uses: actions/setup-python@v5
@@ -66,16 +68,6 @@ jobs:
             Write-Host "Committing $file"
             git commit -m "Update $file"
           }
-          Write-Host "Setting up ssh for push"
-          # Ensure .ssh directory exists
-          New-Item -ItemType Directory -Force -Path ~/.ssh
-          # Add github.com to the list of known hosts for ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          # set the private key of the Github deploy key as the ssh key
-          $privateKey = "${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY }}"
-          $privateKey | Out-File -FilePath ~/.ssh/id_rsa -Encoding ascii
-          # Tell git to use ssh for pushing
-          git remote set-url origin git@github.com:${{ github.repository }}
           Write-Host "Pushing changes"
           git push origin HEAD
         } else {
