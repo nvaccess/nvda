@@ -220,12 +220,16 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 		nHours = systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR
 		nMinutes = (systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
 		
-		# Skip if both hours and minutes are zero
+		# Skip if no time, as it likely means the status check is inaccurate
+		if systemPowerStatus.BatteryLifeTime == 0:
+			return text
 		if nHours == 0 and nMinutes == 0:
+			# Translators: Reported when battery time is less than 1 minute.
+			text.append(_("Less than 1 minute remaining"))
 			return text
 		
-		hourText = ""
-		minuteText = ""
+		hourText: str | None = None
+		minuteText: str | None = None
 		
 		# Handle hours - only if greater than 0
 		if nHours > 0:
@@ -248,17 +252,17 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 			).format(minutes=nMinutes)
 		
 		# Combine hours and minutes appropriately
-		if hourText and minuteText:
+		if hourText is not None and minuteText is not None:
 			text.append(
 				# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
 				# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
 				_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText),
 			)
-		elif hourText:
+		elif hourText is not None:
 			text.append(
 				_("{hourText} remaining").format(hourText=hourText),
 			)
-		elif minuteText:
+		elif minuteText is not None:
 			text.append(
 				_("{minuteText} remaining").format(minuteText=minuteText),
 			)
