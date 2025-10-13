@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 02:38+0000\n"
-"PO-Revision-Date: 2025-10-06 00:16\n"
+"POT-Creation-Date: 2025-10-06 04:05+0000\n"
+"PO-Revision-Date: 2025-10-13 00:17\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -480,12 +480,12 @@ msgstr "数式"
 #. Translators: Displayed in braille when a link destination points to the same page
 #: braille.py:286
 msgid "smp"
-msgstr "smp"
+msgstr "ページ内"
 
 #. Translators: Displayed in braille when an object supports multiple selected items.
 #: braille.py:288
 msgid "msel"
-msgstr ""
+msgstr "msel"
 
 #. Translators: Displayed in braille when an object is not selected.
 #: braille.py:292
@@ -645,14 +645,14 @@ msgstr "⡎"
 #: braille.py:461
 msgctxt "braille formatting symbol"
 msgid "⠑"
-msgstr ""
+msgstr "⠑"
 
 #. Translators: Brailled at the end of invalid spelling text.
 #. This is the English letter "e" plus dot 7 in braille.
 #: braille.py:464
 msgctxt "braille formatting symbol"
 msgid "⡑"
-msgstr ""
+msgstr "⡑"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:677 speech\speech.py:2103
@@ -683,7 +683,7 @@ msgstr "既読"
 #. Translators: Displayed in braille for a multi select list.
 #: braille.py:746
 msgid "mslst"
-msgstr ""
+msgstr "mslst"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -2437,7 +2437,7 @@ msgstr "リモートアクセス"
 #: globalCommands.py:131
 msgctxt "imageDesc"
 msgid "Image Descriptions"
-msgstr ""
+msgstr "画像の説明"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -2804,29 +2804,29 @@ msgstr "スタイルを報告する"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:796
 msgid "Cycles through options for how to report spelling errors"
-msgstr ""
+msgstr "スペルミスの報告のオプションの切り替え"
 
 #. Translators: Reported when the user cycles through the choices to report spelling errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:808
 #, python-brace-format
 msgid "Report spelling errors {mode}"
-msgstr ""
+msgstr "スペルミスの報告 {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling errors in braille.
 #: globalCommands.py:815
 msgid "Toggles reporting spelling errors in braille"
-msgstr ""
+msgstr "点字のスペルミスの報告を切り替え"
 
 #. Translators: Message presented when turning on reporting spelling errors in braille.
 #: globalCommands.py:825
 msgid "Report spelling errors in braille on"
-msgstr ""
+msgstr "点字のスペルミスを報告する"
 
 #. Translators: Message presented when turning off reporting spelling errors in braille.
 #: globalCommands.py:828
 msgid "Report spelling errors in braille off"
-msgstr ""
+msgstr "点字のスペルミスを報告しない"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:832
@@ -3984,7 +3984,7 @@ msgstr "リモートアクセスの設定を表示"
 #: globalCommands.py:3478
 msgctxt "imageDesc"
 msgid "Shows the AI image descriptions settings"
-msgstr ""
+msgstr "AI による画像の説明の設定を開く"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3487
@@ -4793,13 +4793,13 @@ msgstr "制御されるPCにcontrol+alt+deleteを送信します。"
 #: globalCommands.py:5103
 msgctxt "imageDesc"
 msgid "Get an AI generated image description"
-msgstr ""
+msgstr "AIによる画像の説明を取得"
 
 #. Translators: Description for the toggle image captioning script
 #: globalCommands.py:5112
 msgctxt "imageDesc"
 msgid "Toggle image captioning"
-msgstr ""
+msgstr "画像のキャプションの切り替え"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -9260,7 +9260,7 @@ msgstr "日本語漢点字"
 #. braille settings dialog.
 #: brailleTables\__tables.py:327
 msgid "Japanese (Rokuten Kanji) Braille"
-msgstr ""
+msgstr "日本語(6点漢字)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10024,33 +10024,33 @@ msgstr "ビープ音と読み上げ"
 #: config\configFlags.py:202
 msgctxt "reportSpellingErrorsSetting"
 msgid "Off"
-msgstr ""
+msgstr "なし"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
 #: config\configFlags.py:205
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech"
-msgstr ""
+msgstr "読み上げ"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 #: config\configFlags.py:208
 msgctxt "reportSpellingErrorsSetting"
 msgid "Sound"
-msgstr ""
+msgstr "音"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported.
 #: config\configFlags.py:212
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech and sound"
-msgstr ""
+msgstr "読み上げと音"
 
 #. Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
 #: config\configFlags.py:215
 msgctxt "reportSpellingErrorsSetting"
 msgid "Braille"
-msgstr ""
+msgstr "点字"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -11505,7 +11505,7 @@ msgstr "ページ内"
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr ""
+msgstr "複数選択"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -11657,12 +11657,12 @@ msgstr "この設定パネルは使用できません"
 #. from the about dialog
 #: gui\__init__.py:409
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "クリップボードにコピーしました"
 
 #. Translators: The label for a button to copy the NVDA version number from the about dialog.
 #: gui\__init__.py:415
 msgid "&Copy version number"
-msgstr ""
+msgstr "バージョン番号をコピー(&C)"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 #: gui\__init__.py:420 gui\__init__.py:869
@@ -13380,7 +13380,7 @@ msgstr "オブジェクトの位置を推測(&G)"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2484
 msgid "Report when lists support &multiple selection"
-msgstr ""
+msgstr "リストで複数選択できる場合の報告(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13937,13 +13937,13 @@ msgstr "リモートアクセスエラー"
 #: gui\settingsDialogs.py:3671
 msgctxt "imageDesc"
 msgid "AI Image Descriptions"
-msgstr ""
+msgstr "AI による画像の説明"
 
 #. Translators: A configuration in settings dialog.
 #: gui\settingsDialogs.py:3684
 msgctxt "imageDesc"
 msgid "Enable image captioner"
-msgstr ""
+msgstr "画像説明AIを有効にする"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:3705
@@ -15065,7 +15065,7 @@ msgstr "公開日:"
 #: gui\addonStoreGui\controls\details.py:370
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr ""
+msgstr "VirusTotal のスキャン結果:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
@@ -15075,13 +15075,13 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{malicious} out of {total} malware scanners detected this add-on as potentially malicious."
-msgstr ""
+msgstr "{total}個のうち{malicious}個のマルウェアスキャナーがこのアドオンを潜在的に悪意のあるものとして検出しました。"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:385
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr ""
+msgstr "VirusTotal スキャン URL:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15593,20 +15593,20 @@ msgstr "コミュニティのレビュー(&V)"
 #: gui\addonStoreGui\viewModels\store.py:266
 msgctxt "addonStore"
 msgid "VirusTotal scan results"
-msgstr ""
+msgstr "VirusTotal スキャン結果"
 
 #. Translators: Label for an action that shows changelog for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:274
 msgctxt "addonStore"
 msgid "&What's new"
-msgstr ""
+msgstr "最新情報(&W)"
 
 #. Translators: Title for a message showing changes for the current add-on version.
 #: gui\addonStoreGui\viewModels\store.py:282
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Changes for {curVersion}"
-msgstr ""
+msgstr "{curVersion} の変更点"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -15628,43 +15628,43 @@ msgstr "アドオンを無効にできません: {addon}"
 #: gui\_localCaptioner\messageDialogs.py:32
 msgctxt "imageDesc"
 msgid "Download successful"
-msgstr ""
+msgstr "ダウンロード成功"
 
 #. Translators: label of dialog when downloading image captioning
 #: gui\_localCaptioner\messageDialogs.py:36
 msgctxt "imageDesc"
 msgid "Image captioning installed successfully."
-msgstr ""
+msgstr "画像説明AIのインストールに成功しました。"
 
 #. Translators: title of dialog when fail to download
 #: gui\_localCaptioner\messageDialogs.py:57
 msgctxt "imageDesc"
 msgid "Download failed"
-msgstr ""
+msgstr "ダウンロード失敗"
 
 #. Translators: label of dialog when fail to download image captioning
 #: gui\_localCaptioner\messageDialogs.py:61
 msgctxt "imageDesc"
 msgid "Image captioning download failed. Would you like to retry?"
-msgstr ""
+msgstr "画像説明AIのダウンロードに失敗しました。再試行しますか？"
 
 #. Translators: message when image captioning is still downloading
 #: gui\_localCaptioner\messageDialogs.py:77
 msgctxt "imageDesc"
 msgid "image captioning is still downloading, please wait..."
-msgstr ""
+msgstr "画像説明AIをダウンロード中です。お待ちください。"
 
 #. Translators: title of dialog when downloading Image captioning
 #: gui\_localCaptioner\messageDialogs.py:88
 msgctxt "imageDesc"
 msgid "Confirm download"
-msgstr ""
+msgstr "ダウンロードの確認"
 
 #. Translators: label of dialog when downloading image captioning
 #: gui\_localCaptioner\messageDialogs.py:92
 msgctxt "imageDesc"
 msgid "Image captioning not installed. Would you like to install (235 MB)?"
-msgstr ""
+msgstr "画像説明AI(235 MB)がインストールされていません。インストールしますか?"
 
 #. Translators: Describes a command.
 #: mathPres\__init__.py:132
@@ -18782,37 +18782,37 @@ msgstr "セキュアデスクトップ"
 #: _localCaptioner\imageDescriber.py:78
 msgctxt "imageDesc"
 msgid "Failed to generate description"
-msgstr ""
+msgstr "画像説明の生成に失敗しました"
 
 #. Translators: Message when image description is not enabled
 #: _localCaptioner\imageDescriber.py:118
 msgctxt "imageDesc"
 msgid "image description is not enabled"
-msgstr ""
+msgstr "画像説明AIは有効ではありません"
 
 #. Translators: Message when starting image recognition
 #: _localCaptioner\imageDescriber.py:127
 msgctxt "imageDesc"
 msgid "getting image description..."
-msgstr ""
+msgstr "画像の説明を取得..."
 
 #. Translators: error message when fail to load model
 #: _localCaptioner\imageDescriber.py:160
 msgctxt "imageDesc"
 msgid "failed to load image captioner"
-msgstr ""
+msgstr "画像説明AIの読み込みに失敗しました"
 
 #. Translators: Message when successfully load the model
 #: _localCaptioner\imageDescriber.py:165
 msgctxt "imageDesc"
 msgid "image captioning on"
-msgstr ""
+msgstr "画像説明AI オン"
 
 #. Translators: Message when image captioning terminates
 #: _localCaptioner\imageDescriber.py:184
 msgctxt "imageDesc"
 msgid "image captioning off"
-msgstr ""
+msgstr "画像説明AI オフ"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.

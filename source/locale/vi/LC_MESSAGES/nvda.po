@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 02:38+0000\n"
-"PO-Revision-Date: 2025-10-06 00:16\n"
+"POT-Creation-Date: 2025-10-06 04:05+0000\n"
+"PO-Revision-Date: 2025-10-13 00:17\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -645,14 +645,14 @@ msgstr "⡎"
 #: braille.py:461
 msgctxt "braille formatting symbol"
 msgid "⠑"
-msgstr ""
+msgstr "⠑"
 
 #. Translators: Brailled at the end of invalid spelling text.
 #. This is the English letter "e" plus dot 7 in braille.
 #: braille.py:464
 msgctxt "braille formatting symbol"
 msgid "⡑"
-msgstr ""
+msgstr "⡑"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:677 speech\speech.py:2103
@@ -2074,7 +2074,8 @@ msgstr[0] "Các add-on sau đây không thể cài đặt: {}."
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
-msgstr ""
+msgstr "Một số hoạt động trên add-on đã thất bại. Xem tệp log để biết thêm chi tiết.\n"
+"{failureMsg}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: the title of an error message dialog
@@ -2436,7 +2437,7 @@ msgstr "Truy Cập Từ Xa"
 #: globalCommands.py:131
 msgctxt "imageDesc"
 msgid "Image Descriptions"
-msgstr ""
+msgstr "Mô tả hình ảnh"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -2803,29 +2804,29 @@ msgstr "bật báo kiểu dáng"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:796
 msgid "Cycles through options for how to report spelling errors"
-msgstr ""
+msgstr "Chuyển đổi các tùy chọn báo cáo lỗi chính tả"
 
 #. Translators: Reported when the user cycles through the choices to report spelling errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:808
 #, python-brace-format
 msgid "Report spelling errors {mode}"
-msgstr ""
+msgstr "Báo cáo lỗi chính tả {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling errors in braille.
 #: globalCommands.py:815
 msgid "Toggles reporting spelling errors in braille"
-msgstr ""
+msgstr "Bật/tắt báo cáo lỗi chính tả với Braille"
 
 #. Translators: Message presented when turning on reporting spelling errors in braille.
 #: globalCommands.py:825
 msgid "Report spelling errors in braille on"
-msgstr ""
+msgstr "Báo cáo lỗi chính tả khi bật chữ nổi"
 
 #. Translators: Message presented when turning off reporting spelling errors in braille.
 #: globalCommands.py:828
 msgid "Report spelling errors in braille off"
-msgstr ""
+msgstr "Báo cáo lỗi chính tả khi tắt chữ nổi"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:832
@@ -3514,12 +3515,12 @@ msgstr "Đưa con trỏ duyệt đến ký tự cuối cùng trên dòng hiện 
 #. Translators: Input help mode message for move review cursor to start of selection command.
 #: globalCommands.py:2296
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
-msgstr ""
+msgstr "Di chuyển con trỏ duyệt đến ký tự đầu tiên của vùng chọn và đọc nó"
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
 #: globalCommands.py:2324
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
-msgstr ""
+msgstr "Di chuyển con trỏ duyệt đến ký tự cuối cùng của vùng chọn và đọc nó"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 #: globalCommands.py:2360
@@ -3536,14 +3537,15 @@ msgstr "Không có kí hiệu thay thế"
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
-msgstr ""
+msgstr "Ký tự: {character}\n"
+"Thay thế: {replacement}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
 #: globalCommands.py:2390
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
-msgstr ""
+msgstr "Ký hiệu mở rộng ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2396
@@ -3935,7 +3937,7 @@ msgstr "Mở cài đặt âm thanh của NVDA"
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3392
 msgid "Shows NVDA's vision settings"
-msgstr ""
+msgstr "Hiển thị cấu hình hỗ trợ nhìn của NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3401
@@ -3982,22 +3984,22 @@ msgstr "Hiện các cài đặt Truy Cập Từ Xa"
 #: globalCommands.py:3478
 msgctxt "imageDesc"
 msgid "Shows the AI image descriptions settings"
-msgstr ""
+msgstr "Hiển thị cấu hình mô tả hình ảnh bằng AI"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3487
 msgid "Shows NVDA's Add-on Store settings"
-msgstr ""
+msgstr "Hiển thị cấu hình Cửa hàng Add-on của NVDA"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3496
 msgid "Shows NVDA's Windows OCR settings"
-msgstr ""
+msgstr "Hiển thị cấu hình Windows OCR của NVDA"
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3505
 msgid "Shows NVDA's Advanced settings"
-msgstr ""
+msgstr "Hiển thị cấu hình Nâng cao của NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3514
@@ -4186,17 +4188,17 @@ msgstr "Tắt đọc kí tự dưới con trỏ khi đưa con trỏ vào văn b�
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
 #: globalCommands.py:3829
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
-msgstr ""
+msgstr "Bật/tắt đọc khi di chuyển theo dòng hoặc đoạn với chữ nổi"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3838
 msgid "Speak when navigating by line or paragraph with braille on"
-msgstr ""
+msgstr "Đọc khi di chuyển theo dòng hoặc đoạn khi bật chữ nổi"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3840
 msgid "Speak when navigating by line or paragraph with braille off"
-msgstr ""
+msgstr "Đọc khi di chuyển theo dòng hoặc đoạn khi tắt chữ nổi"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3845
@@ -4473,7 +4475,7 @@ msgstr "Vị trí của: {name}"
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4413
 msgid "Unable to get the destination of this link."
-msgstr ""
+msgstr "Không thể lấy đích của liên kết này."
 
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4416
@@ -4600,17 +4602,17 @@ msgstr "Xoay vòng các ngôn ngữ đang có cho Windows OCR"
 #. Translators: Describes a command.
 #: globalCommands.py:4719
 msgid "Toggle periodical refresh of a Windows OCR result"
-msgstr ""
+msgstr "Bật/tắt định kì cập nhật kết quả Windows OCR"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
 #: globalCommands.py:4730
 msgid "Automatic refresh enabled"
-msgstr ""
+msgstr "Tự động làm mới đã bật"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
 #: globalCommands.py:4732
 msgid "Automatic refresh disabled"
-msgstr ""
+msgstr "Tự động làm mới đã tắt"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 #: globalCommands.py:4742
@@ -4700,50 +4702,50 @@ msgstr "Chuyển giữa các chế độ chia âm thanh"
 #: globalCommands.py:4968
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Báo cáo ngôn ngữ của văn bản dưới con trỏ. Nếu nhấn hai lần, thông tin sẽ được hiển thị ở chế độ duyệt"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4983
 msgctxt "reportLanguage"
 msgid "Unknown language"
-msgstr ""
+msgstr "Ngôn ngữ không xác định"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
 #: globalCommands.py:4994
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
-msgstr ""
+msgstr "{languageDescription} (không được hỗ trợ)"
 
 #. Translators: title for report caret language dialog.
 #: globalCommands.py:5003
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr ""
+msgstr "Ngôn ngữ tại vị trí con trỏ"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:5008
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
-msgstr ""
+msgstr "Tắt tiếng hoặc bỏ tắt tiếng bộ đọc từ máy tính từ xa"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
 #: globalCommands.py:5018
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
-msgstr ""
+msgstr "Gửi nội dung bộ nhớ tạm đến máy tính từ xa"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
 #: globalCommands.py:5026
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
-msgstr ""
+msgstr "Sao chép liên kết của phiên Truy cập Từ xa hiện tại vào bộ nhớ tạm"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
 #: globalCommands.py:5036
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
-msgstr ""
+msgstr "Ngắt kết nối khỏi phiên Truy cập Từ xa hiện tại"
 
 #. Translators: A message indicating that the remote client is not connected.
 #. Translators: Message shown when attempting to mute the remote computer when no session is connected.
@@ -4762,7 +4764,7 @@ msgstr "Không được kết nối"
 #: globalCommands.py:5048
 msgctxt "remote"
 msgid "Connects to a remote computer"
-msgstr ""
+msgstr "Kết nối tới máy tính từ xa"
 
 #. Translators: A message indicating that the remote client is already connected.
 #: globalCommands.py:5059
@@ -4773,31 +4775,31 @@ msgstr "Đã được kết nối"
 #: globalCommands.py:5065
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
-msgstr ""
+msgstr "Bật/tắt kết nối Truy cập Từ xa"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
 #: globalCommands.py:5080
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
-msgstr ""
+msgstr "Chuyển đổi bàn phím điều khiển máy tính cục bộ hay máy tính từ xa"
 
 #. Translators: Documentation string for the script that sends alt+ctrl+del to the remote computer
 #: globalCommands.py:5093
 msgctxt "remote"
 msgid "Sends control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Gửi Ctrl+Alt+Delete đến máy tính bị điều khiển."
 
 #. Translators: Description for the image caption script
 #: globalCommands.py:5103
 msgctxt "imageDesc"
 msgid "Get an AI generated image description"
-msgstr ""
+msgstr "Nhận mô tả hình ảnh do AI tạo"
 
 #. Translators: Description for the toggle image captioning script
 #: globalCommands.py:5112
 msgctxt "imageDesc"
 msgid "Toggle image captioning"
-msgstr ""
+msgstr "Bật/tắt mô tả hình ảnh"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6761,7 +6763,7 @@ msgstr "Ngữ điệu"
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
 #: synthDriverHandler.py:230
 msgid "Use modern audio output system (WASAPI)"
-msgstr ""
+msgstr "Sử dụng hệ thống đầu ra âm thanh hiện đại (WASAPI)"
 
 #: touchHandler.py:59
 msgid "text mode"
@@ -6887,7 +6889,7 @@ msgstr "Tính năng không hoạt động."
 #. because of a component failure.
 #: ui.py:116
 msgid "An error has caused this feature to be unavailable at this time. Restarting NVDA or Windows may solve this problem."
-msgstr ""
+msgstr "Một lỗi đã khiến tính năng này hiện không khả dụng. Khởi động lại NVDA hoặc Windows có thể giải quyết vấn đề."
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. because of a component failure. This prompt includes the title
@@ -6897,7 +6899,8 @@ msgstr ""
 #: ui.py:126
 #, python-brace-format
 msgid "An error has caused this feature ({title}) to be unavailable at this time. Restarting NVDA or Windows may solve this problem."
-msgstr ""
+msgstr "Một lỗi đã khiến tính năng này ({title}) hiện không khả dụng.\n"
+"Khởi động lại NVDA hoặc Windows có thể giải quyết vấn đề."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 #: ui.py:194
@@ -6973,13 +6976,14 @@ msgstr "Đang kiểm tra cập nhật"
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr ""
+msgstr "Hãy đảm bảo bạn đã kết nối Internet và URL máy chủ dự phòng cập nhật NVDA hợp lệ.\n"
+"URL dự phòng: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
 #: updateCheck.py:424
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr ""
+msgstr "Không thể kết nối đến máy chủ NV Access."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7130,14 +7134,15 @@ msgstr "Đã &xong"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1015 gui\installerGui.py:452
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Không nên cập nhật NVDA khi đang kết nối NVDA Điều khiển Từ xa với vai trò là máy tính bị điều khiển. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1020
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Kết nối hiện tại có thể sẽ không được duy trì trong hoặc sau khi cập nhật. Ngay cả khi kết nối được duy trì, bạn cũng sẽ không thể phản hồi các thông báo User Account Control (UAC) từ máy tính điều khiển. Chỉ nên tiếp tục nếu bạn có quyền truy cập vật lý đến máy tính bị điều khiển.\n\n"
+"Bạn có chắc muốn tiếp tục ?"
 
 #. Translators: The title of a dialog.
 #. Translators: The title of a warning dialog.
@@ -7210,13 +7215,14 @@ msgstr "Lỗi cập nhật dữ liệu add-on"
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr ""
+msgstr "Hãy đảm bảo rằng bạn đã kết nối Internet và URL máy chủ dự phòng của Cửa hàng Add-on là hợp lệ.\n"
+"URL dự phòng: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
 #: addonStore\dataManager.py:223
 msgctxt "addonStore"
 msgid "Unable to establish a connection to the Add-on Store server."
-msgstr ""
+msgstr "Không thể kết nối đến máy chủ Cửa hàng Add-on."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:256
@@ -7324,38 +7330,38 @@ msgstr "Mặc định ({defaultChannel})"
 #. e.g. an installed beta version only updates to beta versions.
 #: addonStore\models\channel.py:107
 msgid "Same"
-msgstr ""
+msgstr "Giống nhau"
 
 #. Translators: Update channel for an addon.
 #. Any means an add-on updates to the latest version regardless of the channel.
 #: addonStore\models\channel.py:110
 msgid "Any"
-msgstr ""
+msgstr "Bất kì"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:112
 msgid "Do not update"
-msgstr ""
+msgstr "Không cập nhật"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:114
 msgid "Stable"
-msgstr ""
+msgstr "Ổn định"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:116
 msgid "Beta or dev"
-msgstr ""
+msgstr "Beta hoặc đang phát triển"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:118
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:120
 msgid "Dev"
-msgstr ""
+msgstr "Đang phát triển"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -8432,27 +8438,27 @@ msgstr "Không có biểu tượng cảm xúc"
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:43
 msgid "DRAFT"
-msgstr ""
+msgstr "Bản nháp"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:45
 msgid "Outline"
-msgstr ""
+msgstr "Dàn ý"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:47
 msgid "Print layout"
-msgstr ""
+msgstr "Bố cục in"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:49
 msgid "Web layout"
-msgstr ""
+msgstr "Bố cục web"
 
 #. Translators: One of the view types in Word documents.
 #: appModules\winword.py:51
 msgid "Read mode"
-msgstr ""
+msgstr "Chế độ đọc"
 
 #. Translators: a message when toggling change tracking in Microsoft word
 #: appModules\winword.py:98
@@ -8467,17 +8473,17 @@ msgstr "Tắt thông báo theo dõi thay đổi"
 #. Translators: a message when collapsing or expanding headings in MS Word
 #: appModules\winword.py:138
 msgid "No heading selected"
-msgstr ""
+msgstr "Chưa chọn tiêu đề nào"
 
 #. Translators: a message when collapsing a heading in MS Word
 #: appModules\winword.py:146
 msgid "Collapsed"
-msgstr ""
+msgstr "Thu gọn"
 
 #. Translators: a message when expanding a heading in MS Word
 #: appModules\winword.py:149
 msgid "Expanded"
-msgstr ""
+msgstr "Mở rộng"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:39
@@ -8634,7 +8640,7 @@ msgstr "Nattiq nBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\nlseReaderZoomax.py:91
 msgid "NLS eReader Zoomax"
-msgstr ""
+msgstr "Thiết bị đọc NLS Zoomax"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:15
@@ -8681,17 +8687,17 @@ msgstr "Để dùng một thiết bị Albatross với NVDA, hãy thay đổi s�
 #. Translators: Description of the DotPad Braille / Tactile Graphic display.
 #: brailleDisplayDrivers\dotPad\driver.py:82
 msgid "DotPad Braille / Tactile Graphic display"
-msgstr ""
+msgstr "Màn hình chữ nổi / đồ họa xúc giác DotPad"
 
 #. Translators: Label for a setting that allows the user to choose the destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:112
 msgid "Braille destination"
-msgstr ""
+msgstr "Đích chữ nổi"
 
 #. Translators: A destination for braille output.
 #: brailleDisplayDrivers\dotPad\driver.py:300
 msgid "Text"
-msgstr ""
+msgstr "Văn bản"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -9156,19 +9162,19 @@ msgstr "Tây Ban Nha cho văn bản tiếng Hy Lạp"
 #. braille settings dialog.
 #: brailleTables\__tables.py:256
 msgid "Hebrew (Biblical) IHBC"
-msgstr ""
+msgstr "Chữ nổi Do Thái (Kinh Thánh) IHBC"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:259
 msgid "Hebrew (Biblical) full cantillation"
-msgstr ""
+msgstr "Chữ nổi Do Thái (Kinh Thánh) có đầy đủ dấu ngữ âm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:262
 msgid "Hebrew (Biblical) Slim"
-msgstr ""
+msgstr "Chữ nổi Do Thái (Kinh Thánh) bản rút gọn"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9252,7 +9258,7 @@ msgstr "Nhật Bản (Kantenji) chữ nổi văn học"
 #. braille settings dialog.
 #: brailleTables\__tables.py:327
 msgid "Japanese (Rokuten Kanji) Braille"
-msgstr ""
+msgstr "Chữ nổi Nhật (Rokuten Kanji)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9522,13 +9528,13 @@ msgstr "Rumani"
 #. braille settings dialog.
 #: brailleTables\__tables.py:468
 msgid "Russian 6 dot computer braille"
-msgstr ""
+msgstr "Chữ nổi máy tính Nga 6 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:471
 msgid "Russian 8 dot computer braille"
-msgstr ""
+msgstr "Chữ nổi máy tính Nga 8 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9714,13 +9720,13 @@ msgstr "Thái cấp 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:567
 msgid "Thai grade 2"
-msgstr ""
+msgstr "Chữ nổi Thái cấp độ 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:570
 msgid "Turkish 8 dot computer braille"
-msgstr ""
+msgstr "Chữ nổi máy tính Thổ Nhĩ Kỳ 8 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9929,7 +9935,7 @@ msgstr "Tắt"
 #. Translators: One of the choices for typing echo in keyboard settings
 #: config\configFlags.py:71
 msgid "Only in edit controls"
-msgstr ""
+msgstr "Chỉ trong ô nhập liệu"
 
 #. Translators: One of the choices for typing echo in keyboard settings
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
@@ -10016,33 +10022,33 @@ msgstr "Cả đọc và âm thanh"
 #: config\configFlags.py:202
 msgctxt "reportSpellingErrorsSetting"
 msgid "Off"
-msgstr ""
+msgstr "Tắt"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
 #: config\configFlags.py:205
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech"
-msgstr ""
+msgstr "Đọc"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 #: config\configFlags.py:208
 msgctxt "reportSpellingErrorsSetting"
 msgid "Sound"
-msgstr ""
+msgstr "Âm thanh"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported.
 #: config\configFlags.py:212
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech and sound"
-msgstr ""
+msgstr "Đọc và âm thanh"
 
 #. Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
 #: config\configFlags.py:215
 msgctxt "reportSpellingErrorsSetting"
 msgid "Braille"
-msgstr ""
+msgstr "Chữ nổi"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10083,7 +10089,7 @@ msgstr "Thông báo"
 #. Translators: This is a label for the automatic update behaviour for add-ons.
 #: config\configFlags.py:289
 msgid "Update Automatically"
-msgstr ""
+msgstr "Cập nhật tự động"
 
 #. Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 #: config\configFlags.py:317
@@ -10114,43 +10120,43 @@ msgstr "Pilcrow (¶)"
 #: config\configFlags.py:349
 msgctxt "reportLanguage"
 msgid "Speech"
-msgstr ""
+msgstr "Đọc"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:351
 msgctxt "reportLanguage"
 msgid "Beep"
-msgstr ""
+msgstr "Beep"
 
 #. Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 #: config\configFlags.py:353
 msgctxt "reportLanguage"
 msgid "Off"
-msgstr ""
+msgstr "Tắt"
 
 #. Translators: Option that allows this computer to be controlled by the remote computer.
 #: config\configFlags.py:375
 msgctxt "remote"
 msgid "Allow this computer to be controlled"
-msgstr ""
+msgstr "Cho phép máy tính này bị điều khiển"
 
 #. Translators: Option that allows this computer to control the remote computer.
 #: config\configFlags.py:377
 msgctxt "remote"
 msgid "Control another computer"
-msgstr ""
+msgstr "Điều khiển máy tính khác"
 
 #. Translators: Use an existing Remote control server
 #: config\configFlags.py:405
 msgctxt "remote"
 msgid "Use existing"
-msgstr ""
+msgstr "Sử dụng hiện có"
 
 #. Translators: Use NVDA as the Remote control server
 #: config\configFlags.py:407
 msgctxt "remote"
 msgid "Host locally"
-msgstr ""
+msgstr "Máy chủ cục bộ"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:53
@@ -10225,18 +10231,18 @@ msgstr "Nhận dạng không thành công"
 #. Translators: Describes a command.
 #: contentRecog\recogUi.py:171
 msgid "Refresh the recognition result"
-msgstr ""
+msgstr "Làm mới kết quả nhận dạng"
 
 #. Translators: Reported when a manual update of a content recognition result (e.g. OCR result) is
 #. requested, but the content is already updated automatically.
 #: contentRecog\recogUi.py:178
 msgid "The result of content recognition is already automatically updated"
-msgstr ""
+msgstr "Kết quả nhận dạng nội dung đã được tự động cập nhật"
 
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
 #: contentRecog\recogUi.py:192
 msgid "Refresh of recognition result failed"
-msgstr ""
+msgstr "Làm mới kết quả nhận dạng không thành công"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
@@ -11491,13 +11497,13 @@ msgstr "mở cây thư mục"
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:213
 msgid "same page"
-msgstr ""
+msgstr "cùng trang"
 
 #. Translators: Presented when the control allows multiple selected objects.
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr ""
+msgstr "chọn nhiều mục"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -11543,22 +11549,22 @@ msgstr "Không có đoạn trước"
 #. The purpose of this text box will be explained elsewhere in the user interface.
 #: gui\_SetURLDialog.py:74
 msgid "&URL:"
-msgstr ""
+msgstr "&URL:"
 
 #. Translators: A button in a dialog which allows the user to test a URL that they have entered.
 #: gui\_SetURLDialog.py:82
 msgid "&Test..."
-msgstr ""
+msgstr "&Kiểm tra..."
 
 #. Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
 #: gui\_SetURLDialog.py:105
 msgid "The URL you have entered failed the connection test. Are you sure you want to save it anyway?"
-msgstr ""
+msgstr "URL bạn nhập không vượt qua bài kiểm tra kết nối. Bạn có chắc chắn vẫn muốn lưu nó ?"
 
 #. Translators: Message shown to users when saving an untested URL to NVDA's settings.
 #: gui\_SetURLDialog.py:110
 msgid "The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?"
-msgstr ""
+msgstr "URL bạn nhập chưa được kiểm tra. Bạn có chắc muốn lưu nó mà không cố gắng kết nối trước ?"
 
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
@@ -11568,7 +11574,7 @@ msgstr "Đang xác thực URL..."
 #. Translators: Message shown to users when testing a given URL has succeeded.
 #: gui\_SetURLDialog.py:175
 msgid "Successfully connected to the given URL."
-msgstr ""
+msgstr "Đã kết nối thành công với URL được cung cấp."
 
 #. Translators: The title of a dialog presented when a test succeeds
 #. Translators: The title of a dialog presented to indicate a successful operation.
@@ -11583,22 +11589,22 @@ msgstr "Thành công"
 #. Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
 #: gui\_SetURLDialog.py:186
 msgid "The response from the server was not recognised. Check the URL is correct before trying again."
-msgstr ""
+msgstr "Phản hồi từ máy chủ không được nhận dạng. Kiểm tra lại URL cho đúng trước khi thử lại."
 
 #. Translators: Tip shown to users when testing a given URL has failed because the server returned an error.
 #: gui\_SetURLDialog.py:190
 msgid "The server returned an error. Check that the URL is correct before trying again."
-msgstr ""
+msgstr "Máy chủ trả về lỗi. Kiểm tra lại URL cho đúng trước khi thử lại."
 
 #. Translators: Tip shown to users when testing a given URL has failed because of a network error.
 #: gui\_SetURLDialog.py:193
 msgid "There was a network error. Check that you are connected to the internet and try again."
-msgstr ""
+msgstr "Đã xảy ra lỗi mạng. Kiểm tra xem bạn đã kết nối Internet chưa và thử lại."
 
 #. Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
 #: gui\_SetURLDialog.py:203
 msgid "The URL you have entered is not valid. Check that it is correct and try again."
-msgstr ""
+msgstr "URL bạn nhập không hợp lệ. Kiểm tra lại cho đúng và thử lại."
 
 #. Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
 #: gui\_SetURLDialog.py:206
@@ -11610,7 +11616,7 @@ msgstr "Hãy chắc rằng bạn đã kết nối mạng và URL là chính xác
 #: gui\_SetURLDialog.py:209
 #, python-brace-format
 msgid "The URL you have entered failed the connection test. {tip}"
-msgstr ""
+msgstr "URL bạn nhập không vượt qua bài kiểm tra kết nối. {tip}"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 #: gui\__init__.py:211
@@ -11637,7 +11643,7 @@ msgstr "Không thể lưu cấu hình - lỗi có thể do tập tin có thuộc
 #. Translators: Message shown when current configuration cannot be saved, for an unknown reason.
 #: gui\__init__.py:244
 msgid "Could not save configuration; see the log for more details."
-msgstr ""
+msgstr "Không thể lưu cấu hình; xem log để biết thêm chi tiết."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog.
 #. Example: when trying to open touch interaction settings on an unsupported system.
@@ -11649,12 +11655,12 @@ msgstr "Bảng cấu hình bạn muốn mở không có trong hệ thống."
 #. from the about dialog
 #: gui\__init__.py:409
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Đã sao chép vào bộ nhớ tạm"
 
 #. Translators: The label for a button to copy the NVDA version number from the about dialog.
 #: gui\__init__.py:415
 msgid "&Copy version number"
-msgstr ""
+msgstr "&Sao chép số phiên bản"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 #: gui\__init__.py:420 gui\__init__.py:869
@@ -11667,35 +11673,40 @@ msgid "Welcome to the COM Registration Fixing tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
 "Press Continue to run the tool now."
-msgstr ""
+msgstr "Chào mừng đến với công cụ Sửa lỗi Đăng ký COM.\n\n"
+"Việc cài đặt và gỡ cài đặt chương trình, cũng như các sự kiện khác, có thể làm hỏng các mục trợ năng trong registry của Windows. Điều này có thể khiến các phần tử trước đây có thể truy cập được lại bị trình bày không chính xác, hoặc gây ra việc nói hoặc hiển thị chữ nổi \"không xác định\"  hay \"khung\" trong một số phần mềm hoặc thành phần của Windows, thay vì nội dung bạn mong muốn.\n\n"
+"Công cụ này cố gắng khắc phục các sự cố phổ biến như vậy. Lưu ý rằng công cụ này phải truy cập vào registry hệ thống, điều này yêu cầu quyền quản trị.\n\n"
+"Nhấn Tiếp tục để chạy công cụ ngay bây giờ."
 
 #. Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 #: gui\__init__.py:562
 msgid "Fix COM Registrations"
-msgstr ""
+msgstr "Sửa lỗi Đăng ký COM"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 #: gui\__init__.py:577
 msgid "Please wait while NVDA attempts to fix your system's COM registrations..."
-msgstr ""
+msgstr "Vui lòng chờ trong khi NVDA cố gắng sửa lỗi đăng ký COM hệ thống của bạn..."
 
 #. Translators: message shown to the user on COM Registration Fix fail
 #: gui\__init__.py:604
 #, python-brace-format
 msgid "The COM Registration Fixing Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr ""
+msgstr "Công cụ Sửa lỗi Đăng ký COM không thành công. Lỗi Windows này có thể cung cấp thêm thông tin.\n"
+"{error}"
 
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
 #: gui\__init__.py:608
 msgid "COM Registration Fixing Tool Failed"
-msgstr ""
+msgstr "Công cụ Sửa lỗi Đăng ký COM thất bại"
 
 #. Translators: Message shown when the COM Registration Fixing tool completes.
 #: gui\__init__.py:615
 msgid "The COM Registration Fixing Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr ""
+msgstr "Công cụ sửa lỗi Đăng ký COM đã hoàn thành thành công.\n"
+"Rất khuyến nghị bạn nên khởi động lại máy tính ngay bây giờ, để đảm bảo các thay đổi có hiệu lực hoàn toàn."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:642
@@ -12031,7 +12042,7 @@ msgstr "Các add-on không tương thích"
 #: gui\addonGui.py:350
 #, python-brace-format
 msgid "The following add-ons are incompatible with NVDA version {version}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
-msgstr ""
+msgstr "Các add-on sau đây không tương thích với phiên bản NVDA {version}. Các add-on này không thể bật được. Vui lòng liên hệ với tác giả add-on để được hỗ trợ thêm."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 #: gui\addonGui.py:358
@@ -12090,7 +12101,7 @@ msgstr "Hành động không sẵn sàng trong khi chế độ chữ nổi đư�
 #: gui\blockAction.py:87
 msgctxt "remote"
 msgid "Action unavailable when Remote Access is disabled"
-msgstr ""
+msgstr "Thao tác không khả dụng khi Truy cập Từ xa bị vô hiệu hóa"
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -12158,7 +12169,7 @@ msgstr "Lỗi kích hoạt hồ sơ."
 #: gui\configProfiles.py:200
 #, python-brace-format
 msgid "The profile {name} will be permanently deleted. This action cannot be undone."
-msgstr ""
+msgstr "Hồ sơ {name} sẽ bị xóa vĩnh viễn. Hành động này không thể hoàn tác."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:204
@@ -12317,7 +12328,7 @@ msgstr "Khởi động lại"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:49
 msgid "Restart with add-ons disabled and debug logging enabled"
-msgstr ""
+msgstr "Khởi động lại với các add-on bị vô hiệu hóa và bật ghi nhật ký gỡ lỗi"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:53
@@ -12580,14 +12591,15 @@ msgstr "Thư mục tồn tại"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:458
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr ""
+msgstr "Không nên cài đặt NVDA khi đang kết nối với NVDA Truy cập Từ xa dưới vai trò là máy tính bị điều khiển. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:464
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Bạn sẽ không thể phản hồi các lời nhắc User Account Control (UAC) từ máy tính điều khiển. Bạn chỉ nên tiếp tục nếu có thể tiếp cận vật lý với máy tính bị điều khiển.\n\n"
+"Bạn có chắc chắn muốn tiếp tục không?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:502
@@ -12747,7 +12759,7 @@ msgstr "Khô&ng lưu"
 #: gui\nvdaControls.py:607
 #, python-brace-format
 msgid "Default ({default})"
-msgstr ""
+msgstr "Mặc định ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
 #: gui\settingsDialogs.py:445
@@ -12880,7 +12892,7 @@ msgstr "Cho phép dự án NVDA thu thập thống kê sử dụng NVDA"
 #. Translators: The label for the update mirror on the General Settings panel.
 #: gui\settingsDialogs.py:960
 msgid "Update mirror"
-msgstr ""
+msgstr "Máy chủ cập nhật dự phòng"
 
 #. Translators: This is the label for the button used to change the NVDA update mirror URL,
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
@@ -12893,12 +12905,12 @@ msgstr "Thay Đổi..."
 #. Translators: The label of a checkbox in general settings.
 #: gui\settingsDialogs.py:994
 msgid "Prevent &display from turning off during say all or reading with braille"
-msgstr ""
+msgstr "Ngăn màn hình tắt trong khi đọc tất cả hoặc đọc bằng chữ nổi"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:1008
 msgid "Set NVDA Update Mirror"
-msgstr ""
+msgstr "Thiết lập Máy chủ Dự phòng Cập nhật NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -12948,7 +12960,7 @@ msgstr "Không đủ quyền"
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1135 gui\settingsDialogs.py:3382
 msgid "No mirror"
-msgstr ""
+msgstr "Không có máy chủ dự phòng"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 #: gui\settingsDialogs.py:1152
@@ -13016,14 +13028,14 @@ msgstr "Tự động chuyển giọng theo vùng miền (nếu có hỗ trợ)"
 #: gui\settingsDialogs.py:1720
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr ""
+msgstr "Báo cáo chuyển ngôn ngữ khi đọc"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
 #: gui\settingsDialogs.py:1736
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr ""
+msgstr "Báo cáo khi bộ đọc không &hỗ trợ chuyển ngôn ngữ"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13125,12 +13137,12 @@ msgstr "&Chọn các phím bổ trợ NVDA"
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2052
 msgid "Speak typed &characters:"
-msgstr ""
+msgstr "Đọc &ký tự đã nhập:"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
 #: gui\settingsDialogs.py:2063
 msgid "Speak typed &words:"
-msgstr ""
+msgstr "Đọc &từ đã nhập:"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -13361,7 +13373,7 @@ msgstr "Đoán thông tin &vị trí đối tượng khi không có sẵn"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2484
 msgid "Report when lists support &multiple selection"
-msgstr ""
+msgstr "Báo cáo khi danh sách hỗ trợ chọn nhiều mục"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13642,7 +13654,7 @@ msgstr "Thành phần"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2962
 msgid "Link type"
-msgstr ""
+msgstr "Kiểu liên kết"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13790,53 +13802,53 @@ msgstr "Cập nhật &tự động:"
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3298
 msgid "Default update &channel:"
-msgstr ""
+msgstr "Kênh cập nhật &mặc định:"
 
 #. Translators: Mute other apps checkbox in settings
 #: gui\settingsDialogs.py:3312
 msgid "Allow automatic updates to install incompatible add-ons"
-msgstr ""
+msgstr "Cho phép tự động cập nhật để cài đặt các add-on không tương thích"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
 #: gui\settingsDialogs.py:3318
 msgid "Mirror server"
-msgstr ""
+msgstr "Máy chủ dự phòng"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
 #: gui\settingsDialogs.py:3355
 msgid "Set Add-on Store Mirror Server"
-msgstr ""
+msgstr "Thiết lập Máy chủ Cửa hàng Add-on dự phòng"
 
 #. Translators: Label of a checkbox in Remote Access settings
 #: gui\settingsDialogs.py:3409
 msgctxt "remote"
 msgid "Enable Remote Access"
-msgstr ""
+msgstr "Bật Truy cập Từ xa"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
 #: gui\settingsDialogs.py:3426
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr ""
+msgstr "Xác nhận trước khi ngắt kết nối khi đang bị điều khiển"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
 #: gui\settingsDialogs.py:3437
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
-msgstr ""
+msgstr "&Tắt tiếng khi điều khiển máy tính cục bộ"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
 #: gui\settingsDialogs.py:3447
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
-msgstr ""
+msgstr "Tự động& kết nối sau khi NVDA khởi động"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
 #: gui\settingsDialogs.py:3457
 msgctxt "remote"
 msgid "Automatic connection"
-msgstr ""
+msgstr "Kết nối tự động"
 
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
@@ -13859,7 +13871,7 @@ msgstr "&Máy chủ:"
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
 #: gui\settingsDialogs.py:3485 _remoteClient\dialogs.py:46
 msgid "&Host:"
-msgstr ""
+msgstr "&Máy chủ:"
 
 #. Translators: Label for the port field in Remote Access settings.
 #. This is the port on which the local control server will be accessible,
@@ -13880,50 +13892,51 @@ msgstr "&Khóa:"
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
 #: gui\settingsDialogs.py:3522
 msgid "Delete all trusted fingerprints"
-msgstr ""
+msgstr "Xóa tất cả dấu vân tay đáng tin cậy"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3601
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
-msgstr ""
+msgstr "Thao tác này sẽ khiến NVDA quên đi tất cả các máy chủ Truy cập Từ xa đã từng được tin cậy trước đó. Khi kết nối với một máy chủ chưa được nhận dạng đã từng được tin cậy, bạn sẽ được hỏi lại liệu có muốn tin cậy chứng chỉ của nó hay không.\n\n"
+"Bạn có chắc chắn muốn tiếp tục không?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3606
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
-msgstr ""
+msgstr "Xóa tất cả dấu vân tay đáng tin cậy"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
 #: gui\settingsDialogs.py:3623
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
-msgstr ""
+msgstr "Để tự động kết nối bằng một máy chủ hiện có sau khi NVDA khởi động, cả máy chủ và khóa phải được thiết lập trong mục Truy cập Từ xa."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
 #: gui\settingsDialogs.py:3629
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
-msgstr ""
+msgstr "Để tự động kết nối bằng một máy chủ được lưu trữ cục bộ sau khi NVDA khởi động, cả cổng và khóa phải được thiết lập trong danh mục Truy cập Từ xa."
 
 #. Translators: Title of a dialog.
 #: gui\settingsDialogs.py:3635
 msgctxt "remote"
 msgid "Remote Access Error"
-msgstr ""
+msgstr "Lỗi Truy cập Từ xa"
 
 #. Translators: This is the label for the local captioner settings panel.
 #: gui\settingsDialogs.py:3671
 msgctxt "imageDesc"
 msgid "AI Image Descriptions"
-msgstr ""
+msgstr "Mô tả hình ảnh bằng AI"
 
 #. Translators: A configuration in settings dialog.
 #: gui\settingsDialogs.py:3684
 msgctxt "imageDesc"
 msgid "Enable image captioner"
-msgstr ""
+msgstr "Bật tính năng mô tả hình ảnh"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:3705
@@ -14213,13 +14226,13 @@ msgstr "Cố gắng không đọc các sự kiện lỗi thời của focus:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4121
 msgid "Trim leading silence in speech audio"
-msgstr ""
+msgstr "Cắt bớt khoảng lặng đầu âm thanh lời nói"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4129
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Sử dụng WASAPI cho đầu ra âm thanh SAPI 4:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14359,7 +14372,7 @@ msgstr "Bảng mã đầu &ra:"
 #: gui\settingsDialogs.py:4752 gui\settingsDialogs.py:4779
 #, python-brace-format
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Tự động ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 #: gui\settingsDialogs.py:4771
@@ -14455,7 +14468,7 @@ msgstr "Đọ&c kí tự khi đưa con trỏ trong văn bản"
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 #: gui\settingsDialogs.py:5055
 msgid "Speak when navigating by &line or paragraph"
-msgstr ""
+msgstr "Đọc khi điều hướng theo &dòng hoặc đoạn"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14812,12 +14825,12 @@ msgstr "Thỏa thuận giấy phép sử dụng"
 #. Translators: The label of a button in NVDA installation process to view the license agreement.
 #: gui\startupDialogs.py:224
 msgid "&View License"
-msgstr ""
+msgstr "&Xem thỏa thuận cấp phép"
 
 #. Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 #: gui\startupDialogs.py:229
 msgid "I have read and &agree to the license agreement"
-msgstr ""
+msgstr "Tôi đã đọc và đồng ý với thỏa thuận cấp phép"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:275
@@ -14837,7 +14850,7 @@ msgstr "Để cải thiện NVDA trong tương lai, NV Access mong muốn thu th
 #. channel of the selected add-on
 #: gui\addonStoreGui\controls\actions.py:171
 msgid "Upd&ate channel"
-msgstr ""
+msgstr "Kênh c&ập nhật"
 
 #. Translators: a message displayed when activating the context menu on multiple selected add-ons,
 #. but no actions are available for the add-ons.
@@ -14862,13 +14875,13 @@ msgstr "&Cập nhật các add-on đã chọn"
 #: gui\addonStoreGui\controls\actions.py:226
 msgctxt "addonStore"
 msgid "Re&try installing selected add-ons"
-msgstr ""
+msgstr "Th&ử cài đặt lại các add-on đã chọn"
 
 #. Translators: Label for an action that cancel install of the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:233
 msgctxt "addonStore"
 msgid "Ca&ncel install of selected add-ons"
-msgstr ""
+msgstr "Hủ&y cài đặt các add-on đã chọn"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -15031,19 +15044,19 @@ msgstr "URL trang đánh giá:"
 #: gui\addonStoreGui\controls\details.py:354
 msgctxt "addonStore"
 msgid "Install date:"
-msgstr ""
+msgstr "Ngày cài đặt:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:362
 msgctxt "addonStore"
 msgid "Publication date:"
-msgstr ""
+msgstr "Ngày phát hành:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:370
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr ""
+msgstr "Kết quả quét VirusTotal:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
@@ -15053,13 +15066,13 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{malicious} out of {total} malware scanners detected this add-on as potentially malicious."
-msgstr ""
+msgstr "{malicious} trên tổng số {total} trình quét mã độc đã phát hiện add-on này có khả năng chứa mã độc."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:385
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr ""
+msgstr "Đường dẫn (URL) quét bằng VirusTotal:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15085,7 +15098,7 @@ msgstr "&Không"
 #: gui\addonStoreGui\controls\messageDialogs.py:96
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr "nhớ lựa chọn này cho các add-on tiếp theo"
+msgstr "Nhớ lựa chọn này cho các add-on tiếp theo"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -15288,7 +15301,7 @@ msgstr "Đang cập nhật add-on..."
 #: gui\addonStoreGui\controls\messageDialogs.py:613
 msgctxt "addonStore"
 msgid "Add-ons updated, restart NVDA to activate changes"
-msgstr ""
+msgstr "Các add-on đã được cập nhật, khởi động lại NVDA để thay đổi có hiệu lực"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -15312,7 +15325,7 @@ msgstr "Lưu ý: NVDA đã được gọi chạy với các add-on được tắ
 #: gui\addonStoreGui\controls\storeDialog.py:154
 msgctxt "addonStore"
 msgid "Sort by colu&mn:"
-msgstr ""
+msgstr "Sắp xếp theo &cột:"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:163
@@ -15351,7 +15364,7 @@ msgstr "Cài đặt Add-on"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "Đang cài đặt {num} tiện ích bổ sung, vui lòng chờ."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15360,7 +15373,7 @@ msgstr[0] ""
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "Đang tải về {num} tiện ích bổ sung, hủy tải về?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -15431,25 +15444,25 @@ msgstr "Tác giả"
 #: gui\addonStoreGui\viewModels\addonList.py:102
 msgctxt "addonStore"
 msgid "Publication date"
-msgstr ""
+msgstr "Ngày phát hành"
 
 #. Translators: The name of the column that contains the installation date of the add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:107
 msgctxt "addonStore"
 msgid "Install date"
-msgstr ""
+msgstr "Ngày cài đặt"
 
 #. Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:113
 msgctxt "addonStore"
 msgid "Minimum NVDA version"
-msgstr ""
+msgstr "Phiên bản NVDA tối thiểu"
 
 #. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
 #: gui\addonStoreGui\viewModels\addonList.py:118
 msgctxt "addonStore"
 msgid "Last tested NVDA version"
-msgstr ""
+msgstr "Phiên bản NVDA được thử nghiệm sau cùng"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
@@ -15457,7 +15470,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
-msgstr ""
+msgstr "{column} (tăng dần)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
@@ -15465,7 +15478,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
-msgstr ""
+msgstr "{column} (giảm dần)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:119
@@ -15495,7 +15508,7 @@ msgstr "&Cập nhật (ghi đè tính tương thích)"
 #: gui\addonStoreGui\viewModels\store.py:147
 msgctxt "addonStore"
 msgid "Re&try install"
-msgstr ""
+msgstr "&Thử cài đặt lại"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -15508,7 +15521,7 @@ msgstr "Thay &thế"
 #: gui\addonStoreGui\viewModels\store.py:162
 msgctxt "addonStore"
 msgid "Ca&ncel install"
-msgstr ""
+msgstr "Hủy cài đặt"
 
 #. Translators: Label for an action that disables the selected addon
 #: gui\addonStoreGui\viewModels\store.py:169
@@ -15568,20 +15581,20 @@ msgstr "Cộng đồng đánh &giá"
 #: gui\addonStoreGui\viewModels\store.py:266
 msgctxt "addonStore"
 msgid "VirusTotal scan results"
-msgstr ""
+msgstr "Kết quả quét VirusTotal"
 
 #. Translators: Label for an action that shows changelog for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:274
 msgctxt "addonStore"
 msgid "&What's new"
-msgstr ""
+msgstr "&Các tính năng mới"
 
 #. Translators: Title for a message showing changes for the current add-on version.
 #: gui\addonStoreGui\viewModels\store.py:282
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Changes for {curVersion}"
-msgstr ""
+msgstr "Những thay đổi cho {curVersion}"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -15603,43 +15616,43 @@ msgstr "Không thể tắt add-on: {addon}."
 #: gui\_localCaptioner\messageDialogs.py:32
 msgctxt "imageDesc"
 msgid "Download successful"
-msgstr ""
+msgstr "Tải về thành công"
 
 #. Translators: label of dialog when downloading image captioning
 #: gui\_localCaptioner\messageDialogs.py:36
 msgctxt "imageDesc"
 msgid "Image captioning installed successfully."
-msgstr ""
+msgstr "Cài đặt Mô tả hình ảnh thành công."
 
 #. Translators: title of dialog when fail to download
 #: gui\_localCaptioner\messageDialogs.py:57
 msgctxt "imageDesc"
 msgid "Download failed"
-msgstr ""
+msgstr "Tải về không thành công"
 
 #. Translators: label of dialog when fail to download image captioning
 #: gui\_localCaptioner\messageDialogs.py:61
 msgctxt "imageDesc"
 msgid "Image captioning download failed. Would you like to retry?"
-msgstr ""
+msgstr "Tải xuống Mô tả hình ảnh không thành công. Bạn có muốn thử lại không?"
 
 #. Translators: message when image captioning is still downloading
 #: gui\_localCaptioner\messageDialogs.py:77
 msgctxt "imageDesc"
 msgid "image captioning is still downloading, please wait..."
-msgstr ""
+msgstr "chức năng mô tả hình ảnh vẫn đang được tải xuống, vui lòng chờ..."
 
 #. Translators: title of dialog when downloading Image captioning
 #: gui\_localCaptioner\messageDialogs.py:88
 msgctxt "imageDesc"
 msgid "Confirm download"
-msgstr ""
+msgstr "Xác nhận tải về"
 
 #. Translators: label of dialog when downloading image captioning
 #: gui\_localCaptioner\messageDialogs.py:92
 msgctxt "imageDesc"
 msgid "Image captioning not installed. Would you like to install (235 MB)?"
-msgstr ""
+msgstr "Chức năng Mô tả hình ảnh chưa được cài đặt. Bạn có muốn cài đặt không (235 MB)?"
 
 #. Translators: Describes a command.
 #: mathPres\__init__.py:132
@@ -15927,7 +15940,7 @@ msgstr "kích hoạt"
 #, python-brace-format
 msgid "{num} suggestion"
 msgid_plural "{num} suggestions"
-msgstr[0] ""
+msgstr[0] "{num} gợi ý"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -16270,7 +16283,7 @@ msgstr "Thanh xếp chồng 100 phần trăm"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:199
 msgid "Bubble"
-msgstr "bong bóng"
+msgstr "Bong bóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -16482,7 +16495,7 @@ msgstr "Cột kim tự tháp xếp chồng 100 phần trăm"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:310
 msgid "Radar"
-msgstr "ra đa"
+msgstr "Ra đa"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -17461,132 +17474,132 @@ msgstr "{desc} {position}"
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:117
 msgid "Words only"
-msgstr ""
+msgstr "Chỉ từ ngữ"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:119
 msgid "Double"
-msgstr ""
+msgstr "Hai nét"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:121
 msgid "Dotted"
-msgstr ""
+msgstr "Chấm chấm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:123
 msgid "Thick"
-msgstr ""
+msgstr "Dày"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:125
 msgid "Dash"
-msgstr ""
+msgstr "Gạch ngang"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:127
 msgid "Dot dash"
-msgstr ""
+msgstr "Chấm gạch ngang"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:129
 msgid "Dot dot dash"
-msgstr ""
+msgstr "Chấm chấm gạch ngang"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:131
 msgid "Wave"
-msgstr ""
+msgstr "Nét sóng"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:133
 msgid "Dotted heavy"
-msgstr ""
+msgstr "Chấm chấm đậm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:135
 msgid "Dashed heavy"
-msgstr ""
+msgstr "Nét gạch ngang đậm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:137
 msgid "Dot dash heavy"
-msgstr ""
+msgstr "Chấm gạch ngang đậm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:139
 msgid "Dot dot dash heavy"
-msgstr ""
+msgstr "Chấm chấm gạch ngang đậm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:141
 msgid "Wave heavy"
-msgstr ""
+msgstr "Sóng đậm"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:143
 msgid "Dashed long"
-msgstr ""
+msgstr "Nét gạch ngang dài"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:145
 msgid "Wave double"
-msgstr ""
+msgstr "Sóng kép"
 
 #. Translators: an underline style in Microsoft Word as announced in the font window.
 #: NVDAObjects\window\winword.py:147
 msgid "Dashed long heavy"
-msgstr ""
+msgstr "Nét gạch ngang dài đậm"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:310
 msgid "No case"
-msgstr ""
+msgstr "Không có kiểu chữ"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:312
 msgid "Lowercase"
-msgstr ""
+msgstr "Chữ thường"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:314
 msgid "Uppercase"
-msgstr ""
+msgstr "Chữ hoa"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:316
 msgid "Each word capitalized"
-msgstr ""
+msgstr "Viết hoa mỗi từ"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:318
 msgid "Sentence case"
-msgstr ""
+msgstr "Viết hoa đầu câu"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:320
 msgid "Mixed case"
-msgstr ""
+msgstr "Viết hoa xen kẽ"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:322
 msgid "Half width"
-msgstr ""
+msgstr "Độ rộng một nửa"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:324
 msgid "Full width"
-msgstr ""
+msgstr "Độ rộng đầy đủ"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:326
 msgid "Katakana"
-msgstr ""
+msgstr "Chữ Katakana"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:328
 msgid "Hiragana"
-msgstr ""
+msgstr "Chữ Hiragana"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:406
@@ -17802,22 +17815,22 @@ msgstr "màu tự động"
 #: NVDAObjects\window\winword.py:1739
 #, python-brace-format
 msgid "Underline {style}on"
-msgstr ""
+msgstr "Gạch dưới {style} bật"
 
 #. Translators: a message when toggling formatting to 'all capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1765
 msgid "All caps on"
-msgstr ""
+msgstr "Bật tất cả chữ hoa"
 
 #. Translators: a message when toggling formatting to 'small capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1768
 msgid "Small caps on"
-msgstr ""
+msgstr "Bật viết hoa chữ nhỏ"
 
 #. Translators: a message when toggling formatting to 'No capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1771
 msgid "Caps off"
-msgstr ""
+msgstr "Tắt viết hoa"
 
 #. Translators: a an alignment in Microsoft Word
 #: NVDAObjects\window\winword.py:1814
@@ -17966,7 +17979,7 @@ msgstr "{val:g} pt khoảng trắng trước đoạn"
 #, python-brace-format
 msgctxt "languageNotSupported"
 msgid "{lang} (not supported)"
-msgstr ""
+msgstr "{lang} (không được hỗ trợ)"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:102
@@ -18596,7 +18609,7 @@ msgstr "{D} ngày {H}:{M}:{S}"
 #. Translators: Value to show when choosing to use the default audio output device.
 #: utils\mmdevice.py:44
 msgid "Default output device"
-msgstr ""
+msgstr "Thiết bị đầu ra mặc định"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -18757,37 +18770,37 @@ msgstr "Màn Hình Bảo Vệ"
 #: _localCaptioner\imageDescriber.py:78
 msgctxt "imageDesc"
 msgid "Failed to generate description"
-msgstr ""
+msgstr "Không thể tạo mô tả"
 
 #. Translators: Message when image description is not enabled
 #: _localCaptioner\imageDescriber.py:118
 msgctxt "imageDesc"
 msgid "image description is not enabled"
-msgstr ""
+msgstr "mô tả hình ảnh chưa được bật"
 
 #. Translators: Message when starting image recognition
 #: _localCaptioner\imageDescriber.py:127
 msgctxt "imageDesc"
 msgid "getting image description..."
-msgstr ""
+msgstr "đang lấy mô tả hình ảnh..."
 
 #. Translators: error message when fail to load model
 #: _localCaptioner\imageDescriber.py:160
 msgctxt "imageDesc"
 msgid "failed to load image captioner"
-msgstr ""
+msgstr "không thể tải trình tạo mô tả hình ảnh"
 
 #. Translators: Message when successfully load the model
 #: _localCaptioner\imageDescriber.py:165
 msgctxt "imageDesc"
 msgid "image captioning on"
-msgstr ""
+msgstr "bật mô tả hình ảnh"
 
 #. Translators: Message when image captioning terminates
 #: _localCaptioner\imageDescriber.py:184
 msgctxt "imageDesc"
 msgid "image captioning off"
-msgstr ""
+msgstr "tắt mô tả hình ảnh"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
@@ -18796,161 +18809,161 @@ msgstr ""
 #: _remoteClient\client.py:564
 msgctxt "remote"
 msgid "Not the controlling computer"
-msgstr ""
+msgstr "Không phải là máy tính điều khiển"
 
 #. Translators: Displayed when muting speech and sounds from the remote computer
 #: _remoteClient\client.py:141
 msgid "Muted remote"
-msgstr ""
+msgstr "Đã tắt tiếng từ xa"
 
 #. Translators: Displayed when unmuting speech and sounds from the remote computer
 #: _remoteClient\client.py:143
 msgid "Unmuted remote"
-msgstr ""
+msgstr "Đã bỏ tắt tiếng từ xa"
 
 #. Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
 #: _remoteClient\client.py:164
 msgctxt "remote"
 msgid "No one else is connected"
-msgstr ""
+msgstr "Không có ai khác đang kết nối"
 
 #. Translators: Message shown when clipboard content cannot be sent to the remote computer.
 #: _remoteClient\client.py:172
 msgctxt "remote"
 msgid "Unable to send clipboard"
-msgstr ""
+msgstr "Không thể gửi bộ nhớ tạm"
 
 #. Translators: A message indicating that a link has been copied to the clipboard.
 #: _remoteClient\client.py:187
 msgid "Copied link"
-msgstr ""
+msgstr "Đã sao chép liên kết"
 
 #. Translators: Title of the Remote Access disconnection confirmation dialog.
 #: _remoteClient\client.py:238
 msgctxt "remote"
 msgid "Confirm Disconnection"
-msgstr ""
+msgstr "Xác nhận Ngắt kết nối"
 
 #. Translators: Message shown when disconnecting from the remote computer.
 #: _remoteClient\client.py:242
 msgctxt "remote"
 msgid "Are you sure you want to disconnect from the Remote Access session?"
-msgstr ""
+msgstr "Bạn có chắc muốn ngắt kết nối khỏi phiên Truy cập Từ xa không?"
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:302
 msgid "Error Connecting"
-msgstr ""
+msgstr "Lỗi kết nối"
 
 #. Translators: Message shown when unable to connect to the remote computer.
 #: _remoteClient\client.py:304
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Không thể kết nối đến máy tính từ xa"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:327 _remoteClient\client.py:668
 msgctxt "remote"
 msgid "A Remote Access session is already in progress. Disconnect before starting a new session."
-msgstr ""
+msgstr "Một phiên Truy cập Từ xa đang diễn ra. Vui lòng ngắt kết nối trước khi bắt đầu một phiên mới."
 
 #. Translators: Title of the connection error dialog.
 #: _remoteClient\client.py:330 _remoteClient\client.py:671
 msgctxt "remote"
 msgid "Already Connected"
-msgstr ""
+msgstr "Đã kết nối"
 
 #. Translators: Title of the Remote Access connection dialog.
 #: _remoteClient\client.py:341
 msgctxt "remote"
 msgid "Connect to Another Computer"
-msgstr ""
+msgstr "Kết nối đến Máy tính Khác"
 
 #. Translators: Presented when connected to the remote computer.
 #: _remoteClient\client.py:388
 msgid "Connected"
-msgstr ""
+msgstr "Đã kết nối"
 
 #. Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 #: _remoteClient\client.py:568
 msgctxt "remote"
 msgid "No controlled computers are connected"
-msgstr ""
+msgstr "Không có máy tính bị điều khiển nào đang kết nối"
 
 #. Translators: Presented when keyboard control is back to the controlling computer.
 #: _remoteClient\client.py:582
 msgctxt "remote"
 msgid "Controlling local computer"
-msgstr ""
+msgstr "Đang điều khiển máy tính cục bộ"
 
 #. Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 #: _remoteClient\client.py:596
 msgctxt "remote"
 msgid "Controlling remote computer"
-msgstr ""
+msgstr "Đang điều khiển máy tính từ xa"
 
 #. Translators: Ask the user if they want to control the remote computer.
 #: _remoteClient\client.py:686
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to control the computer on server {server} with key {key}?"
-msgstr ""
+msgstr "Bạn có muốn điều khiển máy tính trên máy chủ {server} với khóa {key} không?"
 
 #. Translators: Ask the user if they want to allow the remote computer to control this computer.
 #: _remoteClient\client.py:692
 #, python-brace-format
 msgctxt "remote"
 msgid "Do you wish to allow this computer to be controlled on server {server} with key {key}?"
-msgstr ""
+msgstr "Bạn có muốn cho phép máy tính này bị điều khiển trên máy chủ {server} với khóa {key} không?"
 
 #. Translators: Title of the connection request dialog.
 #: _remoteClient\client.py:698
 msgctxt "remote"
 msgid "Remote Access Connection Request"
-msgstr ""
+msgstr "Yêu cầu Kết nối Truy cập Từ xa"
 
 #. Translators: Message shown when the connection to the remote computer is lost.
 #: _remoteClient\cues.py:28
 msgid "Disconnected"
-msgstr ""
+msgstr "Đã ngắt kết nối"
 
 #. Translators: Presented in direct (client to server) Remote Access connection when the controlled computer is ready.
 #: _remoteClient\cues.py:33
 msgctxt "remote"
 msgid "Connected as controlled computer"
-msgstr ""
+msgstr "Đã kết nối với vai trò máy tính bị điều khiển"
 
 #. Translators: Message shown when the clipboard is successfully sent to the remote computer.
 #: _remoteClient\cues.py:44
 msgctxt "remote"
 msgid "Clipboard sent"
-msgstr ""
+msgstr "Đã gửi bộ nhớ tạm"
 
 #. Translators: Message shown when the clipboard is successfully received from the remote computer.
 #: _remoteClient\cues.py:49
 msgid "Clipboard received"
-msgstr ""
+msgstr "Đã nhận bộ nhớ tạm"
 
 #. Translators: The button used to generate a random key/password.
 #: _remoteClient\dialogs.py:55 _remoteClient\dialogs.py:217
 msgid "&Generate Key"
-msgstr ""
+msgstr "&Tạo Khóa"
 
 #. Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 #: _remoteClient\dialogs.py:65
 msgid "Host must be set."
-msgstr ""
+msgstr "Cần phải đặt máy chủ."
 
 #. Translators: Title of a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:79
 msgctxt "remote"
 msgid "Generating key"
-msgstr ""
+msgstr "Đang tạo khóa"
 
 #. Translators: Message on a dialog shown to users when asking a Remote Access server to generate a key
 #: _remoteClient\dialogs.py:81
 msgctxt "remote"
 msgid "Generating key..."
-msgstr ""
+msgstr "Đang tạo khóa..."
 
 #. Translators: Message shown to users when requesting that a Remote Access server generate a key fails.
 #. {host} will be replaced with the address of the Remote Access server.
@@ -18958,75 +18971,75 @@ msgstr ""
 #, python-brace-format
 msgctxt "remote"
 msgid "Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field."
-msgstr ""
+msgstr "Không thể kết nối đến {host}. Vui lòng kiểm tra kết nối internet và đảm bảo trường máy chủ không có lỗi."
 
 #. Translators: Title of a dialog.
 #: _remoteClient\dialogs.py:128
 msgctxt "remote"
 msgid "Host connection failed"
-msgstr ""
+msgstr "Thiết lập máy chủ thất bại"
 
 #. Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 #: _remoteClient\dialogs.py:192
 msgid "&External IP:"
-msgstr ""
+msgstr "& IP ngoài:"
 
 #. Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 #: _remoteClient\dialogs.py:197
 msgid "Get External &IP"
-msgstr ""
+msgstr "Lấy &IP Ngoài"
 
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
 #: _remoteClient\dialogs.py:215
 msgctxt "remote"
 msgid "&Key"
-msgstr ""
+msgstr "&Khóa"
 
 #. Translators: Title of a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:236
 msgctxt "remote"
 msgid "Getting external IP"
-msgstr ""
+msgstr "Đang lấy IP ngoài"
 
 #. Translators: Message on a dialog shown to users while attempting to detect their external IP address
 #: _remoteClient\dialogs.py:238
 msgctxt "remote"
 msgid "Getting external IP..."
-msgstr ""
+msgstr "Đang lấy IP ngoài..."
 
 #. Translators: Message shown when successfully getting external IP and the specified port is open
 #: _remoteClient\dialogs.py:278
 #, python-brace-format
 msgid "Successfully retrieved IP address. Port {port} is open."
-msgstr ""
+msgstr "Đã lấy thành công địa chỉ IP. Cổng {port} đang mở."
 
 #. Translators: Message shown when IP was retrieved but the specified port is not forwarded
 #. {port} will be replaced with the actual port number
 #: _remoteClient\dialogs.py:289
 #, python-brace-format
 msgid "Retrieved external IP, but port {port} is most likely not currently forwarded."
-msgstr ""
+msgstr "Đã lấy được IP ngoài, nhưng cổng {port} rất có thể hiện chưa được chuyển tiếp."
 
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:304
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr ""
+msgstr "Không thể liên hệ máy chủ kiểm tra cổng, vui lòng tự lấy địa chỉ IP của bạn"
 
 #. Translators: Message displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:414
 msgid "Both host and key must be set."
-msgstr ""
+msgstr "Cần phải đặt cả máy chủ và khóa."
 
 #. Translators: Message displayed when the port or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:422
 msgid "Both port and key must be set."
-msgstr ""
+msgstr "Cần phải đặt cả cổng và khóa."
 
 #. Translators: Title of the dialog presented when attempting to connect to a server with an untrusted certificate.
 #: _remoteClient\dialogs.py:480
 msgctxt "remote"
 msgid "Security Warning"
-msgstr ""
+msgstr "Cảnh báo bảo mật"
 
 #. Translators: Message presented when attempting to connect to a server with an untrusted certificate.
 #. {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
@@ -19037,119 +19050,122 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr ""
+msgstr "Chứng chỉ của máy chủ này không thể được xác minh. Việc sử dụng sai dấu vân tay có thể cho phép bên thứ ba truy cập vào phiên Truy cập Từ xa.\n\n"
+"Trước khi tiếp tục, vui lòng đảm bảo rằng dấu vân tay chứng chỉ máy chủ sau đây là chính xác.\n"
+"Dấu vân tay SHA256 của máy chủ: {fingerprint}\n\n"
+"Vẫn tiếp tục kết nối chứ?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:500
 msgid "Connect and do not ask again for this server"
-msgstr ""
+msgstr "Kết nối và không hỏi lại cho máy chủ này"
 
 #. Translators: A button to connect and ask again for the server with unauthorized certificate.
 #: _remoteClient\dialogs.py:502
 msgid "Connect"
-msgstr ""
+msgstr "Kết nối"
 
 #. Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
 #: _remoteClient\localMachine.py:290
 msgctxt "remote"
 msgid "Unable to trigger control+alt+delete"
-msgstr ""
+msgstr "Không thể kích hoạt control+alt+delete"
 
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
 msgid "Mute remote"
-msgstr ""
+msgstr "Tắt tiếng từ xa"
 
 #. Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:34
 msgctxt "remote"
 msgid "Mute speech and sounds from the remote computer."
-msgstr ""
+msgstr "Tắt tiếng nói và âm thanh từ máy tính từ xa."
 
 #. Translators: Menu item in the Remote Access submenu to send the contents of the clipboard to the remote computer.
 #: _remoteClient\menu.py:42
 msgctxt "remote"
 msgid "&Send clipboard"
-msgstr ""
+msgstr "&Gửi bộ nhớ tạm"
 
 #. Translators: Tooltip for the Send clipboard menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:44
 msgctxt "remote"
 msgid "Send the clipboard text to the remote computer."
-msgstr ""
+msgstr "Gửi văn bản trong bộ nhớ tạm đến máy tính từ xa."
 
 #. Translators: Menu item in the Remote Access submenu to copy a link to the current session.
 #: _remoteClient\menu.py:55
 msgid "Copy &link"
-msgstr ""
+msgstr "Sao chép &liên kết"
 
 #. Translators: Tooltip for the Copy Link menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:57
 msgctxt "remote"
 msgid "Copy a link to the current Remote Access session to the clipboard."
-msgstr ""
+msgstr "Sao chép liên kết tới phiên Truy cập Từ xa hiện tại vào bộ nhớ tạm."
 
 #. Translators: Menu item in the Remote Access submenu to send Control+Alt+Delete to the remote computer.
 #: _remoteClient\menu.py:68
 msgctxt "remote"
 msgid "S&end control+alt+delete"
-msgstr ""
+msgstr "G&ửi control+alt+delete"
 
 #. Translators: Tooltip for the Send Control+Alt+Delete menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:70
 msgctxt "remote"
 msgid "Send control+alt+delete to the controlled computer."
-msgstr ""
+msgstr "Gửi Control+Alt+Delete đến máy tính bị điều khiển."
 
 #. Translators: Label of the Remote Access submenu in the NVDA tools menu.
 #: _remoteClient\menu.py:81
 msgctxt "remote"
 msgid "R&emote Access"
-msgstr ""
+msgstr "T&ruy cập Từ xa"
 
 #. Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 #: _remoteClient\menu.py:85
 msgctxt "remote"
 msgid "Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one."
-msgstr ""
+msgstr "Cho phép người khác điều khiển máy tính này từ xa, hoặc điều khiển máy tính khác đang chạy NVDA bằng máy tính này."
 
 #. Translators: Item in the Remote Access submenu to connect to another computer.
 #: _remoteClient\menu.py:156
 msgid "Connect..."
-msgstr ""
+msgstr "Kết nối..."
 
 #. Translators: Tooltip for the Connect menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:158
 msgctxt "remote"
 msgid "Remotely connect to another computer running NVDA."
-msgstr ""
+msgstr "Kết nối từ xa đến một máy tính khác đang chạy NVDA."
 
 #. Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA.
 #: _remoteClient\menu.py:176
 msgid "Disconnect"
-msgstr ""
+msgstr "Ngắt kết nối"
 
 #. Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:178
 msgctxt "remote"
 msgid "Disconnect from the current Remote Access session."
-msgstr ""
+msgstr "Ngắt kết nối khỏi phiên Truy cập Từ xa hiện tại."
 
 #. Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr ""
+msgstr "Máy chủ Truy cập Từ xa bạn đã kết nối không tương thích với phiên bản NVDA này. Vui lòng sử dụng một máy chủ khác."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
 msgctxt "remote"
 msgid "Message from Remote Access Server"
-msgstr ""
+msgstr "Thông báo từ Máy chủ Truy cập Từ xa"
 
 #. Translators: Message for when the remote NVDA is not connected
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr ""
+msgstr "NVDA truy cập từ xa chưa được kết nối"
 
