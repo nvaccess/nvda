@@ -3,7 +3,7 @@
 ## 2026.1
 
 This release introduces on-device AI image descriptions.
-You can now use `NVDA+Windows+D` to describe images you encounter.
+You can now use `NVDA+Windows+d` to describe images you encounter.
 
 ### Important notes
 
