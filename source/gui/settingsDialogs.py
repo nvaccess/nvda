@@ -2827,7 +2827,7 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style")
 		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
-			config.conf["math"]["speech"]["language"]
+			config.conf["math"]["speech"]["language"],
 		)
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
@@ -3038,7 +3038,8 @@ class MathSettingsPanel(SettingsPanel):
 			self.languageCodes[self.languageList.GetSelection()],
 		)
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
-			VerbosityOption, self.speechAmountList.GetSelection()
+			VerbosityOption,
+			self.speechAmountList.GetSelection(),
 		)
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
