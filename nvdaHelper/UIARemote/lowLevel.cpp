@@ -11,7 +11,6 @@ For full terms and any additional permissions, see the NVDA license file: https:
 #include <winrt/windows.ui.uiautomation.core.h>
 #include <atlcomcli.h>
 #include <common/log.h>
-#define PYBIND11_DETAILED_ERROR_MESSAGES
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
