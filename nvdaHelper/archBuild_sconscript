@@ -244,6 +244,9 @@ if isNVDAHelperLocalArch:
 	if signExec:
 		env.AddPostAction(win10localLib[0], [signExec])
 	env.Install(libInstallDir, win10localLib)
+
+if isNVDACoreArch:
+	# UIARemote is a Python extension and must match our core archetecture always.
 	UIARemoteLib = env.SConscript("UIARemote/sconscript")
 	if signExec:
 		env.AddPostAction(UIARemoteLib[0], [signExec])
