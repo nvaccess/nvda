@@ -1,7 +1,7 @@
 ---
 name: "(Advanced) Feature from add-on"
 about: "Propose specific functionality from an existing community add-on for integration into NVDA."
-labels: ["enhancement", "add-on/integration"]
+labels: ["enhancement", "Addon/integration"]
 ---
 
 ### Describe the specific functionality to be integrated
