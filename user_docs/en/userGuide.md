@@ -4,7 +4,7 @@
 
 <!-- KC:title: NVDA NVDA_VERSION Commands Quick Reference -->
 
-## est2 Introduction {#Introduction}
+## Introduction {#Introduction}
 
 Welcome to NVDA!
 
