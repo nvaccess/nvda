@@ -5112,8 +5112,11 @@ class GlobalCommands(ScriptableObject):
 		_localCaptioner._localCaptioner.runCaption(gesture)
 
 	@script(
-		# Translators: Description for the toggle image captioning script
-		description=pgettext("imageDesc", "Toggle image captioning"),
+		description=pgettext(
+			"imageDesc", 
+			# Translators: Description for the toggle image captioning script
+			"Load or unload the image captioner"
+		),
 		category=SCRCAT_IMAGE_DESC,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
