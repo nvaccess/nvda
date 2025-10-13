@@ -2818,7 +2818,9 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
-			self._getEnumIndexFromConfigValue(DecimalSeparatorOption, config.conf["math"]["other"]["decimalSeparator"]),
+			self._getEnumIndexFromConfigValue(
+				DecimalSeparatorOption, config.conf["math"]["other"]["decimalSeparator"]
+			),
 		)
 
 		# Translators: Select a speech style.
@@ -2951,7 +2953,9 @@ class MathSettingsPanel(SettingsPanel):
 			self.navSpeechAmountList,
 		)
 		self.navSpeechAmountList.SetSelection(
-			self._getEnumIndexFromConfigValue(NavVerbosityOption, config.conf["math"]["navigation"]["navVerbosity"]),
+			self._getEnumIndexFromConfigValue(
+				NavVerbosityOption, config.conf["math"]["navigation"]["navVerbosity"]
+			),
 		)
 
 		# Translators: label for combobox to specify how math will be copied to the clipboard
@@ -2994,7 +2998,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.brailleHighlightsList.SetSelection(
 			self._getEnumIndexFromConfigValue(
 				BrailleNavHighlightOption,
-				config.conf["math"]["braille"]["brailleNavHighlight"]
+				config.conf["math"]["braille"]["brailleNavHighlight"],
 			),
 		)
 
@@ -3016,11 +3020,13 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		mathConf = config.conf["math"]
-		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(ImpairmentOption, self.impairmentList.GetSelection())
+		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(
+			ImpairmentOption, self.impairmentList.GetSelection()
+		)
 		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
-			self.decimalSeparatorList.GetSelection()
+			self.decimalSeparatorList.GetSelection(),
 		)
 		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
 			self.speechStyleList.GetStringSelection(),
@@ -3039,22 +3045,26 @@ class MathSettingsPanel(SettingsPanel):
 			mathConf["speech"]["speechSound"] = "None"
 		mathConf["speech"]["chemistry"] = self._getEnumValueFromSelection(
 			ChemistryOption,
-			self.speechForChemicalList.GetSelection()
+			self.speechForChemicalList.GetSelection(),
 		)
-		mathConf["navigation"]["navMode"] = self._getEnumValueFromSelection(NavModeOption, self.navModeList.GetSelection())
+		mathConf["navigation"]["navMode"] = self._getEnumValueFromSelection(
+			NavModeOption, self.navModeList.GetSelection()
+		)
 		mathConf["navigation"]["resetNavMode"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["navVerbosity"] = self._getEnumValueFromSelection(
 			NavVerbosityOption,
-			self.navSpeechAmountList.GetSelection()
+			self.navSpeechAmountList.GetSelection(),
 		)
 		mathConf["navigation"]["overview"] = self.navSpeechList.GetSelection() != 0
 		mathConf["navigation"]["resetOverview"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["autoZoomOut"] = self.navAutoZoomCheckBox.GetValue()
-		mathConf["navigation"]["copyAs"] = self._getEnumValueFromSelection(CopyAsOption, self.navCopyAsList.GetSelection())
+		mathConf["navigation"]["copyAs"] = self._getEnumValueFromSelection(
+			CopyAsOption, self.navCopyAsList.GetSelection()
+		)
 
 		mathConf["braille"]["brailleNavHighlight"] = self._getEnumValueFromSelection(
 			BrailleNavHighlightOption,
-			self.brailleHighlightsList.GetSelection()
+			self.brailleHighlightsList.GetSelection(),
 		)
 		mathConf["braille"]["brailleCode"] = self.brailleMathCodeList.GetStringSelection()
 		mcPrefs: MathCATUserPreferences = MathCATUserPreferences.fromNVDAConfig()
