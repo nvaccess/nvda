@@ -5113,9 +5113,9 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=pgettext(
-			"imageDesc", 
+			"imageDesc",
 			# Translators: Description for the toggle image captioning script
-			"Load or unload the image captioner"
+			"Load or unload the image captioner",
 		),
 		category=SCRCAT_IMAGE_DESC,
 	)
