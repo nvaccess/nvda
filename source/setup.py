@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
@@ -8,6 +7,12 @@ import argparse
 import os
 import sys
 import gettext
+from buildVersion import (
+	formatBuildVersionString,
+	name,
+	publisher,
+	version,
+)
 
 gettext.install("nvda")
 from glob import glob  # noqa: E402
@@ -18,11 +23,7 @@ import fnmatch  # noqa: E402
 from versionInfo import (  # noqa: E402
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
-	formatBuildVersionString,
-	name,
-	publisher,
-	version,
-)  # noqa: E402
+)
 from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
 import wx  # noqa: E402
@@ -206,7 +207,7 @@ freeze(
 	options={
 		"verbose": 2,
 		# Removes assertions for builds.
-		# https://docs.python.org/3.11/tutorial/modules.html#compiled-python-files
+		# https://docs.python.org/3.13/tutorial/modules.html#compiled-python-files
 		"optimize": 1,
 		"bundle_files": 3,
 		"dist_dir": "../dist",
@@ -226,12 +227,10 @@ freeze(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
-			# numpy is an optional dependency of comtypes but we don't require it.
-			"numpy",
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
-			# Tomli is part of Python 3.11 as Tomlib, but is imported as tomli by cryptography, which causes an infinite loop in py2exe
+			# Tomli is part of Python 3.11+ as Tomlib, but is imported as tomli by cryptography, which causes an infinite loop in py2exe
 			"tomli",
 		],
 		"packages": [
@@ -261,6 +260,9 @@ freeze(
 			# ART dependencies
 			"art",
 			"Pyro5",
+			"pymdownx",
+			# Required for local image captioning
+			"numpy",
 		],
 		"includes": [
 			"nvdaBuiltin",
@@ -268,14 +270,18 @@ freeze(
 			"bisect",
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
+			# required for import numpy without error
+			"numpy._core._exceptions",
+			"numpy._core._multiarray_umath",
 		],
 	},
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
-		("lib/%s" % version, glob("lib/*.dll") + glob("lib/*.manifest")),
-		("lib64/%s" % version, glob("lib64/*.dll") + glob("lib64/*.exe")),
-		("libArm64/%s" % version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
+		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
+		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
+		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
+		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),

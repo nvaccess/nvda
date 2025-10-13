@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Copyright (C) 2007-2025 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
 # Leonard de Ruijter, James Teh
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -13,16 +13,12 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	Structure,
 	c_uint,
 	byref,
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
-)
-from ctypes.wintypes import (
-	WORD,
-	DWORD,
+	string_at,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
@@ -41,7 +37,16 @@ import globalVars
 from speech import SpeechSequence
 from speech.commands import BreakCommand
 from synthDriverHandler import pre_synthSpeak
+from utils import _deprecate
+from winBindings.mmeapi import WAVEFORMATEX as _WAVEFORMATEX
 
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"WAVEFORMATEX",
+		"winBindings.mmeapi",
+	),
+)
+"""Module __getattr__ to handle backward compatibility."""
 
 __all__ = (
 	"WavePlayer",
@@ -58,18 +63,6 @@ the remote system must be notified of sounds played on the local system.
 Also, registrars should be able to suppress playing sounds if desired.
 Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
 """
-
-
-class WAVEFORMATEX(Structure):
-	_fields_ = [
-		("wFormatTag", WORD),
-		("nChannels", WORD),
-		("nSamplesPerSec", DWORD),
-		("nAvgBytesPerSec", DWORD),
-		("nBlockAlign", WORD),
-		("wBitsPerSample", WORD),
-		("cbSize", WORD),
-	]
 
 
 WAVE_FORMAT_PCM = 1
@@ -232,7 +225,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.channels = channels
 		self.samplesPerSec = samplesPerSec
 		self.bitsPerSample = bitsPerSample
-		format = self._format = WAVEFORMATEX()
+		format = self._format = _WAVEFORMATEX()
 		format.wFormatTag = WAVE_FORMAT_PCM
 		format.nChannels = channels
 		format.nSamplesPerSec = samplesPerSec
@@ -346,6 +339,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 		# turn off trimming temporarily.
 		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
+		if not isinstance(data, bytes):
+			data = string_at(data, size)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,

@@ -19,7 +19,7 @@ from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture, canModifiersPerformAction
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
-from utils.security import isRunningOnSecureDesktop
+from utils.security import isRunningOnSecureDesktop, post_sessionLockStateChanged
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 import winUser
@@ -46,11 +46,13 @@ class RemoteClient:
 	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
+	hostPendingNonmodifier: KeyModifier | None
 	_connecting: bool
 	leaderTransport: Optional[RelayTransport]
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
+	sdHandler: SecureDesktopHandler | None
 
 	def __init__(
 		self,
@@ -58,6 +60,7 @@ class RemoteClient:
 		log.info("Initializing NVDA Remote client")
 		self.keyModifiers = set()
 		self.hostPendingModifiers = set()
+		self.hostPendingNonmodifiers = None
 		self.localScripts = set()
 		self.localMachine = LocalMachine()
 		self.followerSession = None
@@ -71,14 +74,20 @@ class RemoteClient:
 		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
-		self.sdHandler = SecureDesktopHandler()
-		if isRunningOnSecureDesktop():
-			connection = self.sdHandler.initializeSecureDesktop()
-			if connection:
-				self.connectAsFollower(connection)
-				self.followerSession.transport.connectedEvent.wait(
-					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
-				)
+		self._wasSendingKeysBeforeLock: bool = False
+		try:
+			self.sdHandler = SecureDesktopHandler()
+		except RuntimeError:
+			log.error("Failed to initialise the secure desktop handler.", exc_info=True)
+			self.sdHandler = None
+		else:
+			if isRunningOnSecureDesktop():
+				connection = self.sdHandler.initializeSecureDesktop()
+				if connection:
+					self.connectAsFollower(connection)
+					self.followerSession.transport.connectedEvent.wait(
+						self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
+					)
 		core.postNvdaStartup.register(self.performAutoconnect)
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
@@ -102,7 +111,8 @@ class RemoteClient:
 		self.connect(conInfo)
 
 	def terminate(self):
-		self.sdHandler.terminate()
+		if self.sdHandler is not None:
+			self.sdHandler.terminate()
 		self.disconnect()
 		self.localMachine.terminate()
 		self.localMachine = None
@@ -128,14 +138,17 @@ class RemoteClient:
 			# Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		self.localMachine.isMuted = not self.localMachine.isMuted
-		self.menu.muteItem.Check(self.localMachine.isMuted)
+		self._doToggleMute()
 		# Translators: Displayed when muting speech and sounds from the remote computer
 		MUTE_MESSAGE = _("Muted remote")
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
 		ui.delayedMessage(status)
+
+	def _doToggleMute(self):
+		self.localMachine.isMuted = not self.localMachine.isMuted
+		self.menu.muteItem.Check(self.localMachine.isMuted)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -273,7 +286,8 @@ class RemoteClient:
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
-		self.sdHandler.followerSession = None
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = None
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 		self._connecting = False
@@ -360,6 +374,8 @@ class RemoteClient:
 		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self._doToggleMute()
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
@@ -368,6 +384,7 @@ class RemoteClient:
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
+		post_sessionLockStateChanged.register(self._sessionLockStateChangeHandler)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected"),
@@ -383,12 +400,11 @@ class RemoteClient:
 			self.localMachine.isMuted = False
 		self.sendingKeys = False
 		self.keyModifiers = set()
+		post_sessionLockStateChanged.unregister(self._sessionLockStateChangeHandler)
 
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
-		# Translators: Presented when connection to a remote computer was interupted.
-		ui.message(_("Disconnected"))
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
@@ -399,7 +415,8 @@ class RemoteClient:
 			transport=transport,
 			localMachine=self.localMachine,
 		)
-		self.sdHandler.followerSession = self.followerSession
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onFollowerCertificateFailed,
@@ -509,6 +526,9 @@ class RemoteClient:
 		if not pressed and keyCode in self.hostPendingModifiers:
 			self.hostPendingModifiers.discard(keyCode)
 			return True
+		if not pressed and keyCode == self.hostPendingNonmodifier:
+			self.hostPendingNonmodifier = None
+			return True
 		gesture = KeyboardInputGesture(
 			self.keyModifiers,
 			keyCode[0],
@@ -525,6 +545,7 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
+		self.localMachine._dismissLocalBrailleMessage()
 		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
@@ -565,17 +586,31 @@ class RemoteClient:
 		self.releaseKeys()
 		# Translators: Presented when keyboard control is back to the controlling computer.
 		ui.message(pgettext("remote", "Controlling local computer"))
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self.toggleMute()
 
-	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
+	def _switchToRemoteControl(self, gesture: KeyboardInputGesture | None) -> None:
 		"""Switch to controlling the remote computer."""
 		self.sendingKeys = True
 		log.info("Remote key control enabled")
 		self.setReceivingBraille(self.sendingKeys)
-		self.hostPendingModifiers = gesture.modifiers
+		if gesture is not None:
+			self.hostPendingModifiers = gesture.modifiers
+			self.hostPendingNonmodifier = (gesture.vkCode, gesture.isExtended)
+		else:
+			self.hostPendingModifiers = set()
 		# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 		ui.message(pgettext("remote", "Controlling remote computer"))
 		if self.localMachine.isMuted:
 			self.toggleMute()
+
+	def _sessionLockStateChangeHandler(self, isNowLocked: bool):
+		if isNowLocked and self.sendingKeys:
+			self._wasSendingKeysBeforeLock = True
+			self._switchToLocalControl()
+		elif not isNowLocked and self._wasSendingKeysBeforeLock:
+			self._wasSendingKeysBeforeLock = False
+			self._switchToRemoteControl(None)
 
 	def releaseKeys(self):
 		"""Release all pressed keys on the remote machine.

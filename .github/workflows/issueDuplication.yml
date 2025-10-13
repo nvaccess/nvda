@@ -1,0 +1,63 @@
+name: Issue Duplication Check
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+  models: read
+
+jobs:
+  duplication-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch issue
+        id: issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            })
+            core.setOutput('title', issue.data.title)
+            core.setOutput('body', issue.data.body)
+
+      - name: Analyze issue for duplicates
+        id: analyze-issue
+        uses: actions/ai-inference@v2
+        with:
+          model: openai/gpt-4.1
+          enable-github-mcp: true
+          # The average issue body uses around 500 tokens
+          # https://platform.openai.com/tokenizer
+          # The max for free tier is 8000 tokens per request.
+          # https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models#rate-limits
+          max-tokens: 2000
+          github-mcp-token: ${{ secrets.MCP_PAT_TOKEN }}
+          system-prompt: |
+            Given an issue title and text,
+            search for duplicates in the nvaccess/nvda repository.
+            If there are duplicates, return a comma separated list of the issue numbers e.g. "#1234, #5678".
+            If there are no duplicates, return 'pass'.
+            Consider the following title and body:
+          prompt: |
+            Title: ${{ steps.issue.outputs.title }}
+            Body: ${{ steps.issue.outputs.body }}
+
+      - name: Comment On Issue
+        if: steps.analyze-issue.outputs.response != 'pass'
+        uses: actions/github-script@v7
+        env:
+          AI_RESPONSE: "Hi there! I found some potential duplicate issues: ${{ steps.analyze-issue.outputs.response }}"
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: process.env.AI_RESPONSE
+            })
