@@ -37,7 +37,7 @@ def NVDA_Caption():
 
 	# locate graph to generate caption
 	spy.emulateKeyPress("g")
-	spy.emulateKeyPress("NVDA+windows+d")
+	spy.emulateKeyPress("NVDA+g")
 	spy.wait_for_specific_speech(
 		"visual desk access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual desktop access non-visual",
 	)
