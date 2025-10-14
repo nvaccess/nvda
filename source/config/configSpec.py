@@ -374,6 +374,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enable = boolean(default=false)
 	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
 
+["configProfiles"]
+	"reportProfileNameWhenSwitching" = boolean(default=False)
 """
 
 #: The configuration specification
