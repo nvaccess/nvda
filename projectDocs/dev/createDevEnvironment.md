@@ -93,7 +93,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
-* brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
+* brlapi Python bindings, version 0.8.7 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.8
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11

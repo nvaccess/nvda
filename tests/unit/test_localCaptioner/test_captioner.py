@@ -25,7 +25,7 @@ from PIL import Image
 import io
 import shutil
 
-from _localCaptioner.captioner import VitGpt2ImageCaptioner
+from _localCaptioner.captioner.vitGpt2 import VitGpt2ImageCaptioner
 from _localCaptioner import modelConfig
 
 modelConfig.initialize()

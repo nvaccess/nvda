@@ -74,6 +74,7 @@ from winAPI.secureDesktop import post_secureDesktopStateChange
 from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
+from gui.guiHelper import wxCallOnMain
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -2396,6 +2397,26 @@ the local braille handler should be disabled as long as the system is in control
 Handlers are called without arguments.
 """
 
+_decide_disabledIncludesMessages = extensionPoints.Decider()
+"""
+Allows Remote Access to decide whether an exception should be made for showing ui.message.
+Handlers are called without arguments.
+"""
+
+_pre_showBrailleMessage = extensionPoints.Action()
+"""
+Called before a `ui.message` is shown,
+to allow Remote Access to show local messages to users who are controlling a remote computer.
+Handlers are called without arguments.
+"""
+
+_post_dismissBrailleMessage = extensionPoints.Action()
+"""
+Called after a `ui.message` is dismissed,
+to allow Remote Access to show local messages to users who are controlling a remote computer.
+Handlers are called without arguments.
+"""
+
 
 class BrailleHandler(baseObject.AutoPropertyObject):
 	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
@@ -2682,12 +2703,27 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		and thus is C{True} when the display size is greater than 0.
 		This is a read only property and can't be set.
 		"""
+		self._refreshEnabled()
+		return self._enabled
+
+	def _refreshEnabled(self, *, block: bool = False) -> None:
+		"""Refresh the state of the enabled property.
+
+		If it has gone from ``True`` to ``False``,
+		actions such as dismissing the current message (if any),
+		and clearing the cursor blink interval are performed.
+		These actions are performed synchronously or asynchronously depending on the value of :param:`block`.
+
+		:param block: Whether this operation should be blocking, defaults to False
+		"""
 		currentEnabled = bool(self.displaySize) and decide_enabled.decide()
 		if self._enabled != currentEnabled:
 			self._enabled = currentEnabled
 			if currentEnabled is False:
-				wx.CallAfter(self._handleEnabledDecisionFalse)
-		return currentEnabled
+				if block:
+					wxCallOnMain(self._handleEnabledDecisionFalse)
+				else:
+					wx.CallAfter(self._handleEnabledDecisionFalse)
 
 	def _set_enabled(self, value):
 		raise AttributeError(
@@ -2961,12 +2997,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		@postcondition: The message is displayed.
 		"""
 		if (
-			not self.enabled
+			(not self.enabled and _decide_disabledIncludesMessages.decide())
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
 			or text is None
 			or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
 		):
 			return
+		_pre_showBrailleMessage.notify()
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
 		else:
@@ -3005,6 +3042,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		if shouldUpdate:
 			self.update()
+		_post_dismissBrailleMessage.notify()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:

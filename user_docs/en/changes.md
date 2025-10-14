@@ -2,8 +2,8 @@
 
 ## 2026.1
 
-This release introduces on-device automatic image descriptions.
-You can now use `NVDA+Windows+,` to describe images you encounter.
+This release introduces on-device AI image descriptions.
+You can now use `NVDA+g` to describe images you encounter.
 
 ### Important notes
 
@@ -16,11 +16,11 @@ Windows 10 on ARM is also no longer supported.
 
 ### New Features
 
-* Automated Image Descriptions:
-  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @tianzeshi-study)
+* AI Image Descriptions:
+  * Press `NVDA+g` to get an AI generated image description. (#18475, @tianzeshi-study)
   * This is generated locally on the device - no information is sent to the internet.
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
-  * Another new unassigned command is available for toggle image captioning. (#18475)
+  * Another new unassigned command is available to toggle image captioning. (#18475)
 
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
@@ -41,10 +41,12 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
+* When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
 * Component updates:
   * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille.
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
+  * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 
 ### Bug Fixes
 
@@ -55,6 +57,9 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
+* Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
+* Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
+* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 
 ### Changes for Developers
 
@@ -69,6 +74,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sphinx to 8.1.3. (#18475)
   * Introduced onnxruntime 1.22.1 for model inference. (#18475)
   * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Updated wxPython to 4.2.3. (#19080)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
@@ -79,6 +85,8 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
+* NVDA now uses `truststore` to always use Windows root certificates, which injects to libraries like `requests`.
+Wrap code with `truststore.extract_from_ssl` and `truststore.inject_into_ssl` to disable this behavior where required. (#18528)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -100,6 +108,8 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
+* `gui.nvdaControls.TabbableScrolledPanel` has been removed.
+Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 
 #### Deprecations
 
@@ -179,6 +189,7 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `updateCheck.UPDATE_FETCH_TIMEOUT_S` is deprecated for removal without replacement. (#18354)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->

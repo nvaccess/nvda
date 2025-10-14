@@ -25,10 +25,12 @@ dependencies = [
 	"comtypes==1.4.11",
 	"cryptography==44.0.1",
 	"pyserial==3.5",
-	"wxPython==4.2.2",
+	"wxPython==4.2.3",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
 	"requests==2.32.3",
+	# Overrides certifi so that requests uses system certificates instead
+	"truststore==0.10.4",
 	"url-normalize==1.4.3",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch

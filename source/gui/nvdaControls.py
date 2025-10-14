@@ -14,7 +14,6 @@ from typing import (
 import warnings
 
 import wx
-from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
 
 import config
@@ -43,7 +42,6 @@ __all__ = [
 	"MessageDialog",
 	"_ContinueCancelDialog",
 	"EnhancedInputSlider",
-	"TabbableScrolledPanel",
 	"FeatureFlagCombo",
 ]
 
@@ -432,44 +430,6 @@ class EnhancedInputSlider(wx.Slider):
 			evt.Skip()
 			return
 		self.SetValue(newValue)
-
-
-class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
-	"""
-	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
-	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
-	https://github.com/wxWidgets/Phoenix/pull/1950
-	"""
-
-	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
-		"""
-		window.GetRect returns the size of a window, and its position relative to its parent.
-		When calculating ScrollChildIntoView, the position relative to its parent is not relevant unless the
-		parent is the ScrolledPanel itself. Instead, calculate the position relative to scrolledPanel
-		"""
-		childRectRelativeToScreen = child.GetScreenRect()
-		scrolledPanelScreenPosition = self.GetScreenPosition()
-		return wx.Rect(
-			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
-			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
-			childRectRelativeToScreen.width,
-			childRectRelativeToScreen.height,
-		)
-
-	def ScrollChildIntoView(self, child: wx.Window) -> None:
-		"""
-		Overrides child.GetRect with `GetChildRectRelativeToSelf` before calling
-		`super().ScrollChildIntoView`. `super().ScrollChildIntoView` incorrectly uses child.GetRect to
-		navigate scrolling, which is relative to the parent, where it should instead be relative to this
-		ScrolledPanel.
-		"""
-		oldChildGetRectFunction = child.GetRect
-		child.GetRect = lambda: self.GetChildRectRelativeToSelf(child)
-		try:
-			super().ScrollChildIntoView(child)
-		finally:
-			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
-			child.GetRect = oldChildGetRectFunction
 
 
 class FeatureFlagCombo(wx.Choice):

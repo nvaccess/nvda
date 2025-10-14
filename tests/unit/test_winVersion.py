@@ -89,7 +89,7 @@ class TestWinVersion(unittest.TestCase):
 	def test_winVerProcessorArchitecture(self):
 		# See if processor architecture matches what Windows says.
 		# Use os.environ to guard against platform.machine() giving odd results.
-		actualArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432", os.environ["PROCESSOR_ARCHITECTURE"])
+		actualArchitecture = os.environ["PROCESSOR_ARCHITECTURE"]
 		self.assertEqual(winVersion.getWinVer().processorArchitecture, actualArchitecture)
 
 	def test_winVerUnknownWin11BuildToReleaseName(self):

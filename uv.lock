@@ -536,6 +536,7 @@ dependencies = [
     { name = "pyserial", marker = "sys_platform == 'win32'" },
     { name = "requests", marker = "sys_platform == 'win32'" },
     { name = "schedule", marker = "sys_platform == 'win32'" },
+    { name = "truststore", marker = "sys_platform == 'win32'" },
     { name = "url-normalize", marker = "sys_platform == 'win32'" },
     { name = "wxpython", marker = "sys_platform == 'win32'" },
 ]
@@ -590,8 +591,9 @@ requires-dist = [
     { name = "pyserial", specifier = "==3.5" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "schedule", specifier = "==1.2.2" },
+    { name = "truststore", specifier = "==0.10.4" },
     { name = "url-normalize", specifier = "==1.4.3" },
-    { name = "wxpython", specifier = "==4.2.2" },
+    { name = "wxpython", specifier = "==4.2.3" },
 ]
 
 [package.metadata.requires-dev]
@@ -624,7 +626,7 @@ unit-tests = [
 
 [[package]]
 name = "nvda-misc-deps"
-version = "20250419"
+version = "20250925"
 source = { editable = "miscDeps" }
 
 [[package]]
@@ -1189,6 +1191,15 @@ wheels = [
 ]
 
 [[package]]
+name = "truststore"
+version = "0.10.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/a3/1585216310e344e8102c22482f6060c7a6ea0322b63e026372e6dcefcfd6/truststore-0.10.4.tar.gz", hash = "sha256:9d91bd436463ad5e4ee4aba766628dd6cd7010cf3e2461756b3303710eebc301", size = 26169, upload-time = "2025-08-12T18:49:02.73Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/97/56608b2249fe206a67cd573bc93cd9896e1efb9e98bce9c163bcdc704b88/truststore-0.10.4-py3-none-any.whl", hash = "sha256:adaeaecf1cbb5f4de3b1959b42d41f6fab57b2b1666adb59e89cb0b53361d981", size = 18660, upload-time = "2025-08-12T18:49:01.46Z" },
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1279,13 +1290,11 @@ wheels = [
 
 [[package]]
 name = "wxpython"
-version = "4.2.2"
+version = "4.2.3"
 source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six", marker = "sys_platform == 'win32'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/f5/8c272764770f47fd419cc2eff4c4fa1c0681c71bcc2f3158b3a83d1339ff/wxPython-4.2.2.tar.gz", hash = "sha256:5dbcb0650f67fdc2c5965795a255ffaa3d7b09fb149aa8da2d0d9aa44e38e2ba", size = 57358880, upload-time = "2024-09-12T02:44:55.263Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/d9/4451392d3d6ba45aa23aa77a6f1a9970b43351b956bf61e10fd513a1dc38/wxPython-4.2.3.tar.gz", hash = "sha256:20d6e0c927e27ced85643719bd63e9f7fd501df6e9a8aab1489b039897fd7c01", size = 58861286, upload-time = "2025-04-10T02:49:43.557Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fa/b1/bc06c1abb212e1a2358588037d4fa5d5f4c962dd287478f4d54e425854a0/wxPython-4.2.2-cp313-cp313-win32.whl", hash = "sha256:c9310864b088d0f68d212360f261c8fec46a543c952da21805177519622b8524", size = 14368445, upload-time = "2024-09-12T02:44:31.593Z" },
-    { url = "https://files.pythonhosted.org/packages/8c/df/5a9eca8dab4367c3efc27a42a6d6d407347261c2b7be5cead468d22f99e0/wxPython-4.2.2-cp313-cp313-win_amd64.whl", hash = "sha256:d8548ce4165e214601083d0d5767dba854a5e14f4e0ed4dbe56e2daf193a4575", size = 16416599, upload-time = "2024-09-12T02:44:34.459Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/42/fe653ffb7817d09cbc146bb67ace7fc690bdbe2739bbe472f99d8c51b01c/wxpython-4.2.3-cp313-cp313-win32.whl", hash = "sha256:676aeb82d64d3d3cb94210e882a508bb1013de5fb55917f54f8dd2c1483f9110", size = 14507572, upload-time = "2025-04-10T02:49:20.927Z" },
+    { url = "https://files.pythonhosted.org/packages/83/5c/1692523ab503b34065add84f184e1b0e4b6af6b5bde6447666a0d192b29d/wxpython-4.2.3-cp313-cp313-win_amd64.whl", hash = "sha256:dac14ea1b04d90b403414f0401704beecae0d3e7143755a20da0ac2cfec02bf9", size = 16566260, upload-time = "2025-04-10T02:49:24.378Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/e6/77ec1e33b878078bd603271a61ca8260b4c7edf780bd5b61116a98637240/wxpython-4.2.3-cp313-cp313-win_arm64.whl", hash = "sha256:81c551460392040fddbf2ced6e477a0b842b8a1598c68c5c7bc5580d373cf108", size = 15535083, upload-time = "2025-09-07T15:12:19.383Z" },
 ]

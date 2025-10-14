@@ -7,16 +7,14 @@ import os
 import json
 import re
 import io
-from abc import ABC, abstractmethod
-
 
 import numpy as np
 from PIL import Image
-import onnxruntime as ort
 
 from logHandler import log
 
-from .modelConfig import (
+from .base import ImageCaptioner
+from ..modelConfig import (
 	_EncoderConfig,
 	_DecoderConfig,
 	_GenerationConfig,
@@ -24,25 +22,7 @@ from .modelConfig import (
 	_PreprocessorConfig,
 	_createConfigFromDict,
 )
-from . import modelConfig
-
-
-class ImageCaptioner(ABC):
-	"""Abstract interface for image caption generation.
-
-	Supports generate caption for image
-	"""
-
-	@abstractmethod
-	def generateCaption(self, image: str | bytes, maxLength: int | None = None) -> str:
-		"""
-		Generate a caption for the given image.
-
-		:param image: Image file path or binary data.
-		:param maxLength: Optional maximum length for the generated caption.
-		:return: The generated image caption as a string.
-		"""
-		pass
+from .. import modelConfig
 
 
 class VitGpt2ImageCaptioner(ImageCaptioner):
@@ -69,6 +49,9 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:raises FileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
+		# Import late to avoid importing numpy at initialization
+		import onnxruntime as ort
+
 		# Load configuration file
 		try:
 			with open(configPath, "r", encoding="utf-8") as f:
@@ -102,7 +85,10 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		try:
 			self.encoderSession = ort.InferenceSession(encoderPath, sess_options=sessionOptions)
 			self.decoderSession = ort.InferenceSession(decoderPath, sess_options=sessionOptions)
-		except ort.capi.onnxruntime_pybind11_state.InvalidProtobuf as e:
+		except (
+			ort.capi.onnxruntime_pybind11_state.InvalidProtobuf,
+			ort.capi.onnxruntime_pybind11_state.NoSuchFile,
+		) as e:
 			raise FileNotFoundError(
 				"model file incomplete"
 				f" Please check whether the file is complete or re-download. Original error: {e}",
@@ -158,7 +144,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 			# Convert to id -> token format
 			vocab = {v: k for k, v in vocabData.items()}
-			log.info(f"Successfully loaded vocabulary with {len(vocab)} tokens")
+			log.debug(f"Successfully loaded vocabulary with {len(vocab)} tokens")
 			return vocab
 
 		except FileNotFoundError:
@@ -392,45 +378,3 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		caption = self._generateWithGreedy(encoderHiddenStates, maxLength)
 
 		return caption
-
-
-def imageCaptionerFactory(
-	configPath: str,
-	encoderPath: str | None = None,
-	decoderPath: str | None = None,
-	monomericModelPath: str | None = None,
-) -> ImageCaptioner:
-	"""Initialize the image caption generator.
-
-	:param monomericModelPath: Path to a single merged model file.
-	:param encoderPath: Path to the encoder model file.
-	:param decoderPath: Path to the decoder model file.
-	:param configPath: Path to the configuration file.
-	:raises ValueError: If neither a single model nor both encoder and decoder are provided.
-	:raises FileNotFoundError: If config file not found.
-	:raises NotImplementedError: if model architecture is unsupported
-	:raises Exception: If config.json fail to load.
-	:return: instance of ImageCaptioner
-	"""
-	if not monomericModelPath and not (encoderPath and decoderPath):
-		raise ValueError(
-			"You must provide either 'monomericModelPath' or both 'encoderPath' and 'decoderPath'.",
-		)
-
-	try:
-		with open(configPath, "r", encoding="utf-8") as f:
-			config = json.load(f)
-	except FileNotFoundError:
-		raise FileNotFoundError(
-			f"Caption model config file {configPath} not found, "
-			"please download models and config file first!",
-		)
-	except Exception:
-		log.exception("config file not found")
-		raise
-
-	modelArchitecture = config["architectures"][0]
-	if modelArchitecture == "VisionEncoderDecoderModel":
-		return VitGpt2ImageCaptioner(encoderPath, decoderPath, configPath)
-	else:
-		raise NotImplementedError("Unsupported model architectures")
