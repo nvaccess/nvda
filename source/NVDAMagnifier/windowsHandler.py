@@ -16,47 +16,6 @@ def getScreenSize() -> tuple[int, int]:
 	)
 	return screenWidth, screenHeight
 
-
-def loadMagnifierApi() -> None:
-	"""Initialize the Magnification API."""
-	try:
-		# Attempt to access the magnification DLL
-		ctypes.windll.magnification
-	except Exception as e:
-		# If the DLL is not available, log this and exit the function
-		log.error(f"Magnification API not available with error {e}")
-		return
-	# Try to initialize the magnification API
-	# MagInitialize returns 0 if already initialized or on failure
-	if ctypes.windll.magnification.MagInitialize() == 0:
-		log.info("Magnification API already initialized")
-		return
-	# If initialization succeeded, log success
-	log.info("Magnification API initialized")
-
-
-def getMagnifierPosition(x: int, y: int, zoomLevel: float) -> tuple[int, int, int, int]:
-	"""
-	Compute the top-left corner of the magnifier window centered on (x, y).
-	Returns (left, top, visibleWidth, visibleHeight).
-	"""
-	screenWidth, screenHeight = getScreenSize()
-
-	# Calculate the size of the visible area at the current zoom level
-	visibleWidth, visibleHeight = screenWidth / zoomLevel, screenHeight / zoomLevel
-
-	# Compute the top-left corner so that (x, y) is at the center of the visible area
-	left, top = int(x - (visibleWidth / 2)), int(y - (visibleHeight / 2))
-
-	# Clamp the top-left corner so the visible area stays within the screen boundaries
-	left, top = (
-		max(0, min(left, int(screenWidth - visibleWidth))),
-		max(0, min(top, int(screenHeight - visibleHeight))),
-	)
-
-	return (left, top, visibleWidth, visibleHeight)
-
-
 class GlobalPanel(wx.Panel):
 	"""Unified panel that handles both docked and lens magnification display."""
 
@@ -202,12 +161,10 @@ class GlobalFrame(wx.Frame):
 		self.Layout()
 
 	def setColorFilter(self, colorFilter: str) -> None:
-		log.info(f"Setting color filter: {colorFilter}")
 		self.colorFilter = colorFilter
 
 	def applyColorFilter(self, image: wx.Image) -> wx.Image:
 		"""Apply color filter with early exit optimization."""
-		log.info(f"Applying color filter: {self.colorFilter}")
 		# width, height = image.GetWidth(), image.GetHeight()
 		# if self.colorFilter == "normal":
 		# 	return image
@@ -285,9 +242,6 @@ class GlobalFrame(wx.Frame):
 		try:
 			self.Layout()
 			magnifierSize = self.panel.GetSize()
-
-			log.info(f"Magnifier size: {magnifierSize}, zoom: {zoomLevel}")
-
 			captureWidth = magnifierSize.width / zoomLevel
 			captureHeight = magnifierSize.height / zoomLevel
 

@@ -1,8 +1,7 @@
 import ctypes
 from ctypes import wintypes
 from enum import Enum
-from logging import PlaceHolder
-from sys import settrace
+from typing import Callable
 
 from .windowsHandler import DockedFrame, LensFrame
 
@@ -12,14 +11,6 @@ import wx
 import api
 
 # Utils
-
-def getScreenSize() -> tuple[int, int]:
-	"""Return screen width and height."""
-	screenWidth, screenHeight = (
-		ctypes.windll.user32.GetSystemMetrics(0),
-		ctypes.windll.user32.GetSystemMetrics(1),
-	)
-	return screenWidth, screenHeight
 
 class MouseHandler:
 	def __init__(self):
@@ -161,8 +152,8 @@ class NVDAMagnifier:
 	_ZOOM_STEP: float = 0.5
 	_TIMER_INTERVAL_MS: int = 20
 	_MARGIN_BORDER: int = 50
-	_SCREEN_WIDTH: int = getScreenSize()[0]
-	_SCREEN_HEIGHT: int = getScreenSize()[1]
+	_SCREEN_WIDTH: int = ctypes.windll.user32.GetSystemMetrics(0)
+	_SCREEN_HEIGHT: int = ctypes.windll.user32.GetSystemMetrics(1)
 
 	def __init__(self, zoomLevel: float, colorFilter: ColorFilter):
 		self._isActive: bool = False
@@ -172,6 +163,7 @@ class NVDAMagnifier:
 		self._lastNVDAPosition: tuple[int, int] = (0, 0)
 		self._lastMousePosition: tuple[int, int] = (0, 0)
 		self._lastScreenPosition: tuple[int, int] = (0, 0)
+		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._colorFilter: ColorFilter = colorFilter
 		self._mouseHandler: MouseHandler = MouseHandler()
 
@@ -227,6 +219,14 @@ class NVDAMagnifier:
 		self._lastScreenPosition = value
 
 	@property
+	def currentCoordinates(self) -> tuple[int, int]:
+		return self._currentCoordinates
+
+	@currentCoordinates.setter
+	def currentCoordinates(self, value: tuple[int, int]) -> None:
+		self._currentCoordinates = value
+
+	@property
 	def magnifierType(self) -> MagnifierType:
 		return self._magnifierType
 
@@ -266,6 +266,12 @@ class NVDAMagnifier:
 		if not self.isActive: 
 			return
 		self.currentCoordinates = self._getFocusCoordinates()
+		self._doUpdate()	
+		self._continueTimer(self._updateMagnifier)
+
+	def _doUpdate(self) -> None:
+		"""Perform the actual update of the magnifier."""
+		pass
 		
 	def _stopMagnifier(self) -> None:
 		"""Stop the magnifier.
@@ -285,7 +291,7 @@ class NVDAMagnifier:
 		else:
 			self.zoomLevel -= self._ZOOM_STEP
 
-	def _startTimer(self, callback: None) -> None:
+	def _startTimer(self, callback: Callable[[], None]) -> None:
 		"""Start the timer with a callback function.
 
 		:param callback: The function to call when the timer expires.
@@ -295,7 +301,7 @@ class NVDAMagnifier:
 		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
 		self.timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
 
-	def _continueTimer(self, callback: None) -> None:
+	def _continueTimer(self, callback: Callable[[], None]) -> None:
 		"""Continue timer execution with a new callback.
 
 		:param callback: The function to call when the timer expires.
@@ -382,7 +388,7 @@ class NVDAMagnifier:
 			tuple[int, int]: The (x, y) coordinates of the focus element.
 		"""
 		nvdaPosition = self._getNvdaPosition()
-		mousePosition = self._mouseHandler.getMousePosition()
+		mousePosition = self._mouseHandler.mousePosition
 
 		# Check if left mouse button is pressed
 		isClickPressed = self._mouseHandler.isLeftClickPressed()
@@ -487,9 +493,8 @@ class FullScreenMagnifier(NVDAMagnifier):
 		self._loadMagnifierApi()
 		self._startTimer(self._updateMagnifier)
 
-	def _updateMagnifier(self) -> None:
-		
-		super()._updateMagnifier()
+	def _doUpdate(self):
+		"""Perform the actual update of the magnifier."""
 		# Calculate new position based on focus mode
 		if self.fullscreenMode == FullScreenMode.CENTER:
 			x, y = self.currentCoordinates
@@ -507,9 +512,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 		self.lastScreenPosition = (x, y)
 		# Apply transformation
 		self._fullscreenMagnifier(x, y)
-
-		# Continue loop
-		self._continueTimer(self._updateMagnifier)
+		
 
 	def _stopMagnifier(self) -> None:
 		"""Stop the Fullscreen magnifier using windows DLL.
@@ -712,7 +715,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 
 		self._animateZoom(1.0, centerX, centerY, callback=lambda: wx.CallLater(2000, checkMouseIdle))
 
-	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback=None) -> None:
+	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback: Callable[[], None]) -> None:
 		"""Animate zoom smoothly using magnifierTimer.
 
 		:param targetZoom: The target zoom level.
@@ -778,13 +781,10 @@ class DockedMagnifier(NVDAMagnifier):
 		self._dockedFrame.startMagnifying(self._mouseHandler.getMousePosition(), self.colorFilter.value)
 		self._startTimer(self._updateMagnifier)
 
-	def _updateMagnifier(self):
-
-		super()._updateMagnifier()
+	def _doUpdate(self):
 		x, y = self.currentCoordinates
 		mouseCoordinates = self._mouseHandler.getMousePosition()
 		self._dockedFrame.updateMagnifier(x, y, self.zoomLevel, mouseCoordinates, self.colorFilter.value)
-		self._continueTimer(self._updateMagnifier)
 
 	def _stopMagnifier(self):
 		super()._stopMagnifier()
@@ -804,11 +804,10 @@ class LensMagnifier(NVDAMagnifier):
 		self._lensFrame.startMagnifying(self.colorFilter.value)
 		self._startTimer(self._updateMagnifier)
 
-	def _updateMagnifier(self):
-		super()._updateMagnifier()
+	def _doUpdate(self):
 		x, y = self._mouseHandler.getMousePosition()
 		self._lensFrame.updateMagnifier(x, y, self.zoomLevel, self.colorFilter.value)
-		self._continueTimer(self._updateMagnifier)
+
 
 	def _stopMagnifier(self):
 		super()._stopMagnifier()
