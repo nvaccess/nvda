@@ -5105,7 +5105,7 @@ class GlobalCommands(ScriptableObject):
 			"Get an AI-generated image description of the navigator object.",
 		),
 		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+windows+d",
+		gesture="kb:NVDA+g",
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_runCaption(self, gesture: "inputCore.InputGesture"):
