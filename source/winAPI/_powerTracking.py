@@ -260,10 +260,14 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 			)
 		elif hourText is not None:
 			text.append(
+				# Translators: Reported when only hours remaining for battery life.
+				# E.g. "2 hours remaining"
 				_("{hourText} remaining").format(hourText=hourText),
 			)
 		elif minuteText is not None:
 			text.append(
+				# Translators: Reported when only minutes remaining for battery life.
+				# E.g. "30 minutes remaining"
 				_("{minuteText} remaining").format(minuteText=minuteText),
 			)
 	return text
