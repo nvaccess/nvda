@@ -114,6 +114,7 @@ repos:
   hooks:
   - id: pyright
     name: Check types with pyright
+    additional_dependencies: [ "pyright[nodejs]==1.1.406" ]
 
 - repo: https://github.com/astral-sh/uv-pre-commit
   rev: 0.8.4
