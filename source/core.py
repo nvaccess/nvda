@@ -31,6 +31,7 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
+import truststore
 
 if TYPE_CHECKING:
 	import wx
@@ -550,6 +551,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import globalPluginHandler
 	import watchdog
 	import _remoteClient
+	import _localCaptioner
 
 	try:
 		import updateCheck
@@ -567,6 +569,8 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remoteClient causes it to clean up its menus, so do it here while they still exist
 	_terminate(_remoteClient)
+
+	_terminate(_localCaptioner)
 
 
 def _initializeObjectCaches():
@@ -673,6 +677,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
+
+	# Use Windows root certificates for requests rather than certifi.
+	truststore.inject_into_ssl()
+
 	if NVDAState.isRunningAsSource():
 		# When running as packaged version, DPI awareness is set via the app manifest.
 		from winAPI.dpiAwareness import setDPIAwareness
@@ -695,6 +703,7 @@ def main():
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
+
 	# Initialize the config path (make sure it exists)
 	config.initConfigPath()
 	log.info(f"Config dir: {WritePaths.configDir}")
@@ -905,6 +914,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import _localCaptioner
+
+	_localCaptioner.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

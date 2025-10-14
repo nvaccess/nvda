@@ -234,8 +234,7 @@ class Transport(ABC):
 	def unregisterOutbound(self, messageType: RemoteMessageType) -> None:
 		"""Unregister an extension point from a message type.
 
-		Args:
-			messageType (RemoteMessageType): The message type to unregister the extension point from
+		:param messageType (RemoteMessageType): The message type to unregister the extension point from
 		"""
 		self.outboundHandlers[messageType].unregister()
 		del self.outboundHandlers[messageType]
@@ -433,11 +432,15 @@ class TCPTransport(Transport):
 			serverSock.settimeout(self.timeout)
 		serverSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 		serverSock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 2000))
-		ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-		if insecure:
-			ctx.verify_mode = ssl.CERT_NONE
-			log.warn(f"Skipping certificate verification for {host}:{port}")
+		ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+		ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+		ctx.maximum_version = ssl.TLSVersion.TLSv1_3
+		# Must be set before verify_mode.
 		ctx.check_hostname = not insecure
+		if insecure:
+			log.warn(f"Skipping certificate verification for {host}:{port}")
+			ctx.verify_mode = ssl.CERT_NONE
+
 		ctx.load_default_certs()
 
 		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
@@ -521,6 +524,9 @@ class TCPTransport(Transport):
 			messageType = RemoteMessageType(obj["type"])
 		except ValueError:
 			log.warn(f"Received message with invalid type: {obj!r}")
+			return
+		if messageType is RemoteMessageType.PING:
+			# No handling is required
 			return
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)

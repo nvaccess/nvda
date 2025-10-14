@@ -73,6 +73,7 @@ import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
+import _localCaptioner
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -125,6 +126,9 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
+#: Script category for image description commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -793,14 +797,35 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
-		toggleIntegerValue(
-			configSection="documentFormatting",
-			configKey="reportSpellingErrors2",
-			enumClass=ReportSpellingErrors,
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
-			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound.
-			messageTemplate=_("Report spelling errors {mode}"),
+		currentValue = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		newValue = ((currentValue + 1) % ReportSpellingErrors.BRAILLE) | (
+			currentValue & ReportSpellingErrors.BRAILLE
 		)
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
+		ui.message(
+			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
+			_("Report spelling errors {mode}").format(
+				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
+			),
+		)
+
+	@script(
+		# Translators: Input help mode message for command to toggle report spelling errors in braille.
+		description=_("Toggles reporting spelling errors in braille"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
+		formatConfig = config.conf["documentFormatting"]["reportSpellingErrors2"]
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = (
+			formatConfig ^ ReportSpellingErrors.BRAILLE
+		)
+		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
+			# Translators: Message presented when turning on reporting spelling errors in braille.
+			ui.message(_("Report spelling errors in braille on"))
+		else:
+			# Translators: Message presented when turning off reporting spelling errors in braille.
+			ui.message(_("Report spelling errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -3449,6 +3474,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to local captioner settings command.
+		description=pgettext("imageDesc", "Shows the AI image descriptions settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateLocalCaptionerSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onLocalCaptionerSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to Add-on Store settings command.
 		description=_("Shows NVDA's Add-on Store settings"),
 		category=SCRCAT_CONFIG,
@@ -5063,6 +5097,31 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
+
+	@script(
+		description=pgettext(
+			"imageDesc",
+			# Translators: Description for the image caption script
+			"Get an AI-generated image description of the navigator object.",
+		),
+		category=SCRCAT_IMAGE_DESC,
+		gesture="kb:NVDA+g",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
+	def script_runCaption(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.runCaption(gesture)
+
+	@script(
+		description=pgettext(
+			"imageDesc",
+			# Translators: Description for the toggle image captioning script
+			"Load or unload the image captioner",
+		),
+		category=SCRCAT_IMAGE_DESC,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
+	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
 
 #: The single global commands instance.

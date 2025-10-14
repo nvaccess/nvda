@@ -154,7 +154,7 @@ def isInstalledCopy() -> bool:
 		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
 		return False
 
-	winreg.CloseKey(k)
+	k.Close()
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except (WindowsError, FileNotFoundError):
@@ -318,10 +318,10 @@ def setSystemConfigToCurrentConfig():
 			raise RuntimeError("Slave failure")
 
 
-def _setSystemConfig(fromPath):
+def _setSystemConfig(fromPath, *, prefix=sys.prefix):
 	import installer
 
-	toPath = os.path.join(sys.prefix, "systemConfig")
+	toPath = os.path.join(prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
@@ -416,6 +416,7 @@ class ConfigManager(object):
 		"development",
 		"addonStore",
 		"remote",
+		"automatedImageDescriptions",
 	}
 	"""
 	Sections that only apply to the base configuration;
