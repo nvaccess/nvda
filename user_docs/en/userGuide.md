@@ -1173,14 +1173,11 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
-Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
-NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
+NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
-With an appropriate math component installed, NVDA supports the following types of mathematical content:
+NVDA supports the following types of mathematical content:
 
 * MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 * Microsoft Word 365 Modern Math Equations via UI automation:
@@ -1188,15 +1185,17 @@ NVDA is able to read and interact with math equations in Microsoft Word 365/2016
 Note however that any previously created MathType equations must be first converted to Office Math.
 This can be done by selecting each and choosing "Equation Options", then "Convert to Office Math" in the context menu.
 Ensure your version of MathType is the latest version before doing this.
-Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LateX.
+Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LaTeX.
 For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
 * Microsoft Powerpoint, and older versions of Microsoft Word:
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
-* Adobe Reader:
-Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+* Adobe Acrobat Reader:
+Tagged PDF with MathML Structure elements.
+* Foxit PDF Reader:
+Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1228,24 +1227,91 @@ For example, you can move through the expression with the left and right arrow k
 
 When you wish to return to the document, simply press the escape key.
 
-For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
-
-* [MathCAT documentation](https://nsoiffer.github.io/MathCAT/users.html)
-* [Access8Math documentation](https://github.com/tsengwoody/Access8Math)
-* [MathPlayer documentation](https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html)
-
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-### Installing MathPlayer {#InstallingMathPlayer}
+Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
-Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
-E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
-MathPlayer is available for free from the Wiris website.
-[Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA.
-Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
-This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction)
+* If inside of a table, `control+arrow` will move by cell
+* `home` / `end` moves to the start/end of the expression
+* `space` reads your current position
+* `shift+upArrow/downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
+
+To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
+
+MathCAT's navigation is the same in Microsoft Word and in a web browser.
+
+While navigating an expression, `control+c` copies the math content of the current node in NVDA.
+The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).
+
+#### Navigation Modes {#MathNavigationModes}
+
+MathCAT supports the following navigation modes:
+
+* Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+Zooming in lets you explore the 2D notation in the same mode.
+Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
+* Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
+Moves by words/characters.
+This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
+Otherwise, word and character navigation is the same.
+
+The following are key commands used to navigate math:
+
+<!-- KC:beginInclude -->
+| Name | Key |
+|---|---|
+| Move to previous | `leftArrow` |
+| Move to previous cell in a table, or previous digit if in columnar math. Note: `control+alt+leftArrow` can also be used. | `control+leftArrow` |
+| Read previous | `shift+leftArrow` |
+| Describe previous | `control+shift+leftArrow` |
+| Move to next | `rightArrow` |
+| Move to next cell in a table, or next digit if in columnar math. Note: `control+alt+rightArrow` can also be used. | `control+rightArrow` |
+| Read next | `shift+rightArrow` |
+| Describe next | `control+shift+rightArrow` |
+| Zoom out | `upArrow` |
+| Move to cell above in a table, or digit above in columnar math. Note: `control+alt+upArrow` can also be used. | `control+upArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
+| Zoom out all the way | `control+shift+upArrow` |
+| Zoom in | `downArrow` |
+| Move to cell below in a table, or digit below in columnar math. Note: `control+shift+downArrow` can also be used. | `control+downArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
+| Zoom in all the way | `control+shift+downArrow` |
+| Where am I | `enter` |
+| Global Where am I | `control+center` |
+| Jump to placemarker | 1 through 10 (0 is 10) |
+| Set placemarker | `control+1` through `control+0` |
+| Read placemarker | `shift+1` through `shift+0` |
+| Describe placemarker | `control+shift+1` through `shift+0` |
+| Read current | `space` |
+| Read current cell | `control+space` |
+| Toggle "speech mode" to Read or Rescribe | `shift+space` |
+| Describe current | `control+shift+space` |
+| Move to start of expression | `home` |
+| Move to start of line | `control+home` |
+| Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
+| Move to end of expression | `end` |
+| Move to end of line | `control+end` |
+| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move back to last position | `backspace` |
+<!-- KC:endInclude -->
+
+## Typical Use
+
+Typically, you will start at the first term of an expression and move right as needed.
+You might move up and down levels if needed.
+This is done with the arrow keys.
+`control+alt+arrow` is used to move around tabular entries.
+
+Backspace will take you back to where you were, which is not always the same as moving to the left.
+For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+
+You will likely find one mode of navigation the most natural for you most of the time.
+This can be set in the MathCAT settings.
+However, at any time during navigation, you can switch the navigation modes using `shift+up/down arrow`.
+This is useful because each mode of navigation has its strengths and weaknesses.
 
 ## Braille {#Braille}
 
@@ -3127,6 +3193,207 @@ This style works best when working with documents which use block paragraphs.
 Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
+
+#### Math Settings {#MathSettings}
+
+This category allows you to adjust how NVDA reads mathematical content.
+
+##### Speech Options {#MathCATSpeechOptions}
+
+###### Impairment {#MathSpeechImpairment}
+
+This controls whether certain notations are disambiguated or not in speech.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Blindness, Low Vision, Learning disabilities |
+| Default | Blindness |
+
+###### Language {#MathSpeechLanguage}
+
+This value determines the language to be used.
+If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
+If speech rules for the main language can not be found, English ("en") is used.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Any known language code and sub-code, e.g. "en-uk". |
+| Default | en |
+
+###### Speech Style {MathSpeechStyle}
+
+A style of speech or coordinated philosophy about how to speak an expression.
+
+* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT.
+See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+* SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
+These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ClearSpeak, SimpleSpeak |
+| Default | ClearSpeak |
+
+###### Speech verbosity {#MathSpeechVerbosity}
+
+Controls how much "extra" speech is used.
+For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+###### Relative speech rate {#MathRelativeSpeed}
+
+Changes the relative speech rate.
+The change is a percentage speed change from the standard speech engine's rate.
+`100` means the math reading rate is the same as that of the text rate.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 1 and 100 |
+| Default | 100 |
+
+###### Pause Factor {#MathSpeechPauseFactor}
+
+Changes the relative amount of pausing that MathCAT adds.
+`0` turns off all pausing and `100` makes the pauses 10 times longer than normal.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 0 and 100 |
+| Default | 50 |
+
+###### Make a sound when starting/ending math speech {#MathSpeechSound}
+
+A start and end beep occur before and after reading an expression.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | None, Beep |
+| Default | None |
+
+* SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
+* AsCompound: "Water"
+* Off: "H sub 2 O"
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Spell Out, As Compound, Off |
+| Default | SpellOut |
+
+##### Navigation Options {#MathNavigation}
+
+###### Navigation mode to use when beginning to navigate an equation {#MathNavMode}
+
+"Enhanced" mode understands math structure.
+"Simple" mode walks by character to find things like fractions, roots, and scripts.
+"Character" mode moves around by character, automatically moving into fractions, etc.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Enhanced, Character, Simple |
+| Default | Enhanced |
+
+###### Navigation speech to use when beginning to navigate an equation {#MathNavSpeech}
+
+Whether to speak the expression after moving to it or give an overview.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Speak, Overview |
+| Default | Speak |
+
+###### Make a sound when starting/ending math speech {#MathNavReset}
+
+Whether to play a beep sound when speech starts/ends.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | True, False |
+| Default | True |
+
+###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
+
+Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is set to False).
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | True, False |
+| Default | True |
+
+###### Speech amount for navigation {#MathNavSpeechAmount}
+
+Specify whether you want a terse or verbose reading of navigation commands.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+###### Copy math as {#MathNavCopyAs}
+
+Specify how math will be copied to the clipboard.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | MathML, LaTeX, ASCIIMath |
+| Default | MathML |
+
+##### Braille Options {#MathBrailleOptions}
+
+###### Braille math code for refreshable displays {#MathBrailleCode}
+
+The braille math code to use.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
+| Default | Nemeth |
+
+###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
+
+Highlight the currently selected navigation node with dots 7 and 8.
+The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Off, First Character, Endpoints, All |
+| Default | Endpoints |
+
+###### UEB: Start Mode {MathStartMode}
+
+Assumed starting mode UEB braille.
+Grade1 assumes we are in G1 passage mode.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Grade1, Grade2 |
+| Default | Grade2 |
+
+###### UEB: Use Spaces Around All Operators {#MathCATUEBSpacesAroundAllOperators}
+
+The UEB guidelines suggest that for lower grades, adding space around operators such as `+` and `-` can be a good idea.
+Normally, space is only added around relational operators such as `=` and `<`.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | True, False |
+| Default | False |
+
+##### Other Options {#MathCATOtherOptions}
+
+MathCAT cleans up bad MathML.
+Numbers are frequently improperly marked up in MathML.
+In order to clean them up correctly, MathCAT needs to know locale information about what characters might be used to separate digit blocks and what characters are used as a decimal separator.
+Typically this is set based on the country code in the document.
+However, that may not be given and only the language code is given, so NVDA needs to guess based on that.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Decimal Separators | ".", "," |
+| Default            | "."      |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
