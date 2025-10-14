@@ -189,20 +189,21 @@ class ARTAddonProcess:
 			raise RuntimeError(f"Invalid ART handshake response: {e}")
 
 		if response_data.get("status") == "ready":
-			self._connectToARTServices(response_data.get("art_services", {}))
+			self._connectToARTServices(response_data.get("art_services", {}), f"addon_{addon_crypto['serializer_id']}")
 			log.info(f"ART process started successfully for {self.addon_name}")
 		else:
 			raise RuntimeError(f"ART startup failed for {self.addon_name}")
 
-	def _connectToARTServices(self, service_uris: Dict[str, str]):
+	def _connectToARTServices(self, service_uris: Dict[str, str], serializer_name: str):
 		"""Connect to ART services using provided URIs."""
 		for service_name, uri in service_uris.items():
 			try:
 				proxy = Pyro5.api.Proxy(uri)
+				proxy._pyroSerializer = serializer_name
 				proxy._pyroTimeout = 10.0  # Increase timeout to match ART config
 				proxy._pyroMaxRetries = 3  # Allow retries on temporary failures
 				self.artServices[service_name] = proxy
-				log.info(f"Connected to ART service for {self.addon_name}: {service_name}")
+				log.info(f"Connected to ART service for {self.addon_name}: {service_name}, {serializer_name=}")
 			except Exception:
 				log.exception(f"Failed to connect to ART service for {self.addon_name}: {service_name}")
 
