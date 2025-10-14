@@ -430,7 +430,9 @@ def _setup_encryption(addon_crypto: dict) -> None:
 		addon_ser.serializer_id = serializer_id
 
 		# Register addon's serializer for ALL communication
+		Pyro5.serializers.serializers_by_id.clear()
 		Pyro5.serializers.serializers_by_id[serializer_id] = addon_ser
+		Pyro5.serializers.serializers.clear()
 		Pyro5.serializers.serializers[f"addon_{serializer_id}"] = addon_ser
 
 		# Configure Pyro5 to use addon's encrypted serializer for ALL messages
