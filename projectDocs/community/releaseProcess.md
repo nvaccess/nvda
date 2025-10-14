@@ -100,7 +100,7 @@ In this case the translation period will need to be extended by an appropriate a
 
 * In the past NVDA has been released around 4 times per year.
 This is not expected to change drastically.
-* NVDA releases occur when a stable commit is ready on a frequency based schedule of roughly 3-4 months, rather than targeting calendar dates
+* NVDA releases occur when a stable commit is ready on a frequency based schedule of roughly 3-4 months, rather than targeting calendar dates.
 You can use the [release workflow](#release-workflow) schedule to estimate when the next release will come out.
 * 20XY.1 releases may take slightly longer than other releases due to managing API breaking changes.
 
