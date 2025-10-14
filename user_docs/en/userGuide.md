@@ -3289,8 +3289,8 @@ This panel provides options to customize the behavior and default settings for t
 
 ##### Enable image captioner {#LocalCaptionToggle}
 
-When this checkbox is enabled, NVDA will enable automatic image descriptions.
-Loading the model may increase memory usage, so this is disabled by default.
+When this checkbox is enabled, NVDA will load the image captioner in memory, enabling the use of the image description command.
+Loading the image captioner will increase memory usage, so this is disabled by default.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3933,7 +3933,7 @@ It is not included with the NVDA installer to reduce the installer size.
 ### Getting Started {#LocalCaptionerGettingStarted}
 
 Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#LocalCaptionToggle).
-Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` to recognize the image currently navigated by NVDA.
+Once the Image Captioner is ready, press the default shortcut `NVDA+g` to recognize the image currently navigated by NVDA.
 
 ### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
 
@@ -3941,8 +3941,8 @@ Once the Image Captioner is ready, press the default shortcut `NVDA+Windows+,` t
 
 | Name |Key |Description|
 |---|---|---|
-| Get an AI generated image description | `NVDA+Windows+,` | Recognize the image currently navigated by NVDA. |
-| Toggle image captioning | None | Enable or disable AI image descriptions. |
+| Get an AI-generated image description of the navigator object. | `NVDA+g` | Get a description of the navigator object provided by a recognition performed on the device locally. |
+| Load or unload the image captioner | None | Load or unload the image captioner in memory, enabling the use of the image description command. |
 | Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
 
 <!-- KC:endInclude -->

@@ -2,8 +2,8 @@
 
 ## 2026.1
 
-This release introduces on-device automatic image descriptions.
-You can now use `NVDA+Windows+,` to describe images you encounter.
+This release introduces on-device AI image descriptions.
+You can now use `NVDA+g` to describe images you encounter.
 
 ### Important notes
 
@@ -16,8 +16,8 @@ Windows 10 on ARM is also no longer supported.
 
 ### New Features
 
-* Automated Image Descriptions:
-  * Press `NVDA+Windows+,` to get an AI generated image description. (#18475, @tianzeshi-study)
+* AI Image Descriptions:
+  * Press `NVDA+g` to get an AI generated image description. (#18475, @tianzeshi-study)
   * This is generated locally on the device - no information is sent to the internet.
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
   * Another new unassigned command is available to toggle image captioning. (#18475)
@@ -59,6 +59,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
+* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 
 ### Changes for Developers
 
@@ -73,6 +74,8 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sphinx to 8.1.3. (#18475)
   * Introduced onnxruntime 1.22.1 for model inference. (#18475)
   * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Updated pyright to 1.1.406 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749)
+  * Updated wxPython to 4.2.3. (#19080)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
@@ -106,6 +109,8 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
+* `gui.nvdaControls.TabbableScrolledPanel` has been removed.
+Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 
 #### Deprecations
 
