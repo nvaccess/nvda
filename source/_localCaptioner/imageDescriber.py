@@ -71,7 +71,7 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes, shouldViewInBro
 
 	:param captioner: The captioner instance to use for generation.
 	:param imageData: The image data to caption.
-	:param shouldViewInBrowseableMode: Should view result in browseable mode 
+	:param shouldViewInBrowseableMode: Should view result in browseable mode
 	"""
 	try:
 		description = captioner.generateCaption(image=imageData)
@@ -124,7 +124,7 @@ class ImageDescriber:
 			# Translators: Message when image description is not enabled
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
-			
+
 		shouldViewInBrowseableMode = scriptHandler.getLastScriptRepeatCount() != 0
 
 		self.captionThread = threading.Thread(
