@@ -5103,7 +5103,7 @@ class GlobalCommands(ScriptableObject):
 			"imageDesc",
 			# Translators: Description for the image caption script
 			"Get an AI-generated image description of the navigator object. "
-			"Pressing this key twice will shows it in a browseable message. ",
+			"Pressing this key twice shows it in a browseable message. ",
 		),
 		category=SCRCAT_IMAGE_DESC,
 		gesture="kb:NVDA+g",

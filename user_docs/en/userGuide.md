@@ -3941,7 +3941,7 @@ Once the Image Captioner is ready, press the default shortcut `NVDA+g` to recogn
 
 | Name |Key |Description|
 |---|---|---|
-| Get an AI-generated image description of the navigator object. Pressing this key twice will shows it in a browseable message. | `NVDA+g` | Get a description of the navigator object provided by a recognition performed on the device locally. |
+| Get an AI-generated image description of the navigator object. Pressing this key twice shows it in a browseable message. | `NVDA+g` | Get a description of the navigator object provided by a recognition performed on the device locally. |
 | Load or unload the image captioner | None | Load or unload the image captioner in memory, enabling the use of the image description command. |
 | Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
 
