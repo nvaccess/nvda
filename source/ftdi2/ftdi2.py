@@ -4,8 +4,12 @@ FTDI USB chips. Initial implementation is for functions from the
 dll required for present project"""
 # (from: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 
+from ctypes import WINFUNCTYPE, POINTER, c_int
+from ctypes.wintypes import DWORD, HANDLE, LPDWORD, LPVOID, PCHAR, PVOID, UCHAR
 import sys
 import ctypes as c
+from typing import Any
+from _ctypes import CFuncPtr
 
 
 __FT_VERSION__ = "1.1"
@@ -14,6 +18,10 @@ __FT_AUTHOR__ = "Jonathan Roadley-Battin"
 
 
 MAX_DESCRIPTION_SIZE = 256
+
+FT_STATUS = DWORD
+FT_HANDLE = HANDLE
+FT_DEVICE = DWORD
 
 FT_OK = 0
 FT_LIST_NUMBER_ONLY = 0x80000000
@@ -108,64 +116,132 @@ def ftExceptionDecorator(f):
 	return fn_wrap
 
 
-@ftExceptionDecorator
-def _PY_GetDeviceInfo(*args):
-	return ft.FT_GetDeviceInfo(*args)
+def _ftd2xxErrorCheck(result: int, func: CFuncPtr, args: tuple[Any, ...]) -> tuple[Any, ...]:
+	if result != FT_OK:
+		raise FTDeviceError(result)
+	return args
 
 
-@ftExceptionDecorator
-def _PY_OpenEx(*args):
-	return ft.FT_OpenEx(*args)
+FT_GetDeviceInfo = WINFUNCTYPE(FT_STATUS, FT_HANDLE, POINTER(FT_DEVICE), LPDWORD, PCHAR, PCHAR, PVOID)(
+	("FT_GetDeviceInfo", ft),
+	(
+		(1, "ftHandle"),
+		(2, "pftType"),
+		(2, "lpdwID"),
+		(2, "pcSerialNumber"),
+		(2, "pcDescription"),
+		(2, "pvDummy"),
+	),
+)
+FT_GetDeviceInfo.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetDeviceInfo(*args):
+# return ft.FT_GetDeviceInfo(*args)
+
+FT_OpenEx = WINFUNCTYPE(FT_STATUS, PVOID, DWORD, POINTER(FT_HANDLE))(
+	("FT_OpenEx", ft),
+	(
+		(1, "pvArg1"),
+		(1, "dwFlags"),
+		(2, "ftHandle"),
+	),
+)
+FT_OpenEx.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_OpenEx(*args):
+# return ft.FT_OpenEx(*args)
 
 
-@ftExceptionDecorator
-def _PY_Open(*args):
-	return ft.FT_Open(*args)
+FT_Open = WINFUNCTYPE(FT_STATUS, c_int, POINTER(FT_HANDLE))(
+	("FT_Open", ft),
+	((1, "iDevice"), (2, "ftHandle")),
+)
+FT_Open.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_Open(*args):
+# return ft.FT_Open(*args)
+
+FT_ListDevices = WINFUNCTYPE(FT_STATUS, PVOID, PVOID, DWORD)(
+	("FT_ListDevices", ft),
+	((3, "pvArg1"), (3, "pvArg2"), (1, "dwFlags")),
+)
+FT_ListDevices.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_ListDevices(*args):
+# return ft.FT_ListDevices(*args)
+
+FT_Close = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
+	("FT_Close", ft),
+	((1, "ftHandle")),
+)
+FT_Close.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_Close(*args):
+# return ft.FT_Close(*args)
+
+FT_Read = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPVOID, DWORD, LPDWORD)(
+	("FT_Read", ft),
+	((1, "ftHandle"), (2, "lpBuffer"), (1, "dwBytesToRead"), (2, "lpdwBytesReturned")),
+)
+FT_Read.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_Read(*args):
+# return ft.FT_Read(*args)
+
+FT_Write = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPVOID, DWORD, LPDWORD)(
+	("FT_Write", ft),
+	((1, "ftHandle"), (1, "lpBuffer"), (1, "dwBytesToWrite"), (2, "lpdwBytesWritten")),
+)
+FT_Write.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_Write(*args):
+# return ft.FT_Write(*args)
 
 
-@ftExceptionDecorator
-def _PY_ListDevices(*args):
-	return ft.FT_ListDevices(*args)
+FT_SetBaudRate = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD)(
+	("FT_SetBaudRate", ft),
+	((1, "ftHandle"), (1, "dwBaudRate")),
+)
+FT_SetBaudRate.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_SetBaudRate(*args):
+# return ft.FT_SetBaudRate(*args)
 
+FT_ResetDevice = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
+	("FT_ResetDevice", ft),
+	((1, "ftHandle")),
+)
+FT_ResetDevice.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_ResetDevice(*args):
+# return ft.FT_ResetDevice(*args)
 
-@ftExceptionDecorator
-def _PY_Close(*args):
-	return ft.FT_Close(*args)
+FT_Purge = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD)(
+	("FT_Purge", ft),
+	((1, "ftHandle"), (1, "uEventCh")),
+)
+FT_Purge.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_Purge(*args):
+# return ft.FT_Purge(*args)
 
+FT_SetTimeouts = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD, DWORD)(
+	("FT_SetTimeouts", ft),
+	((1, "ftHandle"), (1, "dwReadTimeout"), (1, "dwWriteTimeout")),
+)
+FT_SetTimeouts.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_SetTimeouts(*args):
+# return ft.FT_SetTimeouts(*args)
 
-@ftExceptionDecorator
-def _PY_Read(*args):
-	return ft.FT_Read(*args)
-
-
-@ftExceptionDecorator
-def _PY_Write(*args):
-	return ft.FT_Write(*args)
-
-
-@ftExceptionDecorator
-def _PY_SetBaudRate(*args):
-	return ft.FT_SetBaudRate(*args)
-
-
-@ftExceptionDecorator
-def _PY_ResetDevice(*args):
-	return ft.FT_ResetDevice(*args)
-
-
-@ftExceptionDecorator
-def _PY_Purge(*args):
-	return ft.FT_Purge(*args)
-
-
-@ftExceptionDecorator
-def _PY_SetTimeouts(*args):
-	return ft.FT_SetTimeouts(*args)
-
-
-@ftExceptionDecorator
-def _PY_SetBitMode(*args):  # added by CJBH
-	return ft.FT_SetBitMode(*args)
+FT_SetBitMode = WINFUNCTYPE(FT_STATUS, FT_HANDLE, UCHAR, UCHAR)(
+	("FT_SetBitMode", ft),
+	((1, "ftHandle"), (1, "ucMask"), (1, "ucMode")),
+)
+FT_SetBitMode.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_SetBitMode(*args):  # added by CJBH
+# return ft.FT_SetBitMode(*args)
 
 
 @ftExceptionDecorator
@@ -231,13 +307,13 @@ def list_devices():
 	"""method to list devices connected.
 	total connected and specific serial for a device position"""
 	n = c.c_ulong()
-	_PY_ListDevices(c.byref(n), None, c.c_ulong(FT_LIST_NUMBER_ONLY))
+	FT_ListDevices(c.byref(n), None, c.c_ulong(FT_LIST_NUMBER_ONLY))
 
 	if n.value:
 		p_array = (c.c_char_p * (n.value + 1))()
 		for i in range(n.value):
 			p_array[i] = c.cast(c.c_buffer(64), c.c_char_p)
-		_PY_ListDevices(p_array, c.byref(n), c.c_ulong(FT_LIST_ALL | FT_OPEN_BY_SERIAL_NUMBER))
+		FT_ListDevices(p_array, c.byref(n), c.c_ulong(FT_LIST_ALL | FT_OPEN_BY_SERIAL_NUMBER))
 		return [ser for ser in p_array[: n.value]]
 	else:
 		return []
@@ -313,7 +389,7 @@ def open_ex(serial=b""):
 	Serial fetched by the ListDevices fn"""
 	ftHandle = c.c_ulong()
 	dw_flags = c.c_ulong(FT_OPEN_BY_SERIAL_NUMBER)
-	_PY_OpenEx(serial, dw_flags, c.byref(ftHandle))
+	FT_OpenEx(serial, dw_flags, c.byref(ftHandle))
 	return FTD2XX(ftHandle)
 
 
@@ -333,13 +409,13 @@ class FTD2XX(object):
 	# ------------------------------------------------------------------------------
 	def set_baud_rate(self, dwBaudRate=921600):
 		"""Set baud rate of driver, non-intelgent checking of allowed BAUD"""
-		_PY_SetBaudRate(self.ftHandle, c.c_ulong(dwBaudRate))
+		FT_SetBaudRate(self.ftHandle, c.c_ulong(dwBaudRate))
 		return None
 
 	# ------------------------------------------------------------------------------
 	def set_timeouts(self, dwReadTimeout=100, dwWriteTimeout=100):
 		"""setup timeout times for TX and RX"""
-		_PY_SetTimeouts(self.ftHandle, c.c_ulong(dwReadTimeout), c.c_ulong(dwWriteTimeout))
+		FT_SetTimeouts(self.ftHandle, c.c_ulong(dwReadTimeout), c.c_ulong(dwWriteTimeout))
 		return None
 
 	# ------------------------------------------------------------------------------
@@ -351,7 +427,7 @@ class FTD2XX(object):
 	# ------------------------------------------------------------------------------
 	def set_bit_mode(self, ucMask=0, ucMode=0):  # added by CJBH
 		"""setup bit mode"""
-		_PY_SetBitMode(self.ftHandle, c.c_ubyte(ucMask), c.c_ubyte(ucMode))
+		FT_SetBitMode(self.ftHandle, c.c_ubyte(ucMask), c.c_ubyte(ucMode))
 		return None
 
 	# ------------------------------------------------------------------------------
@@ -371,7 +447,7 @@ class FTD2XX(object):
 		elif to_purge == "RX":
 			dwMask = c.c_ulong(FT_PURGE_RX)
 
-		_PY_Purge(self.ftHandle, dwMask)
+		FT_Purge(self.ftHandle, dwMask)
 		return None
 
 	# ------------------------------------------------------------------------------
@@ -386,7 +462,7 @@ class FTD2XX(object):
 	def write(self, lpBuffer=b""):
 		"""writes the bytes-type "data" to the opened port."""
 		lpdwBytesWritten = c.c_ulong()
-		_PY_Write(self.ftHandle, lpBuffer, len(lpBuffer), c.byref(lpdwBytesWritten))
+		FT_Write(self.ftHandle, lpBuffer, len(lpBuffer), c.byref(lpdwBytesWritten))
 		return lpdwBytesWritten.value
 
 	# ------------------------------------------------------------------------------
@@ -395,17 +471,17 @@ class FTD2XX(object):
 		or raises an exception"""
 		lpdwBytesReturned = c.c_ulong()
 		lpBuffer = c.c_buffer(dwBytesToRead)
-		_PY_Read(self.ftHandle, lpBuffer, dwBytesToRead, c.byref(lpdwBytesReturned))
+		FT_Read(self.ftHandle, lpBuffer, dwBytesToRead, c.byref(lpdwBytesReturned))
 		return lpBuffer.raw[: lpdwBytesReturned.value] if raw else lpBuffer.value[: lpdwBytesReturned.value]
 
 	# ------------------------------------------------------------------------------
 	def reset_device(self):
 		"""closes the port."""
-		_PY_ResetDevice(self.ftHandle)
+		FT_ResetDevice(self.ftHandle)
 		return None
 
 	# ------------------------------------------------------------------------------
 	def close(self):
 		"""closes the port."""
-		_PY_Close(self.ftHandle)
+		FT_Close(self.ftHandle)
 		return None
