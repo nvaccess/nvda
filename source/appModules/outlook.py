@@ -335,14 +335,12 @@ class ContactEditField(NVDAObject):
 		"""The auto-complete list is getting closed, set focus back to the edit field."""
 		if vision.handler:
 			vision.handler.handleGainFocus(self)
-		api.setNavigatorObject(self)
 		gesture.send()
 
 	def event_valueChange(self):
 		"""Set focus back to the edit field when an auto-complete list item is confirmed."""
 		if vision.handler:
 			vision.handler.handleGainFocus(self)
-		api.setNavigatorObject(self)
 		super().event_valueChange()
 
 
