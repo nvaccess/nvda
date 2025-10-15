@@ -22,6 +22,7 @@ import api
 from keyboardHandler import KeyboardInputGesture
 from NVDAState import WritePaths
 import core
+import scriptHandler
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
@@ -65,11 +66,12 @@ def _screenshotNavigator() -> bytes:
 	return imageData
 
 
-def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
+def _messageCaption(captioner: ImageCaptioner, imageData: bytes, shouldViewInBrowseableMode: bool) -> None:
 	"""Generate a caption for the given image data.
 
 	:param captioner: The captioner instance to use for generation.
 	:param imageData: The image data to caption.
+	:param shouldViewInBrowseableMode: Should view result in browseable mode 
 	"""
 	try:
 		description = captioner.generateCaption(image=imageData)
@@ -78,7 +80,12 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		wx.CallAfter(ui.message, pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
 	else:
-		wx.CallAfter(ui.message, description)
+		if shouldViewInBrowseableMode:
+			# Translators: title of AI image captioning result
+			title = pgettext("imageDesc", "AI Image Description")
+			wx.CallAfter(ui.browseableMessage, description, title, copyButton=True, closeButton=True)
+		else:
+			wx.CallAfter(ui.message, description)
 
 
 class ImageDescriber:
@@ -117,10 +124,12 @@ class ImageDescriber:
 			# Translators: Message when image description is not enabled
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
+			
+		shouldViewInBrowseableMode = scriptHandler.getLastScriptRepeatCount() != 0
 
 		self.captionThread = threading.Thread(
 			target=_messageCaption,
-			args=(self.captioner, imageData),
+			args=(self.captioner, imageData, shouldViewInBrowseableMode),
 			name="RunCaptionThread",
 		)
 		# Translators: Message when starting image recognition
