@@ -125,7 +125,14 @@ class ImageDescriber:
 			ui.message(pgettext("imageDesc", "image description is not enabled"))
 			return
 
-		shouldViewInBrowseableMode = scriptHandler.getLastScriptRepeatCount() != 0
+		shouldViewInBrowseableMode = False
+		repeat = scriptHandler.getLastScriptRepeatCount()
+		if  repeat == 0:
+			pass
+		elif repeat ==1:
+			shouldViewInBrowseableMode = True
+		else:
+			return
 
 		self.captionThread = threading.Thread(
 			target=_messageCaption,
