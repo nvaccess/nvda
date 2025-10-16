@@ -127,9 +127,9 @@ class ImageDescriber:
 
 		shouldViewInBrowseableMode = False
 		repeat = scriptHandler.getLastScriptRepeatCount()
-		if  repeat == 0:
+		if repeat == 0:
 			pass
-		elif repeat ==1:
+		elif repeat == 1:
 			shouldViewInBrowseableMode = True
 		else:
 			return
