@@ -14,7 +14,7 @@ from ctypes import (
 from ctypes.wintypes import DWORD
 from typing import Any
 
-from .ftdi2xx import (
+from .ftd2xx import (
 	FT_DEVICE_LIST_INFO_NODE,
 	FT_HANDLE,
 	FT_LIST,
