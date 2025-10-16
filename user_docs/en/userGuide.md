@@ -3944,9 +3944,6 @@ Once the Image Captioner is ready, press the default shortcut `NVDA+g` to recogn
 | Get an AI-generated image description of the navigator object. | `NVDA+g` | Get a description of the navigator object provided by a recognition performed on the device locally. Pressing twice shows it in a browseable message. |
 | Load or unload the image captioner | None | Load or unload the image captioner in memory, enabling the use of the image description command. |
 | Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
-Not exactly in the topic of this PR.
-
-But while at it, could you move this command in the AI Image Description settings paragraph and use the same structure as all other settings panels and associated open commands?
 
 <!-- KC:endInclude -->
 
