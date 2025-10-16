@@ -4,13 +4,12 @@ FTDI USB chips. Initial implementation is for functions from the
 dll required for present project"""
 # (from: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 
-from ctypes import WINFUNCTYPE, POINTER, c_int
-from ctypes.wintypes import DWORD, HANDLE, LPDWORD, LPVOID, PCHAR, PVOID, UCHAR
+from ctypes import c_ubyte, POINTER, c_char_p, c_void_p, WINFUNCTYPE, c_int
+from ctypes.wintypes import DWORD, LPDWORD, PHANDLE
 import sys
 import ctypes as c
 from typing import Any
 from _ctypes import CFuncPtr
-
 
 __FT_VERSION__ = "1.1"
 __FT_LICENCE__ = "LGPL3"
@@ -19,9 +18,13 @@ __FT_AUTHOR__ = "Jonathan Roadley-Battin"
 
 MAX_DESCRIPTION_SIZE = 256
 
-FT_STATUS = DWORD
-FT_HANDLE = HANDLE
-FT_DEVICE = DWORD
+
+UCHAR = c_ubyte
+PUCHAR = POINTER(UCHAR)
+PCHAR = c_char_p
+FT_HANDLE = PHANDLE
+FT_STATUS = FT_DEVICE = DWORD
+PVOID = LPVOID = c_void_p
 
 FT_OK = 0
 FT_LIST_NUMBER_ONLY = 0x80000000
@@ -172,7 +175,7 @@ FT_ListDevices.errcheck = _ftd2xxErrorCheck
 
 FT_Close = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
 	("FT_Close", ft),
-	((1, "ftHandle")),
+	((1, "ftHandle"),),
 )
 FT_Close.errcheck = _ftd2xxErrorCheck
 # @ftExceptionDecorator
@@ -209,7 +212,7 @@ FT_SetBaudRate.errcheck = _ftd2xxErrorCheck
 
 FT_ResetDevice = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
 	("FT_ResetDevice", ft),
-	((1, "ftHandle")),
+	((1, "ftHandle"),),
 )
 FT_ResetDevice.errcheck = _ftd2xxErrorCheck
 # @ftExceptionDecorator
@@ -243,60 +246,116 @@ FT_SetBitMode.errcheck = _ftd2xxErrorCheck
 # def _PY_SetBitMode(*args):  # added by CJBH
 # return ft.FT_SetBitMode(*args)
 
+FT_GetQueueStatus = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD)(
+	("FT_GetQueueStatus", ft),
+	((1, "ftHandle"), (2, "lpdwAmountInRxQueue")),
+)
+FT_GetQueueStatus.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetQueueStatus(*args):
+# return ft.FT_GetQueueStatus(*args)
 
-@ftExceptionDecorator
-def _PY_GetQueueStatus(*args):
-	return ft.FT_GetQueueStatus(*args)
-
-
-@ftExceptionDecorator
-def _PY_GetStatus(*args):
-	return ft.FT_GetStatus(*args)
-
-
-@ftExceptionDecorator
-def _PY_SetLatencyTimer(*args):
-	return ft.FT_SetLatencyTimer(*args)
-
-
-@ftExceptionDecorator
-def _PY_SetUSBParameters(*args):
-	return ft.FT_SetUSBParameters(*args)
+FT_GetStatus = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD, LPDWORD, LPDWORD)(
+	("FT_GetStatus", ft),
+	((1, "ftHandle"), (2, "lpdwAmountInRxQueue"), (2, "lpdwAmountInTxQueue"), (2, "lpdwEventStatus")),
+)
+FT_GetStatus.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetStatus(*args):
+# return ft.FT_GetStatus(*args)
 
 
-@ftExceptionDecorator
-def _PY_ResetPort(*args):
-	return ft.FT_ResetPort(*args)
+FT_SetLatencyTimer = WINFUNCTYPE(FT_STATUS, FT_HANDLE, UCHAR)(
+	("FT_SetLatencyTimer", ft),
+	((1, "ftHandle"), (1, "ucTimer")),
+)
+FT_SetLatencyTimer.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_SetLatencyTimer(*args):
+# return ft.FT_SetLatencyTimer(*args)
+
+FT_SetUSBParameters = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD, DWORD)(
+	("FT_SetUSBParameters", ft),
+	((1, "ftHandle"), (1, "dwInTransferSize"), (1, "dwOutTransferSize")),
+)
+FT_SetUSBParameters.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_SetUSBParameters(*args):
+# return ft.FT_SetUSBParameters(*args)
+
+FT_ResetPort = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(("FT_ResetPort", ft), ((1, "ftHandle"),))
+FT_ResetPort.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_ResetPort(*args):
+# return ft.FT_ResetPort(*args)
+
+FT_CyclePort = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(("FT_CyclePort", ft), ((1, "ftHandle"),))
+FT_CyclePort.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_CyclePort(*args):
+# return ft.FT_CyclePort(*args)
+
+FT_CreateDeviceInfoList = WINFUNCTYPE(FT_STATUS, LPDWORD)(
+	("FT_CreateDeviceInfoList", ft),
+	((2, "lpdwNumDevs"),),
+)
+FT_CreateDeviceInfoList.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_CreateDeviceInfoList(*args):
+# return ft.FT_CreateDeviceInfoList(*args)
+
+FT_GetDeviceInfoList = WINFUNCTYPE(FT_STATUS, POINTER(DeviceListInfoNode), LPDWORD)(
+	("FT_GetDeviceInfoList", ft),
+	((2, "pDest"), (1, "lpdwNumDevs")),
+)
+FT_GetDeviceInfoList.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetDeviceInfoList(*args):
+# return ft.FT_GetDeviceInfoList(*args)
 
 
-@ftExceptionDecorator
-def _PY_CyclePort(*args):
-	return ft.FT_CyclePort(*args)
+FT_GetDeviceInfoDetail = WINFUNCTYPE(
+	FT_STATUS,
+	DWORD,
+	LPDWORD,
+	LPDWORD,
+	LPDWORD,
+	LPDWORD,
+	PCHAR,
+	PCHAR,
+	POINTER(FT_HANDLE),
+)(
+	("FT_GetDeviceInfoDetail", ft),
+	(
+		(1, "dwIndex"),
+		(2, "lpdwFlags"),
+		(2, "lpdwType"),
+		(2, "lpdwID"),
+		(2, "lpdwLocId"),
+		(2, "pcSerialNumber"),
+		(2, "pcDescription"),
+		(2, "ftHandle"),
+	),
+)
+FT_GetDeviceInfoDetail.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetDeviceInfoDetail(*args):
+# return ft.FT_GetDeviceInfoDetail(*args)
 
+FT_GetDriverVersion = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD)(
+	("FT_GetDriverVersion", ft),
+	((1, "ftHandle"), (2, "lpdwDriverVersion")),
+)
+FT_GetDriverVersion.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetDriverVersion(*args):
+# return ft.FT_GetDriverVersion(*args)
 
-@ftExceptionDecorator
-def _PY_CreateDeviceInfoList(*args):
-	return ft.FT_CreateDeviceInfoList(*args)
-
-
-@ftExceptionDecorator
-def _PY_GetDeviceInfoList(*args):
-	return ft.FT_GetDeviceInfoList(*args)
-
-
-@ftExceptionDecorator
-def _PY_GetDeviceInfoDetail(*args):
-	return ft.FT_GetDeviceInfoDetail(*args)
-
-
-@ftExceptionDecorator
-def _PY_GetDriverVersion(*args):
-	return ft.FT_GetDriverVersion(*args)
-
-
-@ftExceptionDecorator
-def _PY_GetLibraryVersion(*args):
-	return ft.FT_GetLibraryVersion(*args)
+FT_GetLibraryVersion = WINFUNCTYPE(FT_STATUS, LPDWORD)(("FT_GetLibraryVersion", ft), ((2, "lpdwDLLVersion"),))
+FT_GetLibraryVersion.errcheck = _ftd2xxErrorCheck
+# @ftExceptionDecorator
+# def _PY_GetLibraryVersion(*args):
+# return ft.FT_GetLibraryVersion(*args)
 
 
 ################################################
@@ -323,7 +382,7 @@ def list_devices():
 def create_device_info_list():
 	"""Create the internal device info list and return number of entries"""
 	lpdwNumDevs = c.c_ulong()
-	_PY_CreateDeviceInfoList(c.byref(lpdwNumDevs))
+	FT_CreateDeviceInfoList(c.byref(lpdwNumDevs))
 	return lpdwNumDevs.value
 
 
@@ -338,7 +397,7 @@ def get_device_info_detail(dev=0):
 	pcSerialNumber = c.c_buffer(MAX_DESCRIPTION_SIZE)
 	pcDescription = c.c_buffer(MAX_DESCRIPTION_SIZE)
 	ftHandle = c.c_ulong()
-	_PY_GetDeviceInfoDetail(
+	FT_GetDeviceInfoDetail(
 		dwIndex,
 		c.byref(lpdwFlags),
 		c.byref(lpdwType),
@@ -366,7 +425,7 @@ def get_device_info_list():
 	dev_info = DeviceListInfoNode * (num_dev + 1)
 	pDest = c.pointer(dev_info())
 	lpdwNumDevs = c.c_ulong()
-	_PY_GetDeviceInfoList(pDest, c.byref(lpdwNumDevs))
+	FT_GetDeviceInfoList(pDest, c.byref(lpdwNumDevs))
 
 	return_list = []
 	data = pDest.contents
@@ -387,9 +446,8 @@ def get_device_info_list():
 def open_ex(serial=b""):
 	"""open's FTDI-device by EEPROM-serial (prefered method).
 	Serial fetched by the ListDevices fn"""
-	ftHandle = c.c_ulong()
-	dw_flags = c.c_ulong(FT_OPEN_BY_SERIAL_NUMBER)
-	FT_OpenEx(serial, dw_flags, c.byref(ftHandle))
+	ftHandle = FT_HANDLE()
+	FT_OpenEx(serial, FT_OPEN_BY_SERIAL_NUMBER, c.byref(ftHandle))
 	return FTD2XX(ftHandle)
 
 
@@ -421,7 +479,7 @@ class FTD2XX(object):
 	# ------------------------------------------------------------------------------
 	def set_latency_timer(self, ucTimer=16):  # added by CJBH
 		"""setup latency timer"""
-		_PY_SetLatencyTimer(self.ftHandle, c.c_ubyte(ucTimer))
+		FT_SetLatencyTimer(self.ftHandle, c.c_ubyte(ucTimer))
 		return None
 
 	# ------------------------------------------------------------------------------
@@ -433,7 +491,7 @@ class FTD2XX(object):
 	# ------------------------------------------------------------------------------
 	def set_usb_parameters(self, dwInTransferSize=4096, dwOutTransferSize=0):
 		"""set the drivers input and output buffer size"""
-		_PY_SetUSBParameters(self.ftHandle, c.c_ulong(dwInTransferSize), c.c_ulong(dwOutTransferSize))
+		FT_SetUSBParameters(self.ftHandle, c.c_ulong(dwInTransferSize), c.c_ulong(dwOutTransferSize))
 		return None
 
 	# ------------------------------------------------------------------------------
@@ -455,7 +513,7 @@ class FTD2XX(object):
 		"""returns the number of bytes in the RX buffer
 		else raises an exception"""
 		lpdwAmountInRxQueue = c.c_ulong()
-		_PY_GetQueueStatus(self.ftHandle, c.byref(lpdwAmountInRxQueue))
+		FT_GetQueueStatus(self.ftHandle, c.byref(lpdwAmountInRxQueue))
 		return lpdwAmountInRxQueue.value
 
 	# ------------------------------------------------------------------------------
