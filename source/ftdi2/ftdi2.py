@@ -90,16 +90,18 @@ class FTDeviceError(Exception):
 #####################################
 # CTYPES structure for DeviceInfo   #
 #####################################
-class DeviceListInfoNode(c.Structure):
-	_fields_ = [
-		("Flags", c.c_ulong),
-		("Type", c.c_ulong),
-		("ID", c.c_ulong),
-		("LocID", c.c_ulong),
-		("SerialNumber", (c.c_char * 16)),
-		("Description", (c.c_char * 64)),
-		("none", c.c_void_p),
-	]
+class FT_DEVICE_LIST_INFO_NODE(c.Structure):
+	_fields_ = (
+		("Flags", DWORD),  # c.c_ulong
+		("Type", DWORD),  # c.c_ulong
+		("ID", DWORD),  # c.c_ulong
+		# ("LocID", c.c_ulong),
+		("LocId", DWORD),
+		("SerialNumber", c.c_char * 16),
+		("Description", c.c_char * 64),
+		# ("none", c.c_void_p),
+		("ftHandle", FT_HANDLE),
+	)
 
 
 ####################################################
@@ -108,15 +110,15 @@ class DeviceListInfoNode(c.Structure):
 # Allows common exception routine to be performed on each fn
 # Via Bash-liner additional fn can easily be added and specific pythonic fn added when needed
 ####################################################
-def ftExceptionDecorator(f):
-	def fn_wrap(*args):
-		status = f(*args)
-		if status is None:
-			status = 18
-		if status != FT_OK:
-			raise FTDeviceError(status)
-
-	return fn_wrap
+# def ftExceptionDecorator(f):
+# def fn_wrap(*args):
+# status = f(*args)
+# if status is None:
+# status = 18
+# if status != FT_OK:
+# raise FTDeviceError(status)
+#
+# return fn_wrap
 
 
 def _ftd2xxErrorCheck(result: int, func: CFuncPtr, args: tuple[Any, ...]) -> tuple[Any, ...]:
@@ -304,7 +306,7 @@ FT_CreateDeviceInfoList.errcheck = _ftd2xxErrorCheck
 # def _PY_CreateDeviceInfoList(*args):
 # return ft.FT_CreateDeviceInfoList(*args)
 
-FT_GetDeviceInfoList = WINFUNCTYPE(FT_STATUS, POINTER(DeviceListInfoNode), LPDWORD)(
+FT_GetDeviceInfoList = WINFUNCTYPE(FT_STATUS, POINTER(FT_DEVICE_LIST_INFO_NODE), LPDWORD)(
 	("FT_GetDeviceInfoList", ft),
 	((2, "pDest"), (1, "lpdwNumDevs")),
 )
@@ -422,7 +424,7 @@ def get_device_info_detail(dev=0):
 # ------------------------------------------------------------------------------
 def get_device_info_list():
 	num_dev = create_device_info_list()
-	dev_info = DeviceListInfoNode * (num_dev + 1)
+	dev_info = FT_DEVICE_LIST_INFO_NODE * (num_dev + 1)
 	pDest = c.pointer(dev_info())
 	lpdwNumDevs = c.c_ulong()
 	FT_GetDeviceInfoList(pDest, c.byref(lpdwNumDevs))
@@ -434,7 +436,7 @@ def get_device_info_list():
 			{
 				"Flags": i.Flags,
 				"Type": i.Type,
-				"LocID": i.LocID,
+				"LocID": i.LocId,
 				"SerialNumber": i.SerialNumber,
 				"Description": i.Description,
 			},
