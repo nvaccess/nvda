@@ -59,6 +59,9 @@ class FTD2XX:
 		log.debug(f"Calling FT_SetBaudRate({self.ftHandle}, {dwBaudRate=})")
 		FT_SetBaudRate(self.ftHandle, dwBaudRate)
 
+	# For compatibility with serial.Serial
+	set_baud_rate = setBaudRate
+
 	def setTimeouts(self, dwReadTimeout: int = 100, dwWriteTimeout: int = 100) -> None:
 		"""setup timeout times for TX and RX"""
 		log.debug(f"Calling FT_SetTimeouts({self.ftHandle}, {dwReadTimeout=}, {dwWriteTimeout=})")
