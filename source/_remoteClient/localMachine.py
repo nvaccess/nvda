@@ -20,7 +20,7 @@ muting and uses wxPython's CallAfter for thread synchronization.
 
 from enum import IntEnum, nonmember
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any
 import winreg
 
 import winBindings.sas
@@ -126,7 +126,7 @@ class LocalMachine:
 
 		self.receivingBraille = False
 
-		self._cachedSizes: Optional[List[int]] = None
+		self._cachedSizes: list[int] | None = None
 		"""Cached braille display sizes from remote machines"""
 
 		self._showingLocalUiMessage: bool = False
@@ -220,7 +220,7 @@ class LocalMachine:
 		setSpeechCancelledToFalse()
 		wx.CallAfter(speech._manager.speak, sequence, priority)
 
-	def display(self, cells: List[int]) -> None:
+	def display(self, cells: list[int]) -> None:
 		"""Update the local braille display with cells from remote.
 
 		Safely writes braille cells from a remote machine to the local braille
@@ -238,9 +238,9 @@ class LocalMachine:
 		if (
 			self.receivingBraille
 			and braille.handler.displaySize > 0
-			and len(cells) <= braille.handler.displaySize
+			and len(cells) <= braille.handler.displayDimensions.numCols
 		):
-			cells = cells + [0] * (braille.handler.displaySize - len(cells))
+			cells = cells + [0] * (braille.handler.displayDimensions.numCols - len(cells))
 			# Cache these cells in case we need them later
 			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
@@ -248,7 +248,7 @@ class LocalMachine:
 			# Cache this cell array for after the local ui.message is dismissed
 			self._lastCells = cells
 
-	def brailleInput(self, **kwargs: Dict[str, Any]) -> None:
+	def brailleInput(self, **kwargs: dict[str, Any]) -> None:
 		"""Process braille input gestures from a remote machine.
 
 		Executes braille input commands locally using NVDA's input gesture system.
@@ -262,29 +262,36 @@ class LocalMachine:
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def setBrailleDisplaySize(self, sizes: List[int]) -> None:
+	def setBrailleDisplaySize(self, sizes: list[int]) -> None:
 		"""Cache remote braille display sizes for size negotiation.
 
 		:param sizes: List of display sizes (cells) from remote machines
 		"""
 		self._cachedSizes = sizes
 
-	def handleFilterDisplaySize(self, value: int) -> int:
-		"""Filter the local display size based on remote display sizes.
+	def _handleFilterDisplayDimensions(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+		"""Filter the local display dimensions based on remote display dimensions.
 
-		Determines the optimal display size when sharing braille output by
-		finding the smallest positive size among local and remote displays.
+		Determines the optimal display dimensions when sharing braille output by
+		finding the smallest positive width among local and remote displays.
 
-		:param value: Local display size in cells
-		:return: The negotiated display size to use
+		.. note::
+			We can currently only support a single line of braille,
+			as sending display dimensions would require changing the Remote Access protocol.
+
+		:param value: Local display dimensions
+		:return: The negotiated display dimensions to use.
 		"""
 		if not self._cachedSizes:
-			return value
-		sizes = self._cachedSizes + [value]
+			# We cannot support multiline displays without breaking the Remote Access protocol,
+			# so always force numRows to 1.
+			return value._replace(numRows=1)
+		# There is no point storing the number of rows if we are always going to set it to 1.
+		sizes = self._cachedSizes + [value.numCols]
 		try:
-			return min(i for i in sizes if i > 0)
+			return braille.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
 		except ValueError:
-			return value
+			return value._replace(numRows=1)
 
 	def handleDecideEnabled(self) -> bool:
 		"""Determine if the local braille display should be enabled.
@@ -319,9 +326,9 @@ class LocalMachine:
 
 	def sendKey(
 		self,
-		vk_code: Optional[int] = None,
-		extended: Optional[bool] = None,
-		pressed: Optional[bool] = None,
+		vk_code: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
 	) -> None:
 		"""Simulate a keyboard event on the local machine.
 
