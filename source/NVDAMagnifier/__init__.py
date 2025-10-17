@@ -15,17 +15,16 @@ import api
 class MouseHandler:
 	def __init__(self):
 		pass
-		# not using this yet
-		# self._mousePosition: tuple[int, int] = (0, 0)
+		self._mousePosition: tuple[int, int] = (0, 0)
 
 	@property
 	def mousePosition(self):
-		# return self._mousePosition
-		return self.getMousePosition()
+		return self._mousePosition
 
-	# @mousePosition.setter
-	# def mousePosition(self, pos: tuple[int, int]):
-	# 	self._mousePosition = pos
+
+	@mousePosition.setter
+	def mousePosition(self, pos: tuple[int, int]):
+		self._mousePosition = pos
 
 	def getMousePosition(self) -> tuple[int, int]:
 		"""
@@ -236,7 +235,7 @@ class NVDAMagnifier:
 
 	@property
 	def timer(self) -> wx.Timer | None:
-		return self._timer
+		return self._timer	
 
 	@timer.setter
 	def timer(self, value: wx.Timer | None) -> None:
@@ -249,7 +248,6 @@ class NVDAMagnifier:
 	@colorFilter.setter
 	def colorFilter(self, value: ColorFilter) -> None:
 		self._colorFilter = value
-		self._applyColorFilter()
 
 # Functions
 
@@ -267,11 +265,11 @@ class NVDAMagnifier:
 			return
 		self.currentCoordinates = self._getFocusCoordinates()
 		self._doUpdate()	
-		self._continueTimer(self._updateMagnifier)
+		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
 		"""Perform the actual update of the magnifier."""
-		pass
+		raise NotImplementedError("Subclasses must implement this method.")
 		
 	def _stopMagnifier(self) -> None:
 		"""Stop the magnifier.
@@ -291,7 +289,7 @@ class NVDAMagnifier:
 		else:
 			self.zoomLevel -= self._ZOOM_STEP
 
-	def _startTimer(self, callback: Callable[[], None]) -> None:
+	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""Start the timer with a callback function.
 
 		:param callback: The function to call when the timer expires.
@@ -301,23 +299,14 @@ class NVDAMagnifier:
 		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
 		self.timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
 
-	def _continueTimer(self, callback: Callable[[], None]) -> None:
-		"""Continue timer execution with a new callback.
-
-		:param callback: The function to call when the timer expires.
-		"""
-		if self.timer and self.timer.IsRunning():
-			self.timer.Stop()
-		self.timer = wx.Timer()
-		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
-		self.timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
-
 	def _stopTimer(self) -> None:
-		"""Stop timer execution.
-		"""
-		if self.timer and self.timer.IsRunning():
-			self.timer.Stop()
-			self.timer = None
+		"""Stop timer execution."""
+		if self.timer:
+			if self.timer.IsRunning():
+				self.timer.Stop()
+			self.timer = None  
+		else:
+			log.error('no timer to stop')
 
 	def _getMagnifierPosition(self,
 		x: int, 
@@ -426,7 +415,7 @@ class NVDAMagnifier:
 			return mousePosition
 
 class FullScreenMagnifier(NVDAMagnifier):
-	def __init__(self, zoomLevel: float, colorFilter: ColorFilter, fullscreenMode: FullScreenMode):
+	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL, fullscreenMode: FullScreenMode = FullScreenMode.CENTER):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = fullscreenMode
@@ -500,20 +489,18 @@ class FullScreenMagnifier(NVDAMagnifier):
 			x, y = self.currentCoordinates
 		elif self.fullscreenMode == FullScreenMode.BORDER:
 			if self.lastFocusedObject == "nvda":
+				# keeping nvda center for this mode too
 				x, y = self.currentCoordinates
 			else:
 				x, y = self._borderPos(self.currentCoordinates[0], self.currentCoordinates[1])
 		elif self.fullscreenMode == FullScreenMode.RELATIVE:
 			x, y = self._relativePos(self.currentCoordinates[0], self.currentCoordinates[1])
-		else:
-			x, y = self.currentCoordinates
 
 		# Always save screen position for mode continuity
 		self.lastScreenPosition = (x, y)
 		# Apply transformation
 		self._fullscreenMagnifier(x, y)
 		
-
 	def _stopMagnifier(self) -> None:
 		"""Stop the Fullscreen magnifier using windows DLL.
 		"""
@@ -715,7 +702,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 
 		self._animateZoom(1.0, centerX, centerY, callback=lambda: wx.CallLater(2000, checkMouseIdle))
 
-	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback: Callable[[], None]) -> None:
+	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback: Callable[[], None] = None) -> None:
 		"""Animate zoom smoothly using magnifierTimer.
 
 		:param targetZoom: The target zoom level.
@@ -807,7 +794,6 @@ class LensMagnifier(NVDAMagnifier):
 	def _doUpdate(self):
 		x, y = self._mouseHandler.getMousePosition()
 		self._lensFrame.updateMagnifier(x, y, self.zoomLevel, self.colorFilter.value)
-
 
 	def _stopMagnifier(self):
 		super()._stopMagnifier()
