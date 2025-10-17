@@ -396,7 +396,7 @@ class FollowerSession(RemoteSession):
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
-			log.info("Leader client disconnected: %r", client)
+			log.info(f"Leader client disconnected: {client!r}")
 			del self.leaders[client["id"]]
 		elif client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
 			self.followers.discard(client["id"])
@@ -407,7 +407,7 @@ class FollowerSession(RemoteSession):
 		self.leaderDisplaySizes = (
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
-		log.debug("Setting follower display size to: %r", self.leaderDisplaySizes)
+		log.debug(f"Setting follower display size to: {self.leaderDisplaySizes!r}")
 		self.localMachine.setBrailleDisplaySize(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
@@ -597,11 +597,7 @@ class LeaderSession(RemoteSession):
 		if displayDimensions is None:
 			displayDimensions = braille.handler.displayDimensions
 		displaySize = displayDimensions.numCols
-		log.debug(
-			"Sending braille info to follower - display: %s, width: %d",
-			display.name if display else "None",
-			displaySize,
-		)
+		log.debug(f"Sending braille info to follower - display: {display.name}, width: {displaySize}")
 		self.transport.send(
 			type=RemoteMessageType.SET_BRAILLE_INFO,
 			name=display.name,
