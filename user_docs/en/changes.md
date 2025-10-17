@@ -58,7 +58,6 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
-* Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 * In Outlook Classic, when navigating the list of messages, the navigator object is not moved from the focus, avoiding that wrong information appears in braille. (#18993, @nvdaes)
 
@@ -88,8 +87,6 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
-* NVDA now uses `truststore` to always use Windows root certificates, which injects to libraries like `requests`.
-Wrap code with `truststore.extract_from_ssl` and `truststore.inject_into_ssl` to disable this behavior where required. (#18528)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -192,7 +189,6 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
-* `updateCheck.UPDATE_FETCH_TIMEOUT_S` is deprecated for removal without replacement. (#18354)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
