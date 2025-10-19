@@ -149,21 +149,6 @@ class ExplorerToolTip(ToolTip):
 			super().event_show()
 
 
-class GridTileElement(UIA):
-	role = controlTypes.Role.TABLECELL
-
-	def _get_description(self):
-		name = self.name
-		descriptionStrings = []
-		for child in self.children:
-			description = child.basicText
-			if not description or description == name:
-				continue
-			descriptionStrings.append(description)
-		return " ".join(descriptionStrings)
-		return description
-
-
 class GridListTileElement(UIA):
 	role = controlTypes.Role.TABLECELL
 	description = None
@@ -296,8 +281,6 @@ class AppModule(appModuleHandler.AppModule):
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
-			if uiaClassName == "GridTileElement":
-				clsList.insert(0, GridTileElement)
 			elif uiaClassName == "GridListTileElement":
 				clsList.insert(0, GridListTileElement)
 			elif uiaClassName == "GridGroup":
