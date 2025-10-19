@@ -149,20 +149,6 @@ class ExplorerToolTip(ToolTip):
 			super().event_show()
 
 
-class GridGroup(UIA):
-	"""A group in the Windows 8 Start Menu."""
-
-	presentationType = UIA.presType_content
-
-	# Normally the name is the first tile which is rather redundant
-	# However some groups have custom header text which should be read instead
-	def _get_name(self):
-		child = self.firstChild
-		if isinstance(child, UIA):
-			if child.UIAAutomationId == "GridListGroupHeader":
-				return child.name
-
-
 class StartButton(IAccessible):
 	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons
 	and to suppress selection announcement."""
@@ -276,10 +262,8 @@ class AppModule(appModuleHandler.AppModule):
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
-			elif uiaClassName == "GridGroup":
-				clsList.insert(0, GridGroup)
 			# Multitasking view frame window
-			elif (
+			if (
 				# Windows 10 and earlier
 				(uiaClassName == "MultitaskingViewFrame" and role == controlTypes.Role.WINDOW)
 				# Windows 11 where a pane window receives focus when switching tasks
