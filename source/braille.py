@@ -747,6 +747,8 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				# Translators: Displayed in braille for a multi select list.
 				roleText = _("mslst")
 			elif childControlCount:
+				# Translators: Displayed in braille for a list in browse mode.
+				# %s is replaced with the level.
 				roleText = _("lst%s") % childControlCount
 				childControlCount = None
 			else:
