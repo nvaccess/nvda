@@ -149,11 +149,6 @@ class ExplorerToolTip(ToolTip):
 			super().event_show()
 
 
-class GridListTileElement(UIA):
-	role = controlTypes.Role.TABLECELL
-	description = None
-
-
 class GridGroup(UIA):
 	"""A group in the Windows 8 Start Menu."""
 
@@ -281,8 +276,6 @@ class AppModule(appModuleHandler.AppModule):
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
-			elif uiaClassName == "GridListTileElement":
-				clsList.insert(0, GridListTileElement)
 			elif uiaClassName == "GridGroup":
 				clsList.insert(0, GridGroup)
 			# Multitasking view frame window
