@@ -734,7 +734,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
 		elif role == controlTypes.Role.LIST:
-			if(
+			if (
 				states
 				and controlTypes.State.MULTISELECTABLE in states
 				and config.conf["presentation"]["reportMultiSelect"]
