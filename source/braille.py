@@ -746,13 +746,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				states.discard(controlTypes.State.MULTISELECTABLE)
 				# Translators: Displayed in braille for a multi select list.
 				roleText = _("mslst")
-			elif childControlCount:
-				# Translators: Displayed in braille for a list in browse mode.
-				# %s is replaced with the number of items.
-				roleText = _("lst%s") % childControlCount
-				childControlCount = None
 			else:
 				roleText = roleLabels.get(role, role.displayString)
+				if childControlCount:
+					roleText += childControlCount
+					childControlCount = None
 
 		elif (
 			name or cellCoordsText or rowNumber or columnNumber
