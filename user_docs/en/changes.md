@@ -33,6 +33,10 @@ An action has been added to view the full scan results on the VirusTotal website
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
+* Dot Pad displays can now be connected via Bluetooth Low Energy (BLE) in addition to USB. (#19122, @bramd)
+  * When automatic detection is enabled, Dot Pad devices will be discovered and connected automatically when in range.
+  * No Bluetooth pairing in Windows settings is required.
+  * Bluetooth Low Energy support requires Windows 10 version 1703 (Creators Update) or later.
 
 ### Changes
 
