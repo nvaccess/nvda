@@ -758,6 +758,7 @@ def main():
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
 	import asyncioEventLoop
+
 	log.debug("Initializing asyncio event loop")
 	asyncioEventLoop.initialize()
 
