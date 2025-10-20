@@ -49,7 +49,7 @@ def terminate():
 		pass
 
 	eventLoop.close()
-	asyncioThread.stop()
+	asyncioThread.join()
 	asyncioThread = None
 
 

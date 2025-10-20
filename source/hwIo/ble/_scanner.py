@@ -41,7 +41,6 @@ class Scanner:
 		# Notify extension point handlers
 		self.deviceDiscovered.notify(device=device, advertisementData=adv, isNew=isNew)
 
-		# Play a tone for newly discovered devices
 		if isNew:
 			log.debug(f"Discovered BLE device: {device.name or device.address}")
 
