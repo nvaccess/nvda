@@ -313,7 +313,7 @@ class SecureDesktopHandler:
 		if self._mapFile is not None:
 			if not closeHandle(self._mapFile):
 				log.debugWarning(
-					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}"
+					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}",
 				)
 		log.info("Secure desktop cleanup completed")
 
@@ -384,7 +384,7 @@ class SecureDesktopHandler:
 			log.error(f"Couldn't map view of file. {GetLastError()}: {FormatError()}")
 			if not closeHandle(mapFile):
 				log.debugWarning(
-					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}"
+					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}",
 				)
 			return
 		buffer = (WCHAR * self._IPC_MAXLEN).from_address(bufferAddress)
@@ -410,7 +410,7 @@ class SecureDesktopHandler:
 				log.debugWarning(f"Error unmapping IPC shared memory. {GetLastError()}: {FormatError()}")
 			if not closeHandle(mapFile):
 				log.debugWarning(
-					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}"
+					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}",
 				)
 			self.sdServer.close()
 			self.sdServer = None
@@ -482,7 +482,7 @@ class SecureDesktopHandler:
 		if self._mapFile is not None:
 			if not closeHandle(self._mapFile):
 				log.debugWarning(
-					"Failed to close handle to memory mapped IPC file. {GetLastError()}: {FormatError()}"
+					"Failed to close handle to memory mapped IPC file. {GetLastError()}: {FormatError()}",
 				)
 			self._mapFile = None
 
@@ -552,7 +552,7 @@ class SecureDesktopHandler:
 				log.debugWarning(f"Failed to unmap view of IPC file. {GetLastError()}: {FormatError()}")
 			if not closeHandle(mapFile):
 				log.debugWarning(
-					f"Failed to close handle to IPC file mapping. {GetLastError()}: {FormatError()}"
+					f"Failed to close handle to IPC file mapping. {GetLastError()}: {FormatError()}",
 				)
 
 	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:

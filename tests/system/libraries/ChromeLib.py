@@ -185,10 +185,14 @@ class ChromeLib:
 				"alt+d",
 			)  # focus the address bar, chrome shortcut
 			if expectedAddressBarSpeech not in moveToAddressBarSpeech:
-				builtIn.log(
-					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}",
-				)
-				return False
+				# The "Ask Google about this page" button is sometimes spoken,
+				# which clobbers the expected output
+				moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey("nvda+tab")  # report current focus.
+				if expectedAddressBarSpeech not in moveToAddressBarSpeech:
+					builtIn.log(
+						f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}",
+					)
+					return False
 
 		afterControlF6Speech = _NvdaLib.getSpeechAfterKey("control+F6")  # focus web content, chrome shortcut.
 		if ChromeLib._testCaseTitle not in afterControlF6Speech:
