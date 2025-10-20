@@ -9,7 +9,7 @@ from threading import Event, Thread
 from typing import Callable, Iterator
 import weakref
 
-from asyncioEventLoop import runCoroutine
+from asyncioEventLoop import runCoroutineSync
 from ..base import _isDebug, IoBase
 from ..ioThread import IoThread
 from logHandler import log
@@ -120,10 +120,7 @@ class Ble(IoBase):
 			daemon=True,
 		)
 		self._readerThread.start()
-		f = runCoroutine(self._initAndConnect())
-		f.result()
-		if f.exception():
-			raise f.exception()
+		runCoroutineSync(self._initAndConnect(), timeout=CONNECT_TIMEOUT_SECONDS)
 		self.waitForConnection(CONNECT_TIMEOUT_SECONDS)
 
 	async def _initAndConnect(self) -> None:
@@ -157,19 +154,16 @@ class Ble(IoBase):
 
 		# Split the data into chunks that fit within the MTU
 		for s in sliced(data, characteristic.max_write_without_response_size):
-			f = runCoroutine(
+			runCoroutineSync(
 				self._client.write_gatt_char(characteristic, s, response=False),
 			)
-			f.result()
-			if f.exception():
-				raise f.exception()
 
 	def close(self) -> None:
 		"""Disconnect the BLE peripheral and release resources."""
 		if _isDebug():
 			log.debug("Closing BLE connection")
 		if self._client.is_connected:
-			runCoroutine(self._client.disconnect()).result()
+			runCoroutineSync(self._client.disconnect())
 		self._queuedData.join()
 		self._stopReaderEvent.set()
 		self._readerThread.join()
