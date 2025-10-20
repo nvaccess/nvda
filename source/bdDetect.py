@@ -685,7 +685,11 @@ class _Detector:
 			ProtocolType.BLE,
 			device.name or device.address,
 			device.address,
-			{"name": device.name or "", "address": device.address},
+			{
+				"name": device.name or "",
+				"address": device.address,
+				"provider": CommunicationType.BLE,
+			},
 		)
 
 		# Check against registered drivers (respect limitToDevices filter)
@@ -835,7 +839,11 @@ def getDriversForBleDevices(
 			ProtocolType.BLE,
 			device.name or device.address,
 			device.address,
-			{"name": device.name or "", "address": device.address},
+			{
+				"name": device.name or "",
+				"address": device.address,
+				"provider": CommunicationType.BLE,
+			},
 		)
 
 		for driver, devs in _driverDevices.items():
