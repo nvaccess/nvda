@@ -2788,7 +2788,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				elif (
 					"bluetoothName" in detected.deviceInfo
 					or detected.deviceInfo.get("provider") == "bluetooth"
-					or detected.deviceInfo.get("provider") in "("bluetooth", "ble")
+					or detected.deviceInfo.get("provider") in ("bluetooth", "ble")
 				):
 					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
 					# Note that the detector should always be running in this situation, so we can trigger a rescan.
