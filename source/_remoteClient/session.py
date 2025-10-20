@@ -315,8 +315,8 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
-		braille.filter_displaySize.register(
-			self.localMachine.handleFilterDisplaySize,
+		braille.filter_displayDimensions.register(
+			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
 			RemoteMessageType.BRAILLE_INPUT,
@@ -396,7 +396,7 @@ class FollowerSession(RemoteSession):
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
-			log.info("Leader client disconnected: %r", client)
+			log.info(f"Leader client disconnected: {client!r}")
 			del self.leaders[client["id"]]
 		elif client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
 			self.followers.discard(client["id"])
@@ -407,7 +407,7 @@ class FollowerSession(RemoteSession):
 		self.leaderDisplaySizes = (
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
-		log.debug("Setting follower display size to: %r", self.leaderDisplaySizes)
+		log.debug(f"Setting follower display size to: {self.leaderDisplaySizes!r}")
 		self.localMachine.setBrailleDisplaySize(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
@@ -590,17 +590,14 @@ class LeaderSession(RemoteSession):
 	def sendBrailleInfo(
 		self,
 		display: braille.BrailleDisplayDriver | None = None,
-		displaySize: int | None = None,
+		displayDimensions: braille.DisplayDimensions | None = None,
 	) -> None:
 		if display is None:
 			display = braille.handler.display
-		if displaySize is None:
-			displaySize = braille.handler.displaySize
-		log.debug(
-			"Sending braille info to follower - display: %s, size: %d",
-			display.name if display else "None",
-			displaySize if displaySize else 0,
-		)
+		if displayDimensions is None:
+			displayDimensions = braille.handler.displayDimensions
+		displaySize = displayDimensions.numCols
+		log.debug(f"Sending braille info to follower - display: {display.name}, width: {displaySize}")
 		self.transport.send(
 			type=RemoteMessageType.SET_BRAILLE_INFO,
 			name=display.name,
