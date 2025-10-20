@@ -74,11 +74,11 @@ class Ble(IoBase):
 	_onReceive: Callable[[bytes], None] | None
 	"The callback to call when data is received"
 	_queuedData: Queue[bytes | bytearray]
-	"A queue of received data, this is processsed by the onReceive handler"
+	"A queue of received data, this is processed by the onReceive handler"
 	_readEvent: Event
 	"An event that is set when data is received"
 	_readerThread: Thread
-	"Thread that processes the queue of rad data"
+	"Thread that processes the queue of read data"
 	_stopReaderEvent: Event
 	"Event that is set to stop the reader thread"
 	_ioThreadRef: weakref.ReferenceType[IoThread]
