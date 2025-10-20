@@ -6,11 +6,11 @@ from typing import Callable
 from .windowsHandler import DockedFrame, LensFrame
 
 from logHandler import log
-import ui
 import wx
 import api
 
 # Utils
+
 
 class MouseHandler:
 	def __init__(self):
@@ -20,7 +20,6 @@ class MouseHandler:
 	@property
 	def mousePosition(self):
 		return self._mousePosition
-
 
 	@mousePosition.setter
 	def mousePosition(self, pos: tuple[int, int]):
@@ -42,20 +41,24 @@ class MouseHandler:
 		# GetKeyState returns negative value if key is pressed
 		return ctypes.windll.user32.GetKeyState(0x01) < 0
 
+
 class ColorFilter(Enum):
 	NORMAL = "normal"
 	GREYSCALE = "greyscale"
 	INVERTED = "inverted"
+
 
 class FullScreenMode(Enum):
 	CENTER = "center"
 	BORDER = "border"
 	RELATIVE = "relative"
 
+
 class MagnifierType(Enum):
 	FULLSCREEN = "fullscreen"
 	DOCKED = "docked"
 	LENS = "lens"
+
 
 class ColorFilterMatrix(Enum):
 	NORMAL = (ctypes.c_float * 25)(
@@ -142,10 +145,11 @@ class ColorFilterMatrix(Enum):
 		1.0,
 	)
 
+
 # Base Code
 
-class NVDAMagnifier:
 
+class NVDAMagnifier:
 	_ZOOM_MIN: float = 1.0
 	_ZOOM_MAX: float = 10.0
 	_ZOOM_STEP: float = 0.5
@@ -166,7 +170,7 @@ class NVDAMagnifier:
 		self._colorFilter: ColorFilter = colorFilter
 		self._mouseHandler: MouseHandler = MouseHandler()
 
-# Properties
+	# Properties
 
 	@property
 	def isActive(self) -> bool:
@@ -188,11 +192,11 @@ class NVDAMagnifier:
 	@property
 	def lastFocusedObject(self) -> str:
 		return self._lastFocusedObject
-	
+
 	@lastFocusedObject.setter
 	def lastFocusedObject(self, value: str) -> None:
 		self._lastFocusedObject = value
-	
+
 	@property
 	def lastNVDAPosition(self) -> tuple[int, int]:
 		return self._lastNVDAPosition
@@ -235,7 +239,7 @@ class NVDAMagnifier:
 
 	@property
 	def timer(self) -> wx.Timer | None:
-		return self._timer	
+		return self._timer
 
 	@timer.setter
 	def timer(self, value: wx.Timer | None) -> None:
@@ -244,36 +248,34 @@ class NVDAMagnifier:
 	@property
 	def colorFilter(self) -> ColorFilter:
 		return self._colorFilter
-	
+
 	@colorFilter.setter
 	def colorFilter(self, value: ColorFilter) -> None:
 		self._colorFilter = value
 
-# Functions
+	# Functions
 
 	def _startMagnifier(self) -> None:
-		"""Start the magnifier.
-		"""
+		"""Start the magnifier."""
 		if self.isActive:
-			return # Already active
+			return  # Already active
 		self.isActive = True
 		self.currentCoordinates = self._getFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""Update the magnifier position and content."""
-		if not self.isActive: 
+		if not self.isActive:
 			return
 		self.currentCoordinates = self._getFocusCoordinates()
-		self._doUpdate()	
+		self._doUpdate()
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
 		"""Perform the actual update of the magnifier."""
 		raise NotImplementedError("Subclasses must implement this method.")
-		
+
 	def _stopMagnifier(self) -> None:
-		"""Stop the magnifier.
-		"""
+		"""Stop the magnifier."""
 		if not self.isActive:
 			return
 		self._stopTimer()
@@ -304,17 +306,14 @@ class NVDAMagnifier:
 		if self.timer:
 			if self.timer.IsRunning():
 				self.timer.Stop()
-			self.timer = None  
+			self.timer = None
 		else:
-			log.error('no timer to stop')
+			log.error("no timer to stop")
 
-	def _getMagnifierPosition(self,
-		x: int, 
-		y: int
-	) -> tuple[int, int, int, int]:
+	def _getMagnifierPosition(self, x: int, y: int) -> tuple[int, int, int, int]:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y).
-		
+
 		Args:
 			x, y: Focus coordinates
 			targetWidth, targetHeight: Target size (defaults to screen size for fullscreen)
@@ -329,11 +328,11 @@ class NVDAMagnifier:
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (visibleWidth / 2))
 		top = int(y - (visibleHeight / 2))
-		
+
 		# Clamp to screen boundaries
 		left = max(0, min(left, int(self._SCREEN_WIDTH - visibleWidth)))
 		top = max(0, min(top, int(self._SCREEN_HEIGHT - visibleHeight)))
-		
+
 		return (left, top, int(visibleWidth), int(visibleHeight))
 
 	def _getNvdaPosition(self) -> tuple[int, int]:
@@ -414,12 +413,18 @@ class NVDAMagnifier:
 		else:
 			return mousePosition
 
+
 class FullScreenMagnifier(NVDAMagnifier):
-	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL, fullscreenMode: FullScreenMode = FullScreenMode.CENTER):
+	def __init__(
+		self,
+		zoomLevel: float = 2.0,
+		colorFilter: ColorFilter = ColorFilter.NORMAL,
+		fullscreenMode: FullScreenMode = FullScreenMode.CENTER,
+	):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = fullscreenMode
-		self._currentCoordinates: tuple[int,int] = (0, 0)
+		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._spotlightIsActive = False
 		self._spotlightLastMousePosition: tuple[int, int] = (0, 0)
 		self._spotlightZoom: float = 1.0
@@ -476,8 +481,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 		self._spotlightTimer = value
 
 	def _startMagnifier(self) -> None:
-		"""Start the Fullscreen magnifier using windows DLL.
-		"""
+		"""Start the Fullscreen magnifier using windows DLL."""
 		super()._startMagnifier()
 		self._loadMagnifierApi()
 		self._startTimer(self._updateMagnifier)
@@ -500,10 +504,9 @@ class FullScreenMagnifier(NVDAMagnifier):
 		self.lastScreenPosition = (x, y)
 		# Apply transformation
 		self._fullscreenMagnifier(x, y)
-		
+
 	def _stopMagnifier(self) -> None:
-		"""Stop the Fullscreen magnifier using windows DLL.
-		"""
+		"""Stop the Fullscreen magnifier using windows DLL."""
 		super()._stopMagnifier()
 		# reset color filter of fullscreen to normal
 		ctypes.windll.magnification.MagSetFullscreenColorEffect(ColorFilterMatrix.NORMAL.value)
@@ -525,7 +528,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 		elif self.colorFilter == ColorFilter.INVERTED:
 			ctypes.windll.magnification.MagSetFullscreenColorEffect(ColorFilterMatrix.INVERTED.value)
 		else:
-			log.info(f"Unknown color filter: {self.colorFilter}")		
+			log.info(f"Unknown color filter: {self.colorFilter}")
 
 	def _loadMagnifierApi(self) -> None:
 		"""Initialize the Magnification API."""
@@ -562,7 +565,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 		MagSetFullscreenTransform.restype = wintypes.BOOL
 		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
 		return MagSetFullscreenTransform
-	
+
 	def _fullscreenMagnifier(self, x: int, y: int) -> None:
 		"""Apply fullscreen magnification at given coordinates.
 
@@ -619,7 +622,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 			return self.lastScreenPosition[0] + dx, self.lastScreenPosition[1] + dy
 		else:
 			return self.lastScreenPosition
-	
+
 	def _relativePos(self, mouseX: int, mouseY: int) -> tuple[int, int]:
 		"""
 		Calculate magnifier center maintaining mouse relative position.
@@ -655,10 +658,9 @@ class FullScreenMagnifier(NVDAMagnifier):
 		centerY = int(top + visibleHeight / 2)
 		self.lastScreenPosition = (centerX, centerY)
 		return self.lastScreenPosition
-	
+
 	def _spotlight(self) -> None:
-		"""Activate spotlight mode for the magnifier.
-		"""
+		"""Activate spotlight mode for the magnifier."""
 		self._stopTimer()
 
 		centerX, centerY = self._getFocusCoordinates()
@@ -702,7 +704,9 @@ class FullScreenMagnifier(NVDAMagnifier):
 
 		self._animateZoom(1.0, centerX, centerY, callback=lambda: wx.CallLater(2000, checkMouseIdle))
 
-	def _animateZoom(self, targetZoom: float, centerX: int, centerY: int, callback: Callable[[], None] = None) -> None:
+	def _animateZoom(
+		self, targetZoom: float, centerX: int, centerY: int, callback: Callable[[], None] = None
+	) -> None:
 		"""Animate zoom smoothly using magnifierTimer.
 
 		:param targetZoom: The target zoom level.
@@ -754,8 +758,8 @@ class FullScreenMagnifier(NVDAMagnifier):
 		if self._animationCallback:
 			self._animationCallback()
 
-class DockedMagnifier(NVDAMagnifier):
 
+class DockedMagnifier(NVDAMagnifier):
 	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType: MagnifierType = MagnifierType.DOCKED
@@ -777,8 +781,8 @@ class DockedMagnifier(NVDAMagnifier):
 		super()._stopMagnifier()
 		self._dockedFrame.stopMagnifying()
 
-class LensMagnifier(NVDAMagnifier):
 
+class LensMagnifier(NVDAMagnifier):
 	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType: MagnifierType = MagnifierType.LENS
@@ -798,5 +802,3 @@ class LensMagnifier(NVDAMagnifier):
 	def _stopMagnifier(self):
 		super()._stopMagnifier()
 		self._lensFrame.stopMagnifying()
-
-	

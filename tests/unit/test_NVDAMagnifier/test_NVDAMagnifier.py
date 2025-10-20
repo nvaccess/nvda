@@ -4,13 +4,10 @@ from unittest.mock import MagicMock, Mock, patch
 import wx
 import ctypes
 
-from NVDAMagnifier import ColorFilter, NVDAMagnifier
+from NVDAMagnifier import ColorFilter
 
 
 class TestNVDAMagnifier(unittest.TestCase):
-
-
-
 	@classmethod
 	def setUpClass(cls):
 		"""Setup qui s'exécute une fois au début."""
@@ -56,7 +53,6 @@ class TestNVDAMagnifier(unittest.TestCase):
 		magnifier._doUpdate.assert_called_once()
 		magnifier._startTimer.assert_called_once()
 
-
 	def testDoUpdate(self):
 		"""Test : DoUpdate function is called when Magnifier is active."""
 		magnifier = NVDAMagnifier(2.0, ColorFilter.NORMAL)
@@ -75,7 +71,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 		magnifier._stopTimer.assert_not_called()
 
 		# Call the stop function with activation
-		
+
 		magnifier.isActive = True
 		magnifier._stopMagnifier()
 		magnifier._stopTimer.assert_called_once()
@@ -112,7 +108,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 	def testStopTimer(self):
 		"""Test : Stopping the timer (version corrigée)."""
-		
+
 		magnifier = NVDAMagnifier(2.0, ColorFilter.NORMAL)
 
 		magnifier._startTimer()
@@ -126,14 +122,14 @@ class TestNVDAMagnifier(unittest.TestCase):
 		screenWidth = ctypes.windll.user32.GetSystemMetrics(0)
 		screenHeight = ctypes.windll.user32.GetSystemMetrics(1)
 
-		x, y = int(screenWidth / 2), int(screenHeight / 2)  
+		x, y = int(screenWidth / 2), int(screenHeight / 2)
 		left, top, width, height = magnifier._getMagnifierPosition(x, y)
 
 		expected_width = screenWidth / magnifier.zoomLevel
-		expected_height = screenHeight / magnifier.zoomLevel 
-		expected_left = int(x - (expected_width / 2)) 
-		expected_top = int(y - (expected_height / 2)) 
-		
+		expected_height = screenHeight / magnifier.zoomLevel
+		expected_left = int(x - (expected_width / 2))
+		expected_top = int(y - (expected_height / 2))
+
 		self.assertEqual(left, expected_left)
 		self.assertEqual(top, expected_top)
 		self.assertEqual(width, expected_width)
@@ -157,33 +153,33 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 	def testGetNvdaPosition(self):
 		"""Test : Getting NVDA position with different API responses."""
-		
+
 		magnifier = NVDAMagnifier(2.0, ColorFilter.NORMAL)
-		
+
 		# Scenario 1: Review position successful
-		with patch('api.getReviewPosition') as mock_review:
+		with patch("api.getReviewPosition") as mock_review:
 			mock_point = Mock()
 			mock_point.x = 300
 			mock_point.y = 400
 			mock_review.return_value.pointAtStart = mock_point
-			
+
 			x, y = magnifier._getNvdaPosition()
 			self.assertEqual((x, y), (300, 400))
-		
+
 		# Scenario 2: Review position fails, navigator works
-		with patch('api.getReviewPosition', return_value=None):
-			with patch('api.getNavigatorObject') as mock_navigator:
+		with patch("api.getReviewPosition", return_value=None):
+			with patch("api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = (100, 150, 200, 300)
-				
+
 				x, y = magnifier._getNvdaPosition()
 				# Center: (100 + 200//2, 150 + 300//2) = (200, 300)
 				self.assertEqual((x, y), (200, 300))
-		
+
 		# Scenario 3: Everything fails
-		with patch('api.getReviewPosition', return_value=None):
-			with patch('api.getNavigatorObject') as mock_navigator:
+		with patch("api.getReviewPosition", return_value=None):
+			with patch("api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = Mock(side_effect=Exception())
-				
+
 				x, y = magnifier._getNvdaPosition()
 				self.assertEqual((x, y), (0, 0))
 
@@ -191,21 +187,27 @@ class TestNVDAMagnifier(unittest.TestCase):
 		"""Test : All priority scenarios for focus coordinates."""
 
 		magnifier = NVDAMagnifier(2.0, ColorFilter.NORMAL)
-		
+
 		def initValues(getNvda: tuple[int, int], mousePos: tuple[int, int], leftPressed: bool):
 			magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
-			magnifier.lastNVDAPosition = (0,0)
+			magnifier.lastNVDAPosition = (0, 0)
 
 			magnifier._mouseHandler.mousePosition = mousePos
-			magnifier.lastMousePosition = (0,0)
+			magnifier.lastMousePosition = (0, 0)
 			magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
-
 
 		def testValues(returned: tuple[int, int], lastFocusedObject: str):
 			focusCoordinates = magnifier._getFocusCoordinates()
-			self.assertEqual(focusCoordinates, returned, f"Focus coordinates should return {returned} and not {focusCoordinates}")
-			self.assertEqual(magnifier.lastFocusedObject, lastFocusedObject, f"Last focused object should return {lastFocusedObject} and not {magnifier.lastFocusedObject}")
-
+			self.assertEqual(
+				focusCoordinates,
+				returned,
+				f"Focus coordinates should return {returned} and not {focusCoordinates}",
+			)
+			self.assertEqual(
+				magnifier.lastFocusedObject,
+				lastFocusedObject,
+				f"Last focused object should return {lastFocusedObject} and not {magnifier.lastFocusedObject}",
+			)
 
 		# Case 1 Left click is pressed should return mouse position
 		initValues((0, 0), (0, 0), True)
@@ -219,7 +221,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 		# Case 3 Last move is NVDA mouse not changed
 
 		initValues((10, 10), (0, 0), False)
-		testValues((10,10), "nvda")
+		testValues((10, 10), "nvda")
 
 		# Case 4 noting changed last move Mouse
 

@@ -13,7 +13,14 @@ from typing import (
 	Tuple,
 	Union,
 )
-from NVDAMagnifier import NVDAMagnifier, FullScreenMagnifier, DockedMagnifier, LensMagnifier, FullScreenMode, MagnifierType, ColorFilter
+from NVDAMagnifier import (
+	FullScreenMagnifier,
+	DockedMagnifier,
+	LensMagnifier,
+	FullScreenMode,
+	MagnifierType,
+	ColorFilter,
+)
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -4933,13 +4940,16 @@ class GlobalCommands(ScriptableObject):
 			Fullscreen Mode: {self._fullscreenMode.name.lower()}
 			""")
 			if self._magnifierType == MagnifierType.FULLSCREEN:
-				self._nvdaMagnifier = FullScreenMagnifier(self._zoomLevel, self._colorFilter, self._fullscreenMode)
+				self._nvdaMagnifier = FullScreenMagnifier(
+					self._zoomLevel, self._colorFilter, self._fullscreenMode
+				)
 			elif self._magnifierType == MagnifierType.DOCKED:
 				self._nvdaMagnifier = DockedMagnifier(self._zoomLevel, self._colorFilter)
 			elif self._magnifierType == MagnifierType.LENS:
 				self._nvdaMagnifier = LensMagnifier(self._zoomLevel, self._colorFilter)
 		else:
 			log.info("error starting")
+
 	@script(
 		description=_(
 			# Translators: Describes a command.
@@ -5005,11 +5015,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleFullscreenMode(self, gesture):
 		"""Cycle through fullscreen focus modes (center, border, relative)."""
 		nvdaMagnifier: FullScreenMagnifier = self._nvdaMagnifier
-		if (
-			nvdaMagnifier
-			and nvdaMagnifier.isActive
-			and nvdaMagnifier.magnifierType.value == "fullscreen"
-		):
+		if nvdaMagnifier and nvdaMagnifier.isActive and nvdaMagnifier.magnifierType.value == "fullscreen":
 			modes = list(FullScreenMode)
 			currentMode = nvdaMagnifier.fullscreenMode
 			idx = modes.index(currentMode)
@@ -5032,7 +5038,6 @@ class GlobalCommands(ScriptableObject):
 		"""Cycle to the next magnifier mode."""
 		nvdaMagnifier = self._nvdaMagnifier
 
-	
 		if nvdaMagnifier and nvdaMagnifier.isActive:
 			# Cycle to next mode
 			modes = list(MagnifierType)
@@ -5051,19 +5056,20 @@ class GlobalCommands(ScriptableObject):
 			""")
 
 			if self._magnifierType == MagnifierType.FULLSCREEN:
-				self._nvdaMagnifier = FullScreenMagnifier(self._zoomLevel, self._colorFilter, self._fullscreenMode)
+				self._nvdaMagnifier = FullScreenMagnifier(
+					self._zoomLevel, self._colorFilter, self._fullscreenMode
+				)
 			elif self._magnifierType == MagnifierType.DOCKED:
 				self._nvdaMagnifier = DockedMagnifier(self._zoomLevel, self._colorFilter)
 			elif self._magnifierType == MagnifierType.LENS:
 				self._nvdaMagnifier = LensMagnifier(self._zoomLevel, self._colorFilter)
 			else:
 				self._nvdaMagnifier = FullScreenMagnifier()
-		
 
 			nvdaMagnifier = self._nvdaMagnifier
 			ui.message(f"Magnifier mode at start: {nvdaMagnifier.magnifierType.name.lower()}")
 		else:
-			log.info(f"Magnifier mode at start error")
+			log.info("Magnifier mode at start error")
 			return
 
 	@script(

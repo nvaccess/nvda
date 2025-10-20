@@ -1,12 +1,11 @@
 import unittest
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, patch
 import wx
 
 from NVDAMagnifier import ColorFilter, MagnifierType, LensMagnifier, LensFrame
 
+
 class TestLensMagnifier(unittest.TestCase):
-
-
 	@classmethod
 	def setUpClass(cls):
 		"""
@@ -15,14 +14,17 @@ class TestLensMagnifier(unittest.TestCase):
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
-
-	@patch.object(LensMagnifier, '_startMagnifier')
+	@patch.object(LensMagnifier, "_startMagnifier")
 	def testLensMagnifierCreation(self, mock_start_magnifier):
 		"""Test : Creating the fullscreen magnifier."""
 		zoomDefault = 2.0
 		colorDefault = ColorFilter.NORMAL
-		
-		def testValues(magnifier: LensMagnifier, zoomPassed: float = zoomDefault, colorFilterPassed: ColorFilter = colorDefault):
+
+		def testValues(
+			magnifier: LensMagnifier,
+			zoomPassed: float = zoomDefault,
+			colorFilterPassed: ColorFilter = colorDefault,
+		):
 			self.assertEqual(magnifier.zoomLevel, zoomPassed)
 			self.assertEqual(magnifier.colorFilter, colorFilterPassed)
 			self.assertIsInstance(magnifier, LensMagnifier)
@@ -33,7 +35,6 @@ class TestLensMagnifier(unittest.TestCase):
 			# reseting instance
 
 			mock_start_magnifier.reset_mock()
-
 
 		# Case 1: No parameters
 
@@ -52,10 +53,9 @@ class TestLensMagnifier(unittest.TestCase):
 		magnifier = LensMagnifier(zoomLevel=4.0, colorFilter=ColorFilter.GREYSCALE)
 		testValues(magnifier, zoomPassed=4.0, colorFilterPassed=ColorFilter.GREYSCALE)
 
-
 	def testStartLensMagnifier(self):
 		"""Test : Activating and deactivating the fullscreen magnifier."""
-		with patch.object(LensMagnifier, '_startMagnifier'):
+		with patch.object(LensMagnifier, "_startMagnifier"):
 			magnifier = LensMagnifier()
 
 		magnifier._startTimer = MagicMock()
@@ -70,7 +70,7 @@ class TestLensMagnifier(unittest.TestCase):
 
 	def testLensDoUpdate(self):
 		"""Test : Updating the magnifier"""
-		with patch.object(LensMagnifier, '_startMagnifier'):
+		with patch.object(LensMagnifier, "_startMagnifier"):
 			magnifier = LensMagnifier()
 
 		magnifier._lensFrame.updateMagnifier = MagicMock()
@@ -78,10 +78,9 @@ class TestLensMagnifier(unittest.TestCase):
 		magnifier._doUpdate()
 		magnifier._lensFrame.updateMagnifier.assert_called_once()
 
-
 	def testStopMagnifier(self):
 		"""Test : Stopping the Lens magnifier."""
-		with patch.object(LensMagnifier, '_startMagnifier'):
+		with patch.object(LensMagnifier, "_startMagnifier"):
 			magnifier = LensMagnifier()
 
 		magnifier._lensFrame.stopMagnifying = MagicMock()

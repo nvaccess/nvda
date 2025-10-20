@@ -1,12 +1,11 @@
 import unittest
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, patch
 import wx
 
 from NVDAMagnifier import ColorFilter, MagnifierType, DockedMagnifier, DockedFrame
 
+
 class TestDockedMagnifier(unittest.TestCase):
-
-
 	@classmethod
 	def setUpClass(cls):
 		"""
@@ -15,14 +14,17 @@ class TestDockedMagnifier(unittest.TestCase):
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
-
-	@patch.object(DockedMagnifier, '_startMagnifier')
+	@patch.object(DockedMagnifier, "_startMagnifier")
 	def testDockedMagnifierCreation(self, mock_start_magnifier):
 		"""Test : Creating the fullscreen magnifier."""
 		zoomDefault = 2.0
 		colorDefault = ColorFilter.NORMAL
-		
-		def testValues(magnifier: DockedMagnifier, zoomPassed: float = zoomDefault, colorFilterPassed: ColorFilter = colorDefault):
+
+		def testValues(
+			magnifier: DockedMagnifier,
+			zoomPassed: float = zoomDefault,
+			colorFilterPassed: ColorFilter = colorDefault,
+		):
 			self.assertEqual(magnifier.zoomLevel, zoomPassed)
 			self.assertEqual(magnifier.colorFilter, colorFilterPassed)
 			self.assertIsInstance(magnifier, DockedMagnifier)
@@ -33,7 +35,6 @@ class TestDockedMagnifier(unittest.TestCase):
 			# reseting instance
 
 			mock_start_magnifier.reset_mock()
-
 
 		# Case 1: No parameters
 
@@ -52,10 +53,9 @@ class TestDockedMagnifier(unittest.TestCase):
 		magnifier = DockedMagnifier(zoomLevel=4.0, colorFilter=ColorFilter.GREYSCALE)
 		testValues(magnifier, zoomPassed=4.0, colorFilterPassed=ColorFilter.GREYSCALE)
 
-
 	def testStartDockedMagnifier(self):
 		"""Test : Activating and deactivating the fullscreen magnifier."""
-		with patch.object(DockedMagnifier, '_startMagnifier'):
+		with patch.object(DockedMagnifier, "_startMagnifier"):
 			magnifier = DockedMagnifier()
 
 		magnifier._startTimer = MagicMock()
@@ -70,7 +70,7 @@ class TestDockedMagnifier(unittest.TestCase):
 
 	def testDockedDoUpdate(self):
 		"""Test : Updating the magnifier"""
-		with patch.object(DockedMagnifier, '_startMagnifier'):
+		with patch.object(DockedMagnifier, "_startMagnifier"):
 			magnifier = DockedMagnifier()
 
 		magnifier._dockedFrame.updateMagnifier = MagicMock()
@@ -81,10 +81,9 @@ class TestDockedMagnifier(unittest.TestCase):
 		magnifier._doUpdate()
 		magnifier._dockedFrame.updateMagnifier.assert_called_once()
 
-
 	def testStopMagnifier(self):
 		"""Test : Stopping the docked magnifier."""
-		with patch.object(DockedMagnifier, '_startMagnifier'):
+		with patch.object(DockedMagnifier, "_startMagnifier"):
 			magnifier = DockedMagnifier()
 
 		magnifier._dockedFrame.stopMagnifying = MagicMock()

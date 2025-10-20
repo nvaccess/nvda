@@ -16,6 +16,7 @@ def getScreenSize() -> tuple[int, int]:
 	)
 	return screenWidth, screenHeight
 
+
 class GlobalPanel(wx.Panel):
 	"""Unified panel that handles both docked and lens magnification display."""
 
