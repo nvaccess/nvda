@@ -216,13 +216,10 @@ class TestBle(unittest.TestCase):
 		self.mockServices.services = mockServicesDict
 		self.mockClient.services = self.mockServices
 
-		# Patch runCoroutine
-		self.runCoroutinePatcher = patch("hwIo.ble._io.runCoroutine")
-		self.mockRunCoroutine = self.runCoroutinePatcher.start()
-		mockFuture = MagicMock()
-		mockFuture.result.return_value = None
-		mockFuture.exception.return_value = None
-		self.mockRunCoroutine.return_value = mockFuture
+		# Patch runCoroutineSync (just returns None, as it's a synchronous wrapper)
+		self.runCoroutineSyncPatcher = patch("hwIo.ble._io.runCoroutineSync")
+		self.mockRunCoroutineSync = self.runCoroutineSyncPatcher.start()
+		self.mockRunCoroutineSync.return_value = None
 
 		# Import Ble after patching
 		from hwIo.ble._io import Ble
@@ -231,7 +228,7 @@ class TestBle(unittest.TestCase):
 
 	def tearDown(self):
 		"""Clean up patches."""
-		self.runCoroutinePatcher.stop()
+		self.runCoroutineSyncPatcher.stop()
 		self.bleakClientPatcher.stop()
 
 	def test_connectionSuccess(self):
@@ -265,8 +262,8 @@ class TestBle(unittest.TestCase):
 		callArgs = self.mockBleakClientClass.call_args
 		self.assertEqual(callArgs[0][0], mockDevice)
 
-		# Verify runCoroutine was called at least once (_initAndConnect contains connect + start_notify)
-		self.assertGreaterEqual(self.mockRunCoroutine.call_count, 1)
+		# Verify runCoroutineSync was called for initialization
+		self.mockRunCoroutineSync.assert_called()
 
 		# Verify the connection is established
 		self.assertTrue(ble.isConnected())
@@ -296,8 +293,8 @@ class TestBle(unittest.TestCase):
 		self.mockServices.get_service.assert_called_with("service-uuid")
 		self.mockService.get_characteristic.assert_called_with("write-char-uuid")
 
-		# Verify write was called (through runCoroutine)
-		self.mockRunCoroutine.assert_called()
+		# Verify write was called (through runCoroutineSync)
+		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)  # At least init + write
 
 	def test_writeDataChunking(self):
 		"""Test that large data is split into MTU-sized chunks."""
@@ -320,14 +317,14 @@ class TestBle(unittest.TestCase):
 		)
 
 		# Reset call count after initialization
-		initialCallCount = self.mockRunCoroutine.call_count
+		initialCallCount = self.mockRunCoroutineSync.call_count
 
 		# Write 25 bytes (should split into 3 chunks: 10, 10, 5)
 		testData = b"A" * 25
 		ble.write(testData)
 
-		# Verify runCoroutine was called 3 times for writes (plus initial calls)
-		writeCalls = self.mockRunCoroutine.call_count - initialCallCount
+		# Verify runCoroutineSync was called 3 times for writes
+		writeCalls = self.mockRunCoroutineSync.call_count - initialCallCount
 		self.assertEqual(writeCalls, 3)
 
 	def test_receiveNotification(self):
@@ -353,9 +350,8 @@ class TestBle(unittest.TestCase):
 			ioThread=mockIoThread,
 		)
 
-		# Get the notification callback that was registered
-		# It should be in the call to start_notify via runCoroutine
-		self.assertTrue(self.mockRunCoroutine.called)
+		# Verify initialization occurred
+		self.mockRunCoroutineSync.assert_called()
 
 		# Simulate notification by calling _notifyReceive directly
 		testData = bytearray(b"notification data")
@@ -385,8 +381,8 @@ class TestBle(unittest.TestCase):
 		# Close the connection
 		ble.close()
 
-		# Verify disconnect was called via runCoroutine
-		self.assertTrue(self.mockRunCoroutine.called)
+		# Verify disconnect was called via runCoroutineSync (init + close)
+		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 
 		# Verify onReceive callback was cleared
 		self.assertIsNone(ble._onReceive)

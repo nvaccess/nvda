@@ -58,6 +58,30 @@ def runCoroutine(coro: Coroutine) -> asyncio.Future:
 
 	:param coro: The coroutine to run.
 	"""
-	if not asyncioThread.is_alive():
+	if asyncioThread is None or not asyncioThread.is_alive():
 		raise RuntimeError("Asyncio event loop thread is not running")
 	return asyncio.run_coroutine_threadsafe(coro, eventLoop)
+
+
+def runCoroutineSync(coro: Coroutine, timeout: float | None = None):
+	"""Schedule a coroutine to be run on the asyncio event loop and wait for the result.
+
+	This is a synchronous wrapper around runCoroutine() that blocks until the coroutine
+	completes and returns the result directly, or raises any exception that occurred.
+
+	:param coro: The coroutine to run.
+	:param timeout: Optional timeout in seconds. If None, waits indefinitely.
+	:return: The result of the coroutine.
+	:raises: Any exception raised by the coroutine.
+	:raises TimeoutError: If the timeout is exceeded.
+	:raises RuntimeError: If the asyncio event loop thread is not running.
+	"""
+	future = runCoroutine(coro)
+	try:
+		# Wait for the future to complete and get the result
+		# This will raise any exception that occurred in the coroutine
+		return future.result(timeout)
+	except asyncio.TimeoutError as e:
+		# Cancel the coroutine since it timed out
+		future.cancel()
+		raise TimeoutError(f"Coroutine execution timed out after {timeout} seconds") from e
