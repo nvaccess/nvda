@@ -91,6 +91,8 @@ class FTD2XX:
 			dwMask = FT_PURGE.TX
 		elif toPurge == "RX":
 			dwMask = FT_PURGE.RX
+		else:
+			raise ValueError(f"Got invalid value for toPurge: {toPurge}")
 		log.debug(f"Calling FT_Purge({self.ftHandle}, {dwMask=})")
 		FT_Purge(self.ftHandle, dwMask)
 
@@ -99,7 +101,7 @@ class FTD2XX:
 		else raises an exception"""
 		lpdwAmountInRxQueue = DWORD()
 		log.debug(f"Calling FT_GetQueueStatus({self.ftHandle}, byref({lpdwAmountInRxQueue=}))")
-		FT_GetQueueStatus(self.ftHandl, byref(lpdwAmountInRxQueue))
+		FT_GetQueueStatus(self.ftHandle, byref(lpdwAmountInRxQueue))
 		return lpdwAmountInRxQueue.value
 
 	def write(self, lpBuffer: bytes = b"") -> int:
@@ -161,7 +163,7 @@ def createDeviceInfoList() -> int:
 	return lpdwNumDevs.value
 
 
-def getDeviceInfoDetail(dev=0) -> dict[str, Any]:
+def getDeviceInfoDetail(dev: int = 0) -> dict[str, Any]:
 	"""Get an entry from the internal device info list."""
 	dwIndex = DWORD(dev)
 	lpdwFlags = DWORD()

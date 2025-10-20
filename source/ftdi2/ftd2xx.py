@@ -2,6 +2,7 @@ from _ctypes import CFuncPtr
 from ctypes import POINTER, WINFUNCTYPE, Structure, c_char, c_char_p, c_int, c_ubyte, c_void_p, windll
 from ctypes.wintypes import DWORD, LPDWORD, PHANDLE
 from enum import IntEnum, IntFlag
+from typing import Any
 
 dll = windll.ftd2xx
 
@@ -112,7 +113,7 @@ class FTDeviceError(Exception):
 		return repr(self.parameter)
 
 
-def _ftd2xxErrorCheck(result: int, func: CFuncPtr, args: tuple[...]) -> tuple[...]:
+def _ftd2xxErrorCheck(result: int, func: CFuncPtr, args: tuple[Any, ...]) -> tuple[Any, ...]:
 	if result != FT_MESSAGE.OK:
 		raise FTDeviceError(result)
 	return args
