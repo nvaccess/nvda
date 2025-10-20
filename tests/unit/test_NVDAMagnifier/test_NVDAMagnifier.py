@@ -187,7 +187,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 				x, y = magnifier._getNvdaPosition()
 				self.assertEqual((x, y), (0, 0))
 
-	def testGetFocusCoordinatesScenarios(self):
+	def testGetFocusCoordinates(self):
 		"""Test : All priority scenarios for focus coordinates."""
 
 		magnifier = NVDAMagnifier(2.0, ColorFilter.NORMAL)

@@ -755,8 +755,8 @@ class FullScreenMagnifier(NVDAMagnifier):
 			self._animationCallback()
 
 class DockedMagnifier(NVDAMagnifier):
-	
-	def __init__(self, zoomLevel: float, colorFilter: ColorFilter):
+
+	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType: MagnifierType = MagnifierType.DOCKED
 		self._dockedFrame: DockedFrame = DockedFrame()
@@ -779,7 +779,7 @@ class DockedMagnifier(NVDAMagnifier):
 
 class LensMagnifier(NVDAMagnifier):
 
-	def __init__(self, zoomLevel: float, colorFilter: ColorFilter):
+	def __init__(self, zoomLevel: float = 2.0, colorFilter: ColorFilter = ColorFilter.NORMAL):
 		super().__init__(zoomLevel=zoomLevel, colorFilter=colorFilter)
 		self._magnifierType: MagnifierType = MagnifierType.LENS
 		self._lensFrame: LensFrame = LensFrame()
