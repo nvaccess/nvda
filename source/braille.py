@@ -748,9 +748,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				roleText = _("mslst")
 			else:
 				roleText = roleLabels.get(role, role.displayString)
-				if childControlCount:
-					roleText += childControlCount
-					childControlCount = None
+			if childControlCount:
+				roleText += childControlCount
+				childControlCount = None
 
 		elif (
 			name or cellCoordsText or rowNumber or columnNumber
@@ -1156,10 +1156,11 @@ def _getControlFieldForReportStart(
 	level = field.get("level")
 	if level:
 		props["positionInfo"] = {"level": level}
-	if role == controlTypes.Role.LIST:
-		childControlCount = field.get("_childcontrolcount")
-		if childControlCount:
-			props["positionInfo"] = {"childControlCount": childControlCount}
+	if (
+		role == controlTypes.Role.LIST
+		and (childControlCount := field.get("_childcontrolcount", 0)) > 0
+	):
+		props["positionInfo"] = {"childControlCount": childControlCount}
 
 	text = getPropertiesBraille(**props)
 	if content:
