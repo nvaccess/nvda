@@ -8,7 +8,7 @@ param(
 	[string]$FileToSign
 )
 
-Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force
+Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force -ErrorAction Stop
 
 $authenticodeSignature = Get-AuthenticodeSignature -FilePath $FileToSign
 if (($authenticodeSignature).Status -ne 'Valid') {
