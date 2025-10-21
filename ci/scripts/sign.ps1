@@ -4,14 +4,17 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 param(
-    [string]$ApiToken,
-    [string]$FileToSign
+	[string]$ApiToken,
+	[string]$FileToSign
 )
+
+Write-Host "Signing $FileToSign ... " -NoNewline
 
 Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force
 
 $authenticodeSignature = Get-AuthenticodeSignature -FilePath $FileToSign
 if (($authenticodeSignature).Status -ne 'Valid') {
+	Write-Host "Failure"
 	Write-Output @"
 FAIL: Signature is not valid.
 
@@ -21,12 +24,30 @@ FAIL: Signature is not valid.
 $($authenticodeSignature | ConvertTo-Html -fragment -Property Path, SignatureType, Status, StatusMessage)
 
 Signer certificate:
-$($authenticodeSignature.SignerCertificate | ConvertTo-Html -fragment -Property Subject, Issuer,  SerialNumber,  Thumbprint, @{Name='NotBefore'; Expr={$_.NotBefore.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}}, @{Name='NotAfter'; Expr={$_.NotAfter.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}})
+$(
+	if ($null -eq $authenticodeSignature.SignerCertificate) {
+		"None"
+	} else {
+		$authenticodeSignature.SignerCertificate | ConvertTo-Html -fragment -Property Subject, Issuer,  SerialNumber,  Thumbprint, `
+		@{Name='NotBefore'; Expr={$_.NotBefore.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}},`
+		@{Name='NotAfter'; Expr={$_.NotAfter.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}}
+	}
+)
 
 Timestamper certificate:
-$($authenticodeSignature.TimestamperCertificate | ConvertTo-Html -fragment -Property Subject, Issuer,  SerialNumber,  Thumbprint, @{Name='NotBefore'; Expr={$_.NotBefore.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}}, @{Name='NotAfter'; Expr={$_.NotAfter.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}})
+$(
+	if ($null -eq $authenticodeSignature.TimestamperCertificate) {
+		"None"
+	} else {
+		$authenticodeSignature.TimestamperCertificate | ConvertTo-Html -fragment -Property Subject, Issuer,  SerialNumber,  Thumbprint,`
+		@{Name='NotBefore'; Expr={$_.NotBefore.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}},`
+		@{Name='NotAfter'; Expr={$_.NotAfter.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")}}
+	}
+)
 
 </details>
 "@ >> $env:GITHUB_STEP_SUMMARY
 	exit 1
+} else {
+	Write-Host "Success"
 }
