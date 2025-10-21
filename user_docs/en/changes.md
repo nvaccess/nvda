@@ -31,6 +31,10 @@ This can be enabled using the "Report when lists support multiple selection" set
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* Dot Pad displays can now be connected via Bluetooth Low Energy (BLE) in addition to USB. (#19122, @bramd)
+  * When automatic detection is enabled, Dot Pad devices will be discovered and connected automatically when in range.
+  * No Bluetooth pairing in Windows settings is required.
+  * Bluetooth Low Energy support requires Windows 10 version 1703 (Creators Update) or later.
 
 ### Changes
 
