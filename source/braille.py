@@ -1156,10 +1156,7 @@ def _getControlFieldForReportStart(
 	level = field.get("level")
 	if level:
 		props["positionInfo"] = {"level": level}
-	if (
-		role == controlTypes.Role.LIST
-		and (childControlCount := field.get("_childcontrolcount", 0)) > 0
-	):
+	if role == controlTypes.Role.LIST and (childControlCount := field.get("_childcontrolcount", 0)) > 0:
 		props["positionInfo"] = {"childControlCount": childControlCount}
 
 	text = getPropertiesBraille(**props)
