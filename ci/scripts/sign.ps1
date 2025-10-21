@@ -8,13 +8,11 @@ param(
 	[string]$FileToSign
 )
 
-Write-Host "Signing $FileToSign ... " -NoNewline
-
 Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force
 
 $authenticodeSignature = Get-AuthenticodeSignature -FilePath $FileToSign
 if (($authenticodeSignature).Status -ne 'Valid') {
-	Write-Host "Failure"
+	Write-Error "The signature of $FileToSign is not valid."
 	Write-Output @"
 FAIL: Signature is not valid.
 
@@ -49,5 +47,5 @@ $(
 "@ >> $env:GITHUB_STEP_SUMMARY
 	exit 1
 } else {
-	Write-Host "Success"
+	Write-Output "Successfully signed $FileToSign."
 }
