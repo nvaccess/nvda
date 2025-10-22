@@ -19,6 +19,7 @@ from annotation import (
 )
 
 import audioDucking
+import tones
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -838,8 +839,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		shouldEnableAutoScroll = braille.handler._autoScrollTimer is None
 		if shouldEnableAutoScroll:
-			# Translators: Message reported when automatic scrolling has been enabled in braille.
-			speech.speakMessage(_("Automatic scrolling enabled"))
+			tones.beep(500, 50)
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			speech.speakMessage(_("Automatic scrolling disabled"))
