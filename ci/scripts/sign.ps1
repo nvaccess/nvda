@@ -8,8 +8,8 @@ param(
 	[string]$FileToSign
 )
 
-if ((Split-Path -Path $FileToSign -Leaf) -eq "IAccessible2proxy.dll") {
-	Write-output "Intentionlly not signing IAccessible2proxy.dll!"
+if ((Split-Path -Leaf -Path (Split-Path -Parent -Path $FileToSign)) -eq "output" -and (Split-Path -Leaf -Path $FileToSign) -like "nvda_*.exe") {
+	Write-output "Intentionlly not signing NVDA launcher!"
 } else {
 Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force -ErrorAction Stop
 }
