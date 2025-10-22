@@ -1,3 +1,14 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2025, NV Access Limited, Jonathan Roadley-Battin
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+"""
+Functions exported by ftd2xx.dll, and supporting data structures, constants  and enumerations.
+
+Basedon work from http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip.
+"""
+
 from _ctypes import CFuncPtr
 from ctypes import POINTER, WINFUNCTYPE, Structure, c_char, c_char_p, c_int, c_ubyte, c_void_p, windll
 from ctypes.wintypes import DWORD, LPDWORD, PHANDLE
@@ -113,334 +124,225 @@ class FTDeviceError(Exception):
 		return repr(self.parameter)
 
 
-def _ftd2xxErrorCheck(result: int, func: CFuncPtr, args: tuple[Any, ...]) -> tuple[Any, ...]:
+def _errorCheck(result: int, func: CFuncPtr, args: tuple[Any, ...]) -> tuple[Any, ...]:
 	if result != FT_MESSAGE.OK:
 		raise FTDeviceError(result)
 	return args
 
 
 # Function prototypes
-FT_CreateDeviceInfoList = WINFUNCTYPE(FT_STATUS, LPDWORD)(
-	("FT_CreateDeviceInfoList", dll),
-	# ((2, "lpdwNumDevs"),),
-)
+FT_CreateDeviceInfoList = WINFUNCTYPE(
+	FT_STATUS,
+	LPDWORD,  # lpdwNumDevs
+)(("FT_CreateDeviceInfoList", dll))
 """Builds a device information list and returns the number of D2XX devices connected to the system."""
-FT_CreateDeviceInfoList.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_CreateDeviceInfoList(*args):
-# return ft.FT_CreateDeviceInfoList(*args)
+FT_CreateDeviceInfoList.errcheck = _errorCheck
 
-FT_GetDeviceInfoList = WINFUNCTYPE(FT_STATUS, POINTER(FT_DEVICE_LIST_INFO_NODE), LPDWORD)(
+FT_GetDeviceInfoList = WINFUNCTYPE(
+	FT_STATUS,
+	POINTER(FT_DEVICE_LIST_INFO_NODE),  # pDest
+	LPDWORD,  # lpdwNumDevs
+)(
 	("FT_GetDeviceInfoList", dll),
-	# ((2, "pDest"), (1, "lpdwNumDevs")),
 )
 """Returns a device information list and the number of D2XX devices in the list."""
-FT_GetDeviceInfoList.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetDeviceInfoList(*args):
-# return ft.FT_GetDeviceInfoList(*args)
+FT_GetDeviceInfoList.errcheck = _errorCheck
 
 FT_GetDeviceInfoDetail = WINFUNCTYPE(
 	FT_STATUS,
-	DWORD,
-	LPDWORD,
-	LPDWORD,
-	LPDWORD,
-	LPDWORD,
-	PCHAR,
-	PCHAR,
-	POINTER(FT_HANDLE),
-)(
-	("FT_GetDeviceInfoDetail", dll),
-	# (
-	# (1, "dwIndex"),
-	# (2, "lpdwFlags"),
-	# (2, "lpdwType"),
-	# (2, "lpdwID"),
-	# (2, "lpdwLocId"),
-	# (2, "pcSerialNumber"),
-	# (2, "pcDescription"),
-	# (2, "ftHandle"),
-	# ),
-)
+	DWORD,  # dwIndex
+	LPDWORD,  # lpdwFlags
+	LPDWORD,  # lpdwType
+	LPDWORD,  # lpdwID
+	LPDWORD,  # lpdwLocId
+	PCHAR,  # pcSerialNumber
+	PCHAR,  # pcDescription
+	POINTER(FT_HANDLE),  # ftHandle
+)(("FT_GetDeviceInfoDetail", dll))
 """Returns an entry from the device information list."""
-FT_GetDeviceInfoDetail.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetDeviceInfoDetail(*args):
-# return ft.FT_GetDeviceInfoDetail(*args)
+FT_GetDeviceInfoDetail.errcheck = _errorCheck
 
-FT_ListDevices = WINFUNCTYPE(FT_STATUS, PVOID, PVOID, DWORD)(
-	("FT_ListDevices", dll),
-	# (
-	# (3, "pvArg1"),
-	# (3, "pvArg2"),
-	# (1, "dwFlags"),
-	# ),
-)
+FT_ListDevices = WINFUNCTYPE(
+	FT_STATUS,
+	PVOID,  # pvArg1
+	PVOID,  # pvArg2
+	DWORD,  # dwFlags
+)(("FT_ListDevices", dll))
 """Gets information concerning the devices currently connected."""
-FT_ListDevices.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_ListDevices(*args):
-# return ft.FT_ListDevices(*args)
+FT_ListDevices.errcheck = _errorCheck
 
-FT_Open = WINFUNCTYPE(FT_STATUS, c_int, POINTER(FT_HANDLE))(
-	("FT_Open", dll),
-	# (
-	# (1, "iDevice"),
-	# (2, "ftHandle"),
-	# ),
-)
+FT_Open = WINFUNCTYPE(
+	FT_STATUS,
+	c_int,  # iDevice
+	POINTER(FT_HANDLE),  # ftHandle
+)(("FT_Open", dll))
 """Open the device and return a handle which will be used for subsequent accesses."""
-FT_Open.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_Open(*args):
-# return ft.FT_Open(*args)
+FT_Open.errcheck = _errorCheck
 
-FT_OpenEx = WINFUNCTYPE(FT_STATUS, PVOID, DWORD, POINTER(FT_HANDLE))(
-	("FT_OpenEx", dll),
-	# (
-	# (1, "pvArg1"),
-	# (1, "dwFlags"),
-	# (2, "ftHandle"),
-	# ),
-)
+FT_OpenEx = WINFUNCTYPE(
+	FT_STATUS,
+	PVOID,  # pvArg1
+	DWORD,  # dwFlags
+	POINTER(FT_HANDLE),  # ftHandle
+)(("FT_OpenEx", dll))
 """Open the device specified by serial number, device description or location, and return a handle that will be used for subsequent accesses."""
-FT_OpenEx.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_OpenEx(*args):
-# return ft.FT_OpenEx(*args)
+FT_OpenEx.errcheck = _errorCheck
 
-FT_Close = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
-	("FT_Close", dll),
-	# ((1, "ftHandle"),),
-)
+FT_Close = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+)(("FT_Close", dll))
 """Close an open device."""
-FT_Close.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_Close(*args):
-# return ft.FT_Close(*args)
+FT_Close.errcheck = _errorCheck
 
-FT_Read = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPVOID, DWORD, LPDWORD)(
-	("FT_Read", dll),
-	# (
-	# (1, "ftHandle"),
-	# (2, "lpBuffer"),
-	# (1, "dwBytesToRead"),
-	# (2, "lpdwBytesReturned"),
-	# ),
-)
+FT_Read = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	LPVOID,  # lpBuffer
+	DWORD,  # dwBytesToRead
+	LPDWORD,  # lpdwBytesReturned
+)(("FT_Read", dll))
 """Read data from the device."""
-FT_Read.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_Read(*args):
-# return ft.FT_Read(*args)
+FT_Read.errcheck = _errorCheck
 
-FT_Write = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPVOID, DWORD, LPDWORD)(
-	("FT_Write", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "lpBuffer"),
-	# (1, "dwBytesToWrite"),
-	# (2, "lpdwBytesWritten"),
-	# ),
-)
+FT_Write = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	LPVOID,  # lpBuffer
+	DWORD,  # dwBytesToWrite
+	LPDWORD,  # lpdwBytesWritten
+)(("FT_Write", dll))
 """Write data to the device."""
-FT_Write.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_Write(*args):
-# return ft.FT_Write(*args)
+FT_Write.errcheck = _errorCheck
 
-FT_SetBaudRate = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD)(
-	("FT_SetBaudRate", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "dwBaudRate"),
-	# ),
-)
+FT_SetBaudRate = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	DWORD,  # dwBaudRate
+)(("FT_SetBaudRate", dll))
 """Sets the baud rate for the device."""
-FT_SetBaudRate.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_SetBaudRate(*args):
-# return ft.FT_SetBaudRate(*args)
+FT_SetBaudRate.errcheck = _errorCheck
 
-FT_SetTimeouts = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD, DWORD)(
-	("FT_SetTimeouts", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "dwReadTimeout"),
-	# (1, "dwWriteTimeout"),
-	# ),
-)
+FT_SetTimeouts = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	DWORD,  # dwReadTimeout
+	DWORD,  # dwWriteTimeout
+)(("FT_SetTimeouts", dll))
 """Sets the read and write timeouts for the device."""
-FT_SetTimeouts.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_SetTimeouts(*args):
-# return ft.FT_SetTimeouts(*args)
+FT_SetTimeouts.errcheck = _errorCheck
 
-FT_GetQueueStatus = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD)(
-	("FT_GetQueueStatus", dll),
-	# (
-	# (1, "ftHandle"),
-	# (2, "lpdwAmountInRxQueue"),
-	# ),
-)
+FT_GetQueueStatus = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	LPDWORD,  # lpdwAmountInRxQueue
+)(("FT_GetQueueStatus", dll))
 """Gets the number of bytes in the receive queue."""
-FT_GetQueueStatus.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetQueueStatus(*args):
-# return ft.FT_GetQueueStatus(*args)
+FT_GetQueueStatus.errcheck = _errorCheck
 
-
-FT_GetDeviceInfo = WINFUNCTYPE(FT_STATUS, FT_HANDLE, POINTER(FT_DEVICE), LPDWORD, PCHAR, PCHAR, PVOID)(
-	("FT_GetDeviceInfo", dll),
-	# (
-	# (1, "ftHandle"),
-	# (2, "pftType"),
-	# (2, "lpdwID"),
-	# (2, "pcSerialNumber"),
-	# (2, "pcDescription"),
-	# (2, "pvDummy"),
-	# ),
-)
+FT_GetDeviceInfo = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	POINTER(FT_DEVICE),  # pftType
+	LPDWORD,  # lpdwID
+	PCHAR,  # pcSerialNumber
+	PCHAR,  # pcDescription
+	PVOID,  # pvDummy
+)(("FT_GetDeviceInfo", dll))
 """Get device information for an open device."""
-FT_GetDeviceInfo.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetDeviceInfo(*args):
-# return ft.FT_GetDeviceInfo(*args)
+FT_GetDeviceInfo.errcheck = _errorCheck
 
-FT_GetDriverVersion = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD)(
-	("FT_GetDriverVersion", dll),
-	# (
-	# (1, "ftHandle"),
-	# (2, "lpdwDriverVersion"),
-	# ),
-)
+FT_GetDriverVersion = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	LPDWORD,  # lpdwDriverVersion
+)(("FT_GetDriverVersion", dll))
 """Returns the D2XX driver version number."""
-FT_GetDriverVersion.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetDriverVersion(*args):
-# return ft.FT_GetDriverVersion(*args)
+FT_GetDriverVersion.errcheck = _errorCheck
 
-FT_GetLibraryVersion = WINFUNCTYPE(FT_STATUS, LPDWORD)(
-	("FT_GetLibraryVersion", dll),
-	# ((2, "lpdwDLLVersion"),),
-)
+FT_GetLibraryVersion = WINFUNCTYPE(
+	FT_STATUS,
+	LPDWORD,  # lpdwDLLVersion
+)(("FT_GetLibraryVersion", dll))
 """Returns D2XX DLL version number."""
-FT_GetLibraryVersion.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetLibraryVersion(*args):
-# return ft.FT_GetLibraryVersion(*args)
+FT_GetLibraryVersion.errcheck = _errorCheck
 
-FT_GetStatus = WINFUNCTYPE(FT_STATUS, FT_HANDLE, LPDWORD, LPDWORD, LPDWORD)(
-	("FT_GetStatus", dll),
-	# (
-	# (1, "ftHandle"),
-	# (2, "lpdwAmountInRxQueue"),
-	# (2, "lpdwAmountInTxQueue"),
-	# (2, "lpdwEventStatus"),
-	# ),
-)
+FT_GetStatus = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	LPDWORD,  # lpdwAmountInRxQueue
+	LPDWORD,  # lpdwAmountInTxQueue
+	LPDWORD,  # lpdwEventStatus
+)(("FT_GetStatus", dll))
 """Gets the device status including number of characters in the receive queue, number of characters in the transmit queue, and the current event status."""
-FT_GetStatus.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_GetStatus(*args):
-# return ft.FT_GetStatus(*args)
+FT_GetStatus.errcheck = _errorCheck
 
-
-FT_Purge = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD)(
-	("FT_Purge", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "uEventCh"),
-	# ),
-)
+FT_Purge = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	DWORD,  # uEventCh
+)(("FT_Purge", dll))
 """Purges receive and transmit buffers in the device."""
-FT_Purge.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_Purge(*args):
-# return ft.FT_Purge(*args)
+FT_Purge.errcheck = _errorCheck
 
-FT_ResetDevice = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
-	("FT_ResetDevice", dll),
-	# ((1, "ftHandle"),),
-)
+FT_ResetDevice = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+)(("FT_ResetDevice", dll))
 """Sends a reset command to the device."""
-FT_ResetDevice.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_ResetDevice(*args):
-# return ft.FT_ResetDevice(*args)
+FT_ResetDevice.errcheck = _errorCheck
 
-FT_ResetPort = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
-	("FT_ResetPort", dll),
-	# ((1, "ftHandle"),),
-)
-FT_ResetPort.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_ResetPort(*args):
-# return ft.FT_ResetPort(*args)
+FT_ResetPort = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+)(("FT_ResetPort", dll))
+"""Send a reset command to the port."""
+FT_ResetPort.errcheck = _errorCheck
 
-FT_CyclePort = WINFUNCTYPE(FT_STATUS, FT_HANDLE)(
-	("FT_CyclePort", dll),
-	# ((1, "ftHandle"),),
-)
+FT_CyclePort = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+)(("FT_CyclePort", dll))
 """Send a cycle command to the USB port."""
-FT_CyclePort.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_CyclePort(*args):
-# return ft.FT_CyclePort(*args)
+FT_CyclePort.errcheck = _errorCheck
 
-FT_SetLatencyTimer = WINFUNCTYPE(FT_STATUS, FT_HANDLE, UCHAR)(
-	("FT_SetLatencyTimer", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "ucTimer"),
-	# ),
-)
+FT_SetLatencyTimer = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	UCHAR,  # ucTimer
+)(("FT_SetLatencyTimer", dll))
 """
 Set the latency timer value.
 
 .. note::
 	This is an extended API function, and may not be available on all FTDI devices.
 """
-FT_SetLatencyTimer.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_SetLatencyTimer(*args):
-# return ft.FT_SetLatencyTimer(*args)
+FT_SetLatencyTimer.errcheck = _errorCheck
 
-FT_SetBitMode = WINFUNCTYPE(FT_STATUS, FT_HANDLE, UCHAR, UCHAR)(
-	("FT_SetBitMode", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "ucMask"),
-	# (1, "ucMode"),
-	# ),
-)
+FT_SetBitMode = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle#ftHandle
+	UCHAR,  # ucMas
+	UCHAR,  # ucMode
+)(("FT_SetBitMode", dll))
 """
 Enables different chip modes.
 
 .. note::
 	This is an extended API function, and may not be available on all FTDI devices.
 """
-FT_SetBitMode.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_SetBitMode(*args):  # added by CJBH
-# return ft.FT_SetBitMode(*args)
+FT_SetBitMode.errcheck = _errorCheck
 
-FT_SetUSBParameters = WINFUNCTYPE(FT_STATUS, FT_HANDLE, DWORD, DWORD)(
-	("FT_SetUSBParameters", dll),
-	# (
-	# (1, "ftHandle"),
-	# (1, "dwInTransferSize"),
-	# (1, "dwOutTransferSize"),
-	# ),
-)
+FT_SetUSBParameters = WINFUNCTYPE(
+	FT_STATUS,
+	FT_HANDLE,  # ftHandle
+	DWORD,  # dwInTransferSize
+	DWORD,  # dwOutTransferSize
+)(("FT_SetUSBParameters", dll))
 """
 Set the USB request transfer size.
 
 .. note::
 	This is an extended API function, and may not be available on all FTDI devices.
 """
-FT_SetUSBParameters.errcheck = _ftd2xxErrorCheck
-# @ftExceptionDecorator
-# def _PY_SetUSBParameters(*args):
-# return ft.FT_SetUSBParameters(*args)
+FT_SetUSBParameters.errcheck = _errorCheck
