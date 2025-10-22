@@ -1,9 +1,13 @@
-#!/usr/bin/env python
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2025, NV Access Limited, Jonathan Roadley-Battin
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""This module is the first implementation of FTD2xx driver for the
-FTDI USB chips. Initial implementation is for functions from the
-dll required for present project"""
-# (from: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
+"""
+Lo-level pythonic interface to FTDI chips.
+
+Basedon work from http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip.
+"""
 
 from ctypes import (
 	byref,
@@ -12,7 +16,7 @@ from ctypes import (
 	create_string_buffer,
 )
 from ctypes.wintypes import DWORD
-from typing import Any
+from typing import TypedDict, NotRequired
 from logHandler import log
 
 from .ftd2xx import (
@@ -41,50 +45,87 @@ from .ftd2xx import (
 	FT_Write,
 )
 
-__FT_VERSION__ = "1.1"
-__FT_LICENCE__ = "LGPL3"
-__FT_AUTHOR__ = "Jonathan Roadley-Battin"
+
+class DeviceInfo(TypedDict):
+	"""Typing information for dictionaries returned by :func:`getDeviceInfoDetail` and :func:`getDeviceInfoList`."""
+
+	Dev: NotRequired[int]
+	Flags: int
+	Type: int
+	ID: int
+	LocId: int
+	SerialNumber: bytes
+	Description: bytes
+	ftHandle: FT_HANDLE
 
 
 class FTD2XX:
-	"""class that implements a ctype interface to the FTDI d2xx driver"""
+	"""Low-level interface to an FTDI device via the the FTD2XX driver."""
 
 	def __init__(self, ftHandle: FT_HANDLE):
-		"""setup initial ctypes link and some varabled"""
-		log.debug(f"Initialising FTD2XX with {ftHandle=}")
+		"""
+		Class initialiser.
+
+		:param ftHandle: Handle to the device to be controlled.
+		"""
 		self.ftHandle = ftHandle
 
 	def setBaudRate(self, dwBaudRate: int = 921600) -> None:
-		"""Set baud rate of driver, non-intelgent checking of allowed BAUD"""
-		log.debug(f"Calling FT_SetBaudRate({self.ftHandle}, {dwBaudRate=})")
+		"""
+		Set baud rate of communication.
+
+		:param dwBaudRate: Baud rate to use, defaults to 921600.
+		"""
 		FT_SetBaudRate(self.ftHandle, dwBaudRate)
 
 	# For compatibility with serial.Serial
 	set_baud_rate = setBaudRate
 
 	def setTimeouts(self, dwReadTimeout: int = 100, dwWriteTimeout: int = 100) -> None:
-		"""setup timeout times for TX and RX"""
-		log.debug(f"Calling FT_SetTimeouts({self.ftHandle}, {dwReadTimeout=}, {dwWriteTimeout=})")
+		"""
+		Set read and write timeouts.
+
+		:param dwReadTimeout: New read timeout in milliseconds, defaults to 100
+		:param dwWriteTimeout: New write timeout in milliseconds, defaults to 100
+		"""
 		FT_SetTimeouts(self.ftHandle, dwReadTimeout, dwWriteTimeout)
 
 	def setLatencyTimer(self, ucTimer: int = 16) -> None:
-		"""setup latency timer"""
-		log.debug(f"Calling FT_SetLatencyTimer({self.ftHandle}, {ucTimer=})")
+		"""
+		Set the latency timer value.
+
+		:param ucTimer: New latency timer value, defaults to 16
+		"""
 		FT_SetLatencyTimer(self.ftHandle, ucTimer)
 
 	def setBitMode(self, ucMask: int = 0, ucMode: int = 0) -> None:
-		"""setup bit mode"""
-		log.debug(f"Calling FT_SetBitMode({self.ftHandle}, {ucMask=}, {ucMode=})")
+		"""
+		Set the chip's operating mode.
+
+		:param ucMask: Sets which pins are inputs and which are outputs, defaults to 0
+		:param ucMode: Sets the bit mode, defaults to 0
+		"""
 		FT_SetBitMode(self.ftHandle, ucMask, ucMode)
 
 	def setUsbParameters(self, dwInTransferSize: int = 4096, dwOutTransferSize: int = 0) -> None:
-		"""set the drivers input and output buffer size"""
-		log.debug(f"Calling FT_SetUSBParameters({self.ftHandle}, {dwInTransferSize=}, {dwOutTransferSize=})")
+		"""
+		set the device's input and output buffer size.
+
+		:param dwInTransferSize: Transfer size for USB IN request, defaults to 4096
+		:param dwOutTransferSize: Transfer size for USB OUT request, defaults to 0
+		"""
 		FT_SetUSBParameters(self.ftHandle, dwInTransferSize, dwOutTransferSize)
 
 	def purge(self, toPurge: str = "TXRX") -> None:
-		"""purge the in and out buffer of driver.
-		Valid arguement = TX,RX,TXRX"""
+		"""
+		Purge the device's transmit and/or receive buffers.
+
+		:param toPurge: Which buffers to purge, defaults to "TXRX"
+			* "TX" purges the transmit buffer;
+			* "RX" purges the receive buffer;
+			* "TXRX" purges both the transmit and receive buffers.
+		:raises ValueError: If ``toPurge`` is not one of "TX", "RX" or "TXRX".
+		"""
 		if toPurge == "TXRX":
 			dwMask = FT_PURGE.RX | FT_PURGE.TX
 		elif toPurge == "TX":
@@ -93,29 +134,39 @@ class FTD2XX:
 			dwMask = FT_PURGE.RX
 		else:
 			raise ValueError(f"Got invalid value for toPurge: {toPurge}")
-		log.debug(f"Calling FT_Purge({self.ftHandle}, {dwMask=})")
 		FT_Purge(self.ftHandle, dwMask)
 
 	def getQueueStatus(self) -> int:
-		"""returns the number of bytes in the RX buffer
-		else raises an exception"""
+		"""
+		Retrieves the number of bytes in the device's read buffer.
+
+		:return: The number of bytes in the device's write buffer.
+		"""
 		lpdwAmountInRxQueue = DWORD()
-		log.debug(f"Calling FT_GetQueueStatus({self.ftHandle}, byref({lpdwAmountInRxQueue=}))")
 		FT_GetQueueStatus(self.ftHandle, byref(lpdwAmountInRxQueue))
 		return lpdwAmountInRxQueue.value
 
 	def write(self, lpBuffer: bytes = b"") -> int:
-		"""writes the bytes-type "data" to the opened port."""
+		"""
+		Writes data to the device.
+
+		:param lpBuffer: Data to write, defaults to b""
+		:return: The number of bytes written to the device.
+		"""
 		lpdwBytesWritten = DWORD()
-		log.debug(
-			f"Calling FT_Write({self.ftHandle}, {lpBuffer=}, {len(lpBuffer)=}, byref({lpdwBytesWritten=}))",
-		)
 		FT_Write(self.ftHandle, lpBuffer, len(lpBuffer), byref(lpdwBytesWritten))
 		return lpdwBytesWritten.value
 
 	def read(self, dwBytesToRead: int, raw: bool = True) -> bytes:
-		"""Read in int-type of bytes. Returns either the data
-		or raises an exception"""
+		"""
+		Read data from the device.
+
+		:param dwBytesToRead: Number of bytes of data to read.
+		:param raw: Whether to return the raw data, defaults to True
+			* If ``True``, exactly the data received is returned;
+			* If ``False``, the data is treated as a c-style string (the data is truncated at the first null character).
+		:return: The data read from the device.
+		"""
 		lpdwBytesReturned = DWORD()
 		lpBuffer = create_string_buffer(dwBytesToRead)
 		log.debug(
@@ -125,30 +176,30 @@ class FTD2XX:
 		return lpBuffer.raw[: lpdwBytesReturned.value] if raw else lpBuffer.value[: lpdwBytesReturned.value]
 
 	def resetDevice(self) -> None:
-		"""closes the port."""
-		log.debug(f"Calling FT_ResetDevice({self.ftHandle})")
+		"""Sends a reset command to the device."""
 		FT_ResetDevice(self.ftHandle)
 
 	def close(self) -> None:
-		"""closes the port."""
-		log.debug(f"Calling FT_Close({self.ftHandle})")
+		"""closes the device."""
 		FT_Close(self.ftHandle)
 
 
 def listDevices() -> list[bytes]:
-	"""method to list devices connected.
-	total connected and specific serial for a device position"""
+	"""
+	Retrieve a list of serial numbers of devices connected to the system.
+
+	:return: List of device serial numbers, as bytes.
+	"""
+	# Get the number of devices connected.
 	n = DWORD()
-	log.debug(f"Calling FT_ListDevices(byref({n=}), None, FT_LIST.NUMBER_ONLY)")
 	FT_ListDevices(byref(n), None, FT_LIST.NUMBER_ONLY)
 
 	if n.value:
+		# Per the D2XX programmer's guide, the last entry in the array should be a null pointer
 		serialNumbers = (c_char_p * (n.value + 1))()
 		for i in range(n.value):
 			serialNumbers[i] = cast(create_string_buffer(MAX_SERIAL_NUMBER_SIZE), c_char_p)
-		log.debug(
-			f"Calling FT_ListDevices({serialNumbers=}, byref({n=}), FT_LIST.ALL | FT_OPEN_BY.SERIAL_NUMBER)",
-		)
+		# Request the serial numbers of all connected devices.
 		FT_ListDevices(serialNumbers, byref(n), FT_LIST.ALL | FT_OPEN_BY.SERIAL_NUMBER)
 		return [ser for ser in serialNumbers[: n.value]]
 	else:
@@ -156,16 +207,27 @@ def listDevices() -> list[bytes]:
 
 
 def createDeviceInfoList() -> int:
-	"""Create the internal device info list and return number of entries"""
+	"""
+	Create the internal device info list.
+
+	:return: The number of entries in the device info list.
+	"""
 	lpdwNumDevs = DWORD()
-	log.debug(f"Calling FT_CreateDeviceInfoList(byref({lpdwNumDevs=}))")
 	FT_CreateDeviceInfoList(byref(lpdwNumDevs))
 	return lpdwNumDevs.value
 
 
-def getDeviceInfoDetail(dev: int = 0) -> dict[str, Any]:
-	"""Get an entry from the internal device info list."""
-	dwIndex = DWORD(dev)
+def getDeviceInfoDetail(index: int = 0) -> DeviceInfo:
+	"""
+	Get an entry from the internal device info list.
+
+	.. warning::
+		You must call :func:`createDeviceInfoList` before calling this function.
+
+	:param index: Index of the device in the device info list, defaults to 0.
+	:return: Information about the device at ``index``.
+	"""
+	dwIndex = DWORD(index)
 	lpdwFlags = DWORD()
 	lpdwType = DWORD()
 	lpdwID = DWORD()
@@ -173,9 +235,6 @@ def getDeviceInfoDetail(dev: int = 0) -> dict[str, Any]:
 	pcSerialNumber = create_string_buffer(MAX_SERIAL_NUMBER_SIZE)
 	pcDescription = create_string_buffer(MAX_DESCRIPTION_SIZE)
 	ftHandle = FT_HANDLE()
-	log.debug(
-		f"Calling FT_GetDeviceInfoDetail({dwIndex=}, byref({lpdwFlags=}), byref({lpdwType=}), byref({lpdwID=}), byref({lpdwLocId=}), {pcSerialNumber=}, {pcDescription=}, byref({ftHandle=}))",
-	)
 	FT_GetDeviceInfoDetail(
 		dwIndex,
 		byref(lpdwFlags),
@@ -198,30 +257,43 @@ def getDeviceInfoDetail(dev: int = 0) -> dict[str, Any]:
 	}
 
 
-def getDeviceInfoList() -> list[dict[str, Any]]:
+def getDeviceInfoList() -> list[DeviceInfo]:
+	"""
+	Get information about all FTDI devices connected to thesystem.
+
+	.. note::
+		There is no need to call :func:`createDeviceInfoList` before calling this function.
+
+	:return: A list of dictionaries containing information about each FTDI device connected to the system.
+	"""
 	numDevs = createDeviceInfoList()
-	devInfos = FT_DEVICE_LIST_INFO_NODE * (numDevs + 1)
+	devInfos = (FT_DEVICE_LIST_INFO_NODE * numDevs)()
 	lpdwNumDevs = DWORD()
-	log.debug(f"Calling FT_GetDeviceInfoList({devInfos=}, byref({lpdwNumDevs=}))")
 	FT_GetDeviceInfoList(devInfos, byref(lpdwNumDevs))
-	returnList = []
-	for i in devInfos:
-		returnList.append(
-			{
-				"Flags": i.Flags,
-				"Type": i.Type,
-				"LocID": i.LocId,
-				"SerialNumber": i.SerialNumber,
-				"Description": i.Description,
-			},
-		)
-	return returnList[:-1]
+	return [
+		{
+			"Flags": devInfo.Flags,
+			"Type": devInfo.Type,
+			"ID": devInfo.ID,
+			"LocId": devInfo.LocId,
+			"SerialNumber": devInfo.SerialNumber,
+			"Description": devInfo.Description,
+			"ftHandle": devInfo.ftHandle,
+		}
+		for devInfo in devInfos
+	]
 
 
 def openEx(serial: bytes = b"") -> FTD2XX:
-	"""open's FTDI-device by EEPROM-serial (prefered method).
-	Serial fetched by the ListDevices fn"""
+	"""
+	Open an FTDI device by serial number.
+
+	.. note::
+		Serial numbers can be retrieved with the :func:`getDeviceInfoDetail` or :func:`getDeviceInfoList` functions.
+
+	:param serial: Target device serial number.
+	:return: An object that can be used to interact with the device.
+	"""
 	ftHandle = FT_HANDLE()
-	log.debug(f"Calling FT_OpenEx({serial=}, FT_OPEN_BY.SERIAL_NUMBER, byref({ftHandle=}))")
 	FT_OpenEx(serial, FT_OPEN_BY.SERIAL_NUMBER, byref(ftHandle))
 	return FTD2XX(ftHandle)
