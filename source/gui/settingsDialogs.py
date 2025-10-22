@@ -5092,6 +5092,27 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		minTimeout = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollTimeout"),
+			).kwargs["min"],
+		)
+		maxTimeOut = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollTimeout"),
+			).kwargs["max"],
+		)
+		# Translators: The label for a setting in braille settings to change the number of seconds for the next automatic scroll.
+		autoScrollTimeoutText = _("Auto&matic scroll timeout (sec)")
+		self.autoScrollTimeoutEdit = followCursorGroupHelper.addLabeledControl(
+			autoScrollTimeoutText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTimeout,
+			max=maxTimeOut,
+			initial=config.conf["braille"]["autoScrollTimeout"],
+		)
+		self.bindHelpEvent("BrailleAutoScrollTimeout", self.messageTimeoutEdit)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5122,6 +5143,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		config.conf["braille"]["autoScrollTimeout"] = self.autoScrollTimeoutEdit.GetValue()
+
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value

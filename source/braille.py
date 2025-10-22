@@ -3060,8 +3060,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if enable:
+			autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
 			self._autoScrollTimer = gui.NonReEntrantTimer(self.scrollForward)
-			wx.CallAfter(self._autoScrollTimer.Start, self.displaySize * 100)  # 10chars/sec
+			wx.CallAfter(self._autoScrollTimer.Start, autoScrollTimeout)
 		elif self._autoScrollTimer:
 			self._autoScrollTimer.Stop()
 			self._autoScrollTimer = None
