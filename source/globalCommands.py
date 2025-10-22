@@ -831,7 +831,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for command to toggle automatic scrolling in braille.
 		description=_("Toggles automatic scrolling in braille"),
-		category = SCRCAT_BRAILLE
+		category=SCRCAT_BRAILLE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_toggleBrailleAutoScrolling(self, gesture: inputCore.InputGesture):
@@ -844,7 +844,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			speech.speakMessage(_("Automatic scrolling disabled"))
 		braille.handler.autoScroll(shouldEnableAutoScroll)
-
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -5141,6 +5140,7 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
+
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
