@@ -190,9 +190,11 @@ def listDevices() -> list[bytes]:
 
 	:return: List of device serial numbers, as bytes.
 	"""
+	log.debug("In listDevices()")
 	# Get the number of devices connected.
 	n = DWORD()
 	FT_ListDevices(byref(n), None, FT_LIST.NUMBER_ONLY)
+	log.debug(f"{n} devices connected")
 
 	if n.value:
 		# Per the D2XX programmer's guide, the last entry in the array should be a null pointer
@@ -201,7 +203,9 @@ def listDevices() -> list[bytes]:
 			serialNumbers[i] = cast(create_string_buffer(MAX_SERIAL_NUMBER_SIZE), c_char_p)
 		# Request the serial numbers of all connected devices.
 		FT_ListDevices(serialNumbers, byref(n), FT_LIST.ALL | FT_OPEN_BY.SERIAL_NUMBER)
-		return [ser for ser in serialNumbers[: n.value]]
+		retval = [ser for ser in serialNumbers[: n.value]]
+		log.debug(f"Got serial numbers: {retval}")
+		return retval
 	else:
 		return []
 
@@ -294,6 +298,10 @@ def openEx(serial: bytes = b"") -> FTD2XX:
 	:param serial: Target device serial number.
 	:return: An object that can be used to interact with the device.
 	"""
+	log.debug(f"In openEx({serial})")
 	ftHandle = FT_HANDLE()
-	FT_OpenEx(serial, FT_OPEN_BY.SERIAL_NUMBER, byref(ftHandle))
+	log.debug(f"{ftHandle=}, {ftHandle.contents=}")
+	log.debug(f"Calling FT_OpenEx({serial}, FT_OPEN_BY.SERIAL_NUMBER, byref({ftHandle}))")
+	res = FT_OpenEx(serial, FT_OPEN_BY.SERIAL_NUMBER, byref(ftHandle))
+	log.debug(f"Return code was {res}; {ftHandle=}, {ftHandle.contents=}")
 	return FTD2XX(ftHandle)

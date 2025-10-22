@@ -172,7 +172,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def connectUSB(self, devlist: List[bytes]):
 		"""Try to connect to usb device, this is triggered when bluetooth
 		connection could not be established"""
+		log.debug(f"In connectUSB({devlist=})")
 		try:
+			log.debug(f"Calling ftdi2.openEx({devlist[0]})")
 			self._dev = ftdi2.openEx(devlist[0])
 			self._dev.set_baud_rate(self._baud)
 			self._dev.inWaiting = self._dev.getQueueStatus
@@ -195,7 +197,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# try to connect to usb device,
 		# if no usb device is found there may be a bluetooth device
 		if ftdi2:
+			log.debug("Requesting list of device serial numbers.")
 			devlist = ftdi2.listDevices()
+			log.debug(f"Got serial numbers: {devlist}")
 		if len(devlist) == 0:
 			self.connectBluetooth()
 		elif ftdi2:
@@ -425,7 +429,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			if self._dev is None and self._baud > 0:
 				try:
+					log.debug("Requesting list of device serial numbers.")
 					devlist: List[bytes] = ftdi2.listDevices()
+					log.debug(f"Got serial numbers: {devlist}")
 					if len(devlist) > 0:
 						self.connectUSB(devlist)
 				except:  # noqa: E722
