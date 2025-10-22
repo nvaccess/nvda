@@ -11,13 +11,9 @@ param(
 Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA" -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force -ErrorAction Stop
 
 $authenticodeSignature = Get-AuthenticodeSignature -FilePath $FileToSign
-if (($authenticodeSignature).Status -ne 'Valid') {
-	Write-Error "The signature of $FileToSign is not valid."
-	Write-Output @"
-FAIL: Signature is not valid.
-
+Write-Output @"
 <details>
-<summary>Signature details</summary>
+<summary>Signature details for $FileToSign</summary>
 
 $($authenticodeSignature | ConvertTo-Html -fragment -Property Path, SignatureType, Status, StatusMessage)
 
@@ -45,6 +41,9 @@ $(
 
 </details>
 "@ >> $env:GITHUB_STEP_SUMMARY
+
+if (($authenticodeSignature).Status -ne 'Valid') {
+	Write-Error "The signature of $FileToSign is not valid."
 	exit 1
 } else {
 	Write-Output "Successfully signed $FileToSign."
