@@ -110,6 +110,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
+* The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
 
 #### Deprecations
 
