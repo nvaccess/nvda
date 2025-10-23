@@ -300,7 +300,7 @@ def openEx(serial: bytes = b"") -> FTD2XX:
 	"""
 	log.debug(f"In openEx({serial})")
 	ftHandle = FT_HANDLE()
-	log.debug(f"{ftHandle=}, {ftHandle.contents=}")
+	log.debug(f"{ftHandle=}")
 	log.debug(f"Calling FT_OpenEx({serial}, FT_OPEN_BY.SERIAL_NUMBER, byref({ftHandle}))")
 	res = FT_OpenEx(serial, FT_OPEN_BY.SERIAL_NUMBER, byref(ftHandle))
 	log.debug(f"Return code was {res}; {ftHandle=}, {ftHandle.contents=}")
