@@ -4999,6 +4999,8 @@ class GlobalCommands(ScriptableObject):
 			idx = filters.index(nvdaMagnifier.colorFilter)
 			nvdaMagnifier.colorFilter = filters[(idx + 1) % len(filters)]
 			self._colorFilter = nvdaMagnifier.colorFilter
+			if nvdaMagnifier.magnifierType == MagnifierType.FULLSCREEN:
+				nvdaMagnifier._applyColorFilter()
 			log.info(f"Color filter: {self._colorFilter.name.lower()}")
 			ui.message(f"Color filter: {nvdaMagnifier.colorFilter.name.lower()}")
 		else:

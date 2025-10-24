@@ -55,8 +55,7 @@ class TestLensMagnifier(unittest.TestCase):
 
 	def testStartLensMagnifier(self):
 		"""Test : Activating and deactivating the fullscreen magnifier."""
-		with patch.object(LensMagnifier, "_startMagnifier"):
-			magnifier = LensMagnifier()
+		magnifier = LensMagnifier()
 
 		magnifier._startTimer = MagicMock()
 		magnifier._lensFrame.Show = MagicMock()

@@ -1,20 +1,7 @@
-import ctypes
 import array
 
 from logHandler import log
 import wx
-
-
-lastScreenPosition = [0, 0]
-
-
-def getScreenSize() -> tuple[int, int]:
-	"""Return screen width and height."""
-	screenWidth, screenHeight = (
-		ctypes.windll.user32.GetSystemMetrics(0),
-		ctypes.windll.user32.GetSystemMetrics(1),
-	)
-	return screenWidth, screenHeight
 
 
 class GlobalPanel(wx.Panel):
@@ -86,9 +73,9 @@ class GlobalPanel(wx.Panel):
 
 		# Center the placeholder text
 		textSize = dc.GetTextExtent(self.placeholderText)
-		text_x = (width - textSize.width) // 2
-		text_y = (height - textSize.height) // 2
-		dc.DrawText(self.placeholderText, text_x, text_y)
+		textX = (width - textSize.width) // 2
+		textY = (height - textSize.height) // 2
+		dc.DrawText(self.placeholderText, textX, textY)
 
 	def onPaint(self, event) -> None:
 		"""Paint the magnified content and cursor overlay."""
@@ -113,9 +100,7 @@ class GlobalPanel(wx.Panel):
 class GlobalFrame(wx.Frame):
 	"""Base frame class that handles common magnifier functionality."""
 
-	def __init__(
-		self, frameType: str, title=None, size=None, style=None, position=None, colorFilter="normal"
-	):
+	def __init__(self, frameType: str, title="", size=None, style=None, position=None, colorFilter="normal"):
 		"""
 		Initialize the global frame.
 
@@ -136,7 +121,7 @@ class GlobalFrame(wx.Frame):
 
 		# Store frame configuration
 		self.frameType = frameType
-		self.filter = colorFilter
+		self.colorFilter = colorFilter
 
 		# Common properties
 		self.running = False
@@ -229,7 +214,7 @@ class GlobalFrame(wx.Frame):
 		self.Show()
 		self.forceRefresh()
 		self.Bind(wx.EVT_CLOSE, self.stopMagnifying)
-		self.screenWidth, self.screenHeight = getScreenSize()
+		self.screenWidth, self.screenHeight = wx.GetDisplaySize()
 
 	def stopMagnifying(self) -> None:
 		"""Stop the magnification."""
@@ -250,7 +235,7 @@ class GlobalFrame(wx.Frame):
 			captureY = focusY - captureHeight / 2
 
 			# Ensure capture area stays on screen
-			screenWidth, screenHeight = getScreenSize()
+			screenWidth, screenHeight = wx.GetDisplaySize()
 
 			captureX = max(0, min(captureX, screenWidth - captureWidth))
 			captureY = max(0, min(captureY, screenHeight - captureHeight))
@@ -309,7 +294,7 @@ class DockedFrame(GlobalFrame):
 
 	def __init__(self):
 		# Get screen dimensions to size the magnifier appropriately
-		self.screenWidth, self.screenHeight = getScreenSize()
+		self.screenWidth, self.screenHeight = wx.GetDisplaySize()
 		magnifierWidth = self.screenWidth
 		magnifierHeight = max(150, min(300, self.screenHeight // 4))
 

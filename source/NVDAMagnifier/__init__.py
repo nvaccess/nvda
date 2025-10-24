@@ -19,7 +19,7 @@ class MouseHandler:
 
 	@property
 	def mousePosition(self):
-		return self._mousePosition
+		return self.getMousePosition()
 
 	@mousePosition.setter
 	def mousePosition(self, pos: tuple[int, int]):
@@ -308,7 +308,7 @@ class NVDAMagnifier:
 				self.timer.Stop()
 			self.timer = None
 		else:
-			log.error("no timer to stop")
+			log.info("no timer to stop")
 
 	def _getMagnifierPosition(self, x: int, y: int) -> tuple[int, int, int, int]:
 		"""
@@ -377,7 +377,6 @@ class NVDAMagnifier:
 		"""
 		nvdaPosition = self._getNvdaPosition()
 		mousePosition = self._mouseHandler.mousePosition
-
 		# Check if left mouse button is pressed
 		isClickPressed = self._mouseHandler.isLeftClickPressed()
 

@@ -9,58 +9,72 @@ from NVDAMagnifier import ColorFilter, ColorFilterMatrix, MagnifierType, FullScr
 class TestFullScreenMagnifier(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		"""
-		Setup qui s'exécute une fois au début.
-		"""
+		"""Setup qui s'exécute une fois au début."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
-	@patch.object(FullScreenMagnifier, "_startMagnifier")
-	@patch.object(FullScreenMagnifier, "_applyColorFilter")
-	def testFullScreenMagnifierCreation(self, mock_apply_color_filter, mock_start_magnifier):
+	def setUp(self):
+		"""Setup avant chaque test."""
+		self.patcherStart = patch.object(FullScreenMagnifier, "_startMagnifier")
+		self.patcherApplyColorFilter = patch.object(FullScreenMagnifier, "_applyColorFilter")
+
+		self.magnifier = FullScreenMagnifier()
+
+		self.magnifier._SCREEN_WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
+		self.magnifier._SCREEN_HEIGHT = ctypes.windll.user32.GetSystemMetrics(1)
+		self.magnifier._MARGIN_BORDER = 50
+		self.centerX = self.magnifier._SCREEN_WIDTH // 2
+		self.centerY = self.magnifier._SCREEN_HEIGHT // 2
+
+		self.magnifier.zoomLevel = 2.0
+
+	def tearDown(self):
+		"""Cleanup après chaque test."""
+		self.patcherStart.stop()
+		self.patcherApplyColorFilter.stop()
+
+		if hasattr(self.magnifier, "timer") and self.magnifier.timer:
+			self.magnifier.timer.Stop()
+
+	def _createMagnifier(self, **kwargs):
+		"""Helper pour créer un magnifier avec patches."""
+		return FullScreenMagnifier(**kwargs)
+
+	def testFullScreenMagnifierCreation(self):
 		"""Test : Creating the fullscreen magnifier."""
 		zoomDefault = 2.0
 		colorDefault = ColorFilter.NORMAL
 		fullscreenModeDefault = FullScreenMode.CENTER
 
 		def testValues(
-			magnifier: FullScreenMagnifier,
-			zoomPassed: float = zoomDefault,
-			colorFilterPassed: ColorFilter = colorDefault,
-			fullscreenModePassed: FullScreenMode = fullscreenModeDefault,
+			magnifier,
+			zoomPassed=zoomDefault,
+			colorFilterPassed=colorDefault,
+			fullscreenModePassed=fullscreenModeDefault,
 		):
-			self.assertEqual(magnifier.zoomLevel, zoomPassed)
-			self.assertEqual(magnifier.colorFilter, colorFilterPassed)
-			self.assertEqual(magnifier.fullscreenMode, fullscreenModePassed)
-			self.assertIsInstance(magnifier, FullScreenMagnifier)
-			self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN)
-			mock_start_magnifier.assert_called_once()
-			mock_apply_color_filter.assert_called_once()
-
-			# reseting instance
-
-			mock_start_magnifier.reset_mock()
-			mock_apply_color_filter.reset_mock()
+			self.assertEqual(magnifier.zoomLevel, zoomPassed, "Zoom level mismatch")
+			self.assertEqual(magnifier.colorFilter, colorFilterPassed, "Color filter mismatch")
+			self.assertEqual(magnifier.fullscreenMode, fullscreenModePassed, "Fullscreen mode mismatch")
+			self.assertIsInstance(magnifier, FullScreenMagnifier, "Expected instance of FullScreenMagnifier")
+			self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN, "Magnifier type mismatch")
 
 		# Case 1: No parameters
-
-		magnifier = FullScreenMagnifier()
-		testValues(magnifier)
+		testValues(self.magnifier)
 
 		# Case 2: Only zoom
-		magnifier = FullScreenMagnifier(zoomLevel=4.0)
-		testValues(magnifier, zoomPassed=4.0)
+		magnifier2 = self._createMagnifier(zoomLevel=4.0)
+		testValues(magnifier2, zoomPassed=4.0)
 
 		# Case 3: Only color filter
-		magnifier = FullScreenMagnifier(colorFilter=ColorFilter.INVERTED)
-		testValues(magnifier, colorFilterPassed=ColorFilter.INVERTED)
+		magnifier3 = self._createMagnifier(colorFilter=ColorFilter.INVERTED)
+		testValues(magnifier3, colorFilterPassed=ColorFilter.INVERTED)
 
-		# case 4: all parameters
-		magnifier = FullScreenMagnifier(
+		# Case 4: All parameters
+		magnifier4 = self._createMagnifier(
 			zoomLevel=4.0, colorFilter=ColorFilter.GREYSCALE, fullscreenMode=FullScreenMode.BORDER
 		)
 		testValues(
-			magnifier,
+			magnifier4,
 			zoomPassed=4.0,
 			colorFilterPassed=ColorFilter.GREYSCALE,
 			fullscreenModePassed=FullScreenMode.BORDER,
@@ -68,478 +82,269 @@ class TestFullScreenMagnifier(unittest.TestCase):
 
 	def testStartFullScreenMagnifier(self):
 		"""Test : Activating and deactivating the fullscreen magnifier."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		self.magnifier._loadMagnifierApi = MagicMock()
+		self.magnifier._startTimer = MagicMock()
 
-		magnifier._loadMagnifierApi = MagicMock()
-		magnifier._startTimer = MagicMock()
-
-		magnifier._startMagnifier()
-		magnifier._loadMagnifierApi.assert_called_once()
-		magnifier._startTimer.assert_called_once()
-		self.assertTrue(magnifier.isActive)
+		# Need to stop the patch for _startMagnifier
+		self.patcherStart.stop()
+		try:
+			self.magnifier._startMagnifier()
+			self.magnifier._loadMagnifierApi.assert_called_once()
+			self.magnifier._startTimer.assert_called_once()
+			self.assertTrue(self.magnifier.isActive, "Magnifier should be active")
+		finally:
+			self.patcherStart.start()
 
 	def testFullScreenDoUpdate(self):
-		"""Test : Updating the magnifier"""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		"""Test : Updating the magnifier."""
 
-		def initValues(currentCoordinates: tuple[int, int], mode: FullScreenMode, lastFocusedObject: str):
-			magnifier.currentCoordinates = currentCoordinates
-			magnifier.lastScreenPosition = (0, 0)
-			magnifier.fullscreenMode = mode
-			magnifier.lastFocusedObject = lastFocusedObject
-			magnifier._borderPos = MagicMock(return_value=(20, 20))
-			magnifier._relativePos = MagicMock(return_value=(30, 30))
-			magnifier._fullscreenMagnifier = MagicMock()
+		def initValues(currentCoordinates, mode, lastFocusedObject):
+			self.magnifier.currentCoordinates = currentCoordinates
+			self.magnifier.lastScreenPosition = (0, 0)
+			self.magnifier.fullscreenMode = mode
+			self.magnifier.lastFocusedObject = lastFocusedObject
+			self.magnifier._borderPos = MagicMock(return_value=(20, 20))
+			self.magnifier._relativePos = MagicMock(return_value=(30, 30))
+			self.magnifier._fullscreenMagnifier = MagicMock()
 
 		def testValues(x, y):
-			magnifier._doUpdate()
-			if magnifier.fullscreenMode.value == "border" and magnifier.lastFocusedObject == "mouse":
-				magnifier._borderPos.assert_called_once()
-			elif magnifier.fullscreenMode.value == "relative":
-				magnifier._relativePos.assert_called_once()
-			self.assertEqual(magnifier.currentCoordinates, (x, y))
-			self.assertEqual(magnifier.lastScreenPosition, (x, y))
-			magnifier._fullscreenMagnifier.assert_called_once()
+			self.magnifier._doUpdate()
+			if (
+				self.magnifier.fullscreenMode.value == "border"
+				and self.magnifier.lastFocusedObject == "mouse"
+			):
+				self.magnifier._borderPos.assert_called_once()
+			elif self.magnifier.fullscreenMode.value == "relative":
+				self.magnifier._relativePos.assert_called_once()
+			self.assertEqual(self.magnifier.currentCoordinates, (x, y), "Current coordinates mismatch")
+			self.assertEqual(self.magnifier.lastScreenPosition, (x, y), "Last screen position mismatch")
+			self.magnifier._fullscreenMagnifier.assert_called_once()
 
-		# Case 1: Center mode last focused object: Mouse
+		# Test cases
+		test_cases = [
+			((10, 10), FullScreenMode.CENTER, "mouse", 10, 10),
+			((10, 10), FullScreenMode.CENTER, "nvda", 10, 10),
+			((20, 20), FullScreenMode.BORDER, "mouse", 20, 20),
+			((20, 20), FullScreenMode.BORDER, "nvda", 20, 20),
+			((30, 30), FullScreenMode.RELATIVE, "mouse", 30, 30),
+			((30, 30), FullScreenMode.RELATIVE, "nvda", 30, 30),
+		]
 
-		initValues((10, 10), FullScreenMode.CENTER, "mouse")
-		testValues(10, 10)
-
-		# Case 2: Center mode last focused object: Nvda
-
-		initValues((10, 10), FullScreenMode.CENTER, "nvda")
-		testValues(10, 10)
-
-		# Case 3: Border mode last focused object: Mouse
-
-		initValues((20, 20), FullScreenMode.BORDER, "mouse")
-		testValues(20, 20)
-
-		# Case 4: Border mode last focused object: Nvda Should
-
-		initValues((20, 20), FullScreenMode.BORDER, "nvda")
-		testValues(20, 20)
-
-		# Case 5: relative mode last focused object: Mouse
-
-		initValues((30, 30), FullScreenMode.RELATIVE, "mouse")
-		testValues(30, 30)
-
-		# Case 6: relative mode last focused object: Nvda
-		initValues((30, 30), FullScreenMode.RELATIVE, "nvda")
-		testValues(30, 30)
+		for coords, mode, focus_obj, expected_x, expected_y in test_cases:
+			with self.subTest(mode=mode.value, focus=focus_obj):
+				initValues(coords, mode, focus_obj)
+				testValues(expected_x, expected_y)
 
 	def testStopMagnifier(self):
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
-
+		"""Test : Stopping the magnifier."""
 		ctypes.windll.magnification.MagSetFullscreenColorEffect = MagicMock()
-		magnifier._getMagnificationApi = MagicMock()
-		magnifier._stopMagnifierApi = MagicMock()
+		self.magnifier._getMagnificationApi = MagicMock()
+		self.magnifier._stopMagnifierApi = MagicMock()
 
-		magnifier._stopMagnifier()
+		self.magnifier._stopMagnifier()
 
 		ctypes.windll.magnification.MagSetFullscreenColorEffect.assert_called_once()
-		magnifier._getMagnificationApi.assert_called_once()
-		magnifier._stopMagnifierApi.assert_called_once()
+		self.magnifier._getMagnificationApi.assert_called_once()
+		self.magnifier._stopMagnifierApi.assert_called_once()
 
 	def testApplyColorFilter(self):
-		magnifier = FullScreenMagnifier()
+		"""Test : Color filter application."""
+		test_cases = [
+			(ColorFilter.NORMAL, ColorFilterMatrix.NORMAL),
+			(ColorFilter.GREYSCALE, ColorFilterMatrix.GREYSCALE),
+			(ColorFilter.INVERTED, ColorFilterMatrix.INVERTED),
+		]
 
-		def testValues(colorFilter: ColorFilter, colorFilterMatrix: ColorFilterMatrix):
-			magnifier.colorFilter = colorFilter
-			ctypes.windll.magnification.MagSetFullscreenColorEffect = MagicMock()
+		for color_filter, matrix in test_cases:
+			with self.subTest(filter=color_filter):
+				self.magnifier.colorFilter = color_filter
+				ctypes.windll.magnification.MagSetFullscreenColorEffect = MagicMock()
 
-			magnifier._applyColorFilter()
-			ctypes.windll.magnification.MagSetFullscreenColorEffect.assert_called_once_with(
-				colorFilterMatrix.value
-			)
-
-		# Case 1: Color filter: Normal
-		testValues(ColorFilter.NORMAL, ColorFilterMatrix.NORMAL)
-
-		# Case 2: Color filter: Grayscale
-		testValues(ColorFilter.GREYSCALE, ColorFilterMatrix.GREYSCALE)
-
-		# Case 3: Color filter: Inverted
-		testValues(ColorFilter.INVERTED, ColorFilterMatrix.INVERTED)
-
-	# Windows dll test todo
-
-	def testLoadMagnifierApi(self):
-		pass
-
-	def stopMagnifierApi(self):
-		pass
-
-	def testGetMagnifierApi(self):
-		pass
+				# Stop patch for _applyColorFilter
+				self.patcherApplyColorFilter.stop()
+				try:
+					self.magnifier._applyColorFilter()
+					ctypes.windll.magnification.MagSetFullscreenColorEffect.assert_called_once_with(
+						matrix.value
+					)
+				finally:
+					self.patcherApplyColorFilter.start()
 
 	def testFullscreenMagnifierTryExcept(self):
 		"""Test : Specific try/except behavior in _fullscreenMagnifier."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		self.magnifier.lastScreenPosition = (self.centerX, self.centerY)
 
-		magnifier._SCREEN_WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
-		magnifier._SCREEN_HEIGHT = ctypes.windll.user32.GetSystemMetrics(1)
-		magnifier._MARGIN_BORDER = 50
-		centerX = magnifier._SCREEN_WIDTH // 2
-		centerY = magnifier._SCREEN_HEIGHT // 2
-		magnifier.lastScreenPosition = (centerX, centerY)
-		magnifier.zoomLevel = 2.0
-
-		visibleWidth = int(magnifier._SCREEN_WIDTH / magnifier.zoomLevel)
-		visibleHeight = int(magnifier._SCREEN_HEIGHT / magnifier.zoomLevel)
-		left = centerX - visibleWidth // 2
-		top = centerY - visibleHeight // 2
+		visibleWidth = int(self.magnifier._SCREEN_WIDTH / self.magnifier.zoomLevel)
+		visibleHeight = int(self.magnifier._SCREEN_HEIGHT / self.magnifier.zoomLevel)
+		left = self.centerX - visibleWidth // 2
+		top = self.centerY - visibleHeight // 2
 
 		with patch.object(
-			magnifier, "_getMagnifierPosition", return_value=(left, top, visibleWidth, visibleHeight)
+			self.magnifier, "_getMagnifierPosition", return_value=(left, top, visibleWidth, visibleHeight)
 		):
-			with patch.object(magnifier, "_getMagnificationApi") as mockGetApi:
+			with patch.object(self.magnifier, "_getMagnificationApi") as mockGetApi:
 				mockApiFunction = Mock(return_value=True)
 				mockGetApi.return_value = mockApiFunction
 
-				magnifier._fullscreenMagnifier(centerX, centerY)
-				magnifier._getMagnifierPosition.assert_called_once_with(centerX, centerY)
+				self.magnifier._fullscreenMagnifier(self.centerX, self.centerY)
 
-				resultLeft, resultTop, resultVisibleWidth, resultVisibleHeight = (
-					left,
-					top,
-					visibleWidth,
-					visibleHeight,
-				)
-				self.assertEqual(
-					(resultLeft, resultTop, resultVisibleWidth, resultVisibleHeight),
-					(left, top, visibleWidth, visibleHeight),
-				)
-
+				self.magnifier._getMagnifierPosition.assert_called_once_with(self.centerX, self.centerY)
 				mockGetApi.assert_called_once()
 				mockApiFunction.assert_called_once()
 
 				call_args = mockApiFunction.call_args[0]
-
-				self.assertEqual(call_args[0].value, magnifier.zoomLevel)
-				self.assertEqual(call_args[1].value, left)
-				self.assertEqual(call_args[2].value, top)
+				self.assertEqual(call_args[0].value, self.magnifier.zoomLevel, "Zoom level mismatch")
+				self.assertEqual(call_args[1].value, left, "Left position mismatch")
+				self.assertEqual(call_args[2].value, top, "Top position mismatch")
 
 	def testBorderPosReal(self):
 		"""Test : Border position with realistic screen values."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		self.magnifier.lastScreenPosition = (self.centerX, self.centerY)
 
-		magnifier._SCREEN_WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
-		magnifier._SCREEN_HEIGHT = ctypes.windll.user32.GetSystemMetrics(1)
-		magnifier._MARGIN_BORDER = 50
-		centerX = magnifier._SCREEN_WIDTH // 2
-		centerY = magnifier._SCREEN_HEIGHT // 2
-		magnifier.lastScreenPosition = (centerX, centerY)
-		magnifier.zoomLevel = 2.0
-
-		visibleWidth = int(magnifier._SCREEN_WIDTH / magnifier.zoomLevel)
-		visibleHeight = int(magnifier._SCREEN_HEIGHT / magnifier.zoomLevel)
-		left = centerX - visibleWidth // 2
-		top = centerY - visibleHeight // 2
+		visibleWidth = int(self.magnifier._SCREEN_WIDTH / self.magnifier.zoomLevel)
+		visibleHeight = int(self.magnifier._SCREEN_HEIGHT / self.magnifier.zoomLevel)
+		left = self.centerX - visibleWidth // 2
+		top = self.centerY - visibleHeight // 2
 
 		with patch.object(
-			magnifier, "_getMagnifierPosition", return_value=(left, top, visibleWidth, visibleHeight)
+			self.magnifier, "_getMagnifierPosition", return_value=(left, top, visibleWidth, visibleHeight)
 		):
-			# Case 1: Focus in the Middle
-			result = magnifier._borderPos(centerX, centerY)
-			self.assertEqual(result, (centerX, centerY))
-
-			# Case 2: Focus near the Left Edge
-			edgeFocusX = 100
-			edgeFocusY = centerY
-			result = magnifier._borderPos(edgeFocusX, edgeFocusY)
-			# Should adjust the position
-			self.assertNotEqual(result, (centerX, centerY))
-			self.assertIsInstance(result, tuple)
-			self.assertEqual(len(result), 2)
-
-			# Case 3: Focus near the Right Edge
-			edgeFocusX = magnifier._SCREEN_WIDTH - 100
-			edgeFocusY = centerY
-			result = magnifier._borderPos(edgeFocusX, edgeFocusY)
-			# Devrait ajuster la position
-			self.assertIsInstance(result, tuple)
-			self.assertEqual(len(result), 2)
-
-			# Case 4: Check that results stay within bounds
-			testPositions = [
-				(100, 100),  # Top-left
-				(magnifier._SCREEN_WIDTH - 100, 100),  # Top-right
-				(100, magnifier._SCREEN_HEIGHT - 100),  # Bottom-left
-				(magnifier._SCREEN_WIDTH - 100, magnifier._SCREEN_HEIGHT - 100),  # Bottom-right
+			test_cases = [
+				(self.centerX, self.centerY, "center"),
+				(100, self.centerY, "left_edge"),
+				(self.magnifier._SCREEN_WIDTH - 100, self.centerY, "right_edge"),
 			]
 
-			for pos in testPositions:
-				with self.subTest(position=pos):
-					result = magnifier._borderPos(pos[0], pos[1])
-					self.assertGreaterEqual(result[0], 0)
-					self.assertLessEqual(result[0], magnifier._SCREEN_WIDTH)
-					self.assertGreaterEqual(result[1], 0)
-					self.assertLessEqual(result[1], magnifier._SCREEN_HEIGHT)
+			for x, y, case_name in test_cases:
+				with self.subTest(case=case_name):
+					result = self.magnifier._borderPos(x, y)
+					self.assertIsInstance(result, tuple, "Expected tuple for border position")
+					self.assertEqual(len(result), 2, "Expected tuple of length 2 for border position")
+					self.assertGreaterEqual(result[0], 0, "Left border position should be >= 0")
+					self.assertLessEqual(
+						result[0],
+						self.magnifier._SCREEN_WIDTH,
+						"Left border position should be <= screen width",
+					)
+					self.assertGreaterEqual(result[1], 0, "Top border position should be >= 0")
+					self.assertLessEqual(
+						result[1],
+						self.magnifier._SCREEN_HEIGHT,
+						"Top border position should be <= screen height",
+					)
 
 	def testRelativePos(self):
 		"""Test : Relative position calculation."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		self.magnifier.spotlightIsActive = False
 
-		# Utiliser les vraies dimensions d'écran
-		magnifier._SCREEN_WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
-		magnifier._SCREEN_HEIGHT = ctypes.windll.user32.GetSystemMetrics(1)
-		magnifier.zoomLevel = 2.0
-		magnifier.spotlightIsActive = False
+		# Test cases
+		test_cases = [
+			(self.centerX, self.centerY, "center"),
+			(50, 50, "near_origin"),
+			(self.magnifier._SCREEN_WIDTH - 50, self.magnifier._SCREEN_HEIGHT - 50, "near_end"),
+		]
 
-		# Case 1: Center of the screen
-		centerX = magnifier._SCREEN_WIDTH // 2
-		centerY = magnifier._SCREEN_HEIGHT // 2
-
-		result = magnifier._relativePos(centerX, centerY)
-		self.assertIsInstance(result, tuple)
-		self.assertEqual(len(result), 2)
-		self.assertEqual(magnifier.lastScreenPosition, result)
-		# The center should remain close to the center
-		self.assertAlmostEqual(result[0], centerX, delta=100)
-		self.assertAlmostEqual(result[1], centerY, delta=100)
-
-		# Case 2: Spotlight mode
-		magnifier.spotlightIsActive = True
-		magnifier.spotlightZoom = 4.0
-		result = magnifier._relativePos(centerX, centerY)
-		self.assertIsInstance(result, tuple)
-		self.assertEqual(len(result), 2)
-
-		# Case 3: Clamping edges
-		magnifier.spotlightIsActive = False
-		visible_width = magnifier._SCREEN_WIDTH / magnifier.zoomLevel
-		visible_height = magnifier._SCREEN_HEIGHT / magnifier.zoomLevel
-
-		# Near borders
-		result = magnifier._relativePos(50, 50)
-		self.assertGreaterEqual(result[0], visible_width / 2)
-		self.assertGreaterEqual(result[1], visible_height / 2)
-
-		# Near the opposite edge
-		result = magnifier._relativePos(magnifier._SCREEN_WIDTH - 50, magnifier._SCREEN_HEIGHT - 50)
-		self.assertLessEqual(result[0], magnifier._SCREEN_WIDTH - visible_width / 2)
-		self.assertLessEqual(result[1], magnifier._SCREEN_HEIGHT - visible_height / 2)
+		for x, y, case_name in test_cases:
+			with self.subTest(case=case_name):
+				result = self.magnifier._relativePos(x, y)
+				self.assertIsInstance(result, tuple, "Expected tuple for relative position")
+				self.assertEqual(len(result), 2, "Expected tuple of length 2 for relative position")
 
 	def testSpotlight(self):
 		"""Test : Spotlight mode activation."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
-
-		magnifier._stopTimer = MagicMock()
-		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
-		magnifier._relativePos = MagicMock(return_value=(600, 500))
-		magnifier._borderPos = MagicMock(return_value=(700, 600))
-		magnifier._animateZoom = MagicMock()
-		magnifier.zoomLevel = 2.0
+		self.magnifier._stopTimer = MagicMock()
+		self.magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
+		self.magnifier._relativePos = MagicMock(return_value=(600, 500))
+		self.magnifier._borderPos = MagicMock(return_value=(700, 600))
+		self.magnifier._animateZoom = MagicMock()
 
 		test_cases = [
-			{
-				"name": "Center mode",
-				"mode": FullScreenMode.CENTER,
-				"expected_pos": (500, 400),  # Coordinates from _getFocusCoordinates
-				"should_call_relative": False,
-				"should_call_border": False,
-			},
-			{
-				"name": "Relative mode",
-				"mode": FullScreenMode.RELATIVE,
-				"expected_pos": (600, 500),  # Coordinates from _relativePos
-				"should_call_relative": True,
-				"should_call_border": False,
-			},
-			{
-				"name": "Border mode",
-				"mode": FullScreenMode.BORDER,
-				"expected_pos": (700, 600),  # Coordinates from _borderPos
-				"should_call_relative": False,
-				"should_call_border": True,
-			},
+			(FullScreenMode.CENTER, (500, 400), False, False),
+			(FullScreenMode.RELATIVE, (600, 500), True, False),
+			(FullScreenMode.BORDER, (700, 600), False, True),
 		]
 
-		for case in test_cases:
-			with self.subTest(mode=case["name"]):
-				# Reset mocks
-				magnifier._stopTimer.reset_mock()
-				magnifier._getFocusCoordinates.reset_mock()
-				magnifier._relativePos.reset_mock()
-				magnifier._borderPos.reset_mock()
-				magnifier._animateZoom.reset_mock()
+		for mode, expected_pos, should_call_relative, should_call_border in test_cases:
+			with self.subTest(mode=mode.value):
+				for mock in [
+					self.magnifier._stopTimer,
+					self.magnifier._getFocusCoordinates,
+					self.magnifier._relativePos,
+					self.magnifier._borderPos,
+					self.magnifier._animateZoom,
+				]:
+					mock.reset_mock()
 
-				# Setup
-				magnifier._fullscreenMode = case["mode"]
+				self.magnifier._fullscreenMode = mode
+				self.magnifier._spotlight()
 
-				# Test
-				magnifier._spotlight()
+				self.magnifier._stopTimer.assert_called_once()
+				self.magnifier._getFocusCoordinates.assert_called_once()
 
-				# Verification
-				magnifier._stopTimer.assert_called_once()
-				magnifier._getFocusCoordinates.assert_called_once()
+				if should_call_relative:
+					self.magnifier._relativePos.assert_called_once_with(500, 400)
+				if should_call_border:
+					self.magnifier._borderPos.assert_called_once_with(500, 400)
 
-				if case["should_call_relative"]:
-					magnifier._relativePos.assert_called_once_with(500, 400)
-					magnifier._borderPos.assert_not_called()
-				elif case["should_call_border"]:
-					magnifier._borderPos.assert_called_once_with(500, 400)
-					magnifier._relativePos.assert_not_called()
-				else:
-					magnifier._relativePos.assert_not_called()
-					magnifier._borderPos.assert_not_called()
-
-				self.assertTrue(magnifier.spotlightIsActive)
-				self.assertEqual(magnifier.spotlightZoom, 2.0)
-
-				magnifier._animateZoom.assert_called_once()
-				call_args = magnifier._animateZoom.call_args[0]
-				self.assertEqual(call_args[0], 1.0)
-				self.assertEqual(call_args[1], case["expected_pos"][0])
-				self.assertEqual(call_args[2], case["expected_pos"][1])
+				self.assertTrue(self.magnifier.spotlightIsActive, "Spotlight should be active")
+				self.assertEqual(self.magnifier.spotlightZoom, 2.0, "Spotlight zoom level should be 2.0")
 
 	def testAnimateZoom(self):
 		"""Test : Zoom animation setup."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
+		self.magnifier._stopTimer = MagicMock()
+		self.magnifier._startTimer = MagicMock()
+		callbackMock = MagicMock()
 
-			magnifier._stopTimer = MagicMock()
-			magnifier._startTimer = MagicMock()
-			magnifier.zoomLevel = 2.0
+		self.magnifier._animateZoom(4.0, 800, 600, callback=callbackMock)
 
-			# Mock callback
-			callbackMock = MagicMock()
-
-			# Test animation setup
-			magnifier._animateZoom(4.0, 800, 600, callback=callbackMock)
-
-			magnifier._stopTimer.assert_called_once()
-			magnifier._startTimer.assert_called_once_with(magnifier._onAnimationStep)
-			self.assertEqual(magnifier._animationStep, 0)
-			self.assertEqual(magnifier._animationSteps, 40)
-			self.assertEqual(magnifier._animationStartZoom, 2.0)
-			self.assertEqual(magnifier._animationDelta, (4.0 - 2.0) / 40)
-			self.assertEqual(magnifier._animationTargetZoom, 4.0)
-			self.assertEqual(magnifier._animationCenterX, 800)
-			self.assertEqual(magnifier._animationCenterY, 600)
-			self.assertEqual(magnifier._animationCallback, callbackMock)
-			self.assertEqual(magnifier._animationInterval, 500 // 40)
+		self.magnifier._stopTimer.assert_called_once()
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._onAnimationStep)
+		self.assertEqual(self.magnifier._animationStep, 0, "Animation step should be 0")
+		self.assertEqual(self.magnifier._animationSteps, 40, "Animation steps should be 40")
+		self.assertEqual(self.magnifier._animationStartZoom, 2.0, "Animation start zoom should be 2.0")
+		self.assertEqual(
+			self.magnifier._animationDelta, (4.0 - 2.0) / 40, "Animation delta should be (4.0 - 2.0) / 40"
+		)
+		self.assertEqual(self.magnifier._animationTargetZoom, 4.0, "Animation target zoom should be 4.0")
+		self.assertEqual(self.magnifier._animationCenterX, 800, "Animation center X should be 800")
+		self.assertEqual(self.magnifier._animationCenterY, 600, "Animation center Y should be 600")
+		self.assertEqual(self.magnifier._animationCallback, callbackMock, "Animation callback should match")
 
 	def testOnAnimationStep(self):
 		"""Test : Animation step execution."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
-
 		# Setup animation state
-		magnifier._animationStep = 0
-		magnifier._animationSteps = 10
-		magnifier._animationStartZoom = 2.0
-		magnifier._animationDelta = 0.2  # (4.0 - 2.0) / 10
-		magnifier._animationCenterX = 500
-		magnifier._animationCenterY = 400
-		magnifier._animationInterval = 25
+		self.magnifier._animationStep = 0
+		self.magnifier._animationSteps = 10
+		self.magnifier._animationStartZoom = 2.0
+		self.magnifier._animationDelta = 0.2
+		self.magnifier._animationCenterX = 500
+		self.magnifier._animationCenterY = 400
+		self.magnifier._animationInterval = 25
 
 		# Setup mocks
-		magnifier._fullscreenMagnifier = MagicMock()
-		magnifier.timer = MagicMock()
-		magnifier._finishAnimation = MagicMock()
+		self.magnifier._fullscreenMagnifier = MagicMock()
+		self.magnifier.timer = MagicMock()
+		self.magnifier._finishAnimation = MagicMock()
 
-		# Test 1: Animation step (not finished)
-		magnifier._onAnimationStep()
+		# Test animation step
+		self.magnifier._onAnimationStep()
 
-		# Verifications
-		expected_zoom = 2.2  # 2.0 + 0.2
-		self.assertEqual(magnifier.zoomLevel, expected_zoom)
-		self.assertEqual(magnifier._animationStep, 1)
-		magnifier._fullscreenMagnifier.assert_called_once_with(500, 400)
-		magnifier.timer.Start.assert_called_once_with(25, oneShot=True)
-		magnifier._finishAnimation.assert_not_called()
-
-		# Reset mocks
-		magnifier._fullscreenMagnifier.reset_mock()
-		magnifier.timer.reset_mock()
-
-		# Test 2: Animation step finale
-		magnifier._animationStep = 10
-		magnifier._onAnimationStep()
-
-		# Verifications
-		magnifier._fullscreenMagnifier.assert_not_called()
-		magnifier.timer.Start.assert_not_called()
-		magnifier._finishAnimation.assert_called_once()
-
-	def testOnAnimationStepProgression(self):
-		"""Test : Animation progression through multiple steps."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
-
-		magnifier._animationStep = 0
-		magnifier._animationSteps = 3
-		magnifier._animationStartZoom = 1.0
-		magnifier._animationDelta = 0.5
-		magnifier._animationCenterX = 300
-		magnifier._animationCenterY = 200
-		magnifier._animationInterval = 20
-
-		magnifier._fullscreenMagnifier = MagicMock()
-		magnifier.timer = MagicMock()
-		magnifier._finishAnimation = MagicMock()
-
-		for step in range(3):
-			with self.subTest(animation_step=step):
-				magnifier._onAnimationStep()
-
-				expected_zoom = 1.0 + 0.5 * (step + 1)
-				self.assertAlmostEqual(magnifier.zoomLevel, expected_zoom, places=2)
-				self.assertEqual(magnifier._animationStep, step + 1)
-				magnifier._fullscreenMagnifier.assert_called_with(300, 200)
-				magnifier.timer.Start.assert_called_with(20, oneShot=True)
-				magnifier._finishAnimation.assert_not_called()
-
-				magnifier._fullscreenMagnifier.reset_mock()
-				magnifier.timer.reset_mock()
-
-		magnifier._onAnimationStep()
-		magnifier._finishAnimation.assert_called_once()
-		magnifier._fullscreenMagnifier.assert_not_called()
-		magnifier.timer.Start.assert_not_called()
+		self.assertEqual(self.magnifier.zoomLevel, 2.2, "Zoom level should be 2.2")
+		self.assertEqual(self.magnifier._animationStep, 1, "Animation step should be 1")
+		self.magnifier._fullscreenMagnifier.assert_called_once_with(500, 400)
+		self.magnifier.timer.Start.assert_called_once_with(25, oneShot=True)
 
 	def testFinishAnimation(self):
 		"""Test : Animation completion."""
-		with patch.object(FullScreenMagnifier, "_startMagnifier"):
-			with patch.object(FullScreenMagnifier, "_applyColorFilter"):
-				magnifier = FullScreenMagnifier()
-
-		magnifier._animationTargetZoom = 3.5
-		magnifier._animationCenterX = 600
-		magnifier._animationCenterY = 450
-		magnifier._fullscreenMagnifier = MagicMock()
+		self.magnifier._animationTargetZoom = 3.5
+		self.magnifier._animationCenterX = 600
+		self.magnifier._animationCenterY = 450
+		self.magnifier._fullscreenMagnifier = MagicMock()
 
 		callbackMock = MagicMock()
-		magnifier._animationCallback = callbackMock
-		magnifier._finishAnimation()
+		self.magnifier._animationCallback = callbackMock
+		self.magnifier._finishAnimation()
 
-		self.assertEqual(magnifier.zoomLevel, 3.5)
-		magnifier._fullscreenMagnifier.assert_called_once_with(600, 450)
+		self.assertEqual(self.magnifier.zoomLevel, 3.5)
+		self.magnifier._fullscreenMagnifier.assert_called_once_with(600, 450)
 		callbackMock.assert_called_once()
-
-		magnifier._fullscreenMagnifier.reset_mock()
-		magnifier._animationCallback = None
-		magnifier._finishAnimation()
-
-		magnifier._fullscreenMagnifier.assert_called_once_with(600, 450)

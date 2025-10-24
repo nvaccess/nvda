@@ -55,8 +55,7 @@ class TestDockedMagnifier(unittest.TestCase):
 
 	def testStartDockedMagnifier(self):
 		"""Test : Activating and deactivating the fullscreen magnifier."""
-		with patch.object(DockedMagnifier, "_startMagnifier"):
-			magnifier = DockedMagnifier()
+		magnifier = DockedMagnifier()
 
 		magnifier._startTimer = MagicMock()
 		magnifier._dockedFrame.Show = MagicMock()
