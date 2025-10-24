@@ -38,6 +38,7 @@ from config.configFlags import (
 	RemoteConnectionMode,
 	RemoteServerType,
 	ShowMessages,
+	AutoScrollInterval,
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
@@ -5091,6 +5092,20 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
+
+
+		# Translators: The label for a setting in braille settings to combobox enabling user
+		# to decide how to calculate the interval for AutoScroll.
+		autoScrollIntervalText = _("AutoScroll interval")
+		autoScrollIntervalChoices = [i.displayString for i in AutoScrollInterval]
+		self.autoScrollIntervalList = followCursorGroupHelper.addLabeledControl(
+			autoScrollIntervalText,
+			wx.Choice,
+			choices=autoScrollIntervalChoices,
+		)
+		self.bindHelpEvent("BrailleAutoScrollInterval", self.autoScrollIntervalList)
+		self.autoScrollIntervalList.Bind(wx.EVT_CHOICE, self.onAutoScrollIntervalChange)
+		self.autoScrollIntervalList.SetSelection(config.conf["braille"]["autoScrollInterval"])
 
 		minTimeout = int(
 			config.conf.getConfigValidation(

@@ -148,6 +148,29 @@ class BrailleMode(DisplayStringStrEnum):
 
 
 @unique
+class AutoScrollInterval(DisplayStringStrEnum):
+	"""Enumeration containing the possible config values for "AutoScroll interval" option in braille settings.
+	Use AutoScrollInterval.MEMBER.value to compare with the config;
+	use AutoScrollInterval.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	SECONDS = "seconds"
+	AVAILABLE_CELLS_SEC= "availableCellsSec"
+	USED_CELLS_SEC= "usedCellsSec"
+
+	@property
+	def _displayStringLabels(self) -> dict["AutoScrollInterval", str]:
+		return {
+			# Translators: The label for a braille autoScroll interval option.
+			AutoScrollInterval.SECONDS: _("seconds"),
+			# Translators: The label for a braille autoScroll interval option.
+			AutoScrollInterval.AVAILABLE_CELLS_SEC: _("available cells / sec"),
+			# Translators: The label for a braille autoScroll interval option.
+			AutoScrollInterval.USED_CELLS_SEC: _("used cells / sec"),
+		}
+
+
+@unique
 class ReportLineIndentation(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report line indent.
 
