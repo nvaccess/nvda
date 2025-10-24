@@ -31,6 +31,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 
 ### Changes
 
@@ -109,6 +110,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
+* The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
 
 #### Deprecations
 
