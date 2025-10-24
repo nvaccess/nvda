@@ -5093,7 +5093,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
-
 		# Translators: The label for a setting in braille settings to combobox enabling user
 		# to decide how to calculate the interval for AutoScroll.
 		autoScrollIntervalText = _("AutoScroll interval")
@@ -5202,6 +5201,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())
+
 
 def showStartErrorForProviders(
 	parent: wx.Window,

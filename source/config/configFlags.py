@@ -155,8 +155,8 @@ class AutoScrollInterval(DisplayStringStrEnum):
 	"""
 
 	SECONDS = "seconds"
-	AVAILABLE_CELLS_SEC= "availableCellsSec"
-	USED_CELLS_SEC= "usedCellsSec"
+	AVAILABLE_CELLS_SEC = "availableCellsSec"
+	USED_CELLS_SEC = "usedCellsSec"
 
 	@property
 	def _displayStringLabels(self) -> dict["AutoScrollInterval", str]:
