@@ -5104,7 +5104,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			choices=autoScrollIntervalChoices,
 		)
 		self.bindHelpEvent("BrailleAutoScrollInterval", self.autoScrollIntervalList)
-		self.autoScrollIntervalList.Bind(wx.EVT_CHOICE, self.onAutoScrollIntervalChange)
 		self.autoScrollIntervalList.SetSelection(config.conf["braille"]["autoScrollInterval"])
 
 		minTimeout = int(
@@ -5118,7 +5117,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			).kwargs["max"],
 		)
 		# Translators: The label for a setting in braille settings to change the number of seconds for the next automatic scroll.
-		autoScrollTimeoutText = _("Auto&matic scroll timeout (sec)")
+		autoScrollTimeoutText = _("Auto&matic scroll timeout")
 		self.autoScrollTimeoutEdit = followCursorGroupHelper.addLabeledControl(
 			autoScrollTimeoutText,
 			nvdaControls.SelectOnFocusSpinCtrl,
@@ -5126,7 +5125,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			max=maxTimeOut,
 			initial=config.conf["braille"]["autoScrollTimeout"],
 		)
-		self.bindHelpEvent("BrailleAutoScrollTimeout", self.messageTimeoutEdit)
+		self.bindHelpEvent("BrailleAutoScrollTimeout", self.autoScrollTimeoutEdit)
 
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
@@ -5158,8 +5157,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		config.conf["braille"]["autoScrollInterval"] = self.autoScrollIntervalList.GetSelection()
 		config.conf["braille"]["autoScrollTimeout"] = self.autoScrollTimeoutEdit.GetValue()
-
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
@@ -5203,7 +5202,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())
-
 
 def showStartErrorForProviders(
 	parent: wx.Window,
