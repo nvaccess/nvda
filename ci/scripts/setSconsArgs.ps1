@@ -2,16 +2,9 @@ $ErrorActionPreference = "Stop";
 $sconsDocsOutTargets = "developerGuide changes userGuide keyCommands user_docs"
 $sconsLauncherOutTargets = "launcher client moduleList"
 $sconsArgs = "version=$env:version"
-$sconsCores = "--all-cores"
-if ($env:RUNNER_DEBUG -eq "1") {
-	# Run scons linearly if we are in debug mode, so logs can be easily parsed
-	$sconsCores = "-j1"
-}
+$sconsCores = "-j1"
 if ($env:release) {
 	$sconsArgs += " release=1"
-	# Run scons linearly for release builds, so we can debug if something goes wrong,
-	# as we cannot safely re-run a released build
-	$sconsCores = "-j1"
 }
 if ($env:versionType) {
 	$sconsArgs += " updateVersionType=$env:versionType"

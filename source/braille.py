@@ -711,6 +711,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
+	childControlCount = positionInfo.get("childControlCount") if positionInfo else None
 	cellCoordsText = propertyValues.get("cellCoordsText")
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
@@ -732,19 +733,25 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			states.discard(controlTypes.State.VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
-		elif (
-			role == controlTypes.Role.LIST
-			and states
-			and controlTypes.State.MULTISELECTABLE in states
-			and config.conf["presentation"]["reportMultiSelect"]
-		):
-			# Collapse the list role and multiselectable state into a single role text.
-			# Note that for other cases where this state is found, regular processing with
-			# controlTypes.processAndLabelStates will discard the state if necessary.
-			states = states.copy()
-			states.discard(controlTypes.State.MULTISELECTABLE)
-			# Translators: Displayed in braille for a multi select list.
-			roleText = _("mslst")
+		elif role == controlTypes.Role.LIST:
+			if (
+				states
+				and controlTypes.State.MULTISELECTABLE in states
+				and config.conf["presentation"]["reportMultiSelect"]
+			):
+				# Collapse the list role and multiselectable state into a single role text.
+				# Note that for other cases where this state is found, regular processing with
+				# controlTypes.processAndLabelStates will discard the state if necessary.
+				states = states.copy()
+				states.discard(controlTypes.State.MULTISELECTABLE)
+				# Translators: Displayed in braille for a multi select list.
+				roleText = _("mslst")
+			else:
+				roleText = roleLabels.get(role, role.displayString)
+			if childControlCount:
+				roleText += childControlCount
+				childControlCount = None
+
 		elif (
 			name or cellCoordsText or rowNumber or columnNumber
 		) and role in controlTypes.silentRolesOnFocus:
@@ -792,10 +799,12 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# {number} is replaced with the number of the item in the group.
 			# {total} is replaced with the total number of items in the group.
 			textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
+
 		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
 			textList.append(_("lv %s") % positionInfo["level"])
+
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText:
 			if rowSpan > 1:
@@ -1147,6 +1156,8 @@ def _getControlFieldForReportStart(
 	level = field.get("level")
 	if level:
 		props["positionInfo"] = {"level": level}
+	if role == controlTypes.Role.LIST and (int(childControlCount := field.get("_childcontrolcount", 0))) > 0:
+		props["positionInfo"] = {"childControlCount": childControlCount}
 
 	text = getPropertiesBraille(**props)
 	if content:

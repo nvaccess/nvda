@@ -13,10 +13,10 @@ import zipfile
 import requests
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
-DUMP_SYMS = os.path.join(os.path.dirname(SCRIPT_DIR), "miscDeps", "tools", "dump_syms.exe")
-NVDA_SOURCE = os.path.join(os.path.dirname(SCRIPT_DIR), "source")
+REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+DUMP_SYMS = os.path.join(REPO_ROOT, "dump_syms.exe")
+NVDA_SOURCE = os.path.join(REPO_ROOT, "source")
 NVDA_LIB = os.path.join(NVDA_SOURCE, "lib")
-NVDA_LIB64 = os.path.join(NVDA_SOURCE, "lib64")
 ZIP_FILE = os.path.join(SCRIPT_DIR, "mozillaSyms.zip")
 URL = "https://symbols.mozilla.org/upload/"
 
@@ -28,10 +28,10 @@ DLL_NAMES = [
 	"nvdaHelperRemote.dll",
 ]
 DLL_FILES = [
-	f
+	os.path.join(NVDA_LIB, arch, dll)
 	for dll in DLL_NAMES
-	# We need both the 32 bit and 64 bit symbols.
-	for f in (os.path.join(NVDA_LIB, dll), os.path.join(NVDA_LIB64, dll))
+	# We need symbols for all supported architectures.
+	for arch in ("x86", "x64", "arm64", "arm64ec")
 ]
 
 

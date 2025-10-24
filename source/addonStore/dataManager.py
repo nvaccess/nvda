@@ -27,7 +27,6 @@ import languageHandler
 from logHandler import log
 import NVDAState
 from NVDAState import WritePaths
-from utils.networking import _fetchUrlAndUpdateRootCertificates
 
 from .models.addon import (
 	AddonStoreModel,
@@ -125,7 +124,7 @@ class _DataManager:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			log.debug(f"Fetching add-on data from {url}")
-			response = _fetchUrlAndUpdateRootCertificates(url)
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
 			return None
@@ -136,11 +135,11 @@ class _DataManager:
 			return None
 		return response.content
 
-	def _getCacheHash(self) -> str | None:
+	def _getCacheHash(self) -> Optional[str]:
 		url = _getCacheHashURL()
 		try:
 			log.debug(f"Fetching add-on data from {url}")
-			response = _fetchUrlAndUpdateRootCertificates(url)
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to get cache hash: {e}")
 			return None
