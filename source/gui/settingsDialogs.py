@@ -3116,6 +3116,19 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
+	def postSave(self):
+		from textUtils import wordSeg
+
+		log.debug("Reinitializing word segmentation module")
+
+		try:
+			wordSeg.initialize()
+		except RuntimeError:
+			log.warning("Word segmentation module disabled in configuration")
+		except Exception:
+			log.error("Error reinitializing word segmentation module", exc_info=True)
+		import _localCaptioner
+
 
 def _synthWarningDialog(newSynth: str):
 	gui.messageBox(
