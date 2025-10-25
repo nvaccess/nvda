@@ -51,6 +51,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 	ReportSpellingErrors,
+	AutoScrollInterval,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
@@ -1704,10 +1705,11 @@ class TextInfoRegion(Region):
 				try:
 					dest.obj.turnPage()
 				except RuntimeError:
-					pass
+					handler.autoScroll(enable=False)
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:  # no page turn support
+				handler.autoScroll(enable=False)
 				shouldCollapseToEnd = True
 		dest.collapse(shouldCollapseToEnd)
 		self._setCursor(dest)
@@ -2475,6 +2477,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		self._autoScrollTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
 			self._tether = TetherTo.FOCUS.value
@@ -2510,6 +2513,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
+		if self._autoScrollTimer:
+			self._autoScrollTimer.Stop()
+			self._autoScrollTimer = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopStateChanged)
 		post_sessionLockStateChanged.unregister(self._onSessionLockStateChanged)
@@ -2531,6 +2537,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.update()
 
 	def _onSecureDesktopStateChanged(self, isSecureDesktop: bool):
+		self.autoScroll(enable=False)
 		self.mainBuffer.clear()
 		if not easeOfAccess.isRegistered():
 			if isSecureDesktop:
@@ -2984,13 +2991,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.scrollForward()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
+		if self._autoScrollTimer:
+			# Reset the timer.
+			self.autoScroll(enable=False)
+			self.autoScroll(enable=True)
 
 	def scrollBack(self):
 		self.buffer.scrollBack()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
+		if self._autoScrollTimer:
+			# Reset the timer.
+			self.autoScroll(enable=False)
+			self.autoScroll(enable=True)
 
 	def routeTo(self, windowPos):
+		self.autoScroll(enable=False)
 		self.buffer.routeTo(windowPos)
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage()
@@ -3015,6 +3031,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		):
 			return
 		_pre_showBrailleMessage.notify()
+		self.autoScroll(enable=False)
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
 		else:
@@ -3055,6 +3072,37 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 		_post_dismissBrailleMessage.notify()
 
+	def autoScroll(self, enable: bool) -> None:
+		"""Enable or disable automatic scroll.
+		:param enable: `True` if automatic scroll should be enabled, `False` otherwise.
+		"""
+
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
+			return
+		if enable:
+			self._autoScrollTimer = gui.NonReEntrantTimer(self.scrollForward)
+			autoScrollRate = self._calculateAutoScrollRate()
+			wx.CallAfter(self._autoScrollTimer.Start, autoScrollRate, oneShot=True)
+		elif self._autoScrollTimer:
+			self._autoScrollTimer.Stop()
+			self._autoScrollTimer = None
+
+	def _calculateAutoScrollRate(self) -> int:
+		"""Calculate the rate for automatic scroll.
+		return: The number of milliseconds to wait until the next scroll.
+		"""
+
+		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
+		if autoScrollTimeout == 0:
+			return 0
+		autoScrollInterval: AutoScrollInterval = config.conf["braille"]["autoScrollInterval"]
+		match autoScrollInterval:
+			case AutoScrollInterval.SECONDS:
+				ms = autoScrollTimeout * 1000
+			case AutoScrollInterval.AVAILABLE_CELLS_SEC:
+				ms = int(self.displaySize / autoScrollTimeout * 1000)
+		return ms
+
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
@@ -3078,6 +3126,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		)
 
 	def _doNewObject(self, regions):
+		self.autoScroll(enable=False)
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:

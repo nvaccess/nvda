@@ -19,6 +19,7 @@ from annotation import (
 )
 
 import audioDucking
+import tones
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -826,6 +827,55 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message presented when turning off reporting spelling errors in braille.
 			ui.message(_("Report spelling errors in braille off"))
+
+	@script(
+		# Translators: Input help mode message for command to toggle braille automatic scroll.
+		description=_("Toggles braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
+			return
+		shouldEnableAutoScroll = braille.handler._autoScrollTimer is None
+		if shouldEnableAutoScroll:
+			tones.beep(500, 50)
+		else:
+			# Translators: Message reported when automatic scrolling has been disabled in braille.
+			speech.speakMessage(_("Automatic scrolling disabled"))
+		braille.handler.autoScroll(shouldEnableAutoScroll)
+
+	@script(
+		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
+		description=_("Increases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		maxTimeout = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollTimeout"),
+			).kwargs["max"],
+		)
+		if config.conf["braille"]["autoScrollTimeout"] < maxTimeout:
+			config.conf["braille"]["autoScrollTimeout"] += 1
+		timeout = config.conf["braille"]["autoScrollTimeout"]
+		speech.speakMessage(str(timeout))
+
+	@script(
+		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
+		description=_("Decreases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		minTimeout = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollTimeout"),
+			).kwargs["min"],
+		)
+		if config.conf["braille"]["autoScrollTimeout"] > minTimeout:
+			config.conf["braille"]["autoScrollTimeout"] -= 1
+		timeout = config.conf["braille"]["autoScrollTimeout"]
+		speech.speakMessage(str(timeout))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
