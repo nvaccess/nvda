@@ -57,8 +57,9 @@ class WordSegmentationStrategy(ABC):
 	"""Abstract base class for word segmentation strategies."""
 
 	def __init__(self, text: str, encoding: str | None = None):
-		self.text = text
-		self.encoding = encoding
+		self.text: str = text
+		self.encoding: str | None = encoding
+		self.wordEnds: list[int] = []
 
 	@abstractmethod
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:  # TODO: optimize
@@ -85,6 +86,10 @@ class WordSegmentationStrategy(ABC):
 	@classmethod
 	def isUsingRelatedLanguage(cls) -> bool:
 		"""Returns True if this strategy is for the current language."""
+
+		if not hasattr(cls, "_LANGUAGE_PATTERN"):
+			return False
+
 		import languageHandler
 		import braille
 
