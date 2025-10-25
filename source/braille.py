@@ -3098,7 +3098,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			case AutoScrollInterval.SECONDS:
 				ms = autoScrollTimeout * 1000
 			case AutoScrollInterval.AVAILABLE_CELLS_SEC:
-				ms = int(self.displaySize / autoScrollTimeout* 1000)
+				ms = int(self.displaySize / autoScrollTimeout * 1000)
 		return ms
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
