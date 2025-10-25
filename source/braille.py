@@ -51,6 +51,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 	ReportSpellingErrors,
+	AutoScrollInterval,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
@@ -2990,11 +2991,17 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.scrollForward()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
+		if self._autoScrollTimer:
+			self.autoScroll(enable=False)
+			self.autoScroll(enable=True)
 
 	def scrollBack(self):
 		self.buffer.scrollBack()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
+		if self._autoScrollTimer:
+			self.autoScroll(enable=False)
+			self.autoScroll(enable=True)
 
 	def routeTo(self, windowPos):
 		self.autoScroll(enable=False)
@@ -3071,12 +3078,28 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if enable:
-			autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"] * 1000
 			self._autoScrollTimer = gui.NonReEntrantTimer(self.scrollForward)
-			wx.CallAfter(self._autoScrollTimer.Start, autoScrollTimeout)
+			autoScrollRate = self._calculateAutoScrollRate()
+			wx.CallAfter(self._autoScrollTimer.Start, autoScrollRate)
 		elif self._autoScrollTimer:
 			self._autoScrollTimer.Stop()
 			self._autoScrollTimer = None
+
+	def _calculateAutoScrollRate(self) -> int:
+		"""Calculate the rate for automatic scroll.
+		return: The number of milliseconds to wait until the next scroll.
+		"""
+
+		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
+		if autoScrollTimeout == 0:
+			return 0
+		autoScrollInterval = config.conf["braille"]["autoScrollInterval"]
+		match autoScrollInterval:
+			case AutoScrollInterval.SECONDS:
+				ms = autoScrollTimeout * 1000
+			case AutoScrollInterval.AVAILABLE_CELLS_SEC:
+				ms = int(self.displaySize / autoScrollTimeout* 1000)
+		return ms
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:

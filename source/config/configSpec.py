@@ -84,7 +84,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
 	# How interval for braille AutoScroll will be calculated
-	autoScrollInterval = option("seconds", "availableCdellsSec", "usedCellsSec", default="seconds")
+	autoScrollInterval = option("seconds", "availableCellsSec", default="seconds")
 	# Timeout for the next braille automatic scroll
 	autoScrollTimeout = integer(default=5, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
