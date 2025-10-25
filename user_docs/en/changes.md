@@ -78,8 +78,6 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 
-
-These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)

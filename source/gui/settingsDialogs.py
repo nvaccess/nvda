@@ -3127,7 +3127,6 @@ class DocumentNavigationPanel(SettingsPanel):
 			log.warning("Word segmentation module disabled in configuration")
 		except Exception:
 			log.error("Error reinitializing word segmentation module", exc_info=True)
-		import _localCaptioner
 
 
 def _synthWarningDialog(newSynth: str):
