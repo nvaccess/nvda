@@ -3095,7 +3095,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
 		if autoScrollTimeout == 0:
 			return 0
-		autoScrollInterval = config.conf["braille"]["autoScrollInterval"]
+		autoScrollInterval: AutoScrollInterval = config.conf["braille"]["autoScrollInterval"]
 		match autoScrollInterval:
 			case AutoScrollInterval.SECONDS:
 				ms = autoScrollTimeout * 1000
