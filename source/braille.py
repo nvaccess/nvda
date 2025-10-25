@@ -2992,6 +2992,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
 		if self._autoScrollTimer:
+			# Reset the timer.
 			self.autoScroll(enable=False)
 			self.autoScroll(enable=True)
 
@@ -3000,6 +3001,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
 		if self._autoScrollTimer:
+			# Reset the timer.
 			self.autoScroll(enable=False)
 			self.autoScroll(enable=True)
 
@@ -3080,7 +3082,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if enable:
 			self._autoScrollTimer = gui.NonReEntrantTimer(self.scrollForward)
 			autoScrollRate = self._calculateAutoScrollRate()
-			wx.CallAfter(self._autoScrollTimer.Start, autoScrollRate)
+			wx.CallAfter(self._autoScrollTimer.Start, autoScrollRate, oneShot=True)
 		elif self._autoScrollTimer:
 			self._autoScrollTimer.Stop()
 			self._autoScrollTimer = None
