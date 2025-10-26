@@ -2819,13 +2819,16 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
 			self._getEnumIndexFromConfigValue(
-				DecimalSeparatorOption, config.conf["math"]["other"]["decimalSeparator"]
+				DecimalSeparatorOption,
+				config.conf["math"]["other"]["decimalSeparator"],
 			),
 		)
 
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style")
-		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(config.conf["math"]["speech"]["language"])
+		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
+			config.conf["math"]["speech"]["language"],
+		)
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
@@ -2834,7 +2837,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
 		speechStyleDisplayString = self._getSpeechStyleDisplayString(
 			config.conf["math"]["speech"]["speechStyle"],
-			config.conf["math"]["speech"]["language"]
+			config.conf["math"]["speech"]["language"],
 		)
 		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
 
@@ -2954,7 +2957,8 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		self.navSpeechAmountList.SetSelection(
 			self._getEnumIndexFromConfigValue(
-				NavVerbosityOption, config.conf["math"]["navigation"]["navVerbosity"]
+				NavVerbosityOption,
+				config.conf["math"]["navigation"]["navVerbosity"],
 			),
 		)
 
@@ -3021,7 +3025,8 @@ class MathSettingsPanel(SettingsPanel):
 
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(
-			ImpairmentOption, self.impairmentList.GetSelection()
+			ImpairmentOption,
+			self.impairmentList.GetSelection(),
 		)
 		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
@@ -3030,9 +3035,12 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
 			self.speechStyleList.GetStringSelection(),
-			self.languageCodes[self.languageList.GetSelection()]
+			self.languageCodes[self.languageList.GetSelection()],
 		)
-		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(VerbosityOption, self.speechAmountList.GetSelection())
+		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
+			VerbosityOption,
+			self.speechAmountList.GetSelection(),
+		)
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
@@ -3048,7 +3056,8 @@ class MathSettingsPanel(SettingsPanel):
 			self.speechForChemicalList.GetSelection(),
 		)
 		mathConf["navigation"]["navMode"] = self._getEnumValueFromSelection(
-			NavModeOption, self.navModeList.GetSelection()
+			NavModeOption,
+			self.navModeList.GetSelection(),
 		)
 		mathConf["navigation"]["resetNavMode"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["navVerbosity"] = self._getEnumValueFromSelection(
@@ -3059,7 +3068,8 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["navigation"]["resetOverview"] = self.resetNavSpeechCheckBox.GetValue()
 		mathConf["navigation"]["autoZoomOut"] = self.navAutoZoomCheckBox.GetValue()
 		mathConf["navigation"]["copyAs"] = self._getEnumValueFromSelection(
-			CopyAsOption, self.navCopyAsList.GetSelection()
+			CopyAsOption,
+			self.navCopyAsList.GetSelection(),
 		)
 
 		mathConf["braille"]["brailleNavHighlight"] = self._getEnumValueFromSelection(
