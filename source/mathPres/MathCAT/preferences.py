@@ -24,8 +24,8 @@ class ImpairmentOption(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["ImpairmentOption", str]:
 		return {
-			# Translators: category of impairment that MathCAT supports
-			# Translators: Learning disabilities includes dyslexia and ADHD
+			# Learning disabilities includes dyslexia and ADHD
+			# Translators: category of impairment that MathCAT supports: people with learning disabilities
 			self.LEARNING_DISABILITY: pgettext("math", "Learning disabilities"),
 			# Translators: category of impairment that MathCAT supports: people who are blind
 			self.BLINDNESS: pgettext("math", "Blindness"),
