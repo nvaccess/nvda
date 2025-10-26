@@ -25,6 +25,7 @@ from typing import (
 	List,
 	Optional,
 	Set,
+	Type,
 )
 
 import audio
@@ -72,6 +73,7 @@ from logHandler import log
 from NVDAState import WritePaths
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
 from utils import mmdevice
+from utils.displayString import DisplayStringEnum
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 
@@ -2734,7 +2736,11 @@ class MathSettingsPanel(SettingsPanel):
 			# Not a known enum, so the config value IS the display string
 			return configValue
 
-	def _getEnumIndexFromConfigValue(self, enumClass, configValue):
+	def _getEnumIndexFromConfigValue(
+			self,
+			enumClass: Type[DisplayStringEnum],
+			configValue: Any,
+		) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
 
 		:param enumClass: The DisplayStringStrEnum class to search in
