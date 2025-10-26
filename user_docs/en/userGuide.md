@@ -3315,17 +3315,17 @@ Whether to play a beep sound when speech starts/ends.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | True, False |
-| Default | True |
+| Options | Checked, Unchecked |
+| Default | Checked |
 
 ###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
 
-Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is set to False).
+Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | True, False |
-| Default | True |
+| Options | Checked, Unchecked |
+| Default | Checked |
 
 ###### Speech amount for navigation {#MathNavSpeechAmount}
 
@@ -3365,39 +3365,6 @@ The options allow for either no highlighting, only highlighting of the first cha
 |---|---|
 | Options | Off, First Character, Endpoints, All |
 | Default | Endpoints |
-
-###### UEB: Start Mode {MathStartMode}
-
-Assumed starting mode UEB braille.
-Grade1 assumes we are in G1 passage mode.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Grade1, Grade2 |
-| Default | Grade2 |
-
-###### UEB: Use Spaces Around All Operators {#MathCATUEBSpacesAroundAllOperators}
-
-The UEB guidelines suggest that for lower grades, adding space around operators such as `+` and `-` can be a good idea.
-Normally, space is only added around relational operators such as `=` and `<`.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | True, False |
-| Default | False |
-
-##### Other Options {#MathCATOtherOptions}
-
-MathCAT cleans up bad MathML.
-Numbers are frequently improperly marked up in MathML.
-In order to clean them up correctly, MathCAT needs to know locale information about what characters might be used to separate digit blocks and what characters are used as a decimal separator.
-Typically this is set based on the country code in the document.
-However, that may not be given and only the language code is given, so NVDA needs to guess based on that.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Decimal Separators | ".", "," |
-| Default            | "."      |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
