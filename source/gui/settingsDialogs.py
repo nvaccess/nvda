@@ -2717,11 +2717,10 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
-	def _getSpeechStyleDisplayString(self, configValue: str, languageCode: str) -> str:
+	def _getSpeechStyleDisplayString(self, configValue: str) -> str:
 		"""Helper function to get the display string for a speech style config value.
 
 		:param configValue: The config value to find the display string for
-		:param languageCode: The current language code
 		:return: The display string to show in the UI
 		"""
 		from mathPres.MathCAT.preferences import SpeechStyleOption
@@ -2837,7 +2836,6 @@ class MathSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
 		speechStyleDisplayString = self._getSpeechStyleDisplayString(
 			config.conf["math"]["speech"]["speechStyle"],
-			config.conf["math"]["speech"]["language"],
 		)
 		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
 
