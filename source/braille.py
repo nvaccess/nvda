@@ -576,7 +576,7 @@ class Region(object):
 		textToTranslate = self.rawText
 		textToTranslateTypeforms = self.rawTextTypeforms
 		cursorPos = self.cursorPos
-		if config.conf["braille"]["translationTable"].startswith("zh"):
+		if config.conf["braille"]["translationTable"].startswith("zh") or config.conf["braille"]["translationTable"] == "auto" and brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT).startswith("zh"):
 			from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter  # noqa: F401
 
 			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
