@@ -521,6 +521,9 @@ class TCPTransport(Transport):
 		except ValueError:
 			log.warn(f"Received message with invalid type: {obj!r}")
 			return
+		if messageType is RemoteMessageType.PING:
+			# No handling is required
+			return
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)
 		if not extensionPoint:
