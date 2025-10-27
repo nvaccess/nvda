@@ -923,6 +923,9 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		NVDAState._configInLocalAppDataEnabled(),
 	)
 	if shouldCleanX86:
+		oldSystemConfigPath = os.path.join(installDirX86, "systemConfig")
+		if os.path.isdir(oldSystemConfigPath):
+			config._setSystemConfig(oldSystemConfigPath, prefix=installDir)
 		tryRemoveFile(installDirX86, rebootOK=True)
 	COMRegistrationFixes.fixCOMRegistrations()
 
