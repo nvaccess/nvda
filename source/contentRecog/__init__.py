@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited, James Teh, Leonard de Ruijter
+# Copyright (C) 2017-2023 NV Access Limited, James Teh, Leonard de Ruijter, Cary-rowen
 # This file is covered by the GNU General Public License.
 #  See the file COPYING for more details.
 
@@ -44,6 +44,12 @@ class ContentRecognizer(AutoPropertyObject):
 	"""
 	autoRefreshInterval: int = 1500
 	"""How often (in ms) to perform recognition."""
+	autoSayAllOnResult: bool = False
+	"""
+	Whether to automatically start reading the entire result after a successful recognition.
+	This is useful for users who want to hear the full content immediately
+	without needing to press additional keys.
+	"""
 
 	def getResizeFactor(self, width: int, height: int) -> Union[int, float]:
 		"""Return the factor by which an image must be resized

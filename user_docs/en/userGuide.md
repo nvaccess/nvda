@@ -3309,6 +3309,11 @@ This can be very useful when you want to monitor constantly changing content, su
 The refresh takes place every one and a half seconds.
 This option is disabled by default.
 
+##### Automatically say all on result {#Win10OcrSettingsAutoSayAllOnResult}
+
+This checkbox toggles the automatic reading of all recognized content after a recognition is complete.
+This option is disabled by default.
+
 #### Set Mirror Dialog {#SetURLDialog}
 
 This dialog allows you to specify the URL of a mirror to use when [updating NVDA](#GeneralSettingsCheckForUpdates) or [using the Add-on Store](#AddonsManager).
