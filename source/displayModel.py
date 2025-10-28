@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from ctypes import byref, c_short, c_long
 import unicodedata
@@ -22,6 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 from typing import (
 	List,
 	Tuple,
@@ -525,7 +526,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return lineEndOffsets[-1]
 		return 0
 
-	useUniscribe = False
+	# Override segFlags to strictly use the old fallen-back method
+	charSegFlag = CharSegFlag.NONE
+
+	@property
+	def wordSegFlag(self):
+		return WordSegFlag.NONE
 
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))

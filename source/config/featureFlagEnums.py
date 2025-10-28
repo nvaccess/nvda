@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2025 NV Access Limited, Bill Dengler, Rob Meredith, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Feature flag value enumerations.
@@ -137,6 +137,26 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 			# Translators: Label for a way of outputting formatting in braille.
 			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
 		}
+
+
+class WordNavigationUnitFlag(DisplayStringEnum):
+	"""Enumeration for word navigation."""
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for a method of word segmentation.
+			self.AUTO: _("Auto"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Standard"),
+			# Translators: Label for a method of word segmentation.
+			self.CHINESE: _("Chinese"),
+		}
+
+	DEFAULT = enum.auto()
+	AUTO = enum.auto()
+	UNISCRIBE = enum.auto()
+	CHINESE = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

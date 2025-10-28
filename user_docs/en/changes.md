@@ -31,6 +31,8 @@ This can be enabled using the "Report when lists support multiple selection" set
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* Chinese text can be navigated by word via build-in input gestures.
+  Several GUI elements are added for its configuration in `Document Navigation` panel. (#18735, @CrazySteve0605)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 
 ### Changes
@@ -82,10 +84,6 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 
-
-#### API Breaking Changes
-
-These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
@@ -192,6 +190,8 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `useUniscribe` from `textUtils.offset.OffsetsTextInfo` and its subclasses is deprecated.
+  Use `charSegFlag` and `wordSegFlag` instead. (#18735)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
