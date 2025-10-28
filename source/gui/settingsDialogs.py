@@ -5,8 +5,8 @@
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
-# Wang Chong
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß,
+# Wang Chong, Tianze.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -21,7 +21,7 @@ import re
 import typing
 import requests
 import wx
-import wx.adv
+from wx.lib import scrolledpanel
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -585,7 +585,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0, categoriesLabelText)
 
-		self.container = nvdaControls.TabbableScrolledPanel(
+		self.container = scrolledpanel.ScrolledPanel(
 			parent=self,
 			style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim,
@@ -3116,6 +3116,18 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
+	def postSave(self):
+		from textUtils import wordSeg
+
+		log.debug("Reinitializing word segmentation module")
+
+		try:
+			wordSeg.initialize()
+		except RuntimeError:
+			log.warning("Word segmentation module disabled in configuration")
+		except Exception:
+			log.error("Error reinitializing word segmentation module", exc_info=True)
+
 
 def _synthWarningDialog(newSynth: str):
 	gui.messageBox(
@@ -3675,6 +3687,42 @@ class RemoteSettingsPanel(SettingsPanel):
 				_remoteClient.initialize()
 			elif not enabled and _remoteClient.remoteRunning():
 				_remoteClient.terminate()
+
+
+class LocalCaptionerSettingsPanel(SettingsPanel):
+	"""Settings panel for Local captioner configuration."""
+
+	# Translators: This is the label for the local captioner settings panel.
+	title = pgettext("imageDesc", "AI Image Descriptions")
+	helpId = "LocalCaptionerSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		"""Create the settings controls for the panel.
+
+		:param settingsSizer: The sizer to add settings controls to.
+		"""
+
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.enable = sHelper.addItem(
+			# Translators: A configuration in settings dialog.
+			wx.CheckBox(self, label=pgettext("imageDesc", "Enable image captioner")),
+		)
+		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
+		self.bindHelpEvent("LocalCaptionToggle", self.enable)
+
+	def onSave(self) -> None:
+		"""Save the configuration settings."""
+		enabled = self.enable.GetValue()
+		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
+
+		if enabled != oldEnabled:
+			import _localCaptioner
+
+			if enabled != _localCaptioner.isModelLoaded():
+				_localCaptioner.toggleImageCaptioning()
+
+		config.conf["automatedImageDescriptions"]["enable"] = enabled
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -5579,6 +5627,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
+		LocalCaptionerSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
