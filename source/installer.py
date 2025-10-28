@@ -17,7 +17,7 @@ import shellapi
 import globalVars
 import languageHandler
 import config
-from config.registry import NVDA_ADDON_PROG_ID, RegistryKey
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -29,7 +29,6 @@ import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 from utils._deprecate import handleDeprecations, MovedSymbol
-from winBindings.advapi32 import RegDeleteTree
 
 _wsh = None
 
@@ -99,13 +98,30 @@ def comparePreviousInstall() -> int | None:
 	0 if it is the same, -1 if it is older,
 	None if there is no existing installation.
 	"""
+	pathX86 = WritePaths._installDirX86
+	pathX86Exists = pathX86 and os.path.isdir(pathX86)
 	path = WritePaths.installDir
-	if not path or not os.path.isdir(path):
+	pathExists = path and os.path.isdir(path)
+	oldTime = None
+	if not (pathExists or pathX86Exists):
 		return None
+	if pathExists:
+		try:
+			oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+		except OSError:
+			log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
+			return None
+	elif pathX86Exists:
+		try:
+			oldTime = os.path.getmtime(os.path.join(pathX86, "nvda_slave.exe"))
+		except OSError:
+			log.debug("Unable to get modification time of nvda_slave.exe in previous installation (x86).")
+			return None
 	try:
-		oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
 		newTime = os.path.getmtime("nvda_slave.exe")
 	except OSError:
+		# This should never happen.
+		log.error("Unable to get modification time of nvda_slave.exe in current process.")
 		return None
 	return (oldTime > newTime) - (oldTime < newTime)
 
@@ -515,16 +531,23 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 
-def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
+def _unregisterEaseOfAccessApp():
 	try:
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.EASE_OF_ACCESS_APP.value,
-			winreg.KEY_WOW64_64KEY,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
+	except WindowsError:
+		log.debug("Ease of Access app key not found. Nothing to unregister.")
+	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
-		pass
+		log.debug("Could not disable auto start on logon screen.")
+
+
+def _unregisterDesktopShortcut(keepDesktopShortcut: bool):
 	wsh = _getWSH()
 	desktopPath = os.path.join(wsh.SpecialFolders("AllUsersDesktop"), "NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
@@ -532,31 +555,95 @@ def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
 			os.remove(desktopPath)
 		except WindowsError:
 			pass
+
+
+def _unregisterFromStartMenu() -> None:
+	wsh = _getWSH()
+	programsPath = wsh.SpecialFolders("AllUsersPrograms")
 	startMenuFolder = WritePaths.startMenuFolder
 	if startMenuFolder is None:
 		startMenuFolder = WritePaths.defaultStartMenuFolder
-	programsPath = wsh.SpecialFolders("AllUsersPrograms")
 	startMenuPath = os.path.join(programsPath, startMenuFolder)
 	if os.path.isdir(startMenuPath):
 		shutil.rmtree(startMenuPath, ignore_errors=True)
+		log.debug(f"Removed start menu folder: {startMenuPath}")
+	# Also remove the x86 start menu folder if it is different.
+	startMenuFolderX86 = WritePaths._startMenuFolderX86
+	if startMenuFolderX86 is None:
+		startMenuFolderX86 = WritePaths.defaultStartMenuFolder
+	startMenuPathX86 = os.path.join(programsPath, startMenuFolderX86)
+	if os.path.isdir(startMenuPathX86):
+		shutil.rmtree(startMenuPathX86, ignore_errors=True)
+		log.debug(f"Removed start menu (x86) folder: {startMenuPathX86}")
+
+
+def _unregisterFromUninstallRegistry() -> None:
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.INSTALLED_COPY.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
-		pass
+		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.INSTALLED_COPY.value,
+			access=winreg.KEY_WOW64_32KEY,
+		)
+	except WindowsError:
+		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
+
+
+def _unregisterFromAppPathRegistry() -> None:
+	try:
+		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP_PATH.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
-		pass
+		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.APP_PATH.value,
+			access=winreg.KEY_WOW64_32KEY,
+		)
 	except WindowsError:
-		pass
+		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
+
+
+def _unregisterFromSoftwareRegistry() -> None:
+	try:
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.NVDA.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
+		)
+	except WindowsError:
+		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
+	try:
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.NVDA.value,
+			access=winreg.KEY_WOW64_32KEY,
+		)
+	except WindowsError:
+		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
+
+
+def unregisterInstallation(keepDesktopShortcut: bool = False) -> None:
+	_unregisterEaseOfAccessApp()
+	_unregisterDesktopShortcut(keepDesktopShortcut)
+	_unregisterFromStartMenu()
+	_unregisterFromUninstallRegistry()
+	_unregisterFromAppPathRegistry()
+	_unregisterFromSoftwareRegistry()
 	unregisterAddonFileAssociation()
 
 
@@ -605,29 +692,33 @@ def registerAddonFileAssociation(slaveExe: str):
 		log.error("Can not create addon file association.", exc_info=True)
 
 
-def unregisterAddonFileAssociation():
+def unregisterAddonFileAssociation() -> None:
+	shouldNotifyShell = False
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.ADDON_PROG.value,
+			# TODO: remove when NVDA is 64-bit only.
+			access=winreg.KEY_WOW64_64KEY,
 		)
 	except WindowsError:
-		# This is probably the first install, so just ignore the error.
-		return
-	# Notify the shell that a file association has changed:
-	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
-
-
-def _deleteKeyAndSubkeys(key: int, subkey: str):
-	"""Delete a registry key and all its subkeys using RegDeleteTree via winBindings.advapi32."""
-	with winreg.OpenKey(key, "", 0, winreg.KEY_WRITE | winreg.KEY_READ) as parent:
-		result = RegDeleteTree(
-			parent.handle,
-			subkey,
+		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
+	else:
+		shouldNotifyShell = True
+	try:
+		_deleteKeyAndSubkeys(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.ADDON_PROG.value,
+			access=winreg.KEY_WOW64_32KEY,
 		)
-	if result != 0:
-		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
+	except WindowsError:
+		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
+	else:
+		shouldNotifyShell = True
+	if shouldNotifyShell:
+		# Notify the shell that a file association has changed:
+		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 
 class RetriableFailure(Exception):
@@ -773,10 +864,14 @@ def _deleteFileGroupOrFail(
 			log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
 
 
-def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
+def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True) -> None:
 	prevInstallPath = WritePaths.installDir
 	installDir = WritePaths.defaultInstallDir
+	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
 	startMenuFolder = WritePaths.defaultStartMenuFolder
+	shouldCleanX86 = (
+		installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir
+	)
 	# Give some time for the installed NVDA (which may have been running on a secure screen)
 	# to shut down before we start deleting files.
 	time.sleep(1)
@@ -796,10 +891,19 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		numTries=6,
 		retryWaitInterval=0.5,
 	)
+	if shouldCleanX86:
+		_deleteFileGroupOrFail(
+			installDirX86,
+			_nvdaExes.union({"nvda_service.exe", "nvda_eoaProxy.exe"}),
+			numTries=6,
+			retryWaitInterval=0.5,
+		)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
 	removeOldProgramFiles(installDir)
+	if shouldCleanX86:
+		removeOldProgramFiles(installDirX86)
 	copyProgramFiles(installDir)
 	for f in ("nvda_UIAccess.exe", "nvda_noUIAccess.exe"):
 		f = os.path.join(installDir, f)
@@ -809,6 +913,8 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	removeOldLibFiles(installDir, rebootOK=True)
+	if shouldCleanX86:
+		removeOldLibFiles(installDirX86, rebootOK=True)
 	registerInstallation(
 		installDir,
 		startMenuFolder,
@@ -816,6 +922,11 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		shouldRunAtLogon,
 		NVDAState._configInLocalAppDataEnabled(),
 	)
+	if shouldCleanX86:
+		oldSystemConfigPath = os.path.join(installDirX86, "systemConfig")
+		if os.path.isdir(oldSystemConfigPath):
+			config._setSystemConfig(oldSystemConfigPath, prefix=installDir)
+		tryRemoveFile(installDirX86, rebootOK=True)
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
