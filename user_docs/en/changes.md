@@ -60,6 +60,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
+* Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 
 ### Changes for Developers
 
