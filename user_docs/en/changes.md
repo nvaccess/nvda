@@ -112,7 +112,7 @@ All public symbols defined on this class are now accessible from `winBindings.ma
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
 * The `ftdi2` module has been significantly refactored: (#19105)
-  * It is now a module.
+  * It is now a package.
   * `MAX_DESCRIPTION_SIZE` has been moved to `ftd2xx.MAX_DESCRIPTION_SIZE`, and reduced to 64 in accordance with the D2XX Programmer’s Guide.
   * `FT_OK` has been removed.
   Use `ftd2xx.FT_MESSAGE.OK` instead.
