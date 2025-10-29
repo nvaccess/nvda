@@ -10,7 +10,7 @@ from logHandler import log
 import os
 import codecs
 
-from NVDAState import WritePaths
+from NVDAState import WritePaths, shouldWriteToDisk
 from . import dictFormatUpgrade
 
 
@@ -118,6 +118,9 @@ class SpeechDict(list):
 		return
 
 	def save(self, fileName=None):
+		if not shouldWriteToDisk():
+			log.debugWarning("Not writing dictionary, as shouldWriteToDisk returned False.")
+			return
 		if not fileName:
 			fileName = getattr(self, "fileName", None)
 		if not fileName:

@@ -35,8 +35,8 @@ env:
   supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.7'
-  supportedPythonVersions: '["3.13.7"]'
+  defaultPythonVersion: '3.13.9'
+  supportedPythonVersions: '["3.13.9"]'
 
 jobs:
   matrix:
@@ -512,7 +512,7 @@ jobs:
   uploadSymbols:
     name: Upload symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: [matrix, createSymbols]
+    needs: [matrix, buildNvda]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
     steps:
     - name: Checkout cached build
@@ -526,13 +526,13 @@ jobs:
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
+    - name: Download and extract dump_syms
+      shell: bash
+      run: |
+        curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
+        7z x dump_syms.zip dump_syms.exe
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
-    - name: Get symbols
-      uses: actions/download-artifact@v4
-      with:
-        name: Symbols (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
-        path: output
     - name: Upload symbols to Mozilla
       continue-on-error: true
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\mozillaSyms.py
