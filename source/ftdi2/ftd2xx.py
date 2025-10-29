@@ -6,7 +6,13 @@
 """
 Functions exported by ftd2xx.dll, and supporting data structures, constants  and enumerations.
 
-Basedon work from http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip.
+Based on work from http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip.
+
+.. seealso::
+	`D2XX Programmer’s Guide <https://ftdichip.com/document/programming-guides/>`_
+		Guide to the API for the FTD2XX DLL function library.
+
+		This file prepared with D2XX Programmer’s Guide Version 1.6.
 """
 
 from _ctypes import CFuncPtr
@@ -72,7 +78,7 @@ class FT_OPEN_BY(IntFlag):
 
 
 class FT_PURGE(IntFlag):
-	"""Flags for use wth the FT_Purge function."""
+	"""Flags for use with the FT_Purge function."""
 
 	RX = 1
 	TX = 2
@@ -92,27 +98,21 @@ class FT_BITMODE(IntEnum):
 
 
 # Structures
-#####################################
-# CTYPES structure for DeviceInfo   #
-#####################################
 class FT_DEVICE_LIST_INFO_NODE(Structure):
+	"""Struct returned by the FT_GetDeviceInfoList function."""
+
 	_fields_ = (
-		("Flags", DWORD),  # c.c_ulong
-		("Type", DWORD),  # c.c_ulong
-		("ID", DWORD),  # c.c_ulong
-		# ("LocID", c.c_ulong),
+		("Flags", DWORD),
+		("Type", DWORD),
+		("ID", DWORD),
 		("LocId", DWORD),
-		("SerialNumber", c_char * 16),
-		("Description", c_char * 64),
-		# ("none", c.c_void_p),
+		("SerialNumber", c_char * MAX_SERIAL_NUMBER_SIZE),
+		("Description", c_char * MAX_DESCRIPTION_SIZE),
 		("ftHandle", FT_HANDLE),
 	)
 
 
 # Error checking
-######################################
-##      FTDI exception classes      ##
-######################################
 class FTDeviceError(Exception):
 	"""Exception class for FTDI function returns"""
 
@@ -142,9 +142,7 @@ FT_GetDeviceInfoList = WINFUNCTYPE(
 	FT_STATUS,
 	POINTER(FT_DEVICE_LIST_INFO_NODE),  # pDest
 	LPDWORD,  # lpdwNumDevs
-)(
-	("FT_GetDeviceInfoList", dll),
-)
+)(("FT_GetDeviceInfoList", dll))
 """Returns a device information list and the number of D2XX devices in the list."""
 FT_GetDeviceInfoList.errcheck = _errorCheck
 
@@ -322,7 +320,7 @@ FT_SetLatencyTimer.errcheck = _errorCheck
 FT_SetBitMode = WINFUNCTYPE(
 	FT_STATUS,
 	FT_HANDLE,  # ftHandle#ftHandle
-	UCHAR,  # ucMas
+	UCHAR,  # ucMask
 	UCHAR,  # ucMode
 )(("FT_SetBitMode", dll))
 """
