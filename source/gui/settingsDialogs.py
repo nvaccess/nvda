@@ -2760,7 +2760,7 @@ class MathSettingsPanel(SettingsPanel):
 		) -> Any:
 		"""Helper function to get the config value from a selection index.
 
-		:param enumClass: The DisplayStringStrEnum class to get the value from
+		:param enumClass: The DisplayStringEnum class to get the value from
 		:param selectionIndex: The index of the selected option
 		:return: The config value of the selected enum option
 		"""
