@@ -2743,7 +2743,7 @@ class MathSettingsPanel(SettingsPanel):
 		) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
 
-		:param enumClass: The DisplayStringStrEnum class to search in
+		:param enumClass: The DisplayStringEnum class to search in
 		:param configValue: The config value to find the index for
 		:return: The index of the enum option with the matching value
 		"""
