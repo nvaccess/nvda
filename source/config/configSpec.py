@@ -534,6 +534,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enable = boolean(default=false)
 	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
 
+[screenCurtain]
+	enabled = boolean(default=false)
+	warnOnLoad = boolean(default=true)
+	playToggleSounds = boolean(default=true)
 """
 
 #: The configuration specification
