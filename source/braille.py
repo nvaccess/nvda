@@ -2477,7 +2477,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		self._autoScrollTimer = None
+		self._autoScrollCallLater = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
 			self._tether = TetherTo.FOCUS.value
@@ -2513,9 +2513,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		if self._autoScrollTimer:
-			self._autoScrollTimer.Stop()
-			self._autoScrollTimer = None
+		if self._autoScrollCallLater:
+			self._autoScrollCallLater.Stop()
+			self._autoScrollCallLater = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopStateChanged)
 		post_sessionLockStateChanged.unregister(self._onSessionLockStateChanged)
@@ -2991,7 +2991,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.scrollForward()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
-		if self._autoScrollTimer:
+		if self._autoScrollCallLater:
 			# Reset the timer.
 			self.autoScroll(enable=False)
 			self.autoScroll(enable=True)
@@ -3000,7 +3000,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.scrollBack()
 		if self.buffer is self.messageBuffer:
 			self._resetMessageTimer()
-		if self._autoScrollTimer:
+		if self._autoScrollCallLater:
 			# Reset the timer.
 			self.autoScroll(enable=False)
 			self.autoScroll(enable=True)
@@ -3080,12 +3080,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if enable:
-			self._autoScrollTimer = gui.NonReEntrantTimer(self.scrollForward)
 			autoScrollRate = self._calculateAutoScrollRate()
-			wx.CallAfter(self._autoScrollTimer.Start, autoScrollRate, oneShot=True)
-		elif self._autoScrollTimer:
-			self._autoScrollTimer.Stop()
-			self._autoScrollTimer = None
+			self._autoScrollCallLater = wx.CallLater(autoScrollRate, self.scrollForward)
+		elif self._autoScrollCallLater:
+			self._autoScrollCallLater.Stop()
+			self._autoScrollCallLater = None
 
 	def _calculateAutoScrollRate(self) -> int:
 		"""Calculate the rate for automatic scroll.
@@ -3095,12 +3094,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
 		if autoScrollTimeout == 0:
 			return 0
-		autoScrollInterval: AutoScrollInterval = config.conf["braille"]["autoScrollInterval"]
-		match autoScrollInterval:
-			case AutoScrollInterval.SECONDS:
-				ms = autoScrollTimeout * 1000
-			case AutoScrollInterval.AVAILABLE_CELLS_SEC:
-				ms = int(self.displaySize / autoScrollTimeout * 1000)
+		ms = int(self.displaySize / autoScrollTimeout * 1000)
 		return ms
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:

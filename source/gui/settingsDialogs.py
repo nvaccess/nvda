@@ -38,7 +38,6 @@ from config.configFlags import (
 	RemoteConnectionMode,
 	RemoteServerType,
 	ShowMessages,
-	AutoScrollInterval,
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
@@ -5093,39 +5092,24 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
-		# Translators: The label for a setting in braille settings to combobox enabling user
-		# to decide how to calculate the interval for AutoScroll.
-		autoScrollIntervalText = _("AutoScroll interval")
-		autoScrollIntervalChoices = [i.displayString for i in AutoScrollInterval]
-		self.autoScrollIntervalsComboBox = followCursorGroupHelper.addLabeledControl(
-			autoScrollIntervalText,
-			wx.Choice,
-			choices=autoScrollIntervalChoices,
-		)
-		self.bindHelpEvent("BrailleAutoScrollInterval", self.autoScrollIntervalsComboBox)
-		autoScrollInterval = config.conf["braille"]["autoScrollInterval"]
-		self.autoScrollIntervalsComboBox.SetSelection(
-			[i.value for i in AutoScrollInterval].index(autoScrollInterval),
-		)
-
 		minTimeout = int(
 			config.conf.getConfigValidation(
 				("braille", "autoScrollTimeout"),
 			).kwargs["min"],
 		)
-		maxTimeOut = int(
+		maxTimeout = int(
 			config.conf.getConfigValidation(
 				("braille", "autoScrollTimeout"),
 			).kwargs["max"],
 		)
 		# Translators: The label for a setting in braille settings to change the number of seconds for the next automatic scroll.
-		autoScrollTimeoutText = _("Auto&matic scroll timeout")
+		autoScrollTimeoutText = _("Auto&matic scroll timeout (sec)")
 		self.autoScrollTimeoutEdit = followCursorGroupHelper.addLabeledControl(
 			autoScrollTimeoutText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minTimeout,
-			max=maxTimeOut,
-			initial=config.conf["braille"]["autoScrollTimeout"],
+			max=maxTimeout,
+			initial=int(braille.handler.displaySize / config.conf["braille"]["autoScrollTimeout"]),
 		)
 		self.bindHelpEvent("BrailleAutoScrollTimeout", self.autoScrollTimeoutEdit)
 
@@ -5159,10 +5143,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		config.conf["braille"]["autoScrollInterval"] = [i.value for i in AutoScrollInterval][
-			self.autoScrollIntervalsComboBox.GetSelection()
-		]
-		config.conf["braille"]["autoScrollTimeout"] = self.autoScrollTimeoutEdit.GetValue()
+		config.conf["braille"]["autoScrollTimeout"] = int(braille.handler.displaySize / self.autoScrollTimeoutEdit.GetValue())
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
