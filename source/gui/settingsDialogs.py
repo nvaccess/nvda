@@ -5107,8 +5107,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollTimeoutEdit = followCursorGroupHelper.addLabeledControl(
 			autoScrollTimeoutText,
 			nvdaControls.SelectOnFocusSpinCtrl,
-			min=minTimeout,
-			max=maxTimeout,
+			min=int(braille.handler.displaySize / maxTimeout),
+			max=int(braille.handler.displaySize / minTimeout),
 			initial=int(braille.handler.displaySize / config.conf["braille"]["autoScrollTimeout"]),
 		)
 		self.bindHelpEvent("BrailleAutoScrollTimeout", self.autoScrollTimeoutEdit)
