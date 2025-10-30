@@ -51,7 +51,6 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 	ReportSpellingErrors,
-	AutoScrollInterval,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
