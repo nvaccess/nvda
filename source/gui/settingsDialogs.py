@@ -2753,7 +2753,11 @@ class MathSettingsPanel(SettingsPanel):
 			# If the config value is not found, default to the first option
 			return 0
 
-	def _getEnumValueFromSelection(self, enumClass, selectionIndex):
+	def _getEnumValueFromSelection(
+			self,
+			enumClass: Type[DisplayStringEnum],
+			selectionIndex: int,
+		) -> Any:
 		"""Helper function to get the config value from a selection index.
 
 		:param enumClass: The DisplayStringStrEnum class to get the value from
