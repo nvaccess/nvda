@@ -22,6 +22,7 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
+	"bleak==1.1.0",
 	"comtypes==1.4.11",
 	"cryptography==44.0.1",
 	"pyserial==3.5",
@@ -127,6 +128,14 @@ ignore_packages = [
 	"Markdown",  # BSD-3-Clause, but not in PyPI correctly
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
+	"winrt-Windows.Devices.Bluetooth",  # MIT license, but not in PyPI
+	"winrt-Windows.Devices.Bluetooth.Advertisement",  # MIT license, but not in PyPI
+	"winrt-Windows.Devices.Bluetooth.GenericAttributeProfile",  # MIT license, but not in PyPI
+	"winrt-Windows.Devices.Enumeration",  # MIT license, but not in PyPI
+	"winrt-Windows.Foundation",  # MIT license, but not in PyPI
+	"winrt-Windows.Foundation.Collections",  # MIT license, but not in PyPI
+	"winrt-Windows.Storage.Streams",  # MIT license, but not in PyPI
+	"winrt-runtime",  # MIT license, but not in PyPI
 	"wxPython",  # wxWindows Library License
 ]
 
