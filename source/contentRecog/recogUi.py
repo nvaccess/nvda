@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2025 NV Access Limited, James Teh, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2017-2025 NV Access Limited, James Teh, Leonard de Ruijter, Cyrille Bougot, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -22,6 +22,7 @@ import cursorManager
 import eventHandler
 import textInfos
 from logHandler import log
+from speech import sayAll
 import queueHandler
 import core
 from scriptHandler import script
@@ -45,6 +46,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 
 	def __init__(self, result=None, obj=None):
 		self.parent = parent = api.getFocusObject()
+		self._shouldSayAllOnFirstFocus = False
 		self.result = result
 		if result:
 			self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
@@ -160,6 +162,8 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
 		# This method queues an event to the main thread.
 		self.setFocus()
+		if self.recognizer.autoSayAllOnResult:
+			self._shouldSayAllOnFirstFocus = True
 		if self.recognizer.allowAutoRefresh:
 			self._scheduleRecognize()
 
@@ -204,6 +208,9 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 
 	def event_gainFocus(self):
 		super().event_gainFocus()
+		if self._shouldSayAllOnFirstFocus:
+			self._shouldSayAllOnFirstFocus = False
+			sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 		if self.recognizer.allowAutoRefresh:
 			# Make LiveText watch for and report new text.
 			self.startMonitoring()
