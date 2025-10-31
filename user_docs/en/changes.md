@@ -61,7 +61,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
-* In Outlook Classic, when navigating the list of messages, wrong information is no longer displayed in braille. (#18993, @nvdaes)
+* Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 
 ### Changes for Developers
 
