@@ -729,11 +729,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	long left=0, top=0, width=0, height=0;
-	if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
-		LOG_DEBUG(L"Error getting accLocation");
-	}
-
 	// Whether this node is editable text.
 	bool isEditable = (role == ROLE_SYSTEM_TEXT && (states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE)) || IA2States & IA2_STATE_EDITABLE;
 	// Whether this node is a link or inside a link.
@@ -835,8 +830,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		// aria-hidden
 		isVisible = false;
 	} else {
-		// If a node has children, it's visible.
-		isVisible = width > 0 && height > 0 || childCount > 0;
 		// Only render the selected item for interactive lists.
 		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
 			renderSelectedItemOnly = true;

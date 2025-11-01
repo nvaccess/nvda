@@ -20,7 +20,7 @@ import re
 import typing
 import requests
 import wx
-import wx.adv
+from wx.lib import scrolledpanel
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -584,7 +584,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0, categoriesLabelText)
 
-		self.container = nvdaControls.TabbableScrolledPanel(
+		self.container = scrolledpanel.ScrolledPanel(
 			parent=self,
 			style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim,
