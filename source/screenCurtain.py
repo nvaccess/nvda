@@ -238,6 +238,8 @@ class _ScreenCurtain:
 	def __init__(self):
 		super().__init__()
 		self._settings: _ScreenCurtainSettings = cast(_ScreenCurtainSettings, config.conf["screenCurtain"])
+		if self.settings["enabled"]:
+			self.enable()
 
 	@property
 	def settings(self) -> _ScreenCurtainSettings:
@@ -270,6 +272,11 @@ class _ScreenCurtain:
 			except Exception:
 				log.exception()
 
+	def __del__(self):
+		self.disable()
+		if hasattr(super(), "__del__"):
+			super().__del__(self)
+
 
 screenCurtain: _ScreenCurtain | None = None
 
@@ -283,4 +290,5 @@ def initialize():
 def terminate():
 	global screenCurtain
 	if screenCurtain is not None:
+		screenCurtain.disable()
 		screenCurtain = None
