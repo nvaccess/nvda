@@ -811,6 +811,10 @@ def main():
 
 	log.debug("Initializing braille")
 	braille.initialize()
+	import screenCurtain
+
+	log.debug("Initializing screen curtain")
+	screenCurtain.initialize()
 	import vision
 
 	log.debug("Initializing vision")
@@ -1088,6 +1092,7 @@ def main():
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
 	_terminate(inputCore)
+	_terminate(screenCurtain)
 	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)

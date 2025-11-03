@@ -238,6 +238,7 @@ class _ScreenCurtain:
 	def __init__(self):
 		super().__init__()
 		self._settings: _ScreenCurtainSettings = cast(_ScreenCurtainSettings, config.conf["screenCurtain"])
+		self._enabled: bool = False
 		if self.settings["enabled"]:
 			self.enable()
 
@@ -245,32 +246,47 @@ class _ScreenCurtain:
 	def settings(self) -> _ScreenCurtainSettings:
 		return self._settings
 
+	@property
+	def enabled(self) -> bool:
+		return self._enabled
+
 	def enable(self) -> None:
-		log.debug("Enabling ScreenCurtain")
-		magnification.MagInitialize()
-		try:
-			magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
-			magnification.MagShowSystemCursor(False)
-			if not isScreenFullyBlack():
-				raise RuntimeError("Screen is not black.")
-		except Exception as e:
-			magnification.MagUninitialize()
-			raise e
-		if self.settings["playToggleSounds"]:
+		if self._enabled:
+			log.debug("ScreenCurtain is already enabled.")
+			return
+		else:
+			log.debug("Enabling ScreenCurtain")
+			magnification.MagInitialize()
 			try:
-				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
-			except Exception:
-				log.exception()
+				magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+				magnification.MagShowSystemCursor(False)
+				if not isScreenFullyBlack():
+					raise RuntimeError("Screen is not black.")
+			except Exception as e:
+				magnification.MagUninitialize()
+				raise e
+			else:
+				self._enabled = True
+			if self.settings["playToggleSounds"]:
+				try:
+					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
+				except Exception:
+					log.exception()
 
 	def disable(self):
-		log.debug("Disabling ScreenCurtain")
-		magnification.MagShowSystemCursor(True)
-		magnification.MagUninitialize()
-		if self.settings["playToggleSounds"]:
-			try:
-				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
-			except Exception:
-				log.exception()
+		if not self._enabled:
+			log.debug("ScreenCurtain is already disabled")
+			return
+		else:
+			log.debug("Disabling ScreenCurtain")
+			magnification.MagShowSystemCursor(True)
+			magnification.MagUninitialize()
+			self._enabled = False
+			if self.settings["playToggleSounds"]:
+				try:
+					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
+				except Exception:
+					log.exception()
 
 	def __del__(self):
 		self.disable()
