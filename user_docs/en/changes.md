@@ -159,6 +159,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_queue_status` to `getQueueStatus`; and
     * `reset_device` to `resetDevice`.
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
+* The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#XXXXX)
 
 #### Deprecations
 
