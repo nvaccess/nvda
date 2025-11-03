@@ -4787,8 +4787,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	_tempEnableScreenCurtain = True
-	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
-	_toggleScreenCurtainMessage: Optional[str] = None
+	_waitingOnScreenCurtainWarningDialog: wx.Dialog | None = None
+	_toggleScreenCurtainMessage: str | None = None
 
 	@script(
 		description=_(
@@ -4802,18 +4802,13 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture):
+		from screenCurtain import screenCurtain
+
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:  # first call should reset last message
 			self._toggleScreenCurtainMessage = None
-
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
-
-		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		alreadyRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
-
+		alreadyRunning = screenCurtain.enabled
 		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
-
 		if self._waitingOnScreenCurtainWarningDialog:
 			# Already in the process of enabling the screen curtain, exit early.
 			# Ensure that the dialog is in the foreground, and read it again.
@@ -4854,7 +4849,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when the screen curtain is disabled.
 			message = _("Screen curtain disabled")
 			try:
-				vision.handler.terminateProvider(screenCurtainProviderInfo)
+				screenCurtain.disable()
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
 				log.error("Screen curtain termination error", exc_info=True)
@@ -4867,13 +4862,6 @@ class GlobalCommands(ScriptableObject):
 		elif (  # enable it
 			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
 		):
-			# Check if screen curtain is available, exit early if not.
-			if not screenCurtainProviderInfo.providerClass.canStart():
-				# Translators: Reported when the screen curtain is not available.
-				message = _("Screen curtain not available")
-				self._toggleScreenCurtainMessage = message
-				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-				return
 
 			def _enableScreenCurtain(doEnable: bool = True):
 				self._waitingOnScreenCurtainWarningDialog = None
@@ -4889,12 +4877,9 @@ class GlobalCommands(ScriptableObject):
 
 				try:
 					if alreadyRunning:
-						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+						screenCurtain.settings["enabled"] = True
 					else:
-						vision.handler.initializeProvider(
-							screenCurtainProviderInfo,
-							temporary=tempEnable,
-						)
+						screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.
@@ -4904,14 +4889,13 @@ class GlobalCommands(ScriptableObject):
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
 
 			#  Show warning if necessary and do enable.
-			settingsStorage = ScreenCurtainProvider.getSettings()
-			if settingsStorage.warnOnLoad:
-				from visionEnhancementProviders.screenCurtain import WarnOnLoadDialog
+			settingsStorage = screenCurtain.settings
+			if settingsStorage["warnOnLoad"]:
+				from screenCurtain import WarnOnLoadDialog
 
-				parent = gui.mainFrame
 				dlg = WarnOnLoadDialog(
 					screenCurtainSettingsStorage=settingsStorage,
-					parent=parent,
+					parent=gui.mainFrame,
 				)
 				self._waitingOnScreenCurtainWarningDialog = dlg
 				gui.runScriptModalDialog(
@@ -4931,7 +4915,7 @@ class GlobalCommands(ScriptableObject):
 					and focusObj.recognizer.allowAutoRefresh
 				):
 					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-					warningMessage = _("Could not enable screen curtain when performing content recognition")
+					warningMessage = _("Cannot enable screen curtain when performing content recognition")
 					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
 					return
 				_enableScreenCurtain()

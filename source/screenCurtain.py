@@ -11,8 +11,9 @@ from typing import TypedDict, cast
 # from vision import providerBase
 # from autoSettingsUtils.driverSetting import BooleanDriverSetting
 # from autoSettingsUtils.autoSettings import SupportedSettingType
-# import wx
-# from gui.nvdaControls import MessageDialog
+import wx
+from gui.nvdaControls import MessageDialog
+
 # from gui.settingsDialogs import (
 # 	AutoSettingsMixin,
 # 	SettingsPanel,
@@ -36,96 +37,100 @@ TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other col
 
 # # Translators: Name for a vision enhancement provider that disables output to the screen,
 # # making it black.
-# screenCurtainTranslatedName = _("Screen Curtain")
+screenCurtainTranslatedName = _("Screen Curtain")
 
 # # Translators: Description for a Screen Curtain setting that shows a warning when loading
 # # the screen curtain.
-# warnOnLoadCheckBoxText = _("Always &show a warning when loading Screen Curtain")
+warnOnLoadCheckBoxText = _("Always &show a warning when loading Screen Curtain")
 
 # # Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-# playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
+playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
 
 
-# warnOnLoadText = _(
-# 	# Translators: A warning shown when activating the screen curtain.
-# 	# the translation of "Screen Curtain" should match the "translated name"
-# 	"Enabling Screen Curtain will make the screen of your computer completely black. "
-# 	"Ensure you will be able to navigate without any use of your screen before continuing. "
-# 	"\n\n"
-# 	"Do you wish to continue?",
-# )
+warnOnLoadText = _(
+	# Translators: A warning shown when activating the screen curtain.
+	# the translation of "Screen Curtain" should match the "translated name"
+	"Enabling Screen Curtain will make the screen of your computer completely black. "
+	"Ensure you will be able to navigate without any use of your screen before continuing. "
+	"\n\n"
+	"Do you wish to continue?",
+)
 
 
-# class WarnOnLoadDialog(MessageDialog):
-# 	showWarningOnLoadCheckBox: wx.CheckBox
-# 	noButton: wx.Button
+class _ScreenCurtainSettings(TypedDict):
+	enabled: bool
+	warnOnLoad: bool
+	playToggleSounds: bool
 
-# 	def __init__(
-# 		self,
-# 		screenCurtainSettingsStorage: ScreenCurtainSettings,
-# 		parent,
-# 		title=_("Warning"),
-# 		message=warnOnLoadText,
-# 		dialogType=MessageDialog.DIALOG_TYPE_WARNING,
-# 	):
-# 		self._settingsStorage = screenCurtainSettingsStorage
-# 		super().__init__(parent, title, message, dialogType)
-# 		self.noButton.SetFocus()
 
-# 	def _addContents(self, contentsSizer):
-# 		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
-# 			self,
-# 			label=warnOnLoadCheckBoxText,
-# 		)
-# 		contentsSizer.addItem(self.showWarningOnLoadCheckBox)
-# 		self.showWarningOnLoadCheckBox.SetValue(
-# 			self._settingsStorage.warnOnLoad,
-# 		)
+class WarnOnLoadDialog(MessageDialog):
+	showWarningOnLoadCheckBox: wx.CheckBox
+	noButton: wx.Button
 
-# 	def _addButtons(self, buttonHelper):
-# 		yesButton = buttonHelper.addButton(
-# 			self,
-# 			id=wx.ID_YES,
-# 			# Translators: A button in the screen curtain warning dialog which allows the user to
-# 			# agree to enabling the curtain.
-# 			label=_("&Yes"),
-# 		)
-# 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
+	def __init__(
+		self,
+		screenCurtainSettingsStorage: _ScreenCurtainSettings,
+		parent,
+		title=_("Warning"),
+		message=warnOnLoadText,
+		dialogType=MessageDialog.DIALOG_TYPE_WARNING,
+	):
+		self._settingsStorage = screenCurtainSettingsStorage
+		super().__init__(parent, title, message, dialogType)
+		self.noButton.SetFocus()
 
-# 		noButton: wx.Button = buttonHelper.addButton(
-# 			self,
-# 			id=wx.ID_NO,
-# 			# Translators: A button in the screen curtain warning dialog which allows the user to
-# 			# disagree to enabling the curtain.
-# 			label=_("&No"),
-# 		)
-# 		noButton.SetDefault()
-# 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
-# 		self.noButton = noButton  # so we can manually set the focus.
+	def _addContents(self, contentsSizer):
+		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
+			self,
+			label=warnOnLoadCheckBoxText,
+		)
+		contentsSizer.addItem(self.showWarningOnLoadCheckBox)
+		self.showWarningOnLoadCheckBox.SetValue(
+			self._settingsStorage["warnOnLoad"],
+		)
 
-# 	def _exitDialog(self, result: int):
-# 		"""
-# 		@param result: either wx.YES or wx.No
-# 		"""
-# 		if result == wx.YES:
-# 			settingsStorage = self._settingsStorage
-# 			settingsStorage.warnOnLoad = self.showWarningOnLoadCheckBox.IsChecked()
-# 			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.supportedSettings)
-# 		self.EndModal(result)
+	def _addButtons(self, buttonHelper):
+		yesButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_YES,
+			# Translators: A button in the screen curtain warning dialog which allows the user to
+			# agree to enabling the curtain.
+			label=_("&Yes"),
+		)
+		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
 
-# 	def _onActivateEvent(self, evt: wx.ActivateEvent):
-# 		# focus is normally set to the first child, however, we want people to easily be able to cancel this
-# 		# dialog
-# 		super()._onActivateEvent(evt)
-# 		self.noButton.SetFocus()
+		noButton: wx.Button = buttonHelper.addButton(
+			self,
+			id=wx.ID_NO,
+			# Translators: A button in the screen curtain warning dialog which allows the user to
+			# disagree to enabling the curtain.
+			label=_("&No"),
+		)
+		noButton.SetDefault()
+		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
+		self.noButton = noButton  # so we can manually set the focus.
 
-# 	def _onShowEvent(self, evt: wx.ShowEvent):
-# 		"""When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
-# 		so we correct it after the dialog is opened.
-# 		"""
-# 		if evt.IsShown():
-# 			self.noButton.SetFocus()
-# 		super()._onShowEvent(evt)
+	def _exitDialog(self, result: int):
+		"""
+		@param result: either wx.YES or wx.No
+		"""
+		if result == wx.YES:
+			self._settingsStorage["warnOnLoad"] = self.showWarningOnLoadCheckBox.IsChecked()
+		self.EndModal(result)
+
+	def _onActivateEvent(self, evt: wx.ActivateEvent):
+		# focus is normally set to the first child, however, we want people to easily be able to cancel this
+		# dialog
+		super()._onActivateEvent(evt)
+		self.noButton.SetFocus()
+
+	def _onShowEvent(self, evt: wx.ShowEvent):
+		"""When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
+		so we correct it after the dialog is opened.
+		"""
+		if evt.IsShown():
+			self.noButton.SetFocus()
+		super()._onShowEvent(evt)
 
 
 # class ScreenCurtainGuiPanel(
@@ -228,12 +233,6 @@ TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other col
 # 			return res == wx.YES
 
 
-class _ScreenCurtainSettings(TypedDict):
-	enabled: bool
-	warnOnLoad: bool
-	playToggleSounds: bool
-
-
 class _ScreenCurtain:
 	def __init__(self):
 		super().__init__()
@@ -250,7 +249,7 @@ class _ScreenCurtain:
 	def enabled(self) -> bool:
 		return self._enabled
 
-	def enable(self) -> None:
+	def enable(self, *, persist=False) -> None:
 		if self._enabled:
 			log.debug("ScreenCurtain is already enabled.")
 			return
@@ -267,13 +266,15 @@ class _ScreenCurtain:
 				raise e
 			else:
 				self._enabled = True
+				if persist:
+					self.settings["enabled"] = True
 			if self.settings["playToggleSounds"]:
 				try:
 					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
 				except Exception:
 					log.exception()
 
-	def disable(self):
+	def disable(self, *, persist: bool = True):
 		if not self._enabled:
 			log.debug("ScreenCurtain is already disabled")
 			return
@@ -282,6 +283,8 @@ class _ScreenCurtain:
 			magnification.MagShowSystemCursor(True)
 			magnification.MagUninitialize()
 			self._enabled = False
+			if persist:
+				self.settings["enabled"] = False
 			if self.settings["playToggleSounds"]:
 				try:
 					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
@@ -289,7 +292,8 @@ class _ScreenCurtain:
 					log.exception()
 
 	def __del__(self):
-		self.disable()
+		if self._enabled:
+			self.disable(persist=False)
 		if hasattr(super(), "__del__"):
 			super().__del__(self)
 
@@ -306,5 +310,5 @@ def initialize():
 def terminate():
 	global screenCurtain
 	if screenCurtain is not None:
-		screenCurtain.disable()
+		screenCurtain.disable(persist=False)
 		screenCurtain = None
