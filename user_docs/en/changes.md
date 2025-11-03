@@ -31,6 +31,7 @@ This can be enabled using the "Report when lists support multiple selection" set
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 
 ### Changes
 
@@ -47,6 +48,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Added Japanese (Rokuten Kanji) Braille.
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
+* In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 
 ### Bug Fixes
 
@@ -58,8 +60,9 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
-* Fixed bug when trying to access the Add-on Store from certain environments such as corporate networks. (#18354)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
+* Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
+* Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 
 ### Changes for Developers
 
@@ -74,9 +77,11 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sphinx to 8.1.3. (#18475)
   * Introduced onnxruntime 1.22.1 for model inference. (#18475)
   * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Updated pyright to 1.1.406 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749)
   * Updated wxPython to 4.2.3. (#19080)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
+* NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 
 #### API Breaking Changes
@@ -85,8 +90,6 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * NVDA is now built with Python 3.13. (#18591)
-* NVDA now uses `truststore` to always use Windows root certificates, which injects to libraries like `requests`.
-Wrap code with `truststore.extract_from_ssl` and `truststore.inject_into_ssl` to disable this behavior where required. (#18528)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -110,6 +113,45 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
+* The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
+* The `ftdi2` module has been significantly refactored: (#19105)
+  * It is now a package.
+  * `MAX_DESCRIPTION_SIZE` has been moved to `ftd2xx.MAX_DESCRIPTION_SIZE`, and reduced to 64 in accordance with the D2XX Programmer’s Guide.
+  * `FT_OK` has been removed.
+  Use `ftd2xx.FT_MESSAGE.OK` instead.
+  * The `FT_LIST_*` constants have been removed.
+  Use the `ftd2xx.FT_LIST` enum instead.
+  * The `FT_OPEN_BY_SERIAL_NUMBER` constant has been removed.
+  Use `ftd2xx.FT_OPEN_BY.SERIAL_NUMBER` instead.
+  * The `FT_PURGE_RX` and `FT_PURGE_TX` constants have been removed.
+  Use `ftd2xx.FT_PURGE.RX` and `ftd2xx.FT_PURGE.TX` instead.
+  * `FtdiBitModes` has been moved to `ftd2xx.FT_BITMODE`.
+  * The `ft_messages` list has been replaced with the `ftd2xx.FT_MESSAGE` enum.
+  * `ft` has been removed.
+  Use `ftd2xx.dll` instead.
+  * `FTDeviceError` has been moved to `ftd2xx.FTDeviceError`.
+  * `DeviceListInfoNode` has been moved to `ftd2xx.FT_DEVICE_LIST_INFO_NODE`.
+  Additionally, in accordance with the D2XX Programmer's Guide:
+    * The `LocID` field has been renamed to `LocId`.
+    * The`none` field has been renamed to `ftHandle`.
+  * The `ftExceptionDecorator` function has been removed, with no public replacement.
+  * The `_PY_*` functions have been replaced with `ftd2xx.FT_*` direct FFI bindings.
+  These bindings have type declarations, so are potentially incompatible with existin code.
+  * The following functions have been renamed:
+    * `list_devices` to `listDevices`;
+    * `create_device_info_list` to `createDeviceInfoList`;
+    * `get_device_info_detail` to `getDeviceInfoDetail`;
+    * `get_device_info_list` to `getDeviceInfoList`; and
+    * `open_ex` to `openEx`.
+  * The following methods on the `FTD2XX` class have been   renamed:
+    * `set_baud_rate to`setBaudRate`;
+    * `set_timeouts` to `setTimeouts`;
+    * `set_latency_timer` to `setLatencyTimer`;
+    * `set_bit_mode` to `setBitMode`;
+    * `set_usb_parameters` to `setUsbParameters`;
+    * `get_queue_status` to `getQueueStatus`; and
+    * `reset_device` to `resetDevice`.
+  * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
 
 #### Deprecations
 
@@ -189,7 +231,6 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
-* `updateCheck.UPDATE_FETCH_TIMEOUT_S` is deprecated for removal without replacement. (#18354)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
