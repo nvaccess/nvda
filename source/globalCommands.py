@@ -67,7 +67,6 @@ import core
 from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
-import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 import synthDriverHandler
@@ -4679,11 +4678,9 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows OCR is not available.
 			ui.message(_("Windows OCR not available"))
 			return
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		from screenCurtain import screenCurtain
 
-		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+		isScreenCurtainRunning = screenCurtain is not None and screenCurtain.enabled
 		if isScreenCurtainRunning:
 			# Translators: Reported when screen curtain is enabled.
 			ui.message(_("Please disable screen curtain before using Windows OCR."))
@@ -4803,6 +4800,12 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleScreenCurtain(self, gesture):
 		from screenCurtain import screenCurtain
+
+		if screenCurtain is None:
+			# Screen curtain has not been initialized.
+			# Translators: Reported when the screen curtain is not available.
+			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
+			return
 
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:  # first call should reset last message
