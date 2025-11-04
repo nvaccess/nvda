@@ -56,6 +56,11 @@ class SymphonyUtils:
 
 
 class SymphonyTextInfo(IA2TextTextInfo):
+	allowMoveToOffsetPastEnd = False
+	"""
+	If ``True``, braille cannot be moved to next paragraph: #19152.
+	"""
+
 	# C901 '_getFormatFieldFromLegacyAttributesString' is too complex
 	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
