@@ -1,9 +1,8 @@
 import NVDAMagnifier
 import unittest
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, Mock, patch, PropertyMock
 import wx
 import ctypes
-
 from NVDAMagnifier import ColorFilter
 
 
@@ -19,7 +18,6 @@ class TestNVDAMagnifier(unittest.TestCase):
 		self.zoom = 2.0
 		self.couleur = ColorFilter.NORMAL
 		self.magnifier = NVDAMagnifier.NVDAMagnifier(self.zoom, self.couleur)
-
 		self.screenWidth = ctypes.windll.user32.GetSystemMetrics(0)
 		self.screenHeight = ctypes.windll.user32.GetSystemMetrics(1)
 
@@ -81,21 +79,32 @@ class TestNVDAMagnifier(unittest.TestCase):
 		self.magnifier._stopTimer.assert_called_once()
 		self.assertFalse(self.magnifier.isActive, "Magnifier should be inactive after stopping")
 
-	def testZoom(self):
+	@patch("NVDAMagnifier.ui.message")
+	def testZoom(self, mockUiMessage):
 		"""Test : zoom in and out with valid values and check boundaries."""
 		self.magnifier._zoom(True)
+		mockUiMessage.assert_called_once()
 		self.assertEqual(self.magnifier.zoomLevel, 2.5)
 
 		self.magnifier.zoomLevel = 10.0
+		mockUiMessage.reset_mock()
+
 		self.magnifier._zoom(False)
+		mockUiMessage.assert_called_once()
 		self.assertEqual(self.magnifier.zoomLevel, 9.5)
 
 		self.magnifier.zoomLevel = 10.0
+		mockUiMessage.reset_mock()
+
 		self.magnifier._zoom(True)
+		mockUiMessage.assert_called_once()
 		self.assertEqual(self.magnifier.zoomLevel, 10.0)
 
 		self.magnifier.zoomLevel = 1.0
+		mockUiMessage.reset_mock()
+
 		self.magnifier._zoom(False)
+		mockUiMessage.assert_called_once()
 		self.assertEqual(self.magnifier.zoomLevel, 1.0)
 
 	def testStartTimer(self):
@@ -180,7 +189,6 @@ class TestNVDAMagnifier(unittest.TestCase):
 			self.magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
 			self.magnifier.lastNVDAPosition = (0, 0)
 
-			# ✅ Mock la propriété mousePosition correctement
 			with patch.object(self.magnifier._mouseHandler, "mousePosition", mousePos):
 				self.magnifier.lastMousePosition = (0, 0)
 				self.magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
@@ -194,22 +202,17 @@ class TestNVDAMagnifier(unittest.TestCase):
 			expected_coords: tuple[int, int],
 			expected_focused: str,
 		):
-			# Mock tous les attributs avant l'appel
 			self.magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
 			self.magnifier.lastNVDAPosition = (0, 0)
 			self.magnifier.lastMousePosition = (0, 0)
 			self.magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
 
-			# ✅ Mock mousePosition comme propriété
 			type(self.magnifier._mouseHandler).mousePosition = PropertyMock(return_value=mousePos)
 
 			focusCoordinates = self.magnifier._getFocusCoordinates()
 
 			self.assertEqual(focusCoordinates, expected_coords)
 			self.assertEqual(self.magnifier.lastFocusedObject, expected_focused)
-
-		# ✅ Import PropertyMock
-		from unittest.mock import PropertyMock
 
 		# Case 1: Left click is pressed should return mouse position
 		testValues((0, 0), (0, 0), True, (0, 0), "mouse")

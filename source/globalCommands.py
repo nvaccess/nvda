@@ -4947,8 +4947,20 @@ class GlobalCommands(ScriptableObject):
 				self._nvdaMagnifier = DockedMagnifier(self._zoomLevel, self._colorFilter)
 			elif self._magnifierType == MagnifierType.LENS:
 				self._nvdaMagnifier = LensMagnifier(self._zoomLevel, self._colorFilter)
+			ui.message(
+				_(
+					# Translators: Message announced when starting the NVDA magnifier with {type} being the magnifier type
+					"Starting NVDA {type} magnifier"
+				).format(type=self._magnifierType.name.lower())
+			)
 		else:
 			log.info("error starting")
+			ui.message(
+				_(
+					# Translators: Message announced when failing to start the NVDA magnifier
+					"Error starting NVDA magnifier"
+				)
+			)
 
 	@script(
 		description=_(
@@ -4978,9 +4990,21 @@ class GlobalCommands(ScriptableObject):
 		"""Stop the magnifier and reset settings."""
 		nvdaMagnifier = self._nvdaMagnifier
 		if nvdaMagnifier and nvdaMagnifier.isActive:
+			ui.message(
+				_(
+					# Translators: Message announced when stopping the NVDA magnifier
+					"Stopped NVDA magnifier"
+				)
+			)
 			nvdaMagnifier._stopMagnifier()
 			self._nvdaMagnifier = None
 		else:
+			ui.message(
+				_(
+					# Translators: Message announced when failing to stop the NVDA magnifier
+					"No active NVDA magnifier to stop"
+				)
+			)
 			return
 
 	@script(
@@ -5001,8 +5025,12 @@ class GlobalCommands(ScriptableObject):
 			self._colorFilter = nvdaMagnifier.colorFilter
 			if nvdaMagnifier.magnifierType == MagnifierType.FULLSCREEN:
 				nvdaMagnifier._applyColorFilter()
-			log.info(f"Color filter: {self._colorFilter.name.lower()}")
-			ui.message(f"Color filter: {nvdaMagnifier.colorFilter.name.lower()}")
+			ui.message(
+				_(
+					# Translators: Message announced when changing the color filter with {filter} being the new color filter
+					"Color filter changed to {filter}"
+				).format(filter=self._colorFilter.name.lower())
+			)
 		else:
 			return
 
@@ -5024,8 +5052,19 @@ class GlobalCommands(ScriptableObject):
 			newMode = modes[(idx + 1) % len(modes)]
 			nvdaMagnifier.fullscreenMode = newMode
 			self._fullscreenMode = newMode
-			ui.message(f"Fullscreen mode: {newMode.name.lower()}")
+			ui.message(
+				_(
+					# Translators: Message announced when changing the fullscreen mode with {mode} being the new fullscreen mode
+					"Fullscreen mode changed to {mode}"
+				).format(mode=newMode.name.lower())
+			)
 		else:
+			ui.message(
+				_(
+					# Translators: Message announced when failing to change the fullscreen mode
+					"No active NVDA magnifier, or not fullscreen to change fullscreen mode"
+				)
+			)
 			return
 
 	@script(
@@ -5069,8 +5108,19 @@ class GlobalCommands(ScriptableObject):
 				self._nvdaMagnifier = FullScreenMagnifier()
 
 			nvdaMagnifier = self._nvdaMagnifier
-			ui.message(f"Magnifier mode at start: {nvdaMagnifier.magnifierType.name.lower()}")
+			ui.message(
+				_(
+					# Translators: Message announced when changing the magnifier mode with {mode} being the new magnifier mode
+					"Magnifier mode changed to {mode}"
+				).format(mode=nvdaMagnifier.magnifierType.name.lower())
+			)
 		else:
+			ui.message(
+				_(
+					# Translators: Message announced when failing to change the magnifier mode
+					"Error changing NVDA magnifier to {mode}"
+				).format(mode=self._magnifierType.name.lower())
+			)
 			log.info("Magnifier mode at start error")
 			return
 
@@ -5090,7 +5140,7 @@ class GlobalCommands(ScriptableObject):
 			and nvdaMagnifier.isActive
 			and nvdaMagnifier.magnifierType == MagnifierType.FULLSCREEN
 		):
-			nvdaMagnifier._spotlight()
+			nvdaMagnifier._startSpotlight()
 		else:
 			return
 
