@@ -5123,6 +5123,27 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
+	@script(
+		description=_(
+			# Translators: Description for the repeat last speech script
+			"Repeat the last spoken information. "
+			"Pressing twice shows it in a browsable message. ",
+		),
+		gesture="kb:NVDA+control+f12",
+		category=SCRCAT_SPEECH,
+		speakOnDemand=True,
+	)
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture"):
+		lastSpeech = speech.speech._lastSpeech
+		if lastSpeech is None:
+			return
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(lastSpeech)
+		elif repeats == 1:
+			# Translators: title for report last spoken information dialog.
+			title = _("Last spoken information")
+			ui.browseableMessage(lastSpeech, title, copyButton=True, closeButton=True)
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
