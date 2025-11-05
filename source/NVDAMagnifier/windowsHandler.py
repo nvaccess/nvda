@@ -151,22 +151,6 @@ class GlobalFrame(wx.Frame):
 
 	def applyColorFilter(self, image: wx.Image) -> wx.Image:
 		"""Apply color filter with early exit optimization."""
-		# width, height = image.GetWidth(), image.GetHeight()
-		# if self.colorFilter == "normal":
-		# 	return image
-		# elif self.colorFilter == "greyscale":
-		# 	for y in range(height):
-		# 		for x in range(width):
-		# 			r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
-		# 			gray = int(0.299 * r + 0.587 * g + 0.114 * b)
-		# 			gray = max(0, min(255, gray))
-		# 			image.SetRGB(x, y, gray, gray, gray)
-		# elif self.colorFilter == "inverted":
-		# 	for y in range(height):
-		# 		for x in range(width):
-		# 			r, g, b = image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y)
-		# 			image.SetRGB(x, y, 255 - r, 255 - g, 255 - b)
-		# return image
 
 		if self.colorFilter == "normal" or not image or not image.IsOk():
 			return image
