@@ -35,26 +35,10 @@ TRANSFORM_BLACK = magnification.MAGCOLOREFFECT()  # empty transformation
 TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
 TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
-# # Translators: Name for a vision enhancement provider that disables output to the screen,
-# # making it black.
-screenCurtainTranslatedName = _("Screen Curtain")
 
-# # Translators: Description for a Screen Curtain setting that shows a warning when loading
-# # the screen curtain.
+# Translators: Description for a Screen Curtain setting that shows a warning when loading
+# the screen curtain.
 warnOnLoadCheckBoxText = _("Always &show a warning when loading Screen Curtain")
-
-# # Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
-
-
-warnOnLoadText = _(
-	# Translators: A warning shown when activating the screen curtain.
-	# the translation of "Screen Curtain" should match the "translated name"
-	"Enabling Screen Curtain will make the screen of your computer completely black. "
-	"Ensure you will be able to navigate without any use of your screen before continuing. "
-	"\n\n"
-	"Do you wish to continue?",
-)
 
 
 class _ScreenCurtainSettings(TypedDict):
@@ -72,7 +56,14 @@ class WarnOnLoadDialog(MessageDialog):
 		screenCurtainSettingsStorage: _ScreenCurtainSettings,
 		parent,
 		title=_("Warning"),
-		message=warnOnLoadText,
+		message=_(
+			# Translators: A warning shown when activating the screen curtain.
+			# the translation of "Screen Curtain" should match the "translated name"
+			"Enabling Screen Curtain will make the screen of your computer completely black. "
+			"Ensure you will be able to navigate without any use of your screen before continuing. "
+			"\n\n"
+			"Do you wish to continue?",
+		),
 		dialogType=MessageDialog.DIALOG_TYPE_WARNING,
 	):
 		self._settingsStorage = screenCurtainSettingsStorage

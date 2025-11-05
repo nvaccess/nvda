@@ -160,6 +160,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `reset_device` to `resetDevice`.
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
 * The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#XXXXX)
+* The following symbols have been removed from `visionEnhancementProviders.screenCurtain` with no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `VisionEnhancementProvider`, `warnOnLoadText`. (#xxxxx)
 
 #### Deprecations
 
@@ -241,6 +242,12 @@ Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
+* `visionEnhancementProviders.screenCurtain.WarnOnLoadDialog` is deprecated.
+Use `screenCurtain.WarnOnLoadDialog` instead. (#xxxxx)
+* `visionEnhancementProviders.screenCurtain.warnOnLoadCheckBoxText` is deprecated.
+Use `screenCurtain.warnOnLoadCheckBoxText` instead. (#xxxxx)
+* `visionEnhancementProviders.screenCurtain.TRANSFORM_BLACK` is deprecated.
+Use `screenCurtain.TRANSFORM_BLACK` instead. (#xxxxx)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->

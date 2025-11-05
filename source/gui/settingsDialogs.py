@@ -5975,7 +5975,9 @@ class VisionProviderSubPanel_Wrapper(
 
 
 class ScreenCurtainSettingsPanel(SettingsPanel):
-	title = screenCurtain.screenCurtainTranslatedName
+	# # Translators: Name for a feature that disables output to the screen,
+	# # making it black.
+	title = _("Screen Curtain")
 	helpId = "VisionSettingsScreenCurtain"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
