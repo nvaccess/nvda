@@ -90,6 +90,7 @@ IDEOGRAPHIC_COMMA: Final[str] = "\u3001"
 _lastSpeech: str | None = None
 """Last spoken text"""
 
+
 class SpeechMode(DisplayStringIntEnum):
 	off = 0
 	beeps = 1

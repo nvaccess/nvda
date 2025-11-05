@@ -5126,8 +5126,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Description for the repeat last speech script
-			"Repeat the last spoken information. "
-			"Pressing twice shows it in a browsable message. ",
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
 		),
 		gesture="kb:NVDA+control+f12",
 		category=SCRCAT_SPEECH,
@@ -5144,6 +5143,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: title for report last spoken information dialog.
 			title = _("Last spoken information")
 			ui.browseableMessage(lastSpeech, title, copyButton=True, closeButton=True)
+
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
