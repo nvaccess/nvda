@@ -9,7 +9,7 @@ from NVDAMagnifier import ColorFilter, ColorFilterMatrix, MagnifierType, FullScr
 class TestFullScreenMagnifier(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		"""Setup qui s'exécute une fois au début."""
+		"""Setup that runs once at the beginning."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
