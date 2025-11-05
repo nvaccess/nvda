@@ -563,7 +563,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 		if self._fullscreenMode == FullScreenMode.RELATIVE:
 			return self._relativePos(x, y)
 		elif self._fullscreenMode == FullScreenMode.BORDER:
-			# Pour border mode, on utilise la position actuelle comme référence
+			# For border mode, use the current position as reference
 			return self._borderPos(x, y)
 		else:  # CENTER mode
 			return coordinates
