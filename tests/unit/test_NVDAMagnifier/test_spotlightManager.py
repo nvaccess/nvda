@@ -8,7 +8,7 @@ from NVDAMagnifier import SpotlightManager, FullScreenMagnifier
 class TestSpotlightManager(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		"""Setup qui s'exécute une fois au début."""
+		"""Setup once for all tests."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
