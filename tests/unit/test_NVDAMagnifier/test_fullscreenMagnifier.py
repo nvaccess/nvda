@@ -14,7 +14,7 @@ class TestFullScreenMagnifier(unittest.TestCase):
 			cls.app = wx.App(False)
 
 	def setUp(self):
-		"""Setup avant chaque test."""
+		"""Setup before each test."""
 		self.patcherStart = patch.object(FullScreenMagnifier, "_startMagnifier")
 		self.patcherApplyColorFilter = patch.object(FullScreenMagnifier, "_applyColorFilter")
 
