@@ -5994,21 +5994,21 @@ class ScreenCurtainSettingsPanel(SettingsPanel):
 		self._enabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureEnableState)
 		self._enabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
 		sHelper.addItem(self._enabledCheckbox)
+
 		self._warnOnLoadCheckbox = wx.CheckBox(
 			self,
 			label=screenCurtain.warnOnLoadCheckBoxText,
 		)
+		self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
 		sHelper.addItem(self._warnOnLoadCheckbox)
+
 		self._playToggleSoundsCheckbox = wx.CheckBox(
 			self,
 			# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 			label=_("&Play sound when toggling Screen Curtain"),
 		)
-		sHelper.addItem(self._playToggleSoundsCheckbox)
-
-	def _setControlValues(self):
-		self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
 		self._playToggleSoundsCheckbox.SetValue(self._config["playToggleSounds"])
+		sHelper.addItem(self._playToggleSoundsCheckbox)
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
@@ -6052,14 +6052,13 @@ class ScreenCurtainSettingsPanel(SettingsPanel):
 	def confirmInitWithUser(self) -> bool:
 		if not self._config["warnOnLoad"]:
 			return True
-		parent = self
 		with screenCurtain.WarnOnLoadDialog(
 			screenCurtainSettingsStorage=self._config,
-			parent=parent,
+			parent=self,
 		) as dlg:
 			res = dlg.ShowModal()
 			# WarnOnLoadDialog can change settings, reload them
-			self._setControlValues()
+			self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
 			return res == wx.YES
 
 
