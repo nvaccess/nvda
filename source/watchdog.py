@@ -54,6 +54,10 @@ FROZEN_WARNING_TIMEOUT = 15
 """ Seconds before the core should be considered severely frozen and a warning logged.
 """
 
+_CRASH_STATS_FILENAME = "nvda_crash_stats.txt"
+_CRASH_STATS_WINDOW_SEC = 60
+_CRASH_STATS_MAX_COUNT = 3
+
 safeWindowClassSet = {
 	"Internet Explorer_Server",
 	"_WwG",
@@ -68,6 +72,60 @@ _coreDeadTimer = winBindings.kernel32.CreateWaitableTimer(None, True, None)
 _suspended = False
 _watcherThread = None
 _cancelCallEvent = None
+_crashHandlerRegistered = False
+
+
+def _getCrashStatsPath() -> str:
+	return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), _CRASH_STATS_FILENAME)
+
+
+def _loadRecentCrashTimestamps(now: float) -> list[float]:
+	path = _getCrashStatsPath()
+	try:
+		with open(path, "r", encoding="utf-8") as f:
+			lines = f.readlines()
+	except FileNotFoundError:
+		return []
+	except OSError:
+		log.debugWarning("Failed to read crash stats file", exc_info=True)
+		return []
+
+	recentCrashes: list[float] = []
+	needsRewrite = False
+	for line in lines:
+		stripped = line.strip()
+		if not stripped:
+			needsRewrite = True
+			continue
+		try:
+			timestamp = float(stripped)
+		except ValueError:
+			needsRewrite = True
+			continue
+		if now - timestamp <= _CRASH_STATS_WINDOW_SEC:
+			recentCrashes.append(timestamp)
+		else:
+			# Older entries fall outside of the tracking window.
+			needsRewrite = True
+
+	if needsRewrite:
+		try:
+			with open(path, "w", encoding="utf-8") as f:
+				for ts in recentCrashes:
+					f.write(f"{ts:.6f}\n")
+		except OSError:
+			log.debugWarning("Failed to update crash stats file", exc_info=True)
+
+	return recentCrashes
+
+
+def _recordCrashTimestamp() -> None:
+	path = _getCrashStatsPath()
+	try:
+		with open(path, "a", encoding="utf-8") as f:
+			f.write(f"{time.time():.6f}\n")
+	except OSError:
+		log.debugWarning("Failed to append crash stats", exc_info=True)
 
 
 def alive():
@@ -256,6 +314,7 @@ def _crashHandler(exceptionInfo):
 
 	log.info("Restarting due to crash")
 	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
+	_recordCrashTimestamp()
 	core.restartUnsafely()
 	return 1  # EXCEPTION_EXECUTE_HANDLER
 
@@ -281,8 +340,20 @@ def initialize():
 	if isRunning:
 		raise RuntimeError("already running")
 	isRunning = True
-	# Catch application crashes.
-	winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
+	global _crashHandlerRegistered
+	_crashHandlerRegistered = False
+	now = time.time()
+	recentCrashes = _loadRecentCrashTimestamps(now)
+	disableCrashHandler = len(recentCrashes) > _CRASH_STATS_MAX_COUNT
+	if disableCrashHandler:
+		log.error(
+			f"Crash loop detected ({len(recentCrashes)} crashes in {_CRASH_STATS_WINDOW_SEC:.0f} seconds). "
+			"Automatic crash recovery will remain disabled until the loop clears.",
+		)
+	else:
+		winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
+		_crashHandlerRegistered = True
+		# Catch application crashes if the handler is enabled.
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
