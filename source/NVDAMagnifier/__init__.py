@@ -15,7 +15,6 @@ import api
 
 class MouseHandler:
 	def __init__(self):
-		pass
 		self._mousePosition: tuple[int, int] = (0, 0)
 
 	@property
