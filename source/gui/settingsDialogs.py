@@ -80,7 +80,7 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
-
+import screenCurtain
 from . import guiHelper
 
 try:
@@ -5974,6 +5974,93 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class ScreenCurtainSettingsPanel(SettingsPanel):
+	title = screenCurtain.screenCurtainTranslatedName
+	helpId = "VisionSettingsScreenCurtain"
+
+	def makeSettings(self, sizer: wx.BoxSizer):
+		self._config = config.conf["screenCurtain"]
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self._enabledCheckbox = wx.CheckBox(
+			self,
+			#  Translators: option to enable screen curtain in the vision settings panel
+			label=_("Make screen black (immediate effect)"),
+		)
+		self._enabledCheckbox.SetValue(
+			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
+		)
+		self._enabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureEnableState)
+		self._enabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
+		sHelper.addItem(self._enabledCheckbox)
+		self._warnOnLoadCheckbox = wx.CheckBox(
+			self,
+			label=screenCurtain.warnOnLoadCheckBoxText,
+		)
+		sHelper.addItem(self._warnOnLoadCheckbox)
+		self._playToggleSoundsCheckbox = wx.CheckBox(
+			self,
+			# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+			label=_("&Play sound when toggling Screen Curtain"),
+		)
+		sHelper.addItem(self._playToggleSoundsCheckbox)
+
+	def _setControlValues(self):
+		self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
+		self._playToggleSoundsCheckbox.SetValue(self._config["playToggleSounds"])
+
+	def onSave(self):
+		# We intentionally don't save whether the screen curtain is enabled here,
+		# so we don't unintentionally persist a temporary screen curtain to config.
+		self._config["warnOnLoad"] = self._warnOnLoadCheckbox.IsChecked()
+		self._config["playToggleSounds"] = self._playToggleSoundsCheckbox.IsChecked()
+
+	def _ocrActive(self) -> bool:
+		"""
+		Outputs a message when trying to activate screen curtain when OCR is active.
+
+		:return: ``True`` when OCR is active, ``False`` otherwise.
+		"""
+		import api
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		import ui
+
+		focusObj = api.getFocusObject()
+		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+			warningMessage = _("Could not enable screen curtain when performing content recognition")
+			ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+			return True
+		return False
+
+	def _ensureEnableState(self, evt: wx.CommandEvent):
+		shouldBeEnabled = evt.IsChecked()
+		if screenCurtain.screenCurtain is None:
+			self._enabledCheckbox.SetValue(False)
+			return
+		currentlyEnabled = screenCurtain.screenCurtain.enabled
+		if shouldBeEnabled and not currentlyEnabled:
+			confirmed = self.confirmInitWithUser()
+			if not confirmed or self._ocrActive():
+				self._enabledCheckbox.SetValue(False)
+			else:
+				screenCurtain.screenCurtain.enable()
+		elif not shouldBeEnabled and currentlyEnabled:
+			screenCurtain.screenCurtain.disable()
+
+	def confirmInitWithUser(self) -> bool:
+		if not self._config["warnOnLoad"]:
+			return True
+		parent = self
+		with screenCurtain.WarnOnLoadDialog(
+			screenCurtainSettingsStorage=self._config,
+			parent=parent,
+		) as dlg:
+			res = dlg.ShowModal()
+			# WarnOnLoadDialog can change settings, reload them
+			self._setControlValues()
+			return res == wx.YES
+
+
 """ The name of the config profile currently being edited, if any.
 This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
 This can be used by an AppModule for NVDA to identify and announce
@@ -5990,6 +6077,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
 		AudioPanel,
+		ScreenCurtainSettingsPanel,
 		VisionSettingsPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
