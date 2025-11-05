@@ -247,7 +247,6 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
-|Report language |Not assigned |Not assigned |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
 #### Toggle which information NVDA reads {#ToggleWhichInformationNVDAReads}
@@ -261,6 +260,8 @@ The actual commands will not execute while in input help mode.
 
 #### The synth settings ring {#TheSynthSettingsRing}
 
+The synth settings ring is a set of key commands that allow you to move through the most common speech settings and easily control them from anywhere while running NVDA.
+
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
 |Move to next synth setting |`NVDA+control+rightArrow` |`NVDA+shift+control+rightArrow` |Moves to the next available speech setting after the current, wrapping around to the first setting again after the last|
@@ -269,10 +270,6 @@ The actual commands will not execute while in input help mode.
 |Increment the current synth setting in larger steps |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
 |Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
-
-It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
-This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
-When you're on a voice setting, it will set the first or last voice.
 
 #### Web navigation {#WebNavigation}
 
