@@ -185,16 +185,6 @@ class TestNVDAMagnifier(unittest.TestCase):
 	def testGetFocusCoordinates(self):
 		"""Test : All priority scenarios for focus coordinates."""
 
-		def initValues(getNvda: tuple[int, int], mousePos: tuple[int, int], leftPressed: bool):
-			self.magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
-			self.magnifier.lastNVDAPosition = (0, 0)
-
-			with patch.object(self.magnifier._mouseHandler, "mousePosition", mousePos):
-				self.magnifier.lastMousePosition = (0, 0)
-				self.magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
-
-				return self.magnifier._getFocusCoordinates()
-
 		def testValues(
 			getNvda: tuple[int, int],
 			mousePos: tuple[int, int],
