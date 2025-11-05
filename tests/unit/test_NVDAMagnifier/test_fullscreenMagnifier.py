@@ -29,7 +29,7 @@ class TestFullScreenMagnifier(unittest.TestCase):
 		self.magnifier.zoomLevel = 2.0
 
 	def tearDown(self):
-		"""Cleanup après chaque test."""
+		"""Cleanup after each test."""
 		self.patcherStart.stop()
 		self.patcherApplyColorFilter.stop()
 
