@@ -228,8 +228,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
 	# Bitwise combination of none, some or all values of ReportSpellingErrors
-	# 1: Speech, 2: Sound
-	reportSpellingErrors2 = integer(min=0, max=3, default=1)
+	# 1: Speech, 2: Sound, 4: Braille
+	reportSpellingErrors2 = integer(min=0, max=7, default=1)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
@@ -328,6 +328,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	language = string(default="")
 	autoRefresh = boolean(default=false)
 	autoRefreshInterval = integer(default=1500, min=100)
+	autoSayAllOnResult = boolean(default=false)
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
@@ -369,6 +370,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
 		muteOnLocalControl = boolean(default=False)
+
+[automatedImageDescriptions]
+	enable = boolean(default=false)
+	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
+
 """
 
 #: The configuration specification
