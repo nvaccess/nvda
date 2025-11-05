@@ -37,7 +37,7 @@ class TestFullScreenMagnifier(unittest.TestCase):
 			self.magnifier.timer.Stop()
 
 	def _createMagnifier(self, **kwargs):
-		"""Helper pour créer un magnifier avec patches."""
+		"""Helper for creating a magnifier with patches."""
 		return FullScreenMagnifier(**kwargs)
 
 	def testFullScreenMagnifierCreation(self):
