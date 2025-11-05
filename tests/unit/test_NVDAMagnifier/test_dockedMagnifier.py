@@ -75,8 +75,6 @@ class TestDockedMagnifier(unittest.TestCase):
 		magnifier._dockedFrame.updateMagnifier = MagicMock()
 		magnifier._mouseHandler.getMousePosition = MagicMock()
 
-		x, y = magnifier.currentCoordinates
-
 		magnifier._doUpdate()
 		magnifier._dockedFrame.updateMagnifier.assert_called_once()
 
