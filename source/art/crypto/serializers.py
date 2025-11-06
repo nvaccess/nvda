@@ -50,7 +50,6 @@ class EncryptedSerializer(Pyro5.serializers.SerializerBase):
 		"""Serialize and encrypt data."""
 		plaintext = self.inner.dumps(data)
 		encrypted = self.box.encrypt(plaintext)  # Returns nonce + ciphertext
-		log.debug(f"EncryptedSerializer.dumps() - serializer_id={self.serializer_id}, plaintext={len(plaintext)}B, encrypted={len(encrypted)}B, first_8_bytes={encrypted[:8].hex()}")
 		return encrypted
 	
 	def loads(self, data: bytes) -> Any:
@@ -58,16 +57,13 @@ class EncryptedSerializer(Pyro5.serializers.SerializerBase):
 		# Handle bytearray from Pyro5 network layer
 		if isinstance(data, bytearray):
 			data = bytes(data)
-		log.debug(f"EncryptedSerializer.loads() - serializer_id={self.serializer_id}, encrypted={len(data)}B, first_8_bytes={data[:8].hex()}")
 		plaintext = self.box.decrypt(data)  # Auto-extracts nonce, verifies MAC
-		log.debug(f"EncryptedSerializer.loads() - decrypted to {len(plaintext)}B plaintext")
 		return self.inner.loads(plaintext)
 	
 	def dumpsCall(self, obj: Any, method: str, vargs: Tuple, kwargs: Dict[str, Any]) -> bytes:
 		"""Serialize and encrypt method call."""
 		plaintext = self.inner.dumpsCall(obj, method, vargs, kwargs)
 		encrypted = self.box.encrypt(plaintext)
-		log.debug(f"EncryptedSerializer.dumpsCall() - serializer_id={self.serializer_id}, method={method}, plaintext={len(plaintext)}B, encrypted={len(encrypted)}B")
 		return encrypted
 	
 	def loadsCall(self, data: bytes) -> Tuple[Any, str, Tuple, Dict[str, Any]]:
@@ -75,10 +71,8 @@ class EncryptedSerializer(Pyro5.serializers.SerializerBase):
 		# Handle bytearray from Pyro5 network layer
 		if isinstance(data, bytearray):
 			data = bytes(data)
-		log.debug(f"EncryptedSerializer.loadsCall() - serializer_id={self.serializer_id}, encrypted={len(data)}B")
 		plaintext = self.box.decrypt(data)
 		result = self.inner.loadsCall(plaintext)
-		log.debug(f"EncryptedSerializer.loadsCall() - decrypted method call: {result[1] if len(result) > 1 else 'unknown'}")
 		return result
 	
 	def register_type_replacement(self, object_type: type, replacement_function):
