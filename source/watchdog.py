@@ -312,9 +312,9 @@ def _crashHandler(exceptionInfo):
 	stacks = logHandler.getFormattedStacksForAllThreads()
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
+	_recordCrashTimestamp()
 	log.info("Restarting due to crash")
 	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
-	_recordCrashTimestamp()
 	core.restartUnsafely()
 	return 1  # EXCEPTION_EXECUTE_HANDLER
 
@@ -344,8 +344,8 @@ def initialize():
 	_crashHandlerRegistered = False
 	now = time.time()
 	recentCrashes = _loadRecentCrashTimestamps(now)
-	disableCrashHandler = len(recentCrashes) > _CRASH_STATS_MAX_COUNT
-	if disableCrashHandler:
+
+	if  len(recentCrashes) >= _CRASH_STATS_MAX_COUNT:
 		log.error(
 			f"Crash loop detected ({len(recentCrashes)} crashes in {_CRASH_STATS_WINDOW_SEC:.0f} seconds). "
 			"Automatic crash recovery will remain disabled until the loop clears.",
