@@ -36,9 +36,9 @@ TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
 TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
 
-# Translators: Description for a Screen Curtain setting that shows a warning when loading
+# Translators: Description for a Screen Curtain setting that shows a warning when enabling
 # the screen curtain.
-warnOnLoadCheckBoxText = _("Always &show a warning when loading Screen Curtain")
+warnOnLoadCheckBoxText = _("Always &show a warning when enabling Screen Curtain")
 
 
 class _ScreenCurtainSettings(TypedDict):

@@ -5974,47 +5974,57 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
-class ScreenCurtainSettingsPanel(SettingsPanel):
-	# # Translators: Name for a feature that disables output to the screen,
-	# # making it black.
-	title = _("Screen Curtain")
-	helpId = "VisionSettingsScreenCurtain"
+class PrivacyAndSecuritySettingsPanel(SettingsPanel):
+	# Translators: The title of the privacy and security category in NVDA's settings.
+	title = _("Privacy and Security")
+	helpId = "PrivacyAndSecuritySettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
-		self._config = config.conf["screenCurtain"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
-		self._enabledCheckbox = wx.CheckBox(
-			self,
-			#  Translators: option to enable screen curtain in the vision settings panel
-			label=_("Make screen black (immediate effect)"),
+
+		self._screenCurtainConfig = config.conf["screenCurtain"]
+		# Translators: Name for a feature that disables output to the screen,
+		# making it black.
+		screenCurtainSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Screen Curtain"))
+		screenCurtainBox = screenCurtainSizer.GetStaticBox()
+		screenCurtainGroup = guiHelper.BoxSizerHelper(self, sizer=screenCurtainSizer)
+		sHelper.addItem(screenCurtainGroup)
+
+		self._enabledCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				#  Translators: option to enable screen curtain in the privacy and security settings panel
+				label=_("Make screen black (immediate effect)"),
+			),
 		)
 		self._enabledCheckbox.SetValue(
 			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
 		)
 		self._enabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureEnableState)
 		self._enabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
-		sHelper.addItem(self._enabledCheckbox)
 
-		self._warnOnLoadCheckbox = wx.CheckBox(
-			self,
-			label=screenCurtain.warnOnLoadCheckBoxText,
+		self._warnOnLoadCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				label=screenCurtain.warnOnLoadCheckBoxText,
+			),
 		)
-		self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
-		sHelper.addItem(self._warnOnLoadCheckbox)
+		self._warnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
 
-		self._playToggleSoundsCheckbox = wx.CheckBox(
-			self,
-			# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-			label=_("&Play sound when toggling Screen Curtain"),
+		self._playToggleSoundsCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+				label=_("&Play sound when toggling Screen Curtain"),
+			),
 		)
-		self._playToggleSoundsCheckbox.SetValue(self._config["playToggleSounds"])
-		sHelper.addItem(self._playToggleSoundsCheckbox)
+		self._playToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
 		# so we don't unintentionally persist a temporary screen curtain to config.
-		self._config["warnOnLoad"] = self._warnOnLoadCheckbox.IsChecked()
-		self._config["playToggleSounds"] = self._playToggleSoundsCheckbox.IsChecked()
+		self._screenCurtainConfig["warnOnLoad"] = self._warnOnLoadCheckbox.IsChecked()
+		self._screenCurtainConfig["playToggleSounds"] = self._playToggleSoundsCheckbox.IsChecked()
 
 	def _ocrActive(self) -> bool:
 		"""
@@ -6050,15 +6060,15 @@ class ScreenCurtainSettingsPanel(SettingsPanel):
 			screenCurtain.screenCurtain.disable()
 
 	def confirmInitWithUser(self) -> bool:
-		if not self._config["warnOnLoad"]:
+		if not self._screenCurtainConfig["warnOnLoad"]:
 			return True
 		with screenCurtain.WarnOnLoadDialog(
-			screenCurtainSettingsStorage=self._config,
+			screenCurtainSettingsStorage=self._screenCurtainConfig,
 			parent=self,
 		) as dlg:
 			res = dlg.ShowModal()
 			# WarnOnLoadDialog can change settings, reload them
-			self._warnOnLoadCheckbox.SetValue(self._config["warnOnLoad"])
+			self._warnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
 			return res == wx.YES
 
 
@@ -6078,7 +6088,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
 		AudioPanel,
-		ScreenCurtainSettingsPanel,
+		PrivacyAndSecuritySettingsPanel,
 		VisionSettingsPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
@@ -6119,6 +6129,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
+			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
