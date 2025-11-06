@@ -65,7 +65,10 @@ class CrashStats:
 
 	@property
 	def crashStatsPath(self) -> str:
-		return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), self.crashStatsPath)
+		return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), self.fileName)
+
+
+_crashStats = CrashStats()
 
 
 safeWindowClassSet = {
@@ -158,7 +161,7 @@ def _writeCrashStats(path: str, events: list[dict[str, Any]]) -> None:
 
 
 def _loadRecentCrashTimestamps(now: float) -> list[float]:
-	path = CrashStats.crashStatsPath
+	path = _crashStats.crashStatsPath
 	# Check existance explicetly rather than catching exceptions, as this check is far faster than catching an expected exception.
 	if not os.path.exists(path):
 		return []
@@ -181,7 +184,7 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 			needsRewrite = True
 			continue
 		timestamp = event["timestamp"]
-		if now - timestamp <= CrashStats.timeout:
+		if now - timestamp <= _crashStats.timeout:
 			eventsToRetain.append(event)
 			if event.get("version") == currentVersion and event.get("installType") == currentInstallType:
 				recentCrashes.append(timestamp)
@@ -196,7 +199,7 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 
 
 def _recordCrashTimestamp() -> None:
-	path = CrashStats.crashStatsPath
+	path = _crashStats.crashStatsPath
 	version, installType = _getCurrentCrashFingerprint()
 	try:
 		with open(path, "a", encoding="utf-8") as f:
@@ -420,9 +423,9 @@ def initialize():
 	isRunning = True
 	now = time.time()
 	recentCrashes = _loadRecentCrashTimestamps(now)
-	if len(recentCrashes) >= CrashStats.maxCount:
+	if len(recentCrashes) >= _crashStats.maxCount:
 		log.error(
-			f"Crash loop detected ({len(recentCrashes)} crashes in {CrashStats.timeout:.0f} seconds). "
+			f"Crash loop detected ({len(recentCrashes)} crashes in {_crashStats.timeout:.0f} seconds). "
 			"Automatic crash recovery will remain disabled until the loop clears.",
 		)
 	else:
