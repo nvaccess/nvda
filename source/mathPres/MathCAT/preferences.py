@@ -24,8 +24,8 @@ class ImpairmentOption(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["ImpairmentOption", str]:
 		return {
-			# Learning disabilities includes dyslexia and ADHD
-			# Translators: category of impairment that MathCAT supports: people with learning disabilities
+			# Translators: Learning disabilities includes dyslexia and ADHD
+			# category of impairment that MathCAT supports: people with learning disabilities
 			self.LEARNING_DISABILITY: pgettext("math", "Learning disabilities"),
 			# Translators: category of impairment that MathCAT supports: people who are blind
 			self.BLINDNESS: pgettext("math", "Blindness"),
@@ -284,7 +284,7 @@ def getSpeechStyleConfigValue(displayString: str) -> str:
 	for style in SpeechStyleOption:
 		if style.displayString == displayString:
 			return style.value
-	raise ValueError(f"Couldn't find {displayString} in {SpeechStyleOption}")
+	return displayString
 
 
 class MathCATUserPreferences:

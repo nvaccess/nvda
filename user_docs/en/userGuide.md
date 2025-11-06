@@ -3222,16 +3222,26 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 ###### Speech Style {MathSpeechStyle}
 
-A style of speech or coordinated philosophy about how to speak an expression.
+Different speech styles are used to change how math is reported.
 
 * ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT.
 See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+* LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
+It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
+* Other speech styles may exist designed for individual languages.
+
+Examples of each type of speech:
+
+Expression | LiteralSpeak | SimpleSpeak | ClearSpeak |
+| -- | -- | -- | -- |
+| 1/2 | 1 slash 2 | 1 divided by 2 | one half |
+| √x | radical x | square root x | square root of x |
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
 | Default | ClearSpeak |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
@@ -3276,7 +3286,8 @@ A start and end beep occur before and after reading an expression.
 
 ###### Speech for chemical formulas {#MathSpeechForChemical}
 
-Controls how chemical formulae are read. Examples for $\mathrm{H}_2\mathrm{O}$:
+Controls how chemical formulae are read.
+Examples for $\mathrm{H}_2\mathrm{O}$:
 
 * SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
 * AsCompound: "Water"
