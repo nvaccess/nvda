@@ -3043,7 +3043,6 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
 			self.speechStyleList.GetStringSelection(),
-			self.languageCodes[self.languageList.GetSelection()],
 		)
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
