@@ -326,7 +326,7 @@ def resetConfiguration(factoryDefaults=False):
 
 	log.debug("Terminating vision")
 	vision.terminate()
-	log.debug("Terminating Screen Curtan")
+	log.debug("Terminating Screen Curtain")
 	screenCurtain.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
@@ -818,7 +818,7 @@ def main():
 	braille.initialize()
 	import screenCurtain
 
-	log.debug("Initializing screen curtain")
+	log.debug("Initializing Screen Curtain")
 	screenCurtain.initialize()
 	import vision
 

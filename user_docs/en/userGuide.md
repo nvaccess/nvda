@@ -2641,8 +2641,8 @@ You can also choose not to show the warning dialog using the checkbox in the dia
 This option controls whether a sound cue is played when the [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.
 
 By default, sounds are played when the Screen Curtain is toggled.
-If you do not like this behaviour, you can uncheck this checkbox.
-Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled.
+If you do not wish to hear these sounds, you can uncheck this checkbox.
+Note that you will still be alerted in speech and/or braille when the Screen Curtain is toggled with an input gesture.
 
 #### Vision {#VisionSettings}
 

@@ -4798,7 +4798,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:NVDA+control+escape",
 	)
-	def script_toggleScreenCurtain(self, gesture):
+	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
 		from screenCurtain import screenCurtain
 
 		if screenCurtain is None:
@@ -4918,7 +4918,7 @@ class GlobalCommands(ScriptableObject):
 					and focusObj.recognizer.allowAutoRefresh
 				):
 					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-					warningMessage = _("Cannot enable screen curtain when performing content recognition")
+					warningMessage = _("Cannot enable screen curtain while performing content recognition")
 					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
 					return
 				_enableScreenCurtain()

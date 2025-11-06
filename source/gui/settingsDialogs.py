@@ -6044,7 +6044,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
 			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-			warningMessage = _("Could not enable screen curtain when performing content recognition")
+			warningMessage = _("Cannot enable screen curtain while performing content recognition")
 			ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
 			return True
 		return False

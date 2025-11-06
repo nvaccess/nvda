@@ -8,26 +8,15 @@
 import os
 from typing import TypedDict, cast
 
-# from vision import providerBase
-# from autoSettingsUtils.driverSetting import BooleanDriverSetting
-# from autoSettingsUtils.autoSettings import SupportedSettingType
+import config
+import globalVars
+import nvwave
 import wx
 from gui.nvdaControls import MessageDialog
-
-# from gui.settingsDialogs import (
-# 	AutoSettingsMixin,
-# 	SettingsPanel,
-# 	VisionProviderStateControl,
-# )
-import config
 from logHandler import log
-
-# from typing import Optional, Type
-import nvwave
-import globalVars
-from NVDAHelper.localLib import isScreenFullyBlack
 from winBindings import magnification
 
+from NVDAHelper.localLib import isScreenFullyBlack
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
@@ -122,106 +111,6 @@ class WarnOnLoadDialog(MessageDialog):
 		if evt.IsShown():
 			self.noButton.SetFocus()
 		super()._onShowEvent(evt)
-
-
-# class ScreenCurtainGuiPanel(
-# 	AutoSettingsMixin,
-# 	SettingsPanel,
-# ):
-# 	_enabledCheckbox: wx.CheckBox
-# 	_enableCheckSizer: wx.BoxSizer
-
-# 	helpId = "VisionSettingsScreenCurtain"
-
-# 	def __init__(
-# 		self,
-# 		parent,
-# 		providerControl: VisionProviderStateControl,
-# 	):
-# 		self._providerControl = providerControl
-# 		super().__init__(parent)
-
-# 	def _buildGui(self):
-# 		self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-
-# 		self._enabledCheckbox = wx.CheckBox(
-# 			self,
-# 			#  Translators: option to enable screen curtain in the vision settings panel
-# 			label=_("Make screen black (immediate effect)"),
-# 		)
-# 		isProviderActive = bool(self._providerControl.getProviderInstance())
-# 		self._enabledCheckbox.SetValue(isProviderActive)
-
-# 		self.mainSizer.Add(self._enabledCheckbox)
-# 		self.mainSizer.AddSpacer(size=self.scaleSize(10))
-# 		# this options separator is done with text rather than a group box because a groupbox is too verbose,
-# 		# but visually some separation is helpful, since the rest of the options are really sub-settings.
-# 		self.optionsText = wx.StaticText(
-# 			self,
-# 			# Translators: The label for a group box containing the NVDA highlighter options.
-# 			label=_("Options:"),
-# 		)
-# 		self.mainSizer.Add(self.optionsText)
-# 		self.lastControl = self.optionsText
-# 		self.settingsSizer = wx.BoxSizer(wx.VERTICAL)
-# 		self.makeSettings(self.settingsSizer)
-# 		self.mainSizer.Add(self.settingsSizer, border=self.scaleSize(15), flag=wx.LEFT | wx.EXPAND)
-# 		self.mainSizer.Fit(self)
-# 		self.SetSizer(self.mainSizer)
-
-# 	def getSettings(self) -> ScreenCurtainSettings:
-# 		return ScreenCurtainProvider.getSettings()
-
-# 	def makeSettings(self, sizer: wx.BoxSizer):
-# 		self.updateDriverSettings()
-# 		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
-
-# 	def onPanelActivated(self):
-# 		self.lastControl = self._enabledCheckbox
-
-# 	def _onCheckEvent(self, evt: wx.CommandEvent):
-# 		if evt.GetEventObject() is self._enabledCheckbox:
-# 			self._ensureEnableState(evt.IsChecked())
-
-# 	def _ocrActive(self) -> bool:
-# 		"""Outputs a message when trying to activate screen curtain when OCR is active.
-# 		@returns: C{True} when OCR is active, C{False} otherwise.
-# 		"""
-# 		import api
-# 		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
-# 		import speech
-# 		import ui
-
-# 		focusObj = api.getFocusObject()
-# 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
-# 			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-# 			warningMessage = _("Could not enable screen curtain when performing content recognition")
-# 			ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
-# 			return True
-# 		return False
-
-# 	def _ensureEnableState(self, shouldBeEnabled: bool):
-# 		currentlyEnabled = bool(self._providerControl.getProviderInstance())
-# 		if shouldBeEnabled and not currentlyEnabled:
-# 			confirmed = self.confirmInitWithUser()
-# 			if not confirmed or self._ocrActive() or not self._providerControl.startProvider():
-# 				self._enabledCheckbox.SetValue(False)
-# 		elif not shouldBeEnabled and currentlyEnabled:
-# 			self._providerControl.terminateProvider()
-
-# 	def confirmInitWithUser(self) -> bool:
-# 		settingsStorage = self._getSettingsStorage()
-# 		if not settingsStorage.warnOnLoad:
-# 			return True
-# 		parent = self
-# 		with WarnOnLoadDialog(
-# 			screenCurtainSettingsStorage=settingsStorage,
-# 			parent=parent,
-# 		) as dlg:
-# 			res = dlg.ShowModal()
-# 			# WarnOnLoadDialog can change settings, reload them
-# 			self.updateDriverSettings()
-# 			return res == wx.YES
 
 
 class _ScreenCurtain:
