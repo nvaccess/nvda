@@ -284,6 +284,7 @@ def getSpeechStyleConfigValue(displayString: str) -> str:
 	for style in SpeechStyleOption:
 		if style.displayString == displayString:
 			return style.value
+	raise ValueError(f"Couldn't find {displayString} in {SpeechStyleOption}")
 
 
 class MathCATUserPreferences:
