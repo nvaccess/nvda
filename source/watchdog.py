@@ -162,7 +162,7 @@ def _writeCrashStats(path: str, events: list[dict[str, Any]]) -> None:
 
 def _loadRecentCrashTimestamps(now: float) -> list[float]:
 	path = _crashStats.crashStatsPath
-	# Check existance explicetly rather than catching exceptions, as this check is far faster than catching an expected exception.
+	# Check existence explicitly rather than catching exceptions, as this check is far faster than catching an expected exception.
 	if not os.path.exists(path):
 		return []
 	try:
