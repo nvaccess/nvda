@@ -1709,6 +1709,7 @@ class TextInfoRegion(Region):
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:  # no page turn support
 				shouldCollapseToEnd = True
+				dest.expand(textInfos.UNIT_LINE)
 		dest.collapse(shouldCollapseToEnd)
 		self._setCursor(dest)
 		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
