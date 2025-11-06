@@ -163,6 +163,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
 * The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)
 * The following symbols have been removed from `visionEnhancementProviders.screenCurtain` with no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `VisionEnhancementProvider`, `warnOnLoadText`. (#19177)
+* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 
 #### Deprecations
 
