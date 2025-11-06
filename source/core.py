@@ -322,9 +322,12 @@ def resetConfiguration(factoryDefaults=False):
 	import hwIo
 	import tones
 	import audio
+	import screenCurtain
 
 	log.debug("Terminating vision")
 	vision.terminate()
+	log.debug("Terminating Screen Curtan")
+	screenCurtain.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -388,6 +391,8 @@ def resetConfiguration(factoryDefaults=False):
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
+	log.debug("initializing Screen Curtain")
+	screenCurtain.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
