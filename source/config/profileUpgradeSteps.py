@@ -627,8 +627,11 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 def upgradeConfigFrom_19_to_20(profile: ConfigObj):
 	"""Move Screen Curtain settings from vision to root."""
 	try:
+		# We must copy the old settings,
+		# otherwise configobj will write the new settings as a subsection of the last root section in the config
 		profile["screenCurtain"] = profile["vision"]["screenCurtain"].copy()
 	except KeyError:
 		log.debug("No vision enhancement provider-based Screen Curtain settings exist. No action taken.")
 		return
 	del profile["vision"]["screenCurtain"]
+	log.debug("Moved Screen Curtain settings from ['vision']['screenCurtain'] to ['screenCurtain'].")
