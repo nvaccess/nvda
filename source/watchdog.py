@@ -14,6 +14,7 @@ from typing import (
 import inspect
 import json
 import ctypes.wintypes
+from attr import dataclass
 import comtypes
 import winBindings.ole32
 import winBindings.dbgHelp
@@ -55,9 +56,17 @@ FROZEN_WARNING_TIMEOUT = 15
 """ Seconds before the core should be considered severely frozen and a warning logged.
 """
 
-_CRASH_STATS_FILENAME = "nvda_crash_stats.txt"
-_CRASH_STATS_WINDOW_SEC = 60
-_CRASH_STATS_MAX_COUNT = 3
+
+@dataclass
+class CrashStats:
+	fileName: str = "nvda_crash_stats.txt"
+	timeout: int = 120
+	maxCount: int = 3
+
+	@property
+	def crashStatsPath(self) -> str:
+		return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), self.crashStatsPath)
+
 
 safeWindowClassSet = {
 	"Internet Explorer_Server",
@@ -73,10 +82,6 @@ _coreDeadTimer = winBindings.kernel32.CreateWaitableTimer(None, True, None)
 _suspended = False
 _watcherThread = None
 _cancelCallEvent = None
-
-
-def _getCrashStatsPath() -> str:
-	return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), _CRASH_STATS_FILENAME)
 
 
 def _getCurrentCrashFingerprint() -> tuple[str, str]:
@@ -153,7 +158,10 @@ def _writeCrashStats(path: str, events: list[dict[str, Any]]) -> None:
 
 
 def _loadRecentCrashTimestamps(now: float) -> list[float]:
-	path = _getCrashStatsPath()
+	path = CrashStats.crashStatsPath
+	# Check existance explicetly rather than catching exceptions, as this check is far faster than catching an expected exception.
+	if not os.path.exists(path):
+		return []
 	try:
 		with open(path, "r", encoding="utf-8") as f:
 			lines = f.readlines()
@@ -173,7 +181,7 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 			needsRewrite = True
 			continue
 		timestamp = event["timestamp"]
-		if now - timestamp <= _CRASH_STATS_WINDOW_SEC:
+		if now - timestamp <= CrashStats.timeout:
 			eventsToRetain.append(event)
 			if event.get("version") == currentVersion and event.get("installType") == currentInstallType:
 				recentCrashes.append(timestamp)
@@ -188,7 +196,7 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 
 
 def _recordCrashTimestamp() -> None:
-	path = _getCrashStatsPath()
+	path = CrashStats.crashStatsPath
 	version, installType = _getCurrentCrashFingerprint()
 	try:
 		with open(path, "a", encoding="utf-8") as f:
@@ -412,9 +420,9 @@ def initialize():
 	isRunning = True
 	now = time.time()
 	recentCrashes = _loadRecentCrashTimestamps(now)
-	if len(recentCrashes) >= _CRASH_STATS_MAX_COUNT:
+	if len(recentCrashes) >= CrashStats.maxCount:
 		log.error(
-			f"Crash loop detected ({len(recentCrashes)} crashes in {_CRASH_STATS_WINDOW_SEC:.0f} seconds). "
+			f"Crash loop detected ({len(recentCrashes)} crashes in {CrashStats.timeout:.0f} seconds). "
 			"Automatic crash recovery will remain disabled until the loop clears.",
 		)
 	else:
