@@ -12,6 +12,7 @@ from typing import (
 	Any,
 )
 import inspect
+import json
 import ctypes.wintypes
 import comtypes
 import winBindings.ole32
@@ -78,6 +79,79 @@ def _getCrashStatsPath() -> str:
 	return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), _CRASH_STATS_FILENAME)
 
 
+def _getCurrentCrashFingerprint() -> tuple[str, str]:
+	try:
+		import buildVersion
+
+		version = buildVersion.version
+	except Exception:
+		log.debugWarning("Failed to determine NVDA version for crash stats", exc_info=True)
+		version = "unknown"
+
+	installType = "portable"
+	try:
+		import config
+	except Exception:
+		log.debugWarning("Failed to import config for crash stats", exc_info=True)
+	else:
+		try:
+			if config.isInstalledCopy():
+				installType = "installed"
+		except Exception:
+			log.debugWarning("Failed to determine install type for crash stats", exc_info=True)
+
+	return version, installType
+
+
+def _buildCrashEvent(timestamp: float, version: str, installType: str) -> dict[str, Any]:
+	event: dict[str, Any] = {
+		"timestamp": float(timestamp),
+		"version": version,
+		"installType": installType,
+	}
+	return event
+
+
+def _serializeCrashEvent(event: dict[str, Any]) -> str:
+	return json.dumps(event, separators=(",", ":"))
+
+
+def _parseCrashStatsLine(strippedLine: str) -> dict[str, Any] | None:
+	if not strippedLine:
+		return None
+
+	try:
+		data = json.loads(strippedLine)
+	except json.JSONDecodeError:
+		return None
+
+	if not isinstance(data, dict):
+		return None
+
+	try:
+		timestamp = float(data["timestamp"])
+	except (KeyError, TypeError, ValueError):
+		return None
+
+	version = data.get("version")
+	installType = data.get("installType")
+	if not isinstance(version, str) or not version:
+		return None
+	if not isinstance(installType, str) or not installType:
+		return None
+
+	return _buildCrashEvent(timestamp, version, installType)
+
+
+def _writeCrashStats(path: str, events: list[dict[str, Any]]) -> None:
+	try:
+		with open(path, "w", encoding="utf-8") as f:
+			for event in events:
+				f.write(f"{_serializeCrashEvent(event)}\n")
+	except OSError:
+		log.debugWarning("Failed to update crash stats file", exc_info=True)
+
+
 def _loadRecentCrashTimestamps(now: float) -> list[float]:
 	path = _getCrashStatsPath()
 	try:
@@ -90,39 +164,39 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 		return []
 
 	recentCrashes: list[float] = []
+	eventsToRetain: list[dict[str, Any]] = []
 	needsRewrite = False
+	currentVersion, currentInstallType = _getCurrentCrashFingerprint()
 	for line in lines:
-		stripped = line.strip()
-		if not stripped:
+		event = _parseCrashStatsLine(line.strip())
+		if event is None:
 			needsRewrite = True
 			continue
-		try:
-			timestamp = float(stripped)
-		except ValueError:
-			needsRewrite = True
-			continue
+		timestamp = event["timestamp"]
 		if now - timestamp <= _CRASH_STATS_WINDOW_SEC:
-			recentCrashes.append(timestamp)
+			eventsToRetain.append(event)
+			if (
+				event.get("version") == currentVersion
+				and event.get("installType") == currentInstallType
+			):
+				recentCrashes.append(timestamp)
 		else:
 			# Older entries fall outside of the tracking window.
 			needsRewrite = True
 
 	if needsRewrite:
-		try:
-			with open(path, "w", encoding="utf-8") as f:
-				for ts in recentCrashes:
-					f.write(f"{ts:.6f}\n")
-		except OSError:
-			log.debugWarning("Failed to update crash stats file", exc_info=True)
+		_writeCrashStats(path, eventsToRetain)
 
 	return recentCrashes
 
 
 def _recordCrashTimestamp() -> None:
 	path = _getCrashStatsPath()
+	version, installType = _getCurrentCrashFingerprint()
 	try:
 		with open(path, "a", encoding="utf-8") as f:
-			f.write(f"{time.time():.6f}\n")
+			event = _buildCrashEvent(time.time(), version, installType)
+			f.write(f"{_serializeCrashEvent(event)}\n")
 	except OSError:
 		log.debugWarning("Failed to append crash stats", exc_info=True)
 
