@@ -273,12 +273,11 @@ def getSpeechStyleChoicesWithTranslations(languageCode: str) -> list[str]:
 	return displayChoices
 
 
-def getSpeechStyleConfigValue(displayString: str, languageCode: str) -> str:
+def getSpeechStyleConfigValue(displayString: str) -> str:
 	"""
 	Convert a display string back to its config value.
 
 	:param displayString: The display string from the UI selection
-	:param languageCode: The current language code
 	:return: The config value to save for this speech style
 	"""
 	# Try to find matching enum first
