@@ -175,10 +175,7 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 		timestamp = event["timestamp"]
 		if now - timestamp <= _CRASH_STATS_WINDOW_SEC:
 			eventsToRetain.append(event)
-			if (
-				event.get("version") == currentVersion
-				and event.get("installType") == currentInstallType
-			):
+			if event.get("version") == currentVersion and event.get("installType") == currentInstallType:
 				recentCrashes.append(timestamp)
 		else:
 			# Older entries fall outside of the tracking window.
@@ -415,7 +412,7 @@ def initialize():
 	isRunning = True
 	now = time.time()
 	recentCrashes = _loadRecentCrashTimestamps(now)
-	if  len(recentCrashes) >= _CRASH_STATS_MAX_COUNT:
+	if len(recentCrashes) >= _CRASH_STATS_MAX_COUNT:
 		log.error(
 			f"Crash loop detected ({len(recentCrashes)} crashes in {_CRASH_STATS_WINDOW_SEC:.0f} seconds). "
 			"Automatic crash recovery will remain disabled until the loop clears.",
