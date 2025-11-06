@@ -6050,6 +6050,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		return False
 
 	def _ensureScreenCurtainEnableState(self, evt: wx.CommandEvent):
+		"""Ensures that toggling the Screen Curtain checkbox toggles the Screen Curtain."""
 		shouldBeEnabled = evt.IsChecked()
 		if screenCurtain.screenCurtain is None:
 			self._screenCurtainEnabledCheckbox.SetValue(False)
@@ -6065,6 +6066,10 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			screenCurtain.screenCurtain.disable()
 
 	def _confirmEnableScreenCurtainWithUser(self) -> bool:
+		"""Confirm with the user before enabling Screen Curtain, if configured to do so.
+
+		:return: ``True`` if the Screen Curtain should be enabled; ``False`` otherwise.
+		"""
 		if not self._screenCurtainConfig["warnOnLoad"]:
 			return True
 		with screenCurtain.WarnOnLoadDialog(
