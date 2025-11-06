@@ -52,7 +52,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no-longer dependent on the configuration profile in use. (#10476)
-* The screen Curtain settings have been moved to the new privacy and security category of NVDA's settings. (#xxxxx)
+* The screen Curtain settings have been moved to the new privacy and security category of NVDA's settings. (#19177)
 
 ### Bug Fixes
 
@@ -161,8 +161,8 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_queue_status` to `getQueueStatus`; and
     * `reset_device` to `resetDevice`.
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
-* The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#XXXXX)
-* The following symbols have been removed from `visionEnhancementProviders.screenCurtain` with no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `VisionEnhancementProvider`, `warnOnLoadText`. (#xxxxx)
+* The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)
+* The following symbols have been removed from `visionEnhancementProviders.screenCurtain` with no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `VisionEnhancementProvider`, `warnOnLoadText`. (#19177)
 
 #### Deprecations
 
@@ -245,11 +245,11 @@ Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 * `visionEnhancementProviders.screenCurtain.WarnOnLoadDialog` is deprecated.
-Use `screenCurtain.WarnOnLoadDialog` instead. (#xxxxx)
+Use `screenCurtain.WarnOnLoadDialog` instead. (#19177)
 * `visionEnhancementProviders.screenCurtain.warnOnLoadCheckBoxText` is deprecated.
-Use `screenCurtain.warnOnLoadCheckBoxText` instead. (#xxxxx)
+Use `screenCurtain.warnOnLoadCheckBoxText` instead. (#19177)
 * `visionEnhancementProviders.screenCurtain.TRANSFORM_BLACK` is deprecated.
-Use `screenCurtain.TRANSFORM_BLACK` instead. (#xxxxx)
+Use `screenCurtain.TRANSFORM_BLACK` instead. (#19177)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
