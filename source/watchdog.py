@@ -57,7 +57,7 @@ FROZEN_WARNING_TIMEOUT = 15
 """
 
 
-@dataclass
+@dataclass(frozen=True)
 class CrashStats:
 	fileName: str = "nvda_crash_stats.txt"
 	timeout: int = 120
