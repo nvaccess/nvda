@@ -622,3 +622,13 @@ def upgradeConfigFrom_18_to_19(profile: ConfigObj):
 		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}"
 		f" ({ReportSpellingErrors(newValue).name}). The old key '{key}' has been deleted.",
 	)
+
+
+def upgradeConfigFrom_19_to_20(profile: ConfigObj):
+	"""Move Screen Curtain settings from vision to root."""
+	try:
+		profile["screenCurtain"] = profile["vision"]["screenCurtain"].copy()
+	except KeyError:
+		log.debug("No vision enhancement provider-based Screen Curtain settings exist. No action taken.")
+		return
+	del profile["vision"]["screenCurtain"]
