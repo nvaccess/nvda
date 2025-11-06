@@ -14,7 +14,7 @@ from typing import (
 import inspect
 import json
 import ctypes.wintypes
-from attr import dataclass
+from dataclasses import dataclass
 import comtypes
 import winBindings.ole32
 import winBindings.dbgHelp
