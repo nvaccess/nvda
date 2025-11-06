@@ -72,7 +72,6 @@ _coreDeadTimer = winBindings.kernel32.CreateWaitableTimer(None, True, None)
 _suspended = False
 _watcherThread = None
 _cancelCallEvent = None
-_crashHandlerRegistered = False
 
 
 def _getCrashStatsPath() -> str:
@@ -340,11 +339,8 @@ def initialize():
 	if isRunning:
 		raise RuntimeError("already running")
 	isRunning = True
-	global _crashHandlerRegistered
-	_crashHandlerRegistered = False
 	now = time.time()
 	recentCrashes = _loadRecentCrashTimestamps(now)
-
 	if  len(recentCrashes) >= _CRASH_STATS_MAX_COUNT:
 		log.error(
 			f"Crash loop detected ({len(recentCrashes)} crashes in {_CRASH_STATS_WINDOW_SEC:.0f} seconds). "
@@ -352,7 +348,6 @@ def initialize():
 		)
 	else:
 		winBindings.kernel32.SetUnhandledExceptionFilter(_crashHandler)
-		_crashHandlerRegistered = True
 		# Catch application crashes if the handler is enabled.
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
