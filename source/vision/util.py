@@ -9,7 +9,6 @@
 from .constants import Context
 import api
 import locationHelper
-from contentRecog.recogUi import RecogResultNVDAObject
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
 from typing import Optional
@@ -28,8 +27,8 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 		obj = obj.treeInterceptor
 	if (
 		api.isNVDAObject(obj)
-		# Ignore fake NVDAObjects
-		and not isinstance(obj, RecogResultNVDAObject)
+		# Ignore fake NVDAObjects, as the caret rectangle may not be obtainable through the display model.
+		and not api.isFakeNVDAObject(obj)
 	):
 		# Import late to avoid circular import
 		import displayModel
