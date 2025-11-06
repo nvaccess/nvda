@@ -1487,7 +1487,7 @@ As a blind or vision impaired user, it is often not possible or necessary to see
 Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
 For this situation, NVDA contains a feature called "Screen Curtain" which can be enabled to make the screen black.
 
-You can enable the Screen Curtain in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog.
+You can enable the Screen Curtain in the [privacy and security category](#PrivacyAndSecuritySettings) of the [NVDA Settings](#NVDASettings) dialog.
 
 <!-- KC:beginInclude -->
 
@@ -1497,11 +1497,7 @@ You can enable the Screen Curtain in the [vision category](#VisionSettings) of t
 
 <!-- KC:endInclude -->
 
-When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR](#Win10Ocr) or taking a screenshot cannot be achieved.
-
-Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
-Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
-For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
+When the Screen Curtain is active, some tasks directly based on what appears on the screen, such as performing [OCR](#Win10Ocr) or taking a screenshot, cannot be achieved.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, the screen curtain cannot be enabled.
 
@@ -2618,6 +2614,36 @@ Setting the value too high may cause the battery of the sound output device to d
 
 You can set the time to zero in order to disable this feature.
 
+#### Privacy and Security {#PrivacyAndSecuritySettings}
+
+This category allows you to adjust settings that affect your privacy and security while using NVDA.
+
+##### Make screen black (immediate effect) {#ScreenCurtainEnable}
+
+This option enables and disables the [Screen Curtain](#VisionScreenCurtain).
+Note that the Screen Curtain is activated or deactivated as soon as the checkbox is checked or unchecked.
+
+By default, when you check this box, a warning that your screen will become black after activation will be displayed.
+Before continuing, ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
+If you are sure, you can choose the "Yes" button to enable the Screen Curtain.
+Select "No" if you no longer wish to enable the Screen Curtain.
+If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
+
+##### Always show a warning when loading Screen Curtain {#ScreenCurtainWarnOnLoad}
+
+This option controls whether a warning dialog is displayed when enabling the [Screen Curtain](#VisionScreenCurtain).
+
+If you use the Screen Curtain regularly, you may find it more convenient to disable this option.
+You can also choose not to show the warning dialog using the checkbox in the dialog itself.
+
+##### Play sound when toggling Screen Curtain {#ScreenCurtainPlayToggleSounds}
+
+This option controls whether a sound cue is played when the [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.
+
+By default, sounds are played when the Screen Curtain is toggled.
+If you do not like this behaviour, you can uncheck this checkbox.
+Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled.
+
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
@@ -2637,19 +2663,6 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
 If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
-
-##### Screen Curtain {#VisionSettingsScreenCurtain}
-
-You can enable the [Screen Curtain](#VisionScreenCurtain) by checking the "Make screen black (immediate effect)" check box.
-A warning that your screen will become black after activation will be displayed.
-Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
-Select "No" if you no longer wish to enable the Screen Curtain.
-If you are sure, you can choose the Yes button to enable the screen curtain.
-If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
-You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
-
-By default, sounds are played when the Screen Curtain is toggled.
-When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
 
 ##### Settings for third party visual aids {#VisionSettingsThirdPartyVisualAids}
 

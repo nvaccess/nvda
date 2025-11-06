@@ -5990,41 +5990,46 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		screenCurtainGroup = guiHelper.BoxSizerHelper(self, sizer=screenCurtainSizer)
 		sHelper.addItem(screenCurtainGroup)
 
-		self._enabledCheckbox = screenCurtainGroup.addItem(
+		self._screenCurtainEnabledCheckbox = screenCurtainGroup.addItem(
 			wx.CheckBox(
 				screenCurtainBox,
 				#  Translators: option to enable screen curtain in the privacy and security settings panel
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
-		self._enabledCheckbox.SetValue(
+		self._screenCurtainEnabledCheckbox.SetValue(
 			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
 		)
-		self._enabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureEnableState)
-		self._enabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
+		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
+		self._screenCurtainEnabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
+		self.bindHelpEvent("ScreenCurtainEnable", self._screenCurtainEnabledCheckbox)
 
-		self._warnOnLoadCheckbox = screenCurtainGroup.addItem(
+		self._screenCurtainWarnOnLoadCheckbox = screenCurtainGroup.addItem(
 			wx.CheckBox(
 				screenCurtainBox,
 				label=screenCurtain.warnOnLoadCheckBoxText,
 			),
 		)
-		self._warnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
+		self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
+		self.bindHelpEvent("ScreenCurtainWarnOnLoad", self._screenCurtainWarnOnLoadCheckbox)
 
-		self._playToggleSoundsCheckbox = screenCurtainGroup.addItem(
+		self._screenCurtainPlayToggleSoundsCheckbox = screenCurtainGroup.addItem(
 			wx.CheckBox(
 				screenCurtainBox,
 				# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 				label=_("&Play sound when toggling Screen Curtain"),
 			),
 		)
-		self._playToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
+		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
+		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
 		# so we don't unintentionally persist a temporary screen curtain to config.
-		self._screenCurtainConfig["warnOnLoad"] = self._warnOnLoadCheckbox.IsChecked()
-		self._screenCurtainConfig["playToggleSounds"] = self._playToggleSoundsCheckbox.IsChecked()
+		self._screenCurtainConfig["warnOnLoad"] = self._screenCurtainWarnOnLoadCheckbox.IsChecked()
+		self._screenCurtainConfig["playToggleSounds"] = (
+			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
+		)
 
 	def _ocrActive(self) -> bool:
 		"""
@@ -6044,22 +6049,22 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			return True
 		return False
 
-	def _ensureEnableState(self, evt: wx.CommandEvent):
+	def _ensureScreenCurtainEnableState(self, evt: wx.CommandEvent):
 		shouldBeEnabled = evt.IsChecked()
 		if screenCurtain.screenCurtain is None:
-			self._enabledCheckbox.SetValue(False)
+			self._screenCurtainEnabledCheckbox.SetValue(False)
 			return
 		currentlyEnabled = screenCurtain.screenCurtain.enabled
 		if shouldBeEnabled and not currentlyEnabled:
-			confirmed = self.confirmInitWithUser()
+			confirmed = self._confirmEnableScreenCurtainWithUser()
 			if not confirmed or self._ocrActive():
-				self._enabledCheckbox.SetValue(False)
+				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				screenCurtain.screenCurtain.enable()
 		elif not shouldBeEnabled and currentlyEnabled:
 			screenCurtain.screenCurtain.disable()
 
-	def confirmInitWithUser(self) -> bool:
+	def _confirmEnableScreenCurtainWithUser(self) -> bool:
 		if not self._screenCurtainConfig["warnOnLoad"]:
 			return True
 		with screenCurtain.WarnOnLoadDialog(
@@ -6068,7 +6073,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		) as dlg:
 			res = dlg.ShowModal()
 			# WarnOnLoadDialog can change settings, reload them
-			self._warnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
+			self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
 			return res == wx.YES
 
 
