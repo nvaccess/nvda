@@ -545,6 +545,7 @@ dependencies = [
     { name = "pycaw", marker = "sys_platform == 'win32'" },
     { name = "pymdown-extensions", marker = "sys_platform == 'win32'" },
     { name = "pyserial", marker = "sys_platform == 'win32'" },
+    { name = "pyyaml", marker = "sys_platform == 'win32'" },
     { name = "requests", marker = "sys_platform == 'win32'" },
     { name = "schedule", marker = "sys_platform == 'win32'" },
     { name = "url-normalize", marker = "sys_platform == 'win32'" },
@@ -600,6 +601,7 @@ requires-dist = [
     { name = "pycaw", specifier = "==20240210" },
     { name = "pymdown-extensions", specifier = "==10.16.1" },
     { name = "pyserial", specifier = "==3.5" },
+    { name = "pyyaml", specifier = "==6.0.2" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "schedule", specifier = "==1.2.2" },
     { name = "url-normalize", specifier = "==1.4.3" },
@@ -637,7 +639,7 @@ unit-tests = [
 
 [[package]]
 name = "nvda-mathcat"
-version = "20250626"
+version = "20250714"
 source = { editable = "include/nvda-mathcat" }
 
 [[package]]
