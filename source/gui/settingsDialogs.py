@@ -75,12 +75,8 @@ from config.configFlags import (
 	TypingEcho,
 )
 from logHandler import log
-from NVDAState import WritePaths
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
-from utils import mmdevice
 from utils.displayString import DisplayStringEnum
-from vision.providerBase import VisionEnhancementProviderSettings
-from wx.lib.expando import ExpandoTextCtrl
 
 import gui
 import gui.contextHelp
@@ -2742,10 +2738,10 @@ class MathSettingsPanel(SettingsPanel):
 			return configValue
 
 	def _getEnumIndexFromConfigValue(
-			self,
-			enumClass: Type[DisplayStringEnum],
-			configValue: Any,
-		) -> int:
+		self,
+		enumClass: Type[DisplayStringEnum],
+		configValue: Any,
+	) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
 
 		:param enumClass: The DisplayStringEnum class to search in
@@ -2759,10 +2755,10 @@ class MathSettingsPanel(SettingsPanel):
 			return 0
 
 	def _getEnumValueFromSelection(
-			self,
-			enumClass: Type[DisplayStringEnum],
-			selectionIndex: int,
-		) -> Any:
+		self,
+		enumClass: Type[DisplayStringEnum],
+		selectionIndex: int,
+	) -> Any:
 		"""Helper function to get the config value from a selection index.
 
 		:param enumClass: The DisplayStringEnum class to get the value from
