@@ -328,6 +328,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	language = string(default="")
 	autoRefresh = boolean(default=false)
 	autoRefreshInterval = integer(default=1500, min=100)
+	autoSayAllOnResult = boolean(default=false)
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)

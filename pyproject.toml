@@ -13,7 +13,7 @@ requires-python = ">=3.13,<3.14"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: End Users/Desktop",
-	"License :: OSI Approved :: GNU General Public License v2",
+	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 	"Operating System :: Microsoft :: Windows",
 	"Programming Language :: Python :: 3",
 	"Topic :: Accessibility",
@@ -25,12 +25,10 @@ dependencies = [
 	"comtypes==1.4.11",
 	"cryptography==44.0.1",
 	"pyserial==3.5",
-	"wxPython==4.2.2",
+	"wxPython==4.2.3",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
 	"requests==2.32.3",
-	# Overrides certifi so that requests uses system certificates instead
-	"truststore==0.10.4",
 	"url-normalize==1.4.3",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
@@ -325,7 +323,7 @@ dev = [
 lint = [
 	"ruff==0.12.7",
 	"pre-commit==4.2.0",
-	"pyright==1.1.403",
+	"pyright[nodejs]==1.1.406",
 ]
 license-check = [
 	"licensecheck==2025.1",
