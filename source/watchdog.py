@@ -14,7 +14,10 @@ from typing import (
 import inspect
 import json
 import ctypes.wintypes
-from dataclasses import dataclass
+from dataclasses import (
+	dataclass,
+	asdict,
+)
 import comtypes
 import winBindings.ole32
 import winBindings.dbgHelp
@@ -71,6 +74,38 @@ class CrashStats:
 _crashStats = CrashStats()
 
 
+@dataclass
+class CrashEvent:
+	timestamp: float
+	version: str
+	installType: str
+
+	def to_json(self) -> str:
+		return json.dumps(asdict(self), separators=(",", ":"))
+
+	@staticmethod
+	def from_line(line: str) -> "CrashEvent | None":
+		if not line:
+			return None
+		try:
+			data = json.loads(line)
+		except json.JSONDecodeError:
+			return None
+		if not isinstance(data, dict):
+			return None
+		try:
+			timestamp = float(data["timestamp"])
+			version = data["version"]
+			installType = data["installType"]
+		except (KeyError, TypeError, ValueError):
+			return None
+		if not isinstance(version, str) or not version:
+			return None
+		if not isinstance(installType, str) or not installType:
+			return None
+		return CrashEvent(timestamp=timestamp, version=version, installType=installType)
+
+
 safeWindowClassSet = {
 	"Internet Explorer_Server",
 	"_WwG",
@@ -113,51 +148,15 @@ def _getCurrentCrashFingerprint() -> tuple[str, str]:
 	return version, installType
 
 
-def _buildCrashEvent(timestamp: float, version: str, installType: str) -> dict[str, Any]:
-	event: dict[str, Any] = {
-		"timestamp": float(timestamp),
-		"version": version,
-		"installType": installType,
-	}
-	return event
+def _buildCrashEvent(timestamp: float, version: str, installType: str) -> CrashEvent:
+	return CrashEvent(timestamp=float(timestamp), version=version, installType=installType)
 
 
-def _serializeCrashEvent(event: dict[str, Any]) -> str:
-	return json.dumps(event, separators=(",", ":"))
-
-
-def _parseCrashStatsLine(strippedLine: str) -> dict[str, Any] | None:
-	if not strippedLine:
-		return None
-
-	try:
-		data = json.loads(strippedLine)
-	except json.JSONDecodeError:
-		return None
-
-	if not isinstance(data, dict):
-		return None
-
-	try:
-		timestamp = float(data["timestamp"])
-	except (KeyError, TypeError, ValueError):
-		return None
-
-	version = data.get("version")
-	installType = data.get("installType")
-	if not isinstance(version, str) or not version:
-		return None
-	if not isinstance(installType, str) or not installType:
-		return None
-
-	return _buildCrashEvent(timestamp, version, installType)
-
-
-def _writeCrashStats(path: str, events: list[dict[str, Any]]) -> None:
+def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 	try:
 		with open(path, "w", encoding="utf-8") as f:
 			for event in events:
-				f.write(f"{_serializeCrashEvent(event)}\n")
+				f.write(f"{event.to_json()}\n")
 	except OSError:
 		log.debugWarning("Failed to update crash stats file", exc_info=True)
 
@@ -177,18 +176,18 @@ def _loadRecentCrashTimestamps(now: float) -> list[float]:
 		return []
 
 	recentCrashes: list[float] = []
-	eventsToRetain: list[dict[str, Any]] = []
+	eventsToRetain: list[CrashEvent] = []
 	needsRewrite = False
 	currentVersion, currentInstallType = _getCurrentCrashFingerprint()
 	for line in lines:
-		event = _parseCrashStatsLine(line.strip())
+		event = CrashEvent.from_line(line.strip())
 		if event is None:
 			needsRewrite = True
 			continue
-		timestamp = event["timestamp"]
+		timestamp = event.timestamp
 		if now - timestamp <= _crashStats.timeout:
 			eventsToRetain.append(event)
-			if event.get("version") == currentVersion and event.get("installType") == currentInstallType:
+			if event.version == currentVersion and event.installType == currentInstallType:
 				recentCrashes.append(timestamp)
 		else:
 			# Older entries fall outside of the tracking window.
@@ -206,7 +205,8 @@ def _recordCrashTimestamp() -> None:
 	try:
 		with open(path, "a", encoding="utf-8") as f:
 			event = _buildCrashEvent(time.time(), version, installType)
-			f.write(f"{_serializeCrashEvent(event)}\n")
+			# Append JSON lines instead of writing a list; NVDA is crashing, keep work minimal
+			f.write(f"{event.to_json()}\n")
 	except OSError:
 		log.debugWarning("Failed to append crash stats", exc_info=True)
 
