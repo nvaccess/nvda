@@ -38,19 +38,21 @@ def terminate():
 
 	async def cancelAllTasks():
 		tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+		log.debug(f"Stopping {len(tasks)} tasks")
 		[task.cancel() for task in tasks]
 		await asyncio.gather(*tasks, return_exceptions=True)
-		eventLoop.stop()
+		log.debug("Done stopping tasks")
 
-	f = asyncio.run_coroutine_threadsafe(cancelAllTasks(), eventLoop)
 	try:
-		f.result(TERMINATE_TIMEOUT_SECONDS)
-	except asyncio.TimeoutError:
-		pass
+		runCoroutineSync(cancelAllTasks(), TERMINATE_TIMEOUT_SECONDS)
+	except TimeoutError:
+		log.debugWarning("Timeout while stopping async tasks")
+	finally:
+		eventLoop.call_soon_threadsafe(eventLoop.stop)
 
-	eventLoop.close()
 	asyncioThread.join()
 	asyncioThread = None
+	eventLoop.close()
 
 
 def runCoroutine(coro: Coroutine) -> asyncio.Future:
