@@ -105,6 +105,8 @@ def _getCurrentCrashFingerprint() -> tuple[str, str]:
 		try:
 			if config.isInstalledCopy():
 				installType = "installed"
+			else:
+				installType = "portable"
 		except Exception:
 			log.debugWarning("Failed to determine install type for crash stats", exc_info=True)
 
