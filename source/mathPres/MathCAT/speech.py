@@ -13,9 +13,8 @@ from speech.commands import (
 from logHandler import log
 from synthDriverHandler import getSynth, SynthDriver
 import libmathcat_py as libmathcat
-from collections.abc import Type
 from .MathCAT import PROSODY_COMMANDS
-from localization import getLanguageToUse
+from .localization import getLanguageToUse
 from languageHandler import getCurrentLanguage
 
 RE_MATHML_SPEECH: re.Pattern = re.compile(
@@ -62,7 +61,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# At "50" espeak finished in 46 sec, sapi in 75 sec, and one core in 70; at '100' one core was much slower than the others
 	wpm: int = 2 * getSynth()._get_rate()
 	breakMulti: float = 180.0 / wpm
-	supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
+	supportedCommands: set[type["SynthCommand"]] = synth.supportedCommands
 	useBreak: bool = BreakCommand in supportedCommands
 	usePitch: bool = PitchCommand in supportedCommands
 	usePhoneme: bool = PhonemeCommand in supportedCommands
@@ -78,7 +77,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(language))
 
-	resetProsody: list[Type["BaseProsodyCommand"]] = []
+	resetProsody: list[type["BaseProsodyCommand"]] = []
 	for m in RE_MATHML_SPEECH.finditer(text):
 		if m.lastgroup == "break":
 			if useBreak:
@@ -96,13 +95,13 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 				out.append(PitchCommand(multiplier=int(m.group(m.lastgroup))))
 				resetProsody.append(PitchCommand)
 		elif m.lastgroup in PROSODY_COMMANDS:
-			command: Type["BaseProsodyCommand"] = PROSODY_COMMANDS[m.lastgroup]
+			command: type["BaseProsodyCommand"] = PROSODY_COMMANDS[m.lastgroup]
 			if command in supportedCommands:
 				out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
 				resetProsody.append(command)
 		elif m.lastgroup == "prosodyReset":
 			# for command in resetProsody:    # only supported commands were added, so no need to check
-			command: Type["BaseProsodyCommand"] = resetProsody.pop()
+			command: type["BaseProsodyCommand"] = resetProsody.pop()
 			out.append(command(multiplier=1))
 		elif m.lastgroup == "phonemeText":
 			if usePhoneme:
