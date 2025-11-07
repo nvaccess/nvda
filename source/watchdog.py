@@ -96,7 +96,7 @@ def _getCurrentCrashFingerprint() -> tuple[str, str]:
 		log.debugWarning("Failed to determine NVDA version for crash stats", exc_info=True)
 		version = "unknown"
 
-	installType = "portable"
+	installType = "unknown"
 	try:
 		import config
 	except Exception:
