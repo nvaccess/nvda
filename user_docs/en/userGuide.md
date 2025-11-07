@@ -1236,7 +1236,7 @@ Below is a summary of the most useful commands for those wanting to quickly get 
 * If inside of a table, `control+arrow` will move by cell
 * `home` / `end` moves to the start/end of the expression
 * `space` reads your current position
-* `shift+upArrow/downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
+* `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
 
@@ -1264,24 +1264,24 @@ The following are key commands used to navigate math:
 | Name | Key |
 |---|---|
 | Move to previous | `leftArrow` |
-| Move to previous cell in a table, or previous digit if in columnar math. Note: `control+alt+leftArrow` can also be used. | `control+leftArrow` |
+| Move to previous cell in a table, or previous digit if in columnar math | `control+leftArrow` or `control+alt+leftArrow` |
 | Read previous | `shift+leftArrow` |
 | Describe previous | `control+shift+leftArrow` |
 | Move to next | `rightArrow` |
-| Move to next cell in a table, or next digit if in columnar math. Note: `control+alt+rightArrow` can also be used. | `control+rightArrow` |
+| Move to next cell in a table, or next digit if in columnar math | `control+rightArrow` or `control+alt+rightArrow` |
 | Read next | `shift+rightArrow` |
 | Describe next | `control+shift+rightArrow` |
 | Zoom out | `upArrow` |
-| Move to cell above in a table, or digit above in columnar math. Note: `control+alt+upArrow` can also be used. | `control+upArrow` |
+| Move to cell above in a table, or digit above in columnar math. | `control+upArrow` or `control+alt+upArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
 | Zoom out all the way | `control+shift+upArrow` |
 | Zoom in | `downArrow` |
-| Move to cell below in a table, or digit below in columnar math. Note: `control+shift+downArrow` can also be used. | `control+downArrow` |
+| Move to cell below in a table, or digit below in columnar math | `control+downArrow` or `control+alt+downArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
 | Zoom in all the way | `control+shift+downArrow` |
 | Where am I | `enter` |
 | Global Where am I | `control+center` |
-| Jump to placemarker | 1 through 10 (0 is 10) |
+| Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
 | Describe placemarker | `control+shift+1` through `shift+0` |
