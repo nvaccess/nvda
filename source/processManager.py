@@ -6,6 +6,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Any, Dict, Tuple
 
+import shlobj
 import config
 import globalVars
 import NVDAState
@@ -76,7 +77,11 @@ class SubprocessManager:
 			import tempfile
 
 			# Create temp dir for process communication
-			self._sandbox_temp_dir = tempfile.mkdtemp(prefix="nvda_sandbox_")
+			localLowPath = shlobj.SHGetKnownFolderPath(shlobj.FolderId.LOCAL_APP_DATA_LOW)
+			self._sandbox_temp_dir = tempfile.mkdtemp(
+				prefix="nvda_sandbox_",
+				dir=os.path.join(localLowPath, "temp")
+			)
 			log.info(f"Created sandbox temp directory: {self._sandbox_temp_dir}")
 
 			# Create sandbox config for ART process
@@ -84,7 +89,7 @@ class SubprocessManager:
 			sandboxConfig.enable_sid_restrictions = True
 			sandboxConfig.restrict_user_sid = False
 			sandboxConfig.enable_restricted_token = True
-			sandboxConfig.enable_low_integrity = False
+			sandboxConfig.enable_low_integrity = True
 			sandboxConfig.enable_ui_restrictions = True
 			sandboxConfig.enable_process_limits = False  # Allow subprocess creation for ART
 
@@ -92,7 +97,7 @@ class SubprocessManager:
 			self.subprocess = SandboxPopen(
 				command,
 				config=sandboxConfig,
-				allowed_directory=self._sandbox_temp_dir,
+				sandbox_temp_dir=self._sandbox_temp_dir,
 				**self._config.popenFlags
 			)
 			log.info(f"Successfully started {self._config.name} in sandbox with PID: {self.subprocess.pid}")
@@ -113,13 +118,4 @@ class SubprocessManager:
 				finally:
 					self.subprocess = None
 
-			# Clean up sandbox temp directory
-			if self._sandbox_temp_dir:
-				import shutil
-				try:
-					shutil.rmtree(self._sandbox_temp_dir)
-					log.debug(f"Cleaned up sandbox temp directory: {self._sandbox_temp_dir}")
-				except Exception:
-					log.warning(f"Failed to clean up sandbox temp directory: {self._sandbox_temp_dir}")
-				finally:
-					self._sandbox_temp_dir = None
+				self._sandbox_temp_dir = None
