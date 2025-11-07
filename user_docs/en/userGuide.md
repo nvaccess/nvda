@@ -3234,7 +3234,7 @@ It prioritizes literal reading (character-by-character or symbol-by-symbol), rat
 
 Examples of each type of speech:
 
-Expression | LiteralSpeak | SimpleSpeak | ClearSpeak |
+| Expression | LiteralSpeak | SimpleSpeak | ClearSpeak |
 | -- | -- | -- | -- |
 | 1/2 | 1 slash 2 | 1 divided by 2 | one half |
 | √x | radical x | square root x | square root of x |
