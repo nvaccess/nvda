@@ -1709,6 +1709,8 @@ class TextInfoRegion(Region):
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:  # no page turn support
 				shouldCollapseToEnd = True
+				# This will allow to move to next paragraph In LibreOffice _Writer,
+				# And consistently move to the last position in different applications.
 				dest.expand(textInfos.UNIT_LINE)
 		dest.collapse(shouldCollapseToEnd)
 		self._setCursor(dest)
