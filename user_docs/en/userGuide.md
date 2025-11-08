@@ -270,7 +270,7 @@ The actual commands will not execute while in input help mode.
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
 |Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
 
-It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
+It is also possible to set the first or last value of the current synth setting by assigning custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
 This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
 When you're on a voice setting, it will set the first or last voice.
 
@@ -1173,7 +1173,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
+However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NVDA.
 There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
 Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
 NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
@@ -2003,7 +2003,7 @@ This is beneficial when speaking characters that can be represented in several f
 NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
 
 1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
-For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
@@ -2569,8 +2569,8 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
 * Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
 
-Note that checking and unchecking the "Enable Highlighting" check box wil also change the state of the tree other check boxes accordingly.
-Therefore, if "Enable Highlighting" is off and you check this check box, the other tree check boxes will also be checked automatically.
+Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
+Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
 If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
 
 ##### Screen Curtain {#VisionSettingsScreenCurtain}
@@ -3102,7 +3102,7 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 * Both Speech and Tones: This option reads indentation using both of the above methods.
 
 If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
-This may be useful when reading a document where blank lines are used to separate indented bloks of text, such as in programming source code.
+This may be useful when reading a document where blank lines are used to separate indented blocks of text, such as in programming source code.
 
 #### Document Navigation {#DocumentNavigation}
 
@@ -3516,7 +3516,7 @@ The Speak new text in Windows Terminal combo box has three options:
 * Default: This option is currently equivalent to "diffing", but it is anticipated to change once support for UIA notifications is further developed.
 * Diffing: This option uses the selected diff algorithm to calculate changes each time the terminal renders new text.
 This is identical to NVDA's behaviour in versions 2022.4 and earlier.
-* UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently on-screen is "new".
+* UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meaning that NVDA no longer has to determine what text currently on-screen is "new".
 This should markedly improve performance and stability of Windows Terminal, but this feature is not yet complete.
 In particular, typed characters that are not displayed on-screen, such as passwords, are reported when this option is selected.
 Additionally, contiguous spans of output of over 1,000 characters may not be reported accurately.
@@ -4050,7 +4050,7 @@ Add-ons will be listed if the search text can be found in the add-on ID, display
 By default, the add-ons list is sorted by the add-ons' display name.
 The "Sort by column" combo box can be used to sort the list by the available columns for each tab.
 For example, you may wish to sort add-ons by publisher, available version, etc.
-Add-ons can be sortered in ascending or descending order.
+Add-ons can be sorted in ascending or descending order.
 
 ### Add-on actions {#AddonStoreActions}
 
@@ -4237,7 +4237,7 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 
 Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
 This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
-THE COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
+The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
 The types of problem this tool can fix include:
 
@@ -5343,7 +5343,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |`upArrow` key |`rightKeypadUp`|
 |`downArrow` key |`rightKeypadDown`|
 |`control+home` key |`rightKeypadLeft+rightKeypadUp`|
-|`control+end` key |`rightKeypadLeft+rightKeypadUp`|
+|`control+end` key |`rightKeypadRight+rightKeypadDown`|
 
 <!-- KC:endInclude -->
 
