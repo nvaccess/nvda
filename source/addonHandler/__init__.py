@@ -333,47 +333,36 @@ def initialize():
 
 def _startARTProcessesForAddons():
 	"""Start ART processes for all enabled addons."""
-	try:
-		from art.manager import getARTManager
-		artManager = getARTManager()
-		if not artManager:
-			log.debug("ART manager not available, addons will run in main process")
-			return
-			
-		for addon in getAvailableAddons():
-			if addon.isDisabled or addon.isBlocked or addon.isPendingInstall:
-				continue
-				
-			# Only start ART process for external addons
-			if addon.manifest.get("runtime") != "external":
-				continue
-				
-			# Convert manifest to a simple dict for serialization
-			manifest_dict = {
-				"name": addon.manifest.get("name"),
-				"version": addon.manifest.get("version"),
-				"author": addon.manifest.get("author"),
-				"description": addon.manifest.get("description"),
-				"summary": addon.manifest.get("summary"),
-				"url": addon.manifest.get("url"),
-				"docFileName": addon.manifest.get("docFileName"),
-				"minimumNVDAVersion": addon.manifest.get("minimumNVDAVersion", (0, 0, 0)),
-				"lastTestedNVDAVersion": addon.manifest.get("lastTestedNVDAVersion", (0, 0, 0)),
-			}
-			
-			addon_spec = {
-				"name": addon.name,
-				"path": addon.path,
-				"manifest": manifest_dict
-			}
-			
-			if not artManager.startAddonProcess(addon_spec):
-				log.error(f"Failed to start ART process for addon {addon.name}")
-				
-	except ImportError:
-		log.debug("ART not available, addons will run in main process")
-	except Exception:
-		log.exception("Error starting ART processes for addons")
+	from art.manager import getARTManager
+	artManager = getARTManager()
+	for addon in getAvailableAddons():
+		if addon.isDisabled or addon.isBlocked or addon.isPendingInstall:
+			continue
+		# Only start ART process for external addons
+		if addon.manifest.get("runtime", "internal") == "internal":
+			continue
+		# Convert manifest to a simple dict for serialization
+		manifest_dict = {
+			"name": addon.manifest.get("name"),
+			"version": addon.manifest.get("version"),
+			"author": addon.manifest.get("author"),
+			"description": addon.manifest.get("description"),
+			"summary": addon.manifest.get("summary"),
+			"url": addon.manifest.get("url"),
+			"docFileName": addon.manifest.get("docFileName"),
+			"minimumNVDAVersion": addon.manifest.get("minimumNVDAVersion", (0, 0, 0)),
+			"lastTestedNVDAVersion": addon.manifest.get("lastTestedNVDAVersion", (0, 0, 0)),
+			"runtime": addon.manifest.get("runtime"),
+		}
+		addon_spec = {
+			"name": addon.name,
+			"path": addon.path,
+			"manifest": manifest_dict
+		}
+		try:
+			artManager.startAddonProcess(addon_spec)
+		except Exception:
+			log.exception(f"Error starting ART process for addon: {addon.name}")
 
 
 def terminate():
@@ -689,14 +678,9 @@ class Addon(AddonBase):
 			return
 
 		# Check if addon should run externally via ART
-		if self.manifest.get("runtime") == "external":
-			from art.manager import getARTManager
-			artManager = getARTManager()
-			if artManager:
-				log.debug(f"Skipping {self.name} package path - will run in ART")
-				return
-			else:
-				log.warning(f"ART not available for external addon {self.name}, loading internally")
+		if self.manifest.get("runtime", "internal") != "internal":
+			log.debug(f"Skipping {self.name} package path - will run in ART")
+			return
 
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
@@ -1123,7 +1107,7 @@ docFileName = string(default=None)
 		displayName = string()
 		mandatory = boolean(default=false)
 
-# Runtime mode: "internal" (default) or "external" (runs in ART)
+# Runtime mode: "internal" (old default) or an ART runtime platform E.g. x86. 
 runtime = string(default="internal")
 
 # NOTE: apiVersion:

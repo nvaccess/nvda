@@ -13,6 +13,7 @@ import threading
 from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
+import NVDAState
 import Pyro5.api
 from logHandler import log
 from processManager import ProcessConfig, SubprocessManager
@@ -74,10 +75,20 @@ def setARTManager(manager: Optional["ARTManager"]) -> None:
 	_artManager = manager
 
 
-ART_CONFIG = ProcessConfig(
+class ARTAddonProcess:
+	"""Manages a single ART process for one addon."""
+
+	def __init__(self, addon_spec: dict, core_service_uris: Dict[str, str]):
+		self.addon_spec = addon_spec
+		self.addon_name = addon_spec["name"]
+		self.core_service_uris = core_service_uris
+		runtime = addon_spec['manifest']['runtime']
+		runtimeExe = _runtimeRegistry.get(runtime)
+		if not runtimeExe:
+			raise RuntimeError(f"Runtime {runtime} not registered")
+		artConfig = ProcessConfig(
 	name="NVDA ART",
-	sourceScriptPath=Path("../source/nvda_art.pyw"),
-	builtExeName="nvda_art.exe",
+	builtExeName=runtimeExe,
 	sandboxEnabled=True,
 	popenFlags={
 		"creationflags": subprocess.CREATE_NO_WINDOW,
@@ -87,16 +98,7 @@ ART_CONFIG = ProcessConfig(
 		"stderr": subprocess.PIPE,
 	},
 )
-
-
-class ARTAddonProcess:
-	"""Manages a single ART process for one addon."""
-
-	def __init__(self, addon_spec: dict, core_service_uris: Dict[str, str]):
-		self.addon_spec = addon_spec
-		self.addon_name = addon_spec["name"]
-		self.core_service_uris = core_service_uris
-		self.subprocessManager = SubprocessManager(ART_CONFIG)
+		self.subprocessManager = SubprocessManager(artConfig)
 		self.artServices: Dict[str, Pyro5.api.Proxy] = {}
 		self._shutdownEvent = threading.Event()
 
@@ -457,3 +459,8 @@ class ARTManager:
 		log.debug(f"Found {len(art_proxy_modules)} ART proxy modules: {art_proxy_modules}")
 		log.debug(f"Returning {len(synth_list)} available ART synths: {synth_list}")
 		return synth_list
+
+_runtimeRegistry = {
+	'x86': os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "art-runtime", "nvda_art.exe"),
+}
+
