@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import os
+from glob import glob
 import sys
 sys.path.insert(0, '../source')
 
@@ -86,7 +87,7 @@ freeze(
 		# https://docs.python.org/3.13/tutorial/modules.html#compiled-python-files
 		"optimize": 1,
 		"bundle_files": 3,
-		"dist_dir": "../dist/art-runtime-x86",
+		"dist_dir": "../source/lib/x86/art-runtime",
 		"excludes": [
 			"tkinter",
 			"serial.loopback_connection",
@@ -121,6 +122,6 @@ freeze(
 		],
 	},
 	data_files=[
-		(".", glob("*.dll") + glob("*.manifest"),
+		(".", glob("*.dll") + glob("*.manifest")),
 	]
 )
