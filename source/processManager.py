@@ -16,7 +16,6 @@ from logHandler import log
 @dataclass
 class ProcessConfig:
 	name: str  # Process name for logging/debugging
-	sourceScriptPath: Path  # Path relative to include dir
 	builtExeName: str  # e.g. "nvdaDmp.pyw"
 	sandboxEnabled: bool = False  # Whether to run process in sandbox
 	popenFlags: Dict[str, Any] = field(
@@ -27,9 +26,6 @@ class ProcessConfig:
 			"stdout": subprocess.PIPE,
 		}
 	)
-
-	def getSourceCommand(self) -> Tuple[str, str]:
-		return (sys.executable, os.path.join(globalVars.appDir, "..", "include", str(self.sourceScriptPath)))
 
 	def getBuiltCommand(self) -> Tuple[str]:
 		return (os.path.join(globalVars.appDir, self.builtExeName),)
@@ -64,10 +60,7 @@ class SubprocessManager:
 
 	def _startProcess(self):
 		"""Internal method to start process using config."""
-		if NVDAState.isRunningAsSource():
-			command = self._config.getSourceCommand()
-		else:
-			command = self._config.getBuiltCommand()
+		command = self._config.getBuiltCommand()
 		log.debug(f"Starting {self._config.name} process with command: {command}")
 
 		# Use sandboxing if enabled
