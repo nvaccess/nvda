@@ -80,7 +80,7 @@ class SubprocessManager:
 			localLowPath = shlobj.SHGetKnownFolderPath(shlobj.FolderId.LOCAL_APP_DATA_LOW)
 			self._sandbox_temp_dir = tempfile.mkdtemp(
 				prefix="nvda_sandbox_",
-				dir=os.path.join(localLowPath, "temp")
+				dir=localLowPath
 			)
 			log.info(f"Created sandbox temp directory: {self._sandbox_temp_dir}")
 
