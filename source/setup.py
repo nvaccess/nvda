@@ -279,6 +279,7 @@ freeze(
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
 		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
+		("lib/%s/x86/art-runtime" % version, glob("lib/x86/art-runtime/*")),
 		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
 		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
 		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),
