@@ -189,20 +189,6 @@ freeze(
 				"company_name": publisher,
 			},
 		},
-		{
-			"script": "nvda_art.pyw",
-			"dest_base": "nvda_art",
-			"icon_resources": [(1, "images/nvda.ico")],
-			"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
-			"version_info": {
-				"version": formatBuildVersionString(),
-				"description": "NVDA Add-on Runtime",
-				"product_name": "NVDA ART",
-				"product_version": version,
-				"copyright": NVDAcopyright,
-				"company_name": publisher,
-			},
-		},
 	],
 	options={
 		"verbose": 2,
