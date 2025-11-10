@@ -12,6 +12,7 @@ from typing import (
 import textUtils
 import winUser
 import textInfos
+import textInfos.offsets
 import controlTypes
 import eventHandler
 from NVDAObjects import NVDAObject
@@ -501,6 +502,15 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			except LookupError:
 				continue
 		return rects
+
+
+class CompoundTextLeafTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""A mixin class for leafs within a CompoundTextInfo that utilize offsets.
+	It ensures that moving past the end of the object is only allowed for certain units.
+	"""
+
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		return unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 
 
 class CompoundDocument(EditableText, DocumentTreeInterceptor):

@@ -643,11 +643,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	allowMoveToOffsetPastEnd = True
-	"""
-	We can move 1 past story length to allow braille routing to end insertion point. (#2096)
-	Furthermore, review cursor is able to reach the last, empty line in some controls, like Scintilla. (#18348)
-	"""
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		"""
+		This methods indicates whether the `move` method is allowed to move one unit past the end of the text info.
+		For example, normally we should be able to move 1 past story length
+		to allow braille routing to move to an insertion point at the end. (#2096)
+		Furthermore, review cursor should be able to reach the last, empty line in some controls,
+		like Scintilla. (#18348)
+		:param unit: the TextInfo unit (e.g. character or word)
+		:return: Whether or not to allow movement past end for the specific unit.
+		"""
+		return True
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
@@ -663,9 +669,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		count = 0
 		lowLimit = 0
 		highLimit = self._getStoryLength()
-		if self.allowMoveToOffsetPastEnd:
-			# #2096: There is often an uncounted character at the end of the text
-			# where the caret is placed to append text.
+		if self.allowMoveToUnitOffsetPastEnd(unit):
 			highLimit += 1
 		while (
 			count != direction

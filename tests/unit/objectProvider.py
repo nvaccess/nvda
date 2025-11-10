@@ -1,8 +1,7 @@
-# tests/unit/objectProvider.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2025 NV Access Limited, Babbage B.V.
 
 """Fake object provider implementation for testing of code which uses NVDAObjects."""
 
@@ -13,6 +12,9 @@ import controlTypes
 class PlaceholderNVDAObject(NVDAObject):
 	processID = None  # Must be implemented to instantiate.
 	windowThreadID = 0  # Must be implemented for inputCore tests
+
+	def _isEqual(self, other) -> bool:
+		return False
 
 
 class NVDAObjectWithRole(PlaceholderNVDAObject):
