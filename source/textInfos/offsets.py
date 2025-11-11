@@ -646,7 +646,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
 		"""
-		This methods indicates whether the `move` method is allowed to move one unit past the end of the text info.
+		This method indicates whether the `move` method is allowed to move one unit past the end of the text info.
 		For example, normally we should be able to move 1 past story length
 		to allow braille routing to move to an insertion point at the end. (#2096)
 		Furthermore, review cursor should be able to reach the last, empty line in some controls,
@@ -660,7 +660,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 		def _get_allowMoveToOffsetPastEnd(self) -> bool:
 			log.warning(
-				"OffsetsTextInfo.allowMoveToOffsetPastEnd is deprecated. Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd  method instead.",
+				"OffsetsTextInfo.allowMoveToOffsetPastEnd is deprecated. "
+"Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd method instead.",
 				stack_info=True,
 			)
 			return self.allowMoveToUnitOffsetPastEnd(textInfos.UNIT_CHARACTER)

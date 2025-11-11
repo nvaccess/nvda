@@ -233,6 +233,8 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
+Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
