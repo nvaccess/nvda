@@ -500,7 +500,7 @@ def isNVDAObject(obj: Any) -> bool:
 	return isinstance(obj, NVDAObjects.NVDAObject)
 
 
-fakeNVDAObject: set[type[Any]] = set()
+fakeNVDAObjectClasses: set[type[Any]] = set()
 
 
 def isFakeNVDAObject(obj: Any) -> bool:
