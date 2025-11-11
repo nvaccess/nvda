@@ -927,7 +927,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("end")
 	_asserts.strings_match(
 		actualSpeech,
-		"blank",
+		"link",
 	)
 	# Read the current line.
 	# Before pr #11606 the next line ("C D")  would have been read.
