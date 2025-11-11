@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2025 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
 
 from typing import (
 	Optional,
