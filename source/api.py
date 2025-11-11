@@ -504,7 +504,7 @@ fakeNVDAObject: set[type[Any]] = set()
 
 
 def isFakeNVDAObject(obj: Any) -> bool:
-	"""Returns whether the supplied object is a fake L{NVDAObjects.NVDAObject}"""
+	"""Returns whether the supplied object is a fake :class:`NVDAObjects.NVDAObject`."""
 	return isinstance(obj, tuple(fakeNVDAObject))
 
 
