@@ -500,12 +500,14 @@ def isNVDAObject(obj: Any) -> bool:
 	return isinstance(obj, NVDAObjects.NVDAObject)
 
 
-fakeNVDAObjectClasses: set[type[Any]] = set()
+fakeNVDAObjectClasses: "set[type[documentBase.TextContainerObject]]" = set()
+"""A collection used to register fake NVDAObject classes.
+These classes are treated as virtual NVDAObjects and may not correspond to actual controls."""
 
 
 def isFakeNVDAObject(obj: Any) -> bool:
 	"""Returns whether the supplied object is a fake :class:`NVDAObjects.NVDAObject`."""
-	return isinstance(obj, tuple(fakeNVDAObject))
+	return isinstance(obj, tuple(fakeNVDAObjectClasses))
 
 
 def isCursorManager(obj: Any) -> bool:

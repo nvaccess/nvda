@@ -227,7 +227,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 #: Keeps track of the recognition in progress, if any.
 _activeRecog = None
 # Register the fake NVDA object class.
-api.fakeNVDAObject.add(RecogResultNVDAObject)
+api.fakeNVDAObjectClasses.add(RecogResultNVDAObject)
 
 
 def recognizeNavigatorObject(recognizer: ContentRecognizer):
