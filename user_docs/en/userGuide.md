@@ -82,14 +82,13 @@ NVDA supports braille codes for many languages, including contracted, uncontract
 
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDA is available under the GNU General Public License version 2, with two special exceptions.
+NVDA is available under the GNU General Public License version 2 or later, with two special exceptions.
 The exceptions are outlined in the license document under the sections "Non-GPL Components in Plugins and Drivers" and "Microsoft Distributable Code".
 NVDA also includes and uses components which are made available under different free and open source licenses.
 You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
 This applies to both original and modified copies of this software, plus any derivative works.
 
-For further details, you can [view the full license.](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
-For details regarding exceptions, access the license document from the NVDA menu under the "help" section.
+For further details, access the license document from the NVDA menu under the "Help" section.
 
 ## NVDA Quick Start Guide {#NVDAQuickStartGuide}
 
