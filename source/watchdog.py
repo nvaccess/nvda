@@ -20,7 +20,7 @@ import winUser
 import winKernel
 from logHandler import log
 import logHandler
-from crash_handler import (
+from crashHandler import (
 	CRASH_STATS,
 	crashHandler,
 	loadRecentCrashTimestamps,

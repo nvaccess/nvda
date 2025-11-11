@@ -42,7 +42,7 @@ class CrashEvent:
 	version: str
 	installType: str
 
-	def to_json(self) -> str:
+	def json(self) -> str:
 		return json.dumps(asdict(self), separators=(",", ":"))
 
 	@staticmethod
@@ -102,7 +102,7 @@ def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 	try:
 		with open(path, "w", encoding="utf-8") as f:
 			for event in events:
-				f.write(f"{event.to_json()}\n")
+				f.write(f"{event.json()}\n")
 	except OSError:
 		log.debugWarning("Failed to update crash stats file", exc_info=True)
 
@@ -152,7 +152,7 @@ def _recordCrashTimestamp() -> None:
 		with open(path, "a", encoding="utf-8") as f:
 			event = _buildCrashEvent(time.time(), version, installType)
 			# Append JSON lines instead of writing a list; NVDA is crashing, keep work minimal
-			f.write(f"{event.to_json()}\n")
+			f.write(f"{event.json()}\n")
 	except OSError:
 		log.debugWarning("Failed to append crash stats", exc_info=True)
 
