@@ -661,7 +661,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		def _get_allowMoveToOffsetPastEnd(self) -> bool:
 			log.warning(
 				"OffsetsTextInfo.allowMoveToOffsetPastEnd is deprecated. "
-"Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd method instead.",
+				"Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd method instead.",
 				stack_info=True,
 			)
 			return self.allowMoveToUnitOffsetPastEnd(textInfos.UNIT_CHARACTER)
