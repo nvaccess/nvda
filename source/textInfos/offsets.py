@@ -9,6 +9,7 @@ import re
 import ctypes
 import unicodedata
 import NVDAHelper
+import NVDAState
 import config
 import textInfos
 import locationHelper
@@ -654,6 +655,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		:return: Whether or not to allow movement past end for the specific unit.
 		"""
 		return True
+
+	if NVDAState._allowDeprecatedAPI():
+
+		def _get_allowMoveToOffsetPastEnd(self) -> bool:
+			log.warning(
+				"OffsetsTextInfo.allowMoveToOffsetPastEnd is deprecated. Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd  method instead.",
+				stack_info=True,
+			)
+			return self.allowMoveToUnitOffsetPastEnd(textInfos.UNIT_CHARACTER)
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
