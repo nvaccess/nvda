@@ -60,8 +60,12 @@ def file_navigation():
 	spy = _NvdaLib.getSpyLib()
 	# create 2 new files
 	spy.emulateKeyPress("control+n")
+	spy.emulateKeyPress("control+s")
+	spy.emulateKeyPress("enter")
 	# Create second file
 	spy.emulateKeyPress("control+n")
+	spy.emulateKeyPress("control+s")
+	spy.emulateKeyPress("enter")
 	# navigate back to file 1
 	speech = _NvdaLib.getSpeechAfterKey("control+tab")
 	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=1))
@@ -135,7 +139,7 @@ def file_editor_operations():
 	for c in "(a)":
 		spy.emulateKeyPress(c)
 	# jump to matching bracket
-	spy.emulateKeyPress("control+shift+backslash")
+	spy.emulateKeyPress("control+shift+\\")
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+.")
 	_builtIn.should_contain(speech, "(")
 	# move line down
@@ -181,14 +185,14 @@ def terminal_panel():
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+`")
 	_builtIn.should_contain(speech, "Terminal 1")
-	for c in "ls":
+	for c in "echo foo":
 		spy.emulateKeyPress(c)
 	spy.emulateKeyPress("enter")
 	speech = _NvdaLib.getSpeechAfterKey("alt+f2")
 	_builtIn.should_contain(speech, "Accessible View")
 	# Read top of terminal output
-	speech = _NvdaLib.getSpeechAfterKey("control+home")
-	_builtIn.should_contain(speech, "ls")
+	speech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_builtIn.should_contain(speech, "foo")
 	spy.emulateKeyPress("escape")
 	# Create new terminal
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+`")
