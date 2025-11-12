@@ -7,6 +7,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from SystemTestSpy import _getLib
 import NvdaLib as _NvdaLib
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
 	from VSCodeLib import VSCodeLib
 
@@ -20,6 +21,7 @@ def status_line_is_available():
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+end")
 	_builtIn.should_not_contain(speech, "no status line found")
 
+
 def sidebar_toggle_announced():
 	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
 	_vscode.start_vscode()
@@ -27,6 +29,7 @@ def sidebar_toggle_announced():
 	_builtIn.should_contain(speech, "sidebar shown")
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
 	_builtIn.should_contain(speech, "sidebar hidden")
+
 
 def command_palette_opens():
 	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
@@ -36,6 +39,7 @@ def command_palette_opens():
 	_NvdaLib.getSpeechAfterKey("escape")
 	speech = _NvdaLib.getSpeechAfterKey("f1")
 	_builtIn.should_contain(speech, "type the name of a command")
+
 
 def file_navigation():
 	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
@@ -52,6 +56,7 @@ def file_navigation():
 	# Go to file explorer
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+e")
 	_builtIn.should_contain(speech, "Files Explorer")
+
 
 def search_panel_focus():
 	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
