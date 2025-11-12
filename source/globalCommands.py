@@ -4812,8 +4812,11 @@ class GlobalCommands(ScriptableObject):
 
 		if screenCurtain.screenCurtain is None:
 			# Screen curtain has not been initialized.
-			# Translators: Reported when the screen curtain is not available.
-			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
+			ui.message(
+				# Translators: Reported when the screen curtain is not available.
+				pgettext("screenCurtain", "Screen curtain not available"),
+				speechPriority=speech.priorities.Spri.NOW,
+			)
 			return
 
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
@@ -4859,14 +4862,14 @@ class GlobalCommands(ScriptableObject):
 			alreadyRunning and scriptCount == 0  # a second press might be trying to achieve non temp enable
 		):
 			# Translators: Reported when the screen curtain is disabled.
-			message = _("Screen curtain disabled")
+			message = pgettext("screenCurtain", "Screen curtain disabled")
 			try:
 				screenCurtain.screenCurtain.disable()
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
 				log.error("Screen curtain termination error", exc_info=True)
 				# Translators: Reported when the screen curtain could not be enabled.
-				message = _("Could not disable screen curtain")
+				message = pgettext("screenCurtain", "Could not disable screen curtain")
 			finally:
 				self._toggleScreenCurtainMessage = message
 				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
@@ -4882,10 +4885,13 @@ class GlobalCommands(ScriptableObject):
 
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
-				enableMessage = _("Screen curtain enabled")
+				enableMessage = pgettext("screenCurtain", "Screen curtain enabled")
 				if tempEnable:
-					# Translators: Reported when the screen curtain is temporarily enabled.
-					enableMessage = _("Temporary Screen curtain, enabled until next restart")
+					enableMessage = pgettext(
+						"screenCurtain",
+						# Translators: Reported when the screen curtain is temporarily enabled.
+						"Temporary Screen curtain, enabled until next restart",
+					)
 
 				try:
 					if alreadyRunning:
@@ -4895,7 +4901,7 @@ class GlobalCommands(ScriptableObject):
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.
-					enableMessage = _("Could not enable screen curtain")
+					enableMessage = pgettext("screenCurtain", "Could not enable screen curtain")
 				finally:
 					self._toggleScreenCurtainMessage = enableMessage
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
@@ -4903,9 +4909,7 @@ class GlobalCommands(ScriptableObject):
 			#  Show warning if necessary and do enable.
 			settingsStorage = screenCurtain.screenCurtain.settings
 			if settingsStorage["warnOnLoad"]:
-				from screenCurtain._screenCurtain import WarnOnLoadDialog
-
-				dlg = WarnOnLoadDialog(
+				dlg = screenCurtain._screenCurtain.WarnOnLoadDialog(
 					screenCurtainSettingsStorage=settingsStorage,
 					parent=gui.mainFrame,
 				)

@@ -5986,9 +5986,13 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
 		self._screenCurtainConfig = config.conf["screenCurtain"]
-		# Translators: Name for a feature that disables output to the screen,
-		# making it black.
-		screenCurtainSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Screen Curtain"))
+		screenCurtainSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: Name for a feature that disables output to the screen,
+			# making it black.
+			label=pgettext("screenCurtain", "Screen Curtain"),
+		)
 		screenCurtainBox = screenCurtainSizer.GetStaticBox()
 		screenCurtainGroup = guiHelper.BoxSizerHelper(self, sizer=screenCurtainSizer)
 		sHelper.addItem(screenCurtainGroup)
@@ -5997,7 +6001,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			wx.CheckBox(
 				screenCurtainBox,
 				#  Translators: option to enable screen curtain in the privacy and security settings panel
-				label=_("Make screen black (immediate effect)"),
+				label=pgettext("screenCurtain", "Make screen black (immediate effect)"),
 			),
 		)
 		self._screenCurtainEnabledCheckbox.SetValue(
@@ -6020,7 +6024,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			wx.CheckBox(
 				screenCurtainBox,
 				# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-				label=_("&Play sound when toggling Screen Curtain"),
+				label=pgettext("screenCurtain", "&Play sound when toggling Screen Curtain"),
 			),
 		)
 		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])

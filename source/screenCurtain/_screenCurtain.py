@@ -25,9 +25,10 @@ TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other col
 
 # Translators: Description for a Screen Curtain setting that shows a warning when enabling
 # the screen curtain.
-WARN_ON_LOAD_CHECKBOX_TEXT = _("Always &show a warning when enabling Screen Curtain")
+WARN_ON_LOAD_CHECKBOX_TEXT = pgettext("screenCurtain", "Always &show a warning when enabling Screen Curtain")
 
-UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = _(
+UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = pgettext(
+	"screenCurtain",
 	# Translators: Warning message when trying to enable the screen curtain when OCR is active.
 	"Cannot enable screen curtain while performing content recognition",
 )
@@ -51,8 +52,10 @@ class WarnOnLoadDialog(MessageDialog):
 		self,
 		screenCurtainSettingsStorage: ScreenCurtainSettings,
 		parent: wx.Window,
+		# Translators: The title of a dialog.
 		title: str = _("Warning"),
-		message: str = _(
+		message: str = pgettext(
+			"screenCurtain",
 			# Translators: A warning shown when activating the screen curtain.
 			# the translation of "Screen Curtain" should match the "translated name"
 			"Enabling Screen Curtain will make the screen of your computer completely black. "
@@ -90,7 +93,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_YES,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# agree to enabling the curtain.
-			label=_("&Yes"),
+			label=pgettext("screenCurtain", "&Yes"),
 		)
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
 
@@ -99,7 +102,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_NO,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# disagree to enabling the curtain.
-			label=_("&No"),
+			label=pgettext("screenCurtain", "&No"),
 		)
 		noButton.SetDefault()
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
