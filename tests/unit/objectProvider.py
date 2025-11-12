@@ -7,6 +7,7 @@
 
 from NVDAObjects import NVDAObject
 import controlTypes
+from typing import Any
 
 
 class PlaceholderNVDAObject(NVDAObject):
