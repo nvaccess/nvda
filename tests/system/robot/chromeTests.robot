@@ -165,11 +165,11 @@ ARIA roleDescription block browse mode
 	[Tags]	chrome_roleDescription
 	test_ariaRoleDescription_block_browseMode
 ARIA roleDescription inline content editable
-	[Documentation]	Read an inline element with a custom role in content editables 
+	[Documentation]	Read an inline element with a custom role in content editables
 	[Tags]	chrome_roleDescription
 	test_ariaRoleDescription_inline_contentEditable
 ARIA roleDescription block content editable
-	[Documentation]	Read an block element with a custom role in content editables 
+	[Documentation]	Read an block element with a custom role in content editables
 	[Tags]	chrome_roleDescription
 	test_ariaRoleDescription_block_contentEditable
 
@@ -197,7 +197,7 @@ ARIA switch role
 	[Tags]	chrome_misc_aria
 	test_ARIASwitchRole
 
-# chrome_misc tests
+## chrome_misc tests
 ## No current useful grouping. Keep to minimum in length.
 
 Marked Browse mode
