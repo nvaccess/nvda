@@ -115,8 +115,6 @@ def loadRecentCrashTimestamps(now: float) -> list[float]:
 	try:
 		with open(path, "r", encoding="utf-8") as f:
 			lines = f.readlines()
-	except FileNotFoundError:
-		return []
 	except OSError:
 		log.debugWarning("Failed to read crash stats file", exc_info=True)
 		return []
@@ -169,7 +167,7 @@ def crashHandler(exceptionInfo):
 	if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
-		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
+		log.critical(f"NVDA crashed! Minidump written to {dumpPath}")
 
 	# Log Python stacks for every thread.
 	stacks = logHandler.getFormattedStacksForAllThreads()

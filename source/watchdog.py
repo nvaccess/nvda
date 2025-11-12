@@ -56,7 +56,6 @@ FROZEN_WARNING_TIMEOUT = 15
 """ Seconds before the core should be considered severely frozen and a warning logged.
 """
 
-
 safeWindowClassSet = {
 	"Internet Explorer_Server",
 	"_WwG",
@@ -268,8 +267,8 @@ def initialize():
 			"Automatic crash recovery will remain disabled until the loop clears.",
 		)
 	else:
-		winBindings.kernel32.SetUnhandledExceptionFilter(crashHandler)
 		# Catch application crashes if the handler is enabled.
+		winBindings.kernel32.SetUnhandledExceptionFilter(crashHandler)
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
