@@ -13,7 +13,7 @@ class PlaceholderNVDAObject(NVDAObject):
 	processID = None  # Must be implemented to instantiate.
 	windowThreadID = 0  # Must be implemented for inputCore tests
 
-	def _isEqual(self, other) -> bool:
+	def _isEqual(self, other: Any) -> bool:
 		return False
 
 
