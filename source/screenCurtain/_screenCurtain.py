@@ -10,6 +10,7 @@ import config
 import globalVars
 import nvwave
 import wx
+from gui.guiHelper import BoxSizerHelper, ButtonHelper
 from gui.nvdaControls import MessageDialog
 from logHandler import log
 from winBindings import magnification
@@ -73,7 +74,7 @@ class WarnOnLoadDialog(MessageDialog):
 		super().__init__(parent, title, message, dialogType)
 		self.noButton.SetFocus()
 
-	def _addContents(self, contentsSizer):
+	def _addContents(self, contentsSizer: BoxSizerHelper) -> None:
 		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
 			self,
 			label=WARN_ON_LOAD_CHECKBOX_TEXT,
@@ -83,7 +84,7 @@ class WarnOnLoadDialog(MessageDialog):
 			self._settingsStorage["warnOnLoad"],
 		)
 
-	def _addButtons(self, buttonHelper):
+	def _addButtons(self, buttonHelper: ButtonHelper) -> None:
 		yesButton = buttonHelper.addButton(
 			self,
 			id=wx.ID_YES,
@@ -104,7 +105,7 @@ class WarnOnLoadDialog(MessageDialog):
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
 		self.noButton = noButton  # so we can manually set the focus.
 
-	def _exitDialog(self, result: int):
+	def _exitDialog(self, result: int) -> None:
 		"""Handles persisting the state of the checkbox if the user answers in the affirmative.
 
 		:param result: either wx.YES or wx.No
@@ -113,14 +114,14 @@ class WarnOnLoadDialog(MessageDialog):
 			self._settingsStorage["warnOnLoad"] = self.showWarningOnLoadCheckBox.IsChecked()
 		self.EndModal(result)
 
-	def _onActivateEvent(self, evt: wx.ActivateEvent):
+	def _onActivateEvent(self, evt: wx.ActivateEvent) -> None:
 		"""Activate event handler."""
 		# focus is normally set to the first child, however, we want people to easily be able to cancel this
 		# dialog
 		super()._onActivateEvent(evt)
 		self.noButton.SetFocus()
 
-	def _onShowEvent(self, evt: wx.ShowEvent):
+	def _onShowEvent(self, evt: wx.ShowEvent) -> None:
 		"""Show event handler.
 
 		When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
@@ -187,7 +188,7 @@ class ScreenCurtain:
 			except Exception:
 				log.exception()
 
-	def disable(self, *, persist: bool = True):
+	def disable(self, *, persist: bool = True) -> None:
 		"""Disables the Screen Curtain.
 
 		This method is idempotent.
@@ -209,7 +210,7 @@ class ScreenCurtain:
 			except Exception:
 				log.exception()
 
-	def __del__(self):
+	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""
 		if self._enabled:
 			self.disable(persist=False)
