@@ -6008,7 +6008,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainWarnOnLoadCheckbox = screenCurtainGroup.addItem(
 			wx.CheckBox(
 				screenCurtainBox,
-				label=screenCurtain._screenCurtain.warnOnLoadCheckBoxText,
+				label=screenCurtain._screenCurtain.WARN_ON_LOAD_CHECKBOX_TEXT,
 			),
 		)
 		self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])

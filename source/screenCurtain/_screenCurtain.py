@@ -24,7 +24,7 @@ TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other col
 
 # Translators: Description for a Screen Curtain setting that shows a warning when enabling
 # the screen curtain.
-warnOnLoadCheckBoxText = _("Always &show a warning when enabling Screen Curtain")
+WARN_ON_LOAD_CHECKBOX_TEXT = _("Always &show a warning when enabling Screen Curtain")
 
 UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = _(
 	# Translators: Warning message when trying to enable the screen curtain when OCR is active.
@@ -76,7 +76,7 @@ class WarnOnLoadDialog(MessageDialog):
 	def _addContents(self, contentsSizer):
 		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
 			self,
-			label=warnOnLoadCheckBoxText,
+			label=WARN_ON_LOAD_CHECKBOX_TEXT,
 		)
 		contentsSizer.addItem(self.showWarningOnLoadCheckBox)
 		self.showWarningOnLoadCheckBox.SetValue(
