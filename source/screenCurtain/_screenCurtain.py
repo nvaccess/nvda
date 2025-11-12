@@ -3,8 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
-"""Screen curtain implementation based on the windows magnification API."""
-
 import os
 from typing import TypedDict, cast
 
@@ -24,13 +22,12 @@ TRANSFORM_BLACK = magnification.MAGCOLOREFFECT()  # empty transformation
 TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
 TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
-
 # Translators: Description for a Screen Curtain setting that shows a warning when enabling
 # the screen curtain.
 warnOnLoadCheckBoxText = _("Always &show a warning when enabling Screen Curtain")
 
 
-class _ScreenCurtainSettings(TypedDict):
+class ScreenCurtainSettings(TypedDict):
 	"""Type information for the "screenCurtain" section of the config."""
 
 	enabled: bool
@@ -46,7 +43,7 @@ class WarnOnLoadDialog(MessageDialog):
 
 	def __init__(
 		self,
-		screenCurtainSettingsStorage: _ScreenCurtainSettings,
+		screenCurtainSettingsStorage: ScreenCurtainSettings,
 		parent: wx.Window,
 		title: str = _("Warning"),
 		message: str = _(
@@ -129,7 +126,7 @@ class WarnOnLoadDialog(MessageDialog):
 		super()._onShowEvent(evt)
 
 
-class _ScreenCurtain:
+class ScreenCurtain:
 	"""
 	Screen curtain implementation.
 
@@ -140,13 +137,13 @@ class _ScreenCurtain:
 	def __init__(self):
 		"""Initializer."""
 		super().__init__()
-		self._settings: _ScreenCurtainSettings = cast(_ScreenCurtainSettings, config.conf["screenCurtain"])
+		self._settings: ScreenCurtainSettings = cast(ScreenCurtainSettings, config.conf["screenCurtain"])
 		self._enabled: bool = False
 		if self.settings["enabled"]:
 			self.enable()
 
 	@property
-	def settings(self) -> _ScreenCurtainSettings:
+	def settings(self) -> ScreenCurtainSettings:
 		"""The settings for the Screen Curtain."""
 		return self._settings
 
@@ -213,22 +210,3 @@ class _ScreenCurtain:
 			self.disable(persist=False)
 		if hasattr(super(), "__del__"):
 			super().__del__(self)
-
-
-screenCurtain: _ScreenCurtain | None = None
-"""Global Screen Curtain controller."""
-
-
-def initialize():
-	"""Initialize theScreen Curtain."""
-	global screenCurtain
-	if screenCurtain is None:
-		screenCurtain = _ScreenCurtain()
-
-
-def terminate():
-	"""Terminate the Screen Curtain."""
-	global screenCurtain
-	if screenCurtain is not None:
-		screenCurtain.disable(persist=False)
-		screenCurtain = None

@@ -53,6 +53,7 @@ import wx
 from wx.lib import scrolledpanel
 from NVDAState import WritePaths
 
+import screenCurtain._screenCurtain
 from utils import mmdevice
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
@@ -6007,7 +6008,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainWarnOnLoadCheckbox = screenCurtainGroup.addItem(
 			wx.CheckBox(
 				screenCurtainBox,
-				label=screenCurtain.warnOnLoadCheckBoxText,
+				label=screenCurtain._screenCurtain.warnOnLoadCheckBoxText,
 			),
 		)
 		self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
@@ -6072,7 +6073,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		"""
 		if not self._screenCurtainConfig["warnOnLoad"]:
 			return True
-		with screenCurtain.WarnOnLoadDialog(
+		with screenCurtain._screenCurtain.WarnOnLoadDialog(
 			screenCurtainSettingsStorage=self._screenCurtainConfig,
 			parent=self,
 		) as dlg:

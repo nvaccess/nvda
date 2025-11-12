@@ -7,7 +7,7 @@
 
 import unittest
 
-from screenCurtain import TRANSFORM_BLACK
+from screenCurtain._screenCurtain import TRANSFORM_BLACK
 from winBindings import magnification
 from winBindings.magnification import MAGCOLOREFFECT
 

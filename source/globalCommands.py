@@ -4903,7 +4903,7 @@ class GlobalCommands(ScriptableObject):
 			#  Show warning if necessary and do enable.
 			settingsStorage = screenCurtain.settings
 			if settingsStorage["warnOnLoad"]:
-				from screenCurtain import WarnOnLoadDialog
+				from screenCurtain._screenCurtain import WarnOnLoadDialog
 
 				dlg = WarnOnLoadDialog(
 					screenCurtainSettingsStorage=settingsStorage,
