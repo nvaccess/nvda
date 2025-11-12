@@ -82,6 +82,8 @@ from utils.displayString import DisplayStringEnum
 import gui
 import gui.contextHelp
 import screenCurtain
+import api
+import ui
 from . import guiHelper
 
 try:
@@ -6038,9 +6040,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 		:return: ``True`` when OCR is active, ``False`` otherwise.
 		"""
-		import api
+		# Import late to avoid circular import
 		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
-		import ui
 
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
