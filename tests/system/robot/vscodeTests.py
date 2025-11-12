@@ -169,6 +169,7 @@ def extensions_panel():
 	speech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(speech, "Install")
 
+
 def terminal_panel():
 	"""ensure terminal panel is accessible."""
 	_vscode.start_vscode()
