@@ -71,7 +71,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
-from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
+from textUtils import isUnicodeNormalized, OffsetConverter, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 from gui.guiHelper import wxCallOnMain
@@ -592,10 +592,21 @@ class Region(object):
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 
-		converter: UnicodeNormalizationOffsetConverter | None = None
+		converter: OffsetConverter | None = None
 		textToTranslate = self.rawText
 		textToTranslateTypeforms = self.rawTextTypeforms
 		cursorPos = self.cursorPos
+		if (
+			config.conf["braille"]["translationTable"].startswith("zh")
+			or config.conf["braille"]["translationTable"] == "auto"
+			and brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT).startswith("zh")
+		):
+			from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter  # noqa: F401
+
+			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
+			textToTranslate = converter.encoded
+			if cursorPos is not None:
+				cursorPos = converter.strToEncodedOffsets(cursorPos)
 		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(textToTranslate):
 			converter = UnicodeNormalizationOffsetConverter(textToTranslate)
 			textToTranslate = converter.encoded

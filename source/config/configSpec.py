@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
+# Wang Chong
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -261,6 +262,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
+	initWordSegForUnusedLang = boolean(default=false)
+	wordSegmentationStandard = featureFlag(optionsEnum="WordNavigationUnitFlag", behaviorOfDefault="Auto")
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
 [reviewCursor]

@@ -1,16 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Łukasz Golonka, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
 import ctypes
+import re
 import encodings
 import locale
 import unicodedata
+
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
 from typing import Generator, Optional, Tuple, Type
@@ -18,6 +20,8 @@ from typing import Generator, Optional, Tuple, Type
 from logHandler import log
 
 from .uniscribe import splitAtCharacterBoundaries
+from .wordSeg import wordSegStrategy
+from .segFlag import WordSegFlag
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
@@ -540,3 +544,62 @@ def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
 		return ENCODINGS_TO_CONVERTERS[encoding]
 	except IndexError as e:
 		raise LookupError(f"Don't know how to deal with encoding '{encoding}'", e)
+
+
+class WordSegmenter:
+	"""Selects appropriate segmentation strategy and segments text."""
+
+	# Precompiled patterns
+	# Chinese characters and Japanese kanji (CJK Unified Ideographs U+4E00 - U+9FFF)
+	_CHINESE_CHARACTER_AND_JAPANESE_KANJI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
+	# Japanese kana (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
+	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
+
+	def __init__(self, text: str, encoding: str = "UTF-8", wordSegFlag: WordSegFlag = WordSegFlag.AUTO):
+		self.text: str = text
+		self.encoding: str | None = encoding
+		self.wordSegFlag: WordSegFlag = wordSegFlag
+		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._chooseStrategy()
+
+	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
+		"""Choose the appropriate segmentation strategy based on the text content."""
+		if self.wordSegFlag == WordSegFlag.AUTO:
+			if (
+				wordSegStrategy.ChineseWordSegmentationStrategy._lib
+				and WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
+					self.text,
+				)
+				and not WordSegmenter._KANA.search(self.text)
+			):
+				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+			else:
+				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+		else:
+			match self.wordSegFlag:
+				case WordSegFlag.UNISCRIBE:
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				case WordSegFlag.CHINESE:
+					if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
+						return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
+					else:
+						log.debugWarning("Chinese word segmenter is loading. Falling back to Uniscribe.")
+						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				case _:
+					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		"""Get the segment containing the given offset."""
+		try:
+			return self.strategy.getSegmentForOffset(offset)
+		except Exception as e:
+			log.debugWarning(
+				"WordSegmenter.getSegmentForOffset failed: %s  text: '%s' offset: %s  segmentation strategy: %s",
+				e,
+				self.text,
+				offset,
+				self.strategy,
+			)
+			return None
+
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		return self.strategy.segmentedText(sep, newSepIndex)

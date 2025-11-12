@@ -229,6 +229,10 @@ Export("detoursLib")
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
 
+cppjiebaLib = env.SConscript("cppjieba/sconscript")
+Export("cppjiebaLib")
+env.Install(libInstallDir, cppjiebaLib)
+
 if isNVDAHelperLocalArch:
 	localLib = env.SConscript("local/sconscript")
 	Export("localLib")
