@@ -168,3 +168,25 @@ def extensions_panel():
 	_builtIn.should_contain(speech, "Microsoft")
 	speech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(speech, "Install")
+
+def terminal_panel():
+	"""ensure terminal panel is accessible."""
+	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
+	speech = _NvdaLib.getSpeechAfterKey("control+`")
+	_builtIn.should_contain(speech, "Terminal 1")
+	for c in "ls":
+		spy.emulateKeyPress(c)
+	spy.emulateKeyPress("enter")
+	speech = _NvdaLib.getSpeechAfterKey("alt+f2")
+	_builtIn.should_contain(speech, "Accessible View")
+	# Read top of terminal output
+	speech = _NvdaLib.getSpeechAfterKey("control+home")
+	_builtIn.should_contain(speech, "ls")
+	spy.emulateKeyPress("escape")
+	# Create new terminal
+	speech = _NvdaLib.getSpeechAfterKey("control+shift+`")
+	_builtIn.should_contain(speech, "Terminal 2")
+	# TODO: Switch between terminals
+	speech = _NvdaLib.getSpeechAfterKey("?")
+	_builtIn.should_contain(speech, "Terminal 1")

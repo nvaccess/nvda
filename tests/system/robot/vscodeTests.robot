@@ -60,3 +60,7 @@ file editor operations
 extensions panel
 	[Documentation]    ensure extensions panel is accessible
 	extensions_panel
+
+terminal panel
+	[Documentation]    ensure terminal panel is accessible.
+	terminal_panel
