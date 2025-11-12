@@ -11,7 +11,7 @@
 # This license can be found at:
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
-from typing import List
+from typing import Callable, List
 import re
 from SCons.Node.FS import File
 
@@ -35,31 +35,77 @@ def new_my_import(fullname):
 comtypes.client._generate._my_import = new_my_import
 
 
+def codeReplacer(
+	template: str,
+	indentedGroups: tuple[int | str] | None = None,
+) -> Callable[[re.Match[str]], str]:
+	"""
+	Return a function for the `repl` parameter of `re.sub()`,
+	in order to do some preprocessing before actual replacement.
+
+	:param template: Template strings for replacement.
+		Placeholders are in `str.format`'s style, such as `{1}` or `{name}`.
+	:param indentedGroups: All groups that needs to have one more level of indentation.
+		Specify indices for unnamed groups, or names for named groups.
+	"""
+
+	def repl(match: re.Match[str]) -> str:
+		groups = list(match.groups(""))
+		groupdict = match.groupdict("")
+		if indentedGroups:
+			for grp in indentedGroups:
+				if isinstance(grp, int) and 0 <= grp < len(groups):
+					collection = groups
+				else:
+					collection = groupdict
+				# Add one level of indentation before each line
+				lines = collection[grp].splitlines()
+				for i in range(len(lines)):
+					if lines[i]:  # Add indentation for non-empty lines
+						lines[i] = "    " + lines[i]
+				collection[grp] = "\n".join(lines)
+		return template.format(*groups, **groupdict)
+
+	return repl
+
+
 def makeIDEFriendly(path: str) -> None:
 	"""
-	Add a local import of * so that tools and IDE's can find definitions.
+	Add local imports so that tools and IDE's can find definitions.
 	Prefer to import from comtypes.gen, at runtime behavior will not have changed.
-	@param path: Path to the friendly name comInterfaces module.
-	"""
-	importTemplate = """try:
-	from comtypes.gen import {libIdentifier}
-except ModuleNotFoundError:
-	import {libIdentifier}
-	from {libIdentifier} import *
-"""
 
-	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
-	IDEFriendlyContent = list()
+	:param path: Path to the friendly name comInterfaces module.
+	"""
+	importTemplate = """from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from .{libId} import (
+{importList}
+	)
+else:
+	from comtypes.gen.{libId} import (
+{importList}
+	)
+"""
+	# Matches:
+	# from comtypes.gen._SomeLibId_ import (
+	#     aaa, bbb, ccc,
+	#     xxx, yyy, zzz,   # these lines should be indented
+	# )
+	importPattern = re.compile(
+		r"^from comtypes\.gen\.(?P<libId>\w+) import \(\n"
+		r"(?P<importList>(?:    [\w, ]+\n)+)"
+		r"\)\n",
+		re.MULTILINE,
+	)
+
 	with open(path, "r") as interfaceFile:
-		for line in interfaceFile:
-			match = importPattern.match(line)
-			if match:
-				libId = match.group(1)
-				IDEFriendlyContent.append(importTemplate.format(libIdentifier=libId))
-			else:
-				IDEFriendlyContent.append(line)
+		fileContent = interfaceFile.read()
+		fileContent = importPattern.sub(
+			codeReplacer(importTemplate, indentedGroups=("importList",)), fileContent
+		)
+
 	with open(path, "w") as interfaceFile:
-		interfaceFile.writelines(IDEFriendlyContent)
+		interfaceFile.write(fileContent)
 
 
 def interfaceAction(target: List[File], source, env):
@@ -96,7 +142,7 @@ COM_INTERFACES = {
 	"tom.py": ("{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}", 1, 0),
 	"SpeechLib.py": ("{C866CA3A-32F7-11D2-9602-00C04F8EE628}", 5, 0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
-	# As long as Appveyor is on a Windows version that has an acceptable version of UIAutomationClient,
+	# As long as GitHub Actions is on a Windows version that has an acceptable version of UIAutomationClient,
 	# we generate it at build time.
 	"UIAutomationClient.py": ("{944DE083-8FB8-45CF-BCB7-C477ACB2F897}", 1, 0),
 }

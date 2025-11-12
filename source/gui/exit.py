@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -163,6 +163,14 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
 		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
 			if updateCheck:
+				from _remoteClient import _remoteClient
+
+				if (
+					_remoteClient is not None
+					and _remoteClient.isConnectedAsFollower
+					and not updateCheck._warnAndConfirmIfUpdatingRemotely()
+				):
+					return
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame

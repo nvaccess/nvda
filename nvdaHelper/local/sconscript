@@ -85,7 +85,7 @@ localLib = env.SharedLibrary(
 		"nvdaController.cpp",
 		winIPCUtilsObj,
 		controllerRPCServerSource,
-		"nvdaControllerInternal.c",
+		"nvdaControllerInternal.cpp",
 		controllerInternalRPCServerSource,
 		"dllImportTableHooks.cpp",
 		"nvdaHelperLocal.def",
@@ -99,6 +99,7 @@ localLib = env.SharedLibrary(
 		"wasapi.cpp",
 		"screenCurtain.cpp",
 		"remoteAccess.cpp",
+		"crashDump.cpp",
 	],
 	LIBS=[
 		"advapi32.lib",
@@ -113,6 +114,8 @@ localLib = env.SharedLibrary(
 		"Gdiplus",
 		"Iphlpapi",
 		"Ws2_32",
+		"runtimeobject",
+		"dbghelp",
 	],
 )
 

@@ -18,14 +18,15 @@ muting and uses wxPython's CallAfter for thread synchronization.
 	not be used directly outside of the remote connection infrastructure.
 """
 
-import ctypes
 from enum import IntEnum, nonmember
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any
 import winreg
 
+import winBindings.sas
 import api
 import braille
+from config.registry import RegistryKey
 import inputCore
 import nvwave
 import speech
@@ -62,10 +63,10 @@ class SoftwareSASGeneration(IntEnum):
 	"""both services and Ease of Access applications can simulate the SAS."""
 
 	KEY: int = nonmember(winreg.HKEY_LOCAL_MACHINE)
-	SUBKEY: str = nonmember(r"Software\Microsoft\Windows\CurrentVersion\Policies\System")
+	SUBKEY: str = nonmember(RegistryKey.SYSTEM_POLICIES.value)
 	VALUE_NAME: str = nonmember("SoftwareSASGeneration")
 	DISPLAY_PATH: str = nonmember(
-		r"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System!SoftwareSASGeneration",
+		rf"HKLM\{RegistryKey.SYSTEM_POLICIES.value}!SoftwareSASGeneration",
 	)
 
 
@@ -97,6 +98,24 @@ class LocalMachine:
 	    - :mod:`transport` - Network transport layer
 	"""
 
+	_receivingBraille: bool
+	"""Internal storage for :attr:`receivingBraille`."""
+
+	@property
+	def receivingBraille(self) -> bool:
+		"""When True, braille output comes from remote"""
+		return self._receivingBraille
+
+	@receivingBraille.setter
+	def receivingBraille(self, val: bool):
+		self._receivingBraille = val
+		# Let the braille handler know that whether it's enabled has changed.
+		# This needs to be blocking,
+		# otherwise there is a race condition between
+		# our handling of `ui.message`,
+		# and the braille handler clearing the message buffer.
+		braille.handler._refreshEnabled(block=True)
+
 	def __init__(self) -> None:
 		"""Initialize the local machine controller.
 
@@ -105,13 +124,24 @@ class LocalMachine:
 		self.isMuted: bool = False
 		"""When True, most remote commands will be ignored"""
 
-		self.receivingBraille: bool = False
-		"""When True, braille output comes from remote"""
+		self.receivingBraille = False
 
-		self._cachedSizes: Optional[List[int]] = None
+		self._cachedSizes: list[int] | None = None
 		"""Cached braille display sizes from remote machines"""
 
+		self._showingLocalUiMessage: bool = False
+		"""Whether we're currently showing a `ui.message` while showing remote braille."""
+
+		self._oldReceivingBraille: bool = False
+		"""Cached value of `self.receivingBraille` for when we show a `ui.message`."""
+
+		self._lastCells: list[int] = []
+		"""Cached cells for display when we return from controling the local computer, or displaying a `ui.message`."""
+
 		braille.decide_enabled.register(self.handleDecideEnabled)
+		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
+		braille._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
+		braille._decide_disabledIncludesMessages.register(self._handleDecideDisabledIncludesMessages)
 
 	def terminate(self) -> None:
 		"""Clean up resources when the local machine controller is terminated.
@@ -120,6 +150,9 @@ class LocalMachine:
 		    ensure proper cleanup when the remote connection ends.
 		"""
 		braille.decide_enabled.unregister(self.handleDecideEnabled)
+		braille._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
+		braille._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
+		braille._decide_disabledIncludesMessages.unregister(self._handleDecideDisabledIncludesMessages)
 
 	def playWave(self, fileName: str) -> None:
 		"""Play a wave file on the local machine.
@@ -187,7 +220,7 @@ class LocalMachine:
 		setSpeechCancelledToFalse()
 		wx.CallAfter(speech._manager.speak, sequence, priority)
 
-	def display(self, cells: List[int]) -> None:
+	def display(self, cells: list[int]) -> None:
 		"""Update the local braille display with cells from remote.
 
 		Safely writes braille cells from a remote machine to the local braille
@@ -205,12 +238,17 @@ class LocalMachine:
 		if (
 			self.receivingBraille
 			and braille.handler.displaySize > 0
-			and len(cells) <= braille.handler.displaySize
+			and len(cells) <= braille.handler.displayDimensions.numCols
 		):
-			cells = cells + [0] * (braille.handler.displaySize - len(cells))
+			cells = cells + [0] * (braille.handler.displayDimensions.numCols - len(cells))
+			# Cache these cells in case we need them later
+			self._lastCells = cells
 			wx.CallAfter(braille.handler._writeCells, cells)
+		elif not self.receivingBraille and self._showingLocalUiMessage:
+			# Cache this cell array for after the local ui.message is dismissed
+			self._lastCells = cells
 
-	def brailleInput(self, **kwargs: Dict[str, Any]) -> None:
+	def brailleInput(self, **kwargs: dict[str, Any]) -> None:
 		"""Process braille input gestures from a remote machine.
 
 		Executes braille input commands locally using NVDA's input gesture system.
@@ -224,42 +262,73 @@ class LocalMachine:
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def setBrailleDisplaySize(self, sizes: List[int]) -> None:
+	def setBrailleDisplaySize(self, sizes: list[int]) -> None:
 		"""Cache remote braille display sizes for size negotiation.
 
 		:param sizes: List of display sizes (cells) from remote machines
 		"""
 		self._cachedSizes = sizes
 
-	def handleFilterDisplaySize(self, value: int) -> int:
-		"""Filter the local display size based on remote display sizes.
+	def _handleFilterDisplayDimensions(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+		"""Filter the local display dimensions based on remote display dimensions.
 
-		Determines the optimal display size when sharing braille output by
-		finding the smallest positive size among local and remote displays.
+		Determines the optimal display dimensions when sharing braille output by
+		finding the smallest positive width among local and remote displays.
 
-		:param value: Local display size in cells
-		:return: The negotiated display size to use
+		.. note::
+			We can currently only support a single line of braille,
+			as sending display dimensions would require changing the Remote Access protocol.
+
+		:param value: Local display dimensions
+		:return: The negotiated display dimensions to use.
 		"""
 		if not self._cachedSizes:
-			return value
-		sizes = self._cachedSizes + [value]
+			# We cannot support multiline displays without breaking the Remote Access protocol,
+			# so always force numRows to 1.
+			return value._replace(numRows=1)
+		# There is no point storing the number of rows if we are always going to set it to 1.
+		sizes = self._cachedSizes + [value.numCols]
 		try:
-			return min(i for i in sizes if i > 0)
+			return braille.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
 		except ValueError:
-			return value
+			return value._replace(numRows=1)
 
 	def handleDecideEnabled(self) -> bool:
 		"""Determine if the local braille display should be enabled.
 
 		:return: False if receiving remote braille, True otherwise
 		"""
+		return not self.receivingBraille or self._showingLocalUiMessage
+
+	def _handleDecideDisabledIncludesMessages(self) -> bool:
+		"""Determine if the local display being disabled should exclude ui.message.
+
+		:return: ``True`` if we should block UI messages; ``False`` if we should let them show.
+		"""
 		return not self.receivingBraille
+
+	def _handleShowBrailleMessage(self) -> None:
+		"""Prepare to display a local `ui.message`."""
+		self._oldReceivingBraille, self.receivingBraille = self.receivingBraille, False
+		self._showingLocalUiMessage = True
+
+	def _handleDismissBrailleMessage(self) -> None:
+		"""Handle returning from showing a local `ui.message`."""
+		self._showingLocalUiMessage = False
+		self.receivingBraille = self._oldReceivingBraille
+		self.display(self._lastCells)
+
+	def _dismissLocalBrailleMessage(self) -> None:
+		"""Dismiss a local ``ui.message``, if one is being shown."""
+		if not self._showingLocalUiMessage:
+			return
+		braille.handler._dismissMessage()
 
 	def sendKey(
 		self,
-		vk_code: Optional[int] = None,
-		extended: Optional[bool] = None,
-		pressed: Optional[bool] = None,
+		vk_code: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
 	) -> None:
 		"""Simulate a keyboard event on the local machine.
 
@@ -283,7 +352,7 @@ class LocalMachine:
 		:note: SendSAS requires UI Access. If this fails, a warning is displayed.
 		"""
 		if self._canSendSAS():
-			ctypes.windll.sas.SendSAS(not isRunningOnSecureDesktop())
+			winBindings.sas.SendSAS(not isRunningOnSecureDesktop())
 		else:
 			# Translators: Message displayed when a remote computer tries to send control+alt+delete but UI Access is disabled.
 			ui.message(pgettext("remote", "Unable to trigger control+alt+delete"))

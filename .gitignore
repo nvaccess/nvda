@@ -25,7 +25,10 @@ dlldata.c
 *.pdb
 .sconsign.dblite
 *.md.sub
+user_docs/developerGuide.html
 user_docs/*/*.html
+user_docs/*/*.md
+!user_docs/en/*.md
 user_docs/*/*.css
 user_docs/*/*.ico
 extras/controllerClient/x86/nvdaController.h
@@ -42,12 +45,10 @@ uninstaller/UAC.nsh
 tests/unit/nvda.ini
 tests/unit/brailleTables
 tests/system/settingsCache/*
-!tests/system/settingsCache/2020.4/*.txt
 source/locale/en/LC_MESSAGES/nvda.po
 source/locale/*/cldr.dic
 .vs
 .venv
 nvdaHelper/docs/
 *.pfx
-appveyor-tools/
 *.egg-info

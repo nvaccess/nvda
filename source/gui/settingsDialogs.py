@@ -5,7 +5,7 @@
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß., Tianze
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -20,7 +20,7 @@ import re
 import typing
 import requests
 import wx
-import wx.adv
+from wx.lib import scrolledpanel
 from NVDAState import WritePaths
 
 from utils import mmdevice
@@ -41,6 +41,7 @@ from config.configFlags import (
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
@@ -583,7 +584,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0, categoriesLabelText)
 
-		self.container = nvdaControls.TabbableScrolledPanel(
+		self.container = scrolledpanel.ScrolledPanel(
 			parent=self,
 			style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim,
@@ -1137,8 +1138,6 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
-			config.conf["braille"]["translationTable"] = "auto"
-			config.conf["braille"]["inputTable"] = "auto"
 			LanguageRestartDialog(self).ShowModal()
 
 
@@ -1669,8 +1668,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	def getSettings(self) -> AutoSettings:
 		return self.driver
 
-	def _getSettingControlHelpId(self, controlId):
-		standardSettings = ["voice", "variant", "rate", "rateBoost", "pitch", "inflection", "volume"]
+	def _getSettingControlHelpId(self, controlId: str) -> str:
+		standardSettings = [
+			"voice",
+			"variant",
+			"rate",
+			"rateBoost",
+			"pitch",
+			"inflection",
+			"volume",
+			"useWasapi",
+		]
 		if controlId in standardSettings:
 			capitalizedId = controlId[0].upper() + controlId[1:]
 			return f"{self.helpId}{capitalizedId}"
@@ -1709,7 +1717,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["autoDialectSwitching"],
 		)
 		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes")
+		reportLanguageText = pgettext("reportLanguage", "Report lan&guage changes while reading")
 		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(
 				self,
@@ -2117,7 +2125,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("KeyboardSettingsAlertForSpellingErrors", self.alertForSpellingErrorsCheckBox)
 		self.alertForSpellingErrorsCheckBox.SetValue(config.conf["keyboard"]["alertForSpellingErrors"])
-		if not config.conf["documentFormatting"]["reportSpellingErrors"]:
+		if not config.conf["documentFormatting"]["reportSpellingErrors2"]:
 			self.alertForSpellingErrorsCheckBox.Disable()
 
 		# Translators: This is the label for a checkbox in the
@@ -2473,6 +2481,15 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
+		reportMultiSelectText = _("Report when lists support &multiple selection")
+		self.reportMultiSelectCheckBox = sHelper.addItem(wx.CheckBox(self, label=reportMultiSelectText))
+		self.bindHelpEvent("ReportMultiSelect", self.reportMultiSelectCheckBox)
+		self.reportMultiSelectCheckBox.SetValue(
+			config.conf["presentation"]["reportMultiSelect"],
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings panel.
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox = sHelper.addItem(wx.CheckBox(self, label=descriptionText))
 		self.bindHelpEvent("ObjectPresentationReportDescriptions", self.descriptionCheckBox)
@@ -2535,6 +2552,7 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"] = (
 			self.guessPositionInfoCheckBox.IsChecked()
 		)
+		config.conf["presentation"]["reportMultiSelect"] = self.reportMultiSelectCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"] = self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"] = self.progressLabels[
 			self.progressList.GetSelection()
@@ -2793,11 +2811,23 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
-		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
+		self._spellingErrorsChecklist = docInfoGroup.addLabeledControl(
+			# Translators: This is the label for a checklist in the
+			# document formatting settings panel.
+			_("Spelling e&rrors"),
+			nvdaControls.CustomCheckListBox,
+			choices=[i.displayString for i in ReportSpellingErrors],
+		)
+		checkedItems = []
+		for i, mode in enumerate(ReportSpellingErrors):
+			if config.conf["documentFormatting"]["reportSpellingErrors2"] & mode.value:
+				checkedItems.append(i)
+		self._spellingErrorsChecklist.SetCheckedItems(checkedItems)
+		self._spellingErrorsChecklist.Select(0)
+		self.bindHelpEvent(
+			"reportSpellingErrors",
+			self._spellingErrorsChecklist,
+		)
 
 		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
@@ -3020,7 +3050,11 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"] = self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"] = self.styleCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportSpellingErrors"] = self.spellingErrorsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSpellingErrors2"] = sum(
+			mode.value
+			for (n, mode) in enumerate(ReportSpellingErrors)
+			if self._spellingErrorsChecklist.IsChecked(n)
+		)
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
@@ -3395,6 +3429,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("RemoteConfirmDisconnect", self.confirmDisconnectAsFollower)
 		enabledInSecureMode.add(self.confirmDisconnectAsFollower)
 
+		self.muteOnLocalControl = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
+				# when controlling the local computer.
+				label=pgettext("remote", "&Mute when controlling the local computer"),
+			),
+		)
+		self.bindHelpEvent("RemoteMuteOnLocalControl", self.muteOnLocalControl)
+		enabledInSecureMode.add(self.muteOnLocalControl)
+
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
@@ -3533,6 +3578,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.confirmDisconnectAsFollower.SetValue(self.config["ui"]["confirmDisconnectAsFollower"])
+		self.muteOnLocalControl.SetValue(self.config["ui"]["muteOnLocalControl"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3597,6 +3643,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["confirmDisconnectAsFollower"] = self.confirmDisconnectAsFollower.GetValue()
+		self.config["ui"]["muteOnLocalControl"] = self.muteOnLocalControl.GetValue()
 		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
@@ -3615,6 +3662,42 @@ class RemoteSettingsPanel(SettingsPanel):
 				_remoteClient.initialize()
 			elif not enabled and _remoteClient.remoteRunning():
 				_remoteClient.terminate()
+
+
+class LocalCaptionerSettingsPanel(SettingsPanel):
+	"""Settings panel for Local captioner configuration."""
+
+	# Translators: This is the label for the local captioner settings panel.
+	title = pgettext("imageDesc", "AI Image Descriptions")
+	helpId = "LocalCaptionerSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		"""Create the settings controls for the panel.
+
+		:param settingsSizer: The sizer to add settings controls to.
+		"""
+
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.enable = sHelper.addItem(
+			# Translators: A configuration in settings dialog.
+			wx.CheckBox(self, label=pgettext("imageDesc", "Enable image captioner")),
+		)
+		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
+		self.bindHelpEvent("LocalCaptionToggle", self.enable)
+
+	def onSave(self) -> None:
+		"""Save the configuration settings."""
+		enabled = self.enable.GetValue()
+		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
+
+		if enabled != oldEnabled:
+			import _localCaptioner
+
+			if enabled != _localCaptioner.isModelLoaded():
+				_localCaptioner.toggleImageCaptioning()
+
+		config.conf["automatedImageDescriptions"]["enable"] = enabled
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -3680,10 +3763,19 @@ class UwpOcrPanel(SettingsPanel):
 		self.bindHelpEvent("Win10OcrSettingsAutoRefresh", self.autoRefreshCheckbox)
 		self.autoRefreshCheckbox.SetValue(config.conf["uwpOcr"]["autoRefresh"])
 
+		# Translators: The label for a setting in OCR settings to automatically say all on result.
+		autoSayAllText = _("Automatically say all on result")
+		self.autoSayAllOnResultCheckbox = sHelper.addItem(
+			wx.CheckBox(self, label=autoSayAllText),
+		)
+		self.bindHelpEvent("Win10OcrSettingsAutoSayAllOnResult", self.autoSayAllOnResultCheckbox)
+		self.autoSayAllOnResultCheckbox.SetValue(config.conf["uwpOcr"]["autoSayAllOnResult"])
+
 	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 		config.conf["uwpOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
+		config.conf["uwpOcr"]["autoSayAllOnResult"] = self.autoSayAllOnResultCheckbox.IsChecked()
 
 
 class AdvancedPanelControls(
@@ -4138,6 +4230,7 @@ class AdvancedPanelControls(
 			"garbageHandler",
 			"remoteClient",
 			"externalPythonDependencies",
+			"bdDetect",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5518,6 +5611,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		RemoteSettingsPanel,
+		LocalCaptionerSettingsPanel,
 	]
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.

@@ -4,11 +4,11 @@
 # See the file COPYING for more details.
 
 import wx
+import NVDAState
 import config
 import api
 import gui
 from logHandler import log
-import globalVars
 from . import guiHelper
 import gui.contextHelp
 
@@ -110,7 +110,7 @@ class ProfilesDialog(
 		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.EscapeId = wx.ID_CLOSE
 
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
 			for item in newButton, triggersButton, self.renameButton, self.deleteButton:
 				item.Disable()
 		self.onProfileListChoice(None)
@@ -196,8 +196,10 @@ class ProfilesDialog(
 		if (
 			gui.messageBox(
 				# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-				# The placeholder {} is replaced with the name of the configuration profile that will be deleted.
-				_("The profile {} will be permanently deleted. This action cannot be undone.").format(name),
+				# The placeholder {name} is replaced with the name of the configuration profile that will be deleted.
+				_("The profile {name} will be permanently deleted. This action cannot be undone.").format(
+					name=name,
+				),
 				# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 				_("Confirm Deletion"),
 				wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION,
@@ -240,7 +242,7 @@ class ProfilesDialog(
 			label = _("Manual activate")
 		self.changeStateButton.Label = label
 		self.changeStateButton.Enabled = enable
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
 			return
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable

@@ -19,7 +19,7 @@ from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture, canModifiersPerformAction
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
-from utils.security import isRunningOnSecureDesktop
+from utils.security import isRunningOnSecureDesktop, post_sessionLockStateChanged
 from gui.message import MessageDialog, DefaultButton, ReturnCode, DialogType
 import scriptHandler
 import winUser
@@ -46,11 +46,13 @@ class RemoteClient:
 	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
-	connecting: bool
+	hostPendingNonmodifier: KeyModifier | None
+	_connecting: bool
 	leaderTransport: Optional[RelayTransport]
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
+	sdHandler: SecureDesktopHandler | None
 
 	def __init__(
 		self,
@@ -58,6 +60,7 @@ class RemoteClient:
 		log.info("Initializing NVDA Remote client")
 		self.keyModifiers = set()
 		self.hostPendingModifiers = set()
+		self.hostPendingNonmodifiers = None
 		self.localScripts = set()
 		self.localMachine = LocalMachine()
 		self.followerSession = None
@@ -65,20 +68,26 @@ class RemoteClient:
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
-		self.connecting = False
+		self._connecting = False
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
-		self.sdHandler = SecureDesktopHandler()
-		if isRunningOnSecureDesktop():
-			connection = self.sdHandler.initializeSecureDesktop()
-			if connection:
-				self.connectAsFollower(connection)
-				self.followerSession.transport.connectedEvent.wait(
-					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
-				)
+		self._wasSendingKeysBeforeLock: bool = False
+		try:
+			self.sdHandler = SecureDesktopHandler()
+		except RuntimeError:
+			log.error("Failed to initialise the secure desktop handler.", exc_info=True)
+			self.sdHandler = None
+		else:
+			if isRunningOnSecureDesktop():
+				connection = self.sdHandler.initializeSecureDesktop()
+				if connection:
+					self.connectAsFollower(connection)
+					self.followerSession.transport.connectedEvent.wait(
+						self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
+					)
 		core.postNvdaStartup.register(self.performAutoconnect)
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
@@ -102,7 +111,8 @@ class RemoteClient:
 		self.connect(conInfo)
 
 	def terminate(self):
-		self.sdHandler.terminate()
+		if self.sdHandler is not None:
+			self.sdHandler.terminate()
 		self.disconnect()
 		self.localMachine.terminate()
 		self.localMachine = None
@@ -128,14 +138,17 @@ class RemoteClient:
 			# Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		self.localMachine.isMuted = not self.localMachine.isMuted
-		self.menu.muteItem.Check(self.localMachine.isMuted)
+		self._doToggleMute()
 		# Translators: Displayed when muting speech and sounds from the remote computer
 		MUTE_MESSAGE = _("Muted remote")
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
 		UNMUTE_MESSAGE = _("Unmuted remote")
 		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
 		ui.delayedMessage(status)
+
+	def _doToggleMute(self):
+		self.localMachine.isMuted = not self.localMachine.isMuted
+		self.menu.muteItem.Check(self.localMachine.isMuted)
 
 	def pushClipboard(self):
 		"""Send local clipboard content to the remote computer.
@@ -200,6 +213,7 @@ class RemoteClient:
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
+		self._connecting = True
 		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
@@ -247,6 +261,7 @@ class RemoteClient:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
+		self._connecting = False
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
@@ -262,13 +277,20 @@ class RemoteClient:
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.LEADER, False)
+		self._connecting = False
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
-		self.sdHandler.followerSession = None
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = None
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
+		self._connecting = False
 
 	@alwaysCallAfter
 	def onConnectAsLeaderFailed(self):
@@ -299,6 +321,19 @@ class RemoteClient:
 				stack_info=True,
 			)
 			return
+		if self.isConnected() or self.isConnecting:
+			gui.messageBox(
+				pgettext(
+					"remote",
+					# Translators: Message shown when trying to connect while already connected.
+					"A Remote Access session is already in progress. Disconnect before starting a new session.",
+				),
+				# Translators: Title of the connection error dialog.
+				pgettext("remote", "Already Connected"),
+				wx.OK | wx.ICON_WARNING,
+			)
+			return
+
 		previousConnections = configuration.getRemoteConfig()["connections"]["lastConnected"]
 		hostnames = list(reversed(previousConnections))
 		dlg = dialogs.DirectConnectDialog(
@@ -339,13 +374,17 @@ class RemoteClient:
 		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self._doToggleMute()
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
 		log.info("Successfully connected as leader")
+		self._connecting = False
 		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
+		post_sessionLockStateChanged.register(self._sessionLockStateChangeHandler)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected"),
@@ -361,12 +400,11 @@ class RemoteClient:
 			self.localMachine.isMuted = False
 		self.sendingKeys = False
 		self.keyModifiers = set()
+		post_sessionLockStateChanged.unregister(self._sessionLockStateChangeHandler)
 
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
-		# Translators: Presented when connection to a remote computer was interupted.
-		ui.message(_("Disconnected"))
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
@@ -377,7 +415,8 @@ class RemoteClient:
 			transport=transport,
 			localMachine=self.localMachine,
 		)
-		self.sdHandler.followerSession = self.followerSession
+		if self.sdHandler is not None:
+			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onFollowerCertificateFailed,
@@ -391,6 +430,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
+		self._connecting = False
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
@@ -486,6 +526,9 @@ class RemoteClient:
 		if not pressed and keyCode in self.hostPendingModifiers:
 			self.hostPendingModifiers.discard(keyCode)
 			return True
+		if not pressed and keyCode == self.hostPendingNonmodifier:
+			self.hostPendingNonmodifier = None
+			return True
 		gesture = KeyboardInputGesture(
 			self.keyModifiers,
 			keyCode[0],
@@ -502,6 +545,7 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
+		self.localMachine._dismissLocalBrailleMessage()
 		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
@@ -542,17 +586,31 @@ class RemoteClient:
 		self.releaseKeys()
 		# Translators: Presented when keyboard control is back to the controlling computer.
 		ui.message(pgettext("remote", "Controlling local computer"))
+		if configuration.getRemoteConfig()["ui"]["muteOnLocalControl"] and not self.localMachine.isMuted:
+			self.toggleMute()
 
-	def _switchToRemoteControl(self, gesture: KeyboardInputGesture) -> None:
+	def _switchToRemoteControl(self, gesture: KeyboardInputGesture | None) -> None:
 		"""Switch to controlling the remote computer."""
 		self.sendingKeys = True
 		log.info("Remote key control enabled")
 		self.setReceivingBraille(self.sendingKeys)
-		self.hostPendingModifiers = gesture.modifiers
+		if gesture is not None:
+			self.hostPendingModifiers = gesture.modifiers
+			self.hostPendingNonmodifier = (gesture.vkCode, gesture.isExtended)
+		else:
+			self.hostPendingModifiers = set()
 		# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
 		ui.message(pgettext("remote", "Controlling remote computer"))
 		if self.localMachine.isMuted:
 			self.toggleMute()
+
+	def _sessionLockStateChangeHandler(self, isNowLocked: bool):
+		if isNowLocked and self.sendingKeys:
+			self._wasSendingKeysBeforeLock = True
+			self._switchToLocalControl()
+		elif not isNowLocked and self._wasSendingKeysBeforeLock:
+			self._wasSendingKeysBeforeLock = False
+			self._switchToRemoteControl(None)
 
 	def releaseKeys(self):
 		"""Release all pressed keys on the remote machine.
@@ -609,7 +667,7 @@ class RemoteClient:
 		:note: Shows confirmation dialog before connecting
 		:raises: Displays error if already connected
 		"""
-		if self.isConnected() or self.connecting:
+		if self.isConnected() or self.isConnecting:
 			gui.messageBox(
 				pgettext(
 					"remote",
@@ -622,7 +680,7 @@ class RemoteClient:
 			)
 			return
 
-		self.connecting = True
+		self._connecting = True
 		try:
 			serverAddr = conInfo.getAddress()
 			key = conInfo.key
@@ -657,17 +715,36 @@ class RemoteClient:
 			):
 				self.connect(conInfo)
 		finally:
-			self.connecting = False
+			self._connecting = False
+
+	@property
+	def _transport(self) -> RelayTransport | None:
+		return self.followerTransport or self.leaderTransport
 
 	def isConnected(self) -> bool:
 		"""Check if there is an active connection.
 
 		:return: True if either follower or leader transport is connected
 		"""
-		connector = self.followerTransport or self.leaderTransport
-		if connector is not None:
+		if (connector := self._transport) is not None:
 			return connector.connected
 		return False
+
+	@property
+	def isConnectedAsFollower(self) -> bool:
+		"""Check if we are connected as the controlled computer."""
+		if self.followerTransport is not None:
+			return self.followerTransport.connected
+		return False
+
+	@property
+	def isConnecting(self) -> bool:
+		"""Whether or not a session is being connected or reconnected to."""
+		return self._connecting or (
+			not self.isConnected()
+			and self._transport is not None
+			and self._transport.reconnectorThread.running
+		)
 
 	def registerLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Add a script to be handled locally instead of sent to remote.

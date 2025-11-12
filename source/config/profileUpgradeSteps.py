@@ -24,6 +24,7 @@ from config.configFlags import (
 	OutputMode,
 	ReportCellBorders,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ShowMessages,
 	TetherTo,
@@ -576,3 +577,48 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 					log.debug(
 						f"Renamed config['remote']['{sectionKey}']['{oldItemKey}'] to config['remote']['{sectionKey}']['{newItemKey}'].",
 					)
+
+
+def upgradeConfigFrom_17_to_18(profile: ConfigObj) -> None:
+	"""Add dotPad to excluded braille displays by default due to generic USB PID/VID."""
+	# Only add to excludedDisplays if the auto section doesn't exist or excludedDisplays is empty/default
+	if "braille" not in profile:
+		profile["braille"] = {}
+	if "auto" not in profile["braille"]:
+		profile["braille"]["auto"] = {}
+	if "excludedDisplays" not in profile["braille"]["auto"]:
+		profile["braille"]["auto"]["excludedDisplays"] = []
+
+	# Only add dotPad if it's not already in the list
+	excludedDisplays = profile["braille"]["auto"]["excludedDisplays"]
+
+	if "dotPad" not in excludedDisplays:
+		excludedDisplays.append("dotPad")
+		log.debug(
+			"dotPad added to braille display auto detection excluded displays due to generic USB PID/VID. "
+			f"List is now: {excludedDisplays}",
+		)
+
+
+def upgradeConfigFrom_18_to_19(profile: ConfigObj):
+	"""Convert report spelling errors configurations from boolean to integer values."""
+
+	section = "documentFormatting"
+	key = "reportSpellingErrors"
+	newKey = "reportSpellingErrors2"
+	try:
+		oldValue: bool = profile[section].as_bool(key)
+	except KeyError:
+		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, got {profile[section][key]!r}. No action taken.")
+		return
+
+	newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
+	profile[section][newKey] = newValue
+	del profile[section][key]
+	log.debug(
+		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}"
+		f" ({ReportSpellingErrors(newValue).name}). The old key '{key}' has been deleted.",
+	)

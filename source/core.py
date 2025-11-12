@@ -19,8 +19,8 @@ import winVersion
 import threading
 import os
 import time
-import ctypes
 from enum import Enum
+import winBindings.kernel32
 import logHandler
 import languageHandler
 import globalVars
@@ -113,8 +113,9 @@ def _showAddonsErrors() -> None:
 		gui.messageBox(
 			_(
 				# Translators: Shown when one or more actions on add-ons failed.
-				"Some operations on add-ons failed. See the log file for more details.\n{}",
-			).format("\n".join(addonFailureMessages)),
+				# {failureMsg} will be replaced with the specific error message.
+				"Some operations on add-ons failed. See the log file for more details.\n{failureMsg}",
+			).format(failureMsg="\n".join(addonFailureMessages)),
 			# Translators: Title of message shown when requested action on add-ons failed.
 			_("Error"),
 			wx.ICON_ERROR | wx.OK,
@@ -549,6 +550,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import globalPluginHandler
 	import watchdog
 	import _remoteClient
+	import _localCaptioner
 
 	try:
 		import updateCheck
@@ -566,6 +568,8 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remoteClient causes it to clean up its menus, so do it here while they still exist
 	_terminate(_remoteClient)
+
+	_terminate(_localCaptioner)
 
 
 def _initializeObjectCaches():
@@ -641,7 +645,7 @@ def _setUpWxApp() -> "wx.App":
 	def onQueryEndSession(evt):
 		if config.isAppX:
 			# Automatically restart NVDA on Windows Store update
-			ctypes.windll.kernel32.RegisterApplicationRestart(None, 0)
+			winBindings.kernel32.RegisterApplicationRestart(None, 0)
 
 	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 
@@ -826,9 +830,9 @@ def main():
 		wx.CallAfter(audioDucking.initialize)
 
 	from winAPI.messageWindow import _MessageWindow
-	import versionInfo
+	import buildVersion
 
-	messageWindow = _MessageWindow(versionInfo.name)
+	messageWindow = _MessageWindow(buildVersion.name)
 
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
@@ -904,6 +908,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import _localCaptioner
+
+	_localCaptioner.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
@@ -1092,15 +1100,6 @@ def main():
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	_terminate(schedule, name="task scheduler")
-	# DMP is only started if needed.
-	# Terminate manually (and let it write to the log if necessary)
-	# as core._terminate always writes an entry.
-	try:
-		import diffHandler
-
-		diffHandler._dmp._terminate()
-	except Exception:
-		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:

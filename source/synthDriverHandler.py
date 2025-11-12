@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 import pkgutil
@@ -18,7 +18,6 @@ from typing import (
 from locale import strxfrm
 
 import config
-import winVersion
 import globalVars
 from logHandler import log
 from synthSettingsRing import SynthSettingsRing
@@ -221,6 +220,18 @@ class SynthDriver(driverHandler.Driver):
 			displayName=pgettext("synth setting", "Inflection"),
 		)
 
+	@classmethod
+	def UseWasapiSetting(cls) -> BooleanDriverSetting:
+		"""Factory function for creating 'Use WASAPI' setting."""
+		return BooleanDriverSetting(
+			"useWasapi",
+			# Translators: Label for a setting in voice settings dialog.
+			# "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
+			_("Use modern audio output system (WASAPI)"),
+			availableInSettingsRing=False,
+			defaultVal=True,
+		)
+
 	@abstractmethod
 	def speak(self, speechSequence):
 		"""
@@ -333,6 +344,10 @@ class SynthDriver(driverHandler.Driver):
 				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
 			):
 				return True
+		rootLang = languageHandler.normalizeLanguage(lang).split("_")[0]
+		fallbackLang = f"{rootLang}-{rootLang}"
+		if fallbackLang in self.availableLanguages:
+			return True
 		return False
 
 	def initSettings(self):
@@ -472,10 +487,7 @@ def getSynthInstance(name, asDefault=False):
 
 # The synthDrivers that should be used by default.
 # The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
-defaultSynthPriorityList = ["espeak", "silence"]
-if winVersion.getWinVer() >= winVersion.WIN10:
-	# Default to OneCore on Windows 10 and above
-	defaultSynthPriorityList.insert(0, "oneCore")
+defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):

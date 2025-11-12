@@ -1,0 +1,55 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+import glob
+import os
+
+from SCons.Tool.MSCommon.vc import find_vc_pdir
+
+Import(
+	[
+		"thirdPartyEnv",
+		"sourceDir",
+	]
+)
+
+env: Environment = thirdPartyEnv
+
+# UWP dlls can only be dynamically linked with the CRT,
+# but some systems might not have this version of the CRT.
+# Therefore, we must include it.
+# VS keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
+# Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
+# We also need to get the right DLLs based on the build architecture
+msvc = env.get("MSVC_VERSION")
+vcRedistDirs = glob.glob(
+	os.path.join(
+		find_vc_pdir(msvc, env),
+		"Redist",
+		"MSVC",
+		f"{msvc[:2]}*",
+		targetArch if (targetArch := env["TARGET_ARCH"]) != "x86_64" else "x64",
+		f"Microsoft.VC{msvc.replace('.', '')}.CRT",
+	)
+)
+if len(vcRedistDirs) == 0:
+	raise RuntimeError(
+		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+	)
+vcRedistDirs.sort(reverse=True)
+vcRedistLibs = ["msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll", "vcruntime140_1.dll"]
+# TODO: Delete when we drop support for x86
+if targetArch == "x86":
+	vcRedistLibs.remove("vcruntime140_1.dll")
+for fn in vcRedistLibs:
+	for vcRedistDir in vcRedistDirs:
+		path = os.path.join(vcRedistDir, fn)
+		if os.path.isfile(path):
+			env.Install(sourceDir, path)
+			break
+		else:
+			raise RuntimeError(
+				f"Could not locate {fn}. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+			)
