@@ -164,10 +164,11 @@ def extensions_panel():
 	for c in 'publisher:"Microsoft"':
 		spy.emulateKeyPress(c)
 	spy.emulateKeyPress("enter")
-	while speech := _NvdaLib.getSpeechAfterKey("tab"):
-		# find the extensions list
-		if "extensions list" in speech.lower():
-			break
+	# Tab to clear search button
+	spy.emulateKeyPress("tab")
+	# Tab to search results
+	speech = _NvdaLib.getSpeechAfterKey("tab")
+	_builtIn.should_contain(speech, "Extensions  list")
 	speech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(speech, "Microsoft")
 	speech = _NvdaLib.getSpeechAfterKey("tab")
