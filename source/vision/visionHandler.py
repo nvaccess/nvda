@@ -52,7 +52,7 @@ def _getProviderClass(
 
 def _getProvidersFromFileSystem():
 	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-		if moduleName.startswith("_") or moduleName == "screenCurtain":
+		if moduleName.startswith("_"):
 			continue
 		try:
 			#  Get each piece of info in a new statement so any exceptions raised identifies the line correctly.
