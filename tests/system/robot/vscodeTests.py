@@ -26,9 +26,9 @@ def sidebar_toggle_announced():
 	"""ensure control+b announces sidebar shown/hidden."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
-	_builtIn.should_contain(speech, "sidebar shown")
+	_builtIn.should_contain(speech, "Side Bar shown")
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
-	_builtIn.should_contain(speech, "sidebar hidden")
+	_builtIn.should_contain(speech, "Side Bar hidden")
 
 
 def command_palette():
@@ -36,10 +36,10 @@ def command_palette():
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+p")
-	_builtIn.should_contain(speech, "type the name of a command")
+	_builtIn.should_contain(speech, "Type the name of a command")
 	spy.emulateKeyPress("escape")
 	speech = _NvdaLib.getSpeechAfterKey("f1")
-	_builtIn.should_contain(speech, "type the name of a command")
+	_builtIn.should_contain(speech, "Type the name of a command")
 	for c in "new file":
 		spy.emulateKeyPress(c)
 	speech = _NvdaLib.getSpeechAfterKey("downArrow")
@@ -108,7 +108,7 @@ def file_editor_operations():
 	_builtIn.should_contain(speech, "blank")
 	# jump to start of file
 	spy.emulateKeyPress("control+home")
-	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+upArrow")
 	_builtIn.should_contain(speech, "hello")
 	# jump to end of file
 	spy.emulateKeyPress("control+end")
@@ -128,9 +128,8 @@ def file_editor_operations():
 	# type bracket for bracket matching test
 	spy.emulateKeyPress("control+end")
 	spy.emulateKeyPress("enter")
-	spy.emulateKeyPress("leftParen")
-	spy.emulateKeyPress("a")
-	spy.emulateKeyPress("rightParen")
+	for c in "(a)":
+		spy.emulateKeyPress(c)
 	# jump to matching bracket
 	spy.emulateKeyPress("control+shift+backslash")
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+.")
@@ -144,9 +143,27 @@ def file_editor_operations():
 	_builtIn.should_contain(speech, "hello")
 	# undo
 	spy.emulateKeyPress("control+z")
-	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+upArrow")
 	_builtIn.should_contain(speech, "hello")
 	# redo
 	spy.emulateKeyPress("control+y")
-	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+upArrow")
 	_builtIn.should_contain(speech, "(a)")
+
+def extensions_panel():
+	"""ensure extensions panel is accessible."""
+	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
+	speech = _NvdaLib.getSpeechAfterKey("control+shift+x")
+	_builtIn.should_contain(speech, "Extensions")
+	for c in 'publisher:"Microsoft"':
+		spy.emulateKeyPress(c)
+	spy.emulateKeyPress("enter")
+	while speech := _NvdaLib.getSpeechAfterKey("tab"):
+		# find the extensions list
+		if "extensions list" in speech.lower():
+			break
+	speech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(speech, "Microsoft")
+	speech = _NvdaLib.getSpeechAfterKey("tab")
+	_builtIn.should_contain(speech, "Install")

@@ -99,6 +99,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 
 1. Use `ctrl+shift+x` to open the Extensions panel
 1. Use arrow keys to navigate available extensions
+1. Use the search panel to search for extensions
 1. Use `tab` to move between extension details and actions
 1. Use `enter` to install or enable an extension
 

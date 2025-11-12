@@ -56,3 +56,7 @@ search panel
 file editor operations
 	[Documentation]    ensure file editor operations such as navigation, undo, and redo work correctly.
 	file_editor_operations
+
+extensions panel
+	[Documentation]    ensure extensions panel is accessible
+	extensions_panel
