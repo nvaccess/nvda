@@ -3392,7 +3392,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activatePrivacyAndSecuritySettings(self, gesture):
+	def script_activatePrivacyAndSecuritySettings(self, gesture: inputCore.InputGesture) -> None:
 		wx.CallAfter(gui.mainFrame.onPrivacyAndSecuritySettingsCommand, None)
 
 	@script(

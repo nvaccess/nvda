@@ -816,10 +816,12 @@ def main():
 
 	log.debug("Initializing braille")
 	braille.initialize()
+
 	import screenCurtain
 
 	log.debug("Initializing Screen Curtain")
 	screenCurtain.initialize()
+
 	import vision
 
 	log.debug("Initializing vision")

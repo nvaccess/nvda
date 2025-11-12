@@ -155,7 +155,7 @@ class _ScreenCurtain:
 		"""Whether the Screen Curtain is currently enabled."""
 		return self._enabled
 
-	def enable(self, *, persist=False) -> None:
+	def enable(self, *, persist: bool = False) -> None:
 		"""Enables the screen curtain.
 
 		This method is idempotent.
