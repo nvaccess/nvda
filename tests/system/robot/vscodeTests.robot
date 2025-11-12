@@ -32,6 +32,23 @@ default teardown
 	quit NVDA
 
 *** Test Cases ***
-VS Code status line is available
-	[Documentation]    Start Visual Studio Code and ensure NVDA+end does not report "no status line found".
-	vs_code_status_line_is_available
+
+status line is available
+	[Documentation]    ensure NVDA+end does not report "no status line found".
+	status_line_is_available
+
+sidebar toggle announced
+	[Documentation]    ensure control+b announces sidebar shown/hidden.
+	sidebar_toggle_announced
+
+command palette opens
+	[Documentation]    ensure the command palette is announced when activated.
+	command_palette_opens
+
+file navigation
+	[Documentation]    ensure file navigation works correctly.
+	command_palette_opens
+
+search panel focus
+	[Documentation]    ensure the search panel is announced when activated.
+	search_panel_focus

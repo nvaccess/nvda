@@ -15,13 +15,13 @@ _vscode: VSCodeLib = _getLib("VSCodeLib")
 
 
 def status_line_is_available():
-	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
+	"""ensure NVDA+end does not report "no status line found"."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+end")
 	_builtIn.should_not_contain(speech, "no status line found")
 
 def sidebar_toggle_announced():
-	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
+	"""ensure control+b announces sidebar shown/hidden."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
 	_builtIn.should_contain(speech, "sidebar shown")
@@ -29,7 +29,7 @@ def sidebar_toggle_announced():
 	_builtIn.should_contain(speech, "sidebar hidden")
 
 def command_palette_opens():
-	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
+	"""ensure the command palette is announced when activated."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+p")
 	_builtIn.should_contain(speech, "type the name of a command")
@@ -38,7 +38,7 @@ def command_palette_opens():
 	_builtIn.should_contain(speech, "type the name of a command")
 
 def file_navigation():
-	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
+	"""ensure file navigation works correctly."""
 	_vscode.start_vscode()
 	# create 2 new files
 	_NvdaLib.getSpeechAfterKey("control+n")
@@ -54,7 +54,7 @@ def file_navigation():
 	_builtIn.should_contain(speech, "Files Explorer")
 
 def search_panel_focus():
-	"""Start Visual Studio Code and ensure NVDA+end does not report "no status line found"."""
+	"""ensure the search panel is announced when activated."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+f")
 	_builtIn.should_contain(speech, "Search")
