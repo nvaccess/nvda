@@ -4926,9 +4926,10 @@ class GlobalCommands(ScriptableObject):
 					isinstance(focusObj, RefreshableRecogResultNVDAObject)
 					and focusObj.recognizer.allowAutoRefresh
 				):
-					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-					warningMessage = _("Cannot enable screen curtain while performing content recognition")
-					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					ui.message(
+						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
+						speechPriority=speech.priorities.Spri.NOW,
+					)
 					return
 				_enableScreenCurtain()
 

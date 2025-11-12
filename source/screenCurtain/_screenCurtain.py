@@ -26,6 +26,11 @@ TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other col
 # the screen curtain.
 warnOnLoadCheckBoxText = _("Always &show a warning when enabling Screen Curtain")
 
+UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = _(
+	# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+	"Cannot enable screen curtain while performing content recognition",
+)
+
 
 class ScreenCurtainSettings(TypedDict):
 	"""Type information for the "screenCurtain" section of the config."""
