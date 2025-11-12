@@ -4808,9 +4808,9 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
-		from screenCurtain import screenCurtain
+		import screenCurtain
 
-		if screenCurtain is None:
+		if screenCurtain.screenCurtain is None:
 			# Screen curtain has not been initialized.
 			# Translators: Reported when the screen curtain is not available.
 			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
@@ -4819,7 +4819,7 @@ class GlobalCommands(ScriptableObject):
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:  # first call should reset last message
 			self._toggleScreenCurtainMessage = None
-		alreadyRunning = screenCurtain.enabled
+		alreadyRunning = screenCurtain.screenCurtain.enabled
 		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
 		if self._waitingOnScreenCurtainWarningDialog:
 			# Already in the process of enabling the screen curtain, exit early.
@@ -4861,7 +4861,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when the screen curtain is disabled.
 			message = _("Screen curtain disabled")
 			try:
-				screenCurtain.disable()
+				screenCurtain.screenCurtain.disable()
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
 				log.error("Screen curtain termination error", exc_info=True)
@@ -4889,9 +4889,9 @@ class GlobalCommands(ScriptableObject):
 
 				try:
 					if alreadyRunning:
-						screenCurtain.settings["enabled"] = True
+						screenCurtain.screenCurtain.settings["enabled"] = True
 					else:
-						screenCurtain.enable(persist=not tempEnable)
+						screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.
@@ -4901,7 +4901,7 @@ class GlobalCommands(ScriptableObject):
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
 
 			#  Show warning if necessary and do enable.
-			settingsStorage = screenCurtain.settings
+			settingsStorage = screenCurtain.screenCurtain.settings
 			if settingsStorage["warnOnLoad"]:
 				from screenCurtain._screenCurtain import WarnOnLoadDialog
 
