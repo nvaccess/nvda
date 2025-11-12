@@ -14,6 +14,8 @@ if TYPE_CHECKING:
 _builtIn: BuiltIn = BuiltIn()
 _vscode: "VSCodeLib" = _getLib("VSCodeLib")
 
+_UNTITLED_FILE_FORMAT = "Untitled-{number}"
+
 
 def status_line_is_available():
 	"""ensure NVDA+end does not report "no status line found"."""
@@ -40,15 +42,16 @@ def command_palette():
 	spy.emulateKeyPress("escape")
 	speech = _NvdaLib.getSpeechAfterKey("f1")
 	_builtIn.should_contain(speech, "Type the name of a command")
-	for c in "new file":
+	newFileActionName = "Create: New File"
+	for c in newFileActionName:
 		spy.emulateKeyPress(c)
 	speech = _NvdaLib.getSpeechAfterKey("downArrow")
-	_builtIn.should_not_contain(speech, "Create: New File")
+	_builtIn.should_not_contain(speech, newFileActionName)
 	speech = _NvdaLib.getSpeechAfterKey("upArrow")
-	_builtIn.should_contain(speech, "Create: New File")
+	_builtIn.should_contain(speech, newFileActionName)
 	spy.emulateKeyPress("enter")
 	speech = _NvdaLib.getSpeechAfterKey("enter")
-	_builtIn.should_contain(speech, "Untitled-1")
+	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=1))
 
 
 def file_navigation():
@@ -57,13 +60,14 @@ def file_navigation():
 	spy = _NvdaLib.getSpyLib()
 	# create 2 new files
 	spy.emulateKeyPress("control+n")
-	# navigate to file
-	speech = _NvdaLib.getSpeechAfterKey("control+tab")
-	_builtIn.should_contain(speech, "Untitled-1")
 	# Create second file
 	spy.emulateKeyPress("control+n")
+	# navigate back to file 1
 	speech = _NvdaLib.getSpeechAfterKey("control+tab")
-	_builtIn.should_contain(speech, "Untitled-2")
+	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=1))
+	# navigate back to file 2
+	speech = _NvdaLib.getSpeechAfterKey("control+tab")
+	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=2))
 	# Go to file explorer
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+e")
 	_builtIn.should_contain(speech, "Files Explorer")
@@ -86,7 +90,7 @@ def search_panel():
 	# Confirm search
 	spy.emulateKeyPress("enter")
 	speech = _NvdaLib.getSpeechAfterKey("enter")
-	_builtIn.should_contain(speech, "1 result in 1 file")
+	_builtIn.should_contain(speech, "1 results in 1 files")
 	# Navigate search results
 	speech = _NvdaLib.getSpeechAfterKey("f4")
 	_builtIn.should_contain(speech, "hello world")
@@ -123,7 +127,7 @@ def file_editor_operations():
 	spy.emulateKeyPress("escape")
 	# open replace bar
 	speech = _NvdaLib.getSpeechAfterKey("control+h")
-	_builtIn.should_contain(speech, "Find")
+	_builtIn.should_contain(speech, "Replace")
 	spy.emulateKeyPress("escape")
 	# type bracket for bracket matching test
 	spy.emulateKeyPress("control+end")
