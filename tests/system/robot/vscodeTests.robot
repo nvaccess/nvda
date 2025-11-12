@@ -52,3 +52,7 @@ file navigation
 search panel focus
 	[Documentation]    ensure the search panel is announced when activated.
 	search_panel_focus
+
+file editor operations
+	[Documentation]    ensure file editor operations such as navigation, undo, and redo work correctly.
+	file_editor_operations

@@ -37,8 +37,6 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 ### Steps
 
 1. Use `ctrl+n` to create a new file
-1. Type sample text
-1. Use `ctrl+f` to focus the Search panel
 1. Use `ctrl+s` to save, enter a filename, and confirm
 1. Use `ctrl+o` to open an existing file
 1. Use `ctrl+w` to close the current file

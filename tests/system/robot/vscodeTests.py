@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 	from VSCodeLib import VSCodeLib
 
 _builtIn: BuiltIn = BuiltIn()
-_vscode: VSCodeLib = _getLib("VSCodeLib")
+_vscode: "VSCodeLib" = _getLib("VSCodeLib")
 
 
 def status_line_is_available():
@@ -34,9 +34,10 @@ def sidebar_toggle_announced():
 def command_palette_opens():
 	"""ensure the command palette is announced when activated."""
 	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+p")
 	_builtIn.should_contain(speech, "type the name of a command")
-	_NvdaLib.getSpeechAfterKey("escape")
+	spy.emulateKeyPress("escape")
 	speech = _NvdaLib.getSpeechAfterKey("f1")
 	_builtIn.should_contain(speech, "type the name of a command")
 
@@ -44,13 +45,14 @@ def command_palette_opens():
 def file_navigation():
 	"""ensure file navigation works correctly."""
 	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
 	# create 2 new files
-	_NvdaLib.getSpeechAfterKey("control+n")
+	spy.emulateKeyPress("control+n")
 	# navigate to file
 	speech = _NvdaLib.getSpeechAfterKey("control+tab")
 	_builtIn.should_contain(speech, "Untitled-1")
 	# Create second file
-	_NvdaLib.getSpeechAfterKey("control+n")
+	spy.emulateKeyPress("control+n")
 	speech = _NvdaLib.getSpeechAfterKey("control+tab")
 	_builtIn.should_contain(speech, "Untitled-2")
 	# Go to file explorer
@@ -63,3 +65,66 @@ def search_panel_focus():
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+f")
 	_builtIn.should_contain(speech, "Search")
+
+
+def file_editor_operations():
+	"""ensure file editor operations such as navigation, undo, and redo work correctly."""
+	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
+	# create new file
+	spy.emulateKeyPress("control+n")
+	# type some text
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("e")
+	spy.emulateKeyPress("l")
+	spy.emulateKeyPress("l")
+	spy.emulateKeyPress("o")
+	# navigate with arrow keys
+	speech = _NvdaLib.getSpeechAfterKey("leftArrow")
+	_builtIn.should_contain(speech, "o")
+	speech = _NvdaLib.getSpeechAfterKey("rightArrow")
+	_builtIn.should_contain(speech, "blank")
+	# jump to start of file
+	spy.emulateKeyPress("control+home")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	_builtIn.should_contain(speech, "hello")
+	# jump to end of file
+	spy.emulateKeyPress("control+end")
+	speech = _NvdaLib.getSpeechAfterKey("leftArrow")
+	_builtIn.should_contain(speech, "o")
+	# open find bar and search
+	spy.emulateKeyPress("control+f")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("e")
+	speech = _NvdaLib.getSpeechAfterKey("l")
+	_builtIn.should_contain(speech, "1 of 1")
+	spy.emulateKeyPress("escape")
+	# open replace bar
+	speech = _NvdaLib.getSpeechAfterKey("control+h")
+	_builtIn.should_contain(speech, "Find")
+	spy.emulateKeyPress("escape")
+	# type bracket for bracket matching test
+	spy.emulateKeyPress("control+end")
+	spy.emulateKeyPress("enter")
+	spy.emulateKeyPress("leftParen")
+	spy.emulateKeyPress("a")
+	spy.emulateKeyPress("rightParen")
+	# jump to matching bracket
+	spy.emulateKeyPress("control+shift+backslash")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+.")
+	_builtIn.should_contain(speech, "(")
+	# move line down
+	spy.emulateKeyPress("control+home")
+	speech = _NvdaLib.getSpeechAfterKey("alt+downArrow")
+	_builtIn.should_contain(speech, "hello")
+	# move line up
+	speech = _NvdaLib.getSpeechAfterKey("alt+upArrow")
+	_builtIn.should_contain(speech, "hello")
+	# undo
+	spy.emulateKeyPress("control+z")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	_builtIn.should_contain(speech, "hello")
+	# redo
+	spy.emulateKeyPress("control+y")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+up")
+	_builtIn.should_contain(speech, "(a)")
