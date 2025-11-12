@@ -41,13 +41,13 @@ sidebar toggle announced
 	[Documentation]    ensure control+b announces sidebar shown/hidden.
 	sidebar_toggle_announced
 
-command palette opens
-	[Documentation]    ensure the command palette is announced when activated.
-	command_palette_opens
+command palette
+	[Documentation]    ensure the command palette is announced when activated and can be navigated.
+	command_palette
 
 file navigation
 	[Documentation]    ensure file navigation works correctly.
-	command_palette_opens
+	file_navigation
 
 search panel focus
 	[Documentation]    ensure the search panel is announced when activated.

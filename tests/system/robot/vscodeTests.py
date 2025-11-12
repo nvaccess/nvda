@@ -31,8 +31,8 @@ def sidebar_toggle_announced():
 	_builtIn.should_contain(speech, "sidebar hidden")
 
 
-def command_palette_opens():
-	"""ensure the command palette is announced when activated."""
+def command_palette():
+	"""ensure the command palette is announced when activated and can be navigated."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+p")
@@ -40,6 +40,15 @@ def command_palette_opens():
 	spy.emulateKeyPress("escape")
 	speech = _NvdaLib.getSpeechAfterKey("f1")
 	_builtIn.should_contain(speech, "type the name of a command")
+	for c in "new file":
+		spy.emulateKeyPress(c)
+	speech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_not_contain(speech, "Create: New File")
+	speech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_builtIn.should_contain(speech, "Create: New File")
+	spy.emulateKeyPress("enter")
+	speech = _NvdaLib.getSpeechAfterKey("enter")
+	_builtIn.should_contain(speech, "Untitled-1")
 
 
 def file_navigation():
@@ -74,11 +83,8 @@ def file_editor_operations():
 	# create new file
 	spy.emulateKeyPress("control+n")
 	# type some text
-	spy.emulateKeyPress("h")
-	spy.emulateKeyPress("e")
-	spy.emulateKeyPress("l")
-	spy.emulateKeyPress("l")
-	spy.emulateKeyPress("o")
+	for c in "hello":
+		spy.emulateKeyPress(c)
 	# navigate with arrow keys
 	speech = _NvdaLib.getSpeechAfterKey("leftArrow")
 	_builtIn.should_contain(speech, "o")
