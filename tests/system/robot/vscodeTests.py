@@ -150,6 +150,7 @@ def file_editor_operations():
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+upArrow")
 	_builtIn.should_contain(speech, "(a)")
 
+
 def extensions_panel():
 	"""ensure extensions panel is accessible."""
 	_vscode.start_vscode()
