@@ -15,7 +15,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 * Extensions
 * Terminal
 
-## 1. Application Launch and Window Navigation
+## Application Launch and Window Navigation
 
 ### Steps
 
@@ -32,7 +32,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 * NVDA announces window title and major UI regions
 * Navigation between panels and tabs is clear and consistent
 
-## 2. File Operations
+## File Operations
 
 ### Steps
 
@@ -50,7 +50,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 * NVDA announces file dialogs and file actions
 * File operations are accessible and confirmed by speech
 
-## 3. Editor Accessibility
+## Editor Operations
 
 ### Steps
 
@@ -67,7 +67,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 * NVDA announces line numbers, text, and search results
 * Editing and navigation are accessible
 
-## 4. Command Palette and Search
+## Command Palette
 
 ### Steps
 
@@ -75,15 +75,25 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 1. Type to search for commands (e.g., "toggle word wrap")
 1. Use arrow keys to navigate results
 1. Press `enter` to execute a command
-1. Use `ctrl+shift+f` to open the search panel
-1. Enter a search term and review results
 
 ### Expected Results
 
 * NVDA announces command palette, search results, and command execution
-* All command palette and search features are accessible
+* All command palette features are accessible
 
-## 5. Extensions
+## Search Panel
+
+### Steps
+
+1. Use `ctrl+shift+f` to open the search panel
+1. Fill out each field (find, replace, include, exclude)
+1. Review results with `f4`
+
+### Expected Results
+
+* NVDA announces search results and search fields
+
+## Extensions
 
 ### Steps
 
@@ -97,7 +107,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 * NVDA announces extension names, details, and actions
 * Installing and managing extensions is accessible
 
-## 6. Terminal
+## Terminal
 
 ### Steps
 

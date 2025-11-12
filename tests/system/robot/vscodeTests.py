@@ -69,11 +69,27 @@ def file_navigation():
 	_builtIn.should_contain(speech, "Files Explorer")
 
 
-def search_panel_focus():
-	"""ensure the search panel is announced when activated."""
+def search_panel():
+	"""ensure the search panel is announced when activated and can be navigated."""
 	_vscode.start_vscode()
+	spy = _NvdaLib.getSpyLib()
+	# Create file and text
+	spy.emulateKeyPress("control+n")
+	for c in "hello world":
+		spy.emulateKeyPress(c)
+	# Open search panel
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+f")
 	_builtIn.should_contain(speech, "Search")
+	# Type search query
+	for c in "hello":
+		spy.emulateKeyPress(c)
+	# Confirm search
+	spy.emulateKeyPress("enter")
+	speech = _NvdaLib.getSpeechAfterKey("enter")
+	_builtIn.should_contain(speech, "1 result in 1 file")
+	# Navigate search results
+	speech = _NvdaLib.getSpeechAfterKey("f4")
+	_builtIn.should_contain(speech, "hello world")
 
 
 def file_editor_operations():
