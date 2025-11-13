@@ -75,7 +75,7 @@ def file_navigation():
 	speechIndexBeforeTabbing = spy.get_last_speech_index()
 	spy.emulateKeyPress("control+tab")
 	speech = spy.get_speech_at_index_until_now(speechIndexBeforeTabbing)
-	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=w))
+	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=2))
 	# Go to file explorer
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+e")
 	_builtIn.should_contain(speech, "Files Explorer")
