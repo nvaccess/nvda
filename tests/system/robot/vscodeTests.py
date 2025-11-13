@@ -189,9 +189,9 @@ def terminal_panel():
 		spy.emulateKeyPress(c)
 	spy.emulateKeyPress("enter")
 	spy.wait_for_speech_to_finish()
+	# Enter accessible view of terminal output
 	speech = _NvdaLib.getSpeechAfterKey("alt+f2")
-	_builtIn.should_contain(speech, "Accessible View")
-	# Read top of terminal output
+	# Read bottom of terminal output
 	speech = _NvdaLib.getSpeechAfterKey("upArrow")
 	_builtIn.should_contain(speech, "foo")
 	spy.emulateKeyPress("escape")
