@@ -306,7 +306,7 @@ jobs:
     name: Create launcher
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
-    timeout-minutes: 15
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
