@@ -108,7 +108,7 @@ class VSCodeLib:
 			f"--skip-add-to-recently-opened "
 			f"-n "
 			f"--wait"
-			f" {targetPath}"
+			f' "{targetPath}"'
 		)
 		_builtIn.log(f"Starting Visual Studio Code: {cmd}", level="DEBUG")
 		VSCodeLib._processRFHandleForStart = _process.start_process(

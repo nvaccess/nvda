@@ -25,7 +25,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 1. Use `f1` to open the command palette (alternative)
 1. Use `control+b` to toggle the sidebar
 1. Use `control+shift+f` to focus the Search panel
-1. Use `f6` to navigate between sections of the window.
+1. Use `f6` to navigate between sections of the window
 
 ### Expected Results
 

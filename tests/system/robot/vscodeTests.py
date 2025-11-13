@@ -90,6 +90,7 @@ def search_panel():
 	# Confirm search
 	spy.emulateKeyPress("enter")
 	speech = _NvdaLib.getSpeechAfterKey("enter")
+	# TODO: report grammar issue to codium
 	_builtIn.should_contain(speech, "1 results in 1 files")
 	# Navigate search results
 	speech = _NvdaLib.getSpeechAfterKey("f4")
