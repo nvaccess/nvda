@@ -1497,7 +1497,7 @@ You can enable the Screen Curtain in the [Privacy and Security category](#Privac
 
 <!-- KC:endInclude -->
 
-When the Screen Curtain is active, some tasks directly based on what appears on the screen, such as performing [OCR](#Win10Ocr) or taking a screenshot, cannot be achieved.
+When the Screen Curtain is active, some tasks directly based on what appears on the screen, such as [performing OCR](#Win10Ocr), [getting an AI image description](#LocalCaptioner), or taking a screenshot, cannot be achieved.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, the screen curtain cannot be enabled.
 
