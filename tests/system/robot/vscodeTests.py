@@ -28,9 +28,9 @@ def sidebar_toggle_announced():
 	"""Ensure control+b announces sidebar shown/hidden."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
-	_builtIn.should_contain(speech, "Side Bar shown")
-	speech = _NvdaLib.getSpeechAfterKey("control+b")
 	_builtIn.should_contain(speech, "Side Bar hidden")
+	speech = _NvdaLib.getSpeechAfterKey("control+b")
+	_builtIn.should_contain(speech, "Side Bar shown")
 
 
 def command_palette():
@@ -159,7 +159,7 @@ def file_editor_operations():
 	_builtIn.should_contain(speech, "hello")
 	# redo
 	spy.emulateKeyPress("control+y")
-	speech = _NvdaLib.getSpeechAfterKey("NVDA+upArrow")
+	speech = _NvdaLib.getSpeechAfterKey("NVDA+downArrow")
 	_builtIn.should_contain(speech, "(a)")
 
 
