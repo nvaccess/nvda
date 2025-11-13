@@ -18,14 +18,14 @@ _UNTITLED_FILE_FORMAT = "Untitled-{number}"
 
 
 def status_line_is_available():
-	"""ensure NVDA+end does not report "no status line found"."""
+	"""Ensure NVDA+end does not report "no status line found"."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("NVDA+end")
 	_builtIn.should_not_contain(speech, "no status line found")
 
 
 def sidebar_toggle_announced():
-	"""ensure control+b announces sidebar shown/hidden."""
+	"""Ensure control+b announces sidebar shown/hidden."""
 	_vscode.start_vscode()
 	speech = _NvdaLib.getSpeechAfterKey("control+b")
 	_builtIn.should_contain(speech, "Side Bar shown")
@@ -34,7 +34,7 @@ def sidebar_toggle_announced():
 
 
 def command_palette():
-	"""ensure the command palette is announced when activated and can be navigated."""
+	"""Ensure the command palette is announced when activated and can be navigated."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+p")
@@ -55,7 +55,7 @@ def command_palette():
 
 
 def file_navigation():
-	"""ensure file navigation works correctly."""
+	"""Ensure file navigation works correctly."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	# create 2 new files
@@ -82,7 +82,7 @@ def file_navigation():
 
 
 def search_panel():
-	"""ensure the search panel is announced when activated and can be navigated."""
+	"""Ensure the search panel is announced when activated and can be navigated."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	# Create file and text
@@ -105,7 +105,7 @@ def search_panel():
 
 
 def file_editor_operations():
-	"""ensure file editor operations such as navigation, undo, and redo work correctly."""
+	"""Ensure file editor operations such as navigation, undo, and redo work correctly."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	# create new file
@@ -164,7 +164,7 @@ def file_editor_operations():
 
 
 def extensions_panel():
-	"""ensure extensions panel is accessible."""
+	"""Ensure extensions panel is accessible."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+x")
@@ -184,7 +184,7 @@ def extensions_panel():
 
 
 def terminal_panel():
-	"""ensure terminal panel is accessible."""
+	"""Ensure terminal panel is accessible."""
 	_vscode.start_vscode()
 	spy = _NvdaLib.getSpyLib()
 	speech = _NvdaLib.getSpeechAfterKey("control+`")

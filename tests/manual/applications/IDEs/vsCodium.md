@@ -115,7 +115,7 @@ VSCodium is based on Electron and as such smoke testing can reveal issues with t
 1. Use ``ctrl+` `` to open the integrated terminal
 1. Type commands e.g. `ls`
 1. Review output with accessible view using `alt+f2`
-1. Use `ctrl+shift+` ` to create a new terminal
+1. Use ``ctrl+shift+` `` to create a new terminal
 1. Use `??` to switch between terminals
 
 ### Expected Results

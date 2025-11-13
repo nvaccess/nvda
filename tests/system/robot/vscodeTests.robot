@@ -34,33 +34,33 @@ default teardown
 *** Test Cases ***
 
 status line is available
-	[Documentation]    ensure NVDA+end does not report "no status line found".
+	[Documentation]    Ensure NVDA+end does not report "no status line found".
 	status_line_is_available
 
 sidebar toggle announced
-	[Documentation]    ensure control+b announces sidebar shown/hidden.
+	[Documentation]    Ensure control+b announces sidebar shown/hidden.
 	sidebar_toggle_announced
 
 command palette
-	[Documentation]    ensure the command palette is announced when activated and can be navigated.
+	[Documentation]    Ensure the command palette is announced when activated and can be navigated.
 	command_palette
 
 file navigation
-	[Documentation]    ensure file navigation works correctly.
+	[Documentation]    Ensure file navigation works correctly.
 	file_navigation
 
 search panel
-	[Documentation]    ensure the search panel is announced when activated and can be navigated.
+	[Documentation]    Ensure the search panel is announced when activated and can be navigated.
 	search_panel
 
 file editor operations
-	[Documentation]    ensure file editor operations such as navigation, undo, and redo work correctly.
+	[Documentation]    Ensure file editor operations such as navigation, undo, and redo work correctly.
 	file_editor_operations
 
 extensions panel
-	[Documentation]    ensure extensions panel is accessible
+	[Documentation]    Ensure extensions panel is accessible
 	extensions_panel
 
 terminal panel
-	[Documentation]    ensure terminal panel is accessible.
+	[Documentation]    Ensure terminal panel is accessible.
 	terminal_panel
