@@ -70,6 +70,9 @@ class VSCodeLib:
 		if targetPath is None:
 			targetPath = _os.path.join(VSCodeLib._testTempDir, "testDirectory")
 
+		if not _os.path.exists(targetPath):
+			_os.makedirs(targetPath, exist_ok=True)
+
 		# Prepare user settings to suppress welcome/startup screen
 		userSettingsDir = _os.path.join(userDataDir, "User")
 		_os.makedirs(userSettingsDir, exist_ok=True)

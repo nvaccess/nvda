@@ -145,7 +145,7 @@ def file_editor_operations():
 	# jump to matching bracket
 	spy.emulateKeyPress("control+shift+\\")
 	speech = _NvdaLib.getSpeechAfterKey("numpad2")
-	_builtIn.should_contain(speech, "(")
+	_builtIn.should_contain(speech, "left paren")
 	# move line down
 	spy.emulateKeyPress("control+home")
 	speech = _NvdaLib.getSpeechAfterKey("alt+downArrow")
