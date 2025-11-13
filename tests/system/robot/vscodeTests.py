@@ -67,11 +67,15 @@ def file_navigation():
 	spy.emulateKeyPress("control+s")
 	spy.emulateKeyPress("enter")
 	# navigate back to file 1
-	speech = _NvdaLib.getSpeechAfterKey("control+tab")
+	speechIndexBeforeTabbing = spy.get_last_speech_index()
+	spy.emulateKeyPress("control+tab")
+	speech = spy.get_speech_at_index_until_now(speechIndexBeforeTabbing)
 	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=1))
 	# navigate back to file 2
-	speech = _NvdaLib.getSpeechAfterKey("control+tab")
-	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=2))
+	speechIndexBeforeTabbing = spy.get_last_speech_index()
+	spy.emulateKeyPress("control+tab")
+	speech = spy.get_speech_at_index_until_now(speechIndexBeforeTabbing)
+	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=w))
 	# Go to file explorer
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+e")
 	_builtIn.should_contain(speech, "Files Explorer")
@@ -140,7 +144,7 @@ def file_editor_operations():
 		spy.emulateKeyPress(c)
 	# jump to matching bracket
 	spy.emulateKeyPress("control+shift+\\")
-	speech = _NvdaLib.getSpeechAfterKey("NVDA+.")
+	speech = _NvdaLib.getSpeechAfterKey("numpad2")
 	_builtIn.should_contain(speech, "(")
 	# move line down
 	spy.emulateKeyPress("control+home")
@@ -188,6 +192,7 @@ def terminal_panel():
 	for c in "echo foo":
 		spy.emulateKeyPress(c)
 	spy.emulateKeyPress("enter")
+	spy.wait_for_speech_to_finish()
 	speech = _NvdaLib.getSpeechAfterKey("alt+f2")
 	_builtIn.should_contain(speech, "Accessible View")
 	# Read top of terminal output
