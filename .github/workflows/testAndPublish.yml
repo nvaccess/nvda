@@ -59,6 +59,7 @@ jobs:
     name: Build NVDA
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -305,6 +306,7 @@ jobs:
     name: Create launcher
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -389,6 +391,7 @@ jobs:
     name: Run system tests
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
