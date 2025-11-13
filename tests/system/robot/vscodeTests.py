@@ -60,12 +60,15 @@ def file_navigation():
 	spy = _NvdaLib.getSpyLib()
 	# create 2 new files
 	spy.emulateKeyPress("control+n")
-	spy.emulateKeyPress("control+s")
 	spy.emulateKeyPress("enter")
-	# Agree to overwrite
-	spy.emulateKeyPress("alt+y")
 	# Create second file
 	spy.emulateKeyPress("control+n")
+	# Save second file
+	spy.emulateKeyPress("control+s")
+	spy.emulateKeyPress("enter")
+	# Close second file
+	spy.emulateKeyPress("control+w")
+	# Save first file
 	spy.emulateKeyPress("control+s")
 	spy.emulateKeyPress("enter")
 	# Go to file explorer
