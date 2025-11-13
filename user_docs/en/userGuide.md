@@ -5629,11 +5629,12 @@ Secure mode disables:
 * [Configuration Profile](#ConfigurationProfiles) features such as creation, deletion, renaming profiles etc.
 * Loading custom configuration folders using [the `-c` command line option](#CommandLineOptions)
 * Updating NVDA and creating portable copies
+* Manually initiating a new [Remote Access](#RemoteAccess) session (sessions previously configured to [automatically connect](#RemoteAutoconnect) will still be started)
 * The [Add-on Store](#AddonsManager)
 * The [NVDA Python console](#PythonConsole)
 * The [Log Viewer](#LogViewer) and logging
 * The [Braille Viewer](#BrailleViewer) and [Speech Viewer](#SpeechViewer)
-* Opening external documents from the NVDA menu, such as the user guide file.
+* Opening external documents from the NVDA menu, such as the user guide file
 
 Installed copies of NVDA store their configuration including add-ons in `%APPDATA%\nvda`.
 To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.
