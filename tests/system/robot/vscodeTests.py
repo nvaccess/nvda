@@ -71,11 +71,13 @@ def file_navigation():
 	# navigate back to file 1
 	speechIndexBeforeTabbing = spy.get_last_speech_index()
 	spy.emulateKeyPress("control+tab")
+	spy.wait_for_speech_to_finish()
 	speech = spy.get_speech_at_index_until_now(speechIndexBeforeTabbing)
 	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=1))
 	# navigate back to file 2
 	speechIndexBeforeTabbing = spy.get_last_speech_index()
 	spy.emulateKeyPress("control+tab")
+	spy.wait_for_speech_to_finish()
 	speech = spy.get_speech_at_index_until_now(speechIndexBeforeTabbing)
 	_builtIn.should_contain(speech, _UNTITLED_FILE_FORMAT.format(number=2))
 	# Go to file explorer
