@@ -62,6 +62,8 @@ def file_navigation():
 	spy.emulateKeyPress("control+n")
 	spy.emulateKeyPress("control+s")
 	spy.emulateKeyPress("enter")
+	# Agree to overwrite
+	spy.emulateKeyPress("alt+y")
 	# Create second file
 	spy.emulateKeyPress("control+n")
 	spy.emulateKeyPress("control+s")
