@@ -51,8 +51,8 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
-* The state of the Screen Curtain is no-longer dependent on the configuration profile in use. (#10476)
-* The screen Curtain settings have been moved to the new privacy and security category of NVDA's settings. (#19177)
+* The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
+* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
 
 ### Bug Fixes
 
