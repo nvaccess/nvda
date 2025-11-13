@@ -202,6 +202,8 @@ def terminal_panel():
 	# Create new terminal
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+`")
 	_builtIn.should_contain(speech, "Terminal 2")
-	# TODO: Switch between terminals
-	speech = _NvdaLib.getSpeechAfterKey("?")
+	# Navigate between terminals
+	speech = _NvdaLib.getSpeechAfterKey("control+pageUp")
 	_builtIn.should_contain(speech, "Terminal 1")
+	speech = _NvdaLib.getSpeechAfterKey("control+pageDown")
+	_builtIn.should_contain(speech, "Terminal 2")
