@@ -65,12 +65,12 @@ def file_navigation():
 	spy.emulateKeyPress("control+n")
 	# Save second file
 	spy.emulateKeyPress("control+s")
-	spy.emulateKeyPress("enter")
+	spy.emulateKeyPress("alt+s")
 	# Close second file
 	spy.emulateKeyPress("control+w")
 	# Save first file
 	spy.emulateKeyPress("control+s")
-	spy.emulateKeyPress("enter")
+	spy.emulateKeyPress("alt+s")
 	# Go to file explorer
 	speech = _NvdaLib.getSpeechAfterKey("control+shift+e")
 	_builtIn.should_contain(speech, "Files Explorer")
