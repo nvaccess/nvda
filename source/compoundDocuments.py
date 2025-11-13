@@ -458,7 +458,22 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			tempObj = moveObj.flowsFrom if goPrevious else moveObj.flowsTo
 			if tempObj:
 				moveObj = tempObj
-			else:
+			elif isinstance(moveTi, CompoundTextLeafTextInfo) and not moveTi.allowMoveToUnitOffsetPastEnd(
+				unit,
+			):
+				realEnd = self._makeRawTextInfo(moveObj, textInfos.POSITION_LAST)
+				if (
+					moveTi.compareEndPoints(
+						realEnd,
+						"endToEnd",
+					)
+					< 0
+				):
+					# The inner text info doesn't allow us to move past the last units end.
+					# This causes movement to stall, yet we're not at the real end of the document.
+					# Therefore, move to the end of the inner info.
+					moveTi = realEnd
+					remainingMovement = 0
 				break
 			if goPrevious:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_ALL)
