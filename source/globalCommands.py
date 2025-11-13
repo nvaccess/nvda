@@ -5119,7 +5119,6 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_IMAGE_DESC,
 	)
-	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
