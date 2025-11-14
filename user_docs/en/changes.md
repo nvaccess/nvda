@@ -66,6 +66,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 
 ### Changes for Developers
 
@@ -86,6 +87,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
+* Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 
 #### API Breaking Changes
 
