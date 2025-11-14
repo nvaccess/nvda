@@ -66,6 +66,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* In the input gesture dialog, gestures including an operator while numlock is on will now appear correctly.
 
 ### Changes for Developers
 
