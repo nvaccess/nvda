@@ -500,7 +500,7 @@ def isNVDAObject(obj: Any) -> bool:
 	return isinstance(obj, NVDAObjects.NVDAObject)
 
 
-fakeNVDAObjectClasses: "set[type[documentBase.TextContainerObject]]" = set()
+fakeNVDAObjectClasses: set[type[NVDAObjects.NVDAObject]] = set()
 """A collection used to register fake NVDAObject classes.
 These classes are treated as virtual NVDAObjects and may not correspond to actual controls."""
 
