@@ -5131,7 +5131,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 		speakOnDemand=True,
 	)
-	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture"):
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
 		lastSpeech = speech.speech._lastSpeech
 		if lastSpeech is None:
 			return
