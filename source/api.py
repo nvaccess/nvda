@@ -501,8 +501,12 @@ def isNVDAObject(obj: Any) -> bool:
 
 
 fakeNVDAObjectClasses: set[type[NVDAObjects.NVDAObject]] = set()
-"""A collection used to register fake NVDAObject classes.
-These classes are treated as virtual NVDAObjects and may not correspond to actual controls."""
+"""
+A collection used to register fake NVDAObject classes.
+
+These classes are treated as virtual NVDAObjects, and may not correspond to actual controls.
+For instance, content recognition results.
+"""
 
 
 def isFakeNVDAObject(obj: Any) -> bool:
