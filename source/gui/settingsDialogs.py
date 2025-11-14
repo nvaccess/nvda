@@ -2795,7 +2795,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		commentsText = _("No&tes and comments")
+		commentsText = _("Commen&ts")
 		self.commentsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=commentsText))
 		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
 
