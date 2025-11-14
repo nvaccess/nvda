@@ -75,34 +75,47 @@ class TestTreeCompoundTextInfo(unittest.TestCase):
 		"""Test character movement across the compound text info."""
 		info: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_FIRST)
 		expected = [*"one\r\n", "", *"two\r\n", "", *"three"]
-		for i, c in enumerate(expected):
+		for i in range(len(expected) + 1):
+			c = expected[i] if i < len(expected) else ""
 			with self.subTest(i=i, c=c):
 				info.collapse()
 				movement = min(i, 1)
 				self.assertEqual(info.move(textInfos.UNIT_CHARACTER, movement), movement)
 				info.expand(textInfos.UNIT_CHARACTER)
 				self.assertEqual(info.text, c)
+		last: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_LAST)
+		# Allow moving past end
+		self.assertGreater(info.compareEndPoints(last, "endToEnd"), 0)
 
 	def test_wordMovement(self):
 		"""Test word movement across the compound text info."""
 		info: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_FIRST)
 		expected = ["one\r\n", "", "two\r\n", "", "three"]
-		for i, w in enumerate(expected):
+		for i in range(len(expected) + 1):
+			w = expected[i] if i < len(expected) else ""
 			with self.subTest(i=i, w=w):
 				info.collapse()
 				movement = min(i, 1)
 				self.assertEqual(info.move(textInfos.UNIT_WORD, movement), movement)
 				info.expand(textInfos.UNIT_WORD)
 				self.assertEqual(info.text, w)
+		last: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_LAST)
+		# Allow moving past end
+		self.assertGreater(info.compareEndPoints(last, "endToEnd"), 0)
 
 	def test_lineMovement(self):
 		"""Test linem ovement across the compound text info."""
 		info: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_FIRST)
 		expected = ["one\r\n", "two\r\n", "three"]
-		for i, line in enumerate(expected):
+		for i in range(len(expected) + 1):
+			if i < len(expected):
+				line = expected[i]
 			with self.subTest(i=i, line=line):
 				info.collapse()
 				movement = min(i, 1)
 				self.assertEqual(info.move(textInfos.UNIT_LINE, movement), movement)
 				info.expand(textInfos.UNIT_LINE)
 				self.assertEqual(info.text, line)
+		last: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_LAST)
+		# Allow moving past end
+		self.assertGreater(info.compareEndPoints(last, "endToEnd"), 0)
