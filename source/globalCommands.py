@@ -5127,7 +5127,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Description for the repeat last speech script
 			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
 		),
-		gesture="kb:NVDA+control+f12",
+		gesture="kb:NVDA+x",
 		category=SCRCAT_SPEECH,
 		speakOnDemand=True,
 	)
