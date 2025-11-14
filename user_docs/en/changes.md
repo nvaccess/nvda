@@ -65,7 +65,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When a syntesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
-* The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (@hwf1324)
+* The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 
 ### Changes for Developers
 
