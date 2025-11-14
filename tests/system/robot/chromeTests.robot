@@ -125,6 +125,10 @@ i10840
 	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
 	[Tags]	chrome_table
 	test_i10840
+i10890
+	[Documentation]	Test sort state is announced on column header when changed with inner button
+	[Tags]	chrome_table
+	test_i10890
 
 ## chrome_language tests
 ### Language changing related tests
@@ -234,10 +238,6 @@ Focus reports target first
 	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	[Tags]	chrome_misc
 	test_focusTargetReporting
-i10890
-	[Documentation]	Test sort state is announced on column header when changed with inner button
-	[Tags]	chrome_misc
-	test_i10890
 textParagraphNavigation
 	[Documentation]	Text paragraph navigation
 	[Tags]	chrome_misc
