@@ -67,7 +67,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
-* In the input gesture dialog, gestures including an operator while numlock is on will now appear correctly.
+* In the input gesture dialog, gestures including an operator while numlock is on will now be correctly displayed. (#19214, @CyrilleB79)
 
 ### Changes for Developers
 
