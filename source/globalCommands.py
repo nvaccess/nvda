@@ -5135,13 +5135,16 @@ class GlobalCommands(ScriptableObject):
 		lastSpeech = speech.speech._lastSpeech
 		if lastSpeech is None:
 			return
+		lastSpeechSeq, symbolLevel = lastSpeech
 		repeats = scriptHandler.getLastScriptRepeatCount()
+		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
 		if repeats == 0:
-			ui.message(lastSpeech)
+			speech.speak(lastSpeechSeq, symbolLevel=None)
+			braille.handler.message(lastSpeechText)
 		elif repeats == 1:
 			# Translators: title for report last spoken information dialog.
 			title = _("Last spoken information")
-			ui.browseableMessage(lastSpeech, title, copyButton=True, closeButton=True)
+			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
 
 #: The single global commands instance.

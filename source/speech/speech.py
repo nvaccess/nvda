@@ -87,7 +87,7 @@ if typing.TYPE_CHECKING:
 _speechState: Optional["SpeechState"] = None
 _curWordChars: List[str] = []
 IDEOGRAPHIC_COMMA: Final[str] = "\u3001"
-_lastSpeech: str | None = None
+_lastSpeech: tuple[SpeechSequence, Spri] | None = None
 """Last spoken text"""
 
 
@@ -144,10 +144,10 @@ def setSpeechMode(newMode: SpeechMode):
 
 
 def _setLastSpeechString(speechSequence, symbolLevel, priority):
-	text = "  ".join(i for i in speechSequence if isinstance(i, str))
-	if text:
+	# Check if the speech sequence contains text to speak
+	if [item for item in speechSequence if isinstance(item, str)]:
 		global _lastSpeech
-		_lastSpeech = text
+		_lastSpeech = speechSequence, symbolLevel
 
 
 def initialize():
