@@ -66,6 +66,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)
 
 ### Changes for Developers
 
