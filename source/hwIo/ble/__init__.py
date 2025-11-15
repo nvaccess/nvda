@@ -13,7 +13,6 @@ Bluetooth Classic devices should be paired through Windows' Bluetooth settings a
 """
 
 import time
-import bleak
 from bleak.backends.device import BLEDevice
 from logHandler import log
 
@@ -68,17 +67,3 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 	except Exception:
 		log.error(f"Error while scanning for BLE device {address}", exc_info=True)
 		return None
-
-
-def isAvailable() -> bool:
-	"""Check if BLE (Bluetooth Low Energy) is available on this system.
-
-	:return: True if BLE adapter is available and Bleak can scan, False otherwise
-	"""
-	try:
-		# Try to create a scanner - this will fail if no BLE adapter present
-		bleak.BleakScanner()
-		return True
-	except Exception:
-		log.debugWarning("BLE not available on this system", exc_info=True)
-		return False

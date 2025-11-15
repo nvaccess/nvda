@@ -101,24 +101,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls) -> bool:
-		"""DotPad is available if BLE is supported or manual ports exist.
+		"""DotPad is always available on Windows 10/11.
 
 		This allows DotPad to appear in the braille display list even when
 		no devices are currently detected, enabling users to manually select
 		BLE devices after the GUI triggers a scan.
+
+		BLE is always supported on Windows 10/11. Even without BLE hardware,
+		the scanner will run without errors and simply return no results.
 		"""
-		# Check if BLE is available on this system
-		if hwIo.ble.isAvailable():
-			return True
-
-		# Fallback: check if manual serial ports exist
-		try:
-			next(cls.getManualPorts())
-			return True
-		except (StopIteration, NotImplementedError):
-			pass
-
-		return False
+		return True
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
