@@ -59,6 +59,7 @@ jobs:
     name: Build NVDA
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -305,6 +306,7 @@ jobs:
     name: Create launcher
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -389,11 +391,24 @@ jobs:
     name: Run system tests
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols, vscode, imageDescriptions]
+        testSuite:
+          - installer
+          - startupShutdown
+          - symbols
+          - vscode
+          - imageDescriptions
+          - chrome_annotations
+          - chrome_list
+          - chrome_table
+          - chrome_language
+          - chrome_roleDescription
+          - chrome_misc_aria
+          - chrome_misc
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
