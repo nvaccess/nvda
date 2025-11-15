@@ -150,7 +150,7 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.offsets.OffsetsTextInfo):
 	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
-		""" "Virtual buffers have no insertion point, so no need to move past the end of text."""
+		"""Virtual buffers have no insertion point, so no need to move past the end of text."""
 		return False
 
 	def _getControlFieldAttribs(self, docHandle, id):

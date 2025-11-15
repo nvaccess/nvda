@@ -104,7 +104,7 @@ class TestTreeCompoundTextInfo(unittest.TestCase):
 		self.assertGreater(info.compareEndPoints(last, "endToEnd"), 0)
 
 	def test_lineMovement(self):
-		"""Test linem ovement across the compound text info."""
+		"""Test line movement across the compound text info."""
 		info: compoundDocuments.TreeCompoundTextInfo = self.document.makeTextInfo(textInfos.POSITION_FIRST)
 		expected = ["one\r\n", "two\r\n", "three"]
 		for i in range(len(expected) + 1):
