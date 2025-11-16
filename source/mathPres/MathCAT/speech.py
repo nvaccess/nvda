@@ -16,7 +16,7 @@ from logHandler import log
 from synthDriverHandler import getSynth, SynthDriver
 import libmathcat_py as libmathcat
 from .localization import getLanguageToUse
-from languageHandler import getCurrentLanguage
+from speech import getCurrentLanguage
 
 
 PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
