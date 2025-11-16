@@ -6,9 +6,6 @@
 import glob
 import os
 from collections.abc import Callable
-from zipfile import ZipFile
-
-from logHandler import log
 
 
 def getRulesFiles(
