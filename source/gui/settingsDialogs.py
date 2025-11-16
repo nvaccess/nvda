@@ -3052,7 +3052,9 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
 		pfSlider: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
-			0 if pfSlider == 0 else round(PauseFactor.SCALE * math.pow(PauseFactor.LOG_BASE, pfSlider))
+			0
+			if pfSlider == 0
+			else round(PauseFactor.SCALE.value * math.pow(PauseFactor.LOG_BASE.value, pfSlider))
 		)  # avoid log(0)
 		mathConf["speech"]["pauseFactor"] = pauseFactor
 		if self.speechSoundCheckBox.GetValue():
