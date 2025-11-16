@@ -29,13 +29,10 @@ from scriptHandler import script
 from NVDAState import WritePaths
 
 from speech.commands import (
-	BaseProsodyCommand,
 	BeepCommand,
 	PitchCommand,
-	RateCommand,
 	SpeechCommand,
 	SynthCommand,
-	VolumeCommand,
 )
 from synthDriverHandler import (
 	SynthDriver,
@@ -46,12 +43,6 @@ from textUtils import WCHAR_ENCODING
 import mathPres
 from .localization import getLanguageToUse
 from .speech import convertSSMLTextForNVDA
-
-PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
-	"pitch": PitchCommand,
-	"volume": VolumeCommand,
-	"rate": RateCommand,
-}
 
 
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):

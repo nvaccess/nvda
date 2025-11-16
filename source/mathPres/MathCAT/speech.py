@@ -3,6 +3,8 @@ from speech.commands import (
 	BaseProsodyCommand,
 	BeepCommand,
 	BreakCommand,
+	VolumeCommand,
+	RateCommand,
 	CharacterModeCommand,
 	LangChangeCommand,
 	PhonemeCommand,
@@ -13,9 +15,15 @@ from speech.commands import (
 from logHandler import log
 from synthDriverHandler import getSynth, SynthDriver
 import libmathcat_py as libmathcat
-from .MathCAT import PROSODY_COMMANDS
 from .localization import getLanguageToUse
 from languageHandler import getCurrentLanguage
+
+
+PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
+	"pitch": PitchCommand,
+	"volume": VolumeCommand,
+	"rate": RateCommand,
+}
 
 RE_MATHML_SPEECH: re.Pattern = re.compile(
 	# Break.
