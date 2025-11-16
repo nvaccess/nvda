@@ -263,7 +263,7 @@ def getLanguages() -> tuple[list[str], list[str]]:
 		# codes https://en.wikipedia.org/wiki/ISO_3166-2
 		# check if there are language variants in the language folder
 		if subDir != "SharedRules":
-			# add to the listbox the text for this language variant together with the code
+			# add to the list the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
 			log.info(f"regionalCode: {regionalCode}, langDesc: {langDesc}")
