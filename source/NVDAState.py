@@ -29,8 +29,15 @@ class _WritePaths:
 
 	@property
 	def mathCATDir(self) -> str:
+		"""
+		Base directory for MathCAT assets (rules etc.).
+		"""
+		if isRunningAsSource():
+			base = os.path.dirname(globalVars.appDir)
+		else:
+			base = globalVars.appDir
 		return os.path.join(
-			sys.prefix,
+			base,
 			"include",
 			"nvda-mathcat",
 			"assets",
