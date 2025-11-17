@@ -4648,7 +4648,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Begins interaction with math content"),
+		description=_("Begins interaction with mathematical content"),
 		gesture="kb:NVDA+alt+m",
 	)
 	def script_interactWithMath(self, gesture):
@@ -4665,7 +4665,7 @@ class GlobalCommands(ScriptableObject):
 		if not mathMl:
 			# Translators: Reported when the user attempts math interaction
 			# with something that isn't math.
-			ui.message(_("Not math"))
+			ui.message(_("Not mathematical content"))
 			return
 		mathPres.interactWithMathMl(mathMl)
 

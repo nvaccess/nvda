@@ -1172,17 +1172,17 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
 NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
 
-### Supported math content {#SupportedMathContent}
+### Supported mathematical content {#SupportedMathContent}
 
 NVDA supports the following types of mathematical content:
 
 * MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 * Microsoft Word 365 Modern Math Equations via UI automation:
-NVDA is able to read and interact with math equations in Microsoft Word 365/2016 build 14326 and higher.
+NVDA is able to read and interact with mathematical equations in Microsoft Word 365/2016 build 14326 and higher.
 Note however that any previously created MathType equations must be first converted to Office Math.
 This can be done by selecting each and choosing "Equation Options", then "Convert to Office Math" in the context menu.
 Ensure your version of MathType is the latest version before doing this.
-Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LaTeX.
+Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting mathematics using several syntaxes, including LaTeX.
 For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
 * Microsoft Powerpoint, and older versions of Microsoft Word:
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
@@ -1194,7 +1194,7 @@ Tagged PDF with MathML Structure elements.
 * Foxit PDF Reader:
 Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
 * Kindle Reader for PC:
-NVDA can read and navigate Math in Kindle for PC for books with accessible math.
+NVDA can read and navigate mathematics in Kindle for PC for books with Accessible Math.
 
 When reading a document, NVDA will speak any supported mathematical content where it occurs.
 If you are using a braille display, it will also be displayed in braille.
@@ -1215,17 +1215,17 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 | Name |Key |Description|
 |---|---|---|
-|Interact with math content |NVDA+alt+m |Begins interaction with math content.|
+|Interact with mathematical content |NVDA+alt+m |Begins interaction with mathematical content.|
 
 <!-- KC:endInclude -->
 
-At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
+At this point, NVDA will enter Mathematical navigation mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
 
 When you wish to return to the document, simply press the escape key.
 
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
-To activate the button or the element containing the formula, press ctrl+enter.
+To activate the button or the element containing the formula, press control+enter.
 
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
@@ -1235,19 +1235,19 @@ Below is a summary of the most useful commands for those wanting to quickly get 
 * `space` reads your current position
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
-To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
+To start navigation: press `NVDA+alt+m` or `space` to enter mathematical navigation mode, press `esc` to exit.
 
 MathCAT's navigation is the same in Microsoft Word and in a web browser.
 
-While navigating an expression, `control+c` copies the math content of the current node in NVDA.
-The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).
+While navigating an expression, `control+c` copies the mathematical content of the current node to the clipboard.
+The format of the content copied to the clipboard can be adjusted through the [mathematics settings panel](#MathSettings).
 
 #### Navigation Modes {#MathNavigationModes}
 
 MathCAT supports the following navigation modes:
 
 * Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
-* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+* Simple mode: moves by words except when reaching two-dimensional notation (fractions, roots, ...), then it speaks the entire notation.
 Zooming in lets you explore the 2D notation in the same mode.
 Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
 * Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
@@ -1255,29 +1255,29 @@ Moves by words/characters.
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
 
-The following are key commands used to navigate math:
+The following are key commands used to navigate mathematics:
 
 <!-- KC:beginInclude -->
 | Name | Key |
 |---|---|
 | Move to previous | `leftArrow` |
-| Move to previous cell in a table, or previous digit if in columnar math | `control+leftArrow` or `control+alt+leftArrow` |
+| Move to previous cell in a table, or previous digit if in columnar mathematics | `control+leftArrow` or `control+alt+leftArrow` |
 | Read previous | `shift+leftArrow` |
 | Describe previous | `control+shift+leftArrow` |
 | Move to next | `rightArrow` |
-| Move to next cell in a table, or next digit if in columnar math | `control+rightArrow` or `control+alt+rightArrow` |
+| Move to next cell in a table, or next digit if in columnar mathematics | `control+rightArrow` or `control+alt+rightArrow` |
 | Read next | `shift+rightArrow` |
 | Describe next | `control+shift+rightArrow` |
 | Zoom out | `upArrow` |
-| Move to cell above in a table, or digit above in columnar math. | `control+upArrow` or `control+alt+upArrow` |
+| Move to cell above in a table, or digit above in columnar mathematics. | `control+upArrow` or `control+alt+upArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
 | Zoom out all the way | `control+shift+upArrow` |
 | Zoom in | `downArrow` |
-| Move to cell below in a table, or digit below in columnar math | `control+downArrow` or `control+alt+downArrow` |
+| Move to cell below in a table, or digit below in columnar mathematics | `control+downArrow` or `control+alt+downArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
 | Zoom in all the way | `control+shift+downArrow` |
 | Where am I | `enter` |
-| Global Where am I | `control+center` |
+| Global Where am I | `control+enter` |
 | Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
@@ -1288,10 +1288,10 @@ The following are key commands used to navigate math:
 | Describe current | `control+shift+space` |
 | Move to start of expression | `home` |
 | Move to start of line | `control+home` |
-| Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
+| Move to start of column in table, or move to digit at top in columnar mathematics | `shift+home` |
 | Move to end of expression | `end` |
 | Move to end of line | `control+end` |
-| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move to end of column in table, or move to digit at bottom in columnar mathematics | `shift+end` |
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
@@ -1306,9 +1306,8 @@ Backspace will take you back to where you were, which is not always the same as 
 For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
 
 You will likely find one mode of navigation the most natural for you most of the time.
-This can be set in the MathCAT settings.
-However, at any time during navigation, you can switch the navigation modes using `shift+up/down arrow`.
-This is useful because each mode of navigation has its strengths and weaknesses.
+The default mode can be set in the mathematics settings panel.
+However, at any time during navigation, you can switch navigation modes using `shift+up/down arrow` to take advantage of the differing strengths of each navigation mode.
 
 ## Braille {#Braille}
 
@@ -3193,13 +3192,13 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
-#### Math Settings {#MathSettings}
+#### Mathematics Settings {#MathSettings}
 
 This category allows you to adjust how NVDA reads mathematical content.
 
 ##### Speech Options {#MathCATSpeechOptions}
 
-###### Impairment {#MathSpeechImpairment}
+###### Optimize mathematical content for {#MathSpeechImpairment}
 
 This controls whether certain notations are disambiguated or not in speech.
 
@@ -3210,7 +3209,7 @@ This controls whether certain notations are disambiguated or not in speech.
 
 ###### Language {#MathSpeechLanguage}
 
-This value determines the language to be used.
+This option determines the language to be used to speak mathematical content.
 If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
 If speech rules for the main language can not be found, English ("en") is used.
 
@@ -3221,13 +3220,13 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 ###### Speech Style {MathSpeechStyle}
 
-Different speech styles are used to change how math is reported.
+Different styles can be used to speak mathematical content:
 
-* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT.
+* ClearSpeak was developed by the Educational Testing Service for use on high-stakes examinations such as the SAT, a university entrance exam often administored in the United States.
 See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
-* LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
+* LiteralSpeak tells MathCAT to speak mathematical expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
 * Other speech styles may exist designed for individual languages.
 
@@ -3243,9 +3242,9 @@ Examples of each type of speech:
 | Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
 | Default | ClearSpeak |
 
-###### Speech verbosity {#MathSpeechVerbosity}
+###### Speech Verbosity {#MathSpeechVerbosity}
 
-Controls how much "extra" speech is used.
+This option controls how much "extra" speech is used.
 For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
 
 | . {.hideHeaderRow} | . |
@@ -3257,7 +3256,7 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 
 Changes the relative speech rate.
 The change is a percentage speed change from the standard speech engine's rate.
-`100` means the math reading rate is the same as that of the text rate.
+In other words, `100` means the reading rates of text and mathematical content are the same, whereas `50` means that mathematical content is read at half the speed of other content.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3274,18 +3273,14 @@ Changes the relative amount of pausing that MathCAT adds.
 | Options | Number between 0 and 100 |
 | Default | 50 |
 
-###### Make a sound when starting/ending math speech {#MathSpeechSound}
+###### Make a sound when starting/ending mathematical speech {#MathSpeechSound}
 
-A start and end beep occur before and after reading an expression.
+This option determines whether NVDA beeps at the beginning and end of mathematical content.
+This option is enabled by default.
 
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | None, Beep |
-| Default | None |
+###### Speech for chemical formulae {#MathSpeechForChemical}
 
-###### Speech for chemical formulas {#MathSpeechForChemical}
-
-Controls how chemical formulae are read.
+This option controls how chemical formulae are read.
 Examples for $\mathrm{H}_2\mathrm{O}$:
 
 * SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
@@ -3301,7 +3296,7 @@ Examples for $\mathrm{H}_2\mathrm{O}$:
 
 ###### Navigation mode to use when beginning to navigate an equation {#MathNavMode}
 
-"Enhanced" mode understands math structure.
+"Enhanced" mode understands mathematical structure.
 "Simple" mode walks by character to find things like fractions, roots, and scripts.
 "Character" mode moves around by character, automatically moving into fractions, etc.
 
@@ -3319,36 +3314,29 @@ Whether to speak the expression after moving to it or give an overview.
 | Options | Speak, Overview |
 | Default | Speak |
 
-###### Make a sound when starting/ending math speech {#MathNavReset}
+###### Reset to the default navigation mode for each new equation {#MathNavReset}
 
-Whether to play a beep sound when speech starts/ends.
+This option selects whether NVDA resets to the default navigation mode when entering a new equation.
+When this option is disabled, NVDA preserves the last selected navigation mode across equations in the same NVDA session.
+This option is enabled by default.
 
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Checked, Unchecked |
-| Default | Checked |
-
-###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
+###### Automatic zoom out of two-dimensional notation {#MathNavAutoZoom}
 
 Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+This option is enabled by default.
 
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Checked, Unchecked |
-| Default | Checked |
+###### Navigation verbosity {#MathNavSpeechAmount}
 
-###### Speech amount for navigation {#MathNavSpeechAmount}
-
-Specify whether you want a terse or verbose reading of navigation commands.
+This option specifies whether NVDA should read mathematical expressions in a terse or verbose manner during navigation.
 
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | Terse, Medium, Verbose |
 | Default | Medium |
 
-###### Copy math as {#MathNavCopyAs}
+###### Copy mathematical content as {#MathNavCopyAs}
 
-Specify how math will be copied to the clipboard.
+This option selects the format of mathematical content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3357,18 +3345,18 @@ Specify how math will be copied to the clipboard.
 
 ##### Braille Options {#MathBrailleOptions}
 
-###### Braille math code for refreshable displays {#MathBrailleCode}
+###### Output code {#MathBrailleCode}
 
-The braille math code to use.
+The braille mathematics code to use.
 
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
-| Default | Nemeth |
+| Default | ASCIIMath |
 
-###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
+###### Highlight navigation focus with dots 7 and 8 {#MathBrailleHighlights}
 
-Highlight the currently selected navigation node with dots 7 and 8.
+This option determines whether NVDA indicates the currently selected subexpression with dots 7 and 8 during navigation.
 The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
 
 | . {.hideHeaderRow} | . |

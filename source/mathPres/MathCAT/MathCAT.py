@@ -82,7 +82,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in starting navigation of math.
-			ui.message(pgettext("math", "Error in starting navigation of math."))
+			ui.message(pgettext("math", "Error starting navigation of mathematical content."))
 
 	def getBrailleRegions(
 		self,
@@ -96,8 +96,10 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			region.rawText = libmathcat.GetBraille("")
 		except Exception:
 			log.exception()
-			# Translators: this message alerts users to an error in brailling math.
-			ui.message(pgettext("math", "Error in brailling math: see NVDA error log for details"))
+			ui.message(
+				# Translators: this message alerts users to an error in brailling math.
+				pgettext("math", "Error brailling mathematical content; see NVDA error log for details"),
+			)
 			region.rawText = ""
 
 		yield region
@@ -161,7 +163,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in navigating math.
-			ui.message(pgettext("math", "Error in navigating math"))
+			ui.message(pgettext("math", "Error navigating mathematical content"))
 
 		if not braille.handler.enabled:
 			return
@@ -181,7 +183,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error brailling math.
-			ui.message(pgettext("math", "Error in brailling math"))
+			ui.message(pgettext("math", "Error brailling mathematical content"))
 
 	_startsWithMath: re.Pattern = re.compile("\\s*?<math")
 
@@ -239,7 +241,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.exception()
 			# Translators: alerts users to an error copying math.
-			ui.message(pgettext("unable to copy math"))
+			ui.message(pgettext("math", "Unable to copy mathematical content"))
 
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")
@@ -335,7 +337,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception:
 			log.exception()
 			# Translators: this message directs users to look in the log file
-			ui.message(pgettext("math", "Error navigating math"))
+			ui.message(pgettext("math", "Error navigating mathematical content"))
 
 	def getSpeechForMathMl(
 		self,
@@ -358,7 +360,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			log.exception()
 			log.exception(f"MathML is {mathml}")
 			# Translators: this message reports when invalid math is found.
-			ui.message(pgettext("math", "Invalid math formatting found"))
+			ui.message(pgettext("math", "Invalid mathematical formatting found"))
 			libmathcat.SetMathML("<math></math>")
 		try:
 			supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
@@ -385,7 +387,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in speaking math.
-			ui.message(pgettext("math", "Error in speaking math."))
+			ui.message(pgettext("math", "Error speaking mathematical content."))
 			return [""]
 
 	def _addSounds(self) -> bool:
@@ -417,7 +419,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in brailling math.
-			ui.message(pgettext("math", "Error in brailling math."))
+			ui.message(pgettext("math", "Error brailling mathematical content."))
 			return ""
 
 	def interactWithMathMl(self, mathml: str) -> None:
