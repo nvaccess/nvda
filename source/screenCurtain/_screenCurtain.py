@@ -54,8 +54,7 @@ class WarnOnLoadDialog(MessageDialog):
 		parent: wx.Window,
 		# Translators: The title of a dialog.
 		title: str = _("Warning"),
-		message: str = pgettext(
-			"screenCurtain",
+		message: str = _(
 			# Translators: A warning shown when activating the screen curtain.
 			# the translation of "Screen Curtain" should match the "translated name"
 			"Enabling Screen Curtain will make the screen of your computer completely black. "
@@ -93,7 +92,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_YES,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# agree to enabling the curtain.
-			label=pgettext("screenCurtain", "&Yes"),
+			label=_("&Yes"),
 		)
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
 
@@ -102,7 +101,7 @@ class WarnOnLoadDialog(MessageDialog):
 			id=wx.ID_NO,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
 			# disagree to enabling the curtain.
-			label=pgettext("screenCurtain", "&No"),
+			label=_("&No"),
 		)
 		noButton.SetDefault()
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
