@@ -75,6 +75,7 @@ System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 StrCmp $0 "3076" 0 +2
 StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
+SetRegView 64
 ReadRegStr $INSTDIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 FunctionEnd
 

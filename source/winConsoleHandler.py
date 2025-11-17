@@ -157,7 +157,15 @@ def getConsoleVisibleLines():
 
 
 @winBindings.user32.WINEVENTPROC
-def consoleWinEventHook(handle, eventID, window, objectID, childID, threadID, timestamp):
+def consoleWinEventHook(
+	handle: int | None,
+	eventID: int,
+	window: int | None,
+	objectID: int,
+	childID: int,
+	threadID: int,
+	timestamp: int,
+) -> None:
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 
 	# We don't want to do anything with the event if the event is not for the window this console is in
