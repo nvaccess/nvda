@@ -67,6 +67,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 
 ### Changes for Developers
@@ -237,6 +238,8 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
 * `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
 Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
+Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
