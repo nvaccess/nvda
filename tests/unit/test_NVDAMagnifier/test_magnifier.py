@@ -1,28 +1,28 @@
-import NVDAMagnifier
+from magnifier.magnifier import NVDAMagnifier
+from magnifier.utils.mouseHandler import MouseHandler
 import unittest
 from unittest.mock import MagicMock, Mock, patch, PropertyMock
 import wx
 import ctypes
-from NVDAMagnifier import ColorFilter
 
 
 class TestNVDAMagnifier(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		"""Setup qui s'exécute une fois au début."""
+		"""Setup once for all tests."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
 	def setUp(self):
 		"""Setup before each test."""
 		self.zoom = 2.0
-		self.couleur = ColorFilter.NORMAL
-		self.magnifier = NVDAMagnifier.NVDAMagnifier(self.zoom, self.couleur)
+		self.magnifier = NVDAMagnifier(self.zoom)
 		self.screenWidth = ctypes.windll.user32.GetSystemMetrics(0)
 		self.screenHeight = ctypes.windll.user32.GetSystemMetrics(1)
 
 	def tearDown(self):
 		"""Cleanup after each test."""
+
 		if hasattr(self.magnifier, "timer") and self.magnifier.timer:
 			self.magnifier.timer.Stop()
 			self.magnifier.timer = None
@@ -31,15 +31,84 @@ class TestNVDAMagnifier(unittest.TestCase):
 			self.magnifier.isActive = False
 
 	def testMagnifierCreation(self):
-		"""Test : Can we create a magnifier with valid parameters or invalid ones?"""
+		"""Test : Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
-		self.assertEqual(self.magnifier.colorFilter, ColorFilter.NORMAL)
+		self.assertFalse(self.magnifier.isActive)
+		self.assertEqual(self.magnifier.lastFocusedObject, "")
+		self.assertEqual(self.magnifier.lastNVDAPosition, (0, 0))
+		self.assertEqual(self.magnifier.lastMousePosition, (0, 0))
+		self.assertIsInstance(self.magnifier._mouseHandler, MouseHandler)
+
+	def testZoomLevelProperty(self):
+		"""Test : ZoomLevel property with valid and invalid values."""
+		# Test valid values
+		self.magnifier.zoomLevel = 5.0
+		self.assertEqual(self.magnifier.zoomLevel, 5.0)
+
+		# Test boundary values
+		self.magnifier.zoomLevel = 1.0  # Min
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)
+
+		self.magnifier.zoomLevel = 10.0  # Max
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)
+
+		# Test invalid values (should be rejected)
+		self.magnifier.zoomLevel = 0.5  # Below min
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain unchanged
+
+		self.magnifier.zoomLevel = 15.0  # Above max
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain unchanged
+
+	def testIsActiveProperty(self):
+		"""Test : IsActive property getter and setter."""
+		self.assertFalse(self.magnifier.isActive)
+
+		self.magnifier.isActive = True
+		self.assertTrue(self.magnifier.isActive)
+
+		self.magnifier.isActive = False
+		self.assertFalse(self.magnifier.isActive)
+
+	def testPositionProperties(self):
+		"""Test : Position properties (lastNVDAPosition, lastMousePosition, etc.)."""
+		# Test lastNVDAPosition
+		self.magnifier.lastNVDAPosition = (100, 200)
+		self.assertEqual(self.magnifier.lastNVDAPosition, (100, 200))
+
+		# Test lastMousePosition
+		self.magnifier.lastMousePosition = (300, 400)
+		self.assertEqual(self.magnifier.lastMousePosition, (300, 400))
+
+		# Test lastScreenPosition
+		self.magnifier.lastScreenPosition = (500, 600)
+		self.assertEqual(self.magnifier.lastScreenPosition, (500, 600))
+
+		# Test currentCoordinates
+		self.magnifier.currentCoordinates = (700, 800)
+		self.assertEqual(self.magnifier.currentCoordinates, (700, 800))
+
+		# Test lastFocusedObject
+		self.magnifier.lastFocusedObject = "mouse"
+		self.assertEqual(self.magnifier.lastFocusedObject, "mouse")
 
 	def testStartMagnifier(self):
-		"""Test : Activating and deactivating the magnifier."""
+		"""Test : Activating the magnifier."""
 		self.magnifier._getFocusCoordinates = MagicMock(return_value=(100, 200))
+
+		# Test starting from inactive state
+		self.assertFalse(self.magnifier.isActive)
 		self.magnifier._startMagnifier()
+
 		self.assertTrue(self.magnifier.isActive)
+		self.assertEqual(self.magnifier.currentCoordinates, (100, 200))
+		self.magnifier._getFocusCoordinates.assert_called_once()
+
+		# Test starting when already active (should not call _getFocusCoordinates again)
+		self.magnifier._getFocusCoordinates.reset_mock()
+		self.magnifier._startMagnifier()
+
+		self.assertTrue(self.magnifier.isActive)
+		self.magnifier._getFocusCoordinates.assert_not_called()
 
 	def testUpdateMagnifier(self):
 		"""Test : Updating the magnifier's properties."""
@@ -56,12 +125,14 @@ class TestNVDAMagnifier(unittest.TestCase):
 		# Call the update function with activation
 		self.magnifier.isActive = True
 		self.magnifier._updateMagnifier()
+
 		self.magnifier._getFocusCoordinates.assert_called_once()
 		self.magnifier._doUpdate.assert_called_once()
-		self.magnifier._startTimer.assert_called_once()
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
+		self.assertEqual(self.magnifier.currentCoordinates, (100, 200))
 
 	def testDoUpdate(self):
-		"""Test : DoUpdate function is called when Magnifier is active."""
+		"""Test : DoUpdate function raises NotImplementedError."""
 		with self.assertRaises(NotImplementedError):
 			self.magnifier._doUpdate()
 
@@ -76,49 +147,51 @@ class TestNVDAMagnifier(unittest.TestCase):
 		# Call the stop function with activation
 		self.magnifier.isActive = True
 		self.magnifier._stopMagnifier()
-		self.magnifier._stopTimer.assert_called_once()
-		self.assertFalse(self.magnifier.isActive, "Magnifier should be inactive after stopping")
 
-	@patch("NVDAMagnifier.ui.message")
-	def testZoom(self, mockUiMessage):
+		self.magnifier._stopTimer.assert_called_once()
+		self.assertFalse(self.magnifier.isActive)
+
+	def testZoom(self):
 		"""Test : zoom in and out with valid values and check boundaries."""
+		# Test zoom in
 		self.magnifier._zoom(True)
-		mockUiMessage.assert_called_once()
 		self.assertEqual(self.magnifier.zoomLevel, 2.5)
 
-		self.magnifier.zoomLevel = 10.0
-		mockUiMessage.reset_mock()
-
+		# Test zoom out
 		self.magnifier._zoom(False)
-		mockUiMessage.assert_called_once()
-		self.assertEqual(self.magnifier.zoomLevel, 9.5)
+		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 
+		# Test zoom in at maximum boundary
 		self.magnifier.zoomLevel = 10.0
-		mockUiMessage.reset_mock()
-
 		self.magnifier._zoom(True)
-		mockUiMessage.assert_called_once()
-		self.assertEqual(self.magnifier.zoomLevel, 10.0)
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain at max
 
+		# Test zoom out at minimum boundary
 		self.magnifier.zoomLevel = 1.0
-		mockUiMessage.reset_mock()
-
 		self.magnifier._zoom(False)
-		mockUiMessage.assert_called_once()
-		self.assertEqual(self.magnifier.zoomLevel, 1.0)
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)  # Should remain at min
 
 	def testStartTimer(self):
 		"""Test : Starting the timer."""
 		self.magnifier._stopTimer = MagicMock()
+		callback = MagicMock()
 
-		self.magnifier._startTimer()
-		self.magnifier._stopTimer.assert_called_once
-		self.assertIsInstance(self.magnifier.timer, wx.Timer, "timer should be an instance of wx.Timer")
-		self.assertTrue(self.magnifier.timer.IsRunning(), "timer should be running after starting")
+		self.magnifier._startTimer(callback)
+
+		self.magnifier._stopTimer.assert_called_once()
+		self.assertIsInstance(self.magnifier.timer, wx.Timer)
+		self.assertTrue(self.magnifier.timer.IsRunning())
 
 	def testStopTimer(self):
 		"""Test : Stopping the timer."""
-		self.magnifier._startTimer()
+		# Test stopping when timer exists
+		self.magnifier._startTimer(lambda: None)
+		self.assertIsNotNone(self.magnifier.timer)
+
+		self.magnifier._stopTimer()
+		self.assertIsNone(self.magnifier.timer)
+
+		# Test stopping when no timer exists (should not raise error)
 		self.magnifier._stopTimer()
 		self.assertIsNone(self.magnifier.timer)
 
@@ -127,8 +200,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
 		left, top, width, height = self.magnifier._getMagnifierPosition(x, y)
 
-		expected_width = self.screenWidth / self.magnifier.zoomLevel
-		expected_height = self.screenHeight / self.magnifier.zoomLevel
+		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
+		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		expected_left = int(x - (expected_width / 2))
 		expected_top = int(y - (expected_height / 2))
 
@@ -137,15 +210,15 @@ class TestNVDAMagnifier(unittest.TestCase):
 		self.assertEqual(width, expected_width)
 		self.assertEqual(height, expected_height)
 
-		# Test 2 : Left clamping
+		# Test left clamping
 		left, top, width, height = self.magnifier._getMagnifierPosition(100, 540)
 		self.assertGreaterEqual(left, 0)
 
-		# Test 3 : Right clamping
+		# Test right clamping
 		left, top, width, height = self.magnifier._getMagnifierPosition(1800, 540)
 		self.assertLessEqual(left + width, self.screenWidth)
 
-		# Test 4 : Different zoom
+		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
 		left, top, width, height = self.magnifier._getMagnifierPosition(960, 540)
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
@@ -156,7 +229,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 	def testGetNvdaPosition(self):
 		"""Test : Getting NVDA position with different API responses."""
 		# Case 1: Review position successful
-		with patch("api.getReviewPosition") as mock_review:
+		with patch("NVDAMagnifier.magnifier.api.getReviewPosition") as mock_review:
 			mock_point = Mock()
 			mock_point.x = 300
 			mock_point.y = 400
@@ -166,8 +239,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 			self.assertEqual((x, y), (300, 400))
 
 		# Case 2: Review position fails, navigator works
-		with patch("api.getReviewPosition", return_value=None):
-			with patch("api.getNavigatorObject") as mock_navigator:
+		with patch("NVDAMagnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("NVDAMagnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = (100, 150, 200, 300)
 
 				x, y = self.magnifier._getNvdaPosition()
@@ -175,8 +248,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 				self.assertEqual((x, y), (200, 300))
 
 		# Case 3: Everything fails
-		with patch("api.getReviewPosition", return_value=None):
-			with patch("api.getNavigatorObject") as mock_navigator:
+		with patch("NVDAMagnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("NVDAMagnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = Mock(side_effect=Exception())
 
 				x, y = self.magnifier._getNvdaPosition()
@@ -184,16 +257,6 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 	def testGetFocusCoordinates(self):
 		"""Test : All priority scenarios for focus coordinates."""
-
-		def initValues(getNvda: tuple[int, int], mousePos: tuple[int, int], leftPressed: bool):
-			self.magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
-			self.magnifier.lastNVDAPosition = (0, 0)
-
-			with patch.object(self.magnifier._mouseHandler, "mousePosition", mousePos):
-				self.magnifier.lastMousePosition = (0, 0)
-				self.magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
-
-				return self.magnifier._getFocusCoordinates()
 
 		def testValues(
 			getNvda: tuple[int, int],
@@ -239,3 +302,29 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 		# Case 8: Only nvda moved but left pressed (very unlikely)
 		testValues((10, 10), (0, 0), True, (0, 0), "mouse")
+
+	def testTimerProperty(self):
+		"""Test : Timer property getter and setter."""
+		# Test initial state
+		self.assertIsNone(self.magnifier.timer)
+
+		# Test setting timer
+		timer = wx.Timer()
+		self.magnifier.timer = timer
+		self.assertEqual(self.magnifier.timer, timer)
+
+		# Test setting to None
+		self.magnifier.timer = None
+		self.assertIsNone(self.magnifier.timer)
+
+	def testConstants(self):
+		"""Test : Class constants are properly defined."""
+		self.assertEqual(NVDAMagnifier._ZOOM_MIN, 1.0)
+		self.assertEqual(NVDAMagnifier._ZOOM_MAX, 10.0)
+		self.assertEqual(NVDAMagnifier._ZOOM_STEP, 0.5)
+		self.assertEqual(NVDAMagnifier._TIMER_INTERVAL_MS, 20)
+		self.assertEqual(NVDAMagnifier._MARGIN_BORDER, 50)
+
+		# Screen dimensions should be positive integers
+		self.assertGreater(NVDAMagnifier._SCREEN_WIDTH, 0)
+		self.assertGreater(NVDAMagnifier._SCREEN_HEIGHT, 0)
