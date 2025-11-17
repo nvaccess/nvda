@@ -333,7 +333,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
   * Updated detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
-  * Updated SCons to 4.10.1. (#19016, @LeonarddeR)
+  * Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)
     * This introduces support to build NVDA with Visual Studio 2026.
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
