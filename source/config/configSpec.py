@@ -369,6 +369,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		__many__ = string(default="")
 	[[ui]]
 		confirmDisconnectAsFollower = boolean(default=True)
+		muteOnLocalControl = boolean(default=False)
+
 [math]
 	[[speech]]
 		# LearningDisability, Blindness, LowVision
@@ -527,7 +529,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
 		decimalSeparator = string(default="Auto")
-		muteOnLocalControl = boolean(default=False)
 
 [automatedImageDescriptions]
 	enable = boolean(default=false)
