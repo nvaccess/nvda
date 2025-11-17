@@ -62,9 +62,11 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
-* When a syntesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)
+* When a synthesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
+* NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 
 ### Changes for Developers
 
@@ -85,6 +87,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
+* Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 
 #### API Breaking Changes
 
@@ -236,6 +239,16 @@ Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
+
+## 2025.3.2
+
+This is a patch release to fix a security issue.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))
 
 ## 2025.3.1
 

@@ -53,6 +53,10 @@ class _WritePaths:
 		return os.path.join(self.configDir, "profiles")
 
 	@property
+	def remoteAccessDir(self) -> str:
+		return os.path.join(self.configDir, "remoteAccess")
+
+	@property
 	def scratchpadDir(self) -> str:
 		return os.path.join(self.configDir, "scratchpad")
 
