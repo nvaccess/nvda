@@ -33,6 +33,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
+* Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
 
 ### Changes
 
