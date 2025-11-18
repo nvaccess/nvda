@@ -5541,7 +5541,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		config.conf["braille"]["autoScrollRate"] = (self.autoScrollRateEdit.GetValue())
+		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateEdit.GetValue()
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value

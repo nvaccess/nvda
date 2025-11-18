@@ -852,9 +852,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
 		maxRate = int(
-				config.conf.getConfigValidation(
+			config.conf.getConfigValidation(
 				("braille", "autoScrollRate"),
-			).kwargs["max"]
+			).kwargs["max"],
 		)
 		if config.conf["braille"]["autoScrollRate"] < maxRate:
 			config.conf["braille"]["autoScrollRate"] += 1
