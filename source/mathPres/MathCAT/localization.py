@@ -344,14 +344,14 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 		allStyleFiles = list(set(allStyleFiles))  # make them unique
 		if len(allStyleFiles) == 0:
 			# look in the .zip file for the style files -- this will have regional variants, but also have that dir
+			zipFilePath: str = os.path.join(dir, mainLang, f"{mainLang}.zip")
 			try:
-				zipFilePath: str = dir + mainLang + "\\" + mainLang + ".zip"
-				zipFile: ZipFile = ZipFile(zipFilePath, "r")  # file might not exist
-				allStyleFiles = [
-					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
-				]
+				with ZipFile(zipFilePath, "r") as zipFile:
+					allStyleFiles = [
+						name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
+					]
 			except Exception as e:
-				log.debugWarning(f"MathCAT: didn't find zip file {zipFile}. Error: {e}")
+				log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
 		allStyleFiles.sort()
 		return allStyleFiles
 
