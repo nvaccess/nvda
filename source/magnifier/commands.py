@@ -12,18 +12,20 @@ _zoomLevel: float = 2.0
 
 
 def toggleMagnifier():
+	"""Toggle the NVDA magnifier on/off
+	"""
 	global _nvdaMagnifier
 	if _nvdaMagnifier and _nvdaMagnifier.isActive:
 		_nvdaMagnifier._stopMagnifier()
+		_nvdaMagnifier = None
 		ui.message(
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
 				"Stopping NVDA Fullscreen magnifier"
 			)
 		)
-	elif _nvdaMagnifier is None:
+	else:
 		_nvdaMagnifier = FullScreenMagnifier(_zoomLevel)
-		_nvdaMagnifier._startMagnifier()
 		ui.message(
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
@@ -33,6 +35,8 @@ def toggleMagnifier():
 
 
 def zoomIn():
+	"""Zoom in the Magnifier
+	"""
 	global _zoomLevel
 	global _nvdaMagnifier
 	if _nvdaMagnifier and _nvdaMagnifier.isActive:
@@ -40,7 +44,7 @@ def zoomIn():
 		ui.message(
 			_(
 				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level
-				"Zooming out with {zoomLevel} level"
+				"Zooming in with {zoomLevel} level"
 			).format(zoomLevel=_nvdaMagnifier.zoomLevel)
 		)
 		_zoomLevel = _nvdaMagnifier.zoomLevel
@@ -49,6 +53,8 @@ def zoomIn():
 
 
 def zoomOut():
+	"""Zoom out the Magnifier
+	"""
 	global _zoomLevel
 	global _nvdaMagnifier
 	if _nvdaMagnifier and _nvdaMagnifier.isActive:
