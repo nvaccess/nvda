@@ -129,7 +129,7 @@ class MathInteractionNVDAObject(Window):
 		eventHandler.executeEvent("gainFocus", self.parent)
 
 	# Translators: Describes a command.
-	script_exit.__doc__ = _("Exit math interaction")
+	script_exit.__doc__ = _("Exit mathematics interaction")
 
 	__gestures = {
 		"kb:escape": "exit",
@@ -177,7 +177,7 @@ def interactWithMathMl(mathMl: str) -> None:
 	if not interactionProvider:
 		# Translators: Reported when the user attempts math interaction
 		# but math interaction is not supported.
-		ui.message(_("Math interaction not supported."))
+		ui.message(_("Mathematics interaction not supported."))
 		return
 	return interactionProvider.interactWithMathMl(mathMl)
 
