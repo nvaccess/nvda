@@ -3078,7 +3078,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
-		if enable:
+		if enable and not self.autoScrollCallLater:
 			autoScrollRate = self._calculateAutoScrollRate()
 			self._autoScrollCallLater = wx.CallLater(autoScrollRate, self.scrollForward)
 		elif self._autoScrollCallLater:
@@ -3091,10 +3091,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 
 		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
-		if autoScrollTimeout == 0:
-			return 0
-		ms = int(self.displaySize / autoScrollTimeout * 1000)
-		return ms
+		return autoScrollTimeout * 1000
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
