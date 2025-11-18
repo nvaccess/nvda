@@ -66,7 +66,17 @@ _processDestroyWinEvent = None
 
 
 # C901: winEventCallback is too complex
-def winEventCallback(handle, eventID, window, objectID, childID, threadID, timestamp):  # noqa: C901
+def winEventCallback(
+	handle: int | None,
+	eventID: int,
+	window: int | None,
+	objectID: int,
+	childID: int,
+	threadID: int,
+	timestamp: int,
+) -> None:  # noqa: C901
+	if window is None:
+		window = 0
 	if isMSAADebugLoggingEnabled():
 		log.debug(
 			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",

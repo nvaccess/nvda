@@ -49,7 +49,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.13.7, 32 bit.
+[Python](https://www.python.org/), version 3.13.9, 64-bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
@@ -58,19 +58,19 @@ Install the python version listed in [.python-versions](../../.python-versions)
 
 #### Microsoft Visual Studio
 
-* Microsoft Visual Studio 2022
+* Microsoft Visual Studio 2022 or 2026
   * To replicate the production build environment, use the [version of Visual Studio 2022 that GitHub Actions is using](https://github.com/actions/runner-images/tree/main/images/windows).
   * If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
-  * If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://visualstudio.microsoft.com/vs/community/).
+  * If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe).
     * The Professional and Enterprise versions are also supported.
-    * Preview versions are *not* supported.
+    * Preview or insiders versions are *not* supported.
 * When installing Visual Studio, additional components must be included:
   * You can automatically fetch these using [NVDAs .vsconfig](../../.vsconfig) using the [import feature of the VS installer](https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#import-a-configuration).
   * In the list on the Workloads tab, in the Desktop grouping:
     * Desktop development with C++.
       * Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
   * On the Individual components tab, ensure the following items are selected:
-    * Windows 11 SDK (10.0.26100.0)
+    * Windows 11 SDK (10.0.26100.x)
     * MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
     * MSVC v143 - VS 2022 C++ x64/x86 build tools
     * C++ ATL for v143 build tools (x86 & x64)
@@ -93,7 +93,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
-* brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.6
+* brlapi Python bindings, version 0.8.7 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.8
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11

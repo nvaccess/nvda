@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2025 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (
 	Optional,
@@ -12,6 +12,7 @@ from typing import (
 import textUtils
 import winUser
 import textInfos
+import textInfos.offsets
 import controlTypes
 import eventHandler
 from NVDAObjects import NVDAObject
@@ -501,6 +502,15 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			except LookupError:
 				continue
 		return rects
+
+
+class CompoundTextLeafTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""A mixin class for leafs within a CompoundTextInfo that utilize offsets.
+	It ensures that moving past the end of the object is only allowed for certain units.
+	"""
+
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		return unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD) or not self.obj.flowsTo
 
 
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
