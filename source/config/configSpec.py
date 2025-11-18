@@ -470,7 +470,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		copyAs = string(default="MathML")
 
 	[[braille]]
-		# Any supported braille code (currently Nemeth, UEB)
+		# Any supported braille code
 		brailleCode = string(default="ASCIIMath")
 		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
 		brailleNavHighlight = string(default="EndPoints")
