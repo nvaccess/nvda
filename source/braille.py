@@ -3085,13 +3085,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._autoScrollCallLater.Stop()
 			self._autoScrollCallLater = None
 
-	def _calculateAutoScrollRate(self) -> int:
-		"""Calculate the rate for automatic scroll.
+	def _calculateAutoScrollTimeout(self) -> int:
+		"""Calculate the timeout for automatic scroll.
 		return: The number of milliseconds to wait until the next scroll.
 		"""
 
-		autoScrollTimeout = config.conf["braille"]["autoScrollTimeout"]
-		return autoScrollTimeout * 1000
+		autoScrollRate = config.conf["braille"]["autoScrollRate"]
+		return int((self.displaySize / autoScrollRate) * 1000)
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
