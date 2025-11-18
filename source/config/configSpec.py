@@ -471,7 +471,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 	[[braille]]
 		# Any supported braille code (currently Nemeth, UEB)
-		brailleCode = string(default="Nemeth")
+		brailleCode = string(default="ASCIIMath")
 		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
 		brailleNavHighlight = string(default="EndPoints")
 		# true/false
