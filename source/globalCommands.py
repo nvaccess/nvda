@@ -851,13 +851,15 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		maxRate =  config.conf.getConfigValidation(
+		maxRate = int(
+				config.conf.getConfigValidation(
 				("braille", "autoScrollRate"),
-		).kwargs["max"],
+			).kwargs["max"]
+		)
 		if config.conf["braille"]["autoScrollRate"] < maxRate:
 			config.conf["braille"]["autoScrollRate"] += 1
-		rate = config.conf["braille"]["autoScrollRate"]
-		speech.speakMessage(str(rate))
+		rate = str(config.conf["braille"]["autoScrollRate"])
+		speech.speakMessage(rate)
 
 	@script(
 		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
@@ -865,13 +867,15 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		minRate = config.conf.getConfigValidation(
+		minRate = int(
+			config.conf.getConfigValidation(
 				("braille", "autoScrollRate"),
-		).kwargs["min"],
+			).kwargs["min"],
+		)
 		if config.conf["braille"]["autoScrollRate"] > minRate:
 			config.conf["braille"]["autoScrollRate"] -= 1
-		rate = config.conf["braille"]["autoScrollRate"]
-		speech.speakMessage(str(rate))
+		rate = str(config.conf["braille"]["autoScrollRate"])
+		speech.speakMessage(rate)
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
