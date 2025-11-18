@@ -102,8 +102,9 @@ class NVDAMagnifier:
 
 	def _startMagnifier(self) -> None:
 		"""Start the magnifier."""
+		log.info(f"Starting magnifier with zoom level {self.zoomLevel}")
 		if self.isActive:
-			return  # Already active
+			return
 		self.isActive = True
 		self.currentCoordinates = self._getFocusCoordinates()
 
