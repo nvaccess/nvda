@@ -3223,8 +3223,8 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 Different speech styles are used to change how math is reported.
 
-* ClearSpeak was developed by ETS (Educational Testing Service) for use on high-stakes tests such as the SAT.
-See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+* ClearSpeak was developed by the Educational Testing Service (ETS) for use on high-stakes tests such as national standardized testing.
+Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
