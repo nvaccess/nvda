@@ -3078,9 +3078,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
-		if enable and not self.autoScrollCallLater:
-			autoScrollRate = self._calculateAutoScrollRate()
-			self._autoScrollCallLater = wx.CallLater(autoScrollRate, self.scrollForward)
+		if enable and not self._autoScrollCallLater:
+			autoScrollTimeout = self._calculateAutoScrollTimeout()
+			self._autoScrollCallLater = wx.CallLater(autoScrollTimeout, self.scrollForward)
 		elif self._autoScrollCallLater:
 			self._autoScrollCallLater.Stop()
 			self._autoScrollCallLater = None
