@@ -80,7 +80,7 @@ jobs:
       with:
         submodules: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
@@ -133,7 +133,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -153,7 +153,7 @@ jobs:
         # Include gettext
         submodules: true
     - name: Set up python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -185,7 +185,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -214,7 +214,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -242,7 +242,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
@@ -290,7 +290,7 @@ jobs:
         name: makePot results
         path: output
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -327,7 +327,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
@@ -427,7 +427,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
@@ -537,7 +537,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
