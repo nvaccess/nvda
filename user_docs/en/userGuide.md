@@ -1295,7 +1295,7 @@ The following are key commands used to navigate math:
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
-## Typical Use
+#### Typical Use
 
 Typically, you will start at the first term of an expression and move right as needed.
 You might move up and down levels if needed.
@@ -3223,7 +3223,7 @@ If speech rules for the main language can not be found, English ("en") is used.
 
 Different speech styles are used to change how math is reported.
 
-* ClearSpeak was developed by ETS for use on high-stakes tests such as the SAT.
+* ClearSpeak was developed by ETS (Educational Testing Service) for use on high-stakes tests such as the SAT.
 See the [ClearSpeak spec details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
