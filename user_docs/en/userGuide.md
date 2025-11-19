@@ -1497,9 +1497,9 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 
 <!-- KC:endInclude -->
 
-When the Screen Curtain is active, some tasks directly based on what appears on the screen, such as [performing OCR](#Win10Ocr), [getting an AI image description](#LocalCaptioner), or taking a screenshot, cannot be achieved.
+When Screen Curtain is active, some tasks directly based on what appears on the screen, such as [performing OCR](#Win10Ocr), [getting an AI image description](#LocalCaptioner), or taking a screenshot, cannot be achieved.
 
-Please note that while Windows Magnifier is running and inverted screen colors are being used, the screen curtain cannot be enabled.
+Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
 ## Content Recognition {#ContentRecognition}
 
@@ -2621,28 +2621,28 @@ This category allows you to adjust settings that affect your privacy and securit
 ##### Make screen black (immediate effect) {#ScreenCurtainEnable}
 
 This option enables and disables the [Screen Curtain](#VisionScreenCurtain).
-Note that the Screen Curtain is activated or deactivated as soon as the checkbox is checked or unchecked.
+Note that Screen Curtain is activated or deactivated as soon as the checkbox is checked or unchecked.
 
 By default, when you check this box, a warning that your screen will become black after activation will be displayed.
 Before continuing, ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
-If you are sure, you can choose the "Yes" button to enable the Screen Curtain.
-Select "No" if you no longer wish to enable the Screen Curtain.
+If you are sure, you can choose the "Yes" button to enable Screen Curtain.
+Select "No" if you no longer wish to enable Screen Curtain.
 If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
 
 ##### Always show a warning when loading Screen Curtain {#ScreenCurtainWarnOnLoad}
 
 This option controls whether a warning dialog is displayed when enabling the [Screen Curtain](#VisionScreenCurtain).
 
-If you use the Screen Curtain regularly, you may find it more convenient to disable this option.
+If you use Screen Curtain regularly, you may find it more convenient to disable this option.
 You can also choose not to show the warning dialog using the checkbox in the dialog itself.
 
 ##### Play sound when toggling Screen Curtain {#ScreenCurtainPlayToggleSounds}
 
-This option controls whether a sound cue is played when the [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.
+This option controls whether a sound cue is played when [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.
 
-By default, sounds are played when the Screen Curtain is toggled.
+By default, sounds are played when Screen Curtain is toggled.
 If you do not wish to hear these sounds, you can uncheck this checkbox.
-Note that you will still be alerted in speech and/or braille when the Screen Curtain is toggled with an input gesture.
+Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.
 
 #### Vision {#VisionSettings}
 
