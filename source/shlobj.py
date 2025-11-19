@@ -29,6 +29,8 @@ class FolderId(str, Enum):
 	#: The file system directory that serves as a common repository for application-specific data.
 	#: A typical path is C:\Documents and Settings\username\Application Data.
 	ROAMING_APP_DATA = "{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}"
+	#: The file system directory that serves as a data repository for low integrity local (nonroaming) applications.
+	LOCAL_APP_DATA_LOW = "{A520A1A4-1780-4FF6-BD18-167343C5AF16}"
 	#: The file system directory that serves as a data repository for local (nonroaming) applications.
 	#: A typical path is C:\Documents and Settings\username\Local Settings\Application Data.
 	LOCAL_APP_DATA = "{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}"
