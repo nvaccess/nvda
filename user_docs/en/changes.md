@@ -51,6 +51,8 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
+* The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
+* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
 
 ### Bug Fixes
 
@@ -117,8 +119,6 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
-* `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
-All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
@@ -160,6 +160,13 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_queue_status` to `getQueueStatus`; and
     * `reset_device` to `resetDevice`.
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
+* The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)
+* The `visionEnhancementProviders.screenCurtain` module has been replaced with the `screenCurtain` subpackage. (#19177)
+  * The following symbols have no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`.
+  * All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)
+  * `MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)
+  * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
+* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 
 #### Deprecations
 
@@ -235,10 +242,6 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
-* `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
-Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
-* `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
-Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 

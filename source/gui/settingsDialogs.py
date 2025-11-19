@@ -53,6 +53,7 @@ import wx
 from wx.lib import scrolledpanel
 from NVDAState import WritePaths
 
+import screenCurtain._screenCurtain
 from utils import mmdevice
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
@@ -80,7 +81,9 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
-
+import screenCurtain
+import api
+import ui
 from . import guiHelper
 
 try:
@@ -5974,6 +5977,114 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class PrivacyAndSecuritySettingsPanel(SettingsPanel):
+	# Translators: The title of the privacy and security category in NVDA's settings.
+	title = _("Privacy and Security")
+	helpId = "PrivacyAndSecuritySettings"
+
+	def makeSettings(self, sizer: wx.BoxSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+
+		self._screenCurtainConfig = config.conf["screenCurtain"]
+		# Translators: Name for a feature that disables output to the screen,
+		# making it black.
+		screenCurtainSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Screen Curtain"))
+		screenCurtainBox = screenCurtainSizer.GetStaticBox()
+		screenCurtainGroup = guiHelper.BoxSizerHelper(self, sizer=screenCurtainSizer)
+		sHelper.addItem(screenCurtainGroup)
+
+		self._screenCurtainEnabledCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				#  Translators: option to enable screen curtain in the privacy and security settings panel
+				label=_("Make screen black (immediate effect)"),
+			),
+		)
+		self._screenCurtainEnabledCheckbox.SetValue(
+			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
+		)
+		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
+		self._screenCurtainEnabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
+		self.bindHelpEvent("ScreenCurtainEnable", self._screenCurtainEnabledCheckbox)
+
+		self._screenCurtainWarnOnLoadCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				label=screenCurtain._screenCurtain.WARN_ON_LOAD_CHECKBOX_TEXT,
+			),
+		)
+		self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
+		self.bindHelpEvent("ScreenCurtainWarnOnLoad", self._screenCurtainWarnOnLoadCheckbox)
+
+		self._screenCurtainPlayToggleSoundsCheckbox = screenCurtainGroup.addItem(
+			wx.CheckBox(
+				screenCurtainBox,
+				# Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+				label=_("&Play sound when toggling Screen Curtain"),
+			),
+		)
+		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
+		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
+
+	def onSave(self):
+		# We intentionally don't save whether the screen curtain is enabled here,
+		# so we don't unintentionally persist a temporary screen curtain to config.
+		self._screenCurtainConfig["warnOnLoad"] = self._screenCurtainWarnOnLoadCheckbox.IsChecked()
+		self._screenCurtainConfig["playToggleSounds"] = (
+			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
+		)
+
+	def _ocrActive(self) -> bool:
+		"""
+		Outputs a message when trying to activate screen curtain when OCR is active.
+
+		:return: ``True`` when OCR is active, ``False`` otherwise.
+		"""
+		# Import late to avoid circular import
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+
+		focusObj = api.getFocusObject()
+		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+			ui.message(
+				screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
+				speechPriority=speech.priorities.Spri.NOW,
+			)
+			return True
+		return False
+
+	def _ensureScreenCurtainEnableState(self, evt: wx.CommandEvent):
+		"""Ensures that toggling the Screen Curtain checkbox toggles the Screen Curtain."""
+		shouldBeEnabled = evt.IsChecked()
+		if screenCurtain.screenCurtain is None:
+			self._screenCurtainEnabledCheckbox.SetValue(False)
+			return
+		currentlyEnabled = screenCurtain.screenCurtain.enabled
+		if shouldBeEnabled and not currentlyEnabled:
+			confirmed = self._confirmEnableScreenCurtainWithUser()
+			if not confirmed or self._ocrActive():
+				self._screenCurtainEnabledCheckbox.SetValue(False)
+			else:
+				screenCurtain.screenCurtain.enable()
+		elif not shouldBeEnabled and currentlyEnabled:
+			screenCurtain.screenCurtain.disable()
+
+	def _confirmEnableScreenCurtainWithUser(self) -> bool:
+		"""Confirm with the user before enabling Screen Curtain, if configured to do so.
+
+		:return: ``True`` if the Screen Curtain should be enabled; ``False`` otherwise.
+		"""
+		if not self._screenCurtainConfig["warnOnLoad"]:
+			return True
+		with screenCurtain._screenCurtain.WarnOnLoadDialog(
+			screenCurtainSettingsStorage=self._screenCurtainConfig,
+			parent=self,
+		) as dlg:
+			res = dlg.ShowModal()
+			# WarnOnLoadDialog can change settings, reload them
+			self._screenCurtainWarnOnLoadCheckbox.SetValue(self._screenCurtainConfig["warnOnLoad"])
+			return res == wx.YES
+
+
 """ The name of the config profile currently being edited, if any.
 This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
 This can be used by an AppModule for NVDA to identify and announce
@@ -5990,6 +6101,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
 		AudioPanel,
+		PrivacyAndSecuritySettingsPanel,
 		VisionSettingsPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
@@ -6030,6 +6142,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
+			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
