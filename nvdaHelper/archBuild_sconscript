@@ -219,10 +219,6 @@ env.Install(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
 if isNVDACoreArch:
 	env.Install(sourceTypelibDir, iSimpleDomRPCStubs[1])  # typelib
 
-mathPlayerRPCStubs = env.SConscript("mathPlayer_sconscript")
-if isNVDACoreArch:
-	env.Install(sourceTypelibDir, mathPlayerRPCStubs[0])  # typelib
-
 detoursLib = env.SConscript("detours/sconscript")
 Export("detoursLib")
 
