@@ -792,7 +792,7 @@ def main():
 	speech.initialize()
 	import mathPres
 
-	log.debug("Initializing MathPlayer")
+	log.debug("Initializing math presentation")
 	mathPres.initialize()
 	timeSinceStart = time.time() - NVDAState.getStartTime()
 	if not globalVars.appArgs.minimal and timeSinceStart > 5:
