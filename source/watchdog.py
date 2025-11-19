@@ -13,6 +13,7 @@ from typing import (
 import inspect
 import ctypes.wintypes
 import comtypes
+import globalVars
 import winBindings.ole32
 import winBindings.dbgHelp
 import winBindings.kernel32
@@ -259,16 +260,19 @@ def initialize():
 	if isRunning:
 		raise RuntimeError("already running")
 	isRunning = True
-	now = time.time()
-	recentCrashes = loadRecentCrashTimestamps(now)
-	if len(recentCrashes) >= CRASH_STATS.maxCount:
-		log.error(
-			f"Crash loop detected ({len(recentCrashes)} crashes in {CRASH_STATS.timeout:.0f} seconds). "
-			"Automatic crash recovery will remain disabled until the loop clears.",
-		)
+	if not globalVars.appArgs.secure:
+		now = time.time()
+		recentCrashes = loadRecentCrashTimestamps(now)
+		if len(recentCrashes) >= CRASH_STATS.maxCount:
+			log.error(
+				f"Crash loop detected ({len(recentCrashes)} crashes in {CRASH_STATS.timeout:.0f} seconds). "
+				"Automatic crash recovery will remain disabled until the loop clears.",
+			)
+		else:
+			# Catch application crashes if the handler is enabled.
+			winBindings.kernel32.SetUnhandledExceptionFilter(crashHandler)
 	else:
-		# Catch application crashes if the handler is enabled.
-		winBindings.kernel32.SetUnhandledExceptionFilter(crashHandler)
+		log.debug("Not enabling crash recovery as NVDA is running in secure mode.")
 	winBindings.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
