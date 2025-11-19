@@ -1,0 +1,347 @@
+# Luxembourgish NVDA Symbols File  
+# A part of NonVisual Desktop Access (NVDA)
+# copyright (C) 2025, Information and press service of the Luxembourg government
+# This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Satzenden
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrasenenden
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Reihe von Punkten zur visuellen Darstellung, z. B. im Inhaltsverzeichnis
+Füllzeichen .	\.{4,}
+# Weitere
+Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
+' im Wort	(?<=[^\W_])['’]
+- im Wort	(?<=[^\W_])[-]
+Negative Ziffer	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+Tausendertrennzeichen	(?<![^\d -])\.(?=\d{3}(\D|$))
+Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	Punkt	all	always
+! sentence ending	Ausrufezeechen	all	always
+? sentence ending	Frozeechen	all	always
+; phrase ending	Stréchpunkt	most	always
+: phrase ending	Doppelpunkt	most	always
+Füllzeichen .	Gepunkten Linn	all	always
+' im Wort	Apostroph	all	norep
+Negative Ziffer	Minus	none	norep
+- im Wort	Bindestrëch	all	norep
+... sentence ending	Ellips	all	always
+… sentence ending	Ellips	all	always
+Datumstrennzeichen	Punkt	none	norep
+\0	Eidel	char	# null
+\n	Zeilenëmbroch	char
+\f	Säitenëmbroch	none
+\r	Nei Zeil	char
+ 	Leerzeechen	char
+ 	Geschütztes Leerzeichen	char
+!	Ausrufezeechen	all
+！	Breet Ausrufezeechen	all
+"	Anführungszeichen	most
+\#	Zuelzeechen	some
+$	Dollar	all	norep
+£	Pond	all	norep
+€	Euro	all	norep
+¢	Cent	all	norep
+¥	Yen	all	norep
+₹	Rupie	some	norep
+ƒ	Gulden	all	norep
+¤	Währungszeichen	all	norep
+%	Prozent	some
+‰	Permille	some
+&	an	some	always
+'	Apostroph	all
+(	klammer op	most	always
+)	klammer zou	most	always
+*	Stär	some
+,	Komma	all	always
+、	ideografescht Komma	all	always
+،	Arabesche Komma	all	always
+-	Strich	most	always
+.	Punkt	some
+．	Breet Sazpunkt	some
+/	slash	some
+:	Doppelpunkt	most	norep
+：	Breete Doppelpunkt	most	norep
+;	Stréchpunkt	most
+؛	Arabesche Semikolon	most
+；	Breet Semikolon	most
+?	Frozeechen	all
+؟	Arabescht Frozeechen	all
+？	Breet Frozeechen	all
+@	ät	some
+[	Eckeg Klammer lénks	most
+]	Eckeg Klammer riets	most
+\\	Bäcksläsch	most
+^	Daach	most
+_	Ënnersträichen	most
+`	Gravis	most
+{	Spann lénks	most
+}	Spann riets	most
+|	Vertikal Balken	most
+¦	Gebrachenen Strich	most
+~	Tilde	most
+¡	Invertéiert Ausrufezeechen	some
+¿	Invertéiert Frozeechen	some
+·	Zentrum	most
+‚	Einfaches Anführungszeichen unten	most
+„	Typografisches Anführungszeichen links	most
+′	prim	some
+″	duebel Primzuel	some
+‴	dräifach Primzuel	some
+⁗	Véierstréch	some
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
+“	Anführungszeichen links	most
+”	Anführungszeichen rechts	most
+‘	Apostroph lénks	most
+’	Apostroph riets	most
+–	Bindestrëch	most	always
+—	Bindestrëch	most	always
+­	Silbentrennung	most	always
+⁃	Bindestrich-Aufzählungszeichen	none
+●	Krees	most
+○	Weisser Kreis	most
+¨	Trema	most
+¯	Makron	most
+´	Akut	most
+¸	Cedilla	most
+‎	vu lénks no riets Markéierung	char
+‏	vun riets no lénks markéieren	char
+¶	Absatzzeechen	most
+■	Grosses, gefülltes, schwarzes Quadrat	some
+▪	Kleines, gefülltes, schwarzes Quadrat	some
+◾	Schwaarzt mëttelgrousst klengt Quadrat	some
+□	Weisses Quadrat	some
+◦	Weisses Aufzählungszeichen	some
+⇨	Weisser Pfeil nach rechts	some
+➔	Pfeil no riets	some
+➢	Pfeilspëtz no riets	some
+❖	Schwarzes Karo ohne weisses X	some
+♣	Schwaarzt Kräiz	some
+♦	Karo	some
+◆	Schwaarzen Diamant	some
+§	Absatz	some
+°	Grad	some
+«	Duebel gewénkelte Klammer op	most	always
+»	Duebel gewénkelte Klammer op	most	always
+µ	Mikro	some
+⁰	Superscript 0	some
+¹	Superscript 1	some
+²	Superscript 2	some
+³	Superscript 3	some
+⁴	Superscript 4	some
+⁵	Superskript 5	some
+⁶	Superscript 6	some
+⁷	Superscript 7	some
+⁸	Superscript 8	some
+⁹	Superscript 9	some
+⁺	Superscript Plus	some
+⁼	Superscript Gläichheetszeechen	some
+⁽	Klammer uewen op	some
+⁾	Klammer op	some
+ⁿ	Superscript n	some
+₀	Ënnerschrëft 0	some
+₁	Ënnerschrëft 1	some
+₂	Ënnerschrëft 2	some
+₃	Ënnerschrëft 3	some
+₄	Ënnerschrëft 4	some
+₅	Ënnerschrëft 5	some
+₆	Ënnerschrëft 6	some
+₇	Ënnerschrëft 7	some
+₈	Ënnerschrëft 8	some
+₉	Ënnerschrëft 9	some
+₊	Subskript plus	some
+₋	Subskript Minus	some
+₌	Gläichheetszeechen (Ënnerschrëft)	some
+₍	ronne Klammer uewen	some
+₎	Ënnerschrëft ronn Klammer op	some
+®	Registréiert Mark	some
+™	Registréiert Mark	some
+©	Copyright	some
+℠	Servicemark	some
+←	Pfeil no lénks	some
+↑	Pfeil no uewen	some
+→	Pfeil no riets	some
+↓	Pfeil no ënnen	some
+✓	Häkchen	some
+✔	Fettes Häkchen	some
+🡺	Pfeil no riets	some
+†	Dolch	some
+‡	Duebelen Dolch	some
+‣	dreieckiges Aufzählungszeichen	none
+✗	X-förmige Aufzählungszeichen	none
+⊕	Agekreest Plus	none
+⊖	Minus agekreest	none
+⇄	Pfeil nach rechts über Pfeil nach links	none
+⇒	et folgt	none
++	plus	some
+−	Minus	some
+×	Kräiz	some
+⋅	mal	some
+⨯	mal	none
+∕	gedeelt duerch	some
+⁄	gedeelt duerch	some
+÷	gedeelt duerch	some
+∓	Minus Plus	some
+±	plus minus	some
+∖	Differenzquantitéit	none
+⊍	Multiplikatioun vu verschiddene Sets	none
+𝒫	Mathematischer Grossbuchstabe Schreibschrift-P	none
+𝔓	Mathematischer Grossbuchstabe Fraktur-P	none
+℘	Grossbuchstabe Schreibschrift-P	none
+∁	Ergänzung vum Set	none
+∅	Eidel Set	none
+⊂	Ass eng Ënnergrupp vun	none
+⊄	Ass keng Ënnergrupp vun	none
+⊃	Ass eng Supermenge vun	none
+⊅	Ass keng Superset vun	none
+⊆	Ass eng Ënnergrupp vun oder gläich wéi	none
+⊈	Ass weder eng Ënnergrupp vun nach gläich wéi	none
+⊇	Ass eng Supermenge vun oder gläich wéi	none
+⊉	Ass weder eng Supermenge vun nach gläich wéi	none
+⊌	Multiset	none
+=	gläich	some
+≃	Asymptotesch gläich	none
+≄	net asymptotesch gläich	none
+≅	ungefähr gleich	none
+≆	ungefähr, aber nicht genau gleich	none
+≈	ungefähr gleich	none
+≌	all gläich	none
+≍	gläichwäerteg mat	none
+≭	Net gläich wéi	none
+≎	geometrisch äquivalent zu	none
+≑	geometresch gläich	none
+≚	gläichwénkleg mat	none
+≬	tëscht	none
+≠	Net gläichwäerteg mat	none
+≡	identesch mat	none
+≣	genau äquivalent mit	none
+≢	net identesch mat	none
+∼	Proportional	none
+≙	entsprécht	none
+≟	Vläicht geschwënn	none
+<	manner wéi	some
+>	grösser als	some
+≤	manner wéi oder gläich wéi	none
+≦	kleiner als über gleich	none
+≪	vill méi kleng wéi	none
+≥	grösser gleich	none
+≧	grösser als über gleich	none
+≫	viel grösser als	none
+≶	kleiner grösser	none
+≷	grösser kleiner	none
+≮	net manner wéi	none
+≯	nicht grösser als	none
+⁻	Superscript Minuszeechen	some
+∘	Ringoperator	none
+∂	Partiell Differentialënnerscheed	none
+∇	Nabla	none
+⃗	Vektor tëscht	none
+△	Dräieck	none
+▭	Rechteck	none
+∟	Rechte Wénkel	none
+∠	Wénkel	none
+∥	parallel zu	none
+∦	net parallel zu	none
+⊥	senkrecht zu	none
+⟂	orthogonal zu	none
+‖	Vektorstandard	none
+̂	normaliséiert	none
+∿	Sinus	none
+∡	gemoossene Wénkel	none
+∢	Kugelwénkel	none
+∀	für alle	none
+∃	et gëtt	none
+∄	et gëtt keen	none
+⇏	implizéiert net	none
+⇐	folgt vun	none
+∈	Element vun	none
+∉	kee Element vun	none
+∊	klengt Element vun	none
+∋	enthält Element	none
+∌	enthält nicht Element	none
+∍	klein enthält Element	none
+∎	Enn vum Beweis	none
+∏	Produkt vun	none
+∐	Koprodukt vun	none
+∑	Summe über	none
+√	Quadratwurzel	none
+∛	Kubikwurzel	none
+∜	véiert Wuerzel	none
+∝	proportional zu	none
+∞	Infinity	none
+∧	An	none
+∨	Oder	none
+¬	Net	none
+∩	Kräizung	none
+∪	Uniounsset	none
+∫	Integral	none
+∬	Duebelintegral	none
+∭	Dräifach Integral	none
+∮	Kurveintegral	none
+∯	Oberflächenintegral	none
+∰	Volumenintegral	none
+∱	Integral am Auerzäresënn	none
+∲	Integral vun der Auerzäresënnkurv	none
+∳	Konturintegral géint den Auerzäresënn	none
+∴	dofir	none
+∵	Weil	none
+∶	Verhältnis	none
+∷	Proportioun	none
+∹	Iwwerschësseg	none
+∺	geometresch Proportioun	none
+≀	Kranzprodukt	none
+≏	Ënnerscheed tëscht	none
+≐	nähert sich der Grenze	none
+∙	Kreesoperator	none
+∣	trennt	none
+∤	gëtt net gedeelt	none
+≔	Resultat vun	none
+≕	Net bestëmmt aus	none
+≺	ist Bedingung für	none
+≻	Follegt vun	none
+⊀	Ist nicht Bedingung für	none
+⊁	Follegt net vun	none
+¼	e Véierel	none
+½	einhalb	none
+¾	dräi Véirel	none
+⅐	ee September	none
+⅑	een Néngtel	none
+⅒	een Zéngtel	none
+⅓	een Drëttel	none
+⅔	zwee Drëttel	none
+⅕	ein Fünftel	none
+⅖	zwei Fünftel	none
+⅗	drei Fünftel	none
+⅘	vier Fünftel	none
+⅙	ee Sechstel	none
+⅚	fünf Sechstel	none
+⅛	een Aachtel	none
+⅜	dräi Aachtelen	none
+⅝	fünf Achtel	none
+⅞	siwen Aachtelen	none
+𝔸	Mathematischer Grossbuchstabe A mit Doppelstrich	none
+ℂ	Groussbuschtaf C mat duebelem Strich	none
+ℑ	Groussbuschtaf Fraktur-I	none
+ℍ	Groussbuschtaf H mat duebelem Strich	none
+ℕ	Groussbuschtaf N mat duebelem Strich	none
+𝕁	Mathematesche Groussbuschtaf J mat duebelem Strich	none
+ℚ	Groussbuschtaf Q mat duebelem Strich	none
+ℝ	Groussbuschtaf R mat duebelem Strich	none
+ℜ	Groussbuschtaf Fraktur-R	none
+ℤ	Groussbuschtaf Z mat duebelem Strich	none
+ℵ	Alef	none
+ℶ	Wetten	none
+⌘	Mac Command-Taste	none
+⌥	Mac Optiounstaste	none
