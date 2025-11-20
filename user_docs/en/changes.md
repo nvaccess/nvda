@@ -13,6 +13,7 @@ Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
+* Wiris MathPlayer is no longer supported.
 
 ### New Features
 
@@ -53,6 +54,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
+* Support for the MathPlayer software from Wiris has been removed. (#19239)
 
 ### Bug Fixes
 
@@ -167,6 +169,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
+* The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
 
 #### Deprecations
 
