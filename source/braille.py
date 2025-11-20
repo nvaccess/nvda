@@ -2530,6 +2530,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _clearAll(self) -> None:
 		"""Clear the braille buffers and update the braille display."""
+		self.autoScroll(enable=False)
 		self.mainBuffer.clear()
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage(False)
