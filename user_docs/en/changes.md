@@ -35,6 +35,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
+* Added ability to scroll forward braille automatically (#18573, @nvdaes)
 
 ### Changes
 
@@ -95,6 +96,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
+* Added an `autoScroll` method to `braille.handler`. (#18573, nvdaes)
 
 #### API Breaking Changes
 
