@@ -161,15 +161,15 @@ source = { git = "https://github.com/DiffSK/configobj?rev=9c8a0a80c767bf8a3d6493
 
 [[package]]
 name = "crowdin-api-client"
-version = "1.21.0"
+version = "1.24.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "deprecated", marker = "sys_platform == 'win32'" },
     { name = "requests", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/39/70/4069412e2e8004a6ad15bf2a3d9085bea50ee932a66ad935285831cf82b4/crowdin_api_client-1.21.0.tar.gz", hash = "sha256:0f957e5de6487a74ac892d524a5e300c1bc971320b67f85ce65741904420d8ec", size = 64729, upload-time = "2025-01-31T15:56:42.179Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/07/fc/ec5564928057aac9cae7e78ed324898b3134369b100bbb2b5c97ad1ad548/crowdin_api_client-1.24.1.tar.gz", hash = "sha256:d2a385c2b3f8e985d5bb084524ae14aef9045094fba0b2df1df82d9da97155b1", size = 70629, upload-time = "2025-08-26T13:20:34.955Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/93/0f/9efc4f6db0b3b97f99015529b5832058ce4f7970d547b23fc04a38d69ddd/crowdin_api_client-1.21.0-py3-none-any.whl", hash = "sha256:85e19557755ebf6a15beda605d25b77de365244d8c636462b0dd8030a6cdfe20", size = 101566, upload-time = "2025-01-31T15:56:40.651Z" },
+    { url = "https://files.pythonhosted.org/packages/29/74/118d8f5e592a1fe75b793346a599d57746b18b8875c31e956022b63ba173/crowdin_api_client-1.24.1-py3-none-any.whl", hash = "sha256:a07365a2a0d42830ee4eb188e3820603e1420421575637b1ddd8dffe1d2fe14c", size = 109654, upload-time = "2025-08-26T13:20:33.673Z" },
 ]
 
 [[package]]
@@ -590,7 +590,7 @@ unit-tests = [
 requires-dist = [
     { name = "comtypes", specifier = "==1.4.13" },
     { name = "configobj", git = "https://github.com/DiffSK/configobj?rev=9c8a0a80c767bf8a3d6493ed01df6c351bddca42" },
-    { name = "crowdin-api-client", specifier = "==1.21.0" },
+    { name = "crowdin-api-client", specifier = "==1.24.1" },
     { name = "cryptography", specifier = "==46.0.3" },
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
     { name = "lxml", specifier = "==5.3.2" },
