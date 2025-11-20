@@ -115,6 +115,7 @@ class ImageDescriber:
 
 		if not self.isModelLoaded:
 			from gui._localCaptioner.messageDialogs import openEnableOnceDialog
+
 			# Ask to enable image desc only in this session, No configuration modifications
 			wx.CallAfter(openEnableOnceDialog)
 			return

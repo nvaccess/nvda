@@ -191,4 +191,3 @@ def openEnableOnceDialog() -> None:
 		# load image desc in this session
 		if not _localCaptioner.isModelLoaded():
 			_localCaptioner.toggleImageCaptioning()
-
