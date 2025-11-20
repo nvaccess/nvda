@@ -354,10 +354,10 @@ class WordDocumentTextInfo(UIATextInfo):
 			return fields
 
 		# MS Word tries to produce speakable math content within equations.
-		# However, using mathPlayer with the exposed mathml property on the equation is much nicer.
+		# However, using math presentation providers with the exposed mathml property on the equation is much nicer.
 		# But, we therefore need to remove the inner math content if reading by line
 		if not formatConfig or not formatConfig.get("extraDetail"):
-			# We really only want to remove content if we can guarantee that mathPlayer is available.
+			# We really only want to remove content if we can guarantee that a math presentation provider is available.
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
 				mathLevel = None
@@ -543,7 +543,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
-			# Don't set focus to math equations otherwise they cannot be interacted  with mathPlayer.
+			# Don't set focus to math equations otherwise they cannot be interacted  with by math presentation providers.
 			return False
 		return super()._shouldSetFocusToObj(obj)
 
@@ -554,7 +554,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
-			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with mathPlayer.
+			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with by math presentation providers.
 			return False
 		return super(WordBrowseModeDocument, self).shouldPassThrough(obj, reason=reason)
 
