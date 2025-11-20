@@ -114,8 +114,9 @@ class ImageDescriber:
 		imageData = _screenshotNavigator()
 
 		if not self.isModelLoaded:
-			# Translators: Message when image description is not enabled
-			ui.message(pgettext("imageDesc", "image description is not enabled"))
+			from gui._localCaptioner.messageDialogs import openEnableOnceDialog
+			# Ask to enable image desc only in this session, No configuration modifications
+			wx.CallAfter(openEnableOnceDialog)
 			return
 
 		self.captionThread = threading.Thread(
