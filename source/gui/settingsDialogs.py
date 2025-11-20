@@ -5504,7 +5504,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			).kwargs["max"],
 		)
 		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
-		autoScrollRateText = _("Auto&matic scroll rate (chars/sec)")
+		autoScrollRateText = _("Auto&matic scroll rate (cells/sec)")
 		self.autoScrollRateEdit = followCursorGroupHelper.addLabeledControl(
 			autoScrollRateText,
 			nvdaControls.SelectOnFocusSpinCtrl,
