@@ -2411,6 +2411,8 @@ The following symbols are defined:
 | ⡎ ("s" with dot 7) | End strikethrough |
 | ⠑ ("e")| Start spelling error |
 | ⡑ ("e" with dot 7) | End spelling error |
+| ⠛ ("g")| Start grammar error |
+| ⡛ ("g" with dot 7) | End grammar error |
 
 ##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
@@ -3149,26 +3151,26 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling error reporting {#ReportSpellingErrors}
+##### Spelling and grammar error reporting {#ReportSpellingErrors}
 
-This option allows you to configure how spelling errors are reported while reading text.
+This option allows you to configure how spelling and grammar errors are reported while reading text.
 This checklist box has three options:
 
-* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
-* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
-When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
-* Braille: NVDA will indicate spelling errors in braille.
-To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
+* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
+* Sound: NVDA will play a short glitch sound when an error is encountered while reading text
+When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
+* Braille: NVDA will indicate spelling or grammar errors in braille.
+To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, spelling errors can be reported just in braille.
+Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+In these cases, errors can be reported just in braille.
 
-By default, spelling errors will be reported with speech.
+By default, errors will be reported with speech.
 
-To cycle through available options to report spelling errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through available options to report errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are: Off, Speech, Sound, Speech and sound.
 
-You can also assign a custom gesture to toggle the reporting of spelling errors in braille using the [Input Gestures dialog](#InputGestures).
+You can also assign a custom gesture to toggle the reporting of errors in braille using the [Input Gestures dialog](#InputGestures).
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
