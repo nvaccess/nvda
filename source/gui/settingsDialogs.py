@@ -2492,7 +2492,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		reportMultiSelectText = _("Report when lists support &multiple selection")
+		reportMultiSelectText = _("Report when objects support &multiple selection")
 		self.reportMultiSelectCheckBox = sHelper.addItem(wx.CheckBox(self, label=reportMultiSelectText))
 		self.bindHelpEvent("ReportMultiSelect", self.reportMultiSelectCheckBox)
 		self.reportMultiSelectCheckBox.SetValue(
