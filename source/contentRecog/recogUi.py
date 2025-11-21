@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2025 NV Access Limited, James Teh, Leonard de Ruijter, Cyrille Bougot, Cary-rowen
+# Copyright (C) 2017-2025 NV Access Limited, James Teh, Leonard de Ruijter, Cyrille Bougot, Cary-rowen, hwf1324
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -226,6 +226,8 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 
 #: Keeps track of the recognition in progress, if any.
 _activeRecog = None
+# Register the fake NVDA object class.
+api.fakeNVDAObjectClasses.add(RecogResultNVDAObject)
 
 
 def recognizeNavigatorObject(recognizer: ContentRecognizer):

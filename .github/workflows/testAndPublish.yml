@@ -59,6 +59,7 @@ jobs:
     name: Build NVDA
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -79,12 +80,12 @@ jobs:
       with:
         submodules: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
@@ -132,12 +133,12 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: Static type analysis
       run: ci/scripts/tests/typeCheck.ps1
 
@@ -152,12 +153,12 @@ jobs:
         # Include gettext
         submodules: true
     - name: Set up python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: Run pre-commit
       run: |
         # Ensure uv environment is up to date.
@@ -184,17 +185,17 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
       if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: makePot results
         path: |
@@ -213,12 +214,12 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -241,12 +242,12 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Run unit tests
@@ -258,7 +259,7 @@ jobs:
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: Unit tests results (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: testOutput/unit/unitTests.xml
@@ -284,17 +285,17 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Get makePot results
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: makePot results
         path: output
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: Upload translations to Crowdin
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
@@ -305,6 +306,7 @@ jobs:
     name: Create launcher
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -325,12 +327,12 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
@@ -352,14 +354,14 @@ jobs:
         scons %sconsLauncherOutTargets% %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: |
           output/nvda*.exe
           output/nvda*controllerClient.zip
     - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       id: uploadBuildArtifacts
       with:
         name: Documentation files and packaging metadata (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -389,11 +391,24 @@ jobs:
     name: Run system tests
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         # To skip tests, and just run install, replace with [excluded_from_build]
-        testSuite: [chrome, installer, startupShutdown, symbols, vscode, imageDescriptions]
+        testSuite:
+          - installer
+          - startupShutdown
+          - symbols
+          - vscode
+          - imageDescriptions
+          - chrome_annotations
+          - chrome_list
+          - chrome_table
+          - chrome_language
+          - chrome_roleDescription
+          - chrome_misc_aria
+          - chrome_misc
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
@@ -412,17 +427,17 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Get NVDA launcher
       id: getLauncher
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output
@@ -440,7 +455,7 @@ jobs:
         INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         path: |
@@ -485,7 +500,7 @@ jobs:
       run: ci/scripts/buildSymbolStore.ps1
     - name: Upload symbols artifact
       id: uploadArtifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: Symbols (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output/symbols.zip
@@ -522,7 +537,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
@@ -532,7 +547,7 @@ jobs:
         curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
         7z x dump_syms.zip dump_syms.exe
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
     - name: Upload symbols to Mozilla
       continue-on-error: true
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\mozillaSyms.py
@@ -585,7 +600,7 @@ jobs:
       name: snapshot
     steps:
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
@@ -639,7 +654,7 @@ jobs:
         echo RELEASE_NAME=$GITHUB_REF_NAME | sed 's/release-//g' >> $GITHUB_OUTPUT
         echo NORMALIZED_TAG_NAME=$GITHUB_REF_NAME | sed 's/\./-/g' | sed 's/release-//g' >> $GITHUB_OUTPUT
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output

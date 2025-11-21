@@ -28,6 +28,22 @@ class _WritePaths:
 		return configPath
 
 	@property
+	def mathCATDir(self) -> str:
+		"""
+		Base directory for MathCAT assets (rules etc.).
+		"""
+		if isRunningAsSource():
+			base = os.path.dirname(globalVars.appDir)
+		else:
+			base = globalVars.appDir
+		return os.path.join(
+			base,
+			"include",
+			"nvda-mathcat",
+			"assets",
+		)
+
+	@property
 	def addonsDir(self) -> str:
 		return os.path.join(self.configDir, "addons")
 
@@ -42,6 +58,10 @@ class _WritePaths:
 	@property
 	def profilesDir(self) -> str:
 		return os.path.join(self.configDir, "profiles")
+
+	@property
+	def remoteAccessDir(self) -> str:
+		return os.path.join(self.configDir, "remoteAccess")
 
 	@property
 	def scratchpadDir(self) -> str:

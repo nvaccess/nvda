@@ -13,6 +13,7 @@ Windows 10 is the minimum Windows version supported.
 We recommend updating to Windows 11, or when that's not possible, to the latest Windows 10 version (22H2).
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
+* Wiris MathPlayer is no longer supported.
 
 ### New Features
 
@@ -33,6 +34,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
+* Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
 
 ### Changes
 
@@ -50,6 +52,9 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
+* The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
+* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
+* Support for the MathPlayer software from Wiris has been removed. (#19239)
 
 ### Bug Fixes
 
@@ -62,8 +67,13 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
+* When a synthesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)
 * Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
+* NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
+* When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)
+* The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
+* In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -84,6 +94,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
+* Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 
 #### API Breaking Changes
 
@@ -110,8 +121,6 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
-* `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
-All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
@@ -153,6 +162,14 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_queue_status` to `getQueueStatus`; and
     * `reset_device` to `resetDevice`.
   * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
+* The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)
+* The `visionEnhancementProviders.screenCurtain` module has been replaced with the `screenCurtain` subpackage. (#19177)
+  * The following symbols have no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`.
+  * All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)
+  * `MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)
+  * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
+* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
+* The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
 
 #### Deprecations
 
@@ -228,13 +245,21 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
-* `visionEnhancementProviders.screenCurtain.MAGCOLOREFFECT` is deprecated.
-Use `winBindings.magnification.MAGCOLOREFFECT` instead. (#18958)
-* `visionEnhancementProviders.screenCurtain.isScreenFullyBlack` is deprecated.
-Use `NVDAHelper.localLib.isScreenFullyBlack` instead. (#18958)
+* `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
+Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
+
+## 2025.3.2
+
+This is a patch release to fix a security issue.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))
 
 ## 2025.3.1
 
@@ -318,7 +343,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
   * Updated detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
-  * Updated SCons to 4.10.0. (#19016, @LeonarddeR)
+  * Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)
+    * This introduces support to build NVDA with Visual Studio 2026.
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
