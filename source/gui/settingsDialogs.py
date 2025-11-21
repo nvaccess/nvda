@@ -34,6 +34,7 @@ import braille
 import brailleInput
 import brailleTables
 import characterProcessing
+import magnifier
 import config
 import core
 import globalVars
@@ -5976,6 +5977,87 @@ class VisionProviderSubPanel_Wrapper(
 		if self._providerSettings:
 			self._providerSettings.onSave()
 
+class MagnifierPanel(SettingsPanel):
+	# Translators: This is the label for the magnifier settings panel.
+	title = _("Magnifier")
+	helpId = "MagnifierSettings"
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: The label for a setting in magnifier settings to select the default zoom level.
+		defaultZoomLabelText = _("Default &zoom level:")
+
+		# Create zoom level choices from 1.0 to 10.0 with 0.5 steps
+		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5  
+		zoomChoices = [f"{value:.1f}x" for value in zoomValues]
+
+		self.defaultZoomList = sHelper.addLabeledControl(
+			defaultZoomLabelText,
+			wx.Choice,
+			choices=zoomChoices
+		)
+		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
+
+		# Store zoom values for later use
+		self.zoomValues = zoomValues
+
+		# Set current value from config
+		self._updateCurrentSelection()
+
+	def _updateCurrentSelection(self):
+		"""Update the selection based on current zoom level."""
+		try:
+			# Get current zoom level from magnifier module
+			currentZoom = magnifier.getCurrentZoomLevel()
+
+			# Ensure it's a float
+			currentZoom = float(currentZoom)
+
+			# Find the closest match in our zoom values
+			closestIndex = 0
+			minDifference = abs(self.zoomValues[0] - currentZoom)
+
+			for i, value in enumerate(self.zoomValues):
+				difference = abs(value - currentZoom)
+				if difference < minDifference:
+					minDifference = difference
+					closestIndex = i
+
+			self.defaultZoomList.SetSelection(closestIndex)
+			
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			# Default to 2.0x if module not available or value not found
+			log.debug(f"Error getting current zoom: {e}")
+			try:
+				defaultIndex = self.zoomValues.index(2.0)
+				self.defaultZoomList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultZoomList.SetSelection(0)
+
+	def onPanelActivated(self):
+		"""Called when the panel is activated/shown."""
+		super().onPanelActivated()
+		# Refresh the selection when panel is shown
+		self._updateCurrentSelection()
+
+	def onSave(self):
+		selectedIndex = self.defaultZoomList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedZoom = self.zoomValues[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+				# Save the setting in NVDA config
+				config.conf["magnifier"]["defaultZoomLevel"] = selectedZoom
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultZoomLevel(selectedZoom)
+			except ImportError:
+				pass
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
@@ -6111,6 +6193,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		MagnifierPanel,
 		MathSettingsPanel,
 		RemoteSettingsPanel,
 		LocalCaptionerSettingsPanel,

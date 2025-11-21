@@ -13,12 +13,14 @@ from typing import (
 	Tuple,
 	Union,
 )
+import magnifier
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
 )
 
 import audioDucking
+import magnifier.commands
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -4930,6 +4932,39 @@ class GlobalCommands(ScriptableObject):
 					)
 					return
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+w",
+	)
+	def script_toggleMagnifier(self, gesture):
+		magnifier.commands.toggleMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"decreases the magnification level of the screen magnifier."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+b",
+	)
+	def script_zoomIn(self, gesture):
+		magnifier.commands.zoomIn()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"decreases the magnification level of the screen magnifier."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+n",
+	)
+	def script_zoomOut(self, gesture):
+		magnifier.commands.zoomOut()
 
 	@script(
 		description=_(
