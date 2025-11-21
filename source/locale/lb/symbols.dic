@@ -38,6 +38,9 @@ Negative Ziffer	Minus	none	norep
 ... sentence ending	Ellips	all	always
 … sentence ending	Ellips	all	always
 Datumstrennzeichen	Punkt	none	norep
+Dezimaltrennzeichen		none	always
+Tausendertrennzeichen		none	always
+\t	Tab	char
 \0	Eidel	char	# null
 \n	Zeilenëmbroch	char
 \f	Säitenëmbroch	none
@@ -98,6 +101,7 @@ _	Ënnersträichen	most
 ′	prim	some
 ″	duebel Primzuel	some
 ‴	dräifach Primzuel	some
+‐	digital Bindestrëch	most	always
 ⁗	Véierstréch	some
 •	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
@@ -134,22 +138,22 @@ _	Ënnersträichen	most
 §	Absatz	some
 °	Grad	some
 «	Duebel gewénkelte Klammer op	most	always
-»	Duebel gewénkelte Klammer op	most	always
+»	Duebel gewénkelte Klammer zou	most	always
 µ	Mikro	some
 ⁰	Superscript 0	some
 ¹	Superscript 1	some
 ²	Superscript 2	some
 ³	Superscript 3	some
 ⁴	Superscript 4	some
-⁵	Superskript 5	some
+⁵	Superscript 5	some
 ⁶	Superscript 6	some
 ⁷	Superscript 7	some
 ⁸	Superscript 8	some
 ⁹	Superscript 9	some
 ⁺	Superscript Plus	some
 ⁼	Superscript Gläichheetszeechen	some
-⁽	Klammer uewen op	some
-⁾	Klammer op	some
+⁽	Superscript Klammer uewen op	some
+⁾	Klammer uewen zou	some
 ⁿ	Superscript n	some
 ₀	Ënnerschrëft 0	some
 ₁	Ënnerschrëft 1	some
@@ -164,8 +168,8 @@ _	Ënnersträichen	most
 ₊	Subskript plus	some
 ₋	Subskript Minus	some
 ₌	Gläichheetszeechen (Ënnerschrëft)	some
-₍	ronne Klammer uewen	some
-₎	Ënnerschrëft ronn Klammer op	some
+₍	Ënnerschrëft ronn Klammer op	some
+₎	Ënnerschrëft ronn Klammer zou	some
 ®	Registréiert Mark	some
 ™	Registréiert Mark	some
 ©	Copyright	some
@@ -316,20 +320,20 @@ _	Ënnersträichen	most
 ¼	e Véierel	none
 ½	einhalb	none
 ¾	dräi Véirel	none
-⅐	ee September	none
+⅐	een Siwweltel	none
 ⅑	een Néngtel	none
 ⅒	een Zéngtel	none
 ⅓	een Drëttel	none
 ⅔	zwee Drëttel	none
-⅕	ein Fünftel	none
-⅖	zwei Fünftel	none
-⅗	drei Fünftel	none
-⅘	vier Fünftel	none
+⅕	een Fënneftel	none
+⅖	zwee Fënneftel	none
+⅗	dräi Fënneftel	none
+⅘	véier Fënneftel	none
 ⅙	ee Sechstel	none
-⅚	fünf Sechstel	none
+⅚	fënnef Sechstel	none
 ⅛	een Aachtel	none
 ⅜	dräi Aachtelen	none
-⅝	fünf Achtel	none
+⅝	fënnef Aachtel	none
 ⅞	siwen Aachtelen	none
 𝔸	Mathematischer Grossbuchstabe A mit Doppelstrich	none
 ℂ	Groussbuschtaf C mat duebelem Strich	none
