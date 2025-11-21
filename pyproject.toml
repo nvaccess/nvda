@@ -294,7 +294,7 @@ reportUnknownMemberType = false  # 20000+ errors
 default-groups = "all"
 python-preference = "only-system"
 environments = ["sys_platform == 'win32'"]
-required-version = ">=0.7.9"
+required-version = ">=0.9"
 
 [tool.setuptools]
 package-dir = {"" = "source"}
@@ -319,11 +319,12 @@ dev = [
 	"py2exe==0.14.0.0",
 	"setuptools~=72.0",
 	"nvda-mathcat",
+	"uv==0.9.11",
 ]
 lint = [
-	"ruff==0.12.7",
+	"ruff==0.14.5",
 	"pre-commit==4.2.0",
-	"pyright[nodejs]==1.1.406",
+	"pyright[nodejs]==1.1.407",
 ]
 license-check = [
 	"licensecheck==2025.1",
