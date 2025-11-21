@@ -100,7 +100,7 @@ Generating this requires direct co-ordination with Mozilla.
 
 ### Email notifications
 
-You can sends out email notifications to various email lists when certain changes are made.
+You can send out email notifications to various email lists when certain changes are made.
 Currently, only notifications are sent to a translators list, when localisation file changes occur.
 
 To enable, set:
