@@ -177,7 +177,7 @@ def openEnableOnceDialog() -> None:
 	dialog = MessageDialog(
 		parent=None,
 		# Translators: title of dialog when enable image desc
-		title=pgettext("imageDesc", "Enable image description right now?"),
+		title=pgettext("imageDesc", "Enable AI image descriptions"),
 		message=pgettext(
 			"imageDesc",
 			# Translators: label of dialog when enable image desc
