@@ -45,12 +45,15 @@ PowerShell scripts continue on non-terminating errors unless the file is prefixe
 
 Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
 You just need to enable GitHub Actions on your fork.
+You may want to disable all workflows other than `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
 
 The following configuration is required only for more advanced development such as:
 
 * signed builds
 * Crowdin synchronisation
 * publishing releases to a server
+* email notifications
+* auto-assigning milestones
 
 ### Publisher name
 
