@@ -88,8 +88,10 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sphinx to 8.1.3. (#18475)
   * Introduced onnxruntime 1.22.1 for model inference. (#18475)
   * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
-  * Updated pyright to 1.1.406 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749)
+  * Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)
   * Updated wxPython to 4.2.3. (#19080)
+  * Updated uv to 0.9.11 (#19162)
+  * Updated ruff to 0.14.5 (#19162)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
