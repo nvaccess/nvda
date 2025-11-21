@@ -3028,7 +3028,7 @@ def getFormatFieldSpeech(  # noqa: C901
 			texts = []
 			if invalidGrammar:
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
-					texts.append(WaveFileCommand(r"waves\textError.wav"))
+					texts.append(WaveFileCommand(r"waves\grammarError.wav"))
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a grammar error.
 					texts.append(_("grammar error"))
