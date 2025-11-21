@@ -2424,7 +2424,7 @@ Enabling this option will cause NVDA to speak lines or paragraphs reached using 
 
 To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
-##### Automatic Scroll Rate{#BrailleAutoScrollRate}
+##### Automatic Scroll Rate {#BrailleAutoScrollRate}
 
 This option is a numerical field that controls the rate for automatic scroll forward, measured in cells by seconds.
 For example, with the default value (10 chars/sec), if a braille display with 40 cells is available, the number of seconds between scrolls will be 4.
