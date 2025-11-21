@@ -2424,6 +2424,18 @@ Enabling this option will cause NVDA to speak lines or paragraphs reached using 
 
 To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
+##### Automatic Scroll Rate {#BrailleAutoScrollRate}
+
+This option is a numerical field that controls the rate for automatic scroll forward, measured in cells by seconds.
+For example, with the default value (10 chars/sec), if a braille display with 40 cells is available, the number of seconds between scrolls will be 4.
+If a braille display has 20 cells available, the number of seconds between scrolls will be 2.
+
+While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line been read is too short.
+
+Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, or when the session is locked.
+
+Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
