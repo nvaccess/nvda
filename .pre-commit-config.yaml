@@ -159,3 +159,6 @@ repos:
     - id: pyright
       name: type check with pyright
       entry: uv run pyright
+      language: system
+      types_or: [python, pyw]
+      pass_filenames: false
