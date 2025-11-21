@@ -98,6 +98,27 @@ To enable, set:
 
 Generating this requires direct co-ordination with Mozilla.
 
+### Email notifications
+
+You can sends out email notifications to various email lists when certain changes are made.
+Currently, only notifications are sent to a translators list, when localisation file changes occur.
+
+To enable, set:
+
+* `EMAIL_USERNAME` as a secret.
+* `EMAIL_PASSWORD` as a secret.
+* `EMAIL_SERVER_ADDRESS` as a secret.
+* `EMAIL_SERVER_PORT` optionally, as a secret, with 465 being the default if unset.
+
+### Automatically assign milestone on PR merge
+
+There is a workflow to assign a milestone to the PR, when a PR is merged.
+
+To enable, set:
+
+* `MILESTONE_ID` as a variable with the milestone number.
+You can get this from the end of the URL when you visit the milestone.
+
 ### GitHub Environments
 
 GitHub Environments are used to protect deployments of snapshot/tagged builds.

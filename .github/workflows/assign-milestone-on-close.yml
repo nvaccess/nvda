@@ -15,6 +15,16 @@ jobs:
   assign-milestone:
     runs-on: ubuntu-latest
     steps:
+      - name: Early exit
+        run: |
+          if [ -z "${{ env.MILESTONE_ID }}" ]; then
+            echo "MILESTONE_ID is not set. Exiting workflow."
+            gh run cancel ${{ github.run_id }}
+            gh run watch ${{ github.run_id }}
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
       - name: Check if milestone is set
         id: check-milestone
         uses: actions/github-script@v7
