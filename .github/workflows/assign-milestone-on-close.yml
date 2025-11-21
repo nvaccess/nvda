@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Early exit
         run: |
-          if [ -z "${{ env.MILESTONE_ID }}" ]; then
+          if [ -z "$MILESTONE_ID" ]; then
             echo "MILESTONE_ID is not set. Exiting workflow."
             gh run cancel ${{ github.run_id }}
             gh run watch ${{ github.run_id }}
