@@ -804,7 +804,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(
 			# Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			_("Report spelling or grammar errors {mode}").format(
+			_("Report errors {mode}").format(
 				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
 			),
 		)
