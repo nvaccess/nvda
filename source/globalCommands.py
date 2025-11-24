@@ -821,7 +821,7 @@ class GlobalCommands(ScriptableObject):
 		)
 		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
 			# Translators: Message presented when turning on reporting spelling or grammar errors in braille.
-			ui.message(_("Report spelling or grammar errors in braille on"))
+			ui.message(_("Report errors in braille on"))
 		else:
 			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 			ui.message(_("Report spelling or grammar errors in braille off"))
