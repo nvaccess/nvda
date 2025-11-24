@@ -18,6 +18,7 @@ You do this by:
 1. Add the desired languages
 
 Once work is significantly completed on the files (e.g 50%+), you can integrate the new files for the language into NVDA by running the [add new language workflow](https://github.com/nvaccess/nvda/actions/workflows/add-new-language.yml).
+This will commit any previously uncommitted files for the language.
 
 ## Adding new translators
 
