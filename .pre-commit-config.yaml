@@ -33,7 +33,7 @@ repos:
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
     # Prevents commits to certain branches
     - id: no-commit-to-branch
@@ -92,7 +92,7 @@ repos:
         )
 
 - repo: https://github.com/asottile/add-trailing-comma
-  rev: v3.2.0
+  rev: v4.0.0
   hooks:
   # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
   # if a trailing comma is added.
@@ -101,7 +101,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.12.7
+  rev: v0.14.5
   hooks:
     - id: ruff
       name: lint with ruff
@@ -110,13 +110,14 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.403
+  rev: v1.1.407
   hooks:
   - id: pyright
     name: Check types with pyright
+    additional_dependencies: [ "pyright[nodejs]==1.1.407" ]
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.8.4
+  rev: 0.9.11
   hooks:
     - id: uv-lock
       name: Verify uv lock file

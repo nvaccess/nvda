@@ -56,10 +56,12 @@ from .settingsDialogs import (
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
+	LocalCaptionerSettingsPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
 	ObjectPresentationPanel,
+	PrivacyAndSecuritySettingsPanel,
 	RemoteSettingsPanel,
 	ReviewCursorPanel,
 	SettingsDialog,
@@ -345,6 +347,9 @@ class MainFrame(wx.Frame):
 	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
+	def onPrivacyAndSecuritySettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, PrivacyAndSecuritySettingsPanel)
+
 	def onVisionSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, VisionSettingsPanel)
 
@@ -382,6 +387,10 @@ class MainFrame(wx.Frame):
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onRemoteAccessSettingsCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onLocalCaptionerSettingsCommand(self, evt):
+		self.popupSettingsDialog(NVDASettingsDialog, LocalCaptionerSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAdvancedSettingsCommand(self, evt: wx.CommandEvent):
