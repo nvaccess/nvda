@@ -824,7 +824,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Report errors in braille on"))
 		else:
 			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
-			ui.message(_("Report spelling or grammar errors in braille off"))
+			ui.message(_("Report errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
