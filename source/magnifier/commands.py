@@ -9,8 +9,11 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 import ui
-from . import getMagnifier, setMagnifier, getDefaultZoomLevel
+from . import getMagnifier, setMagnifier, getDefaultZoomLevel, getDefaultFilter
 from .fullscreenMagnifier import FullScreenMagnifier
+from .utils.filterHandler import filter
+from logHandler import log
+
 
 def toggleMagnifier():
 	"""Toggle the NVDA magnifier on/off."""
@@ -27,8 +30,9 @@ def toggleMagnifier():
 		)
 	else:
 		# Start magnifier with zoom level from config
-		zoomLevel = getDefaultZoomLevel()
-		magnifier = FullScreenMagnifier(zoomLevel)
+		defaultZoomLevel = getDefaultZoomLevel()
+		defaultFilter = getDefaultFilter()
+		magnifier = FullScreenMagnifier(zoomLevel=defaultZoomLevel, filter=defaultFilter)
 		setMagnifier(magnifier)
 		ui.message(
 			_(
@@ -36,6 +40,7 @@ def toggleMagnifier():
 				"Starting NVDA Fullscreen magnifier"
 			)
 		)
+
 
 def zoomIn():
 	"""Zoom in the magnifier."""
@@ -48,6 +53,9 @@ def zoomIn():
 				"Zooming in with {zoomLevel} level"
 			).format(zoomLevel=magnifier.zoomLevel)
 		)
+	else:
+		magnifierNotActiveMessage("trying to zoom in")
+
 
 def zoomOut():
 	"""Zoom out the magnifier."""
@@ -60,3 +68,34 @@ def zoomOut():
 				"Zooming out with {zoomLevel} level"
 			).format(zoomLevel=magnifier.zoomLevel)
 		)
+	else:
+		magnifierNotActiveMessage("trying to zoom out")
+
+
+def toggleFilter():
+	magnifier = getMagnifier()
+	log.info(f"Toggling filter for magnifier: {magnifier}")
+	if magnifier and magnifier.isActive:
+		filters = list(filter)
+		idx = filters.index(magnifier.filter)
+		magnifier.filter = filters[(idx + 1) % len(filters)]
+		if True:
+			# if magnifier.magnifierType == MagnifierType.FULLSCREEN:
+			magnifier._applyFilter()
+		ui.message(
+			_(
+				# Translators: Message announced when changing the color filter with {filter} being the new color filter
+				"Color filter changed to {filter}"
+			).format(filter=magnifier.filter.name.lower())
+		)
+	else:
+		magnifierNotActiveMessage("trying to toggle filters")
+
+
+def magnifierNotActiveMessage(action: str = ""):
+	ui.message(
+		_(
+			# Translators: Message announced that the magnifier is not active
+			"Magnifier is not active {action}"
+		).format(action=action)
+	)

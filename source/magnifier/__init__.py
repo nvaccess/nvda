@@ -11,6 +11,7 @@ Handles module initialization, configuration and settings interaction.
 import config
 
 from .fullscreenMagnifier import FullScreenMagnifier
+from .utils.filterHandler import filter
 
 # Variables globales du module
 _magnifier: FullScreenMagnifier | None = None
@@ -19,6 +20,7 @@ _magnifier: FullScreenMagnifier | None = None
 confspec = {
     "magnifier": {
         "defaultZoomLevel": "float(min=1.0, max=10.0, default=2.0)",
+        "defaultFilter": "string(default='normal')"
     }
 }
 
@@ -51,13 +53,40 @@ def setDefaultZoomLevel(zoomLevel: float):
         zoomLevel = max(1.0, min(10.0, zoomLevel))
     except (ValueError, TypeError):
         zoomLevel = 2.0
-    
+
     # Ensure config section exists
     if "magnifier" not in config.conf:
         config.conf["magnifier"] = {}
-    
+
     # Save to config as float
     config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+def getDefaultFilter():
+    """Get default filter from config."""
+    try:
+        filterStr = config.conf["magnifier"]["defaultFilter"]
+        # Convert string to filter enum
+        return filter[filterStr.upper()]
+    except (KeyError, AttributeError):
+        return filter.NORMAL
+
+def getCurrentFilter():
+    """Get current filter for settings."""
+    global _magnifier
+    if _magnifier and _magnifier.isActive:
+        # Return filter name as string for settings
+        return _magnifier.filter.name.lower()
+    # Return default filter name as string
+    return getDefaultFilter().name.lower()
+
+def setDefaultFilter(filterStr: str):
+    """Set default filter from settings."""
+    # Ensure config section exists
+    if "magnifier" not in config.conf:
+        config.conf["magnifier"] = {}
+
+    # Save to config as string (lowercase)
+    config.conf["magnifier"]["defaultFilter"] = filterStr.lower()
 
 def isActive():
     """Check if magnifier is currently active for settings."""
@@ -80,7 +109,3 @@ def terminate():
     if _magnifier and _magnifier.isActive:
         _magnifier._stopMagnifier()
         _magnifier = None
-    
-    # Clean up the API
-    from .fullscreenMagnifier import cleanup
-    cleanup()

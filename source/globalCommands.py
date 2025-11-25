@@ -4967,6 +4967,17 @@ class GlobalCommands(ScriptableObject):
 		magnifier.commands.zoomOut()
 
 	@script(
+			description=_(
+				#Translators: Describes a command.
+				"toggle filter of the magnifier"
+			),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+f",
+	)
+	def script_toggleFilter(self, gesture):
+		magnifier.commands.toggleFilter()
+
+	@script(
 		description=_(
 			# Translators: Describes a command.
 			"Cycles through paragraph navigation styles",

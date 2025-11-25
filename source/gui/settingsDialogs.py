@@ -5977,6 +5977,7 @@ class VisionProviderSubPanel_Wrapper(
 		if self._providerSettings:
 			self._providerSettings.onSave()
 
+
 class MagnifierPanel(SettingsPanel):
 	# Translators: This is the label for the magnifier settings panel.
 	title = _("Magnifier")
@@ -5985,6 +5986,7 @@ class MagnifierPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
+		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
 		defaultZoomLabelText = _("Default &zoom level:")
 
@@ -5992,21 +5994,32 @@ class MagnifierPanel(SettingsPanel):
 		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5
 		zoomChoices = [f"{value:.1f}x" for value in zoomValues]
 
-		self.defaultZoomList = sHelper.addLabeledControl(
-			defaultZoomLabelText,
-			wx.Choice,
-			choices=zoomChoices
-		)
+		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
 		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
 
 		# Store zoom values for later use
 		self.zoomValues = zoomValues
 
+		# FILTER SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default filter
+		defaultFilterLabelText = _("Default &filter:")
+		try:
+			from magnifier.utils.filterHandler import filter
+		except ImportError:
+			filter = None
+		filterChoices = [f.name.lower() for f in filter]
+		self.defaultFilterList = sHelper.addLabeledControl(
+			defaultFilterLabelText, wx.Choice, choices=filterChoices
+		)
+		self.bindHelpEvent("magnifierDefaultFilter", self.defaultFilterList)
+
 		# Set current value from config
 		self._updateCurrentSelection()
 
 	def _updateCurrentSelection(self):
-		"""Update the selection based on current zoom level."""
+		"""Update the selection"""
+
+		# ZOOM
 		try:
 			# Get current zoom level from magnifier module
 			currentZoom = magnifier.getCurrentZoomLevel()
@@ -6035,6 +6048,27 @@ class MagnifierPanel(SettingsPanel):
 			except ValueError:
 				self.defaultZoomList.SetSelection(0)
 
+		# FILTER
+		try:
+			# Get current filter from magnifier module
+			currentFilter = magnifier.getCurrentFilter()
+
+			# Ensure it's a string
+			currentFilter = str(currentFilter)
+			
+			if currentFilter in self.defaultFilterList.GetStrings():
+				self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
+			else:
+				self.defaultFilterList.SetSelection(0)
+
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			log.debug(f"Error getting current filter: {e}")
+			try:
+				defaultIndex = self.defaultFilterList.GetStrings().index("None")
+				self.defaultFilterList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultFilterList.SetSelection(0)
+
 	def onPanelActivated(self):
 		"""Called when the panel is activated/shown."""
 		super().onPanelActivated()
@@ -6042,6 +6076,8 @@ class MagnifierPanel(SettingsPanel):
 		self._updateCurrentSelection()
 
 	def onSave(self):
+
+		# ZOOM
 		selectedIndex = self.defaultZoomList.GetSelection()
 		if selectedIndex != wx.NOT_FOUND:
 			selectedZoom = self.zoomValues[selectedIndex]
@@ -6050,12 +6086,29 @@ class MagnifierPanel(SettingsPanel):
 			if "magnifier" not in config.conf:
 				config.conf["magnifier"] = {}
 
-				# Save the setting in NVDA config
-				config.conf["magnifier"]["defaultZoomLevel"] = selectedZoom
+			# Save the setting in NVDA config
+			config.conf["magnifier"]["defaultZoomLevel"] = selectedZoom
 
 			# Update the magnifier module if loaded
 			try:
 				magnifier.setDefaultZoomLevel(selectedZoom)
+			except ImportError:
+				pass
+
+		# FILTER
+		selectedIndex = self.defaultFilterList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedFilter = self.defaultFilterList.GetStrings()[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+			config.conf["magnifier"]["defaultFilter"] = selectedFilter
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultFilter(selectedFilter)
 			except ImportError:
 				pass
 

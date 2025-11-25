@@ -11,6 +11,7 @@ import wx
 import api
 
 from .utils.mouseHandler import MouseHandler
+from .utils.filterHandler import filter
 
 
 class NVDAMagnifier:
@@ -22,7 +23,7 @@ class NVDAMagnifier:
 	_SCREEN_WIDTH: int = ctypes.windll.user32.GetSystemMetrics(0)
 	_SCREEN_HEIGHT: int = ctypes.windll.user32.GetSystemMetrics(1)
 
-	def __init__(self, zoomLevel: float):
+	def __init__(self, zoomLevel: float, filter: filter):
 		self._isActive: bool = False
 		self._zoomLevel: float = zoomLevel
 		self._timer: None | wx.Timer = None
@@ -32,6 +33,7 @@ class NVDAMagnifier:
 		self._lastScreenPosition: tuple[int, int] = (0, 0)
 		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._mouseHandler: MouseHandler = MouseHandler()
+		self._filter: filter = filter
 
 	@property
 	def isActive(self) -> bool:
@@ -98,11 +100,19 @@ class NVDAMagnifier:
 	def timer(self, value: wx.Timer | None) -> None:
 		self._timer = value
 
+	@property
+	def filter(self) -> filter:
+		return self._filter
+
+	@filter.setter
+	def filter(self, value: filter) -> None:
+		self._filter = value
+
 	# Functions
 
 	def _startMagnifier(self) -> None:
 		"""Start the magnifier."""
-		log.info(f"Starting magnifier with zoom level {self.zoomLevel}")
+		log.info(f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter}")
 		if self.isActive:
 			return
 		self.isActive = True

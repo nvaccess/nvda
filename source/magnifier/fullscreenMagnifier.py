@@ -7,16 +7,19 @@ import ctypes
 from ctypes import wintypes
 from logHandler import log
 from .magnifier import NVDAMagnifier
+from .utils.filterHandler import filter, filterMatrix
 
 
 class FullScreenMagnifier(NVDAMagnifier):
 	def __init__(
 		self,
+		filter: filter = filter.NORMAL,
 		zoomLevel: float = 2.0,
 	):
-		super().__init__(zoomLevel=zoomLevel)
+		super().__init__(zoomLevel=zoomLevel, filter = filter)
 		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._startMagnifier()
+		self._applyFilter()
 
 	@property
 	def currentCoordinates(self) -> tuple[int, int]:
@@ -52,6 +55,18 @@ class FullScreenMagnifier(NVDAMagnifier):
 		except AttributeError:
 			log.info("Magnification API not available")
 		self._stopMagnifierApi()
+
+	def _applyFilter(self) -> None:
+		"""Apply the current color filter to the fullscreen magnifier."""
+		if self.filter == filter.NORMAL:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.NORMAL.value)
+		elif self.filter == filter.GREYSCALE:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.GREYSCALE.value)
+		elif self.filter == filter.INVERTED:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.INVERTED.value)
+		else:
+			log.info(f"Unknown color filter: {self.filter}")
+
 
 	def _loadMagnifierApi(self) -> None:
 		"""Initialize the Magnification API."""
