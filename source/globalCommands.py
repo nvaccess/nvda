@@ -19,7 +19,6 @@ from annotation import (
 )
 
 import audioDucking
-import tones
 import touchHandler
 import keyboardHandler
 import mouseHandler
