@@ -1172,14 +1172,11 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NVDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
-Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
-NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
+NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
-With an appropriate math component installed, NVDA supports the following types of mathematical content:
+NVDA supports the following types of mathematical content:
 
 * MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 * Microsoft Word 365 Modern Math Equations via UI automation:
@@ -1187,15 +1184,17 @@ NVDA is able to read and interact with math equations in Microsoft Word 365/2016
 Note however that any previously created MathType equations must be first converted to Office Math.
 This can be done by selecting each and choosing "Equation Options", then "Convert to Office Math" in the context menu.
 Ensure your version of MathType is the latest version before doing this.
-Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LateX.
+Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LaTeX.
 For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
 * Microsoft Powerpoint, and older versions of Microsoft Word:
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
-* Adobe Reader:
-Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+* Adobe Acrobat Reader:
+Tagged PDF with MathML Structure elements.
+* Foxit PDF Reader:
+Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1227,24 +1226,91 @@ For example, you can move through the expression with the left and right arrow k
 
 When you wish to return to the document, simply press the escape key.
 
-For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
-
-* [MathCAT documentation](https://nsoiffer.github.io/MathCAT/users.html)
-* [Access8Math documentation](https://github.com/tsengwoody/Access8Math)
-* [MathPlayer documentation](https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html)
-
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-### Installing MathPlayer {#InstallingMathPlayer}
+Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
-Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
-E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
-MathPlayer is available for free from the Wiris website.
-[Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA.
-Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
-This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction)
+* If inside of a table, `control+arrow` will move by cell
+* `home` / `end` moves to the start/end of the expression
+* `space` reads your current position
+* `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
+
+To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
+
+MathCAT's navigation is the same in Microsoft Word and in a web browser.
+
+While navigating an expression, `control+c` copies the math content of the current node in NVDA.
+The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).
+
+#### Navigation Modes {#MathNavigationModes}
+
+MathCAT supports the following navigation modes:
+
+* Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+Zooming in lets you explore the 2D notation in the same mode.
+Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
+* Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
+Moves by words/characters.
+This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
+Otherwise, word and character navigation is the same.
+
+The following are key commands used to navigate math:
+
+<!-- KC:beginInclude -->
+| Name | Key |
+|---|---|
+| Move to previous | `leftArrow` |
+| Move to previous cell in a table, or previous digit if in columnar math | `control+leftArrow` or `control+alt+leftArrow` |
+| Read previous | `shift+leftArrow` |
+| Describe previous | `control+shift+leftArrow` |
+| Move to next | `rightArrow` |
+| Move to next cell in a table, or next digit if in columnar math | `control+rightArrow` or `control+alt+rightArrow` |
+| Read next | `shift+rightArrow` |
+| Describe next | `control+shift+rightArrow` |
+| Zoom out | `upArrow` |
+| Move to cell above in a table, or digit above in columnar math. | `control+upArrow` or `control+alt+upArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
+| Zoom out all the way | `control+shift+upArrow` |
+| Zoom in | `downArrow` |
+| Move to cell below in a table, or digit below in columnar math | `control+downArrow` or `control+alt+downArrow` |
+| Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
+| Zoom in all the way | `control+shift+downArrow` |
+| Where am I | `enter` |
+| Global Where am I | `control+center` |
+| Jump to placemarker | `1` through `0` (`0` is 10) |
+| Set placemarker | `control+1` through `control+0` |
+| Read placemarker | `shift+1` through `shift+0` |
+| Describe placemarker | `control+shift+1` through `shift+0` |
+| Read current | `space` |
+| Read current cell | `control+space` |
+| Toggle "speech mode" to Read or Rescribe | `shift+space` |
+| Describe current | `control+shift+space` |
+| Move to start of expression | `home` |
+| Move to start of line | `control+home` |
+| Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
+| Move to end of expression | `end` |
+| Move to end of line | `control+end` |
+| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move back to last position | `backspace` |
+<!-- KC:endInclude -->
+
+#### Typical Use
+
+Typically, you will start at the first term of an expression and move right as needed.
+You might move up and down levels if needed.
+This is done with the arrow keys.
+`control+alt+arrow` is used to move around tabular entries.
+
+Backspace will take you back to where you were, which is not always the same as moving to the left.
+For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+
+You will likely find one mode of navigation the most natural for you most of the time.
+This can be set in the MathCAT settings.
+However, at any time during navigation, you can switch the navigation modes using `shift+up/down arrow`.
+This is useful because each mode of navigation has its strengths and weaknesses.
 
 ## Braille {#Braille}
 
@@ -1423,7 +1489,7 @@ As a blind or vision impaired user, it is often not possible or necessary to see
 Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
 For this situation, NVDA contains a feature called "Screen Curtain" which can be enabled to make the screen black.
 
-You can enable the Screen Curtain in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog.
+You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAndSecuritySettings) of the [NVDA Settings](#NVDASettings) dialog.
 
 <!-- KC:beginInclude -->
 
@@ -1433,13 +1499,11 @@ You can enable the Screen Curtain in the [vision category](#VisionSettings) of t
 
 <!-- KC:endInclude -->
 
-When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR](#Win10Ocr) or taking a screenshot cannot be achieved.
+When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
+For example, you cannot [use OCR](#Win10Ocr) or [get AI image descriptions](#LocalCaptioner).
+Some screenshot utilities also may not work.
 
-Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
-Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
-For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
-
-Please note that while Windows Magnifier is running and inverted screen colors are being used, the screen curtain cannot be enabled.
+Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
 ## Content Recognition {#ContentRecognition}
 
@@ -2554,6 +2618,36 @@ Setting the value too high may cause the battery of the sound output device to d
 
 You can set the time to zero in order to disable this feature.
 
+#### Privacy and Security {#PrivacyAndSecuritySettings}
+
+This category allows you to adjust settings that affect your privacy and security while using NVDA.
+
+##### Make screen black (immediate effect) {#ScreenCurtainEnable}
+
+This option enables and disables the [Screen Curtain](#VisionScreenCurtain).
+Note that Screen Curtain is activated or deactivated as soon as the checkbox is checked or unchecked.
+
+By default, when you check this box, a warning that your screen will become black after activation will be displayed.
+Before continuing, ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
+If you are sure, you can choose the "Yes" button to enable Screen Curtain.
+Select "No" if you no longer wish to enable Screen Curtain.
+If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
+
+##### Always show a warning when loading Screen Curtain {#ScreenCurtainWarnOnLoad}
+
+This option controls whether a warning dialog is displayed when enabling the [Screen Curtain](#VisionScreenCurtain).
+
+If you use Screen Curtain regularly, you may find it more convenient to disable this option.
+You can also choose not to show the warning dialog using the checkbox in the dialog itself.
+
+##### Play sound when toggling Screen Curtain {#ScreenCurtainPlayToggleSounds}
+
+This option controls whether a sound cue is played when [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.
+
+By default, sounds are played when Screen Curtain is toggled.
+If you do not wish to hear these sounds, you can uncheck this checkbox.
+Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.
+
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
@@ -2573,19 +2667,6 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
 If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
-
-##### Screen Curtain {#VisionSettingsScreenCurtain}
-
-You can enable the [Screen Curtain](#VisionScreenCurtain) by checking the "Make screen black (immediate effect)" check box.
-A warning that your screen will become black after activation will be displayed.
-Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
-Select "No" if you no longer wish to enable the Screen Curtain.
-If you are sure, you can choose the Yes button to enable the screen curtain.
-If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
-You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
-
-By default, sounds are played when the Screen Curtain is toggled.
-When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
 
 ##### Settings for third party visual aids {#VisionSettingsThirdPartyVisualAids}
 
@@ -2832,9 +2913,9 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
-##### Report when lists support multiple selection {#ReportMultiSelect}
+##### Report when objects support multiple selection {#ReportMultiSelect}
 
-When this option is enabled, NVDA will report when a list box supports selecting multiple items.
+When this option is enabled, NVDA will report when an object, such as a list box, supports selecting multiple items.
 As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.
 
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
@@ -3128,6 +3209,189 @@ This style works best when working with documents which use block paragraphs.
 Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
+
+#### Math Settings {#MathSettings}
+
+This category allows you to adjust how NVDA reads mathematical content.
+
+##### Speech Options {#MathCATSpeechOptions}
+
+###### Impairment {#MathSpeechImpairment}
+
+This controls whether certain notations are disambiguated or not in speech.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Blindness, Low Vision, Learning disabilities |
+| Default | Blindness |
+
+###### Language {#MathSpeechLanguage}
+
+This value determines the language to be used.
+If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
+If speech rules for the main language can not be found, English ("en") is used.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Any known language code and sub-code, e.g. "en-uk". |
+| Default | en |
+
+###### Speech Style {MathSpeechStyle}
+
+Different speech styles are used to change how math is reported.
+
+* ClearSpeak was developed by the Educational Testing Service (ETS) for use on high-stakes tests such as national standardized testing.
+Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+* SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
+These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
+* LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
+It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
+* Other speech styles may exist designed for individual languages.
+
+Examples of each type of speech:
+
+| Expression | LiteralSpeak | SimpleSpeak | ClearSpeak |
+| -- | -- | -- | -- |
+| 1/2 | 1 slash 2 | 1 divided by 2 | one half |
+| √x | radical x | square root x | square root of x |
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
+| Default | ClearSpeak |
+
+###### Speech verbosity {#MathSpeechVerbosity}
+
+Controls how much "extra" speech is used.
+For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+###### Relative speech rate {#MathRelativeSpeed}
+
+Changes the relative speech rate.
+The change is a percentage speed change from the standard speech engine's rate.
+`100` means the math reading rate is the same as that of the text rate.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 1 and 100 |
+| Default | 100 |
+
+###### Pause Factor {#MathSpeechPauseFactor}
+
+Changes the relative amount of pausing that MathCAT adds.
+`0` turns off all pausing and `100` makes the pauses 10 times longer than normal.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Number between 0 and 100 |
+| Default | 50 |
+
+###### Make a sound when starting/ending math speech {#MathSpeechSound}
+
+A start and end beep occur before and after reading an expression.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | None, Beep |
+| Default | None |
+
+###### Speech for chemical formulas {#MathSpeechForChemical}
+
+Controls how chemical formulae are read.
+Examples for $\mathrm{H}_2\mathrm{O}$:
+
+* SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
+* AsCompound: "Water"
+* Off: "H sub 2 O"
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Spell Out, As Compound, Off |
+| Default | SpellOut |
+
+##### Navigation Options {#MathNavigation}
+
+###### Navigation mode to use when beginning to navigate an equation {#MathNavMode}
+
+"Enhanced" mode understands math structure.
+"Simple" mode walks by character to find things like fractions, roots, and scripts.
+"Character" mode moves around by character, automatically moving into fractions, etc.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Enhanced, Character, Simple |
+| Default | Enhanced |
+
+###### Navigation speech to use when beginning to navigate an equation {#MathNavSpeech}
+
+Whether to speak the expression after moving to it or give an overview.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Speak, Overview |
+| Default | Speak |
+
+###### Make a sound when starting/ending math speech {#MathNavReset}
+
+Whether to play a beep sound when speech starts/ends.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Checked |
+
+###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
+
+Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Checked |
+
+###### Speech amount for navigation {#MathNavSpeechAmount}
+
+Specify whether you want a terse or verbose reading of navigation commands.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Terse, Medium, Verbose |
+| Default | Medium |
+
+###### Copy math as {#MathNavCopyAs}
+
+Specify how math will be copied to the clipboard.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | MathML, LaTeX, ASCIIMath |
+| Default | MathML |
+
+##### Braille Options {#MathBrailleOptions}
+
+###### Braille math code for refreshable displays {#MathBrailleCode}
+
+The braille math code to use.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
+| Default | Nemeth |
+
+###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
+
+Highlight the currently selected navigation node with dots 7 and 8.
+The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Off, First Character, Endpoints, All |
+| Default | Endpoints |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 

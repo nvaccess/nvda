@@ -417,6 +417,8 @@ class ConfigManager(object):
 		"addonStore",
 		"remote",
 		"automatedImageDescriptions",
+		"math",
+		"screenCurtain",
 	}
 	"""
 	Sections that only apply to the base configuration;
