@@ -836,7 +836,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
 		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
-		shouldEnableAutoScroll = not braille.handler._autoScrollCallLater
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
 		if shouldEnableAutoScroll:
 			tones.beep(500, 50)
 		else:

@@ -2476,7 +2476,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		self._autoScrollCallLater = None
+		self._autoScrollCallLater: wx.CallLater | None  = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
 			self._tether = TetherTo.FOCUS.value
@@ -2512,9 +2512,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		if self._autoScrollCallLater:
-			self._autoScrollCallLater.Stop()
-			self._autoScrollCallLater = None
+		self.autoScroll(enable=False)
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopStateChanged)
 		post_sessionLockStateChanged.unregister(self._onSessionLockStateChanged)
@@ -3073,22 +3071,25 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		_post_dismissBrailleMessage.notify()
 
 	def autoScroll(self, enable: bool) -> None:
-		"""Enable or disable automatic scroll.
-		:param enable: `True` if automatic scroll should be enabled, `False` otherwise.
+		"""
+		Enable or disable automatic scroll.
+		
+		:param enable: ``True`` if automatic scroll should be enabled, ``False`` otherwise.
 		"""
 
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
-		if enable and not self._autoScrollCallLater:
-			autoScrollTimeout = self._calculateAutoScrollTimeout()
-			self._autoScrollCallLater = wx.CallLater(autoScrollTimeout, self.scrollForward)
-		elif self._autoScrollCallLater:
+		if enable and self._autoScrollCallLater is None:
+			self._autoScrollCallLater = wx.CallLater(self._calculateAutoScrollTimeout(), self.scrollForward)
+		elif not enable and self._autoScrollCallLater is not None:
 			self._autoScrollCallLater.Stop()
 			self._autoScrollCallLater = None
 
 	def _calculateAutoScrollTimeout(self) -> int:
-		"""Calculate the timeout for automatic scroll.
-		return: The number of milliseconds to wait until the next scroll.
+		"""
+		Calculate the timeout for automatic scroll.
+		
+		:return: The number of milliseconds to wait until the next scroll.
 		"""
 
 		autoScrollRate = config.conf["braille"]["autoScrollRate"]
