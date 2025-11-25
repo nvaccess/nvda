@@ -5139,7 +5139,7 @@ class GlobalCommands(ScriptableObject):
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
 		if repeats == 0:
-			speech.speak(lastSpeechSeq, symbolLevel=None)
+			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
 			braille.handler.message(lastSpeechText)
 		elif repeats == 1:
 			# Translators: title for report last spoken information dialog.

@@ -87,7 +87,7 @@ if typing.TYPE_CHECKING:
 _speechState: Optional["SpeechState"] = None
 _curWordChars: List[str] = []
 IDEOGRAPHIC_COMMA: Final[str] = "\u3001"
-_lastSpeech: tuple[SpeechSequence, Spri] | None = None
+_lastSpeech: tuple[SpeechSequence, characterProcessing.SymbolLevel | None] | None = None
 """Last spoken text"""
 
 
