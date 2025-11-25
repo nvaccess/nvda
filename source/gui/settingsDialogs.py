@@ -6013,6 +6013,25 @@ class MagnifierPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("magnifierDefaultFilter", self.defaultFilterList)
 
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default fullscreen mode
+		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		try:
+			from magnifier.fullscreenMagnifier import FullScreenMode
+		except ImportError:
+			FullScreenMode = None
+		fullscreenModeChoices = [mode.name.lower() for mode in FullScreenMode] if FullScreenMode else []
+		self.defaultFullscreenModeList = sHelper.addLabeledControl(
+			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
+		)
+		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
+
+		# SAVE SHORTCUT CHANGES
+		# Translators: The label for a checkbox to save modifications made via shortcuts
+		saveShortcutChangesText = _("Save &modifications made with shortcuts")
+		self.saveShortcutChangesCheckBox = sHelper.addItem(wx.CheckBox(self, label=saveShortcutChangesText))
+		self.bindHelpEvent("magnifierSaveShortcutChanges", self.saveShortcutChangesCheckBox)
+
 		# Set current value from config
 		self._updateCurrentSelection()
 
@@ -6055,7 +6074,7 @@ class MagnifierPanel(SettingsPanel):
 
 			# Ensure it's a string
 			currentFilter = str(currentFilter)
-			
+
 			if currentFilter in self.defaultFilterList.GetStrings():
 				self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
 			else:
@@ -6069,6 +6088,35 @@ class MagnifierPanel(SettingsPanel):
 			except ValueError:
 				self.defaultFilterList.SetSelection(0)
 
+		# FULLSCREEN MODE
+		try:
+			currentFullscreenMode = magnifier.getCurrentFullscreenMode()
+
+			# Ensure it's a string
+			currentFullscreenMode = str(currentFullscreenMode)
+
+			if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
+				self.defaultFullscreenModeList.SetSelection(
+					self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
+				)
+			else:
+				self.defaultFullscreenModeList.SetSelection(0)
+
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			log.debug(f"Error getting current fullscreen mode: {e}")
+			try:
+				defaultIndex = self.defaultFullscreenModeList.GetStrings().index("center")
+				self.defaultFullscreenModeList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultFullscreenModeList.SetSelection(0)
+
+		# SAVE SHORTCUT CHANGES
+		try:
+			saveShortcutChanges = config.conf["magnifier"]["saveShortcutChanges"]
+			self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
+		except (KeyError, AttributeError):
+			self.saveShortcutChangesCheckBox.SetValue(False)
+
 	def onPanelActivated(self):
 		"""Called when the panel is activated/shown."""
 		super().onPanelActivated()
@@ -6076,7 +6124,6 @@ class MagnifierPanel(SettingsPanel):
 		self._updateCurrentSelection()
 
 	def onSave(self):
-
 		# ZOOM
 		selectedIndex = self.defaultZoomList.GetSelection()
 		if selectedIndex != wx.NOT_FOUND:
@@ -6111,6 +6158,31 @@ class MagnifierPanel(SettingsPanel):
 				magnifier.setDefaultFilter(selectedFilter)
 			except ImportError:
 				pass
+
+		# FULLSCREEN MODE
+		selectedIndex = self.defaultFullscreenModeList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedFullscreenMode = self.defaultFullscreenModeList.GetStrings()[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+			config.conf["magnifier"]["defaultFullscreenMode"] = selectedFullscreenMode
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultFullscreenMode(selectedFullscreenMode)
+			except ImportError:
+				pass
+
+		# SAVE SHORTCUT CHANGES
+		# Ensure config section exists
+		if "magnifier" not in config.conf:
+			config.conf["magnifier"] = {}
+
+		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
+
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.

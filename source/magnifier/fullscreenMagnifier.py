@@ -6,20 +6,35 @@
 import ctypes
 from ctypes import wintypes
 from logHandler import log
-from .magnifier import NVDAMagnifier
+from enum import Enum
+from .magnifier import Magnifier
 from .utils.filterHandler import filter, filterMatrix
 
+class FullScreenMode(Enum):
+	CENTER = "center"
+	BORDER = "border"
+	RELATIVE = "relative"
 
-class FullScreenMagnifier(NVDAMagnifier):
+class FullScreenMagnifier(Magnifier):
 	def __init__(
 		self,
-		filter: filter = filter.NORMAL,
 		zoomLevel: float = 2.0,
+		fullscreenMode: FullScreenMode = FullScreenMode.CENTER,
+		filter: filter = filter.NORMAL,
 	):
 		super().__init__(zoomLevel=zoomLevel, filter = filter)
+		self._fullscreenMode = fullscreenMode
 		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._startMagnifier()
 		self._applyFilter()
+
+	@property
+	def fullscreenMode(self) -> FullScreenMode:
+		return self._fullscreenMode
+
+	@fullscreenMode.setter
+	def fullscreenMode(self, value: FullScreenMode) -> None:
+		self._fullscreenMode = value
 
 	@property
 	def currentCoordinates(self) -> tuple[int, int]:
@@ -32,6 +47,7 @@ class FullScreenMagnifier(NVDAMagnifier):
 	def _startMagnifier(self) -> None:
 		"""Start the Fullscreen magnifier using windows DLL."""
 		super()._startMagnifier()
+		log.info(f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter} and fullscreen mode {self.fullscreenMode}")
 		self._loadMagnifierApi()
 		self._startTimer(self._updateMagnifier)
 
@@ -124,9 +140,92 @@ class FullScreenMagnifier(NVDAMagnifier):
 	def _getCoordinatesForMode(self, coordinates: tuple[int, int]) -> tuple[int, int]:
 		"""Get coordinates adjusted for the current fullscreen mode.
 
-		:param coordinates: Raw coordinates (x, y)
+		Args:
+			coordinates: Raw coordinates (x, y)
 
 		Returns:
 			Adjusted coordinates according to fullscreen mode
 		"""
-		return coordinates
+		x, y = coordinates
+
+		if self._fullscreenMode == FullScreenMode.RELATIVE:
+			return self._relativePos(x, y)
+		elif self._fullscreenMode == FullScreenMode.BORDER:
+			# For border mode, use the current position as reference
+			return self._borderPos(x, y)
+		else:  # CENTER mode
+			return coordinates
+
+	def _borderPos(self, focusX: int, focusY: int) -> tuple[int, int]:
+		"""
+		Check if focus is near magnifier border and adjust position accordingly.
+		Returns adjusted position to keep focus within margin limits.
+
+		Args:
+			focusX (int): The x-coordinate of the focus point.
+			focusY (int): The y-coordinate of the focus point.
+
+		Returns:
+			lastScreenPosition (tuple[int, int]): The adjusted position (x, y) of the focus point.
+		"""
+
+		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
+			self.lastScreenPosition[0], self.lastScreenPosition[1]
+		)
+
+		minX = lastLeft + self._MARGIN_BORDER
+		maxX = lastLeft + visibleWidth - self._MARGIN_BORDER
+		minY = lastTop + self._MARGIN_BORDER
+		maxY = lastTop + visibleHeight - self._MARGIN_BORDER
+
+		dx = 0
+		dy = 0
+
+		if focusX < minX:
+			dx = focusX - minX
+		elif focusX > maxX:
+			dx = focusX - maxX
+
+		if focusY < minY:
+			dy = focusY - minY
+		elif focusY > maxY:
+			dy = focusY - maxY
+
+		if dx != 0 or dy != 0:
+			return self.lastScreenPosition[0] + dx, self.lastScreenPosition[1] + dy
+		else:
+			return self.lastScreenPosition
+
+	def _relativePos(self, mouseX: int, mouseY: int) -> tuple[int, int]:
+		"""
+		Calculate magnifier center maintaining mouse relative position.
+		Handles screen edges to prevent going off-screen.
+
+		Args:
+			mouseX (int): The x-coordinate of the mouse pointer.
+			mouseY (int): The y-coordinate of the mouse pointer.
+
+		Returns:
+			tuple[int, int]: The (x, y) coordinates of the magnifier center.
+		"""
+		zoom = self.zoomLevel
+
+		screenWidth = self._SCREEN_WIDTH
+		screenHeight = self._SCREEN_HEIGHT
+		visibleWidth = screenWidth / zoom
+		visibleHeight = screenHeight / zoom
+		margin = int(zoom * 10)
+
+		# Calculate left/top maintaining mouse relative position
+		left = mouseX - (mouseX / screenWidth) * (visibleWidth - margin)
+		top = mouseY - (mouseY / screenHeight) * (visibleHeight - margin)
+
+		# Clamp to screen boundaries
+		left = max(0, min(left, screenWidth - visibleWidth))
+		top = max(0, min(top, screenHeight - visibleHeight))
+
+		# Return center of zoom window
+		centerX = int(left + visibleWidth / 2)
+		centerY = int(top + visibleHeight / 2)
+		self.lastScreenPosition = (centerX, centerY)
+		return self.lastScreenPosition

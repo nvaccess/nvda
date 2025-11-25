@@ -4978,6 +4978,17 @@ class GlobalCommands(ScriptableObject):
 		magnifier.commands.toggleFilter()
 
 	@script(
+			description=_(
+				# Translators: Describes a command.
+				"toggle fullscreen mode of the magnifier"
+			),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+m",
+	)
+	def script_toggleFullscreenMode(self, gesture):
+		magnifier.commands.toggleFullscreenMode()
+
+	@script(
 		description=_(
 			# Translators: Describes a command.
 			"Cycles through paragraph navigation styles",

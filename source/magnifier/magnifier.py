@@ -14,7 +14,7 @@ from .utils.mouseHandler import MouseHandler
 from .utils.filterHandler import filter
 
 
-class NVDAMagnifier:
+class Magnifier:
 	_ZOOM_MIN: float = 1.0
 	_ZOOM_MAX: float = 10.0
 	_ZOOM_STEP: float = 0.5
@@ -112,7 +112,6 @@ class NVDAMagnifier:
 
 	def _startMagnifier(self) -> None:
 		"""Start the magnifier."""
-		log.info(f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter}")
 		if self.isActive:
 			return
 		self.isActive = True

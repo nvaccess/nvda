@@ -9,15 +9,25 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 import ui
-from . import getMagnifier, setMagnifier, getDefaultZoomLevel, getDefaultFilter
-from .fullscreenMagnifier import FullScreenMagnifier
+from . import (
+	getMagnifier,
+	setMagnifier,
+	getDefaultZoomLevel,
+	getDefaultFilter,
+	getDefaultFullscreenMode,
+	shouldSaveShortcutChanges,
+	setDefaultFilter,
+	setDefaultFullscreenMode,
+)
+from .magnifier import Magnifier
+from .fullscreenMagnifier import FullScreenMagnifier, FullScreenMode
 from .utils.filterHandler import filter
 from logHandler import log
 
 
 def toggleMagnifier():
 	"""Toggle the NVDA magnifier on/off."""
-	magnifier = getMagnifier()
+	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		# Stop magnifier
 		magnifier._stopMagnifier()
@@ -32,7 +42,12 @@ def toggleMagnifier():
 		# Start magnifier with zoom level from config
 		defaultZoomLevel = getDefaultZoomLevel()
 		defaultFilter = getDefaultFilter()
-		magnifier = FullScreenMagnifier(zoomLevel=defaultZoomLevel, filter=defaultFilter)
+
+		# Logic to change when adding other type of magnifier
+		defaultFullscreenMode = getDefaultFullscreenMode()
+		magnifier = FullScreenMagnifier(
+			zoomLevel=defaultZoomLevel, filter=defaultFilter, fullscreenMode=defaultFullscreenMode
+		)
 		setMagnifier(magnifier)
 		ui.message(
 			_(
@@ -44,7 +59,7 @@ def toggleMagnifier():
 
 def zoomIn():
 	"""Zoom in the magnifier."""
-	magnifier = getMagnifier()
+	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		magnifier._zoom(True)
 		ui.message(
@@ -59,7 +74,7 @@ def zoomIn():
 
 def zoomOut():
 	"""Zoom out the magnifier."""
-	magnifier = getMagnifier()
+	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		magnifier._zoom(False)
 		ui.message(
@@ -73,7 +88,7 @@ def zoomOut():
 
 
 def toggleFilter():
-	magnifier = getMagnifier()
+	magnifier: Magnifier = getMagnifier()
 	log.info(f"Toggling filter for magnifier: {magnifier}")
 	if magnifier and magnifier.isActive:
 		filters = list(filter)
@@ -82,6 +97,11 @@ def toggleFilter():
 		if True:
 			# if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
+
+		# Save to config if option is enabled
+		if shouldSaveShortcutChanges():
+			setDefaultFilter(magnifier.filter.name.lower())
+
 		ui.message(
 			_(
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter
@@ -90,6 +110,46 @@ def toggleFilter():
 		)
 	else:
 		magnifierNotActiveMessage("trying to toggle filters")
+
+
+def toggleFullscreenMode():
+	"""Cycle through fullscreen focus modes (center, border, relative)."""
+	magnifier: Magnifier = getMagnifier()
+	if magnifier and magnifier.isActive:
+		# if magnifier.magnifierType.value == "fullscreen":
+		if True:
+			modes = list(FullScreenMode)
+			currentMode = magnifier.fullscreenMode
+			idx = modes.index(currentMode)
+			newMode = modes[(idx + 1) % len(modes)]
+			magnifier.fullscreenMode = newMode
+
+			# Save to config if option is enabled
+			if shouldSaveShortcutChanges():
+				setDefaultFullscreenMode(newMode.name.lower())
+
+			ui.message(
+				_(
+					# Translators: Message announced when changing the fullscreen mode with {mode} being the new fullscreen mode
+					"Fullscreen mode changed to {mode}"
+				).format(mode=newMode.name.lower())
+			)
+		else:
+			ui.message(
+				_(
+					# Translators: Message announced when failing to change the fullscreen mode
+					"Magnifier is not fullscreen"
+				)
+			)
+		return
+	else:
+		ui.message(
+			_(
+				# Translators: Message announced when failing to change the fullscreen mode
+				"No active magnifier"
+			)
+		)
+		return
 
 
 def magnifierNotActiveMessage(action: str = ""):
