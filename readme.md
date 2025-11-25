@@ -37,3 +37,12 @@ This includes information on reporting issues, triaging issues, testing, transla
 * Beta build status: [![view latest beta builds](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml/badge.svg?branch=beta)](https://github.com/nvaccess/nvda/actions/workflows/testAndPublish.yml?query=branch%3Abeta+event%3Apush)
 * Pre-commit status (master): [![view pre-commit checks on master](https://results.pre-commit.ci/badge/github/nvaccess/nvda/master.svg)](https://results.pre-commit.ci/latest/github/nvaccess/nvda/master)
 * CodeQL security analysis status (master): [![view CodeQL security analysis checks on master](https://github.com/nvaccess/nvda/actions/workflows/codeql.yml/badge.svg)](https://github.com/nvaccess/nvda/actions/workflows/codeql.yml)
+
+
+## Recent Features
+
+### Post-Installation Restart Dialog (Issue #19268)
+After installing or updating NVDA, users are now prompted to restart Windows if needed. This ensures proper registration and application injection for optimal functionality. The restart dialog offers three options:
+* Restart now - Immediately restarts Windows
+* Ignore - Continue without restarting (restart later)
+* Don't show again - Suppresses the dialog for future installations
