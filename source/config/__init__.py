@@ -417,6 +417,8 @@ class ConfigManager(object):
 		"addonStore",
 		"remote",
 		"automatedImageDescriptions",
+		"math",
+		"screenCurtain",
 	}
 	"""
 	Sections that only apply to the base configuration;
@@ -666,7 +668,8 @@ class ConfigManager(object):
 		@type name: str
 		@raise ValueError: If a profile with this name already exists.
 		"""
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
+			log.debug("Not creating configuration profile, as shouldWriteToDisk returned False.")
 			return
 		if not name:
 			raise ValueError("Missing name.")
@@ -687,7 +690,8 @@ class ConfigManager(object):
 		@type name: str
 		@raise LookupError: If the profile doesn't exist.
 		"""
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
+			log.debug("Not deleting profile, as shouldSaveToDisk returned False.")
 			return
 		fn = self._getProfileFn(name)
 		if not os.path.isfile(fn):
@@ -743,7 +747,8 @@ class ConfigManager(object):
 		@raise LookupError: If the profile doesn't exist.
 		@raise ValueError: If a profile with the new name already exists.
 		"""
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
+			log.debug("Not renaming profile, as shouldWriteToDisk returned False.")
 			return
 		if newName == oldName:
 			return
@@ -920,8 +925,9 @@ class ConfigManager(object):
 		"""Save profile trigger information to disk.
 		This should be called whenever L{profilesToTriggers} is modified.
 		"""
-		if globalVars.appArgs.secure:
+		if not NVDAState.shouldWriteToDisk():
 			# Never save if running securely.
+			log.debug("Not saving profile triggers, as shouldWriteToDisk returned False.")
 			return
 		self.triggersToProfiles.parent.write()
 		log.info("Profile triggers saved")

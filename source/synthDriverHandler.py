@@ -344,6 +344,10 @@ class SynthDriver(driverHandler.Driver):
 				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
 			):
 				return True
+		rootLang = languageHandler.normalizeLanguage(lang).split("_")[0]
+		fallbackLang = f"{rootLang}-{rootLang}"
+		if fallbackLang in self.availableLanguages:
+			return True
 		return False
 
 	def initSettings(self):
