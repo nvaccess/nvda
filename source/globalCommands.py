@@ -832,16 +832,16 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles braille automatic scroll"),
 		category=SCRCAT_BRAILLE,
 	)
-	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
 		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
 		if shouldEnableAutoScroll:
-			tones.beep(500, 50)
+			# Translators: Message reported when automatic scrolling has been enabled in braille.
+			ui.message(_("Automatic scrolling enabled"))
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
-			speech.speakMessage(_("Automatic scrolling disabled"))
+			ui.message(_("Automatic scrolling disabled"))
 		braille.handler.autoScroll(shouldEnableAutoScroll)
 
 	@script(
@@ -858,7 +858,7 @@ class GlobalCommands(ScriptableObject):
 		if config.conf["braille"]["autoScrollRate"] < maxRate:
 			config.conf["braille"]["autoScrollRate"] += 1
 		rate = str(config.conf["braille"]["autoScrollRate"])
-		speech.speakMessage(rate)
+		ui.message(rate)
 
 	@script(
 		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
@@ -874,7 +874,7 @@ class GlobalCommands(ScriptableObject):
 		if config.conf["braille"]["autoScrollRate"] > minRate:
 			config.conf["braille"]["autoScrollRate"] -= 1
 		rate = str(config.conf["braille"]["autoScrollRate"])
-		speech.speakMessage(rate)
+		ui.message(rate)
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.

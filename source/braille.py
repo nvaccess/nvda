@@ -2991,8 +2991,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._resetMessageTimer()
 		if self._autoScrollCallLater:
 			# Reset the timer.
-			self.autoScroll(enable=False)
-			self.autoScroll(enable=True)
+			self._resetAutoScroll()
 
 	def scrollBack(self):
 		self.buffer.scrollBack()
@@ -3000,8 +2999,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._resetMessageTimer()
 		if self._autoScrollCallLater:
 			# Reset the timer.
-			self.autoScroll(enable=False)
-			self.autoScroll(enable=True)
+			self._resetAutoScroll()
 
 	def routeTo(self, windowPos):
 		self.autoScroll(enable=False)
@@ -3094,6 +3092,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		autoScrollRate = config.conf["braille"]["autoScrollRate"]
 		return int((self.displaySize / autoScrollRate) * 1000)
+
+	def _resetAutoScroll(self) -> None:
+		"""
+		Reset autoScroll.
+		"""
+
+		self.autoScroll(enable=False)
+		self.autoScroll(enable=True)
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
