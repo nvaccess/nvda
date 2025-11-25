@@ -13,6 +13,7 @@ from . import (
 	getMagnifier,
 	setMagnifier,
 	getDefaultZoomLevel,
+	setDefaultZoomLevel,
 	getDefaultFilter,
 	getDefaultFullscreenMode,
 	shouldSaveShortcutChanges,
@@ -62,6 +63,8 @@ def zoomIn():
 	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		magnifier._zoom(True)
+		if shouldSaveShortcutChanges():
+			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
 			_(
 				# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level
@@ -77,6 +80,9 @@ def zoomOut():
 	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		magnifier._zoom(False)
+		if shouldSaveShortcutChanges():
+			# Save to config if option is enabled
+			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
 			_(
 				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level
