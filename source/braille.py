@@ -2476,7 +2476,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		self._autoScrollCallLater: wx.CallLater | None  = None
+		self._autoScrollCallLater: wx.CallLater | None = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
 			self._tether = TetherTo.FOCUS.value
@@ -3073,7 +3073,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def autoScroll(self, enable: bool) -> None:
 		"""
 		Enable or disable automatic scroll.
-		
+
 		:param enable: ``True`` if automatic scroll should be enabled, ``False`` otherwise.
 		"""
 
@@ -3088,7 +3088,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _calculateAutoScrollTimeout(self) -> int:
 		"""
 		Calculate the timeout for automatic scroll.
-		
+
 		:return: The number of milliseconds to wait until the next scroll.
 		"""
 
