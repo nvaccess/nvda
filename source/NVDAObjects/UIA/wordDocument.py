@@ -307,6 +307,23 @@ class WordDocumentTextInfo(UIATextInfo):
 			return res
 		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
 
+			# #19266: Detect table boundaries when navigating by paragraph
+		if unit == textInfos.UNIT_PARAGRAPH:
+			# Check if we're now inside a table by looking for table-related UI elements
+			try:
+				currentElement = self.UIAElementAtStart
+				# Check if current element or any parent is a table cell
+				while currentElement:
+					if currentElement.cachedControlType == UIAHandler.UIA_TableControlTypeId:
+						# We're inside a table now, this will trigger appropriate announcement
+						break
+					try:
+						currentElement = currentElement.cachedParent
+					except:
+						break
+			except:
+				pass
+
 	def expand(self, unit):
 		if unit == textInfos.UNIT_CELL:
 			cell = self.obj._getTableCellCoordsCached(self, axis=None)
