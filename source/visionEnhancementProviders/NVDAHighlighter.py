@@ -471,6 +471,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
 		self._lastContextToRectMap.clear()
+		super().terminate()
 
 	def _run(self):
 		try:
