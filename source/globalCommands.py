@@ -3059,7 +3059,6 @@ class GlobalCommands(ScriptableObject):
 			disabledMsg=disabledMsg,
 		)
 
-
 	@script(
 		# Translators: Input help mode message for toggle mouse text unit resolution command.
 		description=_("Toggles how much text will be spoken when the mouse moves"),
