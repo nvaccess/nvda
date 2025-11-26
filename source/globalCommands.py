@@ -3043,6 +3043,24 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle mouse audio coordinates command.
+		description=_("Toggles beeps that report mouse coordinates as the mouse moves"),
+		category=SCRCAT_MOUSE,
+	)
+	def script_toggleMouseAudioCoordinates(self, gesture):
+		# Translators: Reported when mouse audio coordinates are toggled on.
+		enabledMsg = _("Mouse audio coordinates on")
+		# Translators: Reported when mouse audio coordinates are toggled off.
+		disabledMsg = _("Mouse audio coordinates off")
+		toggleBooleanValue(
+			configSection="mouse",
+			configKey="audioCoordinatesOnMouseMove",
+			enabledMsg=enabledMsg,
+			disabledMsg=disabledMsg,
+		)
+
+
+	@script(
 		# Translators: Input help mode message for toggle mouse text unit resolution command.
 		description=_("Toggles how much text will be spoken when the mouse moves"),
 		category=SCRCAT_MOUSE,
