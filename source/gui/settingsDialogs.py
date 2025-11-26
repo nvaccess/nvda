@@ -6113,7 +6113,10 @@ class MagnifierPanel(SettingsPanel):
 		# SAVE SHORTCUT CHANGES
 		try:
 			saveShortcutChanges = config.conf["magnifier"]["saveShortcutChanges"]
-			self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
+			# Convert string to boolean if necessary
+			if isinstance(saveShortcutChanges, str):
+				saveShortcutChanges = saveShortcutChanges.lower() in ("true", "1", "yes")
+			self.saveShortcutChangesCheckBox.SetValue(bool(saveShortcutChanges))
 		except (KeyError, AttributeError):
 			self.saveShortcutChangesCheckBox.SetValue(False)
 
@@ -6181,7 +6184,8 @@ class MagnifierPanel(SettingsPanel):
 		if "magnifier" not in config.conf:
 			config.conf["magnifier"] = {}
 
-		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
+		checkboxValue = bool(self.saveShortcutChangesCheckBox.GetValue())
+		config.conf["magnifier"]["saveShortcutChanges"] = checkboxValue
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
