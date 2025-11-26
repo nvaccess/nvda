@@ -4,6 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
+from enum import Enum
 from typing import Callable
 
 from logHandler import log
@@ -13,6 +14,10 @@ import api
 from .utils.mouseHandler import MouseHandler
 from .utils.filterHandler import filter
 
+class MagnifierType(Enum):
+	FULLSCREEN = "fullscreen"
+	DOCKED = "docked"
+	LENS = "lens"
 
 class Magnifier:
 	_ZOOM_MIN: float = 1.0
@@ -23,7 +28,8 @@ class Magnifier:
 	_SCREEN_WIDTH: int = ctypes.windll.user32.GetSystemMetrics(0)
 	_SCREEN_HEIGHT: int = ctypes.windll.user32.GetSystemMetrics(1)
 
-	def __init__(self, zoomLevel: float, filter: filter):
+	def __init__(self, zoomLevel: float, filter: filter, magnifierType: MagnifierType = None):
+		self._magnifierType: MagnifierType = magnifierType
 		self._isActive: bool = False
 		self._zoomLevel: float = zoomLevel
 		self._timer: None | wx.Timer = None

@@ -7,8 +7,12 @@ import ctypes
 from ctypes import wintypes
 from logHandler import log
 from enum import Enum
-from .magnifier import Magnifier
+from typing import Callable
+import ui
+import wx
+from .magnifier import Magnifier, MagnifierType
 from .utils.filterHandler import filter, filterMatrix
+
 
 class FullScreenMode(Enum):
 	CENTER = "center"
@@ -21,12 +25,16 @@ class FullScreenMagnifier(Magnifier):
 		zoomLevel: float = 2.0,
 		fullscreenMode: FullScreenMode = FullScreenMode.CENTER,
 		filter: filter = filter.NORMAL,
+		magnifierType = MagnifierType.FULLSCREEN,
+
 	):
-		super().__init__(zoomLevel=zoomLevel, filter = filter)
+		super().__init__(zoomLevel=zoomLevel, filter = filter, magnifierType=magnifierType)
 		self._fullscreenMode = fullscreenMode
 		self._currentCoordinates: tuple[int, int] = (0, 0)
+		self._spotlightManager = SpotlightManager(self)
 		self._startMagnifier()
 		self._applyFilter()
+
 
 	@property
 	def fullscreenMode(self) -> FullScreenMode:
@@ -82,7 +90,6 @@ class FullScreenMagnifier(Magnifier):
 			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.INVERTED.value)
 		else:
 			log.info(f"Unknown color filter: {self.filter}")
-
 
 	def _loadMagnifierApi(self) -> None:
 		"""Initialize the Magnification API."""
@@ -229,3 +236,135 @@ class FullScreenMagnifier(Magnifier):
 		centerY = int(top + visibleHeight / 2)
 		self.lastScreenPosition = (centerX, centerY)
 		return self.lastScreenPosition
+
+	def _startSpotlight(self) -> None:
+		"""Launch Spotlight from Fullscreen class
+		"""
+		log.info(f"Launching spotlight mode from fullscreen magnifier with mode {self._fullscreenMode}")
+		self._stopTimer()
+		self._spotlightManager._startSpotlight()
+
+	def _stopSpotlight(self) -> None:
+		"""Stop and destroy Spotlight from Fullscreen class
+		"""
+		self._spotlightManager._spotlightIsActive = False
+		self._startTimer(self._updateMagnifier)
+
+class SpotlightManager:
+	def __init__(self, fullscreenMagnifier: FullScreenMagnifier):
+		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
+		self._spotlightIsActive: bool = False
+		self._lastMousePosition: tuple[int, int] = (0, 0)
+		self._timer: wx.CallLater | None = None
+		self._animationSteps: int = 40
+		self._currentCoordinates: tuple[int, int] = fullscreenMagnifier._getFocusCoordinates()
+		self._originalZoomLevel: float = fullscreenMagnifier.zoomLevel
+		self._currentZoomLevel: float = fullscreenMagnifier.zoomLevel
+
+	def _startSpotlight(self) -> None:
+		"""Start the spotlight."""
+		log.info("start spotlight")
+		self._spotlightIsActive = True
+
+		startCoords = self._fullscreenMagnifier._getFocusCoordinates()
+		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
+		centerScreen = (
+			self._fullscreenMagnifier._SCREEN_WIDTH // 2,
+			self._fullscreenMagnifier._SCREEN_HEIGHT // 2,
+		)
+
+		self._currentCoordinates = startCoords
+		self._animateZoom(1.0, centerScreen, self._startMouseMonitoring)
+
+	def _stopSpotlight(self) -> None:
+		"""Stop the spotlight."""
+		log.info("stop spotlight")
+		ui.message(
+			_(
+				# Translators: Message announced when stopping the magnifier spotlight
+				"Magnifier spotlight stopped"
+			)
+		)
+		if self._timer:
+			self._timer.Stop()
+			self._timer = None
+
+		self._spotlightIsActive = False
+		self._fullscreenMagnifier._stopSpotlight()
+
+	def _animateZoom(
+		self, targetZoom: float, targetCoordinates: tuple[int, int], callback: Callable[[], None]
+	) -> None:
+		"""Animate the zoom level change."""
+		self._animationStepsList = self._computeAnimationSteps(
+			self._currentZoomLevel, targetZoom, self._currentCoordinates, targetCoordinates
+		)
+
+		self._executeStep(0, callback)
+
+	def _executeStep(self, stepIndex: int, callback: Callable[[], None]) -> None:
+		"""Execute one animation step."""
+
+		if stepIndex < len(self._animationStepsList):
+			zoomLevel, (x, y) = self._animationStepsList[stepIndex]
+			self._fullscreenMagnifier.zoomLevel = zoomLevel
+			self._fullscreenMagnifier._fullscreenMagnifier(x, y)
+			self._currentZoomLevel = zoomLevel
+			self._currentCoordinates = (x, y)
+			wx.CallLater(12, lambda: self._executeStep(stepIndex + 1, callback))
+		else:
+			if callback:
+				callback()
+
+	def _startMouseMonitoring(self) -> None:
+		self._lastMousePosition = wx.GetMousePosition()
+		self._timer = wx.CallLater(2000, self._checkMouseIdle)
+
+	def _checkMouseIdle(self) -> None:
+		currentMousePosition = wx.GetMousePosition()
+		if currentMousePosition == self._lastMousePosition:
+			self._currentCoordinates = (
+				self._fullscreenMagnifier._SCREEN_WIDTH // 2,
+				self._fullscreenMagnifier._SCREEN_HEIGHT // 2,
+			)
+			endCoordinates = self._fullscreenMagnifier._getCoordinatesForMode(self._lastMousePosition)
+
+			self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
+		else:
+			self._lastMousePosition = currentMousePosition
+			self._timer = wx.CallLater(1500, self._checkMouseIdle)
+
+	def _computeAnimationSteps(
+		self,
+		zoomStart: float,
+		zoomEnd: float,
+		coordinateStart: tuple[int, int],
+		coordinateEnd: tuple[int, int],
+	) -> list[tuple[float, tuple[int, int]]]:
+		"""Compute all intermediate animation steps with zoom levels and coordinates.
+
+		Args:
+			zoomStart: Starting zoom level
+			zoomEnd: Ending zoom level
+			coordinateStart: Starting coordinates (x, y)
+			coordinateEnd: Ending coordinates (x, y)
+
+		Returns:
+			List of animation steps as [zoomLevel, (x, y)] for each animation step
+		"""
+		startX, startY = coordinateStart
+		endX, endY = coordinateEnd
+		animationSteps = []
+
+		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
+		coordDeltaX = (endX - startX) / self._animationSteps
+		coordDeltaY = (endY - startY) / self._animationSteps
+
+		for step in range(1, self._animationSteps + 1):
+			currentZoom = zoomStart + zoomDelta * step
+
+			currentX = startX + coordDeltaX * step
+			currentY = startY + coordDeltaY * step
+
+			animationSteps.append((round(currentZoom, 2), (int(round(currentX)), int(round(currentY)))))
+		return animationSteps

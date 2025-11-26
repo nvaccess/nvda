@@ -4967,10 +4967,10 @@ class GlobalCommands(ScriptableObject):
 		magnifier.commands.zoomOut()
 
 	@script(
-			description=_(
-				#Translators: Describes a command.
-				"toggle filter of the magnifier"
-			),
+		description=_(
+			#Translators: Describes a command.
+			"toggle filter of the magnifier"
+		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+f",
 	)
@@ -4978,15 +4978,26 @@ class GlobalCommands(ScriptableObject):
 		magnifier.commands.toggleFilter()
 
 	@script(
-			description=_(
-				# Translators: Describes a command.
-				"toggle fullscreen mode of the magnifier"
-			),
+		description=_(
+			# Translators: Describes a command.
+			"toggle fullscreen mode of the magnifier"
+		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
 	)
 	def script_toggleFullscreenMode(self, gesture):
 		magnifier.commands.toggleFullscreenMode()
+
+	@script(
+		description=_(
+			# Translators: Describe a command.
+			"launch spotlight if magnifier is fullscreen"
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+l",
+	)
+	def script_startSpotlight(self, gesture):
+		magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(
