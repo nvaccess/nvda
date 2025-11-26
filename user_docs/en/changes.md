@@ -104,6 +104,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated lxml to 6.0.2. (#19196)
   * Updated pymdown-extensions to 10.17.1. (#19196)
   * Updated setuptools to 80.9. (#19196)
+  * Updated robotframework to 7.3.2. (#19196)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
