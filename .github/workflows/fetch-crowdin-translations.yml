@@ -18,10 +18,22 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: write
     env:
       branchName: updateCrowdinTranslations${{ github.run_id }}
 
     steps:
+    - name: Early exit
+      shell: bash
+      run: |
+        if [ -z "${{ vars.CROWDIN_PROJECT_ID }}" ]; then
+          echo "CROWDIN_PROJECT_ID is not set. Exiting workflow."
+          gh run cancel ${{ github.run_id }}
+          gh run watch ${{ github.run_id }}
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
