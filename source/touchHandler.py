@@ -12,6 +12,7 @@ import threading
 from ctypes import (
 	byref,
 	Structure,
+	c_void_p,
 	sizeof,
 	cast,
 	c_int,
@@ -306,7 +307,8 @@ class TouchHandler(threading.Thread):
 		winBindings.oleacc.AccSetRunningUtilityState(self._touchWindow, ANRUS_TOUCH_MODIFICATION_ACTIVE, 0)
 		user32.UnregisterPointerInputTarget(self._touchWindow, PT_TOUCH)
 		user32.DestroyWindow(self._touchWindow)
-		user32.UnregisterClass(self._wca, self._appInstance)
+		# The class atom should be stored as the low word of the class name string pointer.
+		user32.UnregisterClass(cast(c_void_p(self._wca), LPCWSTR), self._appInstance)
 
 	def inputTouchWndProc(self, hwnd, msg, wParam, lParam):
 		if msg >= _WM_POINTER_FIRST and msg <= _WM_POINTER_LAST:
