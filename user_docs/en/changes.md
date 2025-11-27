@@ -172,6 +172,9 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
+* The `synthDrivers.sapi4` module has been removed. (#19290)
+* ``gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed. (#19290)
+* `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema. (#19290)
 
 #### Deprecations
 
