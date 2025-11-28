@@ -14,6 +14,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
+* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
@@ -55,6 +56,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
+* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
 ### Bug Fixes
 
@@ -189,6 +191,10 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
+* SAPI 4 support has been removed: (#19290)
+  * The `synthDrivers.sapi4` module has been removed.
+  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
+  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
 
 #### Deprecations
 
