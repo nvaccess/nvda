@@ -1,6 +1,6 @@
 ---
 name: "(Advanced) Feature from add-on"
-about: "Propose specific functionality from an existing community add-on for integration into NVDA."
+about: "Free text feature request template for those familiar with GitHub."
 labels: ["enhancement", "Addon/integration"]
 ---
 
