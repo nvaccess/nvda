@@ -86,8 +86,8 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 #### Run time dependencies
 
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `b0b605c8a80f76c4c19e18033c6780c3cc4afc5b`
-* [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
-* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
+* [Sonic](https://github.com/waywardgeek/sonic), commit `d2cdb40fbdc82b464be364a50b34e8dd82b6c80a`
+* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.35.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 47.0
 * NVDA images and sounds
@@ -95,12 +95,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.7 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.8
 * lilli.dll, version 2.1.0.0
-* Python interface to FTDI driver/chip
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
   * We are in the process of switching to: Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8Zulu (17.60.17)
-* [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/)
-* [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
+* [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/), commit `7cf41936c5b4ab79daf0d9437211380dc69fa958`
 
 #### Build time dependencies
 
