@@ -4540,11 +4540,11 @@ These voices can also be used with NVDA.
 
 To use these voices, you will need to install two components:
 
-* [Microsoft Speech Platform - Runtime (Version 11), x86](https://www.microsoft.com/download/en/details.aspx?id=27225)
-* [Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/download/en/details.aspx?id=27224)
+* [Microsoft Speech Platform - Runtime (Version 11), x64](https://www.microsoft.com/en-us/download/details.aspx?id=27225)
+* [Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/en-us/download/details.aspx?id=27224)
   * This page includes many files for both speech recognition and text-to-speech.
- Choose the files containing the TTS data for the desired languages/voices.
- For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
+  Choose the files containing the TTS data for the desired languages/voices.
+  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
 
 ### Windows OneCore Voices {#OneCore}
 
