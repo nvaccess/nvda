@@ -5975,7 +5975,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
 		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
 
-		self._logLevelCombo = sHelper.addLabeledControl(
+		self._logLevelCombo: wx.Choice = sHelper.addLabeledControl(
 			# Translators: The label for a setting in privacy and security settings to select NVDA's logging level
 			_("L&ogging level:"),
 			wx.Choice,
@@ -5993,7 +5993,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			log.debugWarning("Could not set log level list to current log level")
 
 		if updateCheck:
-			self._allowUsageStatsCheckBox = sHelper.addItem(
+			self._allowUsageStatsCheckBox: wx.CheckBox = sHelper.addItem(
 				# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
 				wx.CheckBox(self, label=_("Allow NV Access to gather NVDA usage statistics")),
 			)
