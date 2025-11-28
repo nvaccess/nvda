@@ -1,3 +1,0 @@
-# Synthesizers
-
-TBD
