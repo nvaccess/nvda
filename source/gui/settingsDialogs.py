@@ -34,6 +34,7 @@ import braille
 import brailleInput
 import brailleTables
 import characterProcessing
+import magnifier
 import config
 import core
 import globalVars
@@ -5961,6 +5962,212 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class MagnifierPanel(SettingsPanel):
+	# Translators: This is the label for the magnifier settings panel.
+	title = _("Magnifier")
+	helpId = "MagnifierSettings"
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# ZOOM SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default zoom level.
+		defaultZoomLabelText = _("Default &zoom level:")
+
+		# Create zoom level choices from 1.0 to 10.0 with 0.5 steps
+		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5
+		zoomChoices = [f"{value:.1f}x" for value in zoomValues]
+
+		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
+		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
+
+		# Store zoom values for later use
+		self.zoomValues = zoomValues
+
+		# FILTER SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default filter
+		defaultFilterLabelText = _("Default &filter:")
+		try:
+			from magnifier.utils.filterHandler import filter
+		except ImportError:
+			filter = None
+		filterChoices = [f.name.lower() for f in filter]
+		self.defaultFilterList = sHelper.addLabeledControl(
+			defaultFilterLabelText, wx.Choice, choices=filterChoices
+		)
+		self.bindHelpEvent("magnifierDefaultFilter", self.defaultFilterList)
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default fullscreen mode
+		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		try:
+			from magnifier.fullscreenMagnifier import FullScreenMode
+		except ImportError:
+			FullScreenMode = None
+		fullscreenModeChoices = [mode.name.lower() for mode in FullScreenMode] if FullScreenMode else []
+		self.defaultFullscreenModeList = sHelper.addLabeledControl(
+			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
+		)
+		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
+
+		# SAVE SHORTCUT CHANGES
+		# Translators: The label for a checkbox to save modifications made via shortcuts
+		saveShortcutChangesText = _("Save &modifications made with shortcuts")
+		self.saveShortcutChangesCheckBox = sHelper.addItem(wx.CheckBox(self, label=saveShortcutChangesText))
+		self.bindHelpEvent("magnifierSaveShortcutChanges", self.saveShortcutChangesCheckBox)
+
+		# Set current value from config
+		self._updateCurrentSelection()
+
+	def _updateCurrentSelection(self):
+		"""Update the selection"""
+
+		# ZOOM
+		try:
+			# Get current zoom level from magnifier module
+			currentZoom = magnifier.getCurrentZoomLevel()
+
+			# Ensure it's a float
+			currentZoom = float(currentZoom)
+
+			# Find the closest match in our zoom values
+			closestIndex = 0
+			minDifference = abs(self.zoomValues[0] - currentZoom)
+
+			for i, value in enumerate(self.zoomValues):
+				difference = abs(value - currentZoom)
+				if difference < minDifference:
+					minDifference = difference
+					closestIndex = i
+
+			self.defaultZoomList.SetSelection(closestIndex)
+
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			# Default to 2.0x if module not available or value not found
+			log.debug(f"Error getting current zoom: {e}")
+			try:
+				defaultIndex = self.zoomValues.index(2.0)
+				self.defaultZoomList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultZoomList.SetSelection(0)
+
+		# FILTER
+		try:
+			# Get current filter from magnifier module
+			currentFilter = magnifier.getCurrentFilter()
+
+			# Ensure it's a string
+			currentFilter = str(currentFilter)
+
+			if currentFilter in self.defaultFilterList.GetStrings():
+				self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
+			else:
+				self.defaultFilterList.SetSelection(0)
+
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			log.debug(f"Error getting current filter: {e}")
+			try:
+				defaultIndex = self.defaultFilterList.GetStrings().index("None")
+				self.defaultFilterList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultFilterList.SetSelection(0)
+
+		# FULLSCREEN MODE
+		try:
+			currentFullscreenMode = magnifier.getCurrentFullscreenMode()
+
+			# Ensure it's a string
+			currentFullscreenMode = str(currentFullscreenMode)
+
+			if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
+				self.defaultFullscreenModeList.SetSelection(
+					self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
+				)
+			else:
+				self.defaultFullscreenModeList.SetSelection(0)
+
+		except (ImportError, ValueError, AttributeError, IndexError) as e:
+			log.debug(f"Error getting current fullscreen mode: {e}")
+			try:
+				defaultIndex = self.defaultFullscreenModeList.GetStrings().index("center")
+				self.defaultFullscreenModeList.SetSelection(defaultIndex)
+			except ValueError:
+				self.defaultFullscreenModeList.SetSelection(0)
+
+		# SAVE SHORTCUT CHANGES
+		try:
+			saveShortcutChanges = config.conf["magnifier"]["saveShortcutChanges"]
+			self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
+		except (KeyError, AttributeError):
+			self.saveShortcutChangesCheckBox.SetValue(False)
+
+	def onPanelActivated(self):
+		"""Called when the panel is activated/shown."""
+		super().onPanelActivated()
+		# Refresh the selection when panel is shown
+		self._updateCurrentSelection()
+
+	def onSave(self):
+		# ZOOM
+		selectedIndex = self.defaultZoomList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedZoom = self.zoomValues[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+			# Save the setting in NVDA config
+			config.conf["magnifier"]["defaultZoomLevel"] = selectedZoom
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultZoomLevel(selectedZoom)
+			except ImportError:
+				pass
+
+		# FILTER
+		selectedIndex = self.defaultFilterList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedFilter = self.defaultFilterList.GetStrings()[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+			config.conf["magnifier"]["defaultFilter"] = selectedFilter
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultFilter(selectedFilter)
+			except ImportError:
+				pass
+
+		# FULLSCREEN MODE
+		selectedIndex = self.defaultFullscreenModeList.GetSelection()
+		if selectedIndex != wx.NOT_FOUND:
+			selectedFullscreenMode = self.defaultFullscreenModeList.GetStrings()[selectedIndex]
+
+			# Ensure config section exists
+			if "magnifier" not in config.conf:
+				config.conf["magnifier"] = {}
+
+			config.conf["magnifier"]["defaultFullscreenMode"] = selectedFullscreenMode
+
+			# Update the magnifier module if loaded
+			try:
+				magnifier.setDefaultFullscreenMode(selectedFullscreenMode)
+			except ImportError:
+				pass
+
+		# SAVE SHORTCUT CHANGES
+		# Ensure config section exists
+		if "magnifier" not in config.conf:
+			config.conf["magnifier"] = {}
+
+		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
+
+
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
@@ -6095,6 +6302,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		MagnifierPanel,
 		MathSettingsPanel,
 		RemoteSettingsPanel,
 		LocalCaptionerSettingsPanel,
