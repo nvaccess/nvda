@@ -36,6 +36,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
+* A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 
 ### Changes
 
