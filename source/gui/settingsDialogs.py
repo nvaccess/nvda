@@ -5993,16 +5993,12 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			log.debugWarning("Could not set log level list to current log level")
 
 		if updateCheck:
-			item = self.allowUsageStatsCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-				label=_("Allow NV Access to gather NVDA usage statistics"),
+			self._allowUsageStatsCheckBox = sHelper.addItem(
+				# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
+				wx.CheckBox(self, label=_("Allow NV Access to gather NVDA usage statistics")),
 			)
-			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
-			item.Value = config.conf["update"]["allowUsageStats"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			sHelper.addItem(item)
+			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self._allowUsageStatsCheckBox)
+			self._allowUsageStatsCheckBox.Value = config.conf["update"]["allowUsageStats"]
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
@@ -6019,7 +6015,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			logHandler.setLogLevelFromConfig()
 
 		if updateCheck:
-			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
+			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
 			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
 
 	def _ocrActive(self) -> bool:
