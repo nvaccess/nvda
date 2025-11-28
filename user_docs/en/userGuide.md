@@ -256,7 +256,6 @@ The actual commands will not execute while in input help mode.
 |Speak typed words |`NVDA+3` |`NVDA+3` |Controls when NVDA announces words you type. |
 |Speak command keys |`NVDA+4` |`NVDA+4` |When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.|
 |Enable mouse tracking |`NVDA+m` |`NVDA+m` |When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.|
-|Toggle mouse audio coordinates |Not assigned |Not assigned |Toggles whether NVDA plays audio beeps that report the mouse position as it moves.|
 
 #### The synth settings ring {#TheSynthSettingsRing}
 
@@ -952,6 +951,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
+|Toggle mouse audio coordinates |none |none |none |Toggles whether NVDA plays audio beeps that report the mouse position as it moves.|
 
 <!-- KC:endInclude -->
 
