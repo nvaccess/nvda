@@ -86,8 +86,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
   * Updated sphinx to 8.1.3. (#18475)
-  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
-  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Introduced onnxruntime 1.23.2 for model inference. (#18475, #19196)
+  * Introduced onnx 1.19.1 to generate mock models for system test. (#18475, #19196)
   * Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)
   * Updated wxPython to 4.2.4. (#19080, #19196)
   * Updated uv to 0.9.11 (#19162)
