@@ -58,6 +58,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
+* The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings have been moved to the new Privacy and Security category of NVDA's settings. (#19296)
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
 * Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
@@ -198,6 +199,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * The `synthDrivers.sapi4` module has been removed.
   * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
   * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
+* The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel`: `LOG_LEVELS`, `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 
 #### Deprecations
 
