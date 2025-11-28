@@ -923,16 +923,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			item = self.allowUsageStatsCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-				label=_("Allow NV Access to gather NVDA usage statistics"),
-			)
-			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
-			item.Value = config.conf["update"]["allowUsageStats"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
 
 			# Translators: The label for the update mirror on the General Settings panel.
 			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
@@ -1088,7 +1078,6 @@ class GeneralSettingsPanel(SettingsPanel):
 				)
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
-			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
@@ -6003,6 +5992,18 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		else:
 			log.debugWarning("Could not set log level list to current log level")
 
+		if updateCheck:
+			item = self.allowUsageStatsCheckBox = wx.CheckBox(
+				self,
+				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+				label=_("Allow NV Access to gather NVDA usage statistics"),
+			)
+			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
+			item.Value = config.conf["update"]["allowUsageStats"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			sHelper.addItem(item)
+
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
 		# so we don't unintentionally persist a temporary screen curtain to config.
@@ -6016,6 +6017,10 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				self._LOG_LEVELS[self._logLevelCombo.GetSelection()][0],
 			)
 			logHandler.setLogLevelFromConfig()
+
+		if updateCheck:
+			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
+			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
 
 	def _ocrActive(self) -> bool:
 		"""
