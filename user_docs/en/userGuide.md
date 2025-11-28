@@ -527,9 +527,10 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 #### Data usage statistics dialog {#UsageStatsDialog}
 
 When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA, in order to help improve NVDA in the future.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
-However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
+You can read more info about the data gathered by NV Access in the Privacy and Security Settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
+
+Note: pressing "yes" or "no" will save this setting and the dialog will not appear again unless you reinstall NVDA or reset your configuration.
+You can enable or disable the data gathering process manually in the [Privacy and Security category](#PrivacyAndSecuritySettings) of the [NVDA Settings dialog](#NVDASettings).
 
 ### About NVDA keyboard commands {#AboutNVDAKeyboardCommands}
 
@@ -1888,21 +1889,6 @@ The following information is always sent:
 * Operating System version
 * Whether the Operating System is 64 or 32 bit
 
-##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
-
-If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
-Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
-Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
-
-* A unique ID for the current NVDA user, this changes once a month
-* NVDA interface language
-* Whether this copy of NVDA is portable or installed
-* Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
-* Name of the current Braille display in use (including the name of the add-on the driver comes from)
-* The current output Braille table (if Braille is in use)
-
-This information greatly aides NV Access to prioritize future development of NVDA.
-
 ##### Notify for pending updates on startup {#GeneralSettingsNotifyPendingUpdates}
 
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
@@ -2643,6 +2629,21 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+
+##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
+
+If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
+Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
+Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:
+
+* A unique ID for the current NVDA user, this changes once a month
+* NVDA interface language
+* Whether this copy of NVDA is portable or installed
+* Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
+* Name of the current Braille display in use (including the name of the add-on the driver comes from)
+* The current output Braille table (if Braille is in use)
+
+This information greatly aides NV Access to prioritize future development of NVDA.
 
 #### Vision {#VisionSettings}
 
