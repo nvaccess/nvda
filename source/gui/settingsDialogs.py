@@ -5929,7 +5929,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
 
-	LOG_LEVELS = (
+	_LOG_LEVELS: tuple[int, str] = (
 		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
 		(log.OFF, _("disabled")),
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
@@ -5986,23 +5986,19 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
 		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
 
-		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs
-		# (available options and what they are logging are found under comments for the logging level messages
-		# themselves).
-		logLevelLabelText = _("L&ogging level:")
-		logLevelChoices = [name for level, name in self.LOG_LEVELS]
-		self.logLevelList = sHelper.addLabeledControl(
-			logLevelLabelText,
+		self._logLevelCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in privacy and security settings to select NVDA's logging level
+			_("L&ogging level:"),
 			wx.Choice,
-			choices=logLevelChoices,
+			choices=[name for level, name in self._LOG_LEVELS],
 		)
-		self.bindHelpEvent("GeneralSettingsLogLevel", self.logLevelList)
-		curLevel = log.getEffectiveLevel()
+		self.bindHelpEvent("GeneralSettingsLogLevel", self._logLevelCombo)
 		if logHandler.isLogLevelForced():
-			self.logLevelList.Disable()
-		for index, (level, name) in enumerate(self.LOG_LEVELS):
+			self._logLevelCombo.Disable()
+		curLevel = log.getEffectiveLevel()
+		for index, (level, name) in enumerate(self._LOG_LEVELS):
 			if level == curLevel:
-				self.logLevelList.SetSelection(index)
+				self._logLevelCombo.SetSelection(index)
 				break
 		else:
 			log.debugWarning("Could not set log level list to current log level")
@@ -6015,9 +6011,10 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
 		)
 
-		logLevel = self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(
+				self._LOG_LEVELS[self._logLevelCombo.GetSelection()][0],
+			)
 			logHandler.setLogLevelFromConfig()
 
 	def _ocrActive(self) -> bool:
