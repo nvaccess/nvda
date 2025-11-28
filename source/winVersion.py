@@ -223,22 +223,6 @@ def isUwpOcrAvailable() -> bool:
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
-if NVDAState._allowDeprecatedAPI():
-
-	def isFullScreenMagnificationAvailable() -> bool:
-		"""
-		Technically this is always False. The Magnification API has been marked by MS as unsupported for
-		WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
-		testing our specific usage of the API with each Windows version since Windows 8
-		"""
-		log.debugWarning(
-			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable, "
-			"use visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart instead.",
-			stack_info=True,
-		)
-		return True
-
-
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "WIN7" and NVDAState._allowDeprecatedAPI():

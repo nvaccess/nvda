@@ -42,13 +42,9 @@ def _isRemoteAccessDisabled() -> bool:
 def _isScreenCurtainEnabled() -> bool:
 	"""Whether screen curtain functionality is **enabled**."""
 	# Import late to avoid circular import
-	import vision
-	from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+	from screenCurtain import screenCurtain
 
-	screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-	screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-	isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
-	return isScreenCurtainRunning
+	return screenCurtain is not None and screenCurtain.enabled
 
 
 @dataclass
