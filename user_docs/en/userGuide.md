@@ -1902,7 +1902,7 @@ The following information is always sent:
 
 * Current NVDA version
 * Operating System version
-* Whether the Operating System is 64 or 32 bit
+* Processor architecture
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -5958,7 +5958,7 @@ Following are the command line options for NVDA:
 
 ### Uninstalling NVDA {#UninstallingNVDA}
 
-NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles%\nvda`.
 
 Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
 To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.
@@ -5977,10 +5977,7 @@ The following are the command line options for NVDA's uninstaller:
 ### System Wide Parameters {#SystemWideParameters}
 
 NVDA allows some values to be set in the system registry which alter the system wide behaviour of NVDA.
-These values are stored in the registry under one of the following keys:
-
-* 32-bit system: `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`
-* 64-bit system: `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda`
+These values are stored in the registry under the key `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`.
 
 The following values can be set under this registry key:
 
