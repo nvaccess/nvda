@@ -801,18 +801,6 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	helpId = "GeneralSettings"
-	LOG_LEVELS = (
-		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
-		(log.OFF, _("disabled")),
-		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
-		(log.INFO, _("info")),
-		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
-		(log.DEBUGWARNING, _("debug warning")),
-		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
-		(log.IO, _("input/output")),
-		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
-		(log.DEBUG, _("debug")),
-	)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -870,27 +858,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("GeneralSettingsPlaySounds", self.playStartAndExitSoundsCheckBox)
 		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
 		settingsSizerHelper.addItem(self.playStartAndExitSoundsCheckBox)
-
-		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs
-		# (available options and what they are logging are found under comments for the logging level messages
-		# themselves).
-		logLevelLabelText = _("L&ogging level:")
-		logLevelChoices = [name for level, name in self.LOG_LEVELS]
-		self.logLevelList = settingsSizerHelper.addLabeledControl(
-			logLevelLabelText,
-			wx.Choice,
-			choices=logLevelChoices,
-		)
-		self.bindHelpEvent("GeneralSettingsLogLevel", self.logLevelList)
-		curLevel = log.getEffectiveLevel()
-		if logHandler.isLogLevelForced():
-			self.logLevelList.Disable()
-		for index, (level, name) in enumerate(self.LOG_LEVELS):
-			if level == curLevel:
-				self.logLevelList.SetSelection(index)
-				break
-		else:
-			log.debugWarning("Could not set log level list to current log level")
 
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto
 		# Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
@@ -1107,10 +1074,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["saveConfigurationOnExit"] = self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
-		logLevel = self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
-			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -5966,6 +5929,19 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
 
+	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+		(log.OFF, _("disabled")),
+		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
+		(log.INFO, _("info")),
+		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
+		(log.DEBUGWARNING, _("debug warning")),
+		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
+		(log.IO, _("input/output")),
+		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
+		(log.DEBUG, _("debug")),
+	)
+
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -6010,6 +5986,27 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
 		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
 
+		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs
+		# (available options and what they are logging are found under comments for the logging level messages
+		# themselves).
+		logLevelLabelText = _("L&ogging level:")
+		logLevelChoices = [name for level, name in self.LOG_LEVELS]
+		self.logLevelList = sHelper.addLabeledControl(
+			logLevelLabelText,
+			wx.Choice,
+			choices=logLevelChoices,
+		)
+		self.bindHelpEvent("GeneralSettingsLogLevel", self.logLevelList)
+		curLevel = log.getEffectiveLevel()
+		if logHandler.isLogLevelForced():
+			self.logLevelList.Disable()
+		for index, (level, name) in enumerate(self.LOG_LEVELS):
+			if level == curLevel:
+				self.logLevelList.SetSelection(index)
+				break
+		else:
+			log.debugWarning("Could not set log level list to current log level")
+
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
 		# so we don't unintentionally persist a temporary screen curtain to config.
@@ -6017,6 +6014,11 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainConfig["playToggleSounds"] = (
 			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
 		)
+
+		logLevel = self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
+		if not logHandler.isLogLevelForced():
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
+			logHandler.setLogLevelFromConfig()
 
 	def _ocrActive(self) -> bool:
 		"""
