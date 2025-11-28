@@ -1861,22 +1861,6 @@ When unchecked, NVDA will exit immediately.
 
 This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
-##### Logging level {#GeneralSettingsLogLevel}
-
-This is a combo box that lets you choose how much NVDA will log as it's running.
-Generally users should not need to touch this as not too much is logged.
-However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
-
-The available logging levels are:
-
-* Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
-* Info: NVDA will log basic information such as startup messages and information useful for developers.
-* Debug warning: Warning messages that are not caused by severe errors will be logged.
-* Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
-If you are concerned about privacy, do not set the logging level to this option.
-* Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
-Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
 ##### Start NVDA after I sign in {#GeneralSettingsStartAfterLogOn}
 
 If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
@@ -2643,6 +2627,22 @@ This option controls whether a sound cue is played when [Screen Curtain](#Vision
 By default, sounds are played when Screen Curtain is toggled.
 If you do not wish to hear these sounds, you can uncheck this checkbox.
 Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.
+
+##### Logging level {#GeneralSettingsLogLevel}
+
+This is a combo box that lets you choose how much NVDA will log as it's running.
+Generally users should not need to touch this as not too much is logged.
+However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
+
+The available logging levels are:
+
+* Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
+* Info: NVDA will log basic information such as startup messages and information useful for developers.
+* Debug warning: Warning messages that are not caused by severe errors will be logged.
+* Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
+If you are concerned about privacy, do not set the logging level to this option.
+* Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
+Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
 
 #### Vision {#VisionSettings}
 
