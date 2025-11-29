@@ -55,12 +55,23 @@ class VSCodeLib:
 				return f'"{resolved}"'
 		raise AssertionError("Visual Studio Code launcher not found. Is it installed?")
 
-	def start_vscode(self) -> _Window:
+	def start_vscode(self, targetPath: str | None = None) -> _Window:
+		"""Start Visual Studio Code.
+
+		:param targetPath: The path to the folder or file to open, defaults to a temporary directory.
+		:return: The window object for the started Visual Studio Code instance
+		"""
 		launcher = self._findCodeLauncher()
 		if VSCodeLib._testTempDir is None:
 			VSCodeLib._testTempDir = _tempfile.mkdtemp(prefix="nvdatest")
 		userDataDir = _os.path.join(VSCodeLib._testTempDir, "vscodeUserData")
 		_os.makedirs(userDataDir, exist_ok=True)
+
+		if targetPath is None:
+			targetPath = _os.path.join(VSCodeLib._testTempDir, "testDirectory")
+
+		if not _os.path.exists(targetPath):
+			_os.makedirs(targetPath, exist_ok=True)
 
 		# Prepare user settings to suppress welcome/startup screen
 		userSettingsDir = _os.path.join(userDataDir, "User")
@@ -97,6 +108,7 @@ class VSCodeLib:
 			f"--skip-add-to-recently-opened "
 			f"-n "
 			f"--wait"
+			f' "{targetPath}"'
 		)
 		_builtIn.log(f"Starting Visual Studio Code: {cmd}", level="DEBUG")
 		VSCodeLib._processRFHandleForStart = _process.start_process(

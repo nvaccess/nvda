@@ -16,7 +16,6 @@ import collections
 import shutil
 from io import StringIO
 import pickle
-from six import string_types
 from typing import (
 	Callable,
 	Dict,
@@ -1175,7 +1174,7 @@ def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
 
 	if not value or value == "None":
 		return (0, 0, 0)
-	if not isinstance(value, string_types):
+	if not isinstance(value, str):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
 		return addonAPIVersion.getAPIVersionTupleFromString(value)

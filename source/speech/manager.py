@@ -495,7 +495,7 @@ class SpeechManager(object):
 		utteranceIndex = self._getUtteranceIndex(utterance)
 		if utteranceIndex is None:
 			raise IndexError(
-				f"no utterance index({utteranceIndex}, cant save cancellable commands",
+				f"no utterance index({utterance}), can't save cancellable commands",
 			)
 		cancellableItems = list(
 			item for item in reversed(utterance) if isinstance(item, _CancellableSpeechCommand)

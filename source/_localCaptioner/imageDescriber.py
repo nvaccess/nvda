@@ -111,11 +111,20 @@ class ImageDescriber:
 
 		:param gesture: The input gesture that triggered this script.
 		"""
+		self._doCaption()
+
+	def _doCaption(self) -> None:
+		"""Real logic to run image captioning on the current navigator object."""
 		imageData = _screenshotNavigator()
 
 		if not self.isModelLoaded:
-			# Translators: Message when image description is not enabled
-			ui.message(pgettext("imageDesc", "image description is not enabled"))
+			from gui._localCaptioner.messageDialogs import openEnableOnceDialog
+
+			# Ask to enable image desc only in this session, No configuration modifications
+			wx.CallAfter(openEnableOnceDialog)
+			return
+
+		if self.captionThread is not None and self.captionThread.is_alive():
 			return
 
 		self.captionThread = threading.Thread(
