@@ -40,6 +40,14 @@ class JOB_OBJECT_LIMIT(enum.IntFlag):
 	KILL_ON_JOB_CLOSE = 0x00002000
 
 
+# JobObjectInformationClass
+JobObjectBasicLimitInformation = 2
+JobObjectBasicUIRestrictions = 4
+JobObjectExtendedLimitInformation = 9
+
+# limit flags
+JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000
+
 class JOBOBJECT_BASIC_LIMIT_INFORMATION(Structure):
 	"""
 	Contains basic limit information for a job object.
@@ -59,7 +67,6 @@ class JOBOBJECT_BASIC_LIMIT_INFORMATION(Structure):
 		("PriorityClass", DWORD),
 		("SchedulingClass", DWORD),
 	)
-
 
 class IO_COUNTERS(Structure):
 	"""
@@ -108,6 +115,16 @@ class JOB_OBJECT_UILIMIT(enum.IntFlag):
 	WRITECLIPBOARD = 0x00000004
 
 
+# UIRestrictionsClass
+JOB_OBJECT_UILIMIT_DESKTOP = 0x00000040
+JOB_OBJECT_UILIMIT_DISPLAYSETTINGS = 0x00000010
+JOB_OBJECT_UILIMIT_EXITWINDOWS = 0x00000080
+JOB_OBJECT_UILIMIT_GLOBALATOMS = 0x00000020
+JOB_OBJECT_UILIMIT_HANDLES = 0x00000001
+JOB_OBJECT_UILIMIT_READCLIPBOARD = 0x00000002
+JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008
+JOB_OBJECT_UILIMIT_WRITECLIPBOARD = 0x00000004
+
 class JOBOBJECT_BASIC_UI_RESTRICTIONS(Structure):
 	"""
 	Contains UI restrictions for a job object.
@@ -116,4 +133,6 @@ class JOBOBJECT_BASIC_UI_RESTRICTIONS(Structure):
 		https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/ns-jobapi2-jobobject_basic_ui_restrictions
 	"""
 
-	_fields_ = (("UIRestrictionsClass", DWORD),)
+	_fields_ = (
+		("UIRestrictionsClass", DWORD),
+	)

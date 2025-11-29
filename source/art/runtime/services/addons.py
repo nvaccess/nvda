@@ -33,7 +33,9 @@ class AddOnLifecycleService:
 			self.logger.error(f"Add-on path does not exist: {addonPathObj}")
 			return False
 
-		manifestFile = addonPathObj / "manifest.ini"
+		# The addonpath is within a platform-specific directory for ART add-ons.
+		# Thus the manifest file is in the parent directory.
+		manifestFile = addonPathObj.parent.joinpath("manifest.ini")
 		if not manifestFile.exists():
 			self.logger.error(f"Add-on manifest.ini not found: {manifestFile}")
 			raise RuntimeError(f"No manifest.ini found at {manifestFile}")
