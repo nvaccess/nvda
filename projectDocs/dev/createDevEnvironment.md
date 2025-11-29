@@ -93,12 +93,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
-* brlapi Python bindings, version 0.8.7 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.8
+* brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)
 * lilli.dll, version 2.1.0.0
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
-* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
-  * We are in the process of switching to: Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8Zulu (17.60.17)
-* [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil/), commit `7cf41936c5b4ab79daf0d9437211380dc69fa958`
+* [Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8 Zulu (17.60.17)](https://github.com/nvaccess/javaAccessBridge32-bin)
+* [Windows Implementation Library (WIL)](https://github.com/microsoft/wil/), commit `7cf41936c5b4ab79daf0d9437211380dc69fa958`
 
 #### Build time dependencies
 
