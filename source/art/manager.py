@@ -17,7 +17,6 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 import NVDAState
 import Pyro5.api
 from logHandler import log
-from processManager import ProcessConfig, SubprocessManager
 from secureProcess import SecurePopen
 
 from .core.services.braille import BrailleService
