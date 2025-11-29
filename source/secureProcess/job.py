@@ -13,9 +13,11 @@ from ctypes.wintypes import (
 	HANDLE,
 )
 from winBindings.jobapi2 import (
-	JobObjectExtendedLimitInformation,
+	JOBOBJECTINFOCLASS,
+	JOB_OBJECT_LIMIT,
 	JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
-	JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE,
+	JOBOBJECT_BASIC_UI_RESTRICTIONS,
+	JOB_OBJECT_UILIMIT,
 )
 from winBindings.kernel32 import (
 	CloseHandle,
@@ -37,30 +39,31 @@ class Job:
 	The job is automatically closed when the Job object is destroyed.
 	"""
 
-	def __init__(self, killOnClose: bool=False):
+	def __init__(self):
 		"""
 		Initialize the Job object.
 
-		Create a Windows Job object and optionally configure it so that all
-		processes assigned to the job are terminated when the job handle is
-		closed.
-
-		:param killOnClose: If True, configure the job to kill processes on
-			job-handle close.
-		:raises RuntimeError: If creating the job object or setting its
-			information fails.
+		Create a Windows Job object.
 		"""
 		log.debug("Creating job object...")
 		hJob = CreateJobObject(None, None)
 		if not hJob:
 			raise RuntimeError(f"Failed to create job object, {ctypes.WinError()}")
 		self._hJob = hJob
-		if killOnClose:
-			log.debug("Setting job object to kill processes on close...")
-			limitInfo = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
-			limitInfo.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
-			if not SetInformationJobObject(self._hJob, JobObjectExtendedLimitInformation, byref(limitInfo), sizeof(limitInfo)):
-				raise RuntimeError(f"Failed to set job object information, {ctypes.WinError()}")
+
+	def setBasicLimits(self, basicLimitFlags: JOB_OBJECT_LIMIT):
+		log.debug(f"Limit flags: {basicLimitFlags.name}...")
+		limitInfo = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
+		limitInfo.BasicLimitInformation.LimitFlags = basicLimitFlags
+		if not SetInformationJobObject(self._hJob, JOBOBJECTINFOCLASS.ExtendedLimitInformation, byref(limitInfo), sizeof(limitInfo)):
+			raise RuntimeError(f"Failed to set job object information, {ctypes.WinError()}")
+
+	def setUiRestrictions(self, uiLimitFlags: JOB_OBJECT_UILIMIT):
+		log.debug(f"UI limit flags: {uiLimitFlags.name}...")
+		uiRestrictions = JOBOBJECT_BASIC_UI_RESTRICTIONS()
+		uiRestrictions.UIRestrictionsClass = uiLimitFlags
+		if not SetInformationJobObject(self._hJob, JOBOBJECTINFOCLASS.BasicUIRestrictions, byref(uiRestrictions), sizeof(uiRestrictions)):
+			raise RuntimeError(f"Failed to set job object UI restrictions, {ctypes.WinError()}")
 
 	def assignProcess(self, processHandle: HANDLE):
 		"""

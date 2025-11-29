@@ -33,6 +33,8 @@ from .desktop import (
 )
 from .job import (
 	Job,
+	JOB_OBJECT_LIMIT,
+	JOB_OBJECT_UILIMIT,
 )
 from .sandboxDir import (
 	SandboxDirectory,
@@ -46,7 +48,7 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, allowUser: bool=True, disableDangerousSids: bool=True, runAsLocalService: bool=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, allowUser: bool=True, disableDangerousSids: bool=True, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
 		"""
 		Create and launch a subprocess using a restricted token and optional isolation features.
 
@@ -68,6 +70,7 @@ class SecurePopen(PopenWithToken):
 		:param allowUser: Whether the user's SID should be allowed in the restricted token.
 		:param disableDangerousSids: Disable well-known dangerous SIDs when restricting the token.
 		:param runAsLocalService: Use a local service logon token instead of the current primary token.
+		:param applyUIRestrictions: Apply maximum UI restrictions to the process via the Windows job object. Includes switching desktops, changing display settings, exiting windows, reading / writing global atoms, access to UI handles from other processes (includes windows and hooks), clipboard reading/writing, and changing system parameters.
 		:param isolateDesktop: Create a temporary desktop for the child process.
 		:param isolateWindowStation: Create a temporary window station (implies isolated desktop).
 		:param killOnDelete: Assign the child to a job that is terminated when this object is closed.
@@ -142,8 +145,19 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 				env[key] = value
 		log.debug("Launching subprocess with restricted token...")
 		super().__init__(HANDLE(int(token)), argv, useSecLogon=useSecLogon, logonFlags=1, env=env, cwd=cwd, desktop=desktopName, stdin=stdin, stdout=stdout, stderr=stderr, startSuspended=True, hideCriticalErrorDialogs=hideCriticalErrorDialogs)
-		log.debug("Creating job object to manage subprocess lifetime...")
-		self.job = Job(killOnClose=killOnDelete)
+		self.job = Job()
+		if killOnDelete:
+			self.job.setBasicLimits(JOB_OBJECT_LIMIT.KILL_ON_JOB_CLOSE)
+		self.job.setUiRestrictions(
+			JOB_OBJECT_UILIMIT.DESKTOP
+			| JOB_OBJECT_UILIMIT.DISPLAYSETTINGS
+			| JOB_OBJECT_UILIMIT.EXITWINDOWS
+			| JOB_OBJECT_UILIMIT.GLOBALATOMS
+			| JOB_OBJECT_UILIMIT.HANDLES
+			| JOB_OBJECT_UILIMIT.READCLIPBOARD
+			| JOB_OBJECT_UILIMIT.SYSTEMPARAMETERS
+			| JOB_OBJECT_UILIMIT.WRITECLIPBOARD
+		)
 		self.job.assignProcess(self._handle)
 		if not startSuspended:
 			log.debug("Resuming process execution...")

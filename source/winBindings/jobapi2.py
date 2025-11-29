@@ -5,9 +5,11 @@
 
 """Types and constants from jobapi2.h."""
 
+import enum
 from ctypes import (
 	Structure,
 	c_size_t,
+	c_int,
 )
 from ctypes.wintypes import (
 	DWORD,
@@ -16,15 +18,24 @@ from ctypes.wintypes import (
 
 ULONG_PTR = c_size_t
 
-JOBOBJECTINFOCLASS = DWORD
+class JOBOBJECTINFOCLASS(enum.IntEnum):
+	"""Enumeration of Job Object Information Classes.
 
-# JobObjectInformationClass
-JobObjectBasicLimitInformation = 2
-JobObjectBasicUIRestrictions = 4
-JobObjectExtendedLimitInformation = 9
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/ne-jobapi2-jobobjectinformationclass
+	"""
+	BasicLimitInformation = 2
+	BasicUIRestrictions = 4
+	ExtendedLimitInformation = 9
 
-# limit flags
-JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000
+	# as a ctypes param
+	@classmethod
+	def from_param(cls, obj):
+		return c_int(obj)
+
+class JOB_OBJECT_LIMIT(enum.IntFlag):
+	KILL_ON_JOB_CLOSE = 0x00002000
+
 
 class JOBOBJECT_BASIC_LIMIT_INFORMATION(Structure):
 	"""
@@ -82,15 +93,15 @@ class JOBOBJECT_EXTENDED_LIMIT_INFORMATION(Structure):
 	)
 
 
-# UIRestrictionsClass
-JOB_OBJECT_UILIMIT_DESKTOP = 0x00000040
-JOB_OBJECT_UILIMIT_DISPLAYSETTINGS = 0x00000010
-JOB_OBJECT_UILIMIT_EXITWINDOWS = 0x00000080
-JOB_OBJECT_UILIMIT_GLOBALATOMS = 0x00000020
-JOB_OBJECT_UILIMIT_HANDLES = 0x00000001
-JOB_OBJECT_UILIMIT_READCLIPBOARD = 0x00000002
-JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008
-JOB_OBJECT_UILIMIT_WRITECLIPBOARD = 0x00000004
+class JOB_OBJECT_UILIMIT(enum.IntFlag):
+	DESKTOP = 0x00000040
+	DISPLAYSETTINGS = 0x00000010
+	EXITWINDOWS = 0x00000080
+	GLOBALATOMS = 0x00000020
+	HANDLES = 0x00000001
+	READCLIPBOARD = 0x00000002
+	SYSTEMPARAMETERS = 0x00000008
+	WRITECLIPBOARD = 0x00000004
 
 
 class JOBOBJECT_BASIC_UI_RESTRICTIONS (Structure):
