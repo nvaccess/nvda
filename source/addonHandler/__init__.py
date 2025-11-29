@@ -341,6 +341,9 @@ def _startARTProcessesForAddons():
 		# Only start ART process for external addons
 		if addon.manifest.get("runtime", "internal") == "internal":
 			continue
+		runtime = addon.manifest.get("runtime")
+		if runtime not in ('amd64', 'x86'):
+			raise ValueError(f"Unsupported add-on runtime value: {runtime}")
 		# Convert manifest to a simple dict for serialization
 		manifest_dict = {
 			"name": addon.manifest.get("name"),
@@ -352,11 +355,11 @@ def _startARTProcessesForAddons():
 			"docFileName": addon.manifest.get("docFileName"),
 			"minimumNVDAVersion": addon.manifest.get("minimumNVDAVersion", (0, 0, 0)),
 			"lastTestedNVDAVersion": addon.manifest.get("lastTestedNVDAVersion", (0, 0, 0)),
-			"runtime": addon.manifest.get("runtime"),
+			"runtime": runtime,
 		}
 		addon_spec = {
 			"name": addon.name,
-			"path": addon.path,
+			"path": os.path.join(addon.path, runtime),
 			"manifest": manifest_dict
 		}
 		try:

@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import sysconfig
 import base64
 import json
 import os
@@ -17,6 +18,7 @@ import NVDAState
 import Pyro5.api
 from logHandler import log
 from processManager import ProcessConfig, SubprocessManager
+from secureProcess import SecurePopen
 
 from .core.services.braille import BrailleService
 from .core.services.config import ConfigService
@@ -78,27 +80,28 @@ def setARTManager(manager: Optional["ARTManager"]) -> None:
 class ARTAddonProcess:
 	"""Manages a single ART process for one addon."""
 
+	def _getRuntimeArgv(self, runtimeName: str):
+		if NVDAState.isRunningAsSource():
+			if (
+				(runtimeName =='amd64' and sysconfig.get_platform() == 'win-amd64')
+				or (runtimeName == 'x86' and sysconfig.get_platform() == 'win32')
+			):
+				# Running from source, use the current Python interpreter
+				return [sys.executable, "nvda_art.pyw"]
+		runtimeExe = _runtimeRegistry.get(runtimeName)
+		if not runtimeExe:
+			raise RuntimeError(f"Runtime {runtimeName} not registered")
+		return [runtimeExe]
+
 	def __init__(self, addon_spec: dict, core_service_uris: Dict[str, str]):
 		self.addon_spec = addon_spec
 		self.addon_name = addon_spec["name"]
 		self.core_service_uris = core_service_uris
 		runtime = addon_spec['manifest']['runtime']
-		runtimeExe = _runtimeRegistry.get(runtime)
-		if not runtimeExe:
+		self._runtimeArgv = self._getRuntimeArgv(runtime)
+		if not self._runtimeArgv:
 			raise RuntimeError(f"Runtime {runtime} not registered")
-		artConfig = ProcessConfig(
-	name="NVDA ART",
-	builtExeName=runtimeExe,
-	sandboxEnabled=True,
-	popenFlags={
-		"creationflags": subprocess.CREATE_NO_WINDOW,
-		"bufsize": 0,
-		"stdin": subprocess.PIPE,
-		"stdout": subprocess.PIPE,
-		"stderr": subprocess.PIPE,
-	},
-)
-		self.subprocessManager = SubprocessManager(artConfig)
+		log.debug(f"using runtime {runtime}: {self._runtimeArgv}")
 		self.artServices: Dict[str, Pyro5.api.Proxy] = {}
 		self._shutdownEvent = threading.Event()
 
@@ -121,20 +124,21 @@ class ARTAddonProcess:
 			return True
 		except Exception:
 			log.exception(f"Failed to start ART process for addon {self.addon_name}")
-			self.subprocessManager.terminate()
+			self.sp.terminate()
 			return False
 
 	def _startProcessWithHandshake(self):
 		"""Start ART process and perform JSON handshake."""
 		log.debug(f"Starting ART subprocess for {self.addon_name}")
-		self.subprocessManager.ensureProcessRunning()
-
-		if not self.subprocessManager.subprocess:
-			raise RuntimeError(f"Failed to start ART subprocess for {self.addon_name}")
-
+		isSecure = self._isRunningOnSecureDesktop()
+		self.sp = SecurePopen(
+			self._runtimeArgv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, killOnDelete=True,
+			integrityLevel="low", removePrivileges=True, disableDangerousSids=True,
+			allowUser=not isSecure, runAsLocalService=isSecure, isolateWindowStation=isSecure, hideCriticalErrorDialogs=isSecure,
+		)
 		# Log subprocess details
-		log.info(f"ART subprocess started for {self.addon_name}: PID={self.subprocessManager.subprocess.pid}")
-		log.debug(f"ART subprocess command line: {self.subprocessManager.subprocess.args}")
+		log.info(f"ART subprocess started for {self.addon_name}: PID={self.sp.pid}")
+		log.debug(f"ART subprocess command line: {self.sp.args}")
 
 		# Generate addon-specific encryption configuration
 		log.debug(f"Generating unique encryption for addon: {self.addon_name}")
@@ -153,7 +157,7 @@ class ARTAddonProcess:
 		}
 
 		startup_json = json.dumps(startup_data) + "\n"
-		
+
 		# Create redacted version for logging (don't log encryption key)
 		startup_data_redacted = startup_data.copy()
 		addon_crypto_redacted = addon_crypto.copy()
@@ -161,24 +165,24 @@ class ARTAddonProcess:
 		startup_data_redacted["addon_crypto"] = addon_crypto_redacted
 		startup_json_redacted = json.dumps(startup_data_redacted)
 		log.debug(f"Sending ART handshake data to {self.addon_name}: {startup_json_redacted}")
-		self.subprocessManager.subprocess.stdin.write(startup_json.encode("utf-8"))
-		self.subprocessManager.subprocess.stdin.flush()
+		self.sp.stdin.write(startup_json.encode("utf-8"))
+		self.sp.stdin.flush()
 
 		# Read response with timeout to prevent indefinite hang
 		log.debug(f"Waiting for handshake response from {self.addon_name} (10s timeout)")
-		response_line = _readLineWithTimeout(self.subprocessManager.subprocess.stdout, 10.0)
+		response_line = _readLineWithTimeout(self.sp.stdout, 10.0)
 
 		if response_line is None:
 			# Timeout or EOF occurred - process failed or hung
 			# Check if process is still running
-			poll_result = self.subprocessManager.subprocess.poll()
+			poll_result = self.sp.poll()
 			if poll_result is not None:
 				log.error(f"ART process {self.addon_name} exited with code {poll_result} before handshake")
 			else:
 				log.error(
 					f"ART process handshake timed out for {self.addon_name}. Process still running but not responding."
 				)
-			self.subprocessManager.terminate()
+			self.sp.terminate()
 			raise RuntimeError(f"ART handshake timeout for {self.addon_name}")
 
 		log.debug(f"Received ART handshake response from {self.addon_name}: {response_line.strip()}")
@@ -187,7 +191,7 @@ class ARTAddonProcess:
 			response_data = json.loads(response_line.strip())
 		except json.JSONDecodeError as e:
 			log.error(f"Failed to decode ART handshake response from {self.addon_name}: {response_line!r}")
-			self.subprocessManager.terminate()
+			self.sp.terminate()
 			raise RuntimeError(f"Invalid ART handshake response: {e}")
 
 		if response_data.get("status") == "ready":
@@ -220,7 +224,7 @@ class ARTAddonProcess:
 				pass
 
 		self.artServices.clear()
-		self.subprocessManager.terminate()
+		self.sp.terminate()
 
 	def getService(self, name: str) -> Optional[Pyro5.api.Proxy]:
 		"""Get a proxy to an ART service."""
@@ -409,7 +413,7 @@ class ARTManager:
 	def isAddonRunning(self, addon_name: str) -> bool:
 		"""Check if an addon's ART process is running."""
 		process = self.addonProcesses.get(addon_name)
-		return process is not None and process.subprocessManager.isRunning()
+		return process is not None and process.sp.isRunning()
 
 	def getAvailableSynthList(self) -> List[Tuple[str, str]]:
 		"""Get list of available ART synthesizers.
@@ -461,6 +465,6 @@ class ARTManager:
 		return synth_list
 
 _runtimeRegistry = {
+	'amd64': 'nvda_art.exe',
 	'x86': os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "art-runtime", "nvda_art.exe"),
 }
-

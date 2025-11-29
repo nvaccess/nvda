@@ -56,8 +56,12 @@ from ctypes.wintypes import (
 	WORD,
 	WPARAM,
 	ATOM,
+	LPVOID,
 )
 from enum import IntEnum, IntFlag
+from .winnt import (
+	LPSECURITY_ATTRIBUTES
+)
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
@@ -1611,3 +1615,38 @@ GetDpiForWindow.restype = UINT
 GetDpiForWindow.argtypes = (
 	HWND,  # hwnd: The window that you want to get information about
 )
+
+LPDEVMODEW = LPVOID
+
+CreateDesktopEx = WINFUNCTYPE(None)(("CreateDesktopExW", dll))
+"""
+Creates a new desktop object with extended attributes.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopexw
+"""
+CreateDesktopEx.restype = HDESK
+CreateDesktopEx.argtypes = (
+	LPCWSTR,  # lpszDesktop: The name of the new desktop
+	LPCWSTR,  # lpszDevice: Reserved; must be NULL
+	LPDEVMODEW,  # pDevmode: Reserved; must be NULL
+	DWORD,  # dwFlags: Desktop creation flags
+	ACCESS_MASK,  # dwDesiredAccess: Access rights for the new desktop
+	LPSECURITY_ATTRIBUTES,  # lpsa: Pointer to a SECURITY_ATTRIBUTES structure that specifies a security descriptor for the new desktop
+	DWORD,  # ulHeapSize: The initial size, in bytes, of the desktop heap for the new desktop
+	LPVOID, # pvoid: Reserved; must be NULL
+)
+
+CloseDesktop = WINFUNCTYPE(None)(("CloseDesktop", dll))
+"""
+Closes an open handle to a desktop object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-closedesktop
+"""
+CloseDesktop.restype = BOOL
+CloseDesktop.argtypes = (
+	HDESK,  # hDesktop: Handle to the desktop to be closed
+)
+
+DESKTOP_ALL_ACCESS = 0x000F01FF
