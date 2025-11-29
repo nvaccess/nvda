@@ -18,7 +18,6 @@ from ctypes.wintypes import (
 
 ULONG_PTR = c_size_t
 
-
 class JOBOBJECTINFOCLASS(enum.IntEnum):
 	"""Enumeration of Job Object Information Classes.
 
@@ -39,14 +38,6 @@ class JOBOBJECTINFOCLASS(enum.IntEnum):
 class JOB_OBJECT_LIMIT(enum.IntFlag):
 	KILL_ON_JOB_CLOSE = 0x00002000
 
-
-# JobObjectInformationClass
-JobObjectBasicLimitInformation = 2
-JobObjectBasicUIRestrictions = 4
-JobObjectExtendedLimitInformation = 9
-
-# limit flags
-JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000
 
 class JOBOBJECT_BASIC_LIMIT_INFORMATION(Structure):
 	"""
