@@ -26,6 +26,7 @@ from .token import (
 	lookupTokenLogonSidString,
 	createTokenEnvironmentBlock,
 	createRestrictedSecurityDescriptor,
+	impersonateToken,
 )
 from .desktop import (
 	createTempDesktop,
@@ -139,12 +140,14 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), dacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
-		if not cwd and (
-			integrityLevel == "low"
-			or (restrictToken and not retainUserInRestrictedToken)
-		):
-			cwd = env["TEMP"]
-			log.debug(f"Setting working directory to {cwd}...")
+		if not cwd:
+			with impersonateToken(token):
+				cwd = os.getcwd()
+				try:
+					os.listdir(cwd)
+				except (PermissionError, FileNotFoundError):
+					cwd = env["TEMP"]
+					log.debug(f"Parent working directory not accessible for child process. Using {cwd}...")
 		if extraEnv:
 			for key, value in extraEnv.items():
 				log.debug(f"Adding extra environment variable: {key}={value}...")
