@@ -18,8 +18,11 @@ log = logging.getLogger(__name__)
 
 DANGEROUS_SIDS = {
 	"Administrators": "S-1-5-32-544",
-	"System": "S-1-5-18",
 	"NT AUTHORITY\\SERVICES": "S-1-5-6",
+	"Backup Operators": "S-1-5-32-551",
+	"Account Operators": "S-1-5-32-548",
+	"Print Operators": "S-1-5-32-550",
+	"Server Operators": "S-1-5-32-549",
 }
 
 ALLOWED_GROUP_SIDS = {
@@ -60,8 +63,36 @@ def getCurrentPrimaryToken():
 	)
 	return curToken
 
+DANGEROUS_DOMAIN_GROUP_RIDS = {
+	'Domain Admins': 512,
+	'Schema Admins': 518,
+	'Enterprise Admins': 519,
+}
 
-def restrictToken(token: PyHandle, removePrivilages: bool=True, allowUser: bool=True, disableDangerousSids: bool=True):
+def getDangerousDomainGroupSids(token) -> dict[str, str]:
+	domainPrefixes: set[str] = set()
+	groups = win32security.GetTokenInformation(token, win32security.TokenGroups)
+	for sid, attrs in groups:
+		sidStr = win32security.ConvertSidToStringSid(sid)
+		if sidStr.startswith('S-1-5-21-'):
+			parts = sidStr.split('-')
+			domainPrefix = '-'.join(parts[:-1])
+			domainPrefixes.add(domainPrefix)
+	log.debug(f"Found {len(domainPrefixes)} domain group SIDs in token.")
+	results = {}
+	for prefix in domainPrefixes:
+		for rid in DANGEROUS_DOMAIN_GROUP_RIDS.values():
+			sidStr = f'{prefix}-{rid}'
+			sid = win32security.ConvertStringSidToSid(sidStr)
+			try:
+				domain, name, type_ = win32security.LookupAccountSid(None, sid)
+				qualName = f'{domain}\\{name}'
+			except Exception:
+				qualName = sidStr
+			results[qualName] = sidStr
+	return results
+
+def restrictToken(token, removePrivilages: bool=True, allowUser: bool=True, disableDangerousSids: bool=True):
 	"""Create a restricted token derived from an existing token.
 
 	This function can remove enabled privileges, restrict the token's group SIDs
@@ -119,7 +150,12 @@ def restrictToken(token: PyHandle, removePrivilages: bool=True, allowUser: bool=
 			sid = win32security.ConvertStringSidToSid(sidString)
 			if sid in oldEnabledGroups:
 				log.debug(f"Disabling dangerous group {name}...")
-			sidsToDisable.append((sid, 0))
+				sidsToDisable.append((sid, 0))
+		for name, sidString in getDangerousDomainGroupSids(token):
+			sid = win32security.ConvertStringSidToSid(sidString)
+			if sid in oldEnabledGroups:
+				log.debug(f"Disabling dangerous domain group SID {name}...")
+				sidsToDisable.append((sid, 0))
 	restrictedToken = win32security.CreateRestrictedToken(
 		token,
 		restrictFlags,
