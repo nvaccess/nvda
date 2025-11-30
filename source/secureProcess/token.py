@@ -4,6 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+import contextlib
 import win32profile
 import win32security
 import win32process
@@ -375,3 +376,19 @@ def createRestrictedSecurityDescriptor(
 		sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
 		sd.SetSecurityDescriptorSacl(1, sacl, 0)
 	return sd
+
+@contextlib.contextmanager
+def impersonateToken(token):
+	"""Context manager to impersonate a given token within a context.
+
+	This context manager calls ImpersonateLoggedOnUser with the provided token
+	when entering the context, and reverts to the original security context
+	when exiting the context.
+
+	:param token: The token to impersonate.
+	"""
+	win32security.ImpersonateLoggedOnUser(token)
+	try:
+		yield
+	finally:
+		win32security.RevertToSelf()
