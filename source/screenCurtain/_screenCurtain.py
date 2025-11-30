@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
-from typing import TypedDict, cast
+from typing import TypedDict, cast, Final
 
 import config
 import globalVars
@@ -145,13 +145,19 @@ class ScreenCurtain:
 	There should only ever be a single object created from this class at a time.
 	"""
 
+	_MAX_ENABLE_RETRIES: Final[int] = 3
+	"""Maximum number of times to try enabling Screen Curtain."""
+
 	def __init__(self):
 		"""Initializer."""
 		super().__init__()
 		self._settings: ScreenCurtainSettings = cast(ScreenCurtainSettings, config.conf["screenCurtain"])
 		self._enabled: bool = False
 		if self.settings["enabled"]:
-			self.enable()
+			try:
+				self.enable()
+			except RuntimeError:
+				log.error("Failed to enable Screen Curtain", exc_info=True)
 
 	@property
 	def settings(self) -> ScreenCurtainSettings:
@@ -175,15 +181,29 @@ class ScreenCurtain:
 			log.debug("ScreenCurtain is already enabled.")
 			return
 		log.debug("Enabling ScreenCurtain")
-		magnification.MagInitialize()
-		try:
-			magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
-			magnification.MagShowSystemCursor(False)
-			if not isScreenFullyBlack():
-				raise RuntimeError("Screen is not black.")
-		except Exception as e:
-			magnification.MagUninitialize()
-			raise e
+		for attempt in range(self._MAX_ENABLE_RETRIES):
+			exception: Exception | None = None
+			try:
+				if not magnification.MagInitialize():
+					raise RuntimeError("Failed to initialize magnification runtime")
+				if not magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK):
+					raise RuntimeError("Failed to set full screen color effect.")
+				if not magnification.MagShowSystemCursor(False):
+					raise RuntimeError("Failed to hide the system cursor")
+				if not isScreenFullyBlack():
+					raise RuntimeError("Screen is not black.")
+				break
+			except Exception as e:
+				# We must call MagUninitialize at least as many times as we call MagInitialize,
+				# as if we don't, we are liable to get permission errors
+				# when attempting to use the magnification API
+				magnification.MagUninitialize()
+				log.debugWarning(f"Failed to enable Screen Curtain on attempt {attempt + 1}.", exc_info=e)
+				exception = e
+		else:
+			log.debug(f"Failed to enable Screen Curtain after {self._MAX_ENABLE_RETRIES} attempts.")
+			raise exception
+		log.debug("Screen Curtain enabled")
 		self._enabled = True
 		if persist:
 			self.settings["enabled"] = True
