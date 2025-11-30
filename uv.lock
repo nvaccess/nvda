@@ -322,6 +322,28 @@ wheels = [
 ]
 
 [[package]]
+name = "l2m4m"
+version = "1.0.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "latex2mathml", marker = "sys_platform == 'win32'" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1d/71/2548c288ef1b27f3419285e45430b8f10b9be8f4c34b4d2ecec2d34baf42/l2m4m-1.0.4.tar.gz", hash = "sha256:7fc451edb281604c1eb9d6fa626a8cce874e8a0d3641cca581c20b7544f51396", size = 16567, upload-time = "2024-06-15T16:49:04.798Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f6/8a/500639fe4b0b1dfc7775633b9173d96a474bbc0811578e916595c9b323f0/L2M4M-1.0.4-py3-none-any.whl", hash = "sha256:766e232b28cfdc6397e9c47162a938dba26e5ab90bddec8d82eccb7896ab46d1", size = 14985, upload-time = "2024-06-15T16:49:03.88Z" },
+]
+
+[[package]]
+name = "latex2mathml"
+version = "3.78.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/26/57b1034c08922d0aefea79430a5e0006ffaee4f0ec59d566613f667ab2f7/latex2mathml-3.78.1.tar.gz", hash = "sha256:f941db80bf41db33f31df87b304e8b588f8166b813b0257c11c98f7a9d0aac71", size = 74030, upload-time = "2025-08-29T23:34:23.178Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3e/76/d661ea2e529c3d464f9efd73f9ac31626b45279eb4306e684054ea20e3d4/latex2mathml-3.78.1-py3-none-any.whl", hash = "sha256:f089b6d75e85b937f99693c93e8c16c0804008672c3dd2a3d25affd36f238100", size = 73892, upload-time = "2025-08-29T23:34:21.98Z" },
+]
+
+[[package]]
 name = "license-expression"
 version = "30.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -555,6 +577,7 @@ dependencies = [
     { name = "crowdin-api-client", marker = "sys_platform == 'win32'" },
     { name = "cryptography", marker = "sys_platform == 'win32'" },
     { name = "fast-diff-match-patch", marker = "sys_platform == 'win32'" },
+    { name = "l2m4m", marker = "sys_platform == 'win32'" },
     { name = "lxml", marker = "sys_platform == 'win32'" },
     { name = "markdown", marker = "sys_platform == 'win32'" },
     { name = "markdown-link-attr-modifier", marker = "sys_platform == 'win32'" },
@@ -612,6 +635,7 @@ requires-dist = [
     { name = "crowdin-api-client", specifier = "==1.24.1" },
     { name = "cryptography", specifier = "==46.0.3" },
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
+    { name = "l2m4m", specifier = "==1.0.4" },
     { name = "lxml", specifier = "==6.0.2" },
     { name = "markdown", specifier = "==3.10" },
     { name = "markdown-link-attr-modifier", specifier = "==0.2.1" },
