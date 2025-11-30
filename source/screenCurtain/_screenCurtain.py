@@ -33,6 +33,9 @@ UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = pgettext(
 	"Cannot enable screen curtain while performing content recognition",
 )
 
+# Translators: Reported when the screen curtain could not be enabled.
+ERROR_ENABLING_MESSAGE = _("Could not enable screen curtain")
+
 
 class ScreenCurtainSettings(TypedDict):
 	"""Type information for the "screenCurtain" section of the config."""
