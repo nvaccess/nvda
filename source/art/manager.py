@@ -132,8 +132,10 @@ class ARTAddonProcess:
 		isSecure = self._isRunningOnSecureDesktop()
 		self.sp = SecurePopen(
 			self._runtimeArgv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, killOnDelete=True,
-			integrityLevel="low", removePrivileges=True, disableDangerousSids=True,
-			allowUser=not isSecure, runAsLocalService=isSecure, isolateWindowStation=isSecure, hideCriticalErrorDialogs=isSecure,
+			applyUIRestrictions=True,
+			integrityLevel="low", removePrivileges=True, restrictToken=True,
+			retainUserInRestrictedToken=not isSecure,
+			runAsLocalService=isSecure, isolateWindowStation=isSecure, hideCriticalErrorDialogs=isSecure,
 		)
 		# Log subprocess details
 		log.info(f"ART subprocess started for {self.addon_name}: PID={self.sp.pid}")

@@ -13,31 +13,9 @@ from winBindings.winnt import (
 )
 
 import logging
+
 log = logging.getLogger(__name__)
 
-
-DANGEROUS_SIDS = {
-	"Administrators": "S-1-5-32-544",
-	"NT AUTHORITY\\SERVICES": "S-1-5-6",
-	"Backup Operators": "S-1-5-32-551",
-	"Account Operators": "S-1-5-32-548",
-	"Print Operators": "S-1-5-32-550",
-	"Server Operators": "S-1-5-32-549",
-}
-
-ALLOWED_GROUP_SIDS = {
-	"Everyone": "S-1-1-0",
-	"INTERACTIVE": "S-1-5-4",
-	"Authenticated Users": "S-1-5-11",
-	"Users": "S-1-5-32-545",
-	"Console Logon": "S-1-2-1",
-	"NT AUTHORITY\\LOCAL": "S-1-2-0",
-	"NT AUTHORITY\\Local account": "S-1-5-113",
-}
-
-REQUIRED_GROUP_SIDS = {
-	"Restricted": "S-1-5-12",
-}
 
 integrityLevels = {
 	"untrusted": win32security.WinUntrustedLabelSid,
@@ -46,6 +24,7 @@ integrityLevels = {
 	"high": win32security.WinHighLabelSid,
 	"system": win32security.WinSystemLabelSid,
 }
+
 
 def getCurrentPrimaryToken():
 	"""Return the primary access token for the current process.
@@ -63,103 +42,87 @@ def getCurrentPrimaryToken():
 	)
 	return curToken
 
-DANGEROUS_DOMAIN_GROUP_RIDS = {
-	'Domain Admins': 512,
-	'Schema Admins': 518,
-	'Enterprise Admins': 519,
+
+def createLeastPrivilegedToken(token):
+	"""
+	Create a least-privileged token from an existing token.
+
+	This produces a new token with all privileges removed except for SE_CHANGE_NOTIFY.
+
+	:param token: The source token to restrict.
+	:returns: A new token with maximum privileges disabled.
+	:raises: Underlying win32 API exceptions if token operations fail.
+	"""
+	log.debug("Removing max privileges from token...")
+	return win32security.CreateRestrictedToken(token, win32security.DISABLE_MAX_PRIVILEGE, (), (), ())
+
+
+allowedRestrictedSids = {
+	"Everyone": "S-1-1-0",
+	"INTERACTIVE": "S-1-5-4",
+	"Authenticated Users": "S-1-5-11",
+	"Users": "S-1-5-32-545",
+	"Console Logon": "S-1-2-1",
+	"NT AUTHORITY\\LOCAL": "S-1-2-0",
+	"NT AUTHORITY\\Local account": "S-1-5-113",
 }
 
-def getDangerousDomainGroupSids(token) -> dict[str, str]:
-	domainPrefixes: set[str] = set()
-	groups = win32security.GetTokenInformation(token, win32security.TokenGroups)
-	for sid, attrs in groups:
-		sidStr = win32security.ConvertSidToStringSid(sid)
-		if sidStr.startswith('S-1-5-21-'):
-			parts = sidStr.split('-')
-			domainPrefix = '-'.join(parts[:-1])
-			domainPrefixes.add(domainPrefix)
-	log.debug(f"Found {len(domainPrefixes)} domain group SIDs in token.")
-	results = {}
-	for prefix in domainPrefixes:
-		for rid in DANGEROUS_DOMAIN_GROUP_RIDS.values():
-			sidStr = f'{prefix}-{rid}'
-			sid = win32security.ConvertStringSidToSid(sidStr)
-			try:
-				domain, name, type_ = win32security.LookupAccountSid(None, sid)
-				qualName = f'{domain}\\{name}'
-			except Exception:
-				qualName = sidStr
-			results[qualName] = sidStr
-	return results
+requiredRestrictedSids = {
+	"Restricted": "S-1-5-12",
+}
 
-def restrictToken(token, removePrivilages: bool=True, allowUser: bool=True, disableDangerousSids: bool=True):
-	"""Create a restricted token derived from an existing token.
 
-	This function can remove enabled privileges, restrict the token's group SIDs
-	to a limited set, and disable membership of dangerous groups. The resulting
-	restricted token is suitable for launching or using in contexts that require
-	lower privileges than the original token.
+def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool = False):
+	"""Create a new restricted token based on an existing token.
 
-	:param token: The original token to restrict.
-	:param removePrivilages: If True, attempt to remove all enabled privileges from
-		the token (but skips change-notify privilege for directory traversal).
-	:param allowUser: If True, include the user SID in the restricted token;
-		if False, the user SID is omitted and only allowed/required groups and the
-		logon SID are included.
-	:param disableDangerousSids: If True, disable membership of well-known
-		dangerous groups (for example Administrators or System) if present in the
-		token.
+	This function builds a reduced-privilege token by optionally disabling maximum
+	privileges and constructing a restricted SID list.
+	The restricted SID list always includes the special "Restricted" SID,
+	the Logon SID from the source token if one exists,
+	and any group SIDs from the source token which match some generic interactive group SIDs.
+	These should be enough to allow basic interactive access such as reading and executing system binaries in system32 and installed applications in program files,
+	as well as basic interaction with the desktop and window station.
+	But by default will not include access to any user's files or profile data, not even  the token user.
 
+	If retainUser is True, the user SID from the source token is also included in the restricted SID list, thus granting access to the user's files and profile data.
+
+	:param token: The source token to restrict.
+	:param removePrivilages: If True, disable all privileges on the created token, except SE_CHANGE_NOTIFY.
+	:param retainUser: If True, include the user's SID in the restricted SID list.
 	:returns: A handle to the newly created restricted token.
-	:raises: Exceptions raised by underlying win32 API calls on failure.
+	:raises: Exceptions from underlying win32 API calls if token operations fail.
 	"""
 	restrictFlags = 0
 	if removePrivilages:
-		oldPrivileges = win32security.GetTokenInformation(token, win32security.TokenPrivileges)
-		for priv, attrs in oldPrivileges:
-			if attrs & win32con.SE_PRIVILEGE_ENABLED:
-				privName = win32security.LookupPrivilegeName(None, priv)
-				if privName == win32security.SE_CHANGE_NOTIFY_NAME:
-					continue
-				log.debug(f"Removing privilege: {privName}...")
-		restrictFlags = win32security.DISABLE_MAX_PRIVILEGE
-	restrictToSids = []
+		log.debug("Removing max privileges from token...")
+		restrictFlags |= win32security.DISABLE_MAX_PRIVILEGE
 	oldGroups = win32security.GetTokenInformation(token, win32security.TokenGroups)
 	oldEnabledGroups = [sid for sid, attrs in oldGroups if attrs & win32security.SE_GROUP_ENABLED]
-	if not allowUser:
-		log.debug("User not allowed, so not including user SID in SIDs to restrict to.")
-		for name, sidString in ALLOWED_GROUP_SIDS.items():
-			sid = win32security.ConvertStringSidToSid(sidString)
-			if sid not in oldEnabledGroups:
-				continue
-			log.debug(f"Restricting to existing group {name}...")
+	restrictToSids = []
+	for name, sidString in requiredRestrictedSids.items():
+		log.debug(f"Restricting to required group {name}...")
+		sid = win32security.ConvertStringSidToSid(sidString)
+		restrictToSids.append((sid, 0))
+	for name, sidString in allowedRestrictedSids.items():
+		sid = win32security.ConvertStringSidToSid(sidString)
+		if sid not in oldEnabledGroups:
+			continue
+		log.debug(f"Retaining existing group {name}...")
+		restrictToSids.append((sid, 0))
+	for sid, attrs in oldGroups:
+		if attrs & win32security.SE_GROUP_LOGON_ID:
+			sidString = win32security.ConvertSidToStringSid(sid)
+			log.debug("Restricting to Logon Sid")
 			restrictToSids.append((sid, 0))
-		for name, sidString in REQUIRED_GROUP_SIDS.items():
-			log.debug(f"Restricting to required group {name}...")
-			sid = win32security.ConvertStringSidToSid(sidString)
-			restrictToSids.append((sid, 0))
-		for sid, attrs in oldGroups:
-			if attrs & win32security.SE_GROUP_LOGON_ID:
-				sidString = win32security.ConvertSidToStringSid(sid)
-				log.debug("Restricting to Logon Sid")
-				restrictToSids.append((sid, 0))
-				break
-	sidsToDisable = []
-	if disableDangerousSids:
-		for name, sidString in DANGEROUS_SIDS.items():
-			sid = win32security.ConvertStringSidToSid(sidString)
-			if sid in oldEnabledGroups:
-				log.debug(f"Disabling dangerous group {name}...")
-				sidsToDisable.append((sid, 0))
-		for name, sidString in getDangerousDomainGroupSids(token):
-			sid = win32security.ConvertStringSidToSid(sidString)
-			if sid in oldEnabledGroups:
-				log.debug(f"Disabling dangerous domain group SID {name}...")
-				sidsToDisable.append((sid, 0))
+			break
+	if retainUser:
+		userSid = win32security.GetTokenInformation(token, win32security.TokenUser)[0]
+		log.debug("Retaining user SID in restricted token...")
+		restrictToSids.append((userSid, 0))
 	restrictedToken = win32security.CreateRestrictedToken(
 		token,
 		restrictFlags,
-		sidsToDisable,
+		(),
 		(),
 		restrictToSids,
 	)
@@ -215,14 +178,15 @@ def createServiceLogon():
 	)
 	return token
 
+
 def lookupTokenUserSidString(token) -> str:
-	""" Return the user SID string for the given token."""
+	"""Return the user SID string for the given token."""
 	userSid = win32security.GetTokenInformation(token, win32security.TokenUser)[0]
 	return win32security.ConvertSidToStringSid(userSid)
 
 
 def lookupTokenLogonSidString(token) -> str:
-	""" Return the unique logon session SID string for the given token."""
+	"""Return the unique logon session SID string for the given token."""
 	groups = win32security.GetTokenInformation(token, win32security.TokenGroups)
 	for sid, attrs in groups:
 		if attrs & win32security.SE_GROUP_LOGON_ID:
@@ -231,14 +195,16 @@ def lookupTokenLogonSidString(token) -> str:
 
 
 def createEnvironmentBlock(vars: dict[str, str]) -> str:
-	""" Create a Windows environment block from a dictionary of variables."""
+	"""Create a Windows environment block from a dictionary of variables."""
 	log.debug(f"Building process environment block containing {len(vars)} variables...")
 	envBlock = "\0".join(f"{key}={value}" for key, value in vars.items()) + "\0\0"
 	return envBlock
 
+
 def createTokenEnvironmentBlock(token):
-	""" Generate standard environment variables for a given token. """
+	"""Generate standard environment variables for a given token."""
 	return win32profile.CreateEnvironmentBlock(token, False)
+
 
 def accessMaskToString(mask) -> str:
 	"""
@@ -270,15 +236,17 @@ def accessMaskToString(mask) -> str:
 		return "none"
 	return f"{', '.join(rights)}"
 
+
 def getAceTypeString(ace_type):
 	"""Returns a string representation of the ACE type."""
 	types = {
 		win32security.ACCESS_ALLOWED_ACE_TYPE: "ALLOW",
 		win32security.ACCESS_DENIED_ACE_TYPE: "DENY",
 		win32security.SYSTEM_AUDIT_ACE_TYPE: "AUDIT",
-		#win32security.SYSTEM_ALARM_ACE_TYPE: "ALARM",
+		# win32security.SYSTEM_ALARM_ACE_TYPE: "ALARM",
 	}
 	return types.get(ace_type, f"Unknown ({ace_type})")
+
 
 def getDaclString(dacl):
 	"""Return a human-readable string representation of a DACL.
@@ -303,7 +271,13 @@ def getDaclString(dacl):
 		aceStrings.append(aceString)
 	return "\n".join(aceStrings)
 
-def createRestrictedDacl(uniqueRestrictedSidString: str, includeSystem: bool=True, includeAdministrators: bool=True, includeMe: bool=True):
+
+def createRestrictedDacl(
+	uniqueRestrictedSidString: str,
+	includeSystem: bool = True,
+	includeAdministrators: bool = True,
+	includeMe: bool = True,
+):
 	"""
 	Create a discretionary access control list (DACL) that allows access to a
 	restricted subject and, optionally, to other well-known principals.
@@ -352,7 +326,14 @@ def createRestrictedDacl(uniqueRestrictedSidString: str, includeSystem: bool=Tru
 				dacl.AddAccessAllowedAce(win32security.ACL_REVISION, GENERIC_ALL, curUserSid)
 	return dacl
 
-def createRestrictedSecurityDescriptor(uniqueRestrictedSidString: str, integrityLevel: str | None="low", includeSystem: bool=True, includeAdministrators: bool=True, includeMe: bool=True):
+
+def createRestrictedSecurityDescriptor(
+	uniqueRestrictedSidString: str,
+	integrityLevel: str | None = "low",
+	includeSystem: bool = True,
+	includeAdministrators: bool = True,
+	includeMe: bool = True,
+):
 	"""
 	Create a security descriptor that restricts access to a single principal.
 
@@ -378,7 +359,12 @@ def createRestrictedSecurityDescriptor(uniqueRestrictedSidString: str, integrity
 	"""
 	sd = win32security.SECURITY_DESCRIPTOR()
 	sd.Initialize()
-	dacl = createRestrictedDacl(uniqueRestrictedSidString, includeSystem=includeSystem, includeAdministrators=includeAdministrators, includeMe=includeMe)
+	dacl = createRestrictedDacl(
+		uniqueRestrictedSidString,
+		includeSystem=includeSystem,
+		includeAdministrators=includeAdministrators,
+		includeMe=includeMe,
+	)
 	sd.SetSecurityDescriptorDacl(1, dacl, 0)
 	if integrityLevel:
 		log.debug(f"Setting integrity level to {integrityLevel}...")

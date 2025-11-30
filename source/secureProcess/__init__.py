@@ -18,7 +18,8 @@ from .childProcess import (
 	PopenWithToken,
 )
 from .token import (
-	restrictToken,
+	createRestrictedToken,
+	createLeastPrivilegedToken,
 	getCurrentPrimaryToken,
 	createServiceLogon,
 	setTokenIntegrityLevel,
@@ -48,11 +49,11 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, allowUser: bool=True, disableDangerousSids: bool=True, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, restrictToken: bool=True, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
 		"""
-		Create and launch a subprocess using a restricted token and optional isolation features.
+		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
-		This constructor prepares a restricted security token (optionally a service logon token),
+		This constructor prepares a Windows access token based on the current user (though optionally a service logon token instead), makes a restricted token from that if requested,
 		configures integrity level and default DACLs, adjusts the environment for low integrity
 		processes, optionally creates an isolated desktop and/or window station, and spawns
 		the child process using PopenWithToken. The created process is assigned to a Job so it
@@ -64,11 +65,11 @@ class SecurePopen(PopenWithToken):
 		:param stderr: File descriptor or handle to use for standard error, or None. if subprocessPIPE, then a pipe from the child will be created.
 		:param extraEnv: Additional environment variables to add to the process environment.
 		:param cwd: Working directory for the child process. If not provided, the current
-			working directory is used (or a short-lived sandbox directory with restricted permissions when allowUser is False).
+			working directory is used (or a short-lived sandbox directory with restricted permissions when restrictedToken is True and retainUserInRestrictedToken is False.
 		:param integrityLevel: Integrity level to apply to the restricted token (e.g. "low").
 		:param removePrivileges: Remove privileges from the token when restricting it.
-		:param allowUser: Whether the user's SID should be allowed in the restricted token.
-		:param disableDangerousSids: Disable well-known dangerous SIDs when restricting the token.
+		:param restrictedToken: Whether to create a restricted token for the child process. The restricted token will have a restricted SID list including the "Restricted" SID and the Logon SID from the source token, as well as interactive group SIDs. Enough to allow basic interactive access, but not enough to access the user's own files or profile data unless retainUserInRestrictedToken is also True.
+		:param retainUserInRestrictedToken: Include the user SID from the source token in the restricted SID list, thus granting access to the user's files and profile data.
 		:param runAsLocalService: Use a local service logon token instead of the current primary token.
 		:param applyUIRestrictions: Apply maximum UI restrictions to the process via the Windows job object. Includes switching desktops, changing display settings, exiting windows, reading / writing global atoms, access to UI handles from other processes (includes windows and hooks), clipboard reading/writing, and changing system parameters.
 		:param isolateDesktop: Create a temporary desktop for the child process.
@@ -78,9 +79,9 @@ class SecurePopen(PopenWithToken):
 		:param hideCriticalErrorDialogs: Suppress critical error dialogs for the spawned process.
 
 When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
-		allowUser is False a sandbox directory is created and used as the TEMP/TMP and cwd.
+		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
-		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: integrityLevel={integrityLevel}, removePrivileges={removePrivileges}, allowUser={allowUser}, disableDangerousSids={disableDangerousSids}, runAsLocalService={runAsLocalService}, isolateDesktop={isolateDesktop}, isolateWindowStation={isolateWindowStation}, killOnDelete={killOnDelete}, startSuspended={startSuspended}, hideCriticalErrorDialogs={hideCriticalErrorDialogs}...")
+		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {restrictToken=}, {retainUserInRestrictedToken=}, {runAsLocalService=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
 		if runAsLocalService:
 			log.debug("runAsLocalService requested, creating service logon token and ensuring secLogon is used to launch process...")
 			useSecLogon = True
@@ -110,9 +111,11 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			sa.bInheritHandle = False
 			desktopName, self._desktopHandle = createTempDesktop(securityAttribs=sa)
 			log.debug(f"Isolated desktop created: {desktopName}")
-		log.debug(f"Preparing restricted token, removePrivileges={removePrivileges}, allowUser={allowUser}, disableDangerousSids={disableDangerousSids}...")
-		token = restrictToken(token, removePrivilages=removePrivileges, allowUser=allowUser, disableDangerousSids=disableDangerousSids)
-		if not allowUser:
+		if restrictToken:
+			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken)
+		elif removePrivileges:
+			token = createLeastPrivilegedToken(token)
+		if restrictToken and not retainUserInRestrictedToken:
 			log.debug("Ensuring restricted token has an appropriate default DACL  so  it can access its own sandbox directory and handles...")
 			dacl = restrictedSD.GetSecurityDescriptorDacl()
 			win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, dacl)
@@ -129,16 +132,19 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			log.debug(f"Setting TEMP and TMP to low integrity Temp folder {temp}...")
 			env["TEMP"] = temp
 			env["TMP"] = temp
-		if not allowUser:
+		if restrictToken and not retainUserInRestrictedToken:
 			temp = env['TEMP']
 			sbDirName = f"sandbox_{uuid.uuid4()}"
 			dacl = restrictedSD.GetSecurityDescriptorDacl()
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), dacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
-			if not cwd:
-				log.debug("Setting working directory to sandbox directory...")
-				cwd = self._sandboxDir.path
+		if not cwd and (
+			integrityLevel == "low"
+			or (restrictToken and not retainUserInRestrictedToken)
+		):
+			cwd = env["TEMP"]
+			log.debug(f"Setting working directory to {cwd}...")
 		if extraEnv:
 			for key, value in extraEnv.items():
 				log.debug(f"Adding extra environment variable: {key}={value}...")
@@ -148,16 +154,17 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		self.job = Job()
 		if killOnDelete:
 			self.job.setBasicLimits(JOB_OBJECT_LIMIT.KILL_ON_JOB_CLOSE)
-		self.job.setUiRestrictions(
-			JOB_OBJECT_UILIMIT.DESKTOP
-			| JOB_OBJECT_UILIMIT.DISPLAYSETTINGS
-			| JOB_OBJECT_UILIMIT.EXITWINDOWS
-			| JOB_OBJECT_UILIMIT.GLOBALATOMS
-			| JOB_OBJECT_UILIMIT.HANDLES
-			| JOB_OBJECT_UILIMIT.READCLIPBOARD
-			| JOB_OBJECT_UILIMIT.SYSTEMPARAMETERS
-			| JOB_OBJECT_UILIMIT.WRITECLIPBOARD
-		)
+		if applyUIRestrictions:
+			self.job.setUiRestrictions(
+				JOB_OBJECT_UILIMIT.DESKTOP
+				| JOB_OBJECT_UILIMIT.DISPLAYSETTINGS
+				| JOB_OBJECT_UILIMIT.EXITWINDOWS
+				| JOB_OBJECT_UILIMIT.GLOBALATOMS
+				| JOB_OBJECT_UILIMIT.HANDLES
+				| JOB_OBJECT_UILIMIT.READCLIPBOARD
+				| JOB_OBJECT_UILIMIT.SYSTEMPARAMETERS
+				| JOB_OBJECT_UILIMIT.WRITECLIPBOARD
+			)
 		self.job.assignProcess(self._handle)
 		if not startSuspended:
 			log.debug("Resuming process execution...")
