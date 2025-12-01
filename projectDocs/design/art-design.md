@@ -27,20 +27,16 @@ ART uses a one-addon-per-process model where each enabled addon runs in its own 
    - Hosts exactly one addon with standard permissions in normal desktop sessions
    - Runs with limited but practical permissions
    - Has network access allowed to support add-ons that require online functionality
-   - Has restricted file system access (limited to add-on's own directory)
-   - Operates within an app container for isolation from the main system
-   - Runs at low integrity level (IL_LOW)
+   - Has restricted file system access (can read the user's files / data but cannot write).
+      - Runs at low integrity level (IL_LOW)
    - Communicates with NVDA Core via secure, validated RPC channels
-   - Cannot start new processes
    - Provides a Python environment where the single addon executes
 
 3. Secure Desktop Add-on Runtime Process (SD-ART): Each addon gets its own SD-ART process in secure desktop
    - Hosts exactly one addon with highly restricted permissions in secure desktop sessions
-   - Runs with minimal permissions (no network, no clipboard, strictly limited file system access)
-   - Operates within a more restrictive app container than the regular ART
-   - Also runs at low integrity level (IL_LOW)
+   - Runs with minimal permissions (no clipboard, strictly limited file system access)
+   - Runs at low integrity level (IL_LOW)
    - Cannot create UI outside of NVDA
-   - Cannot start new processes
    - Restricted permissions for secure desktop sessions
 
 ### Process Communication
@@ -88,13 +84,11 @@ Inter-process communication uses Pyro5 RPC. Security measures include:
 
 3. Error Handling:
    - If an addon crashes, only its runtime process is affected
-   - If a runtime process crashes, NVDA Core detects this and can restart just that process
    - Other addons continue running unaffected
-   - During runtime restart, only the crashed addon is reloaded
 
 4. Secure Desktop Transitions:
-   - When transitioning to a secure desktop, NVDA Core launches SD-ART processes for each addon
-   - Each addon gets its own SD-ART process with more restrictive permissions
+   - When transitioning to a secure desktop, NVDA Core launches ART processes for each addon
+   - Each addon gets its own ART process with more restrictive permissions
    - Addons are isolated from each other even in secure desktop
 
 ### Security Boundaries
@@ -103,8 +97,7 @@ The architecture establishes multiple security boundaries:
 
 1. Process Boundary: Add-ons run in a separate process from NVDA Core
 2. Integrity Level Boundary: Add-on runtimes operate at a lower integrity level than NVDA Core
-3. App Container Boundary: Add-on runtimes run within app containers that restrict their capabilities
-4. File System Boundary: Add-ons can only access their own directories
+4. File System Boundary: Add-ons cannot write to system locations. Add-ons cannot read or write to any users' files / data, though read access to the user's own files / data can be turned on if wanted.
 5. Network Boundary: SD-ART has no network access, ART has network access
 
 These boundaries protect NVDA Core from potentially malicious or unstable add-ons.
@@ -180,10 +173,9 @@ ARTManager Class:
 - Global Access: Provides `getARTManager()` for system-wide access to ART services
 
 ARTAddonProcess Class:
-- Subprocess Management: Uses `SubprocessManager` with `ProcessConfig` for process control
+- Subprocess Management: Uses `secureProcess.SecureProcess` for configuring / creating child processes
 - JSON Handshake Protocol: Implements bi-directional communication during startup
 - Service Connection: Establishes Pyro5 proxy connections to ART services
-- Error Recovery: Handles process crashes and communication failures
 - Secure Desktop Integration: Detects and configures SD-ART mode automatically
 
 Process Configuration:
@@ -473,23 +465,6 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
         # ...
 ```
 
-Process configuration uses `CREATE_NO_WINDOW` for hidden console and pipes for communication:
-
-```python
-ART_CONFIG = ProcessConfig(
-    name="NVDA ART",
-    sourceScriptPath=Path("../source/nvda_art.pyw"),
-    builtExeName="nvda_art.exe",
-    popenFlags={
-        "creationflags": subprocess.CREATE_NO_WINDOW,
-        "bufsize": 0,
-        "stdin": subprocess.PIPE,
-        "stdout": subprocess.PIPE,
-        "stderr": subprocess.PIPE,
-    },
-)
-```
-
 Pyro5 configuration binds to loopback with msgpack serialization:
 
 ```python
@@ -521,31 +496,6 @@ for module_name, module_obj in PROXY_MODULE_REGISTRY.items():
 
 Addons can use `import config` to get the proxy implementation.
 
-## SD-ART Implementation Status
-
-SD-ART (Secure Desktop Add-on Runtime) detection is implemented but we don't enforce security restrictions yet.
-
-When NVDA launches an ART process, it detects secure desktop mode using `utils.security.isRunningOnSecureDesktop()` and passes this information via the startup handshake:
-
-```python
-# In ARTAddonProcess._startProcessWithHandshake()
-startup_data = {
-    "config": {
-        "secureDesktop": self._isRunningOnSecureDesktop(),
-    }
-}
-
-# In nvda_art.pyw
-is_secure_desktop = config.get("secureDesktop", False)
-if is_secure_desktop:
-    art_logger.info("=== SD-ART MODE: Running on Secure Desktop ===")
-os.environ["NVDA_ART_SECURE_DESKTOP"] = "1" if is_secure_desktop else "0"
-```
-
-Currently, SD-ART processes are detected and labeled but run with the same permissions as regular ART. We haven't implemented the security restrictions from the original design (no network access, restricted file system access, no clipboard access, app container technology, low integrity level, UI creation restrictions).
-
-To complete SD-ART, we need to implement app containers, integrity levels, and the planned security restrictions.
-
 ## Implementation Status
 
 ### Completed
@@ -562,7 +512,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 
 - Event forwarding from NVDA to add-ons
 - File system access controls for security boundaries
-- SD-ART security restrictions (app containers, integrity levels)
+
 
 ### Future Work
 
@@ -592,7 +542,7 @@ To complete SD-ART, we need to implement app containers, integrity levels, and t
 
 #### Process Creation
 1. ARTAddonProcess instantiation with addon spec and core service URIs
-2. Subprocess launch via `SubprocessManager` using `nvda_art.exe`
+2. Subprocess launch via `secureProcess` using `nvda_art.exe`
 3. JSON handshake initiation:
    ```json
    // NVDA Core → ART Process
@@ -634,11 +584,7 @@ Each addon runs in its own ART process with bidirectional RPC communication to N
 
 ### Add-on Runtime Hosts
 
-ART implements two security models. Regular ART allows network access but restricts file system access to the addon's directory and prevents starting new processes. SD-ART is more restrictive, blocking network access, clipboard access, UI creation outside NVDA, and desktop access. Both are designed to run with low integrity level (IL_LOW) and app container technology, though these restrictions are not yet fully implemented.
-
-### Process Security
-
-NVDA Core tracks the Process ID (PID) of each ART process it launches and maintains full control over process creation, monitoring, and termination. The current implementation relies on the operating system's process security model and controlled process creation.
+The ART runtime host processes run at low integrity, have no access to clipboard or UI created by outside processes, no write access to system locations, no access to other users' files or data, and optional read-only access to the current user's files / data.
 
 ### Communication Security
 
@@ -657,19 +603,12 @@ The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1
 - Structured Data: All RPC calls use defined data structures
 - No Code Injection: Serialization format prevents arbitrary code execution
 
-#### Access Control via Process Model
-- Process Isolation: Each addon runs in separate process with isolated memory space
-- Service Boundary: Clear separation between NVDA Core and addon code
-- Crash Isolation: Addon crashes do not affect NVDA Core or other addons
-
-
 #### Security Philosophy
 The current security model relies on:
 1. Process Isolation: Operating system process boundaries provide primary security
-2. Network Isolation: Loopback-only communication prevents external access  
-3. Authenticated Encryption: XSalsa20-Poly1305 provides message confidentiality and integrity
-4. Serialization Safety: Safe serialization prevents code injection
-5. Lifecycle Management: Controlled process creation and monitoring
+2. Authenticated Encryption: XSalsa20-Poly1305 provides message confidentiality and integrity
+3. Serialization Safety: Safe serialization prevents code injection
+4. Lifecycle Management: Controlled process creation and monitoring
 
 This provides practical security while maintaining simplicity and performance.
 
@@ -684,8 +623,3 @@ This provides practical security while maintaining simplicity and performance.
 - Each addon runs in its own isolated ART process (one-addon-per-process model)
 - Add-ons cannot directly interact with each other due to process boundaries
 - All inter-addon communication must go through NVDA Core
-
-## Future Enhancements (Post-Version 1)
-
-- Permissions
-- multiprocess runtime
