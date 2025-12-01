@@ -6,6 +6,7 @@
 from typing import (
 	List,
 	Optional,
+	cast,
 )
 
 import wx
@@ -148,17 +149,20 @@ class AddonVirtualList(
 		return str(dataItem)
 
 	def OnColClick(self, evt: wx.ListEvent):
+		from .storeDialog import AddonStoreDialog
+
 		newColIndex = evt.GetColumn()
 		log.debug(f"col clicked: {newColIndex}")
-		sel = self.Parent.columnFilterCtrl.GetSelection()
+		parent = cast(AddonStoreDialog, self.Parent)
+		sel = parent.columnFilterCtrl.GetSelection()
 		curColIndex = sel // 2
 		curReverse = sel % 2
 		if newColIndex == curColIndex:
 			newReverse = 0 if curReverse else 1
 		else:
 			newReverse = 0
-		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[newColIndex], newReverse)
-		self.Parent.columnFilterCtrl.SetSelection(newColIndex * 2 + newReverse)
+		self._addonsListVM.setSortField(self._addonsListVM.sortableFields[newColIndex], newReverse)
+		parent.columnFilterCtrl.SetSelection(newColIndex * 2 + newReverse)
 
 	def _doRefresh(self):
 		with guiHelper.autoThaw(self):

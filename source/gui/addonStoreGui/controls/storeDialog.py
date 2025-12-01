@@ -27,6 +27,7 @@ from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
 from ..viewModels.store import AddonStoreVM
+from ..viewModels.addonList import AddonListField
 from .actions import _MonoActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
@@ -363,8 +364,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
-		self.columnFilterCtrl.SetSelection(0)
-		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[0])
+		fieldIndex = self._storeVM.listVM.sortableFields.index(self._storeVM.listVM._sortByModelField)
+		self.columnFilterCtrl.SetSelection(fieldIndex * 2 + (1 if self._storeVM.listVM._reverseSort else 0))
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -382,8 +383,8 @@ class AddonStoreDialog(SettingsDialog):
 		colIndex = evt.GetSelection() // 2
 		# Descending sort should be applied for odd choices of the combo box
 		reverse = evt.GetSelection() % 2
-		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex], reverse)
-		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.sortableFields[colIndex], reverse)
+		log.debug(f"sorted by: {colIndex}; reversed: {reverse}")
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
@@ -394,7 +395,36 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
 		filterText = self.searchFilterCtrl.GetValue()
+
+		# Clear selection in the VM so the list has a single canonical source of truth.
+		self._storeVM.listVM.setSelection(None)
+		# Also clear any UI selection to avoid accumulating multiple selected rows while filtering.
+		idx = self.addonListView.GetFirstSelected()
+		while idx >= 0:
+			self.addonListView.Select(idx, on=False)
+			idx = self.addonListView.GetNextSelected(idx)
+
+		# When a search is active, reflect search relevance (descending) in the column choice.
+		if filterText and filterText.strip():
+			newSortField = AddonListField.searchRank
+			newReverse = True
+			if self._storeVM.listVM._sortByModelField != AddonListField.searchRank:
+				self._storeVM.listVM._prevSortByModelField = self._storeVM.listVM._sortByModelField
+				self._storeVM.listVM._prevReverseSort = self._storeVM.listVM._reverseSort
+		else:
+			# If cleared, revert the choice to the previously active VM sort field.
+			newSortField =  self._storeVM.listVM._prevSortByModelField
+			newReverse = self._storeVM.listVM._prevReverseSort
+
+		newIndex = self._storeVM.listVM.sortableFields.index(newSortField)
+		newReverseOffset = 1 if newReverse else 0
+		self.columnFilterCtrl.SetSelection(newIndex * 2 + newReverseOffset)
+		self._storeVM.listVM.setSortField(newSortField, newReverse)
+		log.debug(f"filter text changed: {filterText}")
+
 		self.filter(filterText)
+		if self._storeVM.listVM.getCount() > 0:
+			self._storeVM.listVM.setSelection(0)
 
 	def onEnabledFilterChange(self, evt: wx.EVT_CHOICE):
 		index = self.enabledFilterCtrl.GetCurrentSelection()

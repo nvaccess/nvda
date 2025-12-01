@@ -7,10 +7,10 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
+from functools import lru_cache
 from locale import strxfrm
 from typing import (
 	Any,
-	FrozenSet,
 	Generic,
 	List,
 	Optional,
@@ -50,13 +50,20 @@ if TYPE_CHECKING:
 class _AddonListFieldData:
 	displayString: str
 	width: int
-	hideStatuses: FrozenSet[_StatusFilterKey] = frozenset()
+	hideStatuses: frozenset[_StatusFilterKey] = frozenset()
 	"""Hide this field if the current tab filter is in hideStatuses."""
 
 
 class AddonListField(_AddonListFieldData, Enum):
 	"""An ordered enum of fields to use as columns in the add-on list."""
 
+	searchRank = (
+		# Translators: The name of a sorting option for the add-on store to sort by search relevance
+		pgettext("addonStore", "Search relevance"),
+		0,
+		# hide for all statuses, as this is only used for sorting when a search filter is applied.
+		frozenset(_StatusFilterKey),
+	)
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
@@ -211,6 +218,32 @@ class AddonListItemVM(Generic[_AddonModelT]):
 			)
 		)
 
+	@property
+	@lru_cache(maxsize=1)
+	def searchableText(self) -> str:
+		"""Extract searchable text from addon."""
+		model = self.model
+		searchableText = " ".join(
+			[
+				model.displayName,
+				model.description,
+				model.addonId,
+				isinstance(model, _AddonStoreModel) and model.publisher or "",
+				isinstance(model, _AddonManifestModel) and model.author or "",
+			]
+		)
+		return searchableText.casefold()
+
+	@lru_cache(maxsize=256)
+	def searchRank(self, searchTerm: str) -> float:
+		"""Calculate a search rank for this addon based on the filter trigrams."""
+		if not searchTerm or len(searchTerm) < 3:
+			return 1.0  # empty or too short search matches everything
+		addonSearchableText = self.searchableText
+		filterTrigrams = AddonListVM._generateTrigrams(searchTerm)
+		addonTrigrams = AddonListVM._generateTrigrams(addonSearchableText)
+		return AddonListVM._calculateTrigramSimilarity(filterTrigrams, addonTrigrams)
+
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
 
@@ -233,9 +266,11 @@ class AddonDetailsVM:
 
 
 class AddonListVM:
+	DEFAULT_SORT_FIELD = AddonListField.displayName
+
 	def __init__(
 		self,
-		addons: List[AddonListItemVM],
+		addons: list[AddonListItemVM],
 		storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
@@ -244,14 +279,16 @@ class AddonListVM:
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
 		self.selectionChanged = extensionPoints.Action()
-		self.selectedAddonId: Optional[str] = None
+		self.selectedAddonId: str | None = None
 		self.lastSelectedAddonId = self.selectedAddonId
-		self._sortByModelField: AddonListField = AddonListField.displayName
-		self._filterString: Optional[str] = None
+		self._sortByModelField: AddonListField = self.DEFAULT_SORT_FIELD
+		self._prevSortByModelField: AddonListField = self._sortByModelField
+		self._filterString: str | None = None
 		self._reverseSort: bool = False
+		self._prevReverseSort: bool = self._reverseSort
 
 		self._setSelectionPending = False
-		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
+		self._addonsFilteredOrdered: list[str] = self._getFilteredSortedIds()
 		self._validate(
 			sortField=self._sortByModelField,
 			selectionIndex=self.getSelectedIndex(),
@@ -261,8 +298,12 @@ class AddonListVM:
 		self.resetListItems(addons)
 
 	@property
-	def presentedFields(self) -> List[AddonListField]:
+	def presentedFields(self) -> list[AddonListField]:
 		return [c for c in AddonListField if self._storeVM._filteredStatusKey not in c.hideStatuses]
+
+	@property
+	def sortableFields(self) -> list[AddonListField]:
+		return [AddonListField.searchRank] + self.presentedFields
 
 	def _itemDataUpdated(self, addonListItemVM: AddonListItemVM):
 		addonId: str = addonListItemVM.Id
@@ -391,7 +432,7 @@ class AddonListVM:
 	@property
 	def _columnSortChoices(self) -> list[str]:
 		columnChoices = []
-		for c in self.presentedFields:
+		for c in self.sortableFields:
 			columnChoices.append(
 				pgettext(
 					"addonStore",
@@ -414,35 +455,46 @@ class AddonListVM:
 			)
 		return columnChoices
 
+	TRIGRAM_SEARCH_THRESHOLD = 0.3
+
+	@staticmethod
+	@lru_cache(maxsize=256)
+	def _generateTrigrams(text: str) -> frozenset[str]:
+		"""Generate character trigrams from text."""
+		normalized = text.casefold().strip()
+		trigrams = set()
+		assert len(normalized) >= 3
+		for i in range(len(normalized) - 2):
+			trigrams.add(normalized[i : i + 3])
+		return frozenset(trigrams)
+
+	@staticmethod
+	def _calculateTrigramSimilarity(searchTrigrams: frozenset[str], textTrigrams: frozenset[str]) -> float:
+		"""Calculate similarity score between two sets of trigrams."""
+		if not searchTrigrams:
+			return 1.0  # Empty search matches everything
+		matches = len(searchTrigrams & textTrigrams)
+		return matches / len(searchTrigrams)
+
 	def _getFilteredSortedIds(self) -> list[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
+		def _getSortFieldData(listItemVM: AddonListItemVM[_AddonGUIModel]) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
-					listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
-					return listItemVM.model.submissionTime
+					addonStoreListItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
+					return addonStoreListItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
-				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
-				return listItemVM.model.installDate
+				addonManifestListItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
+				return addonManifestListItemVM.model.installDate
+			if self._sortByModelField == AddonListField.searchRank:
+				return listItemVM.searchRank(self._filterString or "")
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
-
-		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
-			term = term.casefold()
-			model = detailsVM.model
-			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
-			inAuthor = isinstance(model, _AddonManifestModel) and term in model.author.casefold()
-			return (
-				term in model.displayName.casefold()
-				or term in model.description.casefold()
-				or term in model.addonId.casefold()
-				or inPublisher
-				or inAuthor
-			)
 
 		filtered = (
 			vm
 			for vm in self._addons.values()
-			if self._filterString is None or _containsTerm(vm, self._filterString)
+			if self._filterString is None
+			or vm.searchRank(self._filterString) >= self.TRIGRAM_SEARCH_THRESHOLD
 		)
 		filteredSorted = list(
 			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
