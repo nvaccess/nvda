@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
 # Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 import ctypes
@@ -635,6 +635,20 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return _("spelling: {text}").format(text=text)
 
 
+class WordDocumentFootnoteQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(self, item):
+		return item.reference
+
+	@property
+	def label(self):
+		number = self.collectionItem.index
+		text = self.collectionItem.range.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {number} will be replaced with the footnote number.
+		# {text} will be replaced with the text in the foot note.
+		return _("footnote reference {number}: {text}").format(number=number, text=text)
+
+
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -751,6 +765,13 @@ class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIt
 
 	def collectionFromRange(self, rangeObj):
 		return rangeObj.spellingErrors
+
+
+class FootnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass = WordDocumentFootnoteQuickNavItem
+
+	def collectionFromRange(self, rangeObj):
+		return rangeObj.footnotes
 
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
@@ -1523,6 +1544,14 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 				rangeObj,
 				includeCurrent,
 			).iterate()
+		elif nodeType == "reference":
+			return FootnoteWinWordCollectionQuicknavIterator(
+				nodeType,
+				self,
+				direction,
+				rangeObj,
+				includeCurrent,
+			).iterate()
 		elif nodeType == "graphic":
 			return GraphicWinWordCollectionQuicknavIterator(
 				nodeType,
@@ -2161,4 +2190,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("error", _("&Errors")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("reference", _("&References")),
 	)

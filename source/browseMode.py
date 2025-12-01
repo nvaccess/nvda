@@ -1221,6 +1221,19 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("No previous different style text"),
 )
+qn(
+	"reference",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next reference"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next reference"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous reference"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous reference"),
+	readUnit=textInfos.UNIT_WORD,
+)
 del qn
 
 

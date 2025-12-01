@@ -1,7 +1,7 @@
-# This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
-# See the file COPYING for more details.
-# Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
+# Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot, Leonard de RUijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (
 	Optional,
@@ -74,6 +74,9 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("error", _("&Errors")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("reference", _("&References")),
 	)
 
 
@@ -97,6 +100,22 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		else:
 			# Translators: The general label shown for track changes
 			return _("track change: {text}").format(text=text)
+
+
+class FootnoteUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues = {UIAHandler.AnnotationType_Footnote}
+
+	@property
+	def label(self):
+		text = next(
+			f.field["content"]
+			for f in self.textInfo.getTextWithFields()
+			if isinstance(f, textInfos.FieldCommand) and "content" in f.field
+		)
+		# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the name of the reference.
+		return _("reference: {text}").format(text=text)
 
 
 def getCommentInfoFromPosition(position):
@@ -223,7 +242,13 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
-	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+	def _getControlFieldForUIAObject(
+		self,
+		obj: "WordDocumentNode",
+		isEmbedded=False,
+		startOfNode=False,
+		endOfNode=False,
+	):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc)
 		automationId = obj.UIAAutomationId
 		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
@@ -587,6 +612,14 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 				direction=direction,
 			)
 			return browseMode.mergeQuickNavItemIterators([comments, revisions], direction)
+		elif nodeType == "reference":
+			return UIATextAttributeQuicknavIterator(
+				FootnoteUIATextInfoQuickNavItem,
+				nodeType,
+				self,
+				pos,
+				direction=direction,
+			)
 		return super(WordBrowseModeDocument, self)._iterNodesByType(nodeType, direction=direction, pos=pos)
 
 	ElementsListDialog = ElementsListDialog
@@ -616,7 +649,7 @@ class WordDocumentNode(UIA):
 		if self.mathMl:
 			return controlTypes.Role.MATH
 		role = super(WordDocumentNode, self).role
-		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
+		# Some elements have a role of unknown. Force them to editableText so that their text is presented correctly
 		if role == controlTypes.Role.UNKNOWN:
 			role = controlTypes.Role.EDITABLETEXT
 		return role
