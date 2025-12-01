@@ -643,7 +643,7 @@ class WordDocumentFootnoteQuickNavItem(WordDocumentCollectionQuickNavItem):
 	def label(self):
 		number = self.collectionItem.index
 		text = self.collectionItem.range.text
-		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# Translators: The label shown for a footnote reference in the NVDA Elements List dialog in Microsoft Word.
 		# {number} will be replaced with the footnote number.
 		# {text} will be replaced with the text in the foot note.
 		return _("footnote reference {number}: {text}").format(number=number, text=text)
