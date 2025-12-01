@@ -102,20 +102,46 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 			return _("track change: {text}").format(text=text)
 
 
+def getFootnoteFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
+	"""
+	Fetches the footnote for the reference located at the given position in a word document.
+	:param position: a TextInfo representing the span of the comment in the word document.
+	@return: The footnote NVDAObject, if any
+	"""
+	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+	if not val:
+		return None
+	try:
+		UIAElementArray = val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+	except COMError:
+		return None
+	for index in range(UIAElementArray.length):
+		UIAElement = UIAElementArray.getElement(index)
+		UIAElement = UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+		# Use Annotation Type Comment if available
+		if typeID == UIAHandler.UIA.AnnotationType_Footnote:
+			return UIA(UIAElement=UIAElement)
+	return None
+
+
 class FootnoteUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
 	wantedAttribValues = {UIAHandler.AnnotationType_Footnote}
 
 	@property
 	def label(self):
-		text = next(
-			f.field["content"]
-			for f in self.textInfo.getTextWithFields()
-			if isinstance(f, textInfos.FieldCommand) and "content" in f.field
-		)
-		# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
-		# {text} will be replaced with the name of the reference.
-		return _("reference: {text}").format(text=text)
+		obj = getFootnoteFromPosition(self.textInfo)
+		if obj:
+			text = obj.UIATextPattern.DocumentRange.GetText(-1).strip()
+			# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
+			# {text} will be replaced with the text of the reference.
+			return _("footnote reference: {text}").format(text=text)
+		else:
+			name = self.textInfo._rangeObj.GetEnclosingElement().CurrentName
+			# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
+			# {name} will be replaced with the name of the reference.
+			return _("reference: {name}").format(name=name)
 
 
 def getCommentInfoFromPosition(position):
