@@ -35,21 +35,17 @@ def readToStdout(stream):
 
 def main():
 	parser = argparse.ArgumentParser(description="Launch a process with a restricted token")
-	parser.add_argument(
-		"-il", "--integrity-level",
-		choices=integrityLevels.keys(),
-		help="Integrity level for the restricted token",
-		default=None
-	)
+	parser.add_argument("-il", "--integrity-level", choices=integrityLevels.keys(), help="Integrity level for the restricted token", default=None)
 	parser.add_argument("-r", "--restrict-sids", help="Restricted SIDs", action="store_true")
+	parser.add_argument("-ru", "--retain-user-in-restricted-token", help="Retain user SID in restricted token", action="store_true")
 	parser.add_argument("-p", "--remove-privileges", help="Remove privileges from the token", action="store_true")
-	parser.add_argument("-d", "--disable-dangerous-sids", help="Disable dangerous SIDs in the token", action="store_true")
 	parser.add_argument("-s", "--service-logon", help="Use the LocalService account to create the token", action="store_true")
 	parser.add_argument("-td", "--temp-desktop", help="Create a temporary desktop for the process", action="store_true")
 	parser.add_argument("-tw", "--temp-window-station", help="Create a temporary window station for the process", action="store_true")
+	parser.add_argument("-he", "--hide-critical-error-dialogs", help="Hide critical error dialogs in the launched process", action="store_true")
+	parser.add_argument("-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true")
 	parser.add_argument("-b", "--block", help="Wait for the launched process to exit", action="store_true")
 	parser.add_argument("command", nargs=argparse.REMAINDER, help="Command to execute with restricted token")
-	parser.add_argument("-he", "--hide-critical-error-dialogs", help="Hide critical error dialogs in the launched process", action="store_true")
 	args = parser.parse_args()
 	p = secureProcess.SecurePopen(
 		args.command,
@@ -58,14 +54,15 @@ def main():
 		stderr=subprocess.STDOUT,
 		integrityLevel=args.integrity_level,
 		removePrivileges=args.remove_privileges,
-		allowUser=not args.restrict_sids,
-		disableDangerousSids=args.disable_dangerous_sids,
+		restrictToken=args.restrict_sids,
+		retainUserInRestrictedToken=args.retain_user_in_restricted_token,
 		runAsLocalService=args.service_logon,
 		isolateWindowStation=args.temp_window_station,
 		isolateDesktop=args.temp_desktop,
 		killOnDelete=True,
 		startSuspended=True,
 		hideCriticalErrorDialogs=args.hide_critical_error_dialogs,
+		applyUIRestrictions=args.ui_restrictions,
 	)
 	print(f"Launched process PID: {p.pid}\n")
 	input("Press Enter to resume the process...")
