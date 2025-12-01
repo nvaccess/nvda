@@ -92,7 +92,7 @@ def getRawGithubURLForPath(filePath: str) -> str:
 def preprocessMarkdownLines(mdLines):
 	for mdLine in mdLines:
 		# #18982: Remove markdown lint comments completely - not needed for intermediate markdown or final html.
-		mdLine = re_inlineMarkdownLintComment.sub(r'\1\2', mdLine)
+		mdLine = re_inlineMarkdownLintComment.sub(r"\1\2", mdLine)
 		yield mdLine
 
 
@@ -273,7 +273,7 @@ def generateXliff(
 		for lineNo, (mdLine, skelLine) in enumerate(
 			zip_longest(
 				preprocessMarkdownLines(mdFile.readlines()),
-				skelContent.splitlines(keepends=True)
+				skelContent.splitlines(keepends=True),
 			),
 			start=1,
 		):
@@ -503,7 +503,7 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 				preprocessMarkdownLines(file1.readlines()),
 				preprocessMarkdownLines(file2.readlines()),
 			),
-			start=1
+			start=1,
 		):
 			line1 = line1.rstrip()
 			line2 = line2.rstrip()
