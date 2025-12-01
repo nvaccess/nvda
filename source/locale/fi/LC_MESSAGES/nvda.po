@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 03:53+0000\n"
-"PO-Revision-Date: 2025-11-24 00:18\n"
+"POT-Creation-Date: 2025-11-27 00:16+0000\n"
+"PO-Revision-Date: 2025-12-01 00:21\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -13859,13 +13859,13 @@ msgstr "Estä mui&den kuin näppäinkomentojen pääsy asiakirjaan"
 #: gui\settingsDialogs.py:2718
 msgctxt "math"
 msgid "Math"
-msgstr "Matemaattinen"
+msgstr "Matemaattinen sisältö"
 
 #. Translators: The description of the math settings panel.
 #: gui\settingsDialogs.py:2723
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
-msgstr "Seuraavat asetukset ohjaavat matemaattisen sisällön esittämistä."
+msgstr "Seuraavat asetukset vaikuttavat matemaattisen sisällön esittämiseen."
 
 #. Translators: options for Copy math to clipboard as -- speech text
 #: gui\settingsDialogs.py:2795 mathPres\MathCAT\preferences.py:139
@@ -13877,7 +13877,7 @@ msgstr "Puhe"
 #: gui\settingsDialogs.py:2802
 msgctxt "math"
 msgid "Impairment"
-msgstr "Vammaisuus"
+msgstr "Vamma"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2814
@@ -13931,13 +13931,13 @@ msgstr "Kemiallisten kaavojen puhe"
 #: gui\settingsDialogs.py:2909
 msgctxt "math"
 msgid "Navigation"
-msgstr "Navigaatio"
+msgstr "Navigointi"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
 #: gui\settingsDialogs.py:2916
 msgctxt "math"
 msgid "Navigation mode to use when beginning to navigate an equation"
-msgstr "Navigointitila siirryttäessä matemaattiseen sisältöön"
+msgstr "Navigointitila lausekkeeseen siirryttäessä"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2928
@@ -13986,7 +13986,7 @@ msgstr "Pistekirjoitus"
 #: gui\settingsDialogs.py:2996
 msgctxt "math"
 msgid "Braille math code for refreshable displays"
-msgstr "Matematiikan pistekirjoitusstandardi"
+msgstr "Matemaattisen sisällön pistekirjoitusstandardi"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 #: gui\settingsDialogs.py:3007
@@ -15072,7 +15072,7 @@ msgstr "Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen kkäyt
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5982
 msgid "Privacy and Security"
-msgstr "Tietosuoja ja turvallisuus"
+msgstr "Tietosuoja ja suojaus"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -15083,12 +15083,12 @@ msgstr "Näyttöverho"
 #. Translators: option to enable screen curtain in the privacy and security settings panel
 #: gui\settingsDialogs.py:6000
 msgid "Make screen black (immediate effect)"
-msgstr "Pimennä ruutu (vaikuttaa välittömästi)"
+msgstr "Pimennä näyttö (vaikuttaa heti)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 #: gui\settingsDialogs.py:6023
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "T&oista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä"
+msgstr "T&oista merkkiääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä"
 
 #. Translators: This is the label for the NVDA settings dialog.
 #: gui\settingsDialogs.py:6098
@@ -15488,7 +15488,7 @@ msgstr "T&oiminnot"
 #: gui\addonStoreGui\controls\details.py:146
 msgctxt "addonStore"
 msgid "&Other Details:"
-msgstr "&Lisätiedot:"
+msgstr "&Muut tiedot:"
 
 #. Translators: Header (usually the add-on name) when multiple add-ons are selected.
 #. In the add-on store dialog.
@@ -15570,25 +15570,25 @@ msgstr "Lisenssi:"
 #: gui\addonStoreGui\controls\details.py:327
 msgctxt "addonStore"
 msgid "License URL:"
-msgstr "Lisenssin URL-osoite:"
+msgstr "Lisenssin osoite:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:333
 msgctxt "addonStore"
 msgid "Download URL:"
-msgstr "Lataus-URL:"
+msgstr "Latausosoite:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:339
 msgctxt "addonStore"
 msgid "Source URL:"
-msgstr "Lähdekoodin URL:"
+msgstr "Lähdekoodin osoite:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:346
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr "Arvostelujen URL:"
+msgstr "Arvostelujen osoite:"
 
 #. Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:354
@@ -16254,25 +16254,25 @@ msgstr "Matemaattisen sisällön vuorovaikutusta ei tueta."
 #: mathPres\MathCAT\MathCAT.py:85
 msgctxt "math"
 msgid "Error in starting navigation of math."
-msgstr "Virhe matemaattisen yhtälön navigoinnin aloittamisessa."
+msgstr "Virhe matemaattisen sisällön navigoinnin aloittamisessa."
 
 #. Translators: this message alerts users to an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:100
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr "Virhe matemaattisen yhtälön näyttämisessä pistekirjoituksella: katso tarkemmat tiedot NVDA:n virhelokista"
+msgstr "Virhe matemaattisen sisällön näyttämisessä pistekirjoituksella: katso tarkemmat tiedot NVDA:n virhelokista"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:164
 msgctxt "math"
 msgid "Error in navigating math"
-msgstr "Virhe matemaattisen yhtälön navigoinnissa"
+msgstr "Virhe matemaattisen sisällön navigoinnissa"
 
 #. Translators: this message alerts users to an error brailling math.
 #: mathPres\MathCAT\MathCAT.py:184
 msgctxt "math"
 msgid "Error in brailling math"
-msgstr "Virhe matemaattisen yhtälön näyttämisessä pistekirjoituksella"
+msgstr "Virhe matemaattisen sisällön näyttämisessä pistekirjoituksella"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:190
@@ -16294,19 +16294,19 @@ msgstr "kopioi muodossa "
 #: mathPres\MathCAT\MathCAT.py:338
 msgctxt "math"
 msgid "Error navigating math"
-msgstr "Virhe matemaattisen yhtälön navigoinnissa"
+msgstr "Virhe matemaattisen sisällön navigoinnissa"
 
 #. Translators: this message reports when invalid math is found.
 #: mathPres\MathCAT\MathCAT.py:361
 msgctxt "math"
 msgid "Invalid math formatting found"
-msgstr "Löytyi virheellinen matemaattisen yhtälön muotoilu"
+msgstr "Löytyi virheellinen matemaattisen sisällön muotoilu"
 
 #. Translators: this message reports an error in speaking math.
 #: mathPres\MathCAT\MathCAT.py:388
 msgctxt "math"
 msgid "Error in speaking math."
-msgstr "Virhe matemaattisen yhtälön puhumisessa."
+msgstr "Virhe matemaattisen sisällön puhumisessa."
 
 #. Translators: this message reports illegal MathML.
 #: mathPres\MathCAT\MathCAT.py:413
@@ -16318,7 +16318,7 @@ msgstr "Löytyi virheellinen MathML-merkintä."
 #: mathPres\MathCAT\MathCAT.py:420
 msgctxt "math"
 msgid "Error in brailling math."
-msgstr "Virhe matemaattisen yhtälön näyttämisessä pistekirjoituksella."
+msgstr "Virhe matemaattisen sisällön näyttämisessä pistekirjoituksella."
 
 #. Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 #. "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
@@ -16332,7 +16332,7 @@ msgstr "Käytä puheäänen kieltä (automaattinen)"
 #: mathPres\MathCAT\preferences.py:29
 msgctxt "math"
 msgid "Learning disabilities"
-msgstr "Oppimisvaikeudet"
+msgstr "Oppimisvaikeus"
 
 #. Translators: category of impairment that MathCAT supports: people who are blind
 #: mathPres\MathCAT\preferences.py:31
@@ -16371,14 +16371,14 @@ msgstr "Suppea"
 #: mathPres\MathCAT\preferences.py:69 mathPres\MathCAT\preferences.py:117
 msgctxt "math"
 msgid "Medium"
-msgstr "Keskikoko"
+msgstr "Keskitaso"
 
 #. Translators: options for speech verbosity -- "verbose" = use more words
 #. Translators: options for navigation verbosity -- "verbose" = use more words
 #: mathPres\MathCAT\preferences.py:71 mathPres\MathCAT\preferences.py:119
 msgctxt "math"
 msgid "Verbose"
-msgstr "Runsas"
+msgstr "Yksityiskohtainen"
 
 #. Translators: values for chemistry options with example speech in parenthesis
 #: mathPres\MathCAT\preferences.py:83
@@ -18798,20 +18798,20 @@ msgstr "{val:g} pisteen väli ennen kappaletta"
 #: screenCurtain\_screenCurtain.py:28
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr "Näytä varoitus aina, kun näyttöverho otetaan käyttöön"
+msgstr "Näytä varoitus, kun näyttöverho otetaan käyttöön"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:33
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr "Näyttöverhoa ei voi ottaa käyttöön sisällöntunnistuksen aikana."
+msgstr "Näyttöverhoa ei voi ottaa käyttöön sisällöntunnistuksen aikana"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
 #: screenCurtain\_screenCurtain.py:60
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
-msgstr "Näyttöverhon käyttöön ottaminen pimentää ruudun kokonaan. Varmista ennen jatkamista, että voit käyttää tietokonetta ilman näyttöä. \n\n"
+msgstr "Näyttöverhon käyttöönotto pimentää näytön kokonaan. Varmista ennen jatkamista, että voit käyttää tietokonetta ilman näyttöä. \n\n"
 "Haluatko jatkaa?"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
