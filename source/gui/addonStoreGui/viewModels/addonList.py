@@ -230,7 +230,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 				model.addonId,
 				isinstance(model, _AddonStoreModel) and model.publisher or "",
 				isinstance(model, _AddonManifestModel) and model.author or "",
-			]
+			],
 		)
 		return searchableText.casefold()
 

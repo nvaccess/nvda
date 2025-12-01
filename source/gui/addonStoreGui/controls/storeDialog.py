@@ -413,7 +413,7 @@ class AddonStoreDialog(SettingsDialog):
 				self._storeVM.listVM._prevReverseSort = self._storeVM.listVM._reverseSort
 		else:
 			# If cleared, revert the choice to the previously active VM sort field.
-			newSortField =  self._storeVM.listVM._prevSortByModelField
+			newSortField = self._storeVM.listVM._prevSortByModelField
 			newReverse = self._storeVM.listVM._prevReverseSort
 
 		newIndex = self._storeVM.listVM.sortableFields.index(newSortField)
