@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import Generator
+from collections.abc import Iterable
 import tempfile
 import os
 import contextlib
@@ -89,7 +90,12 @@ def getRawGithubURLForPath(filePath: str) -> str:
 	return f"{RAW_GITHUB_REPO_URL}/{commitID}/{relativePath}"
 
 
-def preprocessMarkdownLines(mdLines):
+def preprocessMarkdownLines(mdLines: Iterable[str]) -> Iterable[str]:
+	"""
+	Preprocess markdown lines such as removing inline markdown lint comments.\
+	:param mdLines: The markdown lines to preprocess
+	:returns: The preprocessed markdown lines
+	"""
 	for mdLine in mdLines:
 		# #18982: Remove markdown lint comments completely - not needed for intermediate markdown or final html.
 		mdLine = re_inlineMarkdownLintComment.sub(r"\1\2", mdLine)
