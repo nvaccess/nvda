@@ -102,11 +102,11 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 			return _("track change: {text}").format(text=text)
 
 
-def getFootnoteFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
+def getReferenceFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 	"""
-	Fetches the footnote for the reference located at the given position in a word document.
+	Fetches reference (footnote/endnote) for the reference located at the given position in a word document.
 	:param position: a TextInfo representing the span of the comment in the word document.
-	@return: The footnote NVDAObject, if any
+	@return: The reference NVDAObject, if any
 	"""
 	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:
@@ -120,24 +120,31 @@ def getFootnoteFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 		UIAElement = UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.UIA.AnnotationType_Footnote:
+		if typeID in (UIAHandler.UIA.AnnotationType_Footnote, UIAHandler.UIA.AnnotationType_Endnote):
 			return UIA(UIAElement=UIAElement)
 	return None
 
 
-class FootnoteUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+class ReferenceUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_Footnote}
+	wantedAttribValues = {UIAHandler.AnnotationType_Footnote, UIAHandler.AnnotationType_Endnote}
 
 	@property
 	def label(self):
-		obj = getFootnoteFromPosition(self.textInfo)
+		obj = getReferenceFromPosition(self.textInfo)
 		if obj:
 			text = obj.UIATextPattern.DocumentRange.GetText(-1).strip()
-			# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
-			# {text} will be replaced with the text of the reference.
-			return _("footnote reference: {text}").format(text=text)
-		else:
+			match obj.UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId):
+				case UIAHandler.UIA.AnnotationType_Footnote:
+					# Translators: The label shown for a footnote in the NVDA Elements List dialog in Microsoft Word.
+					# {text} will be replaced with the text of the footnote.
+					return _("footnote reference: {text}").format(text=text)
+				case UIAHandler.UIA.AnnotationType_Endnote:
+					# Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
+					# {text} will be replaced with the text of the endnote.
+					return _("endnote reference: {text}").format(text=text)
+				case _:
+					log.error("Unknown reference annotation type")
 			name = self.textInfo._rangeObj.GetEnclosingElement().CurrentName
 			# Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 			# {name} will be replaced with the name of the reference.
@@ -640,7 +647,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return browseMode.mergeQuickNavItemIterators([comments, revisions], direction)
 		elif nodeType == "reference":
 			return UIATextAttributeQuicknavIterator(
-				FootnoteUIATextInfoQuickNavItem,
+				ReferenceUIATextInfoQuickNavItem,
 				nodeType,
 				self,
 				pos,

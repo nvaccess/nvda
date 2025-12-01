@@ -635,10 +635,12 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return _("spelling: {text}").format(text=text)
 
 
-class WordDocumentFootnoteQuickNavItem(WordDocumentCollectionQuickNavItem):
+class WordDocumentReferenceQuickNavItem(WordDocumentCollectionQuickNavItem):
 	def rangeFromCollectionItem(self, item):
 		return item.reference
 
+
+class WordDocumentFootnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 	@property
 	def label(self):
 		number = self.collectionItem.index
@@ -647,6 +649,17 @@ class WordDocumentFootnoteQuickNavItem(WordDocumentCollectionQuickNavItem):
 		# {number} will be replaced with the footnote number.
 		# {text} will be replaced with the text in the foot note.
 		return _("footnote reference {number}: {text}").format(number=number, text=text)
+
+
+class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
+	@property
+	def label(self):
+		number = self.collectionItem.index
+		text = self.collectionItem.range.text
+		# Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
+		# {number} will be replaced with the footnote number.
+		# {text} will be replaced with the text in the foot note.
+		return _("endnote reference {number}: {text}").format(number=number, text=text)
 
 
 class WinWordCollectionQuicknavIterator(object):
@@ -772,6 +785,13 @@ class FootnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterato
 
 	def collectionFromRange(self, rangeObj):
 		return rangeObj.footnotes
+
+
+class EndnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass = WordDocumentEndnoteQuickNavItem
+
+	def collectionFromRange(self, rangeObj):
+		return rangeObj.Endnotes
 
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
@@ -1545,13 +1565,21 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 				includeCurrent,
 			).iterate()
 		elif nodeType == "reference":
-			return FootnoteWinWordCollectionQuicknavIterator(
+			footnotes = FootnoteWinWordCollectionQuicknavIterator(
 				nodeType,
 				self,
 				direction,
 				rangeObj,
 				includeCurrent,
 			).iterate()
+			endnotes = EndnoteWinWordCollectionQuicknavIterator(
+				nodeType,
+				self,
+				direction,
+				rangeObj,
+				includeCurrent,
+			).iterate()
+			return browseMode.mergeQuickNavItemIterators([footnotes, endnotes], direction)
 		elif nodeType == "graphic":
 			return GraphicWinWordCollectionQuicknavIterator(
 				nodeType,

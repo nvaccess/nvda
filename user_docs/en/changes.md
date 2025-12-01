@@ -35,7 +35,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
-* Added references (e.g. to footnotes) to the Microsoft Word elements list.
+* Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
 This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
 
 ### Changes
