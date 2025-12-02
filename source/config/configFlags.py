@@ -13,6 +13,7 @@ the default value.
 
 from typing import TYPE_CHECKING
 from enum import unique, verify, CONTINUOUS
+from logHandler import Logger
 from utils.displayString import (
 	DisplayStringFlag,
 	DisplayStringIntEnum,
@@ -405,4 +406,33 @@ class RemoteServerType(DisplayStringFlag):
 			RemoteServerType.EXISTING: pgettext("remote", "Use existing"),
 			# Translators: Use NVDA as the Remote control server
 			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
+		}
+
+
+class LoggingLevel(DisplayStringIntEnum):
+	"""Enumeration containing the possible logging levels.
+
+	Use LoggingLevel.MEMBER.value to compare with the config;
+	use LoggingLevel.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = Logger.OFF
+	INFO = Logger.INFO
+	DEBUGWARNING = Logger.DEBUGWARNING
+	IO = Logger.IO
+	DEBUG = Logger.DEBUG
+
+	@property
+	def _displayStringLabels(self) -> dict[int, str]:
+		return {
+			# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+			self.OFF: _("disabled"),
+			# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
+			self.INFO: _("info"),
+			# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
+			self.DEBUGWARNING: _("debug warning"),
+			# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
+			self.IO: _("input/output"),
+			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
+			self.DEBUG: _("debug"),
 		}
