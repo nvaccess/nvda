@@ -74,6 +74,7 @@ from config.configFlags import (
 	ShowMessages,
 	TetherTo,
 	TypingEcho,
+	LoggingLevel,
 )
 from logHandler import log
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
@@ -5986,17 +5987,22 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			# Translators: The label for a setting in privacy and security settings to select NVDA's logging level
 			_("L&ogging level:"),
 			wx.Choice,
-			choices=[name for level, name in self._LOG_LEVELS],
+			choices=[level.displayString for level in LoggingLevel],
 		)
 		self.bindHelpEvent("GeneralSettingsLogLevel", self._logLevelCombo)
 		if logHandler.isLogLevelForced():
 			self._logLevelCombo.Disable()
 		curLevel = log.getEffectiveLevel()
-		for index, (level, name) in enumerate(self._LOG_LEVELS):
-			if level == curLevel:
-				self._logLevelCombo.SetSelection(index)
-				break
-		else:
+		try:
+			self._logLevelCombo.SetSelection(
+				next(
+					filter(
+						lambda indexAndLevel: indexAndLevel[1] == curLevel,
+						enumerate(LoggingLevel.__members__.values()),
+					)
+				)[0]
+			)
+		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
 
 		if updateCheck:
@@ -6017,7 +6023,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 		if not logHandler.isLogLevelForced():
 			config.conf["general"]["loggingLevel"] = logging.getLevelName(
-				self._LOG_LEVELS[self._logLevelCombo.GetSelection()][0],
+				list(LoggingLevel)[self._logLevelCombo.GetSelection()]
 			)
 			logHandler.setLogLevelFromConfig()
 
