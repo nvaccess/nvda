@@ -376,7 +376,7 @@ addTable("lt-6dot.utb", _("Lithuanian 6 dot"), inputForLangs={"lt"}, outputForLa
 addTable("Lv-Lv-g1.utb", _("Latvian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ml-in-g1.utb", _("Macedonian grade 1"))
+addTable("mk-g1.utb", _("Macedonian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ml-in-g1.utb", _("Malayalam grade 1"))
