@@ -1,10 +1,12 @@
 from enum import Enum
 import ctypes
 
+
 class filter(Enum):
 	NORMAL = "normal"
 	GREYSCALE = "greyscale"
 	INVERTED = "inverted"
+
 
 class filterMatrix(Enum):
 	NORMAL = (ctypes.c_float * 25)(

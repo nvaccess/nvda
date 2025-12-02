@@ -1,12 +1,13 @@
-from magnifier.magnifier import NVDAMagnifier
+from magnifier.magnifier import Magnifier, MagnifierType
 from magnifier.utils.mouseHandler import MouseHandler
+from magnifier.utils.filterHandler import filter
 import unittest
 from unittest.mock import MagicMock, Mock, patch, PropertyMock
 import wx
 import ctypes
 
 
-class TestNVDAMagnifier(unittest.TestCase):
+class TestMagnifier(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
 		"""Setup once for all tests."""
@@ -16,7 +17,10 @@ class TestNVDAMagnifier(unittest.TestCase):
 	def setUp(self):
 		"""Setup before each test."""
 		self.zoom = 2.0
-		self.magnifier = NVDAMagnifier(self.zoom)
+		self.filter = filter.NORMAL
+		self.magnifierType = MagnifierType.FULLSCREEN
+
+		self.magnifier = Magnifier(self.zoom, self.filter, self.magnifierType)
 		self.screenWidth = ctypes.windll.user32.GetSystemMetrics(0)
 		self.screenHeight = ctypes.windll.user32.GetSystemMetrics(1)
 
@@ -33,6 +37,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 	def testMagnifierCreation(self):
 		"""Test : Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
+		self.assertEqual(self.magnifier.filter, filter.NORMAL)
+		self.assertEqual(self.magnifier.magnifierType, MagnifierType.FULLSCREEN)
 		self.assertFalse(self.magnifier.isActive)
 		self.assertEqual(self.magnifier.lastFocusedObject, "")
 		self.assertEqual(self.magnifier.lastNVDAPosition, (0, 0))
@@ -58,6 +64,16 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 		self.magnifier.zoomLevel = 15.0  # Above max
 		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain unchanged
+
+	def testMagnifierTypeProperty(self):
+		"""Test : MagnifierType property getter and setter."""
+		self.assertEqual(self.magnifier.magnifierType, MagnifierType.FULLSCREEN)
+
+		self.magnifier.magnifierType = MagnifierType.DOCKED
+		self.assertEqual(self.magnifier.magnifierType, MagnifierType.DOCKED)
+
+		self.magnifier.magnifierType = MagnifierType.LENS
+		self.assertEqual(self.magnifier.magnifierType, MagnifierType.LENS)
 
 	def testIsActiveProperty(self):
 		"""Test : IsActive property getter and setter."""
@@ -229,7 +245,7 @@ class TestNVDAMagnifier(unittest.TestCase):
 	def testGetNvdaPosition(self):
 		"""Test : Getting NVDA position with different API responses."""
 		# Case 1: Review position successful
-		with patch("NVDAMagnifier.magnifier.api.getReviewPosition") as mock_review:
+		with patch("magnifier.magnifier.api.getReviewPosition") as mock_review:
 			mock_point = Mock()
 			mock_point.x = 300
 			mock_point.y = 400
@@ -239,8 +255,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 			self.assertEqual((x, y), (300, 400))
 
 		# Case 2: Review position fails, navigator works
-		with patch("NVDAMagnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("NVDAMagnifier.magnifier.api.getNavigatorObject") as mock_navigator:
+		with patch("magnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = (100, 150, 200, 300)
 
 				x, y = self.magnifier._getNvdaPosition()
@@ -248,8 +264,8 @@ class TestNVDAMagnifier(unittest.TestCase):
 				self.assertEqual((x, y), (200, 300))
 
 		# Case 3: Everything fails
-		with patch("NVDAMagnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("NVDAMagnifier.magnifier.api.getNavigatorObject") as mock_navigator:
+		with patch("magnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = Mock(side_effect=Exception())
 
 				x, y = self.magnifier._getNvdaPosition()
@@ -319,12 +335,12 @@ class TestNVDAMagnifier(unittest.TestCase):
 
 	def testConstants(self):
 		"""Test : Class constants are properly defined."""
-		self.assertEqual(NVDAMagnifier._ZOOM_MIN, 1.0)
-		self.assertEqual(NVDAMagnifier._ZOOM_MAX, 10.0)
-		self.assertEqual(NVDAMagnifier._ZOOM_STEP, 0.5)
-		self.assertEqual(NVDAMagnifier._TIMER_INTERVAL_MS, 20)
-		self.assertEqual(NVDAMagnifier._MARGIN_BORDER, 50)
+		self.assertEqual(Magnifier._ZOOM_MIN, 1.0)
+		self.assertEqual(Magnifier._ZOOM_MAX, 10.0)
+		self.assertEqual(Magnifier._ZOOM_STEP, 0.5)
+		self.assertEqual(Magnifier._TIMER_INTERVAL_MS, 20)
+		self.assertEqual(Magnifier._MARGIN_BORDER, 50)
 
 		# Screen dimensions should be positive integers
-		self.assertGreater(NVDAMagnifier._SCREEN_WIDTH, 0)
-		self.assertGreater(NVDAMagnifier._SCREEN_HEIGHT, 0)
+		self.assertGreater(Magnifier._SCREEN_WIDTH, 0)
+		self.assertGreater(Magnifier._SCREEN_HEIGHT, 0)

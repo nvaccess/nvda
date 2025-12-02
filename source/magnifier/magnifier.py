@@ -14,10 +14,12 @@ import api
 from .utils.mouseHandler import MouseHandler
 from .utils.filterHandler import filter
 
+
 class MagnifierType(Enum):
 	FULLSCREEN = "fullscreen"
 	DOCKED = "docked"
 	LENS = "lens"
+
 
 class Magnifier:
 	_ZOOM_MIN: float = 1.0
@@ -48,6 +50,14 @@ class Magnifier:
 	@isActive.setter
 	def isActive(self, value: bool) -> None:
 		self._isActive = value
+
+	@property
+	def magnifierType(self) -> MagnifierType:
+		return self._magnifierType
+
+	@magnifierType.setter
+	def magnifierType(self, value: MagnifierType) -> None:
+		self._magnifierType = value
 
 	@property
 	def zoomLevel(self) -> float:

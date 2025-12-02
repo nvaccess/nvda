@@ -19,22 +19,21 @@ class FullScreenMode(Enum):
 	BORDER = "border"
 	RELATIVE = "relative"
 
+
 class FullScreenMagnifier(Magnifier):
 	def __init__(
 		self,
 		zoomLevel: float = 2.0,
 		fullscreenMode: FullScreenMode = FullScreenMode.CENTER,
 		filter: filter = filter.NORMAL,
-		magnifierType = MagnifierType.FULLSCREEN,
-
+		magnifierType=MagnifierType.FULLSCREEN,
 	):
-		super().__init__(zoomLevel=zoomLevel, filter = filter, magnifierType=magnifierType)
+		super().__init__(zoomLevel=zoomLevel, filter=filter, magnifierType=magnifierType)
 		self._fullscreenMode = fullscreenMode
 		self._currentCoordinates: tuple[int, int] = (0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._startMagnifier()
 		self._applyFilter()
-
 
 	@property
 	def fullscreenMode(self) -> FullScreenMode:
@@ -55,7 +54,9 @@ class FullScreenMagnifier(Magnifier):
 	def _startMagnifier(self) -> None:
 		"""Start the Fullscreen magnifier using windows DLL."""
 		super()._startMagnifier()
-		log.info(f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter} and fullscreen mode {self.fullscreenMode}")
+		log.info(
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter} and fullscreen mode {self.fullscreenMode}"
+		)
 		self._loadMagnifierApi()
 		self._startTimer(self._updateMagnifier)
 
@@ -158,7 +159,6 @@ class FullScreenMagnifier(Magnifier):
 		if self._fullscreenMode == FullScreenMode.RELATIVE:
 			return self._relativePos(x, y)
 		elif self._fullscreenMode == FullScreenMode.BORDER:
-			# For border mode, use the current position as reference
 			return self._borderPos(x, y)
 		else:  # CENTER mode
 			return coordinates
@@ -238,17 +238,16 @@ class FullScreenMagnifier(Magnifier):
 		return self.lastScreenPosition
 
 	def _startSpotlight(self) -> None:
-		"""Launch Spotlight from Fullscreen class
-		"""
+		"""Launch Spotlight from Fullscreen class"""
 		log.info(f"Launching spotlight mode from fullscreen magnifier with mode {self._fullscreenMode}")
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
 	def _stopSpotlight(self) -> None:
-		"""Stop and destroy Spotlight from Fullscreen class
-		"""
+		"""Stop and destroy Spotlight from Fullscreen class"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
+
 
 class SpotlightManager:
 	def __init__(self, fullscreenMagnifier: FullScreenMagnifier):
@@ -273,6 +272,8 @@ class SpotlightManager:
 			self._fullscreenMagnifier._SCREEN_HEIGHT // 2,
 		)
 
+		# Save the current mode for zoom back
+		self._originalMode = self._fullscreenMagnifier._fullscreenMode
 		self._currentCoordinates = startCoords
 		self._animateZoom(1.0, centerScreen, self._startMouseMonitoring)
 
@@ -323,16 +324,27 @@ class SpotlightManager:
 	def _checkMouseIdle(self) -> None:
 		currentMousePosition = wx.GetMousePosition()
 		if currentMousePosition == self._lastMousePosition:
-			self._currentCoordinates = (
-				self._fullscreenMagnifier._SCREEN_WIDTH // 2,
-				self._fullscreenMagnifier._SCREEN_HEIGHT // 2,
-			)
-			endCoordinates = self._fullscreenMagnifier._getCoordinatesForMode(self._lastMousePosition)
-
-			self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
+			self.zoomBack()
 		else:
+			# Mouse moved, continue monitoring
 			self._lastMousePosition = currentMousePosition
+			self._currentCoordinates = currentMousePosition
 			self._timer = wx.CallLater(1500, self._checkMouseIdle)
+
+	def zoomBack(self) -> None:
+		"""Zoom back to mouse position"""
+		mouseX, mouseY = wx.GetMousePosition()
+
+		if self._originalMode == FullScreenMode.RELATIVE:
+			savedZoom = self._fullscreenMagnifier.zoomLevel
+			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
+			endCoordinates = self._fullscreenMagnifier._relativePos(mouseX, mouseY)
+			self._fullscreenMagnifier.zoomLevel = savedZoom
+		else:
+			endCoordinates = (mouseX, mouseY)
+			self._fullscreenMagnifier.lastScreenPosition = endCoordinates
+
+		self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
 
 	def _computeAnimationSteps(
 		self,

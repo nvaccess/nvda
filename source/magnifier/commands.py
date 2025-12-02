@@ -57,6 +57,7 @@ def toggleMagnifier():
 			)
 		)
 
+
 def zoomIn():
 	"""Zoom in the magnifier."""
 	magnifier: Magnifier = getMagnifier()
@@ -70,6 +71,7 @@ def zoomIn():
 				"Zooming in with {zoomLevel} level"
 			).format(zoomLevel=magnifier.zoomLevel)
 		)
+
 
 def zoomOut():
 	"""Zoom out the magnifier."""
@@ -86,6 +88,7 @@ def zoomOut():
 			).format(zoomLevel=magnifier.zoomLevel)
 		)
 
+
 def toggleFilter():
 	magnifier: Magnifier = getMagnifier()
 	log.info(f"Toggling filter for magnifier: {magnifier}")
@@ -93,8 +96,7 @@ def toggleFilter():
 		filters = list(filter)
 		idx = filters.index(magnifier.filter)
 		magnifier.filter = filters[(idx + 1) % len(filters)]
-		if True:
-			# if magnifier.magnifierType == MagnifierType.FULLSCREEN:
+		if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
 
 		# Save to config if option is enabled
@@ -107,6 +109,7 @@ def toggleFilter():
 				"Color filter changed to {filter}"
 			).format(filter=magnifier.filter.name.lower())
 		)
+
 
 def toggleFullscreenMode():
 	"""Cycle through fullscreen focus modes (center, border, relative)."""
@@ -131,13 +134,14 @@ def toggleFullscreenMode():
 				).format(mode=newMode.name.lower())
 			)
 
+
 def startSpotlight():
 	magnifier: FullScreenMagnifier = getMagnifier()
 	if magnifierIsActiveVerify(magnifier, "trying to start spotlight mode"):
 		if magnifierIsFullscreenVerify(magnifier, "trying to start spotlight mode"):
 			log.info("trying to launch spotlight mode")
 			if magnifier._spotlightManager._spotlightIsActive:
-				log.info('found spotlight manager and it is active')
+				log.info("found spotlight manager and it is active")
 				ui.message(
 					_(
 						# Translators: Message announced when trying to start spotlight mode while it's already active
@@ -145,7 +149,7 @@ def startSpotlight():
 					)
 				)
 			else:
-				log.info('no active spotlight manager found, starting new one')
+				log.info("no active spotlight manager found, starting new one")
 				magnifier._startSpotlight()
 				ui.message(
 					_(
@@ -166,6 +170,7 @@ def magnifierIsActiveVerify(magnifier: Magnifier, action: str = "") -> bool:
 			).format(action=action)
 		)
 		return False
+
 
 def magnifierIsFullscreenVerify(magnifier: Magnifier, action: str = "") -> bool:
 	if magnifier._magnifierType == MagnifierType.FULLSCREEN:

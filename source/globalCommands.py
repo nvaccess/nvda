@@ -4968,7 +4968,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			#Translators: Describes a command.
+			# Translators: Describes a command.
 			"toggle filter of the magnifier"
 		),
 		category=SCRCAT_VISION,
