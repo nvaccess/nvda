@@ -199,7 +199,9 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * The `synthDrivers.sapi4` module has been removed.
   * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
   * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
-* The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel`: `LOG_LEVELS`, `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
+* The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
+* `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
+Use `config.configFlags.LoggingLevel` instead. (#19296)
 
 #### Deprecations
 
