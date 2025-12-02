@@ -9,6 +9,7 @@ from logHandler import log
 from enum import Enum
 from typing import Callable
 import ui
+import winUser
 import wx
 from .magnifier import Magnifier, MagnifierType
 from .utils.filterHandler import filter, filterMatrix
@@ -74,6 +75,15 @@ class FullScreenMagnifier(Magnifier):
 		x, y = self._getCoordinatesForMode(self.currentCoordinates)
 		# Always save screen position for mode continuity
 		self.lastScreenPosition = (x, y)
+
+		if self.lastFocusedObject == "nvda":
+			try:
+				from . import shouldKeepMouseCentered
+			except ImportError:
+				log.error("Failed to import shouldKeepMouseCentered from magnifier __init__")
+			else:
+				if shouldKeepMouseCentered():
+					self.moveMouseToScreen()
 		# Apply transformation
 		self._fullscreenMagnifier(x, y)
 
@@ -181,6 +191,16 @@ class FullScreenMagnifier(Magnifier):
 			return self._borderPos(x, y)
 		else:  # CENTER mode
 			return coordinates
+
+	def moveMouseToScreen(self) -> None:
+		"""
+		keep mouse in screen
+		"""
+		x, y = self.currentCoordinates
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(x, y)
+		centerX = int(left + (visibleWidth / 2))
+		centerY = int(top + (visibleHeight / 2))
+		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(self, focusX: int, focusY: int) -> tuple[int, int]:
 		"""

@@ -6026,6 +6026,12 @@ class MagnifierPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
 
+		# KEEP MOUSE CENTERED
+		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
+		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
+		self.bindHelpEvent("magnifierKeepMouseCentered", self.keepMouseCenteredCheckBox)
+
 		# SAVE SHORTCUT CHANGES
 		# Translators: The label for a checkbox to save modifications made via shortcuts
 		saveShortcutChangesText = _("Save &modifications made with shortcuts")
@@ -6110,6 +6116,16 @@ class MagnifierPanel(SettingsPanel):
 			except ValueError:
 				self.defaultFullscreenModeList.SetSelection(0)
 
+		# KEEP MOUSE CENTERED
+		try:
+			keepMouseCentered = config.conf["magnifier"]["keepMouseCentered"]
+			# Convert string to boolean if necessary
+			if isinstance(keepMouseCentered, str):
+				keepMouseCentered = keepMouseCentered.lower() in ("true", "1", "yes")
+			self.keepMouseCenteredCheckBox.SetValue(bool(keepMouseCentered))
+		except (KeyError, AttributeError):
+			self.keepMouseCenteredCheckBox.SetValue(False)
+
 		# SAVE SHORTCUT CHANGES
 		try:
 			saveShortcutChanges = config.conf["magnifier"]["saveShortcutChanges"]
@@ -6179,7 +6195,17 @@ class MagnifierPanel(SettingsPanel):
 			except ImportError:
 				pass
 
+		# KEEP MOUSE CENTERED
+
+		# Ensure config section exists
+		if "magnifier" not in config.conf:
+			config.conf["magnifier"] = {}
+
+		checkboxValue = bool(self.keepMouseCenteredCheckBox.GetValue())
+		config.conf["magnifier"]["keepMouseCentered"] = checkboxValue
+
 		# SAVE SHORTCUT CHANGES
+
 		# Ensure config section exists
 		if "magnifier" not in config.conf:
 			config.conf["magnifier"] = {}

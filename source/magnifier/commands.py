@@ -53,8 +53,8 @@ def toggleMagnifier():
 		ui.message(
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
-				"Starting NVDA Fullscreen magnifier"
-			)
+				"Starting NVDA Fullscreen magnifier with {zoomLevel} zoom level and {filter} filter"
+			).format(zoomLevel=defaultZoomLevel, filter=defaultFilter.name.lower())
 		)
 
 

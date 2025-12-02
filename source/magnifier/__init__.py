@@ -21,6 +21,7 @@ confspec = {
 		"defaultZoomLevel": "float(min=1.0, max=10.0, default=2.0)",
 		"defaultFullscreenMode": "string(default='center')",
 		"defaultFilter": "string(default='normal')",
+		"keepMouseCentered": "boolean(default=False)",
 		"saveShortcutChanges": "boolean(default=False)",
 	}
 }
@@ -151,6 +152,15 @@ def setDefaultFullscreenMode(modeStr: str):
 
 	# Save to config as string (lowercase)
 	config.conf["magnifier"]["defaultFullscreenMode"] = modeStr.lower()
+
+def shouldKeepMouseCentered():
+	"""
+	Check if mouse pointer should be kept centered in magnifier view.
+	"""
+	try:
+		return config.conf["magnifier"]["keepMouseCentered"]
+	except (KeyError, AttributeError):
+		return False
 
 
 def shouldSaveShortcutChanges():
