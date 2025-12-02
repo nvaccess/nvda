@@ -228,8 +228,8 @@ class AddonListItemVM(Generic[_AddonModelT]):
 				model.displayName,
 				model.description,
 				model.addonId,
-				isinstance(model, _AddonStoreModel) and model.publisher or "",
-				isinstance(model, _AddonManifestModel) and model.author or "",
+				model.publisher if isinstance(model, _AddonStoreModel) else "",
+				model.author if isinstance(model, _AddonManifestModel) else "",
 			],
 		)
 		return searchableText.strip()
