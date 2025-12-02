@@ -57,8 +57,8 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
   * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
-* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
-* The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings have been moved to the new Privacy and Security category of NVDA's settings. (#19296)
+* A new "Privacy and Security" category has been added to NVDA's settings dialog.
+It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
 * Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
