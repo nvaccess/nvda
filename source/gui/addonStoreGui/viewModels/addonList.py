@@ -468,12 +468,10 @@ class AddonListVM:
 
 		:param text: The text to generate trigrams from.
 		:return: A frozenset of trigrams.
-		:raises ValueError: If the text is too short to generate trigrams.
 		"""
 		normalized = strxfrm(text.strip())
 		trigrams = set()
-		if len(normalized) < AddonListVM.TRIGRAM_LENGTH:
-			raise ValueError("Text too short to generate trigrams.")
+		normalized = f"  {normalized}  "  # padding to capture leading/trailing grams
 		for i in range(len(normalized) - 2):
 			trigrams.add(normalized[i : i + AddonListVM.TRIGRAM_LENGTH])
 		return frozenset(trigrams)
