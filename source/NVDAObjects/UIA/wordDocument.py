@@ -105,7 +105,7 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 def getReferenceFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 	"""
 	Fetches reference (footnote/endnote) for the reference located at the given position in a word document.
-	:param position: a TextInfo representing the span of the comment in the word document.
+	:param position: a TextInfo representing the span of the reference in the word document.
 	@return: The reference NVDAObject, if any
 	"""
 	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
@@ -119,7 +119,7 @@ def getReferenceFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 		UIAElement = UIAElementArray.getElement(index)
 		UIAElement = UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
-		# Use Annotation Type Comment if available
+		# Use Annotation Type Footnote or Endnote if available
 		if typeID in (UIAHandler.UIA.AnnotationType_Footnote, UIAHandler.UIA.AnnotationType_Endnote):
 			return UIA(UIAElement=UIAElement)
 	return None

@@ -657,8 +657,8 @@ class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 		number = self.collectionItem.index
 		text = self.collectionItem.range.text
 		# Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
-		# {number} will be replaced with the footnote number.
-		# {text} will be replaced with the text in the foot note.
+		# {number} will be replaced with the endnote number.
+		# {text} will be replaced with the text in the footnote.
 		return _("endnote reference {number}: {text}").format(number=number, text=text)
 
 
@@ -791,7 +791,7 @@ class EndnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 	quickNavItemClass = WordDocumentEndnoteQuickNavItem
 
 	def collectionFromRange(self, rangeObj):
-		return rangeObj.Endnotes
+		return rangeObj.endnotes
 
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
