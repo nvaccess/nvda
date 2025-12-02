@@ -14,6 +14,7 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
+* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
@@ -52,10 +53,14 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
     * Added Japanese (Rokuten Kanji) Braille.
     * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
+  * Updated Unicode CLDR to [version 48](https://cldr.unicode.org/downloads/cldr-48).
+  Also added emoji localizations for Luxembourgish. (#19293, @OzancanKaratas)
+  * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
+* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
 ### Bug Fixes
 
@@ -75,6 +80,7 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 * In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)
+* In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
 
 ### Changes for Developers
 
@@ -87,12 +93,29 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Updated components
   * Licensecheck has been updated to 2025.1 (#18728, @bramd)
   * Updated sphinx to 8.1.3. (#18475)
-  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
-  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
+  * Introduced onnxruntime 1.23.2 for model inference. (#18475, #19196)
+  * Introduced onnx 1.19.1 to generate mock models for system test. (#18475, #19196)
   * Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)
-  * Updated wxPython to 4.2.3. (#19080)
+  * Updated wxPython to 4.2.4. (#19080, #19196)
   * Updated uv to 0.9.11 (#19162)
   * Updated ruff to 0.14.5 (#19162)
+  * Updated comtypes to 1.4.13. (#19196)
+  * Updated Cryptography to 46.0.3. (#19196)
+  * Updated configobj to commit `9c8a0a80`. (#19196)
+  * Updated Requests to 2.32.5. (#19196)
+  * Updated url-normalize to 2.2.1. (#19196)
+  * Updated pycaw to 20251023. (#19196)
+  * Updated nh3 to 0.3.2. (#19196)
+  * Updated crowdin-api-client to 1.24.1. (#19196)
+  * Updated Markdown to 3.10. (#19196)
+  * Updated lxml to 6.0.2. (#19196)
+  * Updated pymdown-extensions to 10.17.1. (#19196)
+  * Updated setuptools to 80.9. (#19196)
+  * Updated robotframework to 7.3.2. (#19196)
+  * Updated ia2 to commit `c9ae003`. (#19196)
+  * Updated sonic to commit `d2cdb40`. (#19196)
+  * Updated w3c-aria-practices to commit `84b921a0`. (#19196)
+  * Updated wil to commit `7cf4193`. (#19196)
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
@@ -173,6 +196,10 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
+* SAPI 4 support has been removed: (#19290)
+  * The `synthDrivers.sapi4` module has been removed.
+  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
+  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
 
 #### Deprecations
 

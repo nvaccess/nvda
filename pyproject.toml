@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools~=72.0", "wheel"]
+requires = ["setuptools~=80.9", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -22,34 +22,35 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
-	"comtypes==1.4.11",
-	"cryptography==44.0.1",
+	"comtypes==1.4.13",
+	"cryptography==46.0.3",
 	"pyserial==3.5",
-	"wxPython==4.2.3",
+	"wxPython==4.2.4",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
-	"requests==2.32.3",
-	"url-normalize==1.4.3",
+	"requests==2.32.5",
+	"url-normalize==2.2.1",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
 	"fast-diff-match-patch==2.1.0",
 	# pycaw is a Core Audio Windows Library used for sound split
-	"pycaw==20240210",
+	"pycaw==20251023",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
-	"nh3==0.2.19",
+	"nh3==0.3.2",
 	# l10nUtil requires Crowdin
-	"crowdin-api-client==1.21.0",
+	"crowdin-api-client==1.24.1",
 	# Building user documentation and the l10nUtil
-	"Markdown==3.8.2",
-	"lxml==5.3.2",
+	"Markdown==3.10",
+	"lxml==6.0.2",
 	"mdx_truly_sane_lists==1.3",
 	"markdown-link-attr-modifier==0.2.1",
 	"mdx-gh-links==0.4",
-	"pyyaml==6.0.2",
-	"pymdown-extensions==10.16.1",
+	"l2m4m==1.0.4",
+	"pyyaml==6.0.3",
+	"pymdown-extensions==10.17.1",
 	# local image caption
-	"onnxruntime==1.22.1",
-	"numpy==2.3.2",
+	"onnxruntime==1.23.2",
+	"numpy==2.3.5",
 ]
 
 [project.urls]
@@ -210,7 +211,6 @@ reportOverlappingOverload = true
 reportPrivateImportUsage = true
 reportPropertyTypeMismatch = true
 reportSelfClsParameterName = true
-reportShadowedImports = true
 reportTypeCommentUsage = true
 reportTypedDictNotRequiredAccess = true
 reportUndefinedVariable = true
@@ -301,7 +301,7 @@ package-dir = {"" = "source"}
 
 [tool.uv.sources]
 nvda-misc-deps = { workspace = true }
-configobj = { git = "https://github.com/DiffSK/configobj", rev = "8be54629ee7c26acb5c865b74c76284e80f3aa31" }
+configobj = { git = "https://github.com/DiffSK/configobj", rev = "9c8a0a80c767bf8a3d6493ed01df6c351bddca42" }
 nvda-mathcat = { workspace = true }
 
 [tool.uv.workspace]
@@ -317,7 +317,7 @@ dev = [
 	"SCons==4.10.1",
 	# Packaging NVDA
 	"py2exe==0.14.0.0",
-	"setuptools~=72.0",
+	"setuptools~=80.9",
 	"nvda-mathcat",
 	"uv==0.9.11",
 ]
@@ -335,10 +335,10 @@ dev-docs = [
 	"sphinx_rtd_theme==3.0.1",
 ]
 system-tests = [
-	"robotframework==7.1.1",
+	"robotframework==7.3.2",
 	"robotremoteserver==1.1.1",
 	"robotframework-screencaplibrary==1.6.0",
-	"onnx==1.18.0",
+	"onnx==1.19.1",
 ]
 unit-tests = [
 	# Creating XML unit test reports
