@@ -144,7 +144,9 @@ def setSpeechMode(newMode: SpeechMode):
 
 
 def _setLastSpeechString(
-	speechSequence: SpeechSequence, symbolLevel: characterProcessing.SymbolLevel | None, priority: Spri
+	speechSequence: SpeechSequence,
+	symbolLevel: characterProcessing.SymbolLevel | None,
+	priority: Spri,
 ):
 	# Check if the speech sequence contains text to speak
 	if [item for item in speechSequence if isinstance(item, str)]:
