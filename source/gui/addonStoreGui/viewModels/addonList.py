@@ -232,12 +232,12 @@ class AddonListItemVM(Generic[_AddonModelT]):
 				isinstance(model, _AddonManifestModel) and model.author or "",
 			],
 		)
-		return searchableText.casefold()
+		return searchableText.strip()
 
-	@lru_cache(maxsize=256)
 	def searchRank(self, searchTerm: str) -> float:
 		"""Calculate a search rank for this addon based on the filter trigrams."""
-		if not searchTerm or len(searchTerm) < 3:
+		searchTerm = searchTerm.strip()
+		if len(searchTerm) < AddonListVM.TRIGRAM_LENGTH:
 			return 1.0  # empty or too short search matches everything
 		addonSearchableText = self.searchableText
 		filterTrigrams = AddonListVM._generateTrigrams(searchTerm)
@@ -456,21 +456,31 @@ class AddonListVM:
 		return columnChoices
 
 	TRIGRAM_SEARCH_THRESHOLD = 0.3
+	"""Threshold for trigram search ranking to include an addon in the filtered list."""
+	TRIGRAM_LENGTH = 3
+	"""Length of trigrams used for searching."""
 
 	@staticmethod
 	@lru_cache(maxsize=256)
 	def _generateTrigrams(text: str) -> frozenset[str]:
-		"""Generate character trigrams from text."""
-		normalized = text.casefold().strip()
+		"""Generate character trigrams from text.
+		Used for searching.
+
+		:param text: The text to generate trigrams from.
+		:return: A frozenset of trigrams.
+		:raises ValueError: If the text is too short to generate trigrams.
+		"""
+		normalized = strxfrm(text.strip())
 		trigrams = set()
-		assert len(normalized) >= 3
+		if len(normalized) < AddonListVM.TRIGRAM_LENGTH:
+			raise ValueError("Text too short to generate trigrams.")
 		for i in range(len(normalized) - 2):
-			trigrams.add(normalized[i : i + 3])
+			trigrams.add(normalized[i : i + AddonListVM.TRIGRAM_LENGTH])
 		return frozenset(trigrams)
 
 	@staticmethod
 	def _calculateTrigramSimilarity(searchTrigrams: frozenset[str], textTrigrams: frozenset[str]) -> float:
-		"""Calculate similarity score between two sets of trigrams."""
+		"""Calculate similarity score between two sets of trigrams. Used for searching."""
 		if not searchTrigrams:
 			return 1.0  # Empty search matches everything
 		matches = len(searchTrigrams & textTrigrams)
