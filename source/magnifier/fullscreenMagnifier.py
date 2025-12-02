@@ -51,8 +51,14 @@ class FullScreenMagnifier(Magnifier):
 	def currentCoordinates(self, value: tuple[int, int]) -> None:
 		self._currentCoordinates = value
 
+	def event_gainFocus(self, obj, nextHandler):
+		log.info("FullscreenMagnifier gain focus event")
+		nextHandler()
+
 	def _startMagnifier(self) -> None:
-		"""Start the Fullscreen magnifier using windows DLL."""
+		"""
+		Start the Fullscreen magnifier using windows DLL.
+		"""
 		super()._startMagnifier()
 		log.info(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter} and fullscreen mode {self.fullscreenMode}"
@@ -61,7 +67,9 @@ class FullScreenMagnifier(Magnifier):
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self):
-		"""Perform the actual update of the magnifier."""
+		"""
+		Perform the actual update of the magnifier.
+		"""
 		# Calculate new position based on focus mode
 		x, y = self._getCoordinatesForMode(self.currentCoordinates)
 		# Always save screen position for mode continuity
@@ -70,7 +78,9 @@ class FullScreenMagnifier(Magnifier):
 		self._fullscreenMagnifier(x, y)
 
 	def _stopMagnifier(self) -> None:
-		"""Stop the Fullscreen magnifier using windows DLL."""
+		"""
+		Stop the Fullscreen magnifier using windows DLL.
+		"""
 		super()._stopMagnifier()
 		try:
 			# Get MagSetFullscreenTransform function from magnification API
@@ -82,7 +92,9 @@ class FullScreenMagnifier(Magnifier):
 		self._stopMagnifierApi()
 
 	def _applyFilter(self) -> None:
-		"""Apply the current color filter to the fullscreen magnifier."""
+		"""
+		Apply the current color filter to the fullscreen magnifier.
+		"""
 		if self.filter == filter.NORMAL:
 			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.NORMAL.value)
 		elif self.filter == filter.GREYSCALE:
@@ -93,7 +105,9 @@ class FullScreenMagnifier(Magnifier):
 			log.info(f"Unknown color filter: {self.filter}")
 
 	def _loadMagnifierApi(self) -> None:
-		"""Initialize the Magnification API."""
+		"""
+		Initialize the Magnification API.
+		"""
 		try:
 			# Attempt to access the magnification DLL
 			ctypes.windll.magnification
@@ -110,7 +124,9 @@ class FullScreenMagnifier(Magnifier):
 		log.info("Magnification API initialized")
 
 	def _stopMagnifierApi(self) -> None:
-		"""Stop the Magnification API."""
+		"""
+		Stop the Magnification API.
+		"""
 		try:
 			ctypes.windll.magnification
 		except Exception as e:
@@ -122,14 +138,17 @@ class FullScreenMagnifier(Magnifier):
 		log.info("Magnification API uninitialized")
 
 	def _getMagnificationApi(self):
-		"""Get Windows Magnification API function."""
+		"""
+		Get Windows Magnification API function.
+		"""
 		MagSetFullscreenTransform = ctypes.windll.magnification.MagSetFullscreenTransform
 		MagSetFullscreenTransform.restype = wintypes.BOOL
 		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
 		return MagSetFullscreenTransform
 
 	def _fullscreenMagnifier(self, x: int, y: int) -> None:
-		"""Apply fullscreen magnification at given coordinates.
+		"""
+		Apply fullscreen magnification at given coordinates.
 
 		:param x: The x-coordinate for the magnifier.
 		:param y: The y-coordinate for the magnifier.
@@ -146,10 +165,10 @@ class FullScreenMagnifier(Magnifier):
 			log.info("Magnification API not available")
 
 	def _getCoordinatesForMode(self, coordinates: tuple[int, int]) -> tuple[int, int]:
-		"""Get coordinates adjusted for the current fullscreen mode.
+		"""
+		Get coordinates adjusted for the current fullscreen mode.
 
-		Args:
-			coordinates: Raw coordinates (x, y)
+		:param coordinates: Raw coordinates (x, y)
 
 		Returns:
 			Adjusted coordinates according to fullscreen mode
@@ -168,9 +187,8 @@ class FullScreenMagnifier(Magnifier):
 		Check if focus is near magnifier border and adjust position accordingly.
 		Returns adjusted position to keep focus within margin limits.
 
-		Args:
-			focusX (int): The x-coordinate of the focus point.
-			focusY (int): The y-coordinate of the focus point.
+		:param focusX: The x-coordinate of the focus point.
+		:param focusY: The y-coordinate of the focus point.
 
 		Returns:
 			lastScreenPosition (tuple[int, int]): The adjusted position (x, y) of the focus point.
@@ -208,9 +226,8 @@ class FullScreenMagnifier(Magnifier):
 		Calculate magnifier center maintaining mouse relative position.
 		Handles screen edges to prevent going off-screen.
 
-		Args:
-			mouseX (int): The x-coordinate of the mouse pointer.
-			mouseY (int): The y-coordinate of the mouse pointer.
+		:param mouseX: The x-coordinate of the mouse pointer.
+		:param mouseY: The y-coordinate of the mouse pointer.
 
 		Returns:
 			tuple[int, int]: The (x, y) coordinates of the magnifier center.
@@ -238,13 +255,17 @@ class FullScreenMagnifier(Magnifier):
 		return self.lastScreenPosition
 
 	def _startSpotlight(self) -> None:
-		"""Launch Spotlight from Fullscreen class"""
+		"""
+		Launch Spotlight from Fullscreen class
+		"""
 		log.info(f"Launching spotlight mode from fullscreen magnifier with mode {self._fullscreenMode}")
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
 	def _stopSpotlight(self) -> None:
-		"""Stop and destroy Spotlight from Fullscreen class"""
+		"""
+		Stop and destroy Spotlight from Fullscreen class
+		"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
 
@@ -261,7 +282,9 @@ class SpotlightManager:
 		self._currentZoomLevel: float = fullscreenMagnifier.zoomLevel
 
 	def _startSpotlight(self) -> None:
-		"""Start the spotlight."""
+		"""
+		Start the spotlight.
+		"""
 		log.info("start spotlight")
 		self._spotlightIsActive = True
 
@@ -278,7 +301,9 @@ class SpotlightManager:
 		self._animateZoom(1.0, centerScreen, self._startMouseMonitoring)
 
 	def _stopSpotlight(self) -> None:
-		"""Stop the spotlight."""
+		"""
+		Stop the spotlight.
+		"""
 		log.info("stop spotlight")
 		ui.message(
 			_(
@@ -296,7 +321,13 @@ class SpotlightManager:
 	def _animateZoom(
 		self, targetZoom: float, targetCoordinates: tuple[int, int], callback: Callable[[], None]
 	) -> None:
-		"""Animate the zoom level change."""
+		"""
+		Animate the zoom level change.
+
+		:param targetZoom: The target zoom level.
+		:param targetCoordinates: The target coordinates (x, y).
+		:param callback: The function to call after animation completes.
+		"""
 		self._animationStepsList = self._computeAnimationSteps(
 			self._currentZoomLevel, targetZoom, self._currentCoordinates, targetCoordinates
 		)
@@ -304,7 +335,12 @@ class SpotlightManager:
 		self._executeStep(0, callback)
 
 	def _executeStep(self, stepIndex: int, callback: Callable[[], None]) -> None:
-		"""Execute one animation step."""
+		"""
+		Execute one animation step.
+
+		:param stepIndex: The index of the current animation step.
+		:param callback: The function to call after animation completes.
+		"""
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, (x, y) = self._animationStepsList[stepIndex]
@@ -318,10 +354,16 @@ class SpotlightManager:
 				callback()
 
 	def _startMouseMonitoring(self) -> None:
+		"""
+		Start monitoring the mouse position to detect idleness.
+		"""
 		self._lastMousePosition = wx.GetMousePosition()
 		self._timer = wx.CallLater(2000, self._checkMouseIdle)
 
 	def _checkMouseIdle(self) -> None:
+		"""
+		Check if the mouse has been idle.
+		"""
 		currentMousePosition = wx.GetMousePosition()
 		if currentMousePosition == self._lastMousePosition:
 			self.zoomBack()
@@ -332,16 +374,18 @@ class SpotlightManager:
 			self._timer = wx.CallLater(1500, self._checkMouseIdle)
 
 	def zoomBack(self) -> None:
-		"""Zoom back to mouse position"""
-		mouseX, mouseY = wx.GetMousePosition()
+		"""
+		Zoom back to mouse position
+		"""
+		focusX, focusY = self._fullscreenMagnifier._getFocusCoordinates()
 
 		if self._originalMode == FullScreenMode.RELATIVE:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
 			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
-			endCoordinates = self._fullscreenMagnifier._relativePos(mouseX, mouseY)
+			endCoordinates = self._fullscreenMagnifier._relativePos(focusX, focusY)
 			self._fullscreenMagnifier.zoomLevel = savedZoom
 		else:
-			endCoordinates = (mouseX, mouseY)
+			endCoordinates = (focusX, focusY)
 			self._fullscreenMagnifier.lastScreenPosition = endCoordinates
 
 		self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
@@ -353,13 +397,13 @@ class SpotlightManager:
 		coordinateStart: tuple[int, int],
 		coordinateEnd: tuple[int, int],
 	) -> list[tuple[float, tuple[int, int]]]:
-		"""Compute all intermediate animation steps with zoom levels and coordinates.
+		"""
+		Compute all intermediate animation steps with zoom levels and coordinates.
 
-		Args:
-			zoomStart: Starting zoom level
-			zoomEnd: Ending zoom level
-			coordinateStart: Starting coordinates (x, y)
-			coordinateEnd: Ending coordinates (x, y)
+		:param zoomStart: Starting zoom level
+		:param zoomEnd: Ending zoom level
+		:param coordinateStart: Starting coordinates (x, y)
+		:param coordinateEnd: Ending coordinates (x, y)
 
 		Returns:
 			List of animation steps as [zoomLevel, (x, y)] for each animation step

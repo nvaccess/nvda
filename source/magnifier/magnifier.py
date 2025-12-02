@@ -127,14 +127,18 @@ class Magnifier:
 	# Functions
 
 	def _startMagnifier(self) -> None:
-		"""Start the magnifier."""
+		"""
+		Start the magnifier.
+		"""
 		if self.isActive:
 			return
 		self.isActive = True
 		self.currentCoordinates = self._getFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
-		"""Update the magnifier position and content."""
+		"""
+		Update the magnifier position and content.
+		"""
 		if not self.isActive:
 			return
 		self.currentCoordinates = self._getFocusCoordinates()
@@ -142,18 +146,23 @@ class Magnifier:
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
-		"""Perform the actual update of the magnifier."""
+		"""
+		Perform the actual update of the magnifier.
+		"""
 		raise NotImplementedError("Subclasses must implement this method.")
 
 	def _stopMagnifier(self) -> None:
-		"""Stop the magnifier."""
+		"""
+		Stop the magnifier.
+		"""
 		if not self.isActive:
 			return
 		self._stopTimer()
 		self.isActive = False
 
 	def _zoom(self, direction: bool) -> None:
-		"""Adjust the zoom level of the magnifier.
+		"""
+		Adjust the zoom level of the magnifier.
 
 		:param direction: True to zoom in, False to zoom out.
 		"""
@@ -163,7 +172,8 @@ class Magnifier:
 			self.zoomLevel -= self._ZOOM_STEP
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
-		"""Start the timer with a callback function.
+		"""
+		Start the timer with a callback function.
 
 		:param callback: The function to call when the timer expires.
 		"""
@@ -173,7 +183,9 @@ class Magnifier:
 		self.timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
 
 	def _stopTimer(self) -> None:
-		"""Stop timer execution."""
+		"""
+		Stop timer execution.
+		"""
 		if self.timer:
 			if self.timer.IsRunning():
 				self.timer.Stop()

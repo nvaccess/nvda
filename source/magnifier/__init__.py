@@ -13,7 +13,6 @@ import config
 from .fullscreenMagnifier import FullScreenMagnifier, FullScreenMode
 from .utils.filterHandler import filter
 
-# Variables globales du module
 _magnifier: FullScreenMagnifier | None = None
 
 # Configuration specification
@@ -28,13 +27,17 @@ confspec = {
 
 
 def initialize():
-	"""Initialize the magnifier module."""
+	"""
+	Initialize the magnifier module.
+	"""
 	# Add config specification
 	config.conf.spec.update(confspec)
 
 
 def getDefaultZoomLevel():
-	"""Get default zoom level from config."""
+	"""
+	Get default zoom level from config.
+	"""
 	try:
 		zoomLevel = config.conf["magnifier"]["defaultZoomLevel"]
 		# Ensure it's a float
@@ -44,7 +47,9 @@ def getDefaultZoomLevel():
 
 
 def getCurrentZoomLevel():
-	"""Get current zoom level for settings."""
+	"""
+	Get current zoom level for settings.
+	"""
 	global _magnifier
 	if _magnifier and _magnifier.isActive:
 		return float(_magnifier.zoomLevel)  # Ensure float
@@ -52,7 +57,11 @@ def getCurrentZoomLevel():
 
 
 def setDefaultZoomLevel(zoomLevel: float):
-	"""Set default zoom level from settings."""
+	"""
+	Set default zoom level from settings.
+
+	:param zoomLevel: The zoom level to set.
+	"""
 	# Validate zoom level and ensure it's a float
 	try:
 		zoomLevel = float(zoomLevel)
@@ -69,7 +78,9 @@ def setDefaultZoomLevel(zoomLevel: float):
 
 
 def getDefaultFilter():
-	"""Get default filter from config."""
+	"""
+	Get default filter from config.
+	"""
 	try:
 		filterStr = config.conf["magnifier"]["defaultFilter"]
 		# Convert string to filter enum
@@ -79,7 +90,9 @@ def getDefaultFilter():
 
 
 def getCurrentFilter():
-	"""Get current filter for settings."""
+	"""
+	Get current filter for settings.
+	"""
 	global _magnifier
 	if _magnifier and _magnifier.isActive:
 		# Return filter name as string for settings
@@ -89,7 +102,11 @@ def getCurrentFilter():
 
 
 def setDefaultFilter(filterStr: str):
-	"""Set default filter from settings."""
+	"""
+	Set default filter from settings.
+
+	:param filterStr: The filter to set.
+	"""
 	# Ensure config section exists
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
@@ -99,7 +116,9 @@ def setDefaultFilter(filterStr: str):
 
 
 def getDefaultFullscreenMode():
-	"""Get default fullscreen mode from config."""
+	"""
+	Get default fullscreen mode from config.
+	"""
 	try:
 		modeStr = config.conf["magnifier"]["defaultFullscreenMode"]
 		# Convert string to FullScreenMode enum
@@ -109,7 +128,9 @@ def getDefaultFullscreenMode():
 
 
 def getCurrentFullscreenMode():
-	"""Get current fullscreen mode for settings."""
+	"""
+	Get current fullscreen mode for settings.
+	"""
 	global _magnifier
 	if _magnifier and _magnifier.isActive:
 		# Return fullscreen mode name as string for settings
@@ -119,7 +140,11 @@ def getCurrentFullscreenMode():
 
 
 def setDefaultFullscreenMode(modeStr: str):
-	"""Set default fullscreen mode from settings."""
+	"""
+	Set default fullscreen mode from settings.
+
+	:param modeStr: The fullscreen mode to set.
+	"""
 	# Ensure config section exists
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
@@ -129,7 +154,9 @@ def setDefaultFullscreenMode(modeStr: str):
 
 
 def shouldSaveShortcutChanges():
-	"""Check if shortcut changes should be saved to config."""
+	"""
+	Check if shortcut changes should be saved to config.
+	"""
 	try:
 		return config.conf["magnifier"]["saveShortcutChanges"]
 	except (KeyError, AttributeError):
@@ -137,25 +164,35 @@ def shouldSaveShortcutChanges():
 
 
 def isActive():
-	"""Check if magnifier is currently active for settings."""
+	"""
+	Check if magnifier is currently active for settings.
+	"""
 	global _magnifier
 	return _magnifier is not None and _magnifier.isActive
 
 
 def getMagnifier():
-	"""Get current magnifier"""
+	"""
+	Get current magnifier
+	"""
 	global _magnifier
 	return _magnifier
 
 
 def setMagnifier(magnifier: FullScreenMagnifier | None):
-	"""Set magnifier instance"""
+	"""
+	Set magnifier instance
+
+	:param magnifier: The magnifier instance to set.
+	"""
 	global _magnifier
 	_magnifier = magnifier
 
 
 def terminate():
-	"""Called when NVDA shuts down."""
+	"""
+	Called when NVDA shuts down.
+	"""
 	global _magnifier
 	if _magnifier and _magnifier.isActive:
 		_magnifier._stopMagnifier()
