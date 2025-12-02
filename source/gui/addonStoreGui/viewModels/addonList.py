@@ -559,6 +559,11 @@ class AddonListVM:
 			self.lastSelectedAddonId = self.selectedAddonId
 		self._addonsFilteredOrdered = newOrder
 
+	def _cachePreviousSortField(self) -> None:
+		"""Cache the current sort field and order as previous sort field and order."""
+		self._prevSortByModelField = self._sortByModelField
+		self._prevReverseSort = self._reverseSort
+
 	def applyFilter(self, filterText: str) -> None:
 		oldOrder = self._addonsFilteredOrdered
 		if not filterText:

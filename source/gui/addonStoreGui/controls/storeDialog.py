@@ -395,6 +395,8 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
 		filterText = self.searchFilterCtrl.GetValue()
+		if filterText:
+			filterText = filterText.strip()
 
 		# Clear selection in the VM so the list has a single canonical source of truth.
 		self._storeVM.listVM.setSelection(None)
@@ -405,12 +407,11 @@ class AddonStoreDialog(SettingsDialog):
 			idx = self.addonListView.GetNextSelected(idx)
 
 		# When a search is active, reflect search relevance (descending) in the column choice.
-		if filterText and filterText.strip():
+		if filterText:
 			newSortField = AddonListField.searchRank
 			newReverse = True
 			if self._storeVM.listVM._sortByModelField != AddonListField.searchRank:
-				self._storeVM.listVM._prevSortByModelField = self._storeVM.listVM._sortByModelField
-				self._storeVM.listVM._prevReverseSort = self._storeVM.listVM._reverseSort
+				self._storeVM.listVM._cachePreviousSortField()
 		else:
 			# If cleared, revert the choice to the previously active VM sort field.
 			newSortField = self._storeVM.listVM._prevSortByModelField
