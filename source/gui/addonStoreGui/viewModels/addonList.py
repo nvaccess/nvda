@@ -282,10 +282,10 @@ class AddonListVM:
 		self.selectedAddonId: str | None = None
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = self.DEFAULT_SORT_FIELD
-		self._prevSortByModelField: AddonListField | None = None
+		self._prevSortByModelField: AddonListField = self.DEFAULT_SORT_FIELD
 		self._filterString: str | None = None
 		self._reverseSort: bool = False
-		self._prevReverseSort: bool | None = None
+		self._prevReverseSort: bool = self._reverseSort
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: list[str] = self._getFilteredSortedIds()
