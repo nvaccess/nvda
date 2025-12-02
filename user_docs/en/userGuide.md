@@ -1902,7 +1902,7 @@ The following information is always sent:
 
 * Current NVDA version
 * Operating System version
-* Whether the Operating System is 64 or 32 bit
+* Processor architecture
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -2012,8 +2012,6 @@ Note that the following features depend on WASAPI, and will be disabled if WASAP
 * Rate boost
 * Leading silence trimming
 * Keep audio device awake
-
-Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
@@ -3796,20 +3794,6 @@ When enabled, NVDA will remove silence from the start of speech audio, which may
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
 
-##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
-
-This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
-This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
-However, some SAPI 4 voices might not work with the current WASAPI implementation.
-If you find that the SAPI 4 voice you are using stops working, you may disable this option.
-
-Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
-
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -4543,14 +4527,6 @@ There are over 43 different languages supported by eSpeak NG.
 
 There are also many variants which can be chosen to alter the sound of the voice.
 
-### Microsoft Speech API version 4 (SAPI 4) {#SAPI4}
-
-SAPI 4 is an older Microsoft standard for software speech synthesizers.
-NVDA still supports this for users who already have SAPI 4 synthesizers installed.
-However, Microsoft no longer support this and needed components are no longer available from Microsoft.
-
-When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.
-
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 
 SAPI 5 is a Microsoft standard for software speech synthesizers.
@@ -4564,11 +4540,11 @@ These voices can also be used with NVDA.
 
 To use these voices, you will need to install two components:
 
-* [Microsoft Speech Platform - Runtime (Version 11), x86](https://www.microsoft.com/download/en/details.aspx?id=27225)
-* [Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/download/en/details.aspx?id=27224)
+* [Microsoft Speech Platform - Runtime (Version 11), x64](https://www.microsoft.com/en-us/download/details.aspx?id=27225)
+* [Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/en-us/download/details.aspx?id=27224)
   * This page includes many files for both speech recognition and text-to-speech.
- Choose the files containing the TTS data for the desired languages/voices.
- For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
+  Choose the files containing the TTS data for the desired languages/voices.
+  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
 
 ### Windows OneCore Voices {#OneCore}
 
@@ -5982,7 +5958,7 @@ Following are the command line options for NVDA:
 
 ### Uninstalling NVDA {#UninstallingNVDA}
 
-NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles%\nvda`.
 
 Note: It is possible to stop NVDA from starting automatically without needing to uninstall NVDA.
 To stop NVDA starting automatically, please refer to the options: [Start NVDA after I sign in](#GeneralSettingsStartAfterLogOn) and [Use NVDA during sign-in](#GeneralSettingsStartOnLogOnScreen) in NVDA's general settings.
@@ -6001,10 +5977,7 @@ The following are the command line options for NVDA's uninstaller:
 ### System Wide Parameters {#SystemWideParameters}
 
 NVDA allows some values to be set in the system registry which alter the system wide behaviour of NVDA.
-These values are stored in the registry under one of the following keys:
-
-* 32-bit system: `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`
-* 64-bit system: `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda`
+These values are stored in the registry under the key `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`.
 
 The following values can be set under this registry key:
 

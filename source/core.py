@@ -614,14 +614,13 @@ def _doLoseFocus():
 
 
 def _setUpWxApp() -> "wx.App":
-	import six
 	import wx
 
 	import config
 	import nvwave
 	import speech
 
-	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
+	log.info(f"Using wx version {wx.version()}")
 
 	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
 	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.

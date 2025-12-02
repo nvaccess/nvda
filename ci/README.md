@@ -45,12 +45,15 @@ PowerShell scripts continue on non-terminating errors unless the file is prefixe
 
 Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
 You just need to enable GitHub Actions on your fork.
+You may want to disable all workflows other than `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
 
 The following configuration is required only for more advanced development such as:
 
 * signed builds
 * Crowdin synchronisation
 * publishing releases to a server
+* email notifications
+* auto-assigning milestones
 
 ### Publisher name
 
@@ -97,6 +100,27 @@ To enable, set:
 * `feature_uploadSymbolsToMozilla` as a variable with any non-empty string.
 
 Generating this requires direct co-ordination with Mozilla.
+
+### Email notifications
+
+You can send out email notifications to various email lists when certain changes are made.
+Currently, only notifications are sent to a translators list, when localisation file changes occur.
+
+To enable, set:
+
+* `EMAIL_USERNAME` as a secret.
+* `EMAIL_PASSWORD` as a secret.
+* `EMAIL_SERVER_ADDRESS` as a secret.
+* `EMAIL_SERVER_PORT` optionally, as a secret, with 465 being the default if unset.
+
+### Automatically assign milestone on PR merge
+
+There is a workflow to assign a milestone to the PR, when a PR is merged.
+
+To enable, set:
+
+* `MILESTONE_ID` as a variable with the milestone number.
+You can get this from the end of the URL when you visit the milestone.
 
 ### GitHub Environments
 
