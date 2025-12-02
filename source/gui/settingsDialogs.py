@@ -5919,19 +5919,6 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
 
-	_LOG_LEVELS: tuple[int, str] = (
-		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
-		(log.OFF, _("disabled")),
-		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
-		(log.INFO, _("info")),
-		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
-		(log.DEBUGWARNING, _("debug warning")),
-		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
-		(log.IO, _("input/output")),
-		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
-		(log.DEBUG, _("debug")),
-	)
-
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -5999,8 +5986,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					filter(
 						lambda indexAndLevel: indexAndLevel[1] == curLevel,
 						enumerate(LoggingLevel.__members__.values()),
-					)
-				)[0]
+					),
+				)[0],
 			)
 		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
@@ -6023,7 +6010,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 		if not logHandler.isLogLevelForced():
 			config.conf["general"]["loggingLevel"] = logging.getLevelName(
-				list(LoggingLevel)[self._logLevelCombo.GetSelection()]
+				list(LoggingLevel)[self._logLevelCombo.GetSelection()],
 			)
 			logHandler.setLogLevelFromConfig()
 
