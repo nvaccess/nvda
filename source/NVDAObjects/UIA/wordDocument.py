@@ -130,7 +130,7 @@ class ReferenceUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	wantedAttribValues = {UIAHandler.AnnotationType_Footnote, UIAHandler.AnnotationType_Endnote}
 
 	@property
-	def label(self) ->str:
+	def label(self) -> str:
 		obj = getReferenceFromPosition(self.textInfo)
 		if obj:
 			text = obj.UIATextPattern.DocumentRange.GetText(-1).strip()
