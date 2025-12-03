@@ -65,9 +65,11 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+* Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
+* Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 * When a synthesizer has a fallback language for the current dialect, the language of the text being read won't be reported as not supported. (#18876, @nvdaes)
 * Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
