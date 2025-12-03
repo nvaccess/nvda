@@ -17,7 +17,16 @@ from utils.displayString import DisplayStringStrEnum
 from .utils.filterHandler import Filter
 
 
+class Direction(Enum):
+	"""Direction for zoom operations."""
+
+	IN = True
+	OUT = False
+
+
 class MagnifierType(DisplayStringStrEnum):
+	"""Type of magnifier."""
+
 	FULLSCREEN = "fullscreen"
 	DOCKED = "docked"
 	LENS = "lens"
@@ -184,13 +193,13 @@ class Magnifier:
 		self._stopTimer()
 		self.isActive = False
 
-	def _zoom(self, direction: bool) -> None:
+	def _zoom(self, direction: Direction) -> None:
 		"""
 		Adjust the zoom level of the magnifier.
 
-		:param direction: True to zoom in, False to zoom out.
+		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out.
 		"""
-		if direction:
+		if direction == Direction.IN:
 			self.zoomLevel += self._ZOOM_STEP
 		else:
 			self.zoomLevel -= self._ZOOM_STEP
