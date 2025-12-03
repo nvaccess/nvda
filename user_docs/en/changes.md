@@ -116,6 +116,8 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated sonic to commit `d2cdb40`. (#19196)
   * Updated w3c-aria-practices to commit `84b921a0`. (#19196)
   * Updated wil to commit `7cf4193`. (#19196)
+  * Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)
+    * This introduces support to build NVDA with Visual Studio 2026.
 * X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
@@ -375,9 +377,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated comtypes to 1.4.11. (#18611)
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
-  * Updated detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
-  * Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)
-    * This introduces support to build NVDA with Visual Studio 2026.
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)
