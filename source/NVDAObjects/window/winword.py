@@ -14,7 +14,6 @@ from typing import (
 	Self,
 	TYPE_CHECKING,
 )
-
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -636,7 +635,10 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 
 
 class WordDocumentReferenceQuickNavItem(WordDocumentCollectionQuickNavItem):
-	def rangeFromCollectionItem(self, item):
+	def rangeFromCollectionItem(
+		self,
+		item: comtypes.client.lazybind.Dispatch,
+	) -> comtypes.client.lazybind.Dispatch:
 		return item.reference
 
 
@@ -783,7 +785,10 @@ class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIt
 class FootnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass = WordDocumentFootnoteQuickNavItem
 
-	def collectionFromRange(self, rangeObj):
+	def collectionFromRange(
+		self,
+		rangeObj: comtypes.client.lazybind.Dispatch,
+	) -> comtypes.client.lazybind.Dispatch:
 		return rangeObj.footnotes
 
 
