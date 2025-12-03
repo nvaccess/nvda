@@ -47,10 +47,6 @@ Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 
-
-
->>>>>>> try-chineseWordSegmentation-staging
-
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
@@ -124,7 +120,9 @@ All public symbols defined on this class are now accessible from `winBindings.ma
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
+
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
+
 
 >>>>>>> try-chineseWordSegmentation-staging
 
