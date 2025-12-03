@@ -113,18 +113,10 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
-<<<<<<< HEAD
-  All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
-=======
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
-
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
-
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
-
-
->>>>>>> try-chineseWordSegmentation-staging
 
 #### Deprecations
 
