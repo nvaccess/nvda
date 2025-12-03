@@ -1,4 +1,4 @@
-﻿#locale/ar/symbols.dic
+#locale/ar/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2012 NV Access Inc
 #This file is covered by the GNU General Public License.
@@ -6,7 +6,7 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-؟ sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+؟ sentence ending	(?<=[^\s؟])؟(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
@@ -21,7 +21,7 @@ symbols:
 . sentence ending	نقطة	all	always
 ! sentence ending	تعجب	all	always
 ? sentence ending	استفهام	all	always
-؟  sentence ending	استفهام	all	always
+؟ sentence ending	استفهام	all	always
 ; phrase ending	فاصلة منقوطة	most	always
 : phrase ending	نقطتان رأسيَّتان	most	always
 decimal point		none	always
