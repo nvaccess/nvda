@@ -106,7 +106,7 @@ def getReferenceFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 	"""
 	Fetches reference (footnote/endnote) for the reference located at the given position in a word document.
 	:param position: a TextInfo representing the span of the reference in the word document.
-	@return: The reference NVDAObject, if any
+	:return: The reference NVDAObject, if any
 	"""
 	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:
@@ -130,7 +130,7 @@ class ReferenceUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	wantedAttribValues = {UIAHandler.AnnotationType_Footnote, UIAHandler.AnnotationType_Endnote}
 
 	@property
-	def label(self):
+	def label(self) ->str:
 		obj = getReferenceFromPosition(self.textInfo)
 		if obj:
 			text = obj.UIATextPattern.DocumentRange.GetText(-1).strip()

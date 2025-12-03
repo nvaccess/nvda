@@ -642,7 +642,7 @@ class WordDocumentReferenceQuickNavItem(WordDocumentCollectionQuickNavItem):
 
 class WordDocumentFootnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 	@property
-	def label(self):
+	def label(self) -> str:
 		number = self.collectionItem.index
 		text = self.collectionItem.range.text
 		# Translators: The label shown for a footnote reference in the NVDA Elements List dialog in Microsoft Word.
@@ -653,7 +653,7 @@ class WordDocumentFootnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 
 class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 	@property
-	def label(self):
+	def label(self) -> str:
 		number = self.collectionItem.index
 		text = self.collectionItem.range.text
 		# Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
