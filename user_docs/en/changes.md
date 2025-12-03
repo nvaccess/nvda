@@ -33,7 +33,7 @@ Windows 10 on ARM is also no longer supported.
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 * Chinese text can be navigated by word via build-in input gestures.
   Several GUI elements are added for its configuration in `Document Navigation` panel. (#18735, @CrazySteve0605)
-* Braille output for Chinese contains spaces as word separaters. (#18865, @CrazySteve0605)
+* Braille output for Chinese contains spaces as word separators. (#18865, @CrazySteve0605)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 
 ### Changes
