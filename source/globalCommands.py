@@ -4941,29 +4941,29 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+w",
 	)
-	def script_toggleMagnifier(self, gesture):
+	def script_toggleMagnifier(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.toggleMagnifier()
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"decreases the magnification level of the screen magnifier."
+			"increases the magnification level of the magnifier."
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+b",
 	)
-	def script_zoomIn(self, gesture):
+	def script_zoomIn(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.zoomIn()
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"decreases the magnification level of the screen magnifier."
+			"decreases the magnification level of the magnifier."
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+n",
 	)
-	def script_zoomOut(self, gesture):
+	def script_zoomOut(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.zoomOut()
 
 	@script(
@@ -4974,7 +4974,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+f",
 	)
-	def script_toggleFilter(self, gesture):
+	def script_toggleFilter(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.toggleFilter()
 
 	@script(
@@ -4985,7 +4985,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
 	)
-	def script_toggleFullscreenMode(self, gesture):
+	def script_toggleFullscreenMode(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.toggleFullscreenMode()
 
 	@script(
@@ -4996,7 +4996,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+l",
 	)
-	def script_startSpotlight(self, gesture):
+	def script_startSpotlight(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.startSpotlight()
 
 	@script(

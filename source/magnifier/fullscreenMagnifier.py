@@ -1,24 +1,35 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from ctypes import wintypes
 from logHandler import log
-from enum import Enum
 from typing import Callable
 import ui
 import winUser
 import wx
-from .magnifier import Magnifier, MagnifierType
-from .utils.filterHandler import filter, filterMatrix
+from utils.displayString import DisplayStringStrEnum
+from .magnifier import Magnifier, MagnifierType, FocusType
+from .utils.filterHandler import Filter, FilterMatrix
 
 
-class FullScreenMode(Enum):
+class FullScreenMode(DisplayStringStrEnum):
 	CENTER = "center"
 	BORDER = "border"
 	RELATIVE = "relative"
+
+	@property
+	def _displayStringLabels(self) -> dict["FullScreenMode", str]:
+		return {
+			# Translators: Magnifier focus mode - center mouse/focus on screen
+			self.CENTER: pgettext("magnifier", "Center"),
+			# Translators: Magnifier focus mode - follow focus at screen borders
+			self.BORDER: pgettext("magnifier", "Border"),
+			# Translators: Magnifier focus mode - maintain relative position
+			self.RELATIVE: pgettext("magnifier", "Relative"),
+		}
 
 
 class FullScreenMagnifier(Magnifier):
@@ -26,7 +37,7 @@ class FullScreenMagnifier(Magnifier):
 		self,
 		zoomLevel: float = 2.0,
 		fullscreenMode: FullScreenMode = FullScreenMode.CENTER,
-		filter: filter = filter.NORMAL,
+		filter: Filter = Filter.NORMAL,
 		magnifierType=MagnifierType.FULLSCREEN,
 	):
 		super().__init__(zoomLevel=zoomLevel, filter=filter, magnifierType=magnifierType)
@@ -62,7 +73,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		super()._startMagnifier()
 		log.info(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filter} and fullscreen mode {self.fullscreenMode}"
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and fullscreen mode {self.fullscreenMode}"
 		)
 		self._loadMagnifierApi()
 		self._startTimer(self._updateMagnifier)
@@ -76,11 +87,11 @@ class FullScreenMagnifier(Magnifier):
 		# Always save screen position for mode continuity
 		self.lastScreenPosition = (x, y)
 
-		if self.lastFocusedObject == "nvda":
+		if self.lastFocusedObject == FocusType.NVDA:
 			try:
-				from . import shouldKeepMouseCentered
+				from .config import shouldKeepMouseCentered
 			except ImportError:
-				log.error("Failed to import shouldKeepMouseCentered from magnifier __init__")
+				log.error("Failed to import shouldKeepMouseCentered from magnifier.config")
 			else:
 				if shouldKeepMouseCentered():
 					self.moveMouseToScreen()
@@ -105,14 +116,14 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Apply the current color filter to the fullscreen magnifier.
 		"""
-		if self.filter == filter.NORMAL:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.NORMAL.value)
-		elif self.filter == filter.GREYSCALE:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.GREYSCALE.value)
-		elif self.filter == filter.INVERTED:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(filterMatrix.INVERTED.value)
+		if self.filterType == Filter.NORMAL:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+		elif self.filterType == Filter.GREYSCALE:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.GREYSCALE.value)
+		elif self.filterType == Filter.INVERTED:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.INVERTED.value)
 		else:
-			log.info(f"Unknown color filter: {self.filter}")
+			log.info(f"Unknown color filter: {self.filterType}")
 
 	def _loadMagnifierApi(self) -> None:
 		"""

@@ -34,7 +34,7 @@ import braille
 import brailleInput
 import brailleTables
 import characterProcessing
-import magnifier
+import magnifier.config as magnifier
 import config
 import core
 import globalVars
@@ -5967,7 +5967,7 @@ class MagnifierPanel(SettingsPanel):
 	title = _("Magnifier")
 	helpId = "MagnifierSettings"
 
-	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# ZOOM SETTINGS
@@ -5976,7 +5976,10 @@ class MagnifierPanel(SettingsPanel):
 
 		# Create zoom level choices from 1.0 to 10.0 with 0.5 steps
 		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5
-		zoomChoices = [f"{value:.1f}x" for value in zoomValues]
+		# Translators: zoom level for magnifier. e.g. 2.5x
+		zoomChoices = [
+			pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}") for value in zoomValues
+		]
 
 		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
 		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
@@ -5988,14 +5991,14 @@ class MagnifierPanel(SettingsPanel):
 		# Translators: The label for a setting in magnifier settings to select the default filter
 		defaultFilterLabelText = _("Default &filter:")
 		try:
-			from magnifier.utils.filterHandler import filter
+			from magnifier.utils.filterHandler import Filter
 		except ImportError:
-			filter = None
-		filterChoices = [f.name.lower() for f in filter]
+			Filter = None
+		filterChoices = [f.displayString for f in Filter]
 		self.defaultFilterList = sHelper.addLabeledControl(
 			defaultFilterLabelText, wx.Choice, choices=filterChoices
 		)
-		self.bindHelpEvent("magnifierDefaultFilter", self.defaultFilterList)
+		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default fullscreen mode
@@ -6004,7 +6007,7 @@ class MagnifierPanel(SettingsPanel):
 			from magnifier.fullscreenMagnifier import FullScreenMode
 		except ImportError:
 			FullScreenMode = None
-		fullscreenModeChoices = [mode.name.lower() for mode in FullScreenMode] if FullScreenMode else []
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.defaultFullscreenModeList = sHelper.addLabeledControl(
 			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
 		)
@@ -6018,7 +6021,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# SAVE SHORTCUT CHANGES
 		# Translators: The label for a checkbox to save modifications made via shortcuts
-		saveShortcutChangesText = _("Save &modifications made with shortcuts")
+		saveShortcutChangesText = _("Save &modifications made with input gestures")
 		self.saveShortcutChangesCheckBox = sHelper.addItem(wx.CheckBox(self, label=saveShortcutChangesText))
 		self.bindHelpEvent("magnifierSaveShortcutChanges", self.saveShortcutChangesCheckBox)
 
@@ -6027,98 +6030,53 @@ class MagnifierPanel(SettingsPanel):
 
 	def _updateCurrentSelection(self):
 		"""Update the selection"""
-
 		# ZOOM
-		try:
-			# Get current zoom level from magnifier module
-			currentZoom = magnifier.getCurrentZoomLevel()
 
-			# Ensure it's a float
-			currentZoom = float(currentZoom)
+		# Get current zoom level from magnifier module
+		currentZoom = magnifier.getCurrentZoomLevel()
 
-			# Find the closest match in our zoom values
-			closestIndex = 0
-			minDifference = abs(self.zoomValues[0] - currentZoom)
+		# Find the closest match in our zoom values
+		closestIndex = 0
+		minDifference = abs(self.zoomValues[0] - currentZoom)
 
-			for i, value in enumerate(self.zoomValues):
-				difference = abs(value - currentZoom)
-				if difference < minDifference:
-					minDifference = difference
-					closestIndex = i
+		for i, value in enumerate(self.zoomValues):
+			difference = abs(value - currentZoom)
+			if difference < minDifference:
+				minDifference = difference
+				closestIndex = i
 
-			self.defaultZoomList.SetSelection(closestIndex)
-
-		except (ImportError, ValueError, AttributeError, IndexError) as e:
-			# Default to 2.0x if module not available or value not found
-			log.debug(f"Error getting current zoom: {e}")
-			try:
-				defaultIndex = self.zoomValues.index(2.0)
-				self.defaultZoomList.SetSelection(defaultIndex)
-			except ValueError:
-				self.defaultZoomList.SetSelection(0)
+		self.defaultZoomList.SetSelection(closestIndex)
 
 		# FILTER
-		try:
-			# Get current filter from magnifier module
-			currentFilter = magnifier.getCurrentFilter()
 
-			# Ensure it's a string
-			currentFilter = str(currentFilter)
+		# Get current filter from magnifier module
+		currentFilter = magnifier.getCurrentFilter()
 
-			if currentFilter in self.defaultFilterList.GetStrings():
-				self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
-			else:
-				self.defaultFilterList.SetSelection(0)
-
-		except (ImportError, ValueError, AttributeError, IndexError) as e:
-			log.debug(f"Error getting current filter: {e}")
-			try:
-				defaultIndex = self.defaultFilterList.GetStrings().index("None")
-				self.defaultFilterList.SetSelection(defaultIndex)
-			except ValueError:
-				self.defaultFilterList.SetSelection(0)
+		if currentFilter in self.defaultFilterList.GetStrings():
+			self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
+		else:
+			self.defaultFilterList.SetSelection(0)
 
 		# FULLSCREEN MODE
-		try:
-			currentFullscreenMode = magnifier.getCurrentFullscreenMode()
 
-			# Ensure it's a string
-			currentFullscreenMode = str(currentFullscreenMode)
+		currentFullscreenMode = magnifier.getCurrentFullscreenMode()
 
-			if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
-				self.defaultFullscreenModeList.SetSelection(
-					self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
-				)
-			else:
-				self.defaultFullscreenModeList.SetSelection(0)
-
-		except (ImportError, ValueError, AttributeError, IndexError) as e:
-			log.debug(f"Error getting current fullscreen mode: {e}")
-			try:
-				defaultIndex = self.defaultFullscreenModeList.GetStrings().index("center")
-				self.defaultFullscreenModeList.SetSelection(defaultIndex)
-			except ValueError:
-				self.defaultFullscreenModeList.SetSelection(0)
+		if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
+			self.defaultFullscreenModeList.SetSelection(
+				self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
+			)
+		else:
+			self.defaultFullscreenModeList.SetSelection(0)
 
 		# KEEP MOUSE CENTERED
-		try:
-			keepMouseCentered = config.conf["magnifier"]["keepMouseCentered"]
-			# Convert string to boolean if necessary
-			if isinstance(keepMouseCentered, str):
-				keepMouseCentered = keepMouseCentered.lower() in ("true", "1", "yes")
-			self.keepMouseCenteredCheckBox.SetValue(bool(keepMouseCentered))
-		except (KeyError, AttributeError):
-			self.keepMouseCenteredCheckBox.SetValue(False)
+
+		keepMouseCentered = magnifier.shouldKeepMouseCentered()
+		self.keepMouseCenteredCheckBox.SetValue(keepMouseCentered)
 
 		# SAVE SHORTCUT CHANGES
-		try:
-			saveShortcutChanges = config.conf["magnifier"]["saveShortcutChanges"]
-			# Convert string to boolean if necessary
-			if isinstance(saveShortcutChanges, str):
-				saveShortcutChanges = saveShortcutChanges.lower() in ("true", "1", "yes")
-			self.saveShortcutChangesCheckBox.SetValue(bool(saveShortcutChanges))
-		except (KeyError, AttributeError):
-			self.saveShortcutChangesCheckBox.SetValue(False)
+
+		saveShortcutChanges = magnifier.shouldSaveShortcutChanges()
+		self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
 
 	def onPanelActivated(self):
 		"""Called when the panel is activated/shown."""
@@ -6127,75 +6085,22 @@ class MagnifierPanel(SettingsPanel):
 		self._updateCurrentSelection()
 
 	def onSave(self):
-		# ZOOM
-		selectedIndex = self.defaultZoomList.GetSelection()
-		if selectedIndex != wx.NOT_FOUND:
-			selectedZoom = self.zoomValues[selectedIndex]
+		# Use magnifier.config functions to save settings
+		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
+		magnifier.setDefaultZoomLevel(selectedZoom)
 
-			# Ensure config section exists
-			if "magnifier" not in config.conf:
-				config.conf["magnifier"] = {}
+		from magnifier.utils.filterHandler import Filter
 
-			# Save the setting in NVDA config
-			config.conf["magnifier"]["defaultZoomLevel"] = selectedZoom
+		selectedFilterIdx = self.defaultFilterList.GetSelection()
+		magnifier.setDefaultFilter(list(Filter)[selectedFilterIdx].displayString)
 
-			# Update the magnifier module if loaded
-			try:
-				magnifier.setDefaultZoomLevel(selectedZoom)
-			except ImportError:
-				pass
+		from magnifier.fullscreenMagnifier import FullScreenMode
 
-		# FILTER
-		selectedIndex = self.defaultFilterList.GetSelection()
-		if selectedIndex != wx.NOT_FOUND:
-			selectedFilter = self.defaultFilterList.GetStrings()[selectedIndex]
+		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
+		magnifier.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx].displayString)
 
-			# Ensure config section exists
-			if "magnifier" not in config.conf:
-				config.conf["magnifier"] = {}
-
-			config.conf["magnifier"]["defaultFilter"] = selectedFilter
-
-			# Update the magnifier module if loaded
-			try:
-				magnifier.setDefaultFilter(selectedFilter)
-			except ImportError:
-				pass
-
-		# FULLSCREEN MODE
-		selectedIndex = self.defaultFullscreenModeList.GetSelection()
-		if selectedIndex != wx.NOT_FOUND:
-			selectedFullscreenMode = self.defaultFullscreenModeList.GetStrings()[selectedIndex]
-
-			# Ensure config section exists
-			if "magnifier" not in config.conf:
-				config.conf["magnifier"] = {}
-
-			config.conf["magnifier"]["defaultFullscreenMode"] = selectedFullscreenMode
-
-			# Update the magnifier module if loaded
-			try:
-				magnifier.setDefaultFullscreenMode(selectedFullscreenMode)
-			except ImportError:
-				pass
-
-		# KEEP MOUSE CENTERED
-
-		# Ensure config section exists
-		if "magnifier" not in config.conf:
-			config.conf["magnifier"] = {}
-
-		checkboxValue = bool(self.keepMouseCenteredCheckBox.GetValue())
-		config.conf["magnifier"]["keepMouseCentered"] = checkboxValue
-
-		# SAVE SHORTCUT CHANGES
-
-		# Ensure config section exists
-		if "magnifier" not in config.conf:
-			config.conf["magnifier"] = {}
-
-		checkboxValue = bool(self.saveShortcutChangesCheckBox.GetValue())
-		config.conf["magnifier"]["saveShortcutChanges"] = checkboxValue
+		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):

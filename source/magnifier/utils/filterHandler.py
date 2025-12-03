@@ -1,14 +1,31 @@
-from enum import Enum
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import ctypes
+from enum import Enum
+from utils.displayString import DisplayStringStrEnum
 
 
-class filter(Enum):
+class Filter(DisplayStringStrEnum):
 	NORMAL = "normal"
 	GREYSCALE = "greyscale"
 	INVERTED = "inverted"
 
+	@property
+	def _displayStringLabels(self) -> dict["Filter", str]:
+		return {
+			# Translators: Magnifier color filter - no filter applied
+			self.NORMAL: pgettext("magnifier", "Normal"),
+			# Translators: Magnifier color filter - greyscale/black and white
+			self.GREYSCALE: pgettext("magnifier", "Greyscale"),
+			# Translators: Magnifier color filter - inverted colors
+			self.INVERTED: pgettext("magnifier", "Inverted"),
+		}
 
-class filterMatrix(Enum):
+
+class FilterMatrix(Enum):
 	NORMAL = (ctypes.c_float * 25)(
 		1.0,
 		0.0,

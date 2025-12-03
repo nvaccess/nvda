@@ -3,22 +3,42 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes
 from enum import Enum
 from typing import Callable
 
 from logHandler import log
 import wx
 import api
+import winUser
+import mouseHandler
+from winAPI._displayTracking import getPrimaryDisplayOrientation
+from utils.displayString import DisplayStringStrEnum
 
-from .utils.mouseHandler import MouseHandler
-from .utils.filterHandler import filter
+from .utils.filterHandler import Filter
 
 
-class MagnifierType(Enum):
+class MagnifierType(DisplayStringStrEnum):
 	FULLSCREEN = "fullscreen"
 	DOCKED = "docked"
 	LENS = "lens"
+
+	@property
+	def _displayStringLabels(self) -> dict["MagnifierType", str]:
+		return {
+			# Translators: Magnifier type - fullscreen mode
+			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
+			# Translators: Magnifier type - docked mode
+			self.DOCKED: pgettext("magnifier", "Docked"),
+			# Translators: Magnifier type - lens mode
+			self.LENS: pgettext("magnifier", "Lens"),
+		}
+
+
+class FocusType(Enum):
+	"""Type of focus being tracked by the magnifier."""
+
+	MOUSE = "mouse"
+	NVDA = "nvda"
 
 
 class Magnifier:
@@ -27,21 +47,21 @@ class Magnifier:
 	_ZOOM_STEP: float = 0.5
 	_TIMER_INTERVAL_MS: int = 20
 	_MARGIN_BORDER: int = 50
-	_SCREEN_WIDTH: int = ctypes.windll.user32.GetSystemMetrics(0)
-	_SCREEN_HEIGHT: int = ctypes.windll.user32.GetSystemMetrics(1)
+	display = getPrimaryDisplayOrientation()
+	_SCREEN_WIDTH: int = display.width
+	_SCREEN_HEIGHT: int = display.height
 
-	def __init__(self, zoomLevel: float, filter: filter, magnifierType: MagnifierType = None):
+	def __init__(self, zoomLevel: float, filter: Filter, magnifierType: MagnifierType = None):
 		self._magnifierType: MagnifierType = magnifierType
 		self._isActive: bool = False
 		self._zoomLevel: float = zoomLevel
 		self._timer: None | wx.Timer = None
-		self._lastFocusedObject: str = ""
+		self._lastFocusedObject: FocusType | None = None
 		self._lastNVDAPosition: tuple[int, int] = (0, 0)
 		self._lastMousePosition: tuple[int, int] = (0, 0)
 		self._lastScreenPosition: tuple[int, int] = (0, 0)
 		self._currentCoordinates: tuple[int, int] = (0, 0)
-		self._mouseHandler: MouseHandler = MouseHandler()
-		self._filter: filter = filter
+		self._filterType: Filter = filter
 
 	@property
 	def isActive(self) -> bool:
@@ -67,13 +87,17 @@ class Magnifier:
 	def zoomLevel(self, value: float) -> None:
 		if self._ZOOM_MIN <= value <= self._ZOOM_MAX:
 			self._zoomLevel = value
+		else:
+			raise ValueError(
+				f"Invalid zoom set {value} should be in range ({self._ZOOM_MIN}, {self._ZOOM_MAX})"
+			)
 
 	@property
-	def lastFocusedObject(self) -> str:
+	def lastFocusedObject(self) -> FocusType | None:
 		return self._lastFocusedObject
 
 	@lastFocusedObject.setter
-	def lastFocusedObject(self, value: str) -> None:
+	def lastFocusedObject(self, value: FocusType | None) -> None:
 		self._lastFocusedObject = value
 
 	@property
@@ -117,12 +141,12 @@ class Magnifier:
 		self._timer = value
 
 	@property
-	def filter(self) -> filter:
-		return self._filter
+	def filterType(self) -> Filter:
+		return self._filterType
 
-	@filter.setter
-	def filter(self, value: filter) -> None:
-		self._filter = value
+	@filterType.setter
+	def filterType(self, value: Filter) -> None:
+		self._filterType = value
 
 	# Functions
 
@@ -199,8 +223,7 @@ class Magnifier:
 
 		:param x: Focus x
 		:param y: Focus y
-		:param targetWidth: Target width (defaults to screen width for fullscreen)
-		:param targetHeight: Target height (defaults to screen height for fullscreen)
+
 		Returns:
 			left, top, visibleWidth, visibleHeight: The position and size of the magnifier window.
 		"""
@@ -219,7 +242,7 @@ class Magnifier:
 
 		return (left, top, int(visibleWidth), int(visibleHeight))
 
-	def _getNvdaPosition(self) -> tuple[int, int]:
+	def _getCursorPosition(self) -> tuple[int, int]:
 		"""
 		Get the current review position as (x, y), falling back to navigator object if needed.
 		Tries to get the review position from NVDA's API, or the center of the navigator object.
@@ -259,10 +282,10 @@ class Magnifier:
 		Returns:
 			tuple[int, int]: The (x, y) coordinates of the focus element.
 		"""
-		nvdaPosition = self._getNvdaPosition()
-		mousePosition = self._mouseHandler.mousePosition
+		nvdaPosition = self._getCursorPosition()
+		mousePosition = winUser.getCursorPos()
 		# Check if left mouse button is pressed
-		isClickPressed = self._mouseHandler.isLeftClickPressed()
+		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
 
 		# Always update positions in background (keep them synchronized)
 		nvdaChanged = self.lastNVDAPosition != nvdaPosition
@@ -275,23 +298,23 @@ class Magnifier:
 
 		# During drag & drop, force focus on mouse
 		if isClickPressed:
-			self.lastFocusedObject = "mouse"
+			self.lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
 		# Check mouse first (mouse has priority) - when not dragging
 		if mouseChanged:
-			self.lastFocusedObject = "mouse"
+			self.lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
 		# Then check NVDA (only change focus if mouse didn't move)
 		if nvdaChanged:
-			self.lastFocusedObject = "nvda"
+			self.lastFocusedObject = FocusType.NVDA
 			return nvdaPosition
 
 		# Return current position of the focused object (no changes detected)
-		if self.lastFocusedObject == "nvda":
+		if self.lastFocusedObject == FocusType.NVDA:
 			return nvdaPosition
-		elif self.lastFocusedObject == "mouse":
+		elif self.lastFocusedObject == FocusType.MOUSE:
 			return mousePosition
 		else:
 			return mousePosition
