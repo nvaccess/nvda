@@ -40,10 +40,8 @@ An action has been added to view the full scan results on the VirusTotal website
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
-* Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
-* When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
-* The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
-* When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
+* Support for the MathPlayer software from Wiris has been removed. (#19239)
+* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 * Component updates:
   * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
@@ -52,14 +50,16 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
   * Updated Unicode CLDR to [version 48](https://cldr.unicode.org/downloads/cldr-48).
   Also added emoji localizations for Luxembourgish. (#19293, @OzancanKaratas)
   * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
+* Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
+* When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
+* When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
+* The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible.
 This technique is sometimes used to make content accessible to screen readers without it being visible visually.
 Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * A new "Privacy and Security" category has been added to NVDA's settings dialog.
 It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
-* Support for the MathPlayer software from Wiris has been removed. (#19239)
-* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
 ### Bug Fixes
 
