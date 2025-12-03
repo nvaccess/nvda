@@ -23,7 +23,6 @@ Windows 10 on ARM is also no longer supported.
   * This is generated locally on the device - no information is sent to the internet.
   * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
   * Another new unassigned command is available to toggle image captioning. (#18475)
-
 * Added the possibility to report when multiple items can be selected in a list control.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
@@ -36,6 +35,8 @@ An action has been added to view the full scan results on the VirusTotal website
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
+* Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
+This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
 
 ### Changes
 
@@ -48,16 +49,17 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
 * When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
 * Component updates:
-  * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
-    * Added Japanese (Rokuten Kanji) Braille.
-    * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
+  * Updated LibLouis Braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
+    * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
+    * Improvements to Slovakian, Norwegian, Hungarian, Portuguese 8-dot, Greek International, Biblical Hebrew and Unified English Braille.
   * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
   * Updated Unicode CLDR to [version 48](https://cldr.unicode.org/downloads/cldr-48).
   Also added emoji localizations for Luxembourgish. (#19293, @OzancanKaratas)
   * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
 * In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
-* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
+* A new "Privacy and Security" category has been added to NVDA's settings dialog.
+It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
 * Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 
@@ -199,6 +201,9 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * The `synthDrivers.sapi4` module has been removed.
   * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
   * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
+* The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
+* `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
+Use `config.configFlags.LoggingLevel` instead. (#19296)
 
 #### Deprecations
 
