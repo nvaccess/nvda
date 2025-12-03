@@ -45,10 +45,10 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
 * When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
 * Component updates:
-  * Updated LibLouis Braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
+  * Updated Liblouis to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
     * Improvements to Slovakian, Norwegian, Hungarian, Portuguese 8-dot, Greek International, Biblical Hebrew and Unified English Braille.
-  * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
+  * Updated BrlAPI for BRLTTY to version 0.8.7. (#18657, @LeonarddeR)
   * Updated Unicode CLDR to [version 48](https://cldr.unicode.org/downloads/cldr-48).
   Also added emoji localizations for Luxembourgish. (#19293, @OzancanKaratas)
   * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
@@ -87,30 +87,30 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
   * The changelog should document changes between previous and latest add-on versions, and can be formatted in markdown.
 * Updated components:
-  * Licensecheck to 2025.1 (#18728, @bramd)
-  * sphinx to 8.1.3 (#18475)
-  * pyright to 1.1.407 (#17749, #19162)
+  * LicenseCheck to 2025.1 (#18728, @bramd)
+  * Sphinx to 8.1.3 (#18475)
+  * Pyright to 1.1.407 (#17749, #19162)
     * enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis.
   * wxPython to 4.2.4 (#19080, #19196)
   * uv to 0.9.11 (#19162)
-  * ruff to 0.14.5 (#19162)
+  * Ruff to 0.14.5 (#19162)
   * comtypes to 1.4.13 (#19196)
   * cryptography to 46.0.3 (#19196)
-  * configobj to commit `9c8a0a80` (#19196)
+  * Configobj to commit `9c8a0a80` (#19196)
   * Requests to 2.32.5 (#19196)
   * url-normalize to 2.2.1 (#19196)
-  * pycaw to 20251023 (#19196)
+  * Pycaw to 20251023 (#19196)
   * nh3 to 0.3.2 (#19196)
-  * crowdin-api-client to 1.24.1 (#19196)
+  * Crowdin Python client to 1.24.1 (#19196)
   * Python-Markdown to 3.10 (#19196)
   * lxml to 6.0.2 (#19196)
-  * pymdown-extensions to 10.17.1 (#19196)
-  * setuptools to 80.9 (#19196)
-  * robotframework to 7.3.2 (#19196)
-  * ia2 to commit `c9ae003` (#19196)
-  * sonic to commit `d2cdb40` (#19196)
-  * w3c-aria-practices to commit `84b921a0` (#19196)
-  * wil to commit `7cf4193` (#19196)
+  * PyMdown Extensions to 10.17.1 (#19196)
+  * Setuptools to 80.9 (#19196)
+  * Robot Framework to 7.3.2 (#19196)
+  * IAccessible2 to commit `c9ae003` (#19196)
+  * Sonic to commit `d2cdb40` (#19196)
+  * WAI-ARIA Authoring Practices Guide to commit `84b921a0` (#19196)
+  * Windows Implementation Libraries (WIL) to commit `7cf4193` (#19196)
   * SCons to 4.10.1 (#19016, #19226, @LeonarddeR)
     * This introduces support to build NVDA with Visual Studio 2026.
 * X64 NVDAHelper libraries are now also built for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
