@@ -147,7 +147,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
   Call `speech.speech.getIndentToneDuration` instead. (#18898)
-* the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
+* the `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
@@ -174,15 +174,15 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * The`none` field has been renamed to `ftHandle`.
   * The `ftExceptionDecorator` function has been removed, with no public replacement.
   * The `_PY_*` functions have been replaced with `ftd2xx.FT_*` direct FFI bindings.
-  These bindings have type declarations, so are potentially incompatible with existin code.
+  These bindings have type declarations, so are potentially incompatible with existing code.
   * The following functions have been renamed:
     * `list_devices` to `listDevices`;
     * `create_device_info_list` to `createDeviceInfoList`;
     * `get_device_info_detail` to `getDeviceInfoDetail`;
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
-  * The following methods on the `FTD2XX` class have been   renamed:
-    * `set_baud_rate to`setBaudRate`;
+  * The following methods on the `FTD2XX` class have been renamed:
+    * `set_baud_rate` to`setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
@@ -271,7 +271,7 @@ Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
   Use `winBindings.user32.dll` instead. (#18883)
 * The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
   Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
-* `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION` have been moved from `winKernal` to `winBindings.kernel32`. (#18896)
+* `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION` have been moved from `winKernel` to `winBindings.kernel32`. (#18896)
 * `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE` have been moved from `wincon` to `winBindings.kernel32`. (#18896)
 * `appModuleHandler.processEntry32W` has been moved to `winBindings.kernel32.PROCESSENTRY32W`. (#18896)
 * `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
