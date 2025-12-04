@@ -17,7 +17,7 @@ NVDA messages from the local computer are now shown in braille when controlling 
 Spelling errors and the number of items in a list in browse mode can now be shown in braille.
 Other braille bug fixes, including in Microsoft Outlook and LibreOffice Writer, have also been added.
 
-In browse mode in web browsers, NVDA no longer treats controls with 0  width or height as invisible.
+In browse mode in web browsers, NVDA no longer treats controls with 0 width or height as invisible.
 This may make it possible to access previously inaccessible "screen reader only" content on some websites.
 Malformed links no longer prevent NVDA from reading content in Google Chrome and other Chromium-based browsers.
 The browse mode highlighter now appears on content recognition results, such as when using Windows OCR.
@@ -29,7 +29,7 @@ For add-ons that include one, you can also view an add-on's changelog.
 The reliability of background add-on updates has been improved.
 
 A new "Privacy and Security" category has been added to NVDA's settings dialog.
-The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings have  been moved here from the "General" category.
+The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings have been moved here from the "General" category.
 The settings for Screen Curtain have also been moved here from the "Vision" category.
 Additionally, Screen Curtain's settings are now configuration profile independent.
 
@@ -38,7 +38,7 @@ Added tables for English Grade 3, Japanese (Rokuten Kanji), and Macedonian uncon
 Improved the Biblical Hebrew, Unified English Braille, Greek International, Hungarian, Norwegian, Portuguese 8-dot and Slovakian braille tables.
 Emoji localizations for Luxembourgish have been added.
 
-There have also been many other bug fixes and  improvements.
+There have also been many other bug fixes and improvements.
 
 ### Important notes
 
