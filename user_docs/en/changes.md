@@ -21,7 +21,7 @@ In browse mode in web browsers, NVDA no longer treats controls with 0 width or h
 This may make it possible to access previously inaccessible "screen reader only" content on some websites.
 Malformed links no longer prevent NVDA from reading content in Google Chrome and other Chromium-based browsers.
 The browse mode highlighter now appears on content recognition results, such as when using Windows OCR.
-And in Microsoft Word, unassigned Quick Navigation commands to jump to references have been added.
+In Microsoft Word, unassigned Quick Navigation commands to jump to references have been added.
 They are also now shown in the elements list.
 
 It is now possible to view virus scan results for an add-on from the Add-on Store.
