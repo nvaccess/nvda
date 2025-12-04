@@ -21,6 +21,8 @@ In browse mode in web browsers, NVDA no longer treats controls with 0  width or 
 This may make it possible to access previously inaccessible "screen reader only" content on some websites.
 Malformed links no longer prevent NVDA from reading content in Google Chrome and other Chromium-based browsers.
 The browse mode highlighter now appears on content recognition results, such as when using Windows OCR.
+And in Microsoft Word, unassigned Quick Navigation commands to jump to references have been added.
+They are also now shown in the elements list.
 
 It is now possible to view virus scan results for an add-on from the Add-on Store.
 For add-ons that include one, you can also view an add-on's changelog.
@@ -67,8 +69,8 @@ This can be enabled using the "Report when objects support multiple selection" s
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
-* Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
-This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
+* Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
+Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 
 ### Changes
 
