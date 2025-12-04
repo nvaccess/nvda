@@ -78,7 +78,12 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		wx.CallAfter(ui.message, pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
 	else:
-		wx.CallAfter(ui.message, description)
+		wx.CallAfter(
+			ui.message,
+			# Translators: Presented when an AI image description has been generated.
+			# {description} will be replaced with the generated image description.
+			pgettext("imageDesc", "Could be {description}").format(description=description),
+		)
 
 
 class ImageDescriber:
