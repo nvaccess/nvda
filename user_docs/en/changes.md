@@ -53,24 +53,24 @@ Windows 10 on ARM is also no longer supported.
 
 ### New Features
 
-* NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
-  * Press `NVDA+g` to get an AI generated image description.
-  * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
-* Added the possibility to report when multiple items can be selected in a control such as a list.
-This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
-* In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
-* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
-* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
-* Spelling errors can now be shown in braille. (#7608, @nvdaes)
 * In the Add-on Store:
   * VirusTotal scan results are now available in the details for an add-on.
   An action has been added to view the full scan results on the VirusTotal website. (#18974)
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
-* Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
-* Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
+* NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
+  * Press `NVDA+g` to get an AI generated image description.
+  * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
 Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
+* In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
+* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
+* Spelling errors can now be shown in braille. (#7608, @nvdaes)
+* Added the possibility to report when multiple items can be selected in a control such as a list.
+This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
+* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
+* Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
+* Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 
 ### Changes
 
