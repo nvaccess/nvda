@@ -4,7 +4,7 @@
 
 This release includes built-in support for reading math content with MathCAT.
 It also introduces experimental, on-device AI image descriptions.
-You can now use `NVDA+g` to describe images you encounter.
+You can now use `NVDA+g` to get a short, approximate description of images you encounter, without any data leaving your device.
 
 There have been several improvements to speech.
 Spelling errors can now be reported with a sound instead of speech when reading.
