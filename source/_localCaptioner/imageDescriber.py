@@ -22,6 +22,7 @@ import api
 from keyboardHandler import KeyboardInputGesture
 from NVDAState import WritePaths
 import core
+from tones import beep
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
@@ -29,6 +30,9 @@ from .captioner import imageCaptionerFactory
 
 # Module-level configuration
 _localCaptioner = None
+_beepInterval = 2 # The unit is 0.1s 
+_beepHz = 300
+_beepLength = 100
 
 
 def _screenshotNavigator() -> bytes:
@@ -111,30 +115,60 @@ class ImageDescriber:
 
 		:param gesture: The input gesture that triggered this script.
 		"""
-		self._doCaption()
+		self._prepareCaption()
 
-	def _doCaption(self) -> None:
-		"""Real logic to run image captioning on the current navigator object."""
+	def _prepareCaption(self) -> None:
+		"""Preparations for running image captions on the current Navigator object."""
+		if not self.isModelLoaded:
+			# Directly load the model here(session only), it may take a while
+			self.loadModelInBackground()
+
 		imageData = _screenshotNavigator()
 
-		if not self.isModelLoaded:
-			from gui._localCaptioner.messageDialogs import openEnableOnceDialog
-
-			# Ask to enable image desc only in this session, No configuration modifications
-			wx.CallAfter(openEnableOnceDialog)
-			return
-
+		# Ensure that only one thread is describing the image
 		if self.captionThread is not None and self.captionThread.is_alive():
 			return
 
 		self.captionThread = threading.Thread(
+			target=self._pollCaptionn,
+			args=(imageData,),
+			name="captionThread",
+		)
+		beep(_beepHz, _beepLength)
+		log.debug("starting caption thread")
+		self.captionThread.start()
+
+	def _pollCaptionn(self, imageData: bytes) -> None:
+		"""Poll to load the model and run caption to get the results.
+
+		:param imageData: The image data to caption.
+		"""
+		# Ensure model is loaded 
+		i = 0
+		while self.loadModelThread is not None and self.loadModelThread.is_alive():
+			self.loadModelThread.join(0.1)
+			i+=1
+			if i % _beepInterval == 0:
+				beep(_beepHz, _beepLength)
+
+		# Check if model is successfully loaded
+		if self.captioner is None:
+			log.debug("Captioner not found.")
+			return
+
+		
+		pollThread = threading.Thread(
 			target=_messageCaption,
 			args=(self.captioner, imageData),
 			name="RunCaptionThread",
 		)
-		# Translators: Message when starting image recognition
-		ui.message(pgettext("imageDesc", "getting image description..."))
-		self.captionThread.start()
+		pollThread.start()
+
+		while pollThread.is_alive():
+			pollThread.join(0.1)
+			i+=1
+			if i % _beepInterval == 0:
+				beep(_beepHz, _beepLength)
 
 	def _loadModel(self, localModelDirPath: str | None = None) -> None:
 		"""Load the ONNX model for image captioning.

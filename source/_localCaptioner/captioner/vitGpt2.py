@@ -87,9 +87,13 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			self.encoderSession = ort.InferenceSession(encoderPath, sess_options=sessionOptions)
 			self.decoderSession = ort.InferenceSession(decoderPath, sess_options=sessionOptions)
 		except (
+			# Model  file incomplete
 			ort.capi.onnxruntime_pybind11_state.InvalidProtobuf,
 			ort.capi.onnxruntime_pybind11_state.NoSuchFile,
+			# Model file still downloading
+			ort.capi.onnxruntime_pybind11_state.Fail,
 		) as e:
+			log.debug("model file incomplete")
 			raise FileNotFoundError(
 				"model file incomplete"
 				f" Please check whether the file is complete or re-download. Original error: {e}",
