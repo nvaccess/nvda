@@ -3,7 +3,7 @@
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
-It also introduces on-device AI image descriptions.
+It also introduces experimental, on-device AI image descriptions.
 You can now use `NVDA+g` to describe images you encounter.
 
 There have been several improvements to speech.
@@ -59,6 +59,9 @@ Windows 10 on ARM is also no longer supported.
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
 * NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
+  * This feature is experimental, and should not be used in situations where inaccurate descriptions could cause harm.
+  * To use this feature, NVDA will need to download image description data.
+  Thereafter, it operates entirely offline.
   * Press `NVDA+g` to get an AI generated image description.
   * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
