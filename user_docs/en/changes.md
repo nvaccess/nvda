@@ -67,6 +67,8 @@ This can be enabled using the "Report when objects support multiple selection" s
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
+* Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
+This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
 
 ### Changes
 

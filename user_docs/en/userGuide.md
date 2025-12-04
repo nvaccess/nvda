@@ -1080,6 +1080,7 @@ Here is a list of available commands:
 * Menu item
 * Toggle button
 * Progress bar
+* Reference
 * Math formula
 * Vertically aligned paragraph
 * Same style text
