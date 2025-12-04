@@ -54,8 +54,8 @@ Windows 10 on ARM is also no longer supported.
 * NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
   * Press `NVDA+g` to get an AI generated image description.
   * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
-* Added the possibility to report when multiple items can be selected in a list control.
-This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
+* Added the possibility to report when multiple items can be selected in a control such as a list.
+This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
