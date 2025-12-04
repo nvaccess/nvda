@@ -30,7 +30,7 @@ from .captioner import imageCaptionerFactory
 
 # Module-level configuration
 _localCaptioner = None
-_beepInterval = 2 # The unit is 0.1s 
+_beepInterval = 2  # The unit is 0.1s
 _beepHz = 300
 _beepLength = 100
 
@@ -143,11 +143,11 @@ class ImageDescriber:
 
 		:param imageData: The image data to caption.
 		"""
-		# Ensure model is loaded 
+		# Ensure model is loaded
 		i = 0
 		while self.loadModelThread is not None and self.loadModelThread.is_alive():
 			self.loadModelThread.join(0.1)
-			i+=1
+			i += 1
 			if i % _beepInterval == 0:
 				beep(_beepHz, _beepLength)
 
@@ -156,7 +156,6 @@ class ImageDescriber:
 			log.debug("Captioner not found.")
 			return
 
-		
 		pollThread = threading.Thread(
 			target=_messageCaption,
 			args=(self.captioner, imageData),
@@ -166,7 +165,7 @@ class ImageDescriber:
 
 		while pollThread.is_alive():
 			pollThread.join(0.1)
-			i+=1
+			i += 1
 			if i % _beepInterval == 0:
 				beep(_beepHz, _beepLength)
 
