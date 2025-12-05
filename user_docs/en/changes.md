@@ -330,7 +330,6 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
 * A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
 * A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
-
 ### Changes
 
 * Component updates:

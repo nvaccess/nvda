@@ -3047,7 +3047,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles beeps that report mouse coordinates as the mouse moves"),
 		category=SCRCAT_MOUSE,
 	)
-	def script_toggleMouseAudioCoordinates(self, gesture):
+	def script_toggleMouseAudioCoordinates(self, gesture: inputCore.InputGetsture):
 		# Translators: Reported when mouse audio coordinates are toggled on.
 		enabledMsg = _("Mouse audio coordinates on")
 		# Translators: Reported when mouse audio coordinates are toggled off.
