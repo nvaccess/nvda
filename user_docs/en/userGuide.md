@@ -3157,7 +3157,7 @@ This option allows you to configure how spelling and grammar errors are reported
 This checklist box has three options:
 
 * Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
-* Sound: NVDA will play a short buzzer or glitch sound when a spelling or grammar error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text
 When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
 * Braille: NVDA will indicate spelling or grammar errors in braille.
 To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
