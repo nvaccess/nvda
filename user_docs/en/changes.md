@@ -333,6 +333,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 * A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
 * A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
+* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 

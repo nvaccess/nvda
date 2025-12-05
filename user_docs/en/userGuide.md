@@ -952,6 +952,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
+|Toggle mouse audio coordinates |none |none |none |Toggles whether NVDA plays audio beeps that report the mouse position as it moves.|
 
 <!-- KC:endInclude -->
 
@@ -2811,6 +2812,7 @@ Note that the announcement of some object details might be dependent on how othe
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
 The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
+You can also assign a custom gesture in the Mouse category of the Input Gestures dialog to toggle this option.
 
 ##### Brightness controls audio coordinates volume {#MouseSettingsBrightness}
 
