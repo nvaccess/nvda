@@ -34,6 +34,7 @@ import braille
 import brailleInput
 import brailleTables
 import characterProcessing
+import magnifier.config as magnifier
 import config
 import core
 import globalVars
@@ -5914,6 +5915,147 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class MagnifierPanel(SettingsPanel):
+	# Translators: This is the label for the magnifier settings panel.
+	title = _("Magnifier")
+	helpId = "MagnifierSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# ZOOM SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default zoom level.
+		defaultZoomLabelText = _("Default &zoom level:")
+
+		# Create zoom level choices from 1.0 to 10.0 with 0.5 steps
+		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5
+		# Translators: zoom level for magnifier. e.g. 2.5x
+		zoomChoices = [
+			pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}") for value in zoomValues
+		]
+
+		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
+		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
+
+		# Store zoom values for later use
+		self.zoomValues = zoomValues
+
+		# FILTER SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default filter
+		defaultFilterLabelText = _("Default &filter:")
+		try:
+			from magnifier.utils.filterHandler import Filter
+		except ImportError:
+			Filter = None
+		filterChoices = [f.displayString for f in Filter]
+		self.defaultFilterList = sHelper.addLabeledControl(
+			defaultFilterLabelText, wx.Choice, choices=filterChoices
+		)
+		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default fullscreen mode
+		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		try:
+			from magnifier.fullscreenMagnifier import FullScreenMode
+		except ImportError:
+			FullScreenMode = None
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.defaultFullscreenModeList = sHelper.addLabeledControl(
+			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
+		)
+		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
+
+		# KEEP MOUSE CENTERED
+		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
+		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
+		self.bindHelpEvent("magnifierKeepMouseCentered", self.keepMouseCenteredCheckBox)
+
+		# SAVE SHORTCUT CHANGES
+		# Translators: The label for a checkbox to save modifications made via shortcuts
+		saveShortcutChangesText = _("Save &modifications made with input gestures")
+		self.saveShortcutChangesCheckBox = sHelper.addItem(wx.CheckBox(self, label=saveShortcutChangesText))
+		self.bindHelpEvent("magnifierSaveShortcutChanges", self.saveShortcutChangesCheckBox)
+
+		# Set current value from config
+		self._updateCurrentSelection()
+
+	def _updateCurrentSelection(self):
+		"""Update the selection"""
+		# ZOOM
+
+		# Get current zoom level from magnifier module
+		currentZoom = magnifier.getCurrentZoomLevel()
+
+		# Find the closest match in our zoom values
+		closestIndex = 0
+		minDifference = abs(self.zoomValues[0] - currentZoom)
+
+		for i, value in enumerate(self.zoomValues):
+			difference = abs(value - currentZoom)
+			if difference < minDifference:
+				minDifference = difference
+				closestIndex = i
+
+		self.defaultZoomList.SetSelection(closestIndex)
+
+		# FILTER
+
+		# Get current filter from magnifier module
+		currentFilter = magnifier.getCurrentFilter()
+
+		if currentFilter in self.defaultFilterList.GetStrings():
+			self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
+		else:
+			self.defaultFilterList.SetSelection(0)
+
+		# FULLSCREEN MODE
+
+		currentFullscreenMode = magnifier.getCurrentFullscreenMode()
+
+		if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
+			self.defaultFullscreenModeList.SetSelection(
+				self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
+			)
+		else:
+			self.defaultFullscreenModeList.SetSelection(0)
+
+		# KEEP MOUSE CENTERED
+
+		keepMouseCentered = magnifier.shouldKeepMouseCentered()
+		self.keepMouseCenteredCheckBox.SetValue(keepMouseCentered)
+
+		# SAVE SHORTCUT CHANGES
+
+		saveShortcutChanges = magnifier.shouldSaveShortcutChanges()
+		self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
+
+	def onPanelActivated(self):
+		"""Called when the panel is activated/shown."""
+		super().onPanelActivated()
+		# Refresh the selection when panel is shown
+		self._updateCurrentSelection()
+
+	def onSave(self):
+		# Use magnifier.config functions to save settings
+		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
+		magnifier.setDefaultZoomLevel(selectedZoom)
+
+		from magnifier.utils.filterHandler import Filter
+
+		selectedFilterIdx = self.defaultFilterList.GetSelection()
+		magnifier.setDefaultFilter(list(Filter)[selectedFilterIdx].displayString)
+
+		from magnifier.fullscreenMagnifier import FullScreenMode
+
+		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
+		magnifier.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx].displayString)
+
+		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
+
+
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
@@ -6095,6 +6237,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		MagnifierPanel,
 		MathSettingsPanel,
 		RemoteSettingsPanel,
 		LocalCaptionerSettingsPanel,

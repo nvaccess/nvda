@@ -13,12 +13,14 @@ from typing import (
 	Tuple,
 	Union,
 )
+import magnifier
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
 )
 
 import audioDucking
+import magnifier.commands
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -4947,6 +4949,72 @@ class GlobalCommands(ScriptableObject):
 					)
 					return
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+w",
+	)
+	def script_toggleMagnifier(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.toggleMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"increases the magnification level of the magnifier."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+b",
+	)
+	def script_zoomIn(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.zoomIn()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"decreases the magnification level of the magnifier."
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+n",
+	)
+	def script_zoomOut(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.zoomOut()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"toggle filter of the magnifier"
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+f",
+	)
+	def script_toggleFilter(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"toggle fullscreen mode of the magnifier"
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+m",
+	)
+	def script_toggleFullscreenMode(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.toggleFullscreenMode()
+
+	@script(
+		description=_(
+			# Translators: Describe a command.
+			"launch spotlight if magnifier is fullscreen"
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+l",
+	)
+	def script_startSpotlight(self, gesture: inputCore.InputGesture) -> None:
+		magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(
