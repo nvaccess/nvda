@@ -27,8 +27,8 @@ Windows 10 on ARM is also no longer supported.
 This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
-* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
-* Spelling errors can be reported in braille. (#7608, @nvdaes)
+* While reading text, spelling and grammar errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79, @nvdaes)
+* Spelling and grammar errors can be reported in braille. (#7608, @nvdaes)
 * VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
 An action has been added to view the full scan results on the VirusTotal website. (#18974)
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)

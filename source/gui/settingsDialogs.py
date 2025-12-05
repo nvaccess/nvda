@@ -3159,7 +3159,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self._spellingErrorsChecklist = docInfoGroup.addLabeledControl(
 			# Translators: This is the label for a checklist in the
 			# document formatting settings panel.
-			_("Spelling e&rrors"),
+			_("Spelling or grammar e&rrors"),
 			nvdaControls.CustomCheckListBox,
 			choices=[i.displayString for i in ReportSpellingErrors],
 		)
