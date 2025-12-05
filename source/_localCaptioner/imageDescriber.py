@@ -164,7 +164,7 @@ class ImageDescriber:
 		pollThread.start()
 
 		while pollThread.is_alive():
-			pollThread.join(0.1)
+			pollThread.join(timeout=0.1)
 			i += 1
 			if i % _beepInterval == 0:
 				beep(_beepHz, _beepLength)
