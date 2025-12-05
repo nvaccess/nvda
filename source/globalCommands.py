@@ -832,8 +832,6 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
-		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
-			return
 		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.

@@ -3075,7 +3075,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		:param enable: ``True`` if automatic scroll should be enabled, ``False`` otherwise.
 		"""
 
-		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
+		if not self.enabled:
 			return
 		if enable and self._autoScrollCallLater is None:
 			self._autoScrollCallLater = wx.CallLater(self._calculateAutoScrollTimeout(), self.scrollForward)
