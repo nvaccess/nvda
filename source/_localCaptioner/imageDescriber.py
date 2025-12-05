@@ -118,9 +118,9 @@ class ImageDescriber:
 		self._prepareCaption()
 
 	def _prepareCaption(self) -> None:
-		"""Preparations for running image captions on the current Navigator object."""
+		"""Preparations for running image captions on the current navigator object."""
 		if not self.isModelLoaded:
-			# Directly load the model here(session only), it may take a while
+			# Directly load the model here (session only), it may take a while
 			self.loadModelInBackground()
 
 		imageData = _screenshotNavigator()
