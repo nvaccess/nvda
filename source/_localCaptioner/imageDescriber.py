@@ -97,6 +97,7 @@ class ImageDescriber:
 		self.captioner: ImageCaptioner | None = None
 		self.captionThread: Thread | None = None
 		self.loadModelThread: Thread | None = None
+		self.isModelDownloading = False
 
 		enable = config.conf["automatedImageDescriptions"]["enable"]
 		# Load model when initializing (may cause high memory usage)
@@ -129,8 +130,11 @@ class ImageDescriber:
 		if self.captionThread is not None and self.captionThread.is_alive():
 			return
 
+		if self.isModelDownloading:
+			return
+
 		self.captionThread = threading.Thread(
-			target=self._pollCaptionn,
+			target=self._pollCaption,
 			args=(imageData,),
 			name="captionThread",
 		)
@@ -184,6 +188,9 @@ class ImageDescriber:
 		encoderPath = f"{localModelDirPath}/onnx/encoder_model_quantized.onnx"
 		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
 		configPath = f"{localModelDirPath}/config.json"
+		
+		# Mark each time the model is loading
+		self.isModelDownloading = False
 
 		try:
 			self.captioner = imageCaptionerFactory(
@@ -193,6 +200,10 @@ class ImageDescriber:
 			)
 		except FileNotFoundError:
 			self.isModelLoaded = False
+			# Should be set before prepareCaptioner checks
+			# If not, the user will hear an extra beep 
+			# and incur the overhead of starting a thread one more time.
+			self.isModelDownloading = True
 			from gui._localCaptioner.messageDialogs import ImageDescDownloader
 
 			descDownloader = ImageDescDownloader()
