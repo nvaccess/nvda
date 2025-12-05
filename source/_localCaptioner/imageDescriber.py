@@ -138,7 +138,7 @@ class ImageDescriber:
 		log.debug("starting caption thread")
 		self.captionThread.start()
 
-	def _pollCaptionn(self, imageData: bytes) -> None:
+	def _pollCaption(self, imageData: bytes) -> None:
 		"""Poll to load the model and run caption to get the results.
 
 		:param imageData: The image data to caption.
