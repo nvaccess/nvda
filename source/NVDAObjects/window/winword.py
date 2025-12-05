@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
 # Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 import ctypes
@@ -14,7 +14,6 @@ from typing import (
 	Self,
 	TYPE_CHECKING,
 )
-
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -635,6 +634,36 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return _("spelling: {text}").format(text=text)
 
 
+class WordDocumentReferenceQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(
+		self,
+		item: comtypes.client.lazybind.Dispatch,
+	) -> comtypes.client.lazybind.Dispatch:
+		return item.reference
+
+
+class WordDocumentFootnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
+	@property
+	def label(self) -> str:
+		number = self.collectionItem.index
+		text = self.collectionItem.range.text
+		# Translators: The label shown for a footnote reference in the NVDA Elements List dialog in Microsoft Word.
+		# {number} will be replaced with the footnote number.
+		# {text} will be replaced with the text in the footnote.
+		return _("footnote reference {number}: {text}").format(number=number, text=text)
+
+
+class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
+	@property
+	def label(self) -> str:
+		number = self.collectionItem.index
+		text = self.collectionItem.range.text
+		# Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
+		# {number} will be replaced with the endnote number.
+		# {text} will be replaced with the text in the footnote.
+		return _("endnote reference {number}: {text}").format(number=number, text=text)
+
+
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -751,6 +780,23 @@ class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIt
 
 	def collectionFromRange(self, rangeObj):
 		return rangeObj.spellingErrors
+
+
+class FootnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass = WordDocumentFootnoteQuickNavItem
+
+	def collectionFromRange(
+		self,
+		rangeObj: comtypes.client.lazybind.Dispatch,
+	) -> comtypes.client.lazybind.Dispatch:
+		return rangeObj.footnotes
+
+
+class EndnoteWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass = WordDocumentEndnoteQuickNavItem
+
+	def collectionFromRange(self, rangeObj):
+		return rangeObj.endnotes
 
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
@@ -1523,6 +1569,22 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 				rangeObj,
 				includeCurrent,
 			).iterate()
+		elif nodeType == "reference":
+			footnotes = FootnoteWinWordCollectionQuicknavIterator(
+				nodeType,
+				self,
+				direction,
+				rangeObj,
+				includeCurrent,
+			).iterate()
+			endnotes = EndnoteWinWordCollectionQuicknavIterator(
+				nodeType,
+				self,
+				direction,
+				rangeObj,
+				includeCurrent,
+			).iterate()
+			return browseMode.mergeQuickNavItemIterators([footnotes, endnotes], direction)
 		elif nodeType == "graphic":
 			return GraphicWinWordCollectionQuicknavIterator(
 				nodeType,
@@ -2161,4 +2223,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("error", _("&Errors")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("reference", _("&References")),
 	)

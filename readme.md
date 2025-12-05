@@ -10,7 +10,7 @@ The NVDA project is guided by a [product vision statement and set of principles]
 The vision and principles should be always considered when planning features and prioritizing work.
 NV Access also maintains a [development roadmap](https://www.nvaccess.org/post/nvda-roadmap/) of NVDA features and supporting infrastructure work.
 
-NVDA is available under a modified GNU General Public License version 2.
+NVDA is available under a modified GNU General Public License version 2 or later.
 Please refer to [our license](./copying.txt) for more information.
 
 ## Acknowledgements

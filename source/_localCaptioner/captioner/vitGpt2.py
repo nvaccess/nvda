@@ -7,6 +7,7 @@ import os
 import json
 import re
 import io
+from functools import lru_cache
 
 import numpy as np
 from PIL import Image
@@ -357,6 +358,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		# Decode generated text
 		return self._decodeTokens(generatedTokens)
 
+	@lru_cache()
 	def generateCaption(
 		self,
 		image: str | bytes,
