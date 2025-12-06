@@ -23,6 +23,7 @@ from keyboardHandler import KeyboardInputGesture
 from NVDAState import WritePaths
 import core
 from tones import beep
+from controlTypes import Role, State
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
@@ -33,6 +34,28 @@ _localCaptioner = None
 _beepInterval = 2  # The unit is 0.1s
 _beepHz = 300
 _beepLength = 100
+
+
+def _isNavigatorExpected() -> bool:
+	""" Check whether the current navigation object is of the expected type
+	
+	:return: Whether it is an element of the expected type
+	"""
+	# Get the currently focused object on screen
+	obj = api.getNavigatorObject()
+
+	# todo: Choose whether to recognize elements other than images based on configuration
+	if obj.role != Role.GRAPHIC:
+		# Translators: message when trying to describe an element that is not an image
+		ui.message(pgettext("imageDesc", "This is not an image"))
+		return False
+
+	if State.OFFSCREEN in obj.states:
+		# Translator: Message when image is off screen
+		ui.message(pgettext("imageDesc", "Image off screen"))
+		return False
+
+	return True
 
 
 def _screenshotNavigator() -> bytes:
@@ -120,6 +143,9 @@ class ImageDescriber:
 
 	def _prepareCaption(self) -> None:
 		"""Preparations for running image captions on the current navigator object."""
+		if not _isNavigatorExpected():
+			return 
+			
 		if not self.isModelLoaded:
 			# Directly load the model here (session only), it may take a while
 			self.loadModelInBackground()
