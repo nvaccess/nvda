@@ -37,8 +37,8 @@ _beepLength = 100
 
 
 def _isNavigatorExpected() -> bool:
-	""" Check whether the current navigation object is of the expected type
-	
+	"""Check whether the current navigation object is of the expected type
+
 	:return: Whether it is an element of the expected type
 	"""
 	# Get the currently focused object on screen
@@ -144,8 +144,8 @@ class ImageDescriber:
 	def _prepareCaption(self) -> None:
 		"""Preparations for running image captions on the current navigator object."""
 		if not _isNavigatorExpected():
-			return 
-			
+			return
+
 		if not self.isModelLoaded:
 			# Directly load the model here (session only), it may take a while
 			self.loadModelInBackground()
