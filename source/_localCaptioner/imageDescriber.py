@@ -22,6 +22,8 @@ import api
 from keyboardHandler import KeyboardInputGesture
 from NVDAState import WritePaths
 import core
+from tones import beep
+from controlTypes import Role, State
 
 from .captioner import ImageCaptioner
 from .captioner import imageCaptionerFactory
@@ -29,6 +31,31 @@ from .captioner import imageCaptionerFactory
 
 # Module-level configuration
 _localCaptioner = None
+_beepInterval = 2  # The unit is 0.1s
+_beepHz = 300
+_beepLength = 100
+
+
+def _isNavigatorExpected() -> bool:
+	"""Check whether the current navigation object is of the expected type
+
+	:return: Whether it is an element of the expected type
+	"""
+	# Get the currently focused object on screen
+	obj = api.getNavigatorObject()
+
+	# todo: Choose whether to recognize elements other than images based on configuration
+	if obj.role != Role.GRAPHIC:
+		# Translators: message when trying to describe an element that is not an image
+		ui.message(pgettext("imageDesc", "This is not an image"))
+		return False
+
+	if State.OFFSCREEN in obj.states:
+		# Translator: Message when image is off screen
+		ui.message(pgettext("imageDesc", "Image off screen"))
+		return False
+
+	return True
 
 
 def _screenshotNavigator() -> bytes:
@@ -93,6 +120,7 @@ class ImageDescriber:
 		self.captioner: ImageCaptioner | None = None
 		self.captionThread: Thread | None = None
 		self.loadModelThread: Thread | None = None
+		self.isModelDownloading = False
 
 		enable = config.conf["automatedImageDescriptions"]["enable"]
 		# Load model when initializing (may cause high memory usage)
@@ -111,30 +139,65 @@ class ImageDescriber:
 
 		:param gesture: The input gesture that triggered this script.
 		"""
-		self._doCaption()
+		self._prepareCaption()
 
-	def _doCaption(self) -> None:
-		"""Real logic to run image captioning on the current navigator object."""
-		imageData = _screenshotNavigator()
-
-		if not self.isModelLoaded:
-			from gui._localCaptioner.messageDialogs import openEnableOnceDialog
-
-			# Ask to enable image desc only in this session, No configuration modifications
-			wx.CallAfter(openEnableOnceDialog)
+	def _prepareCaption(self) -> None:
+		"""Preparations for running image captions on the current navigator object."""
+		if not _isNavigatorExpected():
 			return
 
+		if not self.isModelLoaded:
+			# Directly load the model here (session only), it may take a while
+			self.loadModelInBackground()
+
+		imageData = _screenshotNavigator()
+
+		# Ensure that only one thread is describing the image
 		if self.captionThread is not None and self.captionThread.is_alive():
 			return
 
+		if self.isModelDownloading:
+			return
+
 		self.captionThread = threading.Thread(
+			target=self._pollCaption,
+			args=(imageData,),
+			name="captionThread",
+		)
+		beep(_beepHz, _beepLength)
+		log.debug("starting caption thread")
+		self.captionThread.start()
+
+	def _pollCaption(self, imageData: bytes) -> None:
+		"""Poll to load the model and run caption to get the results.
+
+		:param imageData: The image data to caption.
+		"""
+		# Ensure model is loaded
+		i = 0
+		while self.loadModelThread is not None and self.loadModelThread.is_alive():
+			self.loadModelThread.join(0.1)
+			i += 1
+			if i % _beepInterval == 0:
+				beep(_beepHz, _beepLength)
+
+		# Check if model is successfully loaded
+		if self.captioner is None:
+			log.debug("Captioner not found.")
+			return
+
+		pollThread = threading.Thread(
 			target=_messageCaption,
 			args=(self.captioner, imageData),
 			name="RunCaptionThread",
 		)
-		# Translators: Message when starting image recognition
-		ui.message(pgettext("imageDesc", "getting image description..."))
-		self.captionThread.start()
+		pollThread.start()
+
+		while pollThread.is_alive():
+			pollThread.join(timeout=0.1)
+			i += 1
+			if i % _beepInterval == 0:
+				beep(_beepHz, _beepLength)
 
 	def _loadModel(self, localModelDirPath: str | None = None) -> None:
 		"""Load the ONNX model for image captioning.
@@ -152,6 +215,9 @@ class ImageDescriber:
 		decoderPath = f"{localModelDirPath}/onnx/decoder_model_merged_quantized.onnx"
 		configPath = f"{localModelDirPath}/config.json"
 
+		# Mark each time the model is loading
+		self.isModelDownloading = False
+
 		try:
 			self.captioner = imageCaptionerFactory(
 				encoderPath=encoderPath,
@@ -160,6 +226,10 @@ class ImageDescriber:
 			)
 		except FileNotFoundError:
 			self.isModelLoaded = False
+			# Should be set before prepareCaptioner checks
+			# If not, the user will hear an extra beep
+			# and incur the overhead of starting a thread one more time.
+			self.isModelDownloading = True
 			from gui._localCaptioner.messageDialogs import ImageDescDownloader
 
 			descDownloader = ImageDescDownloader()
