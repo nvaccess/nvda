@@ -4184,7 +4184,7 @@ This feature allows NVDA to describe images encountered during navigation.
 Warning: AI image descriptions are an experimental feature.
 Image descriptions generated with this feature may not be accurate.
 You must not use this feature in circumstances where inaccurate results could reasonably be expected to cause harm.
-Always exercise caution and scepticism when interpreting AI image descriptions.
+Always exercise caution and skepticism when interpreting AI image descriptions.
 
 Note: An internet connection is required to enable and install the Image Captioner for the first time.
 It is not included with the NVDA installer to reduce the installer size.
