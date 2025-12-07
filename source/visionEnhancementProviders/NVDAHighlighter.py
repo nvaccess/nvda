@@ -8,7 +8,7 @@
 import threading
 import weakref
 from ctypes import WinError, byref
-from ctypes.wintypes import MSG
+from ctypes.wintypes import MSG, RECT
 from typing import TYPE_CHECKING, NamedTuple, override
 
 import api
@@ -127,6 +127,9 @@ class HighlightWindow(CustomWindow):
 		):
 			raise WinError()
 		user32.ShowWindow(self.handle, winUser.SW_SHOWNA)
+		# Location changed, force a full refresh
+		self._prevContextRects = {}
+		user32.InvalidateRect(self.handle, None, True)
 
 	def __init__(self, highlighter: "NVDAHighlighter"):
 		if vision._isDebug():
@@ -138,6 +141,9 @@ class HighlightWindow(CustomWindow):
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
+		# Store the rendered rects from the previous frame to calculate dirty regions
+		self._prevContextRects: dict[Context, RectLTRB] = {}
+
 		winUser.SetLayeredWindowAttributes(
 			self.handle,
 			self.transparentColor,
@@ -170,12 +176,11 @@ class HighlightWindow(CustomWindow):
 			# wx might not be aware of the display change at this point
 			core.callLater(100, self.updateLocationForDisplays)
 
-	def _paint(self):
-		highlighter = self.highlighterRef()
-		if not highlighter:
-			# The highlighter instance died unexpectedly, kill the window as well
-			user32.PostQuitMessage(0)
-			return
+	def _getDrawRects(self, highlighter: "NVDAHighlighter") -> dict[Context, RectLTRB]:
+		"""
+		Calculates the logical rectangles that should be drawn based on the highlighter's state.
+		Handles logic like merging Focus and Navigator if they overlap.
+		"""
 		contextRects: dict[Context, RectLTRB] = {}
 		for context in highlighter.enabledContexts:
 			rect = highlighter.contextToRectMap.get(context)
@@ -190,24 +195,48 @@ class HighlightWindow(CustomWindow):
 				_ = contextRects.pop(Context.NAVIGATOR, None)
 				context = Context.FOCUS_NAVIGATOR
 			contextRects[context] = rect
+		return contextRects
+
+	def _mapRectToClient(self, rect: RectLTRB, style: HighlightStyle) -> RectLTRB | None:
+		"""
+		Transforms a screen rectangle to a client rectangle ready for drawing.
+		Applies: Intersection with Window -> Logical mapping -> Client mapping -> Style Margin.
+		Returns None if mapping fails.
+		"""
+		# Before calculating logical coordinates,
+		# make sure the rectangle falls within the highlighter window
+		rect = rect.intersection(self.location)
+
+		try:
+			rect = rect.toLogical(self.handle)
+			rect = rect.toClient(self.handle)
+			rect = rect.expandOrShrink(style.margin)
+			return rect
+		except RuntimeError:
+			# Usually happens if window handle is invalid or screen conversion fails
+			log.debugWarning("", exc_info=True)
+			return None
+
+	def _paint(self):
+		highlighter = self.highlighterRef()
+		if not highlighter:
+			# The highlighter instance died unexpectedly, kill the window as well
+			user32.PostQuitMessage(0)
+			return
+
+		# Get the rects we intend to draw
+		contextRects = self._getDrawRects(highlighter)
+
 		if not contextRects:
 			return
+
 		with winUser.paint(self.handle) as hdc:
 			with winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
 				for context, rect in contextRects.items():
 					HighlightStyle = highlighter._ContextStyles[context]
-					# Before calculating logical coordinates,
-					# make sure the rectangle falls within the highlighter window
-					rect = rect.intersection(self.location)
-					try:
-						rect = rect.toLogical(self.handle)
-					except RuntimeError:
-						log.debugWarning("", exc_info=True)
-					rect = rect.toClient(self.handle)
-					try:
-						rect = rect.expandOrShrink(HighlightStyle.margin)
-					except RuntimeError:
-						pass
+					rect = self._mapRectToClient(rect, HighlightStyle)
+					if not rect:
+						continue
 
 					with winGDI.GDIPlusPen(
 						HighlightStyle.color.toGDIPlusARGB(),
@@ -216,8 +245,60 @@ class HighlightWindow(CustomWindow):
 					) as pen:
 						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
+	def _invalidateContextRect(self, rect: RectLTRB, style: HighlightStyle):
+		"""
+		Invalidates a specific rectangle region on the screen (Dirty Rectangle).
+		Calculates the visual bounding box based on the object rect, margin and pen width.
+		"""
+		try:
+			rect = self._mapRectToClient(rect, style)
+			if rect:
+				# We must expand the invalidation rect to account for the Pen's width.
+				# GDI+ draws centered on the line, so we need half the width on each side.
+				# Adding a small buffer (+2 pixels) to avoid anti-aliasing artifacts left behind.
+				padding = int((style.width / 2) + 2)
+				rect = rect.expandOrShrink(padding)
+
+				# Create WINAPI RECT structure
+				winRect = RECT(rect.left, rect.top, rect.right, rect.bottom)
+				user32.InvalidateRect(self.handle, byref(winRect), True)
+		except RuntimeError:
+			user32.InvalidateRect(self.handle, None, True)
+
 	def refresh(self):
-		user32.InvalidateRect(self.handle, None, True)
+		highlighter = self.highlighterRef()
+		if not highlighter:
+			return
+
+		# Calculate the new state (what we want to draw now)
+		currentContextRects = self._getDrawRects(highlighter)
+
+		# Compare with the previous state to determine Dirty Rectangles
+		# Check for changed or removed contexts
+		rectsChanged = False
+
+		# Identify all unique contexts involved in previous and current frame
+		allContexts = set(self._prevContextRects.keys()) | set(currentContextRects.keys())
+
+		for context in allContexts:
+			prevRect = self._prevContextRects.get(context)
+			currRect = currentContextRects.get(context)
+
+			if prevRect != currRect:
+				rectsChanged = True
+				style = highlighter._ContextStyles[context]
+
+				# If there was a rect previously, invalidate its old position (to erase it)
+				if prevRect:
+					self._invalidateContextRect(prevRect, style)
+
+				# If there is a rect now, invalidate its new position (to draw it)
+				if currRect:
+					self._invalidateContextRect(currRect, style)
+
+		# Update state cache
+		if rectsChanged:
+			self._prevContextRects = currentContextRects
 
 
 _contextOptionLabelsWithAccelerators = {
