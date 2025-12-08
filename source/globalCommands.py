@@ -3145,6 +3145,7 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_devInfo(self, gesture):
 		if log.getEffectiveLevel() == 100:
 			from gui import logViewer
+
 			logViewer.activate()
 			return
 		obj = api.getNavigatorObject()
