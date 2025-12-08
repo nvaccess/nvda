@@ -306,11 +306,7 @@ envArm64.SConscript(
 )
 envArm64EC.SConscript(
 	"nvdaHelper/archBuild_sconscript",
-	exports={
-		"env": envArm64EC,
-		"clientInstallDir": clientDir.Dir("arm64ec"),
-		"libInstallDir": sourceLibDirArm64EC,
-	},
+	exports={"env": envArm64EC, "clientInstallDir": clientDir.Dir("arm64ec"), "libInstallDir": sourceLibDirArm64EC},
 	variant_dir="build/arm64ec",
 )
 

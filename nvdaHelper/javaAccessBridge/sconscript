@@ -23,7 +23,5 @@ match TARGET_ARCH:
 		jabDllName = None
 if jabDllName:
 	env.Command(
-		sourceDir.File("windowsaccessbridge.dll"),
-		env.Dir("#include/javaAccessBridge32").File(jabDllName),
-		Copy("$TARGET", "$SOURCE"),
+		sourceDir.File("windowsaccessbridge.dll"), env.Dir("#include/javaAccessBridge32").File(jabDllName), Copy("$TARGET", "$SOURCE"),
 	)
