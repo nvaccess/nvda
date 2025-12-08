@@ -51,7 +51,7 @@ def _isNavigatorExpected() -> bool:
 		return False
 
 	if State.OFFSCREEN in obj.states:
-		# Translator: Message when image is off screen
+		# Translators: Message when image is off screen
 		ui.message(pgettext("imageDesc", "Image off screen"))
 		return False
 
