@@ -952,6 +952,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
+|Toggle mouse audio coordinates |none |none |none |Toggles whether NVDA plays audio beeps that report the mouse position as it moves.|
 
 <!-- KC:endInclude -->
 
@@ -2380,6 +2381,8 @@ The following symbols are defined:
 | ⡎ ("s" with dot 7) | End strikethrough |
 | ⠑ ("e")| Start spelling error |
 | ⡑ ("e" with dot 7) | End spelling error |
+| ⠛ ("g")| Start grammar error |
+| ⡛ ("g" with dot 7) | End grammar error |
 
 ##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
@@ -2811,6 +2814,7 @@ Note that the announcement of some object details might be dependent on how othe
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
 The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
+You can also assign a custom gesture in the Mouse category of the Input Gestures dialog to toggle this option.
 
 ##### Brightness controls audio coordinates volume {#MouseSettingsBrightness}
 
@@ -3149,26 +3153,26 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling error reporting {#ReportSpellingErrors}
+##### Spelling and grammar error reporting {#ReportSpellingErrors}
 
-This option allows you to configure how spelling errors are reported while reading text.
+This option allows you to configure how spelling and grammar errors are reported while reading text.
 This checklist box has three options:
 
-* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
-* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
-When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
-* Braille: NVDA will indicate spelling errors in braille.
-To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
+* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text
+When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
+* Braille: NVDA will indicate spelling or grammar errors in braille.
+To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, spelling errors can be reported just in braille.
+Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+In these cases, errors can be reported just in braille.
 
-By default, spelling errors will be reported with speech.
+By default, errors will be reported with speech.
 
-To cycle through available options to report spelling errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through available options to report errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are: Off, Speech, Sound, Speech and sound.
 
-You can also assign a custom gesture to toggle the reporting of spelling errors in braille using the [Input Gestures dialog](#InputGestures).
+You can also assign a custom gesture to toggle the reporting of errors in braille using the [Input Gestures dialog](#InputGestures).
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 

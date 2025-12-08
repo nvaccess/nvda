@@ -794,7 +794,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report spelling errors command.
-		description=_("Cycles through options for how to report spelling errors"),
+		description=_("Cycles through options for how to report spelling or grammar errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
@@ -804,16 +804,16 @@ class GlobalCommands(ScriptableObject):
 		)
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
 		ui.message(
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			_("Report spelling errors {mode}").format(
+			_("Report errors {mode}").format(
 				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
 			),
 		)
 
 	@script(
-		# Translators: Input help mode message for command to toggle report spelling errors in braille.
-		description=_("Toggles reporting spelling errors in braille"),
+		# Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
+		description=_("Toggles reporting spelling or grammar errors in braille"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
@@ -822,11 +822,11 @@ class GlobalCommands(ScriptableObject):
 			formatConfig ^ ReportSpellingErrors.BRAILLE
 		)
 		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
-			# Translators: Message presented when turning on reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille on"))
+			# Translators: Message presented when turning on reporting spelling or grammar errors in braille.
+			ui.message(_("Report errors in braille on"))
 		else:
-			# Translators: Message presented when turning off reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille off"))
+			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
+			ui.message(_("Report errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -3043,6 +3043,23 @@ class GlobalCommands(ScriptableObject):
 			state = _("Mouse tracking on")
 			config.conf["mouse"]["enableMouseTracking"] = True
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle mouse audio coordinates command.
+		description=_("Toggles beeps that report mouse coordinates as the mouse moves"),
+		category=SCRCAT_MOUSE,
+	)
+	def script_toggleMouseAudioCoordinates(self, gesture: inputCore.InputGesture):
+		# Translators: Reported when mouse audio coordinates are toggled on.
+		enabledMsg = _("Mouse audio coordinates on")
+		# Translators: Reported when mouse audio coordinates are toggled off.
+		disabledMsg = _("Mouse audio coordinates off")
+		toggleBooleanValue(
+			configSection="mouse",
+			configKey="audioCoordinatesOnMouseMove",
+			enabledMsg=enabledMsg,
+			disabledMsg=disabledMsg,
+		)
 
 	@script(
 		# Translators: Input help mode message for toggle mouse text unit resolution command.
