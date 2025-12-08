@@ -5446,10 +5446,10 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = followCursorGroupHelper.addLabeledControl(
 			autoScrollRateText,
 			nvdaControls.EnhancedInputSlider,
-			minValue=1,
+			minValue=5,
 			maxValue=100,
 		)
-		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"]))
+		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"] * 5))
 		self.autoScrollRateSlider.SetLineSize(2)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
