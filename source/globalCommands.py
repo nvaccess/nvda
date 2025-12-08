@@ -583,7 +583,9 @@ class GlobalCommands(ScriptableObject):
 		config.conf["keyboard"]["keyboardLayout"] = newVal
 		# Translators: Reported when the user toggles keyboard layout.
 		# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
-		ui.message(_("Keyboard layout: {layout}").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]))
+		ui.message(
+			_("Keyboard layout: {layout}").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal])
+		)
 
 	@script(
 		# Translators: Input help mode message for cycling the reporting of typed characters.
