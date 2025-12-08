@@ -855,7 +855,7 @@ class GlobalCommands(ScriptableObject):
 		)
 		if config.conf["braille"]["autoScrollRate"] + 0.5 <= maxRate:
 			config.conf["braille"]["autoScrollRate"] += 0.5
-		rate = f"{config.conf["braille"]["autoScrollRate"]:.1f}"
+		rate = f"{config.conf['braille']['autoScrollRate']:.1f}"
 		ui.message(rate)
 
 	@script(
@@ -871,7 +871,7 @@ class GlobalCommands(ScriptableObject):
 		)
 		if config.conf["braille"]["autoScrollRate"] - 0.5 >= minRate:
 			config.conf["braille"]["autoScrollRate"] -= 0.5
-		rate = f"{config.conf["braille"]["autoScrollRate"]:.1f}"
+		rate = f"{config.conf['braille']['autoScrollRate']:.1f}"
 		ui.message(rate)
 
 	@script(
