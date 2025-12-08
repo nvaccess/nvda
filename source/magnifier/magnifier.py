@@ -3,74 +3,44 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from enum import Enum
 from typing import Callable
-
 from logHandler import log
 import wx
 import api
 import winUser
 import mouseHandler
 from winAPI._displayTracking import getPrimaryDisplayOrientation
-from utils.displayString import DisplayStringStrEnum
 
-from .utils.filterHandler import Filter
+from .utils.types import MagnifierPosition, Coordinates, MagnifierType, Direction, FocusType, Filter
 
-
-class Direction(Enum):
-	"""Direction for zoom operations."""
-
-	IN = True
-	OUT = False
-
-
-class MagnifierType(DisplayStringStrEnum):
-	"""Type of magnifier."""
-
-	FULLSCREEN = "fullscreen"
-	DOCKED = "docked"
-	LENS = "lens"
-
-	@property
-	def _displayStringLabels(self) -> dict["MagnifierType", str]:
-		return {
-			# Translators: Magnifier type - fullscreen mode
-			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
-			# Translators: Magnifier type - docked mode
-			self.DOCKED: pgettext("magnifier", "Docked"),
-			# Translators: Magnifier type - lens mode
-			self.LENS: pgettext("magnifier", "Lens"),
-		}
-
-
-class FocusType(Enum):
-	"""Type of focus being tracked by the magnifier."""
-
-	MOUSE = "mouse"
-	NVDA = "nvda"
+from .config import (
+	getDefaultZoomLevel,
+	getDefaultFilter,
+	ZoomLevel,
+)
 
 
 class Magnifier:
-	_ZOOM_MIN: float = 1.0
-	_ZOOM_MAX: float = 10.0
-	_ZOOM_STEP: float = 0.5
+	_ZOOM_MIN: float = ZoomLevel.MIN_ZOOM
+	_ZOOM_MAX: float = ZoomLevel.MAX_ZOOM
+	_ZOOM_STEP: float = ZoomLevel.STEP_FACTOR
 	_TIMER_INTERVAL_MS: int = 20
 	_MARGIN_BORDER: int = 50
 	display = getPrimaryDisplayOrientation()
 	_SCREEN_WIDTH: int = display.width
 	_SCREEN_HEIGHT: int = display.height
 
-	def __init__(self, zoomLevel: float, filter: Filter, magnifierType: MagnifierType = None):
-		self._magnifierType: MagnifierType = magnifierType
+	def __init__(self):
+		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
-		self._zoomLevel: float = zoomLevel
+		self._zoomLevel: float = getDefaultZoomLevel()
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
-		self._lastNVDAPosition: tuple[int, int] = (0, 0)
-		self._lastMousePosition: tuple[int, int] = (0, 0)
-		self._lastScreenPosition: tuple[int, int] = (0, 0)
-		self._currentCoordinates: tuple[int, int] = (0, 0)
-		self._filterType: Filter = filter
+		self._lastNVDAPosition: Coordinates = (0, 0)
+		self._lastMousePosition: Coordinates = (0, 0)
+		self._lastScreenPosition: Coordinates = (0, 0)
+		self._currentCoordinates: Coordinates = (0, 0)
+		self._filterType: Filter = getDefaultFilter()
 
 	@property
 	def isActive(self) -> bool:
@@ -110,35 +80,35 @@ class Magnifier:
 		self._lastFocusedObject = value
 
 	@property
-	def lastNVDAPosition(self) -> tuple[int, int]:
+	def lastNVDAPosition(self) -> Coordinates:
 		return self._lastNVDAPosition
 
 	@lastNVDAPosition.setter
-	def lastNVDAPosition(self, value: tuple[int, int]) -> None:
+	def lastNVDAPosition(self, value: Coordinates) -> None:
 		self._lastNVDAPosition = value
 
 	@property
-	def lastMousePosition(self) -> tuple[int, int]:
+	def lastMousePosition(self) -> Coordinates:
 		return self._lastMousePosition
 
 	@lastMousePosition.setter
-	def lastMousePosition(self, value: tuple[int, int]) -> None:
+	def lastMousePosition(self, value: Coordinates) -> None:
 		self._lastMousePosition = value
 
 	@property
-	def lastScreenPosition(self) -> tuple[int, int]:
+	def lastScreenPosition(self) -> Coordinates:
 		return self._lastScreenPosition
 
 	@lastScreenPosition.setter
-	def lastScreenPosition(self, value: tuple[int, int]) -> None:
+	def lastScreenPosition(self, value: Coordinates) -> None:
 		self._lastScreenPosition = value
 
 	@property
-	def currentCoordinates(self) -> tuple[int, int]:
+	def currentCoordinates(self) -> Coordinates:
 		return self._currentCoordinates
 
 	@currentCoordinates.setter
-	def currentCoordinates(self, value: tuple[int, int]) -> None:
+	def currentCoordinates(self, value: Coordinates) -> None:
 		self._currentCoordinates = value
 
 	@property
@@ -161,7 +131,7 @@ class Magnifier:
 
 	def _startMagnifier(self) -> None:
 		"""
-		Start the magnifier.
+		Start the magnifier
 		"""
 		if self.isActive:
 			return
@@ -170,7 +140,7 @@ class Magnifier:
 
 	def _updateMagnifier(self) -> None:
 		"""
-		Update the magnifier position and content.
+		Update the magnifier position and content
 		"""
 		if not self.isActive:
 			return
@@ -180,13 +150,13 @@ class Magnifier:
 
 	def _doUpdate(self) -> None:
 		"""
-		Perform the actual update of the magnifier.
+		Perform the actual update of the magnifier
 		"""
 		raise NotImplementedError("Subclasses must implement this method.")
 
 	def _stopMagnifier(self) -> None:
 		"""
-		Stop the magnifier.
+		Stop the magnifier
 		"""
 		if not self.isActive:
 			return
@@ -195,9 +165,9 @@ class Magnifier:
 
 	def _zoom(self, direction: Direction) -> None:
 		"""
-		Adjust the zoom level of the magnifier.
+		Adjust the zoom level of the magnifier
 
-		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out.
+		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out
 		"""
 		if direction == Direction.IN:
 			self.zoomLevel += self._ZOOM_STEP
@@ -206,9 +176,9 @@ class Magnifier:
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""
-		Start the timer with a callback function.
+		Start the timer with a callback function
 
-		:param callback: The function to call when the timer expires.
+		:param callback: The function to call when the timer expires
 		"""
 		self._stopTimer()
 		self.timer = wx.Timer()
@@ -217,7 +187,7 @@ class Magnifier:
 
 	def _stopTimer(self) -> None:
 		"""
-		Stop timer execution.
+		Stop timer execution
 		"""
 		if self.timer:
 			if self.timer.IsRunning():
@@ -226,15 +196,15 @@ class Magnifier:
 		else:
 			log.info("no timer to stop")
 
-	def _getMagnifierPosition(self, x: int, y: int) -> tuple[int, int, int, int]:
+	def _getMagnifierPosition(self, x: int, y: int) -> MagnifierPosition:
 		"""
-		Compute the top-left corner of the magnifier window centered on (x, y).
+		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param x: Focus x
 		:param y: Focus y
 
 		Returns:
-			left, top, visibleWidth, visibleHeight: The position and size of the magnifier window.
+			MagnifierPosition: The position and size of the magnifier window
 		"""
 
 		# Calculate the size of the capture area at the current zoom level
@@ -249,16 +219,16 @@ class Magnifier:
 		left = max(0, min(left, int(self._SCREEN_WIDTH - visibleWidth)))
 		top = max(0, min(top, int(self._SCREEN_HEIGHT - visibleHeight)))
 
-		return (left, top, int(visibleWidth), int(visibleHeight))
+		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
 
-	def _getCursorPosition(self) -> tuple[int, int]:
+	def _getCursorPosition(self) -> Coordinates:
 		"""
-		Get the current review position as (x, y), falling back to navigator object if needed.
-		Tries to get the review position from NVDA's API, or the center of the navigator object.
-		This part is taken from NVDA+shift+m gesture.
+		Get the current review position as (x, y), falling back to navigator object if needed
+		Tries to get the review position from NVDA's API, or the center of the navigator object
+		This part is taken from NVDA+shift+m gesture
 
 		Returns:
-			tuple[int, int]: The (x, y) coordinates of the NVDA position.
+			Coordinates: The (x, y) Coordinates of the NVDA position
 		"""
 		# Try to get the current review position object from NVDA's API
 		reviewPosition = api.getReviewPosition()
@@ -284,12 +254,12 @@ class Magnifier:
 			# If no location is found, log this and return (0, 0)
 			return 0, 0
 
-	def _getFocusCoordinates(self) -> tuple[int, int]:
+	def _getFocusCoordinates(self) -> Coordinates:
 		"""
-		Return position (x,y) of current focus element.
+		Return position (x,y) of current focus element
 
 		Returns:
-			tuple[int, int]: The (x, y) coordinates of the focus element.
+			Coordinates: The (x, y) Coordinates of the focus element
 		"""
 		nvdaPosition = self._getCursorPosition()
 		mousePosition = winUser.getCursorPos()

@@ -10,10 +10,25 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 
-from .fullscreenMagnifier import FullScreenMagnifier, FullScreenMode
-from .utils.filterHandler import Filter
+from .utils.types import Filter, FullScreenMode
 
-_magnifier: FullScreenMagnifier | None = None
+
+_magnifier = None
+
+
+class ZoomLevel:
+	"""
+	Constants and utilities for zoom level management.
+	"""
+
+	MAX_ZOOM: float = 10.0
+	MIN_ZOOM: float = 1.0
+	STEP_FACTOR: float = 0.5
+	zoomRange: list[float] = [i * 0.5 for i in range(2, 21)]  # 1.0 to 10.0 with 0.5 steps
+	zoomStrings: list[str] = [
+		pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}") for value in zoomRange
+	]
+
 
 def getDefaultZoomLevel() -> float:
 	"""
@@ -46,7 +61,7 @@ def setDefaultZoomLevel(zoomLevel: float):
 	# Validate zoom level and ensure it's a float
 	try:
 		zoomLevel = float(zoomLevel)
-		zoomLevel = max(1.0, min(10.0, zoomLevel))
+		zoomLevel = max(ZoomLevel.MIN_ZOOM, min(ZoomLevel.MAX_ZOOM, zoomLevel))
 	except (ValueError, TypeError):
 		zoomLevel = 2.0
 
@@ -64,9 +79,9 @@ def getDefaultFilter() -> Filter:
 	"""
 	try:
 		filterStr = config.conf["magnifier"]["defaultFilter"]
-		# Find filter by displayString
+		# Find filter by value
 		for f in Filter:
-			if f.displayString == filterStr:
+			if f.value == filterStr:
 				return f
 		return Filter.NORMAL
 	except (KeyError, AttributeError):
@@ -85,13 +100,13 @@ def getCurrentFilter() -> str:
 	return getDefaultFilter().displayString
 
 
-def setDefaultFilter(filterDisplayString: str):
+def setDefaultFilter(filter: Filter):
 	"""
 	Set default filter from settings.
 
-	:param filterDisplayString: The filter displayString to set.
+	:param filter: The filter displayString to set.
 	"""
-	config.conf["magnifier"]["defaultFilter"] = filterDisplayString
+	config.conf["magnifier"]["defaultFilter"] = filter.value
 
 
 def getDefaultFullscreenMode() -> FullScreenMode:
@@ -100,9 +115,9 @@ def getDefaultFullscreenMode() -> FullScreenMode:
 	"""
 	try:
 		modeStr = config.conf["magnifier"]["defaultFullscreenMode"]
-		# Find mode by displayString
+		# Find mode by value
 		for mode in FullScreenMode:
-			if mode.displayString == modeStr:
+			if mode.value == modeStr:
 				return mode
 		return FullScreenMode.CENTER
 	except (KeyError, AttributeError):
@@ -121,13 +136,14 @@ def getCurrentFullscreenMode() -> str:
 	return getDefaultFullscreenMode().displayString
 
 
-def setDefaultFullscreenMode(modeDisplayString: str):
+def setDefaultFullscreenMode(mode: FullScreenMode):
 	"""
 	Set default fullscreen mode from settings.
 
-	:param modeDisplayString: The fullscreen mode displayString to set.
+	:param mode: The fullscreen mode displayString to set.
 	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = modeDisplayString
+	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
+
 
 def shouldKeepMouseCentered() -> bool:
 	"""

@@ -4,51 +4,28 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
-Keyboard commands for the magnifier module.
-Contains the command functions and their logic for keyboard shortcuts.
+Keyboard commands for the magnifier module
+Contains the command functions and their logic for keyboard shortcuts
 """
 
 import ui
-from utils.displayString import DisplayStringStrEnum
-from . import getMagnifier, setMagnifier
+
+from . import getMagnifier, initialize, terminate
+
 from .config import (
-	getDefaultZoomLevel,
+	getCurrentZoomLevel,
 	setDefaultZoomLevel,
-	getDefaultFilter,
-	getDefaultFullscreenMode,
-	shouldSaveShortcutChanges,
+	getCurrentFilter,
 	setDefaultFilter,
+	getCurrentFullscreenMode,
 	setDefaultFullscreenMode,
+	shouldSaveShortcutChanges,
 )
-from .magnifier import Magnifier, MagnifierType
-from .fullscreenMagnifier import FullScreenMagnifier, FullScreenMode
-from .utils.filterHandler import Filter
+
+from .magnifier import Magnifier
+from .fullscreenMagnifier import FullScreenMagnifier
+from .utils.types import Filter, Direction, MagnifierType, FullScreenMode, MagnifierAction
 from logHandler import log
-
-
-class MagnifierAction(DisplayStringStrEnum):
-	"""Actions that can be performed with the magnifier."""
-
-	ZOOM_IN = "zoom_in"
-	ZOOM_OUT = "zoom_out"
-	TOGGLE_FILTER = "toggle_filter"
-	CHANGE_FULLSCREEN_MODE = "change_fullscreen_mode"
-	START_SPOTLIGHT = "start_spotlight"
-
-	@property
-	def _displayStringLabels(self) -> dict["MagnifierAction", str]:
-		return {
-			# Translators: Action description for zooming in
-			self.ZOOM_IN: pgettext("magnifier action", "trying to zoom in"),
-			# Translators: Action description for zooming out
-			self.ZOOM_OUT: pgettext("magnifier action", "trying to zoom out"),
-			# Translators: Action description for toggling color filters
-			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
-			# Translators: Action description for changing fullscreen mode
-			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "trying to change fullscreen mode"),
-			# Translators: Action description for starting spotlight mode
-			self.START_SPOTLIGHT: pgettext("magnifier action", "trying to start spotlight mode"),
-		}
 
 
 def toggleMagnifier():
@@ -56,30 +33,23 @@ def toggleMagnifier():
 	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		# Stop magnifier
-		magnifier._stopMagnifier()
-		setMagnifier(None)
+		terminate()
 		ui.message(
 			_(
 				# Translators: Message announced when stopping the NVDA magnifier
-				"Stopping NVDA Fullscreen magnifier"
+				"Exiting magnifier"
 			)
 		)
 	else:
-		# Start magnifier with zoom level from config
-		defaultZoomLevel = getDefaultZoomLevel()
-		defaultFilter = getDefaultFilter()
-
-		# Logic to change when adding other type of magnifier
-		defaultFullscreenMode = getDefaultFullscreenMode()
-		magnifier = FullScreenMagnifier(
-			zoomLevel=defaultZoomLevel, filter=defaultFilter, fullscreenMode=defaultFullscreenMode
-		)
-		setMagnifier(magnifier)
+		initialize()
+		zoomLevel = getCurrentZoomLevel()
+		filter = getCurrentFilter()
+		fullscreenMode = getCurrentFullscreenMode()
 		ui.message(
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
-				"Starting NVDA Fullscreen magnifier with {zoomLevel} zoom level and {filter} filter"
-			).format(zoomLevel=defaultZoomLevel, filter=defaultFilter.name.lower())
+				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} fullscreen mode"
+			).format(zoomLevel=zoomLevel, filter=filter, fullscreenMode=fullscreenMode)
 		)
 
 
@@ -87,7 +57,7 @@ def zoomIn():
 	"""Zoom in the magnifier."""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(magnifier, MagnifierAction.ZOOM_IN):
-		magnifier._zoom(True)
+		magnifier._zoom(Direction.IN)
 		if shouldSaveShortcutChanges():
 			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
@@ -102,7 +72,7 @@ def zoomOut():
 	"""Zoom out the magnifier."""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(magnifier, MagnifierAction.ZOOM_OUT):
-		magnifier._zoom(False)
+		magnifier._zoom(Direction.OUT)
 		if shouldSaveShortcutChanges():
 			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
@@ -125,7 +95,7 @@ def toggleFilter():
 
 		# Save to config if option is enabled
 		if shouldSaveShortcutChanges():
-			setDefaultFilter(magnifier.filterType.displayString)
+			setDefaultFilter(magnifier.filterType)
 
 		ui.message(
 			_(
@@ -149,7 +119,7 @@ def toggleFullscreenMode():
 
 			# Save to config if option is enabled
 			if shouldSaveShortcutChanges():
-				setDefaultFullscreenMode(newMode.displayString)
+				setDefaultFullscreenMode(newMode)
 
 			ui.message(
 				_(

@@ -1,5 +1,4 @@
 from magnifier.magnifier import Magnifier, MagnifierType
-from magnifier.utils.mouseHandler import MouseHandler
 from magnifier.utils.filterHandler import filter
 import unittest
 from unittest.mock import MagicMock, Mock, patch, PropertyMock
@@ -43,7 +42,6 @@ class TestMagnifier(unittest.TestCase):
 		self.assertEqual(self.magnifier.lastFocusedObject, "")
 		self.assertEqual(self.magnifier.lastNVDAPosition, (0, 0))
 		self.assertEqual(self.magnifier.lastMousePosition, (0, 0))
-		self.assertIsInstance(self.magnifier._mouseHandler, MouseHandler)
 
 	def testZoomLevelProperty(self):
 		"""Test : ZoomLevel property with valid and invalid values."""

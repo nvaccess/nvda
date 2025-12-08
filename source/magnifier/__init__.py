@@ -4,71 +4,55 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
-NVDA Magnifier module.
-Handles module initialization, configuration and settings interaction.
+NVDA Magnifier module
+Handles module initialization, configuration and settings interaction
 """
 
-import config
-
-from .fullscreenMagnifier import FullScreenMagnifier
-
-_magnifier: FullScreenMagnifier | None = None
-
-# Configuration specification
-confspec = {
-    "magnifier": {
-        "defaultZoomLevel": "float(min=1.0, max=10.0, default=2.0)",
-        "defaultFullscreenMode": "string(default='center')",
-        "defaultFilter": "string(default='normal')",
-        "keepMouseCentered": "boolean(default=False)",
-        "saveShortcutChanges": "boolean(default=False)",
-    }
-}
-
-# Initialize configuration automatically on import
-config.conf.spec.update(confspec)
+_magnifier = None
 
 
 def initialize():
-    """
-    Initialize the magnifier module.
-    This is kept for compatibility but config is now initialized on import.
-    """
-    pass
+	"""
+	Initialize the magnifier module
+	This is kept for compatibility but config is now initialized on import
+	"""
+	from .fullscreenMagnifier import FullScreenMagnifier
+
+	magnifier = FullScreenMagnifier()
+	setMagnifier(magnifier)
 
 
 def isActive() -> bool:
-    """
-    Check if magnifier is currently active for settings.
-    """
-    global _magnifier
-    return _magnifier is not None and _magnifier.isActive
+	"""
+	Check if magnifier is currently active for settings
+	"""
+	global _magnifier
+	return _magnifier and _magnifier.isActive
 
 
-# Fullscreen magnifier instance while there is no other magnifier types
-def getMagnifier() -> FullScreenMagnifier | None:
-    """
-    Get current magnifier
-    """
-    global _magnifier
-    return _magnifier
+def getMagnifier():
+	"""
+	Get current magnifier
+	"""
+	global _magnifier
+	return _magnifier
 
 
-def setMagnifier(magnifier: FullScreenMagnifier | None):
-    """
-    Set magnifier instance
+def setMagnifier(magnifier):
+	"""
+	Set magnifier instance
 
-    :param magnifier: The magnifier instance to set.
-    """
-    global _magnifier
-    _magnifier = magnifier
+	:param magnifier: The magnifier instance to set
+	"""
+	global _magnifier
+	_magnifier = magnifier
 
 
 def terminate():
-    """
-    Called when NVDA shuts down.
-    """
-    global _magnifier
-    if _magnifier and _magnifier.isActive:
-        _magnifier._stopMagnifier()
-        _magnifier = None
+	"""
+	Called when NVDA shuts down
+	"""
+	global _magnifier
+	if _magnifier and _magnifier.isActive:
+		_magnifier._stopMagnifier()
+		_magnifier = None

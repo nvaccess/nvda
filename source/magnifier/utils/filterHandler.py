@@ -5,24 +5,6 @@
 
 import ctypes
 from enum import Enum
-from utils.displayString import DisplayStringStrEnum
-
-
-class Filter(DisplayStringStrEnum):
-	NORMAL = "normal"
-	GREYSCALE = "greyscale"
-	INVERTED = "inverted"
-
-	@property
-	def _displayStringLabels(self) -> dict["Filter", str]:
-		return {
-			# Translators: Magnifier color filter - no filter applied
-			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - greyscale/black and white
-			self.GREYSCALE: pgettext("magnifier", "Greyscale"),
-			# Translators: Magnifier color filter - inverted colors
-			self.INVERTED: pgettext("magnifier", "Inverted"),
-		}
 
 
 class FilterMatrix(Enum):

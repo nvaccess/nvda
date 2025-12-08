@@ -5921,18 +5921,17 @@ class MagnifierPanel(SettingsPanel):
 	helpId = "MagnifierSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		from magnifier.utils.types import Filter, FullScreenMode
+		from magnifier.config import ZoomLevel
+
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
 		defaultZoomLabelText = _("Default &zoom level:")
 
-		# Create zoom level choices from 1.0 to 10.0 with 0.5 steps
-		zoomValues = [i / 10.0 for i in range(10, 101, 5)]  # 1.0 top 10.0 steps of 0.5
-		# Translators: zoom level for magnifier. e.g. 2.5x
-		zoomChoices = [
-			pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}") for value in zoomValues
-		]
+		zoomValues = ZoomLevel.zoomRange
+		zoomChoices = ZoomLevel.zoomStrings
 
 		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
 		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
@@ -5943,10 +5942,6 @@ class MagnifierPanel(SettingsPanel):
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
 		defaultFilterLabelText = _("Default &filter:")
-		try:
-			from magnifier.utils.filterHandler import Filter
-		except ImportError:
-			Filter = None
 		filterChoices = [f.displayString for f in Filter]
 		self.defaultFilterList = sHelper.addLabeledControl(
 			defaultFilterLabelText, wx.Choice, choices=filterChoices
@@ -5956,10 +5951,6 @@ class MagnifierPanel(SettingsPanel):
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default fullscreen mode
 		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
-		try:
-			from magnifier.fullscreenMagnifier import FullScreenMode
-		except ImportError:
-			FullScreenMode = None
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.defaultFullscreenModeList = sHelper.addLabeledControl(
 			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
@@ -5983,10 +5974,11 @@ class MagnifierPanel(SettingsPanel):
 
 	def _updateCurrentSelection(self):
 		"""Update the selection"""
-		# ZOOM
-
-		# Get current zoom level from magnifier module
+		currentFullscreenMode = magnifier.getCurrentFullscreenMode()
 		currentZoom = magnifier.getCurrentZoomLevel()
+		currentFilter = magnifier.getCurrentFilter()
+
+		# ZOOM
 
 		# Find the closest match in our zoom values
 		closestIndex = 0
@@ -6002,17 +5994,12 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER
 
-		# Get current filter from magnifier module
-		currentFilter = magnifier.getCurrentFilter()
-
 		if currentFilter in self.defaultFilterList.GetStrings():
 			self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(currentFilter))
 		else:
 			self.defaultFilterList.SetSelection(0)
 
 		# FULLSCREEN MODE
-
-		currentFullscreenMode = magnifier.getCurrentFullscreenMode()
 
 		if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
 			self.defaultFullscreenModeList.SetSelection(
@@ -6039,18 +6026,16 @@ class MagnifierPanel(SettingsPanel):
 
 	def onSave(self):
 		# Use magnifier.config functions to save settings
+		from magnifier.utils.types import Filter, FullScreenMode
+
 		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
 		magnifier.setDefaultZoomLevel(selectedZoom)
 
-		from magnifier.utils.filterHandler import Filter
-
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
-		magnifier.setDefaultFilter(list(Filter)[selectedFilterIdx].displayString)
-
-		from magnifier.fullscreenMagnifier import FullScreenMode
+		magnifier.setDefaultFilter(list(Filter)[selectedFilterIdx])
 
 		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
-		magnifier.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx].displayString)
+		magnifier.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()
