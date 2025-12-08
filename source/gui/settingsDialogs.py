@@ -5437,6 +5437,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			followCursorGroupHelper.addLabeledControl(
 				autoScrollRateText,
 				nvdaControls.EnhancedInputSlider,
+				# Values are multiplied by 5, so we can set a smaller difference between consecutive values.
 				minValue=5,
 				maxValue=100,
 			)
@@ -5475,6 +5476,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+				# Values are multiplied by 5, so we can set a smaller difference between consecutive values.
 		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateSlider.GetValue() / 5
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
