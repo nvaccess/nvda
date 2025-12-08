@@ -5431,16 +5431,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
-		minRate = int(
-			config.conf.getConfigValidation(
-				("braille", "autoScrollRate"),
-			).kwargs["min"],
-		)
-		maxRate = int(
-			config.conf.getConfigValidation(
-				("braille", "autoScrollRate"),
-			).kwargs["max"],
-		)
 		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
 		autoScrollRateText = _("Auto&matic scroll rate (cells/sec)")
 		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = (
