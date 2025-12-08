@@ -37,6 +37,7 @@ An action has been added to view the full scan results on the VirusTotal website
 * Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
 * Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
 This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
+* Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 
 ### Changes
 
