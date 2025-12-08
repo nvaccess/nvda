@@ -5448,7 +5448,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			nvdaControls.EnhancedInputSlider,
 			minValue=5,
 			maxValue=100,
-		)
+			)
 		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"] * 5))
 		self.autoScrollRateSlider.SetLineSize(2)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
