@@ -120,6 +120,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
+* Spelling error reporting sounds while typing are no longer being emitted when speech mode is on-demand or off. (#19323 , @CyrilleB79)
 
 ### Changes for Developers
 
