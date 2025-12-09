@@ -900,62 +900,63 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 
-		if updateCheck:
-			item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
-				# If not checked, user must check for updates manually.
-				label=_("Automatically check for &updates to NVDA"),
-			)
-			self.bindHelpEvent("GeneralSettingsCheckForUpdates", self.autoCheckForUpdatesCheckBox)
-			item.Value = config.conf["update"]["autoCheck"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
+		item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
+			# If not checked, user must check for updates manually.
+			label=_("Automatically check for &updates to NVDA"),
+		)
+		self.bindHelpEvent("GeneralSettingsCheckForUpdates", self.autoCheckForUpdatesCheckBox)
+		item.Value = config.conf["update"]["autoCheck"]
+		if not updateCheck:
+			item.Value = False
+			item.Disable()
+		settingsSizerHelper.addItem(item)
 
-			item = self.notifyForPendingUpdateCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle startup notifications
-				# for a pending NVDA update.
-				label=_("Notify for &pending update on startup"),
-			)
-			self.bindHelpEvent("GeneralSettingsNotifyPendingUpdates", self.notifyForPendingUpdateCheckBox)
-			item.Value = config.conf["update"]["startupNotification"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
+		item = self.notifyForPendingUpdateCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label of a checkbox in general settings to toggle startup notifications
+			# for a pending NVDA update.
+			label=_("Notify for &pending update on startup"),
+		)
+		self.bindHelpEvent("GeneralSettingsNotifyPendingUpdates", self.notifyForPendingUpdateCheckBox)
+		item.Value = config.conf["update"]["startupNotification"]
+		if not updateCheck:
+			item.Value = False
+			item.Disable()
+		settingsSizerHelper.addItem(item)
 
-			# Translators: The label for the update mirror on the General Settings panel.
-			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
-			mirrorBox = mirrorBoxSizer.GetStaticBox()
-			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
-			settingsSizerHelper.addItem(mirrorBoxSizerHelper)
+		# Translators: The label for the update mirror on the General Settings panel.
+		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
+		mirrorBox = mirrorBoxSizer.GetStaticBox()
+		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+		settingsSizerHelper.addItem(mirrorBoxSizerHelper)
 
-			# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
-			# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
-			# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
-			# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
-			# display here.
-			# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
-			self.mirrorURLTextBox = ExpandoTextCtrl(
-				mirrorBox,
-				size=(self.scaleSize(250), -1),
-				style=wx.TE_READONLY,
-			)
-			# Translators: This is the label for the button used to change the NVDA update mirror URL,
-			# it appears in the context of the update mirror group on the General page of NVDA's settings.
-			changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
-			mirrorBoxSizerHelper.addItem(
-				guiHelper.associateElements(
-					self.mirrorURLTextBox,
-					changeMirrorBtn,
-				),
-			)
-			self.bindHelpEvent("UpdateMirror", mirrorBox)
-			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
-			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
-			if globalVars.appArgs.secure:
-				mirrorBox.Disable()
+		# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+		# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
+		# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
+		self.mirrorURLTextBox = ExpandoTextCtrl(
+			mirrorBox,
+			size=(self.scaleSize(250), -1),
+			style=wx.TE_READONLY,
+		)
+		# Translators: This is the label for the button used to change the NVDA update mirror URL,
+		# it appears in the context of the update mirror group on the General page of NVDA's settings.
+		changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+		mirrorBoxSizerHelper.addItem(
+			guiHelper.associateElements(
+				self.mirrorURLTextBox,
+				changeMirrorBtn,
+			),
+		)
+		self.bindHelpEvent("UpdateMirror", mirrorBox)
+		self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+		changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+		if not updateCheck:
+			mirrorBox.Disable()
 
 		item = self.preventDisplayTurningOffCheckBox = wx.CheckBox(
 			self,
@@ -4015,6 +4016,12 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the local captioner settings panel.
 	title = pgettext("imageDesc", "AI Image Descriptions")
 	helpId = "LocalCaptionerSettings"
+	panelDescription = pgettext(
+		"imageDesc",
+		# Translators: This is a label appearing on the AI Image Descriptions settings panel.
+		"Warning: AI image descriptions are experimental. "
+		"Do not use this feature in circumstances where inaccurate descriptions could cause harm.",
+	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		"""Create the settings controls for the panel.
@@ -4023,6 +4030,11 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		"""
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.windowText = sHelper.addItem(
+			wx.StaticText(self, label=self.panelDescription),
+		)
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
@@ -5992,13 +6004,15 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
 
-		if updateCheck:
-			self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
-				# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-				wx.CheckBox(generalBox, label=_("Allow NV Access to gather NVDA usage statistics")),
-			)
-			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self._allowUsageStatsCheckBox)
-			self._allowUsageStatsCheckBox.Value = config.conf["update"]["allowUsageStats"]
+		self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
+			# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
+			wx.CheckBox(generalBox, label=_("Allow NV Access to gather NVDA usage statistics")),
+		)
+		self.bindHelpEvent("GeneralSettingsGatherUsageStats", self._allowUsageStatsCheckBox)
+		self._allowUsageStatsCheckBox.Value = config.conf["update"]["allowUsageStats"]
+		if not updateCheck:
+			self._allowUsageStatsCheckBox.Value = False
+			self._allowUsageStatsCheckBox.Disable()
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
@@ -6126,6 +6140,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
+			or isinstance(self.currentCategory, LocalCaptionerSettingsPanel)
+			or isinstance(self.currentCategory, MathSettingsPanel)
 			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
 		):
 			# Translators: The profile name for normal configuration

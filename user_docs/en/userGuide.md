@@ -1232,10 +1232,10 @@ To activate the button or the element containing the formula, press ctrl+enter.
 
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
-* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction)
-* If inside of a table, `control+arrow` will move by cell
-* `home` / `end` moves to the start/end of the expression
-* `space` reads your current position
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction).
+* If inside of a table, `control+arrow` will move by cell.
+* `home` / `end` moves to the start/end of the expression.
+* `space` reads your current position.
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
@@ -1280,21 +1280,21 @@ The following are key commands used to navigate math:
 | Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
 | Zoom in all the way | `control+shift+downArrow` |
 | Where am I | `enter` |
-| Global Where am I | `control+center` |
+| Global Where am I | `control+enter` |
 | Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
 | Describe placemarker | `control+shift+1` through `shift+0` |
 | Read current | `space` |
 | Read current cell | `control+space` |
-| Toggle "speech mode" to Read or Rescribe | `shift+space` |
+| Toggle "speech mode" to Read or Describe | `shift+space` |
 | Describe current | `control+shift+space` |
 | Move to start of expression | `home` |
 | Move to start of line | `control+home` |
 | Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
 | Move to end of expression | `end` |
 | Move to end of line | `control+end` |
-| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move to end of column in table, or move to digit at bottom in columnar math | `shift+end` |
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
@@ -2033,17 +2033,17 @@ When this option is enabled, unicode normalization is performed on the text that
 This is beneficial when speaking characters that can be represented in several forms.
 NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
 
-1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
-For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
+1. The bold and italic versions of characters that are part of the Unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the Latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
    For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
 
-   1. One stand alone unicode character (ü)
-   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+   1. One standalone Unicode character (ü)
+   1. A decomposition into two characters (ü), namely the normal Latin letter u and a diaeresis modifier
 
-   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+   Unicode normalization ensures that only one form will be used throughout all speech output, which is the single-character variant.
 
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
@@ -2621,7 +2621,7 @@ Note that you will still be alerted in speech and/or braille when Screen Curtain
 ##### Logging level {#GeneralSettingsLogLevel}
 
 This is a combo box that lets you choose how much NVDA will log as it's running.
-Generally users should not need to touch this as not too much is logged.
+Generally, users should not need to touch this, as not too much is logged.
 However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
 
 The available logging levels are:
@@ -2636,7 +2636,7 @@ Just like input/output, if you are concerned about privacy, you should not set t
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
-If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
+If this is enabled, NV Access will use the information from update checks, including particular demographics such as the operating system and country of origin, to track the number of NVDA users.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:
 
@@ -3231,7 +3231,7 @@ This controls whether certain notations are disambiguated or not in speech.
 
 This value determines the language to be used.
 If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
-If speech rules for the main language can not be found, English ("en") is used.
+If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3388,7 +3388,7 @@ The braille math code to use.
 ###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
 
 Highlight the currently selected navigation node with dots 7 and 8.
-The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
+The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highlighting of the entire subexpression.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -4184,6 +4184,11 @@ Once a Remote Access session is active, you can switch between controlling the r
 
 NVDA supports generating image descriptions on your device without connecting to the internet.
 This feature allows NVDA to describe images encountered during navigation.
+
+Warning: AI image descriptions are an experimental feature.
+Image descriptions generated with this feature may not be accurate.
+You must not use this feature in circumstances where inaccurate results could reasonably be expected to cause harm.
+Always exercise caution and skepticism when interpreting AI image descriptions.
 
 Note: An internet connection is required to enable and install the Image Captioner for the first time.
 It is not included with the NVDA installer to reduce the installer size.
