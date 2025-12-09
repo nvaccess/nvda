@@ -82,8 +82,8 @@ isNVDACoreArch = (
 	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
 )
 isNVDAHelperLocalArch = isNVDACoreArch or (
-	PYTHON_PLATFORM == "win-amd64" 
-	and TARGET_ARCH == "arm64" 
+	PYTHON_PLATFORM == "win-amd64"
+	and TARGET_ARCH == "arm64"
 	and isArm64EC
 )
 debug = env["nvdaHelperDebugFlags"]
