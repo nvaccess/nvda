@@ -1,5 +1,21 @@
 # What's New in NVDA
 
+## 2026.2
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
