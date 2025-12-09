@@ -1,0 +1,2 @@
+
+WAVE_FORMAT_PCM = 1

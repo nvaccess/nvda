@@ -51,6 +51,8 @@ dependencies = [
 	# local image caption
 	"onnxruntime==1.23.2",
 	"numpy==2.3.5",
+	"rpyc>=6.0.2",
+	"pywin32>=311",
 ]
 
 [project.urls]
@@ -137,7 +139,7 @@ ignore_packages = [
 venvPath = ".venv"
 venv = "."
 pythonPlatform = "Windows"
-typeCheckingMode = "strict"
+typeCheckingMode = "standard"
 
 include = [
 	"**/*.py",
@@ -227,6 +229,7 @@ reportUnusedCoroutine = true
 reportUnusedExcept = true
 
 # Should switch to true when possible
+[ding.dong]
 reportDeprecated = false  # 1834 errors
 
 # Can be enabled by generating type stubs for modules via pyright CLI

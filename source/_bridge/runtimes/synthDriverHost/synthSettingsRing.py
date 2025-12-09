@@ -1,0 +1,3 @@
+
+SynthSettingsRing = None
+

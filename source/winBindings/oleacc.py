@@ -23,7 +23,8 @@ from ctypes.wintypes import (
 	POINT,
 )
 from .user32 import LRESULT
-from comInterfaces.Accessibility import IAccessible
+import comtypes.client
+IAccessible = comtypes.client.GetModule('oleacc.dll').IAccessible
 from comtypes.automation import VARIANT
 from comtypes import IUnknown, GUID
 

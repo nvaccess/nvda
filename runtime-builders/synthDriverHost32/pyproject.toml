@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools~=72.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synthDriverHost32-runtime-builder"
+dynamic = ["version"]
+description = "NVDA 32 bit synth driver host"
+maintainers = [
+	{name = "NV Access", email = "info@nvaccess.org"},
+]
+requires-python = ">=3.13,<3.14"
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Intended Audience :: End Users/Desktop",
+	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+	"Operating System :: Microsoft :: Windows",
+	"Programming Language :: Python :: 3",
+	"Topic :: Accessibility",
+]
+readme = "readme.md"
+license = {file = "copying.txt"}
+dependencies = [
+	"comtypes==1.4.11",
+	"pywin32",
+	"rpyc",
+	"wxPython==4.2.4",
+	"configobj",
+]
+
+[project.urls]
+Homepage = "https://www.nvaccess.org/"
+Repository = "https://github.com/nvaccess/nvda.git"
+Issues = "https://github.com/nvaccess/nvda/issues"
+
+[tool.uv]
+default-groups = "all"
+python-preference = "only-system"
+environments = ["sys_platform == 'win32'"]
+required-version = ">=0.7.9"
+
+[dependency-groups]
+dev = [
+	# Packaging NVDA
+	"py2exe==0.14.0.0",
+	"setuptools~=72.0",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "buildVersionLoader.version_detailed"}
+
