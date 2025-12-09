@@ -2,8 +2,43 @@
 
 ## 2026.1
 
-This release introduces on-device AI image descriptions.
-You can now use `NVDA+g` to describe images you encounter.
+This release includes built-in support for reading math content with MathCAT.
+It also introduces experimental, on-device AI image descriptions.
+You can now use `NVDA+g` to get a short, approximate description of images you encounter, without any data leaving your device.
+
+There have been several improvements to speech.
+Spelling errors can now be reported with a sound instead of speech when reading.
+You can now configure NVDA to automatically say all after successfully recognising content, such as with Windows OCR.
+NVDA no longer reports the language being read as unsupported when the synthesizer supports the language but not the specific dialect.
+
+Braille support has also been improved.
+It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.
+NVDA messages from the local computer are now shown in braille when controlling a computer via Remote Access.
+Spelling errors and the number of items in a list in browse mode can now be shown in braille.
+Other braille bug fixes, including in Microsoft Outlook and LibreOffice Writer, have also been added.
+
+In browse mode in web browsers, NVDA no longer treats controls with 0 width or height as invisible.
+This may make it possible to access previously inaccessible "screen reader only" content on some websites.
+Malformed links no longer prevent NVDA from reading content in Google Chrome and other Chromium-based browsers.
+The browse mode highlighter now appears on content recognition results, such as when using Windows OCR.
+In Microsoft Word, unassigned Quick Navigation commands to jump to references have been added.
+They are also now shown in the elements list.
+
+It is now possible to view virus scan results for an add-on from the Add-on Store.
+For add-ons that include one, you can also view an add-on's changelog.
+The reliability of background add-on updates has been improved.
+
+A new "Privacy and Security" category has been added to NVDA's settings dialog.
+The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings have been moved here from the "General" category.
+The settings for Screen Curtain have also been moved here from the "Vision" category.
+Additionally, Screen Curtain's settings are now configuration profile independent.
+
+Liblouis, Unicode CLDR and eSpeak NG have been updated.
+Added tables for English Grade 3, Japanese (Rokuten Kanji), and Macedonian uncontracted braille.
+Improved the Biblical Hebrew, Unified English Braille, Greek International, Hungarian, Norwegian, Portuguese 8-dot and Slovakian braille tables.
+Emoji localizations for Luxembourgish have been added.
+
+There have also been many other bug fixes and improvements.
 
 ### Important notes
 
@@ -14,27 +49,31 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
+* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
-* AI Image Descriptions:
-  * Press `NVDA+g` to get an AI generated image description. (#18475, @tianzeshi-study)
-  * This is generated locally on the device - no information is sent to the internet.
-  * A new unassigned command is available for quickly opening the settings dialog for local image description. (#18475)
-  * Another new unassigned command is available to toggle image captioning. (#18475)
-
-* Added the possibility to report when multiple items can be selected in a list control.
-This can be enabled using the "Report when lists support multiple selection" setting in NVDA's object presentation settings. (#18365 @LeonarddeR)
-* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
-* Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
-* While reading text, spelling errors can now be reported with a sound instead of speech. (#4233, @jcsteh, @CyrilleB79)
-* Spelling errors can be reported in braille. (#7608, @nvdaes)
-* VirusTotal scan results are now available in the details for an add-on in the Add-on Store.
-An action has been added to view the full scan results on the VirusTotal website. (#18974)
-* In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
+* In the Add-on Store:
+  * VirusTotal scan results are now available in the details for an add-on.
+  An action has been added to view the full scan results on the VirusTotal website. (#18974)
+  * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
+* Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
+* NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
+  * This feature is experimental, and should not be used in situations where inaccurate descriptions could cause harm.
+  * To use this feature, NVDA will need to download image description data.
+  Thereafter, it operates entirely offline.
+  * Press `NVDA+g` to get an AI generated image description.
+  * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
+* Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
+Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
+* While reading text, spelling and grammar errors can now be reported with a sound instead of speech. (#4233, #19257, @jcsteh, @CyrilleB79, @nvdaes)
+* Spelling and grammar errors can now be reported in braille. (#7608, #19257, @nvdaes)
+* Added the possibility to report when multiple items can be selected in a control such as a list.
+This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
+* In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
-* Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
+* Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 
 ### Changes
 
@@ -42,19 +81,26 @@ An action has been added to view the full scan results on the VirusTotal website
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
+* Support for the MathPlayer software from Wiris has been removed. (#19239)
+* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
+* Component updates:
+  * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
+    * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
+    * Improvements to Slovakian, Norwegian, Hungarian, Portuguese 8-dot, Greek International, Biblical Hebrew and Unified English Braille.
+  * Updated BrlAPI for BRLTTY to version 0.8.7. (#18657, @LeonarddeR)
+  * Updated Unicode CLDR to [version 48](https://cldr.unicode.org/downloads/cldr-48).
+  Also added emoji localizations for Luxembourgish. (#19293, @OzancanKaratas)
+  * Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
-* The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
 * When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)
-* Component updates:
-  * Updated LibLouis Braille translator to [3.35.0](https://github.com/liblouis/liblouis/releases/tag/v3.35.0). (#18848, @LeonarddeR)
-    * Added Japanese (Rokuten Kanji) Braille.
-    * Improvements to Portuguese 8-dot, Greek International, Biblical Hebrew, Norwegian 8-dot and Unified English Braille.
-  * Updated BrlAPI for BRLTTY to version 0.8.7, and its corresponding python module to a Python 3.13 compatible build. (#18657, @LeonarddeR)
-* In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible. This technique is sometimes used to make content accessible to screen readers without it being visible visually. Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
+* The length of beeps used when "Line indentation reporting" is set to "Tones" or "Both Speech and Tones" has been reduced. (#18898)
+* In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible.
+This technique is sometimes used to make content accessible to screen readers without it being visible visually.
+Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
-* Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)
-* Support for the MathPlayer software from Wiris has been removed. (#19239)
+* A new "Privacy and Security" category has been added to NVDA's settings dialog.
+It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
 
 ### Bug Fixes
 
@@ -62,18 +108,18 @@ We recommend using Windows 11, or if that is not possible, the latest Windows 10
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
-* Fixed a problem where some SAPI 4 voices (e.g. IBM ViaVoice) start speaking in the maximum volume instead of the current volume when speaking capital letters. (#18866, @gexgd0419)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
-* When a synthesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)
-* Certain settings will no-longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
+* When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)
+* Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
 * When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
-* In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)
+* In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
+* In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
 
 ### Changes for Developers
 
@@ -83,16 +129,34 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Add-ons will need to be re-tested and have their manifest updated.
 * Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)
   * The changelog should document changes between previous and latest add-on versions, and can be formatted in markdown.
-* Updated components
-  * Licensecheck has been updated to 2025.1 (#18728, @bramd)
-  * Updated sphinx to 8.1.3. (#18475)
-  * Introduced onnxruntime 1.22.1 for model inference. (#18475)
-  * Introduced onnx 1.18.0 to generate mock models for system test. (#18475)
-  * Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)
-  * Updated wxPython to 4.2.3. (#19080)
-  * Updated uv to 0.9.11 (#19162)
-  * Updated ruff to 0.14.5 (#19162)
-* X64 NVDAHelper libraries are now also build for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
+* Updated components:
+  * LicenseCheck to 2025.1 (#18728, @bramd)
+  * Sphinx to 8.1.3 (#18475)
+  * Pyright to 1.1.407 (#17749, #19162)
+    * enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis.
+  * wxPython to 4.2.4 (#19080, #19196)
+  * uv to 0.9.11 (#19162)
+  * Ruff to 0.14.5 (#19162)
+  * comtypes to 1.4.13 (#19196)
+  * cryptography to 46.0.3 (#19196)
+  * Configobj to commit `9c8a0a80` (#19196)
+  * Requests to 2.32.5 (#19196)
+  * url-normalize to 2.2.1 (#19196)
+  * Pycaw to 20251023 (#19196)
+  * nh3 to 0.3.2 (#19196)
+  * Crowdin Python client to 1.24.1 (#19196)
+  * Python-Markdown to 3.10 (#19196)
+  * lxml to 6.0.2 (#19196)
+  * PyMdown Extensions to 10.17.1 (#19196)
+  * Setuptools to 80.9 (#19196)
+  * Robot Framework to 7.3.2 (#19196)
+  * IAccessible2 to commit `c9ae003` (#19196)
+  * Sonic to commit `d2cdb40` (#19196)
+  * WAI-ARIA Authoring Practices Guide to commit `84b921a0` (#19196)
+  * Windows Implementation Libraries (WIL) to commit `7cf4193` (#19196)
+  * SCons to 4.10.1 (#19016, #19226, @LeonarddeR)
+    * This introduces support to build NVDA with Visual Studio 2026.
+* X64 NVDAHelper libraries are now also built for the [ARM64EC architecture](https://learn.microsoft.com/en-us/windows/arm/arm64ec).
 On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of their X64 equivalents. (#18570, @leonarddeR)
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
@@ -112,7 +176,7 @@ These should be supported natively in Python 3.13. (#18689)
 * `NVDAHelper.localLib` is now a module, not a `ctypes.CDLL`.
 Most API consumers should not be impacted by this change.
 Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18207)
-* `UIAHandler.autoSelectDetectionAvailable` is removed with no replacement. (#18684, @josephsl)
+* `UIAHandler.autoSelectDetectionAvailable` has been removed with no replacement. (#18684, @josephsl)
 * The following symbols have been removed from `installer` with no direct replacement: `programFilesPath`, `getStartMenuFolder`, `getInstallPath`. (#18851)
 * The `bool` configuration key `[documentFormatting][reportSpellingErrors]` has been removed.
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
@@ -120,12 +184,12 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
-  Call `speech.speech.getIndentToneDuration` instead. (#18898)
-* the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
+Call `speech.speech.getIndentToneDuration` instead. (#18898)
+* the `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
-* The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
+* The following symbols have been removed from `appModules.explorer` with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
 * The `ftdi2` module has been significantly refactored: (#19105)
   * It is now a package.
   * `MAX_DESCRIPTION_SIZE` has been moved to `ftd2xx.MAX_DESCRIPTION_SIZE`, and reduced to 64 in accordance with the D2XX Programmer’s Guide.
@@ -148,15 +212,15 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * The`none` field has been renamed to `ftHandle`.
   * The `ftExceptionDecorator` function has been removed, with no public replacement.
   * The `_PY_*` functions have been replaced with `ftd2xx.FT_*` direct FFI bindings.
-  These bindings have type declarations, so are potentially incompatible with existin code.
+  These bindings have type declarations, so are potentially incompatible with existing code.
   * The following functions have been renamed:
     * `list_devices` to `listDevices`;
     * `create_device_info_list` to `createDeviceInfoList`;
     * `get_device_info_detail` to `getDeviceInfoDetail`;
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
-  * The following methods on the `FTD2XX` class have been   renamed:
-    * `set_baud_rate to`setBaudRate`;
+  * The following methods on the `FTD2XX` class have been renamed:
+    * `set_baud_rate` to`setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
@@ -172,81 +236,91 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
+* SAPI 4 support has been removed: (#19290)
+  * The `synthDrivers.sapi4` module has been removed.
+  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
+  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
+* The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
+* `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
+Use `config.configFlags.LoggingLevel` instead. (#19296)
 
 #### Deprecations
 
-* `winVersion.WIN81` constant has been deprecated from the `winVersion` module. (#18684, @josephsl):
+* `winVersion.WIN81` is deprecated. (#18684, @josephsl)
 * `NVDAHelper.versionedLibPath` is deprecated.
 Use `NVDAState.ReadPaths.versionedLibX86Path` instead. (#18207)
 * `NVDAHelper.coreArchLibPath` is deprecated.
 Use `NVDAState.ReadPaths.coreArchLibPath` instead. (#18207)
 * `NVDAHelper.LOCAL_WIN10_DLL_PATH` is deprecated.
 Use `NVDAState.ReadPaths.nvdaHelperLocalWin10Dll` instead. (#18207)
-* `NVDAHelper.generateBeep` is deprecated.
-Use `NVDAHelper.localLib.generateBeep` instead. (#18207)
-* `NVDAHelper.VBuf_getTextInRange` is deprecated.
-Use `NVDAHelper.localLib.VBuf_getTextInRange` instead. (#18207)
+* The following symbols have been moved from `NVDAHelper` to `NVDAHelper.localLib`: `generateBeep`, `VBuf_getTextInRange`.
+Access to these symbols via `NVDAHelper` is deprecated. (#18207)
 * `NVDAHelper.onSsmlMarkReached` is deprecated.
 Use `NVDAHelper.localLib.nvdaController_onSsmlMarkReached` instead. (#18207)
 * `NVDAObjects.window.excel.ExcelCellInfo` is deprecated.
 Use `NVDAHelper.localLib.EXCEL_CELLINFO` instead. (#18207)
 * `nvwave.WAVEFORMATEX` is deprecated.
 Use `winBindings.mmeapi.WAVEFORMATEX` instead. (#18207)
-* The following symbols have been moved from `winuser` to `winBindings.user32`: `GUITHREADINFO`, `HWINEVENTHOOK`, `WINEVENTPROC`, `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`. (#18207, #18883)
+* The following symbols have been moved from `winuser` to `winBindings.user32`: `GUITHREADINFO`, `HWINEVENTHOOK`, `WINEVENTPROC`, `WNDCLASSEXW`, `WNDPROC`, `PAINTSTRUCT`.
+Access to these symbols via `winuser` is deprecated. (#18207, #18883)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.bthprops`: `BLUETOOTH_ADDRESS`, `BLUETOOTH_DEVICE_INFO`, `BLUETOOTH_MAX_NAME_SIZE`, `BluetoothGetDeviceInfo`.
-  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * `hwPortUtils.BTH_ADDR` is deprecated.
-  Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
+Use `winBindings.bthprops.BLUETOOTH_ADDRESS` instead. (#18571)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.cfgmgr32`: `CM_Get_Device_ID`, `CR_SUCCESS`, `MAX_DEVICE_ID_LEN`.
-  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * The following symbol has been moved from `hwPortUtils` to `winBindings.hid`: `HIDD_ATTRIBUTES`.
-  Access to this symbol via `hwPortUtils` is deprecated. (#18571)
+Access to this symbol via `hwPortUtils` is deprecated. (#18571)
 * `hwIo.hid.hidDll` is deprecated.
-  Use `winBindings.hid.dll` instead. (#18902)
+Use `winBindings.hid.dll` instead. (#18902)
 * The following symbols have been moved from `hwPortUtils` to `winBindings.setupapi`: `DEVPKEY_Device_BusReportedDeviceDesc`, `DEVPROPKEY`, `GUID_CLASS_COMPORT`, `GUID_DEVINTERFACE_USB_DEVICE`, `HDEVINFO`, `PSP_DEVICE_INTERFACE_DATA`, `PSP_DEVICE_INTERFACE_DETAIL_DATA`, `PSP_DEVINFO_DATA`, `SP_DEVICE_INTERFACE_DATA`, `SP_DEVINFO_DATA`, `SetupDiDestroyDeviceInfoList`, `SetupDiEnumDeviceInfo`, `SetupDiEnumDeviceInterfaces`, `SetupDiGetClassDevs`, `SetupDiGetDeviceInterfaceDetail`, `SetupDiGetDeviceProperty`, `SetupDiGetDeviceRegistryProperty`, `SetupDiOpenDevRegKey`, `SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
-  Access to these symbols via `hwPortUtils` is deprecated. (#18571)
+Access to these symbols via `hwPortUtils` is deprecated. (#18571)
 * The `DIGCF_*`, `SPDRP_*`, `DICS_FLAG_*`, and `DIREG_*` constants in `hwPortUtils` are deprecated.
-  Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18571)
+Use their `Enum` counterparts from `winBindings.setupapi` instead. (#18571)
 * `hwPortUtils.dummy`, `hwPortUtils.INVALID_HANDLE_VALUE` and `hwPortUtils.ValidHandle` are deprecated, with no planned replacement. (#18571)
 * `hwPortUtils.ERROR_INSUFFICIENT_BUFFER` and `hwPortUtils.ERROR_NO_MORE_ITEMS` are deprecated.
-  Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
+Use `winAPI.SystemErrorCodes.INSUFFICIENT_BUFFER` and `winAPI.SystemErrorCodes.NO_MORE_ITEMS` instead. (#18571)
 * `addonHandler.BUNDLE_EXTENSION` has been moved to `config.registry.ADDON_BUNDLE_EXTENSION`. (#18851)
 * `addonHandler.NVDA_ADDON_PROG_ID` has been moved to `config.registry.NVDA_ADDON_PROG_ID`. (#18851)
 * `installer.defaultInstallPath` has been moved to `NVDAState.WritePaths.defaultInstallDir`. (#18851)
 * `fonts.gdi32`, `screenBitmap.gdi32` and `winGDI.gdi32` are deprecated.
-  Use `winBindings.gdi32.dll` instead. (#18860)
+Use `winBindings.gdi32.dll` instead. (#18860)
 * `shellapi.shell32` is deprecated.
-  Use `winBindings.shell32.dll` instead. (#18860)
+Use `winBindings.shell32.dll` instead. (#18860)
 * The following symbols have been moved from `shellapi` to `winBindings.shell32`: `SHELLEXECUTEINFO`, `SHELLEXECUTEINFOW`.
-  Access to these symbols via `shellapi` is deprecated. (#18860)
+Access to these symbols via `shellapi` is deprecated. (#18860)
 * `winGDI.gdiplus` is deprecated.
-  Use `winBindings.gdiplus.dll` instead. (#18860)
+Use `winBindings.gdiplus.dll` instead. (#18860)
 * The following symbols have been moved from `winGDI` to `winBindings.gdi32`: `RGBQUAD`, `BITMAPINFOHEADER`, `BITMAPINFO`.
-  Access to these symbols via `winGDI` is deprecated. (#18860)
+Access to these symbols via `winGDI` is deprecated. (#18860)
 * The following symbols have been moved from `winGDI` to `winBindings.gdiplus`: `GdiplusStartupInput`, `GdiplusStartupOutput`.
-  Access to these symbols via `winGDI` is deprecated. (#18860)
+Access to these symbols via `winGDI` is deprecated. (#18860)
 * The following symbols have been moved from `winKernel` to `winBindings.advapi32`: `PROCESS_INFORMATION`, `STARTUPINFO`, `STARTUPINFOW`.
-  Access to these symbols via `winKernel` is deprecated. (#18860)
+Access to these symbols via `winKernel` is deprecated. (#18860)
 * `winKernel.advapi32` is deprecated.
-  Use `winBindings.advapi32.dll` instead. (#18860)
+Use `winBindings.advapi32.dll` instead. (#18860)
 * `NVDAHelper.bstrReturn` is deprecated, with no planned replacement. (#18858)
 * `contentRecog.uwpOcr.uwpOcr_Callback` is deprecated.
-  Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
+Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 * `touchHelper.SM_MAXIMUMTOUCHES` is deprecated.
-  Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
+Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 * `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
-  Use `winBindings.user32.dll` instead. (#18883)
+Use `winBindings.user32.dll` instead. (#18883)
 * The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
-  Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
-* `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION` have been moved from `winKernal` to `winBindings.kernel32`. (#18896)
-* `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE` have been moved from `wincon` to `winBindings.kernel32`. (#18896)
+Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
+* The following symbols have been moved from `winKernel` to `winBindings.kernel32`: `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION`.
+Access to these symbols via `winKernel` is deprecated. (#18896)
+* The following symbols have been moved from `wincon` to `winBindings.kernel32`: `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE`.
+Access to these symbols via `wincon` is deprecated. (#18896)
 * `appModuleHandler.processEntry32W` has been moved to `winBindings.kernel32.PROCESSENTRY32W`. (#18896)
-* `winKernel.kernel32` is now `winBindings.kernel32.dll`. (#18896)
+* `winKernel.kernel32` is deprecated.
+Use `winBindings.kernel32.dll` instead. (#18896)
 * The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated.
-  Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
+Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
-* The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`. (#18956)
+* The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`.
+Access to these symbols via `updateCheck` is deprecated. (#18956)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 
@@ -301,6 +375,7 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 * A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
 * A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
+* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 
@@ -344,9 +419,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Updated comtypes to 1.4.11. (#18611)
   * Updated py2exe to 0.14.0.0. (#18611)
   * Updated markdown to 3.8.2. (#18638)
-  * Updated detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
-  * Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)
-    * This introduces support to build NVDA with Visual Studio 2026.
+  * detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)
 * For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)
 * The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)
 * `comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)

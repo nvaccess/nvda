@@ -78,7 +78,12 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 		wx.CallAfter(ui.message, pgettext("imageDesc", "Failed to generate description"))
 		log.exception("Failed to generate caption")
 	else:
-		wx.CallAfter(ui.message, description)
+		wx.CallAfter(
+			ui.message,
+			# Translators: Presented when an AI image description has been generated.
+			# {description} will be replaced with the generated image description.
+			pgettext("imageDesc", "Could be: {description}").format(description=description),
+		)
 
 
 class ImageDescriber:
@@ -111,6 +116,10 @@ class ImageDescriber:
 
 		:param gesture: The input gesture that triggered this script.
 		"""
+		self._doCaption()
+
+	def _doCaption(self) -> None:
+		"""Real logic to run image captioning on the current navigator object."""
 		imageData = _screenshotNavigator()
 
 		if not self.isModelLoaded:
@@ -118,6 +127,9 @@ class ImageDescriber:
 
 			# Ask to enable image desc only in this session, No configuration modifications
 			wx.CallAfter(openEnableOnceDialog)
+			return
+
+		if self.captionThread is not None and self.captionThread.is_alive():
 			return
 
 		self.captionThread = threading.Thread(

@@ -7,11 +7,25 @@ on:
     paths:
       - 'source/locale/en/*.dic'
 
+permissions:
+  actions: write
+
 jobs:
   send_email:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Early exit
+      run: |
+        if [ -z "${{ secrets.EMAIL_USERNAME }}" ]; then
+          echo "EMAIL_USERNAME is not set. Exiting workflow."
+          gh run cancel ${{ github.run_id }}
+          gh run watch ${{ github.run_id }}
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -33,8 +47,8 @@ jobs:
     - name: Send email
       uses: dawidd6/action-send-mail@v4
       with:
-        server_address: email-smtp.us-west-2.amazonaws.com
-        server_port: 465
+        server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
+        server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "Changes detected in localisation files"
