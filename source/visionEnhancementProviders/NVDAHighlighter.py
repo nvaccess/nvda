@@ -252,9 +252,8 @@ class HighlightWindow(CustomWindow):
 			rect = self._mapRectToClient(rect, style)
 			if rect:
 				# We must expand the invalidation rect to account for the Pen's width.
-				# GDI+ draws centered on the line, so we need half the width on each side.
 				# Adding a small buffer (+2 pixels) to avoid anti-aliasing artifacts left behind.
-				padding = int((style.width / 2) + 2)
+				padding = style.width + 2
 				rect = rect.expandOrShrink(padding)
 
 				# Create WINAPI RECT structure
