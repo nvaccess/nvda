@@ -3143,7 +3143,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self, gesture):
-		if log.getEffectiveLevel() == 100:
+		if log.getEffectiveLevel() == logHandler.Logger.OFF:
 			from gui import logViewer
 
 			logViewer.activate()
