@@ -572,7 +572,6 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for toggling keyboard layout.
 		description=_("Toggles between desktop and laptop keyboard layout"),
-		
 		category=SCRCAT_INPUT,
 	)
 	def script_toggleKeyboardLayout(self, gesture: "inputCore.InputGesture") -> None:
@@ -585,7 +584,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when the user toggles keyboard layout.
 		# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
 		ui.message(
-			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal])
+			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]),
 		)
 
 	@script(
