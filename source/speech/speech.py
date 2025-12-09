@@ -3038,16 +3038,17 @@ def getFormatFieldSpeech(  # noqa: C901
 		invalidGrammar = attrs.get("invalid-grammar")
 		oldInvalidGrammar = attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar != oldInvalidGrammar:
+			texts = []
 			if invalidGrammar:
-				# Translators: Reported when text contains a grammar error.
-				text = _("grammar error")
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
+					texts.append(WaveFileCommand(r"waves\textError.wav"))
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
+					# Translators: Reported when text contains a grammar error.
+					texts.append(_("grammar error"))
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a grammar error.
-				text = _("out of grammar error")
-			else:
-				text = ""
-			if text:
-				textList.append(text)
+				texts.append(_("out of grammar error"))
+			textList.extend(texts)
 	# The line-prefix formatField attribute contains the text for a bullet or number for a list item, when the bullet or number does not appear in the actual text content.
 	# Normally this attribute could be repeated across formatFields within a list item and therefore is not safe to speak when the unit is word or character.
 	# However, some implementations (such as MS Word with UIA) do limit its useage to the very first formatField of the list item.

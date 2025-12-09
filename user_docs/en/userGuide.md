@@ -528,9 +528,10 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 #### Data usage statistics dialog {#UsageStatsDialog}
 
 When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA, in order to help improve NVDA in the future.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
-However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
+You can read more info about the data gathered by NV Access in the Privacy and Security Settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
+
+Note: pressing "yes" or "no" will save this setting and the dialog will not appear again unless you reinstall NVDA or reset your configuration.
+You can enable or disable the data gathering process manually in the [Privacy and Security category](#PrivacyAndSecuritySettings) of the [NVDA Settings dialog](#NVDASettings).
 
 ### About NVDA keyboard commands {#AboutNVDAKeyboardCommands}
 
@@ -953,6 +954,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
+|Toggle mouse audio coordinates |none |none |none |Toggles whether NVDA plays audio beeps that report the mouse position as it moves.|
 
 <!-- KC:endInclude -->
 
@@ -1081,6 +1083,7 @@ Here is a list of available commands:
 * Menu item
 * Toggle button
 * Progress bar
+* Reference
 * Math formula
 * Vertically aligned paragraph
 * Same style text
@@ -1231,10 +1234,10 @@ To activate the button or the element containing the formula, press ctrl+enter.
 
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
-* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction)
-* If inside of a table, `control+arrow` will move by cell
-* `home` / `end` moves to the start/end of the expression
-* `space` reads your current position
+* Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction).
+* If inside of a table, `control+arrow` will move by cell.
+* `home` / `end` moves to the start/end of the expression.
+* `space` reads your current position.
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
 
 To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.
@@ -1279,21 +1282,21 @@ The following are key commands used to navigate math:
 | Change Navigation Mode (Enhanced/Simple/Character) to smaller | `shift+downArrow` |
 | Zoom in all the way | `control+shift+downArrow` |
 | Where am I | `enter` |
-| Global Where am I | `control+center` |
+| Global Where am I | `control+enter` |
 | Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
 | Describe placemarker | `control+shift+1` through `shift+0` |
 | Read current | `space` |
 | Read current cell | `control+space` |
-| Toggle "speech mode" to Read or Rescribe | `shift+space` |
+| Toggle "speech mode" to Read or Describe | `shift+space` |
 | Describe current | `control+shift+space` |
 | Move to start of expression | `home` |
 | Move to start of line | `control+home` |
 | Move to start of column in table, or move to digit at top in columnar math | `shift+home` |
 | Move to end of expression | `end` |
 | Move to end of line | `control+end` |
-| Move to end of column in table, or move to digit at botton in columnar math | `shift+end` |
+| Move to end of column in table, or move to digit at bottom in columnar math | `shift+end` |
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
@@ -1863,22 +1866,6 @@ When unchecked, NVDA will exit immediately.
 
 This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
-##### Logging level {#GeneralSettingsLogLevel}
-
-This is a combo box that lets you choose how much NVDA will log as it's running.
-Generally users should not need to touch this as not too much is logged.
-However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
-
-The available logging levels are:
-
-* Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
-* Info: NVDA will log basic information such as startup messages and information useful for developers.
-* Debug warning: Warning messages that are not caused by severe errors will be logged.
-* Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
-If you are concerned about privacy, do not set the logging level to this option.
-* Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
-Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
 ##### Start NVDA after I sign in {#GeneralSettingsStartAfterLogOn}
 
 If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
@@ -1905,21 +1892,6 @@ The following information is always sent:
 * Current NVDA version
 * Operating System version
 * Processor architecture
-
-##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
-
-If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
-Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
-Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
-
-* A unique ID for the current NVDA user, this changes once a month
-* NVDA interface language
-* Whether this copy of NVDA is portable or installed
-* Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
-* Name of the current Braille display in use (including the name of the add-on the driver comes from)
-* The current output Braille table (if Braille is in use)
-
-This information greatly aides NV Access to prioritize future development of NVDA.
 
 ##### Notify for pending updates on startup {#GeneralSettingsNotifyPendingUpdates}
 
@@ -2063,17 +2035,17 @@ When this option is enabled, unicode normalization is performed on the text that
 This is beneficial when speaking characters that can be represented in several forms.
 NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
 
-1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
-For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
+1. The bold and italic versions of characters that are part of the Unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the Latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
    For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
 
-   1. One stand alone unicode character (ü)
-   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+   1. One standalone Unicode character (ü)
+   1. A decomposition into two characters (ü), namely the normal Latin letter u and a diaeresis modifier
 
-   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+   Unicode normalization ensures that only one form will be used throughout all speech output, which is the single-character variant.
 
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
@@ -2411,6 +2383,8 @@ The following symbols are defined:
 | ⡎ ("s" with dot 7) | End strikethrough |
 | ⠑ ("e")| Start spelling error |
 | ⡑ ("e" with dot 7) | End spelling error |
+| ⠛ ("g")| Start grammar error |
+| ⡛ ("g" with dot 7) | End grammar error |
 
 ##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
@@ -2646,6 +2620,37 @@ By default, sounds are played when Screen Curtain is toggled.
 If you do not wish to hear these sounds, you can uncheck this checkbox.
 Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.
 
+##### Logging level {#GeneralSettingsLogLevel}
+
+This is a combo box that lets you choose how much NVDA will log as it's running.
+Generally, users should not need to touch this, as not too much is logged.
+However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
+
+The available logging levels are:
+
+* Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
+* Info: NVDA will log basic information such as startup messages and information useful for developers.
+* Debug warning: Warning messages that are not caused by severe errors will be logged.
+* Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
+If you are concerned about privacy, do not set the logging level to this option.
+* Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
+Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+
+##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
+
+If this is enabled, NV Access will use the information from update checks, including particular demographics such as the operating system and country of origin, to track the number of NVDA users.
+Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
+Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:
+
+* A unique ID for the current NVDA user, this changes once a month
+* NVDA interface language
+* Whether this copy of NVDA is portable or installed
+* Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
+* Name of the current Braille display in use (including the name of the add-on the driver comes from)
+* The current output Braille table (if Braille is in use)
+
+This information greatly aides NV Access to prioritize future development of NVDA.
+
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
@@ -2811,6 +2816,7 @@ Note that the announcement of some object details might be dependent on how othe
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
 The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
+You can also assign a custom gesture in the Mouse category of the Input Gestures dialog to toggle this option.
 
 ##### Brightness controls audio coordinates volume {#MouseSettingsBrightness}
 
@@ -3149,26 +3155,26 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-##### Spelling error reporting {#ReportSpellingErrors}
+##### Spelling and grammar error reporting {#ReportSpellingErrors}
 
-This option allows you to configure how spelling errors are reported while reading text.
+This option allows you to configure how spelling and grammar errors are reported while reading text.
 This checklist box has three options:
 
-* Speech: NVDA will say "spelling error" when a spelling error is encountered while reading text
-* Sound: NVDA will play a short buzzer sound when a spelling error is encountered while reading text
-When navigating word by word or character by character, "out of spelling error" is also reported if the "Speech" or "Sound" option is selected.
-* Braille: NVDA will indicate spelling errors in braille.
-To have spelling errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
+* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
+* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text
+When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
+* Braille: NVDA will indicate spelling or grammar errors in braille.
+To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, spelling errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, spelling errors can be reported just in braille.
+Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
+In these cases, errors can be reported just in braille.
 
-By default, spelling errors will be reported with speech.
+By default, errors will be reported with speech.
 
-To cycle through available options to report spelling errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through available options to report errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are: Off, Speech, Sound, Speech and sound.
 
-You can also assign a custom gesture to toggle the reporting of spelling errors in braille using the [Input Gestures dialog](#InputGestures).
+You can also assign a custom gesture to toggle the reporting of errors in braille using the [Input Gestures dialog](#InputGestures).
 
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
@@ -3227,7 +3233,7 @@ This controls whether certain notations are disambiguated or not in speech.
 
 This value determines the language to be used.
 If the regional variant is not found among the speech rules, the speech will fall back to using the main language.
-If speech rules for the main language can not be found, English ("en") is used.
+If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3384,7 +3390,7 @@ The braille math code to use.
 ###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
 
 Highlight the currently selected navigation node with dots 7 and 8.
-The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highliting of the entire subexpression.
+The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highlighting of the entire subexpression.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -4180,6 +4186,11 @@ Once a Remote Access session is active, you can switch between controlling the r
 
 NVDA supports generating image descriptions on your device without connecting to the internet.
 This feature allows NVDA to describe images encountered during navigation.
+
+Warning: AI image descriptions are an experimental feature.
+Image descriptions generated with this feature may not be accurate.
+You must not use this feature in circumstances where inaccurate results could reasonably be expected to cause harm.
+Always exercise caution and skepticism when interpreting AI image descriptions.
 
 Note: An internet connection is required to enable and install the Image Captioner for the first time.
 It is not included with the NVDA installer to reduce the installer size.
