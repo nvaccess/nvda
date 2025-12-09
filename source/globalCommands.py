@@ -833,14 +833,16 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
 		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		timeout = 0
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.
 			ui.message(_("Automatic scrolling enabled"))
-			timeout = config.conf["braille"]["messageTimeout"] * 1000
-			core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+			if not (config.conf["braille"]["showMessages"] == ShowMessages.DISABLED or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value):
+				timeout = config.conf["braille"]["messageTimeout"] * 1000
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			ui.message(_("Automatic scrolling disabled"))
+		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
 
 	@script(
 		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
