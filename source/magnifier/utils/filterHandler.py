@@ -36,7 +36,7 @@ class FilterMatrix(Enum):
 		1.0,
 	)
 
-	GREYSCALE = (ctypes.c_float * 25)(
+	GRAYSCALE = (ctypes.c_float * 25)(
 		0.33,
 		0.33,
 		0.33,

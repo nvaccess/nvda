@@ -100,8 +100,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		if self.filterType == Filter.NORMAL:
 			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-		elif self.filterType == Filter.GREYSCALE:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.GREYSCALE.value)
+		elif self.filterType == Filter.GRAYSCALE:
+			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.GRAYSCALE.value)
 		elif self.filterType == Filter.INVERTED:
 			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.INVERTED.value)
 		else:
@@ -293,6 +293,7 @@ class SpotlightManager:
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._getFocusCoordinates()
 		self._originalZoomLevel: float = fullscreenMagnifier.zoomLevel
 		self._currentZoomLevel: float = fullscreenMagnifier.zoomLevel
+		self._originalMode: FullScreenMode | None = None
 
 	def _startSpotlight(self) -> None:
 		"""

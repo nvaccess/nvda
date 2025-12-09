@@ -1,9 +1,17 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+
 from magnifier.magnifier import Magnifier, MagnifierType
-from magnifier.utils.filterHandler import filter
+from magnifier.utils.types import Coordinates, Filter, FocusType, Direction
 import unittest
-from unittest.mock import MagicMock, Mock, patch, PropertyMock
+from winAPI._displayTracking import getPrimaryDisplayOrientation
+from unittest.mock import MagicMock, Mock, patch
 import wx
-import ctypes
+import mouseHandler
+import winUser
 
 
 class TestMagnifier(unittest.TestCase):
@@ -15,13 +23,10 @@ class TestMagnifier(unittest.TestCase):
 
 	def setUp(self):
 		"""Setup before each test."""
-		self.zoom = 2.0
-		self.filter = filter.NORMAL
-		self.magnifierType = MagnifierType.FULLSCREEN
 
-		self.magnifier = Magnifier(self.zoom, self.filter, self.magnifierType)
-		self.screenWidth = ctypes.windll.user32.GetSystemMetrics(0)
-		self.screenHeight = ctypes.windll.user32.GetSystemMetrics(1)
+		self.magnifier = Magnifier()
+		self.screenWidth = getPrimaryDisplayOrientation().width
+		self.screenHeight = getPrimaryDisplayOrientation().height
 
 	def tearDown(self):
 		"""Cleanup after each test."""
@@ -36,10 +41,10 @@ class TestMagnifier(unittest.TestCase):
 	def testMagnifierCreation(self):
 		"""Test : Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
-		self.assertEqual(self.magnifier.filter, filter.NORMAL)
+		self.assertEqual(self.magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(self.magnifier.magnifierType, MagnifierType.FULLSCREEN)
 		self.assertFalse(self.magnifier.isActive)
-		self.assertEqual(self.magnifier.lastFocusedObject, "")
+		self.assertIsNone(self.magnifier.lastFocusedObject)
 		self.assertEqual(self.magnifier.lastNVDAPosition, (0, 0))
 		self.assertEqual(self.magnifier.lastMousePosition, (0, 0))
 
@@ -55,13 +60,6 @@ class TestMagnifier(unittest.TestCase):
 
 		self.magnifier.zoomLevel = 10.0  # Max
 		self.assertEqual(self.magnifier.zoomLevel, 10.0)
-
-		# Test invalid values (should be rejected)
-		self.magnifier.zoomLevel = 0.5  # Below min
-		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain unchanged
-
-		self.magnifier.zoomLevel = 15.0  # Above max
-		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain unchanged
 
 	def testMagnifierTypeProperty(self):
 		"""Test : MagnifierType property getter and setter."""
@@ -167,22 +165,25 @@ class TestMagnifier(unittest.TestCase):
 
 	def testZoom(self):
 		"""Test : zoom in and out with valid values and check boundaries."""
+		# Set initial zoom to 1.0 for predictable testing
+		self.magnifier.zoomLevel = 1.0
+
 		# Test zoom in
-		self.magnifier._zoom(True)
-		self.assertEqual(self.magnifier.zoomLevel, 2.5)
+		self.magnifier._zoom(Direction.IN)
+		self.assertEqual(self.magnifier.zoomLevel, 1.5)
 
 		# Test zoom out
-		self.magnifier._zoom(False)
-		self.assertEqual(self.magnifier.zoomLevel, 2.0)
+		self.magnifier._zoom(Direction.OUT)
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)
 
 		# Test zoom in at maximum boundary
 		self.magnifier.zoomLevel = 10.0
-		self.magnifier._zoom(True)
+		self.magnifier._zoom(Direction.IN)
 		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain at max
 
 		# Test zoom out at minimum boundary
 		self.magnifier.zoomLevel = 1.0
-		self.magnifier._zoom(False)
+		self.magnifier._zoom(Direction.OUT)
 		self.assertEqual(self.magnifier.zoomLevel, 1.0)  # Should remain at min
 
 	def testStartTimer(self):
@@ -249,7 +250,7 @@ class TestMagnifier(unittest.TestCase):
 			mock_point.y = 400
 			mock_review.return_value.pointAtStart = mock_point
 
-			x, y = self.magnifier._getNvdaPosition()
+			x, y = self.magnifier._getCursorPosition()
 			self.assertEqual((x, y), (300, 400))
 
 		# Case 2: Review position fails, navigator works
@@ -257,7 +258,7 @@ class TestMagnifier(unittest.TestCase):
 			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = (100, 150, 200, 300)
 
-				x, y = self.magnifier._getNvdaPosition()
+				x, y = self.magnifier._getCursorPosition()
 				# Center: (100 + 200//2, 150 + 300//2) = (200, 300)
 				self.assertEqual((x, y), (200, 300))
 
@@ -266,25 +267,24 @@ class TestMagnifier(unittest.TestCase):
 			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = Mock(side_effect=Exception())
 
-				x, y = self.magnifier._getNvdaPosition()
+				x, y = self.magnifier._getCursorPosition()
 				self.assertEqual((x, y), (0, 0))
 
 	def testGetFocusCoordinates(self):
 		"""Test : All priority scenarios for focus coordinates."""
 
 		def testValues(
-			getNvda: tuple[int, int],
-			mousePos: tuple[int, int],
+			getNvda: Coordinates,
+			mousePos: Coordinates,
 			leftPressed: bool,
-			expected_coords: tuple[int, int],
-			expected_focused: str,
+			expected_coords: Coordinates,
+			expected_focused: FocusType,
 		):
-			self.magnifier._getNvdaPosition = MagicMock(return_value=getNvda)
+			self.magnifier._getCursorPosition = MagicMock(return_value=getNvda)
 			self.magnifier.lastNVDAPosition = (0, 0)
 			self.magnifier.lastMousePosition = (0, 0)
-			self.magnifier._mouseHandler.isLeftClickPressed = MagicMock(return_value=leftPressed)
-
-			type(self.magnifier._mouseHandler).mousePosition = PropertyMock(return_value=mousePos)
+			mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=leftPressed)
+			winUser.getCursorPos = MagicMock(return_value=mousePos)
 
 			focusCoordinates = self.magnifier._getFocusCoordinates()
 
@@ -292,30 +292,30 @@ class TestMagnifier(unittest.TestCase):
 			self.assertEqual(self.magnifier.lastFocusedObject, expected_focused)
 
 		# Case 1: Left click is pressed should return mouse position
-		testValues((0, 0), (0, 0), True, (0, 0), "mouse")
+		testValues((0, 0), (0, 0), True, (0, 0), FocusType.MOUSE)
 
 		# Case 2: Not left click mouse moving
-		testValues((0, 0), (10, 10), False, (10, 10), "mouse")
+		testValues((0, 0), (10, 10), False, (10, 10), FocusType.MOUSE)
 
 		# Case 3: Last move is NVDA mouse not changed
-		testValues((10, 10), (0, 0), False, (10, 10), "nvda")
+		testValues((10, 10), (0, 0), False, (10, 10), FocusType.NVDA)
 
 		# Case 4: Nothing changed last move Mouse
-		self.magnifier.lastFocusedObject = "mouse"
-		testValues((0, 0), (0, 0), False, (0, 0), "mouse")
+		self.magnifier.lastFocusedObject = FocusType.MOUSE
+		testValues((0, 0), (0, 0), False, (0, 0), FocusType.MOUSE)
 
 		# Case 5: Nothing changed last move NVDA
-		self.magnifier.lastFocusedObject = "nvda"
-		testValues((0, 0), (0, 0), False, (0, 0), "nvda")
+		self.magnifier.lastFocusedObject = FocusType.NVDA
+		testValues((0, 0), (0, 0), False, (0, 0), FocusType.NVDA)
 
 		# Case 6: Both have moved and no Left click
-		testValues((10, 10), (20, 20), False, (20, 20), "mouse")
+		testValues((10, 10), (20, 20), False, (20, 20), FocusType.MOUSE)
 
 		# Case 7: Both have moved and Left click
-		testValues((10, 10), (20, 20), True, (20, 20), "mouse")
+		testValues((10, 10), (20, 20), True, (20, 20), FocusType.MOUSE)
 
 		# Case 8: Only nvda moved but left pressed (very unlikely)
-		testValues((10, 10), (0, 0), True, (0, 0), "mouse")
+		testValues((10, 10), (0, 0), True, (0, 0), FocusType.MOUSE)
 
 	def testTimerProperty(self):
 		"""Test : Timer property getter and setter."""

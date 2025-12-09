@@ -1,10 +1,14 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import unittest
 from unittest.mock import MagicMock
 import wx
 import sys
-from magnifier.utils.filterHandler import filter
-from magnifier.fullscreenMagnifier import FullScreenMagnifier, FullScreenMode
-from magnifier.magnifier import MagnifierType
+from magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
+from magnifier.fullscreenMagnifier import FullScreenMagnifier
 
 # Mock the ui module globally before importing Magnifier
 sys.modules["ui"] = MagicMock()
@@ -22,12 +26,10 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		self.assertEqual(magnifier.zoomLevel, 2.0)
-		self.assertEqual(magnifier.filter, filter.NORMAL)
+		self.assertEqual(magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(magnifier.fullscreenMode, FullScreenMode.CENTER)
 		self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN)
 		self.assertTrue(magnifier.isActive)
@@ -36,26 +38,26 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierZoom(self):
 		"""Test zoom functionality."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
+
+		# Set initial zoom to 1.0 for predictable testing
+		magnifier.zoomLevel = 1.0
 
 		# Test zoom in
-		magnifier._zoom(True)
-		self.assertEqual(magnifier.zoomLevel, 2.5)
+		magnifier._zoom(Direction.IN)
+		self.assertEqual(magnifier.zoomLevel, 1.5)
 
 		# Test zoom out
-		magnifier._zoom(False)
-		self.assertEqual(magnifier.zoomLevel, 2.0)
+		magnifier._zoom(Direction.OUT)
+		self.assertEqual(magnifier.zoomLevel, 1.0)
+		self.assertEqual(magnifier.zoomLevel, 1.0)
 
 		# Cleanup
 		magnifier._stopMagnifier()
 
 	def testMagnifierCoordinates(self):
 		"""Test coordinate handling."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Test setting coordinates
 		magnifier.currentCoordinates = (100, 200)
@@ -70,9 +72,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierUpdate(self):
 		"""Test magnifier update cycle."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Mock the update methods
 		magnifier._getCoordinatesForMode = MagicMock(return_value=(150, 250))
@@ -94,9 +94,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierStop(self):
 		"""Test stopping the magnifier."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Mock the API methods
 		magnifier._getMagnificationApi = MagicMock(return_value=MagicMock(return_value=True))
@@ -116,9 +114,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierPositionCalculation(self):
 		"""Test position calculation."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Test position calculation
 		left, top, width, height = magnifier._getMagnifierPosition(500, 400)
@@ -141,15 +137,16 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierZoomBoundaries(self):
 		"""Test zoom boundaries."""
-		magnifier = FullScreenMagnifier(zoomLevel=1.0)
+		magnifier = FullScreenMagnifier()
+		magnifier.zoomLevel = 1.0
 
 		# Test minimum boundary
-		magnifier._zoom(False)  # Try to zoom out below minimum
+		magnifier._zoom(Direction.OUT)  # Try to zoom out below minimum
 		self.assertEqual(magnifier.zoomLevel, 1.0)
 
 		# Test maximum boundary
 		magnifier.zoomLevel = 10.0
-		magnifier._zoom(True)  # Try to zoom in above maximum
+		magnifier._zoom(Direction.IN)  # Try to zoom in above maximum
 		self.assertEqual(magnifier.zoomLevel, 10.0)
 
 		# Cleanup
@@ -157,7 +154,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierTypeProperty(self):
 		"""Test magnifierType property for FullScreenMagnifier."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 
 		# Should default to FULLSCREEN
 		self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN)
@@ -170,9 +167,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierInheritance(self):
 		"""Test inheritance structure."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Test inheritance
 		from magnifier.magnifier import Magnifier
@@ -181,7 +176,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 		# Test basic properties exist
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
-		self.assertTrue(hasattr(magnifier, "filter"))
+		self.assertTrue(hasattr(magnifier, "filterType"))
 		self.assertTrue(hasattr(magnifier, "magnifierType"))
 		self.assertTrue(hasattr(magnifier, "fullscreenMode"))
 		self.assertTrue(hasattr(magnifier, "isActive"))
@@ -192,9 +187,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 	def testMagnifierApiHandling(self):
 		"""Test API error handling."""
-		magnifier = FullScreenMagnifier(
-			zoomLevel=2.0, filter=filter.NORMAL, fullscreenMode=FullScreenMode.CENTER
-		)
+		magnifier = FullScreenMagnifier()
 
 		# Mock API to fail
 		magnifier._getMagnificationApi = MagicMock(side_effect=AttributeError())
@@ -214,13 +207,13 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 	def testMagnifierSimpleLifecycle(self):
 		"""Test simple magnifier lifecycle."""
 		# Create magnifier
-		magnifier = FullScreenMagnifier(zoomLevel=3.0)
+		magnifier = FullScreenMagnifier()
 		self.assertTrue(magnifier.isActive)
-		self.assertEqual(magnifier.zoomLevel, 3.0)
+		self.assertEqual(magnifier.zoomLevel, 2.0)
 
 		# Zoom a bit
-		magnifier._zoom(True)
-		self.assertEqual(magnifier.zoomLevel, 3.5)
+		magnifier._zoom(Direction.IN)
+		self.assertEqual(magnifier.zoomLevel, 2.5)
 
 		# Set some coordinates
 		magnifier.currentCoordinates = (200, 300)
@@ -231,8 +224,8 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		self.assertEqual(magnifier.fullscreenMode, FullScreenMode.RELATIVE)
 
 		# Change filter
-		magnifier.filter = filter.INVERTED
-		self.assertEqual(magnifier.filter, filter.INVERTED)
+		magnifier.filterType = Filter.INVERTED
+		self.assertEqual(magnifier.filterType, Filter.INVERTED)
 
 		# Stop magnifier
 		magnifier._stopMagnifier()
@@ -250,7 +243,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testSpotlightManagerCreation(self):
 		"""Test creating a SpotlightManager."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		self.assertIsNotNone(spotlightManager)
@@ -263,7 +256,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testSpotlightActivation(self):
 		"""Test activating spotlight mode."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock required methods
@@ -282,7 +275,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testSpotlightDeactivation(self):
 		"""Test deactivating spotlight mode."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock timer
@@ -305,7 +298,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testComputeAnimationSteps(self):
 		"""Test animation steps calculation."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Test animation from zoom 2.0 to 1.0, coordinates (500, 400) to (960, 540)
@@ -333,7 +326,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testMouseMonitoring(self):
 		"""Test mouse idle monitoring."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock wx.GetMousePosition
@@ -351,7 +344,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testMouseIdleDetection(self):
 		"""Test detecting mouse idle state."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Set initial position
@@ -372,7 +365,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testMouseMovementDetection(self):
 		"""Test detecting mouse movement."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Set initial position
@@ -398,31 +391,31 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testZoomBack(self):
 		"""Test zoom back to mouse position."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0, fullscreenMode=FullScreenMode.CENTER)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
 		spotlightManager._originalZoomLevel = 3.0
 
-		# Mock wx.GetMousePosition
-		with unittest.mock.patch("wx.GetMousePosition") as mockGetMousePosition:
-			mockGetMousePosition.return_value = (500, 400)
-			spotlightManager._animateZoom = MagicMock()
+		# Mock _getFocusCoordinates to return expected position
+		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
+		spotlightManager._animateZoom = MagicMock()
 
-			# Trigger zoom back
-			spotlightManager.zoomBack()
+		# Trigger zoom back
+		spotlightManager.zoomBack()
 
-			# Should call _animateZoom with original zoom and mouse position
-			spotlightManager._animateZoom.assert_called_once()
-			args = spotlightManager._animateZoom.call_args[0]
-			self.assertEqual(args[0], 3.0)  # Original zoom level
-			self.assertEqual(args[1], (500, 400))  # Mouse position for CENTER mode
+		# Should call _animateZoom with original zoom and mouse position
+		spotlightManager._animateZoom.assert_called_once()
+		args = spotlightManager._animateZoom.call_args[0]
+		self.assertEqual(args[0], 3.0)  # Original zoom level
+		self.assertEqual(args[1], (500, 400))  # Mouse position for CENTER mode
 
 		magnifier._stopMagnifier()
 
 	def testZoomBackRelativeMode(self):
 		"""Test zoom back in RELATIVE mode."""
-		magnifier = FullScreenMagnifier(zoomLevel=2.0, fullscreenMode=FullScreenMode.RELATIVE)
+		magnifier = FullScreenMagnifier()
+		magnifier.fullscreenMode = FullScreenMode.RELATIVE
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
@@ -446,12 +439,12 @@ class TestSpotlightManager(unittest.TestCase):
 
 	def testSpotlightFullLifecycle(self):
 		"""Test full spotlight lifecycle."""
-		magnifier = FullScreenMagnifier(zoomLevel=3.0)
+		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
 		# Verify initial state
 		self.assertFalse(spotlightManager._spotlightIsActive)
-		self.assertEqual(spotlightManager._originalZoomLevel, 3.0)
+		self.assertEqual(spotlightManager._originalZoomLevel, 2.0)
 
 		# Mock methods for full test
 		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))

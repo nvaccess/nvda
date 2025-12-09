@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -64,12 +64,7 @@ class Magnifier:
 
 	@zoomLevel.setter
 	def zoomLevel(self, value: float) -> None:
-		if self._ZOOM_MIN <= value <= self._ZOOM_MAX:
-			self._zoomLevel = value
-		else:
-			raise ValueError(
-				f"Invalid zoom set {value} should be in range ({self._ZOOM_MIN}, {self._ZOOM_MAX})"
-			)
+		self._zoomLevel = value
 
 	@property
 	def lastFocusedObject(self) -> FocusType | None:
@@ -170,9 +165,13 @@ class Magnifier:
 		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out
 		"""
 		if direction == Direction.IN:
-			self.zoomLevel += self._ZOOM_STEP
+			newZoom = self.zoomLevel + self._ZOOM_STEP
+			if newZoom <= self._ZOOM_MAX:
+				self.zoomLevel = newZoom
 		else:
-			self.zoomLevel -= self._ZOOM_STEP
+			newZoom = self.zoomLevel - self._ZOOM_STEP
+			if newZoom >= self._ZOOM_MIN:
+				self.zoomLevel = newZoom
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

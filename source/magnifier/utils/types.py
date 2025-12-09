@@ -119,7 +119,7 @@ class FullScreenMode(DisplayStringStrEnum):
 
 class Filter(DisplayStringStrEnum):
 	NORMAL = "normal"
-	GREYSCALE = "greyscale"
+	GRAYSCALE = "grayscale"
 	INVERTED = "inverted"
 
 	@property
@@ -127,8 +127,8 @@ class Filter(DisplayStringStrEnum):
 		return {
 			# Translators: Magnifier color filter - no filter applied
 			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - greyscale/black and white
-			self.GREYSCALE: pgettext("magnifier", "Greyscale"),
+			# Translators: Magnifier color filter - grayscale/black and white
+			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
 			# Translators: Magnifier color filter - inverted colors
 			self.INVERTED: pgettext("magnifier", "Inverted"),
 		}
