@@ -8,7 +8,11 @@
 
 ### Changes
 
+* The visual highlighter now uses a dirty rectangle to calculate the redraw area, which reduces resource consumption while avoiding highlighter flicker in some cases. (#19344, @hwf1324)
+
 ### Bug Fixes
+
+* Fixed high resource usage when enabling visual highlighter, now `dwm.exe` is not consuming a lot of CPU/GPU. (#17434, @hwf1324)
 
 ### Changes for Developers
 
