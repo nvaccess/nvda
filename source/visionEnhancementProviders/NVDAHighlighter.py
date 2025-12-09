@@ -40,6 +40,7 @@ from windowUtils import CustomWindow
 if TYPE_CHECKING:
 	from cursorManager import CursorManager
 	from NVDAObjects import NVDAObject
+	from winBindings.user32 import WNDCLASSEXW
 
 
 class HighlightStyle(NamedTuple):
@@ -96,13 +97,13 @@ class HighlightWindow(CustomWindow):
 
 	@override
 	@classmethod
-	def _get__wClass(cls):
+	def _get__wClass(cls) -> "WNDCLASSEXW":
 		wClass = super()._wClass
 		wClass.style = winUser.CS_HREDRAW | winUser.CS_VREDRAW
 		wClass.hbrBackground = winBindings.gdi32.CreateSolidBrush(cls.transparentColor)
 		return wClass
 
-	def updateLocationForDisplays(self):
+	def updateLocationForDisplays(self) -> None:
 		if vision._isDebug():
 			log.debug("Updating NVDAHighlighter window location for displays")
 		displays: list[wx.Rect] = [wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount())]
@@ -131,7 +132,7 @@ class HighlightWindow(CustomWindow):
 		self._prevContextRects = {}
 		user32.InvalidateRect(self.handle, None, True)
 
-	def __init__(self, highlighter: "NVDAHighlighter"):
+	def __init__(self, highlighter: "NVDAHighlighter") -> None:
 		if vision._isDebug():
 			log.debug("initializing NVDAHighlighter window")
 		super().__init__(
@@ -155,7 +156,7 @@ class HighlightWindow(CustomWindow):
 			raise WinError()
 
 	@override
-	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
+	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int) -> None:
 		if msg == winUser.WM_PAINT:
 			self._paint()
 			# Ensure the window is top most
@@ -208,16 +209,13 @@ class HighlightWindow(CustomWindow):
 		rect = rect.intersection(self.location)
 
 		try:
-			rect = rect.toLogical(self.handle)
-			rect = rect.toClient(self.handle)
-			rect = rect.expandOrShrink(style.margin)
-			return rect
+			return rect.toLogical(self.handle).toClient(self.handle).expandOrShrink(style.margin)
 		except RuntimeError:
 			# Usually happens if window handle is invalid or screen conversion fails
 			log.debugWarning("", exc_info=True)
 			return None
 
-	def _paint(self):
+	def _paint(self) -> None:
 		highlighter = self.highlighterRef()
 		if not highlighter:
 			# The highlighter instance died unexpectedly, kill the window as well
@@ -245,7 +243,7 @@ class HighlightWindow(CustomWindow):
 					) as pen:
 						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
-	def _invalidateContextRect(self, rect: RectLTRB, style: HighlightStyle):
+	def _invalidateContextRect(self, rect: RectLTRB, style: HighlightStyle) -> None:
 		"""
 		Invalidates a specific rectangle region on the screen (Dirty Rectangle).
 		Calculates the visual bounding box based on the object rect, margin and pen width.
@@ -265,7 +263,7 @@ class HighlightWindow(CustomWindow):
 		except RuntimeError:
 			user32.InvalidateRect(self.handle, None, True)
 
-	def refresh(self):
+	def refresh(self) -> None:
 		highlighter = self.highlighterRef()
 		if not highlighter:
 			return
@@ -278,7 +276,7 @@ class HighlightWindow(CustomWindow):
 		rectsChanged = False
 
 		# Identify all unique contexts involved in previous and current frame
-		allContexts = set(self._prevContextRects.keys()) | set(currentContextRects.keys())
+		allContexts = set(self._prevContextRects).union(currentContextRects)
 
 		for context in allContexts:
 			prevRect = self._prevContextRects.get(context)
@@ -358,7 +356,7 @@ class NVDAHighlighterGuiPanel(
 		self,
 		parent: wx.Window,
 		providerControl: VisionProviderStateControl,
-	):
+	) -> None:
 		self._providerControl = providerControl
 		initiallyEnabledInConfig = NVDAHighlighter.isEnabledInConfig()
 		if not initiallyEnabledInConfig:
@@ -379,7 +377,7 @@ class NVDAHighlighterGuiPanel(
 		super().__init__(parent)
 
 	@override
-	def _buildGui(self):
+	def _buildGui(self) -> None:
 		self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		self._enabledCheckbox = wx.CheckBox(
@@ -416,17 +414,17 @@ class NVDAHighlighterGuiPanel(
 		return VisionEnhancementProvider.getSettings()
 
 	@override
-	def makeSettings(self, sizer: wx.BoxSizer):
+	def makeSettings(self, sizer: wx.BoxSizer) -> None:
 		self.updateDriverSettings()
 		# bind to all check box events
 		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
 		self._updateEnabledState()
 
 	@override
-	def onPanelActivated(self):
+	def onPanelActivated(self) -> None:
 		self.lastControl = self.optionsText
 
-	def _updateEnabledState(self):
+	def _updateEnabledState(self) -> None:
 		settingsStorage: NVDAHighlighterSettings = self._getSettingsStorage()
 		settingsToTriggerActivation = [
 			settingsStorage.highlightBrowseMode,
@@ -444,7 +442,7 @@ class NVDAHighlighterGuiPanel(
 		if not self._ensureEnableState(isAnyEnabled) and isAnyEnabled:
 			self._onEnableFailure()
 
-	def _onEnableFailure(self):
+	def _onEnableFailure(self) -> None:
 		"""Initialization of Highlighter failed. Reset settings / GUI"""
 		settingsStorage: NVDAHighlighterSettings = self._getSettingsStorage()
 		settingsStorage.highlightBrowseMode = False
@@ -461,7 +459,7 @@ class NVDAHighlighterGuiPanel(
 			return self._providerControl.terminateProvider()
 		return True
 
-	def _onCheckEvent(self, evt: wx.CommandEvent):
+	def _onCheckEvent(self, evt: wx.CommandEvent) -> None:
 		settingsStorage: NVDAHighlighterSettings = self._getSettingsStorage()
 		if evt.GetEventObject() is self._enabledCheckbox:
 			isEnableAllChecked = evt.IsChecked()
@@ -490,7 +488,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	customWindowClass = HighlightWindow
 	_settings = NVDAHighlighterSettings()
 	_window: HighlightWindow | None = None
-	enabledContexts: tuple[Context]  # type info for autoprop: :meth:~._get_enableContexts
+	enabledContexts: tuple[Context, ...]  # type info for autoprop: :meth:~._get_enableContexts
 
 	@override
 	@classmethod
@@ -499,11 +497,8 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	@override
 	@classmethod
-	def getSettingsPanelClass(cls):
-		"""Returns the class to be used in order to construct a settings panel for the provider.
-		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
-		"""
+	def getSettingsPanelClass(cls) -> type[NVDAHighlighterGuiPanel]:
+		"""Returns the class to be used in order to construct a settings panel for NVDAHighlighter provider."""
 		return NVDAHighlighterGuiPanel
 
 	@override
@@ -512,7 +507,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		return True
 
 	@override
-	def registerEventExtensionPoints(  # override
+	def registerEventExtensionPoints(
 		self,
 		extensionPoints: EventExtensionPoints,
 	) -> None:
@@ -520,7 +515,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
 
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__()
 		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap: dict[Context, RectLTRB | None] = {}
@@ -538,7 +533,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			raise RuntimeError("Highlighter thread wasn't able to initialize correctly")
 
 	@override
-	def terminate(self):
+	def terminate(self) -> None:
 		log.debug("Terminating NVDAHighlighter")
 		if self._highlighterThread and self._window and self._window.handle:
 			if not user32.PostThreadMessage(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
@@ -550,7 +545,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.contextToRectMap.clear()
 		super().terminate()
 
-	def _run(self):
+	def _run(self) -> None:
 		try:
 			if vision._isDebug():
 				log.debug("Starting NVDAHighlighter thread")
@@ -578,7 +573,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		context: Context,
 		rect: RectLTRB | None = None,
 		obj: "NVDAObject | None" = None,
-	):
+	) -> None:
 		"""Updates the position rectangle of the highlight for the specified context.
 		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
 		Otherwise, it will call L{getContextRect}
@@ -592,25 +587,25 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 				rect = None
 		self.contextToRectMap[context] = rect
 
-	def handleFocusChange(self, obj: "NVDAObject"):
+	def handleFocusChange(self, obj: "NVDAObject") -> None:
 		self.updateContextRect(context=Context.FOCUS, obj=obj)
 		if not api.isObjectInActiveTreeInterceptor(obj):
 			_ = self.contextToRectMap.pop(Context.BROWSEMODE, None)
 		else:
 			self.handleBrowseModeMove()
 
-	def handleReviewMove(self, context: Context):
+	def handleReviewMove(self, context: Context) -> None:
 		self.updateContextRect(context=Context.NAVIGATOR)
 
-	def handleBrowseModeMove(self, obj: "CursorManager | None" = None):
+	def handleBrowseModeMove(self, obj: "CursorManager | None" = None) -> None:
 		self.updateContextRect(context=Context.BROWSEMODE)
 
-	def refresh(self):
+	def refresh(self) -> None:
 		"""Refreshes the screen positions of the enabled highlights."""
 		if self._window and self._window.handle:
 			self._window.refresh()
 
-	def _get_enabledContexts(self):
+	def _get_enabledContexts(self) -> tuple[Context, ...]:
 		"""Gets the contexts for which the highlighter is enabled."""
 		return tuple(
 			context
