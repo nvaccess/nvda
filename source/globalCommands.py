@@ -34,7 +34,7 @@ from speech import (
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
-from logHandler import log
+from logHandler import log, Logger
 import gui
 import systemUtils
 import wx
@@ -3143,7 +3143,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self, gesture):
-		if log.getEffectiveLevel() == logHandler.Logger.OFF:
+		if log.getEffectiveLevel() == Logger.OFF:
 			from gui import logViewer
 
 			logViewer.activate()
