@@ -6,8 +6,6 @@
 
 ### New Features
 
-* Added ability to scroll forward braille automatically (#18573, @nvdaes)
-
 ### Changes
 
 ### Bug Fixes
@@ -91,10 +89,6 @@ Also added unassigned Quick Navigation commands to jump to the next/previous ref
 This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
-* Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)
-
-* Added references (e.g. to footnotes and endnotes) to the Microsoft Word elements list.
-This includes unassigned Quick Navigation commands that can be used to jump to the next/previous reference. (#19300, @LeonarddeR)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 
 ### Changes
@@ -183,7 +177,6 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
-* Added an `autoScroll` method to `braille.handler`. (#18573, nvdaes)
 
 #### API Breaking Changes
 
