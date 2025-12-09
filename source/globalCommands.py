@@ -837,7 +837,10 @@ class GlobalCommands(ScriptableObject):
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.
 			ui.message(_("Automatic scrolling enabled"))
-			if not (config.conf["braille"]["showMessages"] == ShowMessages.DISABLED or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value):
+			if not (
+				config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+				or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
+			):
 				timeout = config.conf["braille"]["messageTimeout"] * 1000
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
