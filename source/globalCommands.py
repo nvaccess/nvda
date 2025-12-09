@@ -581,9 +581,9 @@ class GlobalCommands(ScriptableObject):
 		else:
 			newVal = "desktop"
 		config.conf["keyboard"]["keyboardLayout"] = newVal
-		# Translators: Reported when the user toggles keyboard layout.
-		# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
 		ui.message(
+			# Translators: Reported when the user toggles keyboard layout.
+			# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
 			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]),
 		)
 
