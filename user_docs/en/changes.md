@@ -6,6 +6,8 @@
 
 ### New Features
 
+* Added ability to scroll forward braille automatically. (#18573, @nvdaes)
+
 ### Changes
 
 ### Bug Fixes
@@ -13,6 +15,8 @@
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Added an `autoScroll` method to `braille.handler`. (#18573, @nvdaes)
 
 #### Deprecations
 
