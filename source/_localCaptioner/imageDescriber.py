@@ -82,7 +82,7 @@ def _messageCaption(captioner: ImageCaptioner, imageData: bytes) -> None:
 			ui.message,
 			# Translators: Presented when an AI image description has been generated.
 			# {description} will be replaced with the generated image description.
-			pgettext("imageDesc", "Could be {description}").format(description=description),
+			pgettext("imageDesc", "Could be: {description}").format(description=description),
 		)
 
 
