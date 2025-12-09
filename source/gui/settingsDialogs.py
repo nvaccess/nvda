@@ -4016,6 +4016,12 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the local captioner settings panel.
 	title = pgettext("imageDesc", "AI Image Descriptions")
 	helpId = "LocalCaptionerSettings"
+	panelDescription = pgettext(
+		"imageDesc",
+		# Translators: This is a label appearing on the AI Image Descriptions settings panel.
+		"Warning: AI image descriptions are experimental. "
+		"Do not use this feature in circumstances where inaccurate descriptions could cause harm.",
+	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		"""Create the settings controls for the panel.
@@ -4024,6 +4030,11 @@ class LocalCaptionerSettingsPanel(SettingsPanel):
 		"""
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.windowText = sHelper.addItem(
+			wx.StaticText(self, label=self.panelDescription),
+		)
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
 
 		self.enable = sHelper.addItem(
 			# Translators: A configuration in settings dialog.
