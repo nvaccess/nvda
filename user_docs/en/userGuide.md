@@ -2398,15 +2398,17 @@ To toggle this option from anywhere, please assign a custom gesture to "speakOnN
 
 ##### Automatic Scroll Rate {#BrailleAutoScrollRate}
 
-This option controls the rate of automatic braille display scrolling, measured in cells per second.
+This slider controls the rate of automatic braille display scrolling, measured in cells per second.
+The minimum value (0 %) will be 1 cell per second, and the maximum value (100 %), 20 cells per second.
 For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
 While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line been read is too short.
 
-Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, or when the session is locked.
+Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
 
 Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
+When using commands to decrease or increase the scroll rate, instead of the slider, NVDA will report the number of cells for second, not the percentage shown in the slider.
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
