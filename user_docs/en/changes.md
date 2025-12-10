@@ -82,7 +82,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 * In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
-* Setting the log level on "off" does not prevent anymore to open the log with `NVDA+f1`. (#19318, @CyrilleB79)
+* It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 
 ### Changes for Developers
 
