@@ -34,7 +34,7 @@ import braille
 import brailleInput
 import brailleTables
 import characterProcessing
-import magnifier.config as magnifier
+import magnifier.config as magnifierConfig
 import config
 import core
 import globalVars
@@ -5923,7 +5923,6 @@ class MagnifierPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		from magnifier.utils.types import Filter, FullScreenMode
-		from magnifier.config import ZoomLevel
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
@@ -5931,8 +5930,8 @@ class MagnifierPanel(SettingsPanel):
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
 		defaultZoomLabelText = _("Default &zoom level:")
 
-		zoomValues = ZoomLevel.zoomRange
-		zoomChoices = ZoomLevel.zoomStrings
+		zoomValues = magnifierConfig.ZoomLevel.zoomRange
+		zoomChoices = magnifierConfig.ZoomLevel.zoomStrings
 
 		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
 		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
@@ -5975,9 +5974,9 @@ class MagnifierPanel(SettingsPanel):
 
 	def _updateCurrentSelection(self):
 		"""Update the selection"""
-		currentFullscreenMode = magnifier.getCurrentFullscreenMode()
-		currentZoom = magnifier.getCurrentZoomLevel()
-		currentFilter = magnifier.getCurrentFilter()
+		currentFullscreenMode = magnifierConfig.getCurrentFullscreenMode()
+		currentZoom = magnifierConfig.getCurrentZoomLevel()
+		currentFilter = magnifierConfig.getCurrentFilter()
 
 		# ZOOM
 
@@ -6011,12 +6010,12 @@ class MagnifierPanel(SettingsPanel):
 
 		# KEEP MOUSE CENTERED
 
-		keepMouseCentered = magnifier.shouldKeepMouseCentered()
+		keepMouseCentered = magnifierConfig.shouldKeepMouseCentered()
 		self.keepMouseCenteredCheckBox.SetValue(keepMouseCentered)
 
 		# SAVE SHORTCUT CHANGES
 
-		saveShortcutChanges = magnifier.shouldSaveShortcutChanges()
+		saveShortcutChanges = magnifierConfig.shouldSaveShortcutChanges()
 		self.saveShortcutChangesCheckBox.SetValue(saveShortcutChanges)
 
 	def onPanelActivated(self):
@@ -6030,13 +6029,13 @@ class MagnifierPanel(SettingsPanel):
 		from magnifier.utils.types import Filter, FullScreenMode
 
 		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
-		magnifier.setDefaultZoomLevel(selectedZoom)
+		magnifierConfig.setDefaultZoomLevel(selectedZoom)
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
-		magnifier.setDefaultFilter(list(Filter)[selectedFilterIdx])
+		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
 
 		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
-		magnifier.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 		config.conf["magnifier"]["saveShortcutChanges"] = self.saveShortcutChangesCheckBox.GetValue()

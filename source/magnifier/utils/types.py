@@ -9,6 +9,7 @@ Types used in the magnifier module.
 from typing import NamedTuple
 from enum import Enum
 from utils.displayString import DisplayStringStrEnum
+from gettext import pgettext
 
 
 class MagnifierParams(NamedTuple):
@@ -27,7 +28,7 @@ class Direction(Enum):
 
 
 class MagnifierAction(DisplayStringStrEnum):
-	"""Actions that can be performed with the magnifier."""
+	"""Actions that can be performed with the magnifier"""
 
 	ZOOM_IN = "zoom_in"
 	ZOOM_OUT = "zoom_out"

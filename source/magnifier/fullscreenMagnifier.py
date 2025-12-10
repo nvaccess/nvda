@@ -4,8 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
-from ctypes import wintypes
-
 from logHandler import log
 from typing import Callable
 import ui
@@ -15,9 +13,7 @@ import wx
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
-from .config import (
-	getDefaultFullscreenMode,
-)
+from .config import getDefaultFullscreenMode
 
 
 class FullScreenMagnifier(Magnifier):
@@ -145,7 +141,7 @@ class FullScreenMagnifier(Magnifier):
 		Get Windows Magnification API function
 		"""
 		MagSetFullscreenTransform = ctypes.windll.magnification.MagSetFullscreenTransform
-		MagSetFullscreenTransform.restype = wintypes.BOOL
+		MagSetFullscreenTransform.restype = ctypes.wintypes.BOOL
 		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
 		return MagSetFullscreenTransform
 
@@ -171,10 +167,10 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Get Coordinates adjusted for the current fullscreen mode
 
-		:param coordinates: Raw Coordinates (x, y)
+		:param coordinates: Raw coordinates (x, y)
 
 		Returns:
-			Adjusted Coordinates according to fullscreen mode
+			coordinates: Adjusted coordinates according to fullscreen mode
 		"""
 		x, y = coordinates
 
@@ -204,7 +200,7 @@ class FullScreenMagnifier(Magnifier):
 		:param focusY: The y-coordinate of the focus point
 
 		Returns:
-			lastScreenPosition (Coordinates): The adjusted position (x, y) of the focus point
+			coordinates: The adjusted position (x, y) of the focus point
 		"""
 
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
@@ -243,7 +239,7 @@ class FullScreenMagnifier(Magnifier):
 		:param mouseY: The y-coordinate of the mouse pointer
 
 		Returns:
-			Coordinates: The (x, y) Coordinates of the magnifier center
+			coordinates: The (x, y) coordinates of the magnifier center
 		"""
 		zoom = self.zoomLevel
 
@@ -416,11 +412,11 @@ class SpotlightManager:
 
 		:param zoomStart: Starting zoom level
 		:param zoomEnd: Ending zoom level
-		:param CoordinateStart: Starting Coordinates (x, y)
+		:param coordinateStart: Starting Coordinates (x, y)
 		:param coordinateEnd: Ending Coordinates (x, y)
 
 		Returns:
-			List of animation steps as ZoomHistory for each animation step
+			zoomSteps: List of animation steps as ZoomHistory for each animation step
 		"""
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd

@@ -13,19 +13,19 @@ from typing import (
 	Tuple,
 	Union,
 )
-import magnifier
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
 )
 
 import audioDucking
-import magnifier.commands
 import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
+import magnifier
+import magnifier.commands
 import controlTypes
 import api
 import textInfos
@@ -4964,7 +4964,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"increases the magnification level of the magnifier."
+			"Increases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+b",
@@ -4975,7 +4975,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"decreases the magnification level of the magnifier."
+			"Decreases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+n",
@@ -4986,7 +4986,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"toggle filter of the magnifier"
+			"Toggle filter of the magnifier"
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+f",
@@ -4997,7 +4997,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"toggle fullscreen mode of the magnifier"
+			"Toggle fullscreen mode of the magnifier"
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
@@ -5008,7 +5008,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"launch spotlight if magnifier is fullscreen"
+			"Launch spotlight if magnifier is fullscreen"
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+l",

@@ -168,7 +168,7 @@ class Magnifier:
 			newZoom = self.zoomLevel + self._ZOOM_STEP
 			if newZoom <= self._ZOOM_MAX:
 				self.zoomLevel = newZoom
-		else:
+		elif direction == Direction.OUT:
 			newZoom = self.zoomLevel - self._ZOOM_STEP
 			if newZoom >= self._ZOOM_MIN:
 				self.zoomLevel = newZoom
@@ -203,7 +203,7 @@ class Magnifier:
 		:param y: Focus y
 
 		Returns:
-			MagnifierPosition: The position and size of the magnifier window
+			magnifierPosition: The position and size of the magnifier window
 		"""
 
 		# Calculate the size of the capture area at the current zoom level
@@ -227,7 +227,7 @@ class Magnifier:
 		This part is taken from NVDA+shift+m gesture
 
 		Returns:
-			Coordinates: The (x, y) Coordinates of the NVDA position
+			coordinates: The (x, y) coordinates of the NVDA position
 		"""
 		# Try to get the current review position object from NVDA's API
 		reviewPosition = api.getReviewPosition()
@@ -258,7 +258,7 @@ class Magnifier:
 		Return position (x,y) of current focus element
 
 		Returns:
-			Coordinates: The (x, y) Coordinates of the focus element
+			coordinates: The (x, y) coordinates of the focus element
 		"""
 		nvdaPosition = self._getCursorPosition()
 		mousePosition = winUser.getCursorPos()
