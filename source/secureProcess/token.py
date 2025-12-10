@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 import contextlib
+import win32api
 import win32profile
 import win32security
 import win32process
@@ -392,3 +393,38 @@ def impersonateToken(token):
 		yield
 	finally:
 		win32security.RevertToSelf()
+
+def isTokenElevated(token) -> bool:
+	"""
+	Check if a given token is elevated.
+
+	:param token: The token to check.
+	:return: True if the token is elevated, False otherwise.
+	"""
+	elevation = win32security.GetTokenInformation(token, win32security.TokenElevation)
+	return elevation != 0
+
+def getUnelevatedCurrentInteractiveUserTokenFromShell():
+	"""Return an unelevated primary token for the current interactive user.
+
+	This function locates the shell window for the active desktop session,
+	determines the process ID of the shell, opens that process and obtains
+	its primary token. A duplicated primary token is returned so callers can
+	use it for impersonation or process creation within the interactive
+	session without inheriting elevation from the current process.
+
+	:raises RuntimeError: If the shell window cannot be located.
+	:return: A duplicated primary token for the interactive user's shell
+		process.
+	"""
+
+	import ctypes
+	shellWindow = ctypes.windll.user32.GetShellWindow()
+	if not shellWindow:
+		raise RuntimeError("Could not find shell window; no interactive user session?")
+	tid, pid = win32process.GetWindowThreadProcessId(shellWindow)
+	log.debug(f"Found shell process with PID {pid}...")
+	shellProcess = win32api.OpenProcess(win32con.PROCESS_QUERY_INFORMATION, False, pid)
+	token = win32security.OpenProcessToken(shellProcess, win32con.MAXIMUM_ALLOWED)
+	token = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	return token
