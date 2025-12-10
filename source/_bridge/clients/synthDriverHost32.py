@@ -42,7 +42,7 @@ def createSynthDriverHost32():
 	  """
 	global stream, conn
 	log.info(f"Starting synthDriverHost32 process: {_hostExe}")
-	hostProc = secureProcess.SecurePopen([_hostExe], restrictToken=False,integrityLevel=None, killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	hostProc = secureProcess.SecurePopen([_hostExe], restrictToken=True, retainUserInRestrictedToken=True, integrityLevel='low', killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	log.info("Creating PipeStream over host process std pipes")
 	stream = PipeStream(hostProc.stdout, hostProc.stdin)
 	log.info("Connecting to synthDriverHost32 process RPYC service over PipeStream")
