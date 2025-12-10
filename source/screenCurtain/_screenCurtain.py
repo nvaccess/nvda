@@ -184,12 +184,9 @@ class ScreenCurtain:
 		for attempt in range(self._MAX_ENABLE_RETRIES):
 			exception: Exception | None = None
 			try:
-				if not magnification.MagInitialize():
-					raise RuntimeError("Failed to initialize magnification runtime")
-				if not magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK):
-					raise RuntimeError("Failed to set full screen color effect.")
-				if not magnification.MagShowSystemCursor(False):
-					raise RuntimeError("Failed to hide the system cursor")
+				magnification.MagInitialize()
+				magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+				magnification.MagShowSystemCursor(False)
 				if not isScreenFullyBlack():
 					raise RuntimeError("Screen is not black.")
 				break
@@ -202,7 +199,7 @@ class ScreenCurtain:
 				exception = e
 		else:
 			log.debug(f"Failed to enable Screen Curtain after {self._MAX_ENABLE_RETRIES} attempts.")
-			raise exception
+			raise RuntimeError("Failed to enable screen curtain") from exception
 		log.debug("Screen Curtain enabled")
 		self._enabled = True
 		if persist:
