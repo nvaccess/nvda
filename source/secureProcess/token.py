@@ -13,6 +13,9 @@ import win32con
 from winBindings.winnt import (
 	GENERIC_ALL,
 )
+from winBindings.user32 import (
+	GetShellWindow,
+)
 
 import logging
 
@@ -418,8 +421,7 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 		process.
 	"""
 
-	import ctypes
-	shellWindow = ctypes.windll.user32.GetShellWindow()
+	shellWindow = GetShellWindow()
 	if not shellWindow:
 		raise RuntimeError("Could not find shell window; no interactive user session?")
 	tid, pid = win32process.GetWindowThreadProcessId(shellWindow)
