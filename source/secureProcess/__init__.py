@@ -52,7 +52,7 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, removeElevation:bool=True, restrictToken: bool=True, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
 		"""
 		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
