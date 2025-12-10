@@ -27,6 +27,8 @@ from .token import (
 	createTokenEnvironmentBlock,
 	createRestrictedSecurityDescriptor,
 	impersonateToken,
+	getUnelevatedCurrentInteractiveUserTokenFromShell,
+	isTokenElevated,
 )
 from .desktop import (
 	createTempDesktop,
@@ -50,7 +52,7 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, restrictToken: bool=True, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None="low", removePrivileges: bool=True, removeElevation:bool=True, restrictToken: bool=True, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=True, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=True, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
 		"""
 		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
@@ -68,6 +70,7 @@ class SecurePopen(PopenWithToken):
 		:param cwd: Working directory for the child process. If not provided, the current
 			working directory is used (or a short-lived sandbox directory with restricted permissions when restrictedToken is True and retainUserInRestrictedToken is False.
 		:param integrityLevel: Integrity level to apply to the restricted token (e.g. "low").
+		:param removeElevation: If the current token is elevated, obtain an unelevated interactive user token from the shell instead.
 		:param removePrivileges: Remove privileges from the token when restricting it.
 		:param restrictedToken: Whether to create a restricted token for the child process. The restricted token will have a restricted SID list including the "Restricted" SID and the Logon SID from the source token, as well as interactive group SIDs. Enough to allow basic interactive access, but not enough to access the user's own files or profile data unless retainUserInRestrictedToken is also True.
 		:param retainUserInRestrictedToken: Include the user SID from the source token in the restricted SID list, thus granting access to the user's files and profile data.
@@ -82,15 +85,23 @@ class SecurePopen(PopenWithToken):
 When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
 		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
-		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {restrictToken=}, {retainUserInRestrictedToken=}, {runAsLocalService=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
+		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {runAsLocalService=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
 		if runAsLocalService:
 			log.debug("runAsLocalService requested, creating service logon token and ensuring secLogon is used to launch process...")
 			useSecLogon = True
 			token = createServiceLogon()
 		else:
-			log.debug("Using current primary token as basis for child process token")
-			useSecLogon = False
+			log.debug("Fetching current primary token...")
 			token = getCurrentPrimaryToken()
+			if removeElevation and isTokenElevated(token):
+				log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
+				token = getUnelevatedCurrentInteractiveUserTokenFromShell()
+				log.debug("Successfully obtained unelevated interactive user token from shell.")
+				log.debug("Ensuring secLogon is used to launch process...")
+				useSecLogon = True
+			else:
+				log.debug("Using current primary token as source token for child process. Not using secLogon for process launch.")
+				useSecLogon = False
 		log.debug("Preparing restricted DACL for sandboxing, using unique Logon session SID ...")
 		logonSidString = lookupTokenLogonSidString(token)
 		restrictedSD = createRestrictedSecurityDescriptor(logonSidString, integrityLevel=integrityLevel, includeSystem=True, includeAdministrators=True, includeMe=True)
@@ -140,6 +151,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), dacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
+		cwd = 'c:\\'
 		if not cwd:
 			with impersonateToken(token):
 				cwd = os.getcwd()

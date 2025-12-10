@@ -39,6 +39,7 @@ def main():
 	parser.add_argument("-r", "--restrict-sids", help="Restricted SIDs", action="store_true")
 	parser.add_argument("-ru", "--retain-user-in-restricted-token", help="Retain user SID in restricted token", action="store_true")
 	parser.add_argument("-p", "--remove-privileges", help="Remove privileges from the token", action="store_true")
+	parser.add_argument("-re", "--remove-elevation", help="If the current token is elevated, obtain an unelevated interactive user token from the shell instead", action="store_true")
 	parser.add_argument("-s", "--service-logon", help="Use the LocalService account to create the token", action="store_true")
 	parser.add_argument("-td", "--temp-desktop", help="Create a temporary desktop for the process", action="store_true")
 	parser.add_argument("-tw", "--temp-window-station", help="Create a temporary window station for the process", action="store_true")
@@ -54,6 +55,7 @@ def main():
 		stderr=subprocess.STDOUT,
 		integrityLevel=args.integrity_level,
 		removePrivileges=args.remove_privileges,
+		removeElevation=args.remove_elevation,
 		restrictToken=args.restrict_sids,
 		retainUserInRestrictedToken=args.retain_user_in_restricted_token,
 		runAsLocalService=args.service_logon,
