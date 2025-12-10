@@ -26,7 +26,9 @@ class ZoomLevel:
 	STEP_FACTOR: float = 0.5
 	zoomRange: list[float] = [i * 0.5 for i in range(2, 21)]  # 1.0 to 10.0 with 0.5 steps
 	zoomStrings: list[str] = [
-		pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}") for value in zoomRange
+		# Translators: Zoom level string shown in settings and messages
+		pgettext("magnifier", "{zoomLevel}x").format(zoomLevel=f"{value:.1f}")
+		for value in zoomRange
 	]
 
 
