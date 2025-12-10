@@ -1,4 +1,11 @@
-import functools
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+from __future__ import annotations
+import typing
+from collections import OrderedDict
 import pickle
 from logHandler import log
 import synthDriverHandler
@@ -8,25 +15,28 @@ from synthDriverHandler import (
 	synthDoneSpeaking,
 	VoiceInfo,
 )
+if typing.TYPE_CHECKING:
+	from ..services.synthDriver import SynthDriverService
 
 
 class SynthDriverProxy(synthDriverHandler.SynthDriver):
-	_synthDriverService = None
+	""" Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver. """
+	_synthDriverService: SynthDriverService
 
-	def __init__(self, synthDriverService):
+	def __init__(self, synthDriverService:  SynthDriverService):
 		super().__init__()
 		self._synthDriverService = synthDriverService
 		for notification in self.supportedNotifications:
 			if notification is synthIndexReached:
 				log.info("Registering synthIndexReached notification with synth driver service")
-				def localCallback(index):
+				def localCallback_synthIndexReached(index):
 					synthIndexReached.notify(synth=self, index=index)
-				self._synthDriverService.registerNotification('synthIndexReached', localCallback)
+				self._synthDriverService.registerSynthIndexReachedNotification(localCallback_synthIndexReached)
 			elif notification is synthDoneSpeaking:
 				log.info("Registering synthDoneSpeaking notification with synth driver service")
-				def localCallback():
+				def localCallback_synthDoneSpeaking():
 					synthDoneSpeaking.notify(synth=self)
-				self._synthDriverService.registerNotification('synthDoneSpeaking', localCallback)
+				self._synthDriverService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
 
 	_supportedSettingsCache = None
 	def _get_supportedSettings(self):
@@ -67,11 +77,17 @@ class SynthDriverProxy(synthDriverHandler.SynthDriver):
 
 	def _getAvailableVoices(self):
 		data = self._synthDriverService.getAvailableVoices()
-		return {ID: VoiceInfo(ID, name, language) for ID, name, language in data}
+		voices = OrderedDict()
+		for ID, name, language in data:
+			voices[ID] = VoiceInfo(ID, name, language)
+		return voices
 
 	def _getAvailableVariants(self):
 		data = self._synthDriverService.getAvailableVariants()
-		return {ID: VoiceInfo(ID, name) for ID, name in data}
+		variants = OrderedDict()
+		for ID, name in data:
+			variants[ID] = VoiceInfo(ID, name, None)
+		return variants
 
 	def speak(self, speechSequence):
 		data = pickle.dumps(speechSequence)
@@ -86,30 +102,31 @@ class SynthDriverProxy(synthDriverHandler.SynthDriver):
 	def _get_voice(self):
 		return self._synthDriverService.getParam('voice')
 
-	def _set_voice(self, voice):
-			self._synthDriverService.setParam('voice', voice)
+	def _set_voice(self, value):
+			self._synthDriverService.setParam('voice', value)
+			# changing the voice may change the supported settings
 			self._supportedSettingsCache = None
 
 	def _get_rate(self):
 		return self._synthDriverService.getParam('rate')
 
-	def _set_rate(self, rate):
-		self._synthDriverService.setParam('rate', rate)
+	def _set_rate(self, value):
+		self._synthDriverService.setParam('rate', value)
 
 	def _get_pitch(self):
 		return self._synthDriverService.getParam('pitch')
 
-	def _set_pitch(self, pitch):
-		self._synthDriverService.setParam('pitch', pitch)
+	def _set_pitch(self, value):
+		self._synthDriverService.setParam('pitch', value)
 
 	def _get_volume(self):
 		return self._synthDriverService.getParam('volume')
 
-	def _set_volume(self, volume):
-		self._synthDriverService.setParam('volume', volume)
+	def _set_volume(self, value):
+		self._synthDriverService.setParam('volume', value)
 
 	def _get_variant(self):
 		return self._synthDriverService.getParam('variant')
 
-	def _set_variant(self, variant):
-		self._synthDriverService.setParam('variant', variant)
+	def _set_variant(self, value):
+		self._synthDriverService.setParam('variant', value)

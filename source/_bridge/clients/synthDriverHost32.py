@@ -1,29 +1,45 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import threading
 import subprocess
 import rpyc
 from rpyc.core.stream import PipeStream
 import secureProcess
 from logHandler import log
+import languageHandler
+from ..components.services.logHandler import LogHandlerService
+from ..components.services.nvwave import WavePlayerService
 
 
-class NVDAService(rpyc.Service):
+@rpyc.service
+class NVDAService:
 
-	def exposed_LogHandler(self):
-		from ..components.services.logHandler import LogHandlerService
+	@rpyc.exposed
+	def LogHandler(self) -> LogHandlerService:
+		""" Return a LogHandler service wrapping the NVDA log handler, so remote clients can log messsages and check the log level. """
 		return LogHandlerService()
 
-	def exposed_getLanguage(self):
-		import languageHandler
+	@rpyc.exposed
+	def getLanguage(self) -> str:
+		"""Get the current NVDA language. """
 		return languageHandler.getLanguage()
 
-	def exposed_WavePlayer(self, *args, **kwargs):
-		from ..components.services.nvwave import WavePlayerService
-		return WavePlayerService(*args, **kwargs)
+	@rpyc.exposed
+	def WavePlayer(self, channels: int, samplesPerSec: int, bitsPerSample: int, outputDevice: str, wantDucking: bool = True):
+		""" return a WavePlayer service wrapping a new real WavePlayer instance. """
+		return WavePlayerService(channels=channels, samplesPerSec=samplesPerSec, bitsPerSample=bitsPerSample, outputDevice=outputDevice, wantDucking=wantDucking)
 
 
 _hostExe = "lib/x86/synthDriverHost-runtime/nvda_synthDriverHost.exe"
 
 def createSynthDriverHost32():
+	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
+	Instructs the host to install proxies that use the given NVDAService for remote calls back into NVDA.
+	:returns: The remote SynthDriverHostService instance.
+	  """
 	global stream, conn
 	log.info(f"Starting synthDriverHost32 process: {_hostExe}")
 	hostProc = secureProcess.SecurePopen([_hostExe], restrictToken=False,integrityLevel=None, killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)

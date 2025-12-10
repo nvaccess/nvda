@@ -1,18 +1,21 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+from __future__ import annotations
+import typing
 import inspect
+import traceback
 import time
-import logging
 import logHandler
 from ...base import Proxy
+if typing.TYPE_CHECKING:
+	from ..services.logHandler import LogHandlerService
 
-
-class LogHandlerProxy(Proxy, logging.Logger):
-	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
-
-	# Our custom levels.
-	IO = 12
-	DEBUGWARNING = 15
-	OFF = 100
-
+class LogHandlerProxy(Proxy, logHandler.Logger):
+	""" Wraps a remote LogHandlerService, providing the same interface as the local logHandler.log. """
+	_remoteService: LogHandlerService
 	disabled = False
 
 	def __init__(self, remoteService):
@@ -20,21 +23,24 @@ class LogHandlerProxy(Proxy, logging.Logger):
 		self._effectiveLevelCache = 0
 		self._effectiveLevelCacheTime = 0
 
-	def _log(self, level: int, msg: str, args: dict, exc_info: bool = False, stack_info: bool = False, codepath: str | None = None):
-		if not codepath:
-			f = inspect.currentframe().f_back.f_back
-			codepath = logHandler.getCodePath(f)
-		self._remoteService.logMessage(level, msg, exc_info=exc_info, stack_info=stack_info, codepath=codepath)
-
-	def debugWarning(self, msg, *args, **kwargs):
-		if not self.isEnabledFor(self.DEBUGWARNING):
-			return
-		self._log(self.DEBUGWARNING, msg, args, **kwargs)
-
-	def io(self, msg, *args, **kwargs):
-		if not self.isEnabledFor(self.IO):
-			return
-		self._log(self.IO, msg, args, **kwargs)
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
+		if not codepath or stack_info:
+			frame = inspect.currentframe()
+			count = 2
+			while count > 0 and frame:
+				parentFrame = frame.f_back
+				if not parentFrame:
+					break
+				frame = parentFrame
+				count -= 1
+			if not codepath:
+				codepath = logHandler.getCodePath(frame)
+			if stack_info is True:
+				stack_info = traceback.extract_stack(frame)
+				msg += "\nStack trace:\n" + (
+					"".join(traceback.format_list(stack_info)).rstrip()
+				)
+		self._remoteService.logMessage(level, msg, exc_info=bool(exc_info), stack_info=bool(stack_info), codepath=codepath)
 
 	def getEffectiveLevel(self):
 		curTime = time.time()
