@@ -3,10 +3,13 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+import os
 import threading
 import subprocess
 import rpyc
 from rpyc.core.stream import PipeStream
+import NVDAState
+from utils.security import isRunningOnSecureDesktop
 import secureProcess
 from logHandler import log
 import languageHandler
@@ -33,7 +36,10 @@ class NVDAService:
 		return WavePlayerService(channels=channels, samplesPerSec=samplesPerSec, bitsPerSample=bitsPerSample, outputDevice=outputDevice, wantDucking=wantDucking)
 
 
-_hostExe = "lib/x86/synthDriverHost-runtime/nvda_synthDriverHost.exe"
+_hostExe = os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "synthDriverHost-runtime/nvda_synthDriverHost.exe")
+
+def isSynthDriverHost32RuntimeAvailable():
+	return os.path.isfile(_hostExe)
 
 def createSynthDriverHost32():
 	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
@@ -41,8 +47,14 @@ def createSynthDriverHost32():
 	:returns: The remote SynthDriverHostService instance.
 	  """
 	global stream, conn
+	isSecureDesktop = isRunningOnSecureDesktop()
 	log.info(f"Starting synthDriverHost32 process: {_hostExe}")
-	hostProc = secureProcess.SecurePopen([_hostExe], restrictToken=True, retainUserInRestrictedToken=True, integrityLevel='low', killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	hostProc = secureProcess.SecurePopen(
+		[_hostExe], killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+		removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
+		retainUserInRestrictedToken=not isSecureDesktop,
+		runAsLocalService=isSecureDesktop, isolateWindowStation=isSecureDesktop, hideCriticalErrorDialogs=isSecureDesktop,
+		)
 	log.info("Creating PipeStream over host process std pipes")
 	stream = PipeStream(hostProc.stdout, hostProc.stdin)
 	log.info("Connecting to synthDriverHost32 process RPYC service over PipeStream")

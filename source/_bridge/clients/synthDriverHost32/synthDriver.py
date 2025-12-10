@@ -5,12 +5,16 @@
 
 import os
 from _bridge.components.proxies.synthDriver import SynthDriverProxy
-from .launcher import createSynthDriverHost32
+from .launcher import createSynthDriverHost32, isSynthDriverHost32RuntimeAvailable
 
 class SynthDriverProxy32(SynthDriverProxy):
 	""" A SynthDriver proxy class that loads a synthDriver using  the 32 bit SynthDriver host. """ 
 	synthDriver32Path: str
 	synthDriver32Name: str
+
+	@classmethod
+	def check(cls):
+		return isSynthDriverHost32RuntimeAvailable()
 
 	def __init__(self):
 		self._host = createSynthDriverHost32()

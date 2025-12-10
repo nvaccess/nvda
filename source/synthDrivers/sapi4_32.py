@@ -20,6 +20,8 @@ class SynthDriver(SynthDriverProxy32):
 
 	@classmethod
 	def check(cls):
+		if not super().check():
+			return False
 		try:
 			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator, 0, winreg.KEY_READ | winreg.KEY_WOW64_32KEY).Close()
 			return True
