@@ -19,13 +19,16 @@ from .childProcess import (
 )
 from .token import (
 	createRestrictedToken,
+	createRestrictedDacl,
 	createLeastPrivilegedToken,
 	getCurrentPrimaryToken,
 	createServiceLogon,
 	setTokenIntegrityLevel,
 	lookupTokenLogonSidString,
 	createTokenEnvironmentBlock,
-	createRestrictedSecurityDescriptor,
+	gettokenDefaultDacl,
+	createSaclFromToken,
+	createSecurityDescriptorFromDaclAndSacl,
 	impersonateToken,
 	getUnelevatedCurrentInteractiveUserTokenFromShell,
 	isTokenElevated,
@@ -86,6 +89,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
 		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {runAsLocalService=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
+		useSecLogon = False
 		if runAsLocalService:
 			log.debug("runAsLocalService requested, creating service logon token and ensuring secLogon is used to launch process...")
 			useSecLogon = True
@@ -93,23 +97,32 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		else:
 			log.debug("Fetching current primary token...")
 			token = getCurrentPrimaryToken()
-			if removeElevation and isTokenElevated(token):
-				log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
-				token = getUnelevatedCurrentInteractiveUserTokenFromShell()
-				log.debug("Successfully obtained unelevated interactive user token from shell.")
-				log.debug("Ensuring secLogon is used to launch process...")
-				useSecLogon = True
-			else:
-				log.debug("Using current primary token as source token for child process. Not using secLogon for process launch.")
-				useSecLogon = False
-		log.debug("Preparing restricted DACL for sandboxing, using unique Logon session SID ...")
-		logonSidString = lookupTokenLogonSidString(token)
-		restrictedSD = createRestrictedSecurityDescriptor(logonSidString, integrityLevel=integrityLevel, includeSystem=True, includeAdministrators=True, includeMe=True)
+		if removeElevation and isTokenElevated(token):
+			log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
+			token = getUnelevatedCurrentInteractiveUserTokenFromShell()
+			log.debug("Successfully obtained unelevated interactive user token from shell.")
+			log.debug("Ensuring secLogon is used to launch process...")
+			useSecLogon = True
+		defaultDacl = gettokenDefaultDacl(token)
+		if restrictToken:
+			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken)
+			if not retainUserInRestrictedToken:
+				log.debug("Preparing restricted DACL for sandboxing, using unique Logon session SID ...")
+				logonSidString = lookupTokenLogonSidString(token)
+				defaultDacl = createRestrictedDacl(logonSidString , includeSystem=True, includeAdministrators=True, includeMe=True)
+				win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, defaultDacl)
+		elif removePrivileges:
+			token = createLeastPrivilegedToken(token)
+		if integrityLevel:
+			log.debug(f"Setting token integrity level to {integrityLevel}...")
+			setTokenIntegrityLevel(token, integrityLevel)
+		defaultSacl = createSaclFromToken(token)
+		defaultSD = createSecurityDescriptorFromDaclAndSacl(defaultDacl, defaultSacl)
 		desktopName = None
 		if isolateWindowStation:
-			log.debug("Creating isolated window station and desktop with restricted security descriptor...")
+			log.debug("Creating isolated window station and desktop...")
 			sa = win32security.SECURITY_ATTRIBUTES()
-			sa.SECURITY_DESCRIPTOR = restrictedSD
+			sa.SECURITY_DESCRIPTOR = defaultSD
 			sa.bInheritHandle = False
 			winstaName, self._winstaHandle = createTempWindowStation(securityAttribs=sa)
 			with temporarilySwitchWindowStation(self._winstaHandle):
@@ -117,23 +130,12 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			desktopName = f"{winstaName}\\{desktopName}"
 			log.debug(f"Isolated window station and desktop created: {desktopName}")
 		elif isolateDesktop:
-			log.debug("Creating isolated desktop with restricted security descriptor...")
+			log.debug("Creating isolated desktop...")
 			sa = win32security.SECURITY_ATTRIBUTES()
-			sa.SECURITY_DESCRIPTOR = restrictedSD
+			sa.SECURITY_DESCRIPTOR =defaultSD
 			sa.bInheritHandle = False
 			desktopName, self._desktopHandle = createTempDesktop(securityAttribs=sa)
 			log.debug(f"Isolated desktop created: {desktopName}")
-		if restrictToken:
-			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken)
-		elif removePrivileges:
-			token = createLeastPrivilegedToken(token)
-		if restrictToken and not retainUserInRestrictedToken:
-			log.debug("Ensuring restricted token has an appropriate default DACL  so  it can access its own sandbox directory and handles...")
-			dacl = restrictedSD.GetSecurityDescriptorDacl()
-			win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, dacl)
-		if integrityLevel:
-			log.debug(f"Setting token integrity level to {integrityLevel}...")
-			setTokenIntegrityLevel(token, integrityLevel)
 		log.debug("Preparing environment variables appropriate for token...")
 		env = createTokenEnvironmentBlock(token)
 		if integrityLevel == "low":
@@ -147,8 +149,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		if restrictToken and not retainUserInRestrictedToken:
 			temp = env['TEMP']
 			sbDirName = f"sandbox_{uuid.uuid4()}"
-			dacl = restrictedSD.GetSecurityDescriptorDacl()
-			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), dacl, autoRemove=True)
+			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), defaultDacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
 		if not cwd:

@@ -331,55 +331,48 @@ def createRestrictedDacl(
 				dacl.AddAccessAllowedAce(win32security.ACL_REVISION, GENERIC_ALL, curUserSid)
 	return dacl
 
-
-def createRestrictedSecurityDescriptor(
-	uniqueRestrictedSidString: str,
-	integrityLevel: str | None = "low",
-	includeSystem: bool = True,
-	includeAdministrators: bool = True,
-	includeMe: bool = True,
-):
+def gettokenDefaultDacl(token):
 	"""
-	Create a security descriptor that restricts access to a single principal.
+	Return the default DACL for a given token.
 
-	This function builds a SECURITY_DESCRIPTOR whose DACL grants GENERIC_ALL to
-	the provided restricted SID and, optionally, to SYSTEM, the built-in
-	Administrators group, and the current calling user. If an integrityLevel is
-	provided, a mandatory integrity SACL is also attached to the security
-	descriptor to enforce the requested integrity policy.
+	:param token: The token whose default DACL will be retrieved.
+	:returns: The default DACL as an ACL object.
+	:raises: Underlying win32 API exceptions if reading the token information fails.
+	"""
+	dacl = win32security.GetTokenInformation(token, win32security.TokenDefaultDacl)
+	return dacl
 
-	:param uniqueRestrictedSidString: The string representation of the SID to
-		which access should be granted.
-	:param integrityLevel: Named integrity level to apply to the SACL (for
-		example "low", "medium", "high"), or None to omit a SACL.
-	:param includeSystem: If True, include an ACE granting access to the
-		local SYSTEM account.
-	:param includeAdministrators: If True, include an ACE granting access to
-		the built-in Administrators group.
-	:param includeMe: If True, include an ACE granting access to the current
-		calling user (unless that user is SYSTEM or equals the restricted SID).
+def createSaclFromToken(token):
+	"""
+	Create a SACL from the integrity level of a given token.
 
-	:returns: A SECURITY_DESCRIPTOR with the requested DACL and optional SACL.
-	:raises: Exceptions propagated from underlying win32 API calls on failure.
+	:param token: The token whose integrity level will be used to create the SACL.
+	:returns: An ACL object representing the SACL with the token's integrity level.
+	:raises: Underlying win32 API exceptions if reading the token information fails.
+	"""
+	integrityLevelInfo = win32security.GetTokenInformation(token, win32security.TokenIntegrityLevel)
+	sid = integrityLevelInfo[0]
+	sacl = win32security.ACL()
+	policy = win32security.SYSTEM_MANDATORY_LABEL_NO_WRITE_UP
+	sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
+	return sacl
+
+def createSecurityDescriptorFromDaclAndSacl(dacl, sacl=None):
+	"""
+	Create a SECURITY_DESCRIPTOR from the given DACL and optional SACL.
+
+	:param dacl: The discretionary access control list to set on the security descriptor.
+	:param sacl: The optional system access control list to set on the security descriptor.
+	:returns: A SECURITY_DESCRIPTOR object with the requested DACL and optional SACL.
+	:raises: Underlying win32 API exceptions if creating or setting the security descriptor fails.
 	"""
 	sd = win32security.SECURITY_DESCRIPTOR()
 	sd.Initialize()
-	dacl = createRestrictedDacl(
-		uniqueRestrictedSidString,
-		includeSystem=includeSystem,
-		includeAdministrators=includeAdministrators,
-		includeMe=includeMe,
-	)
 	sd.SetSecurityDescriptorDacl(1, dacl, 0)
-	if integrityLevel:
-		log.debug(f"Setting integrity level to {integrityLevel}...")
-		levelId = integrityLevels[integrityLevel]
-		sid = win32security.CreateWellKnownSid(levelId, None)
-		sacl = win32security.ACL()
-		policy = win32security.SYSTEM_MANDATORY_LABEL_NO_WRITE_UP
-		sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
+	if sacl:
 		sd.SetSecurityDescriptorSacl(1, sacl, 0)
 	return sd
+
 
 @contextlib.contextmanager
 def impersonateToken(token):
@@ -404,8 +397,20 @@ def isTokenElevated(token) -> bool:
 	:param token: The token to check.
 	:return: True if the token is elevated, False otherwise.
 	"""
-	elevation = win32security.GetTokenInformation(token, win32security.TokenElevation)
-	return elevation != 0
+	elevationType = win32security.GetTokenInformation(token, win32security.TokenElevationType)
+	if elevationType == win32security.TokenElevationTypeLimited:
+		log.debug("Token has elevation type: limited (not elevated)")
+		return False
+	elif elevationType == win32security.TokenElevationTypeDefault:
+		log.debug("Token has elevation type: default (No elevation possible)")
+		return False
+	elif elevationType == win32security.TokenElevationTypeFull:
+		log.debug("Token has elevation type: full (elevated)")
+		return True
+	log.warning(f"Unknown token elevation type: {elevationType}")
+	return False
+
+
 
 def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	"""Return an unelevated primary token for the current interactive user.
