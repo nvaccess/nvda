@@ -10,8 +10,8 @@ from rpyc.core.stream import PipeStream
 import secureProcess
 from logHandler import log
 import languageHandler
-from ..components.services.logHandler import LogHandlerService
-from ..components.services.nvwave import WavePlayerService
+from _bridge.components.services.logHandler import LogHandlerService
+from _bridge.components.services.nvwave import WavePlayerService
 
 
 @rpyc.service
