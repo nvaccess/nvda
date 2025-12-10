@@ -1650,3 +1650,12 @@ CloseDesktop.argtypes = (
 )
 
 DESKTOP_ALL_ACCESS = 0x000F01FF
+
+GetShellWindow = WINFUNCTYPE(None)(("GetShellWindow", dll))
+"""
+Retrieves a handle to the Shell's desktop window.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow
+"""
+GetShellWindow.restype = HWND
+GetShellWindow.argtypes = ()

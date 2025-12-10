@@ -151,7 +151,6 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), dacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
-		cwd = 'c:\\'
 		if not cwd:
 			with impersonateToken(token):
 				cwd = os.getcwd()

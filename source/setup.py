@@ -277,6 +277,14 @@ freeze(
 	]
 	+ (
 		getLocaleDataFiles()
+		+ (getRecursiveDataFiles(
+			f"lib/{version}/x86/synthDriverHost-runtime",
+			"lib/x86/synthDriverHost-runtime",
+		) if os.path.isdir('lib/x86/synthDriverHost-runtime') else []),
+		+ (getRecursiveDataFiles(
+			"synthDrivers32",
+			"synthDrivers32",
+		) if os.path.isdir('lib/x86/synthDriverHost-runtime') else []),
 		+ getRecursiveDataFiles(
 			"include/nvda-mathcat/assets",
 			"../include/nvda-mathcat/assets",
