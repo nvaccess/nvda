@@ -222,6 +222,8 @@ freeze(
 			"tomli",
 		],
 		"packages": [
+			"winBindings",
+			"speech",
 			"synthDrivers",
 		],
 		"includes": [
@@ -230,8 +232,6 @@ freeze(
 			"win32event",
 			"win32file",
 			"win32pipe",
-			"audioDucking",
-			"comtypes.stream",
 		],
 	},
 	data_files=[
