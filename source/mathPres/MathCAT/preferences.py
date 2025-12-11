@@ -248,6 +248,8 @@ def getAutoBrailleCode(
 		"es": "CMU",
 		"es_CO": "CMU",
 		"fi": "ASCIIMath-finnish",
+		"pt_BR": "CMU",
+		"pt_PT": "CMU",
 		"sv": "Swedish",
 		"vi": "Vietnam",
 	}
