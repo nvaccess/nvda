@@ -425,3 +425,49 @@ class IncompatibleAddonsDialog(
 		evt.Skip()
 		self.EndModal(wx.OK)
 		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
+
+
+class CopyAddonsDialog(DpiScalingHelperMixinWithoutInit, gui.contextHelp.ContextHelpMixin, wx.Dialog):
+	def __init__(self):
+		super().__init__(None, wx.ID_ANY, "Copy Add-ons")
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
+		label = wx.StaticText(
+			self,
+			label="Add-ons were detected in your user settings directory. "
+			"Copying these to the system profile could be a security risk. "
+			"Do you still wish to copy your settings?",
+		)
+		label.Wrap(self.scaleSize(self.GetSize().Width))
+		# AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
+		sHelper.addItem(label)
+		listCtrl = sHelper.addLabeledControl(
+			"Add-ons",
+			nvdaControls.AutoWidthColumnListCtrl,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+		)
+		listCtrl.setResizeColumn(0)
+		listCtrl.AppendColumn("Name")
+		listCtrl.AppendColumn("Status")
+		listCtrl.Append(("Audioscreen", "Enabled"))
+		listCtrl.Append(("PC Keyboard Braille Input", "Disabled"))
+		listCtrl.EnableCheckBoxes(True)
+		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
+		self.aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
+		# self.aboutButton.Disable()
+		# self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
+		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
+		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		button = buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		# self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(buttonHelper, separated=True)
+
+		mainSizer.Add(
+			sHelper.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1,
+		)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
