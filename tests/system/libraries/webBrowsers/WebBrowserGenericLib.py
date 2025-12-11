@@ -1,4 +1,3 @@
-from robot.api.deco import keyword
 from robot.libraries.BuiltIn import BuiltIn
 from .ChromeLib import ChromeLib
 from .EdgeLib import EdgeLib
@@ -20,13 +19,11 @@ class WebBrowserGenericLib:
 			FirefoxLib(),
 		]
 
-	@keyword("Start all browsers")
 	def start_all_browsers(self):
 		for lib in self._browsers:
 			self._bi.log(f"[Browser] Starting: {lib.name}")
 			lib.start_browser()
 
-	@keyword("Open W3C example")
 	def open_w3c_example(self, relative_path: str):
 		"""Open a local W3C ARIA Authoring Practices example in each browser.
 
@@ -49,7 +46,6 @@ class WebBrowserGenericLib:
 			except Exception as e:
 				self._bi.log(f"[Browser] Failed to open in {lib.name}: {e}", level="WARN")
 
-	@keyword("Read window title")
 	def read_window_title(self):
 		"""Start each browser and ensure NVDA reads the window title (smoke)."""
 		for lib in self._browsers:
@@ -61,7 +57,6 @@ class WebBrowserGenericLib:
 			self._bi.log(f"[Browser] Window title for {lib.name}: {title}")
 			self._bi.should_not_be_empty(title)
 
-	@keyword("Close browser windows")
 	def close_browser_windows(self):
 		for lib in self._browsers:
 			try:
