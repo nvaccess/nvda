@@ -2753,7 +2753,7 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(speechGroup)
 
 		# Translators: Select an impairment for MathCAT
-		impairmentText = pgettext("math", "Impairment")
+		impairmentText = pgettext("math", "Generate speech for:")
 		self.impairmentList = speechGroup.addLabeledControl(
 			impairmentText,
 			wx.Choice,
@@ -2765,7 +2765,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: MathCAT language option
-		languageText = pgettext("math", "Language")
+		languageText = pgettext("math", "Language:")
 		self.languageOptions, self.languageCodes = localization.getLanguages()
 		self.languageList = speechGroup.addLabeledControl(
 			languageText,
@@ -2792,7 +2792,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: Select a speech style.
-		speechStyleText = pgettext("math", "Speech style")
+		speechStyleText = pgettext("math", "Speech style:")
 		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
 			config.conf["math"]["speech"]["language"],
 		)
@@ -2808,7 +2808,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
 
 		# Translators: MathCAT's verbosity setting
-		speechAmountText = pgettext("math", "Speech verbosity")
+		speechAmountText = pgettext("math", "Speech verbosity:")
 		self.speechAmountList = speechGroup.addLabeledControl(
 			speechAmountText,
 			wx.Choice,
@@ -2848,7 +2848,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"] != "None")
 
 		# Translators: label for combobox to specify how verbose/terse the speech should be
-		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
+		speechForChemicalText = pgettext("math", "Chemical formulae:")
 		self.speechForChemicalList = speechGroup.addLabeledControl(
 			speechForChemicalText,
 			wx.Choice,
@@ -2859,27 +2859,8 @@ class MathSettingsPanel(SettingsPanel):
 			self._getEnumIndexFromConfigValue(ChemistryOption, config.conf["math"]["speech"]["chemistry"]),
 		)
 
-		# Translators: Text for the navigation group.
-		navGroupText = pgettext("math", "Navigation")
-		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
-		navGroupBox = navGroupSizer.GetStaticBox()
-		navGroup = guiHelper.BoxSizerHelper(self, sizer=navGroupSizer)
-		sHelper.addItem(navGroup)
-
-		# Translators: label for combobox to specify one of three modes use to navigate math expressions
-		navModeText = pgettext("math", "Navigation mode to use when beginning to navigate an equation")
-		self.navModeList = speechGroup.addLabeledControl(
-			navModeText,
-			wx.Choice,
-			choices=[option.displayString for option in NavModeOption],
-		)
-		self.bindHelpEvent("MathNavMode", self.navModeList)
-		self.navModeList.SetSelection(
-			self._getEnumIndexFromConfigValue(NavModeOption, config.conf["math"]["navigation"]["navMode"]),
-		)
-
 		# Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-		navSpeechText = pgettext("math", "Navigation speech to use when beginning to navigate an equation")
+		navSpeechText = pgettext("math", "When entering an equation:")
 		navSpeechOptions: list[str] = [
 			# Translators: "Speak" the expression after moving to it
 			pgettext("math", "Speak"),
@@ -2897,21 +2878,43 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
-		# Translators: label for check box controlling a beep sound when math speech starts/ends
-		resetNavSpeechText = pgettext("math", "Make a sound when starting/ending math speech")
+		# Translators: Text for the navigation group.
+		navGroupText = pgettext("math", "Navigation")
+		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
+		navGroupBox = navGroupSizer.GetStaticBox()
+		navGroup = guiHelper.BoxSizerHelper(self, sizer=navGroupSizer)
+		sHelper.addItem(navGroup)
+
+		# Translators: label for combobox to specify one of three modes use to navigate math expressions
+		navModeText = pgettext("math", "Default navigation mode:")
+		self.navModeList = navGroup.addLabeledControl(
+			navModeText,
+			wx.Choice,
+			choices=[option.displayString for option in NavModeOption],
+		)
+		self.bindHelpEvent("MathNavMode", self.navModeList)
+		self.navModeList.SetSelection(
+			self._getEnumIndexFromConfigValue(NavModeOption, config.conf["math"]["navigation"]["navMode"]),
+		)
+
+		# Translators: label for check box that determines whether MathCAT
+		# reverts to the user-selected "default navigation mode" when
+		# navigating into a new equation, even if they selected a different
+		# one this session.
+		resetNavSpeechText = pgettext("math", "Reset to the default navigation mode for each new equation")
 		self.resetNavSpeechCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=resetNavSpeechText))
 		self.bindHelpEvent("MathNavReset", self.resetNavSpeechCheckBox)
 		self.resetNavSpeechCheckBox.SetValue(config.conf["math"]["navigation"]["resetOverview"])
 
 		# Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 		# or whether you have to manually back out of the fraction, etc.
-		navAutoZoomText = pgettext("math", "Automatic zoom out of 2D notations")
+		navAutoZoomText = pgettext("math", "Automatically zoom out of two-dimensional notation")
 		self.navAutoZoomCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=navAutoZoomText))
 		self.bindHelpEvent("MathNavAutoZoom", self.navAutoZoomCheckBox)
 		self.navAutoZoomCheckBox.SetValue(config.conf["math"]["navigation"]["autoZoomOut"])
 
 		# Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-		navSpeechAmountText = pgettext("math", "Speech amount for navigation")
+		navSpeechAmountText = pgettext("math", "Navigation verbosity:")
 		self.navSpeechAmountList = navGroup.addLabeledControl(
 			navSpeechAmountText,
 			wx.Choice,
@@ -2929,7 +2932,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: label for combobox to specify how math will be copied to the clipboard
-		navCopyAsText = pgettext("math", "Copy math as")
+		navCopyAsText = pgettext("math", "Copy math as:")
 		self.navCopyAsList = navGroup.addLabeledControl(
 			navCopyAsText,
 			wx.Choice,
@@ -2947,7 +2950,7 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(brailleGroup)
 
 		# Translators: label for combobox to specify which braille code to use
-		brailleMathCodeText = pgettext("math", "Braille math code for refreshable displays")
+		brailleMathCodeText = pgettext("math", "Output code:")
 		availableBrailleCodes: list[str] = preferences.getBrailleCodes()
 		autoBrailleCode = preferences.getAutoBrailleCode(availableBrailleCodes)
 		# Translators: An option in Math settings to select a braille code automatically,
@@ -2957,7 +2960,7 @@ class MathSettingsPanel(SettingsPanel):
 		brailleMathCodeOptions: list[str] = [autoDisplay]
 		self._brailleCodeIds.extend(availableBrailleCodes)
 		brailleMathCodeOptions.extend(availableBrailleCodes)
-		self.brailleMathCodeList = navGroup.addLabeledControl(
+		self.brailleMathCodeList = brailleGroup.addLabeledControl(
 			brailleMathCodeText,
 			wx.Choice,
 			choices=brailleMathCodeOptions,
@@ -2971,8 +2974,8 @@ class MathSettingsPanel(SettingsPanel):
 		self.brailleMathCodeList.SetSelection(selectionIndex)
 
 		# Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
-		self.brailleHighlightsList = navGroup.addLabeledControl(
+		brailleHighlightsText = pgettext("math", "Highlight navigation focus with dots 7 and 8")
+		self.brailleHighlightsList = brailleGroup.addLabeledControl(
 			brailleHighlightsText,
 			wx.Choice,
 			choices=[option.displayString for option in BrailleNavHighlightOption],
