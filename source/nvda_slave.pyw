@@ -85,7 +85,7 @@ def main():
 		elif action == "setNvdaSystemConfig":
 			import config
 
-			config._setSystemConfig(args[0])
+			config._setSystemConfig(args[0], addonsToCopy=args[1:])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config

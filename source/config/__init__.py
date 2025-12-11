@@ -10,6 +10,7 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
+from collections.abc import Collection
 from enum import Enum
 import globalVars
 import winreg
@@ -25,6 +26,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
+from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
@@ -302,14 +304,18 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, enable)
 
 
-def setSystemConfigToCurrentConfig():
+def setSystemConfigToCurrentConfig(*, _addonsToCopy: Collection[str] = ()):
 	fromPath = WritePaths.configDir
 	if winBindings.shell32.IsUserAnAdmin():
-		_setSystemConfig(fromPath)
+		_setSystemConfig(fromPath, addonsToCopy=_addonsToCopy)
 	else:
 		import systemUtils
 
-		res = systemUtils.execElevated(SLAVE_FILENAME, ("setNvdaSystemConfig", fromPath), wait=True)
+		res = systemUtils.execElevated(
+			SLAVE_FILENAME,
+			("setNvdaSystemConfig", fromPath, *_addonsToCopy),
+			wait=True,
+		)
 		if res == 2:
 			import installer
 
@@ -318,7 +324,7 @@ def setSystemConfigToCurrentConfig():
 			raise RuntimeError("Slave failure")
 
 
-def _setSystemConfig(fromPath, *, prefix=sys.prefix):
+def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: Collection[str] = ()):
 	import installer
 
 	toPath = os.path.join(prefix, "systemConfig")
@@ -336,6 +342,9 @@ def _setSystemConfig(fromPath, *, prefix=sys.prefix):
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
+		if relativePath == "addons":
+			addonsToCopy = CaseInsensitiveSet(addonsToCopy)
+			subDirs = [subDir for subDir in subDirs if subDir in addonsToCopy]
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
