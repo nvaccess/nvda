@@ -26,7 +26,7 @@ from .token import (
 	setTokenIntegrityLevel,
 	lookupTokenLogonSidString,
 	createTokenEnvironmentBlock,
-	gettokenDefaultDacl,
+	getTokenDefaultDacl,
 	createSaclFromToken,
 	createSecurityDescriptorFromDaclAndSacl,
 	impersonateToken,
@@ -103,7 +103,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			log.debug("Successfully obtained unelevated interactive user token from shell.")
 			log.debug("Ensuring secLogon is used to launch process...")
 			useSecLogon = True
-		defaultDacl = gettokenDefaultDacl(token)
+		defaultDacl = getTokenDefaultDacl(token)
 		if restrictToken:
 			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken)
 			if not retainUserInRestrictedToken:

@@ -331,7 +331,7 @@ def createRestrictedDacl(
 				dacl.AddAccessAllowedAce(win32security.ACL_REVISION, GENERIC_ALL, curUserSid)
 	return dacl
 
-def gettokenDefaultDacl(token):
+def getTokenDefaultDacl(token):
 	"""
 	Return the default DACL for a given token.
 
