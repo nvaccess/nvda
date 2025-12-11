@@ -3378,12 +3378,13 @@ Specify how math will be copied to the clipboard.
 
 ###### Braille math code for refreshable displays {#MathBrailleCode}
 
-The braille math code to use.
+The Braille math code to use.
+When this option is set to "Automatic", NVDA tries to infer a reasonable choice based on the current NVDA language.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
-| Default | Nemeth |
+| Options | Automatic, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
+| Default | Automatic |
 
 ###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
 
