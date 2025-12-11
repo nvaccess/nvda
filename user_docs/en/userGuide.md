@@ -3378,7 +3378,7 @@ Specify how math will be copied to the clipboard.
 
 ###### Braille math code for refreshable displays {#MathBrailleCode}
 
-The Braille math code to use.
+The braille math code to use.
 When this option is set to "Automatic", NVDA selects a default math braille code based on the current NVDA language.
 
 | . {.hideHeaderRow} | . |
