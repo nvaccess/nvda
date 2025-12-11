@@ -167,7 +167,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13, 64-bit architecture. (#18591)
+* NVDA is now built with Python 3.13, 64-bit. (#18591)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
