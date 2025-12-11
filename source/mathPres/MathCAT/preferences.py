@@ -244,6 +244,7 @@ def getAutoBrailleCode(
 		languageCode = languageHandler.getLanguage()
 
 	languagesToBrailleCodes: dict[str, str] = {
+		"en": "UEB",
 		"es": "CMU",
 		"es_CO": "CMU",
 		"fi": "ASCIIMath-finnish",
