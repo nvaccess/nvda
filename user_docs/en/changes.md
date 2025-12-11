@@ -65,7 +65,7 @@ Windows 10 on ARM is also no longer supported.
   * Press `NVDA+g` to get an AI generated image description.
   * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
-Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
+Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * While reading text, spelling and grammar errors can now be reported with a sound instead of speech. (#4233, #19257, @jcsteh, @CyrilleB79, @nvdaes)
 * Spelling and grammar errors can now be reported in braille. (#7608, #19257, @nvdaes)
@@ -167,7 +167,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13. (#18591)
+* NVDA is now built with Python 3.13, 64-bit. (#18591)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
