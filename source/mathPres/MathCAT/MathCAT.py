@@ -26,7 +26,7 @@ from api import getClipData
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from scriptHandler import script
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 
 from speech.commands import (
 	BeepCommand,
@@ -326,7 +326,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		try:
 			# IMPORTANT -- SetRulesDir must be the first call to libmathcat besides GetVersion()
 			rulesDir: str = path.join(
-				WritePaths.mathCATDir,
+				ReadPaths.mathCATDir,
 				"Rules",
 			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
