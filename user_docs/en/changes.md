@@ -57,7 +57,7 @@ Windows 10 on ARM is also no longer supported.
   * VirusTotal scan results are now available in the details for an add-on.
   An action has been added to view the full scan results on the VirusTotal website. (#18974)
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
-* Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
+* Added built-in support for reading math content by integrating MathCAT. (#18323, #19368, @RyanMcCleary, @codeofdusk)
 * NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
   * This feature is experimental, and should not be used in situations where inaccurate descriptions could cause harm.
   * To use this feature, NVDA will need to download image description data.
