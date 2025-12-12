@@ -285,7 +285,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Get makePot results
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: makePot results
         path: output
@@ -437,7 +437,7 @@ jobs:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Get NVDA launcher
       id: getLauncher
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output
@@ -600,7 +600,7 @@ jobs:
       name: snapshot
     steps:
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
@@ -654,7 +654,7 @@ jobs:
         echo RELEASE_NAME=$GITHUB_REF_NAME | sed 's/release-//g' >> $GITHUB_OUTPUT
         echo NORMALIZED_TAG_NAME=$GITHUB_REF_NAME | sed 's/\./-/g' | sed 's/release-//g' >> $GITHUB_OUTPUT
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
