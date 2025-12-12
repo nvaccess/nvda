@@ -10,6 +10,8 @@
 
 ### Changes
 
+* In Microsoft Word with UI Automation on Windows 11, NVDA can navigate by sentence in environments where the legacy object model is unavailable. (#13517, @codeofdusk)
+
 ### Bug Fixes
 
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
