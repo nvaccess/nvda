@@ -10,6 +10,8 @@
 
 ### Changes
 
+* It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+
 ### Bug Fixes
 
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
