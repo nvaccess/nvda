@@ -5451,16 +5451,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		maxScrollRate = float(
 			config.conf.getConfigValidation(
-				("braille", "autoScrollRate")
-			).kwargs["max"]
+				("braille", "autoScrollRate"),
+			).kwargs["max"],
 		)
 		self.autoScrollRateEdit = sHelper.addLabeledControl(
 			autoScrollRateText,
 			wx.SpinCtrlDouble,
 			min=minScrollRate,
-			max =maxScrollRate,
-			initial = config.conf["braille"]["autoScrollRate"],
-			inc = 0.5,
+			max=maxScrollRate,
+			initial=config.conf["braille"]["autoScrollRate"],
+			inc=0.5,
 		)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateEdit)
 
