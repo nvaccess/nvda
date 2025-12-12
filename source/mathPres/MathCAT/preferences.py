@@ -243,18 +243,28 @@ def getAutoBrailleCode(
 	if languageCode is None:
 		languageCode = languageHandler.getLanguage()
 
+	# de, nb, and nn should probably use Marburg when implemented upstream
 	languagesToBrailleCodes: dict[str, str] = {
+		"af": "UEB",
+		"an": "CMU",
+		"ca": "CMU",
+		"da": "LaTeX",
+		"de": "LaTeX",
 		"en": "UEB",
 		"es": "CMU",
-		"es_CO": "CMU",
-		"fi": "ASCIIMath-finnish",
-		"pt_BR": "CMU",
-		"pt_PT": "CMU",
+		"fi": "ASCIIMath-fi",
+		"ga": "UEB",
+		"gl": "CMU",
+		"mn": "UEB",
+		"nb": "LaTeX",
+		"nn": "LaTeX",
+		"pt": "CMU",
+		"ro": "UEB",
 		"sv": "Swedish",
 		"vi": "Vietnam",
 	}
 
-	res = languagesToBrailleCodes.get(languageCode)
+	res = languagesToBrailleCodes.get(languageCode.split("_")[0])
 	if res and res in availableCodes:
 		return res
 	return "ASCIIMath"
