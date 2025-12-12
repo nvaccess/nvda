@@ -5444,18 +5444,25 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
 		autoScrollRateText = _("Auto&matic scroll rate (cells/sec)")
-		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = (
-			followCursorGroupHelper.addLabeledControl(
-				autoScrollRateText,
-				nvdaControls.EnhancedInputSlider,
-				# Values are multiplied by 5, so we can set a smaller difference between consecutive values.
-				minValue=5,
-				maxValue=100,
-			)
+		minScrollRate = float(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate"),
+			).kwargs["min"],
 		)
-		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"] * 5))
-		self.autoScrollRateSlider.SetLineSize(2)
-		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
+		maxScrollRate = float(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate")
+			).kwargs["max"]
+		)
+		self.autoScrollRateEdit = sHelper.addLabeledControl(
+			autoScrollRateText,
+			wx.SpinCtrlDouble,
+			min=minScrollRate,
+			max =maxScrollRate,
+			initial = config.conf["braille"]["autoScrollRate"],
+			inc = 0.5,
+		)
+		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateEdit)
 
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
@@ -5487,8 +5494,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		# Values are multiplied by 5, so we can set a smaller difference between consecutive values.
-		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateSlider.GetValue() / 5
+		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateEdit.GetValue()
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
