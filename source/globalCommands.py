@@ -5095,6 +5095,53 @@ class GlobalCommands(ScriptableObject):
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
 
+	@script(
+		description=pgettext(
+			"imageDesc",
+			# Translators: Description for the image caption script
+			"Get an AI-generated image description of the navigator object.",
+		),
+		category=SCRCAT_IMAGE_DESC,
+		gesture="kb:NVDA+g",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
+	def script_runCaption(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.runCaption(gesture)
+
+	@script(
+		description=pgettext(
+			"imageDesc",
+			# Translators: Description for the toggle image captioning script
+			"Load or unload the image captioner",
+		),
+		category=SCRCAT_IMAGE_DESC,
+	)
+	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
+		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
+
+	@script(
+		description=_(
+			# Translators: Description for the repeat last speech script
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
+		),
+		gesture="kb:NVDA+x",
+		category=SCRCAT_SPEECH,
+		speakOnDemand=True,
+	)
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
+		lastSpeech = speech.speech._lastSpeech
+		if lastSpeech is None:
+			return
+		lastSpeechSeq, symbolLevel = lastSpeech
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
+		if repeats == 0:
+			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
+			braille.handler.message(lastSpeechText)
+		elif repeats == 1:
+			# Translators: title for report last spoken information dialog.
+			title = _("Last spoken information")
+			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

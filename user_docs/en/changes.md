@@ -6,6 +6,8 @@
 
 ### New Features
 
+* A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
+
 ### Changes
 
 ### Bug Fixes
