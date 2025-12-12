@@ -5442,6 +5442,28 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
+		autoScrollRateText = _("Auto&matic scroll rate (cells/sec)")
+		minScrollRate = float(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate"),
+			).kwargs["min"],
+		)
+		maxScrollRate = float(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate"),
+			).kwargs["max"],
+		)
+		self.autoScrollRateEdit = followCursorGroupHelper.addLabeledControl(
+			autoScrollRateText,
+			wx.SpinCtrlDouble,
+			min=minScrollRate,
+			max=maxScrollRate,
+			initial=config.conf["braille"]["autoScrollRate"],
+			inc=0.5,
+		)
+		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateEdit)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5472,6 +5494,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateEdit.GetValue()
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
