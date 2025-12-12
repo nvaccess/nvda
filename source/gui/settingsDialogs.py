@@ -5454,7 +5454,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 				("braille", "autoScrollRate"),
 			).kwargs["max"],
 		)
-		self.autoScrollRateEdit = sHelper.addLabeledControl(
+		self.autoScrollRateEdit = followCursorGroupHelper.addLabeledControl(
 			autoScrollRateText,
 			wx.SpinCtrlDouble,
 			min=minScrollRate,
