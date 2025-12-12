@@ -8,9 +8,9 @@
 
 ### Changes
 
-### Bug Fixes
-
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+
+### Bug Fixes
 
 ### Changes for Developers
 
