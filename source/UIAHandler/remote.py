@@ -127,7 +127,7 @@ def msWord_moveTextRangeBySentence(
 	docElement: UIA.IUIAutomationElement,
 	textRange: UIA.IUIAutomationTextRange,
 	unitCount: int,
-) -> Optional[UIA.IUIAutomationTextRange]:
+) -> UIA.IUIAutomationTextRange | None:
 	"""
 	Move a UI Automation text range by sentence using the Word-specific UIA
 	extended text range pattern, if available.
@@ -156,6 +156,14 @@ def msWord_moveTextRangeBySentence(
 		with ra.ifBlock(moveBySentenceSupported.inverse()):
 			ra.logRuntimeMessage("extendedTextRangePattern does not support MoveBySentence")
 			ra.Return(None)
+		expandSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_expandToEnclosingSentence,
+		)
+		with ra.ifBlock(expandSupported.inverse()):
+			ra.logRuntimeMessage(
+				"extendedTextRangePattern does not support ExpandToEnclosingSentence",
+			)
+			ra.Return(None)
 
 		moveCount = ra.newInt(unitCount)
 		actualMoved = ra.newInt(0)
@@ -166,16 +174,6 @@ def msWord_moveTextRangeBySentence(
 			moveCount,
 			actualMoved,
 		)
-
-		expandSupported = remoteExtendedTextRangePattern.isExtensionSupported(
-			guid_msWord_expandToEnclosingSentence,
-		)
-		with ra.ifBlock(expandSupported.inverse()):
-			ra.logRuntimeMessage(
-				"extendedTextRangePattern does not support ExpandToEnclosingSentence",
-			)
-			ra.Return(None)
-
 		ra.logRuntimeMessage("doing callExtension for ExpandToEnclosingSentence")
 		remoteExtendedTextRangePattern.callExtension(
 			guid_msWord_expandToEnclosingSentence,
