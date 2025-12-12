@@ -191,9 +191,9 @@ class HighlightWindow(CustomWindow):
 				# When the focus overlaps the navigator object, which is usually the case,
 				# show a different highlight style.
 				# Focus is in contextRects, do not show the standalone focus highlight.
-				_ = contextRects.pop(Context.FOCUS)
+				contextRects.pop(Context.FOCUS)
 				# Navigator object might be in contextRects as well
-				_ = contextRects.pop(Context.NAVIGATOR, None)
+				contextRects.pop(Context.NAVIGATOR, None)
 				context = Context.FOCUS_NAVIGATOR
 			contextRects[context] = rect
 		return contextRects
@@ -589,7 +589,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	def handleFocusChange(self, obj: "NVDAObject") -> None:
 		self.updateContextRect(context=Context.FOCUS, obj=obj)
 		if not api.isObjectInActiveTreeInterceptor(obj):
-			_ = self.contextToRectMap.pop(Context.BROWSEMODE, None)
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
 		else:
 			self.handleBrowseModeMove()
 
