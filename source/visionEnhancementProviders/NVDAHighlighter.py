@@ -368,7 +368,7 @@ class NVDAHighlighterGuiPanel(
 			if any(settingsToCheck):
 				log.debugWarning(
 					"Highlighter disabled in config while some of its settings are enabled. "
-					+ "This will be corrected",
+					"This will be corrected",
 				)
 				settingsStorage.highlightBrowseMode = False
 				settingsStorage.highlightFocus = False
