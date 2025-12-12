@@ -10,7 +10,7 @@ import config
 import languageHandler
 import yaml
 from logHandler import log
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -208,7 +208,7 @@ def pathToBrailleFolder() -> str:
 	:return: Absolute path to the Braille folder as a string.
 	"""
 	return os.path.join(
-		WritePaths.mathCATDir,
+		ReadPaths.mathCATDir,
 		"Rules",
 		"Braille",
 	)
