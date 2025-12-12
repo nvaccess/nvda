@@ -2864,8 +2864,8 @@ class MathSettingsPanel(SettingsPanel):
 		navSpeechOptions: list[str] = [
 			# Translators: "Speak" the expression after moving to it
 			pgettext("math", "Speak"),
-			# Translators: "Describe" the expression after moving to it ("overview is a synonym")
-			pgettext("math", "Describe/overview"),
+			# Translators: "Describe" the expression after moving to it
+			pgettext("math", "Describe overview"),
 		]
 		self.navSpeechList = speechGroup.addLabeledControl(
 			navSpeechText,

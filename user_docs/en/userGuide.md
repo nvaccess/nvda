@@ -3241,7 +3241,7 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 Different styles can be used to speak mathematical content:
 
-* ClearSpeak was developed by the Educational Testing Service for use on high-stakes examinations such as the SAT, a university entrance exam often administored in the United States.
+* ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
 Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
@@ -3275,7 +3275,7 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 
 Changes the relative speech rate.
 The change is a percentage speed change from the standard speech engine's rate.
-In other words, `100` means the reading rates of text and mathematical content are the same, whereas `50` means that mathematical content is read at half the speed of other content.
+`100` means the reading rates of text and math content are the same, whereas `50` means that math content is read at half the speed of other content.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3317,7 +3317,7 @@ Whether to speak the expression after moving to it or give an overview.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Speak, Overview |
+| Options | Speak, Describe overview |
 | Default | Speak |
 
 ##### Navigation Options {#MathNavigation}
@@ -3339,10 +3339,20 @@ This option selects whether NVDA resets to the default navigation mode when ente
 When this option is disabled, NVDA preserves the last selected navigation mode across equations in the same NVDA session.
 This option is enabled by default.
 
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Checked |
+
 ###### Automatically zoom out of two-dimensional notation {#MathNavAutoZoom}
 
 Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
 This option is enabled by default.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Checked |
 
 ###### Navigation verbosity {#MathNavSpeechAmount}
 
@@ -3355,7 +3365,7 @@ This option specifies whether NVDA should read mathematical expressions in a ter
 
 ###### Copy math as {#MathNavCopyAs}
 
-This option selects the format of mathematical content copied to the clipboard.
+This option selects the format of math content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
