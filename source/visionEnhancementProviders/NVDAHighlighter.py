@@ -132,7 +132,7 @@ class HighlightWindow(CustomWindow):
 		self._prevContextRects = {}
 		user32.InvalidateRect(self.handle, None, True)
 
-	def __init__(self, highlighter: "NVDAHighlighter") -> None:
+	def __init__(self, highlighter: "NVDAHighlighter"):
 		if vision._isDebug():
 			log.debug("initializing NVDAHighlighter window")
 		super().__init__(
@@ -514,7 +514,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
 
-	def __init__(self) -> None:
+	def __init__(self):
 		super().__init__()
 		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap: dict[Context, RectLTRB | None] = {}
