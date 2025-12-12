@@ -343,8 +343,8 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 
 
 class NVDAHighlighterGuiPanel(
-	SettingsPanel,
 	AutoSettingsMixin,
+	SettingsPanel,
 ):
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
