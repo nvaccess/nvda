@@ -1394,6 +1394,40 @@ class TextInfoRegion(Region):
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 		self._rawToContentPos.extend((contentPos,) * textLen)
 
+	def _getBrailleFormatConfig(self, formatConfig):
+		"""
+		Filter format configuration to only include attributes needed for braille.
+		This significantly improves performance by reducing unnecessary formatting queries,
+		especially in Microsoft Word.
+
+		Braille displays don't need visual formatting like fonts, colors, etc.
+		Only structural information (headings, lists, links) is relevant.
+		"""
+		# Create a shallow copy to avoid modifying the original
+		brailleFormatConfig = dict(formatConfig)
+
+		# Disable visual formatting attributes that braille doesn't use
+		unnecessaryAttrs = [
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",  # bold, italic, underline
+			"reportColor",
+			"reportBackgroundColor",
+			"reportLineNumber",
+			"reportLineIndentation",
+			"reportParagraphIndentation",
+			"reportAlignment",
+			"reportSpellingErrors",
+			"reportStyle",
+			"reportBorderStyle",
+			"reportBorderColor",
+		]
+
+		for attr in unnecessaryAttrs:
+			brailleFormatConfig[attr] = False
+
+		return brailleFormatConfig
+
 	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
@@ -1404,7 +1438,7 @@ class TextInfoRegion(Region):
 		# Collapsed ranges should never produce text and fields,
 		# But later on we may still need to draw the cursor at this position.
 		if not info.isCollapsed:
-			commands = info.getTextWithFields(formatConfig=formatConfig)
+			commands = info.getTextWithFields(formatConfig=self._getBrailleFormatConfig(formatConfig))
 		else:
 			commands = []
 		for command in commands:
