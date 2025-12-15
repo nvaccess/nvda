@@ -34,7 +34,7 @@ from speech import (
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
-from logHandler import log
+from logHandler import log, Logger
 import gui
 import systemUtils
 import wx
@@ -568,6 +568,24 @@ class GlobalCommands(ScriptableObject):
 			return
 		previousSettingValue = globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
+
+	@script(
+		# Translators: Input help mode message for toggling keyboard layout.
+		description=_("Toggles between desktop and laptop keyboard layout"),
+		category=SCRCAT_INPUT,
+	)
+	def script_toggleKeyboardLayout(self, gesture: "inputCore.InputGesture") -> None:
+		val = config.conf["keyboard"]["keyboardLayout"]
+		if val == "desktop":
+			newVal = "laptop"
+		else:
+			newVal = "desktop"
+		config.conf["keyboard"]["keyboardLayout"] = newVal
+		ui.message(
+			# Translators: Reported when the user toggles keyboard layout.
+			# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
+			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]),
+		)
 
 	@script(
 		# Translators: Input help mode message for cycling the reporting of typed characters.
@@ -3160,6 +3178,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self, gesture):
+		if log.getEffectiveLevel() == Logger.OFF:
+			from gui import logViewer
+
+			logViewer.activate()
+			return
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info(
@@ -4911,8 +4934,7 @@ class GlobalCommands(ScriptableObject):
 						screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
-					# Translators: Reported when the screen curtain could not be enabled.
-					enableMessage = _("Could not enable screen curtain")
+					enableMessage = screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE
 				finally:
 					self._toggleScreenCurtainMessage = enableMessage
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
@@ -5133,6 +5155,30 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
+
+	@script(
+		description=_(
+			# Translators: Description for the repeat last speech script
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
+		),
+		gesture="kb:NVDA+x",
+		category=SCRCAT_SPEECH,
+		speakOnDemand=True,
+	)
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
+		lastSpeech = speech.speech._lastSpeech
+		if lastSpeech is None:
+			return
+		lastSpeechSeq, symbolLevel = lastSpeech
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
+		if repeats == 0:
+			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
+			braille.handler.message(lastSpeechText)
+		elif repeats == 1:
+			# Translators: title for report last spoken information dialog.
+			title = _("Last spoken information")
+			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
 
 #: The single global commands instance.
