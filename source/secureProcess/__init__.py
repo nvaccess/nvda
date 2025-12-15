@@ -22,7 +22,7 @@ from .token import (
 	createRestrictedDacl,
 	createLeastPrivilegedToken,
 	getCurrentPrimaryToken,
-	createServiceLogon,
+	logonUser,
 	setTokenIntegrityLevel,
 	lookupTokenLogonSidString,
 	createTokenEnvironmentBlock,
@@ -55,7 +55,7 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, runAsLocalService: bool=False, applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
 		"""
 		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
@@ -77,7 +77,10 @@ class SecurePopen(PopenWithToken):
 		:param removePrivileges: Remove privileges from the token when restricting it.
 		:param restrictedToken: Whether to create a restricted token for the child process. The restricted token will have a restricted SID list including the "Restricted" SID and the Logon SID from the source token, as well as interactive group SIDs. Enough to allow basic interactive access, but not enough to access the user's own files or profile data unless retainUserInRestrictedToken is also True.
 		:param retainUserInRestrictedToken: Include the user SID from the source token in the restricted SID list, thus granting access to the user's files and profile data.
-		:param runAsLocalService: Use a local service logon token instead of the current primary token.
+		:param username: Username to log on as. If provided, a logon token for this user will be created via secLogon and used instead of the current primary token.
+		:param domain: Domain of the user to log on as.
+		:param password: Password for the user to log on as.
+		:param logonType: The type of logon to perform (e.g., "interactive", "service",
 		:param applyUIRestrictions: Apply maximum UI restrictions to the process via the Windows job object. Includes switching desktops, changing display settings, exiting windows, reading / writing global atoms, access to UI handles from other processes (includes windows and hooks), clipboard reading/writing, and changing system parameters.
 		:param isolateDesktop: Create a temporary desktop for the child process.
 		:param isolateWindowStation: Create a temporary window station (implies isolated desktop).
@@ -88,12 +91,12 @@ class SecurePopen(PopenWithToken):
 When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
 		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
-		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {runAsLocalService=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
+		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
 		useSecLogon = False
-		if runAsLocalService:
-			log.debug("runAsLocalService requested, creating service logon token and ensuring secLogon is used to launch process...")
+		if username:
+			log.debug(f"Logging on as user {username=} {domain=} {logonType=}...")
 			useSecLogon = True
-			token = createServiceLogon()
+			token = logonUser(username, domain, password, logonType)
 		else:
 			log.debug("Fetching current primary token...")
 			token = getCurrentPrimaryToken()

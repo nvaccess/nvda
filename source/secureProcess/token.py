@@ -160,30 +160,6 @@ def setTokenIntegrityLevel(token: PyHandle, level: str):
 	)
 
 
-def createServiceLogon():
-	"""
-	Create a logon token for the built-in LocalService account.
-
-	This is a small convenience wrapper around win32security.LogonUser that
-	requests a service-type logon for the "LocalService" account in the
-	"NT AUTHORITY" domain. The call uses the LOGON32_LOGON_SERVICE logon
-	type and the default logon provider.
-
-	:return: A handle to the created logon token.
-	:raises: Exceptions raised by the underlying LogonUser call if the logon
-		attempt fails or if the Win32 API returns an error.
-	"""
-	log.debug("Calling LogonUser for LocalService...")
-	token = win32security.LogonUser(
-		"LocalService",
-		"NT AUTHORITY",
-		"",
-		win32con.LOGON32_LOGON_SERVICE,
-		win32con.LOGON32_PROVIDER_DEFAULT,
-	)
-	return token
-
-
 def lookupTokenUserSidString(token) -> str:
 	"""Return the user SID string for the given token."""
 	userSid = win32security.GetTokenInformation(token, win32security.TokenUser)[0]
@@ -434,4 +410,37 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	shellProcess = win32api.OpenProcess(win32con.PROCESS_QUERY_INFORMATION, False, pid)
 	token = win32security.OpenProcessToken(shellProcess, win32con.MAXIMUM_ALLOWED)
 	token = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	return token
+
+
+logonTypes = {
+	"interactive": win32con.LOGON32_LOGON_INTERACTIVE,
+	"network": win32con.LOGON32_LOGON_NETWORK,
+	"batch": win32con.LOGON32_LOGON_BATCH,
+	"service": win32con.LOGON32_LOGON_SERVICE,
+	"unlock": win32con.LOGON32_LOGON_UNLOCK,
+	"networkCleartext": win32con.LOGON32_LOGON_NETWORK_CLEARTEXT,
+	"newCredentials": win32con.LOGON32_LOGON_NEW_CREDENTIALS,
+}
+
+def logonUser(username: str, domain: str=".", password: str="",logonType: str ="interactive"):
+	"""
+	Call LogonUser to obtain a logon token for a given user.
+
+	:param username: The username to log on.
+	:param domain: The domain of the user.
+	:param password: The password of the user.
+	:param logonType: The type of logon to perform (default is interactive).
+	:return: A handle to the created logon token.
+	:raises: Exceptions raised by the underlying LogonUser call if the logon
+		attempt fails or if the Win32 API returns an error.
+	"""
+	log.debug(f"Calling LogonUser for {domain}\\{username}...")
+	token = win32security.LogonUser(
+		username,
+		domain,
+		password,
+		logonTypes[logonType],
+		win32con.LOGON32_PROVIDER_DEFAULT,
+	)
 	return token
