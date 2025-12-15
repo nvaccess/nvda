@@ -4,6 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+import uuid
 import contextlib
 import win32api
 import win32profile
@@ -70,14 +71,11 @@ allowedRestrictedSids = {
 	"Console Logon": "S-1-2-1",
 	"NT AUTHORITY\\LOCAL": "S-1-2-0",
 	"NT AUTHORITY\\Local account": "S-1-5-113",
-}
-
-requiredRestrictedSids = {
 	"Restricted": "S-1-5-12",
 }
 
 
-def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool = False):
+def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool = False, includeExtraSidStrings: list[str] = []):
 	"""Create a new restricted token based on an existing token.
 
 	This function builds a reduced-privilege token by optionally disabling maximum
@@ -94,6 +92,7 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 	:param token: The source token to restrict.
 	:param removePrivilages: If True, disable all privileges on the created token, except SE_CHANGE_NOTIFY.
 	:param retainUser: If True, include the user's SID in the restricted SID list.
+	:param includeExtraSidStrings: List of additional SID strings to include in the restricted SID list.
 	:returns: A handle to the newly created restricted token.
 	:raises: Exceptions from underlying win32 API calls if token operations fail.
 	"""
@@ -104,15 +103,12 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 	oldGroups = win32security.GetTokenInformation(token, win32security.TokenGroups)
 	oldEnabledGroups = [sid for sid, attrs in oldGroups if attrs & win32security.SE_GROUP_ENABLED]
 	restrictToSids = []
-	for name, sidString in requiredRestrictedSids.items():
-		log.debug(f"Restricting to required group {name}...")
-		sid = win32security.ConvertStringSidToSid(sidString)
-		restrictToSids.append((sid, 0))
 	for name, sidString in allowedRestrictedSids.items():
 		sid = win32security.ConvertStringSidToSid(sidString)
 		if sid not in oldEnabledGroups:
-			continue
-		log.debug(f"Retaining existing group {name}...")
+			log.debug(f"Restricting to {name}...")
+		else:
+			log.debug(f"Restricting to existing group {name}...")
 		restrictToSids.append((sid, 0))
 	for sid, attrs in oldGroups:
 		if attrs & win32security.SE_GROUP_LOGON_ID:
@@ -122,8 +118,12 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 			break
 	if retainUser:
 		userSid = win32security.GetTokenInformation(token, win32security.TokenUser)[0]
-		log.debug("Retaining user SID in restricted token...")
+		log.debug("Restricting to user SID in restricted token...")
 		restrictToSids.append((userSid, 0))
+	for sidString in includeExtraSidStrings:
+		sid = win32security.ConvertStringSidToSid(sidString)
+		log.debug(f"Including extra restricted SID {sidString}...")
+		restrictToSids.append((sid, 0))
 	restrictedToken = win32security.CreateRestrictedToken(
 		token,
 		restrictFlags,
@@ -444,3 +444,20 @@ def logonUser(username: str, domain: str=".", password: str="",logonType: str ="
 		win32con.LOGON32_PROVIDER_DEFAULT,
 	)
 	return token
+
+def generateUniqueSandboxSidString() -> str:
+	"""
+	Generate a unique one-time SID for use in restricted tokens and ACLs.
+
+	:return: The string representation of the generated SID.
+	:raises: Underlying win32 API exceptions if SID creation fails.
+	"""
+	u = uuid.uuid4()
+	u = uuid.uuid4().int
+	a = (u >> 96) & 0xffffffff
+	b = (u >> 64) & 0xffffffff
+	c = (u >> 32) & 0xffffffff
+	rid = u & 0xffffffff
+	sidString = f"S-1-5-21-{a}-{b}-{c}-{rid}"
+	log.debug(f"Generated unique sandbox SID: {sidString}")
+	return sidString

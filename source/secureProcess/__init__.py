@@ -7,6 +7,7 @@ from typing import ParamSpec
 import uuid
 import subprocess
 import os
+import win32con
 import win32security
 from ctypes.wintypes import (
 	HANDLE,
@@ -32,6 +33,7 @@ from .token import (
 	impersonateToken,
 	getUnelevatedCurrentInteractiveUserTokenFromShell,
 	isTokenElevated,
+	generateUniqueSandboxSidString,
 )
 from .desktop import (
 	createTempDesktop,
@@ -108,11 +110,11 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			useSecLogon = True
 		defaultDacl = getTokenDefaultDacl(token)
 		if restrictToken:
-			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken)
+			uniqueSandboxSidString = generateUniqueSandboxSidString()
+			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken, includeExtraSidStrings=[uniqueSandboxSidString])
 			if not retainUserInRestrictedToken:
-				log.debug("Preparing restricted DACL for sandboxing, using unique Logon session SID ...")
-				logonSidString = lookupTokenLogonSidString(token)
-				defaultDacl = createRestrictedDacl(logonSidString , includeSystem=True, includeAdministrators=True, includeMe=True)
+				log.debug("Adding unique sandbox SID to token default DACL")
+				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(uniqueSandboxSidString))
 				win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, defaultDacl)
 		elif removePrivileges:
 			token = createLeastPrivilegedToken(token)
