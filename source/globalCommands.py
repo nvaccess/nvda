@@ -4967,7 +4967,7 @@ class GlobalCommands(ScriptableObject):
 			"Increases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+b",
+		gestures=("kb:nvda+keypadPlus", "kb(laptop):nvda+equals"),
 	)
 	def script_zoomIn(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.zoomIn()
@@ -4978,7 +4978,7 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+n",
+		gestures=("kb:nvda+keypadMinus", "kb(laptop):nvda+minus"),
 	)
 	def script_zoomOut(self, gesture: inputCore.InputGesture) -> None:
 		magnifier.commands.zoomOut()

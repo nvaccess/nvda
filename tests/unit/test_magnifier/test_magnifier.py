@@ -54,7 +54,6 @@ class TestMagnifier(unittest.TestCase):
 		self.magnifier.zoomLevel = 5.0
 		self.assertEqual(self.magnifier.zoomLevel, 5.0)
 
-		# Test boundary values
 		self.magnifier.zoomLevel = 1.0  # Min
 		self.assertEqual(self.magnifier.zoomLevel, 1.0)
 
