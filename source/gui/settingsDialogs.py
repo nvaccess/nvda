@@ -2753,7 +2753,7 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(speechGroup)
 
 		# Translators: Select an impairment for MathCAT
-		impairmentText = pgettext("math", "Generate speech for:")
+		impairmentText = pgettext("math", "Impairment:")
 		self.impairmentList = speechGroup.addLabeledControl(
 			impairmentText,
 			wx.Choice,
@@ -2842,7 +2842,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.pauseFactorSlider.SetValue(config.conf["math"]["speech"]["pauseFactor"])
 
 		# Translators: label for check box controlling a beep sound when math speech starts/ends
-		speechSoundText = pgettext("math", "Make a sound when starting/ending math speech")
+		speechSoundText = pgettext("math", "Beep at the beginning and end of math")
 		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
 		self.bindHelpEvent("MathSpeechSound", self.speechSoundCheckBox)
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"] != "None")

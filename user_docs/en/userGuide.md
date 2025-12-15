@@ -3217,7 +3217,7 @@ This category allows you to adjust how NVDA reads mathematical content.
 
 ##### Speech Options {#MathCATSpeechOptions}
 
-###### Generate speech for {#MathSpeechImpairment}
+###### Impairment {#MathSpeechImpairment}
 
 This controls whether certain notations are disambiguated or not in speech.
 
@@ -3292,7 +3292,7 @@ Changes the relative amount of pausing that MathCAT adds.
 | Options | Number between 0 and 100 |
 | Default | 50 |
 
-###### Make a sound when starting/ending math speech {#MathSpeechSound}
+###### Beep at the beginning and end of math {#MathSpeechSound}
 
 This option determines whether NVDA beeps at the beginning and end of math content.
 This option is enabled by default.
