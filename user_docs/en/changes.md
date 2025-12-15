@@ -16,6 +16,7 @@
 ### Bug Fixes
 
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* Fixed an error that occurred when enabling visual highlighter for elements with a height less than 0. (#19383, @hwf1324)
 
 ### Changes for Developers
 
