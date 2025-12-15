@@ -3294,7 +3294,7 @@ Changes the relative amount of pausing that MathCAT adds.
 
 ###### Make a sound when starting/ending math speech {#MathSpeechSound}
 
-This option determines whether NVDA beeps at the beginning and end of mathematical content.
+This option determines whether NVDA beeps at the beginning and end of math content.
 This option is enabled by default.
 
 ###### Chemical formulae {#MathSpeechForChemical}
