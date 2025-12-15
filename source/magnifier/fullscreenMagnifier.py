@@ -9,6 +9,7 @@ from typing import Callable
 import ui
 import winUser
 import wx
+from winBindings import magnification
 
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -23,7 +24,6 @@ class FullScreenMagnifier(Magnifier):
 		self._currentCoordinates: Coordinates = (0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._startMagnifier()
-		self._applyFilter()
 
 	@property
 	def fullscreenMode(self) -> FullScreenMode:
@@ -41,6 +41,16 @@ class FullScreenMagnifier(Magnifier):
 	def currentCoordinates(self, value: Coordinates) -> None:
 		self._currentCoordinates = value
 
+	@property
+	def filterType(self) -> Filter:
+		return super().filterType
+
+	@filterType.setter
+	def filterType(self, value: Filter) -> None:
+		Magnifier.filterType.fset(self, value)
+		if self.isActive:
+			self._applyFilter()
+
 	def event_gainFocus(self, obj, nextHandler):
 		log.info("FullscreenMagnifier gain focus event")
 		nextHandler()
@@ -53,7 +63,16 @@ class FullScreenMagnifier(Magnifier):
 		log.info(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and fullscreen mode {self.fullscreenMode}"
 		)
-		self._loadMagnifierApi()
+		# Initialize Magnification API if not already initialized
+		try:
+			magnification.MagInitialize()
+			log.debug("Magnification API initialized")
+		except Exception as e:
+			# Already initialized or failed - continue anyway
+			log.debug(f"MagInitialize result: {e}")
+
+		if self.isActive:
+			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self):
@@ -86,55 +105,33 @@ class FullScreenMagnifier(Magnifier):
 			MagSetFullscreenTransform = self._getMagnificationApi()
 			# Reset fullscreen magnifier: 1.0 zoom, 0,0 position
 			MagSetFullscreenTransform(ctypes.c_float(1.0), ctypes.c_int(0), ctypes.c_int(0))
-		except AttributeError:
-			log.info("Magnification API not available")
-		self._stopMagnifierApi()
+			# Reset color effect to normal (identity matrix)
+			magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+		except Exception as e:
+			log.info(f"Error resetting magnification: {e}")
+
+		# Uninitialize Magnification API
+		try:
+			magnification.MagUninitialize()
+			log.debug("Magnification API uninitialized")
+		except Exception as e:
+			log.debug(f"MagUninitialize result: {e}")
 
 	def _applyFilter(self) -> None:
 		"""
 		Apply the current color filter to the fullscreen magnifier
 		"""
-		if self.filterType == Filter.NORMAL:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-		elif self.filterType == Filter.GRAYSCALE:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.GRAYSCALE.value)
-		elif self.filterType == Filter.INVERTED:
-			ctypes.windll.magnification.MagSetFullscreenColorEffect(FilterMatrix.INVERTED.value)
-		else:
-			log.info(f"Unknown color filter: {self.filterType}")
-
-	def _loadMagnifierApi(self) -> None:
-		"""
-		Initialize the Magnification API
-		"""
 		try:
-			# Attempt to access the magnification DLL
-			ctypes.windll.magnification
+			if self.filterType == Filter.NORMAL:
+				magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+			elif self.filterType == Filter.GRAYSCALE:
+				magnification.MagSetFullscreenColorEffect(FilterMatrix.GRAYSCALE.value)
+			elif self.filterType == Filter.INVERTED:
+				magnification.MagSetFullscreenColorEffect(FilterMatrix.INVERTED.value)
+			else:
+				log.info(f"Unknown color filter: {self.filterType}")
 		except Exception as e:
-			# If the DLL is not available, log this and exit the function
-			log.error(f"Magnification API not available with error {e}")
-			return
-		# Try to initialize the magnification API
-		# MagInitialize returns 0 if already initialized or on failure
-		if ctypes.windll.magnification.MagInitialize() == 0:
-			log.info("Magnification API already initialized")
-			return
-		# If initialization succeeded, log success
-		log.info("Magnification API initialized")
-
-	def _stopMagnifierApi(self) -> None:
-		"""
-		Stop the Magnification API
-		"""
-		try:
-			ctypes.windll.magnification
-		except Exception as e:
-			log.error(f"Magnification API not available with error {e}")
-			return
-		if ctypes.windll.magnification.MagUninitialize() == 0:
-			log.info("Magnification API already uninitialized")
-			return
-		log.info("Magnification API uninitialized")
+			log.error(f"Failed to apply filter: {e}")
 
 	def _getMagnificationApi(self):
 		"""

@@ -13,11 +13,7 @@ from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 from .utils.types import MagnifierPosition, Coordinates, MagnifierType, Direction, FocusType, Filter
 
-from .config import (
-	getDefaultZoomLevel,
-	getDefaultFilter,
-	ZoomLevel,
-)
+from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
 
 
 class Magnifier:

@@ -110,7 +110,6 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		# Verify it's stopped
 		self.assertFalse(magnifier.isActive)
 		magnifier._stopTimer.assert_called_once()
-		magnifier._stopMagnifierApi.assert_called_once()
 
 	def testMagnifierPositionCalculation(self):
 		"""Test position calculation."""
