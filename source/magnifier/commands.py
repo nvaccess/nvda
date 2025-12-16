@@ -24,7 +24,13 @@ from .config import (
 
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
-from .utils.types import Filter, Direction, MagnifierType, FullScreenMode, MagnifierAction
+from .utils.types import (
+	Filter,
+	Direction,
+	MagnifierType,
+	FullScreenMode,
+	MagnifierAction,
+)
 from logHandler import log
 
 

@@ -13,7 +13,13 @@ from winBindings import magnification
 
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
-from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
+from .utils.types import (
+	Filter,
+	ZoomHistory,
+	Coordinates,
+	FullScreenMode,
+	FocusType
+)
 from .config import getDefaultFullscreenMode
 
 
