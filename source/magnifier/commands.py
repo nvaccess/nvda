@@ -180,7 +180,7 @@ def startSpotlight():
 
 def magnifierIsActiveVerify(
 		magnifier: Magnifier,
-		action: MagnifierAction
+		action: MagnifierAction,
 	) -> bool:
 	if magnifier and magnifier.isActive:
 		return True

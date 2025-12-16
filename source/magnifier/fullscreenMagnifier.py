@@ -244,7 +244,7 @@ class FullScreenMagnifier(Magnifier):
 	def _relativePos(
 			self,
 			mouseX: int,
-			mouseY: int
+			mouseY: int,
 		) -> Coordinates:
 		"""
 		Calculate magnifier center maintaining mouse relative position
