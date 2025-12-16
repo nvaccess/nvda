@@ -140,7 +140,6 @@ _HorizontalCtrlT = TypeVar(
 	wx.ComboBox,
 	wx.Slider,
 	wx.SpinCtrl,
-	wx.SpinCtrlDouble,
 	wx.TextCtrl,
 )
 
