@@ -5955,7 +5955,9 @@ class MagnifierPanel(SettingsPanel):
 		defaultFilterLabelText = _("Default &filter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.defaultFilterList = sHelper.addLabeledControl(
-			defaultFilterLabelText, wx.Choice, choices=filterChoices
+			defaultFilterLabelText,
+			wx.Choice,
+			choices=filterChoices,
 		)
 		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
 
@@ -5964,7 +5966,9 @@ class MagnifierPanel(SettingsPanel):
 		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.defaultFullscreenModeList = sHelper.addLabeledControl(
-			defaultFullscreenModeLabelText, wx.Choice, choices=fullscreenModeChoices
+			defaultFullscreenModeLabelText,
+			wx.Choice,
+			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
 

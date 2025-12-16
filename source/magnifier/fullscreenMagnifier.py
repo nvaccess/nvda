@@ -51,7 +51,11 @@ class FullScreenMagnifier(Magnifier):
 		if self.isActive:
 			self._applyFilter()
 
-	def event_gainFocus(self, obj, nextHandler):
+	def event_gainFocus(
+			self,
+			obj,
+			nextHandler,
+			):
 		log.info("FullscreenMagnifier gain focus event")
 		nextHandler()
 
@@ -153,14 +157,19 @@ class FullScreenMagnifier(Magnifier):
 		try:
 			MagSetFullscreenTransform = self._getMagnificationApi()
 			result = MagSetFullscreenTransform(
-				ctypes.c_float(self.zoomLevel), ctypes.c_int(left), ctypes.c_int(top)
+				ctypes.c_float(self.zoomLevel),
+				ctypes.c_int(left),
+				ctypes.c_int(top),
 			)
 			if not result:
 				log.info("Failed to set fullscreen transform")
 		except AttributeError:
 			log.info("Magnification API not available")
 
-	def _getCoordinatesForMode(self, coordinates: Coordinates) -> Coordinates:
+	def _getCoordinatesForMode(
+			self,
+			coordinates: Coordinates,
+		) -> Coordinates:
 		"""
 		Get Coordinates adjusted for the current fullscreen mode
 
@@ -188,7 +197,11 @@ class FullScreenMagnifier(Magnifier):
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
 
-	def _borderPos(self, focusX: int, focusY: int) -> Coordinates:
+	def _borderPos(
+			self,
+			focusX: int,
+			focusY: int,
+		) -> Coordinates:
 		"""
 		Check if focus is near magnifier border and adjust position accordingly
 		Returns adjusted position to keep focus within margin limits
@@ -201,7 +214,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self.lastScreenPosition[0], self.lastScreenPosition[1]
+			self.lastScreenPosition[0],
+			self.lastScreenPosition[1],
 		)
 
 		minX = lastLeft + self._MARGIN_BORDER
@@ -227,7 +241,11 @@ class FullScreenMagnifier(Magnifier):
 		else:
 			return self.lastScreenPosition
 
-	def _relativePos(self, mouseX: int, mouseY: int) -> Coordinates:
+	def _relativePos(
+			self,
+			mouseX: int,
+			mouseY: int
+		) -> Coordinates:
 		"""
 		Calculate magnifier center maintaining mouse relative position
 		Handles screen edges to prevent going off-screen
@@ -277,7 +295,10 @@ class FullScreenMagnifier(Magnifier):
 
 
 class SpotlightManager:
-	def __init__(self, fullscreenMagnifier: FullScreenMagnifier):
+	def __init__(
+			self,
+			fullscreenMagnifier: FullScreenMagnifier,
+		):
 		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
 		self._spotlightIsActive: bool = False
 		self._lastMousePosition: Coordinates = (0, 0)
@@ -326,7 +347,10 @@ class SpotlightManager:
 		self._fullscreenMagnifier._stopSpotlight()
 
 	def _animateZoom(
-		self, targetZoom: float, targetCoordinates: Coordinates, callback: Callable[[], None]
+		self,
+		targetZoom: float,
+		targetCoordinates: Coordinates,
+		callback: Callable[[], None],
 	) -> None:
 		"""
 		Animate the zoom level change
@@ -336,12 +360,18 @@ class SpotlightManager:
 		:param callback: The function to call after animation completes
 		"""
 		self._animationStepsList = self._computeAnimationSteps(
-			self._currentZoomLevel, targetZoom, self._currentCoordinates, targetCoordinates
+			self._currentZoomLevel,
+			targetZoom, self._currentCoordinates,
+			targetCoordinates,
 		)
 
 		self._executeStep(0, callback)
 
-	def _executeStep(self, stepIndex: int, callback: Callable[[], None]) -> None:
+	def _executeStep(
+			self,
+			stepIndex: int,
+			callback: Callable[[], None],
+		) -> None:
 		"""
 		Execute one animation step
 
