@@ -97,7 +97,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		"""
 		parentToken = getCurrentPrimaryToken()
 		parentUserSidString = lookupTokenUserSidString(parentToken)
-		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
+		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)},\noptions: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {applyUIRestrictions=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
 		useSecLogon = False
 		if username:
 			log.debug(f"Logging on as user {username=} {domain=} {logonType=}...")
