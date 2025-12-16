@@ -58,9 +58,7 @@ from .raiiUtils import (
 	makeAutoFree,
 	OnDelete,
 )
-
-import logging
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 class BasicPopen:

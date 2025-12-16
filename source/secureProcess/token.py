@@ -17,10 +17,7 @@ from winBindings.winnt import (
 from winBindings.user32 import (
 	GetShellWindow,
 )
-
-import logging
-
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 integrityLevels = {

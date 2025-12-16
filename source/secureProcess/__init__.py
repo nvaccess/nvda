@@ -50,9 +50,8 @@ from .job import (
 from .sandboxDir import (
 	SandboxDirectory,
 )
+from logHandler import log
 
-import logging
-log = logging.getLogger(__name__)
 
 class SecurePopen(PopenWithToken):
 	"""

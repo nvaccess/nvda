@@ -12,9 +12,7 @@ import win32con
 import win32file
 import win32security
 import pywintypes
-
-import logging
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 class SandboxDirectory:

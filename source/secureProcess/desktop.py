@@ -17,9 +17,7 @@ from winBindings.user32 import (
 	DESKTOP_ALL_ACCESS,
 )
 from .raiiUtils import makeAutoFree
-
-import logging
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 def createTempWindowStation(securityAttribs=None) -> tuple[str, HANDLE]:

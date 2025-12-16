@@ -25,9 +25,7 @@ from winBindings.kernel32 import (
 	AssignProcessToJobObject,
 	SetInformationJobObject,
 )
-
-import logging
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 class Job:
