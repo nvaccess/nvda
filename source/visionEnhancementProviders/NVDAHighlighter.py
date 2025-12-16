@@ -582,7 +582,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		if rect is None:
 			try:
 				rect = getContextRect(context, obj=obj)
-			except (LookupError, RuntimeError, TypeError):
+			except (LookupError, ValueError, RuntimeError, TypeError):
 				rect = None
 		self.contextToRectMap[context] = rect
 
