@@ -245,6 +245,7 @@ The actual commands will not execute while in input help mode.
 |Read window |`NVDA+b` |`NVDA+b` |Reads the entire current window (useful for dialogs)|
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
+|Repeat last spoken information |`NVDA+x` |`NVDA+x` |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -650,6 +651,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Starts or restarts NVDA |Control+alt+n |Control+alt+n |none |Starts or restarts NVDA from the Desktop, if this Windows shortcut is enabled during NVDA's installation process. This is a Windows specific shortcut and therefore it cannot be reassigned in the input gestures dialog.|
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
+|Repeat last spoken information |`NVDA+x` |`NVDA+x` |none |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -3379,11 +3381,12 @@ Specify how math will be copied to the clipboard.
 ###### Braille math code for refreshable displays {#MathBrailleCode}
 
 The braille math code to use.
+When this option is set to "Automatic", NVDA selects a default math braille code based on the current NVDA language.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
-| Default | Nemeth |
+| Options | Automatic, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
+| Default | Automatic |
 
 ###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
 
