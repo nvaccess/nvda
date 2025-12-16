@@ -80,7 +80,7 @@ Windows 10 on ARM is also no longer supported.
   * VirusTotal scan results are now available in the details for an add-on.
   An action has been added to view the full scan results on the VirusTotal website. (#18974)
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
-* Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
+* Added built-in support for reading math content by integrating MathCAT. (#18323, #19368, @RyanMcCleary, @codeofdusk)
 * NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
   * This feature is experimental, and should not be used in situations where inaccurate descriptions could cause harm.
   * To use this feature, NVDA will need to download image description data.
@@ -88,7 +88,7 @@ Windows 10 on ARM is also no longer supported.
   * Press `NVDA+g` to get an AI generated image description.
   * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
-Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
+Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * While reading text, spelling and grammar errors can now be reported with a sound instead of speech. (#4233, #19257, @jcsteh, @CyrilleB79, @nvdaes)
 * Spelling and grammar errors can now be reported in braille. (#7608, #19257, @nvdaes)
@@ -143,6 +143,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
+* NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -190,7 +191,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13. (#18591)
+* NVDA is now built with Python 3.13, 64-bit. (#18591)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
