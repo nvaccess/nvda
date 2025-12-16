@@ -7,9 +7,10 @@ from enum import Enum
 import os
 
 import config
+import languageHandler
 import yaml
 from logHandler import log
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -207,7 +208,7 @@ def pathToBrailleFolder() -> str:
 	:return: Absolute path to the Braille folder as a string.
 	"""
 	return os.path.join(
-		WritePaths.mathCATDir,
+		ReadPaths.mathCATDir,
 		"Rules",
 		"Braille",
 	)
@@ -227,6 +228,62 @@ def getBrailleCodes() -> list[str]:
 			if len(getRulesFiles(pathToBrailleCode, None)) > 0:
 				resultBrailleCodes.append(brailleCode)
 	return resultBrailleCodes
+
+
+def getAutoBrailleCode(
+	availableCodes: list[str] | None = None,
+	languageCode: str | None = None,
+) -> str:
+	"""
+	Determine the automatic MathCAT Braille code to use based on the current
+	or provided NVDA language.
+	"""
+	if not availableCodes:
+		availableCodes = getBrailleCodes()
+	if languageCode is None:
+		languageCode = languageHandler.getLanguage()
+
+	# de, nb, and nn should probably use Marburg when implemented upstream
+	languagesToBrailleCodes: dict[str, str] = {
+		"af": "UEB",
+		"an": "CMU",
+		"ca": "CMU",
+		"da": "LaTeX",
+		"de": "LaTeX",
+		"en": "UEB",
+		"es": "CMU",
+		"fi": "ASCIIMath-fi",
+		"ga": "UEB",
+		"gl": "CMU",
+		"mn": "UEB",
+		"nb": "LaTeX",
+		"nn": "LaTeX",
+		"pt": "CMU",
+		"ro": "UEB",
+		"sv": "Swedish",
+		"vi": "Vietnam",
+	}
+
+	res = languagesToBrailleCodes.get(languageCode.split("_")[0])
+	if res and res in availableCodes:
+		return res
+	return "ASCIIMath"
+
+
+def setEffectiveBrailleCode() -> None:
+	"""
+	Apply the effective Braille code to MathCAT at runtime, resolving auto
+	if needed.
+	"""
+	try:
+		brailleCodePref = config.conf["math"]["braille"]["brailleCode"]
+		effectiveCode = getAutoBrailleCode() if brailleCodePref == "Auto" else brailleCodePref
+		libmathcat.SetPreference("BrailleCode", effectiveCode)
+	except Exception as e:
+		log.debugWarning(
+			f"MathCAT: failed to set BrailleCode preference: {e}",
+			exc_info=True,
+		)
 
 
 def toNVDAConfigKey(key: str) -> str:
@@ -359,6 +416,9 @@ class MathCATUserPreferences:
 			log.exception(
 				f'Error in trying to set MathCAT "Language" preference to "{self._prefs["Speech"]["Language"]}": {e}',
 			)
+
+		setEffectiveBrailleCode()
+
 		if not os.path.exists(pathToUserPreferencesFolder()):
 			# create a folder for the user preferences
 			os.mkdir(pathToUserPreferencesFolder())
@@ -482,9 +542,9 @@ class MathCATUserPreferences:
 			BrailleNavHighlightOption.ENDPOINTS.value,
 		)
 		# Braille.BrailleCode
-		# Default value: "Nemeth"
-		# Valid values: Any supported braille code (currently Nemeth, UEB, CMU, Vietnam)
-		self._validate("Braille", "BrailleCode", [], "Nemeth")
+		# Default value: Auto
+		# Valid values: Any supported braille code (for example Nemeth, UEB, CMU, Vietnam) or Auto
+		self._validate("Braille", "BrailleCode", [], "Auto")
 
 	def _validate(
 		self,

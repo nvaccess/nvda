@@ -26,7 +26,7 @@ from api import getClipData
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from scriptHandler import script
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 
 from speech.commands import (
 	BeepCommand,
@@ -42,6 +42,7 @@ from textUtils import WCHAR_ENCODING
 
 import mathPres
 from .localization import getLanguageToUse
+from .preferences import setEffectiveBrailleCode
 from .speech import convertSSMLTextForNVDA
 
 
@@ -326,12 +327,13 @@ class MathCAT(mathPres.MathPresentationProvider):
 		try:
 			# IMPORTANT -- SetRulesDir must be the first call to libmathcat besides GetVersion()
 			rulesDir: str = path.join(
-				WritePaths.mathCATDir,
+				ReadPaths.mathCATDir,
 				"Rules",
 			)
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
 			libmathcat.SetRulesDir(rulesDir)
 			libmathcat.SetPreference("TTS", "SSML")
+			setEffectiveBrailleCode()
 		except Exception:
 			log.exception()
 			# Translators: this message directs users to look in the log file
