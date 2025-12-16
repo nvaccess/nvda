@@ -4973,7 +4973,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=(
 			"kb:nvda+keypadPlus",
 			"kb:nvda+shift+c",
-			),
+		),
 	)
 	def script_zoomIn(
 		self,

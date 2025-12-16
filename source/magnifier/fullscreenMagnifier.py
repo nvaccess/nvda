@@ -55,7 +55,7 @@ class FullScreenMagnifier(Magnifier):
 			self,
 			obj,
 			nextHandler,
-			):
+		):
 		log.info("FullscreenMagnifier gain focus event")
 		nextHandler()
 
@@ -169,7 +169,7 @@ class FullScreenMagnifier(Magnifier):
 	def _getCoordinatesForMode(
 			self,
 			coordinates: Coordinates,
-		) -> Coordinates:
+	) -> Coordinates:
 		"""
 		Get Coordinates adjusted for the current fullscreen mode
 

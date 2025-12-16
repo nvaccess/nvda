@@ -9,7 +9,7 @@ from winBindings.magnification import MAGCOLOREFFECT
 
 def _createColorEffect(
 		matrix: tuple,
-	) -> MAGCOLOREFFECT:
+) -> MAGCOLOREFFECT:
 	"""Create a MAGCOLOREFFECT from a flat matrix tuple."""
 	effect = MAGCOLOREFFECT()
 	for i in range(5):
@@ -106,5 +106,5 @@ class FilterMatrix(Enum):
 			1.0,
 			0.0,
 			1.0,
-		)
+		),
 	)
