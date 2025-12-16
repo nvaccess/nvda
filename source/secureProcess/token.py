@@ -461,3 +461,14 @@ def generateUniqueSandboxSidString() -> str:
 	sidString = f"S-1-5-21-{a}-{b}-{c}-{rid}"
 	log.debug(f"Generated unique sandbox SID: {sidString}")
 	return sidString
+
+def duplicatePrimaryToken(token):
+	"""
+	Duplicate a primary token.
+
+	:param token: The primary token to duplicate.
+	:return: A duplicated primary token.
+	:raises: Underlying win32 API exceptions if token duplication fails.
+	"""
+	duplicatedToken = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	return duplicatedToken

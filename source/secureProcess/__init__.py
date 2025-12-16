@@ -26,6 +26,7 @@ from .token import (
 	logonUser,
 	setTokenIntegrityLevel,
 	lookupTokenLogonSidString,
+	lookupTokenUserSidString,
 	createTokenEnvironmentBlock,
 	getTokenDefaultDacl,
 	createSaclFromToken,
@@ -34,6 +35,7 @@ from .token import (
 	getUnelevatedCurrentInteractiveUserTokenFromShell,
 	isTokenElevated,
 	generateUniqueSandboxSidString,
+	duplicatePrimaryToken,
 )
 from .desktop import (
 	createTempDesktop,
@@ -93,6 +95,8 @@ class SecurePopen(PopenWithToken):
 When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
 		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
+		parentToken = getCurrentPrimaryToken()
+		parentUserSidString = lookupTokenUserSidString(parentToken)
 		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)}, options: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
 		useSecLogon = False
 		if username:
@@ -100,8 +104,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			useSecLogon = True
 			token = logonUser(username, domain, password, logonType)
 		else:
-			log.debug("Fetching current primary token...")
-			token = getCurrentPrimaryToken()
+			token = parentToken
 		if removeElevation and isTokenElevated(token):
 			log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
 			token = getUnelevatedCurrentInteractiveUserTokenFromShell()
@@ -109,15 +112,22 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			log.debug("Ensuring secLogon is used to launch process...")
 			useSecLogon = True
 		defaultDacl = getTokenDefaultDacl(token)
+		if username:
+				log.debug("Adding parent user SID to default DACL...")
+				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(parentUserSidString))
 		if restrictToken:
 			uniqueSandboxSidString = generateUniqueSandboxSidString()
 			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken, includeExtraSidStrings=[uniqueSandboxSidString])
 			if not retainUserInRestrictedToken:
-				log.debug("Adding unique sandbox SID to token default DACL")
+				log.debug("Adding unique sandbox SID to default DACL")
 				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(uniqueSandboxSidString))
-				win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, defaultDacl)
 		elif removePrivileges:
 			token = createLeastPrivilegedToken(token)
+		if token is parentToken:
+			log.debug("Duplicating token to avoid modifying the parent token...")
+			token = duplicatePrimaryToken(token)
+		log.debug("Updating token default DACL...")
+		win32security.SetTokenInformation(token, win32security.TokenDefaultDacl, defaultDacl)
 		if integrityLevel:
 			log.debug(f"Setting token integrity level to {integrityLevel}...")
 			setTokenIntegrityLevel(token, integrityLevel)
