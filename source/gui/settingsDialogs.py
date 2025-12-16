@@ -6031,7 +6031,6 @@ class MagnifierPanel(SettingsPanel):
 
 		# ZOOM
 
-		# Find the closest match in our zoom values
 		closestIndex = 0
 		minDifference = abs(self.zoomValues[0] - currentZoom)
 
@@ -6054,7 +6053,7 @@ class MagnifierPanel(SettingsPanel):
 
 		if currentFullscreenMode in self.defaultFullscreenModeList.GetStrings():
 			self.defaultFullscreenModeList.SetSelection(
-				self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode)
+				self.defaultFullscreenModeList.GetStrings().index(currentFullscreenMode),
 			)
 		else:
 			self.defaultFullscreenModeList.SetSelection(0)

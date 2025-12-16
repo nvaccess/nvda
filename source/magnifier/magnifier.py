@@ -10,7 +10,6 @@ import api
 import winUser
 import mouseHandler
 from winAPI._displayTracking import getPrimaryDisplayOrientation
-
 from .utils.types import (
 	MagnifierPosition,
 	Coordinates,

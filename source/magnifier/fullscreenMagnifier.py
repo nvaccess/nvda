@@ -10,7 +10,6 @@ import ui
 import winUser
 import wx
 from winBindings import magnification
-
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
@@ -65,7 +64,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		super()._startMagnifier()
 		log.info(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and fullscreen mode {self.fullscreenMode}"
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and fullscreen mode {self.fullscreenMode}",
 		)
 		# Initialize Magnification API if not already initialized
 		try:
@@ -336,8 +335,8 @@ class SpotlightManager:
 		ui.message(
 			_(
 				# Translators: Message announced when stopping the magnifier spotlight
-				"Magnifier spotlight stopped"
-			)
+				"Magnifier spotlight stopped",
+			),
 		)
 		if self._timer:
 			self._timer.Stop()

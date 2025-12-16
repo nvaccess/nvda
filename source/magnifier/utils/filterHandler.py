@@ -46,7 +46,7 @@ class FilterMatrix(Enum):
 			0.0,
 			0.0,
 			1.0,
-		)
+		),
 	)
 
 	GRAYSCALE = _createColorEffect(
@@ -76,7 +76,7 @@ class FilterMatrix(Enum):
 			0.0,
 			0.0,
 			1.0,
-		)
+		),
 	)
 
 	INVERTED = _createColorEffect(

@@ -4975,7 +4975,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles the magnifier on and off."
+			"Toggles the magnifier on and off.",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+w",
@@ -4989,7 +4989,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the magnification level of the magnifier"
+			"Increases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
 		gestures=(
@@ -5006,7 +5006,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the magnification level of the magnifier"
+			"Decreases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
 		gestures=(
@@ -5023,7 +5023,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle filter of the magnifier"
+			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+f",
@@ -5037,7 +5037,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle fullscreen mode of the magnifier"
+			"Toggle fullscreen mode of the magnifier",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
@@ -5051,7 +5051,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"Launch spotlight if magnifier is fullscreen"
+			"Launch spotlight if magnifier is fullscreen",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+l",

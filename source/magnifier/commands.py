@@ -9,9 +9,7 @@ Contains the command functions and their logic for keyboard shortcuts
 """
 
 import ui
-
 from . import getMagnifier, initialize, terminate
-
 from .config import (
 	getCurrentZoomLevel,
 	setDefaultZoomLevel,
@@ -21,7 +19,6 @@ from .config import (
 	setDefaultFullscreenMode,
 	shouldSaveShortcutChanges,
 )
-
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
 from .utils.types import (
@@ -43,8 +40,8 @@ def toggleMagnifier():
 		ui.message(
 			_(
 				# Translators: Message announced when stopping the NVDA magnifier
-				"Exiting magnifier"
-			)
+				"Exiting magnifier",
+			),
 		)
 	else:
 		initialize()
@@ -54,12 +51,12 @@ def toggleMagnifier():
 		ui.message(
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
-				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} fullscreen mode"
+				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} fullscreen mode",
 			).format(
 				zoomLevel=zoomLevel,
 				filter=filter,
 				fullscreenMode=fullscreenMode,
-			)
+			),
 		)
 
 
@@ -76,8 +73,8 @@ def zoomIn():
 		ui.message(
 			_(
 				# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level
-				"Zooming in with {zoomLevel} level"
-			).format(zoomLevel=magnifier.zoomLevel)
+				"Zooming in with {zoomLevel} level",
+			).format(zoomLevel=magnifier.zoomLevel),
 		)
 
 
@@ -94,8 +91,8 @@ def zoomOut():
 		ui.message(
 			_(
 				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level
-				"Zooming out with {zoomLevel} level"
-			).format(zoomLevel=magnifier.zoomLevel)
+				"Zooming out with {zoomLevel} level",
+			).format(zoomLevel=magnifier.zoomLevel),
 		)
 
 
@@ -119,8 +116,8 @@ def toggleFilter():
 		ui.message(
 			_(
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter
-				"Color filter changed to {filter}"
-			).format(filter=magnifier.filterType.displayString)
+				"Color filter changed to {filter}",
+			).format(filter=magnifier.filterType.displayString),
 		)
 
 
@@ -149,8 +146,8 @@ def toggleFullscreenMode():
 			ui.message(
 				_(
 					# Translators: Message announced when changing the fullscreen mode with {mode} being the new fullscreen mode
-					"Fullscreen mode changed to {mode}"
-				).format(mode=newMode.displayString)
+					"Fullscreen mode changed to {mode}",
+				).format(mode=newMode.displayString),
 			)
 
 
@@ -170,8 +167,8 @@ def startSpotlight():
 				ui.message(
 					_(
 						# Translators: Message announced when trying to start spotlight mode while it's already active
-						"Spotlight mode is already active"
-					)
+						"Spotlight mode is already active",
+					),
 				)
 			else:
 				log.info("no active spotlight manager found, starting new one")
@@ -179,8 +176,8 @@ def startSpotlight():
 				ui.message(
 					_(
 						# Translators: Message announced when spotlight mode is started
-						"Spotlight mode started"
-					)
+						"Spotlight mode started",
+					),
 				)
 
 
@@ -194,8 +191,8 @@ def magnifierIsActiveVerify(
 		ui.message(
 			_(
 				# Translators: Message announced that the magnifier is not active
-				"Magnifier is not active at {action}"
-			).format(action=action.displayString)
+				"Magnifier is not active at {action}",
+			).format(action=action.displayString),
 		)
 		return False
 
@@ -210,7 +207,7 @@ def magnifierIsFullscreenVerify(
 		ui.message(
 			_(
 				# Translators: Message announced that the magnifier is not fullscreen
-				"Magnifier is not fullscreen at {action}"
-			).format(action=action.displayString)
+				"Magnifier is not fullscreen at {action}",
+			).format(action=action.displayString),
 		)
 		return False
