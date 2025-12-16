@@ -5947,15 +5947,15 @@ class MagnifierPanel(SettingsPanel):
 	helpId = "MagnifierSettings"
 
 	def makeSettings(
-			self,
-			settingsSizer: wx.BoxSizer,
+		self,
+		settingsSizer: wx.BoxSizer,
 	):
 		from magnifier.utils.types import Filter, FullScreenMode
 
 		sHelper = guiHelper.BoxSizerHelper(
 			self,
 			sizer=settingsSizer,
-	)
+		)
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
@@ -6009,7 +6009,7 @@ class MagnifierPanel(SettingsPanel):
 		self.bindHelpEvent(
 			"magnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
-	)
+		)
 
 		# SAVE SHORTCUT CHANGES
 		# Translators: The label for a checkbox to save modifications made via shortcuts
@@ -6018,7 +6018,7 @@ class MagnifierPanel(SettingsPanel):
 		self.bindHelpEvent(
 			"magnifierSaveShortcutChanges",
 			self.saveShortcutChangesCheckBox,
-	)
+		)
 
 		# Set current value from config
 		self._updateCurrentSelection()

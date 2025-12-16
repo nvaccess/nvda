@@ -8,7 +8,7 @@ from winBindings.magnification import MAGCOLOREFFECT
 
 
 def _createColorEffect(
-		matrix: tuple,
+	matrix: tuple,
 ) -> MAGCOLOREFFECT:
 	"""Create a MAGCOLOREFFECT from a flat matrix tuple."""
 	effect = MAGCOLOREFFECT()

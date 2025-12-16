@@ -185,9 +185,9 @@ def startSpotlight():
 
 
 def magnifierIsActiveVerify(
-		magnifier: Magnifier,
-		action: MagnifierAction,
-	) -> bool:
+	magnifier: Magnifier,
+	action: MagnifierAction,
+) -> bool:
 	if magnifier and magnifier.isActive:
 		return True
 	else:
@@ -201,9 +201,9 @@ def magnifierIsActiveVerify(
 
 
 def magnifierIsFullscreenVerify(
-		magnifier: Magnifier,
-		action: MagnifierAction,
-	) -> bool:
+	magnifier: Magnifier,
+	action: MagnifierAction,
+) -> bool:
 	if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 		return True
 	else:

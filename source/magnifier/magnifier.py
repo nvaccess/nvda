@@ -11,14 +11,14 @@ import winUser
 import mouseHandler
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
-from .utils.types import(
+from .utils.types import (
 	MagnifierPosition,
 	Coordinates,
 	MagnifierType,
 	Direction,
 	FocusType,
 	Filter,
-	)
+)
 
 from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
 

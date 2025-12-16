@@ -13,13 +13,7 @@ from winBindings import magnification
 
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
-from .utils.types import (
-	Filter,
-	ZoomHistory,
-	Coordinates,
-	FullScreenMode,
-	FocusType
-)
+from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
 from .config import getDefaultFullscreenMode
 
 
@@ -58,10 +52,10 @@ class FullScreenMagnifier(Magnifier):
 			self._applyFilter()
 
 	def event_gainFocus(
-			self,
-			obj,
-			nextHandler,
-		):
+		self,
+		obj,
+		nextHandler,
+	):
 		log.info("FullscreenMagnifier gain focus event")
 		nextHandler()
 
@@ -173,8 +167,8 @@ class FullScreenMagnifier(Magnifier):
 			log.info("Magnification API not available")
 
 	def _getCoordinatesForMode(
-			self,
-			coordinates: Coordinates,
+		self,
+		coordinates: Coordinates,
 	) -> Coordinates:
 		"""
 		Get Coordinates adjusted for the current fullscreen mode
@@ -204,10 +198,10 @@ class FullScreenMagnifier(Magnifier):
 		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(
-			self,
-			focusX: int,
-			focusY: int,
-		) -> Coordinates:
+		self,
+		focusX: int,
+		focusY: int,
+	) -> Coordinates:
 		"""
 		Check if focus is near magnifier border and adjust position accordingly
 		Returns adjusted position to keep focus within margin limits
@@ -248,10 +242,10 @@ class FullScreenMagnifier(Magnifier):
 			return self.lastScreenPosition
 
 	def _relativePos(
-			self,
-			mouseX: int,
-			mouseY: int,
-		) -> Coordinates:
+		self,
+		mouseX: int,
+		mouseY: int,
+	) -> Coordinates:
 		"""
 		Calculate magnifier center maintaining mouse relative position
 		Handles screen edges to prevent going off-screen
@@ -302,9 +296,9 @@ class FullScreenMagnifier(Magnifier):
 
 class SpotlightManager:
 	def __init__(
-			self,
-			fullscreenMagnifier: FullScreenMagnifier,
-		):
+		self,
+		fullscreenMagnifier: FullScreenMagnifier,
+	):
 		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
 		self._spotlightIsActive: bool = False
 		self._lastMousePosition: Coordinates = (0, 0)
@@ -367,17 +361,18 @@ class SpotlightManager:
 		"""
 		self._animationStepsList = self._computeAnimationSteps(
 			self._currentZoomLevel,
-			targetZoom, self._currentCoordinates,
+			targetZoom,
+			self._currentCoordinates,
 			targetCoordinates,
 		)
 
 		self._executeStep(0, callback)
 
 	def _executeStep(
-			self,
-			stepIndex: int,
-			callback: Callable[[], None],
-		) -> None:
+		self,
+		stepIndex: int,
+		callback: Callable[[], None],
+	) -> None:
 		"""
 		Execute one animation step
 
