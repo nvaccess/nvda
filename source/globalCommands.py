@@ -4958,7 +4958,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+w",
 	)
-	def script_toggleMagnifier(self, gesture: inputCore.InputGesture) -> None:
+	def script_toggleMagnifier(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.toggleMagnifier()
 
 	@script(
@@ -4967,9 +4970,15 @@ class GlobalCommands(ScriptableObject):
 			"Increases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
-		gestures=("kb:nvda+keypadPlus", "kb:nvda+shift+c"),
+		gestures=(
+			"kb:nvda+keypadPlus",
+			"kb:nvda+shift+c",
+			),
 	)
-	def script_zoomIn(self, gesture: inputCore.InputGesture) -> None:
+	def script_zoomIn(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.zoomIn()
 
 	@script(
@@ -4978,9 +4987,15 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the magnification level of the magnifier"
 		),
 		category=SCRCAT_VISION,
-		gestures=("kb:nvda+keypadMinus", "kb:nvda+shift+v"),
+		gestures=(
+			"kb:nvda+keypadMinus",
+			"kb:nvda+shift+v",
+		),
 	)
-	def script_zoomOut(self, gesture: inputCore.InputGesture) -> None:
+	def script_zoomOut(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.zoomOut()
 
 	@script(
@@ -4991,7 +5006,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+f",
 	)
-	def script_toggleFilter(self, gesture: inputCore.InputGesture) -> None:
+	def script_toggleFilter(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.toggleFilter()
 
 	@script(
@@ -5002,7 +5020,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
 	)
-	def script_toggleFullscreenMode(self, gesture: inputCore.InputGesture) -> None:
+	def script_toggleFullscreenMode(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.toggleFullscreenMode()
 
 	@script(
@@ -5013,7 +5034,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+l",
 	)
-	def script_startSpotlight(self, gesture: inputCore.InputGesture) -> None:
+	def script_startSpotlight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
 		magnifier.commands.startSpotlight()
 
 	@script(

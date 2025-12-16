@@ -5932,10 +5932,16 @@ class MagnifierPanel(SettingsPanel):
 	title = _("Magnifier")
 	helpId = "MagnifierSettings"
 
-	def makeSettings(self, settingsSizer: wx.BoxSizer):
+	def makeSettings(
+			self,
+			settingsSizer: wx.BoxSizer,
+		):
 		from magnifier.utils.types import Filter, FullScreenMode
 
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		sHelper = guiHelper.BoxSizerHelper(
+			self,
+			sizer=settingsSizer,
+		)
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
@@ -5944,8 +5950,15 @@ class MagnifierPanel(SettingsPanel):
 		zoomValues = magnifierConfig.ZoomLevel.zoomRange
 		zoomChoices = magnifierConfig.ZoomLevel.zoomStrings
 
-		self.defaultZoomList = sHelper.addLabeledControl(defaultZoomLabelText, wx.Choice, choices=zoomChoices)
-		self.bindHelpEvent("magnifierDefaultZoom", self.defaultZoomList)
+		self.defaultZoomList = sHelper.addLabeledControl(
+			defaultZoomLabelText,
+			wx.Choice,
+			choices=zoomChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultZoom",
+			self.defaultZoomList,
+		)
 
 		# Store zoom values for later use
 		self.zoomValues = zoomValues
@@ -5970,19 +5983,28 @@ class MagnifierPanel(SettingsPanel):
 			wx.Choice,
 			choices=fullscreenModeChoices,
 		)
-		self.bindHelpEvent("magnifierDefaultFullscreenMode", self.defaultFullscreenModeList)
+		self.bindHelpEvent(
+			"magnifierDefaultFullscreenMode",
+			self.defaultFullscreenModeList,
+		)
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
 		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
-		self.bindHelpEvent("magnifierKeepMouseCentered", self.keepMouseCenteredCheckBox)
+		self.bindHelpEvent(
+			"magnifierKeepMouseCentered",
+			self.keepMouseCenteredCheckBox,
+		)
 
 		# SAVE SHORTCUT CHANGES
 		# Translators: The label for a checkbox to save modifications made via shortcuts
 		saveShortcutChangesText = _("Save &modifications made with input gestures")
 		self.saveShortcutChangesCheckBox = sHelper.addItem(wx.CheckBox(self, label=saveShortcutChangesText))
-		self.bindHelpEvent("magnifierSaveShortcutChanges", self.saveShortcutChangesCheckBox)
+		self.bindHelpEvent(
+			"magnifierSaveShortcutChanges",
+			self.saveShortcutChangesCheckBox,
+			)
 
 		# Set current value from config
 		self._updateCurrentSelection()

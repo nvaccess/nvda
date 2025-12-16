@@ -49,14 +49,21 @@ def toggleMagnifier():
 			_(
 				# Translators: Message announced when starting the NVDA magnifier
 				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} fullscreen mode"
-			).format(zoomLevel=zoomLevel, filter=filter, fullscreenMode=fullscreenMode)
+			).format(
+				zoomLevel=zoomLevel,
+				filter=filter,
+				fullscreenMode=fullscreenMode,
+			)
 		)
 
 
 def zoomIn():
 	"""Zoom in the magnifier."""
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, MagnifierAction.ZOOM_IN):
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.ZOOM_IN,
+	):
 		magnifier._zoom(Direction.IN)
 		if shouldSaveShortcutChanges():
 			setDefaultZoomLevel(magnifier.zoomLevel)
@@ -71,7 +78,10 @@ def zoomIn():
 def zoomOut():
 	"""Zoom out the magnifier."""
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, MagnifierAction.ZOOM_OUT):
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.ZOOM_OUT,
+	):
 		magnifier._zoom(Direction.OUT)
 		if shouldSaveShortcutChanges():
 			setDefaultZoomLevel(magnifier.zoomLevel)
@@ -86,7 +96,10 @@ def zoomOut():
 def toggleFilter():
 	magnifier: Magnifier = getMagnifier()
 	log.info(f"Toggling filter for magnifier: {magnifier}")
-	if magnifierIsActiveVerify(magnifier, MagnifierAction.TOGGLE_FILTER):
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FILTER,
+	):
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
@@ -108,8 +121,14 @@ def toggleFilter():
 def toggleFullscreenMode():
 	"""Cycle through fullscreen focus modes (center, border, relative)."""
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, MagnifierAction.CHANGE_FULLSCREEN_MODE):
-		if magnifierIsFullscreenVerify(magnifier, MagnifierAction.CHANGE_FULLSCREEN_MODE):
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.CHANGE_FULLSCREEN_MODE,
+	):
+		if magnifierIsFullscreenVerify(
+			magnifier,
+			MagnifierAction.CHANGE_FULLSCREEN_MODE,
+		):
 			modes = list(FullScreenMode)
 			currentMode = magnifier.fullscreenMode
 			idx = modes.index(currentMode)
@@ -131,8 +150,14 @@ def toggleFullscreenMode():
 
 def startSpotlight():
 	magnifier: FullScreenMagnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, MagnifierAction.START_SPOTLIGHT):
-		if magnifierIsFullscreenVerify(magnifier, MagnifierAction.START_SPOTLIGHT):
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.START_SPOTLIGHT,
+	):
+		if magnifierIsFullscreenVerify(
+			magnifier,
+			MagnifierAction.START_SPOTLIGHT,
+		):
 			log.info("trying to launch spotlight mode")
 			if magnifier._spotlightManager._spotlightIsActive:
 				log.info("found spotlight manager and it is active")
@@ -153,7 +178,10 @@ def startSpotlight():
 				)
 
 
-def magnifierIsActiveVerify(magnifier: Magnifier, action: MagnifierAction) -> bool:
+def magnifierIsActiveVerify(
+		magnifier: Magnifier,
+		action: MagnifierAction
+	) -> bool:
 	if magnifier and magnifier.isActive:
 		return True
 	else:
@@ -166,7 +194,10 @@ def magnifierIsActiveVerify(magnifier: Magnifier, action: MagnifierAction) -> bo
 		return False
 
 
-def magnifierIsFullscreenVerify(magnifier: Magnifier, action: MagnifierAction) -> bool:
+def magnifierIsFullscreenVerify(
+		magnifier: Magnifier,
+		action: MagnifierAction,
+	) -> bool:
 	if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 		return True
 	else:
