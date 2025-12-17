@@ -1,11 +1,12 @@
-import inspect
+from types import SimpleNamespace
 import sys
+import inspect
 import threading
 import os
 import subprocess
 import argparse
 import secureProcess
-from secureProcess.token import integrityLevels
+from secureProcess.token import integrityLevels, logonTypes
 
 import logging
 
@@ -13,16 +14,20 @@ old_factory = logging.getLogRecordFactory()
 
 def record_factory(*args, **kwargs):
 	record = old_factory(*args, **kwargs)
-	frame = inspect.currentframe().f_back.f_back.f_back.f_back
+	frame = inspect.currentframe().f_back.f_back.f_back.f_back.f_back
 	record.qualname = frame.f_code.co_qualname.removesuffix('.__init__')
+	mod = os.path.splitext(os.path.basename(frame.f_code.co_filename))[0]
+	record.module = mod
 	return record
 
 logging.setLogRecordFactory(record_factory)
 
 logging.basicConfig(
 	level=logging.DEBUG,
-	format="%(levelname)s %(name)s.%(qualname)s: %(message)s"
+	format="%(levelname)s %(module)s.%(qualname)s: %(message)s"
 )
+log = logging.getLogger()
+sys.modules['logHandler'] = SimpleNamespace(log=log)
 
 
 def readToStdout(stream):
@@ -40,44 +45,46 @@ def main():
 	parser.add_argument("-ru", "--retain-user-in-restricted-token", help="Retain user SID in restricted token", action="store_true")
 	parser.add_argument("-p", "--remove-privileges", help="Remove privileges from the token", action="store_true")
 	parser.add_argument("-re", "--remove-elevation", help="If the current token is elevated, obtain an unelevated interactive user token from the shell instead", action="store_true")
-	parser.add_argument("-s", "--service-logon", help="Use the LocalService account to create the token", action="store_true")
+	parser.add_argument("-u", "--username", help="Run the process as the specified user", default=None)
+	parser.add_argument("-d", "--domain", help="Domain for the specified user", default=".")
+	parser.add_argument("-pw", "--password", help="Password for the specified user", default="")
+	parser.add_argument("-lt", "--logon-type", choices=logonTypes.keys(), help="Logon type to use when running as a different user", default="interactive")
 	parser.add_argument("-td", "--temp-desktop", help="Create a temporary desktop for the process", action="store_true")
 	parser.add_argument("-tw", "--temp-window-station", help="Create a temporary window station for the process", action="store_true")
 	parser.add_argument("-he", "--hide-critical-error-dialogs", help="Hide critical error dialogs in the launched process", action="store_true")
 	parser.add_argument("-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true")
-	parser.add_argument("-b", "--block", help="Wait for the launched process to exit", action="store_true")
+	parser.add_argument("-nw", "--no-window", help="Create the process without a window", action="store_true")
+	parser.add_argument("-rh", "--redirect-handles", help="Redirect stdin/stdout/stderr handles", action="store_true")
 	parser.add_argument("command", nargs=argparse.REMAINDER, help="Command to execute with restricted token")
 	args = parser.parse_args()
 	p = secureProcess.SecurePopen(
 		args.command,
-		stdin=subprocess.PIPE if args.block else None,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.STDOUT,
+		stdin=subprocess.PIPE if args.redirect_handles else None,
+		stdout=subprocess.PIPE if args.redirect_handles else None,
+		stderr=subprocess.STDOUT	 if args.redirect_handles else None,
 		integrityLevel=args.integrity_level,
 		removePrivileges=args.remove_privileges,
 		removeElevation=args.remove_elevation,
 		restrictToken=args.restrict_sids,
 		retainUserInRestrictedToken=args.retain_user_in_restricted_token,
-		runAsLocalService=args.service_logon,
+		username=args.username,
+		domain=args.domain,
+		password=args.password,
+		logonType=args.logon_type,
 		isolateWindowStation=args.temp_window_station,
 		isolateDesktop=args.temp_desktop,
 		killOnDelete=True,
 		startSuspended=True,
 		hideCriticalErrorDialogs=args.hide_critical_error_dialogs,
+		createNoWindow=args.no_window,
 		applyUIRestrictions=args.ui_restrictions,
 	)
 	print(f"Launched process PID: {p.pid}\n")
 	input("Press Enter to resume the process...")
 	p.resume()
-	if args.block:
+	if args.redirect_handles:
 		p.interact()
 	else:
-		rt = threading.Thread(target=readToStdout, args=(p.stdout,))
-		rt.start()
-		input("Press Enter to continue...\n")
-		if p.poll() is None:
-			p.job.close()
-		rt.join()
 		p.wait()
 	print(f"\nProcess exited with code: {p.returncode}")
 
