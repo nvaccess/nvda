@@ -5549,26 +5549,75 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Description for the repeat last speech script
-			"Repeat the last spoken information. Pressing twice shows it in a browsable message.",
+			"Reports the last spoken information, or the current item when reviewing speech history. "
+			"Pressing twice shows the whole speech history in a browsable message.",
 		),
 		gesture="kb:NVDA+x",
 		category=SCRCAT_SPEECH,
 		speakOnDemand=True,
 	)
 	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
-		lastSpeech = speech.speech._lastSpeech
-		if lastSpeech is None:
+		lastItem = speech.history.speechHistoryBuffer.lastSpeechItem()
+		if not lastItem:
 			return
-		lastSpeechSeq, symbolLevel = lastSpeech
 		repeats = getLastScriptRepeatCount()
-		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
 		if repeats == 0:
-			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
-			braille.handler.message(lastSpeechText)
+			speech.speak(lastItem.seq, symbolLevel=lastItem.symbLevel)
+			braille.handler.message(lastItem.text)
 		elif repeats == 1:
+			from html import escape
+
+			content = "<hr>".join(
+				f"<p>{escape(item.text)}</p>" for item in speech.history.speechHistoryBuffer.items
+			)
+			content += """
+			"""
 			# Translators: title for report last spoken information dialog.
-			title = _("Last spoken information")
-			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
+			title = _("Speech history")
+			ui.browseableMessage(content, title, isHtml=True, copyButton=True, closeButton=True)
+
+	@script(
+		# Translators: Description for the command to review previous speech history item
+		_("Review the previous item in speech history"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_reviewPreviousItemInSpeechHistory(self, gesture):
+		try:
+			item = speech.history.speechHistoryBuffer.reviewPrevious()
+		except LookupError:
+			# Translator: Reported when calling command to review speech history items
+			ui.message(_("No previous item"))
+			return
+		ui.message(item.text)
+
+	@script(
+		# Translators: Description for the command to review next speech history item
+		_("Review the nex item in speech history"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_reviewNextItemInSpeechHistory(self, gesture):
+		try:
+			item = speech.history.speechHistoryBuffer.reviewNext()
+		except LookupError:
+			# Translator: Reported when calling command to review speech history items
+			ui.message(_("No next item"))
+			return
+		ui.message(item.text)
+
+	@script(
+		# Translators: Description of the command to copy current speech history item
+		_("Copy the last spoken information to the clipboard, or the current item when reviewing speech history."
+		gesture="kb:nvda+control+x",
+		category=SCRCAT_SPEECH,
+	)
+	def script_copyCurrentlyReviewedSpeechHistoryItem(self, gesture):
+		try:
+			item = speech.history.speechHistoryBuffer.currentReviewItem()
+		except LookupError:
+			# Translator: Reported when calling command to review speech history items
+			ui.message(_("Nothing to copy"))
+			return
+		api.copyToClip(item.text.strip(), notify=True)
 
 
 #: The single global commands instance.
