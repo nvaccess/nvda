@@ -484,7 +484,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			page = fields[0].field["page-number"]
 		except KeyError:
 			page = None
-		if page is not None:
+		if page is not None and not UIARemote.isSupported():
 			for field in fields:
 				if isinstance(field, textInfos.FieldCommand) and isinstance(
 					field.field,
@@ -537,6 +537,13 @@ class WordDocumentTextInfo(UIATextInfo):
 				if isinstance(lineNumber, int):
 					formatField.field["line-number"] = lineNumber
 			if formatConfig["reportPage"]:
+				pageNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement,
+					textRange,
+					UIACustomAttributeID.PAGE_NUMBER,
+				)
+				if isinstance(pageNumber, int):
+					formatField.field["page-number"] = pageNumber
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
 					docElement,
 					textRange,
