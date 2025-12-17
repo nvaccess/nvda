@@ -3,6 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+"""
+Magnifier module.
+Implements the magnifier global class and its basic functionalities.
+"""
+
 from typing import Callable
 from logHandler import log
 import wx
@@ -23,25 +28,22 @@ from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
 
 
 class Magnifier:
-	_ZOOM_MIN: float = ZoomLevel.MIN_ZOOM
-	_ZOOM_MAX: float = ZoomLevel.MAX_ZOOM
-	_ZOOM_STEP: float = ZoomLevel.STEP_FACTOR
 	_TIMER_INTERVAL_MS: int = 20
 	_MARGIN_BORDER: int = 50
-	display = getPrimaryDisplayOrientation()
-	_SCREEN_WIDTH: int = display.width
-	_SCREEN_HEIGHT: int = display.height
 
 	def __init__(self):
+		self._screenWidth: int = 0
+		self._screenHeight: int = 0
+		self._GetScreenDisplay()
 		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
-		self._lastNVDAPosition: Coordinates = (0, 0)
-		self._lastMousePosition: Coordinates = (0, 0)
-		self._lastScreenPosition: Coordinates = (0, 0)
-		self._currentCoordinates: Coordinates = (0, 0)
+		self._lastNVDAPosition = Coordinates(0, 0)
+		self._lastMousePosition = Coordinates(0, 0)
+		self._lastScreenPosition = Coordinates(0, 0)
+		self._currentCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
 
 	@property
@@ -125,6 +127,13 @@ class Magnifier:
 		self._filterType = value
 
 	# Functions
+	def _GetScreenDisplay(self) -> None:
+		"""
+		Get the primary display size and update screen width and height
+		"""
+		display = getPrimaryDisplayOrientation()
+		self._screenWidth = display.width
+		self._screenHeight = display.height
 
 	def _startMagnifier(self) -> None:
 		"""
@@ -149,7 +158,7 @@ class Magnifier:
 		"""
 		Perform the actual update of the magnifier
 		"""
-		raise NotImplementedError("Subclasses must implement this method.")
+		raise NotImplementedError("Subclasses must implement this method")
 
 	def _stopMagnifier(self) -> None:
 		"""
@@ -167,12 +176,12 @@ class Magnifier:
 		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out
 		"""
 		if direction == Direction.IN:
-			newZoom = self.zoomLevel + self._ZOOM_STEP
-			if newZoom <= self._ZOOM_MAX:
+			newZoom = self.zoomLevel + ZoomLevel.STEP_FACTOR
+			if newZoom <= ZoomLevel.MAX_ZOOM:
 				self.zoomLevel = newZoom
 		elif direction == Direction.OUT:
-			newZoom = self.zoomLevel - self._ZOOM_STEP
-			if newZoom >= self._ZOOM_MIN:
+			newZoom = self.zoomLevel - ZoomLevel.STEP_FACTOR
+			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
@@ -197,28 +206,26 @@ class Magnifier:
 		else:
 			log.info("no timer to stop")
 
-	def _getMagnifierPosition(self, x: int, y: int) -> MagnifierPosition:
+	def _getMagnifierPosition(self, coordinates: Coordinates) -> MagnifierPosition:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
-		:param x: Focus x
-		:param y: Focus y
+		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		Returns:
-			magnifierPosition: The position and size of the magnifier window
+		:returns MagnifierPosition: The position and size of the magnifier window
 		"""
-
+		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._SCREEN_WIDTH / self.zoomLevel
-		visibleHeight = self._SCREEN_HEIGHT / self.zoomLevel
+		visibleWidth = self._screenWidth / self.zoomLevel
+		visibleHeight = self._screenHeight / self.zoomLevel
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (visibleWidth / 2))
 		top = int(y - (visibleHeight / 2))
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, int(self._SCREEN_WIDTH - visibleWidth)))
-		top = max(0, min(top, int(self._SCREEN_HEIGHT - visibleHeight)))
+		left = max(0, min(left, int(self._screenWidth - visibleWidth)))
+		top = max(0, min(top, int(self._screenHeight - visibleHeight)))
 
 		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
 
@@ -228,8 +235,7 @@ class Magnifier:
 		Tries to get the review position from NVDA's API, or the center of the navigator object
 		This part is taken from NVDA+shift+m gesture
 
-		Returns:
-			coordinates: The (x, y) coordinates of the NVDA position
+		:returns Coordinates: The (x, y) coordinates of the NVDA position
 		"""
 		# Try to get the current review position object from NVDA's API
 		reviewPosition = api.getReviewPosition()
@@ -237,7 +243,7 @@ class Magnifier:
 			try:
 				# Try to get the point at the start of the review position
 				point = reviewPosition.pointAtStart
-				return point.x, point.y
+				return Coordinates(point.x, point.y)
 			except (NotImplementedError, LookupError, AttributeError):
 				# If that fails, fall through to try navigator object
 				pass
@@ -250,20 +256,21 @@ class Magnifier:
 			# Calculate the center point of the rectangle
 			x = left + (width // 2)
 			y = top + (height // 2)
-			return x, y
+			return Coordinates(x, y)
 		except Exception:
 			# If no location is found, log this and return (0, 0)
-			return 0, 0
+			return Coordinates(0, 0)
 
 	def _getFocusCoordinates(self) -> Coordinates:
 		"""
 		Return position (x,y) of current focus element
 
-		Returns:
-			coordinates: The (x, y) coordinates of the focus element
+		:returns Coordinates: The (x, y) coordinates of the focus element
 		"""
 		nvdaPosition = self._getCursorPosition()
 		mousePosition = winUser.getCursorPos()
+		# convert to Coordinates named tuple
+		mousePosition = Coordinates(mousePosition[0], mousePosition[1])
 		# Check if left mouse button is pressed
 		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
 

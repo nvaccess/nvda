@@ -24,8 +24,8 @@ import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
-import magnifier
-import magnifier.commands
+import _magnifier
+import _magnifier.commands
 import controlTypes
 import api
 import textInfos
@@ -4975,7 +4975,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles the magnifier on and off.",
+			"Toggles the magnifier on and off",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+w",
@@ -4984,7 +4984,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.toggleMagnifier()
+		_magnifier.commands.toggleMagnifier()
 
 	@script(
 		description=_(
@@ -4993,7 +4993,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_VISION,
 		gestures=(
-			"kb:nvda+keypadPlus",
+			"kb:nvda+numpadPlus",
 			"kb:nvda+shift+c",
 		),
 	)
@@ -5001,7 +5001,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.zoomIn()
+		_magnifier.commands.zoomIn()
 
 	@script(
 		description=_(
@@ -5010,7 +5010,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_VISION,
 		gestures=(
-			"kb:nvda+keypadMinus",
+			"kb:nvda+numpadMinus",
 			"kb:nvda+shift+v",
 		),
 	)
@@ -5018,7 +5018,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.zoomOut()
+		_magnifier.commands.zoomOut()
 
 	@script(
 		description=_(
@@ -5032,12 +5032,12 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.toggleFilter()
+		_magnifier.commands.toggleFilter()
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle fullscreen mode of the magnifier",
+			"Toggle full-screen mode of the magnifier",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+m",
@@ -5046,12 +5046,12 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.toggleFullscreenMode()
+		_magnifier.commands.toggleFullscreenMode()
 
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"Launch spotlight if magnifier is fullscreen",
+			"Launch spotlight if magnifier is full-screen",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+l",
@@ -5060,7 +5060,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		magnifier.commands.startSpotlight()
+		_magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(

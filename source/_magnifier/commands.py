@@ -4,20 +4,17 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
-Keyboard commands for the magnifier module
-Contains the command functions and their logic for keyboard shortcuts
+Keyboard commands for the magnifier module.
+Contains the command functions and their logic for keyboard shortcuts.
 """
 
+from typing import Literal
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
-	getCurrentZoomLevel,
-	setDefaultZoomLevel,
-	getCurrentFilter,
-	setDefaultFilter,
-	getCurrentFullscreenMode,
-	setDefaultFullscreenMode,
-	shouldSaveShortcutChanges,
+	getDefaultZoomLevel,
+	getDefaultFilter,
+	getDefaultFullscreenMode,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -31,27 +28,29 @@ from .utils.types import (
 from logHandler import log
 
 
-def toggleMagnifier():
-	"""Toggle the NVDA magnifier on/off."""
+def toggleMagnifier() -> None:
+	"""Toggle the NVDA magnifier on/off"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		# Stop magnifier
 		terminate()
 		ui.message(
-			_(
-				# Translators: Message announced when stopping the NVDA magnifier
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when stopping the NVDA magnifier.
 				"Exiting magnifier",
 			),
 		)
 	else:
 		initialize()
-		zoomLevel = getCurrentZoomLevel()
-		filter = getCurrentFilter()
-		fullscreenMode = getCurrentFullscreenMode()
+		zoomLevel = getDefaultZoomLevel()
+		filter = getDefaultFilter()
+		fullscreenMode = getDefaultFullscreenMode()
 		ui.message(
-			_(
-				# Translators: Message announced when starting the NVDA magnifier
-				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} fullscreen mode",
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when starting the NVDA magnifier.
+				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
 				zoomLevel=zoomLevel,
 				filter=filter,
@@ -60,43 +59,42 @@ def toggleMagnifier():
 		)
 
 
-def zoomIn():
-	"""Zoom in the magnifier."""
+def zoomIn() -> None:
+	"""Zoom in the magnifier"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.ZOOM_IN,
 	):
 		magnifier._zoom(Direction.IN)
-		if shouldSaveShortcutChanges():
-			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
-			_(
-				# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 				"Zooming in with {zoomLevel} level",
 			).format(zoomLevel=magnifier.zoomLevel),
 		)
 
 
-def zoomOut():
-	"""Zoom out the magnifier."""
+def zoomOut() -> None:
+	"""Zoom out the magnifier"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.ZOOM_OUT,
 	):
 		magnifier._zoom(Direction.OUT)
-		if shouldSaveShortcutChanges():
-			setDefaultZoomLevel(magnifier.zoomLevel)
 		ui.message(
-			_(
-				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level.
 				"Zooming out with {zoomLevel} level",
 			).format(zoomLevel=magnifier.zoomLevel),
 		)
 
 
-def toggleFilter():
+def toggleFilter() -> None:
+	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
 	log.info(f"Toggling filter for magnifier: {magnifier}")
 	if magnifierIsActiveVerify(
@@ -108,21 +106,17 @@ def toggleFilter():
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
-
-		# Save to config if option is enabled
-		if shouldSaveShortcutChanges():
-			setDefaultFilter(magnifier.filterType)
-
 		ui.message(
-			_(
-				# Translators: Message announced when changing the color filter with {filter} being the new color filter
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
 				"Color filter changed to {filter}",
 			).format(filter=magnifier.filterType.displayString),
 		)
 
 
-def toggleFullscreenMode():
-	"""Cycle through fullscreen focus modes (center, border, relative)."""
+def toggleFullscreenMode() -> None:
+	"""Cycle through full-screen focus modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
@@ -136,22 +130,19 @@ def toggleFullscreenMode():
 			currentMode = magnifier.fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
-			log.info(f"Changing fullscreen mode from {currentMode} to {newMode}")
+			log.info(f"Changing full-screen mode from {currentMode} to {newMode}")
 			magnifier.fullscreenMode = newMode
-
-			# Save to config if option is enabled
-			if shouldSaveShortcutChanges():
-				setDefaultFullscreenMode(newMode)
-
 			ui.message(
-				_(
-					# Translators: Message announced when changing the fullscreen mode with {mode} being the new fullscreen mode
-					"Fullscreen mode changed to {mode}",
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+					"Full-screen mode changed to {mode}",
 				).format(mode=newMode.displayString),
 			)
 
 
-def startSpotlight():
+def startSpotlight() -> None:
+	"""Start spotlight mode in full-screen magnifier"""
 	magnifier: FullScreenMagnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
@@ -165,8 +156,9 @@ def startSpotlight():
 			if magnifier._spotlightManager._spotlightIsActive:
 				log.info("found spotlight manager and it is active")
 				ui.message(
-					_(
-						# Translators: Message announced when trying to start spotlight mode while it's already active
+					pgettext(
+						"magnifier",
+						# Translators: Message announced when trying to start spotlight mode while it's already active.
 						"Spotlight mode is already active",
 					),
 				)
@@ -174,8 +166,9 @@ def startSpotlight():
 				log.info("no active spotlight manager found, starting new one")
 				magnifier._startSpotlight()
 				ui.message(
-					_(
-						# Translators: Message announced when spotlight mode is started
+					pgettext(
+						"magnifier",
+						# Translators: Message announced when spotlight mode is started.
 						"Spotlight mode started",
 					),
 				)
@@ -185,13 +178,21 @@ def magnifierIsActiveVerify(
 	magnifier: Magnifier,
 	action: MagnifierAction,
 ) -> bool:
+	"""
+	Verify that the magnifier is active before performing an action
+
+	:param magnifier: The magnifier instance to check
+	:param action: The action being performed, for messaging
+
+	:returns bool: True if the magnifier is active, False otherwise
+	"""
 	if magnifier and magnifier.isActive:
 		return True
 	else:
 		ui.message(
 			_(
-				# Translators: Message announced that the magnifier is not active
-				"Magnifier is not active at {action}",
+				# Translators: Message announced that the magnifier is not active.
+				"Magnifier is not active when {action}",
 			).format(action=action.displayString),
 		)
 		return False
@@ -199,15 +200,23 @@ def magnifierIsActiveVerify(
 
 def magnifierIsFullscreenVerify(
 	magnifier: Magnifier,
-	action: MagnifierAction,
+	action: Literal[MagnifierAction.CHANGE_FULLSCREEN_MODE, MagnifierAction.START_SPOTLIGHT],
 ) -> bool:
+	"""
+	Verify that the magnifier is full-screen before performing an action
+
+	:param magnifier: The magnifier instance to check
+	:param action: The action being performed, for messaging
+
+	:returns bool: True if the magnifier is full-screen, False otherwise
+	"""
 	if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 		return True
 	else:
 		ui.message(
 			_(
-				# Translators: Message announced that the magnifier is not fullscreen
-				"Magnifier is not fullscreen at {action}",
+				# Translators: Message announced that the magnifier is not full-screen.
+				"Magnifier is not full-screen when {action}",
 			).format(action=action.displayString),
 		)
 		return False

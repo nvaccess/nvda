@@ -2,14 +2,14 @@
 # Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 """
 Types used in the magnifier module.
 """
 
+from enum import Enum, auto
 from typing import NamedTuple
-from enum import Enum
-from utils.displayString import DisplayStringStrEnum
-from gettext import pgettext
+from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
 class MagnifierParams(NamedTuple):
@@ -27,27 +27,27 @@ class Direction(Enum):
 	OUT = False
 
 
-class MagnifierAction(DisplayStringStrEnum):
+class MagnifierAction(DisplayStringEnum):
 	"""Actions that can be performed with the magnifier"""
 
-	ZOOM_IN = "zoom_in"
-	ZOOM_OUT = "zoom_out"
-	TOGGLE_FILTER = "toggle_filter"
-	CHANGE_FULLSCREEN_MODE = "change_fullscreen_mode"
-	START_SPOTLIGHT = "start_spotlight"
+	ZOOM_IN = auto()
+	ZOOM_OUT = auto()
+	TOGGLE_FILTER = auto()
+	CHANGE_FULLSCREEN_MODE = auto()
+	START_SPOTLIGHT = auto()
 
 	@property
 	def _displayStringLabels(self) -> dict["MagnifierAction", str]:
 		return {
-			# Translators: Action description for zooming in
+			# Translators: Action description for zooming in.
 			self.ZOOM_IN: pgettext("magnifier action", "trying to zoom in"),
-			# Translators: Action description for zooming out
+			# Translators: Action description for zooming out.
 			self.ZOOM_OUT: pgettext("magnifier action", "trying to zoom out"),
-			# Translators: Action description for toggling color filters
+			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
-			# Translators: Action description for changing fullscreen mode
-			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "trying to change fullscreen mode"),
-			# Translators: Action description for starting spotlight mode
+			# Translators: Action description for changing full-screen mode.
+			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "trying to change full-screen mode"),
+			# Translators: Action description for starting spotlight mode.
 			self.START_SPOTLIGHT: pgettext("magnifier action", "trying to start spotlight mode"),
 		}
 
@@ -62,11 +62,11 @@ class MagnifierType(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["MagnifierType", str]:
 		return {
-			# Translators: Magnifier type - fullscreen mode
+			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
-			# Translators: Magnifier type - docked mode
+			# Translators: Magnifier type - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
-			# Translators: Magnifier type - lens mode
+			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
 		}
 
@@ -109,11 +109,11 @@ class FullScreenMode(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["FullScreenMode", str]:
 		return {
-			# Translators: Magnifier focus mode - center mouse/focus on screen
+			# Translators: Magnifier focus mode - center mouse/focus on screen.
 			self.CENTER: pgettext("magnifier", "Center"),
-			# Translators: Magnifier focus mode - follow focus at screen borders
+			# Translators: Magnifier focus mode - follow focus at screen borders.
 			self.BORDER: pgettext("magnifier", "Border"),
-			# Translators: Magnifier focus mode - maintain relative position
+			# Translators: Magnifier focus mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
 
@@ -126,10 +126,10 @@ class Filter(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["Filter", str]:
 		return {
-			# Translators: Magnifier color filter - no filter applied
+			# Translators: Magnifier color filter - no filter applied.
 			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - grayscale/black and white
+			# Translators: Magnifier color filter - grayscale/black and white.
 			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
-			# Translators: Magnifier color filter - inverted colors
+			# Translators: Magnifier color filter - inverted colors.
 			self.INVERTED: pgettext("magnifier", "Inverted"),
 		}

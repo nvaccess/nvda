@@ -3,7 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes
+"""
+Full-screen magnifier module.
+"""
+
 from logHandler import log
 from typing import Callable
 import ui
@@ -13,14 +16,14 @@ from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
-from .config import getDefaultFullscreenMode
+from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
 
 
 class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
 		self._fullscreenMode = getDefaultFullscreenMode()
-		self._currentCoordinates: Coordinates = (0, 0)
+		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._startMagnifier()
 
@@ -55,16 +58,16 @@ class FullScreenMagnifier(Magnifier):
 		obj,
 		nextHandler,
 	):
-		log.info("FullscreenMagnifier gain focus event")
+		log.info("Full-screen Magnifier gain focus event")
 		nextHandler()
 
 	def _startMagnifier(self) -> None:
 		"""
-		Start the Fullscreen magnifier using windows DLL
+		Start the Full-screen magnifier using windows DLL
 		"""
 		super()._startMagnifier()
 		log.info(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and fullscreen mode {self.fullscreenMode}",
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self.fullscreenMode}",
 		)
 		# Initialize Magnification API if not already initialized
 		try:
@@ -83,31 +86,23 @@ class FullScreenMagnifier(Magnifier):
 		Perform the actual update of the magnifier
 		"""
 		# Calculate new position based on focus mode
-		x, y = self._getCoordinatesForMode(self.currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		# Always save screen position for mode continuity
-		self.lastScreenPosition = (x, y)
+		self.lastScreenPosition = coordinates
 
 		if self.lastFocusedObject == FocusType.NVDA:
-			try:
-				from .config import shouldKeepMouseCentered
-			except ImportError:
-				log.error("Failed to import shouldKeepMouseCentered from magnifier.config")
-			else:
-				if shouldKeepMouseCentered():
-					self.moveMouseToScreen()
-		# Apply transformation
-		self._fullscreenMagnifier(x, y)
+			if shouldKeepMouseCentered():
+				self.moveMouseToScreen()
+		self._fullscreenMagnifier(coordinates)
 
 	def _stopMagnifier(self) -> None:
 		"""
-		Stop the Fullscreen magnifier using windows DLL
+		Stop the Full-screen magnifier using windows DLL
 		"""
 		super()._stopMagnifier()
 		try:
-			# Get MagSetFullscreenTransform function from magnification API
-			MagSetFullscreenTransform = self._getMagnificationApi()
 			# Reset fullscreen magnifier: 1.0 zoom, 0,0 position
-			MagSetFullscreenTransform(ctypes.c_float(1.0), ctypes.c_int(0), ctypes.c_int(0))
+			magnification.MagSetFullscreenTransform(1.0, 0, 0)
 			# Reset color effect to normal (identity matrix)
 			magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
 		except Exception as e:
@@ -122,46 +117,37 @@ class FullScreenMagnifier(Magnifier):
 
 	def _applyFilter(self) -> None:
 		"""
-		Apply the current color filter to the fullscreen magnifier
+		Apply the current color filter to the full-screen magnifier
 		"""
 		try:
-			if self.filterType == Filter.NORMAL:
-				magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-			elif self.filterType == Filter.GRAYSCALE:
-				magnification.MagSetFullscreenColorEffect(FilterMatrix.GRAYSCALE.value)
-			elif self.filterType == Filter.INVERTED:
-				magnification.MagSetFullscreenColorEffect(FilterMatrix.INVERTED.value)
-			else:
-				log.info(f"Unknown color filter: {self.filterType}")
+			match self.filterType:
+				case Filter.NORMAL:
+					matrix = FilterMatrix.NORMAL
+				case Filter.GRAYSCALE:
+					matrix = FilterMatrix.GRAYSCALE
+				case Filter.INVERTED:
+					matrix = FilterMatrix.INVERTED
+
+			magnification.MagSetFullscreenColorEffect(matrix.value)
+
 		except Exception as e:
 			log.error(f"Failed to apply filter: {e}")
 
-	def _getMagnificationApi(self):
+	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:
 		"""
-		Get Windows Magnification API function
-		"""
-		MagSetFullscreenTransform = ctypes.windll.magnification.MagSetFullscreenTransform
-		MagSetFullscreenTransform.restype = ctypes.wintypes.BOOL
-		MagSetFullscreenTransform.argtypes = [ctypes.c_float, ctypes.c_int, ctypes.c_int]
-		return MagSetFullscreenTransform
+		Apply full-screen magnification at given Coordinates
 
-	def _fullscreenMagnifier(self, x: int, y: int) -> None:
+		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
-		Apply fullscreen magnification at given Coordinates
-
-		:param x: The x-coordinate for the magnifier
-		:param y: The y-coordinate for the magnifier
-		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(x, y)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
 		try:
-			MagSetFullscreenTransform = self._getMagnificationApi()
-			result = MagSetFullscreenTransform(
-				ctypes.c_float(self.zoomLevel),
-				ctypes.c_int(left),
-				ctypes.c_int(top),
+			result = magnification.MagSetFullscreenTransform(
+				self.zoomLevel,
+				left,
+				top,
 			)
 			if not result:
-				log.info("Failed to set fullscreen transform")
+				log.info("Failed to set full-screen transform")
 		except AttributeError:
 			log.info("Magnification API not available")
 
@@ -170,21 +156,20 @@ class FullScreenMagnifier(Magnifier):
 		coordinates: Coordinates,
 	) -> Coordinates:
 		"""
-		Get Coordinates adjusted for the current fullscreen mode
+		Get Coordinates adjusted for the current full-screen mode
 
 		:param coordinates: Raw coordinates (x, y)
-
-		Returns:
-			coordinates: Adjusted coordinates according to fullscreen mode
+		:returns Coordinates: Adjusted coordinates according to full-screen mode
 		"""
 		x, y = coordinates
 
-		if self._fullscreenMode == FullScreenMode.RELATIVE:
-			return self._relativePos(x, y)
-		elif self._fullscreenMode == FullScreenMode.BORDER:
-			return self._borderPos(x, y)
-		else:  # CENTER mode
-			return coordinates
+		match self._fullscreenMode:
+			case FullScreenMode.RELATIVE:
+				return self._relativePos(x, y)
+			case FullScreenMode.BORDER:
+				return self._borderPos(x, y)
+			case FullScreenMode.CENTER:
+				return coordinates
 
 	def moveMouseToScreen(self) -> None:
 		"""
@@ -198,23 +183,19 @@ class FullScreenMagnifier(Magnifier):
 
 	def _borderPos(
 		self,
-		focusX: int,
-		focusY: int,
+		coordinates: Coordinates,
 	) -> Coordinates:
 		"""
 		Check if focus is near magnifier border and adjust position accordingly
 		Returns adjusted position to keep focus within margin limits
 
-		:param focusX: The x-coordinate of the focus point
-		:param focusY: The y-coordinate of the focus point
+		:param coordinates: Raw coordinates (x, y)
 
-		Returns:
-			coordinates: The adjusted position (x, y) of the focus point
+		:returns Coordinates: The adjusted position (x, y) of the focus point
 		"""
-
+		focusX, focusY = coordinates
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self.lastScreenPosition[0],
-			self.lastScreenPosition[1],
+			self.lastScreenPosition,
 		)
 
 		minX = lastLeft + self._MARGIN_BORDER
@@ -236,58 +217,54 @@ class FullScreenMagnifier(Magnifier):
 			dy = focusY - maxY
 
 		if dx != 0 or dy != 0:
-			return self.lastScreenPosition[0] + dx, self.lastScreenPosition[1] + dy
+			return Coordinates(self.lastScreenPosition[0] + dx, self.lastScreenPosition[1] + dy)
 		else:
 			return self.lastScreenPosition
 
 	def _relativePos(
 		self,
-		mouseX: int,
-		mouseY: int,
+		coordinates: Coordinates,
 	) -> Coordinates:
 		"""
 		Calculate magnifier center maintaining mouse relative position
 		Handles screen edges to prevent going off-screen
 
-		:param mouseX: The x-coordinate of the mouse pointer
-		:param mouseY: The y-coordinate of the mouse pointer
+		:param coordinates: Raw coordinates (x, y)
 
-		Returns:
-			coordinates: The (x, y) coordinates of the magnifier center
+		:returns Coordinates: The (x, y) coordinates of the magnifier center
 		"""
-		zoom = self.zoomLevel
 
-		screenWidth = self._SCREEN_WIDTH
-		screenHeight = self._SCREEN_HEIGHT
-		visibleWidth = screenWidth / zoom
-		visibleHeight = screenHeight / zoom
+		zoom = self.zoomLevel
+		mouseX, mouseY = coordinates
+		visibleWidth = self._screenWidth / zoom
+		visibleHeight = self._screenHeight / zoom
 		margin = int(zoom * 10)
 
 		# Calculate left/top maintaining mouse relative position
-		left = mouseX - (mouseX / screenWidth) * (visibleWidth - margin)
-		top = mouseY - (mouseY / screenHeight) * (visibleHeight - margin)
+		left = mouseX - (mouseX / self._screenWidth) * (visibleWidth - margin)
+		top = mouseY - (mouseY / self._screenHeight) * (visibleHeight - margin)
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, screenWidth - visibleWidth))
-		top = max(0, min(top, screenHeight - visibleHeight))
+		left = max(0, min(left, self._screenWidth - visibleWidth))
+		top = max(0, min(top, self._screenHeight - visibleHeight))
 
 		# Return center of zoom window
 		centerX = int(left + visibleWidth / 2)
 		centerY = int(top + visibleHeight / 2)
-		self.lastScreenPosition = (centerX, centerY)
+		self.lastScreenPosition = Coordinates(centerX, centerY)
 		return self.lastScreenPosition
 
 	def _startSpotlight(self) -> None:
 		"""
-		Launch Spotlight from Fullscreen class
+		Launch Spotlight from Full-screen class
 		"""
-		log.info(f"Launching spotlight mode from fullscreen magnifier with mode {self._fullscreenMode}")
+		log.info(f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}")
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
 	def _stopSpotlight(self) -> None:
 		"""
-		Stop and destroy Spotlight from Fullscreen class
+		Stop and destroy Spotlight from Full-screen class
 		"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
@@ -300,7 +277,7 @@ class SpotlightManager:
 	):
 		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
 		self._spotlightIsActive: bool = False
-		self._lastMousePosition: Coordinates = (0, 0)
+		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None
 		self._animationSteps: int = 40
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._getFocusCoordinates()
@@ -318,8 +295,8 @@ class SpotlightManager:
 		startCoords = self._fullscreenMagnifier._getFocusCoordinates()
 		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
 		centerScreen = (
-			self._fullscreenMagnifier._SCREEN_WIDTH // 2,
-			self._fullscreenMagnifier._SCREEN_HEIGHT // 2,
+			self._fullscreenMagnifier._screenWidth // 2,
+			self._fullscreenMagnifier._screenHeight // 2,
 		)
 
 		# Save the current mode for zoom back
@@ -333,8 +310,9 @@ class SpotlightManager:
 		"""
 		log.info("stop spotlight")
 		ui.message(
-			_(
-				# Translators: Message announced when stopping the magnifier spotlight
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when stopping the magnifier spotlight.
 				"Magnifier spotlight stopped",
 			),
 		)
@@ -382,7 +360,7 @@ class SpotlightManager:
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, (x, y) = self._animationStepsList[stepIndex]
 			self._fullscreenMagnifier.zoomLevel = zoomLevel
-			self._fullscreenMagnifier._fullscreenMagnifier(x, y)
+			self._fullscreenMagnifier._fullscreenMagnifier((x, y))
 			self._currentZoomLevel = zoomLevel
 			self._currentCoordinates = (x, y)
 			wx.CallLater(12, lambda: self._executeStep(stepIndex + 1, callback))
@@ -442,8 +420,7 @@ class SpotlightManager:
 		:param coordinateStart: Starting Coordinates (x, y)
 		:param coordinateEnd: Ending Coordinates (x, y)
 
-		Returns:
-			zoomSteps: List of animation steps as ZoomHistory for each animation step
+		:returns ZoomHistory list: List of animation steps as ZoomHistory for each animation step
 		"""
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd

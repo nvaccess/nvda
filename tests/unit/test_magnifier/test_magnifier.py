@@ -4,8 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from magnifier.magnifier import Magnifier, MagnifierType
-from magnifier.utils.types import Coordinates, Filter, FocusType, Direction
+from _magnifier.magnifier import Magnifier, MagnifierType
+from _magnifier.utils.types import Coordinates, Filter, FocusType, Direction
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, Mock, patch
@@ -139,7 +139,9 @@ class TestMagnifier(unittest.TestCase):
 
 		self.magnifier._getFocusCoordinates.assert_called_once()
 		self.magnifier._doUpdate.assert_called_once()
-		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
+		self.magnifier._startTimer.assert_called_once_with(
+			self.magnifier._updateMagnifier,
+		)
 		self.assertEqual(self.magnifier.currentCoordinates, (100, 200))
 
 	def testDoUpdate(self):
@@ -212,7 +214,7 @@ class TestMagnifier(unittest.TestCase):
 	def testMagnifierPosition(self):
 		"""Test : Computing magnifier position and size."""
 		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		left, top, width, height = self.magnifier._getMagnifierPosition(x, y)
+		left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
 
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
@@ -225,16 +227,16 @@ class TestMagnifier(unittest.TestCase):
 		self.assertEqual(height, expected_height)
 
 		# Test left clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition(100, 540)
+		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540))
 		self.assertGreaterEqual(left, 0)
 
 		# Test right clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition(1800, 540)
+		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540))
 		self.assertLessEqual(left + width, self.screenWidth)
 
 		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
-		left, top, width, height = self.magnifier._getMagnifierPosition(960, 540)
+		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540))
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		self.assertEqual(width, expected_width)
@@ -243,7 +245,7 @@ class TestMagnifier(unittest.TestCase):
 	def testGetNvdaPosition(self):
 		"""Test : Getting NVDA position with different API responses."""
 		# Case 1: Review position successful
-		with patch("magnifier.magnifier.api.getReviewPosition") as mock_review:
+		with patch("_magnifier.magnifier.api.getReviewPosition") as mock_review:
 			mock_point = Mock()
 			mock_point.x = 300
 			mock_point.y = 400
@@ -253,8 +255,8 @@ class TestMagnifier(unittest.TestCase):
 			self.assertEqual((x, y), (300, 400))
 
 		# Case 2: Review position fails, navigator works
-		with patch("magnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
+		with patch("_magnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("_magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = (100, 150, 200, 300)
 
 				x, y = self.magnifier._getCursorPosition()
@@ -262,8 +264,8 @@ class TestMagnifier(unittest.TestCase):
 				self.assertEqual((x, y), (200, 300))
 
 		# Case 3: Everything fails
-		with patch("magnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
+		with patch("_magnifier.magnifier.api.getReviewPosition", return_value=None):
+			with patch("_magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
 				mock_navigator.return_value.location = Mock(side_effect=Exception())
 
 				x, y = self.magnifier._getCursorPosition()
@@ -332,12 +334,14 @@ class TestMagnifier(unittest.TestCase):
 
 	def testConstants(self):
 		"""Test : Class constants are properly defined."""
-		self.assertEqual(Magnifier._ZOOM_MIN, 1.0)
-		self.assertEqual(Magnifier._ZOOM_MAX, 10.0)
-		self.assertEqual(Magnifier._ZOOM_STEP, 0.5)
+		from _magnifier.config import ZoomLevel
+
+		self.assertEqual(ZoomLevel.MIN_ZOOM, 1.0)
+		self.assertEqual(ZoomLevel.MAX_ZOOM, 10.0)
+		self.assertEqual(ZoomLevel.STEP_FACTOR, 0.5)
 		self.assertEqual(Magnifier._TIMER_INTERVAL_MS, 20)
 		self.assertEqual(Magnifier._MARGIN_BORDER, 50)
 
-		# Screen dimensions should be positive integers
-		self.assertGreater(Magnifier._SCREEN_WIDTH, 0)
-		self.assertGreater(Magnifier._SCREEN_HEIGHT, 0)
+		# Screen dimensions should be positive integers (instance variables)
+		self.assertGreater(self.magnifier._screenWidth, 0)
+		self.assertGreater(self.magnifier._screenHeight, 0)

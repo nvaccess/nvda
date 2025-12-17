@@ -4,22 +4,39 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
-NVDA Magnifier module
-Handles module initialization, configuration and settings interaction
+NVDA Magnifier module.
+Handles module initialization, configuration and settings interaction.
 """
 
-_magnifier = None
+from typing import TYPE_CHECKING
+from .fullscreenMagnifier import FullScreenMagnifier
+
+if TYPE_CHECKING:
+	from .magnifier import Magnifier
+
+_magnifier: "Magnifier | None" = None
 
 
 def initialize():
 	"""
 	Initialize the magnifier module
-	This is kept for compatibility but config is now initialized on import
+	For now, only the full-screen magnifier is supported
 	"""
-	from .fullscreenMagnifier import FullScreenMagnifier
 
 	magnifier = FullScreenMagnifier()
 	setMagnifier(magnifier)
+
+
+def getDisplaySize() -> tuple[int, int]:
+	"""
+	Get the primary display size
+
+	:returns: A tuple (width, height) representing the display size
+	"""
+	from winAPI._displayTracking import getPrimaryDisplayOrientation
+
+	display = getPrimaryDisplayOrientation()
+	return display.width, display.height
 
 
 def isActive() -> bool:
@@ -30,7 +47,7 @@ def isActive() -> bool:
 	return _magnifier and _magnifier.isActive
 
 
-def getMagnifier():
+def getMagnifier() -> "Magnifier | None":
 	"""
 	Get current magnifier
 	"""
@@ -38,7 +55,7 @@ def getMagnifier():
 	return _magnifier
 
 
-def setMagnifier(magnifier):
+def setMagnifier(magnifier: "Magnifier") -> None:
 	"""
 	Set magnifier instance
 
