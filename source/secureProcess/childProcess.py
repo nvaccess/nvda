@@ -63,7 +63,7 @@ from logHandler import log
 
 class BasicPopen:
 
-	def __init__(self, args: list[str], env: dict[str, str] | None=None, cwd: str | None=None, desktop: str | None=None, stdin: int | None=None, stdout: int | None =None, stderr: int | None=None, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, args: list[str], env: dict[str, str] | None=None, cwd: str | None=None, desktop: str | None=None, stdin: int | None=None, stdout: int | None =None, stderr: int | None=None, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False, createNoWindow: bool=False):
 		"""
 		Initialize and create a child process.
 
@@ -88,9 +88,12 @@ class BasicPopen:
 		:param startSuspended: If True, the child process is created suspended.
 		:param hideCriticalErrorDialogs: If True, the error mode is temporarily
 			changed to suppress critical error dialogs while creating the process.
+		:param createNoWindow: If True, the process is created without a window (I.e. CREATIONFLAGS_CREATE_NO_WINDOW).
 		"""
 		self.args = args
-		self._creationFlags = CREATIONFLAGS_CREATE_NO_WINDOW
+		self._creationFlags = 0
+		if createNoWindow:
+			self._creationFlags |= CREATIONFLAGS_CREATE_NO_WINDOW
 		self._hideCriticalErrorDialogs = hideCriticalErrorDialogs
 		if startSuspended:
 			self._creationFlags |= CREATIONFLAGS_CREATE_SUSPENDED

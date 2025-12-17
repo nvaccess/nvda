@@ -58,7 +58,7 @@ class SecurePopen(PopenWithToken):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False, createNoWindow: bool=False):
 		"""
 		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
@@ -90,6 +90,7 @@ class SecurePopen(PopenWithToken):
 		:param killOnDelete: Assign the child to a job that is terminated when this object is closed.
 		:param startSuspended: Start the process suspended; call resume() to continue execution.
 		:param hideCriticalErrorDialogs: Suppress critical error dialogs for the spawned process.
+		:param createNoWindow: If True, the process is created without a window (I.e. CREATIONFLAGS_CREATE_NO_WINDOW).
 
 When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
 		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
