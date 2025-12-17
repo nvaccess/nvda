@@ -41,6 +41,18 @@ _hostExe = os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "synthDriverHos
 def isSynthDriverHost32RuntimeAvailable():
 	return os.path.isfile(_hostExe)
 
+
+launchConfig_standard = dict(
+	removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
+	retainUserInRestrictedToken=True,
+)
+launchConfig_secure = dict(
+	removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
+	retainUserInRestrictedToken=False,
+	username="local service", domain="nt authority", logonType="service",
+	isolateWindowStation=True, isolateDesktop=True, hideCriticalErrorDialogs=True,
+)
+
 def createSynthDriverHost32():
 	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
 	Instructs the host to install proxies that use the given NVDAService for remote calls back into NVDA.
@@ -49,11 +61,10 @@ def createSynthDriverHost32():
 	global stream, conn
 	isSecureDesktop = isRunningOnSecureDesktop()
 	log.info(f"Starting synthDriverHost32 process: {_hostExe}")
+	securePopenOptions = launchConfig_secure if isSecureDesktop else launchConfig_standard
 	hostProc = secureProcess.SecurePopen(
 		[_hostExe], killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-		removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
-		retainUserInRestrictedToken=not isSecureDesktop,
-		runAsLocalService=isSecureDesktop, isolateWindowStation=isSecureDesktop, hideCriticalErrorDialogs=isSecureDesktop,
+		**securePopenOptions
 		)
 	log.info("Creating PipeStream over host process std pipes")
 	stream = PipeStream(hostProc.stdout, hostProc.stdin)
