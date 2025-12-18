@@ -16,6 +16,7 @@ from typing import (
 	Optional,
 )
 
+import extensionPoints
 from logHandler import log
 import ui
 import winUser
@@ -37,6 +38,12 @@ class OrientationState:
 
 
 _orientationState: Optional[OrientationState] = None
+
+displayChanged = extensionPoints.Action()
+"""
+Notifies when display configuration changes (resolution, monitor setup, etc.).
+Handlers are called without arguments.
+"""
 
 
 def initialize():
@@ -114,3 +121,5 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 
 	_orientationState.height = height
 	_orientationState.width = width
+	# Notify registered handlers about display changes
+	displayChanged.notify()

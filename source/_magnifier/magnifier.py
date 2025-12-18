@@ -14,6 +14,7 @@ import wx
 import api
 import winUser
 import mouseHandler
+from winAPI import _displayTracking
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierPosition,
@@ -45,6 +46,8 @@ class Magnifier:
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
+		# Register for display changes
+		_displayTracking.displayChanged.register(self._onDisplayChanged)
 
 	@property
 	def isActive(self) -> bool:
@@ -135,6 +138,13 @@ class Magnifier:
 		self._screenWidth = display.width
 		self._screenHeight = display.height
 
+	def _onDisplayChanged(self) -> None:
+		"""
+		Called when display configuration changes
+		"""
+		log.debug("Display configuration changed, updating screen dimensions")
+		self._GetScreenDisplay()
+
 	def _startMagnifier(self) -> None:
 		"""
 		Start the magnifier
@@ -168,6 +178,8 @@ class Magnifier:
 			return
 		self._stopTimer()
 		self.isActive = False
+		# Unregister from display changes
+		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
 	def _zoom(self, direction: Direction) -> None:
 		"""
