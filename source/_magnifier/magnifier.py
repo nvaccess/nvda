@@ -204,7 +204,7 @@ class Magnifier:
 				self.timer.Stop()
 			self.timer = None
 		else:
-			log.info("no timer to stop")
+			log.debug("no timer to stop")
 
 	def _getMagnifierPosition(self, coordinates: Coordinates) -> MagnifierPosition:
 		"""

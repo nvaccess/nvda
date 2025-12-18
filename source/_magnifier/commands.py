@@ -96,7 +96,7 @@ def zoomOut() -> None:
 def toggleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
-	log.info(f"Toggling filter for magnifier: {magnifier}")
+	log.debug(f"Toggling filter for magnifier: {magnifier}")
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.TOGGLE_FILTER,
@@ -130,7 +130,7 @@ def toggleFullscreenMode() -> None:
 			currentMode = magnifier.fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
-			log.info(f"Changing full-screen mode from {currentMode} to {newMode}")
+			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			magnifier.fullscreenMode = newMode
 			ui.message(
 				pgettext(
@@ -152,9 +152,9 @@ def startSpotlight() -> None:
 			magnifier,
 			MagnifierAction.START_SPOTLIGHT,
 		):
-			log.info("trying to launch spotlight mode")
+			log.debug("trying to launch spotlight mode")
 			if magnifier._spotlightManager._spotlightIsActive:
-				log.info("found spotlight manager and it is active")
+				log.debug("found spotlight manager and it is active")
 				ui.message(
 					pgettext(
 						"magnifier",
@@ -163,7 +163,7 @@ def startSpotlight() -> None:
 					),
 				)
 			else:
-				log.info("no active spotlight manager found, starting new one")
+				log.debug("no active spotlight manager found, starting new one")
 				magnifier._startSpotlight()
 				ui.message(
 					pgettext(

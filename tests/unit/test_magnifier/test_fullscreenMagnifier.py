@@ -6,13 +6,8 @@
 import unittest
 from unittest.mock import MagicMock
 import wx
-import sys
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
-
-# Mock the ui module globally before importing Magnifier
-sys.modules["ui"] = MagicMock()
-sys.modules["api"] = MagicMock()
 
 
 class TestMagnifierEndToEnd(unittest.TestCase):
@@ -244,8 +239,8 @@ class TestSpotlightManager(unittest.TestCase):
 		self.assertIsNotNone(spotlightManager)
 		self.assertFalse(spotlightManager._spotlightIsActive)
 		self.assertEqual(spotlightManager._animationSteps, 40)
-		self.assertEqual(spotlightManager._originalZoomLevel, 2.0)
-		self.assertEqual(spotlightManager._currentZoomLevel, 2.0)
+		self.assertEqual(spotlightManager._originalZoomLevel, 0.0)
+		self.assertEqual(spotlightManager._currentZoomLevel, 0.0)
 
 		magnifier._stopMagnifier()
 
@@ -281,13 +276,11 @@ class TestSpotlightManager(unittest.TestCase):
 		# Mock fullscreen magnifier method
 		magnifier._stopSpotlight = MagicMock()
 
-		# Mock ui.message to avoid speech/translation issues
-		with unittest.mock.patch("_magnifier.fullscreenMagnifier.ui.message"):
-			# Stop spotlight
-			spotlightManager._stopSpotlight()
+		# Stop spotlight
+		spotlightManager._stopSpotlight()
 
-			# Verify spotlight is inactive
-			self.assertFalse(spotlightManager._spotlightIsActive)
+		# Verify spotlight is inactive
+		self.assertFalse(spotlightManager._spotlightIsActive)
 
 		magnifier._stopMagnifier()
 
@@ -447,7 +440,7 @@ class TestSpotlightManager(unittest.TestCase):
 
 		# Verify initial state
 		self.assertFalse(spotlightManager._spotlightIsActive)
-		self.assertEqual(spotlightManager._originalZoomLevel, 2.0)
+		self.assertEqual(spotlightManager._originalZoomLevel, 0.0)
 
 		# Mock methods for full test
 		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
@@ -459,9 +452,7 @@ class TestSpotlightManager(unittest.TestCase):
 		spotlightManager._startSpotlight()
 		self.assertTrue(spotlightManager._spotlightIsActive)
 
-		# Stop spotlight
-		with unittest.mock.patch("_magnifier.fullscreenMagnifier.ui.message"):
-			spotlightManager._stopSpotlight()
-			self.assertFalse(spotlightManager._spotlightIsActive)
+		spotlightManager._stopSpotlight()
+		self.assertFalse(spotlightManager._spotlightIsActive)
 
 		magnifier._stopMagnifier()

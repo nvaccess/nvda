@@ -8,14 +8,12 @@ Full-screen magnifier module.
 """
 
 from logHandler import log
-from typing import Callable
-import ui
 import winUser
-import wx
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
-from .utils.types import Filter, ZoomHistory, Coordinates, FullScreenMode, FocusType
+from .utils.spotlightManager import SpotlightManager
+from .utils.types import Filter, Coordinates, FullScreenMode, FocusType
 from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
 
 
@@ -58,7 +56,7 @@ class FullScreenMagnifier(Magnifier):
 		obj,
 		nextHandler,
 	):
-		log.info("Full-screen Magnifier gain focus event")
+		log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
 	def _startMagnifier(self) -> None:
@@ -66,7 +64,7 @@ class FullScreenMagnifier(Magnifier):
 		Start the Full-screen magnifier using windows DLL
 		"""
 		super()._startMagnifier()
-		log.info(
+		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self.fullscreenMode}",
 		)
 		# Initialize Magnification API if not already initialized
@@ -106,7 +104,7 @@ class FullScreenMagnifier(Magnifier):
 			# Reset color effect to normal (identity matrix)
 			magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
 		except Exception as e:
-			log.info(f"Error resetting magnification: {e}")
+			log.debug(f"Error resetting magnification: {e}")
 
 		# Uninitialize Magnification API
 		try:
@@ -147,9 +145,9 @@ class FullScreenMagnifier(Magnifier):
 				top,
 			)
 			if not result:
-				log.info("Failed to set full-screen transform")
+				log.debug("Failed to set full-screen transform")
 		except AttributeError:
-			log.info("Magnification API not available")
+			log.debug("Magnification API not available")
 
 	def _getCoordinatesForMode(
 		self,
@@ -165,9 +163,9 @@ class FullScreenMagnifier(Magnifier):
 
 		match self._fullscreenMode:
 			case FullScreenMode.RELATIVE:
-				return self._relativePos(x, y)
+				return self._relativePos((x, y))
 			case FullScreenMode.BORDER:
-				return self._borderPos(x, y)
+				return self._borderPos((x, y))
 			case FullScreenMode.CENTER:
 				return coordinates
 
@@ -176,7 +174,7 @@ class FullScreenMagnifier(Magnifier):
 		keep mouse in screen
 		"""
 		x, y = self.currentCoordinates
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(x, y)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition((x, y))
 		centerX = int(left + (visibleWidth / 2))
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -258,7 +256,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Launch Spotlight from Full-screen class
 		"""
-		log.info(f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}")
+		log.debug(f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}")
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
@@ -268,173 +266,3 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
-
-
-class SpotlightManager:
-	def __init__(
-		self,
-		fullscreenMagnifier: FullScreenMagnifier,
-	):
-		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
-		self._spotlightIsActive: bool = False
-		self._lastMousePosition = Coordinates(0, 0)
-		self._timer: wx.CallLater | None = None
-		self._animationSteps: int = 40
-		self._currentCoordinates: Coordinates = fullscreenMagnifier._getFocusCoordinates()
-		self._originalZoomLevel: float = fullscreenMagnifier.zoomLevel
-		self._currentZoomLevel: float = fullscreenMagnifier.zoomLevel
-		self._originalMode: FullScreenMode | None = None
-
-	def _startSpotlight(self) -> None:
-		"""
-		Start the spotlight
-		"""
-		log.info("start spotlight")
-		self._spotlightIsActive = True
-
-		startCoords = self._fullscreenMagnifier._getFocusCoordinates()
-		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
-		centerScreen = (
-			self._fullscreenMagnifier._screenWidth // 2,
-			self._fullscreenMagnifier._screenHeight // 2,
-		)
-
-		# Save the current mode for zoom back
-		self._originalMode = self._fullscreenMagnifier._fullscreenMode
-		self._currentCoordinates = startCoords
-		self._animateZoom(1.0, centerScreen, self._startMouseMonitoring)
-
-	def _stopSpotlight(self) -> None:
-		"""
-		Stop the spotlight
-		"""
-		log.info("stop spotlight")
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when stopping the magnifier spotlight.
-				"Magnifier spotlight stopped",
-			),
-		)
-		if self._timer:
-			self._timer.Stop()
-			self._timer = None
-
-		self._spotlightIsActive = False
-		self._fullscreenMagnifier._stopSpotlight()
-
-	def _animateZoom(
-		self,
-		targetZoom: float,
-		targetCoordinates: Coordinates,
-		callback: Callable[[], None],
-	) -> None:
-		"""
-		Animate the zoom level change
-
-		:param targetZoom: The target zoom level
-		:param targetCoordinates: The target Coordinates (x, y)
-		:param callback: The function to call after animation completes
-		"""
-		self._animationStepsList = self._computeAnimationSteps(
-			self._currentZoomLevel,
-			targetZoom,
-			self._currentCoordinates,
-			targetCoordinates,
-		)
-
-		self._executeStep(0, callback)
-
-	def _executeStep(
-		self,
-		stepIndex: int,
-		callback: Callable[[], None],
-	) -> None:
-		"""
-		Execute one animation step
-
-		:param stepIndex: The index of the current animation step
-		:param callback: The function to call after animation completes
-		"""
-
-		if stepIndex < len(self._animationStepsList):
-			zoomLevel, (x, y) = self._animationStepsList[stepIndex]
-			self._fullscreenMagnifier.zoomLevel = zoomLevel
-			self._fullscreenMagnifier._fullscreenMagnifier((x, y))
-			self._currentZoomLevel = zoomLevel
-			self._currentCoordinates = (x, y)
-			wx.CallLater(12, lambda: self._executeStep(stepIndex + 1, callback))
-		else:
-			if callback:
-				callback()
-
-	def _startMouseMonitoring(self) -> None:
-		"""
-		Start monitoring the mouse position to detect idleness
-		"""
-		self._lastMousePosition = wx.GetMousePosition()
-		self._timer = wx.CallLater(2000, self._checkMouseIdle)
-
-	def _checkMouseIdle(self) -> None:
-		"""
-		Check if the mouse has been idle
-		"""
-		currentMousePosition = wx.GetMousePosition()
-		if currentMousePosition == self._lastMousePosition:
-			self.zoomBack()
-		else:
-			# Mouse moved, continue monitoring
-			self._lastMousePosition = currentMousePosition
-			self._currentCoordinates = currentMousePosition
-			self._timer = wx.CallLater(1500, self._checkMouseIdle)
-
-	def zoomBack(self) -> None:
-		"""
-		Zoom back to mouse position
-		"""
-		focusX, focusY = self._fullscreenMagnifier._getFocusCoordinates()
-
-		if self._originalMode == FullScreenMode.RELATIVE:
-			savedZoom = self._fullscreenMagnifier.zoomLevel
-			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
-			endCoordinates = self._fullscreenMagnifier._relativePos(focusX, focusY)
-			self._fullscreenMagnifier.zoomLevel = savedZoom
-		else:
-			endCoordinates = (focusX, focusY)
-			self._fullscreenMagnifier.lastScreenPosition = endCoordinates
-
-		self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
-
-	def _computeAnimationSteps(
-		self,
-		zoomStart: float,
-		zoomEnd: float,
-		coordinateStart: Coordinates,
-		coordinateEnd: Coordinates,
-	) -> list[ZoomHistory]:
-		"""
-		Compute all intermediate animation steps with zoom levels and Coordinates
-
-		:param zoomStart: Starting zoom level
-		:param zoomEnd: Ending zoom level
-		:param coordinateStart: Starting Coordinates (x, y)
-		:param coordinateEnd: Ending Coordinates (x, y)
-
-		:returns ZoomHistory list: List of animation steps as ZoomHistory for each animation step
-		"""
-		startX, startY = coordinateStart
-		endX, endY = coordinateEnd
-		animationSteps = []
-
-		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
-		coordDeltaX = (endX - startX) / self._animationSteps
-		coordDeltaY = (endY - startY) / self._animationSteps
-
-		for step in range(1, self._animationSteps + 1):
-			currentZoom = zoomStart + zoomDelta * step
-
-			currentX = startX + coordDeltaX * step
-			currentY = startY + coordDeltaY * step
-
-			animationSteps.append((round(currentZoom, 2), (int(round(currentX)), int(round(currentY)))))
-		return animationSteps
