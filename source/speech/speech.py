@@ -40,6 +40,7 @@ from .commands import (
 	SuppressUnicodeNormalizationCommand,
 	CharacterModeCommand,
 	WaveFileCommand,
+	CallbackCommand,
 )
 from .shortcutKeys import getKeyboardShortcutsSpeech
 
@@ -149,9 +150,10 @@ def _setLastSpeechString(
 	priority: Spri,
 ):
 	# Check if the speech sequence contains text to speak
-	if [item for item in speechSequence if isinstance(item, str)]:
+	if any(isinstance(item, str) for item in speechSequence):
 		global _lastSpeech
-		_lastSpeech = speechSequence, symbolLevel
+		log.debug(f"{speechSequence=}")
+		_lastSpeech = [item for item in speechSequence if not isinstance(item, CallbackCommand)], symbolLevel
 
 
 def initialize():
