@@ -152,7 +152,6 @@ def _setLastSpeechString(
 	# Check if the speech sequence contains text to speak
 	if any(isinstance(item, str) for item in speechSequence):
 		global _lastSpeech
-		log.debug(f"{speechSequence=}")
 		_lastSpeech = [item for item in speechSequence if not isinstance(item, CallbackCommand)], symbolLevel
 
 
