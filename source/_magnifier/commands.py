@@ -9,6 +9,7 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 from typing import Literal
+import screenCurtain
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
@@ -42,6 +43,17 @@ def toggleMagnifier() -> None:
 			),
 		)
 	else:
+		# Check if Screen Curtain is active
+		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
+					"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
+				),
+			)
+			return
+
 		initialize()
 		zoomLevel = getDefaultZoomLevel()
 		filter = getDefaultFilter()

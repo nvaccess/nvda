@@ -4922,6 +4922,16 @@ class GlobalCommands(ScriptableObject):
 				if not doEnable:
 					return  # exit early with no ui.message because the user has decided to abort.
 
+				# Check if magnifier is active
+				if _magnifier.isActive():
+					enableMessage = _(
+						# Translators: Message announced when trying to enable Screen Curtain while magnifier is active.
+						"Cannot enable Screen Curtain: magnifier is active. Please disable magnifier first.",
+					)
+					self._toggleScreenCurtainMessage = enableMessage
+					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
+					return
+
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
 				enableMessage = _("Screen curtain enabled")
