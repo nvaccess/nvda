@@ -154,7 +154,7 @@ def _setLastSpeechString(
 	if any(isinstance(item, str) for item in speechSequence):
 		global _lastSpeech
 		_lastSpeech = (
-i			[item for item in speechSequence if not isinstance(item, (CallbackCommand, _CancellableSpeechCommand))],
+			[item for item in speechSequence if not isinstance(item, (CallbackCommand, _CancellableSpeechCommand))],
 			symbolLevel,
 		)
 
