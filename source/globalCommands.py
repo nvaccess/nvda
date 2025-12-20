@@ -34,7 +34,7 @@ from speech import (
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
-from logHandler import log
+from logHandler import log, Logger
 import gui
 import systemUtils
 import wx
@@ -570,6 +570,24 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
 
 	@script(
+		# Translators: Input help mode message for toggling keyboard layout.
+		description=_("Toggles between desktop and laptop keyboard layout"),
+		category=SCRCAT_INPUT,
+	)
+	def script_toggleKeyboardLayout(self, gesture: "inputCore.InputGesture") -> None:
+		val = config.conf["keyboard"]["keyboardLayout"]
+		if val == "desktop":
+			newVal = "laptop"
+		else:
+			newVal = "desktop"
+		config.conf["keyboard"]["keyboardLayout"] = newVal
+		ui.message(
+			# Translators: Reported when the user toggles keyboard layout.
+			# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
+			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]),
+		)
+
+	@script(
 		# Translators: Input help mode message for cycling the reporting of typed characters.
 		description=_("Cycles through options for when to speak typed characters."),
 		category=SCRCAT_SPEECH,
@@ -792,7 +810,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report spelling errors command.
-		description=_("Cycles through options for how to report spelling errors"),
+		description=_("Cycles through options for how to report spelling or grammar errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
@@ -802,16 +820,16 @@ class GlobalCommands(ScriptableObject):
 		)
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
 		ui.message(
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			_("Report spelling errors {mode}").format(
+			_("Report errors {mode}").format(
 				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
 			),
 		)
 
 	@script(
-		# Translators: Input help mode message for command to toggle report spelling errors in braille.
-		description=_("Toggles reporting spelling errors in braille"),
+		# Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
+		description=_("Toggles reporting spelling or grammar errors in braille"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
@@ -820,11 +838,11 @@ class GlobalCommands(ScriptableObject):
 			formatConfig ^ ReportSpellingErrors.BRAILLE
 		)
 		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
-			# Translators: Message presented when turning on reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille on"))
+			# Translators: Message presented when turning on reporting spelling or grammar errors in braille.
+			ui.message(_("Report errors in braille on"))
 		else:
-			# Translators: Message presented when turning off reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille off"))
+			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
+			ui.message(_("Report errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -3043,6 +3061,23 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle mouse audio coordinates command.
+		description=_("Toggles beeps that report mouse coordinates as the mouse moves"),
+		category=SCRCAT_MOUSE,
+	)
+	def script_toggleMouseAudioCoordinates(self, gesture: inputCore.InputGesture):
+		# Translators: Reported when mouse audio coordinates are toggled on.
+		enabledMsg = _("Mouse audio coordinates on")
+		# Translators: Reported when mouse audio coordinates are toggled off.
+		disabledMsg = _("Mouse audio coordinates off")
+		toggleBooleanValue(
+			configSection="mouse",
+			configKey="audioCoordinatesOnMouseMove",
+			enabledMsg=enabledMsg,
+			disabledMsg=disabledMsg,
+		)
+
+	@script(
 		# Translators: Input help mode message for toggle mouse text unit resolution command.
 		description=_("Toggles how much text will be spoken when the mouse moves"),
 		category=SCRCAT_MOUSE,
@@ -3143,6 +3178,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self, gesture):
+		if log.getEffectiveLevel() == Logger.OFF:
+			from gui import logViewer
+
+			logViewer.activate()
+			return
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info(
@@ -4894,8 +4934,7 @@ class GlobalCommands(ScriptableObject):
 						screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
-					# Translators: Reported when the screen curtain could not be enabled.
-					enableMessage = _("Could not enable screen curtain")
+					enableMessage = screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE
 				finally:
 					self._toggleScreenCurtainMessage = enableMessage
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
@@ -5116,6 +5155,30 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
 		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
+
+	@script(
+		description=_(
+			# Translators: Description for the repeat last speech script
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
+		),
+		gesture="kb:NVDA+x",
+		category=SCRCAT_SPEECH,
+		speakOnDemand=True,
+	)
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
+		lastSpeech = speech.speech._lastSpeech
+		if lastSpeech is None:
+			return
+		lastSpeechSeq, symbolLevel = lastSpeech
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
+		if repeats == 0:
+			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
+			braille.handler.message(lastSpeechText)
+		elif repeats == 1:
+			# Translators: title for report last spoken information dialog.
+			title = _("Last spoken information")
+			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
 
 #: The single global commands instance.

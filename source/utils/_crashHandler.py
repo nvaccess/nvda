@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Derek Riemer
+# Copyright (C) 2025 NV Access Limited, Derek Riemer, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -112,7 +112,7 @@ def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 def loadRecentCrashTimestamps(now: float) -> list[float]:
 	path = CRASH_STATS.crashStatsPath
 	# Check existence explicitly rather than catching exceptions, as this check is far faster than catching an expected exception.
-	if not os.path.exists(path):
+	if path is None or not os.path.exists(path):
 		return []
 	try:
 		with open(path, "r", encoding="utf-8") as f:

@@ -87,6 +87,8 @@ if typing.TYPE_CHECKING:
 _speechState: Optional["SpeechState"] = None
 _curWordChars: List[str] = []
 IDEOGRAPHIC_COMMA: Final[str] = "\u3001"
+_lastSpeech: tuple[SpeechSequence, characterProcessing.SymbolLevel | None] | None = None
+"""Last spoken text and the symbol level with which it was spoken."""
 
 
 class SpeechMode(DisplayStringIntEnum):
@@ -139,6 +141,17 @@ def getState():
 
 def setSpeechMode(newMode: SpeechMode):
 	_speechState.speechMode = newMode
+
+
+def _setLastSpeechString(
+	speechSequence: SpeechSequence,
+	symbolLevel: characterProcessing.SymbolLevel | None,
+	priority: Spri,
+):
+	# Check if the speech sequence contains text to speak
+	if [item for item in speechSequence if isinstance(item, str)]:
+		global _lastSpeech
+		_lastSpeech = speechSequence, symbolLevel
 
 
 def initialize():
@@ -3025,16 +3038,17 @@ def getFormatFieldSpeech(  # noqa: C901
 		invalidGrammar = attrs.get("invalid-grammar")
 		oldInvalidGrammar = attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar != oldInvalidGrammar:
+			texts = []
 			if invalidGrammar:
-				# Translators: Reported when text contains a grammar error.
-				text = _("grammar error")
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SOUND.value:
+					texts.append(WaveFileCommand(r"waves\textError.wav"))
+				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
+					# Translators: Reported when text contains a grammar error.
+					texts.append(_("grammar error"))
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a grammar error.
-				text = _("out of grammar error")
-			else:
-				text = ""
-			if text:
-				textList.append(text)
+				texts.append(_("out of grammar error"))
+			textList.extend(texts)
 	# The line-prefix formatField attribute contains the text for a bullet or number for a list item, when the bullet or number does not appear in the actual text content.
 	# Normally this attribute could be repeated across formatFields within a list item and therefore is not safe to speak when the unit is word or character.
 	# However, some implementations (such as MS Word with UIA) do limit its useage to the very first formatField of the list item.
