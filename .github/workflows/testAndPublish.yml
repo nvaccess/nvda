@@ -32,7 +32,7 @@ env:
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
   defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2022", "windows-2025"]'
+  supportedRunners: '["windows-2022", "windows-2025", "windows-11-arm"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
   defaultPythonVersion: '3.13.11'
@@ -113,6 +113,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
     - name: Store release metadata information
       id: releaseInfo
       run: |
@@ -131,6 +132,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -183,6 +185,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -212,6 +215,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -240,6 +244,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -283,6 +288,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Get makePot results
       uses: actions/download-artifact@v7
@@ -325,6 +331,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -420,11 +427,15 @@ jobs:
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
+    - name: 'Workaround for missing zstd in windows-11-arm'
+      if: matrix.runner == 'windows-11-arm'
+      run: choco install -y zstandard
     - name: Checkout cached build
       uses: actions/cache/restore@v5
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
@@ -490,6 +501,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Windows SDK
       # Installs symstore.exe to expected location.
@@ -535,6 +547,7 @@ jobs:
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        enableCrossOsArchive: true
         fail-on-cache-miss: true
     - name: Install Python
       uses: actions/setup-python@v6
