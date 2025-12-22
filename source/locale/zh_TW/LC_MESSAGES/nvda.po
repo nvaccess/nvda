@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 05:23+0000\n"
-"PO-Revision-Date: 2025-12-15 00:20\n"
+"POT-Creation-Date: 2025-12-16 00:38+0000\n"
+"PO-Revision-Date: 2025-12-22 00:18\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1620,22 +1620,22 @@ msgstr "沒有上一個不同樣式文字了"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1228
 msgid "moves to the next reference"
-msgstr ""
+msgstr "移到下一個參考資料"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1230
 msgid "no next reference"
-msgstr ""
+msgstr "沒有下一個參考資料了"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1232
 msgid "moves to the previous reference"
-msgstr ""
+msgstr "移到上一個參考資料"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1234
 msgid "no previous reference"
-msgstr ""
+msgstr "沒有上一個參考資料了"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2838,29 +2838,29 @@ msgstr "讀出樣式 開"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:795
 msgid "Cycles through options for how to report spelling or grammar errors"
-msgstr ""
+msgstr "循環切換讀出拼字或文法錯誤選項"
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:807
 #, python-brace-format
 msgid "Report errors {mode}"
-msgstr ""
+msgstr "讀出錯誤 {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
 #: globalCommands.py:814
 msgid "Toggles reporting spelling or grammar errors in braille"
-msgstr ""
+msgstr "切換點字呈現拼字或文法錯誤"
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
 #: globalCommands.py:824
 msgid "Report errors in braille on"
-msgstr ""
+msgstr "點字呈現錯誤 開"
 
 #. Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 #: globalCommands.py:827
 msgid "Report errors in braille off"
-msgstr ""
+msgstr "在點字輸出中呈現錯誤 關"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:831
@@ -3755,17 +3755,17 @@ msgstr "跟隨滑鼠朗讀 開"
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
 #: globalCommands.py:3047
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
-msgstr ""
+msgstr "切換當滑鼠移動時播放聲音座標"
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
 #: globalCommands.py:3052
 msgid "Mouse audio coordinates on"
-msgstr ""
+msgstr "滑鼠移動時播放聲音座標 開"
 
 #. Translators: Reported when mouse audio coordinates are toggled off.
 #: globalCommands.py:3054
 msgid "Mouse audio coordinates off"
-msgstr ""
+msgstr "滑鼠移動時播放聲音座標 關"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:3064
@@ -5723,7 +5723,7 @@ msgstr "塔加拉文"
 #: localesData.py:130
 msgctxt "languageName"
 msgid "Tonga (Tonga Islands)"
-msgstr "東加文(東加島)"
+msgstr "東加文 (東加島)"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:132
@@ -9395,7 +9395,7 @@ msgstr "英文 (英國) 二級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr ""
+msgstr "英文統一三級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9755,7 +9755,7 @@ msgstr "拉脫維亞文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:379
 msgid "Macedonian grade 1"
-msgstr ""
+msgstr "馬其頓文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -13907,7 +13907,7 @@ msgstr "語言"
 #: gui\settingsDialogs.py:2780
 msgctxt "math"
 msgid "Decimal separator for numbers:"
-msgstr "數字的小數分隔符號："
+msgstr "數字位數的分隔符號:"
 
 #. Translators: Select a speech style.
 #: gui\settingsDialogs.py:2795
@@ -13986,7 +13986,7 @@ msgstr "自動縮小 2D 符號"
 #: gui\settingsDialogs.py:2914
 msgctxt "math"
 msgid "Speech amount for navigation"
-msgstr "瀏覽時的語音量"
+msgstr "導覽時的語音量"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
 #: gui\settingsDialogs.py:2932
@@ -14012,7 +14012,7 @@ msgstr "點顯器的點字數學代碼"
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "自動 ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 #: gui\settingsDialogs.py:2974
@@ -14114,7 +14114,7 @@ msgstr "編輯者修訂(&E)"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3177
 msgid "Spelling or grammar e&rrors"
-msgstr ""
+msgstr "拼字或文法錯誤(&R)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -14486,7 +14486,7 @@ msgstr "AI 影像描述"
 #: gui\settingsDialogs.py:4036
 msgctxt "imageDesc"
 msgid "Warning: AI image descriptions are experimental. Do not use this feature in circumstances where inaccurate descriptions could cause harm."
-msgstr ""
+msgstr "警告：AI 影像描述目前為實驗性功能。請勿在不準確的描述可能造成危害的情況下使用此功能。"
 
 #. Translators: A configuration in settings dialog.
 #: gui\settingsDialogs.py:4055
@@ -16265,7 +16265,9 @@ msgctxt "imageDesc"
 msgid "AI image descriptions are currently disabled.\n\n"
 "Warning: AI image descriptions are experimental. Do not use this feature in circumstances where inaccurate descriptions could cause harm.\n\n"
 "Would you like to temporarily enable AI image descriptions now?"
-msgstr ""
+msgstr "AI 影像描述目前已停用。\n\n"
+"警告：AI 影像描述目前為實驗性功能。請勿在不準確的描述可能造成危害的情況下使用此功能。\n\n"
+"您想要現在暫時啟用 AI 影像描述嗎？"
 
 #. Translators: Describes a command.
 #: mathPres\__init__.py:132
@@ -16288,19 +16290,19 @@ msgstr "啟動數學導覽時發生錯誤。"
 #: mathPres\MathCAT\MathCAT.py:101
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr "數學點字輸出錯誤：請檢視 NVDA 事件記錄以取得詳細資訊"
+msgstr "顯示數學點字時發生錯誤: 請查看 NVDA 事件記錄以取得詳細資訊"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:165
 msgctxt "math"
 msgid "Error in navigating math"
-msgstr "數學導覽錯誤"
+msgstr "導覽數學時發生錯誤"
 
 #. Translators: this message alerts users to an error brailling math.
 #: mathPres\MathCAT\MathCAT.py:185
 msgctxt "math"
 msgid "Error in brailling math"
-msgstr "數學點字輸出錯誤"
+msgstr "顯示數學點字時發生錯誤"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:191
@@ -16346,7 +16348,7 @@ msgstr "發現不合法的 MathML。"
 #: mathPres\MathCAT\MathCAT.py:422
 msgctxt "math"
 msgid "Error in brailling math."
-msgstr "數學點字輸出錯誤。"
+msgstr "顯示數學點字時發生錯誤。"
 
 #. Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 #. "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
@@ -16418,7 +16420,7 @@ msgstr "拼讀 (H 2 O)"
 #: mathPres\MathCAT\preferences.py:86
 msgctxt "math"
 msgid "Off (H sub 2 O)"
-msgstr "關 (H sub 2 O)"
+msgstr "關 (H 下標 2 O)"
 
 #. Translators: names of different modes of navigation. "Enhanced" mode understands math structure
 #: mathPres\MathCAT\preferences.py:99
@@ -16430,7 +16432,7 @@ msgstr "增強"
 #: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
-msgstr "簡易"
+msgstr "簡化"
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
 #: mathPres\MathCAT\preferences.py:103
@@ -16487,7 +16489,7 @@ msgstr "全部"
 #: mathPres\MathCAT\preferences.py:176
 msgctxt "math"
 msgid "ClearSpeak"
-msgstr "ClearSpeak"
+msgstr "清析描述"
 
 #. Translators: SimpleSpeak is a speech style that tries to minimize speech by speaking simple expressions without bracketing words
 #: mathPres\MathCAT\preferences.py:178
@@ -16948,7 +16950,7 @@ msgstr "錯誤(&E)"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr ""
+msgstr "參考資料(&R)"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
@@ -16973,21 +16975,21 @@ msgstr "追蹤修訂: {text}"
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr ""
+msgstr "註腳參考資料: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr ""
+msgstr "章節附註參考：{text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr ""
+msgstr "參考：{name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -18618,7 +18620,7 @@ msgstr "拼字: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr ""
+msgstr "註腳參考資料 {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18626,7 +18628,7 @@ msgstr ""
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr ""
+msgstr "章節附註參考 {number}：{text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18876,7 +18878,7 @@ msgstr "無法啟用螢幕簾幕"
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr ""
+msgstr "啟用螢幕簾幕時發生問題。您的螢幕內容仍然可見，您可以嘗試手動啟用螢幕簾幕。"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -19679,7 +19681,7 @@ msgstr "無法產生描述"
 #, python-brace-format
 msgctxt "imageDesc"
 msgid "Could be: {description}"
-msgstr ""
+msgstr "可能是： {description}"
 
 #. Translators: Message when starting image recognition
 #: _localCaptioner\imageDescriber.py:141
