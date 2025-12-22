@@ -55,10 +55,15 @@ def main():
 	parser.add_argument("-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true")
 	parser.add_argument("-nw", "--no-window", help="Create the process without a window", action="store_true")
 	parser.add_argument("-rh", "--redirect-handles", help="Redirect stdin/stdout/stderr handles", action="store_true")
+	parser.add_argument("-py", "--python", help="Use the current Python interpreter to launch the process", action="store_true")
 	parser.add_argument("command", nargs=argparse.REMAINDER, help="Command to execute with restricted token")
 	args = parser.parse_args()
+	command = args.command.copy()
+	if args.python:
+		log.debug("Using current Python interpreter to launch the process")
+		command.insert(0, sys.executable)
 	p = secureProcess.SecurePopen(
-		args.command,
+		command,
 		stdin=subprocess.PIPE if args.redirect_handles else None,
 		stdout=subprocess.PIPE if args.redirect_handles else None,
 		stderr=subprocess.STDOUT	 if args.redirect_handles else None,
