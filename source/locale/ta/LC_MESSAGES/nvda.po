@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 05:23+0000\n"
-"PO-Revision-Date: 2025-12-15 00:20\n"
+"POT-Creation-Date: 2025-12-16 00:38+0000\n"
+"PO-Revision-Date: 2025-12-22 00:18\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -1620,22 +1620,22 @@ msgstr "முந்தைய மாறுபட்ட பாங்கு உர
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1228
 msgid "moves to the next reference"
-msgstr "அடுத்த சுட்டுக்கு நகர்கிறது"
+msgstr "அடுத்த கூறுச் சுட்டுக்கு நகர்கிறது"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1230
 msgid "no next reference"
-msgstr "அடுத்த சுட்டு ஏதுமில்லை"
+msgstr "அடுத்த கூறுச் சுட்டு ஏதுமில்லை"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1232
 msgid "moves to the previous reference"
-msgstr "முந்தைய சுட்டுக்கு நகர்கிறது"
+msgstr "முந்தைய கூறுச் சுட்டுக்கு நகர்கிறது"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1234
 msgid "no previous reference"
-msgstr "முந்தைய சுட்டு ஏதுமில்லை"
+msgstr "முந்தைய கூறுச் சுட்டு ஏதுமில்லை"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -16450,7 +16450,7 @@ msgstr "விளக்கமாக"
 #: mathPres\MathCAT\preferences.py:84
 msgctxt "math"
 msgid "Spell it out (H 2 O)"
-msgstr "எழுத்துகளாகப் படித்திடுக (H 2 O)"
+msgstr "எழுத்துகளாகப் படித்திடும் (H 2 O)"
 
 #. Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
 #: mathPres\MathCAT\preferences.py:86
@@ -16519,7 +16519,7 @@ msgstr "முதல் மற்றும் இறுதி வரியுர
 #: mathPres\MathCAT\preferences.py:163
 msgctxt "math"
 msgid "All"
-msgstr "அனைத்து வரியுருக்கள்"
+msgstr "அனைத்து வரியுருக்களும்"
 
 #. Translators: ClearSpeak is a speech style developed by ETS for use on high-stakes tests such as the SAT
 #: mathPres\MathCAT\preferences.py:176
@@ -16990,7 +16990,7 @@ msgstr "பிழைகள் (&E)"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr "சுட்டுகள் (&R)"
+msgstr "கூறுச் சுட்டுகள் (&R)"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
@@ -17015,21 +17015,21 @@ msgstr "மாற்றப்பட்ட உரை: {text}"
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr "அடிக்குறிப்புச் சுட்டு: {text}"
+msgstr "அடிக்குறிப்புக் கூறுச் சுட்டு: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr "முடிவுக் குறிப்புச் சுட்டு: {text}"
+msgstr "முடிவுக்குறிப்புக் கூறுச் சுட்டு: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr "சுட்டு: {name}"
+msgstr "கூறுச் சுட்டு: {name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -18661,7 +18661,7 @@ msgstr "எழுத்தாக்கம்: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr "அடிக்குறிப்புச் சுட்டு {number}: {text}"
+msgstr "அடிக்குறிப்புக் கூறுச் சுட்டு {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18669,7 +18669,7 @@ msgstr "அடிக்குறிப்புச் சுட்டு {number
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr "முடிவுக் குறிப்புச் சுட்டு {number}: {text}"
+msgstr "முடிவுக்குறிப்புக் கூறுச் சுட்டு {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
