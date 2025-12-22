@@ -180,7 +180,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 				log.debug(f"Adding extra environment variable: {key}={value}...")
 				env[key] = value
 		log.debug("Launching subprocess with restricted token...")
-		super().__init__(HANDLE(int(token)), argv, useSecLogon=useSecLogon, logonFlags=1, env=env, cwd=cwd, desktop=desktopName, stdin=stdin, stdout=stdout, stderr=stderr, startSuspended=True, hideCriticalErrorDialogs=hideCriticalErrorDialogs)
+		super().__init__(HANDLE(int(token)), argv, useSecLogon=useSecLogon, logonFlags=1, env=env, cwd=cwd, desktop=desktopName, stdin=stdin, stdout=stdout, stderr=stderr, startSuspended=True, hideCriticalErrorDialogs=hideCriticalErrorDialogs, createNoWindow=createNoWindow)
 		self.job = Job()
 		if killOnDelete:
 			self.job.setBasicLimits(JOB_OBJECT_LIMIT.KILL_ON_JOB_CLOSE)
