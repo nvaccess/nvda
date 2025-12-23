@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Derek Riemer
+# Copyright (C) 2025 NV Access Limited, Derek Riemer, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ import os
 import time
 from dataclasses import asdict, dataclass
 
+import NVDAState
 from logHandler import log, getFormattedStacksForAllThreads
 import core
 import globalVars
@@ -25,7 +26,9 @@ class CrashStats:
 	maxCount: int = 3
 
 	@property
-	def crashStatsPath(self) -> str:
+	def crashStatsPath(self) -> str | None:
+		if globalVars.appArgs.logFileName is None:
+			return None
 		return os.path.join(os.path.dirname(globalVars.appArgs.logFileName), self.fileName)
 
 
@@ -95,6 +98,9 @@ def _buildCrashEvent(timestamp: float, version: str, installType: str) -> CrashE
 
 
 def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
+	if not NVDAState.shouldWriteToDisk():
+		log.debugWarning("Not writing crash stats, as shouldWriteToDisk returned False.")
+		return
 	try:
 		with open(path, "w", encoding="utf-8") as f:
 			for event in events:
@@ -106,7 +112,7 @@ def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 def loadRecentCrashTimestamps(now: float) -> list[float]:
 	path = CRASH_STATS.crashStatsPath
 	# Check existence explicitly rather than catching exceptions, as this check is far faster than catching an expected exception.
-	if not os.path.exists(path):
+	if path is None or not os.path.exists(path):
 		return []
 	try:
 		with open(path, "r", encoding="utf-8") as f:
@@ -142,7 +148,15 @@ def loadRecentCrashTimestamps(now: float) -> list[float]:
 
 
 def _recordCrashTimestamp() -> None:
+	if not NVDAState.shouldWriteToDisk():
+		log.debugWarning("Not recording crash timestamp, as shouldWriteToDisk returned False.")
+		return
 	path = CRASH_STATS.crashStatsPath
+	if path is None:
+		log.debugWarning(
+			"Not recording crash timestamp, as crashStatsPath is None (logFileName is probably None).",
+		)
+		return
 	version, installType = _getCurrentCrashFingerprint()
 	try:
 		with open(path, "a", encoding="utf-8") as f:
@@ -161,18 +175,28 @@ def crashHandler(exceptionInfo):
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
-	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
-	if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
-		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
+	if not NVDAState.shouldWriteToDisk():
+		log.critical("NVDA crashed! Not writing minidump, as shouldWriteToDisk returned False.")
+	elif (logFileName := globalVars.appArgs.logFileName) is not None:
+		dumpPath = os.path.join(os.path.dirname(logFileName), "nvda_crash.dmp")
+		if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
+			log.critical("NVDA crashed! Error writing minidump", exc_info=True)
+		else:
+			log.critical(f"NVDA crashed! Minidump written to {dumpPath}")
 	else:
-		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
+		log.critical("NVDA crashed! Not writing minidump as logFileName is None")
 
 	# Log Python stacks for every thread.
 	stacks = getFormattedStacksForAllThreads()
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	_recordCrashTimestamp()
-	log.info("Restarting due to crash")
-	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
-	core.restartUnsafely()
+	if globalVars.appArgs.secure:
+		# We cannot prevent crash loops in secure mode,
+		# so we should not automatically restart
+		log.info("Not restarting due to running in secure mode.")
+	else:
+		log.info("Restarting due to crash")
+		# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
+		core.restartUnsafely()
 	return 1  # EXCEPTION_EXECUTE_HANDLER

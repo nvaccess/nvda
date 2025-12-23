@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2007-2025 NV Access Limited, Peter Vágner, Cyrille Bougot
+# Copyright (C) 2007-2025 NV Access Limited, Peter Vágner, Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import time
 import threading
@@ -149,7 +149,9 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 
 class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.offsets.OffsetsTextInfo):
-	allowMoveToOffsetPastEnd = False  #: no need for end insertion point as vbuf is not editable.
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		"""Virtual buffers have no insertion point, so no need to move past the end of text."""
+		return False
 
 	def _getControlFieldAttribs(self, docHandle, id):
 		info = self.copy()
@@ -907,8 +909,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(
 				self.VBufHandle,
-				docHandle,
-				objId,
+				docHandle if docHandle is not None else 0,
+				objId if objId is not None else 0,
 				ctypes.byref(node),
 			)
 		except WindowsError:

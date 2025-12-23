@@ -254,6 +254,22 @@ class _ReadPaths:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
 
 	@property
+	def mathCATDir(self) -> str:
+		"""
+		Base directory for MathCAT assets (rules etc.).
+		"""
+		if isRunningAsSource():
+			base = os.path.dirname(globalVars.appDir)
+		else:
+			base = globalVars.appDir
+		return os.path.join(
+			base,
+			"include",
+			"nvda-mathcat",
+			"assets",
+		)
+
+	@property
 	def UIARemoteDll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "UIARemote.dll")
 

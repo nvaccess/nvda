@@ -166,3 +166,33 @@ class ImageDescDownloader:
 		self._progressDialog.Destroy()
 		self._progressDialog = None
 		ImageDescDownloader.isOpening = False
+
+
+def openEnableOnceDialog() -> None:
+	confirmationButtons = (
+		DefaultButton.YES.value._replace(defaultFocus=True, fallbackAction=False),
+		DefaultButton.NO.value._replace(defaultFocus=False, fallbackAction=True),
+	)
+
+	dialog = MessageDialog(
+		parent=None,
+		# Translators: title of dialog when enable image desc
+		title=pgettext("imageDesc", "Enable AI image descriptions"),
+		message=pgettext(
+			"imageDesc",
+			# Translators: label of dialog when enable image desc
+			"AI image descriptions are currently disabled."
+			"\n\n"
+			"Warning: AI image descriptions are experimental. "
+			"Do not use this feature in circumstances where inaccurate descriptions could cause harm."
+			"\n\n"
+			"Would you like to temporarily enable AI image descriptions now?",
+		),
+		dialogType=DialogType.STANDARD,
+		buttons=confirmationButtons,
+	)
+
+	if dialog.ShowModal() == ReturnCode.YES:
+		# load image desc in this session
+		if not _localCaptioner.isModelLoaded():
+			_localCaptioner.toggleImageCaptioning()

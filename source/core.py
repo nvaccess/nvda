@@ -322,9 +322,12 @@ def resetConfiguration(factoryDefaults=False):
 	import hwIo
 	import tones
 	import audio
+	import screenCurtain
 
 	log.debug("Terminating vision")
 	vision.terminate()
+	log.debug("Terminating Screen Curtain")
+	screenCurtain.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -388,6 +391,8 @@ def resetConfiguration(factoryDefaults=False):
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
+	log.debug("initializing Screen Curtain")
+	screenCurtain.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
@@ -609,14 +614,13 @@ def _doLoseFocus():
 
 
 def _setUpWxApp() -> "wx.App":
-	import six
 	import wx
 
 	import config
 	import nvwave
 	import speech
 
-	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
+	log.info(f"Using wx version {wx.version()}")
 
 	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
 	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
@@ -792,7 +796,7 @@ def main():
 	speech.initialize()
 	import mathPres
 
-	log.debug("Initializing MathPlayer")
+	log.debug("Initializing math presentation")
 	mathPres.initialize()
 	timeSinceStart = time.time() - NVDAState.getStartTime()
 	if not globalVars.appArgs.minimal and timeSinceStart > 5:
@@ -816,6 +820,12 @@ def main():
 
 	log.debug("Initializing braille")
 	braille.initialize()
+
+	import screenCurtain
+
+	log.debug("Initializing Screen Curtain")
+	screenCurtain.initialize()
+
 	import vision
 
 	log.debug("Initializing vision")
@@ -1093,6 +1103,7 @@ def main():
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
 	_terminate(inputCore)
+	_terminate(screenCurtain)
 	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)

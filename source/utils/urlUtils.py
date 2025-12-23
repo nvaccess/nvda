@@ -40,10 +40,18 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 
 	validSchemes = ("http", "https", "file")
 	# Parse the URLs
-	parsedTargetURLOnPage: ParseResult = urlparse(targetURLOnPage)
+	try:
+		parsedTargetURLOnPage: ParseResult = urlparse(targetURLOnPage)
+	except ValueError:
+		log.debugWarning(f"Invalid target URL: {targetURLOnPage}", exc_info=True)
+		return False
 	if parsedTargetURLOnPage.scheme not in validSchemes:
 		return False
-	parsedRootURL: ParseResult = urlparse(rootURL)
+	try:
+		parsedRootURL: ParseResult = urlparse(rootURL)
+	except ValueError:
+		log.debugWarning(f"Invalid root URL: {rootURL}", exc_info=True)
+		return False
 	if parsedRootURL.scheme not in validSchemes:
 		return False
 
