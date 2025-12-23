@@ -65,11 +65,15 @@ def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = Tru
 		cachedCls = _makeAutoFreeCache.get(key)
 		if cachedCls:
 			return cachedCls
+	attribs = {
+		"__del__": lambda self: deleter(self) if self else None
+	}
+	ctypes_type_ = getattr(cls, "_type_", None)
+	if ctypes_type_:
+		attribs["_type_"] = ctypes_type_
 	newCls = type(
 		f"AutoFree{cls.__name__}",
 		(cls,),
-		{
-			"__del__": lambda self: deleter(self) if self else None
-		}
+		attribs
 	)
 	return cast(type[T], newCls)

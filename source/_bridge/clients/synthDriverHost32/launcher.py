@@ -43,14 +43,13 @@ def isSynthDriverHost32RuntimeAvailable():
 
 
 launchConfig_standard = dict(
-	removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
-	retainUserInRestrictedToken=True,
+	removeElevation=True, removePrivileges=True, integrityLevel='low', applyUIRestrictions=True,
+	restrictToken=True, retainUserInRestrictedToken=True,
 )
 launchConfig_secure = dict(
-	removeElevation=True, removePrivileges=True, integrityLevel='low', restrictToken=True, applyUIRestrictions=True,
-	retainUserInRestrictedToken=False,
 	username="local service", domain="nt authority", logonType="service",
-	isolateWindowStation=True, isolateDesktop=True, hideCriticalErrorDialogs=True,
+	appContainerName="nvdaSynthDriverHost", appContainerCapabilities=[],
+	isolateWindowStation=True, applyUIRestrictions=True,
 )
 
 def createSynthDriverHost32():
@@ -64,6 +63,7 @@ def createSynthDriverHost32():
 	securePopenOptions = launchConfig_secure if isSecureDesktop else launchConfig_standard
 	hostProc = secureProcess.SecurePopen(
 		[_hostExe], killOnDelete=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+		hideCriticalErrorDialogs=True, createNoWindow=True,
 		**securePopenOptions
 		)
 	log.info("Creating PipeStream over host process std pipes")

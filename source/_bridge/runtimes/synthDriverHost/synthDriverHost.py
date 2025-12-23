@@ -5,10 +5,12 @@
 
 from __future__ import annotations
 import typing
+import sys
 import importlib
 import types
 import logging
 import rpyc
+from rpyc.core.stream import PipeStream
 from _bridge.components.services.synthDriver import SynthDriverService
 if typing.TYPE_CHECKING:
 	from _bridge.clients.synthDriverHost32 import NVDAService
@@ -94,7 +96,8 @@ def main():
 	"""Entry point for the synth driver host runtime. """
 	global log
 	log.info("Connecting to RPYC server over standard pipes")
-	conn = rpyc.connect_stdpipes(HostService, config={'allowpublic_attrs': False, 'allow_safe_attrs': False})
+	stream = PipeStream(sys.stdin, sys.stdout)
+	conn = rpyc.connect_stream(stream, service=HostService, config={'allowpublic_attrs': False, 'allow_safe_attrs': False})
 	log.info("Connected to remote service")
 	log.info("Entering service loop.")
 	conn.serve_all()

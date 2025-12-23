@@ -3,20 +3,30 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from enum import unique
 from typing import ParamSpec
 import uuid
 import subprocess
 import os
+import pywintypes
 import win32con
 import win32security
+import ctypes
+from ctypes import (
+	byref,
+)
 from ctypes.wintypes import (
 	HANDLE,
+)
+from winBindings.winnt import (
+	PROC_THREAD_ATTRIBUTE,
 )
 from winBindings.user32 import (
 	DESKTOP_ALL_ACCESS,
 )
 from .childProcess import (
 	PopenWithToken,
+	PopenInAppContainerMixin,
 )
 from .token import (
 	createRestrictedToken,
@@ -53,12 +63,12 @@ from .sandboxDir import (
 from logHandler import log
 
 
-class SecurePopen(PopenWithToken):
+class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 	"""
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False, createNoWindow: bool=False):
+	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False, createNoWindow: bool=False, appContainerName: str | None=None, appContainerCapabilities: list[str]=[]):
 		"""
 		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
@@ -105,6 +115,8 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			token = logonUser(username, domain, password, logonType)
 		else:
 			token = parentToken
+		log.debug("Preparing environment variables appropriate for token...")
+		env = createTokenEnvironmentBlock(token)
 		if removeElevation and isTokenElevated(token):
 			log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
 			token = getUnelevatedCurrentInteractiveUserTokenFromShell()
@@ -113,8 +125,13 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			useSecLogon = True
 		defaultDacl = getTokenDefaultDacl(token)
 		if username:
-				log.debug("Adding parent user SID to default DACL...")
-				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(parentUserSidString))
+			log.debug("Adding parent user SID to default DACL...")
+			defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(parentUserSidString))
+		if appContainerName:
+			log.debug(f"Initializing AppContainer: {appContainerName} with capabilities: {appContainerCapabilities}...")
+			with impersonateToken(token):
+				self.appContainerInit(appContainerName, appContainerCapabilities)
+			log.debug(f"AppContainer initialized with path: {self.appContainerPath}...")
 		if restrictToken:
 			uniqueSandboxSidString = generateUniqueSandboxSidString()
 			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken, includeExtraSidStrings=[uniqueSandboxSidString])
@@ -123,6 +140,21 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(uniqueSandboxSidString))
 		elif removePrivileges:
 			token = createLeastPrivilegedToken(token)
+		if appContainerName:
+			log.debug("	Creating AppContainer token...")
+			acToken = HANDLE()
+			if not ctypes.windll.kernelbase.CreateAppContainerToken(HANDLE(int(token)), byref(self._appContainerSecurityCapabilities), byref(acToken)):
+				raise ctypes.WinError(ctypes.get_last_error())
+			token = pywintypes.HANDLE(acToken.value)
+			defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(self.appContainerSidString))
+			integrityLevel = "low"
+			if not cwd:
+				cwd = self.appContainerPath
+				log.debug(f"Setting working directory to AppContainer path: {cwd}...")
+			env['LOCALAPPDATA'] = self.appContainerPath
+			tmp = os.path.join(self.appContainerPath, "Temp")
+			env['TMP'] = tmp
+			env['TEMP'] = tmp
 		if token is parentToken:
 			log.debug("Duplicating token to avoid modifying the parent token...")
 			token = duplicatePrimaryToken(token)
@@ -131,6 +163,14 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		if integrityLevel:
 			log.debug(f"Setting token integrity level to {integrityLevel}...")
 			setTokenIntegrityLevel(token, integrityLevel)
+			if not appContainerName:
+				userProfile = env["USERPROFILE"]
+				localLow = os.path.join(userProfile, "AppData", "LocalLow")
+				temp = os.path.join(localLow, "Temp")
+				os.makedirs(temp, exist_ok=True)
+				log.debug(f"Setting TEMP and TMP to low integrity Temp folder {temp}...")
+				env["TEMP"] = temp
+				env["TMP"] = temp
 		defaultSacl = createSaclFromToken(token)
 		defaultSD = createSecurityDescriptorFromDaclAndSacl(defaultDacl, defaultSacl)
 		desktopName = None
@@ -151,30 +191,20 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 			sa.bInheritHandle = False
 			desktopName, self._desktopHandle = createTempDesktop(securityAttribs=sa)
 			log.debug(f"Isolated desktop created: {desktopName}")
-		log.debug("Preparing environment variables appropriate for token...")
-		env = createTokenEnvironmentBlock(token)
-		if integrityLevel == "low":
-			userProfile = env["USERPROFILE"]
-			localLow = os.path.join(userProfile, "AppData", "LocalLow")
-			temp = os.path.join(localLow, "Temp")
-			os.makedirs(temp, exist_ok=True)
-			log.debug(f"Setting TEMP and TMP to low integrity Temp folder {temp}...")
-			env["TEMP"] = temp
-			env["TMP"] = temp
-		if restrictToken and not retainUserInRestrictedToken:
+		if not appContainerName and restrictToken and not retainUserInRestrictedToken:
 			temp = env['TEMP']
 			sbDirName = f"sandbox_{uuid.uuid4()}"
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), defaultDacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
 			env["TEMP"] = env['TMP'] = self._sandboxDir.path
-		if not cwd:
-			with impersonateToken(token):
-				cwd = os.getcwd()
-				try:
-					os.listdir(cwd)
-				except (PermissionError, FileNotFoundError):
-					cwd = env["TEMP"]
-					log.debug(f"Parent working directory not accessible for child process. Using {cwd}...")
+			if not cwd:
+				with impersonateToken(token):
+					cwd = os.getcwd()
+					try:
+						os.listdir(cwd)
+					except (PermissionError, FileNotFoundError):
+						cwd = env["TEMP"]
+						log.debug(f"Parent working directory not accessible for child process. Using {cwd}...")
 		if extraEnv:
 			for key, value in extraEnv.items():
 				log.debug(f"Adding extra environment variable: {key}={value}...")

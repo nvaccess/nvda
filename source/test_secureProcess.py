@@ -14,7 +14,13 @@ old_factory = logging.getLogRecordFactory()
 
 def record_factory(*args, **kwargs):
 	record = old_factory(*args, **kwargs)
-	frame = inspect.currentframe().f_back.f_back.f_back.f_back.f_back
+	frame = inspect.currentframe()
+	count = 5
+	while count > 0:
+		if not frame.f_back:
+			break
+		frame = frame.f_back
+		count -= 1
 	record.qualname = frame.f_code.co_qualname.removesuffix('.__init__')
 	mod = os.path.splitext(os.path.basename(frame.f_code.co_filename))[0]
 	record.module = mod
@@ -53,6 +59,8 @@ def main():
 	parser.add_argument("-tw", "--temp-window-station", help="Create a temporary window station for the process", action="store_true")
 	parser.add_argument("-he", "--hide-critical-error-dialogs", help="Hide critical error dialogs in the launched process", action="store_true")
 	parser.add_argument("-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true")
+	parser.add_argument("-acn", "--app-container-name", help="Run the process in the specified AppContainer", default=None)
+	parser.add_argument("-acc", "--app-container-capabilities", help="An appContainer Capability to add to the AppContainer. Can be specified multiple times", action="append", default=[])
 	parser.add_argument("-nw", "--no-window", help="Create the process without a window", action="store_true")
 	parser.add_argument("-rh", "--redirect-handles", help="Redirect stdin/stdout/stderr handles", action="store_true")
 	parser.add_argument("-py", "--python", help="Use the current Python interpreter to launch the process", action="store_true")
@@ -83,6 +91,8 @@ def main():
 		hideCriticalErrorDialogs=args.hide_critical_error_dialogs,
 		createNoWindow=args.no_window,
 		applyUIRestrictions=args.ui_restrictions,
+		appContainerName=args.app_container_name,
+		appContainerCapabilities=args.app_container_capabilities,
 	)
 	print(f"Launched process PID: {p.pid}\n")
 	input("Press Enter to resume the process...")

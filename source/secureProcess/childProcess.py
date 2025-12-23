@@ -4,16 +4,18 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from typing import ParamSpec
+import typing
 import io
 import contextlib
 import sys
 import threading
 import os
 import msvcrt
+import winerror
 import ctypes
 from ctypes import (
 	byref,
+	POINTER,
 	cast,
 	sizeof,
 )
@@ -21,23 +23,30 @@ from ctypes.wintypes import (
 	HANDLE,
 	DWORD,
 	LPVOID,
+	LPWSTR,
 )
+from comtypes.hresult import HRESULT_FROM_WIN32
 import subprocess
 import ctypes.wintypes
+import win32security
 from winBindings.advapi32 import (
 	CreateProcessWithToken,
 	CreateProcessAsUser,
+	FreeSid,
+	ConvertSidToStringSid,
 )
 from winBindings.winnt import (
-	STARTUPINFO,
 	STARTUPINFOEX,
-	PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
 	PROCESS_INFORMATION,
 	STARTF_USESTDHANDLES,
 	CREATIONFLAGS_CREATE_NO_WINDOW,
 	CREATIONFLAGS_CREATE_SUSPENDED,
 	CREATIONFLAGS_CREATE_UNICODE_ENVIRONMENT,
 	CREATIONFLAGS_EXTENDED_STARTUPINFO_PRESENT,
+	PSID,
+	SECURITY_CAPABILITIES,
+	SID_AND_ATTRIBUTES,
+	PROC_THREAD_ATTRIBUTE,
 )
 from winBindings.kernel32 import (
 	GetExitCodeProcess,
@@ -50,6 +59,11 @@ from winBindings.kernel32 import (
 	InitializeProcThreadAttributeList,
 	UpdateProcThreadAttribute,
 	DeleteProcThreadAttributeList,
+	LocalFree,
+	DeriveCapabilitySidsFromName,
+)
+from winBindings.ole32 import (
+	CoTaskMemFree,
 )
 from .token import (
 	createEnvironmentBlock,
@@ -138,7 +152,7 @@ class BasicPopen:
 			if pStderrWrite and pStderrWrite != pStdoutWrite:
 				handlesList.append(pStderrWrite)
 			handlesBuf = (HANDLE * len(handlesList))(*handlesList)
-			self._addProcthreadAttribute("handle list", handlesBuf)
+			self._addProcthreadAttribute(PROC_THREAD_ATTRIBUTE.HANDLE_LIST, handlesBuf)
 		procThreadAttributes = self._getProcThreadAttributes()
 		if len(procThreadAttributes) > 0:
 			attribsBufSize = ctypes.c_size_t()
@@ -149,9 +163,8 @@ class BasicPopen:
 			if not InitializeProcThreadAttributeList(attribsBuf.value, len(procThreadAttributes), 0, byref(attribsBufSize)):
 				raise RuntimeError(f"Failed to initialize attribute list, {ctypes.WinError()}")
 			log.debug(f"Initialized proc thread attributes, size ={attribsBufSize.value}")
-			for attribName, val in procThreadAttributes.items():
-				log.debug(f"Updating proc thread attribute: {attribName}")
-				attrib = globals().get(f"PROC_THREAD_ATTRIBUTE_{attribName.upper().replace(' ', '_')}")
+			for attrib, val in procThreadAttributes.items():
+				log.debug(f"Updating proc thread attribute: {attrib.name}")
 				if not UpdateProcThreadAttribute(attribsBuf.value, 0, attrib, byref(val), sizeof(val), None, None):
 					raise RuntimeError(f"Failed to update attribute list, {ctypes.WinError()}")
 			siEx.lpAttributeList = cast(attribsBuf.value, LPVOID)
@@ -172,7 +185,7 @@ class BasicPopen:
 			self._procThreadAttributes = {}
 		return self._procThreadAttributes
 
-	def _addProcthreadAttribute(self, attrib: str, value: object):
+	def _addProcthreadAttribute(self, attrib: PROC_THREAD_ATTRIBUTE, value: object):
 		"""
 		Add an attribute to the process thread attribute list.
 
@@ -411,7 +424,8 @@ class PopenWithToken(BasicPopen):
 	def _createProcessWithToken(self):
 		log.debug("Calling CreateProcessWithToken...")
 		creationFlags = self._creationFlags
-		# Remove extended startup info flag as it's not supported by CreateProcessWithToken
+		# Remove extended startup info flag as it's not "supported" by CreateProcessWithToken.
+		# Oddly enough, it will check cbSize of STARTUPINFO and honor it anyway.
 		creationFlags &= ~CREATIONFLAGS_EXTENDED_STARTUPINFO_PRESENT
 		if not CreateProcessWithToken(
 			self.token,
@@ -442,3 +456,73 @@ class PopenWithToken(BasicPopen):
 			byref(self._pi),
 		):
 			raise RuntimeError(f"CreateProcessAsUser failed, {ctypes.WinError()}")
+
+
+class PopenInAppContainerMixin(BasicPopen):
+	appContainerName: str
+	appContainerSidString: str
+	appContainerCapabilities: list[str]
+	appContainerPath: str
+
+	def appContainerInit(self, appContainerName: str, appContainerCapabilities: list[str]):
+		appContainerSid = makeAutoFree(PSID, FreeSid)()
+		res = ctypes.windll.userenv.CreateAppContainerProfile(appContainerName, appContainerName, appContainerName, None, 0, byref(appContainerSid))
+		if res == HRESULT_FROM_WIN32(winerror.ERROR_ALREADY_EXISTS):
+			log.debug("AppContainer already exists")
+		elif res < 0:
+			raise RuntimeError(f"Failed to create AppContainer profile {appContainerName}, {ctypes.WinError()}")
+		if ctypes.windll.userenv.DeriveAppContainerSidFromAppContainerName(appContainerName, byref(appContainerSid)) < 0:
+			raise RuntimeError(f"Failed to derive AppContainer SID from name {appContainerName}, {ctypes.WinError()}")
+		appContainerSidString = makeAutoFree(LPWSTR, LocalFree)()
+		if not ConvertSidToStringSid(appContainerSid, byref(appContainerSidString)):
+			raise RuntimeError(f"Failed to convert AppContainer SID to string, {ctypes.WinError()}")
+		appContainerPath = makeAutoFree(LPWSTR, CoTaskMemFree)()
+		if ctypes.windll.userenv.GetAppContainerFolderPath(appContainerSidString, byref(appContainerPath)) < 0:
+			raise RuntimeError(f"Failed to get AppContainer folder path, {ctypes.WinError()}")
+		sc = SECURITY_CAPABILITIES()
+		sc.AppContainerSid = appContainerSid
+		sc._appContainerSidRef = appContainerSid  # prevent GC
+		if appContainerCapabilities:
+			capabilitySids = []
+			for name in appContainerCapabilities:
+				log.debug(f"Deriving capability SID for capability name: {name}...")
+				groupSids = makeAutoFree(POINTER(PSID), LocalFree)()
+				groupSidsCount = DWORD()
+				appSids = makeAutoFree(POINTER(PSID), LocalFree)()
+				appSidsCount = DWORD()
+				if not DeriveCapabilitySidsFromName(
+					name,
+					byref(groupSids),
+					byref(groupSidsCount),
+					byref(appSids),
+					byref(appSidsCount),
+				):
+					raise RuntimeError(f"Failed to derive capability SID for capability name {name}, {ctypes.WinError()}")
+				for i in range(groupSidsCount.value):
+					psid = makeAutoFree(PSID, LocalFree)(groupSids[i])
+					#capabilitySids.append(psid)
+					sidString = makeAutoFree(LPWSTR, LocalFree)()
+					if not ConvertSidToStringSid(psid, byref(sidString)):
+						raise RuntimeError(f"Failed to convert capability SID to string, {ctypes.WinError()}")
+					log.debug(f"  Derived capability group SID: {sidString.value}")
+				for i in range(appSidsCount.value):
+					psid = makeAutoFree(PSID, LocalFree)(appSids[i])
+					capabilitySids.append(psid)
+					sidString = makeAutoFree(LPWSTR, LocalFree)()
+					if not ConvertSidToStringSid(psid, byref(sidString)):
+						raise RuntimeError(f"Failed to convert capability SID to string, {ctypes.WinError()}")
+					log.debug(f"  Derived capability app SID: {sidString.value}")
+			capabilitiesBuf = (SID_AND_ATTRIBUTES * len(capabilitySids))()
+			capabilitiesBuf._sidRefs = capabilitySids  # prevent GC
+			for i, psid in enumerate(capabilitySids):
+				capabilitiesBuf[i].Sid = psid
+				capabilitiesBuf[i].Attributes = win32security.SE_GROUP_ENABLED
+			sc.Capabilities = capabilitiesBuf
+			sc._capabilitiesBufRef = capabilitiesBuf  # prevent GC
+			sc.CapabilityCount = len(capabilitiesBuf)
+		#self._addProcthreadAttribute(PROC_THREAD_ATTRIBUTE.SECURITY_CAPABILITIES, sc)
+		self.appContainerName = appContainerName
+		self.appContainerSidString = appContainerSidString.value
+		self.appContainerCapabilities = appContainerCapabilities
+		self.appContainerPath = appContainerPath.value
+		self._appContainerSecurityCapabilities = sc
