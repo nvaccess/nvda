@@ -473,6 +473,11 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("switch")]},
 			]
+		elif nodeType == "slider":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("slider")]},
+			]
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "blockQuote":
