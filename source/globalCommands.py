@@ -845,6 +845,63 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Report errors in braille off"))
 
 	@script(
+		# Translators: Input help mode message for command to toggle braille automatic scroll.
+		description=_("Toggles braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		timeout = 0
+		if shouldEnableAutoScroll:
+			# Translators: Message reported when automatic scrolling has been enabled in braille.
+			ui.message(_("Automatic scrolling enabled"))
+			if not (
+				config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+				or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
+			):
+				timeout = config.conf["braille"]["messageTimeout"] * 1000
+		else:
+			# Translators: Message reported when automatic scrolling has been disabled in braille.
+			ui.message(_("Automatic scrolling disabled"))
+		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+
+	@script(
+		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
+		description=_("Increases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		maxRate = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate"),
+			).kwargs["max"],
+		)
+		if config.conf["braille"]["autoScrollRate"] + 0.5 <= maxRate:
+			config.conf["braille"]["autoScrollRate"] += 0.5
+		else:
+			config.conf["braille"]["autoScrollRate"] = maxRate
+		rate = f"{config.conf['braille']['autoScrollRate']:.1f}"
+		ui.message(rate)
+
+	@script(
+		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
+		description=_("Decreases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		minRate = int(
+			config.conf.getConfigValidation(
+				("braille", "autoScrollRate"),
+			).kwargs["min"],
+		)
+		if config.conf["braille"]["autoScrollRate"] - 0.5 >= minRate:
+			config.conf["braille"]["autoScrollRate"] -= 0.5
+		else:
+			config.conf["braille"]["autoScrollRate"] = minRate
+		rate = f"{config.conf['braille']['autoScrollRate']:.1f}"
+		ui.message(rate)
+
+	@script(
 		# Translators: Input help mode message for toggle report pages command.
 		description=_("Toggles on and off the reporting of pages"),
 		category=SCRCAT_DOCUMENTFORMATTING,

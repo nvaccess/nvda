@@ -3449,6 +3449,8 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		shouldDebugGui = gui._isDebug()
+		startTime = time.time() if shouldDebugGui else 0
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
@@ -5456,6 +5458,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
+		autoScrollRateText = _("Auto&matic scroll rate")
+		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			autoScrollRateText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=5,
+			maxValue=100,
+		)
+		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"] * 5))
+		self.autoScrollRateSlider.SetPageSize(2)
+		self.bindHelpEvent("BrailleSettingsAutoScrollRate", self.autoScrollRateSlider)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5486,6 +5500,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		# Values are multiplied by 5, so we can set a smaller difference between consecutive values.
+		config.conf["braille"]["autoScrollRate"] = self.autoScrollRateSlider.GetValue() / 5
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
