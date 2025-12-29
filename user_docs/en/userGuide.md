@@ -1083,12 +1083,12 @@ Here is a list of available commands:
 * Menu item
 * Toggle button
 * Progress bar
+* Slider
 * Reference
 * Math formula
 * Vertically aligned paragraph
 * Same style text
 * Different style text
-* Slider
 
 Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
 For example, if you want to use the `y` / `shift+y` keys to quickly navigate through tabs, you would do the following:
