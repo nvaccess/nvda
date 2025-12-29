@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 05:23+0000\n"
-"PO-Revision-Date: 2025-12-15 00:20\n"
+"POT-Creation-Date: 2025-12-16 00:38+0000\n"
+"PO-Revision-Date: 2025-12-29 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -851,18 +851,18 @@ msgstr "pistekirjoitusnäppäimistö"
 #. along with any dots on a braille keyboard.
 #: brailleInput.py:571
 msgid "space with any dots"
-msgstr "välilyönti ja mitkä tahansa pisteet"
+msgstr "välilyönti ja mikä tahansa piste"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
 #: brailleInput.py:575
 msgid "any dots"
-msgstr "mitkä tahansa pisteet"
+msgstr "mikä tahansa piste"
 
 #. Translators: The mode to interact with controls in documents
 #: browseMode.py:75
 msgid "Focus mode"
-msgstr "Vuorovaikutustila"
+msgstr "Lomaketila"
 
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
@@ -897,7 +897,7 @@ msgstr "Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. 
 #: appModules\kindle.py:269 contentRecog\recogUi.py:99
 #: contentRecog\recogUi.py:103 contentRecog\recogUi.py:107
 msgid "Not supported in this document"
-msgstr "Ei tueta tässä asiakirjassa"
+msgstr "Ei tueta tässä dokumentissa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
@@ -935,7 +935,7 @@ msgstr "Näyttää luettelon asiakirjan elementeistä."
 #. Translators: the description for the activatePosition script on browseMode documents.
 #: browseMode.py:729
 msgid "Activates the current object in the document"
-msgstr "Aktivoi asiakirjan nykyisen objektin."
+msgstr "Aktivoi dokumentin nykyisen objektin."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:811
@@ -1743,7 +1743,7 @@ msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, lopun ohi"
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 #: browseMode.py:2627 virtualBuffers\__init__.py:694
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "Ottaa käyttöön tai poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö ruudun ulkoasu asiakirjan sisältöä hahmonnettaessa."
+msgstr "Ottaa käyttöön tai poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö ruudun ulkoasu dokumentin sisältöä näytettäessä."
 
 #. Translators: The message reported for not supported toggling of screen layout
 #: browseMode.py:2633
@@ -1758,17 +1758,17 @@ msgstr "Ottaa käyttöön tai poistaa käytöstä alkuperäisen valintatilan."
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2652
 msgid "Native selection mode unsupported in this browse mode document"
-msgstr "Alkuperäistä valintatilaa ei tueta tässä selaustila-asiakirjassa"
+msgstr "Alkuperäistä valintatilaa ei tueta tässä selaustiladokumentissa"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2655
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr "Alkuperäistä valintatilaa ei voi poistaa käytöstä tässä selaustila-asiakirjassa"
+msgstr "Alkuperäistä valintatilaa ei voi poistaa käytöstä tässä selaustiladokumentissa"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2667
 msgid "Native selection mode unsupported in this document"
-msgstr "Alkuperäistä valintatilaa ei tueta tässä asiakirjassa"
+msgstr "Alkuperäistä valintatilaa ei tueta tässä dokumentissa"
 
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2671
@@ -3600,13 +3600,13 @@ msgstr "{mode}"
 #. mostly used in web browsing to move from embedded object to the webpage document.
 #: globalCommands.py:2425
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
-msgstr "Siirtää kohdistuksen pois nykyisestä upotetusta objektista sen sisältävään asiakirjaan."
+msgstr "Siirtää kohdistuksen pois nykyisestä upotetusta objektista sen sisältävään dokumenttiin."
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
 #: globalCommands.py:2450 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa oltaessa asiakirjassa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
+msgstr "Vaihtaa selaus- ja lomaketilojen välillä. Lomaketilassa näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa oltaessa dokumentissa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2500
@@ -11202,7 +11202,7 @@ msgstr "taulukon alatunniste"
 #. Translators: Identifies a document (for example, a webpage document).
 #: controlTypes\role.py:320
 msgid "document"
-msgstr "asiakirja"
+msgstr "dokumentti"
 
 #. Translators: Identifies an animation in a document or a webpage.
 #: controlTypes\role.py:322
@@ -13881,25 +13881,25 @@ msgstr "Sisällytä as&ettelutaulukot"
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2597
 msgid "Automatic focus mode for focus changes"
-msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
+msgstr "Automaattinen lomaketila kohdistuksen muuttuessa"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2611
 msgid "Automatic focus mode for caret movement"
-msgstr "Automaattinen vuorovaikutustila kohdistinta siirrettäessä"
+msgstr "Automaattinen lomaketila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2625
 msgid "Audio indication of focus and browse modes"
-msgstr "Ilmaise vuorovaikutus- ja selaustilat merkkiäänellä"
+msgstr "Ilmaise lomake- ja selaustilat merkkiäänellä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2639
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "Estä mui&den kuin näppäinkomentojen pääsy asiakirjaan"
+msgstr "Estä mui&den kuin näppäinkomentojen pääsy dokumenttiin"
 
 #. Translators: Title of the math settings panel.
 #: gui\settingsDialogs.py:2672
@@ -14297,7 +14297,7 @@ msgstr "Ilmoita koh&distimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastu
 #. Translators: This is the label for the document navigation settings panel.
 #: gui\settingsDialogs.py:3448
 msgid "Document Navigation"
-msgstr "Asiakirjan selaus"
+msgstr "Asiakirjassa liikkuminen"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
 #: gui\settingsDialogs.py:3454
@@ -14826,7 +14826,7 @@ msgstr "Näennäispuskurit"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:4517
 msgid "Load Chromium virtual buffer when document busy."
-msgstr "Lataa Chromiumin näennäispuskuri, kun asiakirja on varattu"
+msgstr "Lataa Chromiumin näennäispuskuri, kun dokumentti on varattu"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -17048,7 +17048,7 @@ msgstr "Kommentti: {comment}, muokkaaja: {author}, päivämäärä: {date}"
 #. Translators: a message when navigating by sentence is unavailable in MS Word
 #: NVDAObjects\UIA\wordDocument.py:728
 msgid "Navigating by sentence not supported in this document"
-msgstr "Lauseittain liikkumista ei tueta tässä asiakirjassa"
+msgstr "Lausenavigointia ei tueta tässä asiakirjassa"
 
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:764
@@ -19600,12 +19600,12 @@ msgstr "Päivitetty"
 #. Translators: Reported while loading a document.
 #: virtualBuffers\__init__.py:619
 msgid "Loading document..."
-msgstr "Ladataan asiakirjaa..."
+msgstr "Ladataan dokumenttia..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 #: virtualBuffers\__init__.py:689
 msgid "Refreshes the document content"
-msgstr "Päivittää asiakirjan sisällön"
+msgstr "Päivittää dokumentin sisällön"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:704
