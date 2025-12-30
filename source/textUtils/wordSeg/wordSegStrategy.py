@@ -18,6 +18,7 @@ from functools import lru_cache
 from collections.abc import Callable
 from typing import Any
 import re
+import unicodedata
 
 import textUtils
 from logHandler import log
@@ -289,8 +290,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		if len(self.wordEnds) <= 1:
 			return self.text
 
-		from .wordSegUtils import NO_SEP_BEFORE, NO_SEP_AFTER
-
 		result = ""
 		for sepIndex in range(len(self.wordEnds) - 1):
 			preIndex = 0 if sepIndex == 0 else self.wordEnds[sepIndex - 1]
@@ -305,15 +304,13 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				# separator already present at either side -> skip adding
 				continue
 
-			# slice to check the next token (text between curIndex and postIndex)
-			nextSlice = self.text[curIndex:postIndex]
+			# Determine whether any punctuation forbids a separator
+			noSep = (
+				unicodedata.category(self.text[curIndex - 1])[0] in "pP"
+				or unicodedata.category(self.text[curIndex])[0] in "pP"
+			)  # Punctuation categories
 
-			# Determine whether any punctuation forbids a separator BEFORE the next token
-			noSepBefore = any(nextSlice.startswith(s) for s in NO_SEP_BEFORE)
-			# Determine whether any punctuation forbids a separator AFTER the current result
-			noSepAfter = any(result.endswith(s) for s in NO_SEP_AFTER)
-
-			if not (noSepBefore or noSepAfter):
+			if not noSep:
 				# If neither side forbids the separator, add it
 				result += sep
 				if newSepIndex is not None:

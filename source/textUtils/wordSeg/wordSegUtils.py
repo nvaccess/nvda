@@ -19,7 +19,14 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		self.newSepIndex: list[int] = []
 		self.encoded = WordSegmenter(text).segmentedText(sep=self.sep, newSepIndex=self.newSepIndex)
 
-	@property
+	@cached_property
+	def _separatorFlag(self) -> list[bool]:
+		isSep = [False] * self.encodedStringLength
+		for pos in self.newSepIndex:
+			isSep[pos] = True
+		return isSep
+
+	@cached_property
 	def computedStrToEncodedOffsets(self) -> list[int]:
 		"""
 		Compute a list of offsets so that:
@@ -32,23 +39,12 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		original index.
 		"""
 		strLen = self.strLength
-		encodedLen = self.encodedStringLength
-
-		# validate separator positions (optional but makes bugs obvious)
-		for pos in self.newSepIndex:
-			if pos < 0 or pos >= encodedLen:
-				raise ValueError(f"separator position {pos} out of range for encoded length {encodedLen}")
-
-		# mark which encoded positions are separators
-		isSep = [False] * encodedLen
-		for pos in self.newSepIndex:
-			isSep[pos] = True
 
 		# build explicit str -> encoded mapping
 		strToEncoded: list[int] = [0] * strLen
 		nextStrIndex = 0
-		for encodedIndex in range(encodedLen):
-			if not isSep[encodedIndex]:
+		for encodedIndex in range(self.encodedStringLength):
+			if not self._separatorFlag[encodedIndex]:
 				# assign the current original-char index to this encoded slot
 				# then advance to the next original index
 				if nextStrIndex >= strLen:
@@ -60,27 +56,15 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 
 		return strToEncoded
 
-	@property
+	@cached_property
 	def computedEncodedToStrOffsets(self) -> list[int]:
-		encodedLen = self.encodedStringLength
-
-		# validate separator positions
-		for pos in self.newSepIndex:
-			if pos < 0 or pos >= encodedLen:
-				raise ValueError(f"separator position {pos} out of range for encoded length {encodedLen}")
-
-		# mark which encoded positions are separators
-		isSep = [False] * encodedLen
-		for pos in self.newSepIndex:
-			isSep[pos] = True
-
 		# build explicit encoded -> str mapping
 		# semantics: separator positions and the following encoded character
 		# both map to the same upcoming original str index (insertion point semantics).
-		encodedToStr: list[int] = [0] * encodedLen
+		encodedToStr: list[int] = [0] * self.encodedStringLength
 		nextStrIndex = 0
-		for encodedIndex in range(encodedLen):
-			if isSep[encodedIndex]:
+		for encodedIndex in range(self.encodedStringLength):
+			if self._separatorFlag[encodedIndex]:
 				# map separator to the next original character index (insertion point)
 				encodedToStr[encodedIndex] = nextStrIndex
 			else:
@@ -133,77 +117,3 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		else:
 			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
 			return (resultStart, resultEnd)
-
-
-# Punctuation that should NOT have a separator BEFORE it (no space before these marks)
-NO_SEP_BEFORE = {
-	# Common Chinese fullwidth punctuation
-	"。",
-	"，",
-	"、",
-	"；",
-	"：",
-	"？",
-	"！",
-	"…",
-	"...",
-	"—",
-	"–",
-	"——",
-	"）",
-	"】",
-	"》",
-	"〉",
-	"」",
-	"』",
-	"”",
-	"’",
-	"％",
-	"‰",
-	"￥",
-	# Common ASCII / halfwidth punctuation
-	".",
-	",",
-	";",
-	":",
-	"?",
-	"!",
-	"%",
-	".",
-	")",
-	"]",
-	"}",
-	">",
-	'"',
-	"'",
-}
-
-# Punctuation that should NOT have a separator AFTER it (no space after these marks)
-NO_SEP_AFTER = {
-	# Common Chinese fullwidth opening/leading punctuation
-	"（",
-	"【",
-	"《",
-	"〈",
-	"「",
-	"『",
-	"“",
-	"‘",
-	# Common ASCII / halfwidth opening/leading punctuation
-	"(",
-	"[",
-	"{",
-	"<",
-	'"',
-	"'",
-	# Currency and prefix-like symbols that typically bind to the following token
-	"$",
-	"€",
-	"£",
-	"¥",
-	"₹",
-	# Social/identifier prefixes
-	"@",
-	"#",
-	"&",
-}

@@ -42,7 +42,7 @@ env.AppendUnique(
 
 cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
 
-if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDir.Dir("dicts").get_abspath()): # insure dicts installation happens only once and avoid a scons' warning
+if not os.path.exists(outDir.Dir("dicts").get_abspath()) or not os.listdir(outDir.Dir("dicts").get_abspath()): # ensure dicts installation happens only once and avoid a scons' warning
 	env.Install(
 		outDir.Dir("dicts"),
 		[

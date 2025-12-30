@@ -33,7 +33,7 @@ Windows 10 on ARM is also no longer supported.
 * In the Add-on Store, a new action has been added to see the latest changes for the current version of add-ons. (#14041, @josephsl, @nvdaes)
 * Chinese text can be navigated by word via build-in input gestures.
   Several GUI elements are added for its configuration in `Document Navigation` panel. (#18735, @CrazySteve0605)
-* Braille output for Chinese contains spaces as word separaters. (#18865, @CrazySteve0605)
+* Braille output for Chinese contains spaces as word separators. (#18865, @CrazySteve0605)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 
 ### Changes
@@ -46,10 +46,6 @@ Windows 10 on ARM is also no longer supported.
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
-
-
-
->>>>>>> try-chineseWordSegmentation-staging
 
 * Added a button to the About dialog to copy the NVDA version number to the clipboard. (#18667)
 * When entering a secure desktop, an installed copy of NVDA will automatically disable Braille temporarily, so that the secure desktop copy can access the braille display. (#2315, @LeonarddeR)
@@ -117,16 +113,10 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 * the `rgpszUsageIdentifier` member of  the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `visionEnhancementProviders.screenCurtain.Magnification` has been removed.
-<<<<<<< HEAD
-  All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
-=======
 All public symbols defined on this class are now accessible from `winBindings.magnification`. (#18958)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
-
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following Windows 8.x Start screen support symbols have been removed from `appModules.explorer` (File Explorer) app module with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)
-
->>>>>>> try-chineseWordSegmentation-staging
 
 #### Deprecations
 
