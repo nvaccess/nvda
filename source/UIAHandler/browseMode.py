@@ -686,7 +686,12 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation, browseMode.BrowseMod
 				UIAHandler.UIA_ProgressBarControlTypeId,
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
-
+		elif nodeType == "slider":
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_ControlTypePropertyId,
+				UIAHandler.UIA_SliderControlTypeId,
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "nonTextContainer":
 			condition = createUIAMultiPropertyCondition(
 				{
