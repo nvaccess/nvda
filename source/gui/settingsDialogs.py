@@ -41,6 +41,8 @@ import installer
 import keyboardHandler
 import languageHandler
 import logHandler
+import _magnifier.config as magnifierConfig
+from _magnifier.utils.types import Filter, FullScreenMode
 import queueHandler
 import requests
 import speech
@@ -5940,6 +5942,116 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class MagnifierPanel(SettingsPanel):
+	# Translators: This is the label for the magnifier settings panel.
+	title = _("Magnifier")
+	helpId = "MagnifierSettings"
+
+	def makeSettings(
+		self,
+		settingsSizer: wx.BoxSizer,
+	):
+		sHelper = guiHelper.BoxSizerHelper(
+			self,
+			sizer=settingsSizer,
+		)
+
+		# ZOOM SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default zoom level.
+		defaultZoomLabelText = _("Default &zoom level:")
+
+		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
+		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
+
+		self.defaultZoomList = sHelper.addLabeledControl(
+			defaultZoomLabelText,
+			wx.Choice,
+			choices=zoomChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultZoom",
+			self.defaultZoomList,
+		)
+
+		# Store zoom values for later use
+		self.zoomValues = zoomValues
+
+		# Set default value from config
+		defaultZoom = magnifierConfig.getDefaultZoomLevel()
+		closestIndex = 0
+		minDifference = abs(self.zoomValues[0] - defaultZoom)
+		for i, value in enumerate(self.zoomValues):
+			difference = abs(value - defaultZoom)
+			if difference < minDifference:
+				minDifference = difference
+				closestIndex = i
+		self.defaultZoomList.SetSelection(closestIndex)
+
+		# FILTER SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default filter
+		defaultFilterLabelText = _("Default &filter:")
+		filterChoices = [f.displayString for f in Filter]
+		self.defaultFilterList = sHelper.addLabeledControl(
+			defaultFilterLabelText,
+			wx.Choice,
+			choices=filterChoices,
+		)
+		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
+
+		# Set default value from config
+		defaultFilter = magnifierConfig.getDefaultFilter().displayString
+		if defaultFilter in self.defaultFilterList.GetStrings():
+			self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(defaultFilter))
+		else:
+			self.defaultFilterList.SetSelection(0)
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
+		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.defaultFullscreenModeList = sHelper.addLabeledControl(
+			defaultFullscreenModeLabelText,
+			wx.Choice,
+			choices=fullscreenModeChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultFullscreenMode",
+			self.defaultFullscreenModeList,
+		)
+
+		# Set default value from config
+		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
+		if defaultFullscreenMode in self.defaultFullscreenModeList.GetStrings():
+			self.defaultFullscreenModeList.SetSelection(
+				self.defaultFullscreenModeList.GetStrings().index(defaultFullscreenMode),
+			)
+		else:
+			self.defaultFullscreenModeList.SetSelection(0)
+
+		# KEEP MOUSE CENTERED
+		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
+		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
+		self.bindHelpEvent(
+			"magnifierKeepMouseCentered",
+			self.keepMouseCenteredCheckBox,
+		)
+		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
+
+	def onSave(self):
+		"""Save the current selections to config."""
+		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
+		magnifierConfig.setDefaultZoomLevel(selectedZoom)
+
+		selectedFilterIdx = self.defaultFilterList.GetSelection()
+		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+
+		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
+		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+
+		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+
+
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
@@ -6131,6 +6243,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		MagnifierPanel,
 		MathSettingsPanel,
 		RemoteSettingsPanel,
 		LocalCaptionerSettingsPanel,

@@ -24,6 +24,8 @@ import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
+import _magnifier
+import _magnifier.commands
 import controlTypes
 import api
 import textInfos
@@ -4919,7 +4921,6 @@ class GlobalCommands(ScriptableObject):
 				self._waitingOnScreenCurtainWarningDialog = None
 				if not doEnable:
 					return  # exit early with no ui.message because the user has decided to abort.
-
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
 				enableMessage = _("Screen curtain enabled")
@@ -4969,6 +4970,96 @@ class GlobalCommands(ScriptableObject):
 					)
 					return
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+w",
+	)
+	def script_toggleMagnifier(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gestures=(
+			"kb:nvda+numpadPlus",
+			"kb:nvda+shift+c",
+		),
+	)
+	def script_zoomIn(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoomIn()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gestures=(
+			"kb:nvda+numpadMinus",
+			"kb:nvda+shift+v",
+		),
+	)
+	def script_zoomOut(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoomOut()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle filter of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+f",
+	)
+	def script_toggleFilter(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle full-screen mode of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+m",
+	)
+	def script_toggleFullscreenMode(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFullscreenMode()
+
+	@script(
+		description=_(
+			# Translators: Describe a command.
+			"Launch spotlight if magnifier is full-screen",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+l",
+	)
+	def script_startSpotlight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(
