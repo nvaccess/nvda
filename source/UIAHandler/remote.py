@@ -86,7 +86,7 @@ def msWord_getCustomAttributeValue(
 	docElement: UIA.IUIAutomationElement,
 	textRange: UIA.IUIAutomationTextRange,
 	customAttribID: int,
-) -> Optional[Any]:
+) -> Any | None:
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
 	op = operation.Operation()
 
