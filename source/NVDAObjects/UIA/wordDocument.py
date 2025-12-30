@@ -719,7 +719,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 	# The following override of the EditableText._caretMoveBySentenceHelper private method
 	# First tries to use UI Automation remote operations to move by sentence when available,
 	# falling back to the MS Word object model otherwise.
-	def _caretMoveBySentenceHelper(self, gesture, direction):
+	def _caretMoveBySentenceHelper(self, gesture: inputCore.InputGesture, direction: int):
 		if isScriptWaiting():
 			return
 
