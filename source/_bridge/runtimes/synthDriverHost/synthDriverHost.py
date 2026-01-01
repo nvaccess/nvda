@@ -6,6 +6,7 @@
 from __future__ import annotations
 import typing
 import sys
+import threading
 import importlib
 import types
 import logging
@@ -13,7 +14,8 @@ import rpyc
 from rpyc.core.stream import PipeStream
 from _bridge.components.services.synthDriver import SynthDriverService
 if typing.TYPE_CHECKING:
-	from _bridge.clients.synthDriverHost32 import NVDAService
+	from _bridge.clients.synthDriverHost32.launcher import NVDAService
+from _bridge.base import Connection
 
 # Monkeypatch RPYC to force it to use builtins for its exceptions module.
 # On Python 3 it normally would, but
@@ -23,15 +25,19 @@ if typing.TYPE_CHECKING:
 import builtins
 import rpyc.core.vinegar
 rpyc.core.vinegar.exceptions_module = builtins
-
-log = logging.getLogger()
+from logHandler import log
+from _bridge.base import Service
 
 
 @rpyc.service
-class HostService(rpyc.Service):
+class HostService(Service):
 	"""RPYC service for the synth driver host runtime."""
 
-	@rpyc.exposed
+
+	def __init__(self):
+		super().__init__()
+
+	@Service.exposed
 	def installProxies(self, remoteService: NVDAService):
 		"""Install and bind proxy objects from the parent NVDA process.
 
@@ -47,22 +53,20 @@ class HostService(rpyc.Service):
 		    attributes.
 		:returns: None
 		"""
-
-		global log
-		log.info("Injecting log into logHandler")
-		from _bridge.components.proxies.logHandler import LogHandlerProxy
-		log = LogHandlerProxy(remoteService.LogHandler())
-		import logHandler
-		logHandler.log = log
-		log.info("Injecting languageHandler.getLanguage")
+		log.debug("Installing proxies from remote NVDAService")
+		log.debug("Injecting languageHandler.getLanguage")
 		import languageHandler
 		languageHandler.getLanguage = remoteService.getLanguage
-		log.info("Injecting WavePlayerProxy into nvwave module")
+		log.debug("Injecting WavePlayerProxy into nvwave module")
 		from _bridge.components.proxies.nvwave import WavePlayerProxy
 		import nvwave
-		nvwave.WavePlayer = WavePlayerProxy._createBoundProxyClass(remoteService.WavePlayer)
+		RemoteWavePlayerClass = remoteService.WavePlayer
+		class BoundWavePlayerProxy(WavePlayerProxy):
+			def __init__(self, *args, **kwargs):
+				super().__init__(RemoteWavePlayerClass, *args, **kwargs)
+		nvwave.WavePlayer = BoundWavePlayerProxy
 
-	@rpyc.exposed
+	@Service.exposed
 	def registerSynthDriversPath(self, path: str):
 		"""Register an additional path to search for synth drivers.
 
@@ -76,17 +80,19 @@ class HostService(rpyc.Service):
 		    imported.
 		:returns: None
 		"""
+		log.debug(f"Registering synth drivers path: {path}")
 		import synthDrivers
 		synthDrivers.__path__.insert(0, path)
 
-	@rpyc.exposed
-	def SynthDriver(self, name: str) -> SynthDriverService:
+	@Service.exposed
+	def SynthDriver(self, name: str, ) -> SynthDriverService:
 		""" Loads a synthDriver with the given name, exposing it to the remote caller as a SynthDriverService.
 
 		:param name: Name of the synth driver to load.
 		:raises ImportError: If the SynthDriverService implementation cannot be imported.
 		:returns: SynthDriverService instance bound to the requested driver name.
 		"""
+		log.debug(f"	Loading synth driver '{name}'")
 		mod = importlib.import_module(f'synthDrivers.{name}')
 		synth = mod.SynthDriver()
 		return SynthDriverService(synth)
@@ -94,10 +100,10 @@ class HostService(rpyc.Service):
 
 def main():
 	"""Entry point for the synth driver host runtime. """
-	global log
-	log.info("Connecting to RPYC server over standard pipes")
+	log.debug("Connecting to RPYC server over standard pipes")
 	stream = PipeStream(sys.stdin, sys.stdout)
-	conn = rpyc.connect_stream(stream, service=HostService, config={'allowpublic_attrs': False, 'allow_safe_attrs': False})
-	log.info("Connected to remote service")
-	log.info("Entering service loop.")
-	conn.serve_all()
+	service = HostService()
+	conn = Connection(stream, service, name="synthDriverHost service connection")
+	log.debug("Entering service loop.")
+	conn.eventLoop()
+	log.debug("Service loop exited, shutting down.")

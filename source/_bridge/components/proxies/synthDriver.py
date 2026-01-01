@@ -4,10 +4,12 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+import weakref
 import typing
 from collections import OrderedDict
 import pickle
 from logHandler import log
+from _bridge.base import Proxy
 import synthDriverHandler
 from autoSettingsUtils.driverSetting import DriverSetting, NumericDriverSetting, BooleanDriverSetting
 from synthDriverHandler import (
@@ -17,32 +19,43 @@ from synthDriverHandler import (
 )
 if typing.TYPE_CHECKING:
 	from ..services.synthDriver import SynthDriverService
+	from _bridge.base import Proxy
 
 
-class SynthDriverProxy(synthDriverHandler.SynthDriver):
+class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
 	""" Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver. """
-	_synthDriverService: SynthDriverService
 
-	def __init__(self, synthDriverService:  SynthDriverService):
-		super().__init__()
-		self._synthDriverService = synthDriverService
+	def __init__(self, service: SynthDriverService):
+		log.debug(f"Creating SynthDriverProxy instance for remote synth driver '{self.name}'")
+		super().__init__(service)
+		selfRef = weakref.ref(self)
 		for notification in self.supportedNotifications:
 			if notification is synthIndexReached:
-				log.info("Registering synthIndexReached notification with synth driver service")
+				log.debug("Registering synthIndexReached notification with synth driver service")
 				def localCallback_synthIndexReached(index):
-					synthIndexReached.notify(synth=self, index=index)
-				self._synthDriverService.registerSynthIndexReachedNotification(localCallback_synthIndexReached)
+					synth = selfRef()
+					if synth is not None:
+						synthIndexReached.notify(synth=synth, index=index)
+				self._remoteService.registerSynthIndexReachedNotification(localCallback_synthIndexReached)
 			elif notification is synthDoneSpeaking:
-				log.info("Registering synthDoneSpeaking notification with synth driver service")
+				log.debug("Registering synthDoneSpeaking notification with synth driver service")
 				def localCallback_synthDoneSpeaking():
-					synthDoneSpeaking.notify(synth=self)
-				self._synthDriverService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
+					synth = selfRef()
+					if synth is not None:
+						synthDoneSpeaking.notify(synth=synth)
+				self._remoteService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
+
+	def old_terminate(self):
+		log.debug(f"Terminating SynthDriverProxy instance for remote synth driver '{self.name}'")
+		for conn in self._heldConnections:
+			conn.close()
+		#self._heldConnections.clear()
 
 	_supportedSettingsCache = None
 	def _get_supportedSettings(self):
 		if self._supportedSettingsCache is not None:
 			return self._supportedSettingsCache
-		data = self._synthDriverService.getSupportedSettings()
+		data = self._remoteService.getSupportedSettings()
 		settings = []
 		for item in data:
 			clsName, params = item
@@ -63,7 +76,7 @@ class SynthDriverProxy(synthDriverHandler.SynthDriver):
 	def _get_supportedNotifications(self):
 		if self._supportedNotificationsCache is not None:
 			return self._supportedNotificationsCache
-		data = self._synthDriverService.getSupportedNotifications()
+		data = self._remoteService.getSupportedNotifications()
 		notifications = set()
 		for item in data:
 			if item == 'synthIndexReached':
@@ -76,14 +89,14 @@ class SynthDriverProxy(synthDriverHandler.SynthDriver):
 		return notifications
 
 	def _getAvailableVoices(self):
-		data = self._synthDriverService.getAvailableVoices()
+		data = self._remoteService.getAvailableVoices()
 		voices = OrderedDict()
 		for ID, name, language in data:
 			voices[ID] = VoiceInfo(ID, name, language)
 		return voices
 
 	def _getAvailableVariants(self):
-		data = self._synthDriverService.getAvailableVariants()
+		data = self._remoteService.getAvailableVariants()
 		variants = OrderedDict()
 		for ID, name in data:
 			variants[ID] = VoiceInfo(ID, name, None)
@@ -91,42 +104,42 @@ class SynthDriverProxy(synthDriverHandler.SynthDriver):
 
 	def speak(self, speechSequence):
 		data = pickle.dumps(speechSequence)
-		return self._synthDriverService.speak(data)
+		return self._remoteService.speak(data)
 
 	def cancel(self):
-		return self._synthDriverService.cancel()
+		return self._remoteService.cancel()
 
 	def pause(self, switch: bool):
-		return self._synthDriverService.pause(switch)
+		return self._remoteService.pause(switch)
 
 	def _get_voice(self):
-		return self._synthDriverService.getParam('voice')
+		return self._remoteService.getParam('voice')
 
 	def _set_voice(self, value):
-			self._synthDriverService.setParam('voice', value)
+			self._remoteService.setParam('voice', value)
 			# changing the voice may change the supported settings
 			self._supportedSettingsCache = None
 
 	def _get_rate(self):
-		return self._synthDriverService.getParam('rate')
+		return self._remoteService.getParam('rate')
 
 	def _set_rate(self, value):
-		self._synthDriverService.setParam('rate', value)
+		self._remoteService.setParam('rate', value)
 
 	def _get_pitch(self):
-		return self._synthDriverService.getParam('pitch')
+		return self._remoteService.getParam('pitch')
 
 	def _set_pitch(self, value):
-		self._synthDriverService.setParam('pitch', value)
+		self._remoteService.setParam('pitch', value)
 
 	def _get_volume(self):
-		return self._synthDriverService.getParam('volume')
+		return self._remoteService.getParam('volume')
 
 	def _set_volume(self, value):
-		self._synthDriverService.setParam('volume', value)
+		self._remoteService.setParam('volume', value)
 
 	def _get_variant(self):
-		return self._synthDriverService.getParam('variant')
+		return self._remoteService.getParam('variant')
 
 	def _set_variant(self, value):
-		self._synthDriverService.setParam('variant', value)
+		self._remoteService.setParam('variant', value)

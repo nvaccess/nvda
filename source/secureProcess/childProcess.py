@@ -29,6 +29,7 @@ from comtypes.hresult import HRESULT_FROM_WIN32
 import subprocess
 import ctypes.wintypes
 import win32security
+import win32con
 from winBindings.advapi32 import (
 	CreateProcessWithToken,
 	CreateProcessAsUser,
@@ -61,6 +62,8 @@ from winBindings.kernel32 import (
 	DeleteProcThreadAttributeList,
 	LocalFree,
 	DeriveCapabilitySidsFromName,
+	GetCurrentProcess,
+	DuplicateHandle,
 )
 from winBindings.ole32 import (
 	CoTaskMemFree,
@@ -220,22 +223,39 @@ class BasicPopen:
 		if not CreateProcess(None, self._cmdline, None, None, True, self._creationFlags, self._envBlock, self.cwd, byref(self._siEx.startupInfo), byref(self._pi)):
 			raise RuntimeError(f"Failed to create process, {ctypes.WinError()}")
 
-	def _createPipe(self, push: bool=True) -> tuple[io.FileIO, HANDLE]:
+	def _duplicateHandleForProcess(self, handle: HANDLE, accessMask: int) -> HANDLE:
+		"""
+		Duplicate a handle into the child process.
+
+		:param handle: Handle to duplicate.
+		:param accessMask: Desired access mask for the duplicated handle.
+		:returns: Duplicated handle valid in the child process.
+		:raises RuntimeError: If duplicating the handle fails.
+		"""
+		dupHandle = HANDLE()
+		hCurProcess = GetCurrentProcess()
+		if not DuplicateHandle(hCurProcess, handle, self._handle, byref(dupHandle), accessMask, False, 0):
+			raise RuntimeError(f"Failed to duplicate handle into child process, {ctypes.WinError()}")
+		return dupHandle
+
+	def _createPipe(self, push: bool=True, duplicateIntoProcess: bool=False) -> tuple[io.FileIO, HANDLE]:
 		"""
 		Create an anonymous pipe and return the parent-side Python object and the
 		child-side HANDLE suitable for use as a standard stream.
 
 		When ``push`` is True this prepares a writable file object that the parent
 		can write to (typically connected to the child's standard input) and a
-		native HANDLE for the read end which is inheritable by the child.
+		native HANDLE for the read end.
 
 		When ``push`` is False this prepares a readable file object that the
 		parent can read from (typically connected to the child's standard output
-		or error) and a native HANDLE for the write end which is inheritable by
-		the child.
+		or error) and a native HANDLE for the write end.
+
+		If ``duplicateIntoProcess`` is True, the child-side HANDLE is duplicated
+		into the child process. useful if the child is already created .
 
 		The returned file objects are opened in binary mode with no buffering, and
-		the native HANDLEs are wrapped with makeAutoFree so they will be closed
+		if duplicateIntoProcess is True, the native handles are wrapped with makeAutoFree so they will be closed
 		automatically when no longer needed.
 
 		:param push: If True create a writable parent-side file and a child-side
@@ -246,13 +266,19 @@ class BasicPopen:
 		r_fd, w_fd = os.pipe()
 		if push:
 				w_file = os.fdopen(w_fd, 'wb', 0)
-				os.set_inheritable(r_fd, True)
 				r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
+				if duplicateIntoProcess:
+					r_handle = self._duplicateHandleForProcess(r_handle, win32con.GENERIC_READ)
+				else:
+					os.set_inheritable(r_fd, True)
 				return w_file, r_handle
 		else:
 				r_file = os.fdopen(r_fd, 'rb', 0)
-				os.set_inheritable(w_fd, True)
 				w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
+				if duplicateIntoProcess:
+					w_handle = self._duplicateHandleForProcess(w_handle, win32con.GENERIC_WRITE)
+				else:
+					os.set_inheritable(w_fd, True)
 				return r_file, w_handle
 
 	def resume(self):
