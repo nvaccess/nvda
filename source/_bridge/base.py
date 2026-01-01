@@ -5,19 +5,13 @@
 
 from __future__ import annotations
 import functools
-import traceback
 import weakref
 from typing import (
-	ParamSpec,
 	Callable,
 	cast,
-	Self,
 )
 from collections.abc import Callable
-import functools
 import threading
-import time
-import queue
 import rpyc
 from rpyc.core.stream import PipeStream
 from logHandler import log
@@ -25,6 +19,7 @@ import secureProcess
 
 
 """Base classes for NVDA Bridge components."""
+
 
 @rpyc.service
 class Service(rpyc.Service):
@@ -40,10 +35,12 @@ class Service(rpyc.Service):
 		self._dependentConnections = []
 		self._dependantServices = []
 
-	def _createDependentConnection(self, localService: Service, name: str | None=None) -> tuple[int, int]:
+	def _createDependentConnection(self, localService: Service, name: str | None = None) -> tuple[int, int]:
 		if not name:
 			name = f"Dependent service '{localService.__class__.__name__}' of '{self.__class__.__name__}'"
-		log.debug(f"Creating dependent connection: {name} on Service {self}, using service {localService} as root")
+		log.debug(
+			f"Creating dependent connection: {name} on Service {self}, using service {localService} as root"
+		)
 		if not self._childProcess:
 			raise RuntimeError("This service is not associated with a child process.")
 		log.debug("Creating pipes for new RPYC stream")
@@ -61,6 +58,7 @@ class Service(rpyc.Service):
 	@classmethod
 	def exposed(cls, func: Callable):
 		func = rpyc.exposed(func)
+
 		@functools.wraps(func)
 		def f(*args, **kwargs):
 			service = args[0] if len(args) > 0 else None
@@ -79,6 +77,7 @@ class Service(rpyc.Service):
 				log.debug(f"Registering dependant service {res} on parent service {service}")
 				service._dependantServices.append(weakref.ref(res))
 			return res
+
 		return f
 
 	@property
@@ -136,7 +135,9 @@ class Proxy[Service_t: Service]:
 		log.debug(f"Holding Connection '{conn._name}' on Proxy {self}")
 		self._heldConnections.append(conn)
 
-	def _connectToDependentServiceOverPipes(self, r_handle: int, w_handle: int, localService: Service | None = None, name: str = "unknown") -> Service:
+	def _connectToDependentServiceOverPipes(
+		self, r_handle: int, w_handle: int, localService: Service | None = None, name: str = "unknown"
+	) -> Service:
 		log.debug(f"	Connecting to dependent service over pipes: {name} on Proxy {self}")
 		stream = PipeStream(r_handle, w_handle)
 		newConn = Connection(stream, localService, name=name)
@@ -156,16 +157,19 @@ class Proxy[Service_t: Service]:
 
 
 class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
-
 	_closed: bool = False
 	_name: str
 	_conn: rpyc.Connection | None
 	_localService: LocalService_t | None
 
-	def __init__(self, stream, localService: LocalService_t=None, name:str="unknown"):
+	def __init__(self, stream, localService: LocalService_t = None, name: str = "unknown"):
 		self._name = name
 		log.debug(f"Creating connection '{name}'")
-		self._conn = rpyc.connect_stream(stream, service=localService or rpyc.VoidService, config={'allow_public_attrs': False, 'allow_safe_attrs': False, 'close_catchall': True})
+		self._conn = rpyc.connect_stream(
+			stream,
+			service=localService or rpyc.VoidService,
+			config={"allow_public_attrs": False, "allow_safe_attrs": False, "close_catchall": True},
+		)
 		self._localService = localService
 
 	@property
@@ -176,7 +180,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	def closed(self) -> bool:
 		return self._conn is None or self._conn._closed
 
-	def _serve_request(self, timeout: float=0.5) -> bool:
+	def _serve_request(self, timeout: float = 0.5) -> bool:
 		conn = self._conn
 		if not conn or conn._closed:
 			return False
@@ -203,7 +207,12 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		log.debug(f"Exiting event loop for Connection '{name}'")
 
 	def bgEventLoop(self, daemon: bool = False) -> threading.Thread:
-		t = threading.Thread(target=self._bgEventLoop, args=(weakref.ref(self), self._name), name=f"Connection Event Loop: {self._name}", daemon=daemon)
+		t = threading.Thread(
+			target=self._bgEventLoop,
+			args=(weakref.ref(self), self._name),
+			name=f"Connection Event Loop: {self._name}",
+			daemon=daemon,
+		)
 		t.start()
 		return t
 
@@ -250,7 +259,12 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		if conn and not conn._closed:
 			# Unfortunately if there is an exception when closing the connection,
 			# Our Connection object can get stuck in a traceback frame.
-			t = threading.Thread(target=self._closeRawConnection, args=(conn, self._name), name=f"Connection Close: {self._name}", daemon=True)
+			t = threading.Thread(
+				target=self._closeRawConnection,
+				args=(conn, self._name),
+				name=f"Connection Close: {self._name}",
+				daemon=True,
+			)
 			t.start()
 		self._closed = True
 

@@ -68,46 +68,74 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 	Spawns a process with a restricted token and various isolation options.
 	"""
 
-	def __init__(self, argv: list[str], stdin: int | None=None, stdout: int | None=None, stderr: int | None=None, extraEnv: dict[str, str] | None=None, cwd: str | None=None, integrityLevel: str | None=None, removePrivileges: bool=False, removeElevation:bool=False, restrictToken: bool=False, retainUserInRestrictedToken: bool=False, username: str | None=None, domain: str=".", password: str="", logonType: str="interactive", applyUIRestrictions=False, isolateDesktop: bool=False, isolateWindowStation: bool=False, killOnDelete: bool=False, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False, createNoWindow: bool=False, appContainerName: str | None=None, appContainerCapabilities: list[str]=[]):
+	def __init__(
+		self,
+		argv: list[str],
+		stdin: int | None = None,
+		stdout: int | None = None,
+		stderr: int | None = None,
+		extraEnv: dict[str, str] | None = None,
+		cwd: str | None = None,
+		integrityLevel: str | None = None,
+		removePrivileges: bool = False,
+		removeElevation: bool = False,
+		restrictToken: bool = False,
+		retainUserInRestrictedToken: bool = False,
+		username: str | None = None,
+		domain: str = ".",
+		password: str = "",
+		logonType: str = "interactive",
+		applyUIRestrictions=False,
+		isolateDesktop: bool = False,
+		isolateWindowStation: bool = False,
+		killOnDelete: bool = False,
+		startSuspended: bool = False,
+		hideCriticalErrorDialogs: bool = False,
+		createNoWindow: bool = False,
+		appContainerName: str | None = None,
+		appContainerCapabilities: list[str] = [],
+	):
 		"""
-		Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
+				Create and launch a subprocess using optionally a restricted token, particular integrity level, and isolation features.
 
-		This constructor prepares a Windows access token based on the current user (though optionally a service logon token instead), makes a restricted token from that if requested,
-		configures integrity level and default DACLs, adjusts the environment for low integrity
-		processes, optionally creates an isolated desktop and/or window station, and spawns
-		the child process using PopenWithToken. The created process is assigned to a Job so it
-		can be terminated automatically when this object is cleaned up.
+				This constructor prepares a Windows access token based on the current user (though optionally a service logon token instead), makes a restricted token from that if requested,
+				configures integrity level and default DACLs, adjusts the environment for low integrity
+				processes, optionally creates an isolated desktop and/or window station, and spawns
+				the child process using PopenWithToken. The created process is assigned to a Job so it
+				can be terminated automatically when this object is cleaned up.
 
-		:param argv: Command line to execute (program and arguments).
-		:param stdin: File descriptor or handle to use for standard input, or None. if subprocessPIPE, then a pipe to the child will be created.
-		:param stdout: File descriptor or handle to use for standard output, or None. if subprocessPIPE, then a pipe from the child will be created.
-		:param stderr: File descriptor or handle to use for standard error, or None. if subprocessPIPE, then a pipe from the child will be created.
-		:param extraEnv: Additional environment variables to add to the process environment.
-		:param cwd: Working directory for the child process. If not provided, the current
-			working directory is used (or a short-lived sandbox directory with restricted permissions when restrictedToken is True and retainUserInRestrictedToken is False.
-		:param integrityLevel: Integrity level to apply to the restricted token (e.g. "low").
-		:param removeElevation: If the current token is elevated, obtain an unelevated interactive user token from the shell instead.
-		:param removePrivileges: Remove privileges from the token when restricting it.
-		:param restrictedToken: Whether to create a restricted token for the child process. The restricted token will have a restricted SID list including the "Restricted" SID and the Logon SID from the source token, as well as interactive group SIDs. Enough to allow basic interactive access, but not enough to access the user's own files or profile data unless retainUserInRestrictedToken is also True.
-		:param retainUserInRestrictedToken: Include the user SID from the source token in the restricted SID list, thus granting access to the user's files and profile data.
-		:param username: Username to log on as. If provided, a logon token for this user will be created via secLogon and used instead of the current primary token.
-		:param domain: Domain of the user to log on as.
-		:param password: Password for the user to log on as.
-		:param logonType: The type of logon to perform (e.g., "interactive", "service",
-		:param applyUIRestrictions: Apply maximum UI restrictions to the process via the Windows job object. Includes switching desktops, changing display settings, exiting windows, reading / writing global atoms, access to UI handles from other processes (includes windows and hooks), clipboard reading/writing, and changing system parameters.
-		:param isolateDesktop: Create a temporary desktop for the child process.
-		:param isolateWindowStation: Create a temporary window station (implies isolated desktop).
-		:param killOnDelete: Assign the child to a job that is terminated when this object is closed.
-		:param startSuspended: Start the process suspended; call resume() to continue execution.
-		:param hideCriticalErrorDialogs: Suppress critical error dialogs for the spawned process.
-		:param createNoWindow: If True, the process is created without a window (I.e. CREATIONFLAGS_CREATE_NO_WINDOW).
+				:param argv: Command line to execute (program and arguments).
+				:param stdin: File descriptor or handle to use for standard input, or None. if subprocessPIPE, then a pipe to the child will be created.
+				:param stdout: File descriptor or handle to use for standard output, or None. if subprocessPIPE, then a pipe from the child will be created.
+				:param stderr: File descriptor or handle to use for standard error, or None. if subprocessPIPE, then a pipe from the child will be created.
+				:param extraEnv: Additional environment variables to add to the process environment.
+				:param cwd: Working directory for the child process. If not provided, the current
+					working directory is used (or a short-lived sandbox directory with restricted permissions when restrictedToken is True and retainUserInRestrictedToken is False.
+				:param integrityLevel: Integrity level to apply to the restricted token (e.g. "low").
+				:param removeElevation: If the current token is elevated, obtain an unelevated interactive user token from the shell instead.
+				:param removePrivileges: Remove privileges from the token when restricting it.
+				:param restrictedToken: Whether to create a restricted token for the child process. The restricted token will have a restricted SID list including the "Restricted" SID and the Logon SID from the source token, as well as interactive group SIDs. Enough to allow basic interactive access, but not enough to access the user's own files or profile data unless retainUserInRestrictedToken is also True.
+				:param retainUserInRestrictedToken: Include the user SID from the source token in the restricted SID list, thus granting access to the user's files and profile data.
+				:param username: Username to log on as. If provided, a logon token for this user will be created via secLogon and used instead of the current primary token.
+				:param domain: Domain of the user to log on as.
+				:param password: Password for the user to log on as.
+				:param logonType: The type of logon to perform (e.g., "interactive", "service",
+				:param applyUIRestrictions: Apply maximum UI restrictions to the process via the Windows job object. Includes switching desktops, changing display settings, exiting windows, reading / writing global atoms, access to UI handles from other processes (includes windows and hooks), clipboard reading/writing, and changing system parameters.
+				:param isolateDesktop: Create a temporary desktop for the child process.
+				:param isolateWindowStation: Create a temporary window station (implies isolated desktop).
+				:param killOnDelete: Assign the child to a job that is terminated when this object is closed.
+				:param startSuspended: Start the process suspended; call resume() to continue execution.
+				:param hideCriticalErrorDialogs: Suppress critical error dialogs for the spawned process.
+				:param createNoWindow: If True, the process is created without a window (I.e. CREATIONFLAGS_CREATE_NO_WINDOW).
 
-When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
-		restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
+		When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp folder. If
+				restrictedtoken is True and retainUserInRestrictedtoken is False a sandbox directory is created and used as the TEMP/TMP and cwd.
 		"""
 		parentToken = getCurrentPrimaryToken()
 		parentUserSidString = lookupTokenUserSidString(parentToken)
-		log.debug(f"Preparing to launch secure process: {subprocess.list2cmdline(argv)},\noptions: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {applyUIRestrictions=}, {startSuspended=}, {hideCriticalErrorDialogs=}...")
+		log.debug(
+			f"Preparing to launch secure process: {subprocess.list2cmdline(argv)},\noptions: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {applyUIRestrictions=}, {startSuspended=}, {hideCriticalErrorDialogs=}..."
+		)
 		useSecLogon = False
 		if username:
 			log.debug(f"Logging on as user {username=} {domain=} {logonType=}...")
@@ -118,7 +146,9 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		log.debug("Preparing environment variables appropriate for token...")
 		env = createTokenEnvironmentBlock(token)
 		if removeElevation and isTokenElevated(token):
-			log.debug("Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...")
+			log.debug(
+				"Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell..."
+			)
 			token = getUnelevatedCurrentInteractiveUserTokenFromShell()
 			log.debug("Successfully obtained unelevated interactive user token from shell.")
 			log.debug("Ensuring secLogon is used to launch process...")
@@ -126,35 +156,56 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		defaultDacl = getTokenDefaultDacl(token)
 		if username:
 			log.debug("Adding parent user SID to default DACL...")
-			defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(parentUserSidString))
+			defaultDacl.AddAccessAllowedAce(
+				win32security.ACL_REVISION,
+				win32con.GENERIC_ALL,
+				win32security.ConvertStringSidToSid(parentUserSidString),
+			)
 		if appContainerName:
-			log.debug(f"Initializing AppContainer: {appContainerName} with capabilities: {appContainerCapabilities}...")
+			log.debug(
+				f"Initializing AppContainer: {appContainerName} with capabilities: {appContainerCapabilities}..."
+			)
 			with impersonateToken(token):
 				self.appContainerInit(appContainerName, appContainerCapabilities)
 			log.debug(f"AppContainer initialized with path: {self.appContainerPath}...")
 		if restrictToken:
 			uniqueSandboxSidString = generateUniqueSandboxSidString()
-			token = createRestrictedToken(token, removePrivilages=removePrivileges, retainUser=retainUserInRestrictedToken, includeExtraSidStrings=[uniqueSandboxSidString])
+			token = createRestrictedToken(
+				token,
+				removePrivilages=removePrivileges,
+				retainUser=retainUserInRestrictedToken,
+				includeExtraSidStrings=[uniqueSandboxSidString],
+			)
 			if not retainUserInRestrictedToken:
 				log.debug("Adding unique sandbox SID to default DACL")
-				defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(uniqueSandboxSidString))
+				defaultDacl.AddAccessAllowedAce(
+					win32security.ACL_REVISION,
+					win32con.GENERIC_ALL,
+					win32security.ConvertStringSidToSid(uniqueSandboxSidString),
+				)
 		elif removePrivileges:
 			token = createLeastPrivilegedToken(token)
 		if appContainerName:
 			log.debug("	Creating AppContainer token...")
 			acToken = HANDLE()
-			if not ctypes.windll.kernelbase.CreateAppContainerToken(HANDLE(int(token)), byref(self._appContainerSecurityCapabilities), byref(acToken)):
+			if not ctypes.windll.kernelbase.CreateAppContainerToken(
+				HANDLE(int(token)), byref(self._appContainerSecurityCapabilities), byref(acToken)
+			):
 				raise ctypes.WinError(ctypes.get_last_error())
 			token = pywintypes.HANDLE(acToken.value)
-			defaultDacl.AddAccessAllowedAce(win32security.ACL_REVISION, win32con.GENERIC_ALL, win32security.ConvertStringSidToSid(self.appContainerSidString))
+			defaultDacl.AddAccessAllowedAce(
+				win32security.ACL_REVISION,
+				win32con.GENERIC_ALL,
+				win32security.ConvertStringSidToSid(self.appContainerSidString),
+			)
 			integrityLevel = "low"
 			if not cwd:
 				cwd = self.appContainerPath
 				log.debug(f"Setting working directory to AppContainer path: {cwd}...")
-			env['LOCALAPPDATA'] = self.appContainerPath
+			env["LOCALAPPDATA"] = self.appContainerPath
 			tmp = os.path.join(self.appContainerPath, "Temp")
-			env['TMP'] = tmp
-			env['TEMP'] = tmp
+			env["TMP"] = tmp
+			env["TEMP"] = tmp
 		if token is parentToken:
 			log.debug("Duplicating token to avoid modifying the parent token...")
 			token = duplicatePrimaryToken(token)
@@ -187,16 +238,16 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 		elif isolateDesktop:
 			log.debug("Creating isolated desktop...")
 			sa = win32security.SECURITY_ATTRIBUTES()
-			sa.SECURITY_DESCRIPTOR =defaultSD
+			sa.SECURITY_DESCRIPTOR = defaultSD
 			sa.bInheritHandle = False
 			desktopName, self._desktopHandle = createTempDesktop(securityAttribs=sa)
 			log.debug(f"Isolated desktop created: {desktopName}")
 		if not appContainerName and restrictToken and not retainUserInRestrictedToken:
-			temp = env['TEMP']
+			temp = env["TEMP"]
 			sbDirName = f"sandbox_{uuid.uuid4()}"
 			self._sandboxDir = SandboxDirectory(os.path.join(temp, sbDirName), defaultDacl, autoRemove=True)
 			log.debug(f"Created sandbox directory at {self._sandboxDir.path}, setting TEMP to this path...")
-			env["TEMP"] = env['TMP'] = self._sandboxDir.path
+			env["TEMP"] = env["TMP"] = self._sandboxDir.path
 			if not cwd:
 				with impersonateToken(token):
 					cwd = os.getcwd()
@@ -204,13 +255,29 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 						os.listdir(cwd)
 					except (PermissionError, FileNotFoundError):
 						cwd = env["TEMP"]
-						log.debug(f"Parent working directory not accessible for child process. Using {cwd}...")
+						log.debug(
+							f"Parent working directory not accessible for child process. Using {cwd}..."
+						)
 		if extraEnv:
 			for key, value in extraEnv.items():
 				log.debug(f"Adding extra environment variable: {key}={value}...")
 				env[key] = value
 		log.debug("Launching subprocess with restricted token...")
-		super().__init__(HANDLE(int(token)), argv, useSecLogon=useSecLogon, logonFlags=1, env=env, cwd=cwd, desktop=desktopName, stdin=stdin, stdout=stdout, stderr=stderr, startSuspended=True, hideCriticalErrorDialogs=hideCriticalErrorDialogs, createNoWindow=createNoWindow)
+		super().__init__(
+			HANDLE(int(token)),
+			argv,
+			useSecLogon=useSecLogon,
+			logonFlags=1,
+			env=env,
+			cwd=cwd,
+			desktop=desktopName,
+			stdin=stdin,
+			stdout=stdout,
+			stderr=stderr,
+			startSuspended=True,
+			hideCriticalErrorDialogs=hideCriticalErrorDialogs,
+			createNoWindow=createNoWindow,
+		)
 		self.job = Job()
 		if killOnDelete:
 			self.job.setBasicLimits(JOB_OBJECT_LIMIT.KILL_ON_JOB_CLOSE)
@@ -223,7 +290,7 @@ When the integrity level is "low", TEMP/TMP are redirected to a LocalLow Temp fo
 				| JOB_OBJECT_UILIMIT.HANDLES
 				| JOB_OBJECT_UILIMIT.READCLIPBOARD
 				| JOB_OBJECT_UILIMIT.SYSTEMPARAMETERS
-				| JOB_OBJECT_UILIMIT.WRITECLIPBOARD
+				| JOB_OBJECT_UILIMIT.WRITECLIPBOARD,
 			)
 		self.job.assignProcess(self._handle)
 		if not startSuspended:

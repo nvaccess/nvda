@@ -12,7 +12,8 @@ from synthDriverHandler import (
 	synthIndexReached,
 	synthDoneSpeaking,
 )
-from _bridge.base import Service, Connection
+from _bridge.base import Service
+
 
 @rpyc.service
 class SynthDriverService(Service):
@@ -22,6 +23,7 @@ class SynthDriverService(Service):
 	Arguments and return types on the methods here are an internal detail and not thoroughly documented, as they should not be used directly.
 	:ivar _synth: The SynthDriver instance being wrapped.
 	"""
+
 	_synth: SynthDriver
 
 	def __init__(self, synthDriver: SynthDriver):
@@ -36,6 +38,7 @@ class SynthDriverService(Service):
 			log.debug(f"synthIndexReached localCallback called with index {index}")
 			if synth is self._synth:
 				callback(index)
+
 		self._synthIndexReachedCallback = localCallback_synthIndexReached
 		synthIndexReached.register(localCallback_synthIndexReached)
 
@@ -45,38 +48,39 @@ class SynthDriverService(Service):
 			log.debug(f"synthDoneSpeaking localCallback called with synth {synth}")
 			if synth is self._synth:
 				callback()
+
 		self._synthDoneSpeakingCallback = localCallback_synthDoneSpeaking
 		synthDoneSpeaking.register(localCallback_synthDoneSpeaking)
 
 	@Service.exposed
 	def getSupportedSettings(self) -> tuple:
-		return tuple((setting.__class__.__name__, tuple((k, v) for k, v in setting.__dict__.items() if not k.startswith('_'))) for setting in self._synth.supportedSettings)
+		return tuple(
+			(
+				setting.__class__.__name__,
+				tuple((k, v) for k, v in setting.__dict__.items() if not k.startswith("_")),
+			)
+			for setting in self._synth.supportedSettings
+		)
 
 	@Service.exposed
 	def getSupportedNotifications(self) -> frozenset[str]:
 		notifications = []
 		for item in self._synth.supportedNotifications:
 			if item is synthIndexReached:
-				notifications.append('synthIndexReached')
+				notifications.append("synthIndexReached")
 			elif item is synthDoneSpeaking:
-				notifications.append('synthDoneSpeaking')
+				notifications.append("synthDoneSpeaking")
 			else:
 				raise ValueError("Unknown notification")
 		return frozenset(notifications)
 
 	@Service.exposed
 	def getAvailableVoices(self):
-		return tuple(
-			(v.id, v.displayName, v.language)
-			for v in self._synth._getAvailableVoices().values()
-		)
+		return tuple((v.id, v.displayName, v.language) for v in self._synth._getAvailableVoices().values())
 
 	@Service.exposed
 	def getAvailableVariants(self):
-		return tuple(
-			(v.id, v.displayName)
-			for v in self._synth._getAvailableVariants().values()
-		)
+		return tuple((v.id, v.displayName) for v in self._synth._getAvailableVariants().values())
 
 	@Service.exposed
 	def speak(self, data):
@@ -106,11 +110,15 @@ class SynthDriverService(Service):
 
 	def terminate(self):
 		if self._synthIndexReachedCallback:
-			log.debug(f"Unregistering synthIndexReached callback for {self._synth.name} of SynthDriverService")
+			log.debug(
+				f"Unregistering synthIndexReached callback for {self._synth.name} of SynthDriverService"
+			)
 			synthIndexReached.unregister(self._synthIndexReachedCallback)
 			self._synthIndexReachedCallback = None
 		if self._synthDoneSpeakingCallback:
-			log.debug(f"Unregistering synthDoneSpeaking callback for {self._synth.name} of SynthDriverService")
+			log.debug(
+				f"Unregistering synthDoneSpeaking callback for {self._synth.name} of SynthDriverService"
+			)
 			synthDoneSpeaking.unregister(self._synthDoneSpeakingCallback)
 			self._synthDoneSpeakingCallback = None
 		log.debug(f"Terminating SynthDriver instance {self._synth.name} of SynthDriverService")

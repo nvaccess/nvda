@@ -10,11 +10,14 @@ import traceback
 import time
 import logHandler
 from ...base import Proxy
+
 if typing.TYPE_CHECKING:
 	from ..services.logHandler import LogHandlerService
 
+
 class LogHandlerProxy(Proxy, logHandler.Logger):
-	""" Wraps a remote LogHandlerService, providing the same interface as the local logHandler.log. """
+	"""Wraps a remote LogHandlerService, providing the same interface as the local logHandler.log."""
+
 	_remoteService: LogHandlerService
 	disabled = False
 
@@ -23,7 +26,17 @@ class LogHandlerProxy(Proxy, logHandler.Logger):
 		self._effectiveLevelCache = 0
 		self._effectiveLevelCacheTime = 0
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
+	def _log(
+		self,
+		level,
+		msg,
+		args,
+		exc_info=None,
+		extra=None,
+		codepath=None,
+		activateLogViewer=False,
+		stack_info=None,
+	):
 		if not codepath or stack_info:
 			frame = inspect.currentframe()
 			count = 2
@@ -37,10 +50,10 @@ class LogHandlerProxy(Proxy, logHandler.Logger):
 				codepath = logHandler.getCodePath(frame)
 			if stack_info is True:
 				stack_info = traceback.extract_stack(frame)
-				msg += "\nStack trace:\n" + (
-					"".join(traceback.format_list(stack_info)).rstrip()
-				)
-		self._remoteService.logMessage(level, msg, exc_info=bool(exc_info), stack_info=bool(stack_info), codepath=codepath)
+				msg += "\nStack trace:\n" + ("".join(traceback.format_list(stack_info)).rstrip())
+		self._remoteService.logMessage(
+			level, msg, exc_info=bool(exc_info), stack_info=bool(stack_info), codepath=codepath
+		)
 
 	def getEffectiveLevel(self):
 		curTime = time.time()

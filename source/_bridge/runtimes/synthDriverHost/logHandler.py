@@ -7,7 +7,8 @@ import inspect
 import logging
 
 
-#old_factory = logging.getLogRecordFactory()
+# old_factory = logging.getLogRecordFactory()
+
 
 def record_factory(*args, **kwargs):
 	record = old_factory(*args, **kwargs)
@@ -18,12 +19,13 @@ def record_factory(*args, **kwargs):
 			break
 		frame = frame.f_back
 		count -= 1
-	record.qualname = frame.f_code.co_qualname.removesuffix('.__init__')
+	record.qualname = frame.f_code.co_qualname.removesuffix(".__init__")
 	mod = os.path.splitext(os.path.basename(frame.f_code.co_filename))[0]
 	record.module = mod
 	return record
 
-#logging.setLogRecordFactory(record_factory)
+
+# logging.setLogRecordFactory(record_factory)
 
 
 log = logging.getLogger()

@@ -1,7 +1,5 @@
 import os
-import sys
 import subprocess
-import comtypes
 
 try:
 	import comtypes.client as comclient
@@ -26,7 +24,10 @@ def createObject_x86(prog_id, helper_exe_path=None, timeout=5.0):
 
 	# Start helper process
 	proc = subprocess.Popen(
-		[helper_exe_path, prog_id], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+		[helper_exe_path, prog_id],
+		stdin=subprocess.PIPE,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE,
 	)
 
 	# Read one line (display name) from stdout
@@ -54,9 +55,11 @@ def createObject_x86(prog_id, helper_exe_path=None, timeout=5.0):
 		display_name = raw.decode("latin-1", errors="ignore").strip()
 
 	# Parse the display name into an IMoniker using winBindings (replace pythoncom usage).
-	from ctypes import byref, c_void_p, c_ulong
+	from ctypes import byref, c_ulong
+
 	# add POINTER import for creating COM interface pointers
 	from comtypes import GUID, POINTER
+
 	# objidl.IMoniker and IBindCtx are COM interface declarations used by the winBindings layer.
 	from objidl import IMoniker, IBindCtx
 	from winBindings import ole32

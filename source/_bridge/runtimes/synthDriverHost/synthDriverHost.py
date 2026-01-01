@@ -6,13 +6,11 @@
 from __future__ import annotations
 import typing
 import sys
-import threading
 import importlib
-import types
-import logging
 import rpyc
 from rpyc.core.stream import PipeStream
 from _bridge.components.services.synthDriver import SynthDriverService
+
 if typing.TYPE_CHECKING:
 	from _bridge.clients.synthDriverHost32.launcher import NVDAService
 from _bridge.base import Connection
@@ -24,6 +22,7 @@ from _bridge.base import Connection
 # and causing remote exceptions to fail deserialization.
 import builtins
 import rpyc.core.vinegar
+
 rpyc.core.vinegar.exceptions_module = builtins
 from logHandler import log
 from _bridge.base import Service
@@ -32,7 +31,6 @@ from _bridge.base import Service
 @rpyc.service
 class HostService(Service):
 	"""RPYC service for the synth driver host runtime."""
-
 
 	def __init__(self):
 		super().__init__()
@@ -56,14 +54,18 @@ class HostService(Service):
 		log.debug("Installing proxies from remote NVDAService")
 		log.debug("Injecting languageHandler.getLanguage")
 		import languageHandler
+
 		languageHandler.getLanguage = remoteService.getLanguage
 		log.debug("Injecting WavePlayerProxy into nvwave module")
 		from _bridge.components.proxies.nvwave import WavePlayerProxy
 		import nvwave
+
 		RemoteWavePlayerClass = remoteService.WavePlayer
+
 		class BoundWavePlayerProxy(WavePlayerProxy):
 			def __init__(self, *args, **kwargs):
 				super().__init__(RemoteWavePlayerClass, *args, **kwargs)
+
 		nvwave.WavePlayer = BoundWavePlayerProxy
 
 	@Service.exposed
@@ -82,24 +84,25 @@ class HostService(Service):
 		"""
 		log.debug(f"Registering synth drivers path: {path}")
 		import synthDrivers
+
 		synthDrivers.__path__.insert(0, path)
 
 	@Service.exposed
-	def SynthDriver(self, name: str, ) -> SynthDriverService:
-		""" Loads a synthDriver with the given name, exposing it to the remote caller as a SynthDriverService.
+	def SynthDriver(self, name: str) -> SynthDriverService:
+		"""Loads a synthDriver with the given name, exposing it to the remote caller as a SynthDriverService.
 
 		:param name: Name of the synth driver to load.
 		:raises ImportError: If the SynthDriverService implementation cannot be imported.
 		:returns: SynthDriverService instance bound to the requested driver name.
 		"""
 		log.debug(f"	Loading synth driver '{name}'")
-		mod = importlib.import_module(f'synthDrivers.{name}')
+		mod = importlib.import_module(f"synthDrivers.{name}")
 		synth = mod.SynthDriver()
 		return SynthDriverService(synth)
 
 
 def main():
-	"""Entry point for the synth driver host runtime. """
+	"""Entry point for the synth driver host runtime."""
 	log.debug("Connecting to RPYC server over standard pipes")
 	stream = PipeStream(sys.stdin, sys.stdout)
 	service = HostService()

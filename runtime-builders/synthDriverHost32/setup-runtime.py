@@ -44,12 +44,14 @@ manifestTemplateFilePath = f"{nvdaSourceDir}/manifest.template.xml"
 with open(manifestTemplateFilePath, "r", encoding="utf-8") as manifestTemplateFile:
 	_manifestTemplate = manifestTemplateFile.read()
 
+
 def _genManifestTemplate(shouldHaveUIAccess: bool) -> tuple[int, int, bytes]:
 	return (
 		RT_MANIFEST,
 		1,
 		(_manifestTemplate % {"uiAccess": shouldHaveUIAccess}).encode("utf-8"),
 	)
+
 
 # py2exe's idea of whether a dll is a system dll appears to be wrong sometimes, so monkey patch it.
 orig_determine_dll_type = DllFinder.determine_dll_type
@@ -66,6 +68,7 @@ def determine_dll_type(self, imagename):
 
 DllFinder.determine_dll_type = determine_dll_type
 
+
 def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[tuple[str, list[str]]]:
 	rulesList: list[tuple[str, list[str]]] = []
 	for file in glob(f"{source}/*"):
@@ -81,6 +84,7 @@ def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[
 				),
 			)
 	return rulesList
+
 
 sys.path.insert(0, runtimeSourceDir)
 
@@ -197,7 +201,6 @@ freeze(
 			"wincon",
 			"winConsoleHandler",
 			"windowUtils",
-			
 			"winInputHook",
 			"xmlFormatting",
 			"tkinter",
@@ -236,7 +239,8 @@ freeze(
 	},
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest")),
-	] + getRecursiveDataFiles(
+	]
+	+ getRecursiveDataFiles(
 		"synthDrivers",
 		f"{runtimeSourceDir}\\synthDrivers",
 		excludes=tuple(f"*{ext}" for ext in importlib.machinery.all_suffixes())
@@ -245,5 +249,5 @@ freeze(
 			"*.lib",
 			"*.pdb",
 		),
-	)
+	),
 )

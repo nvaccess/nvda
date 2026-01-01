@@ -72,7 +72,9 @@ allowedRestrictedSids = {
 }
 
 
-def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool = False, includeExtraSidStrings: list[str] = []):
+def createRestrictedToken(
+	token, removePrivilages: bool = True, retainUser: bool = False, includeExtraSidStrings: list[str] = []
+):
 	"""Create a new restricted token based on an existing token.
 
 	This function builds a reduced-privilege token by optionally disabling maximum
@@ -304,6 +306,7 @@ def createRestrictedDacl(
 				dacl.AddAccessAllowedAce(win32security.ACL_REVISION, GENERIC_ALL, curUserSid)
 	return dacl
 
+
 def getTokenDefaultDacl(token):
 	"""
 	Return the default DACL for a given token.
@@ -314,6 +317,7 @@ def getTokenDefaultDacl(token):
 	"""
 	dacl = win32security.GetTokenInformation(token, win32security.TokenDefaultDacl)
 	return dacl
+
 
 def createSaclFromToken(token):
 	"""
@@ -329,6 +333,7 @@ def createSaclFromToken(token):
 	policy = win32security.SYSTEM_MANDATORY_LABEL_NO_WRITE_UP
 	sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
 	return sacl
+
 
 def createSecurityDescriptorFromDaclAndSacl(dacl, sacl=None):
 	"""
@@ -363,6 +368,7 @@ def impersonateToken(token):
 	finally:
 		win32security.RevertToSelf()
 
+
 def isTokenElevated(token) -> bool:
 	"""
 	Check if a given token is elevated.
@@ -382,7 +388,6 @@ def isTokenElevated(token) -> bool:
 		return True
 	log.warning(f"Unknown token elevation type: {elevationType}")
 	return False
-
 
 
 def getUnelevatedCurrentInteractiveUserTokenFromShell():
@@ -406,7 +411,13 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	log.debug(f"Found shell process with PID {pid}...")
 	shellProcess = win32api.OpenProcess(win32con.PROCESS_QUERY_INFORMATION, False, pid)
 	token = win32security.OpenProcessToken(shellProcess, win32con.MAXIMUM_ALLOWED)
-	token = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	token = win32security.DuplicateTokenEx(
+		token,
+		win32security.SecurityImpersonation,
+		win32security.TOKEN_ALL_ACCESS,
+		win32security.TokenPrimary,
+		None,
+	)
 	return token
 
 
@@ -420,7 +431,8 @@ logonTypes = {
 	"newCredentials": win32con.LOGON32_LOGON_NEW_CREDENTIALS,
 }
 
-def logonUser(username: str, domain: str=".", password: str="",logonType: str ="interactive"):
+
+def logonUser(username: str, domain: str = ".", password: str = "", logonType: str = "interactive"):
 	"""
 	Call LogonUser to obtain a logon token for a given user.
 
@@ -442,6 +454,7 @@ def logonUser(username: str, domain: str=".", password: str="",logonType: str ="
 	)
 	return token
 
+
 def generateUniqueSandboxSidString() -> str:
 	"""
 	Generate a unique one-time SID for use in restricted tokens and ACLs.
@@ -451,13 +464,14 @@ def generateUniqueSandboxSidString() -> str:
 	"""
 	u = uuid.uuid4()
 	u = uuid.uuid4().int
-	a = (u >> 96) & 0xffffffff
-	b = (u >> 64) & 0xffffffff
-	c = (u >> 32) & 0xffffffff
-	rid = u & 0xffffffff
+	a = (u >> 96) & 0xFFFFFFFF
+	b = (u >> 64) & 0xFFFFFFFF
+	c = (u >> 32) & 0xFFFFFFFF
+	rid = u & 0xFFFFFFFF
 	sidString = f"S-1-5-21-{a}-{b}-{c}-{rid}"
 	log.debug(f"Generated unique sandbox SID: {sidString}")
 	return sidString
+
 
 def duplicatePrimaryToken(token):
 	"""
@@ -467,5 +481,11 @@ def duplicatePrimaryToken(token):
 	:return: A duplicated primary token.
 	:raises: Underlying win32 API exceptions if token duplication fails.
 	"""
-	duplicatedToken = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	duplicatedToken = win32security.DuplicateTokenEx(
+		token,
+		win32security.SecurityImpersonation,
+		win32security.TOKEN_ALL_ACCESS,
+		win32security.TokenPrimary,
+		None,
+	)
 	return duplicatedToken

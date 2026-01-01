@@ -7,17 +7,13 @@
 
 from ctypes import (
 	WINFUNCTYPE,
-	sizeof,
-	Structure,
 	POINTER,
 	windll,
 	c_void_p,
-	c_byte,
 )
 from ctypes.wintypes import (
 	BOOL,
 	DWORD,
-	WORD,
 	HANDLE,
 	HKEY,
 	LONG,
@@ -28,7 +24,6 @@ from ctypes.wintypes import (
 from .winnt import (
 	SECURITY_ATTRIBUTES,
 	STARTUPINFOW,
-	STARTUPINFO,
 	PROCESS_INFORMATION,
 	SID_AND_ATTRIBUTES,
 	LUID_AND_ATTRIBUTES,
@@ -126,8 +121,6 @@ RegQueryValueEx.argtypes = (
 RegQueryValueEx.restype = LONG
 
 
-
-
 CreateProcessAsUser = WINFUNCTYPE(None)(("CreateProcessAsUserW", dll))
 """
 Creates a new process and its primary thread. The new process runs in the security context of the user represented by the specified token.
@@ -180,8 +173,8 @@ LogonUser.argtypes = (
 	LPCWSTR,  # lpszUsername
 	LPCWSTR,  # lpszDomain
 	LPCWSTR,  # lpszPassword
-	DWORD,    # dwLogonType
-	DWORD,    # dwLogonProvider
+	DWORD,  # dwLogonType
+	DWORD,  # dwLogonProvider
 	POINTER(HANDLE),  # phToken
 )
 LogonUser.restype = BOOL
@@ -208,9 +201,9 @@ Sets specified types of information for an access token.
 """
 SetTokenInformation.argtypes = (
 	HANDLE,  # TokenHandle
-	DWORD,   # TOKEN_INFORMATION_CLASS
+	DWORD,  # TOKEN_INFORMATION_CLASS
 	LPVOID,  # TokenInformation
-	DWORD,   # TokenInformationLength
+	DWORD,  # TokenInformationLength
 )
 SetTokenInformation.restype = BOOL
 
@@ -221,10 +214,10 @@ Creates a new access token that duplicates an existing token.
 """
 DuplicateTokenEx.argtypes = (
 	HANDLE,  # hExistingToken
-	DWORD,   # dwDesiredAccess
+	DWORD,  # dwDesiredAccess
 	POINTER(SECURITY_ATTRIBUTES),  # lpTokenAttributes
-	DWORD,   # ImpersonationLevel (SECURITY_IMPERSONATION_LEVEL)
-	DWORD,   # TokenType (TOKEN_TYPE)
+	DWORD,  # ImpersonationLevel (SECURITY_IMPERSONATION_LEVEL)
+	DWORD,  # TokenType (TOKEN_TYPE)
 	POINTER(HANDLE),  # phNewToken
 )
 DuplicateTokenEx.restype = BOOL
@@ -239,8 +232,8 @@ Converts a string-format security identifier (SID) into a valid SID structure.
 """
 # LPCWSTR StringSid, PSID *Sid
 ConvertStringSidToSid.argtypes = (
-	LPCWSTR,            # StringSid
-	POINTER(PSID ),    # Sid (PSID*) -> pointer to allocated PSID
+	LPCWSTR,  # StringSid
+	POINTER(PSID),  # Sid (PSID*) -> pointer to allocated PSID
 )
 ConvertStringSidToSid.restype = BOOL
 
@@ -251,8 +244,8 @@ Converts a valid SID to a string-format SID.
 """
 # PSID Sid, LPWSTR *StringSid
 ConvertSidToStringSid.argtypes = (
-	PSID ,             # Sid (PSID)
-	POINTER(LPWSTR),    # StringSid (LPWSTR*)
+	PSID,  # Sid (PSID)
+	POINTER(LPWSTR),  # StringSid (LPWSTR*)
 )
 ConvertSidToStringSid.restype = BOOL
 
@@ -263,9 +256,9 @@ Creates a well-known security identifier (SID).
 .. seealso:: https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-createwellknownsid
 """
 CreateWellKnownSid.argtypes = (
-	DWORD,        # WellKnownSidType
-	PSID,         # DomainSid (PSID) or NULL
-	PSID,         # pSid (buffer to receive SID)
+	DWORD,  # WellKnownSidType
+	PSID,  # DomainSid (PSID) or NULL
+	PSID,  # pSid (buffer to receive SID)
 	POINTER(DWORD),  # cbSid (in/out buffer size)
 )
 CreateWellKnownSid.restype = BOOL
@@ -278,12 +271,12 @@ Creates a restricted token by disabling SIDs, deleting privileges, and adding re
 """
 CreateRestrictedToken.argtypes = (
 	HANDLE,  # ExistingTokenHandle
-	DWORD,   # Flags
-	DWORD,   # DisableSidCount
+	DWORD,  # Flags
+	DWORD,  # DisableSidCount
 	POINTER(SID_AND_ATTRIBUTES),  # SidsToDisable (PSID_AND_ATTRIBUTES)
-	DWORD,   # DeletePrivilegeCount
+	DWORD,  # DeletePrivilegeCount
 	POINTER(LUID_AND_ATTRIBUTES),  # PrivilegesToDelete (PLUID_AND_ATTRIBUTES)
-	DWORD,   # RestrictedSidCount
+	DWORD,  # RestrictedSidCount
 	POINTER(SID_AND_ATTRIBUTES),  # SidsToRestrict (PSID_AND_ATTRIBUTES)
 	POINTER(HANDLE),  # NewToken (PHANDLE)
 )

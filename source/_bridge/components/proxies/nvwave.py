@@ -4,34 +4,53 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
-import weakref
 import typing
 import ctypes
 from ...base import Proxy
+
 if typing.TYPE_CHECKING:
 	from ..services.nvwave import WavePlayerService
 from logHandler import log
 from _bridge.components.services.nvwave import WavePlayerFeederService
-from _bridge.base import Connection
+
 
 class WavePlayerProxy(Proxy):
-	""" Wraps a remote WavePlayerService, providing the same interface as a local WavePlayer. """
+	"""Wraps a remote WavePlayerService, providing the same interface as a local WavePlayer."""
+
 	_remoteWavePlayerFeederService: WavePlayerFeederService | None = None
 
-	def __init__(self, remoteServiceFactory: typing.Callable[..., WavePlayerService], channels: int, samplesPerSec: int, bitsPerSample: int, outputDevice: str | None = None, wantDucking: bool = True):
-		remoteService = remoteServiceFactory(channels=channels, samplesPerSec=samplesPerSec, bitsPerSample=bitsPerSample, outputDevice=outputDevice, wantDucking=wantDucking)
+	def __init__(
+		self,
+		remoteServiceFactory: typing.Callable[..., WavePlayerService],
+		channels: int,
+		samplesPerSec: int,
+		bitsPerSample: int,
+		outputDevice: str | None = None,
+		wantDucking: bool = True,
+	):
+		remoteService = remoteServiceFactory(
+			channels=channels,
+			samplesPerSec=samplesPerSec,
+			bitsPerSample=bitsPerSample,
+			outputDevice=outputDevice,
+			wantDucking=wantDucking,
+		)
 		super().__init__(remoteService)
 
-	def setVolume(self, *, all: float | None= None, left: float | None= None, right: float | None= None):
-		#log.debug("setVolume start")
+	def setVolume(self, *, all: float | None = None, left: float | None = None, right: float | None = None):
+		# log.debug("setVolume start")
 		self._remoteService.setVolume(all=all, left=left, right=right)
-		#log.debug("setVolume end")
+		# log.debug("setVolume end")
 
-	def feed(self, data: bytes, size: typing.Optional[int] = None, onDone: typing.Optional[typing.Callable] = None) -> None:
+	def feed(
+		self, data: bytes, size: typing.Optional[int] = None, onDone: typing.Optional[typing.Callable] = None
+	) -> None:
 		if not self._remoteWavePlayerFeederService:
 			log.debug("Creating WavePlayerFeeder service connection for WavePlayerProxy")
 			r_handle, w_handle = self._remoteService.createWavePlayerFeederServiceConnection()
-			self._remoteWavePlayerFeederService = self._connectToDependentServiceOverPipes(r_handle, w_handle, name="WavePlayerFeeder for WavePlayer on Proxy")
+			self._remoteWavePlayerFeederService = self._connectToDependentServiceOverPipes(
+				r_handle, w_handle, name="WavePlayerFeeder for WavePlayer on Proxy"
+			)
 		log.debug("feed start")
 		if isinstance(data, ctypes.Array):
 			if size is None:
@@ -48,16 +67,16 @@ class WavePlayerProxy(Proxy):
 		log.debug("feed end")
 
 	def pause(self, switch: bool):
-		#log.debug("pause start")
+		# log.debug("pause start")
 		self._remoteService.pause(switch)
-		#log.debug("pause end")
+		# log.debug("pause end")
 
 	def stop(self):
-		#log.debug("stop start")
+		# log.debug("stop start")
 		self._remoteService.stop()
-		#log.debug("stop end")
+		# log.debug("stop end")
 
 	def close(self):
-		#log.debug("close start")
+		# log.debug("close start")
 		self._remoteService.close()
-		#log.debug("close end")
+		# log.debug("close end")

@@ -6,11 +6,14 @@
 # Required by sapi5.
 # Fixme: This should be converted to a proxy so it can actually duck via NVDA.
 
+
 def _isDebug():
 	return False
 
+
 def isAudioDuckingSupported():
 	return False
+
 
 class AudioDucker:
 	pass

@@ -53,14 +53,18 @@ class Job:
 		log.debug(f"Limit flags: {basicLimitFlags.name}...")
 		limitInfo = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
 		limitInfo.BasicLimitInformation.LimitFlags = basicLimitFlags
-		if not SetInformationJobObject(self._hJob, JOBOBJECTINFOCLASS.ExtendedLimitInformation, byref(limitInfo), sizeof(limitInfo)):
+		if not SetInformationJobObject(
+			self._hJob, JOBOBJECTINFOCLASS.ExtendedLimitInformation, byref(limitInfo), sizeof(limitInfo)
+		):
 			raise RuntimeError(f"Failed to set job object information, {ctypes.WinError()}")
 
 	def setUiRestrictions(self, uiLimitFlags: JOB_OBJECT_UILIMIT):
 		log.debug(f"UI limit flags: {uiLimitFlags.name}...")
 		uiRestrictions = JOBOBJECT_BASIC_UI_RESTRICTIONS()
 		uiRestrictions.UIRestrictionsClass = uiLimitFlags
-		if not SetInformationJobObject(self._hJob, JOBOBJECTINFOCLASS.BasicUIRestrictions, byref(uiRestrictions), sizeof(uiRestrictions)):
+		if not SetInformationJobObject(
+			self._hJob, JOBOBJECTINFOCLASS.BasicUIRestrictions, byref(uiRestrictions), sizeof(uiRestrictions)
+		):
 			raise RuntimeError(f"Failed to set job object UI restrictions, {ctypes.WinError()}")
 
 	def assignProcess(self, processHandle: HANDLE):
@@ -79,7 +83,7 @@ class Job:
 			raise RuntimeError(f"Failed to assign process to job object, {ctypes.WinError()}")
 
 	def close(self):
-		""" Closes the job object."""
+		"""Closes the job object."""
 		if self._hJob:
 			log.debug("Closing job object...")
 			CloseHandle(self._hJob)

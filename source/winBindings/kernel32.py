@@ -1569,7 +1569,7 @@ Initializes the specified list of attributes for process and thread creation.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-initializeprocthreadattributelist
 """
 InitializeProcThreadAttributeList.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 	DWORD,  # dwAttributeCount: The number of attributes in the list
 	DWORD,  # dwFlags: Reserved; must be zero
 	POINTER(c_size_t),  # lpSize: A pointer to a variable that receives the size of the attribute list
@@ -1583,7 +1583,7 @@ Updates the specified attribute in a list of attributes for process and thread c
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute
 """
 UpdateProcThreadAttribute.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 	DWORD,  # dwFlags: Reserved; must be zero
 	c_void_p,  # Attribute: The attribute to be updated
 	LPVOID,  # lpValue: A pointer to the attribute value
@@ -1600,14 +1600,11 @@ Deletes a list of attributes for process and thread creation.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-deleteprocthreadattributelist
 """
 DeleteProcThreadAttributeList.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 )
 DeleteProcThreadAttributeList.restype = None
 
 
-
-
-from .winnt import STARTUPINFOEXW
 CreateProcess = WINFUNCTYPE(None)(("CreateProcessW", dll))
 """
 Creates a new process and its primary thread.

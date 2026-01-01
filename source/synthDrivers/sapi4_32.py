@@ -6,16 +6,16 @@
 import os
 from comtypes import GUID
 import winreg
-from _bridge.components.proxies.synthDriver import SynthDriverProxy
 from _bridge.clients.synthDriverHost32.synthDriver import SynthDriverProxy32
 import globalVars
 
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
 
+
 class SynthDriver(SynthDriverProxy32):
 	name = "sapi4_32"
 	description = "Microsoft Speech API version 4 (32 bit proxy)"
-	synthDriver32Path = os.path.join(globalVars.appDir, 'synthDrivers32')
+	synthDriver32Path = os.path.join(globalVars.appDir, "synthDrivers32")
 	synthDriver32Name = "sapi4"
 
 	@classmethod
@@ -23,7 +23,12 @@ class SynthDriver(SynthDriverProxy32):
 		if not super().check():
 			return False
 		try:
-			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator, 0, winreg.KEY_READ | winreg.KEY_WOW64_32KEY).Close()
+			winreg.OpenKey(
+				winreg.HKEY_CLASSES_ROOT,
+				r"CLSID\%s" % CLSID_TTSEnumerator,
+				0,
+				winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
+			).Close()
 			return True
 		except WindowsError:
 			return False

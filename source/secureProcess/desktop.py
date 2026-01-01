@@ -5,18 +5,14 @@
 
 import contextlib
 import uuid
-import ctypes
 from ctypes.wintypes import (
 	HANDLE,
 )
 import win32service
 import win32con
 from winBindings.user32 import (
-	CreateDesktopEx,
-	CloseDesktop,
 	DESKTOP_ALL_ACCESS,
 )
-from .raiiUtils import makeAutoFree
 from logHandler import log
 
 
@@ -44,6 +40,7 @@ def createTempWindowStation(securityAttribs=None) -> tuple[str, HANDLE]:
 	)
 	return windowStationName, winStationHandle
 
+
 def createTempDesktop(securityAttribs=None) -> tuple[str, HANDLE]:
 	"""Create a temporary desktop and return its name and handle.
 
@@ -59,7 +56,7 @@ def createTempDesktop(securityAttribs=None) -> tuple[str, HANDLE]:
 	"""
 
 	desktopName = f"nvDesktop-{uuid.uuid4()}"
-	desktopAccess =  DESKTOP_ALL_ACCESS
+	desktopAccess = DESKTOP_ALL_ACCESS
 	log.debug("Calling CreateDesktop...")
 	desktopHandle = win32service.CreateDesktop(desktopName, 0, desktopAccess, securityAttribs)
 	return desktopName, desktopHandle

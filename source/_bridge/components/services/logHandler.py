@@ -9,13 +9,20 @@ import logHandler
 
 @rpyc.service
 class LogHandlerService:
-	""" Wraps the local logHandler.log, exposing its methods for remote access.
+	"""Wraps the local logHandler.log, exposing its methods for remote access.
 	When accessed remotely, this service must be wrapped in a `_bridge.components.proxies.logHandler.LogHandlerProxy` which will handle any deserialization and provide the same interface as a local SynthDriver.
 	Arguments and return types on the methods here are an internal detail and not thoroughly documented, as they should not be used directly.
 	"""
 
 	@rpyc.exposed
-	def logMessage(self, level: int, msg: str, exc_info: bool = False, stack_info: bool = False, codepath: str | None = None):
+	def logMessage(
+		self,
+		level: int,
+		msg: str,
+		exc_info: bool = False,
+		stack_info: bool = False,
+		codepath: str | None = None,
+	):
 		fullCodepath = "External synthDriverHost"
 		if codepath:
 			fullCodepath += f": {codepath}"

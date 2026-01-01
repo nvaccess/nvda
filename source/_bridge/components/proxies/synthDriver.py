@@ -17,13 +17,14 @@ from synthDriverHandler import (
 	synthDoneSpeaking,
 	VoiceInfo,
 )
+
 if typing.TYPE_CHECKING:
 	from ..services.synthDriver import SynthDriverService
 	from _bridge.base import Proxy
 
 
 class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
-	""" Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver. """
+	"""Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver."""
 
 	def __init__(self, service: SynthDriverService):
 		log.debug(f"Creating SynthDriverProxy instance for remote synth driver '{self.name}'")
@@ -32,26 +33,31 @@ class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
 		for notification in self.supportedNotifications:
 			if notification is synthIndexReached:
 				log.debug("Registering synthIndexReached notification with synth driver service")
+
 				def localCallback_synthIndexReached(index):
 					synth = selfRef()
 					if synth is not None:
 						synthIndexReached.notify(synth=synth, index=index)
+
 				self._remoteService.registerSynthIndexReachedNotification(localCallback_synthIndexReached)
 			elif notification is synthDoneSpeaking:
 				log.debug("Registering synthDoneSpeaking notification with synth driver service")
+
 				def localCallback_synthDoneSpeaking():
 					synth = selfRef()
 					if synth is not None:
 						synthDoneSpeaking.notify(synth=synth)
+
 				self._remoteService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
 
 	def old_terminate(self):
 		log.debug(f"Terminating SynthDriverProxy instance for remote synth driver '{self.name}'")
 		for conn in self._heldConnections:
 			conn.close()
-		#self._heldConnections.clear()
+		# self._heldConnections.clear()
 
 	_supportedSettingsCache = None
+
 	def _get_supportedSettings(self):
 		if self._supportedSettingsCache is not None:
 			return self._supportedSettingsCache
@@ -60,11 +66,11 @@ class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
 		for item in data:
 			clsName, params = item
 			params = {k: v for k, v in params}
-			if clsName == 'DriverSetting':
+			if clsName == "DriverSetting":
 				setting = DriverSetting(**params)
-			elif clsName == 'NumericDriverSetting':
+			elif clsName == "NumericDriverSetting":
 				setting = NumericDriverSetting(**params)
-			elif clsName == 'BooleanDriverSetting':
+			elif clsName == "BooleanDriverSetting":
 				setting = BooleanDriverSetting(**params)
 			else:
 				raise ValueError(f"Unknown setting class name: {clsName}")
@@ -73,15 +79,16 @@ class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
 		return settings
 
 	_supportedNotificationsCache = None
+
 	def _get_supportedNotifications(self):
 		if self._supportedNotificationsCache is not None:
 			return self._supportedNotificationsCache
 		data = self._remoteService.getSupportedNotifications()
 		notifications = set()
 		for item in data:
-			if item == 'synthIndexReached':
+			if item == "synthIndexReached":
 				notifications.add(synthIndexReached)
-			elif item == 'synthDoneSpeaking':
+			elif item == "synthDoneSpeaking":
 				notifications.add(synthDoneSpeaking)
 			else:
 				raise ValueError(f"Unknown notification: {item}")
@@ -113,33 +120,33 @@ class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
 		return self._remoteService.pause(switch)
 
 	def _get_voice(self):
-		return self._remoteService.getParam('voice')
+		return self._remoteService.getParam("voice")
 
 	def _set_voice(self, value):
-			self._remoteService.setParam('voice', value)
-			# changing the voice may change the supported settings
-			self._supportedSettingsCache = None
+		self._remoteService.setParam("voice", value)
+		# changing the voice may change the supported settings
+		self._supportedSettingsCache = None
 
 	def _get_rate(self):
-		return self._remoteService.getParam('rate')
+		return self._remoteService.getParam("rate")
 
 	def _set_rate(self, value):
-		self._remoteService.setParam('rate', value)
+		self._remoteService.setParam("rate", value)
 
 	def _get_pitch(self):
-		return self._remoteService.getParam('pitch')
+		return self._remoteService.getParam("pitch")
 
 	def _set_pitch(self, value):
-		self._remoteService.setParam('pitch', value)
+		self._remoteService.setParam("pitch", value)
 
 	def _get_volume(self):
-		return self._remoteService.getParam('volume')
+		return self._remoteService.getParam("volume")
 
 	def _set_volume(self, value):
-		self._remoteService.setParam('volume', value)
+		self._remoteService.setParam("volume", value)
 
 	def _get_variant(self):
-		return self._remoteService.getParam('variant')
+		return self._remoteService.getParam("variant")
 
 	def _set_variant(self, value):
-		self._remoteService.setParam('variant', value)
+		self._remoteService.setParam("variant", value)

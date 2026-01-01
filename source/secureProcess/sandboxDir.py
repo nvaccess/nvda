@@ -6,12 +6,10 @@
 
 import os
 import shutil
-import errno
 
 import win32con
 import win32file
 import win32security
-import pywintypes
 from logHandler import log
 
 
@@ -23,7 +21,7 @@ class SandboxDirectory:
 	including scheduling deletion on next reboot if immediate removal fails.
 	"""
 
-	def __init__(self, path: str, dacl, autoRemove: bool=False):
+	def __init__(self, path: str, dacl, autoRemove: bool = False):
 		"""Initialize the sandbox directory.
 
 		Creates the directory at the given path (parents are created as needed),
@@ -47,8 +45,7 @@ class SandboxDirectory:
 		win32security.SetNamedSecurityInfo(
 			self._path,
 			win32security.SE_FILE_OBJECT,
-			win32security.DACL_SECURITY_INFORMATION
-			| win32security.PROTECTED_DACL_SECURITY_INFORMATION,
+			win32security.DACL_SECURITY_INFORMATION | win32security.PROTECTED_DACL_SECURITY_INFORMATION,
 			None,
 			None,
 			dacl,
@@ -62,9 +59,9 @@ class SandboxDirectory:
 		log.debug("Removing sandbox directory...")
 		try:
 			shutil.rmtree(self._path)
-		except OSError as e:
-				log.debug("Failed to remove sandbox directory, scheduling for deletion on next reboot...")
-				self._scheduleDeleteOnReboot()
+		except OSError:
+			log.debug("Failed to remove sandbox directory, scheduling for deletion on next reboot...")
+			self._scheduleDeleteOnReboot()
 		self._removed = True
 
 	def __del__(self):
@@ -73,5 +70,5 @@ class SandboxDirectory:
 
 	@property
 	def path(self) -> str:
-		""" the path of the sandbox directory."""
+		"""the path of the sandbox directory."""
 		return self._path

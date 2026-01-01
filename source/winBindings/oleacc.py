@@ -24,7 +24,8 @@ from ctypes.wintypes import (
 )
 from .user32 import LRESULT
 import comtypes.client
-IAccessible = comtypes.client.GetModule('oleacc.dll').IAccessible
+
+IAccessible = comtypes.client.GetModule("oleacc.dll").IAccessible
 from comtypes.automation import VARIANT
 from comtypes import IUnknown, GUID
 

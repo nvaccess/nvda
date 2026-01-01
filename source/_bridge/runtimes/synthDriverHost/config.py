@@ -5,20 +5,28 @@
 
 import types
 
+
 # fixme: This is a minimal config.conf dict to allow synth drivers to initialize.
 # This should be converted to a proper proxy.
 class FakeConfDict(dict):
-	getConfigValidation = staticmethod(lambda path: types.SimpleNamespace(default='default') if path[0] == 'audio' and path[1] == 'outputDevice' else None)
+	getConfigValidation = staticmethod(
+		lambda path: types.SimpleNamespace(default="default")
+		if path[0] == "audio" and path[1] == "outputDevice"
+		else None
+	)
+
 
 conf = FakeConfDict()
-conf.update({
-	'audio': {
-		'outputDevice': 'default',
-	},
-	'speech': {
-		'useWASAPIForSAPI4': True,
-	},
-	'debugLog': {
-		'synthDriver': False,
-	},
-})
+conf.update(
+	{
+		"audio": {
+			"outputDevice": "default",
+		},
+		"speech": {
+			"useWASAPIForSAPI4": True,
+		},
+		"debugLog": {
+			"synthDriver": False,
+		},
+	}
+)
