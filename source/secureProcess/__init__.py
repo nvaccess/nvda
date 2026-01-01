@@ -134,7 +134,7 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 		parentToken = getCurrentPrimaryToken()
 		parentUserSidString = lookupTokenUserSidString(parentToken)
 		log.debug(
-			f"Preparing to launch secure process: {subprocess.list2cmdline(argv)},\noptions: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {applyUIRestrictions=}, {startSuspended=}, {hideCriticalErrorDialogs=}..."
+			f"Preparing to launch secure process: {subprocess.list2cmdline(argv)},\noptions: {integrityLevel=}, {removePrivileges=}, {removeElevation=}, {restrictToken=}, {retainUserInRestrictedToken=}, {username=}, {domain=}, {logonType=}, {isolateDesktop=}, {isolateWindowStation=}, {killOnDelete=}, {applyUIRestrictions=}, {startSuspended=}, {hideCriticalErrorDialogs=}...",
 		)
 		useSecLogon = False
 		if username:
@@ -147,7 +147,7 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 		env = createTokenEnvironmentBlock(token)
 		if removeElevation and isTokenElevated(token):
 			log.debug(
-				"Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell..."
+				"Current token is elevated but removeElevation is requested, obtaining unelevated interactive user token from shell...",
 			)
 			token = getUnelevatedCurrentInteractiveUserTokenFromShell()
 			log.debug("Successfully obtained unelevated interactive user token from shell.")
@@ -163,7 +163,7 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 			)
 		if appContainerName:
 			log.debug(
-				f"Initializing AppContainer: {appContainerName} with capabilities: {appContainerCapabilities}..."
+				f"Initializing AppContainer: {appContainerName} with capabilities: {appContainerCapabilities}...",
 			)
 			with impersonateToken(token):
 				self.appContainerInit(appContainerName, appContainerCapabilities)
@@ -189,7 +189,9 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 			log.debug("	Creating AppContainer token...")
 			acToken = HANDLE()
 			if not ctypes.windll.kernelbase.CreateAppContainerToken(
-				HANDLE(int(token)), byref(self._appContainerSecurityCapabilities), byref(acToken)
+				HANDLE(int(token)),
+				byref(self._appContainerSecurityCapabilities),
+				byref(acToken),
 			):
 				raise ctypes.WinError(ctypes.get_last_error())
 			token = pywintypes.HANDLE(acToken.value)
@@ -256,7 +258,7 @@ class SecurePopen(PopenWithToken, PopenInAppContainerMixin):
 					except (PermissionError, FileNotFoundError):
 						cwd = env["TEMP"]
 						log.debug(
-							f"Parent working directory not accessible for child process. Using {cwd}..."
+							f"Parent working directory not accessible for child process. Using {cwd}...",
 						)
 		if extraEnv:
 			for key, value in extraEnv.items():

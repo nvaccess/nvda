@@ -12,7 +12,7 @@ class FakeConfDict(dict):
 	getConfigValidation = staticmethod(
 		lambda path: types.SimpleNamespace(default="default")
 		if path[0] == "audio" and path[1] == "outputDevice"
-		else None
+		else None,
 	)
 
 
@@ -28,5 +28,5 @@ conf.update(
 		"debugLog": {
 			"synthDriver": False,
 		},
-	}
+	},
 )

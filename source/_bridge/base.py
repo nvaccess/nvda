@@ -39,7 +39,7 @@ class Service(rpyc.Service):
 		if not name:
 			name = f"Dependent service '{localService.__class__.__name__}' of '{self.__class__.__name__}'"
 		log.debug(
-			f"Creating dependent connection: {name} on Service {self}, using service {localService} as root"
+			f"Creating dependent connection: {name} on Service {self}, using service {localService} as root",
 		)
 		if not self._childProcess:
 			raise RuntimeError("This service is not associated with a child process.")
@@ -136,7 +136,11 @@ class Proxy[Service_t: Service]:
 		self._heldConnections.append(conn)
 
 	def _connectToDependentServiceOverPipes(
-		self, r_handle: int, w_handle: int, localService: Service | None = None, name: str = "unknown"
+		self,
+		r_handle: int,
+		w_handle: int,
+		localService: Service | None = None,
+		name: str = "unknown",
 	) -> Service:
 		log.debug(f"	Connecting to dependent service over pipes: {name} on Proxy {self}")
 		stream = PipeStream(r_handle, w_handle)

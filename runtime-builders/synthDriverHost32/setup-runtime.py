@@ -12,7 +12,7 @@ import sys
 nvdaSourceDir = "../../source"
 runtimeSourceDir = "../../source/_bridge/runtimes/synthDriverHost"
 runtimeName = "synthDriverHost"
-runtimeDestDir = f"dist"
+runtimeDestDir = "dist"
 
 
 sys.path.insert(0, nvdaSourceDir)

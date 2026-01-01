@@ -81,7 +81,10 @@ class WavePlayerFeederService(Service):
 
 	@Service.exposed
 	def feed(
-		self, data: bytes, size: typing.Optional[int] = None, onDone: typing.Optional[typing.Callable] = None
+		self,
+		data: bytes,
+		size: typing.Optional[int] = None,
+		onDone: typing.Optional[typing.Callable] = None,
 	) -> None:
 		if onDone:
 

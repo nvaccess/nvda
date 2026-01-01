@@ -174,14 +174,23 @@ class BasicPopen:
 				raise RuntimeError(f"Failed to get attribute list size, {ctypes.WinError()}")
 			attribsBuf = OnDelete(ctypes.c_buffer(attribsBufSize.value), DeleteProcThreadAttributeList)
 			if not InitializeProcThreadAttributeList(
-				attribsBuf.value, len(procThreadAttributes), 0, byref(attribsBufSize)
+				attribsBuf.value,
+				len(procThreadAttributes),
+				0,
+				byref(attribsBufSize),
 			):
 				raise RuntimeError(f"Failed to initialize attribute list, {ctypes.WinError()}")
 			log.debug(f"Initialized proc thread attributes, size ={attribsBufSize.value}")
 			for attrib, val in procThreadAttributes.items():
 				log.debug(f"Updating proc thread attribute: {attrib.name}")
 				if not UpdateProcThreadAttribute(
-					attribsBuf.value, 0, attrib, byref(val), sizeof(val), None, None
+					attribsBuf.value,
+					0,
+					attrib,
+					byref(val),
+					sizeof(val),
+					None,
+					None,
 				):
 					raise RuntimeError(f"Failed to update attribute list, {ctypes.WinError()}")
 			siEx.lpAttributeList = cast(attribsBuf.value, LPVOID)
@@ -518,22 +527,28 @@ class PopenInAppContainerMixin(BasicPopen):
 	def appContainerInit(self, appContainerName: str, appContainerCapabilities: list[str]):
 		appContainerSid = makeAutoFree(PSID, FreeSid)()
 		res = ctypes.windll.userenv.CreateAppContainerProfile(
-			appContainerName, appContainerName, appContainerName, None, 0, byref(appContainerSid)
+			appContainerName,
+			appContainerName,
+			appContainerName,
+			None,
+			0,
+			byref(appContainerSid),
 		)
 		if res == HRESULT_FROM_WIN32(winerror.ERROR_ALREADY_EXISTS):
 			log.debug("AppContainer already exists")
 		elif res < 0:
 			raise RuntimeError(
-				f"Failed to create AppContainer profile {appContainerName}, {ctypes.WinError()}"
+				f"Failed to create AppContainer profile {appContainerName}, {ctypes.WinError()}",
 			)
 		if (
 			ctypes.windll.userenv.DeriveAppContainerSidFromAppContainerName(
-				appContainerName, byref(appContainerSid)
+				appContainerName,
+				byref(appContainerSid),
 			)
 			< 0
 		):
 			raise RuntimeError(
-				f"Failed to derive AppContainer SID from name {appContainerName}, {ctypes.WinError()}"
+				f"Failed to derive AppContainer SID from name {appContainerName}, {ctypes.WinError()}",
 			)
 		appContainerSidString = makeAutoFree(LPWSTR, LocalFree)()
 		if not ConvertSidToStringSid(appContainerSid, byref(appContainerSidString)):
@@ -563,7 +578,7 @@ class PopenInAppContainerMixin(BasicPopen):
 					byref(appSidsCount),
 				):
 					raise RuntimeError(
-						f"Failed to derive capability SID for capability name {name}, {ctypes.WinError()}"
+						f"Failed to derive capability SID for capability name {name}, {ctypes.WinError()}",
 					)
 				for i in range(groupSidsCount.value):
 					psid = makeAutoFree(PSID, LocalFree)(groupSids[i])

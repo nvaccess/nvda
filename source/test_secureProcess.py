@@ -63,7 +63,10 @@ def main():
 		action="store_true",
 	)
 	parser.add_argument(
-		"-p", "--remove-privileges", help="Remove privileges from the token", action="store_true"
+		"-p",
+		"--remove-privileges",
+		help="Remove privileges from the token",
+		action="store_true",
 	)
 	parser.add_argument(
 		"-re",
@@ -82,7 +85,10 @@ def main():
 		default="interactive",
 	)
 	parser.add_argument(
-		"-td", "--temp-desktop", help="Create a temporary desktop for the process", action="store_true"
+		"-td",
+		"--temp-desktop",
+		help="Create a temporary desktop for the process",
+		action="store_true",
 	)
 	parser.add_argument(
 		"-tw",
@@ -97,10 +103,16 @@ def main():
 		action="store_true",
 	)
 	parser.add_argument(
-		"-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true"
+		"-ui",
+		"--ui-restrictions",
+		help="Apply UI restrictions to the launched process",
+		action="store_true",
 	)
 	parser.add_argument(
-		"-acn", "--app-container-name", help="Run the process in the specified AppContainer", default=None
+		"-acn",
+		"--app-container-name",
+		help="Run the process in the specified AppContainer",
+		default=None,
 	)
 	parser.add_argument(
 		"-acc",
@@ -111,7 +123,10 @@ def main():
 	)
 	parser.add_argument("-nw", "--no-window", help="Create the process without a window", action="store_true")
 	parser.add_argument(
-		"-rh", "--redirect-handles", help="Redirect stdin/stdout/stderr handles", action="store_true"
+		"-rh",
+		"--redirect-handles",
+		help="Redirect stdin/stdout/stderr handles",
+		action="store_true",
 	)
 	parser.add_argument(
 		"-py",

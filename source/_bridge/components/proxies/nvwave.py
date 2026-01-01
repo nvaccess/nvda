@@ -43,13 +43,18 @@ class WavePlayerProxy(Proxy):
 		# log.debug("setVolume end")
 
 	def feed(
-		self, data: bytes, size: typing.Optional[int] = None, onDone: typing.Optional[typing.Callable] = None
+		self,
+		data: bytes,
+		size: typing.Optional[int] = None,
+		onDone: typing.Optional[typing.Callable] = None,
 	) -> None:
 		if not self._remoteWavePlayerFeederService:
 			log.debug("Creating WavePlayerFeeder service connection for WavePlayerProxy")
 			r_handle, w_handle = self._remoteService.createWavePlayerFeederServiceConnection()
 			self._remoteWavePlayerFeederService = self._connectToDependentServiceOverPipes(
-				r_handle, w_handle, name="WavePlayerFeeder for WavePlayer on Proxy"
+				r_handle,
+				w_handle,
+				name="WavePlayerFeeder for WavePlayer on Proxy",
 			)
 		log.debug("feed start")
 		if isinstance(data, ctypes.Array):

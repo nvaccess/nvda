@@ -73,7 +73,10 @@ allowedRestrictedSids = {
 
 
 def createRestrictedToken(
-	token, removePrivilages: bool = True, retainUser: bool = False, includeExtraSidStrings: list[str] = []
+	token,
+	removePrivilages: bool = True,
+	retainUser: bool = False,
+	includeExtraSidStrings: list[str] = [],
 ):
 	"""Create a new restricted token based on an existing token.
 

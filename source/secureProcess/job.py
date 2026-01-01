@@ -54,7 +54,10 @@ class Job:
 		limitInfo = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
 		limitInfo.BasicLimitInformation.LimitFlags = basicLimitFlags
 		if not SetInformationJobObject(
-			self._hJob, JOBOBJECTINFOCLASS.ExtendedLimitInformation, byref(limitInfo), sizeof(limitInfo)
+			self._hJob,
+			JOBOBJECTINFOCLASS.ExtendedLimitInformation,
+			byref(limitInfo),
+			sizeof(limitInfo),
 		):
 			raise RuntimeError(f"Failed to set job object information, {ctypes.WinError()}")
 
@@ -63,7 +66,10 @@ class Job:
 		uiRestrictions = JOBOBJECT_BASIC_UI_RESTRICTIONS()
 		uiRestrictions.UIRestrictionsClass = uiLimitFlags
 		if not SetInformationJobObject(
-			self._hJob, JOBOBJECTINFOCLASS.BasicUIRestrictions, byref(uiRestrictions), sizeof(uiRestrictions)
+			self._hJob,
+			JOBOBJECTINFOCLASS.BasicUIRestrictions,
+			byref(uiRestrictions),
+			sizeof(uiRestrictions),
 		):
 			raise RuntimeError(f"Failed to set job object UI restrictions, {ctypes.WinError()}")
 

@@ -52,7 +52,11 @@ class LogHandlerProxy(Proxy, logHandler.Logger):
 				stack_info = traceback.extract_stack(frame)
 				msg += "\nStack trace:\n" + ("".join(traceback.format_list(stack_info)).rstrip())
 		self._remoteService.logMessage(
-			level, msg, exc_info=bool(exc_info), stack_info=bool(stack_info), codepath=codepath
+			level,
+			msg,
+			exc_info=bool(exc_info),
+			stack_info=bool(stack_info),
+			codepath=codepath,
 		)
 
 	def getEffectiveLevel(self):

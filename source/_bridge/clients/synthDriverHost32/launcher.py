@@ -64,7 +64,8 @@ class NVDAService(Service):
 
 
 _hostExe = os.path.join(
-	NVDAState.ReadPaths.versionedLibX86Path, "synthDriverHost-runtime/nvda_synthDriverHost.exe"
+	NVDAState.ReadPaths.versionedLibX86Path,
+	"synthDriverHost-runtime/nvda_synthDriverHost.exe",
 )
 
 

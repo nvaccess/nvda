@@ -111,13 +111,13 @@ class SynthDriverService(Service):
 	def terminate(self):
 		if self._synthIndexReachedCallback:
 			log.debug(
-				f"Unregistering synthIndexReached callback for {self._synth.name} of SynthDriverService"
+				f"Unregistering synthIndexReached callback for {self._synth.name} of SynthDriverService",
 			)
 			synthIndexReached.unregister(self._synthIndexReachedCallback)
 			self._synthIndexReachedCallback = None
 		if self._synthDoneSpeakingCallback:
 			log.debug(
-				f"Unregistering synthDoneSpeaking callback for {self._synth.name} of SynthDriverService"
+				f"Unregistering synthDoneSpeaking callback for {self._synth.name} of SynthDriverService",
 			)
 			synthDoneSpeaking.unregister(self._synthDoneSpeakingCallback)
 			self._synthDoneSpeakingCallback = None
