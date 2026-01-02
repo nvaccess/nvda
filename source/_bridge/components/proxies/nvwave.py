@@ -89,4 +89,4 @@ class WavePlayerProxy(Proxy):
 	def close(self):
 		# log.debug("close start")
 		self._remoteService.close()
-			# log.debug("close end")
+		# log.debug("close end")
