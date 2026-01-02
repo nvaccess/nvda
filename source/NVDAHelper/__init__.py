@@ -35,6 +35,7 @@ from ctypes import (
 from winBindings import user32
 import winBindings.oleaut32
 import winBindings.kernel32
+import winBindings.winnt
 import winBindings.advapi32
 import winBindings.rpcrt4
 import winBindings.shlwapi
@@ -736,7 +737,7 @@ class _RemoteLoader:
 		with open("nul", "wb") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
-		si = winBindings.advapi32.STARTUPINFO(
+		si = winBindings.winnt.STARTUPINFO(
 			dwFlags=winKernel.STARTF_USESTDHANDLES,
 			hSTDInput=pipeRead,
 			hSTDOutput=nulHandle,

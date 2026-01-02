@@ -20,6 +20,7 @@ Import(
 	[
 		"thirdPartyEnv",
 		"sourceDir",
+		"sonicLib",
 	]
 )
 
@@ -1043,16 +1044,6 @@ def espeak_compileDict_buildAction(
 		espeak.espeak_Terminate()
 	return ACTION_SUCCESS
 
-
-sonicLib = env.SharedLibrary(
-	target="sonic",
-	srcdir=sonicSrcDir.abspath,
-	source=[
-		"sonic.c",
-		Dir(".").File("sonic.def"),
-	],
-)
-
 espeakLib = env.SharedLibrary(
 	target="espeak",
 	srcdir=espeakSrcDir.Dir("libespeak-ng").abspath,
@@ -1112,7 +1103,7 @@ espeakLib = env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 	],
-	LIBS=["advapi32", "sonic"],
+	LIBS=["advapi32", sonicLib[2]] ,
 	LIBPATH=".",
 )
 
@@ -1164,7 +1155,6 @@ for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	)
 
 env.Install(synthDriversDir, espeakLib)
-env.Install(synthDriversDir, sonicLib)
 
 # install espeak-ng-data
 targetEspeakDataDir = synthDriversDir.Dir("espeak-ng-data")
