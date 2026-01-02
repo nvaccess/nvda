@@ -6,7 +6,6 @@
 from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
 import os
 from typing import TYPE_CHECKING
-import globalVars
 from logHandler import log
 
 if TYPE_CHECKING:

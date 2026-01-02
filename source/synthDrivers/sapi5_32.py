@@ -4,16 +4,15 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
-from comtypes import GUID
 import winreg
-from _bridge.components.proxies.synthDriver import SynthDriverProxy
 from _bridge.clients.synthDriverHost32.synthDriver import SynthDriverProxy32
 import globalVars
+
 
 class SynthDriver(SynthDriverProxy32):
 	name = "sapi5_32"
 	description = "Microsoft Speech API version 5 (32 bit proxy)"
-	synthDriver32Path = os.path.join(globalVars.appDir, 'synthDrivers32')
+	synthDriver32Path = os.path.join(globalVars.appDir, "synthDrivers32")
 	synthDriver32Name = "sapi5"
 
 	@classmethod
@@ -21,7 +20,9 @@ class SynthDriver(SynthDriverProxy32):
 		if not super().check():
 			return False
 		try:
-			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"sapi.spVoice", 0, winreg.KEY_READ | winreg.KEY_WOW64_32KEY).Close()
+			winreg.OpenKey(
+				winreg.HKEY_CLASSES_ROOT, r"sapi.spVoice", 0, winreg.KEY_READ | winreg.KEY_WOW64_32KEY
+			).Close()
 			return True
 		except WindowsError:
 			return False

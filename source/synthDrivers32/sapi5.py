@@ -29,7 +29,8 @@ import winBindings.ole32
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
 import comtypes.client
-comtypes.client.GetModule('C:\\WINDOWS\\System32\\Speech\\Common\\sapi.dll')
+
+comtypes.client.GetModule("C:\\WINDOWS\\System32\\Speech\\Common\\sapi.dll")
 from comtypes.gen.SpeechLib import (
 	ISpAudio,
 	ISpEventSource,
