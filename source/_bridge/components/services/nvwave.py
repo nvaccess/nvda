@@ -58,6 +58,10 @@ class WavePlayerService(Service):
 		self._player.stop()
 
 	@Service.exposed
+	def idle(self):
+		self._player.idle()
+
+	@Service.exposed
 	def close(self):
 		self._player.close()
 
@@ -95,6 +99,10 @@ class WavePlayerFeederService(Service):
 		else:
 			localOnDone = None
 		self._player.feed(data, size=size, onDone=onDone)
+
+	@Service.exposed
+	def idle(self):
+		self._player.idle()
 
 	def terminate(self):
 		log.debug("Deleting WavePlayer instance")
