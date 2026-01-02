@@ -235,6 +235,8 @@ freeze(
 			"win32event",
 			"win32file",
 			"win32pipe",
+			"audioDucking",
+			"comtypes.stream",
 		],
 	},
 	data_files=[
