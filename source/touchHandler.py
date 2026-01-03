@@ -43,6 +43,7 @@ import touchTracker
 import core
 import systemUtils
 from utils import _deprecate
+from treeInterceptorHandler import post_browseModeStateChange
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol(
@@ -93,7 +94,28 @@ POINTER_MESSAGE_FLAG_FIRSTBUTTON = 0x10
 POINTER_MESSAGE_FLAG_PRIMARY = 0x100
 POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
+def _browseModeStateChange(browseMode=False, interceptor=None, **kwargs):
+	if not handler:
+		return
 
+	webModeName = "web"
+
+	if browseMode:
+		# Entering browse mode
+		if webModeName not in availableTouchModes:
+			availableTouchModes.append(webModeName)
+
+		handler._curTouchMode = webModeName
+
+	else:
+		# Leaving browse mode
+		if webModeName in availableTouchModes:
+			availableTouchModes.remove(webModeName)
+
+		if handler._curTouchMode == webModeName:
+			handler._curTouchMode = "object"
+
+post_browseModeStateChange.register(_browseModeStateChange)
 
 class POINTER_INFO(Structure):
 	_fields_ = [

@@ -4662,6 +4662,107 @@ class GlobalCommands(ScriptableObject):
 		winUser.setCursorPos(x, y)
 		self.script_rightMouseClick(gesture)
 
+	webElements = (
+		"default",
+		"link",
+		"button",
+		"form field",
+		"heading",
+		"frame",
+		"table",
+		"list",
+		"graphic",
+		"landmark",
+	)
+
+	webBrowseMode = 0
+
+	browseModeCommands = (
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextLink,
+			browseMode.BrowseModeTreeInterceptor.script_previousLink,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextButton,
+			browseMode.BrowseModeTreeInterceptor.script_previousButton,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextFormField,
+			browseMode.BrowseModeTreeInterceptor.script_previousFormField,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextHeading,
+			browseMode.BrowseModeTreeInterceptor.script_previousHeading,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextFrame,
+			browseMode.BrowseModeTreeInterceptor.script_previousFrame,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextTable,
+			browseMode.BrowseModeTreeInterceptor.script_previousTable,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextList,
+			browseMode.BrowseModeTreeInterceptor.script_previousList,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextGraphic,
+			browseMode.BrowseModeTreeInterceptor.script_previousGraphic,
+		),
+		(
+			browseMode.BrowseModeTreeInterceptor.script_nextLandmark,
+			browseMode.BrowseModeTreeInterceptor.script_previousLandmark,
+		),
+	)
+	@scriptHandler.script(
+	description="Select next web navigation element",
+	gesture="ts(Web):flickDown",
+	)
+	def script_nextWebElement(self, gesture):
+		ti = api.getNavigatorObject().treeInterceptor
+		if not isinstance(ti, browseMode.BrowseModeTreeInterceptor):
+			return
+
+		self.webBrowseMode = (self.webBrowseMode + 1) % len(self.webElements)
+		ui.message(self.webElements[self.webBrowseMode])
+
+	@scriptHandler.script(
+	description="Select previous web navigation element",
+	gesture="ts(Web):flickUp",
+	)
+	def script_prevWebElement(self, gesture):
+		ti = api.getNavigatorObject().treeInterceptor
+		if not isinstance(ti, browseMode.BrowseModeTreeInterceptor):
+			return
+
+		self.webBrowseMode = (self.webBrowseMode - 1) % len(self.webElements)
+		ui.message(self.webElements[self.webBrowseMode])
+
+	@scriptHandler.script(gesture="ts(Web):flickRight")
+	def script_nextSelectedElement(self, gesture):
+		ti = api.getNavigatorObject().treeInterceptor
+		if not isinstance(ti, browseMode.BrowseModeTreeInterceptor):
+			return
+
+		if self.webBrowseMode == 0:
+			self.script_navigatorObject_nextInFlow(gesture)
+		else:
+			nextScript, _ = self.browseModeCommands[self.webBrowseMode - 1]
+			nextScript(ti, gesture)
+
+	@scriptHandler.script(gesture="ts(Web):flickLeft")
+	def script_prevSelectedElement(self, gesture):
+		ti = api.getNavigatorObject().treeInterceptor
+		if not isinstance(ti, browseMode.BrowseModeTreeInterceptor):
+			return
+
+		if self.webBrowseMode == 0:
+			self.script_navigatorObject_previousInFlow(gesture)
+		else:
+			_, prevScript = self.browseModeCommands[self.webBrowseMode - 1]
+			prevScript(ti, gesture)
+ 
 	@script(
 		# Translators: Describes the command to open the Configuration Profiles dialog.
 		description=_("Shows the NVDA Configuration Profiles dialog"),
