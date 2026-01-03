@@ -4715,9 +4715,10 @@ class GlobalCommands(ScriptableObject):
 			browseMode.BrowseModeTreeInterceptor.script_previousLandmark,
 		),
 	)
+
 	@scriptHandler.script(
-	description="Select next web navigation element",
-	gesture="ts(Web):flickDown",
+		description="Select next web navigation element",
+		gesture="ts(Web):flickDown",
 	)
 	def script_nextWebElement(self, gesture):
 		ti = api.getNavigatorObject().treeInterceptor
@@ -4728,8 +4729,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(self.webElements[self.webBrowseMode])
 
 	@scriptHandler.script(
-	description="Select previous web navigation element",
-	gesture="ts(Web):flickUp",
+		description="Select previous web navigation element",
+		gesture="ts(Web):flickUp",
 	)
 	def script_prevWebElement(self, gesture):
 		ti = api.getNavigatorObject().treeInterceptor
@@ -4762,7 +4763,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			_, prevScript = self.browseModeCommands[self.webBrowseMode - 1]
 			prevScript(ti, gesture)
- 
+
 	@script(
 		# Translators: Describes the command to open the Configuration Profiles dialog.
 		description=_("Shows the NVDA Configuration Profiles dialog"),
