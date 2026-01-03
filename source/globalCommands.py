@@ -5,7 +5,7 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
-# Burman's Computer and Education Ltd, Cary-rowen.
+# Burman's Computer and Education Ltd, Cary-rowen, Kefas Lungu.
 
 import itertools
 from typing import (
