@@ -9,6 +9,7 @@
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* Added touch based navigation of web elements in browse mode, allowing touch screen users to move between links, headings, form fields, landmarks and other structural elements. (#3424, #19414, @kefaslungu)
 
 ### Changes
 

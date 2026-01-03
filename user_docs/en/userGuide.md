@@ -599,13 +599,13 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode.
+The three modes are text mode, object mode and web mode.
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
 For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
 If the command does not have a mode listed, it will work in any mode.
 
 <!-- KC:beginInclude -->
-To toggle touch modes, perform a 3-finger tap.
+To switch between touch modes, perform a 3-finger tap.
 <!-- KC:endInclude -->
 
 #### Touch keyboard {#TouchKeyboard}
@@ -1049,6 +1049,33 @@ If you want to use these while still being able to use your cursor keys to read 
 <!-- KC:beginInclude -->
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 <!-- KC:endInclude -->
+
+#### Touch Navigation in Browse Mode {#BrowseModeTouch}
+
+When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing web content.
+
+When browse mode is active in supported documents such as web pages, NVDA can expose a Web touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+
+In Web touch mode, flick gestures are used to move between common web elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+
+This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
+
+##### Touch gestures in Web mode
+
+<!-- KC:beginInclude -->
+
+| Gesture     | Description                                          |
+| ----------- | ---------------------------------------------------- |
+| Flick down  | Switches to the next web navigation element type     |
+| Flick up    | Switches to the previous web navigation element type |
+| Flick right | Moves to the next element of the selected type       |
+| Flick left  | Moves to the previous element of the selected type   |
+
+<!-- KC:endInclude -->
+
+When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element.
+
+Web touch mode is only available when browse mode is active and does not affect touch navigation outside of browse mode documents.
 
 #### Text paragraph navigation command {#TextNavigationCommand}
 
