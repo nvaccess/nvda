@@ -104,6 +104,11 @@ This can be enabled using the "Report when objects support multiple selection" s
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
 
+* Dot Pad displays can now be connected via Bluetooth Low Energy (BLE) in addition to USB. (#19122, @bramd)
+  * When automatic detection is enabled, Dot Pad devices will be discovered and connected automatically when in range.
+  * No Bluetooth pairing in Windows settings is required.
+  * Bluetooth Low Energy support requires Windows 10 version 1703 (Creators Update) or later.
+
 ### Changes
 
 * NVDA no longer supports Windows 8.1.
