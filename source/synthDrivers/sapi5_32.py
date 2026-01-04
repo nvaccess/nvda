@@ -21,7 +21,10 @@ class SynthDriver(SynthDriverProxy32):
 			return False
 		try:
 			winreg.OpenKey(
-				winreg.HKEY_CLASSES_ROOT, r"sapi.spVoice", 0, winreg.KEY_READ | winreg.KEY_WOW64_32KEY
+				winreg.HKEY_CLASSES_ROOT,
+				r"sapi.spVoice",
+				0,
+				winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
 			).Close()
 			return True
 		except WindowsError:

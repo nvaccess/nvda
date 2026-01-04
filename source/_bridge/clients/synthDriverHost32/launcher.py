@@ -35,6 +35,7 @@ class NVDAService(Service):
 	def getAppDir(self):
 		"""Get the NVDA application directory."""
 		import globalVars
+
 		return globalVars.appDir
 
 	@Service.exposed

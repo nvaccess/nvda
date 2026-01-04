@@ -30,7 +30,7 @@ import time
 import garbageHandler
 import wave
 import config
-from logHandler import log, getOnErrorSoundRequested
+from logHandler import getOnErrorSoundRequested
 import os.path
 import extensionPoints
 import wasapi

@@ -12,7 +12,6 @@ from logHandler import log
 
 
 class _WorkItem:
-
 	def __init__(self, time: float, ID: int, callable, args, kwargs):
 		self.time = time
 		self.ID = ID
@@ -27,12 +26,11 @@ class _WorkItem:
 
 
 class Core:
-
 	_workIDFactory: itertools.count
 	_workItems: list[_WorkItem]
 	_workItemsLock: threading.Lock
 	_wake: threading.Event
-	_stopped : bool = False
+	_stopped: bool = False
 
 	def __init__(self):
 		self._workIDFactory = itertools.count()
@@ -90,6 +88,7 @@ def callLater(delay, callable, *args, **kwargs):
 	log.debug(f"Scheduling callLater: {callable} to run in {delay} seconds")
 	_core.schedule(delay / 1000, callable, *args, **kwargs)
 
+
 def requestStop():
 	if _core is None:
 		raise RuntimeError("Core not initialized")
@@ -101,6 +100,7 @@ def _runSynthDriverHost():
 	log.debug("Starting synthDriverHost runtime thread")
 	try:
 		import synthDriverHost
+
 		synthDriverHost.main()
 	finally:
 		requestStop()

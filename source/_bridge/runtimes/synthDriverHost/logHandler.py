@@ -33,6 +33,8 @@ log.debugWarning = log.debug
 
 
 _onErrorSoundRequested: "extensionPoints.Action | None" = None
+
+
 def getOnErrorSoundRequested() -> "extensionPoints.Action":
 	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it."""
 
