@@ -56,7 +56,7 @@ class Service(rpyc.Service):
 		return r_handle.value, w_handle.value
 
 	@classmethod
-	def exposed(cls, func: Callable):
+	def exposed[ResType](cls, func: Callable[..., ResType]) -> Callable[..., ResType]:
 		func = rpyc.exposed(func)
 
 		@functools.wraps(func)

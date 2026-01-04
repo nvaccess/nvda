@@ -18,7 +18,7 @@ logging.getLogger("comtypes").setLevel(logging.INFO)
 
 try:
 	gettext.install("nvda", names=["pgettext", "npgettext", "ngettext"])
-	import synthDriverHost
-	synthDriverHost.main()
+	import core
+	core.main()
 except Exception:
 	log.exception("Unhandled exception")

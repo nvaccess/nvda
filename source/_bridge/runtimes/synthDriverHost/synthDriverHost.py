@@ -5,11 +5,14 @@
 
 from __future__ import annotations
 import typing
+from functools import cached_property
 import sys
 import importlib
 import rpyc
 from rpyc.core.stream import PipeStream
 from _bridge.components.services.synthDriver import SynthDriverService
+
+
 
 if typing.TYPE_CHECKING:
 	from _bridge.clients.synthDriverHost32.launcher import NVDAService
@@ -52,13 +55,25 @@ class HostService(Service):
 		:returns: None
 		"""
 		log.debug("Installing proxies from remote NVDAService")
+		import NVDAState
+		isRunningAsSource = remoteService.isRunningAsSource()
+		NVDAState.isRunningAsSource = lambda: isRunningAsSource
+		class _ReadPaths(NVDAState._ReadPaths):
+			@property
+			def versionedLibPath(self) -> str:
+				if not hasattr(self, "_versionedLibPath"):
+					self._versionedLibPath = remoteService.getVersionedLibPath()
+				return self._versionedLibPath
+		NVDAState.ReadPaths = _ReadPaths()
+		import globalVars
+		globalVars.appDir = remoteService.getAppDir()
 		log.debug("Injecting languageHandler.getLanguage")
 		import languageHandler
-
 		languageHandler.getLanguage = remoteService.getLanguage
 		log.debug("Injecting WavePlayerProxy into nvwave module")
 		from _bridge.components.proxies.nvwave import WavePlayerProxy
 		import nvwave
+		nvwave.initialize()
 
 		RemoteWavePlayerClass = remoteService.WavePlayer
 
@@ -66,7 +81,7 @@ class HostService(Service):
 			def __init__(self, *args, **kwargs):
 				super().__init__(RemoteWavePlayerClass, *args, **kwargs)
 
-		nvwave.WavePlayer = BoundWavePlayerProxy
+		#nvwave.WavePlayer = BoundWavePlayerProxy
 
 	@Service.exposed
 	def registerSynthDriversPath(self, path: str):

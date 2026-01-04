@@ -21,9 +21,12 @@ conf.update(
 	{
 		"audio": {
 			"outputDevice": "default",
+			"audioAwakeTime": 30,
+			"whiteNoiseVolume": 0,
 		},
 		"speech": {
 			"useWASAPIForSAPI4": True,
+			"trimLeadingSilence": True,
 		},
 		"debugLog": {
 			"synthDriver": False,

@@ -30,3 +30,16 @@ def record_factory(*args, **kwargs):
 
 log = logging.getLogger()
 log.debugWarning = log.debug
+
+
+_onErrorSoundRequested: "extensionPoints.Action | None" = None
+def getOnErrorSoundRequested() -> "extensionPoints.Action":
+	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it."""
+
+	global _onErrorSoundRequested
+
+	import extensionPoints
+
+	if not _onErrorSoundRequested:
+		_onErrorSoundRequested = extensionPoints.Action()
+	return _onErrorSoundRequested

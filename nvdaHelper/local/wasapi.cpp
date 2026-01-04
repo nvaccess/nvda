@@ -309,7 +309,7 @@ HRESULT WasapiPlayer::open(bool force) {
 	hr = disableCommunicationDucking(device);
 	if (FAILED(hr)) {
 		// Gracefully ignore failure, as disabling ducking isn't critical.
-		LOG_DEBUGWARNING(L"Couldn't disable communication ducking: " << hr);
+		//LOG_DEBUGWARNING(L"Couldn't disable communication ducking: " << hr);
 	}
 	return S_OK;
 }
@@ -607,7 +607,7 @@ void WasapiPlayer::completeStop() {
 	if (FAILED(hr)) {
 		// We must not use LOG_ERROR here because that plays a sound and we might be
 		// in the middle of stopping our sound player.
-		LOG_DEBUGWARNING(L"Couldn't reset stream: " << hr);
+		//LOG_DEBUGWARNING(L"Couldn't reset stream: " << hr);
 		// We deliberately continue here. If Reset failed, the stream is probably
 		// already cleared or unusable anyway. We should always reset our state.
 	}

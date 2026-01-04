@@ -161,7 +161,6 @@ freeze(
 			"browseMode",
 			"characterProcessing",
 			"compoundDocuments",
-			"core",
 			"cursorManager",
 			"diffHandler",
 			"displayModel",

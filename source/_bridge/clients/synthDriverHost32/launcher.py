@@ -35,13 +35,21 @@ class NVDAService(Service):
 	def getAppDir(self):
 		"""Get the NVDA application directory."""
 		import globalVars
-
 		return globalVars.appDir
 
 	@Service.exposed
 	def getLanguage(self) -> str:
 		"""Get the current NVDA language."""
 		return languageHandler.getLanguage()
+
+	@Service.exposed
+	def isRunningAsSource(self) -> bool:
+		"""Return whether NVDA is running from source."""
+		return NVDAState.isRunningAsSource()
+
+	@Service.exposed
+	def getVersionedLibPath(self) -> str:
+		return NVDAState.ReadPaths.versionedLibPath
 
 	@Service.exposed
 	def WavePlayer(
