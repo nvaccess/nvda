@@ -1083,6 +1083,7 @@ Here is a list of available commands:
 * Menu item
 * Toggle button
 * Progress bar
+* Slider
 * Reference
 * Math formula
 * Vertically aligned paragraph
