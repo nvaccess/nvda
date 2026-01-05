@@ -238,17 +238,17 @@ class FullScreenMagnifier(Magnifier):
 
 		zoom = self.zoomLevel
 		mouseX, mouseY = coordinates
-		visibleWidth = self._screenWidth / zoom
-		visibleHeight = self._screenHeight / zoom
+		visibleWidth = self._displayOrientation.width / zoom
+		visibleHeight = self._displayOrientation.height / zoom
 		margin = int(zoom * 10)
 
 		# Calculate left/top maintaining mouse relative position
-		left = mouseX - (mouseX / self._screenWidth) * (visibleWidth - margin)
-		top = mouseY - (mouseY / self._screenHeight) * (visibleHeight - margin)
+		left = mouseX - (mouseX / self._displayOrientation.width) * (visibleWidth - margin)
+		top = mouseY - (mouseY / self._displayOrientation.height) * (visibleHeight - margin)
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, self._screenWidth - visibleWidth))
-		top = max(0, min(top, self._screenHeight - visibleHeight))
+		left = max(0, min(left, self._displayOrientation.width - visibleWidth))
+		top = max(0, min(top, self._displayOrientation.height - visibleHeight))
 
 		# Return center of zoom window
 		centerX = int(left + visibleWidth / 2)

@@ -23,7 +23,6 @@ class ZoomLevel:
 	STEP_FACTOR: float = 0.5
 
 	@classmethod
-	@property
 	def zoom_range(cls) -> list[float]:
 		"""
 		Return the list of available zoom levels.
@@ -34,7 +33,6 @@ class ZoomLevel:
 		return [i * cls.STEP_FACTOR for i in range(start, end + 1)]
 
 	@classmethod
-	@property
 	def zoom_strings(cls) -> list[str]:
 		"""
 		Return localized zoom level strings.

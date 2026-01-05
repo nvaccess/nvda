@@ -93,7 +93,7 @@ class SpotlightManager:
 
 		self._animationStepsList = self._computeAnimationSteps(
 			self._currentZoomLevel,
-			target.zoom,
+			target.zoomLevel,
 			self._currentCoordinates,
 			target.coordinates,
 		)

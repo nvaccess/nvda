@@ -53,23 +53,23 @@ def toggleMagnifier() -> None:
 			),
 		)
 		return
+	else:
+		initialize()
 
-	initialize()
+		filter = getDefaultFilter()
+		fullscreenMode = getDefaultFullscreenMode()
 
-	filter = getDefaultFilter()
-	fullscreenMode = getDefaultFullscreenMode()
-
-	ui.message(
-		pgettext(
-			"magnifier",
-			# Translators: Message announced when starting the NVDA magnifier.
-			"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-		).format(
-			zoomLevel=getDefaultZoomLevelString(),
-			filter=filter.displayString,
-			fullscreenMode=fullscreenMode.displayString,
-		),
-	)
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when starting the NVDA magnifier.
+				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+			).format(
+				zoomLevel=getDefaultZoomLevelString(),
+				filter=filter.displayString,
+				fullscreenMode=fullscreenMode.displayString,
+			),
+		)
 
 
 def zoomIn() -> None:
