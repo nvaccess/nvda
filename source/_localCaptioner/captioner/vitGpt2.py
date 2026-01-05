@@ -52,6 +52,8 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""
 		# Import late to avoid importing numpy at initialization
 		import onnxruntime as ort
+		from .winMl import WinML
+		WinML().register_execution_providers_to_ort()
 
 		# Load configuration file
 		try:
