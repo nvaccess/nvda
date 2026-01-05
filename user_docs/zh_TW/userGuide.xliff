@@ -6555,7 +6555,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.</source>
-        <target>NVDA 著作權 2006-2024 是歸屬於 NVDA 貢獻者所有。</target>
+        <target>NVDA 著作權 NVDA_COPYRIGHT_YEARS 是歸屬於 NVDA 貢獻者所有。</target>
       </segment>
     </unit>
     <unit id="c60a05d2-e4d3-4c64-b82e-0bc241a0033d">
@@ -14301,9 +14301,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1234</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.</source>
-        <target>以下摘要列出對於想要快速開始瀏覽數學內容的使用者最有用的指令。</target>
+        <target>以下摘要列出對於想要快速開始導覽數學內容的使用者最有用的指令。</target>
       </segment>
     </unit>
     <unit id="4bb7c863-f098-42c9-a95a-0ef2699a08f6">
@@ -14351,27 +14351,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1240</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>`shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.</source>
-        <target>shift+向向鍵` / `shift+向下鍵` 將切換瀏覽模式，這將在下一節中更詳細地說明。</target>
+        <target>`Shift+向上鍵` / `Shift+向下鍵`將切換導覽模式，這將在下一節中更詳細地說明。</target>
       </segment>
     </unit>
     <unit id="f1b5cd76-14e0-4877-96b0-eea3e5b43148">
       <notes>
         <note appliesTo="source">line: 1242</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>To start navigation: press `NVDA+alt+m` or `space` to enter math navigation mode, press `esc` to exit.</source>
-        <target>若要開始瀏覽: 按下 NVDA+alt+m 或 space 進入數學瀏覽模式，按下 esc 退出。</target>
+        <target>若要開始導覽: 按下 NVDA+alt+m 或 space 進入數學導覽模式，按下 esc 退出。</target>
       </segment>
     </unit>
     <unit id="b54b2175-0b47-4e68-b909-b2f176d1a6f0">
       <notes>
         <note appliesTo="source">line: 1244</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>MathCAT's navigation is the same in Microsoft Word and in a web browser.</source>
-        <target>MathCAT 的瀏覽操作在 Microsoft Word 和網頁瀏覽器中皆相同。</target>
+        <target>MathCAT 的導覽操作在 Microsoft Word 和網頁瀏覽器中皆相同。</target>
       </segment>
     </unit>
     <unit id="79335c85-92da-42f2-b69b-034444122d24">
@@ -14380,16 +14380,16 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>While navigating an expression, `control+c` copies the math content of the current node in NVDA.</source>
-        <target>在瀏覽算式時，`control+c` 會複製 NVDA 中目前物件的數學內容。</target>
+        <target>在導覽算式時，`control+c` 會複製 NVDA 中目前物件的數學內容。</target>
       </segment>
     </unit>
     <unit id="2be65653-29b7-4194-96f7-9a3fb778c48e">
       <notes>
         <note appliesTo="source">line: 1247</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>The format of the math copied to the clipboard can be adjusted through the [math settings panel](#MathSettings).</source>
-        <target>複製到剪貼簿的數學格式可透過 [數學設定](#MathSettings) 進行調整。</target>
+        <target>複製到剪貼簿的數學格式可透過[數學設定](#MathSettings)進行調整。</target>
       </segment>
     </unit>
     <unit id="9d8f3560-08c4-490b-9d78-4040311d66f2">
@@ -14911,9 +14911,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1307</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>`control+alt+arrow` is used to move around tabular entries.</source>
-        <target>control+alt+方向鍵 用於在表格項目間移動。</target>
+        <target>Ctrl+Alt+方向鍵 用於在表格項目間移動。</target>
       </segment>
     </unit>
     <unit id="490f33d8-383f-4ccd-8fe7-279c39f78bf9">
@@ -14922,7 +14922,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>Backspace will take you back to where you were, which is not always the same as moving to the left.</source>
-        <target>Backspace 會帶您回到剛才的位置，這與向左移動並不總是相同。</target>
+        <target>Backspace 會帶您回到剛才的位置，這與向左移動並不總是相同，</target>
       </segment>
     </unit>
     <unit id="046670df-b519-427c-b76b-000103de1188">
@@ -14965,9 +14965,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1315</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>This is useful because each mode of navigation has its strengths and weaknesses.</source>
-        <target>這很有用，因為每種導覽模式都有其優缺點。</target>
+        <target>由於每種導覽模式都有其優缺點，因此這方式很有用。</target>
       </segment>
     </unit>
     <unit id="8fbc04ab-c5bf-4d7d-a0b8-2b1ab7d15e9b">
@@ -16475,18 +16475,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1504</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>When Screen Curtain is enabled, features that rely on what is literally on screen will not function.</source>
-        <target>當螢幕簾幕啟用時，依賴螢幕實際顯示內容的功能將無法運作。</target>
+        <target>當螢幕簾幕啟用時，依賴螢幕實際顯示內容的功能將無法運作，</target>
       </segment>
     </unit>
     <unit id="02c2503a-715a-42d4-b2f4-b5c27dfc1369">
       <notes>
         <note appliesTo="source">line: 1505</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>For example, you cannot [use OCR](#Win10Ocr) or [get AI image descriptions](#LocalCaptioner).</source>
-        <target>例如，您無法 [使用 OCR](#Win10Ocr) 或 [取得 AI 影像描述](#LocalCaptioner)。</target>
+        <target>例如，您無法[使用 OCR](#Win10Ocr) 或[取得 AI 影像描述](#LocalCaptioner)。</target>
       </segment>
     </unit>
     <unit id="186924d2-4574-4f54-88c8-f203e6b33288">
@@ -16502,9 +16502,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1508</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.</source>
-        <target>請注意，當啟用 Windows 放大鏡並使用螢幕色彩對換時無法啟用螢幕簾幕。</target>
+        <target>請注意，當啟用 Windows 放大鏡並使用螢幕色彩反轉時無法啟用螢幕簾幕。</target>
       </segment>
     </unit>
     <unit id="db268119-b152-4431-bbe7-44da8add31e6">
@@ -22774,9 +22774,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2598</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>This option enables and disables the [Screen Curtain](#VisionScreenCurtain).</source>
-        <target>此選項可啟用或停用 [螢幕簾幕](#VisionScreenCurtain)。</target>
+        <target>此選項可啟用或停用[螢幕簾幕](#VisionScreenCurtain)。</target>
       </segment>
     </unit>
     <unit id="52efba1d-226c-4ae2-963e-f6a59d6a1e33">
@@ -22794,7 +22794,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>By default, when you check this box, a warning that your screen will become black after activation will be displayed.</source>
-        <target>預設情況下，當您勾選此核取方塊時，會顯示警告，提示啟用後您的螢幕將變黑。</target>
+        <target>預設情況下，當您勾選此核取方塊時，會顯示警告，提示啟用後您的螢幕將變黑，</target>
       </segment>
     </unit>
     <unit id="17a0b989-d376-4182-a3d4-e068071eee59">
@@ -22803,16 +22803,16 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>Before continuing, ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.</source>
-        <target>在繼續之前，請確定您已啟用語音或點字，且在不使用螢幕的情況下仍可以控制電腦。</target>
+        <target>在繼續之前，請確定您已啟用語音或點字，且在不使用螢幕的情況下仍可以控制電腦，</target>
       </segment>
     </unit>
     <unit id="2955889d-6d6f-43a4-a2c2-b8d32275453b">
       <notes>
         <note appliesTo="source">line: 2603</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>If you are sure, you can choose the "Yes" button to enable Screen Curtain.</source>
-        <target>若已確定，就可以選擇「是」按鈕來啟用螢幕簾幕。</target>
+        <target>若您已確定，就可以選擇「是」按鈕來啟用螢幕簾幕。</target>
       </segment>
     </unit>
     <unit id="7d556623-8f06-4c9d-91b8-30f9a21f68a3">
@@ -22839,7 +22839,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#ScreenCurtainWarnOnLoad}</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Always show a warning when loading Screen Curtain</source>
         <target>啟用螢幕簾幕時總是顯示警告</target>
       </segment>
@@ -22848,9 +22848,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2609</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>This option controls whether a warning dialog is displayed when enabling the [Screen Curtain](#VisionScreenCurtain).</source>
-        <target>此選項控制啟用 [螢幕簾幕](#VisionScreenCurtain) 時是否顯示警告對話框。</target>
+        <target>此選項控制啟用[螢幕簾幕](#VisionScreenCurtain) 時是否顯示警告對話框，</target>
       </segment>
     </unit>
     <unit id="9713cee5-a6bd-408d-aeee-551f450f8992">
@@ -22895,9 +22895,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2618</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>By default, sounds are played when Screen Curtain is toggled.</source>
-        <target>預設情況下，當切換螢幕簾幕時會播放音效。</target>
+        <target>預設情況下，當切換螢幕簾幕時會播放音效，</target>
       </segment>
     </unit>
     <unit id="3d6eba1d-3ac8-4ef0-9b7a-3f2c6d9db788">
@@ -25397,7 +25397,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Automatic focus mode for focus changes</source>
-        <target>焦點改變時自動切換焦點模式</target>
+        <target>焦點改變時自動切換為焦點模式</target>
       </segment>
     </unit>
     <unit id="427c083e-ca32-4f5c-83cb-c985e14b45a6">
@@ -25426,7 +25426,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Automatic focus mode for caret movement</source>
-        <target>游標移動時自動切換焦點模式</target>
+        <target>游標移動時自動切換為焦點模式</target>
       </segment>
     </unit>
     <unit id="46641c37-bd81-4c45-89ba-002ea998402c">
@@ -26638,7 +26638,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>ClearSpeak was developed by the Educational Testing Service (ETS) for use on high-stakes tests such as national standardized testing.</source>
-        <target>ClearSpeak 是由美國教育測驗服務社 (ETS) 開發，用於高利害考試，例如國家標準化測驗。</target>
+        <target>ClearSpeak 是由美國 Educational Testing Service (ETS) 開發，用於重大考試，例如國家標準化測驗。</target>
       </segment>
     </unit>
     <unit id="0dbd37ce-0d85-4b9f-ac76-2405614d813d">
@@ -26715,7 +26715,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> Expression | LiteralSpeak | SimpleSpeak | ClearSpeak </source>
-        <target> 算式 | LiteralSpeak | SimpleSpeak | ClearSpeak </target>
+        <target> 算式 | 字面描述 | 簡化描述 | 清晰描述 </target>
       </segment>
     </unit>
     <unit id="e0a0e84f-7524-4b40-bfd4-fa9e66c4ce1e">
@@ -27084,7 +27084,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>"Simple" mode walks by character to find things like fractions, roots, and scripts.</source>
-        <target>「簡單」模式會以字元為單位移動，用以尋找分式、根式及上下標等項。</target>
+        <target>「簡易」模式會以字元為單位移動，用以尋找分式、根式及上下標等項。</target>
       </segment>
     </unit>
     <unit id="3d712bdd-faab-482f-8719-130f8cc997c9">
@@ -27104,7 +27104,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> Options | Enhanced, Character, Simple </source>
-        <target> 選項 | 增強、字元、簡單 </target>
+        <target> 選項 | 增強、字元、簡易 </target>
       </segment>
     </unit>
     <unit id="509a71e8-a78d-4860-8c14-31c68b4522d7">
@@ -28373,7 +28373,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>When this checkbox is enabled, NVDA will load the image captioner in memory, enabling the use of the image description command.</source>
-        <target>啟用此核取方塊時，NVDA 會將影像字幕工具載入記憶體，以啟用影像描述指令。</target>
+        <target>啟用此核取方塊時，NVDA 會將影像描述工具載入記憶體，以啟用影像描述指令。</target>
       </segment>
     </unit>
     <unit id="172039e3-58ca-4779-921a-de434272af98">

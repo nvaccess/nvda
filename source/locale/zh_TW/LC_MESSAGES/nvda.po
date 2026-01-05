@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 00:38+0000\n"
-"PO-Revision-Date: 2025-12-29 00:19\n"
+"POT-Creation-Date: 2025-12-29 08:04+0000\n"
+"PO-Revision-Date: 2026-01-05 00:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -5723,7 +5723,7 @@ msgstr "塔加拉文"
 #: localesData.py:130
 msgctxt "languageName"
 msgid "Tonga (Tonga Islands)"
-msgstr "東加文 (東加島)"
+msgstr "東加文 (東加群島)"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:132
@@ -9395,7 +9395,7 @@ msgstr "英文 (英國) 二級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr "英文統一三級"
+msgstr "英文三級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -12375,7 +12375,7 @@ msgstr "請稍後"
 #. as addons have been added, enabled/disabled or removed.
 #: gui\addonGui.py:31
 msgid "Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "附加元件已經變更，必須重新啟動 NVDA 才能生效，您要現在重新啟動嗎？"
+msgstr "附加元件已經變更，必須重新啟動 NVDA 才能生效，您要現在重新啟動嗎?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 #: gui\addonGui.py:36
@@ -12434,14 +12434,14 @@ msgstr "附加元件安裝"
 #: gui\addonGui.py:182
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
-msgstr "您即將安裝 {summary} 版本 {newVersion} 似乎已經安裝。是否仍要更新？"
+msgstr "您即將安裝 {summary} 版本 {newVersion} 似乎已經安裝。是否仍要更新?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
 #: gui\addonGui.py:190
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
-msgstr "此附加元件的一個版本已經安裝，是否要更新 {summary} 版本 {curVersion} 到版本 {newVersion}？"
+msgstr "此附加元件的一個版本已經安裝，是否要更新 {summary} 版本 {curVersion} 到版本 {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui\addonGui.py:238
@@ -12721,7 +12721,7 @@ msgstr "這個設定檔用於:"
 msgid "This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr "這個觸發器已經和另一個設定檔建立關聯。如要繼續，將會移除原有關聯並和這個設定檔建立新的關聯。\n"
-"您確定要繼續嗎？"
+"您確定要繼續嗎?"
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
@@ -12740,7 +12740,7 @@ msgstr "建立設定檔時發生錯誤 - 可能是唯讀的檔案系統所造成
 msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
 msgstr "要編輯這個設定檔，需要以手動方式啟用它。一旦您完成編輯，需要手動停用以恢復原本的運作。\n"
-"您希望現在手動啟用設定檔嗎？"
+"您希望現在手動啟用設定檔嗎?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 #: gui\configProfiles.py:563
@@ -12796,7 +12796,7 @@ msgstr "NVDA 介面語言現在由命令列強制變更，下次重新啟動將�
 #. Translators: The label for actions list in the Exit dialog.
 #: gui\exit.py:104
 msgid "What would you like to &do?"
-msgstr "您想要做什麼？(&d)"
+msgstr "您想要做什麼?(&d)"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -12865,7 +12865,7 @@ msgstr "重設為預設值(&D)"
 msgid "Are you sure you want to reset all gestures to their factory defaults?\n\n"
 "\t\t\tAll of your user defined gestures, whether previously set or defined during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
-msgstr "您確定要將所有手勢重設為預設值嗎？\n\n"
+msgstr "您確定要將所有手勢重設為預設值嗎?\n\n"
 "\t\t\t您所有過去及現階段定義的手勢將被移除。\n"
 "\t\t\t這將無法復原。"
 
@@ -13319,7 +13319,7 @@ msgstr "設定 NVDA 更新鏡像伺服器"
 #. settings to system settings.
 #: gui\settingsDialogs.py:1004
 msgid "Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "在使用者設定目錄中偵測到附加元件，複製這些到系統設定檔可能存在安全風險，是否仍要複製設定？"
+msgstr "在使用者設定目錄中偵測到附加元件，複製這些到系統設定檔可能存在安全風險，是否仍要複製設定?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 #: gui\settingsDialogs.py:1017
@@ -13853,13 +13853,13 @@ msgstr "包含排版表格(&A)"
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2597
 msgid "Automatic focus mode for focus changes"
-msgstr "焦點改變時自動切換焦點模式"
+msgstr "焦點改變時自動切換為焦點模式"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2611
 msgid "Automatic focus mode for caret movement"
-msgstr "游標移動時自動切換焦點模式"
+msgstr "游標移動時自動切換為焦點模式"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -14004,7 +14004,7 @@ msgstr "點字"
 #: gui\settingsDialogs.py:2950
 msgctxt "math"
 msgid "Braille math code for refreshable displays"
-msgstr "點顯器的點字數學代碼"
+msgstr "點顯器的數學點字代碼"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
@@ -14450,7 +14450,7 @@ msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
 msgstr "這將使 NVDA 忘記所有先前信任的遠端存取伺服器。當連線到先前信任的未授權伺服器時，會再次詢問您是否信任其憑證。\n\n"
-"您確定要繼續嗎？此動作無法復原。"
+"您確定要繼續嗎? 此動作無法復原。"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
 #: gui\settingsDialogs.py:3966
@@ -15424,8 +15424,8 @@ msgid "In order to improve NVDA in the future, NV Access wishes to collect usage
 "Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please refer to the User Guide for a current list of all data collected.\n\n"
 "Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
 msgstr "為了改進 NVDA，NV Access 希望從執行中的 NVDA 收集使用資料。\n"
-"這些資料包括作業系統版本、NVDA 版本、語言、國別以及一些 NVDA 組態，如目前的語音合成器、點字顯示器和點字轉譯表，但不會將語音或點字的內容傳送給 NV Access。請參閱用戶指南以獲取目前所有收集資料的清單。\n\n"
-"您是否允許 NV Access 定期收集這些資料以改進 NVDA？"
+"這些資料包括作業系統版本、NVDA 版本、語言、國別以及一些 NVDA 組態，如目前的語音合成器、點字顯示器和點字轉譯表，但不會將語音或點字的內容傳送給 NV Access。請參閱使用者指南以獲取目前所有收集資料的清單。\n\n"
+"您是否允許 NV Access 定期收集這些資料以改進 NVDA?"
 
 #. Translators: Label for a submenu that allows the user to change the default update
 #. channel of the selected add-on
@@ -15637,7 +15637,7 @@ msgstr "發行日期:"
 #: gui\addonStoreGui\controls\details.py:371
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr "VirusTotal 掃描結果："
+msgstr "VirusTotal 掃描結果:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
@@ -15654,7 +15654,7 @@ msgstr[0] "在 {total} 款惡意軟體掃描程式中，有 {malicious} 款將�
 #: gui\addonStoreGui\controls\details.py:388
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr "VirusTotal 網址掃描："
+msgstr "VirusTotal 掃描 URL:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15705,7 +15705,7 @@ msgstr "安裝附加元件"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be undone."
-msgstr "您確定要從 NVDA 移除 {addon} 附加元件嗎？這將無法復原。"
+msgstr "您確定要從 NVDA 移除 {addon} 附加元件嗎? 這將無法復原。"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
 #: gui\addonStoreGui\controls\messageDialogs.py:155
@@ -15756,7 +15756,7 @@ msgstr "附加元件安裝失敗"
 msgid "Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
-msgstr "您確定要安裝此附加元件嗎？\n"
+msgstr "您確定要安裝此附加元件嗎?\n"
 "請僅安裝可以信任來源的附加元件。\n"
 "附加元件: {summary} {version}"
 
@@ -16215,13 +16215,13 @@ msgstr "下載失敗"
 #: gui\_localCaptioner\messageDialogs.py:82
 msgctxt "imageDesc"
 msgid "Image captioning download failed. Would you like to retry?"
-msgstr "影像描述下載失敗。您要重試嗎？"
+msgstr "影像描述下載失敗。您要重試嗎?"
 
 #. Translators: message when image captioning is still downloading
 #: gui\_localCaptioner\messageDialogs.py:96
 msgctxt "imageDesc"
 msgid "image captioning is still downloading, please wait..."
-msgstr "影像描述仍在下載中，請稍候……"
+msgstr "影像描述仍在下載中，請稍候..."
 
 #. Translators: title of dialog when downloading Image captioning
 #: gui\_localCaptioner\messageDialogs.py:109
@@ -16233,7 +16233,7 @@ msgstr "確認下載"
 #: gui\_localCaptioner\messageDialogs.py:113
 msgctxt "imageDesc"
 msgid "Image captioning not installed. Would you like to install (235 MB)?"
-msgstr "影像描述未安裝。您要安裝嗎 (235 MB)？"
+msgstr "影像描述未安裝。您要安裝嗎 (235 MB)?"
 
 #. Translators: The title of the dialog displayed while downloading image descriptioner.
 #: gui\_localCaptioner\messageDialogs.py:123
@@ -16266,8 +16266,8 @@ msgid "AI image descriptions are currently disabled.\n\n"
 "Warning: AI image descriptions are experimental. Do not use this feature in circumstances where inaccurate descriptions could cause harm.\n\n"
 "Would you like to temporarily enable AI image descriptions now?"
 msgstr "AI 影像描述目前已停用。\n\n"
-"警告：AI 影像描述目前為實驗性功能。請勿在不準確的描述可能造成危害的情況下使用此功能。\n\n"
-"您想要現在暫時啟用 AI 影像描述嗎？"
+"警告: AI 影像描述目前為實驗性功能。請勿在不準確的描述可能造成危害的情況下使用此功能。\n\n"
+"您想要現在暫時啟用 AI 影像描述嗎?"
 
 #. Translators: Describes a command.
 #: mathPres\__init__.py:132
@@ -16355,7 +16355,7 @@ msgstr "顯示數學點字時發生錯誤。"
 #: mathPres\MathCAT\localization.py:280
 msgctxt "math"
 msgid "Use Voice's Language (Auto)"
-msgstr "使用語音語言(自動)"
+msgstr "使用語音語言 (自動)"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -16432,7 +16432,7 @@ msgstr "增強"
 #: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
-msgstr "簡化"
+msgstr "簡易"
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
 #: mathPres\MathCAT\preferences.py:103
@@ -16489,7 +16489,7 @@ msgstr "全部"
 #: mathPres\MathCAT\preferences.py:176
 msgctxt "math"
 msgid "ClearSpeak"
-msgstr "清析描述"
+msgstr "清晰描述"
 
 #. Translators: SimpleSpeak is a speech style that tries to minimize speech by speaking simple expressions without bracketing words
 #: mathPres\MathCAT\preferences.py:178
@@ -16982,7 +16982,7 @@ msgstr "註腳參考資料: {text}"
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr "章節附註參考：{text}"
+msgstr "章節附註參考資料: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
@@ -18628,7 +18628,7 @@ msgstr "註腳參考資料 {number}: {text}"
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr "章節附註參考 {number}：{text}"
+msgstr "章節附註參考 {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18886,7 +18886,7 @@ msgstr "啟用螢幕簾幕時發生問題。您的螢幕內容仍然可見，您
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
 msgstr "啟用螢幕簾幕會使您的電腦螢幕全黑。在您繼續執行之前，請確認您可以不需要使用螢幕仍可操作電腦。\n\n"
-"您確定要繼續嗎？"
+"您確定要繼續嗎?"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 #: speech\languageHandling.py:43
@@ -19625,7 +19625,7 @@ msgstr "已拔除電源"
 #. Translators: Reported when battery time is less than 1 minute.
 #: winAPI\_powerTracking.py:228
 msgid "Less than 1 minute remaining"
-msgstr "還剩下不到 1 分鐘"
+msgstr "剩下不到 1 分鐘"
 
 #. Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".
@@ -19655,14 +19655,14 @@ msgstr "剩餘 {hourText} {minuteText}"
 #: winAPI\_powerTracking.py:265
 #, python-brace-format
 msgid "{hourText} remaining"
-msgstr "剩餘時間 {hourText}"
+msgstr "剩下 {hourText}"
 
 #. Translators: Reported when only minutes remaining for battery life.
 #. E.g. "30 minutes remaining"
 #: winAPI\_powerTracking.py:271
 #, python-brace-format
 msgid "{minuteText} remaining"
-msgstr "剩餘時間 {minuteText}"
+msgstr "剩下 {minuteText}"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: winAPI\secureDesktop.py:53
@@ -19681,13 +19681,13 @@ msgstr "無法產生描述"
 #, python-brace-format
 msgctxt "imageDesc"
 msgid "Could be: {description}"
-msgstr "可能是： {description}"
+msgstr "可能是: {description}"
 
 #. Translators: Message when starting image recognition
 #: _localCaptioner\imageDescriber.py:141
 msgctxt "imageDesc"
 msgid "getting image description..."
-msgstr "取得影像描述中……"
+msgstr "取得影像描述中..."
 
 #. Translators: error message when fail to load model
 #: _localCaptioner\imageDescriber.py:175
