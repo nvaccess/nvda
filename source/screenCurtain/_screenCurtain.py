@@ -201,14 +201,11 @@ class ScreenCurtain:
 			return
 
 		# Notify magnifier that screen curtain is being enabled
-		try:
-			import _magnifier
+		import _magnifier
 
-			magnifierInstance = _magnifier.getMagnifier()
-			if magnifierInstance:
-				magnifierInstance.onScreenCurtainEnabled()
-		except (ImportError, AttributeError):
-			log.debug("Could not notify _magnifier module")
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainEnabled()
 
 		log.debug("Enabling ScreenCurtain")
 		for attempt in range(self._MAX_ENABLE_RETRIES):

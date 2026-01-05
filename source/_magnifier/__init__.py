@@ -27,18 +27,6 @@ def initialize():
 	setMagnifier(magnifier)
 
 
-def getDisplaySize() -> tuple[int, int]:
-	"""
-	Get the primary display size
-
-	:returns: A tuple (width, height) representing the display size
-	"""
-	from winAPI._displayTracking import getPrimaryDisplayOrientation
-
-	display = getPrimaryDisplayOrientation()
-	return display.width, display.height
-
-
 def isActive() -> bool:
 	"""
 	Check if magnifier is currently active for settings

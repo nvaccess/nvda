@@ -118,8 +118,8 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		self.assertIsInstance(height, int)
 
 		# Width and height should be screen size divided by zoom
-		expectedWidth = int(magnifier._screenWidth / 2.0)
-		expectedHeight = int(magnifier._screenHeight / 2.0)
+		expectedWidth = int(magnifier._displayOrientation.width / 2.0)
+		expectedHeight = int(magnifier._displayOrientation.height / 2.0)
 
 		self.assertEqual(width, expectedWidth)
 		self.assertEqual(height, expectedHeight)
@@ -403,8 +403,8 @@ class TestSpotlightManager(unittest.TestCase):
 		# Should call _animateZoom with original zoom and mouse position
 		spotlightManager._animateZoom.assert_called_once()
 		args = spotlightManager._animateZoom.call_args[0]
-		self.assertEqual(args[0], 3.0)  # Original zoom level
-		self.assertEqual(args[1], (500, 400))  # Mouse position for CENTER mode
+		self.assertEqual(args[0].zoomLevel, 3.0)  # Original zoom level
+		self.assertEqual(args[0].coordinates, (500, 400))  # Mouse position for CENTER mode
 
 		magnifier._stopMagnifier()
 

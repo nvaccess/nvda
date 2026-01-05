@@ -1568,9 +1568,12 @@ The default color filter when the magnifier is first enabled can be configured i
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
-* **Center**: The magnified area is always centered on the current focus position. This mode keeps the focused element at the center of the screen at all times.
-* **Border**: The magnified area only moves when the focus approaches the edge of the visible area. This mode provides a more stable view, only adjusting when necessary.
-* **Relative**: The magnified area maintains the relative position of the focus within the screen. This mode mimics the behavior of the Windows Magnifier.
+* **Center**: The magnified area is always centered on the current focus position.
+This mode keeps the focused element at the center of the screen at all times.
+* **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
+This mode provides a more stable view, only adjusting when necessary.
+* **Relative**: The magnified area maintains the relative position of the focus within the screen.
+This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the focus tracking modes, press `NVDA+shift+m`.
 NVDA will announce the name of the currently selected mode.
@@ -2795,9 +2798,11 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+u
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
 The available options are:
 
-* Normal: No color modification is applied. This is the default setting.
-* Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast.
-* Inverted: Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
+| Option | Description |
+|---|---|
+| Normal | No color modification is applied. This is the default setting. |
+| Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
+| Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
 You can cycle through the color filters on the fly using `NVDA+shift+f` while the magnifier is active.
 
@@ -2806,9 +2811,11 @@ You can cycle through the color filters on the fly using `NVDA+shift+f` while th
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
 The available options are:
 
-* Center: The magnified area is always centered on the current focus position.
-* Border: The magnified area only moves when the focus approaches the edge of the visible area.
-* Relative: The magnified area maintains the relative position of the focus within the screen.
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 You can cycle through the focus modes on the fly using `NVDA+shift+m` while the magnifier is active.
 

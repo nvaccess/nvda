@@ -18,7 +18,7 @@ class MAGCOLOREFFECT(Structure):
 	Describes a color transformation matrix that a magnifier control uses to apply a color effect to magnified screen content.
 
 	.. seealso::
-	        https://learn.microsoft.com/en-us/windows/win32/api/magnification/ns-magnification-magcoloreffect
+		https://learn.microsoft.com/en-us/windows/win32/api/magnification/ns-magnification-magcoloreffect
 	"""
 
 	_fields_ = (("transform", c_float * 5 * 5),)

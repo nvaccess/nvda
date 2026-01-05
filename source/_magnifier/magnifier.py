@@ -18,7 +18,7 @@ import screenCurtain
 import winUser
 import mouseHandler
 from winAPI import _displayTracking
-from winAPI._displayTracking import getPrimaryDisplayOrientation
+from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierPosition,
 	Coordinates,
@@ -36,9 +36,7 @@ class Magnifier:
 	_MARGIN_BORDER: int = 50
 
 	def __init__(self):
-		self._screenWidth: int = 0
-		self._screenHeight: int = 0
-		self._GetScreenDisplay()
+		self._displayOrientation = getPrimaryDisplayOrientation()
 		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
@@ -134,20 +132,12 @@ class Magnifier:
 		self._filterType = value
 
 	# Functions
-	def _GetScreenDisplay(self) -> None:
-		"""
-		Get the primary display size and update screen width and height
-		"""
-		display = getPrimaryDisplayOrientation()
-		self._screenWidth = display.width
-		self._screenHeight = display.height
-
-	def _onDisplayChanged(self) -> None:
+	def _onDisplayChanged(self, newOrientation: OrientationState) -> None:
 		"""
 		Called when display configuration changes
 		"""
 		log.debug("Display configuration changed, updating screen dimensions")
-		self._GetScreenDisplay()
+		self.orientationState = newOrientation
 
 	def _startMagnifier(self) -> None:
 		"""
@@ -156,18 +146,15 @@ class Magnifier:
 		if self.isActive:
 			return
 		# Check if screen curtain is active - if so, block magnifier from starting
-		try:
-			if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-				log.debug("Screen curtain is active, cannot start magnifier")
+		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
+			log.debug("Screen curtain is active, cannot start magnifier")
 
-				message = _(
-					# Translators: Message when trying to enable magnifier while screen curtain is active
-					"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
-				)
-				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-				return
-		except ImportError:
-			log.debug("Could not import screenCurtain module")
+			message = pgettext(
+				# Translators: Message when trying to enable magnifier while screen curtain is active
+				"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+			return
 
 		self.isActive = True
 		self.currentCoordinates = self._getFocusCoordinates()
@@ -206,7 +193,7 @@ class Magnifier:
 		"""
 		if self.isActive:
 			# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-			ui.message(_("Magnifier is active, disabling it before enabling screen curtain"))
+			ui.message(pgettext("Magnifier is active, disabling it before enabling screen curtain"))
 			self._stopMagnifier()
 			self._screenCurtainIsActive = True
 		else:
@@ -219,7 +206,7 @@ class Magnifier:
 		"""
 		if self._screenCurtainIsActive:
 			# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-			ui.message(_("Magnifier was active before screen curtain, re-enabling it"))
+			ui.message(pgettext("Magnifier was active before screen curtain, re-enabling it"))
 			self._startMagnifier()
 			self._updateMagnifier()
 			self._screenCurtainIsActive = False
@@ -267,20 +254,20 @@ class Magnifier:
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		:returns MagnifierPosition: The position and size of the magnifier window
+		:return: The position and size of the magnifier window
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._screenWidth / self.zoomLevel
-		visibleHeight = self._screenHeight / self.zoomLevel
+		visibleWidth = self._displayOrientation.width / self.zoomLevel
+		visibleHeight = self._displayOrientation.height / self.zoomLevel
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (visibleWidth / 2))
 		top = int(y - (visibleHeight / 2))
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, int(self._screenWidth - visibleWidth)))
-		top = max(0, min(top, int(self._screenHeight - visibleHeight)))
+		left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
+		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
 
 		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
 
@@ -290,7 +277,7 @@ class Magnifier:
 		Tries to get the review position from NVDA's API, or the center of the navigator object
 		This part is taken from NVDA+shift+m gesture
 
-		:returns Coordinates: The (x, y) coordinates of the NVDA position
+		:return: The (x, y) coordinates of the NVDA position
 		"""
 		# Try to get the current review position object from NVDA's API
 		reviewPosition = api.getReviewPosition()
@@ -320,7 +307,7 @@ class Magnifier:
 		"""
 		Return position (x,y) of current focus element
 
-		:returns Coordinates: The (x, y) coordinates of the focus element
+		:return: The (x, y) coordinates of the focus element
 		"""
 		nvdaPosition = self._getCursorPosition()
 		mousePosition = winUser.getCursorPos()

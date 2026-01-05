@@ -23,6 +23,7 @@ class ZoomLevel:
 	STEP_FACTOR: float = 0.5
 
 	@classmethod
+	@property
 	def zoom_range(cls) -> list[float]:
 		"""
 		Return the list of available zoom levels.
@@ -33,6 +34,7 @@ class ZoomLevel:
 		return [i * cls.STEP_FACTOR for i in range(start, end + 1)]
 
 	@classmethod
+	@property
 	def zoom_strings(cls) -> list[str]:
 		"""
 		Return localized zoom level strings.
@@ -49,12 +51,27 @@ class ZoomLevel:
 def getDefaultZoomLevel() -> float:
 	"""
 	Get default zoom level from config.
+
+	:return: The default zoom level.
 	"""
 	zoomLevel = config.conf["magnifier"]["defaultZoomLevel"]
-	return float(zoomLevel)
+	return zoomLevel
 
 
-def setDefaultZoomLevel(zoomLevel: float):
+def getDefaultZoomLevelString() -> str:
+	"""
+	Get default zoom level as a formatted string.
+
+	:return: Formatted zoom level string.
+	"""
+	zoomLevel = getDefaultZoomLevel()
+	zoomValues = ZoomLevel.zoom_range()
+	zoomStrings = ZoomLevel.zoom_strings()
+	zoomIndex = zoomValues.index(zoomLevel)
+	return zoomStrings[zoomIndex]
+
+
+def setDefaultZoomLevel(zoomLevel: float) -> None:
 	"""
 	Set default zoom level from settings.
 
@@ -69,14 +86,13 @@ def setDefaultZoomLevel(zoomLevel: float):
 def getDefaultFilter() -> Filter:
 	"""
 	Get default filter from config.
+
+	:return: The default filter.
 	"""
-	filterStr = config.conf["magnifier"]["defaultFilter"]
-	for f in Filter:
-		if f.value == filterStr:
-			return f
+	return Filter(config.conf["magnifier"]["defaultFilter"])
 
 
-def setDefaultFilter(filter: Filter):
+def setDefaultFilter(filter: Filter) -> None:
 	"""
 	Set default filter from settings.
 
@@ -88,15 +104,13 @@ def setDefaultFilter(filter: Filter):
 def getDefaultFullscreenMode() -> FullScreenMode:
 	"""
 	Get default full-screen mode from config.
+
+	:return: The default full-screen mode.
 	"""
-	modeStr = config.conf["magnifier"]["defaultFullscreenMode"]
-	# Find mode by value
-	for mode in FullScreenMode:
-		if mode.value == modeStr:
-			return mode
+	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
 
 
-def setDefaultFullscreenMode(mode: FullScreenMode):
+def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
 	"""
 	Set default full-screen mode from settings.
 
@@ -108,5 +122,7 @@ def setDefaultFullscreenMode(mode: FullScreenMode):
 def shouldKeepMouseCentered() -> bool:
 	"""
 	Check if mouse pointer should be kept centered in magnifier view.
+
+	:return: True if mouse should be kept centered, False otherwise.
 	"""
 	return config.conf["magnifier"]["keepMouseCentered"]

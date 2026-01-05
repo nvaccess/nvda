@@ -10,6 +10,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import bisect
 import copy
 import logging
 import os
@@ -5973,18 +5974,16 @@ class MagnifierPanel(SettingsPanel):
 			self.defaultZoomList,
 		)
 
-		# Store zoom values for later use
-		self.zoomValues = zoomValues
-
 		# Set default value from config
 		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		closestIndex = 0
-		minDifference = abs(self.zoomValues[0] - defaultZoom)
-		for i, value in enumerate(self.zoomValues):
-			difference = abs(value - defaultZoom)
-			if difference < minDifference:
-				minDifference = difference
-				closestIndex = i
+		index = bisect.bisect_left(zoomValues, defaultZoom)
+		# Find the closest value
+		if index == 0:
+			closestIndex = 0
+		elif index >= len(zoomValues):
+			closestIndex = len(zoomValues) - 1
+		else:
+			closestIndex = min(index - 1, index, key=lambda i: abs(zoomValues[i] - defaultZoom))
 		self.defaultZoomList.SetSelection(closestIndex)
 
 		# FILTER SETTINGS
@@ -6000,10 +5999,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# Set default value from config
 		defaultFilter = magnifierConfig.getDefaultFilter().displayString
-		if defaultFilter in self.defaultFilterList.GetStrings():
-			self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(defaultFilter))
-		else:
-			self.defaultFilterList.SetSelection(0)
+		self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(defaultFilter))
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
@@ -6021,12 +6017,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# Set default value from config
 		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
-		if defaultFullscreenMode in self.defaultFullscreenModeList.GetStrings():
-			self.defaultFullscreenModeList.SetSelection(
-				self.defaultFullscreenModeList.GetStrings().index(defaultFullscreenMode),
-			)
-		else:
-			self.defaultFullscreenModeList.SetSelection(0)
+		self.defaultFullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
@@ -6040,7 +6031,7 @@ class MagnifierPanel(SettingsPanel):
 
 	def onSave(self):
 		"""Save the current selections to config."""
-		selectedZoom = self.zoomValues[self.defaultZoomList.GetSelection()]
+		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(selectedZoom)
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()

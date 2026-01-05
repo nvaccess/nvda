@@ -17,6 +17,7 @@ from typing import (
 )
 
 import extensionPoints
+import gettext
 from logHandler import log
 import ui
 import winUser
@@ -114,12 +115,12 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 		_orientationState.style = newState
 		if _orientationState.style == Orientation.LANDSCAPE:
 			# Translators: The screen is oriented so that it is wider than it is tall.
-			ui.message(_("Landscape"))
+			ui.message(gettext("Landscape"))
 		if _orientationState.style == Orientation.PORTRAIT:
 			# Translators: The screen is oriented in such a way that the height is taller than it is wide.
-			ui.message(_("Portrait"))
+			ui.message(gettext("Portrait"))
 
 	_orientationState.height = height
 	_orientationState.width = width
 	# Notify registered handlers about display changes
-	displayChanged.notify()
+	displayChanged.notify(_orientationState)

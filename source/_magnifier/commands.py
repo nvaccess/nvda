@@ -9,11 +9,10 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 from typing import Literal
-import screenCurtain
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
-	getDefaultZoomLevel,
+	getDefaultZoomLevelString,
 	getDefaultFilter,
 	getDefaultFullscreenMode,
 )
@@ -31,6 +30,8 @@ from logHandler import log
 
 def toggleMagnifier() -> None:
 	"""Toggle the NVDA magnifier on/off"""
+	import screenCurtain
+
 	magnifier: Magnifier = getMagnifier()
 	if magnifier and magnifier.isActive:
 		# Stop magnifier
@@ -42,33 +43,33 @@ def toggleMagnifier() -> None:
 				"Exiting magnifier",
 			),
 		)
-	else:
-		# Check if Screen Curtain is active
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-					"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
-				),
-			)
-			return
-
-		initialize()
-		zoomLevel = getDefaultZoomLevel()
-		filter = getDefaultFilter()
-		fullscreenMode = getDefaultFullscreenMode()
+	# Check if Screen Curtain is active
+	elif screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-			).format(
-				zoomLevel=zoomLevel,
-				filter=filter,
-				fullscreenMode=fullscreenMode,
+				# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
+				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
 			),
 		)
+		return
+
+	initialize()
+
+	filter = getDefaultFilter()
+	fullscreenMode = getDefaultFullscreenMode()
+
+	ui.message(
+		pgettext(
+			"magnifier",
+			# Translators: Message announced when starting the NVDA magnifier.
+			"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+		).format(
+			zoomLevel=getDefaultZoomLevelString(),
+			filter=filter.displayString,
+			fullscreenMode=fullscreenMode.displayString,
+		),
+	)
 
 
 def zoomIn() -> None:
@@ -196,13 +197,13 @@ def magnifierIsActiveVerify(
 	:param magnifier: The magnifier instance to check
 	:param action: The action being performed, for messaging
 
-	:returns bool: True if the magnifier is active, False otherwise
+	:return: True if the magnifier is active, False otherwise
 	"""
 	if magnifier and magnifier.isActive:
 		return True
 	else:
 		ui.message(
-			_(
+			pgettext(
 				# Translators: Message announced that the magnifier is not active.
 				"Magnifier is not active when {action}",
 			).format(action=action.displayString),
@@ -220,13 +221,13 @@ def magnifierIsFullscreenVerify(
 	:param magnifier: The magnifier instance to check
 	:param action: The action being performed, for messaging
 
-	:returns bool: True if the magnifier is full-screen, False otherwise
+	:return: True if the magnifier is full-screen, False otherwise
 	"""
 	if magnifier.magnifierType == MagnifierType.FULLSCREEN:
 		return True
 	else:
 		ui.message(
-			_(
+			pgettext(
 				# Translators: Message announced that the magnifier is not full-screen.
 				"Magnifier is not full-screen when {action}",
 			).format(action=action.displayString),

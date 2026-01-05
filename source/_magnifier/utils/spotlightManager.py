@@ -28,6 +28,7 @@ class SpotlightManager:
 		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None
 		self._animationSteps: int = 40
+		self._animationStepDelay: int = 12  # Delay in milliseconds between animation steps
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._getFocusCoordinates()
 		self._originalZoomLevel: float = 0.0
 		self._currentZoomLevel: float = 0.0
@@ -46,15 +47,15 @@ class SpotlightManager:
 
 		startCoords = self._fullscreenMagnifier._getFocusCoordinates()
 		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
-		centerScreen = (
-			self._fullscreenMagnifier._screenWidth // 2,
-			self._fullscreenMagnifier._screenHeight // 2,
+		centerScreen = Coordinates(
+			self._fullscreenMagnifier._displayOrientation.width // 2,
+			self._fullscreenMagnifier._displayOrientation.height // 2,
 		)
 
 		# Save the current mode for zoom back
 		self._originalMode = self._fullscreenMagnifier._fullscreenMode
 		self._currentCoordinates = startCoords
-		self._animateZoom(1.0, centerScreen, self._startMouseMonitoring)
+		self._animateZoom(ZoomHistory(1.0, centerScreen), self._startMouseMonitoring)
 
 	def _stopSpotlight(self) -> None:
 		"""
@@ -77,15 +78,13 @@ class SpotlightManager:
 
 	def _animateZoom(
 		self,
-		targetZoom: float,
-		targetCoordinates: Coordinates,
+		target: ZoomHistory,
 		callback: Callable[[], None],
 	) -> None:
 		"""
 		Animate the zoom level change
 
-		:param targetZoom: The target zoom level
-		:param targetCoordinates: The target Coordinates (x, y)
+		:param target: The target zoom history (zoom level and coordinates)
 		:param callback: The function to call after animation completes
 		"""
 		log.debug(
@@ -94,9 +93,9 @@ class SpotlightManager:
 
 		self._animationStepsList = self._computeAnimationSteps(
 			self._currentZoomLevel,
-			targetZoom,
+			target.zoom,
 			self._currentCoordinates,
-			targetCoordinates,
+			target.coordinates,
 		)
 
 		self._executeStep(0, callback)
@@ -107,7 +106,7 @@ class SpotlightManager:
 		callback: Callable[[], None],
 	) -> None:
 		"""
-		Execute one animation step
+		Execute one animation step.
 
 		:param stepIndex: The index of the current animation step
 		:param callback: The function to call after animation completes
@@ -117,12 +116,12 @@ class SpotlightManager:
 		)
 
 		if stepIndex < len(self._animationStepsList):
-			zoomLevel, (x, y) = self._animationStepsList[stepIndex]
+			zoomLevel, coords = self._animationStepsList[stepIndex]
 			self._fullscreenMagnifier.zoomLevel = zoomLevel
-			self._fullscreenMagnifier._fullscreenMagnifier((x, y))
+			self._fullscreenMagnifier._fullscreenMagnifier(coords)
 			self._currentZoomLevel = zoomLevel
-			self._currentCoordinates = (x, y)
-			wx.CallLater(12, lambda: self._executeStep(stepIndex + 1, callback))
+			self._currentCoordinates = coords
+			wx.CallLater(self._animationStepDelay, lambda: self._executeStep(stepIndex + 1, callback))
 		else:
 			if callback:
 				callback()
@@ -131,14 +130,14 @@ class SpotlightManager:
 		"""
 		Start monitoring the mouse position to detect idleness
 		"""
-		self._lastMousePosition = wx.GetMousePosition()
+		self._lastMousePosition = Coordinates(*wx.GetMousePosition())
 		self._timer = wx.CallLater(2000, self._checkMouseIdle)
 
 	def _checkMouseIdle(self) -> None:
 		"""
 		Check if the mouse has been idle
 		"""
-		currentMousePosition = wx.GetMousePosition()
+		currentMousePosition = Coordinates(*wx.GetMousePosition())
 		if currentMousePosition == self._lastMousePosition:
 			self.zoomBack()
 		else:
@@ -155,18 +154,18 @@ class SpotlightManager:
 			f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
 		)
 
-		focusX, focusY = self._fullscreenMagnifier._getFocusCoordinates()
+		focus = self._fullscreenMagnifier._getFocusCoordinates()
 
 		if self._originalMode == FullScreenMode.RELATIVE:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
 			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
-			endCoordinates = self._fullscreenMagnifier._relativePos(focusX, focusY)
+			endCoordinates = self._fullscreenMagnifier._relativePos(focus)
 			self._fullscreenMagnifier.zoomLevel = savedZoom
 		else:
-			endCoordinates = (focusX, focusY)
+			endCoordinates = focus
 			self._fullscreenMagnifier.lastScreenPosition = endCoordinates
 
-		self._animateZoom(self._originalZoomLevel, endCoordinates, self._stopSpotlight)
+		self._animateZoom(ZoomHistory(self._originalZoomLevel, endCoordinates), self._stopSpotlight)
 
 	def _computeAnimationSteps(
 		self,
@@ -183,7 +182,7 @@ class SpotlightManager:
 		:param coordinateStart: Starting Coordinates (x, y)
 		:param coordinateEnd: Ending Coordinates (x, y)
 
-		:returns ZoomHistory list: List of animation steps as ZoomHistory for each animation step
+		:return: List of animation steps as ZoomHistory for each animation step
 		"""
 		log.debug(
 			f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
@@ -203,5 +202,10 @@ class SpotlightManager:
 			currentX = startX + coordDeltaX * step
 			currentY = startY + coordDeltaY * step
 
-			animationSteps.append((round(currentZoom, 2), (int(round(currentX)), int(round(currentY)))))
+			animationSteps.append(
+				ZoomHistory(
+					round(currentZoom, 2),
+					Coordinates(round(currentX), round(currentY)),
+				),
+			)
 		return animationSteps

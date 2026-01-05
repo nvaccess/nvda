@@ -341,7 +341,3 @@ class TestMagnifier(unittest.TestCase):
 		self.assertEqual(ZoomLevel.STEP_FACTOR, 0.5)
 		self.assertEqual(Magnifier._TIMER_INTERVAL_MS, 20)
 		self.assertEqual(Magnifier._MARGIN_BORDER, 50)
-
-		# Screen dimensions should be positive integers (instance variables)
-		self.assertGreater(self.magnifier._screenWidth, 0)
-		self.assertGreater(self.magnifier._screenHeight, 0)

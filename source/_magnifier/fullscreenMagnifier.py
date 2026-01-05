@@ -163,15 +163,14 @@ class FullScreenMagnifier(Magnifier):
 		Get Coordinates adjusted for the current full-screen mode
 
 		:param coordinates: Raw coordinates (x, y)
-		:returns Coordinates: Adjusted coordinates according to full-screen mode
+		:return: Adjusted coordinates according to full-screen mode
 		"""
-		x, y = coordinates
 
 		match self._fullscreenMode:
 			case FullScreenMode.RELATIVE:
-				return self._relativePos((x, y))
+				return self._relativePos(coordinates)
 			case FullScreenMode.BORDER:
-				return self._borderPos((x, y))
+				return self._borderPos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
 
@@ -179,8 +178,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		x, y = self.currentCoordinates
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition((x, y))
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(self.currentCoordinates)
 		centerX = int(left + (visibleWidth / 2))
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -195,7 +193,7 @@ class FullScreenMagnifier(Magnifier):
 
 		:param coordinates: Raw coordinates (x, y)
 
-		:returns Coordinates: The adjusted position (x, y) of the focus point
+		:return: The adjusted position (x, y) of the focus point
 		"""
 		focusX, focusY = coordinates
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
@@ -235,7 +233,7 @@ class FullScreenMagnifier(Magnifier):
 
 		:param coordinates: Raw coordinates (x, y)
 
-		:returns Coordinates: The (x, y) coordinates of the magnifier center
+		:return: The (x, y) coordinates of the magnifier center
 		"""
 
 		zoom = self.zoomLevel
