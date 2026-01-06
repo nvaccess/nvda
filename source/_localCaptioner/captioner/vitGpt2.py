@@ -1,20 +1,21 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Tianze
+# Copyright (C) 2025-2026 NV Access Limited, Tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+import math
 import os
 import json
 import re
 import io
 from functools import lru_cache
 
-import numpy as np
 from PIL import Image
 
 from logHandler import log
 
 from .base import ImageCaptioner
+from .winML import _WinML
 from ..modelConfig import (
 	_EncoderConfig,
 	_DecoderConfig,
@@ -52,8 +53,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""
 		# Import late to avoid importing numpy at initialization
 		import onnxruntime as ort
-		from .winMl import WinML
-		WinML().register_execution_providers_to_ort()
+		_WinML().registerExecutionProvidersToOrt()
 
 		# Load configuration file
 		try:
@@ -81,6 +81,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		# Configure ONNX Runtime session
 		sessionOptions = ort.SessionOptions()
+		sessionOptions.set_provider_selection_policy(ort.OrtExecutionProviderDevicePolicy.MAX_EFFICIENCY)
 		if enableProfiling:
 			sessionOptions.enable_profiling = True
 
@@ -172,7 +173,32 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 				modelConfig._DEFAULT_PREPROCESSOR_CONFIG,
 			)
 
-	def _preprocessImage(self, image: str | bytes) -> np.ndarray:
+	@staticmethod
+	def scaleImage(image: Image.Image, scaleFactor: float | int) -> Image.Image:
+		def scalePixel(pixelValue: float) -> float:
+			return pixelValue * scaleFactor
+
+		return Image.eval(image, scalePixel)
+
+	@staticmethod
+	def normalizeImage(image: Image.Image) -> Image.Image:
+		# split image into bands
+		bands = image.split()
+		newBands: list[Image.Image] = []
+		for band in bands:
+			pixels = list(band.getdata())  # Get all pixel values as a list
+			count = len(pixels)
+			mean = sum(pixels) / count
+			var = sum((p - mean) ** 2 for p in pixels) / count
+			stdDev = math.sqrt(var) if var else 1.0
+
+			def scalePixel(pixelValue: float) -> float:
+				return (pixelValue - mean) / stdDev
+
+			newBands.append(Image.eval(band, scalePixel))
+		return Image.merge("RGB", newBands)
+
+	def _preprocessImage(self, image: str | bytes) -> list[list[list[float]]]:
 		"""Preprocess image for model input using external configuration.
 
 		:param image: Image file path or binary data.
@@ -202,26 +228,24 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			resample_method = resample_map.get(self.preprocessorConfig.resample, Image.LANCZOS)
 			img = img.resize(target_size, resample_method)
 
-		# Convert to numpy array
-		imgArray = np.array(img).astype(np.float32)
-
 		# Rescale if configured (typically from [0, 255] to [0, 1])
 		if self.preprocessorConfig.do_rescale:
-			imgArray = imgArray * self.preprocessorConfig.rescale_factor
+			img = self.scaleImage(img, self.preprocessorConfig.rescale_factor)
 
 		# Normalize if configured
 		if self.preprocessorConfig.do_normalize:
-			mean = np.array(self.preprocessorConfig.image_mean, dtype=np.float32)
-			std = np.array(self.preprocessorConfig.image_std, dtype=np.float32)
-			imgArray = (imgArray - mean) / std
+			img = self.normalizeImage(img)
 
 		# Adjust dimensions: (H, W, C) -> (1, C, H, W)
-		imgArray = np.transpose(imgArray, (2, 0, 1))
-		imgArray = np.expand_dims(imgArray, axis=0)
+		pixels = list(img.getdata())
+		r: list[float] = [p[0] / 255.0 for p in pixels]
+		g: list[float] = [p[1] / 255.0 for p in pixels]
+		b: list[float] = [p[2] / 255.0 for p in pixels]
+		chw_list = [[[r, g, b]]]  # Adding batch dimension: [1, 3, 224, 224]
 
-		return imgArray
+		return chw_list
 
-	def _encodeImage(self, imageArray: np.ndarray) -> np.ndarray:
+	def _encodeImage(self, image: list[list[list[float]]]) -> list:
 		"""Encode image using ViT encoder.
 
 		:param imageArray: Preprocessed image array.
@@ -231,8 +255,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		inputName = self.encoderSession.get_inputs()[0].name
 
 		# Run encoder inference
-		imageArray = imageArray.astype(np.float32)
-		encoderOutputs = self.encoderSession.run(None, {inputName: imageArray})
+		encoderOutputs = self.encoderSession.run(None, {inputName: image})
 
 		# Return last hidden state
 		return encoderOutputs[0]
@@ -274,13 +297,18 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""
 		return [out.name for out in self.decoderSession.get_outputs()]
 
-	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, np.ndarray]:
+	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, list]:
 		"""Initialize past_key_values for decoder.
 
 		:param batchSize: Batch size for inference.
 		:return: Dictionary of initialized past key values.
 		"""
 		pastKeyValues = {}
+
+		def zerosNdArray(shape: tuple) -> list:
+			if not shape:
+				return 0.0
+			return [zerosNdArray(shape[1:]) for _ in range(shape[0])]
 
 		# Create key and value for each layer
 		for layerIdx in range(self.decoderConfig.n_layer):
@@ -291,14 +319,14 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			keyShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
 			valueShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
 
-			pastKeyValues[f"past_key_values.{layerIdx}.key"] = np.zeros(keyShape, dtype=np.float32)
-			pastKeyValues[f"past_key_values.{layerIdx}.value"] = np.zeros(valueShape, dtype=np.float32)
+			pastKeyValues[f"past_key_values.{layerIdx}.key"] = zerosNdArray(keyShape)
+			pastKeyValues[f"past_key_values.{layerIdx}.value"] = zerosNdArray(valueShape)
 
 		return pastKeyValues
 
 	def _generateWithGreedy(
 		self,
-		encoderHiddenStates: np.ndarray,
+		encoderHiddenStates: list,
 		maxLength: int | None = None,
 	) -> str:
 		"""Generate text using greedy search.
@@ -312,7 +340,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			maxLength = self.decoderConfig.max_length
 
 		# Initialize input sequence
-		inputIds = np.array([[self.modelConfig.bos_token_id]], dtype=np.int64)
+		inputIds = [[self.modelConfig.bos_token_id]]
 		generatedTokens = []
 
 		# Initialize past_key_values
@@ -321,9 +349,9 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		for step in range(maxLength):
 			# Prepare decoder inputs
 			decoderInputs = {
-				"input_ids": inputIds if step == 0 else np.array([[generatedTokens[-1]]], dtype=np.int64),
+				"input_ids": inputIds if step == 0 else [[generatedTokens[-1]]],
 				"encoder_hidden_states": encoderHiddenStates,
-				"use_cache_branch": np.array([1], dtype=np.bool_),
+				"use_cache_branch": [True],
 			}
 
 			# Add past_key_values to inputs
@@ -335,7 +363,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 			# Greedy selection of next token
 			nextTokenLogits = logits[0, -1, :]  # Logits for last position
-			nextTokenId = int(np.argmax(nextTokenLogits))
+			nextTokenId = max(range(len(nextTokenLogits)), key=nextTokenLogits.__getitem__)  # argmax
 
 			# Check if generation should end
 			if nextTokenId == self.modelConfig.eos_token_id:
