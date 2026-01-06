@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -213,7 +213,7 @@ freeze(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
-			# numpy is an optional dependency of comtypes but we don't require it.
+			# numpy is an optional dependency of comtypes and onnxruntime but we don't require it.
 			"numpy",
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
