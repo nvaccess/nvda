@@ -32,7 +32,7 @@ def isActive() -> bool:
 	Check if magnifier is currently active for settings
 	"""
 	global _magnifier
-	return _magnifier and _magnifier.isActive
+	return _magnifier and _magnifier._isActive
 
 
 def getMagnifier() -> "Magnifier | None":
@@ -58,6 +58,6 @@ def terminate():
 	Called when NVDA shuts down
 	"""
 	global _magnifier
-	if _magnifier and _magnifier.isActive:
+	if _magnifier and _magnifier._isActive:
 		_magnifier._stopMagnifier()
 		_magnifier = None

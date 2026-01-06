@@ -27,29 +27,13 @@ class FullScreenMagnifier(Magnifier):
 		self._startMagnifier()
 
 	@property
-	def fullscreenMode(self) -> FullScreenMode:
-		return self._fullscreenMode
-
-	@fullscreenMode.setter
-	def fullscreenMode(self, value: FullScreenMode) -> None:
-		self._fullscreenMode = value
-
-	@property
-	def currentCoordinates(self) -> Coordinates:
-		return self._currentCoordinates
-
-	@currentCoordinates.setter
-	def currentCoordinates(self, value: Coordinates) -> None:
-		self._currentCoordinates = value
-
-	@property
 	def filterType(self) -> Filter:
-		return super().filterType
+		return self._filterType
 
 	@filterType.setter
 	def filterType(self, value: Filter) -> None:
-		Magnifier.filterType.fset(self, value)
-		if self.isActive:
+		self._filterType = value
+		if self._isActive:
 			self._applyFilter()
 
 	def event_gainFocus(
@@ -71,7 +55,7 @@ class FullScreenMagnifier(Magnifier):
 
 		super()._startMagnifier()
 		log.debug(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self.fullscreenMode}",
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self._filterType} and full-screen mode {self._fullscreenMode}",
 		)
 		# Initialize Magnification API if not already initialized
 		try:
@@ -81,7 +65,7 @@ class FullScreenMagnifier(Magnifier):
 			# Already initialized or failed - continue anyway
 			log.debug(f"MagInitialize result: {e}")
 
-		if self.isActive:
+		if self._isActive:
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
@@ -90,11 +74,11 @@ class FullScreenMagnifier(Magnifier):
 		Perform the actual update of the magnifier
 		"""
 		# Calculate new position based on focus mode
-		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
 		# Always save screen position for mode continuity
-		self.lastScreenPosition = coordinates
+		self._lastScreenPosition = coordinates
 
-		if self.lastFocusedObject == FocusType.NVDA:
+		if self._lastFocusedObject == FocusType.NVDA:
 			if shouldKeepMouseCentered():
 				self.moveMouseToScreen()
 		self._fullscreenMagnifier(coordinates)
@@ -124,7 +108,7 @@ class FullScreenMagnifier(Magnifier):
 		Apply the current color filter to the full-screen magnifier
 		"""
 		try:
-			match self.filterType:
+			match self._filterType:
 				case Filter.NORMAL:
 					matrix = FilterMatrix.NORMAL
 				case Filter.GRAYSCALE:
@@ -178,7 +162,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(self.currentCoordinates)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(self._currentCoordinates)
 		centerX = int(left + (visibleWidth / 2))
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -197,7 +181,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		focusX, focusY = coordinates
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self.lastScreenPosition,
+			self._lastScreenPosition,
 		)
 
 		minX = lastLeft + self._MARGIN_BORDER
@@ -219,9 +203,9 @@ class FullScreenMagnifier(Magnifier):
 			dy = focusY - maxY
 
 		if dx != 0 or dy != 0:
-			return Coordinates(self.lastScreenPosition[0] + dx, self.lastScreenPosition[1] + dy)
+			return Coordinates(self._lastScreenPosition[0] + dx, self._lastScreenPosition[1] + dy)
 		else:
-			return self.lastScreenPosition
+			return self._lastScreenPosition
 
 	def _relativePos(
 		self,
@@ -253,8 +237,8 @@ class FullScreenMagnifier(Magnifier):
 		# Return center of zoom window
 		centerX = int(left + visibleWidth / 2)
 		centerY = int(top + visibleHeight / 2)
-		self.lastScreenPosition = Coordinates(centerX, centerY)
-		return self.lastScreenPosition
+		self._lastScreenPosition = Coordinates(centerX, centerY)
+		return self._lastScreenPosition
 
 	def _startSpotlight(self) -> None:
 		"""

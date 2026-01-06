@@ -107,6 +107,7 @@ class SpotlightManager:
 	) -> None:
 		"""
 		Execute one animation step.
+		Also queues the next animation step.
 
 		:param stepIndex: The index of the current animation step
 		:param callback: The function to call after animation completes
@@ -163,7 +164,7 @@ class SpotlightManager:
 			self._fullscreenMagnifier.zoomLevel = savedZoom
 		else:
 			endCoordinates = focus
-			self._fullscreenMagnifier.lastScreenPosition = endCoordinates
+			self._fullscreenMagnifier._lastScreenPosition = endCoordinates
 
 		self._animateZoom(ZoomHistory(self._originalZoomLevel, endCoordinates), self._stopSpotlight)
 

@@ -259,14 +259,12 @@ class ScreenCurtain:
 			except Exception:
 				log.exception()
 		# Notify magnifier that screen curtain is being disabled
-		try:
-			import _magnifier
 
-			magnifierInstance = _magnifier.getMagnifier()
-			if magnifierInstance:
-				magnifierInstance.onScreenCurtainDisabled()
-		except (ImportError, AttributeError):
-			log.debug("Could not notify _magnifier module")
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainDisabled()
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""

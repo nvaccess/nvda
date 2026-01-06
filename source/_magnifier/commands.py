@@ -33,7 +33,7 @@ def toggleMagnifier() -> None:
 	import screenCurtain
 
 	magnifier: Magnifier = getMagnifier()
-	if magnifier and magnifier.isActive:
+	if magnifier and magnifier._isActive:
 		# Stop magnifier
 		terminate()
 		ui.message(
@@ -115,16 +115,16 @@ def toggleFilter() -> None:
 		MagnifierAction.TOGGLE_FILTER,
 	):
 		filters = list(Filter)
-		idx = filters.index(magnifier.filterType)
-		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier.magnifierType == MagnifierType.FULLSCREEN:
+		idx = filters.index(magnifier._filterType)
+		magnifier._filterType = filters[(idx + 1) % len(filters)]
+		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
 		ui.message(
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
 				"Color filter changed to {filter}",
-			).format(filter=magnifier.filterType.displayString),
+			).format(filter=magnifier._filterType.displayString),
 		)
 
 
@@ -140,11 +140,11 @@ def toggleFullscreenMode() -> None:
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
 			modes = list(FullScreenMode)
-			currentMode = magnifier.fullscreenMode
+			currentMode = magnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
-			magnifier.fullscreenMode = newMode
+			magnifier._fullscreenMode = newMode
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -199,7 +199,7 @@ def magnifierIsActiveVerify(
 
 	:return: True if the magnifier is active, False otherwise
 	"""
-	if magnifier and magnifier.isActive:
+	if magnifier and magnifier._isActive:
 		return True
 	else:
 		ui.message(
@@ -223,7 +223,7 @@ def magnifierIsFullscreenVerify(
 
 	:return: True if the magnifier is full-screen, False otherwise
 	"""
-	if magnifier.magnifierType == MagnifierType.FULLSCREEN:
+	if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 		return True
 	else:
 		ui.message(

@@ -5961,8 +5961,8 @@ class MagnifierPanel(SettingsPanel):
 		# Translators: The label for a setting in magnifier settings to select the default zoom level.
 		defaultZoomLabelText = _("Default &zoom level:")
 
-		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
-		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
+		zoomValues = magnifierConfig.ZoomLevel.zoom_range
+		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings
 
 		self.defaultZoomList = sHelper.addLabeledControl(
 			defaultZoomLabelText,
@@ -5998,7 +5998,7 @@ class MagnifierPanel(SettingsPanel):
 		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
 
 		# Set default value from config
-		defaultFilter = magnifierConfig.getDefaultFilter().displayString
+		defaultFilter = magnifierConfig.getDefaultFilter()
 		self.defaultFilterList.SetSelection(self.defaultFilterList.GetStrings().index(defaultFilter))
 
 		# FULLSCREEN MODE SETTINGS

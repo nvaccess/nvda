@@ -52,84 +52,24 @@ class Magnifier:
 		self._screenCurtainIsActive: bool = False
 
 	@property
-	def isActive(self) -> bool:
-		return self._isActive
-
-	@isActive.setter
-	def isActive(self, value: bool) -> None:
-		self._isActive = value
-
-	@property
-	def magnifierType(self) -> MagnifierType:
-		return self._magnifierType
-
-	@magnifierType.setter
-	def magnifierType(self, value: MagnifierType) -> None:
-		self._magnifierType = value
-
-	@property
 	def zoomLevel(self) -> float:
 		return self._zoomLevel
 
 	@zoomLevel.setter
 	def zoomLevel(self, value: float) -> None:
+		"""
+		Set zoom level, ensuring it's a valid value in the zoom range.
+
+		:param value: The zoom level to set
+		:raises ValueError: If the value is not in the valid zoom range
+		"""
+		validZoomValues = ZoomLevel.zoom_range()
+		if value not in validZoomValues:
+			# Find the closest valid zoom value
+			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
+			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
+			value = closestZoom
 		self._zoomLevel = value
-
-	@property
-	def lastFocusedObject(self) -> FocusType | None:
-		return self._lastFocusedObject
-
-	@lastFocusedObject.setter
-	def lastFocusedObject(self, value: FocusType | None) -> None:
-		self._lastFocusedObject = value
-
-	@property
-	def lastNVDAPosition(self) -> Coordinates:
-		return self._lastNVDAPosition
-
-	@lastNVDAPosition.setter
-	def lastNVDAPosition(self, value: Coordinates) -> None:
-		self._lastNVDAPosition = value
-
-	@property
-	def lastMousePosition(self) -> Coordinates:
-		return self._lastMousePosition
-
-	@lastMousePosition.setter
-	def lastMousePosition(self, value: Coordinates) -> None:
-		self._lastMousePosition = value
-
-	@property
-	def lastScreenPosition(self) -> Coordinates:
-		return self._lastScreenPosition
-
-	@lastScreenPosition.setter
-	def lastScreenPosition(self, value: Coordinates) -> None:
-		self._lastScreenPosition = value
-
-	@property
-	def currentCoordinates(self) -> Coordinates:
-		return self._currentCoordinates
-
-	@currentCoordinates.setter
-	def currentCoordinates(self, value: Coordinates) -> None:
-		self._currentCoordinates = value
-
-	@property
-	def timer(self) -> wx.Timer | None:
-		return self._timer
-
-	@timer.setter
-	def timer(self, value: wx.Timer | None) -> None:
-		self._timer = value
-
-	@property
-	def filterType(self) -> Filter:
-		return self._filterType
-
-	@filterType.setter
-	def filterType(self, value: Filter) -> None:
-		self._filterType = value
 
 	# Functions
 	def _onDisplayChanged(self, newOrientation: OrientationState) -> None:
@@ -143,29 +83,30 @@ class Magnifier:
 		"""
 		Start the magnifier
 		"""
-		if self.isActive:
+		if self._isActive:
 			return
 		# Check if screen curtain is active - if so, block magnifier from starting
 		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
 			log.debug("Screen curtain is active, cannot start magnifier")
 
 			message = pgettext(
+				"magnifier",
 				# Translators: Message when trying to enable magnifier while screen curtain is active
 				"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
 			)
 			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 			return
 
-		self.isActive = True
-		self.currentCoordinates = self._getFocusCoordinates()
+		self._isActive = True
+		self._currentCoordinates = self._getFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""
 		Update the magnifier position and content
 		"""
-		if not self.isActive:
+		if not self._isActive:
 			return
-		self.currentCoordinates = self._getFocusCoordinates()
+		self._currentCoordinates = self._getFocusCoordinates()
 		self._doUpdate()
 		self._startTimer(self._updateMagnifier)
 
@@ -179,10 +120,10 @@ class Magnifier:
 		"""
 		Stop the magnifier
 		"""
-		if not self.isActive:
+		if not self._isActive:
 			return
 		self._stopTimer()
-		self.isActive = False
+		self._isActive = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
@@ -191,9 +132,14 @@ class Magnifier:
 		Called when screen curtain is being enabled.
 		Handles disabling magnifier if it's active.
 		"""
-		if self.isActive:
-			# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-			ui.message(pgettext("Magnifier is active, disabling it before enabling screen curtain"))
+		if self._isActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
+					"Magnifier is active, disabling it before enabling screen curtain",
+				),
+			)
 			self._stopMagnifier()
 			self._screenCurtainIsActive = True
 		else:
@@ -205,8 +151,13 @@ class Magnifier:
 		Handles re-enabling magnifier if it was active before screen curtain.
 		"""
 		if self._screenCurtainIsActive:
-			# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-			ui.message(pgettext("Magnifier was active before screen curtain, re-enabling it"))
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
+					"Magnifier was active before screen curtain, re-enabling it",
+				),
+			)
 			self._startMagnifier()
 			self._updateMagnifier()
 			self._screenCurtainIsActive = False
@@ -233,18 +184,18 @@ class Magnifier:
 		:param callback: The function to call when the timer expires
 		"""
 		self._stopTimer()
-		self.timer = wx.Timer()
-		self.timer.Bind(wx.EVT_TIMER, lambda evt: callback())
-		self.timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
+		self._timer = wx.Timer()
+		self._timer.Bind(wx.EVT_TIMER, lambda evt: callback())
+		self._timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
 
 	def _stopTimer(self) -> None:
 		"""
 		Stop timer execution
 		"""
-		if self.timer:
-			if self.timer.IsRunning():
-				self.timer.Stop()
-			self.timer = None
+		if self._timer:
+			if self._timer.IsRunning():
+				self._timer.Stop()
+			self._timer = None
 		else:
 			log.debug("no timer to stop")
 
@@ -317,33 +268,33 @@ class Magnifier:
 		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
 
 		# Always update positions in background (keep them synchronized)
-		nvdaChanged = self.lastNVDAPosition != nvdaPosition
-		mouseChanged = self.lastMousePosition != mousePosition
+		nvdaChanged = self._lastNVDAPosition != nvdaPosition
+		mouseChanged = self._lastMousePosition != mousePosition
 
 		if nvdaChanged:
-			self.lastNVDAPosition = nvdaPosition
+			self._lastNVDAPosition = nvdaPosition
 		if mouseChanged:
-			self.lastMousePosition = mousePosition
+			self._lastMousePosition = mousePosition
 
 		# During drag & drop, force focus on mouse
 		if isClickPressed:
-			self.lastFocusedObject = FocusType.MOUSE
+			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
 		# Check mouse first (mouse has priority) - when not dragging
 		if mouseChanged:
-			self.lastFocusedObject = FocusType.MOUSE
+			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
 		# Then check NVDA (only change focus if mouse didn't move)
 		if nvdaChanged:
-			self.lastFocusedObject = FocusType.NVDA
+			self._lastFocusedObject = FocusType.NVDA
 			return nvdaPosition
 
 		# Return current position of the focused object (no changes detected)
-		if self.lastFocusedObject == FocusType.NVDA:
+		if self._lastFocusedObject == FocusType.NVDA:
 			return nvdaPosition
-		elif self.lastFocusedObject == FocusType.MOUSE:
+		elif self._lastFocusedObject == FocusType.MOUSE:
 			return mousePosition
 		else:
 			return mousePosition

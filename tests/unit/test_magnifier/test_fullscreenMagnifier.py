@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import wx
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
@@ -19,15 +19,31 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
+	def setUp(self):
+		"""Setup before each test - mock magnification API to prevent actual screen magnification."""
+		# Mock the Windows Magnification API to prevent affecting the user's screen
+		self.mag_patcher = patch("winBindings.magnification")
+		self.mock_mag = self.mag_patcher.start()
+
+		# Configure mocked API methods to return success
+		self.mock_mag.MagInitialize.return_value = True
+		self.mock_mag.MagUninitialize.return_value = True
+		self.mock_mag.MagSetFullscreenTransform.return_value = True
+		self.mock_mag.MagSetFullscreenColorEffect.return_value = True
+
+	def tearDown(self):
+		"""Cleanup after each test."""
+		self.mag_patcher.stop()
+
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
 		magnifier = FullScreenMagnifier()
 
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
-		self.assertEqual(magnifier.fullscreenMode, FullScreenMode.CENTER)
-		self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN)
-		self.assertTrue(magnifier.isActive)
+		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
+		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
+		self.assertTrue(magnifier._isActive)
 
 		magnifier._stopMagnifier()
 
@@ -55,12 +71,12 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		magnifier = FullScreenMagnifier()
 
 		# Test setting coordinates
-		magnifier.currentCoordinates = (100, 200)
-		self.assertEqual(magnifier.currentCoordinates, (100, 200))
+		magnifier._currentCoordinates = (100, 200)
+		self.assertEqual(magnifier._currentCoordinates, (100, 200))
 
 		# Test negative coordinates
-		magnifier.currentCoordinates = (-50, -100)
-		self.assertEqual(magnifier.currentCoordinates, (-50, -100))
+		magnifier._currentCoordinates = (-50, -100)
+		self.assertEqual(magnifier._currentCoordinates, (-50, -100))
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -74,14 +90,14 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		magnifier._fullscreenMagnifier = MagicMock()
 
 		# Set initial coordinates
-		magnifier.currentCoordinates = (100, 200)
+		magnifier._currentCoordinates = (100, 200)
 
 		# Test update
 		magnifier._doUpdate()
 
 		# Verify update was called correctly
 		magnifier._getCoordinatesForMode.assert_called_once_with((100, 200))
-		self.assertEqual(magnifier.lastScreenPosition, (150, 250))
+		self.assertEqual(magnifier._lastScreenPosition, (150, 250))
 		magnifier._fullscreenMagnifier.assert_called_once_with((150, 250))
 
 		# Cleanup
@@ -95,13 +111,13 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		magnifier._stopTimer = MagicMock()
 
 		# Verify it's active first
-		self.assertTrue(magnifier.isActive)
+		self.assertTrue(magnifier._isActive)
 
 		# Stop the magnifier
 		magnifier._stopMagnifier()
 
 		# Verify it's stopped
-		self.assertFalse(magnifier.isActive)
+		self.assertFalse(magnifier._isActive)
 		magnifier._stopTimer.assert_called_once()
 
 	def testMagnifierPositionCalculation(self):
@@ -149,10 +165,10 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		magnifier = FullScreenMagnifier()
 
 		# Should default to FULLSCREEN
-		self.assertEqual(magnifier.magnifierType, MagnifierType.FULLSCREEN)
+		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
 
 		# Test that we can read it (inherited property from Magnifier)
-		self.assertIsNotNone(magnifier.magnifierType)
+		self.assertIsNotNone(magnifier._magnifierType)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -169,10 +185,10 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		# Test basic properties exist
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
 		self.assertTrue(hasattr(magnifier, "filterType"))
-		self.assertTrue(hasattr(magnifier, "magnifierType"))
-		self.assertTrue(hasattr(magnifier, "fullscreenMode"))
-		self.assertTrue(hasattr(magnifier, "isActive"))
-		self.assertTrue(hasattr(magnifier, "currentCoordinates"))
+		self.assertTrue(hasattr(magnifier, "_magnifierType"))
+		self.assertTrue(hasattr(magnifier, "_fullscreenMode"))
+		self.assertTrue(hasattr(magnifier, "_isActive"))
+		self.assertTrue(hasattr(magnifier, "_currentCoordinates"))
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -192,13 +208,13 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 			testPassed = False
 
 		self.assertTrue(testPassed)
-		self.assertFalse(magnifier.isActive)
+		self.assertFalse(magnifier._isActive)
 
 	def testMagnifierSimpleLifecycle(self):
 		"""Test simple magnifier lifecycle."""
 		# Create magnifier
 		magnifier = FullScreenMagnifier()
-		self.assertTrue(magnifier.isActive)
+		self.assertTrue(magnifier._isActive)
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 
 		# Zoom a bit
@@ -206,12 +222,12 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 		self.assertEqual(magnifier.zoomLevel, 2.5)
 
 		# Set some coordinates
-		magnifier.currentCoordinates = (200, 300)
-		self.assertEqual(magnifier.currentCoordinates, (200, 300))
+		magnifier._currentCoordinates = (200, 300)
+		self.assertEqual(magnifier._currentCoordinates, (200, 300))
 
 		# Change mode
-		magnifier.fullscreenMode = FullScreenMode.RELATIVE
-		self.assertEqual(magnifier.fullscreenMode, FullScreenMode.RELATIVE)
+		magnifier._fullscreenMode = FullScreenMode.RELATIVE
+		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.RELATIVE)
 
 		# Change filter
 		magnifier.filterType = Filter.INVERTED
@@ -219,7 +235,7 @@ class TestMagnifierEndToEnd(unittest.TestCase):
 
 		# Stop magnifier
 		magnifier._stopMagnifier()
-		self.assertFalse(magnifier.isActive)
+		self.assertFalse(magnifier._isActive)
 
 
 class TestSpotlightManager(unittest.TestCase):
@@ -230,6 +246,22 @@ class TestSpotlightManager(unittest.TestCase):
 		"""Setup that runs once for all tests."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
+
+	def setUp(self):
+		"""Setup before each test - mock magnification API to prevent actual screen magnification."""
+		# Mock the Windows Magnification API to prevent affecting the user's screen
+		self.mag_patcher = patch("winBindings.magnification")
+		self.mock_mag = self.mag_patcher.start()
+
+		# Configure mocked API methods to return success
+		self.mock_mag.MagInitialize.return_value = True
+		self.mock_mag.MagUninitialize.return_value = True
+		self.mock_mag.MagSetFullscreenTransform.return_value = True
+		self.mock_mag.MagSetFullscreenColorEffect.return_value = True
+
+	def tearDown(self):
+		"""Cleanup after each test."""
+		self.mag_patcher.stop()
 
 	def testSpotlightManagerCreation(self):
 		"""Test creating a SpotlightManager."""
@@ -276,11 +308,13 @@ class TestSpotlightManager(unittest.TestCase):
 		# Mock fullscreen magnifier method
 		magnifier._stopSpotlight = MagicMock()
 
-		# Stop spotlight
-		spotlightManager._stopSpotlight()
+		# Mock ui.message to avoid speech dictionary errors
+		with patch("_magnifier.utils.spotlightManager.ui.message"):
+			# Stop spotlight
+			spotlightManager._stopSpotlight()
 
-		# Verify spotlight is inactive
-		self.assertFalse(spotlightManager._spotlightIsActive)
+			# Verify spotlight is inactive
+			self.assertFalse(spotlightManager._spotlightIsActive)
 
 		magnifier._stopMagnifier()
 
@@ -411,7 +445,7 @@ class TestSpotlightManager(unittest.TestCase):
 	def testZoomBackRelativeMode(self):
 		"""Test zoom back in RELATIVE mode."""
 		magnifier = FullScreenMagnifier()
-		magnifier.fullscreenMode = FullScreenMode.RELATIVE
+		magnifier._fullscreenMode = FullScreenMode.RELATIVE
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
@@ -452,7 +486,9 @@ class TestSpotlightManager(unittest.TestCase):
 		spotlightManager._startSpotlight()
 		self.assertTrue(spotlightManager._spotlightIsActive)
 
-		spotlightManager._stopSpotlight()
-		self.assertFalse(spotlightManager._spotlightIsActive)
+		# Mock ui.message to avoid speech dictionary errors
+		with patch("_magnifier.utils.spotlightManager.ui.message"):
+			spotlightManager._stopSpotlight()
+			self.assertFalse(spotlightManager._spotlightIsActive)
 
 		magnifier._stopMagnifier()
