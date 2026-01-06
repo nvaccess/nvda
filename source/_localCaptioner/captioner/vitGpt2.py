@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Tianze
+# Copyright (C) 2025-2026 NV Access Limited, Tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -15,6 +15,7 @@ from PIL import Image
 from logHandler import log
 
 from .base import ImageCaptioner
+from .winML import _WinML
 from ..modelConfig import (
 	_EncoderConfig,
 	_DecoderConfig,
@@ -52,6 +53,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""
 		# Import late to avoid importing numpy at initialization
 		import onnxruntime as ort
+		_WinML().registerExecutionProvidersToOrt()
 
 		# Load configuration file
 		try:
@@ -79,6 +81,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 
 		# Configure ONNX Runtime session
 		sessionOptions = ort.SessionOptions()
+		sessionOptions.set_provider_selection_policy(ort.OrtExecutionProviderDevicePolicy.MAX_EFFICIENCY)
 		if enableProfiling:
 			sessionOptions.enable_profiling = True
 

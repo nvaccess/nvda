@@ -51,6 +51,10 @@ dependencies = [
 	# local image caption
 	"onnxruntime==1.23.2",
 	"numpy==2.3.5",
+	"pillow==12.1.0",
+	"wasdk-microsoft-windows-ai-machinelearning[all]~=1.8",
+	"wasdk-microsoft-windows-applicationmodel-dynamicdependency-bootstrap~=1.8",
+	"onnxruntime-winml",
 ]
 
 [project.urls]
@@ -303,6 +307,12 @@ package-dir = {"" = "source"}
 nvda-misc-deps = { workspace = true }
 configobj = { git = "https://github.com/DiffSK/configobj", rev = "9c8a0a80c767bf8a3d6493ed01df6c351bddca42" }
 nvda-mathcat = { workspace = true }
+onnxruntime-winml = { index = "onnxruntime-winml-nightly" }
+
+[[tool.uv.index]]
+name = "onnxruntime-winml-nightly"
+url = "https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/"
+explicit = true
 
 [tool.uv.workspace]
 members = [
