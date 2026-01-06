@@ -251,9 +251,10 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			b_row = []
 			for x in range(width):
 				idx = y * width + x
-				r_row.append(float(pixels[idx][0]) / 255.0)
-				g_row.append(float(pixels[idx][1]) / 255.0)
-				b_row.append(float(pixels[idx][2]) / 255.0)
+				# Pixels are already rescaled and normalized - don't divide by 255 again
+				r_row.append(pixels[idx][0])
+				g_row.append(pixels[idx][1])
+				b_row.append(pixels[idx][2])
 			r_channel.append(r_row)
 			g_channel.append(g_row)
 			b_channel.append(b_row)
