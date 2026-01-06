@@ -10,7 +10,7 @@ from pathlib import Path
 
 from winui3.microsoft.windows.applicationmodel.dynamicdependency.bootstrap import (
 	InitializeOptions,
-	initialize
+	initialize,
 )
 import winui3.microsoft.windows.ai.machinelearning as winml
 
@@ -61,6 +61,7 @@ class _WinML:
 
 	def registerExecutionProvidersToOrt(self) -> list[str]:
 		import onnxruntime as ort
+
 		for name, path in self._epPaths.items():
 			if name not in self._registeredEps:
 				try:

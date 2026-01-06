@@ -53,6 +53,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		"""
 		# Import late to avoid importing numpy at initialization
 		import onnxruntime as ort
+
 		_WinML().registerExecutionProvidersToOrt()
 
 		# Load configuration file
