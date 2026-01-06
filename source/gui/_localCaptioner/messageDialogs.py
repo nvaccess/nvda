@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Tianze
+# Copyright (C) 2025-2026 NV Access Limited, Tianze
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -146,7 +146,7 @@ class ImageDescDownloader:
 			# update progress when downloading all files to prevent premature stop
 			if len(self.downloadDict) == len(self.filesToDownload):
 				# Translators: The progress message indicating that a download is in progress.
-				cont, skip = self._progressDialog.Update(totalProgress, pgettext("imageDesc", "downloading"))
+				cont, skip = self._progressDialog.Update(totalProgress, pgettext("imageDesc", "Downloading..."))
 				if not cont:
 					self._shouldCancel = True
 					self._stopped()
