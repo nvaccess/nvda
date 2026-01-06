@@ -186,7 +186,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		bands = image.split()
 		newBands: list[Image.Image] = []
 		for band in bands:
-			pixels = list(band.getdata())  # Get all pixel values as a list
+			pixels = band.get_flattened_data()
 			count = len(pixels)
 			mean = sum(pixels) / count
 			var = sum((p - mean) ** 2 for p in pixels) / count
@@ -236,14 +236,29 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		if self.preprocessorConfig.do_normalize:
 			img = self.normalizeImage(img)
 
-		# Adjust dimensions: (H, W, C) -> (1, C, H, W)
-		pixels = list(img.getdata())
-		r: list[float] = [p[0] / 255.0 for p in pixels]
-		g: list[float] = [p[1] / 255.0 for p in pixels]
-		b: list[float] = [p[2] / 255.0 for p in pixels]
-		chw_list = [[[r, g, b]]]  # Adding batch dimension: [1, 3, 224, 224]
+		# Build NCHW tensor: [1, 3, H, W]
+		width, height = img.size
+		pixels = img.get_flattened_data()
 
-		return chw_list
+		# Create channel matrices
+		r_channel = []
+		g_channel = []
+		b_channel = []
+
+		for y in range(height):
+			r_row = []
+			g_row = []
+			b_row = []
+			for x in range(width):
+				idx = y * width + x
+				r_row.append(float(pixels[idx][0]) / 255.0)
+				g_row.append(float(pixels[idx][1]) / 255.0)
+				b_row.append(float(pixels[idx][2]) / 255.0)
+			r_channel.append(r_row)
+			g_channel.append(g_row)
+			b_channel.append(b_row)
+
+		return [[r_channel, g_channel, b_channel]]
 
 	def _encodeImage(self, image: list[list[list[float]]]) -> list:
 		"""Encode image using ViT encoder.
@@ -300,24 +315,30 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 	def _initializePastKeyValues(self, batchSize: int = 1) -> dict[str, list]:
 		"""Initialize past_key_values for decoder.
 
+		Note: Uses sequence length of 1 instead of 0 because nested Python lists
+		cannot represent 4D tensors with zero-length dimensions. The decoder will
+		replace these with proper values after the first iteration when use_cache_branch=False.
+
 		:param batchSize: Batch size for inference.
 		:return: Dictionary of initialized past key values.
 		"""
 		pastKeyValues = {}
 
 		def zerosNdArray(shape: tuple) -> list:
-			if not shape:
-				return 0.0
+			if len(shape) == 1:
+				# Base case: return list of zeros for innermost dimension
+				return [0.0] * shape[0]
+			# Recursive case: create nested lists
 			return [zerosNdArray(shape[1:]) for _ in range(shape[0])]
 
 		# Create key and value for each layer
 		for layerIdx in range(self.decoderConfig.n_layer):
-			# Key and value shape: (batch_size, num_heads, 0, head_dim)
-			# Initial sequence length is 0
+			# Use seq_len=1 instead of 0 to avoid dimension collapse in nested lists
+			# These dummy values will be ignored when use_cache_branch=False
 			headDim = self.decoderConfig.n_embd // self.decoderConfig.n_head
 
-			keyShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
-			valueShape = (batchSize, self.decoderConfig.n_head, 0, headDim)
+			keyShape = (batchSize, self.decoderConfig.n_head, 1, headDim)
+			valueShape = (batchSize, self.decoderConfig.n_head, 1, headDim)
 
 			pastKeyValues[f"past_key_values.{layerIdx}.key"] = zerosNdArray(keyShape)
 			pastKeyValues[f"past_key_values.{layerIdx}.value"] = zerosNdArray(valueShape)
@@ -343,7 +364,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		inputIds = [[self.modelConfig.bos_token_id]]
 		generatedTokens = []
 
-		# Initialize past_key_values
+		# Initialize past_key_values with proper structure
 		pastKeyValues = self._initializePastKeyValues(batchSize=1)
 
 		for step in range(maxLength):
@@ -351,7 +372,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			decoderInputs = {
 				"input_ids": inputIds if step == 0 else [[generatedTokens[-1]]],
 				"encoder_hidden_states": encoderHiddenStates,
-				"use_cache_branch": [True],
+				"use_cache_branch": [False] if step == 0 else [True],
 			}
 
 			# Add past_key_values to inputs
@@ -375,7 +396,7 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 			if len(decoderOutputs) > 1:
 				for layerIdx in range(self.decoderConfig.n_layer):
 					if len(decoderOutputs) > 1 + layerIdx * 2 + 1:
-						# [3] -> layer1 key, [4] -> layer1 value
+						# [1] -> layer0 key, [2] -> layer0 value, etc.
 						keyIndex = 1 + layerIdx * 2
 						valueIndex = keyIndex + 1
 						pastKeyValues[f"past_key_values.{layerIdx}.key"] = decoderOutputs[keyIndex]
