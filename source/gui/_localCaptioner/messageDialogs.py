@@ -146,7 +146,9 @@ class ImageDescDownloader:
 			# update progress when downloading all files to prevent premature stop
 			if len(self.downloadDict) == len(self.filesToDownload):
 				# Translators: The progress message indicating that a download is in progress.
-				cont, skip = self._progressDialog.Update(totalProgress, pgettext("imageDesc", "Downloading..."))
+				cont, skip = self._progressDialog.Update(
+					totalProgress, pgettext("imageDesc", "Downloading...")
+				)
 				if not cont:
 					self._shouldCancel = True
 					self._stopped()
