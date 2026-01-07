@@ -150,6 +150,17 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
+	def _get__nameForInputHelp(self) -> str:
+		"""The name of this gesture as presented to the user in input help mode.
+
+		The base implementation returns self.displayName.
+		Subclasses can override this to provide more specific behavior,
+		such as including the character that would be typed.
+
+		:return: The name to be displayed in input help mode.
+		"""
+		return self.displayName
+
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
 	shouldReportAsCommand = True
@@ -646,7 +657,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
-		textList = [gesture.displayName]
+		textList = [gesture._nameForInputHelp]
 		script = gesture.script
 		runScript = False
 		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
