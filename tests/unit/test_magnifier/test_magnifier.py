@@ -214,7 +214,7 @@ class TestMagnifier(unittest.TestCase):
 		self.assertEqual(width, expected_width)
 		self.assertEqual(height, expected_height)
 
-	def testGetNvdaPosition(self):
+	def testGetNVDAPosition(self):
 		"""Getting NVDA position with different API responses."""
 		# Case 1: Review position successful
 		with patch("_magnifier.magnifier.api.getReviewPosition") as mock_review:
