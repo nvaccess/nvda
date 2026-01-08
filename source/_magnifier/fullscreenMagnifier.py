@@ -55,7 +55,7 @@ class FullScreenMagnifier(Magnifier):
 
 		super()._startMagnifier()
 		log.debug(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self._filterType} and full-screen mode {self._fullscreenMode}",
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 		)
 		# Initialize Magnification API if not already initialized
 		try:
@@ -108,7 +108,7 @@ class FullScreenMagnifier(Magnifier):
 		Apply the current color filter to the full-screen magnifier
 		"""
 		try:
-			match self._filterType:
+			match self.filterType:
 				case Filter.NORMAL:
 					matrix = FilterMatrix.NORMAL
 				case Filter.GRAYSCALE:

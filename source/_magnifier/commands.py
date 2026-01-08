@@ -115,8 +115,8 @@ def toggleFilter() -> None:
 		MagnifierAction.TOGGLE_FILTER,
 	):
 		filters = list(Filter)
-		idx = filters.index(magnifier._filterType)
-		magnifier._filterType = filters[(idx + 1) % len(filters)]
+		idx = filters.index(magnifier.filterType)
+		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
 		ui.message(
@@ -124,7 +124,7 @@ def toggleFilter() -> None:
 				"magnifier",
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
 				"Color filter changed to {filter}",
-			).format(filter=magnifier._filterType.displayString),
+			).format(filter=magnifier.filterType.displayString),
 		)
 
 

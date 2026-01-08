@@ -2841,7 +2841,7 @@ You can cycle through the focus modes on the fly using `NVDA+shift+m` while the 
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Disabled), Enabled, Disabled|
+|Options |Disabled, Enabled|
 |Default |Disabled|
 
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
