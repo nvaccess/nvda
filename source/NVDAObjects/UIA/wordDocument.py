@@ -739,7 +739,8 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 					"Failed to fetch caret text range for remote sentence navigation",
 					exc_info=True,
 				)
-			elif sentenceRange is not None:
+			else:
+				if sentenceRange is not None:
 					info = WordDocumentTextInfo(self, textInfos.POSITION_CARET, _rangeObj=sentenceRange)
 					info.updateCaret()
 
