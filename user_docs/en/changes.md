@@ -11,7 +11,6 @@
 
 ### Changes
 
-* In Microsoft Word with UI Automation on Windows 11, NVDA can navigate by sentence in environments where the legacy object model is unavailable. (#13517, @codeofdusk)
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 
 ### Bug Fixes
