@@ -76,6 +76,18 @@ Install the python version listed in [.python-versions](../../.python-versions)
     * C++ ATL for v143 build tools (x86 & x64)
     * C++ ATL for v143 build tools (ARM64/ARM64EC)
 
+#### Windows App SDK
+
+NVDA requires the Windows App SDK (experimental version 2.0) C++ bindings for WinML (Windows Machine Learning) support.
+The Windows App SDK provides the C++/WinRT headers and libraries needed for the WinML functionality used in local image captioning.
+
+This is automatically included via the NuGet package `Microsoft.WindowsAppSDK:2.0.0-experimental2` specified in [.vsconfig](../../.vsconfig) when using Visual Studio.
+
+To install from CLI
+setup nuget https://learn.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli
+nuget.exe sources add -Name "nuget.org" -Source https://api.nuget.org/v3/index.json
+nuget.exe install Microsoft.WindowsAppSDK -Version 2.0.0-experimental
+
 ### Git Submodules
 
 Some of the dependencies are contained in [Git submodules](https://git-scm.com/docs/gitsubmodules).

@@ -18,22 +18,102 @@ Import(
 	"localLib",
 )
 
+import os
+import glob
 
 # Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 env = env.Clone()  # noqa: F821
 
+# Define BUILDING_LOCALWIN10 for proper dllexport/dllimport
+env.Append(CPPDEFINES=["BUILDING_LOCALWIN10"])
+
+# Add Windows App SDK NuGet package paths
+# SCons runs from the repository root
+repoRoot = Dir('#').abspath  # noqa: F821
+mlPackage = glob.glob(os.path.join(repoRoot, "Microsoft.WindowsAppSDK.ML.*-experimental"))
+foundationPackage = glob.glob(os.path.join(repoRoot, "Microsoft.WindowsAppSDK.Foundation.*-experimental"))
+aiPackage = glob.glob(os.path.join(repoRoot, "Microsoft.WindowsAppSDK.AI.*-experimental"))
+runtimePackage = glob.glob(os.path.join(repoRoot, "Microsoft.WindowsAppSDK.Runtime.*-experimental*"))
+
+# Add generated C++/WinRT headers
+generatedWinRTPath = os.path.join(repoRoot, "nvdaHelper", "localWin10", "Generated")
+if os.path.exists(generatedWinRTPath):
+	env.Append(CPPPATH=[generatedWinRTPath])
+else:
+	import sys
+	print("Warning: Generated WinRT headers not found at:", generatedWinRTPath, file=sys.stderr)
+	print("Run generateWinRTHeaders.ps1 to generate them before building.", file=sys.stderr)
+
+if mlPackage:
+	# Add ONNX Runtime / WinML headers
+	env.Append(CPPPATH=[os.path.join(mlPackage[0], "include")])
+	
+	# Add ONNX Runtime library path for the target architecture
+	# ARM64EC uses x64 libraries for compatibility with x64 code
+	targetArch = env.get("TARGET_ARCH", "x86_64")
+	isArm64EC = env.get("isArm64EC", False)
+	if isArm64EC or targetArch == "x86_64":
+		onnxLibDir = "win-x64"
+	elif targetArch == "arm64":
+		onnxLibDir = "win-arm64"
+	else:
+		onnxLibDir = "win-x86"
+	onnxLibPath = os.path.join(mlPackage[0], "runtimes", onnxLibDir, "native")
+	if os.path.exists(onnxLibPath):
+		env.Append(LIBPATH=[onnxLibPath])
+	
+if foundationPackage:
+	# Add Foundation headers
+	env.Append(CPPPATH=[os.path.join(foundationPackage[0], "include")])
+	
+	# Add Foundation library path for the target architecture
+	# ARM64EC uses x64 libraries for compatibility with x64 code
+	targetArch = env.get("TARGET_ARCH", "x86_64")
+	isArm64EC = env.get("isArm64EC", False)
+	if isArm64EC or targetArch == "x86_64":
+		libDir = "x64"
+	elif targetArch == "arm64":
+		libDir = "arm64"
+	else:
+		libDir = "x86"
+	foundationLibPath = os.path.join(foundationPackage[0], "lib", "native", libDir)
+	if os.path.exists(foundationLibPath):
+		env.Append(LIBPATH=[foundationLibPath])
+
+if runtimePackage:
+	# Add Runtime headers
+	env.Append(CPPPATH=[os.path.join(runtimePackage[0], "include")])
+
+if aiPackage:
+	# Add AI/ML libraries
+	targetArch = env.get("TARGET_ARCH", "x86_64")
+	libDir = "x64" if targetArch == "x86_64" else ("arm64" if targetArch == "arm64" else "x86")
+	aiLibPath = os.path.join(aiPackage[0], "lib", "net6.0-windows10.0.17763.0")
+	if os.path.exists(aiLibPath):
+		env.Append(LIBPATH=[aiLibPath])
+
+# Build source list and library list
+sources = [
+	env["projectResFile"],
+	"oneCoreSpeech.cpp",
+	"uwpOcr.cpp",
+	"winML.cpp",
+	"nvdaHelperLocalWin10.def",
+]
+
+libs = [
+	"WindowsApp",
+	"onnxruntime",
+	"Microsoft.WindowsAppRuntime.Bootstrap",
+]
+
+# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
+libs.append(localLib[2])  # noqa: F821
+
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
-	source=[
-		env["projectResFile"],
-		"oneCoreSpeech.cpp",
-		"uwpOcr.cpp",
-	],
-	LIBS=[
-		"WindowsApp",
-		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-		localLib[2],
-	],  # noqa: F821
+	source=sources,
+	LIBS=libs,
 )
 
 Return(["localWin10Lib"])
