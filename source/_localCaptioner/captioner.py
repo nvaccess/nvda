@@ -13,6 +13,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 from PIL import Image
+import onnxruntime as ort
 
 from logHandler import log
 
@@ -69,9 +70,6 @@ class VitGpt2ImageCaptioner(ImageCaptioner):
 		:raises FileNotFoundError: If config file is not found.
 		:raises Exception: If model initialization fails.
 		"""
-		# Import late to avoid importing numpy at initialization
-		import onnxruntime as ort
-
 		# Load configuration file
 		try:
 			with open(configPath, "r", encoding="utf-8") as f:
