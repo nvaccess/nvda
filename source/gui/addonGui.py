@@ -17,7 +17,6 @@ from logHandler import log
 import addonHandler
 from . import guiHelper
 from . import nvdaControls
-from .message import displayDialogAsModal
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
 import ui

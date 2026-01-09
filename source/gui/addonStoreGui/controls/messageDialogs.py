@@ -251,13 +251,12 @@ def _showAddonRequiresNVDAUpdateDialog(
 			showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		),
 	)
-	
+
 	from gui.addonGui import IncompatibleAddonsDialog
 
 	if IncompatibleAddonsDialog._instance() is not None:
 		log.debug(
-			"IncompatibleAddonsDialog already open while showing "
-			"Add-on requires newer NVDA version dialog"
+			"IncompatibleAddonsDialog already open while showing Add-on requires newer NVDA version dialog",
 		)
 
 
