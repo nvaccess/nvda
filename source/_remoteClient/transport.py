@@ -234,8 +234,7 @@ class Transport(ABC):
 	def unregisterOutbound(self, messageType: RemoteMessageType) -> None:
 		"""Unregister an extension point from a message type.
 
-		Args:
-			messageType (RemoteMessageType): The message type to unregister the extension point from
+		:param messageType (RemoteMessageType): The message type to unregister the extension point from
 		"""
 		self.outboundHandlers[messageType].unregister()
 		del self.outboundHandlers[messageType]
