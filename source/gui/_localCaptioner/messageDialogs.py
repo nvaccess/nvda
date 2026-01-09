@@ -181,12 +181,7 @@ def openEnableOnceDialog() -> None:
 		message=pgettext(
 			"imageDesc",
 			# Translators: label of dialog when enable image desc
-			"AI image descriptions are currently disabled."
-			"\n\n"
-			"Warning: AI image descriptions are experimental. "
-			"Do not use this feature in circumstances where inaccurate descriptions could cause harm."
-			"\n\n"
-			"Would you like to temporarily enable AI image descriptions now?",
+			"AI image description is not enabled, would you like to enable it right now?",
 		),
 		dialogType=DialogType.STANDARD,
 		buttons=confirmationButtons,
