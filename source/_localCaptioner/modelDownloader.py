@@ -151,7 +151,7 @@ class ModelDownloader:
 
 		try:
 			# Use HEAD request with automatic redirect following
-			response = self.session.head(url, timeout=10, allow_redirects=True)
+			response = self.session.head(url, timeout=30, allow_redirects=True)
 			response.raise_for_status()
 		except Exception as e:
 			if not self.cancelRequested:
@@ -163,7 +163,7 @@ class ModelDownloader:
 
 		try:
 			# If HEAD doesn't work, try GET with range header to get just 1 byte
-			response = self.session.get(url, headers={"Range": "bytes=0-0"}, timeout=10, allow_redirects=True)
+			response = self.session.get(url, headers={"Range": "bytes=0-0"}, timeout=30, allow_redirects=True)
 		except Exception as e:
 			if not self.cancelRequested:
 				log.warning(f"Failed to get remote file size (GET) for {url}: {e}")
@@ -480,7 +480,7 @@ class ModelDownloader:
 			url,
 			headers=headers,
 			stream=True,
-			timeout=10,
+			timeout=30,
 			allow_redirects=True,
 		)
 
@@ -499,7 +499,7 @@ class ModelDownloader:
 
 			# Make new request without range header
 			response.close()
-			response = self.session.get(url, stream=True, timeout=10, allow_redirects=True)
+			response = self.session.get(url, stream=True, timeout=30, allow_redirects=True)
 
 		response.raise_for_status()
 		return response
@@ -732,7 +732,8 @@ class ModelDownloader:
 					self.activeFutures.discard(future)
 
 				try:
-					ok, msg = future.result()
+					# Use a short timeout to avoid blocking indefinitely
+					ok, msg = future.result(timeout=1.0)
 					if ok:
 						successful.append(filePath)
 						log.debug(f"successful {filePath=}")
