@@ -3,6 +3,7 @@ revision = 3
 requires-python = "==3.13.*"
 resolution-markers = [
     "sys_platform == 'win32'",
+    "python_version < '0'",
 ]
 supported-markers = [
     "sys_platform == 'win32'",
@@ -135,18 +136,6 @@ wheels = [
 ]
 
 [[package]]
-name = "coloredlogs"
-version = "15.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "humanfriendly", marker = "sys_platform == 'win32'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/c7/eed8f27100517e8c0e6b923d5f0845d0cb99763da6fdee00478f91db7325/coloredlogs-15.0.1.tar.gz", hash = "sha256:7c991aa71a4577af2f82600d8f8f3a89f936baeaf9b50a9c197da014e5bf16b0", size = 278520, upload-time = "2021-06-11T10:22:45.202Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/06/3d6badcf13db419e25b07041d9c7b4a2c331d3f4e7134445ec5df57714cd/coloredlogs-15.0.1-py2.py3-none-any.whl", hash = "sha256:612ee75c546f53e92e70049c9dbfcc18c935a2b9a53b66085ce9ef6a6e5c0934", size = 46018, upload-time = "2021-06-11T10:22:42.561Z" },
-]
-
-[[package]]
 name = "comtypes"
 version = "1.4.13"
 source = { registry = "https://pypi.org/simple" }
@@ -249,6 +238,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "flatbuffers"
 version = "25.9.23"
 source = { registry = "https://pypi.org/simple" }
@@ -270,6 +260,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> parent of e1cef0775 (Support image descriptions using local AI model (#18475))
 name = "identify"
 version = "2.6.15"
 source = { registry = "https://pypi.org/simple" }
@@ -507,15 +499,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/fa/b2ba8229b9381e8f6381c1dcae6f4159a7f72349e414ed19cfbbd1817173/MouseInfo-0.1.3.tar.gz", hash = "sha256:2c62fb8885062b8e520a3cce0a297c657adcc08c60952eb05bc8256ef6f7f6e7", size = 10850, upload-time = "2020-03-27T21:20:10.136Z" }
 
 [[package]]
-name = "mpmath"
-version = "1.3.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e0/47/dd32fa426cc72114383ac549964eecb20ecfd886d1e5ccf5340b55b02f57/mpmath-1.3.0.tar.gz", hash = "sha256:7a28eb2a9774d00c7bc92411c19a89209d5da7c4c9a9e227be8330a23a25b91f", size = 508106, upload-time = "2023-03-07T16:47:11.061Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/e3/7d92a15f894aa0c9c4b49b8ee9ac9850d6e63b03c9c32c0367a13ae62209/mpmath-1.3.0-py3-none-any.whl", hash = "sha256:a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c", size = 536198, upload-time = "2023-03-07T16:47:09.197Z" },
-]
-
-[[package]]
 name = "mss"
 version = "10.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -584,8 +567,6 @@ dependencies = [
     { name = "mdx-gh-links", marker = "sys_platform == 'win32'" },
     { name = "mdx-truly-sane-lists", marker = "sys_platform == 'win32'" },
     { name = "nh3", marker = "sys_platform == 'win32'" },
-    { name = "numpy", marker = "sys_platform == 'win32'" },
-    { name = "onnxruntime", marker = "sys_platform == 'win32'" },
     { name = "pycaw", marker = "sys_platform == 'win32'" },
     { name = "pymdown-extensions", marker = "sys_platform == 'win32'" },
     { name = "pyserial", marker = "sys_platform == 'win32'" },
@@ -618,7 +599,6 @@ lint = [
     { name = "ruff", marker = "sys_platform == 'win32'" },
 ]
 system-tests = [
-    { name = "onnx", marker = "sys_platform == 'win32'" },
     { name = "robotframework", marker = "sys_platform == 'win32'" },
     { name = "robotframework-screencaplibrary", marker = "sys_platform == 'win32'" },
     { name = "robotremoteserver", marker = "sys_platform == 'win32'" },
@@ -641,11 +621,17 @@ requires-dist = [
     { name = "markdown-link-attr-modifier", specifier = "==0.2.1" },
     { name = "mdx-gh-links", specifier = "==0.4" },
     { name = "mdx-truly-sane-lists", specifier = "==1.3" },
+<<<<<<< HEAD
     { name = "nh3", specifier = "==0.3.2" },
     { name = "numpy", specifier = "==2.3.5" },
     { name = "onnxruntime", specifier = "==1.23.2" },
     { name = "pycaw", specifier = "==20251023" },
     { name = "pymdown-extensions", specifier = "==10.17.1" },
+=======
+    { name = "nh3", specifier = "==0.2.19" },
+    { name = "pycaw", specifier = "==20240210" },
+    { name = "pymdown-extensions", specifier = "==10.16.1" },
+>>>>>>> parent of e1cef0775 (Support image descriptions using local AI model (#18475))
     { name = "pyserial", specifier = "==3.5" },
     { name = "pyyaml", specifier = "==6.0.3" },
     { name = "requests", specifier = "==2.32.5" },
@@ -664,7 +650,7 @@ dev = [
     { name = "uv", specifier = "==0.9.11" },
 ]
 dev-docs = [
-    { name = "sphinx", specifier = "==8.1.3" },
+    { name = "sphinx", specifier = "==8.1.2" },
     { name = "sphinx-rtd-theme", specifier = "==3.0.1" },
 ]
 license-check = [{ name = "licensecheck", specifier = "==2025.1" }]
@@ -674,8 +660,12 @@ lint = [
     { name = "ruff", specifier = "==0.14.5" },
 ]
 system-tests = [
+<<<<<<< HEAD
     { name = "onnx", specifier = "==1.19.1" },
     { name = "robotframework", specifier = "==7.3.2" },
+=======
+    { name = "robotframework", specifier = "==7.1.1" },
+>>>>>>> parent of e1cef0775 (Support image descriptions using local AI model (#18475))
     { name = "robotframework-screencaplibrary", specifier = "==1.6.0" },
     { name = "robotremoteserver", specifier = "==1.1.1" },
 ]
@@ -695,6 +685,7 @@ version = "20250925"
 source = { editable = "miscDeps" }
 
 [[package]]
+<<<<<<< HEAD
 name = "onnx"
 version = "1.19.1"
 source = { registry = "https://pypi.org/simple" }
@@ -729,6 +720,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> parent of e1cef0775 (Support image descriptions using local AI model (#18475))
 name = "opencv-python"
 version = "4.11.0.86"
 source = { registry = "https://pypi.org/simple" }
@@ -811,6 +804,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "protobuf"
 version = "6.33.1"
 source = { registry = "https://pypi.org/simple" }
@@ -822,6 +816,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> parent of e1cef0775 (Support image descriptions using local AI model (#18475))
 name = "psutil"
 version = "7.1.3"
 source = { registry = "https://pypi.org/simple" }
@@ -928,15 +924,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e8/52/d87eba7cb129b81563019d1679026e7a112ef76855d6159d24754dbd2a51/pyperclip-1.11.0.tar.gz", hash = "sha256:244035963e4428530d9e3a6101a1ef97209c6825edab1567beac148ccc1db1b6", size = 12185, upload-time = "2025-09-26T14:40:37.245Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/80/fc9d01d5ed37ba4c42ca2b55b4339ae6e200b456be3a1aaddf4a9fa99b8c/pyperclip-1.11.0-py3-none-any.whl", hash = "sha256:299403e9ff44581cb9ba2ffeed69c7aa96a008622ad0c46cb575ca75b5b84273", size = 11063, upload-time = "2025-09-26T14:40:36.069Z" },
-]
-
-[[package]]
-name = "pyreadline3"
-version = "3.5.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0f/49/4cea918a08f02817aabae639e3d0ac046fef9f9180518a3ad394e22da148/pyreadline3-3.5.4.tar.gz", hash = "sha256:8d57d53039a1c75adba8e50dd3d992b28143480816187ea5efbd5c78e6c885b7", size = 99839, upload-time = "2024-09-19T02:40:10.062Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5a/dc/491b7661614ab97483abf2056be1deee4dc2490ecbf7bff9ab5cdbac86e1/pyreadline3-3.5.4-py3-none-any.whl", hash = "sha256:eaf8e6cc3c49bcccf145fc6067ba8643d1df34d604a1ec0eccbf7a18e6d3fae6", size = 83178, upload-time = "2024-09-19T02:40:08.598Z" },
 ]
 
 [[package]]
@@ -1133,7 +1120,7 @@ wheels = [
 
 [[package]]
 name = "sphinx"
-version = "8.1.3"
+version = "8.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alabaster", marker = "sys_platform == 'win32'" },
@@ -1153,9 +1140,9 @@ dependencies = [
     { name = "sphinxcontrib-qthelp", marker = "sys_platform == 'win32'" },
     { name = "sphinxcontrib-serializinghtml", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6f/6d/be0b61178fe2cdcb67e2a92fc9ebb488e3c51c4f74a36a7824c0adf23425/sphinx-8.1.3.tar.gz", hash = "sha256:43c1911eecb0d3e161ad78611bc905d1ad0e523e4ddc202a58a821773dc4c927", size = 8184611, upload-time = "2024-10-13T20:27:13.93Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/a4/fca423c01a257a56cbd99b8cf2a0e11e065c2e8988b7da603f79b60ca454/sphinx-8.1.2.tar.gz", hash = "sha256:b19e24b51d1926567e0bb8f4fbd372e40cb19f1f62bcba91b45c9ee0cdd8874e", size = 8184540, upload-time = "2024-10-12T18:44:37.462Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/26/60/1ddff83a56d33aaf6f10ec8ce84b4c007d9368b21008876fceda7e7381ef/sphinx-8.1.3-py3-none-any.whl", hash = "sha256:09719015511837b76bf6e03e42eb7595ac8c2e41eeb9c29c5b755c6b677992a2", size = 3487125, upload-time = "2024-10-13T20:27:10.448Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/5d/61ffd806913ab2cbfde9a350a5bfd1cbb4c81dd1f510482f7e8b2104289a/sphinx-8.1.2-py3-none-any.whl", hash = "sha256:5e96eb11b5cf7bb2d3f32326c579c3db2a4b7fe1207e84126d57185194988716", size = 3487081, upload-time = "2024-10-12T18:44:34.175Z" },
 ]
 
 [[package]]
@@ -1236,18 +1223,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/3b/44/6716b257b0aa6bfd51a1b31665d1c205fb12cb5ad56de752dfa15657de2f/sphinxcontrib_serializinghtml-2.0.0.tar.gz", hash = "sha256:e9d912827f872c029017a53f0ef2180b327c3f7fd23c87229f7a8e8b70031d4d", size = 16080, upload-time = "2024-07-29T01:10:09.332Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/52/a7/d2782e4e3f77c8450f727ba74a8f12756d5ba823d81b941f1b04da9d033a/sphinxcontrib_serializinghtml-2.0.0-py3-none-any.whl", hash = "sha256:6e2cb0eef194e10c27ec0023bfeb25badbbb5868244cf5bc5bdc04e4464bf331", size = 92072, upload-time = "2024-07-29T01:10:08.203Z" },
-]
-
-[[package]]
-name = "sympy"
-version = "1.14.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "mpmath", marker = "sys_platform == 'win32'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/83/d3/803453b36afefb7c2bb238361cd4ae6125a569b4db67cd9e79846ba2d68c/sympy-1.14.0.tar.gz", hash = "sha256:d3d3fe8df1e5a0b42f0e7bdf50541697dbe7d23746e894990c030e2b05e72517", size = 7793921, upload-time = "2025-04-27T18:05:01.611Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/09/77d55d46fd61b4a135c444fc97158ef34a095e5681d0a6c10b75bf356191/sympy-1.14.0-py3-none-any.whl", hash = "sha256:e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5", size = 6299353, upload-time = "2025-04-27T18:04:59.103Z" },
 ]
 
 [[package]]
