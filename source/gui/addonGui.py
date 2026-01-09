@@ -112,14 +112,6 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		)
 		okButton.SetDefault()
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-		if IncompatibleAddonsDialog._instance() is None:
-			displayDialogAsModal(
-				IncompatibleAddonsDialog(
-					parent=self,
-				),
-			)
-		else:
-			log.debug("IncompatibleAddonsDialog already open; skipping duplicate dialog")
 
 
 def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
