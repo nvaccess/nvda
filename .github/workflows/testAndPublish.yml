@@ -409,6 +409,7 @@ jobs:
           - chrome_roleDescription
           - chrome_misc_aria
           - chrome_misc
+          - chrome_link
         runner: ${{ fromJson(needs.matrix.outputs.supportedRunners) }}
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
