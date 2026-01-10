@@ -26,6 +26,9 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### Deprecations
 
+* The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated. Use the `speechDictHandler.types.EntryType` enumeration instead. (#xxxx, @LeonarddeR)
+* `speechDictHandler.SpeechDictEntry` has been moved to `speechDictHandler.types`. (#xxxx, @LeonarddeR)
+
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
 
