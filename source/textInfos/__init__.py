@@ -706,22 +706,52 @@ class TextInfo(baseObject.AutoPropertyObject):
 		winUser.setCursorPos(oldX, oldY)
 
 	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
+		"""Retrieve link data at the current caret position.
+
+		This method traverses up the object hierarchy to find an enclosing link,
+		handling cases where the caret is positioned on nested elements
+		(e.g. ``<strong>`` inside ``<a>``).
+
+		:return: Link data containing the display text and destination URL,
+			or None if no link is found at the current position.
+
+		.. seealso:: GitHub issues #14779 (graphics inside links) and #17363 (nested elements).
+		"""
 		self.expand(UNIT_CHARACTER)
 		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
-		if obj.role == controlTypes.role.Role.GRAPHIC and (
-			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
-		):
-			# In Firefox, graphics with a parent link also expose the parents link href value.
-			# In Chromium, the link href value must be fetched from the parent object. (#14779)
+
+		# Special handling for graphics inside links (#14779).
+		if obj.role == controlTypes.role.Role.GRAPHIC:
+			# In Firefox, graphics with a parent link also expose the parent's link href value.
+			if obj.value:
+				return _LinkData(
+					displayText=obj.name,
+					destination=obj.value,
+				)
+			# In Chromium, the link href value must be fetched from the parent object.
+			if obj.parent and obj.parent.role == controlTypes.role.Role.LINK:
+				parentLink = obj.parent
+				return _LinkData(
+					displayText=parentLink.name,
+					destination=parentLink.value,
+				)
+
+		# Traverse up the parent hierarchy to find a link (#17363).
+		# This handles cases where the caret is on nested elements like <strong> inside <a>.
+		# Limit traversal depth to prevent infinite loops on malformed object trees.
+		maxParentDepth = 10
+		for _ in range(maxParentDepth):
+			if obj is None:
+				break
+			if (
+				obj.role == controlTypes.role.Role.LINK
+				or controlTypes.state.State.LINKED in obj.states
+			):
+				return _LinkData(
+					displayText=obj.name,
+					destination=obj.value,
+				)
 			obj = obj.parent
-		if (
-			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
-			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
-		):
-			return _LinkData(
-				displayText=obj.name,
-				destination=obj.value,
-			)
 		return None
 
 	def getMathMl(self, field):
