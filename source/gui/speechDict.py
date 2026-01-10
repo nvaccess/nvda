@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
-# Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
+# Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from re import error as RegexpError
 
@@ -15,6 +14,7 @@ import gui
 import gui.contextHelp
 from logHandler import log
 import speechDictHandler
+from speechDictHandler.types import EntryType
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
@@ -26,18 +26,11 @@ class DictionaryEntryDialog(
 ):
 	helpId = "SpeechDictionaries"
 
-	TYPE_LABELS = {
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
-	}
+	TYPE_LABELS = EntryType.ANYWHERE._displayStringLabels
 	TYPE_LABELS_ORDERING = (
-		speechDictHandler.ENTRY_TYPE_ANYWHERE,
-		speechDictHandler.ENTRY_TYPE_WORD,
-		speechDictHandler.ENTRY_TYPE_REGEXP,
+		EntryType.ANYWHERE,
+		EntryType.WORD,
+		EntryType.REGEXP,
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
