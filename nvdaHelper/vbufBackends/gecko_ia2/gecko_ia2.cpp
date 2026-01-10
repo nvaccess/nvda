@@ -287,6 +287,15 @@ OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComVariant state;
 	HRESULT res = firstAccTarget->get_accState(child, &state);
 	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
+	// If the label element is visible, also verify it has actual accessible text content.
+	// A label containing only aria-hidden elements would be visible but have no accessible text,
+	// meaning it cannot be the source of the accessible name (e.g. aria-label was used instead).
+	if (isVisible) {
+		wstring labelText;
+		if (!getTextFromIAccessible(labelText, firstAccTarget)) {
+			isVisible = false;
+		}
+	}
 	auto ID = getIAccessible2UniqueID(firstAccTarget);
 	return LabelInfo { isVisible, ID } ;
 }
