@@ -14,7 +14,7 @@ import gui
 import gui.contextHelp
 from logHandler import log
 import speechDictHandler
-from speechDictHandler.types import EntryType
+from speechDictHandler.types import EntryType, DictionaryType
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
@@ -325,7 +325,7 @@ class DefaultDictionaryDialog(DictionaryDialog):
 			parent,
 			# Translators: Title for default speech dictionary dialog.
 			title=_("Default dictionary"),
-			speechDict=speechDictHandler.dictionaries["default"],
+			speechDict=speechDictHandler.dictionaries[DictionaryType.DEFAULT],
 		)
 
 
@@ -335,7 +335,7 @@ class VoiceDictionaryDialog(DictionaryDialog):
 			parent,
 			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
-			speechDict=speechDictHandler.dictionaries["voice"],
+			speechDict=speechDictHandler.dictionaries[DictionaryType.VOICE],
 		)
 
 
@@ -346,5 +346,5 @@ class TemporaryDictionaryDialog(DictionaryDialog):
 			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
 			# as NvDA is running).
 			title=_("Temporary dictionary"),
-			speechDict=speechDictHandler.dictionaries["temp"],
+			speechDict=speechDictHandler.dictionaries[DictionaryType.TEMP],
 		)
