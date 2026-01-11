@@ -3031,22 +3031,9 @@ def test_reportNotSupportedLanguageAndOtherLanguages():
 REPORT_LINK_DESTINATION_GESTURE = "NVDA+k"
 
 
-def _getLinkDestinationTestSample() -> str:
-	"""Returns HTML sample for testing NVDA+K link destination reporting."""
-	return """
-		<p><a href="https://example.com/plain">Plain link</a></p>
-		<p><a href="https://example.com/strong"><strong>Bold link text</strong></a></p>
-		<p><a href="https://example.com/em"><em>Italic link text</em></a></p>
-		<p><a href="https://example.com/nested"><strong><em><span>Deeply nested</span></em></strong></a></p>
-		<p><a href="https://example.com/mixed">Text with <strong>bold</strong> inside</a></p>
-		<p><a href="https://example.com/image"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Test image"></a></p>
-		<p><strong>Not a link</strong></p>
-	"""
-
-
 def test_reportLinkDestination_plainLink():
 	"""Test NVDA+K reports the URL of a plain link."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome('<p><a href="https://example.com/plain">Plain link</a></p>')
 
 	# Move to the first link line
 	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
@@ -3063,11 +3050,12 @@ def test_reportLinkDestination_plainLink():
 
 def test_reportLinkDestination_nestedStrong():
 	"""Test NVDA+K reports the URL when caret is on text inside a <strong> tag within a link (#17363)."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/strong"><strong>Bold link text</strong></a></p>',
+	)
 
-	# Move past the first link to the second (strong nested)
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Plain link
-	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")  # Strong link
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(actualSpeech, "Bold link text")
 
 	# Report link destination - this was broken before #17363 fix
@@ -3081,12 +3069,12 @@ def test_reportLinkDestination_nestedStrong():
 
 def test_reportLinkDestination_nestedEm():
 	"""Test NVDA+K reports the URL when caret is on text inside an <em> tag within a link (#17363)."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/em"><em>Italic link text</em></a></p>',
+	)
 
-	# Move to the third link (em nested)
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Plain link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Strong link
-	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")  # Em link
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(actualSpeech, "Italic link text")
 
 	# Report link destination
@@ -3100,13 +3088,12 @@ def test_reportLinkDestination_nestedEm():
 
 def test_reportLinkDestination_deeplyNested():
 	"""Test NVDA+K reports the URL when caret is on deeply nested elements within a link (#17363)."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/nested"><strong><em><span>Deeply nested</span></em></strong></a></p>',
+	)
 
-	# Move to the fourth link (deeply nested)
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Plain link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Strong link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Em link
-	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")  # Deeply nested
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(actualSpeech, "Deeply nested")
 
 	# Report link destination
@@ -3120,15 +3107,14 @@ def test_reportLinkDestination_deeplyNested():
 
 def test_reportLinkDestination_imageLink():
 	"""Test NVDA+K reports the URL of an image link (#14779)."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/image">'
+		'<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" '
+		'alt="Test image"></a></p>',
+	)
 
-	# Move to the image link (6th paragraph)
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Plain link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Strong link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Em link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Deeply nested
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Mixed content
-	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")  # Image link
+	# Move to the image link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(actualSpeech, "Test image")
 
 	# Report link destination
@@ -3142,23 +3128,16 @@ def test_reportLinkDestination_imageLink():
 
 def test_reportLinkDestination_notALink():
 	"""Test NVDA+K reports 'Not a link' when caret is not on a link."""
-	_chrome.prepareChrome(_getLinkDestinationTestSample())
+	_chrome.prepareChrome("<p><strong>Not a link</strong></p>")
 
-	# Move to the non-link element (last paragraph)
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Plain link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Strong link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Em link
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Deeply nested
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Mixed content
-	_NvdaLib.getSpeechAfterKey("downArrow")  # Image link
-	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")  # Not a link
+	# Move to the non-link element
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
 	_builtIn.should_contain(actualSpeech, "Not a link")
 
 	# Report link destination - should say "Not a link"
 	actualSpeech = _NvdaLib.getSpeechAfterKey(REPORT_LINK_DESTINATION_GESTURE)
 	_asserts.strings_match(
 		actualSpeech,
-		# Translators: Reported when using the command to report the destination of a link.
 		"Not a link.",
 		message="NVDA+K should report 'Not a link' when caret is not on a link",
 	)
