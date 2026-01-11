@@ -46,6 +46,9 @@ from ctypes.wintypes import (
 )
 from serial.win32 import LPOVERLAPPED
 from .advapi32 import SECURITY_ATTRIBUTES
+from .jobapi2 import (
+	JOBOBJECTINFOCLASS,
+)
 
 ULONG_PTR = c_size_t
 LPSECURITY_ATTRIBUTES = POINTER(SECURITY_ATTRIBUTES)
@@ -1543,3 +1546,44 @@ Retrieves the current OEM code page identifier.
 """
 GetOEMCP.argtypes = ()
 GetOEMCP.restype = UINT
+
+CreateJobObject = WINFUNCTYPE(None)(("CreateJobObjectW", dll))
+"""
+Creates or opens a job object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-createjobobjectw
+"""
+CreateJobObject.argtypes = (
+	LPSECURITY_ATTRIBUTES,  # lpJobAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+	LPCWSTR,  # lpName: The name of the job object
+)
+CreateJobObject.restype = HANDLE
+
+AssignProcessToJobObject = WINFUNCTYPE(None)(("AssignProcessToJobObject", dll))
+"""
+Associates a process with an existing job object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-assignprocesstojobobject
+"""
+AssignProcessToJobObject.argtypes = (
+	HANDLE,  # hJob: A handle to the job object
+	HANDLE,  # hProcess: A handle to the process to be associated with the job object
+)
+AssignProcessToJobObject.restype = BOOL
+
+SetInformationJobObject = WINFUNCTYPE(None)(("SetInformationJobObject", dll))
+"""
+Sets limits for a job object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-setinformationjobobject
+"""
+SetInformationJobObject.argtypes = (
+	HANDLE,  # hJob: A handle to the job object
+	JOBOBJECTINFOCLASS,  # JobObjectInfoClass: The information class for the job object
+	LPVOID,  # lpJobObjectInfo: A pointer to the job object information
+	DWORD,  # cbJobObjectInfoLength: The size of the job object information
+)
+SetInformationJobObject.restype = BOOL
