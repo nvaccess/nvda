@@ -262,7 +262,15 @@ if not isNVDAHelperLocalArch:
 	env.Install(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('synthDrivers'), sonicLib)
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
 	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
 	thirdPartyEnv.SConscript("uwp/sconscript")
+
+if TARGET_ARCH == "x86":
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('synthDrivers32'), sonicLib)
