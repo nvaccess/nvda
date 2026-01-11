@@ -480,17 +480,36 @@ class WordDocumentTextInfo(UIATextInfo):
 				# Not a controlStart, formatChange or text string. Nothing to do.
 				break
 		# Fill in page number attributes where NVDA expects
-		try:
-			page = fields[0].field["page-number"]
-		except KeyError:
-			page = None
-		if page is not None and not UIARemote.isSupported():
+		# Get page number from control field (automation ID), which is reliable.
+		# Only use page numbers from control fields, not format fields,
+		# as format fields may have invalid values from Custom Attributes API.
+		page = None
+		if (
+			len(fields) > 0
+			and isinstance(fields[0], textInfos.FieldCommand)
+			and fields[0].command == "controlStart"
+			and isinstance(fields[0].field, textInfos.ControlField)
+		):
+			page = fields[0].field.get("page-number")
+			# Convert to int to match the type used by Custom Attributes API
+			# Control fields extract page numbers as strings from automation IDs
+			if page is not None:
+				try:
+					page = int(page)
+				except (ValueError, TypeError):
+					page = None
+		if page is not None:
+			# Propagate control field page number to format fields that don't already have one.
+			# This serves as a fallback when the Custom Attributes API returns invalid values,
+			# particularly when navigating backwards to the first line of a page.
 			for field in fields:
 				if isinstance(field, textInfos.FieldCommand) and isinstance(
 					field.field,
 					textInfos.FormatField,
 				):
-					field.field["page-number"] = page
+					# Only set if not already set by Custom Attributes API
+					if "page-number" not in field.field:
+						field.field["page-number"] = page
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
 		# This does not cause a loop, but does cause information to be doubled
@@ -542,7 +561,10 @@ class WordDocumentTextInfo(UIATextInfo):
 					textRange,
 					UIACustomAttributeID.PAGE_NUMBER,
 				)
-				if isinstance(pageNumber, int):
+				# Only use valid page numbers (>= 1). Word returns -1 when the value is not available,
+				# particularly when navigating backwards to the first line of a page.
+				# In such cases, we fall back to the control field page number in getTextWithFields.
+				if isinstance(pageNumber, int) and pageNumber > 0:
 					formatField.field["page-number"] = pageNumber
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
 					docElement,
