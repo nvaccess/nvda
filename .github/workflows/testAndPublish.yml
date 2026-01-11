@@ -35,8 +35,8 @@ env:
   supportedRunners: '["windows-2022", "windows-2025"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.11'
-  supportedPythonVersions: '["3.13.11"]'
+  defaultPythonVersion: '3.13.9'
+  supportedPythonVersions: '["3.13.9"]'
 
 jobs:
   matrix:
@@ -105,7 +105,7 @@ jobs:
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
-      run: scons source %sconsArgs% %sconsCores%
+      run: scons source synthDriverHost32Runtime %sconsArgs% %sconsCores%
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
