@@ -184,14 +184,6 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	def closed(self) -> bool:
 		return self._conn is None or self._conn._closed
 
-	def _serve_request(self, timeout: float = 0.5) -> bool:
-		conn = self._conn
-		if not conn or conn._closed:
-			return False
-		assert isinstance(conn, rpyc.Connection)
-		return conn.serve(timeout=timeout)
-		return False
-
 	@classmethod
 	def _bgEventLoop(cls, connRef: weakref.ref[Connection], name: str):
 		log.debug(f"Starting background event loop for Connection '{name}'")
