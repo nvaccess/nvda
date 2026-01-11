@@ -353,6 +353,15 @@ Retrieves a pseudo handle for the current process.
 GetCurrentProcess.argtypes = ()
 GetCurrentProcess.restype = HANDLE
 
+GetCurrentProcessId = WINFUNCTYPE(None)(("GetCurrentProcessId", dll))
+"""
+Retrieves the process identifier of the calling process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocessid
+"""
+GetCurrentProcessId.argtypes = ()
+GetCurrentProcessId.restype = DWORD
+
 UnhandledExceptionFilter = WINFUNCTYPE(
 	c_void_p,  # lpTopLevelExceptionFilter: The pointer to the old unhandled exception filter function.
 	c_void_p,  # lpTopLevelExceptionFilter: A pointer to the new unhandled exception filter function.
