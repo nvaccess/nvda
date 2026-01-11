@@ -416,7 +416,6 @@ class ConfigManager(object):
 		"development",
 		"addonStore",
 		"remote",
-		"automatedImageDescriptions",
 		"math",
 		"screenCurtain",
 	}
