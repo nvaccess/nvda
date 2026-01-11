@@ -225,12 +225,13 @@ Export("detoursLib")
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
 
+localLib = env.SConscript("local/sconscript")
+Export("localLib")
+if signExec:
+	env.AddPostAction(localLib[0], [signExec])
+env.Install(libInstallDir, localLib)
+
 if isNVDAHelperLocalArch:
-	localLib = env.SConscript("local/sconscript")
-	Export("localLib")
-	if signExec:
-		env.AddPostAction(localLib[0], [signExec])
-	env.Install(libInstallDir, localLib)
 	win10localLib = env.SConscript(
 		"localWin10/sconscript",
 	)
