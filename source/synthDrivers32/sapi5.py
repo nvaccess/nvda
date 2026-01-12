@@ -9,11 +9,14 @@ import comtypes.client
 
 # Precompile the SAPI5 COM interfaces
 # Placing them where NvDA's original sapi5 driver expects them.
-sys.modules['comInterfaces.SpeechLib'] = comtypes.client.GetModule(r'c:\windows\system32\speech\common\sapi.dll') 
+sys.modules["comInterfaces.SpeechLib"] = comtypes.client.GetModule(
+	r"c:\windows\system32\speech\common\sapi.dll"
+)
 
-# Point the sonic module to the 32 bit build of its dll 
+# Point the sonic module to the 32 bit build of its dll
 from . import _sonic
-_sonic.SONIC_DLL_PATH = os.path.join(os.path.dirname(__file__), 'sonic.dll')
+
+_sonic.SONIC_DLL_PATH = os.path.join(os.path.dirname(__file__), "sonic.dll")
 
 from ._sapi5 import SynthDriver
 

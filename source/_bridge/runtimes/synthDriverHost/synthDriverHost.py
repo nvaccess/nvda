@@ -74,6 +74,7 @@ class HostService(Service):
 		languageHandler.getLanguage = remoteService.getLanguage
 		log.debug("Injecting WavePlayerProxy into nvwave module")
 		import nvwave
+
 		nvwave.initialize()
 
 	@Service.exposed

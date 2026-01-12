@@ -100,6 +100,7 @@ def _runSynthDriverHost():
 	log.debug("Starting synthDriverHost runtime thread")
 	try:
 		import comtypes
+
 		comtypes.CoInitialize()
 		import synthDriverHost
 

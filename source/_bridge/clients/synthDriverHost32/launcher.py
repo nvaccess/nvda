@@ -16,7 +16,6 @@ from winBindings.jobapi2 import JOB_OBJECT_LIMIT
 import jobObject
 
 
-
 @rpyc.service
 class NVDAService(Service):
 	"""The main NVDA service exposed to remote synth driver hosts."""
@@ -68,7 +67,7 @@ def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, Syn
 		[_hostExe],
 		stdin=subprocess.PIPE,
 		stdout=subprocess.PIPE,
-		creationflags=subprocess.CREATE_NO_WINDOW
+		creationflags=subprocess.CREATE_NO_WINDOW,
 	)
 	job.assignProcess(hostProc._handle)
 	hostProc._job = job  # Prevent job from being GC'd while process is running
