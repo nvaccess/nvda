@@ -10,9 +10,9 @@ from collections import OrderedDict
 import pickle
 from logHandler import log
 from _bridge.base import Proxy
-import synthDriverHandler
 from autoSettingsUtils.driverSetting import DriverSetting, NumericDriverSetting, BooleanDriverSetting
 from synthDriverHandler import (
+	SynthDriver,
 	synthIndexReached,
 	synthDoneSpeaking,
 	VoiceInfo,
@@ -23,7 +23,7 @@ if typing.TYPE_CHECKING:
 	from _bridge.base import Proxy
 
 
-class SynthDriverProxy(Proxy, synthDriverHandler.SynthDriver):
+class SynthDriverProxy(Proxy, SynthDriver):
 	"""Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver."""
 
 	def __init__(self, service: SynthDriverService):
