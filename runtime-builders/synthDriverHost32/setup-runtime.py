@@ -105,8 +105,8 @@ freeze(
 			"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
 			"version_info": {
 				"version": formatBuildVersionString(),
-				"description": "NVDA Add-on Runtime",
-				"product_name": "NVDA ART",
+				"description": "32 bit NVDA synthDriver host runtime",
+				"product_name": "NVDA",
 				"product_version": version,
 				"copyright": NVDAcopyright,
 				"company_name": publisher,
