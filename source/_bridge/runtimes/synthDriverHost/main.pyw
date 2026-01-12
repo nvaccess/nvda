@@ -19,6 +19,7 @@ def record_factory(*args, **kwargs):
 	try:
 		record.name = frame.f_code.co_qualname
 	except AttributeError:
+		# co_qualname may be unavailable for some frames; in that case, keep the default record.name
 		pass
 	return record
 logging.setLogRecordFactory(record_factory)

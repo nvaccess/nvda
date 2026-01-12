@@ -7,7 +7,7 @@ import types
 import os
 import sys
 
-# Verry basic values to allow things to run.
+# Very basic values to allow things to run.
 appDir = os.path.dirname(sys.executable)
 appArgs = types.SimpleNamespace()
 appArgs.launcher = False
