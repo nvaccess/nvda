@@ -890,14 +890,14 @@ class GeneralSettingsPanel(SettingsPanel):
 				# current user settings to system settings (to allow current
 				# settings to be used in secure screens such as User Account
 				# Control (UAC) dialog).
-				"Use currently saved settings during sign-in and on secure screens"
+				"&Use currently saved settings during sign-in and on secure screens"
 				" (requires administrator privileges)",
 			),
 		)
 		self.bindHelpEvent("GeneralSettingsCopySettings", self.copySettingsButton)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON, self.onCopySettings)
-		if globalVars.appArgs.secure or not config.isInstalledCopy():
-			self.copySettingsButton.Disable()
+		# if globalVars.appArgs.secure or not config.isInstalledCopy():
+		# self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 
 		item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
@@ -997,20 +997,26 @@ class GeneralSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onCopySettings(self, evt):
+		addonsToCopy: list[str] = []
 		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
-			message = _(
-				# Translators: A message to warn the user when attempting to copy current
-				# settings to system settings.
-				"Add-ons were detected in your user settings directory. "
-				"Copying these to the system profile could be a security risk. "
-				"Do you still wish to copy your settings?",
-			)
-			# Translators: The title of the warning dialog displayed when trying to
-			# copy settings for use in secure screens.
-			title = _("Warning")
-			style = wx.YES | wx.NO | wx.ICON_WARNING
-			if wx.NO == gui.messageBox(message, title, style, self):
+			# message = _(
+			# 	# Translators: A message to warn the user when attempting to copy current
+			# 	# settings to system settings.
+			# 	"Add-ons were detected in your user settings directory. "
+			# 	"Copying these to the system profile could be a security risk. "
+			# 	"Do you still wish to copy your settings?",
+			# )
+			# # Translators: The title of the warning dialog displayed when trying to
+			# # copy settings for use in secure screens.
+			# title = _("Warning")
+			# style = wx.YES | wx.NO | wx.ICON_WARNING
+			# if wx.NO == gui.messageBox(message, title, style, self):
+			# 	return
+			from .addonGui import CopyAddonsDialog
+
+			if CopyAddonsDialog(self.GetTopLevelParent(), addonsToCopy).ShowModal() != wx.ID_OK:
 				return
+		gui.messageBox(f"{addonsToCopy}")
 		progressDialog = gui.IndeterminateProgressDialog(
 			gui.mainFrame,
 			# Translators: The title of the dialog presented while settings are being copied
@@ -1021,7 +1027,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		while True:
 			try:
-				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig, _addonsToCopy=addonsToCopy)
 				res = True
 				break
 			except installer.RetriableFailure:

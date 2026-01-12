@@ -427,41 +427,59 @@ class IncompatibleAddonsDialog(
 		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
 
 
-class CopyAddonsDialog(DpiScalingHelperMixinWithoutInit, gui.contextHelp.ContextHelpMixin, wx.Dialog):
-	def __init__(self):
-		super().__init__(None, wx.ID_ANY, "Copy Add-ons")
+class CopyAddonsDialog(
+	DpiScalingHelperMixinWithoutInit,
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,
+):
+	def __init__(self, parent: wx.Window, returnList: list[str]):
+		super().__init__(parent, wx.ID_ANY, "Copy Add-ons")
+		self._installedAddons: tuple[Addon] = tuple(addonHandler.getAvailableAddons())
+		self._returnList = returnList
+
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
+
 		label = wx.StaticText(
 			self,
-			label="Add-ons were detected in your user settings directory. "
-			"Copying these to the system profile could be a security risk. "
-			"Do you still wish to copy your settings?",
+			label="You currently have one or more add-ons installed. "
+			"Select which of these add-ons should be copied to the system profile. "
+			"You are encouraged to keep this list minimal.",
 		)
 		label.Wrap(self.scaleSize(self.GetSize().Width))
-		# AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(label)
-		listCtrl = sHelper.addLabeledControl(
+
+		sHelper.addLabeledControl("Dummy", wx.TextCtrl)
+
+		listCtrl = self.addonsList = sHelper.addLabeledControl(
 			"Add-ons",
 			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
 		listCtrl.setResizeColumn(0)
-		listCtrl.AppendColumn("Name")
-		listCtrl.AppendColumn("Status")
-		listCtrl.Append(("Audioscreen", "Enabled"))
-		listCtrl.Append(("PC Keyboard Braille Input", "Disabled"))
+		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
+		listCtrl.AppendColumn(_("Package"), width=self.scaleSize(150))
+		# Translators: The label for a column in add-ons list used to specify the add-on's author.
+		listCtrl.AppendColumn(_("Author"), width=self.scaleSize(180))
+		# Translators: The label for a column in add-ons list used to identify the version of an add-on.
+		listCtrl.AppendColumn(_("Version"), width=self.scaleSize(150))
 		listCtrl.EnableCheckBoxes(True)
+		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
+		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
+
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 		self.aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
-		# self.aboutButton.Disable()
-		# self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
-		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
-		button = buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
-		# self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.aboutButton.Disable()
+		self.aboutButton.Bind(wx.EVT_BUTTON, self._onAbout)
+		okButton = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		okButton.Bind(wx.EVT_BUTTON, self.onContinue)
+		okButton.SetDefault()
+		cancelButton = buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		cancelButton.Bind(wx.EVT_BUTTON, self.onCancel)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonHelper, separated=True)
+		self._populateAddonsList()
 
 		mainSizer.Add(
 			sHelper.sizer,
@@ -471,3 +489,65 @@ class CopyAddonsDialog(DpiScalingHelperMixinWithoutInit, gui.contextHelp.Context
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.CentreOnParent()
+
+	def _populateAddonsList(self):
+		self.addonsList.DeleteAllItems()
+		for idx, addon in enumerate(self._installedAddons):
+			self.addonsList.Append(
+				(
+					addon.manifest["summary"],
+					addon.manifest["author"],
+					addon.version,
+				),
+			)
+		activeIndex = 0
+		self.addonsList.SetItemState(
+			activeIndex,
+			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
+			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
+		)
+
+	def _onSelectionChange(self, evt: wx.ListEvent):
+		self.aboutButton.Enable(self.addonsList.GetSelectedItemCount() == 1)
+
+	def _onAbout(self, evt: wx.EVT_BUTTON):
+		index: int = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
+
+		_showAddonInfo(self._installedAddons[index]._addonGuiModel)
+
+	def onClose(self, evt: wx.CloseEvent):
+		import tones
+
+		tones.beep(500, 50)
+		if not self.GetReturnCode():
+			self.SetReturnCode(wx.ID_CANCEL)
+		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
+
+	def onCancel(self, evt: wx.CommandEvent):
+		import tones
+
+		tones.beep(300, 50)
+		import time
+
+		time.sleep(0.05)
+		self.EndModal(evt.GetId())
+		self.Close()
+
+	def onContinue(self, evt: wx.CommandEvent):
+		import tones
+
+		tones.beep(700, 50)
+		import time
+
+		time.sleep(0.05)
+		self._returnList.extend(
+			addon.name
+			for idx, addon in enumerate(self._installedAddons)
+			if self.addonsList.IsItemChecked(idx)
+		)
+		self.EndModal(evt.GetId())
+		self.Close()
