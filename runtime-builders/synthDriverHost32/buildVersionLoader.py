@@ -8,7 +8,7 @@ import sys
 
 
 # This file wraps buildVersion.py from NvDA's own source directory,
- # Exposing the symbols required by pyproject.toml and setup-runtime.py in this particular sub-project. 
+# Exposing the symbols required by pyproject.toml and setup-runtime.py in this particular sub-project.
 
 sys.path.insert(0, "../../source")
 try:
@@ -23,9 +23,9 @@ finally:
 	del sys.path[0]
 
 __all__ = [
-	'version_detailed',
-	'formatBuildVersionString',
-	'name',
-	'publisher',
-	'version',
+	"version_detailed",
+	"formatBuildVersionString",
+	"name",
+	"publisher",
+	"version",
 ]
