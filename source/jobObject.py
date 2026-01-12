@@ -4,10 +4,10 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import ctypes
 from ctypes import (
 	byref,
 	sizeof,
+	WinError,
 )
 from ctypes.wintypes import (
 	HANDLE,
@@ -46,7 +46,7 @@ class Job:
 		log.debug("Creating job object...")
 		hJob = CreateJobObject(None, None)
 		if not hJob:
-			raise RuntimeError(f"Failed to create job object, {ctypes.WinError()}")
+			raise RuntimeError(f"Failed to create job object, {WinError()}")
 		self._hJob = hJob
 
 	def setBasicLimits(self, basicLimitFlags: JOB_OBJECT_LIMIT):
@@ -59,7 +59,7 @@ class Job:
 			byref(limitInfo),
 			sizeof(limitInfo),
 		):
-			raise RuntimeError(f"Failed to set job object information, {ctypes.WinError()}")
+			raise RuntimeError(f"Failed to set job object information, {WinError()}")
 
 	def setUiRestrictions(self, uiLimitFlags: JOB_OBJECT_UILIMIT):
 		log.debug(f"UI limit flags: {uiLimitFlags.name}...")
@@ -71,7 +71,7 @@ class Job:
 			byref(uiRestrictions),
 			sizeof(uiRestrictions),
 		):
-			raise RuntimeError(f"Failed to set job object UI restrictions, {ctypes.WinError()}")
+			raise RuntimeError(f"Failed to set job object UI restrictions, {WinError()}")
 
 	def assignProcess(self, processHandle: HANDLE):
 		"""
@@ -86,7 +86,7 @@ class Job:
 		"""
 		log.debug("Assigning process to job object...")
 		if not AssignProcessToJobObject(self._hJob, processHandle):
-			raise RuntimeError(f"Failed to assign process to job object, {ctypes.WinError()}")
+			raise RuntimeError(f"Failed to assign process to job object, {WinError()}")
 
 	def close(self):
 		"""Closes the job object."""
