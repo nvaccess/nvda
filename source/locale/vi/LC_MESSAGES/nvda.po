@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 05:23+0000\n"
-"PO-Revision-Date: 2025-12-15 00:20\n"
+"POT-Creation-Date: 2025-12-29 08:04+0000\n"
+"PO-Revision-Date: 2026-01-05 00:20\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -90,7 +90,7 @@ msgstr "Giảm khi đọc và phát âm thanh"
 #. See the Audio Ducking Mode section of the User Guide for details.
 #: audioDucking.py:52
 msgid "Always duck"
-msgstr "Luôn luôn giảm"
+msgstr "Luôn giảm"
 
 #. Translators: Displayed in braille for an object which is a
 #. window.
@@ -659,14 +659,14 @@ msgstr "⡑"
 #: braille.py:470
 msgctxt "braille formatting symbol"
 msgid "⠛"
-msgstr ""
+msgstr "⠛"
 
 #. Translators: Brailled at the end of invalid grammar text.
 #. This is the English letter "g" plus dot 7 in braille.
 #: braille.py:473
 msgctxt "braille formatting symbol"
 msgid "⡛"
-msgstr ""
+msgstr "⡛"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:686 speech\speech.py:2103
@@ -1620,22 +1620,22 @@ msgstr "Không có văn bản khác kiểu trước"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1228
 msgid "moves to the next reference"
-msgstr ""
+msgstr "chuyển đến tham chiếu kế"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1230
 msgid "no next reference"
-msgstr ""
+msgstr "không có tham chiếu kế"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1232
 msgid "moves to the previous reference"
-msgstr ""
+msgstr "chuyển về tham chiếu trước"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1234
 msgid "no previous reference"
-msgstr ""
+msgstr "không có tham chiếu trước"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2437,7 +2437,7 @@ msgstr "Màn hình cảm ứng"
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:112
 msgid "System focus"
-msgstr "Con trỏ hệ thống"
+msgstr "Focus hệ thống"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:115
@@ -2492,13 +2492,13 @@ msgstr "Không hỗ trợ chức năng giảm âm lượng"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:214
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Bật tắt chế độ trợ giúp nhập. Nếu bật, khi bấmmột phím hoặc một tổ hợp phím, sẽ thông báo chức năng được gán cho phím đó nếu có."
+msgstr "Bật tắt chế độ trợ giúp nhập. Nếu bật, khi bấm một phím hoặc một tổ hợp phím, sẽ thông báo chức năng được gán cho phím đó nếu có."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:225
 #, python-brace-format
 msgid "input help on. Press {gestureKeys} again to turn it off."
-msgstr "đã Bật trợ giúp nhập. Bấm lại {gestureKeys} để tắt."
+msgstr "bật chế độ trợ giúp nhập. Bấm lại {gestureKeys} để tắt."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:229
@@ -2523,7 +2523,7 @@ msgstr "Bật chế độ ngủ"
 #. Translators: Input help mode message for report current line command.
 #: globalCommands.py:256
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."
-msgstr "Thông báo dòng tại vị trí con trỏ hiện tại của ứng dụng. bấm nhanh hai lần để đánh vần dòng. Và bấm nhanh ba lần để đánh vần dòng đó với phần mô tả của từng ký tự."
+msgstr "Thông báo dòng tại vị trí con trỏ hiện tại của ứng dụng. Bấm nhanh hai lần để đánh vần dòng. Và bấm nhanh ba lần để đánh vần dòng đó với phần mô tả của từng ký tự."
 
 #. Translators: Input help mode message for left mouse click command.
 #: globalCommands.py:285
@@ -2592,7 +2592,7 @@ msgstr "đã chọn %s"
 #. Translators: Input help mode message for report date and time command.
 #: globalCommands.py:436
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Bấm một lần để nghe ggiờ hiện tại. Bấm hai lần để nghe ngày hiện tại"
+msgstr "Bấm một lần để nghe giờ hiện tại. Bấm hai lần để nghe ngày hiện tại"
 
 #. Translators: Input help mode message for set the first value in the synth ring setting.
 #: globalCommands.py:464
@@ -2838,29 +2838,29 @@ msgstr "bật báo kiểu dáng"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:795
 msgid "Cycles through options for how to report spelling or grammar errors"
-msgstr ""
+msgstr "Chuyển đổi qua lại giữa các tùy chọn báo cáo lỗi chính tả hoặc ngữ pháp"
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:807
 #, python-brace-format
 msgid "Report errors {mode}"
-msgstr ""
+msgstr "Báo cáo lỗi {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
 #: globalCommands.py:814
 msgid "Toggles reporting spelling or grammar errors in braille"
-msgstr ""
+msgstr "Bật/tắt báo cáo lỗi chính tả hoặc ngữ pháp chữ nổi"
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
 #: globalCommands.py:824
 msgid "Report errors in braille on"
-msgstr ""
+msgstr "Bật Báo cáo lỗi chữ nổi"
 
 #. Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 #: globalCommands.py:827
 msgid "Report errors in braille off"
-msgstr ""
+msgstr "Tắt báo cáo lỗi chữ nổi"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:831
@@ -3294,7 +3294,7 @@ msgstr "Chuyển về chế độ duyệt trước"
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:1369
 msgid "No previous review mode"
-msgstr "Khong có chế độ duyệt trước"
+msgstr "Không có chế độ duyệt trước"
 
 #. Translators: Input help mode message for toggle simple review mode command.
 #: globalCommands.py:1373
@@ -3361,7 +3361,7 @@ msgstr "Thông báo thông tin về văn bản hoặc đối tượng tại nơi
 #. or object with focus if there is no caret.
 #: globalCommands.py:1529
 msgid "Reports information about the location of the text or object at the position of system caret. Pressing twice may provide further detail."
-msgstr "Thông báo thông tin về vị trí văn bản hoặc đối tượng tại vị trí con trỏ náy. Bấm nhanh hai lần có thể cung cấp nhiều chi tiết hơn."
+msgstr "Thông báo thông tin về vị trí văn bản hoặc đối tượng tại vị trí dấu nháy hệ thống. Bấm nhanh hai lần có thể cung cấp nhiều chi tiết hơn."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:1545
@@ -3441,7 +3441,7 @@ msgstr "Không có đối tượng con"
 #. Translators: Input help mode message for activate current object command.
 #: globalCommands.py:1739
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Thực hiện thao tác mặc định cho đối tượng điều hướng hiện tại (Ví dụ như thực hiện thao tác kích hoạt một nút)"
+msgstr "Thực hiện thao tác mặc định cho đối tượng điều hướng hiện tại (ví dụ như thực hiện thao tác kích hoạt một nút)"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 #: globalCommands.py:1786
@@ -3597,7 +3597,7 @@ msgstr "Chế độ đọc {mode}"
 #. mostly used in web browsing to move from embedded object to the webpage document.
 #: globalCommands.py:2425
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
-msgstr "Chuyển con trỏ ra khỏi đối tượng nhún hiện tại và vào trong tài liệu có chứa nó"
+msgstr "Chuyển focus ra khỏi đối tượng nhúng hiện tại và vào trong tài liệu có chứa nó"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3755,17 +3755,17 @@ msgstr "Bật theo dõi chuột"
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
 #: globalCommands.py:3047
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
-msgstr ""
+msgstr "Bật/tắt tiếng bíp báo tọa độ chuột khi chuột di chuyển"
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
 #: globalCommands.py:3052
 msgid "Mouse audio coordinates on"
-msgstr ""
+msgstr "Bật tọa độ âm thanh chuột"
 
 #. Translators: Reported when mouse audio coordinates are toggled off.
 #: globalCommands.py:3054
 msgid "Mouse audio coordinates off"
-msgstr ""
+msgstr "Tắt tọa độ âm thanh chuột"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:3064
@@ -3851,7 +3851,7 @@ msgstr "Mở thư mục cấu hình người dùng của NVDA cho tài khoản h
 #. Translators: Input help mode message for toggle progress bar output command.
 #: globalCommands.py:3219
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Xoay vòng giữa các tùy chọn thông báo cho thanh tiến độ như: thông báo bằng tiếng nói, bằng tiếng bip, cả hai hay tắt"
+msgstr "Xoay vòng giữa các tùy chọn thông báo cho thanh tiến độ như: thông báo bằng tiếng nói, bằng tiếng bíp, cả hai hay tắt"
 
 #. Translators: A mode where no progress bar updates are given.
 #: globalCommands.py:3229
@@ -3986,7 +3986,7 @@ msgstr "Mở cài đặt âm thanh của NVDA"
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3408
 msgid "Shows NVDA's privacy and security settings"
-msgstr ""
+msgstr "Hiển thị các thiết lập về quyền riêng tư và bảo mật của NVDA"
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3417
@@ -4096,7 +4096,7 @@ msgstr "hồ sơ cấu hình bình thường đang hoạt động"
 #: globalCommands.py:3598
 #, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "hồ sơ cấu hình {profileName}đang hoạt động"
+msgstr "hồ sơ cấu hình {profileName} đang hoạt động"
 
 #. Translators: Input help mode message for save current configuration command.
 #: globalCommands.py:3605
@@ -4116,7 +4116,7 @@ msgstr "Mở trình Python Console, chủ yếu dùng trong việc phát triển
 #. Translators: Input help mode message to activate Add-on Store command.
 #: globalCommands.py:3650
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
-msgstr "Mở cửa hang Add-on để tìm và quản lý các gói add-on cho NVDA"
+msgstr "Mở cửa hàng Add-on để tìm và quản lý các gói add-on cho NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 #: globalCommands.py:3659
@@ -4539,7 +4539,7 @@ msgstr "Không phải liên kết."
 #. Translators: input help mode message for Report URL of a link in a window command
 #: globalCommands.py:4446
 msgid "Displays the destination URL of the link at the position of caret or focus in a window, instead of just speaking it. May be preferred by braille users."
-msgstr "Hiển thị đường dẫn URL của liên kết tại vị trí dấu náy hoặc focus trong một cửa sổ, thay vì chỉ đọc nó lên. Có thể người dùng chữ nổi chuộng cái này."
+msgstr "Hiển thị đường dẫn URL của liên kết tại vị trí dấu nháy hoặc focus trong một cửa sổ, thay vì chỉ đọc nó lên. Có thể người dùng chữ nổi chuộng cái này."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4459
@@ -4746,7 +4746,7 @@ msgstr "Chuyển giữa các chế độ chia âm thanh"
 #: globalCommands.py:4979
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr "Báo cáo ngôn ngữ của văn bản dưới con trỏ. Nếu nhấn hai lần, thông tin sẽ được hiển thị ở chế độ duyệt"
+msgstr "Báo cáo ngôn ngữ của văn bản dưới dấu nháy. Nếu nhấn hai lần, thông tin sẽ được hiển thị ở chế độ duyệt"
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:4994
@@ -4765,7 +4765,7 @@ msgstr "{languageDescription} (không được hỗ trợ)"
 #: globalCommands.py:5014
 msgctxt "reportLanguage"
 msgid "Language at caret position"
-msgstr "Ngôn ngữ tại vị trí con trỏ"
+msgstr "Ngôn ngữ tại vị trí dấu nháy"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 #: globalCommands.py:5019
@@ -5381,379 +5381,379 @@ msgstr "{desc}, {lc}"
 #: localesData.py:16
 msgctxt "languageName"
 msgid "Afar"
-msgstr ""
+msgstr "Tiếng Afar"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:18
 msgctxt "languageName"
 msgid "Abkhazian"
-msgstr ""
+msgstr "Tiếng Abkhaz"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:20
 msgctxt "languageName"
 msgid "Akan"
-msgstr ""
+msgstr "Tiếng Akan"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:22
 msgctxt "languageName"
 msgid "Aragonese"
-msgstr "Aragon"
+msgstr "Tiếng Aragon"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:24
 msgctxt "languageName"
 msgid "Avaric"
-msgstr ""
+msgstr "Tiếng Avar"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:26
 msgctxt "languageName"
 msgid "Aymara"
-msgstr ""
+msgstr "Tiếng Aymara"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:28
 msgctxt "languageName"
 msgid "Bihari"
-msgstr ""
+msgstr "Tiếng Bihari"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:30
 msgctxt "languageName"
 msgid "Bislama"
-msgstr ""
+msgstr "Tiếng Bislama"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:32
 msgctxt "languageName"
 msgid "Bambara"
-msgstr ""
+msgstr "Tiếng Bambara"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:34
 msgctxt "languageName"
 msgid "Chechen"
-msgstr ""
+msgstr "Tiếng Chechen"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:36
 msgctxt "languageName"
 msgid "Chamorro"
-msgstr ""
+msgstr "Tiếng Chamorro"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:38
 msgctxt "languageName"
 msgid "Central Kurdish"
-msgstr "Trung Kurdish"
+msgstr "Tiếng Kurd Miền Trung"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:40
 msgctxt "languageName"
 msgid "Cree"
-msgstr ""
+msgstr "Tiếng Cree"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:42
 msgctxt "languageName"
 msgid "Church Slavic"
-msgstr ""
+msgstr "Tiếng Slav Nhà thờ"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:44
 msgctxt "languageName"
 msgid "Chuvash"
-msgstr ""
+msgstr "Tiếng Chuvash"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:46
 msgctxt "languageName"
 msgid "Ewe"
-msgstr ""
+msgstr "Tiếng Ewe"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:48
 msgctxt "languageName"
 msgid "Esperanto"
-msgstr ""
+msgstr "Tiếng Quốc tế ngữ"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:50
 msgctxt "languageName"
 msgid "Fijian"
-msgstr ""
+msgstr "Tiếng Fiji"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:52
 msgctxt "languageName"
 msgid "Manx"
-msgstr ""
+msgstr "Tiếng Manx"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:54
 msgctxt "languageName"
 msgid "Hiri Motu"
-msgstr ""
+msgstr "Tiếng Hiri Motu"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:56
 msgctxt "languageName"
 msgid "Haitian"
-msgstr ""
+msgstr "Tiếng Haiti"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:58
 msgctxt "languageName"
 msgid "Herero"
-msgstr ""
+msgstr "Tiếng Herero"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:60
 msgctxt "languageName"
 msgid "Interlingua"
-msgstr ""
+msgstr "Tiếng Quốc tế ngữ (Interlingua)"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:62
 msgctxt "languageName"
 msgid "Inupiaq"
-msgstr ""
+msgstr "Tiếng Inupiaq"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:64
 msgctxt "languageName"
 msgid "Ido"
-msgstr ""
+msgstr "Tiếng Ido"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:66
 msgctxt "languageName"
 msgid "Javanese"
-msgstr ""
+msgstr "Tiếng Java"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:68
 msgctxt "languageName"
 msgid "Kongo"
-msgstr ""
+msgstr "Tiếng Kongo"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:70
 msgctxt "languageName"
 msgid "Kikuyu"
-msgstr ""
+msgstr "Tiếng Kikuyu"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:72
 msgctxt "languageName"
 msgid "Kuanyama"
-msgstr ""
+msgstr "Tiếng Kuanyama"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:74
 msgctxt "languageName"
 msgid "Northern Kurdish"
-msgstr "Bắc Kurdish"
+msgstr "Tiếng Kurd miền Bắc"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:76
 msgctxt "languageName"
 msgid "Kashmiri"
-msgstr ""
+msgstr "Tiếng Kashmir"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:78
 msgctxt "languageName"
 msgid "Komi"
-msgstr ""
+msgstr "Tiếng Komi"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:80
 msgctxt "languageName"
 msgid "Cornish"
-msgstr ""
+msgstr "Tiếng Cornish"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:82
 msgctxt "languageName"
 msgid "Ganda"
-msgstr ""
+msgstr "Tiếng Ganda"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:84
 msgctxt "languageName"
 msgid "Limburgan"
-msgstr ""
+msgstr "Tiếng Limburg"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:86
 msgctxt "languageName"
 msgid "Lingala"
-msgstr ""
+msgstr "Tiếng Lingala"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:88
 msgctxt "languageName"
 msgid "Malagasy"
-msgstr ""
+msgstr "Tiếng Malagasy"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:90
 msgctxt "languageName"
 msgid "Marshallese"
-msgstr ""
+msgstr "Tiếng Marshall"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:92
 msgctxt "languageName"
 msgid "Moldovan"
-msgstr ""
+msgstr "Tiếng Moldova"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:94
 msgctxt "languageName"
 msgid "Burmese"
-msgstr "Myanmar"
+msgstr "Tiếng Myanmar"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:96
 msgctxt "languageName"
 msgid "Nauru"
-msgstr ""
+msgstr "Tiếng Nauru"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:98
 msgctxt "languageName"
 msgid "Ndonga"
-msgstr ""
+msgstr "Tiếng Ndonga"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:100
 msgctxt "languageName"
 msgid "South Ndebele"
-msgstr ""
+msgstr "Tiếng Ndebele Miền Nam"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:102
 msgctxt "languageName"
 msgid "Navajo"
-msgstr ""
+msgstr "Tiếng Navajo"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:104
 msgctxt "languageName"
 msgid "Nyanja"
-msgstr ""
+msgstr "Tiếng Nyanja"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:106
 msgctxt "languageName"
 msgid "Ojibwa"
-msgstr ""
+msgstr "Tiếng Ojibwa"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:108
 msgctxt "languageName"
 msgid "Ossetian"
-msgstr ""
+msgstr "Tiếng Ossetia"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:110
 msgctxt "languageName"
 msgid "Pali"
-msgstr ""
+msgstr "Tiếng Pali"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:112
 msgctxt "languageName"
 msgid "Sardinian"
-msgstr ""
+msgstr "Tiếng Sardinia"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:114
 msgctxt "languageName"
 msgid "Sango"
-msgstr ""
+msgstr "Tiếng Sango"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:116
 msgctxt "languageName"
 msgid "Serbo-Croatian"
-msgstr ""
+msgstr "Tiếng Serbo-Croatia"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:118
 msgctxt "languageName"
 msgid "Samoan"
-msgstr ""
+msgstr "Tiếng Samoa"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:120
 msgctxt "languageName"
 msgid "Shona"
-msgstr ""
+msgstr "Tiếng Shona"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:122
 msgctxt "languageName"
 msgid "Somali"
-msgstr "Somalia"
+msgstr "Tiếng Somali"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:124
 msgctxt "languageName"
 msgid "Swati"
-msgstr ""
+msgstr "Tiếng Swati"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:126
 msgctxt "languageName"
 msgid "Sundanese"
-msgstr ""
+msgstr "Tiếng Sunda"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:128
 msgctxt "languageName"
 msgid "Tagalog"
-msgstr ""
+msgstr "Tiếng Tagalog"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:130
 msgctxt "languageName"
 msgid "Tonga (Tonga Islands)"
-msgstr ""
+msgstr "Tiếng Tonga (Quần đảo Tonga)"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:132
 msgctxt "languageName"
 msgid "Twi"
-msgstr ""
+msgstr "Tiếng Twi"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:134
 msgctxt "languageName"
 msgid "Tahitian"
-msgstr ""
+msgstr "Tiếng Tahiti"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:136
 msgctxt "languageName"
 msgid "Volapük"
-msgstr ""
+msgstr "Tiếng Volapük"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:138
 msgctxt "languageName"
 msgid "Walloon"
-msgstr ""
+msgstr "Tiếng Walloon"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:140
 msgctxt "languageName"
 msgid "Zhuang"
-msgstr ""
+msgstr "Tiếng Choang"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #: mouseHandler.py:274
@@ -7022,7 +7022,7 @@ msgstr "Âm thanh"
 
 #: pythonConsole.py:38
 msgid "Type help(object) to get help about object."
-msgstr "Gõ help [tên đối tượng] để nghe trợ giúp về dối tượng đó."
+msgstr "Gõ help [tên đối tượng] để nghe trợ giúp về đối tượng đó."
 
 #: pythonConsole.py:55
 msgid "Type exit() to exit the console"
@@ -7495,7 +7495,7 @@ msgid "We need your help in order to continue to improve NVDA.\n"
 "All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
 "Thank you for your support."
 msgstr "Chúng tôi cần sự giúp đỡ của bạn để tiếp tục phát triển sản phẩm.\n"
-"Dự án này chủ yếu dựa trên sự đóng góp từ các tổ chức cá nhân.Mọi đóng góp dù là nhỏ nhất đều hỗ trợ cho dự án phát triển NVDA và được chuyển về tổ chức NVAccess, đây là tổ chức chịu trách nhiệm phát triển sản phẩm.\n"
+"Dự án này chủ yếu dựa trên sự đóng góp từ các tổ chức cá nhân. Mọi đóng góp dù là nhỏ nhất đều hỗ trợ cho dự án phát triển NVDA và được chuyển về tổ chức NVAccess, đây là tổ chức chịu trách nhiệm phát triển sản phẩm.\n"
 "Cảm ơn sự hỗ trợ của các bạn."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -7578,7 +7578,17 @@ msgid "{longName} ({name})\n"
 "It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html and https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
 "{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
-msgstr ""
+msgstr "{longName} ({name})\n"
+"Phiên bản: {version} ({version_detailed})\n"
+"URL: {url}\n"
+"{copyright}\n\n"
+"{name} được cấp phép theo Giấy phép Công cộng GNU (Phiên bản 2 hoặc mới hơn).\n"
+"Bạn được tự do chia sẻ hoặc tùy biến phần mềm này theo bất kỳ cách nào bạn muốn, miễn là bản sao đó kèm theo giấy phép và bạn cung cấp toàn bộ mã nguồn cho bất kỳ ai yêu cầu.\n"
+"Điều này áp dụng cho cả bản sao gốc, bản đã sửa đổi của phần mềm, cũng như mọi sản phẩm phái sinh.\n"
+"Để biết thêm chi tiết, bạn có thể xem giấy phép trong trình đơn Trợ giúp.\n"
+"Bạn cũng có thể xem trực tuyến tại: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html và https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
+"{name} được phát triển bởi NV Access, một tổ chức phi lợi nhuận cam kết hỗ trợ và thúc đẩy các giải pháp mã nguồn mở và miễn phí dành cho người mù và người khiếm thị.\n"
+"Nếu bạn thấy NVDA hữu ích và mong muốn phần mềm này tiếp tục được cải tiến, vui lòng cân nhắc tài trợ cho NV Access. Bạn có thể thực hiện việc này bằng cách chọn mục Tài trợ từ trình đơn NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on
 #. from windows explorer and NVDA is not running.
@@ -7586,8 +7596,8 @@ msgstr ""
 #, python-brace-format
 msgid "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
-msgstr "Không cài được Add on từ {path}.\n"
-"Bạn phải chạy NVDA để cài Add on này."
+msgstr "Không cài được add-on từ {path}.\n"
+"Bạn phải chạy NVDA để cài add-on này."
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:212
@@ -7955,7 +7965,7 @@ msgstr "Yêu cầu một bản cập nhật của NVDA. NVDA phiên bản {nvdaV
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of this add-on is required. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
-msgstr "Yêu cầu một bản cập nhật của add-on này. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
+msgstr "Yêu cầu bản cập nhật của add-on này. Add-on này được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầu add-on này phải được thử nghiệm với NVDA {nvdaVersion} hoặc cao hơn. Bạn có thể bật add-on này và tự chịu rủi ro. "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -8970,7 +8980,7 @@ msgstr "Màn hình chữ nổi EcoBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\freedomScientific.py:176
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific dòng Focus/PAC Mate"
+msgstr "Freedom Scientific dòng Tiêu điểm/PAC Mate"
 
 #. Translators: The name of a key on a braille display, that scrolls the display
 #. to show previous/next part of a long line.
@@ -9387,7 +9397,7 @@ msgstr "Anh (Anh) cấp 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr ""
+msgstr "Tiếng Anh cấp 3"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9747,7 +9757,7 @@ msgstr "Latvian cấp 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:379
 msgid "Macedonian grade 1"
-msgstr ""
+msgstr "Tiếng Macedonia cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -12100,7 +12110,7 @@ msgid "Welcome to the COM Registration Fixing tool.\n\n"
 msgstr "Chào mừng đến với công cụ Sửa lỗi Đăng ký COM.\n\n"
 "Việc cài đặt và gỡ cài đặt chương trình, cũng như các sự kiện khác, có thể làm hỏng các mục trợ năng trong registry của Windows. Điều này có thể khiến các phần tử trước đây có thể truy cập được lại bị trình bày không chính xác, hoặc gây ra việc nói hoặc hiển thị chữ nổi \"không xác định\"  hay \"khung\" trong một số phần mềm hoặc thành phần của Windows, thay vì nội dung bạn mong muốn.\n\n"
 "Công cụ này cố gắng khắc phục các sự cố phổ biến như vậy. Lưu ý rằng công cụ này phải truy cập vào registry hệ thống, điều này yêu cầu quyền quản trị.\n\n"
-"Nhấn Tiếp tục để chạy công cụ ngay bây giờ."
+"Bấm Tiếp tục để chạy công cụ ngay bây giờ."
 
 #. Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 #: gui\__init__.py:566
@@ -12894,7 +12904,7 @@ msgstr "Vui lòng chờ trong khi cài NVDA"
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui\installerGui.py:99
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "Chương trình cài đặt không thể gỡ bỏ hay cài đè lên phiên bản NVDA hiện tại. có thể một người dùng khác đang sử dụng NVDA. xin vui lòng tắt tất cả NVDA đang chạy trên máy và tiến hành cài đặt lại."
+msgstr "Chương trình cài đặt không thể gỡ bỏ hay cài đè lên phiên bản NVDA hiện tại. Có thể một người dùng khác đang sử dụng NVDA. xin vui lòng tắt tất cả NVDA đang chạy trên máy và tiến hành cài đặt lại."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -12931,7 +12941,7 @@ msgstr "Cài đặt NVDA"
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:216
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "Để cài NVDA vào ổ cứng, xin vui lòng chọn nút tiếp tục."
+msgstr "Để cài NVDA vào ổ cứng, xin vui lòng bấm nút Tiếp tục."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:220
@@ -12942,7 +12952,7 @@ msgstr "Có một phiên bản NVDA đã cài trên máy, phiên bản này sẽ
 #: gui\installerGui.py:225
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
-msgstr "Thư mục cài đặt cho NVDA đã bị thay đổi. thư mục mới bây giờ là {path}"
+msgstr "Thư mục cài đặt cho NVDA đã bị thay đổi. Thư mục bây giờ là {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
@@ -13261,7 +13271,7 @@ msgstr "Khởi động NVDA s&au khi tôi đăng nhập"
 #. to allow user to choose the correct account).
 #: gui\settingsDialogs.py:878
 msgid "Use NVDA during sign-in (requires administrator privileges)"
-msgstr "Dùng NVDA trong khi đăng nhập ( yêu cầu quyền quản trị)"
+msgstr "Dùng NVDA trong khi đăng nhập (yêu cầu quyền quản trị)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -13321,7 +13331,7 @@ msgstr "Đang sao chép cấu hình"
 #. to the system configuration (for use on Windows logon etc)
 #: gui\settingsDialogs.py:1020
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "Vui long chờ trong khi đang sao chép các thiết lập vào cấu hình hệ thống."
+msgstr "Vui lòng chờ trong khi đang sao chép các thiết lập vào cấu hình hệ thống."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 #: gui\settingsDialogs.py:1031
@@ -13767,7 +13777,7 @@ msgstr "Đoán thông tin &vị trí đối tượng khi không có sẵn"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2449
 msgid "Report when objects support &multiple selection"
-msgstr ""
+msgstr "Báo cáo khi các đối tượng hỗ trợ &chọn nhiều mục"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13868,134 +13878,134 @@ msgstr "&Chặn các thao tác không thuộc lệnh truy cập tài liệu"
 #: gui\settingsDialogs.py:2672
 msgctxt "math"
 msgid "Math"
-msgstr ""
+msgstr "Toán học"
 
 #. Translators: The description of the math settings panel.
 #: gui\settingsDialogs.py:2677
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
-msgstr ""
+msgstr "Các tùy chọn sau kiểm soát cách trình bày nội dung toán học."
 
 #. Translators: options for Copy math to clipboard as -- speech text
 #: gui\settingsDialogs.py:2749 mathPres\MathCAT\preferences.py:140
 msgctxt "math"
 msgid "Speech"
-msgstr ""
+msgstr "Nói"
 
 #. Translators: Select an impairment for MathCAT
 #: gui\settingsDialogs.py:2756
 msgctxt "math"
 msgid "Impairment"
-msgstr ""
+msgstr "Suy giảm"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2768
 msgctxt "math"
 msgid "Language"
-msgstr ""
+msgstr "Ngôn ngữ"
 
 #. Translators: MathCAT decimal separator option.
 #: gui\settingsDialogs.py:2780
 msgctxt "math"
 msgid "Decimal separator for numbers:"
-msgstr ""
+msgstr "Dấu tách thập phân cho số:"
 
 #. Translators: Select a speech style.
 #: gui\settingsDialogs.py:2795
 msgctxt "math"
 msgid "Speech style"
-msgstr ""
+msgstr "Kiểu đọc"
 
 #. Translators: MathCAT's verbosity setting
 #: gui\settingsDialogs.py:2811
 msgctxt "math"
 msgid "Speech verbosity"
-msgstr ""
+msgstr "Độ chi tiết của lời nói"
 
 #. Translators: MathCAT's relative speed setting
 #: gui\settingsDialogs.py:2823
 msgctxt "math"
 msgid "Relative speech rate"
-msgstr ""
+msgstr "Tốc độ đọc tương đối"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 #: gui\settingsDialogs.py:2834
 msgctxt "math"
 msgid "Pause factor"
-msgstr ""
+msgstr "Hệ số tạm dừng"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
 #: gui\settingsDialogs.py:2845 gui\settingsDialogs.py:2901
 msgctxt "math"
 msgid "Make a sound when starting/ending math speech"
-msgstr ""
+msgstr "Phát âm thanh khi bắt đầu/kết thúc đọc công thức toán"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
 msgctxt "math"
 msgid "Speech for chemical formulas"
-msgstr ""
+msgstr "Đọc công thức hóa học"
 
 #. Translators: Text for the navigation group.
 #: gui\settingsDialogs.py:2863
 msgctxt "math"
 msgid "Navigation"
-msgstr ""
+msgstr "Điều hướng"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
 #: gui\settingsDialogs.py:2870
 msgctxt "math"
 msgid "Navigation mode to use when beginning to navigate an equation"
-msgstr ""
+msgstr "Chế độ điều hướng để sử dụng khi bắt đầu điều hướng một phương trình"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Navigation speech to use when beginning to navigate an equation"
-msgstr ""
+msgstr "Lời nói điều hướng để sử dụng khi bắt đầu điều hướng một phương trình"
 
 #. Translators: "Speak" the expression after moving to it
 #: gui\settingsDialogs.py:2885
 msgctxt "math"
 msgid "Speak"
-msgstr ""
+msgstr "Đọc"
 
 #. Translators: "Describe" the expression after moving to it ("overview is a synonym")
 #: gui\settingsDialogs.py:2887
 msgctxt "math"
 msgid "Describe/overview"
-msgstr ""
+msgstr "Mô tả/Tổng quan"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
 #: gui\settingsDialogs.py:2908
 msgctxt "math"
 msgid "Automatic zoom out of 2D notations"
-msgstr ""
+msgstr "Tự động thu nhỏ ký hiệu 2D"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
 #: gui\settingsDialogs.py:2914
 msgctxt "math"
 msgid "Speech amount for navigation"
-msgstr ""
+msgstr "Mức độ nói cho việc điều hướng"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
 #: gui\settingsDialogs.py:2932
 msgctxt "math"
 msgid "Copy math as"
-msgstr ""
+msgstr "Sao chép công thức toán dưới dạng"
 
 #. Translators: Text for the braille group.
 #: gui\settingsDialogs.py:2944
 msgctxt "math"
 msgid "Braille"
-msgstr ""
+msgstr "Chữ nổi"
 
 #. Translators: label for combobox to specify which braille code to use
 #: gui\settingsDialogs.py:2950
 msgctxt "math"
 msgid "Braille math code for refreshable displays"
-msgstr ""
+msgstr "Mã chữ nổi toán học cho màn hình chữ nổi làm mới được"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
@@ -14003,13 +14013,13 @@ msgstr ""
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Tự động ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 #: gui\settingsDialogs.py:2974
 msgctxt "math"
 msgid "Highlight the current navigation node with dots 7 and 8"
-msgstr ""
+msgstr "Đánh dấu nút điều hướng hiện tại bằng chấm 7 và 8"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -14087,7 +14097,7 @@ msgstr "Thông tin tài liệu"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3158
 msgid "Commen&ts"
-msgstr ""
+msgstr "Bình luậ&n"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -14105,7 +14115,7 @@ msgstr "Các bản sửa biên tập"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3177
 msgid "Spelling or grammar e&rrors"
-msgstr ""
+msgstr "Lỗi chính tả hoặc ngữ ph&áp"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -14477,7 +14487,7 @@ msgstr "Mô tả hình ảnh bằng AI"
 #: gui\settingsDialogs.py:4036
 msgctxt "imageDesc"
 msgid "Warning: AI image descriptions are experimental. Do not use this feature in circumstances where inaccurate descriptions could cause harm."
-msgstr ""
+msgstr "Cảnh báo: Tính năng mô tả hình ảnh bằng AI đang trong giai đoạn thử nghiệm. Không sử dụng tính năng này trong các trường hợp mà mô tả không chính xác có thể gây hại."
 
 #. Translators: A configuration in settings dialog.
 #: gui\settingsDialogs.py:4055
@@ -14520,7 +14530,7 @@ msgstr "Định kì &cập nhật nội dung đã nhận dạng"
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
 #: gui\settingsDialogs.py:4138
 msgid "Automatically say all on result"
-msgstr ""
+msgstr "Tự động đọc tất cả kết quả"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -15084,12 +15094,12 @@ msgstr "Tùy chọn:"
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 #: gui\settingsDialogs.py:5908
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
-msgstr "Không thể cấu hình giao diện người dung cho trình cải thiện tầm nhìn. Không bật nó lên được."
+msgstr "Không thể cấu hình giao diện người dùng cho trình cải thiện tầm nhìn. Không bật nó lên được."
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5945
 msgid "Privacy and Security"
-msgstr ""
+msgstr "Quyền riêng tư và bảo mật"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -15643,7 +15653,7 @@ msgstr "Kết quả quét VirusTotal:"
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] ""
+msgstr[0] "Trình quét phần mềm độc hại {malicious} đã phát hiện add-on này có khả năng độc hại (trong tổng số {total})."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:388
@@ -15715,7 +15725,7 @@ msgstr "Gỡ add-on"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầuthis add-on phải được thử nghiệm với NVDA {nvdaVersion} hay cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
+msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầu add-on này phải được thử nghiệm với NVDA {nvdaVersion} hoặc cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
 "Vẫn tiếp tục cài đặt? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -15725,7 +15735,7 @@ msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầuthis add-on phải được thử nghiệm với NVDA {nvdaVersion} hay cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
+msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầu add-on này phải được thử nghiệm với NVDA {nvdaVersion} hay cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
 "Vẫn tiếp tục bật lên? "
 
 #. Translators: The title of a dialog presented when an error occurs.
@@ -15941,7 +15951,7 @@ msgstr "Cài đặt Add-on"
 msgctxt "addonStore"
 msgid "Installing {num} add-on, please wait."
 msgid_plural "Installing {num} add-ons, please wait."
-msgstr[0] "Đang cài đặt {num} tiện ích bổ sung, vui lòng chờ."
+msgstr[0] "Đang cài đặt {num} add-on, vui lòng chờ."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -15950,7 +15960,7 @@ msgstr[0] "Đang cài đặt {num} tiện ích bổ sung, vui lòng chờ."
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] "Đang tải về {num} tiện ích bổ sung, hủy tải về?"
+msgstr[0] "Đang tải về {num} add-on, hủy tải về?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -16253,7 +16263,7 @@ msgstr "đang tải về"
 #: gui\_localCaptioner\messageDialogs.py:180
 msgctxt "imageDesc"
 msgid "Enable AI image descriptions"
-msgstr ""
+msgstr "Bật mô tả hình ảnh bằng AI"
 
 #. Translators: label of dialog when enable image desc
 #: gui\_localCaptioner\messageDialogs.py:184
@@ -16261,7 +16271,9 @@ msgctxt "imageDesc"
 msgid "AI image descriptions are currently disabled.\n\n"
 "Warning: AI image descriptions are experimental. Do not use this feature in circumstances where inaccurate descriptions could cause harm.\n\n"
 "Would you like to temporarily enable AI image descriptions now?"
-msgstr ""
+msgstr "Mô tả hình ảnh bằng AI hiện đang bị tắt.\n\n"
+"Cảnh báo: Tính năng mô tả hình ảnh bằng AI đang trong giai đoạn thử nghiệm. Không sử dụng tính năng này trong các trường hợp mà mô tả không chính xác có thể gây hại.\n\n"
+"Bạn có muốn tạm thời bật tính năng mô tả hình ảnh bằng AI ngay bây giờ không?"
 
 #. Translators: Describes a command.
 #: mathPres\__init__.py:132
@@ -16278,224 +16290,224 @@ msgstr "Không hỗ trợ tương tác với Toán."
 #: mathPres\MathCAT\MathCAT.py:86
 msgctxt "math"
 msgid "Error in starting navigation of math."
-msgstr ""
+msgstr "Lỗi khi bắt đầu điều hướng công thức toán."
 
 #. Translators: this message alerts users to an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:101
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr ""
+msgstr "Lỗi khi hiển thị chữ nổi cho công thức toán; hãy xem log của NVDA để biết thêm chi tiết"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:165
 msgctxt "math"
 msgid "Error in navigating math"
-msgstr ""
+msgstr "Lỗi khi điều hướng công thức toán"
 
 #. Translators: this message alerts users to an error brailling math.
 #: mathPres\MathCAT\MathCAT.py:185
 msgctxt "math"
 msgid "Error in brailling math"
-msgstr ""
+msgstr "Lỗi khi hiển thị chữ nổi cho công thức toán"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:191
 msgid "Copy navigation focus to clipboard"
-msgstr ""
+msgstr "Sao chép đối tượng điều hướng vào bộ nhớ tạm"
 
 #. Translators: Name of the section in "Input gestures" dialog.
 #: mathPres\MathCAT\MathCAT.py:193
 msgid "Clipboard"
-msgstr ""
+msgstr "Bộ nhớ tạm"
 
 #. Translators: copy to clipboard
 #: mathPres\MathCAT\MathCAT.py:239
 msgctxt "math"
 msgid "copy as "
-msgstr ""
+msgstr "sao chép dưới dạng "
 
 #. Translators: this message directs users to look in the log file
 #: mathPres\MathCAT\MathCAT.py:340
 msgctxt "math"
 msgid "Error navigating math"
-msgstr ""
+msgstr "Lỗi điều hướng công thức toán"
 
 #. Translators: this message reports when invalid math is found.
 #: mathPres\MathCAT\MathCAT.py:363
 msgctxt "math"
 msgid "Invalid math formatting found"
-msgstr ""
+msgstr "Định dạng công thức toán không hợp lệ."
 
 #. Translators: this message reports an error in speaking math.
 #: mathPres\MathCAT\MathCAT.py:390
 msgctxt "math"
 msgid "Error in speaking math."
-msgstr ""
+msgstr "Lỗi khi đọc công thức toán."
 
 #. Translators: this message reports illegal MathML.
 #: mathPres\MathCAT\MathCAT.py:415
 msgctxt "math"
 msgid "Illegal MathML found."
-msgstr ""
+msgstr "Phát hiện mã MathML không hợp lệ."
 
 #. Translators: this message reports an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:422
 msgctxt "math"
 msgid "Error in brailling math."
-msgstr ""
+msgstr "Lỗi khi hiển thị chữ nổi cho công thức toán."
 
 #. Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 #. "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
 #: mathPres\MathCAT\localization.py:280
 msgctxt "math"
 msgid "Use Voice's Language (Auto)"
-msgstr ""
+msgstr "Sử dụng ngôn ngữ của giọng đọc (Tự động)"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
 #: mathPres\MathCAT\preferences.py:30
 msgctxt "math"
 msgid "Learning disabilities"
-msgstr ""
+msgstr "Rối loạn học tập"
 
 #. Translators: category of impairment that MathCAT supports: people who are blind
 #: mathPres\MathCAT\preferences.py:32
 msgctxt "math"
 msgid "Blindness"
-msgstr ""
+msgstr "Khiếm thị"
 
 #. Translators: category of impairment that MathCAT supports: people who have low vision
 #: mathPres\MathCAT\preferences.py:34
 msgctxt "math"
 msgid "Low vision"
-msgstr ""
+msgstr "Nhìn kém"
 
 #. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
 #: mathPres\MathCAT\preferences.py:48
 msgctxt "math"
 msgid "Auto"
-msgstr ""
+msgstr "Tự động"
 
 #. Translators: options for decimal separator -- "Custom" = user sets it
 #. Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
 #: mathPres\MathCAT\preferences.py:55
 msgctxt "math"
 msgid "Custom"
-msgstr ""
+msgstr "Tùy chỉnh"
 
 #. Translators: options for speech verbosity -- "terse" = use less words
 #. Translators: options for navigation verbosity -- "terse" = use less words
 #: mathPres\MathCAT\preferences.py:68 mathPres\MathCAT\preferences.py:116
 msgctxt "math"
 msgid "Terse"
-msgstr ""
+msgstr "Ngắn gọn"
 
 #. Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
 #. Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
 #: mathPres\MathCAT\preferences.py:70 mathPres\MathCAT\preferences.py:118
 msgctxt "math"
 msgid "Medium"
-msgstr ""
+msgstr "Vừa phải"
 
 #. Translators: options for speech verbosity -- "verbose" = use more words
 #. Translators: options for navigation verbosity -- "verbose" = use more words
 #: mathPres\MathCAT\preferences.py:72 mathPres\MathCAT\preferences.py:120
 msgctxt "math"
 msgid "Verbose"
-msgstr ""
+msgstr "Chi tiết"
 
 #. Translators: values for chemistry options with example speech in parenthesis
 #: mathPres\MathCAT\preferences.py:84
 msgctxt "math"
 msgid "Spell it out (H 2 O)"
-msgstr ""
+msgstr "Đánh vần (H 2 O)"
 
 #. Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
 #: mathPres\MathCAT\preferences.py:86
 msgctxt "math"
 msgid "Off (H sub 2 O)"
-msgstr ""
+msgstr "Tắt (H sub 2 O)"
 
 #. Translators: names of different modes of navigation. "Enhanced" mode understands math structure
 #: mathPres\MathCAT\preferences.py:99
 msgctxt "math"
 msgid "Enhanced"
-msgstr ""
+msgstr "Nâng cao"
 
 #. Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
 #: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
-msgstr ""
+msgstr "Đơn giản"
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
 #: mathPres\MathCAT\preferences.py:103
 msgctxt "math"
 msgid "Character"
-msgstr ""
+msgstr "Ký tự"
 
 #. Translators: options for Copy expression to clipboard as -- "MathML"
 #: mathPres\MathCAT\preferences.py:134
 msgctxt "math"
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #. Translators: options for Copy math to clipboard as -- "LaTeX"
 #: mathPres\MathCAT\preferences.py:136
 msgctxt "math"
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #. Translators: options for Copy math to clipboard as -- "ASCIIMath"
 #: mathPres\MathCAT\preferences.py:138
 msgctxt "math"
 msgid "ASCIIMath"
-msgstr ""
+msgstr "ASCIIMath"
 
 #. Translators: Math option for using dots 7 and 8: don't highlight
 #: mathPres\MathCAT\preferences.py:154
 msgctxt "math"
 msgid "Off"
-msgstr ""
+msgstr "Tắt"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:157
 msgctxt "math"
 msgid "First character"
-msgstr ""
+msgstr "Ký tự đầu"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first and last character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:160
 msgctxt "math"
 msgid "Endpoints"
-msgstr ""
+msgstr "Điểm cuối"
 
 #. Translators: Math option for using dots 7 and 8:
 #. all the characters for the current navigation node use dots 7 & 8
 #: mathPres\MathCAT\preferences.py:163
 msgctxt "math"
 msgid "All"
-msgstr ""
+msgstr "Tất cả"
 
 #. Translators: ClearSpeak is a speech style developed by ETS for use on high-stakes tests such as the SAT
 #: mathPres\MathCAT\preferences.py:176
 msgctxt "math"
 msgid "ClearSpeak"
-msgstr ""
+msgstr "ClearSpeak"
 
 #. Translators: SimpleSpeak is a speech style that tries to minimize speech by speaking simple expressions without bracketing words
 #: mathPres\MathCAT\preferences.py:178
 msgctxt "math"
 msgid "SimpleSpeak"
-msgstr ""
+msgstr "SimpleSpeak"
 
 #. Translators: LiteralSpeak is a speech style with no language-specific rules that reads math character by character
 #: mathPres\MathCAT\preferences.py:180
 msgctxt "math"
 msgid "LiteralSpeak"
-msgstr ""
+msgstr "LiteralSpeak"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 #: NVDAHelper\__init__.py:497
@@ -16620,7 +16632,7 @@ msgstr "Chuyển sang cột kế"
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:759
 msgid "Moves the navigator object to the previous column"
-msgstr "Chuyển về cột trước"
+msgstr "Chuyển đối tượng điều hướng về cột trước"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:792
@@ -16944,7 +16956,7 @@ msgstr "&Lỗi"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr ""
+msgstr "&Tham chiếu"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
@@ -16969,21 +16981,21 @@ msgstr "theo dõi thay đổi: {text}"
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr ""
+msgstr "tham chiếu chú thích: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr ""
+msgstr "tham chiếu chú thích cuối tài liệu: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr ""
+msgstr "tham chiếu: {name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -17100,7 +17112,7 @@ msgstr "Bánh 3D"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:175
 msgid "Exploded 3D Pie"
-msgstr "Bánh 3D Nổ"
+msgstr "Bánh 3D Phân tách"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -17252,7 +17264,7 @@ msgstr "Doughnut"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:259
 msgid "Exploded Doughnut"
-msgstr "Bánh donut nổ"
+msgstr "Bánh donut Phân tách"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -17306,7 +17318,7 @@ msgstr "Bánh nổ"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:286
 msgid "Pie of Pie"
-msgstr "Bánh nướng"
+msgstr "Biểu đồ tròn kép"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -17396,31 +17408,31 @@ msgstr "Khối lượng-Mở-Cao-Thấp-Đóng"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:331
 msgid "3D Surface"
-msgstr "Dịch Vụ 3D"
+msgstr "Bề mặt 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:334
 msgid "Surface (Top View)"
-msgstr "Dịch vụ (Top View)"
+msgstr "Bề mặt (Top View)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:337
 msgid "Surface (Top View wireframe)"
-msgstr "Dịch vụ (Top View wireframe)"
+msgstr "Bề mặt (Top View wireframe)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:340
 msgid "3D Surface (wireframe)"
-msgstr "Dịch vụ 3D (wireframe)"
+msgstr "Bề mặt 3D (wireframe)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:343
 msgid "Scatter"
-msgstr "Tiêu tan"
+msgstr "Phân tán"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -17751,7 +17763,7 @@ msgstr "Đa thức"
 #. Translators: Indicates that trendline type is Power
 #: NVDAObjects\window\_msOfficeChart.py:1046
 msgid "Power"
-msgstr "Năng lượng"
+msgstr "Lũy thừa"
 
 #. Translators: Substitute superscript two by square for R square value
 #: NVDAObjects\window\_msOfficeChart.py:1067
@@ -17982,7 +17994,7 @@ msgstr "độ đốc hình chữ nhật"
 #. Translators: the description for the elements list command in Microsoft Excel.
 #: NVDAObjects\window\excel.py:743
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Liệt kê các thành phần trong bang tính này"
+msgstr "Liệt kê các thành phần trong bảng tính này"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -18614,7 +18626,7 @@ msgstr "chính tả: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr ""
+msgstr "tham chiếu chú thích {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18622,7 +18634,7 @@ msgstr ""
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr ""
+msgstr "tham chiếu chú thích cuối tài liệu {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18854,13 +18866,13 @@ msgstr "{val:g} pt khoảng trắng trước đoạn"
 #: screenCurtain\_screenCurtain.py:30
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr ""
+msgstr "Luôn &hiển thị cảnh báo khi bật Che Màn hình"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:35
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr ""
+msgstr "Không thể bật che màn hình khi đang thực hiện nhận dạng nội dung"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: screenCurtain\_screenCurtain.py:39
@@ -18872,7 +18884,7 @@ msgstr "Không thể bật che màn hình"
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr ""
+msgstr "Có lỗi xảy ra khi bật che màn hình. Nội dung màn hình của bạn vẫn có thể nhìn thấy. Bạn có thể thử bật che màn hình theo cách thủ công."
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -18899,7 +18911,7 @@ msgstr "tắt"
 #: speech\speech.py:104
 msgctxt "speechModes"
 msgid "beeps"
-msgstr "beeps"
+msgstr "bíp"
 
 #. Translators: Name of the speech mode which causes NVDA to speak normally.
 #: speech\speech.py:106
@@ -19675,7 +19687,7 @@ msgstr "Không thể tạo mô tả"
 #, python-brace-format
 msgctxt "imageDesc"
 msgid "Could be: {description}"
-msgstr ""
+msgstr "Có thể là: {description}"
 
 #. Translators: Message when starting image recognition
 #: _localCaptioner\imageDescriber.py:141

@@ -72,7 +72,6 @@ import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
-import _localCaptioner
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -125,9 +124,6 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
-#: Script category for image description commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -3579,15 +3575,6 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
 
 	@script(
-		# Translators: Input help mode message for go to local captioner settings command.
-		description=pgettext("imageDesc", "Shows the AI image descriptions settings"),
-		category=SCRCAT_CONFIG,
-	)
-	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateLocalCaptionerSettings(self, gesture: "inputCore.InputGesture"):
-		wx.CallAfter(gui.mainFrame.onLocalCaptionerSettingsCommand, None)
-
-	@script(
 		# Translators: Input help mode message for go to Add-on Store settings command.
 		description=_("Shows NVDA's Add-on Store settings"),
 		category=SCRCAT_CONFIG,
@@ -5188,30 +5175,6 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
-
-	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the image caption script
-			"Get an AI-generated image description of the navigator object.",
-		),
-		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+g",
-	)
-	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
-	def script_runCaption(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.runCaption(gesture)
-
-	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the toggle image captioning script
-			"Load or unload the image captioner",
-		),
-		category=SCRCAT_IMAGE_DESC,
-	)
-	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
 	@script(
 		description=_(
