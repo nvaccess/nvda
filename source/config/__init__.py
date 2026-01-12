@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -342,9 +342,11 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
-		if relativePath == "addons":
-			addonsToCopy = CaseInsensitiveSet(addonsToCopy)
-			subDirs = [subDir for subDir in subDirs if subDir in addonsToCopy]
+			if relativePath == "addons":
+				addonsToCopy = CaseInsensitiveSet(addonsToCopy)
+				allAddons = subDirs[:]
+				subDirs.clear()
+				subDirs.extend(addon for addon in allAddons if addon.casefold() in addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
