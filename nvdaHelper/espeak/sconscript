@@ -26,7 +26,16 @@ Import(
 
 freeLibrary = ctypes.windll.kernel32.FreeLibrary
 freeLibrary.argtypes = (ctypes.wintypes.HANDLE,)
+DLL_DIRECTORY_COOKIE = ctypes.c_void_p
+AddDllDirectory = ctypes.windll.kernel32.AddDllDirectory
+AddDllDirectory.argtypes = (ctypes.wintypes.LPCWSTR,)
+AddDllDirectory.restype = DLL_DIRECTORY_COOKIE 
 
+# Add the directory of the sonic dll to our DLL search path
+# So that eSpeak.dll cna find it when being loaded to compile dictionaries etc.
+sonicDllDir = sonicLib[0].get_dir().abspath
+AddDllDirectory(sonicDllDir)
+ 
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
