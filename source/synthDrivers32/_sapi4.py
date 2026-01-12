@@ -20,7 +20,6 @@ from ctypes import (
 from ctypes.wintypes import BOOL, BYTE, DWORD, FILETIME, LPCWSTR, WORD
 from enum import IntEnum
 from comtypes import GUID, IUnknown, STDMETHOD, COMMETHOD
-from winBindings.kernel32 import FILETIME
 
 
 S_OK = 0

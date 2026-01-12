@@ -17,8 +17,8 @@ runtimeDestDir = "dist"
 
 sys.path.insert(0, nvdaSourceDir)
 
-import gettext
-from buildVersionLoader import (
+import gettext  # noqa: E402
+from buildVersion import (  # noqa: E402
 	formatBuildVersionString,
 	name,
 	publisher,
