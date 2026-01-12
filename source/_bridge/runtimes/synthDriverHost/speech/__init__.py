@@ -6,4 +6,4 @@
 from .types import SpeechSequence
 
 
-__all__ = ['SpeechSequence']
+__all__ = ["SpeechSequence"]
