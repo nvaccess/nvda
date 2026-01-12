@@ -13,15 +13,38 @@ import mouseHandler
 import winUser
 
 
-class TestMagnifier(unittest.TestCase):
+class _TestMagnifier(unittest.TestCase):
+	"""Base class for magnifier tests with common setup and teardown."""
+
 	@classmethod
 	def setUpClass(cls):
-		"""Setup once for all tests."""
+		"""Setup that runs once for all tests."""
 		if not wx.GetApp():
 			cls.app = wx.App(False)
 
 	def setUp(self):
+		"""Setup before each test - mock magnification API to prevent actual screen magnification."""
+		# Mock the Windows Magnification API to prevent affecting the user's screen
+		self.mag_patcher = patch("winBindings.magnification")
+		self.mock_mag = self.mag_patcher.start()
+
+		# Configure mocked API methods to return success
+		self.mock_mag.MagInitialize.return_value = True
+		self.mock_mag.MagUninitialize.return_value = True
+		self.mock_mag.MagSetFullscreenTransform.return_value = True
+		self.mock_mag.MagSetFullscreenColorEffect.return_value = True
+
+	def tearDown(self):
+		"""Cleanup after each test."""
+		self.mag_patcher.stop()
+
+
+class TestMagnifier(_TestMagnifier):
+	"""Tests for the Magnifier class."""
+
+	def setUp(self):
 		"""Setup before each test."""
+		super().setUp()
 
 		self.magnifier = Magnifier()
 		self.screenWidth = getPrimaryDisplayOrientation().width
@@ -29,13 +52,14 @@ class TestMagnifier(unittest.TestCase):
 
 	def tearDown(self):
 		"""Cleanup after each test."""
-
 		if hasattr(self.magnifier, "_timer") and self.magnifier._timer:
 			self.magnifier._timer.Stop()
 			self.magnifier._timer = None
 
 		if hasattr(self.magnifier, "_isActive") and self.magnifier._isActive:
 			self.magnifier._isActive = False
+
+		super().tearDown()
 
 	def testMagnifierCreation(self):
 		"""Can we create a magnifier with valid parameters?"""
