@@ -8,7 +8,6 @@ import functools
 import weakref
 import subprocess
 from typing import (
-	Callable,
 	cast,
 )
 from collections.abc import Callable
