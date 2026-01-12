@@ -183,6 +183,6 @@ class SpeechDict(list):
 				dictName = self.fileName or "temporary dictionary"
 				log.error(f'Invalid dictionary entry {index + 1} in {dictName}: "{entry.pattern}", {exc}')
 				invalidEntries.append(index)
-			for index in reversed(invalidEntries):
-				del self[index]
+		for index in reversed(invalidEntries):
+			del self[index]
 		return text
