@@ -7,6 +7,7 @@ from unittest.mock import MagicMock
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
+from _magnifier.magnifier import Magnifier
 
 
 class TestMagnifierEndToEnd(_TestMagnifier):
@@ -153,9 +154,6 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierInheritance(self):
 		"""Test inheritance structure."""
 		magnifier = FullScreenMagnifier()
-
-		# Test inheritance
-		from _magnifier.magnifier import Magnifier
 
 		self.assertIsInstance(magnifier, Magnifier)
 
