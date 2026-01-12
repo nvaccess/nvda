@@ -9,8 +9,8 @@ import fnmatch
 from glob import glob
 import sys
 
-nvdaSourceDir = "../../source"
-runtimeSourceDir = "../../source/_bridge/runtimes/synthDriverHost"
+nvdaSourceDir = os.path.join("..", "..", "source")
+runtimeSourceDir = os.path.join(nvdaSourceDir, "_bridge", "runtimes", "synthDriverHost")
 runtimeName = "synthDriverHost"
 runtimeDestDir = "dist"
 
@@ -39,7 +39,7 @@ from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
 
 RT_MANIFEST = 24
-manifestTemplateFilePath = f"{nvdaSourceDir}/manifest.template.xml"
+manifestTemplateFilePath = os.path.join(nvdaSourceDir, "manifest.template.xml")
 
 with open(manifestTemplateFilePath, "r", encoding="utf-8") as manifestTemplateFile:
 	_manifestTemplate = manifestTemplateFile.read()
