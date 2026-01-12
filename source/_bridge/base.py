@@ -158,6 +158,11 @@ class Proxy[Service_t: Service]:
 					conn.close()
 				except Exception:
 					log.debugWarning("Exception while closing held connection", exc_info=True)
+		# A base may or may not have a __del__ method.
+		# Depending on how Proxy might be used as a mixin, we should call it if it exists.
+		deleter = getattr(super(), "__del__", None)
+		if deleter:
+			deleter()
 
 
 class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
