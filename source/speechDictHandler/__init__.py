@@ -43,7 +43,7 @@ def processText(text: str) -> str:
 	return text
 
 
-def initialize():
+def initialize() -> None:
 	for type in dictTypes:
 		dictionaries[type] = SpeechDict()
 	dictionaries[DictionaryType.DEFAULT].load(WritePaths.speechDictDefaultFile)

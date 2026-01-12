@@ -89,7 +89,7 @@ class SpeechDictEntry:
 			tempPattern = r"\b" + re.escape(self.pattern) + r"\b"
 		else:
 			tempPattern = re.escape(self.pattern)
-			self.type = EntryType.ANYWHERE  # Insure sane values.
+			self.type = EntryType.ANYWHERE  # Ensure sane values.
 		self.compiled = re.compile(tempPattern, flags)
 
 	def sub(self, text: str) -> str:
@@ -102,7 +102,7 @@ class SpeechDictEntry:
 
 
 class SpeechDict(list):
-	fileName = None
+	fileName: str | None = None
 
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__} ({len(self)} entries, fileName={self.fileName})"
@@ -174,7 +174,7 @@ class SpeechDict(list):
 					),
 				)
 
-	def sub(self, text):
+	def sub(self, text: str) -> str:
 		invalidEntries = []
 		for index, entry in enumerate(self):
 			try:
