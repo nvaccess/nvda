@@ -2788,27 +2788,27 @@ This settings category contains the following options:
 
 ##### Default zoom level {#MagnifierDefaultZoom}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |1.0 to 16.0|
-|Default |2.0|
-
 This slider allows you to set the default zoom level when the magnifier is first enabled.
 The zoom level can range from 1.0 (no magnification) to 16.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
 You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+upArrow`) and zoom out (`NVDA+shift+downArrow`) commands while the magnifier is active.
 
-##### Default color filter {#MagnifierDefaultFilter}
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Enabled), Disabled, Enabled |
-|Default |Enabled |
-|Toggle command |`NVDA+shift+e` |
+|Options |1.0 to 16.0|
+|Default |2.0|
+
+##### Default color filter {#MagnifierDefaultFilter}
 
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
 The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Normal), Grayscale, Inverted |
+|Default |Normal |
+|Toggle command |`NVDA+shift+e` |
 
 | Option | Description |
 |---|---|
@@ -2839,15 +2839,15 @@ You can cycle through the focus modes on the fly using `NVDA+shift+m` while the 
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
-
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
 When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
 
 This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 #### Keyboard {#KeyboardSettings}
 
