@@ -110,10 +110,10 @@ class SpeechDict(list):
 	def load(self, fileName: str) -> None:
 		self.fileName = fileName
 		comment = ""
-		del self[:]
-		log.debug("Loading speech dictionary '%s'..." % fileName)
+		self.clear()
+		log.debug("Loading speech dictionary '%s'...", fileName)
 		if not os.path.isfile(fileName):
-			log.debug("file '%s' not found." % fileName)
+			log.debug("file '%s' not found.", fileName)
 			return
 		with open(fileName, encoding="utf_8_sig", errors="replace") as file:
 			for line in file:
@@ -139,15 +139,12 @@ class SpeechDict(list):
 								type=int(temp[3]),
 							)
 							self.append(dictionaryEntry)
-						except Exception as e:
-							log.exception(
-								'Dictionary ("%s") entry invalid for "%s" error raised: "%s"'
-								% (fileName, line, e),
-							)
+						except Exception:
+							log.exception('Dictionary ("%s") entry invalid for "%s"', fileName, line)
 						comment = ""
 					else:
-						log.warning("can't parse line '%s'" % line)
-			log.debug("%d loaded records." % len(self))
+						log.warning("can't parse line '%s'", line)
+			log.debug("%d loaded records.", len(self))
 
 	def save(self, fileName: str | None = None):
 		if not shouldWriteToDisk():
@@ -163,10 +160,9 @@ class SpeechDict(list):
 		with open(fileName, "w", encoding="utf_8_sig", errors="replace") as file:
 			for entry in self:
 				if entry.comment:
-					file.write("#%s\r\n" % entry.comment)
+					file.write(f"#{entry.comment}\r\n")
 				file.write(
-					"%s\t%s\t%s\t%s\r\n"
-					% (
+					"{}\t{}\t{}\t{}\r\n".format(
 						entry.pattern.replace("#", r"\#"),
 						entry.replacement.replace("#", r"\#"),
 						int(entry.caseSensitive),
