@@ -26,10 +26,10 @@ __getattr__ = handleDeprecations(
 
 dictionaries: dict[DictionaryType | str, SpeechDict] = {}
 dictTypes = (
-	DictionaryType.TEMP,
-	DictionaryType.VOICE,
-	DictionaryType.DEFAULT,
-	DictionaryType.BUILTIN,
+	DictionaryType.TEMP.value,
+	DictionaryType.VOICE.value,
+	DictionaryType.DEFAULT.value,
+	DictionaryType.BUILTIN.value,
 )
 """Types ordered by their priority E.G. voice specific speech dictionary is processed before the default."""
 
@@ -63,6 +63,6 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 		voice = synth.availableVoices[synth.voice].displayName
 		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
-		baseName = rf"{synth.name}.dic"
+		baseName = f"{synth.name}.dic"
 	fileName = os.path.join(WritePaths.voiceDictsDir, synth.name, baseName)
 	dictionaries[DictionaryType.VOICE].load(fileName)
