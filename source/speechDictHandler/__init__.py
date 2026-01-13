@@ -11,7 +11,7 @@ from utils._deprecate import MovedSymbol, handleDeprecations
 
 from NVDAState import WritePaths
 from . import dictFormatUpgrade
-from .types import DictionaryType, SpeechDict
+from .types import DictionaryType, SpeechDict as _SpeechDict
 
 if typing.TYPE_CHECKING:
 	import synthDriverHandler
@@ -21,10 +21,11 @@ __getattr__ = handleDeprecations(
 	MovedSymbol("ENTRY_TYPE_ANYWHERE", "speechDictHandler.types", "EntryType", "ANYWHERE"),
 	MovedSymbol("ENTRY_TYPE_WORD", "speechDictHandler.types", "EntryType", "WORD"),
 	MovedSymbol("ENTRY_TYPE_REGEXP", "speechDictHandler.types", "EntryType", "REGEXP"),
+	MovedSymbol("SpeechDict", "speechDictHandler.types"),
 	MovedSymbol("SpeechDictEntry", "speechDictHandler.types"),
 )
 
-dictionaries: dict[DictionaryType | str, SpeechDict] = {}
+dictionaries: dict[DictionaryType | str, _SpeechDict] = {}
 dictTypes = (
 	DictionaryType.TEMP.value,
 	DictionaryType.VOICE.value,
@@ -45,7 +46,7 @@ def processText(text: str) -> str:
 
 def initialize() -> None:
 	for type in dictTypes:
-		dictionaries[type] = SpeechDict()
+		dictionaries[type] = _SpeechDict()
 	dictionaries[DictionaryType.DEFAULT].load(WritePaths.speechDictDefaultFile)
 	dictionaries[DictionaryType.BUILTIN].load(os.path.join(globalVars.appDir, "builtin.dic"))
 

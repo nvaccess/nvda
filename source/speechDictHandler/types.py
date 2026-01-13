@@ -21,10 +21,10 @@ class EntryType(DisplayStringIntEnum):
 
 	ANYWHERE = 0
 	"""String can match anywhere"""
-	WORD = 2
-	"""String must have word boundaries on both sides to match"""
 	REGEXP = 1
 	"""Regular expression"""
+	WORD = 2
+	"""String must have word boundaries on both sides to match"""
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
