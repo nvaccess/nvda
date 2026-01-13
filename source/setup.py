@@ -234,6 +234,8 @@ freeze(
 			"brailleDisplayDrivers.albatross",
 			"brailleDisplayDrivers.eurobraille",
 			"brailleDisplayDrivers.dotPad",
+			"_magnifier",
+			"_magnifier.commands",
 			"synthDrivers",
 			"visionEnhancementProviders",
 			# Required for markdown, markdown implicitly imports this so it isn't picked up
@@ -249,8 +251,6 @@ freeze(
 		],
 		"includes": [
 			"nvdaBuiltin",
-			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-			"bisect",
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
 			# required for import numpy without error
