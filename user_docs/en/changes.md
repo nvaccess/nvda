@@ -2,6 +2,7 @@
 
 ## 2026.1
 
+
 This release includes built-in support for reading math content with MathCAT.
 
 There have been several improvements to speech.
@@ -112,6 +113,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
 * NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)
+* NVDA Remote Access will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
 
 ### Changes for Developers
 
