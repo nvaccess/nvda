@@ -222,6 +222,9 @@ class RemoteClient:
 	@alwaysCallAfter
 	def doDisconnect(self) -> None:
 		"""Seek confirmation from the user before disconnecting."""
+		if MessageDialog.blockingInstancesExist():
+			MessageDialog.focusBlockingInstances()
+			return
 		if (
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
