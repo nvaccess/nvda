@@ -231,10 +231,6 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
-=======
-
-
->>>>>>> parent of 33cf7ad75 (Remove SAPI4 (#19290))
 
 #### Deprecations
 
