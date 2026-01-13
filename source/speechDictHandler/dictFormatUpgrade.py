@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited
+# Copyright (C) 2017-2026 NV Access Limited, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -95,7 +95,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 	newDictPath = os.path.join(WritePaths.voiceDictsDir, synthName)
 	needsUpgrade = not os.path.isdir(newDictPath)
 	if needsUpgrade:
-		log.info("Upgrading voice dictionaries for %s" % synthName)
+		log.info("Upgrading voice dictionaries for %s", synthName)
 
 		# always make the new directory, this prevents the upgrade from
 		# occuring more than once.
@@ -107,24 +107,22 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 			WritePaths.speechDictsDir,
 			f"{synthName}*",
 		)
-		log.debug("voiceDictGlob: %s" % voiceDictGlob)
+		log.debug("voiceDictGlob: %s", voiceDictGlob)
 
 		for actualPath in glob.glob(voiceDictGlob):
-			log.debug("processing file: %s" % actualPath)
+			log.debug("processing file: %s", actualPath)
 			# files will be copied here before we modify them so as to avoid
 			# any data loss.
 			shutil.copy(actualPath, WritePaths.voiceDictsBackupDir)
 
 			actualBasename = os.path.basename(actualPath)
-			log.debug("basename: %s" % actualBasename)
+			log.debug("basename: %s", actualBasename)
 
 			renameTo = actualBasename
 			if oldFileNameToNewFileNameList:
 				for oldFname, newFname in oldFileNameToNewFileNameList:
 					if oldFname == actualBasename:
-						log.debug(
-							f"renaming {actualPath} to {newFname} and moving to {newDictPath}",
-						)
+						log.debug("renaming %r to %r and moving to %r", actualPath, newFname, newDictPath)
 						renameTo = newFname
 						break
 			shutil.move(actualPath, os.path.join(newDictPath, renameTo))

@@ -5,13 +5,15 @@
 
 import os
 import typing
+
 import globalVars
 from logHandler import log
+from NVDAState import WritePaths
 from utils._deprecate import MovedSymbol, handleDeprecations
 
-from NVDAState import WritePaths
 from . import dictFormatUpgrade
-from .types import DictionaryType, SpeechDict as _SpeechDict
+from .types import DictionaryType
+from .types import SpeechDict as _SpeechDict
 
 if typing.TYPE_CHECKING:
 	import synthDriverHandler

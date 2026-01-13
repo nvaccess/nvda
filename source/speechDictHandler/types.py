@@ -5,10 +5,10 @@
 
 """Types used for the speech dictionary system."""
 
-from functools import cached_property
 import os
 import re
 from dataclasses import dataclass, field
+from functools import cached_property
 from typing import Self
 
 from logHandler import log
