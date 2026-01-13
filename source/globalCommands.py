@@ -24,7 +24,6 @@ import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
-import _magnifier
 import _magnifier.commands
 import controlTypes
 import api

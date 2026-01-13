@@ -9,7 +9,6 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from gettext import pgettext
 from .utils.types import Filter, FullScreenMode
 
 
