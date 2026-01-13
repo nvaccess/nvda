@@ -102,7 +102,9 @@ def _runSynthDriverHost():
 		import comtypes
 
 		comtypes.CoInitialize()
-		import synthDriverHost
+		# Pyright wants this import to be relative
+		# But under py2exe at runtime it is not a package.
+		import synthDriverHost  # type: ignore[import]
 
 		synthDriverHost.main()
 	except Exception:
