@@ -60,7 +60,7 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 	try:
 		dictFormatUpgrade.doAnyUpgrades(synth)
 	except:  # noqa: E722
-		log.error("error trying to upgrade dictionaries", exc_info=True)
+		log.exception("error trying to upgrade dictionaries")
 		pass
 	if synth.isSupported("voice"):
 		voice = synth.availableVoices[synth.voice].displayName

@@ -170,9 +170,9 @@ class SpeechDict(list[SpeechDictEntry]):
 		for index, entry in enumerate(self):
 			try:
 				text = entry.sub(text)
-			except re.error as exc:
+			except re.error:
 				dictName = self.fileName or "temporary dictionary"
-				log.error(f'Invalid dictionary entry {index + 1} in {dictName}: "{entry.pattern}", {exc}')
+				log.error("Invalid dictionary entry %d in %r: %r", index + 1, dictName, entry.pattern)
 				invalidEntries.append(index)
 		for index in reversed(invalidEntries):
 			del self[index]
