@@ -101,7 +101,7 @@ class SpeechDictEntry:
 		return self.compiled.sub(replacement, text)
 
 
-class SpeechDict(list):
+class SpeechDict(list[SpeechDictEntry]):
 	fileName: str | None = None
 
 	def __repr__(self) -> str:
@@ -136,7 +136,7 @@ class SpeechDict(list):
 								replace,
 								comment,
 								caseSensitive=bool(int(temp[2])),
-								type=int(temp[3]),
+								type=EntryType(int(temp[3])),
 							)
 							self.append(dictionaryEntry)
 						except Exception:
@@ -161,14 +161,9 @@ class SpeechDict(list):
 			for entry in self:
 				if entry.comment:
 					file.write(f"#{entry.comment}\r\n")
-				file.write(
-					"{}\t{}\t{}\t{}\r\n".format(
-						entry.pattern.replace("#", r"\#"),
-						entry.replacement.replace("#", r"\#"),
-						int(entry.caseSensitive),
-						entry.type,
-					),
-				)
+				pattern = entry.pattern.replace("#", r"\#")
+				replacement = entry.replacement.replace("#", r"\#")
+				file.write(f"{pattern}\t{replacement}\t{entry.caseSensitive:d}\t{entry.type:d}\r\n")
 
 	def sub(self, text: str) -> str:
 		invalidEntries = []
