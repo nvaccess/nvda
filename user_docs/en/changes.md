@@ -47,7 +47,6 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
-* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
@@ -74,7 +73,6 @@ Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
-* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 * Component updates:
   * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
@@ -230,13 +228,11 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
-* SAPI 4 support has been removed: (#19290)
-  * The `synthDrivers.sapi4` module has been removed.
-  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
-  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+=======
+>>>>>>> parent of 33cf7ad75 (Remove SAPI4 (#19290))
 
 #### Deprecations
 
