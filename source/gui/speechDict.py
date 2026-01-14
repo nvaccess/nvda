@@ -334,7 +334,7 @@ class VoiceDictionaryDialog(DictionaryDialog):
 		super().__init__(
 			parent,
 			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
+			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries[DictionaryType.VOICE].fileName,
 			speechDict=speechDictHandler.dictionaries[DictionaryType.VOICE],
 		)
 
