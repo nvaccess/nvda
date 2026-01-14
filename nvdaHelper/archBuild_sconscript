@@ -273,4 +273,4 @@ if isNVDACoreArch:
 if TARGET_ARCH == "x86":
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
 	Export("sonicLib")
-	env.Install(sourceDir.Dir('synthDrivers32'), sonicLib)
+	env.Install(sourceDir.Dir('_synthDrivers32'), sonicLib)

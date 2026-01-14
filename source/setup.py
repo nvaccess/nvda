@@ -287,8 +287,8 @@ freeze(
 		)
 		+ (
 			getRecursiveDataFiles(
-				"synthDrivers32",
-				"synthDrivers32",
+				"_synthDrivers32",
+				"_synthDrivers32",
 			)
 			if os.path.isdir("lib/x86/synthDriverHost-runtime")
 			else []

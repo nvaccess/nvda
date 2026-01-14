@@ -12,7 +12,7 @@ import globalVars
 class SynthDriver(SynthDriverProxy32):
 	name = "sapi5_32"
 	description = "Microsoft Speech API version 5 (32 bit proxy)"
-	synthDriver32Path = os.path.join(globalVars.appDir, "synthDrivers32")
+	synthDriver32Path = os.path.join(globalVars.appDir, "_synthDrivers32")
 	synthDriver32Name = "sapi5"
 
 	@classmethod
