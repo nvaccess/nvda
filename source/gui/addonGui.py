@@ -444,7 +444,7 @@ class CopyAddonsDialog(
 
 		label = wx.StaticText(
 			self,
-			label="You currently have one or more add-ons installed. "
+			label="You currently have one or more add-ons enabled. "
 			"Select which of these add-ons should be copied to the system profile. "
 			"You are encouraged to keep this list minimal.",
 		)
@@ -471,15 +471,16 @@ class CopyAddonsDialog(
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-		self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
-		self._aboutButton.Disable()
-		self._aboutButton.Bind(wx.EVT_BUTTON, self._onAbout)
-		okButton = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
-		okButton.Bind(wx.EVT_BUTTON, self.onContinue)
-		okButton.SetDefault()
-		cancelButton = buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
-		cancelButton.Bind(wx.EVT_BUTTON, self.onCancel)
+		button = self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
+		button.Disable()
+		button.Bind(wx.EVT_BUTTON, self.onAbout)
+		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		button.SetDefault()
+		buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
+		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)
 		sHelper.addDialogDismissButtons(buttonHelper, separated=True)
 		self._populateAddonsList()
 
@@ -513,7 +514,13 @@ class CopyAddonsDialog(
 	def _onSelectionChange(self, evt: wx.ListEvent):
 		self._aboutButton.Enable(self._addonsList.GetSelectedItemCount() == 1)
 
-	def _onAbout(self, evt: wx.EVT_BUTTON):
+	def _enterActivatesContinue(self, evt):
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+		else:
+			evt.Skip()
+
+	def onAbout(self, evt: wx.EVT_BUTTON):
 		index: int = self._addonsList.GetFirstSelected()
 		if index < 0:
 			return
@@ -555,8 +562,8 @@ class CopyAddonsDialog(
 			message = ngettext(
 				# Translators: A message to warn the user when attempting to copy current
 				# settings to system settings.
-				"You have selected {num} add-on. Copying it to the system profile could be a security risk. Do you wish to continue?",
-				"You have selected {num} add-ons. Copying them to the system profile could be a security risk. Do you wish to continue?",
+				"You have selected {num} add-on. Copying it to the system profile could be a security risk. Are you sure you wish to continue?",
+				"You have selected {num} add-ons. Copying them to the system profile could be a security risk. Are you sure you wish to continue?",
 				len(toCopy),
 			).format(num=len(toCopy))
 			# Translators: The title of the warning dialog displayed when trying to
