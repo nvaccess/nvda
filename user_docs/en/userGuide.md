@@ -2806,7 +2806,7 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Normal), Grayscale, Inverted |
+|Options | Normal, Grayscale, Inverted |
 |Default |Normal |
 |Toggle command |`NVDA+shift+e` |
 
