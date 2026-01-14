@@ -434,7 +434,9 @@ class CopyAddonsDialog(
 ):
 	def __init__(self, parent: wx.Window, returnList: list[str]):
 		super().__init__(parent, wx.ID_ANY, "Copy Add-ons")
-		self._installedAddons: tuple[Addon] = tuple(addonHandler.getAvailableAddons())
+		self._installedAddons: tuple[Addon] = tuple(
+			addonHandler.getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
+		)
 		self._returnList = returnList
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)

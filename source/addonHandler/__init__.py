@@ -148,21 +148,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self.setDefaultStateValues()
-		try:
-			# #9038: Python 3 requires binary format when working with pickles.
-			with open(self.statePath, "rb") as f:
-				pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = pickle.load(f)
-		except FileNotFoundError:
-			pass  # Clean config - no point logging in this case
-		except IOError:
-			log.debug("Error when reading state file", exc_info=True)
-		except pickle.UnpicklingError:
-			log.debugWarning("Failed to unpickle state", exc_info=True)
-		except Exception:
-			log.exception()
-		else:
-			self.fromPickledDict(pickledState)
+		self._load(self.statePath)
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
@@ -178,6 +164,23 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
 			self[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
+
+	def _load(self, statePath: os.PathLike) -> None:
+		self.setDefaultStateValues()
+		try:
+			# #9038: Python 3 requires binary format when working with pickles.
+			with open(statePath, "rb") as f:
+				pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = pickle.load(f)
+		except FileNotFoundError:
+			pass  # Clean config - no point logging in this case
+		except IOError:
+			log.debug("Error when reading state file", exc_info=True)
+		except pickle.UnpicklingError:
+			log.debugWarning("Failed to unpickle state", exc_info=True)
+		except Exception:
+			log.exception()
+		else:
+			self.fromPickledDict(pickledState)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():
@@ -196,16 +199,20 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			log.error("NVDA should not write to disk from secure mode or launcher", stack_info=True)
 			return
 
+		if not self._save(self.statePath):
+			# Empty state - just delete state file and don't save anything.
+			self.removeStateFile()
+
+	def _save(self, statePath: os.PathLike) -> bool:
 		if any(self.values()):
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.
-				with open(self.statePath, "wb") as f:
+				with open(statePath, "wb") as f:
 					pickle.dump(self.toDict(), f, protocol=0)
 			except (IOError, pickle.PicklingError):
 				log.debugWarning("Error saving state", exc_info=True)
-		else:
-			# Empty state - just delete state file and don't save anything.
-			self.removeStateFile()
+			return True
+		return False
 
 	def cleanupRemovedDisabledAddons(self) -> None:
 		"""Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
