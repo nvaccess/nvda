@@ -171,7 +171,7 @@ class SpeechDict(list[SpeechDictEntry]):
 			try:
 				text = entry.sub(text)
 			except re.error:
-				dictName = self.fileName or "temporary dictionary"
+				dictName = self.fileName or DictionaryType.TEMP.value
 				log.error("Invalid dictionary entry %d in %r: %r", index + 1, dictName, entry.pattern)
 				invalidEntries.append(index)
 		for index in reversed(invalidEntries):
