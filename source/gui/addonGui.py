@@ -449,9 +449,9 @@ class CopyAddonsDialog(
 		label.Wrap(self.scaleSize(self.GetSize().Width))
 		sHelper.addItem(label)
 
-		sHelper.addLabeledControl("Dummy", wx.TextCtrl)
+		# sHelper.addLabeledControl("Dummy", wx.TextCtrl)
 
-		listCtrl = self.addonsList = sHelper.addLabeledControl(
+		listCtrl = self._addonsList = sHelper.addLabeledControl(
 			"Add-ons",
 			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
@@ -469,9 +469,9 @@ class CopyAddonsDialog(
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-		self.aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
-		self.aboutButton.Disable()
-		self.aboutButton.Bind(wx.EVT_BUTTON, self._onAbout)
+		self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
+		self._aboutButton.Disable()
+		self._aboutButton.Bind(wx.EVT_BUTTON, self._onAbout)
 		okButton = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		okButton.Bind(wx.EVT_BUTTON, self.onContinue)
 		okButton.SetDefault()
@@ -492,9 +492,9 @@ class CopyAddonsDialog(
 		self.CentreOnParent()
 
 	def _populateAddonsList(self):
-		self.addonsList.DeleteAllItems()
+		self._addonsList.DeleteAllItems()
 		for idx, addon in enumerate(self._installedAddons):
-			self.addonsList.Append(
+			self._addonsList.Append(
 				(
 					addon.manifest["summary"],
 					addon.manifest["author"],
@@ -502,17 +502,17 @@ class CopyAddonsDialog(
 				),
 			)
 		activeIndex = 0
-		self.addonsList.SetItemState(
+		self._addonsList.SetItemState(
 			activeIndex,
 			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
 			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
 		)
 
 	def _onSelectionChange(self, evt: wx.ListEvent):
-		self.aboutButton.Enable(self.addonsList.GetSelectedItemCount() == 1)
+		self._aboutButton.Enable(self._addonsList.GetSelectedItemCount() == 1)
 
 	def _onAbout(self, evt: wx.EVT_BUTTON):
-		index: int = self.addonsList.GetFirstSelected()
+		index: int = self._addonsList.GetFirstSelected()
 		if index < 0:
 			return
 		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
@@ -544,10 +544,32 @@ class CopyAddonsDialog(
 		import time
 
 		time.sleep(0.05)
-		self._returnList.extend(
+		toCopy = tuple(
 			addon.name
 			for idx, addon in enumerate(self._installedAddons)
-			if self.addonsList.IsItemChecked(idx)
+			if self._addonsList.IsItemChecked(idx)
 		)
+		if toCopy:
+			message = ngettext(
+				# Translators: A message to warn the user when attempting to copy current
+				# settings to system settings.
+				"You have selected {num} add-on. Copying it to the system profile could be a security risk. Do you wish to continue?",
+				"You have selected {num} add-ons. Copying them to the system profile could be a security risk. Do you wish to continue?",
+				len(toCopy),
+			).format(num=len(toCopy))
+			# Translators: The title of the warning dialog displayed when trying to
+			# copy settings for use in secure screens.
+			title = _("Warning")
+			style = wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING
+			res = gui.messageBox(message, title, style, self)
+			if res == wx.CANCEL:
+				tones.beep(1000, 50)
+				time.sleep(0.05)
+				self.EndModal(wx.CANCEL)
+				self.Close()
+				return
+			elif res == wx.NO:
+				return
+		self._returnList.extend(toCopy)
 		self.EndModal(evt.GetId())
 		self.Close()
