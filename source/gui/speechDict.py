@@ -4,17 +4,17 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from abc import abstractmethod
 from re import error as RegexpError
 
-from abc import abstractmethod
-import wx
-
 import globalVars
+import speechDictHandler
+import wx
+from logHandler import log
+from speechDictHandler.types import DictionaryType, EntryType, SpeechDict
+
 import gui
 import gui.contextHelp
-from logHandler import log
-import speechDictHandler
-from speechDictHandler.types import EntryType, DictionaryType, SpeechDict
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
@@ -35,7 +35,7 @@ class DictionaryEntryDialog(
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
-		super(DictionaryEntryDialog, self).__init__(parent, title=title)
+		super().__init__(parent, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -235,7 +235,7 @@ class DictionaryDialog(
 
 	def onCancel(self, evt):
 		globalVars.speechDictionaryProcessing = True
-		super(DictionaryDialog, self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onOk(self, evt):
 		globalVars.speechDictionaryProcessing = True
@@ -243,7 +243,7 @@ class DictionaryDialog(
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
 			self.speechDict.save()
-		super(DictionaryDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def onAddClick(self, evt):
 		# Translators: This is the label for the add dictionary entry dialog.
