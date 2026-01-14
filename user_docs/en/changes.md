@@ -2,7 +2,6 @@
 
 ## 2026.1
 
-
 This release includes built-in support for reading math content with MathCAT.
 
 There have been several improvements to speech.
