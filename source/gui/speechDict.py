@@ -14,7 +14,7 @@ import gui
 import gui.contextHelp
 from logHandler import log
 import speechDictHandler
-from speechDictHandler.types import EntryType, DictionaryType
+from speechDictHandler.types import EntryType, DictionaryType, SpeechDict
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
@@ -152,10 +152,10 @@ class DictionaryDialog(
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod
-	def __init__(self, parent, title, speechDict):
+	def __init__(self, parent, title, speechDict: SpeechDict):
 		self.title = title
 		self.speechDict = speechDict
-		self.tempSpeechDict = speechDictHandler.SpeechDict()
+		self.tempSpeechDict = SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing = False
 		super().__init__(parent, resizeable=True)
