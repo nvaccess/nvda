@@ -14,7 +14,8 @@ CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
 
 class SynthDriver(SynthDriverProxy32):
 	name = "sapi4_32"
-	description = "Microsoft Speech API version 4 (32 bit proxy)"
+	# Translators: Description for a speech synthesizer.
+	description = _("Microsoft Speech API version 4")
 	synthDriver32Path = os.path.join(globalVars.appDir, "_synthDrivers32")
 	synthDriver32Name = "sapi4"
 
