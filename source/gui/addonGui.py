@@ -5,6 +5,7 @@
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 from collections.abc import Collection
+from typing import Self
 import weakref
 
 import addonAPIVersion
@@ -433,7 +434,36 @@ class _CopyAddonsDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,
 ):
+	"""A dialog which asks the user which add-ons they would like to copy to the system profile."""
+
+	@classmethod
+	def _instance(cls) -> Self | None:
+		"""Retrieves the globally unique instance of this class, if any."""
+		# Return None until this is replaced with a weakref.ref object.
+		# Then the instance is retrieved by treating that object as a callable.
+		return None
+
+	def __new__(cls, *args, **kwargs):
+		instance = cls._instance()
+		if instance is None:
+			return super().__new__(cls, *args, **kwargs)
+		return instance
+
 	def __init__(self, parent: wx.Window, availableAddons: Collection[Addon], returnList: list[str]):
+		"""Initializer.
+
+		:param parent: The dialog's parent window.
+		:param availableAddons: The add-ons that are available to be copied to the system profile.
+			This must not be empty.
+		:param returnList: A list that will be modified in place with the add-on IDs that the user wishes to copy.
+		:raises RuntimeError: If an instance of this class already exists.
+		:raises ValueError: If ``availableAddons`` is empty.
+		"""
+		if type(self)._instance() is not None:
+			raise RuntimeError("Attempting to open multiple _CopyAddonsDialog instances")
+		if len(availableAddons) < 1:
+			raise ValueError("Unable to show copy add-ons dialog when there are no add-ons to copy.")
+		type(self)._instance = weakref.ref(self)
 		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
 		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons"))
 		self._availableAddons = availableAddons
