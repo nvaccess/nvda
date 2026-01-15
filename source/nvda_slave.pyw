@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2025 NV Access Limited, Cyrille Bougot, Christopher Toth
+# Copyright (C) 2009-2026 NV Access Limited, Cyrille Bougot, Christopher Toth
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
