@@ -433,7 +433,8 @@ class CopyAddonsDialog(
 	wx.Dialog,
 ):
 	def __init__(self, parent: wx.Window, returnList: list[str]):
-		super().__init__(parent, wx.ID_ANY, "Copy Add-ons")
+		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
+		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons"))
 		self._installedAddons: tuple[Addon] = tuple(
 			addonHandler.getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
 		)
@@ -457,16 +458,17 @@ class CopyAddonsDialog(
 		sHelper.addItem(label)
 
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
-			"Add-ons",
+			# Translators: The label of the list which allows users to select which add-ons to copy to the system profile
+			_("Add-ons"),
 			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
 		listCtrl.setResizeColumn(0)
-		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-		listCtrl.AppendColumn(_("Package"), width=self.scaleSize(150))
-		# Translators: The label for a column in add-ons list used to specify the add-on's author.
+		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
+		listCtrl.AppendColumn(_("Name"), width=self.scaleSize(150))
+		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
 		listCtrl.AppendColumn(_("Author"), width=self.scaleSize(180))
-		# Translators: The label for a column in add-ons list used to identify the version of an add-on.
+		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on
 		listCtrl.AppendColumn(_("Version"), width=self.scaleSize(150))
 		listCtrl.EnableCheckBoxes(True)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
@@ -474,12 +476,14 @@ class CopyAddonsDialog(
 		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
+		# Translators: The label for a button in the copy add-ons dialog to show information about the selected add-on.
 		button = self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
 		button.Disable()
 		button.Bind(wx.EVT_BUTTON, self.onAbout)
+		# Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		button.SetDefault()
+		# Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 		buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
@@ -550,9 +554,9 @@ class CopyAddonsDialog(
 			match gui.messageBox(
 				ngettext(
 					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
-					"You have selected 1 add-on. "
+					"You have selected to copy 1 add-on. "
 					"Using this add-on during sign-in and on secure screens is a security risk.",
-					"You have selected {num} add-ons. "
+					"You have selected to copy {num} add-ons. "
 					"Using these add-ons during sign-in and on secure screens is a security risk.",
 					len(toCopy),
 				).format(num=len(toCopy))
@@ -561,7 +565,7 @@ class CopyAddonsDialog(
 					"\n\nAre you sure you want to continue?",
 				),
 				# Translators: The title of the warning dialog displayed when trying to
-				# copy add-ons for use in secure screens.
+				# copy add-ons for use on secure screens.
 				_("Warning"),
 				wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING,
 				self,
