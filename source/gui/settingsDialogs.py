@@ -3452,8 +3452,6 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		shouldDebugGui = gui._isDebug()
-		startTime = time.time() if shouldDebugGui else 0
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
