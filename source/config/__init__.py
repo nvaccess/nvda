@@ -304,16 +304,16 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, enable)
 
 
-def setSystemConfigToCurrentConfig(*, _addonsToCopy: Collection[str] = ()):
+def setSystemConfigToCurrentConfig(*, addonsToCopy: Collection[str] = ()):
 	fromPath = WritePaths.configDir
 	if winBindings.shell32.IsUserAnAdmin():
-		_setSystemConfig(fromPath, addonsToCopy=_addonsToCopy)
+		_setSystemConfig(fromPath, addonsToCopy=addonsToCopy)
 	else:
 		import systemUtils
 
 		res = systemUtils.execElevated(
 			SLAVE_FILENAME,
-			("setNvdaSystemConfig", fromPath, *_addonsToCopy),
+			("setNvdaSystemConfig", fromPath, *addonsToCopy),
 			wait=True,
 		)
 		if res == 2:
