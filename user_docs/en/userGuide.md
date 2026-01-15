@@ -2802,13 +2802,14 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+u
 ##### Default color filter {#MagnifierDefaultFilter}
 
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
+You can cycle through the color filters on the fly using `NVDA+shift+f` while the magnifier is active.
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options | Normal, Grayscale, Inverted |
 |Default |Normal |
-|Toggle command |`NVDA+shift+e` |
+|Toggle command |`NVDA+shift+f` |
 
 | Option | Description |
 |---|---|
@@ -2816,18 +2817,16 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-You can cycle through the color filters on the fly using `NVDA+shift+f` while the magnifier is active.
-
 ##### Default focus mode {#MagnifierDefaultFocusMode}
+
+This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Center, Border, Relative|
 |Default |Center|
 |Toggle command |`NVDA+shift+m`|
-
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-The available options are:
 
 | Option | Description |
 |---|---|
