@@ -51,7 +51,6 @@ import vision.providerInfo
 import winUser
 import wx
 from wx.lib import scrolledpanel
-from NVDAState import WritePaths
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
@@ -997,25 +996,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onCopySettings(self, evt):
-		addonsToCopy: list[str] = []
-		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
-			# message = _(
-			# 	# Translators: A message to warn the user when attempting to copy current
-			# 	# settings to system settings.
-			# 	"Add-ons were detected in your user settings directory. "
-			# 	"Copying these to the system profile could be a security risk. "
-			# 	"Do you still wish to copy your settings?",
-			# )
-			# # Translators: The title of the warning dialog displayed when trying to
-			# # copy settings for use in secure screens.
-			# title = _("Warning")
-			# style = wx.YES | wx.NO | wx.ICON_WARNING
-			# if wx.NO == gui.messageBox(message, title, style, self):
-			# 	return
-			from .addonGui import CopyAddonsDialog
+		from .addonGui import _getAddonsToCopy
 
-			if CopyAddonsDialog(self.GetTopLevelParent(), addonsToCopy).ShowModal() != wx.ID_OK:
-				return
+		if (addonsToCopy := _getAddonsToCopy(self.GetTopLevelParent())) is None:
+			return
 		gui.messageBox(f"{addonsToCopy}")
 		progressDialog = gui.IndeterminateProgressDialog(
 			gui.mainFrame,

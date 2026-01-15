@@ -4,6 +4,7 @@
 # Copyright (C) 2012-2026 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
+from collections.abc import Collection
 import weakref
 
 import addonAPIVersion
@@ -427,17 +428,15 @@ class IncompatibleAddonsDialog(
 		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
 
 
-class CopyAddonsDialog(
+class _CopyAddonsDialog(
 	DpiScalingHelperMixinWithoutInit,
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,
 ):
-	def __init__(self, parent: wx.Window, returnList: list[str]):
+	def __init__(self, parent: wx.Window, availableAddons: Collection[Addon], returnList: list[str]):
 		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
 		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons"))
-		self._installedAddons: tuple[Addon] = tuple(
-			addonHandler.getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
-		)
+		self._availableAddons = availableAddons
 		self._returnList = returnList
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -503,7 +502,7 @@ class CopyAddonsDialog(
 
 	def _populateAddonsList(self):
 		self._addonsList.DeleteAllItems()
-		for idx, addon in enumerate(self._installedAddons):
+		for idx, addon in enumerate(self._availableAddons):
 			self._addonsList.Append(
 				(
 					addon.manifest["summary"],
@@ -533,7 +532,7 @@ class CopyAddonsDialog(
 			return
 		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 
-		_showAddonInfo(self._installedAddons[index]._addonGuiModel)
+		_showAddonInfo(self._availableAddons[index]._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):
 		if not self.GetReturnCode():
@@ -548,7 +547,7 @@ class CopyAddonsDialog(
 		returnCode = evt.GetId()
 		toCopy = tuple(
 			addon.name
-			for idx, addon in enumerate(self._installedAddons)
+			for idx, addon in enumerate(self._availableAddons)
 			if self._addonsList.IsItemChecked(idx)
 		)
 		if toCopy:
@@ -579,3 +578,29 @@ class CopyAddonsDialog(
 					return
 		self.EndModal(returnCode)
 		self.Close()
+
+
+def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
+	"""Get a list of add-on IDs to copy to the system profile.
+
+	This function asks the user which add-ons they want to copy to the system profile, and returns the add-on IDs of those they select.
+	If no add-ons are enabled, the user is not asked, and no add-on IDs are returned.
+
+	.. warning::
+		This function is blocking.
+
+	:param parent: The window to use as the dialog's parent.
+	:return: If the user cancels the process, ``None``.
+		Otherwise, a list of add-on IDs to copy.
+		Note that this list may be empty, in which case there are either no enabled add-ons in the user config, or the user has chosen to copy no add-ons.
+	"""
+	addonsToCopy: list[str] = []
+	enabledAddons: tuple[Addon] = tuple(
+		addonHandler.getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
+	)
+	if (
+		len(enabledAddons) > 0
+		and _CopyAddonsDialog(parent, enabledAddons, addonsToCopy).ShowModal() != wx.ID_OK
+	):
+		return None
+	return addonsToCopy
