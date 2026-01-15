@@ -237,6 +237,8 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+* `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
+Only add-ons with the given IDs will be copied. (#19446)
 
 #### Deprecations
 
