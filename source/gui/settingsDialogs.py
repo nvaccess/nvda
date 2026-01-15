@@ -889,14 +889,14 @@ class GeneralSettingsPanel(SettingsPanel):
 				# current user settings to system settings (to allow current
 				# settings to be used in secure screens such as User Account
 				# Control (UAC) dialog).
-				"&Use currently saved settings during sign-in and on secure screens"
+				"Use currently saved settings during sign-in and on secure screens"
 				" (requires administrator privileges)",
 			),
 		)
 		self.bindHelpEvent("GeneralSettingsCopySettings", self.copySettingsButton)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON, self.onCopySettings)
-		# if globalVars.appArgs.secure or not config.isInstalledCopy():
-		# self.copySettingsButton.Disable()
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
+			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 
 		item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
@@ -1000,7 +1000,6 @@ class GeneralSettingsPanel(SettingsPanel):
 
 		if (addonsToCopy := _getAddonsToCopy(self.GetTopLevelParent())) is None:
 			return
-		gui.messageBox(f"{addonsToCopy}")
 		progressDialog = gui.IndeterminateProgressDialog(
 			gui.mainFrame,
 			# Translators: The title of the dialog presented while settings are being copied
