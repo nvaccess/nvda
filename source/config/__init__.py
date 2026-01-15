@@ -365,6 +365,9 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 						userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
 					)
 					systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
+				else:
+					log.debug("No add-ons to copy.")
+					continue
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:

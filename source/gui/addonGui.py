@@ -545,6 +545,7 @@ class CopyAddonsDialog(
 		self.Close()
 
 	def onContinue(self, evt: wx.CommandEvent):
+		returnCode = evt.GetId()
 		toCopy = tuple(
 			addon.name
 			for idx, addon in enumerate(self._installedAddons)
@@ -571,12 +572,10 @@ class CopyAddonsDialog(
 				self,
 			):
 				case wx.CANCEL:
-					self.EndModal(wx.CANCEL)
-					self.Close()
-					return
+					returnCode = wx.CANCEL
 				case wx.YES:
 					self._returnList.extend(toCopy)
 				case _:
 					return
-		self.EndModal(evt.GetId())
+		self.EndModal(returnCode)
 		self.Close()
