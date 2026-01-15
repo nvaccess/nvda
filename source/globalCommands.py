@@ -876,7 +876,7 @@ class GlobalCommands(ScriptableObject):
 			config.conf["braille"]["autoScrollRate"] += 0.5
 		else:
 			config.conf["braille"]["autoScrollRate"] = maxRate
-		rateValue = config.conf['braille']['autoScrollRate']
+		rateValue = config.conf["braille"]["autoScrollRate"]
 		percentage = round((rateValue - 1.0) / 19.0 * 100)
 		rate = f"{percentage}"
 		ui.message(rate)
@@ -896,7 +896,7 @@ class GlobalCommands(ScriptableObject):
 			config.conf["braille"]["autoScrollRate"] -= 0.5
 		else:
 			config.conf["braille"]["autoScrollRate"] = minRate
-		rateValue = config.conf['braille']['autoScrollRate']
+		rateValue = config.conf["braille"]["autoScrollRate"]
 		percentage = round((rateValue - 1.0) / 19.0 * 100)
 		rate = f"{percentage}"
 		ui.message(rate)
