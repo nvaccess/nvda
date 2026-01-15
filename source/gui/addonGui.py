@@ -436,6 +436,8 @@ class _CopyAddonsDialog(
 ):
 	"""A dialog which asks the user which add-ons they would like to copy to the system profile."""
 
+	helpId = "CopyAddonsToSystemProfileDialog"
+
 	@classmethod
 	def _instance(cls) -> Self | None:
 		"""Retrieves the globally unique instance of this class, if any."""
