@@ -327,7 +327,7 @@ def setSystemConfigToCurrentConfig(*, _addonsToCopy: Collection[str] = ()):
 def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: Collection[str] = ()):
 	import installer
 	import addonHandler
-	import addonStore.models.status
+	from addonStore.models.status import AddonStateCategory
 
 	toPath = os.path.join(prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
@@ -342,7 +342,8 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
 				subDirs.remove(subPath)
 			if addonHandler.stateFilename in files:
-				# Don't copy the addons state file, as we will generate a new one based on which add-ons are being copied.
+				# Don't copy the addons state file,
+				# as we will generate a new one based on which add-ons are being copied.
 				files.remove(addonHandler.stateFilename)
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
@@ -353,19 +354,16 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 				subDirs.clear()
 				subDirs.extend(addon for addon in allAddons if addon.casefold() in addonsToCopy)
 				if subDirs:
-					# We are copying add-ons, so we need to generate a new state file
+					log.debug(f"Copying add-ons: {', '.join(subDirs)}")
+					# We are copying add-ons, so we need to generate a new addons state file.
 					# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
-					log.debug("Generating new add-on state file")
 					userAddonsState = addonHandler.AddonsState()
 					userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
 					systemAddonsState = addonHandler.AddonsState()
 					systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
-					systemAddonsState[addonStore.models.status.AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
-						userAddonsState[addonStore.models.status.AddonStateCategory.OVERRIDE_COMPATIBILITY]
-						& addonsToCopy
+					systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
+						userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
 					)
-					log.debug(f"Generated {systemAddonsState=}")
-					log.debug(f"Saving to {os.path.join(toPath, addonHandler.stateFilename)}")
 					systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)

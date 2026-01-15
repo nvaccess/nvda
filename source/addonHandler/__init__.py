@@ -166,6 +166,14 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
 
 	def _load(self, statePath: os.PathLike) -> None:
+		"""
+		Loads the addons state file.
+
+		..note::
+			Unlike :meth:`load`, this method does not perform any consistency checking.
+
+		:param statePath: Path from which to load the addons state file.
+		"""
 		self.setDefaultStateValues()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
@@ -204,6 +212,17 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self.removeStateFile()
 
 	def _save(self, statePath: os.PathLike) -> bool:
+		"""
+		Writes the state file to disk.
+
+		If the state filewould be empty (i.e. contain no add-ons), no file will be written.
+
+		.. note::
+			Unlike :meth:`write`, this method does not delete the existing state file if it would not be overwritten.
+
+		:param statePath: Location at which to write the state file.
+		:return: ``True`` if an attempt was made to save the state file (regardless of whether it succeded or not); ``False`` otherwise.
+		"""
 		if any(self.values()):
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.

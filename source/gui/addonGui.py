@@ -456,8 +456,6 @@ class CopyAddonsDialog(
 		label.Wrap(self.scaleSize(self.GetSize().Width))
 		sHelper.addItem(label)
 
-		# sHelper.addLabeledControl("Dummy", wx.TextCtrl)
-
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
 			"Add-ons",
 			nvdaControls.AutoWidthColumnListCtrl,
@@ -473,6 +471,7 @@ class CopyAddonsDialog(
 		listCtrl.EnableCheckBoxes(True)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
+		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
@@ -485,7 +484,6 @@ class CopyAddonsDialog(
 		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
-		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)
 		sHelper.addDialogDismissButtons(buttonHelper, separated=True)
 		self._populateAddonsList()
 
@@ -534,30 +532,15 @@ class CopyAddonsDialog(
 		_showAddonInfo(self._installedAddons[index]._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):
-		import tones
-
-		tones.beep(500, 50)
 		if not self.GetReturnCode():
 			self.SetReturnCode(wx.ID_CANCEL)
 		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
 
 	def onCancel(self, evt: wx.CommandEvent):
-		import tones
-
-		tones.beep(300, 50)
-		import time
-
-		time.sleep(0.05)
 		self.EndModal(evt.GetId())
 		self.Close()
 
 	def onContinue(self, evt: wx.CommandEvent):
-		import tones
-
-		tones.beep(700, 50)
-		import time
-
-		time.sleep(0.05)
 		toCopy = tuple(
 			addon.name
 			for idx, addon in enumerate(self._installedAddons)
@@ -584,8 +567,6 @@ class CopyAddonsDialog(
 				self,
 			):
 				case wx.CANCEL:
-					tones.beep(1000, 50)
-					time.sleep(0.05)
 					self.EndModal(wx.CANCEL)
 					self.Close()
 					return
