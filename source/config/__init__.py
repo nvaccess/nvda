@@ -305,6 +305,17 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 
 def setSystemConfigToCurrentConfig(*, addonsToCopy: Collection[str] = ()):
+	"""
+	Replaces the system configuration with the current user configuration.
+
+	:param addonsToCopy: IDs of the add-ons to copy, defaults to ()
+		.. warning::
+			Only enabled add-ons should be copied.
+			Providing IDs of add-ons that are disabled may cause unexpected results,
+			especially for add-ons that are not compatible with the current API version.
+	:raises installer.RetriableFailure: If copying the user to the system config fails.
+	:raises RuntimeError: If calling ``nvda_slave`` fails for some other reason.
+	"""
 	fromPath = WritePaths.configDir
 	if winBindings.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath, addonsToCopy=addonsToCopy)
