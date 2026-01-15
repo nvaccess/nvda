@@ -444,9 +444,14 @@ class CopyAddonsDialog(
 
 		label = wx.StaticText(
 			self,
-			label="You currently have one or more add-ons enabled. "
-			"Select which of these add-ons should be copied to the system profile. "
-			"You are encouraged to keep this list minimal.",
+			label=_(
+				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
+				"You currently have one or more add-ons enabled. "
+				"If copied to the system profile, they will have unrestricted access to your entire system. "
+				"\n\n"
+				"Check only the add-ons you wish to copy. "
+				"You are strongly encouraged to choose only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+			),
 		)
 		label.Wrap(self.scaleSize(self.GetSize().Width))
 		sHelper.addItem(label)
@@ -559,26 +564,34 @@ class CopyAddonsDialog(
 			if self._addonsList.IsItemChecked(idx)
 		)
 		if toCopy:
-			message = ngettext(
-				# Translators: A message to warn the user when attempting to copy current
-				# settings to system settings.
-				"You have selected {num} add-on. Copying it to the system profile could be a security risk. Are you sure you wish to continue?",
-				"You have selected {num} add-ons. Copying them to the system profile could be a security risk. Are you sure you wish to continue?",
-				len(toCopy),
-			).format(num=len(toCopy))
-			# Translators: The title of the warning dialog displayed when trying to
-			# copy settings for use in secure screens.
-			title = _("Warning")
-			style = wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING
-			res = gui.messageBox(message, title, style, self)
-			if res == wx.CANCEL:
-				tones.beep(1000, 50)
-				time.sleep(0.05)
-				self.EndModal(wx.CANCEL)
-				self.Close()
-				return
-			elif res == wx.NO:
-				return
-		self._returnList.extend(toCopy)
+			match gui.messageBox(
+				ngettext(
+					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
+					"You have selected 1 add-on. "
+					"Using this add-on during sign-in and on secure screens is a security risk.",
+					"You have selected {num} add-ons. "
+					"Using these add-ons during sign-in and on secure screens is a security risk.",
+					len(toCopy),
+				).format(num=len(toCopy))
+				+ _(
+					# Translators: A prompt asking the user to confirm whether to perform an action.
+					"\n\nAre you sure you want to continue?",
+				),
+				# Translators: The title of the warning dialog displayed when trying to
+				# copy add-ons for use in secure screens.
+				_("Warning"),
+				wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING,
+				self,
+			):
+				case wx.CANCEL:
+					tones.beep(1000, 50)
+					time.sleep(0.05)
+					self.EndModal(wx.CANCEL)
+					self.Close()
+					return
+				case wx.YES:
+					self._returnList.extend(toCopy)
+				case _:
+					return
 		self.EndModal(evt.GetId())
 		self.Close()
