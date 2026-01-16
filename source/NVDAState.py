@@ -68,6 +68,10 @@ class _WritePaths:
 		return os.path.join(self.configDir, "updates")
 
 	@property
+	def modelsDir(self) -> str:
+		return os.path.join(self.configDir, "models")
+
+	@property
 	def nvdaConfigFile(self) -> str:
 		return os.path.join(self.configDir, "nvda.ini")
 
