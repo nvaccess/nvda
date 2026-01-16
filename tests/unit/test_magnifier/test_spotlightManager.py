@@ -3,7 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import unittest.mock
 from unittest.mock import MagicMock, patch
 from _magnifier.utils.types import FullScreenMode
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
@@ -110,7 +109,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock wx.GetMousePosition
-		with unittest.mock.patch("wx.GetMousePosition") as mockGetMousePosition:
+		with patch("wx.GetMousePosition") as mockGetMousePosition:
 			mockGetMousePosition.return_value = (100, 200)
 
 			# Start monitoring
@@ -131,7 +130,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager._lastMousePosition = (100, 200)
 
 		# Mock wx.GetMousePosition to return same position (idle)
-		with unittest.mock.patch("wx.GetMousePosition") as mockGetMousePosition:
+		with patch("wx.GetMousePosition") as mockGetMousePosition:
 			mockGetMousePosition.return_value = (100, 200)
 			spotlightManager.zoomBack = MagicMock()
 
@@ -152,7 +151,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager._lastMousePosition = (100, 200)
 
 		# Mock wx.GetMousePosition to return different position (moved)
-		with unittest.mock.patch("wx.GetMousePosition") as mockGetMousePosition:
+		with patch("wx.GetMousePosition") as mockGetMousePosition:
 			mockGetMousePosition.return_value = (150, 250)
 			spotlightManager.zoomBack = MagicMock()
 			spotlightManager._timer = None
@@ -202,7 +201,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager._originalZoomLevel = 3.0
 
 		# Mock wx.GetMousePosition and _getCoordinatesForMode
-		with unittest.mock.patch("wx.GetMousePosition") as mockGetMousePosition:
+		with patch("wx.GetMousePosition") as mockGetMousePosition:
 			mockGetMousePosition.return_value = (500, 400)
 			magnifier._getCoordinatesForMode = MagicMock(return_value=(550, 450))
 			spotlightManager._animateZoom = MagicMock()
