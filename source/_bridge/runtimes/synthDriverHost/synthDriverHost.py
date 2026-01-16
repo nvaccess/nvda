@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 import typing
+from types import SimpleNamespace
 import sys
 import importlib
 import rpyc
@@ -72,9 +73,21 @@ class HostService(Service):
 		import languageHandler
 
 		languageHandler.getLanguage = remoteService.getLanguage
-		log.debug("Injecting WavePlayerProxy into nvwave module")
-		import nvwave
 
+		log.debug("Synchronizing configuration values")
+		configNeeded = [
+		("audio", ["outputDevice", "audioAwakeTime", "whiteNoiseVolume"]),
+		("speech", ["useWASAPIForSAPI4", "trimLeadingSilence"]),
+		 ("debugLog", ["synthDriver"]),
+		]
+		import config
+		for section, keys in configNeeded:
+			config.conf[section] = {}
+			for key in keys:
+				config.conf[section][key] = remoteService.getConfigValue(section, key)
+
+		log.debug("Initializing nvwave")
+		import nvwave
 		nvwave.initialize()
 
 	@Service.exposed

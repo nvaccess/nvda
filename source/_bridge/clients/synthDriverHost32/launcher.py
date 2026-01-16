@@ -44,6 +44,18 @@ class NVDAService(Service):
 	def getVersionedLibPath(self) -> str:
 		return NVDAState.ReadPaths.versionedLibPath
 
+	@Service.exposed
+	def getConfigValue(self, *pathStrings):
+		import config
+		conf = config.conf
+		for part in pathStrings:
+			log.debug(f"Traversing config path part: {part}")
+			conf = conf[part]
+		if pathStrings[0] == "speech" and pathStrings[1] == "useWASAPIForSAPI4":
+			conf = bool(conf)
+		log.debug(f"Retrieved config value: {conf}")
+		return conf #pickle.dumps(conf)
+
 
 _hostExe = os.path.join(
 	NVDAState.ReadPaths.versionedLibX86Path,
