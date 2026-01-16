@@ -41,7 +41,7 @@ repos:
     # Checks that large files have not been added. Default cut-off for "large" files is 500kb.
     - id: check-added-large-files
       # POFiles, TTF fonts, and xliff files can't be made smaller
-      exclude_types: ["pofile", "ttf", ".xliff"]
+      exclude_types: ["pofile", "ttf", "xliff"]
       # Same applies for NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
       exclude: "\\.(dic|sfd)$"
     # Checks python syntax
