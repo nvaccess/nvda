@@ -82,7 +82,7 @@ def _getNewOrientationStyle(
 	previousState: OrientationState,
 	height: int,
 	width: int,
-) -> Orientation | nONE:
+) -> Orientation | None:
 	"""
 	:returns: Orientation if there has been an orientation state change, otherwise None
 	"""
