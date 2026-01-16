@@ -97,7 +97,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
-    	excludedDisplays = string_list(default=list("dotPad"))
+		excludedDisplays = string_list(default=list("dotPad"))
 
 	# Braille display driver settings
 	[[__many__]]
@@ -373,23 +373,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [math]
 	[[speech]]
 		# LearningDisability, Blindness, LowVision
-    	impairment = string(default="Blindness")
+		impairment = string(default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-    	language = string(default="Auto")
+		language = string(default="Auto")
 		# Any known speech style (falls back to ClearSpeak)
-    	speechStyle = string(default="ClearSpeak")
+		speechStyle = string(default="ClearSpeak")
 		# Terse, Medium, Verbose
-    	verbosity = string(default="Medium")
+		verbosity = string(default="Medium")
 		# Change from text speech rate (%)
-    	mathRate = integer(default=100)
+		mathRate = integer(default=100)
 		# Change from normal pause length (%)
-    	pauseFactor = integer(default=100)
+		pauseFactor = integer(default=100)
 		# make a sound when starting/ending math speech -- None, Beep
-    	speechSound = string(default="None")
+		speechSound = string(default="None")
 		# NOTE: not currently working in MathCAT
-    	subjectArea = string(default="General")
+		subjectArea = string(default="General")
 		# SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
-    	chemistry = string(default="SpellOut")
+		chemistry = string(default="SpellOut")
 		# Verbose, Brief, SuperBrief
 		mathSpeak = string(default="Verbose")
 
@@ -528,10 +528,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
 		decimalSeparator = string(default="Auto")
-
-[automatedImageDescriptions]
-	enable = boolean(default=false)
-	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
 
 [screenCurtain]
 	enabled = boolean(default=false)
