@@ -14904,7 +14904,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This is done with the arrow keys.</source>
-        <target>Это делается с помощью клавиш со стрелками.</target>
+        <target>Это делается с помощью курсорных стрелок.</target>
       </segment>
     </unit>
     <unit id="00ca5128-00c7-4301-b8d4-664a1883e5fc">
@@ -28010,7 +28010,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When unchecked, Remote Access sessions start unmuted, and must be muted explicitly.</source>
-        <target>Если флажок снят, сеансы удаленного доступа начинаются без отключения звука, речь и звуки управляемого компьютера нужно отключать вручную.</target>
+        <target>Если флажок снят, то речь и звуки управляемого компьютера будут воспроизводиться сразу после подключения к сеансу удалённого доступа, в этом случае их нужно отключать вручную.</target>
       </segment>
     </unit>
     <unit id="c6638271-ce78-4e38-908d-71a0ba152e85">
@@ -28019,7 +28019,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>You can still manually mute or unmute Remote Access when controlling the local computer [via the Remote Access menu](#RemoteAccessUsage), or by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).</source>
-        <target>Вы также можете вручную отключать или включать речь и звуки управляемого компьютера при управлении локальным компьютером [в меню удаленного доступа](#RemoteAccessUsage) или назначив сочетание клавиш в [диалоге жесты ввода](#InputGestures).</target>
+        <target>Вы также можете вручную отключать или включать речь и звуки управляемого компьютера при управлении локальным компьютером в [меню удалённого доступа](#RemoteAccessUsage) или назначив сочетание клавиш в диалоге [жесты ввода](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="4b142507-9401-4d1f-b8da-cb443c3cb501">
@@ -28128,7 +28128,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Control another computer |Use this computer as the "controlling" computer. This allows you to execute commands on the remote computer. </source>
-        <target>Управлять другим компьютером |используйте этот компьютер в качестве "управляющего". Это позволяет выполнять команды на удаленном компьютере. </target>
+        <target>Управлять другим компьютером |используйте этот компьютер в качестве "управляющего". Это позволяет выполнять команды на удалённом компьютере. </target>
       </segment>
     </unit>
     <unit id="af02981e-74c9-4832-be1a-9596b2b1ad2a">
@@ -28179,7 +28179,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Use existing |Use an existing Remote Access server to mediate the connection (recommended). </source>
-        <target>Использовать существующий |Использовать существующий сервер удаленного доступа, чтобы опосредовать соединение (рекомендуется). </target>
+        <target>Использовать существующий |Использовать существующий сервер удалённого доступа для установки соединения (рекомендуется). </target>
       </segment>
     </unit>
     <unit id="c4229ecd-8563-4a67-8ed6-823b2f8f890b">
@@ -31659,7 +31659,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If NVDA is running in [secure mode](#SecureMode), you cannot manually initiate a new Remote Access session.</source>
-        <target>Если NVDA запущена в [безопасном режиме](#SecureMode), вы не сможете вручную инициировать новый сеанс удаленного доступа.</target>
+        <target>Если NVDA запущена в [безопасном режиме](#SecureMode), вы не сможете вручную запустить новый сеанс удалённого доступа.</target>
       </segment>
     </unit>
     <unit id="b98ba472-736b-4064-a635-a06206770515">
@@ -32173,7 +32173,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Once a Remote Access session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:</source>
-        <target>Когда сеанс удалённого доступа активен, вы можете переключаться между управлением удаленным компьютером и своим собственным, предоставлять общий доступ к буферу обмена и отключать звук удаленного сеанса:</target>
+        <target>После запуска сеанса удалённого доступа вы можете переключать управление между своим и удалённым компьютером, отправлять и передавать текст между буферами обмена и отключать речь и звуки удалённого компьютера:</target>
       </segment>
     </unit>
     <unit id="3825cc2f-df6e-40ea-b0d9-8235c199d8e1">
@@ -32203,7 +32203,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If connected as the controlling computer, mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Mute remote".</source>
-        <target>Если вы подключены в качестве управляющего компьютера, то вы можете отключить речь удаленного компьютера на вашем компьютере. Для этого откройте меню NVDA, Сервис подменю, "Удалённый доступ подменю" и выберите  пункт "Отключить удалённую речь и звуки".</target>
+        <target>Если вы подключены в качестве управляющего компьютера, вы можете отключать речь и звуки удалённого компьютера на вашем компьютере. Для этого откройте меню NVDA, Сервис подменю, "Удалённый доступ подменю" и выберите пункт "Отключить речь и звуки удалённого компьютера".</target>
       </segment>
     </unit>
     <unit id="277e28c8-561a-46b5-85d5-752e8abf5766">

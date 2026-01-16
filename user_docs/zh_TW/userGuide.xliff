@@ -26655,18 +26655,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3248</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").</source>
-        <target>SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").</target>
+        <target>簡化描述會試著快速地說出簡單的表達式 (例如 $\frac{a}{b}$ 讀成「b 分之 a」，而不會讀出分隔詞。</target>
       </segment>
     </unit>
     <unit id="434f44b7-4fd1-4a24-aed4-a0c4a65b445e">
       <notes>
         <note appliesTo="source">line: 3249</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").</source>
-        <target>These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").</target>
+        <target>這與更複雜的表達式不同，例如 $\frac{a}{b+1}$ ，總是會讀出分隔詞 (分數 b+1 分之 a 結束分數)。</target>
       </segment>
     </unit>
     <unit id="422d5a68-c21c-45dc-aa60-347e29f11e11">
@@ -26786,9 +26786,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3269</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".</source>
-        <target>For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".</target>
+        <target>例如，平方根詳細會讀成「x 的平方根」，精簡會讀成「根號 x」。</target>
       </segment>
     </unit>
     <unit id="e9afc84c-cba6-4146-b8f3-5fb932d4e3d1">
@@ -43056,7 +43056,7 @@ dn</target>
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>`control+end` key |`rightKeypadRight+rightKeypadDown`</source>
         <target>`control+end` key |`rightKeypadRight+rightKeypadDown`</target>
       </segment>
