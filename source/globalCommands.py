@@ -3605,6 +3605,16 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to magnifier settings command.
+		description=_("Shows NVDA's magnifier settings"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+w",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateMagnifierSettingsDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onMagnifierSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
 		description=_("Reports the name of the current NVDA configuration profile"),
 		category=SCRCAT_CONFIG,
