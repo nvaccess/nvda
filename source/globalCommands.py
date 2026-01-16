@@ -3611,7 +3611,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+w",
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateMagnifierSettingsDialog(self, gesture):
+	def script_activateMagnifierSettingsDialog(self, gesture: inputCore.InputGesture):
 		wx.CallAfter(gui.mainFrame.onMagnifierSettingsCommand, None)
 
 	@script(
