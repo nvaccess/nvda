@@ -48,6 +48,9 @@ dependencies = [
 	"l2m4m==1.0.4",
 	"pyyaml==6.0.3",
 	"pymdown-extensions==10.17.1",
+	# local image caption
+	"onnxruntime==1.23.2",
+	"numpy==2.3.5",
 ]
 
 [project.urls]
@@ -335,6 +338,7 @@ system-tests = [
 	"robotframework==7.3.2",
 	"robotremoteserver==1.1.1",
 	"robotframework-screencaplibrary==1.6.0",
+	"onnx==1.19.1",
 ]
 unit-tests = [
 	# Creating XML unit test reports
