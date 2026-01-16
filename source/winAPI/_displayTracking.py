@@ -124,4 +124,4 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 	_orientationState.height = height
 	_orientationState.width = width
 	# Notify registered handlers about display changes
-	displayChanged.notify(_orientationState)
+	displayChanged.notify(orientationState=_orientationState)
