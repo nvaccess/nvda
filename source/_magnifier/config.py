@@ -93,7 +93,7 @@ def setDefaultFilter(filter: Filter) -> None:
 	"""
 	Set default filter from settings.
 
-	:param filter: The filter displayString to set.
+	:param filter: The filter to set.
 	"""
 	config.conf["magnifier"]["defaultFilter"] = filter.value
 
