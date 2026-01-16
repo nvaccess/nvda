@@ -111,7 +111,7 @@ def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
 	"""
 	Set default full-screen mode from settings.
 
-	:param mode: The full-screen mode displayString to set.
+	:param mode: The full-screen mode to set.
 	"""
 	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
 
