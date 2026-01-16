@@ -203,6 +203,7 @@ def magnifierIsActiveVerify(
 		return True
 	else:
 		ui.message(
+			"magnifier",
 			pgettext(
 				# Translators: Message announced that the magnifier is not active.
 				"Magnifier is not active when {action}",
