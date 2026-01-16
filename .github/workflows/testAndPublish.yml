@@ -431,7 +431,11 @@ jobs:
       run: choco install -y zstandard
     - name: 'Workaround for OneDrive popup in windows-11-arm'
       if: matrix.runner == 'windows-11-arm'
-      run: taskkill /f /im onedrive.exe
+      run: |
+        taskkill /f /im onedrive.exe
+        taskkill /f /im ShellExperienceHost.exe
+        taskkill /f /im explorer.exe
+        start explorer.exe
     - name: Checkout cached build
       uses: actions/cache/restore@v5
       with:
