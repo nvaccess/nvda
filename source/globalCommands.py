@@ -4808,7 +4808,6 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it",
 		),
-		category=SCRCAT_VISION,
 		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
