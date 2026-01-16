@@ -40,12 +40,11 @@ repos:
       args: ["--branch", "master", "--branch", "beta", "--branch", "rc"]
     # Checks that large files have not been added. Default cut-off for "large" files is 500kb.
     - id: check-added-large-files
-      # POFiles, TTF fonts, and xliff files can't be made smaller
-      exclude_types: ["pofile", "ttf", "xliff"]
-      # Same applies for NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
-      exclude: "\\.(dic|sfd)$"
-      # Needed temporarily until pre-commit/identify#558 is released.
-      additional_dependencies: ["identify>=2.6.16"]
+      # POFiles and TTF fonts files can't be made smaller
+      # XLIFF files can be moved here from exclude when pre-commit/identify#558 is released.
+      exclude_types: ["pofile", "ttf"]
+      # Same applies for XLIFF, NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
+      exclude: "\\.(dic|sfd|xliff)$"
     # Checks python syntax
     - id: check-ast
     # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
