@@ -229,6 +229,7 @@ def magnifierIsFullscreenVerify(
 	else:
 		ui.message(
 			pgettext(
+				"magnifier",
 				# Translators: Message announced that the magnifier is not full-screen.
 				"Magnifier is not full-screen when {action}",
 			).format(action=action.displayString),
