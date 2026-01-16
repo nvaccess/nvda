@@ -75,7 +75,7 @@ class RemoteClient:
 		self.localControlServer = None
 		self.sendingKeys = False
 		self._wasSendingKeysBeforeLock: bool = False
-		self._disconnectConfirmationDialog: Optional[MessageDialog] = None
+		self._disconnectConfirmationDialog: MessageDialog | None = None
 		try:
 			self.sdHandler = SecureDesktopHandler()
 		except RuntimeError:
@@ -257,6 +257,9 @@ class RemoteClient:
 					if dialog.ShowModal() != ReturnCode.YES:
 						log.info("Remote disconnection cancelled by user.")
 						return
+				except Exception:
+					log.error("Error showing disconnect confirmation dialog", exc_info=True)
+					return
 				finally:
 					self._disconnectConfirmationDialog = None
 		self.disconnect()
