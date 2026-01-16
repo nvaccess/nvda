@@ -718,8 +718,8 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 
 	def _moveBySentenceWithObjectModel(self, direction) -> LegacyWordDocumentTextInfo:
 		"""
-			Using the legacy object model,
-			Move the caret to the next sentence in the requested direction.
+		Using the legacy object model,
+		Move the caret to the next sentence in the requested direction.
 		"""
 		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
 		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
