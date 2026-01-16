@@ -5,7 +5,6 @@
 
 from __future__ import annotations
 import typing
-from types import SimpleNamespace
 import sys
 import importlib
 import rpyc
@@ -76,11 +75,12 @@ class HostService(Service):
 
 		log.debug("Synchronizing configuration values")
 		configNeeded = [
-		("audio", ["outputDevice", "audioAwakeTime", "whiteNoiseVolume"]),
-		("speech", ["useWASAPIForSAPI4", "trimLeadingSilence"]),
-		 ("debugLog", ["synthDriver"]),
+			("audio", ["outputDevice", "audioAwakeTime", "whiteNoiseVolume"]),
+			("speech", ["useWASAPIForSAPI4", "trimLeadingSilence"]),
+			("debugLog", ["synthDriver"]),
 		]
 		import config
+
 		for section, keys in configNeeded:
 			config.conf[section] = {}
 			for key in keys:
@@ -88,6 +88,7 @@ class HostService(Service):
 
 		log.debug("Initializing nvwave")
 		import nvwave
+
 		nvwave.initialize()
 
 	@Service.exposed
