@@ -72,12 +72,12 @@ class Magnifier:
 		self._zoomLevel = value
 
 	# Functions
-	def _onDisplayChanged(self, newOrientation: OrientationState) -> None:
+	def _onDisplayChanged(self, orientationState: OrientationState) -> None:
 		"""
 		Called when display configuration changes
 		"""
 		log.debug("Display configuration changed, updating screen dimensions")
-		self.orientationState = newOrientation
+		self.orientationState = orientationState
 
 	def _startMagnifier(self) -> None:
 		"""
