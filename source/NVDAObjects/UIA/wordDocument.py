@@ -716,7 +716,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
-	def _moveBySentenceWithObjectModel(self, direction) -> LegacyWordDocumentTextInfo:
+	def _moveBySentenceWithObjectModel(self, direction: int) -> LegacyWordDocumentTextInfo:
 		"""
 		Using the legacy object model,
 		Move the caret to the next sentence in the requested direction.
