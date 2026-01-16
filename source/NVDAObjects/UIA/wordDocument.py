@@ -716,6 +716,28 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
+	def _moveBySentenceWithObjectModel(self, direction) -> LegacyWordDocumentTextInfo:
+		"""
+			Using the legacy object model,
+			Move the caret to the next sentence in the requested direction.
+		"""
+		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
+		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
+		# Save the start of the sentence for future use
+		legacyStart = legacyInfo.copy()
+		legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
+		# Fetch the caret position (end of the next sentence) with UI automation.
+		endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Move the caret back to the start of the next sentence,
+		# where it should be left for the user.
+		legacyStart.updateCaret()
+		# Fetch the new caret position (start of the next sentence) with UI Automation.
+		startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Make a UI automation text range spanning the entire next sentence.
+		info = startInfo.copy()
+		info.end = endInfo.end
+		return info
+
 	# The following override of the EditableText._caretMoveBySentenceHelper private method
 	# First tries to use UI Automation remote operations to move by sentence when available,
 	# falling back to the MS Word object model otherwise.
@@ -751,23 +773,8 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 				ui.message(_("Navigating by sentence not supported in this document"))
 				gesture.send()
 				return
-			# Using the legacy object model,
-			# Move the caret to the next sentence in the requested direction.
-			legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
-			legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
-			# Save the start of the sentence for future use
-			legacyStart = legacyInfo.copy()
-			legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
-			# Fetch the caret position (end of the next sentence) with UI automation.
-			endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			# Move the caret back to the start of the next sentence,
-			# where it should be left for the user.
-			legacyStart.updateCaret()
-			# Fetch the new caret position (start of the next sentence) with UI Automation.
-			startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			# Make a UI automation text range spanning the entire next sentence.
-			info = startInfo.copy()
-			info.end = endInfo.end
+			else:
+				info = self._moveBySentenceWithObjectModel(direction)
 
 		# Speak the sentence moved to
 		speech.speakTextInfo(
