@@ -1309,9 +1309,8 @@ Backspace will take you back to where you were, which is not always the same as 
 For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
 
 You will likely find one mode of navigation the most natural for you most of the time.
-This can be set in the MathCAT settings.
-However, at any time during navigation, you can switch the navigation modes using `shift+up/down arrow`.
-This is useful because each mode of navigation has its strengths and weaknesses.
+The default mode can be set in the math settings panel.
+However, at any time during navigation, you can switch navigation modes using `shift+up/down arrow` to take advantage of the differing strengths of each navigation mode.
 
 ## Braille {#Braille}
 
@@ -1501,7 +1500,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 <!-- KC:endInclude -->
 
 When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
-For example, you cannot [use OCR](#Win10Ocr) or [get AI image descriptions](#LocalCaptioner).
+For example, you cannot [use OCR](#Win10Ocr).
 Some screenshot utilities also may not work.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
@@ -1984,6 +1983,8 @@ Note that the following features depend on WASAPI, and will be disabled if WASAP
 * Rate boost
 * Leading silence trimming
 * Keep audio device awake
+
+Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
@@ -3240,9 +3241,9 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 ###### Speech Style {MathSpeechStyle}
 
-Different speech styles are used to change how math is reported.
+Different styles can be used to speak mathematical content:
 
-* ClearSpeak was developed by the Educational Testing Service (ETS) for use on high-stakes tests such as national standardized testing.
+* ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
 Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
@@ -3264,7 +3265,7 @@ Examples of each type of speech:
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 
-Controls how much "extra" speech is used.
+This option controls how much "extra" speech is used.
 For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".
 
 | . {.hideHeaderRow} | . |
@@ -3276,7 +3277,7 @@ For example, square roots are verbosely spoken as "the square root of x" and ter
 
 Changes the relative speech rate.
 The change is a percentage speed change from the standard speech engine's rate.
-`100` means the math reading rate is the same as that of the text rate.
+`100` means the reading rates of text and math content are the same, whereas `50` means that math content is read at half the speed of other content.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3293,18 +3294,19 @@ Changes the relative amount of pausing that MathCAT adds.
 | Options | Number between 0 and 100 |
 | Default | 50 |
 
-###### Make a sound when starting/ending math speech {#MathSpeechSound}
+###### Beep at the beginning and end of math {#MathSpeechSound}
 
-A start and end beep occur before and after reading an expression.
+This option determines whether NVDA beeps at the beginning and end of math content.
+This option is disabled by default.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | None, Beep |
-| Default | None |
+| Options | Checked, Unchecked |
+| Default | Unchecked |
 
-###### Speech for chemical formulas {#MathSpeechForChemical}
+###### Chemical formulae {#MathSpeechForChemical}
 
-Controls how chemical formulae are read.
+This option controls how chemical formulae are read.
 Examples for $\mathrm{H}_2\mathrm{O}$:
 
 * SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
@@ -3316,9 +3318,18 @@ Examples for $\mathrm{H}_2\mathrm{O}$:
 | Options | Spell Out, As Compound, Off |
 | Default | SpellOut |
 
+###### When entering an equation {#MathNavSpeech}
+
+Whether to speak the expression after moving to it or give an overview.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Speak, Describe overview |
+| Default | Speak |
+
 ##### Navigation Options {#MathNavigation}
 
-###### Navigation mode to use when beginning to navigate an equation {#MathNavMode}
+###### Default navigation mode {#MathNavMode}
 
 "Enhanced" mode understands math structure.
 "Simple" mode walks by character to find things like fractions, roots, and scripts.
@@ -3329,36 +3340,30 @@ Examples for $\mathrm{H}_2\mathrm{O}$:
 | Options | Enhanced, Character, Simple |
 | Default | Enhanced |
 
-###### Navigation speech to use when beginning to navigate an equation {#MathNavSpeech}
+###### Reset to the default navigation mode for each new equation {#MathNavReset}
 
-Whether to speak the expression after moving to it or give an overview.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Speak, Overview |
-| Default | Speak |
-
-###### Make a sound when starting/ending math speech {#MathNavReset}
-
-Whether to play a beep sound when speech starts/ends.
+This option selects whether NVDA resets to the default navigation mode when entering a new equation.
+When this option is disabled, NVDA preserves the last selected navigation mode across equations in the same NVDA session.
+This option is enabled by default.
 
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | Checked, Unchecked |
 | Default | Checked |
 
-###### Automatic zoom out of 2D notations {#MathNavAutoZoom}
+###### Automatically zoom out of two-dimensional notation {#MathNavAutoZoom}
 
 Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+This option is enabled by default.
 
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | Checked, Unchecked |
 | Default | Checked |
 
-###### Speech amount for navigation {#MathNavSpeechAmount}
+###### Navigation verbosity {#MathNavSpeechAmount}
 
-Specify whether you want a terse or verbose reading of navigation commands.
+This option specifies whether NVDA should read mathematical expressions in a terse or verbose manner during navigation.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3367,7 +3372,7 @@ Specify whether you want a terse or verbose reading of navigation commands.
 
 ###### Copy math as {#MathNavCopyAs}
 
-Specify how math will be copied to the clipboard.
+This option selects the format of math content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
@@ -3376,7 +3381,7 @@ Specify how math will be copied to the clipboard.
 
 ##### Braille Options {#MathBrailleOptions}
 
-###### Braille math code for refreshable displays {#MathBrailleCode}
+###### Output code {#MathBrailleCode}
 
 The braille math code to use.
 When this option is set to "Automatic", NVDA selects a default math braille code based on the current NVDA language.
@@ -3386,9 +3391,9 @@ When this option is set to "Automatic", NVDA selects a default math braille code
 | Options | Automatic, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam |
 | Default | Automatic |
 
-###### Highlight the current navigation node with dots 7 and 8 {#MathBrailleHighlights}
+###### Highlight navigation focus with dots 7 and 8 {#MathBrailleHighlights}
 
-Highlight the currently selected navigation node with dots 7 and 8.
+This option determines whether NVDA indicates the currently selected subexpression with dots 7 and 8 during navigation.
 The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highlighting of the entire subexpression.
 
 | . {.hideHeaderRow} | . |
@@ -3550,15 +3555,6 @@ This means that you will again be asked whether to connect to all unrecognised R
 You will be asked to confirm before all trusted fingerprints are deleted.
 
 This option is only available if there are trusted fingerprints stored in your configuration.
-
-#### AI Image Descriptions Settings {#LocalCaptionerSettings}
-
-This panel provides options to customize the behavior and default settings for the ["Image Captioner"](#LocalCaptioner).
-
-##### Enable image captioner {#LocalCaptionToggle}
-
-When this checkbox is enabled, NVDA will load the image captioner in memory, enabling the use of the image description command.
-Loading the image captioner will increase memory usage, so this is disabled by default.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3800,6 +3796,20 @@ This functionality is enabled by default as of NVDA 2021.1.
 When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
+
+##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
+
+This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
+This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
+However, some SAPI 4 voices might not work with the current WASAPI implementation.
+If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
@@ -4181,36 +4191,6 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
 <!-- KC:endInclude -->
 
-## Image Captioner {#LocalCaptioner}
-
-NVDA supports generating image descriptions on your device without connecting to the internet.
-This feature allows NVDA to describe images encountered during navigation.
-
-Warning: AI image descriptions are an experimental feature.
-Image descriptions generated with this feature may not be accurate.
-You must not use this feature in circumstances where inaccurate results could reasonably be expected to cause harm.
-Always exercise caution and skepticism when interpreting AI image descriptions.
-
-Note: An internet connection is required to enable and install the Image Captioner for the first time.
-It is not included with the NVDA installer to reduce the installer size.
-
-### Getting Started {#LocalCaptionerGettingStarted}
-
-Enable the "Image Captioner" in the ["AI Image Descriptions" settings panel](#LocalCaptionToggle).
-Once the Image Captioner is ready, press the default shortcut `NVDA+g` to recognize the image currently navigated by NVDA.
-
-### AI Image Descriptions Key Commands Summary {#LocalCaptionerGestures}
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-| Get an AI-generated image description of the navigator object. | `NVDA+g` | Get a description of the navigator object provided by a recognition performed on the device locally. |
-| Load or unload the image captioner | None | Load or unload the image captioner in memory, enabling the use of the image description command. |
-| Shows the AI image descriptions settings | None | Opens the AI image descriptions settings panel. |
-
-<!-- KC:endInclude -->
-
 ## Add-ons and the Add-on Store {#AddonsManager}
 
 Add-ons are software packages which provide new or altered functionality for NVDA.
@@ -4538,6 +4518,14 @@ Each voice that comes with eSpeak NG speaks a different language.
 There are over 43 different languages supported by eSpeak NG.
 
 There are also many variants which can be chosen to alter the sound of the voice.
+
+### Microsoft Speech API version 4 (SAPI 4) {#SAPI4}
+
+SAPI 4 is an older Microsoft standard for software speech synthesizers.
+NVDA still supports this for users who already have SAPI 4 synthesizers installed.
+However, Microsoft no longer support this and needed components are no longer available from Microsoft.
+
+When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 
