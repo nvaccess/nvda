@@ -12,9 +12,6 @@ and we notify the user of changes to the orientation.
 
 from dataclasses import dataclass
 import enum
-from typing import (
-	Optional,
-)
 
 import extensionPoints
 from logHandler import log
@@ -37,7 +34,7 @@ class OrientationState:
 	style: Orientation
 
 
-_orientationState: Optional[OrientationState] = None
+_orientationState: OrientationState | None = None
 
 displayChanged = extensionPoints.Action()
 """
