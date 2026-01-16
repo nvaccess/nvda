@@ -5988,7 +5988,7 @@ class MagnifierPanel(SettingsPanel):
 	def onSave(self):
 		"""Save the current selections to config."""
 		selectedZoom = self.defaultZoomList.GetSelection()
-		magnifierConfig.setDefaultZoomLevel(zoomValues[selectedZoom])
+		magnifierConfig.setDefaultZoomLevel(ZoomLevel.zoom_range()[selectedZoom])
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
