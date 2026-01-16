@@ -152,7 +152,7 @@ class DictionaryDialog(
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod
-	def __init__(self, parent, title, speechDict: SpeechDict):
+	def __init__(self, parent: wx.Window | None, title: str, speechDict: SpeechDict):
 		self.title = title
 		self.speechDict = speechDict
 		self.tempSpeechDict = SpeechDict()
