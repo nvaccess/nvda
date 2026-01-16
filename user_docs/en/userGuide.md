@@ -1534,19 +1534,19 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 
 | Name |Key |Description|
 |---|---|---|
-|Toggle magnifier |`NVDA+shift+w` |Enables or disables the magnifier|
-|Zoom in |`NVDA+shift+upArrow` |Increases the zoom level|
-|Zoom out |`NVDA+shift+downArrow` |Decreases the zoom level|
-|Toggle color filter |`NVDA+shift+f` |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode |`NVDA+shift+m` |Cycles through focus tracking modes (center, border, relative)|
-|Start spotlight mode |`NVDA+shift+s` |Activates spotlight mode for focused reading or presentations|
+|Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
+|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+|Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
+|Toggle filter of the magnifier | None |Cycles through available color filters (normal, grayscale, inverted)|
+|Toggle focus mode for the full-screen magnifier | None |Cycles through focus tracking modes (center, border, relative)|
+|Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
 
 <!-- KC:endInclude -->
 
 ### Zoom Levels {#MagnifierZoomLevels}
 
 The magnifier supports zoom levels from 1.0 (no magnification) to 10.0 (maximum magnification).
-You can adjust the zoom level using the zoom in (`NVDA+shift+upArrow`) and zoom out (`NVDA+shift+downArrow`) commands.
+You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.
 Each press increases or decreases the zoom by a fixed increment.
 
 The default zoom level when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1560,7 +1560,7 @@ The magnifier provides three color filter options:
 * **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
 * **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
-To cycle through the available filters, press `NVDA+shift+f`.
+To cycle through the available filters, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1576,7 +1576,7 @@ This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes, press `NVDA+shift+m`.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1591,7 +1591,7 @@ This is useful when you want to:
 * Show context to your audience during a presentation before zooming in on specific details
 * Temporarily view the full screen layout while magnifying
 
-To activate spotlight mode, press `NVDA+shift+s` while the magnifier is enabled.
+To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
 Once activated, the magnifier will:
 
 1. Smoothly zoom out to show the full screen (zoom level 1.0)
@@ -2781,7 +2781,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 ##### Open Magnifier settings {#OpenMagnifierSettings}
 
-Key: `NVDA+control+shift+m`
+Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
@@ -2789,27 +2789,26 @@ This settings category contains the following options:
 ##### Default zoom level {#MagnifierDefaultZoom}
 
 This slider allows you to set the default zoom level when the magnifier is first enabled.
-The zoom level can range from 1.0 (no magnification) to 16.0 (maximum magnification).
+The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
-You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+upArrow`) and zoom out (`NVDA+shift+downArrow`) commands while the magnifier is active.
+You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1.0 to 16.0|
+|Options |1.0 to 10.0|
 |Default |2.0|
 
 ##### Default color filter {#MagnifierDefaultFilter}
 
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
-You can cycle through the color filters on the fly using `NVDA+shift+f` while the magnifier is active.
+You can cycle through the color filters on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options | Normal, Grayscale, Inverted |
 |Default |Normal |
-|Toggle command |`NVDA+shift+f` |
 
 | Option | Description |
 |---|---|
@@ -2820,21 +2819,19 @@ The available options are:
 ##### Default focus mode {#MagnifierDefaultFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+You can cycle through the focus modes on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Center, Border, Relative|
 |Default |Center|
-|Toggle command |`NVDA+shift+m`|
 
 | Option | Description |
 |---|---|
 | Center | The magnified area is always centered on the current focus position. |
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
-
-You can cycle through the focus modes on the fly using `NVDA+shift+m` while the magnifier is active.
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 

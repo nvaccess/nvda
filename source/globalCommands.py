@@ -5002,8 +5002,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_VISION,
 		gestures=(
-			"kb:nvda+numpadPlus",
-			"kb:nvda+shift+c",
+			"kb:nvda+shift+=",
 		),
 	)
 	def script_zoomIn(
@@ -5019,8 +5018,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_VISION,
 		gestures=(
-			"kb:nvda+numpadMinus",
-			"kb:nvda+shift+v",
+			"kb:nvda+shift+-",
 		),
 	)
 	def script_zoomOut(
@@ -5035,7 +5033,6 @@ class GlobalCommands(ScriptableObject):
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+f",
 	)
 	def script_toggleFilter(
 		self,
@@ -5046,10 +5043,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle full-screen mode of the magnifier",
+			"Toggle focus mode for the full-screen magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+m",
 	)
 	def script_toggleFullscreenMode(
 		self,
