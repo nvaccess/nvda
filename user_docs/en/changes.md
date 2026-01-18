@@ -231,6 +231,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+* `NVDAHelper.localLib.wasapi*` functions have been moved to `wasapi.wassapi*`.
 
 #### Deprecations
 
