@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-11 03:38+0000\n"
-"PO-Revision-Date: 2026-01-12 00:19\n"
+"POT-Creation-Date: 2026-01-18 23:35+0000\n"
+"PO-Revision-Date: 2026-01-19 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1641,7 +1641,7 @@ msgstr "Nincs több utalás ebben az irányban"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1249 gui\settingsDialogs.py:3316
+#: browseMode.py:1249 gui\settingsDialogs.py:3319
 msgid "Lin&ks"
 msgstr "&Hivatkozások"
 
@@ -1649,7 +1649,7 @@ msgstr "&Hivatkozások"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1252 gui\settingsDialogs.py:3311
+#: browseMode.py:1252 gui\settingsDialogs.py:3314
 msgid "&Headings"
 msgstr "&Címsorok"
 
@@ -2151,8 +2151,8 @@ msgstr "Néhány műveletet nem sikerült végrehajtani a bővítményekkel. Tov
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
 #: gui\installerGui.py:120 gui\installerGui.py:567 gui\installerGui.py:582
 #: gui\installerGui.py:654 gui\logViewer.py:112 gui\logViewer.py:143
-#: gui\message.py:160 gui\settingsDialogs.py:1048 gui\settingsDialogs.py:5864
-#: gui\settingsDialogs.py:6393 gui\startupDialogs.py:127
+#: gui\message.py:160 gui\settingsDialogs.py:1048 gui\settingsDialogs.py:5883
+#: gui\settingsDialogs.py:6412 gui\startupDialogs.py:127
 #: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
 #: _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2395,7 +2395,7 @@ msgstr "Egér"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:90 config\configFlags.py:314 gui\settingsDialogs.py:1150
-#: gui\settingsDialogs.py:4419
+#: gui\settingsDialogs.py:4422
 msgid "Speech"
 msgstr "Beszéd"
 
@@ -2414,14 +2414,14 @@ msgstr "Profilok"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4325
-#: gui\settingsDialogs.py:4819
+#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4328
+#: gui\settingsDialogs.py:4838
 msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:102 gui\settingsDialogs.py:5632
+#: globalCommands.py:102 gui\settingsDialogs.py:5651
 msgid "Vision"
 msgstr "Vizuális"
 
@@ -2459,13 +2459,13 @@ msgstr "Dokumentumformázás"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:123 gui\settingsDialogs.py:3481
+#: globalCommands.py:123 gui\settingsDialogs.py:3484
 msgid "Audio"
 msgstr "Audio"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:126 gui\settingsDialogs.py:3759
+#: globalCommands.py:126 gui\settingsDialogs.py:3762
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Távelérés"
@@ -12844,7 +12844,7 @@ msgstr "&Szűrés:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6281 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6300 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Hozzáadás"
 
@@ -13220,7 +13220,7 @@ msgstr "&Kategóriák"
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:803 gui\settingsDialogs.py:5947
+#: gui\settingsDialogs.py:803 gui\settingsDialogs.py:5966
 msgid "General"
 msgstr "Általános"
 
@@ -13299,7 +13299,7 @@ msgstr "Frissítés tükörszervere"
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:948 gui\settingsDialogs.py:3696
+#: gui\settingsDialogs.py:948 gui\settingsDialogs.py:3699
 msgid "Change..."
 msgstr "Módosít"
 
@@ -13359,7 +13359,7 @@ msgid "Insufficient Privileges"
 msgstr "Nincs megfelelő jogosultság"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1100 gui\settingsDialogs.py:3742
+#: gui\settingsDialogs.py:1100 gui\settingsDialogs.py:3745
 msgid "No mirror"
 msgstr "Nincs tükörszerver"
 
@@ -13392,7 +13392,7 @@ msgstr "Szintetizátor"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1178 gui\settingsDialogs.py:4840
+#: gui\settingsDialogs.py:1178 gui\settingsDialogs.py:4859
 msgid "C&hange..."
 msgstr "&Módosítás"
 
@@ -13452,7 +13452,7 @@ msgstr "Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1748 gui\settingsDialogs.py:5393
+#: gui\settingsDialogs.py:1748 gui\settingsDialogs.py:5412
 msgid "Unicode normali&zation"
 msgstr "Unicode &normalizáció"
 
@@ -13892,14 +13892,14 @@ msgstr "Beszéd"
 #. Translators: Select an impairment for MathCAT
 #: gui\settingsDialogs.py:2756
 msgctxt "math"
-msgid "Impairment"
-msgstr "Állapot"
+msgid "Impairment:"
+msgstr "Fogyatékosság:"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2768
 msgctxt "math"
-msgid "Language"
-msgstr "Nyelv"
+msgid "Language:"
+msgstr "Nyelv:"
 
 #. Translators: MathCAT decimal separator option.
 #: gui\settingsDialogs.py:2780
@@ -13910,13 +13910,13 @@ msgstr "Tizedesvessző"
 #. Translators: Select a speech style.
 #: gui\settingsDialogs.py:2795
 msgctxt "math"
-msgid "Speech style"
+msgid "Speech style:"
 msgstr "Beszédstílus"
 
 #. Translators: MathCAT's verbosity setting
 #: gui\settingsDialogs.py:2811
 msgctxt "math"
-msgid "Speech verbosity"
+msgid "Speech verbosity:"
 msgstr "Bőbeszédűség"
 
 #. Translators: MathCAT's relative speed setting
@@ -13932,468 +13932,477 @@ msgid "Pause factor"
 msgstr "Relatív szünet"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
-#: gui\settingsDialogs.py:2845 gui\settingsDialogs.py:2901
+#: gui\settingsDialogs.py:2845
 msgctxt "math"
-msgid "Make a sound when starting/ending math speech"
-msgstr "hangjelzés matematikai tartalomra lépéskor és elhagyásakor"
+msgid "Beep at the beginning and end of math"
+msgstr "Hangjelzés a matematikai tartalom elején és végén"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
 msgctxt "math"
-msgid "Speech for chemical formulas"
-msgstr "Kémiai képletek bemondása"
+msgid "Chemical formulae:"
+msgstr "Kémiai kifejezések:"
+
+#. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
+#: gui\settingsDialogs.py:2863
+msgctxt "math"
+msgid "When entering an equation:"
+msgstr "A kifejezésbe lépéskor"
+
+#. Translators: "Speak" the expression after moving to it
+#: gui\settingsDialogs.py:2866
+msgctxt "math"
+msgid "Speak"
+msgstr "Kimond"
+
+#. Translators: "Describe" the expression after moving to it
+#: gui\settingsDialogs.py:2868
+msgctxt "math"
+msgid "Describe overview"
+msgstr "Összefoglaló leírás"
 
 #. Translators: Text for the navigation group.
-#: gui\settingsDialogs.py:2863
+#: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Navigation"
 msgstr "Navigáció"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
-#: gui\settingsDialogs.py:2870
+#: gui\settingsDialogs.py:2889
 msgctxt "math"
-msgid "Navigation mode to use when beginning to navigate an equation"
-msgstr "Matematikai tartalom navigáció módja"
+msgid "Default navigation mode:"
+msgstr "Alapértelmezett navigációs mód:"
 
-#. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-#: gui\settingsDialogs.py:2882
+#. Translators: label for check box that determines whether MathCAT
+#. reverts to the user-selected "default navigation mode" when
+#. navigating into a new equation, even if they selected a different
+#. one this session.
+#: gui\settingsDialogs.py:2904
 msgctxt "math"
-msgid "Navigation speech to use when beginning to navigate an equation"
-msgstr "Matematikai tartalom navigáció beszédstílusa"
-
-#. Translators: "Speak" the expression after moving to it
-#: gui\settingsDialogs.py:2885
-msgctxt "math"
-msgid "Speak"
-msgstr "Kimond"
-
-#. Translators: "Describe" the expression after moving to it ("overview is a synonym")
-#: gui\settingsDialogs.py:2887
-msgctxt "math"
-msgid "Describe/overview"
-msgstr "Leír/áttekint"
+msgid "Reset to the default navigation mode for each new equation"
+msgstr "Minden új kifejezés előtt térjen vissza az alapértelmezett navigációs módra"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
-#: gui\settingsDialogs.py:2908
+#: gui\settingsDialogs.py:2911
 msgctxt "math"
-msgid "Automatic zoom out of 2D notations"
-msgstr "Automatikus kilépés a kétdimenziós kifejezésekből"
+msgid "Automatically zoom out of two-dimensional notation"
+msgstr "Automatikusan lépjen ki a kétdimenziós kifejezésekből"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-#: gui\settingsDialogs.py:2914
+#: gui\settingsDialogs.py:2917
 msgctxt "math"
-msgid "Speech amount for navigation"
-msgstr "Navigáció bőbeszédűsége"
+msgid "Navigation verbosity:"
+msgstr "Navigáció bőbeszédűsége:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
-#: gui\settingsDialogs.py:2932
+#: gui\settingsDialogs.py:2935
 msgctxt "math"
-msgid "Copy math as"
-msgstr "Matematikai tartalom másolása mint"
+msgid "Copy math as:"
+msgstr "Matematikai tartalom másolása mint:"
 
 #. Translators: Text for the braille group.
-#: gui\settingsDialogs.py:2944
+#: gui\settingsDialogs.py:2947
 msgctxt "math"
 msgid "Braille"
 msgstr "Braille"
 
 #. Translators: label for combobox to specify which braille code to use
-#: gui\settingsDialogs.py:2950
+#: gui\settingsDialogs.py:2953
 msgctxt "math"
-msgid "Braille math code for refreshable displays"
-msgstr "Braille matematikai kód frissülő kijelzőkhöz"
+msgid "Output code:"
+msgstr "Kimeneti kód:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
-#: gui\settingsDialogs.py:2955
+#: gui\settingsDialogs.py:2958
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
 msgstr "Automatikus ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-#: gui\settingsDialogs.py:2974
+#: gui\settingsDialogs.py:2977
 msgctxt "math"
-msgid "Highlight the current navigation node with dots 7 and 8"
-msgstr "Aktuális navigációs csomópont kiemelése a 7. és 8. ponttal"
+msgid "Highlight navigation focus with dots 7 and 8"
+msgstr "A navigáció fókuszának kiemelése a 7. és 8. ponttal"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3067 gui\settingsDialogs.py:4501
+#: gui\settingsDialogs.py:3070 gui\settingsDialogs.py:4515
 msgid "Document Formatting"
 msgstr "Dokumentumformázás"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:3071
+#: gui\settingsDialogs.py:3074
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "Az alábbi opciókkal a formázási információk jelzését szabályozhatja"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3080
+#: gui\settingsDialogs.py:3083
 msgid "Font"
 msgstr "Betűtípus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3088
+#: gui\settingsDialogs.py:3091
 msgid "&Font name"
 msgstr "Betű&típus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3094
+#: gui\settingsDialogs.py:3097
 msgid "Font &size"
 msgstr "Betű&méret"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3100
+#: gui\settingsDialogs.py:3103
 msgid "Font attrib&utes"
 msgstr "Betűtípus &paraméterek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3112
+#: gui\settingsDialogs.py:3115
 msgid "Su&perscripts and subscripts"
 msgstr "Felső és alsó &index"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3122
+#: gui\settingsDialogs.py:3125
 msgid "E&mphasis"
 msgstr "&Hangsúlyozott"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3128
+#: gui\settingsDialogs.py:3131
 msgid "Highlighted (mar&ked) text"
 msgstr "&Kiemelt"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3138
+#: gui\settingsDialogs.py:3141
 msgid "St&yle"
 msgstr "St&ílus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3144
+#: gui\settingsDialogs.py:3147
 msgid "&Colors"
 msgstr "&Színek"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3150
+#: gui\settingsDialogs.py:3153
 msgid "Document information"
 msgstr "Dokumentum"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3158
+#: gui\settingsDialogs.py:3161
 msgid "Commen&ts"
 msgstr "&Hozzászólások"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3164
+#: gui\settingsDialogs.py:3167
 msgid "&Bookmarks"
 msgstr "&Könyvjelzők"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3170
+#: gui\settingsDialogs.py:3173
 msgid "&Editor revisions"
 msgstr "Szerkeszt&ői változások"
 
 #. Translators: This is the label for a checklist in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3177
+#: gui\settingsDialogs.py:3180
 msgid "Spelling or grammar e&rrors"
 msgstr "&Helyesírási és nyelvtani hibák"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3194
+#: gui\settingsDialogs.py:3197
 msgid "Pages and spacing"
 msgstr "Oldalak és sorköz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3202
+#: gui\settingsDialogs.py:3205
 msgid "&Pages"
 msgstr "&Oldalszámok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3208
+#: gui\settingsDialogs.py:3211
 msgid "Line &numbers"
 msgstr "So&rszámok"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:3216
+#: gui\settingsDialogs.py:3219
 msgid "Line &indentation reporting:"
 msgstr "&Behúzások"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:3230
+#: gui\settingsDialogs.py:3233
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "&Üres sorok figyelmen kívül hagyása a behúzás bejelentésénél"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:3242
+#: gui\settingsDialogs.py:3245
 msgid "&Paragraph indentation"
 msgstr "Beke&zdés-igazítás"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:3251
+#: gui\settingsDialogs.py:3254
 msgid "&Line spacing"
 msgstr "Sork&öz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3258
+#: gui\settingsDialogs.py:3261
 msgid "&Alignment"
 msgstr "&Igazítás"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3264
+#: gui\settingsDialogs.py:3267
 msgid "Table information"
 msgstr "Táblázat"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3272
+#: gui\settingsDialogs.py:3275
 msgid "&Tables"
 msgstr "&Táblázatok"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3279
+#: gui\settingsDialogs.py:3282
 msgid "H&eaders"
 msgstr "&Fejlécek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3287
+#: gui\settingsDialogs.py:3290
 msgid "Cell c&oordinates"
 msgstr "&Cellakoordináták"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3295
+#: gui\settingsDialogs.py:3298
 msgid "Cell &borders:"
 msgstr "Cellasze&gélyek"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3303
+#: gui\settingsDialogs.py:3306
 msgid "Elements"
 msgstr "Elemek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3322
+#: gui\settingsDialogs.py:3325
 msgid "Link type"
 msgstr "Hivatkozástípus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3328
+#: gui\settingsDialogs.py:3331
 msgid "&Graphics"
 msgstr "&Ábrák"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3333
+#: gui\settingsDialogs.py:3336
 msgid "&Lists"
 msgstr "&Listák"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3338
+#: gui\settingsDialogs.py:3341
 msgid "Block &quotes"
 msgstr "I&dézetblokkok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3344
+#: gui\settingsDialogs.py:3347
 msgid "&Groupings"
 msgstr "&Elemcsoportok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3350
+#: gui\settingsDialogs.py:3353
 msgid "Lan&dmarks and regions"
 msgstr "&Jelzőpontok és területek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3356
+#: gui\settingsDialogs.py:3359
 msgid "Arti&cles"
 msgstr "&Cikkek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3361
+#: gui\settingsDialogs.py:3364
 msgid "Fra&mes"
 msgstr "&Keretek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3367
+#: gui\settingsDialogs.py:3370
 msgid "&Figures and captions"
 msgstr "&Alakzatok és feliratok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3373
+#: gui\settingsDialogs.py:3376
 msgid "&Clickable"
 msgstr "K&attintható"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3378
+#: gui\settingsDialogs.py:3381
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "A kurzor pozíciójánál lévő formázások &változásának jelzése (a visszajelzés késését okozhatja)"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3448
+#: gui\settingsDialogs.py:3451
 msgid "Document Navigation"
 msgstr "Dokumentum-navigáció"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3454
+#: gui\settingsDialogs.py:3457
 msgid "&Paragraph style:"
 msgstr "&Bekezdések stílusa"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3471
+#: gui\settingsDialogs.py:3474
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Nem lehet betölteni a(z) %s beszédszintetizátort."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3474
+#: gui\settingsDialogs.py:3477
 msgid "Synthesizer Error"
 msgstr "Beszédszintetizátor hiba"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3489
+#: gui\settingsDialogs.py:3492
 msgid "Audio output &device:"
 msgstr "&Kimeneti hangeszköz"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3504
+#: gui\settingsDialogs.py:3507
 msgid "Audio d&ucking mode:"
 msgstr "&Hangerő-igazítás"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3518
+#: gui\settingsDialogs.py:3521
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "Az NVDA hangjelzéseinek hangereje követi a beszéd hangerejét"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3526
+#: gui\settingsDialogs.py:3529
 msgid "Volume of NVDA sounds"
 msgstr "Az NVDA hangjelzéseinek hangereje"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3537
+#: gui\settingsDialogs.py:3540
 msgid "&Sound split mode:"
 msgstr "&Osztott hang"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3554
+#: gui\settingsDialogs.py:3557
 msgid "Time to &keep audio device awake after speech (seconds)"
 msgstr "A hangeszköz ébren tartásának ideje a beszéd befejezése után (másodpercben)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3571
+#: gui\settingsDialogs.py:3574
 msgid "&Modes available in the 'Cycle sound split mode' command:"
 msgstr "&Az osztott hang váltásánál megjelenő lehetőségek"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3629
+#: gui\settingsDialogs.py:3632
 msgid "At least one sound split mode has to be checked."
 msgstr "Legalább egy osztási lehetőséget ki kell választani!"
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3632
+#: gui\settingsDialogs.py:3635
 msgid "Modes available in the 'Cycle sound split mode' command"
 msgstr "Az osztott hang váltásánál megjelenő lehetőségek"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3640
+#: gui\settingsDialogs.py:3643
 msgid "Add-on Store"
 msgstr "Bővítménykezelő"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3646
+#: gui\settingsDialogs.py:3649
 msgid "Automatic &updates:"
 msgstr "Automatikus &frissítések"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3658
+#: gui\settingsDialogs.py:3661
 msgid "Default update &channel:"
 msgstr "Alapértelmezett frissítési &csatorna:"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3672
+#: gui\settingsDialogs.py:3675
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "A nem kompatibilis bővítmények automatikus frissítésének engedélyezése"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3678
+#: gui\settingsDialogs.py:3681
 msgid "Mirror server"
 msgstr "Tükörszerver"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3715
+#: gui\settingsDialogs.py:3718
 msgid "Set Add-on Store Mirror Server"
 msgstr "Bővítménykezelő tükörszerverének beállítása"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3769
+#: gui\settingsDialogs.py:3772
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "Távelérés engedélyezése"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3786
+#: gui\settingsDialogs.py:3789
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "Megerősítés kérése szétkapcsolás előtt vezérelt állapotban"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
-#: gui\settingsDialogs.py:3797
+#: gui\settingsDialogs.py:3800
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
 msgstr "Elnémítás a helyi számítógép vezérlésekor"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3807
+#: gui\settingsDialogs.py:3810
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "Automatikus kapcsolódás az NVDA indításakor"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3817
+#: gui\settingsDialogs.py:3820
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "Automatikus kapcsolódás"
@@ -14401,7 +14410,7 @@ msgstr "Automatikus kapcsolódás"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3826 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3829 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "&Mód:"
@@ -14409,7 +14418,7 @@ msgstr "&Mód:"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3835 _remoteClient\dialogs.py:335
+#: gui\settingsDialogs.py:3838 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "&Szerver:"
@@ -14417,7 +14426,7 @@ msgstr "&Szerver:"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3845 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3848 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "&Szerver:"
 
@@ -14425,7 +14434,7 @@ msgstr "&Szerver:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3854 gui\settingsDialogs.py:4918
+#: gui\settingsDialogs.py:3857 gui\settingsDialogs.py:4937
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&Port:"
@@ -14433,17 +14442,17 @@ msgstr "&Port:"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3875 _remoteClient\dialogs.py:51
+#: gui\settingsDialogs.py:3878 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "&Azonosító:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3882
+#: gui\settingsDialogs.py:3885
 msgid "Delete all trusted fingerprints"
 msgstr "Minden megbízható ujjlenyomat törlése"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3961
+#: gui\settingsDialogs.py:3964
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -14451,184 +14460,184 @@ msgstr "Ennek hatására az NVDA elfelejt minden korábban megbízhatónak íté
 "Biztosan folytassuk?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3966
+#: gui\settingsDialogs.py:3969
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "Minden megbízható ujjlenyomat törlése"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:3983
+#: gui\settingsDialogs.py:3986
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "A szerver címét és az azonosítót is meg kell adni a Távelérés szekcióban, hogy az NVDA elindulása után automatikusan csatlakozhasson egy meglévő távoli szerverhez."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:3989
+#: gui\settingsDialogs.py:3992
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "A port címét és az azonosítót is meg kell adni a Távelérés szekcióban, hogy az NVDA elindulása után helyi szerverként kapcsolódhasson egy távelérési munkamenethez."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:3995
+#: gui\settingsDialogs.py:3998
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "Távelérési hiba"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:4029
+#: gui\settingsDialogs.py:4032
 msgid "Touch Interaction"
 msgstr "Érintőmód"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4036
+#: gui\settingsDialogs.py:4039
 msgid "Enable touch interaction support"
 msgstr "Érintőmód engedélyezése"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4042
+#: gui\settingsDialogs.py:4045
 msgid "&Touch typing mode"
 msgstr "&Érintéses bevitel"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:4054
+#: gui\settingsDialogs.py:4057
 msgid "Windows OCR"
 msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:4073
+#: gui\settingsDialogs.py:4076
 msgid "Recognition &language:"
 msgstr "&Felismerési nyelv"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:4083
+#: gui\settingsDialogs.py:4086
 msgid "Periodically &refresh recognized content"
 msgstr "A felismerés automatikusan ismétlődő frissítése"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
-#: gui\settingsDialogs.py:4091
+#: gui\settingsDialogs.py:4094
 msgid "Automatically say all on result"
 msgstr "Az eredmény automatikus bemondása"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4123
+#: gui\settingsDialogs.py:4126
 msgid "NVDA Development"
 msgstr "NVDA fejlesztés"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4131
+#: gui\settingsDialogs.py:4134
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "Saját testreszabott kód betöltésének engedélyezése a fejlesztési könyvtárból."
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:4144
+#: gui\settingsDialogs.py:4147
 msgid "Open developer scratchpad directory"
 msgstr "Fejlesztési könyvtár megnyitása"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4154
+#: gui\settingsDialogs.py:4157
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:4164
+#: gui\settingsDialogs.py:4167
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "UI Automation események és tulajdonságváltozások &regisztrálása"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:4170
+#: gui\settingsDialogs.py:4173
 msgid "Automatic (prefer selective)"
 msgstr "Automatikus (szelektív preferálása)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:4174
+#: gui\settingsDialogs.py:4177
 msgid "Selective"
 msgstr "szelektív"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:4178
+#: gui\settingsDialogs.py:4181
 msgid "Global"
 msgstr "Általános"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4207
+#: gui\settingsDialogs.py:4210
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "UI Automation használata a Microsoft &Word dokumentumvezérlőihez"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4212
+#: gui\settingsDialogs.py:4215
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Alapértelmezett (Ahol elérhető)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4214
+#: gui\settingsDialogs.py:4217
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Csak ha szükséges"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4216
+#: gui\settingsDialogs.py:4219
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Ahol elérhető"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4218
+#: gui\settingsDialogs.py:4221
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "Mindig"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4227
+#: gui\settingsDialogs.py:4230
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "UI Automation használata a Microsoft &Excel dokumentumvezérlőihez, ha lehetséges."
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:4235
+#: gui\settingsDialogs.py:4238
 msgid "Windows C&onsole support:"
 msgstr "Windows &konzol támogatása"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:4240
+#: gui\settingsDialogs.py:4243
 msgid "Automatic (prefer UIA)"
 msgstr "Automatikus (UIA preferálása)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:4243
+#: gui\settingsDialogs.py:4246
 msgid "UIA when available"
 msgstr "UIA, ha elérhető"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:4247
+#: gui\settingsDialogs.py:4250
 msgid "Legacy"
 msgstr "Korábbi viselkedés"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:4270
+#: gui\settingsDialogs.py:4273
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14637,72 +14646,72 @@ msgstr "UI Automation használata a Microsoft Edge és más \n"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4275
+#: gui\settingsDialogs.py:4278
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Alapértelmezett (Csak ha szükséges)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4277
+#: gui\settingsDialogs.py:4280
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "Csak ha szükséges"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4279
+#: gui\settingsDialogs.py:4282
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Igen"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4281
+#: gui\settingsDialogs.py:4284
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Nem"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:4289
+#: gui\settingsDialogs.py:4292
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "Kiemelt eseményfeldolgozás használata (Újraindítás szükséges)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4300
+#: gui\settingsDialogs.py:4303
 msgid "Annotations"
 msgstr "Mellékszövegek"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4309
+#: gui\settingsDialogs.py:4312
 msgid "Report 'has details' for structured annotations"
 msgstr "Bővebb leírás jelzése strukturált mellékszövegekhez"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4316
+#: gui\settingsDialogs.py:4319
 msgid "Report aria-description always"
 msgstr "Aria-description bemondása mindig"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4332
+#: gui\settingsDialogs.py:4335
 msgid "Report live regions:"
 msgstr "Élő régiók jelzése:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4341
+#: gui\settingsDialogs.py:4344
 msgid "Terminal programs"
 msgstr "Parancssori programok"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4348
+#: gui\settingsDialogs.py:4351
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "Jelszavak bemondása a továbbfejlesztettterminál programokban. (Javíthatja a felhasználói élményt)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4357
+#: gui\settingsDialogs.py:4360
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Használja a továbbfejlesztett beírt karakterek bemondását a hagyományos Windows konzolban, ha elérhető"
 
@@ -14710,322 +14719,328 @@ msgstr "Használja a továbbfejlesztett beírt karakterek bemondását a hagyom�
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4370
+#: gui\settingsDialogs.py:4373
 msgid "&Diff algorithm:"
 msgstr "&Diff algoritmus:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4375
+#: gui\settingsDialogs.py:4378
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automatikus (Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4379
+#: gui\settingsDialogs.py:4382
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4383
+#: gui\settingsDialogs.py:4386
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4409
+#: gui\settingsDialogs.py:4412
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Új szövegek bemondása a Windows Terminálban:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4428
+#: gui\settingsDialogs.py:4431
 msgid "Default (Yes)"
 msgstr "Alapértelmezett (Igen)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4431
+#: gui\settingsDialogs.py:4434
 msgid "Yes"
 msgstr "Igen"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4434
+#: gui\settingsDialogs.py:4437
 msgid "No"
 msgstr "Nem"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4438
+#: gui\settingsDialogs.py:4441
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Beszéd megszakítása az időközben lejárt fókuszeseményeknél"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4454
+#: gui\settingsDialogs.py:4457
 msgid "Trim leading silence in speech audio"
 msgstr "Kezdeti csend levágása a beszédnél"
 
+#. Translators: This is the label for a combo-box control in the
+#. Advanced settings panel.
+#: gui\settingsDialogs.py:4465
+msgid "Use WASAPI for SAPI 4 audio output:"
+msgstr "WASAPI használata a SAPI 4 hangkimenethez:"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4462
+#: gui\settingsDialogs.py:4476
 msgid "Virtual Buffers"
 msgstr "Virtuális pufferek"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4470
+#: gui\settingsDialogs.py:4484
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Chromium virtuális puffer használata a dokumentumok betöltéséhez"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4479
+#: gui\settingsDialogs.py:4493
 msgid "Editable Text"
 msgstr "Szerkeszthető szöveg"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4486
+#: gui\settingsDialogs.py:4500
 msgid "Caret movement timeout (in ms)"
 msgstr "Érintési mozgási túllépés (másodpercben)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4509
+#: gui\settingsDialogs.py:4523
 msgid "Report transparent color values"
 msgstr "Átlátszó színek bejelentése"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4523
+#: gui\settingsDialogs.py:4537
 msgid "Debug logging"
 msgstr "Nyomkövetés"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4550
+#: gui\settingsDialogs.py:4564
 msgid "Enabled logging categories"
 msgstr "Engedélyezett naplózási kategóriák"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4570
+#: gui\settingsDialogs.py:4584
 msgid "Play a sound for logged e&rrors:"
 msgstr "Hangjelzés &naplózási hibánál"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4573
+#: gui\settingsDialogs.py:4587
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Csak az NVDA tesztverzióiban"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4575
+#: gui\settingsDialogs.py:4589
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "Igen"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4588
+#: gui\settingsDialogs.py:4602
 msgid "Regular expression for text paragraph navigation"
 msgstr "Regex kifejezés a bekezdésenkénti navigációhoz"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4610
+#: gui\settingsDialogs.py:4624
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Nem sikerült értelmezni az alábbi, bekezdéshez megadott regex kifejezést: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4735
+#: gui\settingsDialogs.py:4754
 msgid "Advanced"
 msgstr "Haladó"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4740
+#: gui\settingsDialogs.py:4759
 msgid "Warning!"
 msgstr "Figyelmesztetés!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4744
+#: gui\settingsDialogs.py:4763
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Az alábbi beállítások haladó felhasználók számára készültek, megváltoztatásuk az NVDA hibás működését eredményezheti. Csak akkor változtassa meg őket, ha biztosan tudja, hogy mit csinál, vagy ha az NVDA fejlesztőinek pontos útmutatása szerint jár el."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4771
+#: gui\settingsDialogs.py:4790
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Megértettem, hogy az alábbi beállítások megváltoztatása az NVDA hibás működését eredményezheti."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4782
+#: gui\settingsDialogs.py:4801
 msgid "Restore defaults"
 msgstr "Alapértelmezett értékek visszaállítása"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4825
+#: gui\settingsDialogs.py:4844
 msgid "Braille display"
 msgstr "Braille kijelző"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:4894
+#: gui\settingsDialogs.py:4913
 msgid "Select Braille Display"
 msgstr "Válasszon Braille kijelzőt"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:4903
+#: gui\settingsDialogs.py:4922
 msgid "Braille &display:"
 msgstr "Bra&ille kijelző:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:4909
+#: gui\settingsDialogs.py:4928
 msgid "&Displays to detect automatically:"
 msgstr "Automatikusan &felismerhető kijelzők"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5025
+#: gui\settingsDialogs.py:5044
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Nem lehet betölteni a következő kijelzőt: {display}"
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5028
+#: gui\settingsDialogs.py:5047
 msgid "Braille Display Error"
 msgstr "Braille kijelző hiba"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5061
+#: gui\settingsDialogs.py:5080
 msgid "&Output table:"
 msgstr "&Kimeneti tábla:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5069 gui\settingsDialogs.py:5096
+#: gui\settingsDialogs.py:5088 gui\settingsDialogs.py:5115
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automatikus ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5088
+#: gui\settingsDialogs.py:5107
 msgid "&Input table:"
 msgstr "&Beviteli tábla:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5114
+#: gui\settingsDialogs.py:5133
 msgid "Braille mode:"
 msgstr "Braillemód:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5129
+#: gui\settingsDialogs.py:5148
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "A kurzornál lévő szó átalakítása &számítógépes braille jelekké"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5137
+#: gui\settingsDialogs.py:5156
 msgid "&Show cursor"
 msgstr "Kurzor &mutatása"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5146
+#: gui\settingsDialogs.py:5165
 msgid "Blink cursor"
 msgstr "Villogó kurzor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5157
+#: gui\settingsDialogs.py:5176
 msgid "Cursor blink rate (ms)"
 msgstr "A kurzor &villogási sebessége (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5179
+#: gui\settingsDialogs.py:5198
 msgid "Cursor shape for &focus:"
 msgstr "A rendszerkurzor &alakja"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5195
+#: gui\settingsDialogs.py:5214
 msgid "Cursor shape for &review:"
 msgstr "Az áttekintőkurzor &alakja"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5217
+#: gui\settingsDialogs.py:5236
 msgid "Show messages"
 msgstr "üzenetek megjelenítése"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5239
+#: gui\settingsDialogs.py:5258
 msgid "Message &timeout (sec)"
 msgstr "&Üzenet megjelenésének időtartama(másodperc)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5258
+#: gui\settingsDialogs.py:5277
 msgid "Tether B&raille:"
 msgstr "A Braille követi"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5282
+#: gui\settingsDialogs.py:5301
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Az áttekintőkurzor követése a rendszerkurzorral"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5298
+#: gui\settingsDialogs.py:5317
 msgid "Read by &paragraph"
 msgstr "B&ekezdésenkénti olvasás"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5307
+#: gui\settingsDialogs.py:5326
 msgid "Paragraph start marker:"
 msgstr "Bekezdés kezdetének jelzése:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5322
+#: gui\settingsDialogs.py:5341
 msgid "Focus context presentation:"
 msgstr "Információk az aktív elemről"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5343
+#: gui\settingsDialogs.py:5362
 msgid "Show se&lection"
 msgstr "Ki&jelölés megjelenítése"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5355
+#: gui\settingsDialogs.py:5374
 msgid "Formatting &display"
 msgstr "&Formázás megjelenítése"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5364
+#: gui\settingsDialogs.py:5383
 msgid "Spea&k character when routing cursor in text"
 msgstr "&Karakter felolvasása, amikor a kurzort egy szövegre mozgatjuk."
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5372
+#: gui\settingsDialogs.py:5391
 msgid "Speak when navigating by &line or paragraph"
 msgstr "&Beszéd soronkénti vagy bekezdésenkénti navigáció esetén"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:5385
+#: gui\settingsDialogs.py:5404
 msgid "Avoid splitting &words when possible"
 msgstr "&Szöveg tördelése a kijelző végénél"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5404
+#: gui\settingsDialogs.py:5423
 msgid "I&nterrupt speech while scrolling"
 msgstr "Beszéd meg&szakítása görgetéskor"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5498
+#: gui\settingsDialogs.py:5517
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Nem lehet betölteni a következő vizuális segédet: {providerName}."
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5505
+#: gui\settingsDialogs.py:5524
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15033,20 +15048,20 @@ msgstr "Nem lehet betölteni az alábbi vizuális segédeket:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5511 gui\settingsDialogs.py:5541
+#: gui\settingsDialogs.py:5530 gui\settingsDialogs.py:5560
 msgid "Vision Enhancement Provider Error"
 msgstr "Probléma a vizuális segéddel"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5528
+#: gui\settingsDialogs.py:5547
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nem lehet kikapcsolni a következő vizuális segédet:{providerName}."
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5536
+#: gui\settingsDialogs.py:5555
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15054,149 +15069,149 @@ msgstr "Nem lehet kikapcsolni az alábbi vizuális segédeket:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5636
+#: gui\settingsDialogs.py:5655
 msgid "Configure visual aids."
 msgstr "Vizuális segédletek beállítása"
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5808
+#: gui\settingsDialogs.py:5827
 msgid "Enable"
 msgstr "Engedélyezés"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5815
+#: gui\settingsDialogs.py:5834
 #: visionEnhancementProviders\NVDAHighlighter.py:309
 msgid "Options:"
 msgstr "Beállítások"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:5861
+#: gui\settingsDialogs.py:5880
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "A felhasználói felületet nem lehet a vizuális segéd számára beállítani, ezért nem lehet azt bekapcsolni"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:5898
+#: gui\settingsDialogs.py:5917
 msgid "Privacy and Security"
 msgstr "Adatvédelem és biztonság"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:5907
+#: gui\settingsDialogs.py:5926
 msgid "Screen Curtain"
 msgstr "Képernyőfüggöny"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:5916
+#: gui\settingsDialogs.py:5935
 msgid "Make screen black (immediate effect)"
 msgstr "A képernyő elsötétítése"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:5939
+#: gui\settingsDialogs.py:5958
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&Hangjelzés a képernyőfüggöny be- és kikapcsolásakor"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:5954
+#: gui\settingsDialogs.py:5973
 msgid "L&ogging level:"
 msgstr "Na&plózási szint"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:5976
+#: gui\settingsDialogs.py:5995
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Engedélyezi az NV Accessnek, hogy használati adatokat gyűjtsön az NVDA-ról"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6071
+#: gui\settingsDialogs.py:6090
 msgid "NVDA Settings"
 msgstr "Az NVDA beállításai"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6121
+#: gui\settingsDialogs.py:6140
 msgid "normal configuration"
 msgstr "Alapértelmezett konfiguráció"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6156
+#: gui\settingsDialogs.py:6175
 msgid "Add Symbol"
 msgstr "Írásjel Hozzáadása"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6161
+#: gui\settingsDialogs.py:6180
 msgid "&Symbol:"
 msgstr "&Írásjel:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6191
+#: gui\settingsDialogs.py:6210
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Írásjelkiejtés  (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6205
+#: gui\settingsDialogs.py:6224
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Szűrés:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6214
+#: gui\settingsDialogs.py:6233
 msgid "&Symbols"
 msgstr "&Írásjelek"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6224
+#: gui\settingsDialogs.py:6243
 msgid "Symbol"
 msgstr "Írásjel"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6226 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6245 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Behelyettesített kifejezés"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6228
+#: gui\settingsDialogs.py:6247
 msgid "Level"
 msgstr "Szint"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6231
+#: gui\settingsDialogs.py:6250
 msgid "Preserve"
 msgstr "Megtartva"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6235
+#: gui\settingsDialogs.py:6254
 msgid "Change selected symbol"
 msgstr "Írásjel megváltoztatása"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6253 gui\speechDict.py:55
+#: gui\settingsDialogs.py:6272 gui\speechDict.py:55
 msgid "&Replacement"
 msgstr "&Behelyettesített kifejezés"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6262
+#: gui\settingsDialogs.py:6281
 msgid "&Level"
 msgstr "Szint"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6269
+#: gui\settingsDialogs.py:6288
 msgid "&Send actual symbol to synthesizer"
 msgstr "Akktuális szimbólum kiküldése a &szintetizátornak"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6284
+#: gui\settingsDialogs.py:6303
 msgid "Re&move"
 msgstr "&eltávolítás"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6391
+#: gui\settingsDialogs.py:6410
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "A(z) \"%s\" írásjel már létezik."
@@ -16237,7 +16252,7 @@ msgstr "másolás mint "
 #: mathPres\MathCAT\MathCAT.py:340
 msgctxt "math"
 msgid "Error navigating math"
-msgstr "Hiba történt a matematikai tartalomban történő navigálás során"
+msgstr "Hiba történt a matematikai tartalomban való navigálás során"
 
 #. Translators: this message reports when invalid math is found.
 #: mathPres\MathCAT\MathCAT.py:363
@@ -16249,7 +16264,7 @@ msgstr "A matematikai tartalom formátuma nem megfelelő"
 #: mathPres\MathCAT\MathCAT.py:390
 msgctxt "math"
 msgid "Error in speaking math."
-msgstr "Hiba történt a matematikai tartalom bemondása során"
+msgstr "Hiba történt a matematikai tartalom kimondása során"
 
 #. Translators: this message reports illegal MathML.
 #: mathPres\MathCAT\MathCAT.py:415
@@ -16267,8 +16282,8 @@ msgstr "Hiba történt a matematikai tartalom braille megjelenítése során"
 #. "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
 #: mathPres\MathCAT\localization.py:280
 msgctxt "math"
-msgid "Use Voice's Language (Auto)"
-msgstr "A hangkarakter nyelvének használata (automatikus)"
+msgid "Automatic (Use Voice's Language)"
+msgstr ""
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -16292,8 +16307,8 @@ msgstr "Gyengénlátó"
 #. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
 #: mathPres\MathCAT\preferences.py:48
 msgctxt "math"
-msgid "Auto"
-msgstr "Automatikus"
+msgid "Automatic"
+msgstr ""
 
 #. Translators: options for decimal separator -- "Custom" = user sets it
 #. Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
