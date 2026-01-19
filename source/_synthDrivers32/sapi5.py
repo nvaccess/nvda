@@ -8,7 +8,7 @@ import os
 import comtypes.client
 
 # Precompile the SAPI5 COM interfaces
-# Placing them where NvDA's original sapi5 driver expects them.
+# Placing them where NVDA's original sapi5 driver expects them.
 sys.modules["comInterfaces.SpeechLib"] = comtypes.client.GetModule(
 	r"c:\windows\system32\speech\common\sapi.dll",
 )

@@ -24,7 +24,7 @@ class NVDAService(Service):
 		super().__init__(childProcess)
 
 	@Service.exposed
-	def getAppDir(self):
+	def getAppDir(self) -> str:
 		"""Get the NVDA application directory."""
 		import globalVars
 

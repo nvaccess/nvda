@@ -7,7 +7,7 @@
 import sys
 
 
-# This file wraps buildVersion.py from NvDA's own source directory,
+# This file wraps buildVersion.py from NVDA's own source directory,
 # Exposing the symbols required by pyproject.toml and setup-runtime.py in this particular sub-project.
 
 sys.path.insert(0, "../../source")

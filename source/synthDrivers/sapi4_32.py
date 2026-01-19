@@ -26,7 +26,7 @@ class SynthDriver(SynthDriverProxy32):
 		try:
 			winreg.OpenKey(
 				winreg.HKEY_CLASSES_ROOT,
-				r"CLSID\%s" % CLSID_TTSEnumerator,
+				os.path.join("CLSID", CLSID_TTSEnumerator),
 				0,
 				winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
 			).Close()
