@@ -1536,8 +1536,8 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
 |Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
-|Toggle filter of the magnifier | None |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode for the full-screen magnifier | None |Cycles through focus tracking modes (center, border, relative)|
+|Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
+|Toggle focus mode for the full-screen magnifier |`NVDA+shift+u` |Cycles through focus tracking modes (center, border, relative)|
 |Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
 
 <!-- KC:endInclude -->
@@ -1559,7 +1559,7 @@ The magnifier provides three color filter options:
 * **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
 * **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
-To cycle through the available filters, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the available filters press `NVDA+shift+i`.
 NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1575,7 +1575,7 @@ This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the focus tracking modes press `NVDA+shift+u`.
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -2803,13 +2803,14 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 ##### Default color filter {#MagnifierDefaultFilter}
 
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
-You can cycle through the color filters on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options | Normal, Grayscale, Inverted |
 |Default |Normal |
+|Toggle command |`NVDA+shift+i` |
 
 | Option | Description |
 |---|---|
@@ -2820,13 +2821,14 @@ The available options are:
 ##### Default focus mode {#MagnifierDefaultFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-You can cycle through the focus modes on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+You can cycle through the focus modes by pressing `NVDA+shift+u`.
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Center, Border, Relative|
 |Default |Center|
+|Toggle command |`NVDA+shift+u` |
 
 | Option | Description |
 |---|---|
