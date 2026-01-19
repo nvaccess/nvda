@@ -33,6 +33,7 @@ class MagnifierAction(DisplayStringEnum):
 	ZOOM_IN = auto()
 	ZOOM_OUT = auto()
 	TOGGLE_FILTER = auto()
+	CHANGE_MAGNIFIER_TYPE = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
 
@@ -45,6 +46,8 @@ class MagnifierAction(DisplayStringEnum):
 			self.ZOOM_OUT: pgettext("magnifier action", "trying to zoom out"),
 			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
+			# Translators: Action description for changing magnifier type.
+			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "trying to change magnifier type"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "trying to change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
@@ -56,6 +59,7 @@ class MagnifierType(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
+	FIXED = "fixed"
 	DOCKED = "docked"
 	LENS = "lens"
 
@@ -64,6 +68,8 @@ class MagnifierType(DisplayStringStrEnum):
 		return {
 			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
+			# Translators: Magnifier type - fixed mode.
+			self.FIXED: pgettext("magnifier", "Fixed"),
 			# Translators: Magnifier type - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
 			# Translators: Magnifier type - lens mode.

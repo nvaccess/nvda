@@ -43,7 +43,7 @@ import keyboardHandler
 import languageHandler
 import logHandler
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType
 import queueHandler
 import requests
 import speech
@@ -5973,6 +5973,24 @@ class MagnifierPanel(SettingsPanel):
 		defaultFilter = magnifierConfig.getDefaultFilter()
 		self.defaultFilterList.SetSelection(list(Filter).index(defaultFilter))
 
+		# MAGNIFIER TYPE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default magnifier type
+		magnifierTypeLabelText = _("Default &magnifier type:")
+		magnifierTypeChoices = [mt.displayString for mt in MagnifierType]
+		self.magnifierTypeList = sHelper.addLabeledControl(
+			magnifierTypeLabelText,
+			wx.Choice,
+			choices=magnifierTypeChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultMagnifierType",
+			self.magnifierTypeList,
+		)
+
+		# Set default value from config
+		defaultMagnifierType = magnifierConfig.getDefaultMagnifierType()
+		self.magnifierTypeList.SetSelection(list(MagnifierType).index(defaultMagnifierType))
+
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
 		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
@@ -6008,6 +6026,9 @@ class MagnifierPanel(SettingsPanel):
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+
+		selectedMagnifierTypeIdx = self.magnifierTypeList.GetSelection()
+		magnifierConfig.setDefaultMagnifierType(list(MagnifierType)[selectedMagnifierTypeIdx])
 
 		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
 		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
