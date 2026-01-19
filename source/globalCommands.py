@@ -5029,7 +5029,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggle focus mode for the full-screen magnifier",
 		),
 		category=SCRCAT_VISION,
-			gesture="kb:NVDA+shift+u",
+		gesture="kb:NVDA+shift+u",
 	)
 	def script_toggleFullscreenMode(
 		self,
