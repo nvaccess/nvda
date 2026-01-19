@@ -45,7 +45,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
 			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-			self.AUTO: pgettext("math", "Auto"),
+			self.AUTO: pgettext("math", "Automatic"),
 			# options for decimal separator -- use "."  (and use ", " for block separators)
 			self.DOT: ".",
 			# options for decimal separator -- use ","  (and use ". " for block separators)
