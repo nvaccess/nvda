@@ -32,7 +32,7 @@ from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
 
 
 class Magnifier:
-	_TIMER_INTERVAL_MS: int = 20
+	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
 
 	def __init__(self):
@@ -69,6 +69,15 @@ class Magnifier:
 			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
 			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
 			value = closestZoom
+		self._zoomLevel = value
+
+	def _setZoomRawValue(self, value: float) -> None:
+		"""
+		Set zoom level directly without validation.
+		Used internally for smooth animations (e.g., spotlight).
+
+		:param value: The zoom level to set (can be any intermediate value)
+		"""
 		self._zoomLevel = value
 
 	# Functions
