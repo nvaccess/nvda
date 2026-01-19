@@ -56,6 +56,7 @@ from .settingsDialogs import (
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
+	MagnifierPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
@@ -398,6 +399,10 @@ class MainFrame(wx.Frame):
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
 		self.popupSettingsDialog(InputGesturesDialog)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onMagnifierSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, MagnifierPanel)
 
 	@staticmethod
 	def _copyVersionToClipboard(p: Payload):

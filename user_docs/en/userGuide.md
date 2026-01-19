@@ -28,7 +28,7 @@ Major highlights include:
 * Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
-* Translated into 55 languages
+* Translated into 56 languages
 * Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
@@ -58,7 +58,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 55 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 56 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
@@ -1508,6 +1508,103 @@ Some screenshot utilities also may not work.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
+## Magnifier {#Magnifier}
+
+NVDA includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen.
+This feature is particularly useful for users with low vision who need to enlarge content on the screen, or for users who want to apply color filters to reduce eye strain or improve readability.
+
+The NVDA Magnifier operates as a full-screen magnifier, meaning it enlarges the entire screen while following the system focus or mouse pointer.
+It provides several configuration options to customize the magnification experience according to your needs.
+
+### Enabling and Disabling the Magnifier {#MagnifierToggle}
+
+To enable or disable the magnifier, press `NVDA+shift+w`.
+When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
+When disabled, the screen returns to its normal size.
+
+Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
+If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first, and vice versa.
+
+### Magnifier Controls {#MagnifierControls}
+
+Once the magnifier is enabled, you can use the following keyboard commands to control it:
+
+<!-- KC:beginInclude -->
+
+| Name |Key |Description|
+|---|---|---|
+|Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
+|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+|Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
+|Toggle filter of the magnifier | None |Cycles through available color filters (normal, grayscale, inverted)|
+|Toggle focus mode for the full-screen magnifier | None |Cycles through focus tracking modes (center, border, relative)|
+|Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
+
+<!-- KC:endInclude -->
+
+### Zoom Levels {#MagnifierZoomLevels}
+
+The magnifier supports zoom levels from 1.0 (no magnification) to 10.0 (maximum magnification).
+You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.
+Each press increases or decreases the zoom by a fixed increment.
+
+The default zoom level when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+
+### Color Filters {#MagnifierColorFilters}
+
+Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.
+The magnifier provides three color filter options:
+
+* **Normal**: No color modification is applied. This is the default setting.
+* **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
+* **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
+
+To cycle through the available filters, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+NVDA will announce the name of the currently selected filter.
+
+The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+
+### Focus Tracking Modes {#MagnifierFocusModes}
+
+The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+
+* **Center**: The magnified area is always centered on the current focus position.
+This mode keeps the focused element at the center of the screen at all times.
+* **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
+This mode provides a more stable view, only adjusting when necessary.
+* **Relative**: The magnified area maintains the relative position of the focus within the screen.
+This mode mimics the behavior of the Windows Magnifier.
+
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+NVDA will announce the name of the currently selected mode.
+
+The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+
+### Spotlight Mode {#MagnifierSpotlight}
+
+Spotlight mode is a special feature designed for presentations or focused reading tasks.
+When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
+
+This is useful when you want to:
+
+* Show context to your audience during a presentation before zooming in on specific details
+* Temporarily view the full screen layout while magnifying
+
+To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
+Once activated, the magnifier will:
+
+1. Smoothly zoom out to show the full screen (zoom level 1.0)
+2. Monitor mouse movement
+3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the mouse position
+
+Spotlight mode automatically deactivates after zooming back in.
+If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+
+### Magnifier Settings {#MagnifierSettings}
+
+The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+p`).
+See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.
+
 ## Content Recognition {#ContentRecognition}
 
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
@@ -1986,6 +2083,8 @@ Note that the following features depend on WASAPI, and will be disabled if WASAP
 * Rate boost
 * Leading silence trimming
 * Keep audio device awake
+
+Note that in Advanced settings, there is a similar [option for SAPI 4 voices](#UseWASAPIForSAPI4), not to be confused with this one.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
 
@@ -2676,6 +2775,76 @@ If you only want to highlight the focus and leave the navigator object and brows
 Additional vision enhancement providers can be provided in [NVDA add-ons](#AddonsManager).
 When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
 For the supported settings per provider, please refer to the documentation for that provider.
+
+#### Magnifier {#MagnifierSettingsCategory}
+
+<!-- KC:setting -->
+
+##### Open Magnifier settings {#OpenMagnifierSettings}
+
+Key: `NVDA+control+w`
+
+The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
+This settings category contains the following options:
+
+##### Default zoom level {#MagnifierDefaultZoom}
+
+This slider allows you to set the default zoom level when the magnifier is first enabled.
+The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
+The default value is 2.0 (200% zoom).
+
+You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |1.0 to 10.0|
+|Default |2.0|
+
+##### Default color filter {#MagnifierDefaultFilter}
+
+This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
+You can cycle through the color filters on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options | Normal, Grayscale, Inverted |
+|Default |Normal |
+
+| Option | Description |
+|---|---|
+| Normal | No color modification is applied. |
+| Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
+| Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
+
+##### Default focus mode {#MagnifierDefaultFocusMode}
+
+This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+You can cycle through the focus modes on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Center, Border, Relative|
+|Default |Center|
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Keep mouse centered {#MagnifierKeepMouseCentered}
+
+This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
+When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
+
+This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 #### Keyboard {#KeyboardSettings}
 
@@ -3798,6 +3967,20 @@ When enabled, NVDA will remove silence from the start of speech audio, which may
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
 
+##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
+
+This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
+This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
+However, some SAPI 4 voices might not work with the current WASAPI implementation.
+If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
+Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -4505,6 +4688,14 @@ Each voice that comes with eSpeak NG speaks a different language.
 There are over 43 different languages supported by eSpeak NG.
 
 There are also many variants which can be chosen to alter the sound of the voice.
+
+### Microsoft Speech API version 4 (SAPI 4) {#SAPI4}
+
+SAPI 4 is an older Microsoft standard for software speech synthesizers.
+NVDA still supports this for users who already have SAPI 4 synthesizers installed.
+However, Microsoft no longer support this and needed components are no longer available from Microsoft.
+
+When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 

@@ -6,6 +6,12 @@
 
 ### New Features
 
+* NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
+  * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
+  * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
+  * A spotlight mode is available for presentations or focused reading tasks.
+  * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
+  * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
@@ -64,6 +70,7 @@ The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settin
 The settings for Screen Curtain have also been moved here from the "Vision" category.
 Additionally, Screen Curtain's settings are now configuration profile independent.
 
+The NVDA interface is now translated to Cambodian.
 Liblouis, Unicode CLDR and eSpeak NG have been updated.
 Added tables for English Grade 3, Japanese (Rokuten Kanji), and Macedonian uncontracted braille.
 Improved the Biblical Hebrew, Unified English Braille, Greek International, Hungarian, Norwegian, Portuguese 8-dot and Slovakian braille tables.
@@ -80,7 +87,6 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
-* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
@@ -107,7 +113,6 @@ Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
-* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 * Component updates:
   * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
@@ -126,6 +131,7 @@ Such controls will now be accessible in browse mode where they weren't before. (
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * A new "Privacy and Security" category has been added to NVDA's settings dialog.
 It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
+* The NVDA interface is now translated to Cambodian. (#19450)
 
 ### Bug Fixes
 
@@ -263,10 +269,6 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
 * `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
-* SAPI 4 support has been removed: (#19290)
-  * The `synthDrivers.sapi4` module has been removed.
-  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
-  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
