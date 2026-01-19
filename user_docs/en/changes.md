@@ -60,6 +60,7 @@ The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settin
 The settings for Screen Curtain have also been moved here from the "Vision" category.
 Additionally, Screen Curtain's settings are now configuration profile independent.
 
+The NVDA interface is now translated to Cambodian.
 Liblouis, Unicode CLDR and eSpeak NG have been updated.
 Added tables for English Grade 3, Japanese (Rokuten Kanji), and Macedonian uncontracted braille.
 Improved the Biblical Hebrew, Unified English Braille, Greek International, Hungarian, Norwegian, Portuguese 8-dot and Slovakian braille tables.
@@ -120,6 +121,7 @@ Such controls will now be accessible in browse mode where they weren't before. (
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * A new "Privacy and Security" category has been added to NVDA's settings dialog.
 It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
+* The NVDA interface is now translated to Cambodian. (#19450)
 
 ### Bug Fixes
 
