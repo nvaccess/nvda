@@ -199,6 +199,14 @@ class ScreenCurtain:
 		if self._enabled:
 			log.debug("ScreenCurtain is already enabled.")
 			return
+
+		# Notify magnifier that screen curtain is being enabled
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainEnabled()
+
 		log.debug("Enabling ScreenCurtain")
 		for attempt in range(self._MAX_ENABLE_RETRIES):
 			exception: Exception | None = None
@@ -250,6 +258,13 @@ class ScreenCurtain:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
 			except Exception:
 				log.exception()
+		# Notify magnifier that screen curtain is being disabled
+
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainDisabled()
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""
