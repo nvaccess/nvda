@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
@@ -4831,7 +4831,6 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it",
 		),
-		category=SCRCAT_VISION,
 		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
