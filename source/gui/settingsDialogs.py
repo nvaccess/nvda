@@ -5948,15 +5948,44 @@ class MagnifierPanel(SettingsPanel):
 
 		# Set default value from config
 		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		index = bisect.bisect_left(zoomValues, defaultZoom)
+		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
 		# Find the closest value
-		if index == 0:
+		if zoomIndex == 0:
 			closestIndex = 0
-		elif index >= len(zoomValues):
+		elif zoomIndex >= len(zoomValues):
 			closestIndex = len(zoomValues) - 1
 		else:
-			closestIndex = min(index - 1, index, key=lambda i: abs(zoomValues[i] - defaultZoom))
+			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
 		self.defaultZoomList.SetSelection(closestIndex)
+
+		# PAN SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default pan value.
+		defaultPanLabelText = _("Default &pan value:")
+
+		panValues = magnifierConfig.PanValue.pan_range()
+		panChoices = magnifierConfig.PanValue.pan_strings()
+
+		self.defaultPanList = sHelper.addLabeledControl(
+			defaultPanLabelText,
+			wx.Choice,
+			choices=panChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultPan",
+			self.defaultPanList,
+		)
+
+		# set default value from config
+		defaultPan = magnifierConfig.getDefaultPanValue()
+		panIndex = bisect.bisect_left(panValues, defaultPan)
+		# Find the closest value
+		if panIndex == 0:
+			closestPanIndex = 0
+		elif panIndex >= len(panValues):
+			closestPanIndex = len(panValues) - 1
+		else:
+			closestPanIndex = min(panIndex - 1, panIndex, key=lambda i: abs(panValues[i] - defaultPan))
+		self.defaultPanList.SetSelection(closestPanIndex)
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
@@ -6005,6 +6034,9 @@ class MagnifierPanel(SettingsPanel):
 		"""Save the current selections to config."""
 		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+
+		selectedPanIdx = self.defaultPanList.GetSelection()
+		magnifierConfig.setDefaultPanValue(magnifierConfig.PanValue.pan_range()[selectedPanIdx])
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])

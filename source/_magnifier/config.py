@@ -45,6 +45,32 @@ class ZoomLevel:
 		]
 
 
+class PanValue:
+	"""
+	Constants and utilities for pan value management.
+	"""
+
+	@classmethod
+	def pan_range(cls) -> list[int]:
+		"""
+		Return the list of available pan values.
+		"""
+		return [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+	@classmethod
+	def pan_strings(cls) -> list[str]:
+		"""
+		Return localized pan value strings.
+		"""
+		return [
+			# Translators: Pan value string shown in settings and messages.
+			pgettext("magnifier", "{panValue} px").format(
+				panValue=f"{value}",
+			)
+			for value in cls.pan_range()
+		]
+
+
 def getDefaultZoomLevel() -> float:
 	"""
 	Get default zoom level from config.
@@ -78,6 +104,24 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultPanValue() -> int:
+	"""
+	Get default pan value from config.
+
+	:return: The default pan value.
+	"""
+	return config.conf["magnifier"]["defaultPanValue"]
+
+
+def setDefaultPanValue(panValue: int) -> None:
+	"""
+	Set default pan value from settings.
+
+	:param panValue: The pan value to set.
+	"""
+	config.conf["magnifier"]["defaultPanValue"] = panValue
 
 
 def getDefaultFilter() -> Filter:

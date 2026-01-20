@@ -21,6 +21,7 @@ from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierPosition,
+	MagnifierAction,
 	Coordinates,
 	MagnifierType,
 	Direction,
@@ -28,7 +29,12 @@ from .utils.types import (
 	Filter,
 )
 
-from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
+from .config import (
+	getDefaultZoomLevel,
+	getDefaultPanValue,
+	getDefaultFilter,
+	ZoomLevel,
+)
 
 
 class Magnifier:
@@ -40,6 +46,8 @@ class Magnifier:
 		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
+		self._panValue: int = getDefaultPanValue()
+		self._panMargin: list[int] = [0, 0, 0, 0]  # left, top, right, bottom²
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
 		self._lastNVDAPosition = Coordinates(0, 0)
@@ -71,6 +79,29 @@ class Magnifier:
 			value = closestZoom
 		self._zoomLevel = value
 
+	def setPanMarginBorder(self) -> None:
+		"""
+		Calculate pan margin limits based on zoom level and screen size.
+		These margins define the minimum and maximum coordinates where the center
+		can be positioned to keep the magnified view within screen boundaries.
+		"""
+		# Calculate the size of the visible area at current zoom
+		visibleWidth = self._displayOrientation.width / self.zoomLevel
+		visibleHeight = self._displayOrientation.height / self.zoomLevel
+
+		# The center cannot go closer to screen edges than half the visible area
+		# Otherwise the magnified window would extend beyond the screen
+		minX = int(visibleWidth / 2)
+		minY = int(visibleHeight / 2)
+		maxX = int(self._displayOrientation.width - (visibleWidth / 2))
+		maxY = int(self._displayOrientation.height - (visibleHeight / 2))
+
+		self._panMargin = [minX, minY, maxX, maxY]
+		log.debug(
+			f"Pan margins updated: left={minX}, top={minY}, right={maxX}, bottom={maxY} "
+			f"(zoom={self.zoomLevel}, visible={visibleWidth}x{visibleHeight})",
+		)
+
 	# Functions
 	def _onDisplayChanged(self, orientationState: OrientationState) -> None:
 		"""
@@ -98,6 +129,7 @@ class Magnifier:
 			return
 
 		self._isActive = True
+		self.setPanMarginBorder()
 		self._currentCoordinates = self._getFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
@@ -172,10 +204,59 @@ class Magnifier:
 			newZoom = self.zoomLevel + ZoomLevel.STEP_FACTOR
 			if newZoom <= ZoomLevel.MAX_ZOOM:
 				self.zoomLevel = newZoom
+				self.setPanMarginBorder()
 		elif direction == Direction.OUT:
 			newZoom = self.zoomLevel - ZoomLevel.STEP_FACTOR
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+				self.setPanMarginBorder()
+
+	def _pan(self, action: MagnifierAction) -> bool:
+		"""
+		Pan the magnifier in the specified direction
+
+		:param action: The pan action (left, right, up, down)
+		:return: True if we reached the edge limit, False otherwise
+		"""
+		panMarginLeft, panMarginTop, panMarginRight, panMarginBottom = self._panMargin
+		x, y = self._currentCoordinates
+		reachedEdge = False
+
+		match action:
+			case MagnifierAction.PAN_LEFT:
+				newX = x - self._panValue
+				x = max(panMarginLeft, newX)
+				reachedEdge = x == panMarginLeft and newX < panMarginLeft
+			case MagnifierAction.PAN_RIGHT:
+				newX = x + self._panValue
+				x = min(panMarginRight, newX)
+				reachedEdge = x == panMarginRight and newX > panMarginRight
+			case MagnifierAction.PAN_UP:
+				newY = y - self._panValue
+				y = max(panMarginTop, newY)
+				reachedEdge = y == panMarginTop and newY < panMarginTop
+			case MagnifierAction.PAN_DOWN:
+				newY = y + self._panValue
+				y = min(panMarginBottom, newY)
+				reachedEdge = y == panMarginBottom and newY > panMarginBottom
+			case MagnifierAction.PAN_LEFT_EDGE:
+				x = panMarginLeft
+			case MagnifierAction.PAN_RIGHT_EDGE:
+				x = panMarginRight
+			case MagnifierAction.PAN_TOP_EDGE:
+				y = panMarginTop
+			case MagnifierAction.PAN_BOTTOM_EDGE:
+				y = panMarginBottom
+			case _:
+				log.error(f"Unknown pan action: {action}")
+
+		# Update coordinates and move mouse to maintain the pan position
+		self._currentCoordinates = Coordinates(x, y)
+		winUser.setCursorPos(x, y)
+		self._lastMousePosition = Coordinates(x, y)
+		self._doUpdate()
+
+		return reachedEdge
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

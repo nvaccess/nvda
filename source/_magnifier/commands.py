@@ -106,6 +106,178 @@ def zoomOut() -> None:
 		)
 
 
+def panLeft() -> None:
+	"""Pan the magnifier to the left"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_LEFT,
+	):
+		reachedEdge = magnifier._pan(MagnifierAction.PAN_LEFT)
+		if reachedEdge:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when arriving at the left edge.
+					"Arrived to left",
+				),
+			)
+		else:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when panning left.
+					"Panning left",
+				),
+			)
+
+
+def panRight() -> None:
+	"""Pan the magnifier to the right"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_RIGHT,
+	):
+		reachedEdge = magnifier._pan(MagnifierAction.PAN_RIGHT)
+		if reachedEdge:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when arriving at the right edge.
+					"Arrived to right",
+				),
+			)
+		else:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when panning right.
+					"Panning right",
+				),
+			)
+
+
+def panUp() -> None:
+	"""Pan the magnifier up"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_UP,
+	):
+		reachedEdge = magnifier._pan(MagnifierAction.PAN_UP)
+		if reachedEdge:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when arriving at the top edge.
+					"Arrived to top",
+				),
+			)
+		else:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when panning up.
+					"Panning up",
+				),
+			)
+
+
+def panDown() -> None:
+	"""Pan the magnifier down"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_DOWN,
+	):
+		reachedEdge = magnifier._pan(MagnifierAction.PAN_DOWN)
+		if reachedEdge:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when arriving at the bottom edge.
+					"Arrived to bottom",
+				),
+			)
+		else:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when panning down.
+					"Panning down",
+				),
+			)
+
+
+def panToLeftEdge() -> None:
+	"""Pan the magnifier to the left edge"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_LEFT_EDGE,
+	):
+		magnifier._pan(MagnifierAction.PAN_LEFT_EDGE)
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when panning to the left edge.
+				"Panning to left edge",
+			),
+		)
+
+
+def panToRightEdge() -> None:
+	"""Pan the magnifier to the right edge"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_RIGHT_EDGE,
+	):
+		magnifier._pan(MagnifierAction.PAN_RIGHT_EDGE)
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when panning to the right edge.
+				"Panning to right edge",
+			),
+		)
+
+
+def panToTopEdge() -> None:
+	"""Pan the magnifier to the top edge"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_TOP_EDGE,
+	):
+		magnifier._pan(MagnifierAction.PAN_TOP_EDGE)
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when panning to the top edge.
+				"Panning to top edge",
+			),
+		)
+
+
+def panToBottomEdge() -> None:
+	"""Pan the magnifier to the bottom edge"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.PAN_BOTTOM_EDGE,
+	):
+		magnifier._pan(MagnifierAction.PAN_BOTTOM_EDGE)
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when panning to the bottom edge.
+				"Panning to bottom edge",
+			),
+		)
+
+
 def toggleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()

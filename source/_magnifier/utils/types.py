@@ -32,6 +32,14 @@ class MagnifierAction(DisplayStringEnum):
 
 	ZOOM_IN = auto()
 	ZOOM_OUT = auto()
+	PAN_LEFT = auto()
+	PAN_RIGHT = auto()
+	PAN_UP = auto()
+	PAN_DOWN = auto()
+	PAN_LEFT_EDGE = auto()
+	PAN_RIGHT_EDGE = auto()
+	PAN_TOP_EDGE = auto()
+	PAN_BOTTOM_EDGE = auto()
 	TOGGLE_FILTER = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
@@ -43,6 +51,22 @@ class MagnifierAction(DisplayStringEnum):
 			self.ZOOM_IN: pgettext("magnifier action", "trying to zoom in"),
 			# Translators: Action description for zooming out.
 			self.ZOOM_OUT: pgettext("magnifier action", "trying to zoom out"),
+			# Translators: Action description for toggling color filters.
+			self.PAN_LEFT: pgettext("magnifier action", "trying to pan left"),
+			# Translators: Action description for panning right.
+			self.PAN_RIGHT: pgettext("magnifier action", "trying to pan right"),
+			# Translators: Action description for panning up.
+			self.PAN_UP: pgettext("magnifier action", "trying to pan up"),
+			# Translators: Action description for panning down.
+			self.PAN_DOWN: pgettext("magnifier action", "trying to pan down"),
+			# Translators: Action description for panning to left edge.
+			self.PAN_LEFT_EDGE: pgettext("magnifier action", "trying to pan to left edge"),
+			# Translators: Action description for panning to right edge.
+			self.PAN_RIGHT_EDGE: pgettext("magnifier action", "trying to pan to right edge"),
+			# Translators: Action description for panning to top edge.
+			self.PAN_TOP_EDGE: pgettext("magnifier action", "trying to pan to top edge"),
+			# Translators: Action description for panning to bottom edge.
+			self.PAN_BOTTOM_EDGE: pgettext("magnifier action", "trying to pan to bottom edge"),
 			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
 			# Translators: Action description for changing full-screen mode.
