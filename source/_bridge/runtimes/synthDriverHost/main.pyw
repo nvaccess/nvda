@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import sys
 import inspect
 import os
@@ -6,9 +11,9 @@ import gettext
 import tempfile
 from winBindings.kernel32 import GetCurrentProcessId
 
-old_factory = logging.getLogRecordFactory()
-def record_factory(*args, **kwargs):
-	record = old_factory(*args, **kwargs)
+oldRecordFactory = logging.getLogRecordFactory()
+def recordFactory(*args, **kwargs):
+	record = oldRecordFactory(*args, **kwargs)
 	frame = inspect.currentframe()
 	count = 4
 	while count > 0:
@@ -22,7 +27,7 @@ def record_factory(*args, **kwargs):
 		# co_qualname may be unavailable for some frames; in that case, keep the default record.name
 		pass
 	return record
-logging.setLogRecordFactory(record_factory)
+logging.setLogRecordFactory(recordFactory)
 
 exeName = os.path.splitext(os.path.basename(sys.executable))[0]
 pid = GetCurrentProcessId()
