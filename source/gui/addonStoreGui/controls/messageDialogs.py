@@ -3,16 +3,21 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Collection
 import threading
 from time import sleep
 from typing import (
 	TYPE_CHECKING,
+	Self,
 )
+import weakref
 import winsound
 
 import wx
 
 import addonAPIVersion
+
+from addonHandler import Addon, getAvailableAddons
 from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
@@ -26,6 +31,7 @@ import gui
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
 from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 from gui.contextHelp import ContextHelpMixin
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from gui.guiHelper import (
 	BoxSizerHelper,
 	BORDER_FOR_DIALOGS,
@@ -33,6 +39,7 @@ from gui.guiHelper import (
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
 from gui.message import DisplayableError, displayDialogAsModal, messageBox, _countAsMessageBox
+from gui.nvdaControls import AutoWidthColumnListCtrl
 from logHandler import log
 import NVDAState
 from speech.priorities import SpeechPriority
@@ -615,3 +622,212 @@ def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
 		)
 
 	wx.CallAfter(mainThreadCallback)
+
+
+class _CopyAddonsDialog(
+	DpiScalingHelperMixinWithoutInit,
+	ContextHelpMixin,
+	wx.Dialog,
+):
+	"""A dialog which asks the user which add-ons they would like to copy to the system profile."""
+
+	helpId = "CopyAddonsToSystemProfileDialog"
+
+	@classmethod
+	def _instance(cls) -> Self | None:
+		"""Retrieves the globally unique instance of this class, if any."""
+		# Return None until this is replaced with a weakref.ref object.
+		# Then the instance is retrieved by treating that object as a callable.
+		return None
+
+	def __new__(cls, *args, **kwargs):
+		instance = cls._instance()
+		if instance is None:
+			return super().__new__(cls, *args, **kwargs)
+		return instance
+
+	def __init__(self, parent: wx.Window, availableAddons: Collection[Addon], returnList: list[str]):
+		"""Initializer.
+
+		:param parent: The dialog's parent window.
+		:param availableAddons: The add-ons that are available to be copied to the system profile.
+			This must not be empty.
+		:param returnList: A list that will be modified in place with the add-on IDs that the user wishes to copy.
+		:raises RuntimeError: If an instance of this class already exists.
+		:raises ValueError: If ``availableAddons`` is empty.
+		"""
+		if type(self)._instance() is not None:
+			raise RuntimeError("Attempting to open multiple _CopyAddonsDialog instances")
+		if len(availableAddons) < 1:
+			raise ValueError("Unable to show copy add-ons dialog when there are no add-ons to copy.")
+		type(self)._instance = weakref.ref(self)
+		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
+		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons"))
+		self._availableAddons = availableAddons
+		self._returnList = returnList
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = BoxSizerHelper(self, wx.VERTICAL)
+
+		label = wx.StaticText(
+			self,
+			label=_(
+				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
+				"You currently have one or more add-ons enabled. "
+				"If copied to the system profile, they will have unrestricted access to your entire system. "
+				"\n\n"
+				"Check only the add-ons you wish to copy. "
+				"You are strongly encouraged to choose only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+			),
+		)
+		label.Wrap(self.scaleSize(self.GetSize().Width))
+		sHelper.addItem(label)
+
+		listCtrl = self._addonsList = sHelper.addLabeledControl(
+			# Translators: The label of the list which allows users to select which add-ons to copy to the system profile
+			_("Add-ons"),
+			AutoWidthColumnListCtrl,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+		)
+		listCtrl.setResizeColumn(0)
+		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
+		listCtrl.AppendColumn(_("Name"), width=self.scaleSize(150))
+		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
+		listCtrl.AppendColumn(_("Author"), width=self.scaleSize(180))
+		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on
+		listCtrl.AppendColumn(_("Version"), width=self.scaleSize(150))
+		listCtrl.EnableCheckBoxes(True)
+		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
+		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
+		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)
+
+		buttonHelper = ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label for a button in the copy add-ons dialog to show information about the selected add-on.
+		button = self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
+		button.Disable()
+		button.Bind(wx.EVT_BUTTON, self.onAbout)
+		# Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
+		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		button.SetDefault()
+		# Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
+		buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(buttonHelper, separated=True)
+		self._populateAddonsList()
+
+		mainSizer.Add(
+			sHelper.sizer,
+			border=BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1,
+		)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.CentreOnParent()
+
+	def _populateAddonsList(self):
+		self._addonsList.DeleteAllItems()
+		for idx, addon in enumerate(self._availableAddons):
+			self._addonsList.Append(
+				(
+					addon.manifest["summary"],
+					addon.manifest["author"],
+					addon.version,
+				),
+			)
+		activeIndex = 0
+		self._addonsList.SetItemState(
+			activeIndex,
+			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
+			wx.LIST_STATE_FOCUSED | wx.LIST_STATE_SELECTED,
+		)
+
+	def _onSelectionChange(self, evt: wx.ListEvent):
+		self._aboutButton.Enable(self._addonsList.GetSelectedItemCount() == 1)
+
+	def _enterActivatesContinue(self, evt):
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+		else:
+			evt.Skip()
+
+	def onAbout(self, evt: wx.EVT_BUTTON):
+		index: int = self._addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
+
+		_showAddonInfo(self._availableAddons[index]._addonGuiModel)
+
+	def onClose(self, evt: wx.CloseEvent):
+		if not self.GetReturnCode():
+			self.SetReturnCode(wx.ID_CANCEL)
+		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
+
+	def onCancel(self, evt: wx.CommandEvent):
+		self.EndModal(evt.GetId())
+		self.Close()
+
+	def onContinue(self, evt: wx.CommandEvent):
+		returnCode = evt.GetId()
+		toCopy = tuple(
+			addon.name
+			for idx, addon in enumerate(self._availableAddons)
+			if self._addonsList.IsItemChecked(idx)
+		)
+		if toCopy:
+			match gui.messageBox(
+				ngettext(
+					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
+					"You have selected to copy 1 add-on. "
+					"Using this add-on during sign-in and on secure screens is a security risk.",
+					"You have selected to copy {num} add-ons. "
+					"Using these add-ons during sign-in and on secure screens is a security risk.",
+					len(toCopy),
+				).format(num=len(toCopy))
+				+ _(
+					# Translators: A prompt asking the user to confirm whether to perform an action.
+					"\n\nAre you sure you want to continue?",
+				),
+				# Translators: The title of the warning dialog displayed when trying to
+				# copy add-ons for use on secure screens.
+				_("Warning"),
+				wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING,
+				self,
+			):
+				case wx.CANCEL:
+					returnCode = wx.CANCEL
+				case wx.YES:
+					self._returnList.extend(toCopy)
+				case _:
+					return
+		self.EndModal(returnCode)
+		self.Close()
+
+
+def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
+	"""Get a list of add-on IDs to copy to the system profile.
+
+	This function asks the user which add-ons they want to copy to the system profile, and returns the add-on IDs of those they select.
+	If no add-ons are enabled, the user is not asked, and no add-on IDs are returned.
+
+	.. warning::
+		This function is blocking.
+
+	:param parent: The window to use as the dialog's parent.
+	:return: If the user cancels the process, ``None``.
+		Otherwise, a list of add-on IDs to copy.
+		Note that this list may be empty, in which case there are either no enabled add-ons in the user config, or the user has chosen to copy no add-ons.
+	"""
+	addonsToCopy: list[str] = []
+	enabledAddons: tuple[Addon] = tuple(
+		getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
+	)
+	if (
+		len(enabledAddons) > 0
+		and _CopyAddonsDialog(parent, enabledAddons, addonsToCopy).ShowModal() != wx.ID_OK
+	):
+		return None
+	return addonsToCopy

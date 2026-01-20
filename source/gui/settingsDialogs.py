@@ -996,7 +996,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onCopySettings(self, evt):
-		from .addonGui import _getAddonsToCopy
+		from .addonStoreGui.controls.messageDialogs import _getAddonsToCopy
 
 		if (addonsToCopy := _getAddonsToCopy(self.GetTopLevelParent())) is None:
 			return
