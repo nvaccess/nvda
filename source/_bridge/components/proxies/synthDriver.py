@@ -19,6 +19,7 @@ from synthDriverHandler import (
 )
 
 if typing.TYPE_CHECKING:
+	import extensionPoints
 	from ..services.synthDriver import SynthDriverService
 	from _bridge.base import Proxy
 
@@ -34,7 +35,7 @@ class SynthDriverProxy(Proxy, SynthDriver):
 			if notification is synthIndexReached:
 				log.debug("Registering synthIndexReached notification with synth driver service")
 
-				def localCallback_synthIndexReached(index):
+				def localCallback_synthIndexReached(index: int):
 					synth = selfRef()
 					if synth is not None:
 						synthIndexReached.notify(synth=synth, index=index)
@@ -50,15 +51,9 @@ class SynthDriverProxy(Proxy, SynthDriver):
 
 				self._remoteService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
 
-	def old_terminate(self):
-		log.debug(f"Terminating SynthDriverProxy instance for remote synth driver '{self.name}'")
-		for conn in self._heldConnections:
-			conn.close()
-		# self._heldConnections.clear()
+	_supportedSettingsCache: list[DriverSetting] | None  = None
 
-	_supportedSettingsCache = None
-
-	def _get_supportedSettings(self):
+	def _get_supportedSettings(self) -> list[DriverSetting]:
 		if self._supportedSettingsCache is not None:
 			return self._supportedSettingsCache
 		data = self._remoteService.getSupportedSettings()
@@ -78,9 +73,9 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		self._supportedSettingsCache = settings
 		return settings
 
-	_supportedNotificationsCache = None
+	_supportedNotificationsCache: set[extensionPoints.Action] | None = None
 
-	def _get_supportedNotifications(self):
+	def _get_supportedNotifications(self) -> set[extensionPoints.Action]:
 		if self._supportedNotificationsCache is not None:
 			return self._supportedNotificationsCache
 		data = self._remoteService.getSupportedNotifications()
@@ -110,6 +105,8 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		return variants
 
 	def speak(self, speechSequence):
+		# Pickle should be replaced with a much safer serialization method in future.
+		# But as only internal synth drivers are supported currently, this is acceptable for now.
 		data = pickle.dumps(speechSequence)
 		return self._remoteService.speak(data)
 
