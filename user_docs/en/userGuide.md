@@ -3602,7 +3602,7 @@ It is recommended that you always test the URL before saving it.
 
 #### Copy Add-ons Dialog {#CopyAddonsToSystemProfileDialog}
 
-This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system configuration](#GeneralSettingsCopySettings).
+This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system configuration](#GeneralSettingsCopySettings), which is used during sign-in and on secure screens.
 By default, NVDA will not copy any of your add-ons to the system configuration.
 
 Copying add-ons to the system configuration is a serious security risk.
