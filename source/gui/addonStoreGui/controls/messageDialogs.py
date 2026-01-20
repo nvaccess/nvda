@@ -747,7 +747,7 @@ class _CopyAddonsDialog(
 	def _onSelectionChange(self, evt: wx.ListEvent):
 		self._aboutButton.Enable(self._addonsList.GetSelectedItemCount() == 1)
 
-	def _enterActivatesContinue(self, evt):
+	def _enterActivatesContinue(self, evt: wx.KeyEvent):
 		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		else:
