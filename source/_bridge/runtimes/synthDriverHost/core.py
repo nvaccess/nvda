@@ -87,6 +87,7 @@ _core: Core | None = None
 
 P = ParamSpec("P")
 
+
 def callLater(delay: int, callable: Callable[P, None], *args: P.args, **kwargs: P.kwargs) -> None:
 	if _core is None:
 		raise RuntimeError("Core not initialized")
