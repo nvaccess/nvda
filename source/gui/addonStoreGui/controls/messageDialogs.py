@@ -662,7 +662,7 @@ class _CopyAddonsDialog(
 			raise ValueError("Unable to show copy add-ons dialog when there are no add-ons to copy.")
 		type(self)._instance = weakref.ref(self)
 		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
-		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons to System Profile"))
+		super().__init__(parent, wx.ID_ANY, pgettext("addonStore", "Copy Add-ons to System Profile"))
 		self._availableAddons = availableAddons
 		self._returnList = returnList
 
@@ -671,7 +671,8 @@ class _CopyAddonsDialog(
 
 		label = wx.StaticText(
 			self,
-			label=_(
+			label=pgettext(
+				"addonStore",
 				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 				"One or more add-ons are currently enabled in your user settings. "
 				"If run on secure screens, they will have unrestricted access to your entire system. "
@@ -684,17 +685,17 @@ class _CopyAddonsDialog(
 
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
 			# Translators: The label of the list which allows users to select which add-ons to copy to the system profile
-			_("Add-ons"),
+			pgettext("addonStore", "Add-ons"),
 			AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
 		listCtrl.setResizeColumn(0)
 		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
-		listCtrl.AppendColumn(_("Name"), width=self.scaleSize(150))
+		listCtrl.AppendColumn(pgettext("addonStore", "Name"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
-		listCtrl.AppendColumn(_("Author"), width=self.scaleSize(180))
+		listCtrl.AppendColumn(pgettext("addonStore", "Author"), width=self.scaleSize(180))
 		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on
-		listCtrl.AppendColumn(_("Version"), width=self.scaleSize(150))
+		listCtrl.AppendColumn(pgettext("addonStore", "Version"), width=self.scaleSize(150))
 		listCtrl.EnableCheckBoxes(True)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
@@ -702,14 +703,17 @@ class _CopyAddonsDialog(
 
 		buttonHelper = ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in the copy add-ons dialog to show information about the selected add-on.
-		button = self._aboutButton = buttonHelper.addButton(self, label=_("&About add-on..."))
+		button = self._aboutButton = buttonHelper.addButton(
+			self,
+			label=pgettext("addonStore", "&About add-on..."),
+		)
 		button.Disable()
 		button.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
-		button = buttonHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		button = buttonHelper.addButton(self, label=pgettext("addonStore", "&Continue"), id=wx.ID_OK)
 		button.SetDefault()
 		# Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
-		buttonHelper.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		buttonHelper.addButton(self, label=pgettext("addonStore", "Cancel"), id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -778,7 +782,8 @@ class _CopyAddonsDialog(
 		)
 		if toCopy:
 			match gui.messageBox(
-				ngettext(
+				npgettext(
+					"addonStore",
 					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 					"You have selected to copy 1 add-on to the system profile. "
 					"Using this add-on during sign-in and on secure screens is a serious security risk.",
@@ -787,13 +792,14 @@ class _CopyAddonsDialog(
 					len(toCopy),
 				).format(num=len(toCopy))
 				+ "\n\n"
-				+ _(
+				+ pgettext(
+					"addonStore",
 					# Translators: A prompt asking the user to confirm whether to perform an action.
 					"Are you sure you want to continue?",
 				),
 				# Translators: The title of the warning dialog displayed when trying to
 				# copy add-ons for use on secure screens.
-				_("Warning"),
+				pgettext("addonStore", "Warning"),
 				wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING,
 				self,
 			):
