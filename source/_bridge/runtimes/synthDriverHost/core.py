@@ -4,6 +4,10 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
+from typing import (
+	Callable,
+	ParamSpec,
+)
 import threading
 import itertools
 import time
@@ -81,8 +85,9 @@ class Core:
 
 _core: Core | None = None
 
+P = ParamSpec("P")
 
-def callLater(delay, callable, *args, **kwargs):
+def callLater(delay: int, callable: Callable[P, None], *args: P.args, **kwargs: P.kwargs) -> None:
 	if _core is None:
 		raise RuntimeError("Core not initialized")
 	log.debug(f"Scheduling callLater: {callable} to run in {delay} seconds")
@@ -118,5 +123,5 @@ def main():
 	global _core
 	log.debug("Initializing core")
 	_core = Core()
-	threading.Thread(target=_runSynthDriverHost, daemon=True).start()
+	threading.Thread(target=_runSynthDriverHost, name="synthDriverHost runtime", daemon=True).start()
 	_core.run()
