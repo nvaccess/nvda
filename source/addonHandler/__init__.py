@@ -222,7 +222,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 		:param statePath: Location at which to write the state file.
 		:return: ``True`` if an attempt was made to save the state file (regardless of whether it succeded or not); ``False`` otherwise.
+		:raises RuntimeError: If NVDA should not write to disk.
 		"""
+		if not NVDAState.shouldWriteToDisk():
+			raise RuntimeError("Should not write to disk.")
 		if any(self.values()):
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.
