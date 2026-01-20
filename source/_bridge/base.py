@@ -9,12 +9,16 @@ import weakref
 import subprocess
 from typing import (
 	cast,
+	TYPE_CHECKING,
 )
 from collections.abc import Callable
 import threading
 import rpyc
 from rpyc.core.stream import PipeStream
 from logHandler import log
+
+if TYPE_CHECKING:
+	from rpyc.core.stream import Stream
 
 
 """Base classes for NVDA Bridge components."""
@@ -170,7 +174,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	_conn: rpyc.Connection | None
 	_localService: LocalService_t | None
 
-	def __init__(self, stream, localService: LocalService_t = None, name: str = "unknown"):
+	def __init__(self, stream: Stream, localService: LocalService_t = None, name: str = "unknown"):
 		self._name = name
 		log.debug(f"Creating connection '{name}'")
 		self._conn = rpyc.connect_stream(
