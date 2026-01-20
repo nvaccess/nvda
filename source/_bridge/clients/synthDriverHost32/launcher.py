@@ -64,7 +64,7 @@ _hostExe = os.path.join(
 )
 
 
-def isSynthDriverHost32RuntimeAvailable():
+def isSynthDriverHost32RuntimeAvailable() -> bool:
 	return os.path.isfile(_hostExe)
 
 
