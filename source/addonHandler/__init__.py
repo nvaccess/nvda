@@ -7,6 +7,7 @@
 from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
+from collections.abc import Callable
 import sys
 import os.path
 import gettext
@@ -17,15 +18,9 @@ import shutil
 from io import StringIO
 import pickle
 from typing import (
-	Callable,
-	Dict,
 	IO,
 	Literal,
-	Optional,
-	Set,
 	TYPE_CHECKING,
-	Tuple,
-	Union,
 )
 import zipfile
 from configobj import ConfigObj
@@ -93,7 +88,7 @@ _failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 _failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 
-AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+AddonStateDictT = dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
 
 class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
@@ -127,7 +122,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def fromPickledDict(
 		self,
-		pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
+		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
 	) -> None:
 		# Load from pickledState
 		if "backCompatToAPIVersion" in pickledState:
@@ -136,11 +131,11 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			# Make pickles case insensitive
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
 
-	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
+	def toDict(self) -> dict[str, set[str] | addonAPIVersion.AddonApiVersionT]:
 		# We cannot pickle instance of `AddonsState` directly
 		# since older versions of NVDA aren't aware about this class and they're expecting
 		# the state to be using inbuilt data types only.
-		picklableState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = dict()
+		picklableState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = dict()
 		for category in self.data:
 			picklableState[category.value] = set(self.data[category])
 		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
@@ -178,7 +173,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(statePath, "rb") as f:
-				pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = pickle.load(f)
+				pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = pickle.load(f)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
 		except IOError:
@@ -451,7 +446,7 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 	refresh: bool = False,
-	filterFunc: Optional[Callable[["Addon"], bool]] = None,
+	filterFunc: Callable[["Addon"], bool] | None = None,
 	isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Gets all available addons on the system.
@@ -548,7 +543,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 	def manifest(self) -> "AddonManifest": ...
 
 	@property
-	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
+	def _addonStoreData(self) -> "InstalledAddonStoreModel" | None:
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
@@ -590,7 +585,7 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> Optional[str]:
+	def completeInstall(self) -> str | None:
 		if not os.path.exists(self.pendingInstallPath):
 			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
 			return None
@@ -833,7 +828,7 @@ class Addon(AddonBase):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
-	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
+	def getDocFilePath(self, fileName: str | None = None) -> str | None:
 		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
@@ -977,7 +972,7 @@ class AddonBundle(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def extract(self, addonPath: Optional[str] = None):
+	def extract(self, addonPath: str | None = None):
 		"""Extracts the bundle content to the specified path.
 		The addon will be extracted to L{addonPath}
 		@param addonPath: Path where to extract contents.
@@ -1149,7 +1144,7 @@ docFileName = string(default=None)
 		return minRequiredVersion <= lastTested
 
 
-def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
+def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 	"""
 	@raises: configobj.validate.ValidateError on validation error
 	"""
