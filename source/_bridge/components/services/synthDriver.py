@@ -3,7 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import typing
+from typing import (
+	Callable,
+	Any,
+	TypeAlias,
+)
 import pickle
 import rpyc
 from logHandler import log
@@ -33,8 +37,8 @@ class SynthDriverService(Service):
 		self._synthDoneSpeakingCallback = None
 
 	@Service.exposed
-	def registerSynthIndexReachedNotification(self, callback: typing.Callable[[int], typing.Any]):
-		def localCallback_synthIndexReached(synth, index):
+	def registerSynthIndexReachedNotification(self, callback: Callable[[int], Any]):
+		def localCallback_synthIndexReached(synth: SynthDriver, index: int):
 			log.debug(f"synthIndexReached localCallback called with index {index}")
 			if synth is self._synth:
 				callback(index)
@@ -43,8 +47,8 @@ class SynthDriverService(Service):
 		synthIndexReached.register(localCallback_synthIndexReached)
 
 	@Service.exposed
-	def registerSynthDoneSpeakingNotification(self, callback: typing.Callable[[], typing.Any]):
-		def localCallback_synthDoneSpeaking(synth):
+	def registerSynthDoneSpeakingNotification(self, callback: Callable[[], Any]):
+		def localCallback_synthDoneSpeaking(synth: SynthDriver):
 			log.debug(f"synthDoneSpeaking localCallback called with synth {synth}")
 			if synth is self._synth:
 				callback()
@@ -52,8 +56,11 @@ class SynthDriverService(Service):
 		self._synthDoneSpeakingCallback = localCallback_synthDoneSpeaking
 		synthDoneSpeaking.register(localCallback_synthDoneSpeaking)
 
+	_SerializedSettingKV: TypeAlias = tuple[str, Any]
+	_SerializedSettingData: TypeAlias = tuple[str, tuple[_SerializedSettingKV, ...]]
+	_SerializedSupportedSettings: TypeAlias = tuple[_SerializedSettingData, ...]
 	@Service.exposed
-	def getSupportedSettings(self) -> tuple:
+	def getSupportedSettings(self) -> _SerializedSupportedSettings:
 		return tuple(
 			(
 				setting.__class__.__name__,
@@ -75,35 +82,35 @@ class SynthDriverService(Service):
 		return frozenset(notifications)
 
 	@Service.exposed
-	def getAvailableVoices(self):
+	def getAvailableVoices(self) -> tuple[tuple[str, str, str], ...]:
 		return tuple((v.id, v.displayName, v.language) for v in self._synth._getAvailableVoices().values())
 
 	@Service.exposed
-	def getAvailableVariants(self):
+	def getAvailableVariants(self) -> tuple[tuple[str, str], ...]:
 		return tuple((v.id, v.displayName) for v in self._synth._getAvailableVariants().values())
 
 	@Service.exposed
-	def speak(self, data):
+	def speak(self, data: str):
 		# fixme: replace Pickle with a safer serialization method
 		speechSequence = pickle.loads(data)
 		return self._synth.speak(speechSequence)
 
 	@Service.exposed
 	def cancel(self):
-		return self._synth.cancel()
+		self._synth.cancel()
 
 	@Service.exposed
 	def pause(self, switch: bool):
-		return self._synth.pause(switch)
+		self._synth.pause(switch)
 
 	@Service.exposed
-	def getParam(self, param):
+	def getParam(self, param: str) -> Any:
 		if not any(param == setting.id for setting in self._synth.supportedSettings):
 			raise AttributeError(f"{param} not a supported setting")
 		return getattr(self._synth, param)
 
 	@Service.exposed
-	def setParam(self, param, val):
+	def setParam(self, param: str, val: Any):
 		if not any(param == setting.id for setting in self._synth.supportedSettings):
 			raise AttributeError(f"{param} not a supported setting")
 		setattr(self._synth, param, val)
