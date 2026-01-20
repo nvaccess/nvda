@@ -24,7 +24,7 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
-from addonStore.models.status import _StatusFilterKey, getStatus
+from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
@@ -823,7 +823,14 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	"""
 	addonsToCopy: list[str] = []
 	enabledAddons: tuple[Addon] = tuple(
-		getAvailableAddons(filterFunc=lambda addon: addon.isEnabled),
+		getAvailableAddons(
+			filterFunc=lambda addon: getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
+			in (
+				AvailableAddonStatus.ENABLED,
+				AvailableAddonStatus.RUNNING,
+				AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+			),
+		),
 	)
 	if (
 		len(enabledAddons) > 0
