@@ -676,8 +676,9 @@ class _CopyAddonsDialog(
 				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 				"One or more add-ons are currently enabled in your user settings. "
 				"If run on secure screens, they will have unrestricted access to your entire system. "
-				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
-				"\n\nCheck only the add-ons you wish to copy. ",
+				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
+				"\n\n"
+				"Check only the add-ons you wish to copy. ",
 			),
 		)
 		label.Wrap(self.scaleSize(self.GetSize().Width))

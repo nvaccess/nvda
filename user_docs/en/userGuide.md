@@ -3600,7 +3600,7 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
-#### Copy Add-ons Dialog {#CopyAddonsToSystemProfileDialog}
+#### Copy Add-ons to System Profile Dialog {#CopyAddonsToSystemProfileDialog}
 
 This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
 By default, NVDA will not copy any of your add-ons to the system configuration.
@@ -3608,7 +3608,7 @@ By default, NVDA will not copy any of your add-ons to the system configuration.
 Copying add-ons to the system configuration is a serious security risk.
 NVDA uses the system configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
 When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.
-This means that many of the usual security and privasy features of Windows, like User Account Control (UAC), do not apply.
+This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
 Allowing add-ons to run in this environment grants  them unrestricted access to your entire system.
 
 To copy one or more add-ons to the system configuration, check them in the list of add-ons.
