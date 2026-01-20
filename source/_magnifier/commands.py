@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -203,10 +203,10 @@ def magnifierIsActiveVerify(
 		return True
 	else:
 		ui.message(
-			"magnifier",
 			pgettext(
-				# Translators: Message announced that the magnifier is not active.
-				"Magnifier is not active when {action}",
+				"magnifier",
+				# Translators: Message announced when the magnifier is not active.
+				"Cannot {action} when Magnifier is not active.",
 			).format(action=action.displayString),
 		)
 		return False
@@ -230,8 +230,8 @@ def magnifierIsFullscreenVerify(
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced that the magnifier is not full-screen.
-				"Magnifier is not full-screen when {action}",
+				# Translators: Message announced when the magnifier is not full-screen.
+				"Cannot {action} when Magnifier is not full-screen/",
 			).format(action=action.displayString),
 		)
 		return False
