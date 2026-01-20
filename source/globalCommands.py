@@ -5259,6 +5259,7 @@ class GlobalCommands(ScriptableObject):
 			title = _("Last spoken information")
 			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
+
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
 commands = GlobalCommands()
