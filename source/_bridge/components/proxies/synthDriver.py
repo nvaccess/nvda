@@ -51,7 +51,7 @@ class SynthDriverProxy(Proxy, SynthDriver):
 
 				self._remoteService.registerSynthDoneSpeakingNotification(localCallback_synthDoneSpeaking)
 
-	_supportedSettingsCache: list[DriverSetting] | None  = None
+	_supportedSettingsCache: list[DriverSetting] | None = None
 
 	def _get_supportedSettings(self) -> list[DriverSetting]:
 		if self._supportedSettingsCache is not None:
