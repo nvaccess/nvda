@@ -59,6 +59,7 @@ class SynthDriverService(Service):
 	_SerializedSettingKV: TypeAlias = tuple[str, Any]
 	_SerializedSettingData: TypeAlias = tuple[str, tuple[_SerializedSettingKV, ...]]
 	_SerializedSupportedSettings: TypeAlias = tuple[_SerializedSettingData, ...]
+
 	@Service.exposed
 	def getSupportedSettings(self) -> _SerializedSupportedSettings:
 		return tuple(
