@@ -338,7 +338,6 @@ def setSystemConfigToCurrentConfig(*, addonsToCopy: Collection[str] = ()):
 def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: Collection[str] = ()):
 	import installer
 	import addonHandler
-	from addonStore.models.status import AddonStateCategory
 
 	toPath = os.path.join(prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
@@ -360,25 +359,7 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
 			if relativePath == "addons":
-				addonsToCopy = CaseInsensitiveSet(addonsToCopy)
-				allAddons = subDirs[:]
-				subDirs.clear()
-				subDirs.extend(addon for addon in allAddons if addon.casefold() in addonsToCopy)
-				if subDirs:
-					log.debug(f"Copying add-ons: {', '.join(subDirs)}")
-					# We are copying add-ons, so we need to generate a new addons state file.
-					# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
-					userAddonsState = addonHandler.AddonsState()
-					userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
-					systemAddonsState = addonHandler.AddonsState()
-					systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
-					systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
-						userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
-					)
-					systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
-				else:
-					log.debug("No add-ons to copy.")
-					continue
+				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
@@ -392,6 +373,43 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 			sourceFilePath = os.path.join(curSourceDir, f)
 			destFilePath = os.path.join(curDestDir, f)
 			installer.tryCopyFile(sourceFilePath, destFilePath)
+
+
+def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addonsToCopy: Collection[str]):
+	"""Determine which add-on directories to copy to the system profile, and create the appropriate addonsState file.
+
+	.. Note::
+		While this function returns ``None``, it has two major side-effects:
+		1. The ``addonDirs`` list is mutated to contain only the add-ons that should be copied.
+		2. A new `addonsState.pickle` is created in ``toPath``.
+
+	:param fromPath: Root of the source configuration directory.
+	:param toPath: Root of the destination configuration directory
+	:param addonDirs: Subdirectories of ``addons/`` in ``fromPath``.
+		This will be mutated to only contain the add-ons that should be copied.
+	:param addonsToCopy: Add-on IDs of the add-ons that should be copied.
+	"""
+	from addonStore.models.status import AddonStateCategory
+	import addonHandler
+
+	addonsToCopy = CaseInsensitiveSet(addonsToCopy)
+	allAddons = addonDirs[:]
+	addonDirs.clear()
+	addonDirs.extend(addon for addon in allAddons if addon.casefold() in addonsToCopy)
+	if addonDirs:
+		log.debug(f"Copying add-ons: {', '.join(addonDirs)}")
+		# We are copying add-ons, so we need to generate a new addons state file.
+		# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
+		userAddonsState = addonHandler.AddonsState()
+		userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
+		systemAddonsState = addonHandler.AddonsState()
+		systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
+		systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
+			userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
+		)
+		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
+	else:
+		log.debug("No add-ons to copy.")
 
 
 def setStartOnLogonScreen(enable: bool) -> None:
