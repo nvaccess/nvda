@@ -118,7 +118,7 @@ class HostService(Service):
 		:raises ImportError: If the SynthDriverService implementation cannot be imported.
 		:returns: SynthDriverService instance bound to the requested driver name.
 		"""
-		log.debug(f"	Loading synth driver '{name}'")
+		log.debug(f"Loading synth driver '{name}'")
 		mod = importlib.import_module(f"synthDrivers.{name}")
 		synth = mod.SynthDriver()
 		return SynthDriverService(synth)
