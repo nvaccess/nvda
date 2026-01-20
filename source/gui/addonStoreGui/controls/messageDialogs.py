@@ -662,7 +662,7 @@ class _CopyAddonsDialog(
 			raise ValueError("Unable to show copy add-ons dialog when there are no add-ons to copy.")
 		type(self)._instance = weakref.ref(self)
 		# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
-		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons"))
+		super().__init__(parent, wx.ID_ANY, _("Copy Add-ons to System Profile"))
 		self._availableAddons = availableAddons
 		self._returnList = returnList
 
@@ -673,11 +673,10 @@ class _CopyAddonsDialog(
 			self,
 			label=_(
 				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
-				"You currently have one or more add-ons enabled. "
-				"If copied to the system profile, they will have unrestricted access to your entire system. "
-				"\n\n"
-				"Check only the add-ons you wish to copy. "
-				"You are strongly encouraged to choose only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+				"One or more add-ons are currently enabled in your user settings. "
+				"If run on secure screens, they will have unrestricted access to your entire system. "
+				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+				"\n\nCheck only the add-ons you wish to copy. ",
 			),
 		)
 		label.Wrap(self.scaleSize(self.GetSize().Width))
@@ -781,15 +780,16 @@ class _CopyAddonsDialog(
 			match gui.messageBox(
 				ngettext(
 					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
-					"You have selected to copy 1 add-on. "
-					"Using this add-on during sign-in and on secure screens is a security risk.",
-					"You have selected to copy {num} add-ons. "
-					"Using these add-ons during sign-in and on secure screens is a security risk.",
+					"You have selected to copy 1 add-on to the system profile. "
+					"Using this add-on during sign-in and on secure screens is a serious security risk.",
+					"You have selected to copy {num} add-ons to the system profile. "
+					"Using these add-ons during sign-in and on secure screens is a serious security risk.",
 					len(toCopy),
 				).format(num=len(toCopy))
+				+ "\n\n"
 				+ _(
 					# Translators: A prompt asking the user to confirm whether to perform an action.
-					"\n\nAre you sure you want to continue?",
+					"Are you sure you want to continue?",
 				),
 				# Translators: The title of the warning dialog displayed when trying to
 				# copy add-ons for use on secure screens.
