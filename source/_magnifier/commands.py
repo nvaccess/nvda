@@ -231,7 +231,7 @@ def magnifierIsFullscreenVerify(
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when the magnifier is not full-screen.
-				"Cannot {action} when Magnifier is not full-screen/",
+				"Cannot {action} when Magnifier is not full-screen.",
 			).format(action=action.displayString),
 		)
 		return False
