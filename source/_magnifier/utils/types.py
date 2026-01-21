@@ -75,7 +75,8 @@ class FocusType(Enum):
 	"""Type of focus being tracked by the magnifier"""
 
 	MOUSE = "mouse"
-	NVDA = "nvda"
+	SYSTEM_FOCUS = "system_focus"
+	NAVIGATOR = "navigator"
 
 
 class MagnifierPosition(NamedTuple):
