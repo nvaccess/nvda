@@ -318,9 +318,9 @@ class RemoteClient:
 			gui.messageBox(
 				parent=gui.mainFrame,
 				# Translators: Title of the connection error dialog.
-				caption=_("Error Connecting"),
+				caption=pgettext("remote", "Error Connecting"),
 				# Translators: Message shown when unable to connect to the remote computer.
-				message=_("Unable to connect to the remote computer"),
+				message=pgettext("remote", "Unable to connect to the remote computer"),
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
