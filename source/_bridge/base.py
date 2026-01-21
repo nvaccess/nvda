@@ -14,7 +14,7 @@ from typing import (
 from collections.abc import Callable
 import threading
 import rpyc
-from rpyc.core.stream import PipeStream
+from rpyc.core.stream import PipeStream, Stream
 from logHandler import log
 
 if TYPE_CHECKING:
