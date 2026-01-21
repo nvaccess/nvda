@@ -145,7 +145,7 @@ class Proxy[Service_t: Service]:
 		localService: Service | None = None,
 		name: str = "unknown",
 	) -> Service:
-		log.debug(f"	Connecting to dependent service over pipes: {name} on Proxy {self}")
+		log.debug(f"Connecting to dependent service over pipes: {name} on Proxy {self}")
 		stream = PipeStream(r_handle, w_handle)
 		newConn = Connection(stream, localService, name=name)
 		newConn.bgEventLoop(daemon=True)
