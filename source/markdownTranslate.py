@@ -30,7 +30,7 @@ re_hiddenHeaderRow = re.compile(r"^\|\s*\.\s*\{\.hideHeaderRow\}\s*(\|\s*\.\s*)*
 re_postTableHeaderLine = re.compile(r"^(\|\s*-+\s*)+\|$")
 re_tableRow = re.compile(r"^(\|)(.+)(\|)$")
 re_translationID = re.compile(r"^(.*)\$\(ID:([0-9a-f-]+)\)(.*)$")
-re_inlineMarkdownLintComment = re.compile(r"^(.*?)(?:\s*<!-- markdownlint.*-->)(\s*)$")
+re_inlineMarkdownLintComment = re.compile(r"^(.*?)(?:\s*<!-- markdownlint.*-->)(.*?)$")
 
 
 def prettyPathString(path: str) -> str:
