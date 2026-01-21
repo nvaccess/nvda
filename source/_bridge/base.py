@@ -9,14 +9,12 @@ import weakref
 import subprocess
 from typing import (
 	cast,
-	TYPE_CHECKING,
 )
 from collections.abc import Callable
 import threading
 import rpyc
 from rpyc.core.stream import PipeStream, Stream
 from logHandler import log
-
 
 
 """Base classes for NVDA Bridge components."""
