@@ -28,6 +28,8 @@
 
 ### Changes for Developers
 
+* NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
+
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 #### Deprecations
@@ -131,6 +133,9 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 
 ### Bug Fixes
 
+* Remote Access:
+  * Improved user notifications when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
+  * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
