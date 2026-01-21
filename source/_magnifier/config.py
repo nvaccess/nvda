@@ -121,6 +121,9 @@ def setDefaultPanValue(panValue: int) -> None:
 
 	:param panValue: The pan value to set.
 	"""
+
+	if "magnifier" not in config.conf:
+		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultPanValue"] = panValue
 
 

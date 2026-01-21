@@ -5975,7 +5975,7 @@ class MagnifierPanel(SettingsPanel):
 			self.defaultPanList,
 		)
 
-		# set default value from config
+		# Set default value from config
 		defaultPan = magnifierConfig.getDefaultPanValue()
 		panIndex = bisect.bisect_left(panValues, defaultPan)
 		# Find the closest value

@@ -51,7 +51,7 @@ class MagnifierAction(DisplayStringEnum):
 			self.ZOOM_IN: pgettext("magnifier action", "zoom in"),
 			# Translators: Action description for zooming out.
 			self.ZOOM_OUT: pgettext("magnifier action", "zoom out"),
-			# Translators: Action description for toggling color filters.
+			# Translators: Action description for panning left.
 			self.PAN_LEFT: pgettext("magnifier action", "trying to pan left"),
 			# Translators: Action description for panning right.
 			self.PAN_RIGHT: pgettext("magnifier action", "trying to pan right"),

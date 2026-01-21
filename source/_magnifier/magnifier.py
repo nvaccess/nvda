@@ -47,7 +47,7 @@ class Magnifier:
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._panValue: int = getDefaultPanValue()
-		self._panMargin: list[int] = [0, 0, 0, 0]  # left, top, right, bottom²
+		self._panMargin: list[int] = [0, 0, 0, 0]  # left, top, right, bottom
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
 		self._lastNVDAPosition = Coordinates(0, 0)
@@ -101,7 +101,7 @@ class Magnifier:
 			f"Pan margins updated: left={minX}, top={minY}, right={maxX}, bottom={maxY} "
 			f"(zoom={self.zoomLevel}, visible={visibleWidth}x{visibleHeight})",
 		)
-    
+
 	def _setZoomRawValue(self, value: float) -> None:
 		"""
 		Set zoom level directly without validation.
@@ -250,12 +250,16 @@ class Magnifier:
 				reachedEdge = y == panMarginBottom and newY > panMarginBottom
 			case MagnifierAction.PAN_LEFT_EDGE:
 				x = panMarginLeft
+				reachedEdge = True
 			case MagnifierAction.PAN_RIGHT_EDGE:
 				x = panMarginRight
+				reachedEdge = True
 			case MagnifierAction.PAN_TOP_EDGE:
 				y = panMarginTop
+				reachedEdge = True
 			case MagnifierAction.PAN_BOTTOM_EDGE:
 				y = panMarginBottom
+				reachedEdge = True
 			case _:
 				log.error(f"Unknown pan action: {action}")
 
