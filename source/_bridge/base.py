@@ -17,8 +17,6 @@ import rpyc
 from rpyc.core.stream import PipeStream, Stream
 from logHandler import log
 
-if TYPE_CHECKING:
-	from rpyc.core.stream import Stream
 
 
 """Base classes for NVDA Bridge components."""
