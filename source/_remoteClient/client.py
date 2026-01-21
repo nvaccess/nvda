@@ -75,6 +75,7 @@ class RemoteClient:
 		self.localControlServer = None
 		self.sendingKeys = False
 		self._wasSendingKeysBeforeLock: bool = False
+		self._disconnectConfirmationDialog: MessageDialog | None = None
 		try:
 			self.sdHandler = SecureDesktopHandler()
 		except RuntimeError:
@@ -222,6 +223,10 @@ class RemoteClient:
 	@alwaysCallAfter
 	def doDisconnect(self) -> None:
 		"""Seek confirmation from the user before disconnecting."""
+		if self._disconnectConfirmationDialog:
+			self._disconnectConfirmationDialog.Raise()
+			self._disconnectConfirmationDialog.SetFocus()
+			return
 		if (
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
@@ -247,9 +252,16 @@ class RemoteClient:
 					buttons=confirmation_buttons,
 				)
 
-				if dialog.ShowModal() != ReturnCode.YES:
-					log.info("Remote disconnection cancelled by user.")
+				self._disconnectConfirmationDialog = dialog
+				try:
+					if dialog.ShowModal() != ReturnCode.YES:
+						log.info("Remote disconnection cancelled by user.")
+						return
+				except Exception:
+					log.error("Error showing disconnect confirmation dialog", exc_info=True)
 					return
+				finally:
+					self._disconnectConfirmationDialog = None
 		self.disconnect()
 
 	def disconnect(self, *, _silent: bool = False):

@@ -96,6 +96,9 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 
 ### Bug Fixes
 
+* Remote Access:
+  * Improved user notifications when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
+  * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
@@ -114,7 +117,6 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
 * NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)
-* Improved user notifications for Remote Access when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
 
 ### Changes for Developers
 
