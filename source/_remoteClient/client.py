@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -295,6 +295,8 @@ class RemoteClient:
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
+		if self.followerTransport:
+			self.followerTransport.transportConnectionFailed.unregister(self.onConnectAsFollowerFailed)
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
@@ -316,6 +318,21 @@ class RemoteClient:
 				caption=_("Error Connecting"),
 				# Translators: Message shown when unable to connect to the remote computer.
 				message=_("Unable to connect to the remote computer"),
+				style=wx.OK | wx.ICON_WARNING,
+			)
+
+	@alwaysCallAfter
+	def onConnectAsFollowerFailed(self):
+		if self.followerTransport and self.followerTransport.successfulConnects == 0:
+			log.error(f"Failed to connect to {self.followerTransport.address}")
+			self.disconnectAsFollower()
+			# Translators: Title of the connection error dialog.
+			gui.messageBox(
+				parent=gui.mainFrame,
+				# Translators: Title of the connection error dialog.
+				caption=pgettext("remote", "Error Connecting"),
+				# Translators: Message shown when unable to connect to the remote computer.
+				message=pgettext("remote", "Unable to connect to the remote computer"),
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
@@ -434,6 +451,7 @@ class RemoteClient:
 			self.onFollowerCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
+		transport.transportConnectionFailed.register(self.onConnectAsFollowerFailed)
 		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
