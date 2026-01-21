@@ -71,7 +71,7 @@ version = _formatDevVersionString()
 publisher = "unknown"
 copyrightYears = "2006-2026"
 url = "https://www.nvaccess.org"
-updateVersionType = None
+updateVersionType = "snapshot:alpha"
 try:
 	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
 except ImportError:
