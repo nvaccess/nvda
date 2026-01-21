@@ -38,7 +38,7 @@ from .config import (
 
 
 class Magnifier:
-	_TIMER_INTERVAL_MS: int = 20
+	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
 
 	def __init__(self):
@@ -101,6 +101,15 @@ class Magnifier:
 			f"Pan margins updated: left={minX}, top={minY}, right={maxX}, bottom={maxY} "
 			f"(zoom={self.zoomLevel}, visible={visibleWidth}x{visibleHeight})",
 		)
+    
+	def _setZoomRawValue(self, value: float) -> None:
+		"""
+		Set zoom level directly without validation.
+		Used internally for smooth animations (e.g., spotlight).
+
+		:param value: The zoom level to set (can be any intermediate value)
+		"""
+		self._zoomLevel = value
 
 	# Functions
 	def _onDisplayChanged(self, orientationState: OrientationState) -> None:
