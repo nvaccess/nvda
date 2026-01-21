@@ -256,6 +256,8 @@ class UIAWebTextInfo(UIATextInfo):
 					field["content"] = obj.name
 		elif hasAriaLabel or hasAriaLabelledby:
 			field["alwaysReportName"] = True
+			if hasAriaLabelledby and not field.get("content"):
+				field["content"] = obj.name
 		# Give lists an item count
 		if obj.role == controlTypes.Role.LIST:
 			child = UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
