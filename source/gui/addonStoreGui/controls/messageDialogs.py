@@ -765,8 +765,6 @@ class _CopyAddonsDialog(
 		index: int = self._addonsList.GetFirstSelected()
 		if index < 0:
 			return
-		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
-
 		_showAddonInfo(self._availableAddons[index]._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):
