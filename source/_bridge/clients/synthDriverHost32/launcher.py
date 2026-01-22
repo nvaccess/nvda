@@ -55,7 +55,7 @@ class NVDAService(Service):
 		if pathStrings[0] == "speech" and pathStrings[1] == "useWASAPIForSAPI4":
 			conf = bool(conf)
 		log.debug(f"Retrieved config value: {conf}")
-		return conf  # pickle.dumps(conf)
+		return conf
 
 
 _hostExe = os.path.join(
