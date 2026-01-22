@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
+	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -111,6 +112,14 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Vision enhancement provider settings
 	[[__many__]]
 		enabled = boolean(default=false)
+
+# Magnifier settings
+[magnifier]
+	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
+	defaultFullscreenMode = string(default="center")
+	defaultFilter = string(default="normal")
+	keepMouseCentered = boolean(default=false)
+	saveShortcutChanges = boolean(default=false)
 
 # Presentation settings
 [presentation]
