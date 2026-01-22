@@ -228,8 +228,6 @@ freeze(
 			"synthDrivers",
 		],
 		"includes": [
-			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-			"bisect",
 			"win32event",
 			"win32file",
 			"win32pipe",
