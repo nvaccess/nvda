@@ -116,6 +116,7 @@ dependencies = [
     { name = "comtypes", marker = "sys_platform == 'win32'" },
     { name = "configobj", marker = "sys_platform == 'win32'" },
     { name = "pyserial", marker = "sys_platform == 'win32'" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
     { name = "rpyc", marker = "sys_platform == 'win32'" },
 ]
 
@@ -130,6 +131,7 @@ requires-dist = [
     { name = "comtypes", specifier = "==1.4.11" },
     { name = "configobj" },
     { name = "pyserial", specifier = "==3.5" },
+    { name = "pywin32", specifier = "==311" },
     { name = "rpyc", specifier = "==6.0.2" },
 ]
 

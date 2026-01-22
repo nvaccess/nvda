@@ -254,6 +254,7 @@ freeze(
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
 			# Required for RPYC over std pipes
+			"win32file",
 			"win32event",
 			"win32pipe",
 		],
