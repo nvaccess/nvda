@@ -874,14 +874,11 @@ class GlobalCommands(ScriptableObject):
 				("braille", "autoScrollRate"),
 			).kwargs["max"],
 		)
-		if config.conf["braille"]["autoScrollRate"] + 0.5 <= maxRate:
-			config.conf["braille"]["autoScrollRate"] += 0.5
-		else:
-			config.conf["braille"]["autoScrollRate"] = maxRate
-		rateValue = config.conf["braille"]["autoScrollRate"]
-		percentage = round((rateValue - 1.0) / 19.0 * 100)
-		rate = f"{percentage}"
-		ui.message(rate)
+		rateValue = config.conf["braille"]["autoScrollRate"] = min(config.conf["braille"]["autoScrollRate"] + 0.5, maxRate)
+		percentage = round((rateValue - minRate) / (maxRate - minRate) * 100)
+		# Translators: Message shown when increasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
 
 	@script(
 		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
