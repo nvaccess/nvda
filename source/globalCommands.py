@@ -874,7 +874,9 @@ class GlobalCommands(ScriptableObject):
 				("braille", "autoScrollRate"),
 			).kwargs["max"],
 		)
-		rateValue = config.conf["braille"]["autoScrollRate"] = min(config.conf["braille"]["autoScrollRate"] + 0.5, maxRate)
+		rateValue = config.conf["braille"]["autoScrollRate"] = min(
+			config.conf["braille"]["autoScrollRate"] + 0.5, maxRate
+		)
 		percentage = round((rateValue - minRate) / (maxRate - minRate) * 100)
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
