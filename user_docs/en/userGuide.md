@@ -3609,7 +3609,7 @@ Copying add-ons to the system-wide configuration is a serious security risk.
 NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
 When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.
 This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
-Allowing add-ons to run in this environment grants  them unrestricted access to your entire system.
+Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
 To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
