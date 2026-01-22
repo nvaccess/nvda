@@ -805,7 +805,7 @@ class _CopyAddonsDialog(
 				# Translators: The title of the warning dialog displayed when trying to
 				# copy add-ons for use on secure screens.
 				pgettext("addonStore", "Warning"),
-				wx.YES | wx.NO | wx.CANCEL | wx.ICON_WARNING,
+				wx.YES | wx.NO | wx.CANCEL | wx.NO_DEFAULT | wx.ICON_WARNING,
 				self,
 			):
 				case wx.CANCEL:
