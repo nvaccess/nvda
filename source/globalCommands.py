@@ -869,11 +869,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		maxRate = int(
-			config.conf.getConfigValidation(
+		maxRate = config.conf.getConfigValidation(
 				("braille", "autoScrollRate"),
 			).kwargs["max"],
-		)
 		if config.conf["braille"]["autoScrollRate"] + 0.5 <= maxRate:
 			config.conf["braille"]["autoScrollRate"] += 0.5
 		else:
@@ -889,11 +887,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		minRate = int(
-			config.conf.getConfigValidation(
+		minRate = config.conf.getConfigValidation(
 				("braille", "autoScrollRate"),
 			).kwargs["min"],
-		)
 		if config.conf["braille"]["autoScrollRate"] - 0.5 >= minRate:
 			config.conf["braille"]["autoScrollRate"] -= 0.5
 		else:
