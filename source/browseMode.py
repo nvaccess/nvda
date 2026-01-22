@@ -2649,7 +2649,7 @@ class BrowseModeDocumentTreeInterceptor(
 		),
 		gesture="kb:NVDA+v",
 	)
-	def script_toggleScreenLayout(self, gesture):
+	def script_toggleScreenLayout(self, gesture: inputCore.InputGesture) -> None:
 		try:
 			self._toggleScreenLayout()
 		except NotImplementedError:
