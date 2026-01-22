@@ -743,10 +743,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		for _ in range(maxParentDepth):
 			if obj is None:
 				break
-			if (
-				obj.role == controlTypes.role.Role.LINK
-				or controlTypes.state.State.LINKED in obj.states
-			):
+			if obj.role == controlTypes.role.Role.LINK or controlTypes.state.State.LINKED in obj.states:
 				return _LinkData(
 					displayText=obj.name,
 					destination=obj.value,
